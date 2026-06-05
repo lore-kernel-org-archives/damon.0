@@ -1,208 +1,415 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407253B71A6;
-	Fri,  5 Jun 2026 09:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780652348; cv=none; b=i0afnz6aWhKWVUv+jOfVNFyfKzws+mvADenj3AtizSnIPsymZU6y0jc5M7CmAWv/WJFoLOjnFLJfofB+zBHI61derLinyqY0gGmGMMH6Z4y6u8BaduY3YDZZ/xuGjtAfShachbsJTC4PhG2HkujTuClkWkwKmldmO7xKsCNLjeA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780652348; c=relaxed/simple;
-	bh=x5+TosQSbym3AlXGBLbj6U8Nfi2vD+NLuMBI0rPvRzk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aCoKe5AS4DtBE67Zb0gQ8EKLX067pjt1QRX9SxOJFXV7BRd+9BEoX/0FKiasmZAkAhLGClMWo/BTAgL0X54nBmMiMvScIXWSvECBLdlQIzuwOAwedWeSYLEHONOagCpWApuu48H1AgH46fPC4iaAdjVbgxmm8VO1J43rsLnm8Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K7oT6stY; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAC03E4C6C
+	for <damon@lists.linux.dev>; Fri,  5 Jun 2026 09:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780653384; cv=pass; b=RK+TQFOZmSpdIIxjIpGf+Sw6vGH9sbPA33jUXjQvazXn7xyrMthOc8NSC3Wm96FY5M9Ayp9csgM9Y+8R+KxnOLX9yqDUzBE22M9AYaZsc6ONq3PtUtezUln9CGahABvw7pOm/cVkMCljd18W7NW0erAiFvHEEOPsvMHIkv8C/Sc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780653384; c=relaxed/simple;
+	bh=fXfXk/1LzHnPDWmujicyJbX/mcKGT50kFcQZFxYNjEU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=O5q1EX4UdRNr2IwCu60yQg4frhq2VmX3BYAi6wZSExwBmQp1xlXDJlUH4fPDEvrECtqvdEJUya6QSMupBDYUUWTrR8ypQhhsn5dZtPpIQV2RJbMeP2qNAutAS7eC8FRHaihsmhNZ4Cuf2mYdQPS7x88NjHGeQyvYeuY6+ty81+M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pxo6+3Hs; arc=pass smtp.client-ip=209.85.217.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K7oT6stY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E574C1F00893;
-	Fri,  5 Jun 2026 09:38:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780652346;
-	bh=g0exJx9gpz8TpzX9EFSHldYxLTySh1XVwF0hmGrg+SA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=K7oT6stYsJW/YT9+CLuE4TfgWKkFNtwhsSQ53mqQovYMrbZLJWUQ4rbp6uxejWd+z
-	 t5JHmN3KGMPCLS2TO56d7L74IOiAwX23PDECnj/nTfe197Q+OP9bE+qUvm01OxXTnz
-	 VaXeAe5nEKvW4je9Yuy/sT4e/OngJ5J28DetwPAR/eKcBYhye7LPWuij71lfZsJBoa
-	 XxqzSfDFN3Rxkre7vs/pwStv5dZDYpmh/+g9VuH+APF6pu+ubTi/Y8Qxo0UnhXkyAC
-	 UJGS0bNa3B5he8hGXH7wYqtLCc1Pknc+f/TnAx+wmk3H3+sBpOcWP4UpCfZcAct3pi
-	 G1RqfxxePG4cg==
-Message-ID: <68a4aec0-72d4-4967-b063-b57cc7ee40cf@kernel.org>
-Date: Fri, 5 Jun 2026 11:38:52 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pxo6+3Hs"
+Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-6c7e72a6bdcso62896137.1
+        for <damon@lists.linux.dev>; Fri, 05 Jun 2026 02:56:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780653382; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lRMrVCjOm8OpYniion8LlOq8Fo7gJUxcO8xb8rGoDAEgLSAWMLDrFNkFR4SO3WfiAj
+         MQIJqLSzD9UhlP8jCPKw9Qnt/CLKrXTKW6lavCDBbZpHWB0pFv/aMovd5i5v+qKQkZC4
+         wlZwowp0bXoFPB/OIG8bOuGRxCXhfnnCFxZXYUtecDM4SLXVA86ZVg69AiMbjhT6s0eb
+         4VqnK3iHFtHvDc1AmkqtZtbqZyTlt0hDdL611rXCi0dqLztxk/g5fqIEzN7LMycNIhvu
+         KKayNsUgFEg2KE1djgDM6nuPY07mCRy/C+5OTYwLGRNFc1z9R/fMrjc0AGaoN76LhK33
+         7OpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=188nvOnCtn3gvAkEJ5AAqju2IjEOtnXumuNth0RPW38=;
+        fh=6a3aAaUxbtpNoT/f8W8thaEPTmK1+71+dD3MQn0vnx8=;
+        b=jxxqCG9T7u5p+1GcIvVxc8ru4lu8fNl69f0iE6S+xWuopRR+XEjC4Qdsi7yYHpUpnA
+         WBIgrVmfvpCSPfYRcsYS18PhFE7cQExBNRWPBXL4L0wD0a7Y7VdiASwxMpQNbNH3log9
+         PsomjauNKtxeRAdZLl+2snIC7wS4DfiMWcLKjRgjqcnqpfUjYEyuHxPHaompU4n321ES
+         hG15dlz5fmWlPaXemdaNbo58oCt/wIdJAYrJoU/7r4+zHfzDp9pcoHHPyQenL43TIcvF
+         eUHSyaEIune0xWQQBAk7yxNAECodGVbigCSb/cDSvK5g+xJ6tlX68fWb35In35rkaZzo
+         6BLw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780653382; x=1781258182; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=188nvOnCtn3gvAkEJ5AAqju2IjEOtnXumuNth0RPW38=;
+        b=Pxo6+3Hsx1Tlu7bpLIbW0fdGihLa2Fiw/xz2hov7SkAU7ToDnz8x0yowjgDQxT2+w9
+         CoiARKnQ1eKsi7XmD6EJm4rw7ox5+T4BckZ7Pkq5j7Ja+ajg/BrP7KuKjCR8KgCUK3sa
+         2u8W3j9Y9tQl9m4Q4JMVJ7wh4gOEpLj12OM4vjk1pWdhzexEMOaJlKXE+DxfYzsikTI5
+         6DWVGN/A4mOJAsQMGa7F0DW6KyQ8gRRS9kVrMWJgham/W0i93/BfZAcXEP8YF6Yd9ATn
+         RQVYm3zv5zvFUmspIgKvxbf3hjgtXRfHDGlQqw/PeT/87z1lbAgr3qWHiagnJlav3BH3
+         XaQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780653382; x=1781258182;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=188nvOnCtn3gvAkEJ5AAqju2IjEOtnXumuNth0RPW38=;
+        b=exuSlT+fRpvmMmQEh5WAWvUao0Q5Qa/1bQABogGZ1ka1QIN8CAXVK5UGhdZCxX67zb
+         Pxb0SmEFCt3kdCiSeQsi9cuz1aKxBVuQPhgxALD2KpOW3O5JXtPELSBgIrT4NAWeeYZn
+         rBaea4IXRnIpsm9oVwyx1w5s+nPDexLy5S+1z1wctRGfGoYF9+e3+C71G0b3jZdjnqRD
+         W+DUg6sjrAS3j86FbPWfAazykqtQUaTac7AIyJbB3EnjrStr/UV6sypvLU5VAXajV3t6
+         6qPhYGVum6ou+M1KFAMTjiz3fdjNmEUC9crce5PIXSPe7IhhYLQb7yd4d+GGxrU2BEEW
+         bm6w==
+X-Forwarded-Encrypted: i=1; AFNElJ/MJ/uBVrAj8bW1gwKzgn6L0WFCTiJWckEGpgV58GAn+6qNt3cn3I4YcfUtRju7vFcPcnxZfg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyPG8EnBjpsgg7WdfkiEGDD9QbTmJewKXPGnZS2iFHMwavr6TiL
+	GD/1A6c2260BhZymb5NteK4BdArpRvkBhUYff4VxSK2DyO625uCM3c4o8Sivsy5DZ75JtdrGUFD
+	wPPS+ImI9OCA3Jq7hJ+fiB89XhgVkk2g=
+X-Gm-Gg: Acq92OGb9GAjv/bphoYJNOcsIEp3Yd16rRsAO5qkJEQy2jFk3p7sKVAWEXUMtkY8REm
+	2i8yovE2IIb1M81xkcxLsmsVu58BhfBDrbpR4Qbdmpo+EYzcdD/Rl3ZbvOdoyv4fvQddLfe045T
+	3l5ujZqbRle/QFbqVjp6kzF5rbnRhDNZh8xucNiGZ9cTtQctyvrlrffkT0m7YfWUUBGQV7MkJAI
+	OCnMPhZohO1dW+Esm76Lu7DrCWFMvJz2xRLha9/NnSNe2pLprj+tueTHTa1HGbCD55SHwoDjVyF
+	UlFtxiDOf1hI7wlaux/C41r+vx6P
+X-Received: by 2002:a05:6102:c50:b0:60f:77ad:4bed with SMTP id
+ ada2fe7eead31-6fefdee6cd8mr293230137.7.1780653381899; Fri, 05 Jun 2026
+ 02:56:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/15] mm: introduce ANON_VMA_LAZY for deferred anon_vma
- creation
-To: xu.xin16@zte.com.cn, tao.wangtao@honor.com
-Cc: catalin.marinas@arm.com, will@kernel.org, tglx@kernel.org,
- mingo@redhat.com, bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org,
- akpm@linux-foundation.org, willy@infradead.org, sj@kernel.org,
- kees@kernel.org, luizcap@redhat.com, zhangjiao2@cmss.chinamobile.com,
- kas@kernel.org, ljs@kernel.org, hpa@zytor.com, liam@infradead.org,
- vbabka@kernel.org, rppt@kernel.org, surenb@google.com, mhocko@suse.com,
- jack@suse.cz, riel@surriel.com, harry@kernel.org, jannh@google.com,
- jgg@ziepe.ca, jhubbard@nvidia.com, peterx@redhat.com, ziy@nvidia.com,
- baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
- dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
- chengming.zhou@linux.dev, nao.horiguchi@gmail.com, matthew.brost@intel.com,
- joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
- gourry@gourry.net, ying.huang@linux.alibaba.com, apopple@nvidia.com,
- pfalcato@suse.de, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-mm@kvack.org, damon@lists.linux.dev, shakeel.butt@linux.dev,
- ryncsn@gmail.com, dvander@google.com, wangzicheng@honor.com
-References: <20260604111035154Lk-9ZgwKY4Nlk4zz30U1t@zte.com.cn>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20260604111035154Lk-9ZgwKY4Nlk4zz30U1t@zte.com.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260524100258.36819-1-saileshnandanavanam@gmail.com>
+ <20260524183750.1810-1-sj@kernel.org> <CAF+TLO0TOKr3nef9RnbBuZ8A-jNpV1po26t1BO6JbSqMhfABvw@mail.gmail.com>
+In-Reply-To: <CAF+TLO0TOKr3nef9RnbBuZ8A-jNpV1po26t1BO6JbSqMhfABvw@mail.gmail.com>
+From: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+Date: Fri, 5 Jun 2026 15:25:48 +0530
+X-Gm-Features: AVVi8Cd8y5fFKwqGfXRah25YurCGU1j0bkf9HlQz8Xf8QOU5lKc-yuHMMmkRebY
+Message-ID: <CAF+TLO0=zpnAo-Ma2zi-Op=P0w0TPVCLbBkWKq113RDsHaCXuw@mail.gmail.com>
+Subject: Re: [PATCH v2] selftests/damon: add regression test for damos_walk()
+ vs kdamond exit race
+To: SeongJae Park <sj@kernel.org>
+Cc: shuah@kernel.org, damon@lists.linux.dev, linux-mm@kvack.org, 
+	linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/4/26 05:10, xu.xin16@zte.com.cn wrote:
->>>
->>>  arch/arm64/Kconfig         |   1 +
->>>  arch/x86/Kconfig           |   1 +
->>>  fs/proc/page.c             |   6 +-
->>>  include/linux/mm.h         |  38 ++
->>>  include/linux/mm_types.h   |   9 +-
->>>  include/linux/page-flags.h |  34 +-
->>>  include/linux/pagemap.h    |   2 +-
->>>  include/linux/rmap.h       | 165 ++++++++-
->>>  mm/Kconfig                 |  22 ++
->>>  mm/damon/ops-common.c      |   4 +-
->>>  mm/debug.c                 |   2 +-
->>>  mm/debug_vm_pgtable.c      |   2 +-
->>>  mm/gup.c                   |   6 +-
->>>  mm/huge_memory.c           |  16 +-
->>>  mm/internal.h              | 171 +++++++++
->>>  mm/khugepaged.c            |  13 +-
->>>  mm/ksm.c                   |  43 ++-
->>>  mm/memory-failure.c        |  11 +-
->>>  mm/memory.c                |  19 +-
->>>  mm/migrate.c               | 126 ++++---
->>>  mm/mmap.c                  |  15 +-
->>>  mm/mremap.c                |   4 +-
->>>  mm/page_idle.c             |   2 +-
->>>  mm/rmap.c                  | 690 ++++++++++++++++++++++++++++++++++---
->>>  mm/vma.c                   |  76 ++--
->>>  mm/vma.h                   |   4 +-
->>>  mm/vma_exec.c              |   2 +-
->>>  mm/vma_init.c              |   1 +
->>>  28 files changed, 1279 insertions(+), 206 deletions(-)
->>
->> Hi!
->>
->> When I saw the diffsat I was concerned. Going through the patches made me ...
->> more concerned :)
->>
->> This is a lot of complexity. On top of something that is already so complicated
->> that I fail to grasp most details without regularly taking a look at the nice
->> figures Lorenzo created recently.
->>
->> For example, I read above "since child VMAs do not need to allocate anon_vma"
->> and wondered how that could be part of something that is just done lazily. Then
->> I had to learn in the patches that there is some additional "Child VMAs
->> are created as ANON_VMA_TREE_PARENT and do not allocate anon_vma" -- excuse me,
->> what? :)
->>
->> Reading about VMA refcounts made me shiver. Reading "Holding only
->> folio_lock(folio) cannot guarantee that the split
->> operation completes atomically." confused me. Learning that we have to invent
->> interesting ways to make page migration mutually exclusive to free_pgtables()
->> concerned me. Figuring out that there are arch-specific config options and
->> runtime toggles is a clear warning sign.
->>
->> Seeing test_folio_unmapped() was funny, though (why?! :)).
->>
->> I think this patch set has a noble goal of reducing anon_vma overhead when anon
->> pages are not shared during fork. However, using anon_vma for them actually
->> makes the overall implementation (e.g., rmap walks, locking) more consistent and
->> simpler.
->>
->> Even if we could be convinced that most of this here is correct, how should we
->> reasonably maintain this increasing level of complexity here?
-> 
-> Indeed, it's very complex, but having the changes of 15 patches scattered across
-> various subsystems is really frustrating for reviewers. It took me a whole day to
-> read through the entire patch set, which made an already complicated matter even
-> more complex (maintaining such complex code in the future will be a pain).
-> 
-> However, overall, I think the original intention behind Tao's patch is innovative
-> and valuable, and Tao could definitely make this patch set simpler and more
-> readable, because the core changes actually start from PATCH 10.
-> 
-> I believe that if Tao had done the following, things might have gone better and easier
-> for reviewing. In fact, I understand the motivation behind the patch is quite simple
-> at its core (just wanting to avoid allocating the anon_vma structure when a VMA hasn't
-> been truly forked, and instead put the VMA information directly into folio->mapping):
-> 
-> 1) You could actually simplify your patch significantly — without adding a lot of wrappers
-> and helper functions that introduce extra review overhead — and keep only the most essential elements.
-> 
-> 2) Provide complete test code (in tools/testing/selftest) that covers the affected functionality,
-> such as VMA, huge pages, KSM, etc.
-> 
-> 3) Use the RFC tag to start a discussion.
-> 
-> 
-> I would be very glad to see if Tao could post a simpler v2 version that does not alter the rmap
-> core data structures too much and does not introduce excessive complexity, no matter whether
-> it can be merged finaly.
+Hi SeongJae,
 
-I'm afraid, the overall complexity would increase in any case.
+Apologies for the delayed response.
 
-So to quote myself "But fundamentally, I think we want to find a new design that
-is just naturally simpler."
+Thank you for the detailed review and for actually testing the patch
+on a kernel with the fix reverted.
 
--- 
-Cheers,
+You are right that the userspace selftest cannot reliably trigger this
+race. The race window between kdamond cancelling requests and
+unsetting the pointer is microseconds wide. Since userspace calls have
+system call overhead, they cannot hit that window reliably =E2=80=94 which =
+is
+why the test always passed even on a broken kernel.
 
-David
+Regarding the error condition question:
+
+When kdamond stops naturally, any subsequent write to the state file
+(which update_schemes_tried_regions() does internally) fails because
+kdamond is no longer running. So receiving an error indicates kdamond
+exited without deadlock =E2=80=94 the expected success condition. I should
+have explained this more clearly in the comment.
+
+I agree that a KUnit test is the right approach since it runs inside
+the kernel and can directly set walk_control_obsolete to simulate the
+race condition reliably without timing dependencies.
+
+I will drop the userspace selftest approach and write a KUnit test for
+damos_walk() functionality including walk_control_obsolete. I will
+verify it fails on a kernel with commit 33c3f6c2b48c ("mm/damon/core:
+fix damos_walk() vs kdamond_fn() exit race") reverted and passes with
+the fix present before sending v3.
+
+Regarding other feedback:
+- Will use correct commit description format with subject in brackets
+- Will remove the Fixes: tag
+- Will add blank line before _damon_sysfs import
+- Will add changelog and link previous versions
+- Will share revision plan and wait at least one day
+  before sending new version
+
+Please give me some time to study mm/damon/tests/core-kunit.h and
+implement this properly.
+
+Thanks,
+Sailesh Nandanavanam
+
+
+On Fri, Jun 5, 2026 at 12:44=E2=80=AFPM Sailesh Nandanavanam
+<saileshnandanavanam@gmail.com> wrote:
+>
+> Hi SeongJae,
+>
+> Apologies for the delayed response.
+>
+> Thank you for the detailed review and for actually testing the patch on a=
+ kernel with the fix reverted.
+>
+> You are right that the userspace selftest cannot reliably trigger this ra=
+ce. The race window between kdamond cancelling requests and unsetting the p=
+ointer is microseconds wide. Since userspace calls have system call overhea=
+d, they cannot hit that window reliably =E2=80=94 which is why the test alw=
+ays passed even on a broken kernel.
+>
+> Regarding the error condition question:
+>
+> When kdamond stops naturally, any subsequent write to the state file (whi=
+ch update_schemes_tried_regions() does internally) fails because kdamond is=
+ no longer running. So receiving an error indicates kdamond exited without =
+deadlock =E2=80=94 the expected success condition. I should have explained =
+this more clearly in the comment.
+>
+> I agree that a KUnit test is the right approach since it runs inside the =
+kernel and can directly set walk_control_obsolete to simulate the race cond=
+ition reliably without timing dependencies.
+>
+> I will drop the userspace selftest approach and write a KUnit test for da=
+mos_walk() functionality including walk_control_obsolete. I will verify it =
+fails on a kernel with commit 33c3f6c2b48c ("mm/damon/core: fix damos_walk(=
+) vs kdamond_fn() exit race") reverted and passes with the fix present befo=
+re sending v3.
+>
+> Regarding other feedback:
+> - Will use correct commit description format with subject in brackets
+> - Will remove the Fixes: tag
+> - Will add blank line before _damon_sysfs import
+> - Will add changelog and link previous versions
+> - Will share revision plan and wait at least one day
+>   before sending new version
+>
+> Please give me some time to study mm/damon/tests/core-kunit.h and impleme=
+nt this properly.
+>
+> Thanks,
+> Sailesh Nandanavanam
+>
+> On Mon, May 25, 2026 at 12:08=E2=80=AFAM SeongJae Park <sj@kernel.org> wr=
+ote:
+>>
+>> Hello Sailesh,
+>>
+>> On Sun, 24 May 2026 15:32:58 +0530 Sailesh Nandanavanam <saileshnandanav=
+anam@gmail.com> wrote:
+>>
+>> > Add a regression test that verifies damos_walk() does not deadlock
+>> > when racing with kdamond_fn() exit.
+>> >
+>> > When kdamond_fn() finishes its main loop, it cancels remaining
+>> > damos_walk() requests and unsets damon_ctx->kdamond. Without the fix
+>> > in commit 33c3f6c2b48c, damos_walk() could be called right after
+>>
+>> Please use more common commit description format that has the commit sub=
+ject.
+>> E.g., commit 33c3f6c2b48c ("mm/damon/core: fix damos_walk() vs kdamond_f=
+n()
+>> exit race").
+>>
+>> > cancellation but before kdamond pointer unset, causing it to wait
+>> > forever for handling that never comes.
+>> >
+>> > The test starts kdamond monitoring a short-lived process, waits for
+>> > the process to exit naturally triggering kdamond termination, then
+>> > rapidly calls update_schemes_tried_regions in a separate thread to
+>> > hit the race window. Using a thread with join timeout ensures the
+>> > test can detect kernel-level deadlocks where the system call blocks
+>> > in uninterruptible state.
+>> >
+>> > The sysfs state path is resolved dynamically via the kdamonds object
+>> > instead of being hardcoded, and exceptions are handled specifically
+>> > as OSError rather than using a bare except block.
+>>
+>> Thank you for this patch.  But, is this test reliable?  I ran the test m=
+ore
+>> than 100 times on my system running a kernel that has commit 33c3f6c2b48=
+c is
+>> reverted.  But test always passed.
+>>
+>> >
+>> > Fixes: 33c3f6c2b48c ("mm/damon/core: fix damos_walk() vs kdamond_fn() =
+exit race")
+>>
+>> This is not fixing a bug in the commit, so the above 'Fixes:' tag is
+>> inappropriate and may only confuse people.
+>>
+>> > Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+>> > ---
+>>
+>> From next time, please add changelog on the commentary area [1], with li=
+nks to
+>> the previous revisions.
+>>
+>> I was able to find the previous version on the mailing list [2], so putt=
+ing the
+>> link here for others.
+>>
+>> Also, before sending a new version, please share your revisioning plan a=
+nd give
+>> time (about a daay) for others to comment about.
+>>
+>> >  tools/testing/selftests/damon/Makefile        |  1 +
+>> >  .../sysfs_damos_walk_kdamond_exit_race.py     | 82 ++++++++++++++++++=
++
+>> >  2 files changed, 83 insertions(+)
+>> >  create mode 100755 tools/testing/selftests/damon/sysfs_damos_walk_kda=
+mond_exit_race.py
+>> >
+>> > diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/se=
+lftests/damon/Makefile
+>> > index 2180c328a825..60c83d6c318e 100644
+>> > --- a/tools/testing/selftests/damon/Makefile
+>> > +++ b/tools/testing/selftests/damon/Makefile
+>> > @@ -20,6 +20,7 @@ TEST_PROGS +=3D sysfs_update_removed_scheme_dir.sh
+>> >  TEST_PROGS +=3D sysfs_update_schemes_tried_regions_hang.py
+>> >  TEST_PROGS +=3D sysfs_memcg_path_leak.sh
+>> >  TEST_PROGS +=3D sysfs_no_op_commit_break.py
+>> > +TEST_PROGS +=3D sysfs_damos_walk_kdamond_exit_race.py
+>> >
+>> >  EXTRA_CLEAN =3D __pycache__
+>> >
+>> > diff --git a/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_ex=
+it_race.py b/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_ra=
+ce.py
+>> > new file mode 100755
+>> > index 000000000000..8e8006d63926
+>> > --- /dev/null
+>> > +++ b/tools/testing/selftests/damon/sysfs_damos_walk_kdamond_exit_race=
+.py
+>> > @@ -0,0 +1,82 @@
+>> > +#!/usr/bin/env python3
+>> > +# SPDX-License-Identifier: GPL-2.0
+>> > +#
+>> > +# Regression test for damos_walk() vs kdamond_fn() exit race.
+>> > +#
+>> > +# When kdamond_fn() finishes its main loop, it cancels remaining damo=
+s_walk()
+>> > +# requests and unsets damon_ctx->kdamond. If damos_walk() is called r=
+ight
+>> > +# after cancellation but before kdamond pointer unset, it could wait =
+forever
+>> > +# for handling that never comes, causing a deadlock.
+>> > +#
+>> > +# This test verifies the fix by rapidly calling update_schemes_tried_=
+regions
+>> > +# while kdamond is naturally terminating (monitored process exits).
+>> > +# Without the fix (commit 33c3f6c2b48c), this would hang indefinitely=
+.
+>> > +
+>> > +import os
+>> > +import subprocess
+>> > +import threading
+>> > +import time
+>> > +import _damon_sysfs
+>>
+>> Let's add a blank line before _damon_sysfs import, to be consistent with=
+ other
+>> test files, like sysfs_update_schemes_tried_regions_hang.py.
+>>
+>> > +
+>> > +def call_update(kdamond, result):
+>> > +    err =3D kdamond.update_schemes_tried_regions()
+>> > +    result['err'] =3D err
+>> > +    result['done'] =3D True
+>> > +
+>> > +def main():
+>> > +    proc =3D subprocess.Popen(['sleep', '0.3'])
+>> > +
+>> > +    kdamonds =3D _damon_sysfs.Kdamonds([_damon_sysfs.Kdamond(
+>> > +            contexts=3D[_damon_sysfs.DamonCtx(
+>> > +                ops=3D'vaddr',
+>> > +                targets=3D[_damon_sysfs.DamonTarget(pid=3Dproc.pid)],
+>> > +                schemes=3D[_damon_sysfs.Damos(
+>> > +                    action=3D'stat',
+>> > +                    access_pattern=3D_damon_sysfs.DamosAccessPattern(
+>> > +                        nr_accesses=3D[0, 200]))]
+>> > +                )]
+>> > +            )])
+>> > +
+>> > +    err =3D kdamonds.start()
+>> > +    if err is not None:
+>> > +        print('kdamond start failed: %s' % err)
+>> > +        exit(1)
+>> > +
+>> > +    # Wait for monitored process to die naturally
+>> > +    proc.wait()
+>> > +
+>> > +    # Rapidly call damos_walk() while kdamond is exiting
+>> > +    # Use a thread with real timeout to detect kernel-level deadlock
+>> > +    deadline =3D time.time() + 5
+>> > +    while time.time() < deadline:
+>> > +        result =3D {'done': False, 'err': None}
+>> > +        t =3D threading.Thread(target=3Dcall_update,
+>> > +                             args=3D(kdamonds.kdamonds[0], result))
+>> > +        t.daemon =3D True
+>> > +        t.start()
+>> > +        t.join(timeout=3D5)
+>>
+>> I'm not sure if this is reliable to trigger the exact race.  As I mentio=
+ned
+>> abovely, I tried this test more than 100 times on a kernel that having t=
+he fix
+>> reverted, but I was unable to make the test fail.  If it is that unrelia=
+ble,
+>> I'm not very sure if having this test is beneficial or just make people
+>> confused.
+>>
+>> If the test has no false positive, maybe having this make sense to
+>> opportunistically finding the bug.  But I think the 5 seconds timeout is=
+ still
+>> not very reliable on some case, and therefore it seems false positive te=
+st
+>> failure is available.  If that is correct, I think having this test migh=
+t only
+>> confuse people.
+>>
+>> I think having damos_walk() kunit test for its functionalities including=
+ the
+>> walk_control_obsolete might make more sense.
+>>
+>> > +
+>> > +        if not result['done']:
+>> > +            print('FAIL: update_schemes_tried_regions hung - '
+>> > +                  'possible damos_walk/kdamond exit race deadlock')
+>> > +            exit(1)
+>> > +
+>> > +        if result['err'] is not None:
+>> > +            # kdamond stopped cleanly - expected
+>> > +            break
+>>
+>> Is the above if condition correct?  Could you please explain why having =
+an
+>> error here is expected?
+>>
+>> > +
+>> > +        # Check kdamond state via sysfs using dynamic path
+>> > +        state_path =3D os.path.join(
+>> > +                kdamonds.kdamonds[0].sysfs_dir(), 'state')
+>> > +        try:
+>> > +            with open(state_path) as f:
+>> > +                if f.read().strip() =3D=3D 'off':
+>> > +                    break
+>> > +        except OSError as e:
+>> > +            print('failed to read kdamond state: %s' % e)
+>> > +            exit(1)
+>> > +
+>> > +    print('PASS: damos_walk() vs kdamond exit race not triggered')
+>> > +
+>> > +if __name__ =3D=3D '__main__':
+>> > +    main()
+>> > --
+>> > 2.34.1
+>>
+>> [1] https://docs.kernel.org/process/submitting-patches.html#commentary
+>> [2] https://lore.kernel.org/20260524091812.35283-1-saileshnandanavanam@g=
+mail.com
+>>
+>>
+>> Thanks,
+>> SJ
