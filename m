@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1AB199385;
-	Sat,  6 Jun 2026 00:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0F12AEE1;
+	Sat,  6 Jun 2026 00:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780705494; cv=none; b=WXhypCgXqmBvPUOy3LHLxfuFyswTpW/DWn3bQhEDbyzfCIeGSfHB7+E7SIs1jlAPchjcs0F3DVpVOWVTqpy6tJmJD+bpi7KegTDof4RUgf6O0CI34n7YsO6V4SW5VZ/CA4A3kBRE7MJ3xHcmGaIvpH8sBO++6J5BqHFs9uoQzl4=
+	t=1780706197; cv=none; b=dQZuTMOXuCRvLMDermwcUk4t9mafX/A0cOmBJ8xLJxF+AYf+CDADKgBZWeys6+7r8F//6ZlDFnpYFtBIua6sF9ZZg9SThFTqKjpAFxyrOCOj+0CnD8E/MGXWhMxAmL2YRyj93a0m0Cadypgp/mXgaG/mSje1peiuvV3rHmPrDrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780705494; c=relaxed/simple;
-	bh=Nma9v4rJJoJOge+ZXqCuBZ7vTNLIMoPXEfMY6Gj9vKM=;
+	s=arc-20240116; t=1780706197; c=relaxed/simple;
+	bh=xPJpsk4fCWhHFLotY9Z+aG2/WSNeKHLmHOP0NM+HU2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IbR1b5PPnU1va6eZ/748ROWsxLjSMIqhXdyX/Wio/dfJCmKC/YvouGGek/uJy9wm886vPdUAj0P0xq1JAORL9ps3OF5OIp+gvqnAcstS52oiPYguHH/hJle7rttIP+u7nXBA0yrCPN3lQBwAuZFrM0/eERxMfu9l7CB2ee7zDG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QyEvHHTG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JFWNZTePXhFTzJ7NnuodbxRMqjIf+oCmaxBsOTS1wP6q/4keSTOdCH9B4L6c2gKSa8zr55Pr7hLUAWlUuevWk0qat2Vf/l4QkELpC5xD/RKUzzcbNMDlNJgK3s976JIg984NQ2oqnPJThGvfd0j2TR8QOPtFYniW8oEqJQtr06s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fw/vLaTX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QyEvHHTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B041F00893;
-	Sat,  6 Jun 2026 00:24:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fw/vLaTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C481F00893;
+	Sat,  6 Jun 2026 00:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780705493;
-	bh=moshiuy8JwuZ3+oTcEsfObj1AtXF7PyldC/qvAt/mT8=;
+	s=k20260515; t=1780706196;
+	bh=if7f2i827CYYs4L2MWjOunPYSfsBUmgkGAdZ7VFnG54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QyEvHHTGx2S8OfnbQBiJk8vrArJ0wxW/Av0tdx4+2ZBODe1njfPe0a0qu5U6c6NSi
-	 t9t3AGBRb/Y+gnqn8t25ynFGdKFBQACbzmZxJSxWlZDHF19mkKv1c9qNiYKfTlYQo1
-	 u3HOOQdIUkf8Hu5iBdJJBmR28Y8IMO1oJCDt25s675D4E73mTYqDx4Eoma8yrsKJM1
-	 eTypb+Q2Nl7dOJJgqTru5dY+ySXAmsR16L2U1BBGlYdsWJFDvQ7sIK8D2OrN4zD6Ki
-	 t0leWaUvMuwsKSSI/4JyaaZHi70xH4cYyBDX5s4BKcMfWK3zDaZK6imCI+PX09RBZK
-	 K0vizNfCBjGeg==
+	b=Fw/vLaTXL6yirNSzNZu4/QAtzAszDN+U36IQdoYEJdWbuAk6oju9WLGXzn9xi1DvV
+	 sedxmaFJCY7H4ijFitBnuhKd4PYgEsKAwWwuOAWB/cVZ1T9tr0gbefFIDE6qZ6X28J
+	 PfH5zCrVAQte3BUWNF58USZTO9D8Z/qtLNORH61oX6wXpcTd6PgroQj2Vz38GAVqWf
+	 hoen9t5E9ArWsx21uZevAez1HHKtHY9uQFKSP9j77izBeZZ0t6YOEU/jSrFSCPHzNK
+	 JopifGHCD99GzXSM0UHfQ+asewWGBkQzzLvXqwb4VSZC9JA1hvxaiggSXWpnZmbjFh
+	 nRbrhGpiyUg9g==
 From: SeongJae Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+To: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
+	shuah@kernel.org,
 	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
 	linux-mm@kvack.org,
+	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v3 0/4] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
-Date: Fri,  5 Jun 2026 17:24:45 -0700
-Message-ID: <20260606002445.88776-1-sj@kernel.org>
+Subject: Re: [PATCH v2] selftests/damon: add regression test for damos_walk() vs kdamond exit race
+Date: Fri,  5 Jun 2026 17:36:27 -0700
+Message-ID: <20260606003627.88973-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <9f9e2159-5a6b-496f-9633-fa06c0217948@huawei-partners.com>
+In-Reply-To: <CAF+TLO0TOKr3nef9RnbBuZ8A-jNpV1po26t1BO6JbSqMhfABvw@mail.gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,49 +48,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 5 Jun 2026 13:25:56 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+On Fri, 5 Jun 2026 12:44:50 +0530 Sailesh Nandanavanam <saileshnandanavanam@gmail.com> wrote:
 
-> Hi SJ,
+> Hi SeongJae,
 > 
-> On 6/5/2026 4:34 AM, SeongJae Park wrote:
-> > Hello Asier,
-> > 
-> > 
-> > Thank you for revisioning this great patch!
-> > 
-> > On Thu, 4 Jun 2026 15:03:33 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> Apologies for the delayed response.
+
+No worry!
+
 [...]
-> >> Benchmarks
-> >> ==========
-[...]
-> > Also, have you tried temporal quota tuner?
+> I agree that a KUnit test is the right approach since it runs inside the
+> kernel and can directly set walk_control_obsolete to simulate the race
+> condition reliably without timing dependencies.
 > 
-> OK, I will give it try.
+> I will drop the userspace selftest approach and write a KUnit test for
+> damos_walk() functionality including walk_control_obsolete. I will verify
+> it fails on a kernel with commit 33c3f6c2b48c ("mm/damon/core: fix
+> damos_walk() vs kdamond_fn() exit race") reverted and passes with the fix
+> present before sending v3.
+> 
+> Regarding other feedback:
+> - Will use correct commit description format with subject in brackets
+> - Will remove the Fixes: tag
+> - Will add blank line before _damon_sysfs import
+> - Will add changelog and link previous versions
+> - Will share revision plan and wait at least one day
+>   before sending new version
 
-Sounds good!  These test results are great contributions for DAMON community.
-Nonetheless I don't think those are blocker of this series.  You could run more
-tests and share results even after this series is merged first if you want to.
+Sounds good.  Please consider using in-line reply [1] from the next time,
+though!
 
-[...]
-> >> Patches Sequence
-> >> ================
-> >> Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE and autotuning
-> >> Patch 2 -> damon_modules_new_vaddr_ctx_target
-> >> Patch 3 -> Module that demonstrates how to use DAMOS_QUOTA_HUGEPAGE
-> >>            and the new VADDR ctx creation
-> >> Patch 4 -> Documentation
-> > 
-> > As I commented to each patch, patch 1 looks good except a few trivial things.
-> > Patch 2 seems unnecessary.  I hope patch 3 to be much simplified and wrote
-> > again following the sample modules' pattern.  Patch 4 seems too much for a
-> > sample module.
-> Thanks for the feedback, I will work out the patches.
+> 
+> Please give me some time to study mm/damon/tests/core-kunit.h and implement
+> this properly.
 
-I have a trivial comment about the 32-bit overflow issue, but everythinng
-except that look good to me.
+No rush, take your time.
 
-I feel like we are going on the right direction and this series is getting
-closer to land!
+[1] https://subspace.kernel.org/etiquette.html#do-not-top-post-when-replying
 
 
 Thanks,
