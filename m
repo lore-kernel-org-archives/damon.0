@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16D02D3ECF;
-	Sun,  7 Jun 2026 16:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902742E736F
+	for <damon@lists.linux.dev>; Sun,  7 Jun 2026 17:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780851196; cv=none; b=ntW4eea+HpwbiGp0RX3oFj7HmjcEio286yT8BADysr8MsmgoZcvkvx8MXKyPZwr206CiHT/Vj69cwxw7Almou8BWL8jCqWjOEJJEbhuJg0PTzFgKx8BwY2b20qZyuAEfNWYbO3YNOSCiOQn7jK7DbJ+DFwFiOrsYzoYQy1oUruI=
+	t=1780853226; cv=none; b=KPhJVK9iI7kwT9HENX9jqR7i4LQjhz6CJBfT/X75YVKnxKDQb0H23+KlOfs44q48Ia89tS28yckAgH+cI+2CeZLOG8982DET8eC9jPKzKW+MX4hzRDB55ipOoIlVFryLxzOm5bcOGaOW9uwtkFovuPc/w6J91NBkwGA04nukbmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780851196; c=relaxed/simple;
-	bh=ljpIQFRFckflNVICmSEoqA2XPwt2FkOF12tQcjOfWDw=;
+	s=arc-20240116; t=1780853226; c=relaxed/simple;
+	bh=K0JkAp95wyXBDjv7DQ4JaobTcXOIBzb2vxqOY149Pao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjJ2hWk9GfZKJHYf3LcYC+JJ2jA/T7JoK6lMe75O55sZMyU2NK/Xw7Rc4uM1XlvkCBvSqxgIIsJXyQbx3eBosXIFURtUySK5/l8z12mol28XRiPUSrfoUKV4nfAxcZ8LHkLMJGyyZY3s9HsB1ufgzi38GQG7MI15xy35dqAfvms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TohwrbPs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ggVLBVi5JUjB8ltRvSDxh8uw3t6Am5gcaB5NevlD5w8VACKNcou3yThyXdaX2fAT9pORU25/V7eaFgU+hTjZ4OT48CPmHuj1WETU0HD2BbFOS86zr4+Pfo9IvmFRpmnQ/fvRkSbf+afnu7rcvsef5FtlmAOnPOrPyTGTFSbrvwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UFmabmBx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TohwrbPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CBE1F00893;
-	Sun,  7 Jun 2026 16:53:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UFmabmBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDBA1F00893;
+	Sun,  7 Jun 2026 17:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780851194;
-	bh=BYvllh828OEo5YmAfffzBOwQRz1Nkklj1UYoBt49RSw=;
+	s=k20260515; t=1780853224;
+	bh=HYQYuYCkVt3kKQnzKIyf1WPC6IaqQ9oq7NlittoyVN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TohwrbPsBtqeQhFfFgF52wyCgnviyVAWSuXKxFJHBiTIgWQQGzoK1EtNBoALbydkQ
-	 51CGXRRReXS4xTJqnXXMvyegujt15YSLOGMhVPvbR/abYWVONUH4YMiN59qICa7la5
-	 T7g7HmMt2xsWOjkir3BPTIRlPmC+pYIBgm33cY/Ea/w+sFfQuqI636qTXkpDBib2oO
-	 9PfQC/cAyRa/0mBZ67r71ZUIL3gFbaniC8goOkJerlsN5H6FFLUw+5yO3TNd+vuSbD
-	 uoFBJ2NPi143XzYeDWbA7cY3KDwX092Lbn620pfKDsNsLyhjTGIJ56aro2UdVhH0xk
-	 E19kEcKLvnTsg==
+	b=UFmabmBxmonBBsAWkD3jdW+GmDnG6wKk8q4QbjEZv7ILK+QfiPjlV4kT280moYmSi
+	 8ITF7W1opa6xMMXfSolfXAUm37AU8M/qTuyzbCb1Q9XE3KrE+0wFA69RejiX3876+S
+	 CIbuvJm/UC9SENF+fF8OanNGhZZTlhF/2iCJjdpm62EaazHK+rlENiWDghRbNsuVrl
+	 AqCANvKsbA1n5Tj+ygwFHCthcjP/mATKbw3LJ+U/CTTLEBkbLgQ6MNNi13OqG0SIT6
+	 YOR1Vnf5UF3FwxUVoHCm2lNYX+R2LprvkvphDu/tfdO5W5PkFcR7bIWq8RFwiuFafh
+	 3b6Uyz7qR/erA==
 From: SeongJae Park <sj@kernel.org>
-To: Zenghui Yu <zenghui.yu@linux.dev>
+To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 02/10] mm/damon/core: add damon_new_region() debug_sanity check
-Date: Sun,  7 Jun 2026 09:53:05 -0700
-Message-ID: <20260607165305.93321-1-sj@kernel.org>
+	"Cunlong Li" <shenxiaogll@gmail.com>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH] mm/damon/vaddr: drop redundant mmap_read_lock from damon_va_three_regions
+Date: Sun,  7 Jun 2026 10:26:49 -0700
+Message-ID: <20260607172650.93719-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <d057097f-2efc-4f27-861b-ac076b93e34f@linux.dev>
+In-Reply-To: <20260607140017.191771F00893@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,94 +45,89 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Zenghui,
+On Sun, 07 Jun 2026 14:00:16 +0000 sashiko-bot@kernel.org wrote:
 
-On Sun, 7 Jun 2026 23:24:27 +0800 Zenghui Yu <zenghui.yu@linux.dev> wrote:
-
-> Hi SeongJae,
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> On 3/6/26 11:29 PM, SeongJae Park wrote:
-> > damon_new_region() is supposed to be called with only valid address
-> > range arguments.  Do the check under DAMON_DEBUG_SANITY.
-> > 
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> >  mm/damon/core.c | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
-> > 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index f1a97e85824ac..0c1353164ec81 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -109,6 +109,17 @@ int damon_select_ops(struct damon_ctx *ctx, enum damon_ops_id id)
-> >  	return err;
-> >  }
+> New issues:
+> - [High] Unsafe lockless VMA iteration exposes `SLAB_TYPESAFE_BY_RCU` freelist pointer corruption
+> 
+> Pre-existing issues:
+> - [High] Missing `check_stable_address_space()` validation during external `mm_struct` VMA iteration
+> --
+> 
+> commit fc1954fba1bc736b5f26aad51449f15c4774293c
+> Author: Cunlong Li <shenxiaogll@gmail.com>
+> 
+> mm/damon/vaddr: drop redundant mmap_read_lock from damon_va_three_regions
+> 
+> __damon_va_three_regions() already walks VMAs under rcu_read_lock(), so
+> the outer mmap_read_lock() is no longer needed.
+
+Is this correct?  The rcu_read_lock() is for protecting only vma traversal.
+mmap_read_lock() is required for reading the entire VMAs of the snapshot.  Am I
+missing something?
+
+> 
+> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> > index b069dbc7e3d25..27e34596c43b8 100644
+> > --- a/mm/damon/vaddr.c
+> > +++ b/mm/damon/vaddr.c
+> > @@ -77,7 +77,7 @@ static int __damon_va_three_regions(struct mm_struct *mm,
+> >  	struct damon_addr_range first_gap = {0}, second_gap = {0};
+> >  	VMA_ITERATOR(vmi, mm, 0);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but is it safe to iterate over
+> the VMAs of an external mm_struct here without first checking
+> check_stable_address_space(mm)?
+> 
+> If the target address space becomes unstable (for example, due to an OOM
+> reap or a failed dup_mmap()), the maple tree may contain XA_ZERO_ENTRY
+> markers and the mm is flagged MMF_UNSTABLE.
+> 
+> Without validating the address space, could the maple tree iterator
+> return XA_ZERO_ENTRY as a VMA pointer and lead to a kernel panic when
+> vma->vm_start is dereferenced?
+
+We hold mmap_read_lock(), so I believe it is safe.  Correct me if I'm wrong.
+
+> 
+> >  	struct vm_area_struct *vma, *prev = NULL;
+> > -	unsigned long start;
+> > +	unsigned long start = 0, last_vma_end = 0;
 > >  
-> > +#ifdef CONFIG_DAMON_DEBUG_SANITY
-> > +static void damon_verify_new_region(unsigned long start, unsigned long end)
-> > +{
-> > +	WARN_ONCE(start >= end, "start %lu >= end %lu\n", start, end);
-> > +}
-> > +#else
-> > +static void damon_verify_new_region(unsigned long start, unsigned long end)
-> > +{
-> > +}
-> > +#endif
-> > +
-> >  /*
-> >   * Construct a damon_region struct
-> >   *
-> > @@ -118,6 +129,7 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
-> >  {
-> >  	struct damon_region *region;
+> >  	/*
+> >  	 * Find the two biggest gaps so that first_gap > second_gap > others.
+> 
+> [ ... ]
+> 
+> > @@ -140,9 +141,7 @@ static int damon_va_three_regions(struct damon_target *t,
+> >  	if (!mm)
+> >  		return -EINVAL;
 > >  
-> > +	damon_verify_new_region(start, end);
-> >  	region = kmem_cache_alloc(damon_region_cache, GFP_KERNEL);
-> >  	if (!region)
-> >  		return NULL;
+> > -	mmap_read_lock(mm);
+> >  	rc = __damon_va_three_regions(mm, regions);
+> > -	mmap_read_unlock(mm);
 > 
-> This can be triggered with
+> [Severity: High]
+> Does removing this mmap_read_lock() expose the VMA iteration to
+> SLAB_TYPESAFE_BY_RCU freelist pointer corruption?
 > 
-> 	echo Y > /sys/module/damon_sample_mtier/parameters/enabled
+> Since the VMA slab cache is created with SLAB_TYPESAFE_BY_RCU, a VMA can
+> be freed while an RCU reader is still accessing it. When this happens,
+> the SLUB allocator overwrites the first word of the structure with its
+> freelist pointer (vm_freeptr).
 > 
-> because both node{0,1}_{start,end}_addr are 0 if people forget to properly
-> initialize them.
-
-Nice finding!
-
-> This can be avoided by checking the parameters right
-> before damon_new_region(). But I'm not sure if this is the correct
-> solution.
+> Because vm_freeptr is in a union with vm_start and vm_end, locklessly
+> reading vma->vm_start from a recently freed VMA in
+> __damon_va_three_regions() will yield an unvalidated kernel freelist
+> pointer instead of a valid address.
 > 
-> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-> index 775838a23d93..4a5d3fb12e1b 100644
-> --- a/samples/damon/mtier.c
-> +++ b/samples/damon/mtier.c
-> @@ -118,6 +118,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
->  	} else {
->  		addr.start = promote ? node1_start_addr : node0_start_addr;
->  		addr.end = promote ? node1_end_addr : node0_end_addr;
-> +
-> +		if (addr.start >= addr.end)
-> +			goto free_out;
->  	}
->  
->  	region = damon_new_region(addr.start, addr.end);
+> Could subtracting prev->vm_end from this corrupted pointer cause massive
+> arithmetic underflows, tricking DAMON into tracking bogus memory regions?
 
-Because mtier is just a sample module, and this doesn't cause a catastrophic
-situation like system crash, I think this is very urgent.  But, given the
-simplicity of the change, this looks good to me.  If you'd like to send a
-patch, please feel free to do.
-
-The real problem in my perspective is, however, the fact that DAMON core is
-not providing a central parameters sanity check.  As a result, each DAMON core
-API callers are implementing their own validation that often and repeatedly
-turns out to be incomplete, like this.  I'm working on such central sanity
-check and further refactoring DAMON API.  Some of work in progress [1] is
-available at damon/next tree.  While the work is ongoing, adding this kind of
-additional check should also be fine.
-
-[1] http://git.kernel.org/sj/c/16a0e8ecd699f86b
+Sounds like making sense to me.  Cunlong, what do you think?
 
 
 Thanks,
