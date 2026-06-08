@@ -1,119 +1,114 @@
-Received: from zg8tmtyylji0my4xnjeumjiw.icoremail.net (zg8tmtyylji0my4xnjeumjiw.icoremail.net [162.243.161.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E820F30DED0
-	for <damon@lists.linux.dev>; Mon,  8 Jun 2026 02:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.243.161.220
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE57F34AB06
+	for <damon@lists.linux.dev>; Mon,  8 Jun 2026 03:32:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780884841; cv=none; b=PoS5Rrc27rTLY6U7hQOkZ9DqcyQO8uWcPArZIZVfiXB4Hi8+jpwArFFOvFGu184yaUO7/cgg5k184M6OnBJFIXGRP0ztZJrP+9lzBqM/yuRNMdTWhWsuTkjdfIcnL706XtFbpGnPzcZ4RTkT9lD/q77ChimDlYqKSig4OJH6y9k=
+	t=1780889532; cv=none; b=qh3uqwq7r7nsuAI/PikJNqElf94zmxPzcZvwy33C4latkBNLCpfOV5ytU1zs3C3G4iGZzc3YVbMtBcUlaz4xflH9NnlfOb9JlgX58mGgAuckR7qyoovjIIrdir2QU8QVQLQD722eJNhZGRyX395WuZaTP83V9NOPxr6GKJYMhnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780884841; c=relaxed/simple;
-	bh=ye/7h8vRT/vmH/8DPzh8vp+7gQ/40g53kFNbXSkrZko=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MDtjSOsQFv+pkgBrFD5ROxsHJNKBZYRxx+W5IFlccqHJzhLnC/GHSlSdXMe91PdEaDxyg4ljyy/YApnCukLA2VNBqgAQAUXl1XL+IsFfbS+UL/NyIyYBEXF3kPYFWeeoB03MmyEzo+8QgWecpB1PTv/NhY7zJBK5vHAmzpSJPvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hust.edu.cn; spf=pass smtp.mailfrom=hust.edu.cn; arc=none smtp.client-ip=162.243.161.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hust.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hust.edu.cn
-Received: from hust.edu.cn (unknown [172.16.0.50])
-	by app2 (Coremail) with SMTP id HwEQrABnSQ4gJSZqtFcXAA--.60942S2;
-	Mon, 08 Jun 2026 10:12:48 +0800 (CST)
-Received: from [10.12.169.28] (unknown [10.12.169.28])
-	by gateway (Coremail) with SMTP id _____wCHgAcXJSZqS16oAQ--.47447S2;
-	Mon, 08 Jun 2026 10:12:39 +0800 (CST)
-Message-ID: <20bde227-fe15-42f2-bc83-51801e1f795d@hust.edu.cn>
-Date: Mon, 8 Jun 2026 10:12:39 +0800
+	s=arc-20240116; t=1780889532; c=relaxed/simple;
+	bh=Utx4NhQYi0LNoHZCImWDC3d8NFpNYQZR13FETf3nIdY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Disposition; b=Xq0du57IpRhfQHD7okxbHqd3zLQ8chakLsrxghOciOeDKTDeZwFf8abQnyiq+ZB2F9KHRvlfOq/nC1g4X+2E9xNcT0yAVgHg/qDiaW6fZMu5yK47+vuW0nsjIjdN5/nfCYdk+oL+fdfRuy+JsYsAwrHvUf3cCg7HzeJA7IUE4RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H7NkUUBQ; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H7NkUUBQ"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2c0c3546924so24069305ad.3
+        for <damon@lists.linux.dev>; Sun, 07 Jun 2026 20:32:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780889530; x=1781494330; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :mail-followup-to:references:in-reply-to:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hVEHUeXPEsnvmIwfhxm/kSVMelwzxdhJwmVWg0LJjCg=;
+        b=H7NkUUBQOZPILZbNDgT8Jw92zxo7orWqh3u7ZtWiwMQDLKGbLg2iCcnj8SbY0uPyTx
+         rW6geZrkTBcEClfxkrBTw8qL/+L5wYub6a44QF81/UAv7FsvRUbARw02ZxKsQBSj9Alq
+         zv7tP4snPxDjcdh1eUOLp5cnZS4E3T79GKrQoC8WwnUUwlZoVaZIIsCyKt1NrvXhCrzX
+         gkLxTfz9202CVx3dy9kckQ0l7La5w0wRnME+6dYrOlz5+Ldd4bh/RCCNVr9xB/AzYdM1
+         mFRsvKc6SONvpsOfsTGDj+P25fpY0ByZnX+jKVPQ9WyK4ZCAcDeCbccjVzixdBaUihCr
+         huxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780889530; x=1781494330;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :mail-followup-to:references:in-reply-to:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hVEHUeXPEsnvmIwfhxm/kSVMelwzxdhJwmVWg0LJjCg=;
+        b=h3K4uTluVdeBwWP5Dxw2x3PnidAuXQzekXAHTL6QHuPLeorI83thyEbS8ck4rWxftg
+         RqLQyRNunAg22/U9LM9UcVpvkFyIDoSRZ4kN2rIyuvublaeHCfcDjPYCgQxG472KVRvU
+         watrst5BvQBxZghaepKXDgt/dQfpvtbFJnz1wgpK7Ghnb12NCGXtTw5bu9uNUBSrmh5/
+         45hfVj81X5/c4B7ZQ/RpMco+FOEVF4MmI4Wh00kvpwwxzUQcqAK6iK8PVXjhLxph4VHc
+         QlqPvQ02qQ7SxMoI+PKJLRI4NEqxsTeaL34IiZFJbGCy6JQQCvH9lx8M7jMoXeUHVC93
+         cubA==
+X-Forwarded-Encrypted: i=1; AFNElJ9nchiRyQ4GyB7c8TUi70WBOreoHFKaOgVf1afD+vPksNwrkwDFa5YuQlDomxSNr0U7Pf+IwA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx4Uv2ipwwI/KGbDS4UYlmPiAHel8mlUtCflQzHZEKVG4ro3zKl
+	7agLHOdbTmOFSwfvO4DC6zEi0ijm9Pon2iUWoZixyViLvXtQmIE4ASUo
+X-Gm-Gg: Acq92OGScbMBDn/ji/NA00UHp3vEOCHz47NDaCHEAJvUKHrLZ7cOumhLMVcwKC+KdH4
+	H9POdFhczGh0vSOaIMpU4ZgAHF9/QsR34spPmg2SfWjHXYRPFeGFfgFJJd0bgGZDwdw2hESQyz6
+	Mx3UVtB17IjjUNykpJGc2UVejtukPHQqbReier7H/MHDSUCUgwAFZ6S9k+buDlPb/18LSHGACoU
+	gyaDf1R6gHuzcflmfgtv3XcVz4GpAr6lSUvDD3vWhdJbgeWgxwM02RzIlK8N1QyaxoM+akgzbc3
+	L08JoLW+ejL2o/71MJhFZYvSQ6igkf3cQUxTRfVvwNzh3xdjP3GTtfvSl8Ur80scqN1d+ChZSy9
+	IBkIWHzhex6gDuJ6fdSqwVeyMibAmlAPx/+ziYs6iy0j2rEEGvSGCLcz0+GUQuhLqME87EDdAFs
+	63AbIg33yES72QNr+nY4AuZTBEspRmUeUPGnrc/9EaURTrhhA=
+X-Received: by 2002:a17:903:1a10:b0:2bd:606d:b342 with SMTP id d9443c01a7336-2c1e881ff09mr156981155ad.26.1780889530187;
+        Sun, 07 Jun 2026 20:32:10 -0700 (PDT)
+Received: from localhost.localdomain ([116.80.91.208])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16649d2dfsm163430945ad.75.2026.06.07.20.32.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Jun 2026 20:32:09 -0700 (PDT)
+From: Cunlong Li <shenxiaogll@gmail.com>
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/vaddr: drop redundant mmap_read_lock from damon_va_three_regions
+Date: Mon,  8 Jun 2026 11:32:05 +0800
+Message-Id: <aiY3tCGC06k46wOG@debian>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260607173644.93883-1-sj@kernel.org>
+References: <20260607-rcu-v1-1-3c9f5995a3a0@gmail.com> <20260607173644.93883-1-sj@kernel.org>
+Mail-Followup-To: Cunlong Li <shenxiaogll@gmail.com>, SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] docs/zh: update DAMON usage sysfs documentation
-To: Doehyun Baek <doehyunbaek@gmail.com>, Alex Shi <alexs@kernel.org>,
- Yanteng Si <si.yanteng@linux.dev>, Hu Haowen <2023002089@link.tyut.edu.cn>
-Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
- SeongJae Park <sj@kernel.org>, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, damon@lists.linux.dev
-References: <20260523094420.741003-1-doehyunbaek@gmail.com>
-From: Dongliang Mu <dzm91@hust.edu.cn>
-In-Reply-To: <20260523094420.741003-1-doehyunbaek@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:HwEQrABnSQ4gJSZqtFcXAA--.60942S2
-Authentication-Results: app2; spf=neutral smtp.mail=dzm91@hust.edu.cn;
-X-Coremail-Antispam: 1UD129KBjvJXoWxXFy8CFy5Xw15Kr17Gw4fGrg_yoW5Xryfp3
-	Z8CFyIqa13t343Xr13J34UZa1fJFWfJ3yYgF9Fqwn5JF1vqa4kK3WUKryagFyqvrySqFy5
-	AFZ8t34xG3W7urJanT9S1TB71UUUUjUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUQFb7Iv0xC_Zr1lb4IE77IF4wAFc2x0x2IEx4CE42xK8VAvwI8I
-	cIk0rVWrJVCq3wA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjx
-	v20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1l84ACjcxK
-	6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1ln4kS14v26r
-	1Y6r17M2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI
-	12xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj64x0Y40En7xvr7AKxV
-	W8Jr0_Cr1UMcIj6x8ErcxFaVAv8VW8uFyUJr1UMcIj6xkF7I0En7xvr7AKxVW8Jr0_Cr1U
-	McvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY1x0262kKe7AKxVWUAVWUtwCF04
-	k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26r4fZr1UJr1l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
-	xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0
-	cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8V
-	AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E
-	14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jy38nUUUUU=
-X-CM-SenderInfo: asqsiiirqrkko6kx23oohg3hdfq/
 
+On Sun, Jun 07, 2026 at 10:36:44AM -0700, SeongJae Park wrote:
+> Hello Cunlong,
+> 
+> On Sun, 07 Jun 2026 21:48:52 +0800 Cunlong Li <shenxiaogll@gmail.com> wrote:
+> 
+> > __damon_va_three_regions() already walks VMAs under rcu_read_lock(), so
+> > the outer mmap_read_lock() is no longer needed.
+> 
+> The function aims to read a snapshot of the virtual address space.  So I think
+> mmap_read_lock() is still required.  Please let me know if I'm missing
+> something.
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
 
-On 5/23/26 5:44 PM, Doehyun Baek wrote:
-> Hi,
->
-> The Simplified and Traditional Chinese DAMON usage translations are
-> missing selected updates that are already documented in the English file.
-> As a result, parts of the translated sysfs hierarchy and descriptions are
-> stale, and the translations also lack the newer introduction of DAMON's
-> special-purpose modules.
+Yes — I understand this path is meant to obtain a snapshot of the VMA layout.
 
-Hi Doehyun,
+My thinking was that an exact snapshot may not be required here, and
+the RCU-protected traversal inside __damon_va_three_regions() already
+makes the walk safe, so the outer mmap_read_lock() might be redundant.
 
-Thanks for your patch. To track the translation status of the 
-documentation in different locales, we define a uniform format in 
-how-to.rst [1]. Please revise the commit message of two patches.
+But, if we want a consistent VMA layout here, mmap_read_lock() is the
+right mechanism and rcu_read_lock() alone is not enough.  I'll drop
+the patch :)
 
-	docs/zh_CN: Add/Update self-protection index Chinese translation
-
-	Translate .../security/self-protection.rst into Chinese.
-
-	Update the translation through commit b080e52110ea
-	("docs: update self-protection __ro_after_init status")
-	# 请执行 git log --oneline <您翻译的英文文档路径>，并替换上述内容
-
-	Signed-off-by: Yanteng Si <si.yanteng@linux.dev>
-	# 如果您前面的步骤正确执行，该行会自动显示，否则请检查 gitconfig 文件
-
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/translations/zh_CN/how-to.rst#n252
-
->
-> The gaps correspond to the following English documentation commits:
->
->    commit a7bb1e754559 ("Docs/admin-guide/mm/damon/usage: document 'nid' file")
->    commit e85e965bdbec ("Docs/admin-guide/mm/damon/usage: document refresh_ms file")
->    commit e0c725455fd5 ("Docs/admin-guide/mm/damon/usage: document addr_unit file")
->    commit e06469cdf1fd ("Docs/admin-guide/mm/damon/usage: document obsolete_target file")
->    commit 2584dd7496c5 ("Docs/admin-guide/mm/damon/usage: update for max_nr_snapshots")
->    commit 652fd06d20da ("Docs/admin-guide/mm/damon/usage: update stats update process for refresh_ms")
->    commit e7df7a0bfc90 ("Docs/admin-guide/mm/damon/usage: introduce DAMON modules at the beginning")
->    commit d9cfe515d36e ("Docs/admin-guide/mm/damon/usage: document goal_tuner sysfs file")
->
-
-> Update both translations only for those stale DAMON usage entries,
-> including refresh_ms, addr_unit, obsolete_target, goal_tuner, nid, and
-> max_nr_snapshots.
->
-> Doehyun Baek (2):
->    docs/zh_CN: update DAMON usage sysfs documentation
->    docs/zh_TW: update DAMON usage sysfs documentation
->
->   .../zh_CN/admin-guide/mm/damon/usage.rst      | 56 +++++++++++++------
->   .../zh_TW/admin-guide/mm/damon/usage.rst      | 56 +++++++++++++------
->   2 files changed, 80 insertions(+), 32 deletions(-)
->
->
-> base-commit: 79bd2dded182b1d458b18e62684b7f82ffc682e5
-
+Thanks,
+Cunlong
