@@ -1,114 +1,104 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE57F34AB06
-	for <damon@lists.linux.dev>; Mon,  8 Jun 2026 03:32:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496FA29C33F
+	for <damon@lists.linux.dev>; Mon,  8 Jun 2026 06:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780889532; cv=none; b=qh3uqwq7r7nsuAI/PikJNqElf94zmxPzcZvwy33C4latkBNLCpfOV5ytU1zs3C3G4iGZzc3YVbMtBcUlaz4xflH9NnlfOb9JlgX58mGgAuckR7qyoovjIIrdir2QU8QVQLQD722eJNhZGRyX395WuZaTP83V9NOPxr6GKJYMhnc=
+	t=1780898601; cv=none; b=I/b10tqDjKRbtWo2ciol5KqKN4BXriZ4lmc/b9O/1hJimkJkwhDiC4ZfBhKSudrcC98lrBaGYCGaBEU3y9IG+wyLsrqeIJ1zqM4vV62yLUt7SLtySje1YeoHbn7jlPQcgblGWFl/KUgWbjT5J0Um7hc6D4Fi6vJT0vW4/6AyMVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780889532; c=relaxed/simple;
-	bh=Utx4NhQYi0LNoHZCImWDC3d8NFpNYQZR13FETf3nIdY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Disposition; b=Xq0du57IpRhfQHD7okxbHqd3zLQ8chakLsrxghOciOeDKTDeZwFf8abQnyiq+ZB2F9KHRvlfOq/nC1g4X+2E9xNcT0yAVgHg/qDiaW6fZMu5yK47+vuW0nsjIjdN5/nfCYdk+oL+fdfRuy+JsYsAwrHvUf3cCg7HzeJA7IUE4RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H7NkUUBQ; arc=none smtp.client-ip=209.85.214.179
+	s=arc-20240116; t=1780898601; c=relaxed/simple;
+	bh=qfKaMWmF0sxnjH+gu9kp51f1jwGLmJYv7TRXGRVBt0U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kJyBWv5YYBwJ62LDYvO18HakKcwy/7U6TI18Quavj4xcbS6WrTiee8fmcevTfsWJPMkk/fn8adKIo+IvvUmeccNBhyRU8ZfcsKeSOph74+NIKsXGkNAPOhmGuMJLsw8XmEwfhNQ9c/besGhJuQH76lMfMQaKeFcSwmWBIWTzTJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GWMaeJsr; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H7NkUUBQ"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2c0c3546924so24069305ad.3
-        for <damon@lists.linux.dev>; Sun, 07 Jun 2026 20:32:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GWMaeJsr"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-490ae0812c9so3431795e9.2
+        for <damon@lists.linux.dev>; Sun, 07 Jun 2026 23:03:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780889530; x=1781494330; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :mail-followup-to:references:in-reply-to:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hVEHUeXPEsnvmIwfhxm/kSVMelwzxdhJwmVWg0LJjCg=;
-        b=H7NkUUBQOZPILZbNDgT8Jw92zxo7orWqh3u7ZtWiwMQDLKGbLg2iCcnj8SbY0uPyTx
-         rW6geZrkTBcEClfxkrBTw8qL/+L5wYub6a44QF81/UAv7FsvRUbARw02ZxKsQBSj9Alq
-         zv7tP4snPxDjcdh1eUOLp5cnZS4E3T79GKrQoC8WwnUUwlZoVaZIIsCyKt1NrvXhCrzX
-         gkLxTfz9202CVx3dy9kckQ0l7La5w0wRnME+6dYrOlz5+Ldd4bh/RCCNVr9xB/AzYdM1
-         mFRsvKc6SONvpsOfsTGDj+P25fpY0ByZnX+jKVPQ9WyK4ZCAcDeCbccjVzixdBaUihCr
-         huxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780889530; x=1781494330;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :mail-followup-to:references:in-reply-to:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780898599; x=1781503399; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hVEHUeXPEsnvmIwfhxm/kSVMelwzxdhJwmVWg0LJjCg=;
-        b=h3K4uTluVdeBwWP5Dxw2x3PnidAuXQzekXAHTL6QHuPLeorI83thyEbS8ck4rWxftg
-         RqLQyRNunAg22/U9LM9UcVpvkFyIDoSRZ4kN2rIyuvublaeHCfcDjPYCgQxG472KVRvU
-         watrst5BvQBxZghaepKXDgt/dQfpvtbFJnz1wgpK7Ghnb12NCGXtTw5bu9uNUBSrmh5/
-         45hfVj81X5/c4B7ZQ/RpMco+FOEVF4MmI4Wh00kvpwwxzUQcqAK6iK8PVXjhLxph4VHc
-         QlqPvQ02qQ7SxMoI+PKJLRI4NEqxsTeaL34IiZFJbGCy6JQQCvH9lx8M7jMoXeUHVC93
-         cubA==
-X-Forwarded-Encrypted: i=1; AFNElJ9nchiRyQ4GyB7c8TUi70WBOreoHFKaOgVf1afD+vPksNwrkwDFa5YuQlDomxSNr0U7Pf+IwA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx4Uv2ipwwI/KGbDS4UYlmPiAHel8mlUtCflQzHZEKVG4ro3zKl
-	7agLHOdbTmOFSwfvO4DC6zEi0ijm9Pon2iUWoZixyViLvXtQmIE4ASUo
-X-Gm-Gg: Acq92OGScbMBDn/ji/NA00UHp3vEOCHz47NDaCHEAJvUKHrLZ7cOumhLMVcwKC+KdH4
-	H9POdFhczGh0vSOaIMpU4ZgAHF9/QsR34spPmg2SfWjHXYRPFeGFfgFJJd0bgGZDwdw2hESQyz6
-	Mx3UVtB17IjjUNykpJGc2UVejtukPHQqbReier7H/MHDSUCUgwAFZ6S9k+buDlPb/18LSHGACoU
-	gyaDf1R6gHuzcflmfgtv3XcVz4GpAr6lSUvDD3vWhdJbgeWgxwM02RzIlK8N1QyaxoM+akgzbc3
-	L08JoLW+ejL2o/71MJhFZYvSQ6igkf3cQUxTRfVvwNzh3xdjP3GTtfvSl8Ur80scqN1d+ChZSy9
-	IBkIWHzhex6gDuJ6fdSqwVeyMibAmlAPx/+ziYs6iy0j2rEEGvSGCLcz0+GUQuhLqME87EDdAFs
-	63AbIg33yES72QNr+nY4AuZTBEspRmUeUPGnrc/9EaURTrhhA=
-X-Received: by 2002:a17:903:1a10:b0:2bd:606d:b342 with SMTP id d9443c01a7336-2c1e881ff09mr156981155ad.26.1780889530187;
-        Sun, 07 Jun 2026 20:32:10 -0700 (PDT)
-Received: from localhost.localdomain ([116.80.91.208])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16649d2dfsm163430945ad.75.2026.06.07.20.32.08
+        bh=8ZSzr00MGkKxaluJZ1HWpON2lHxunjWudF+1j2Ezry4=;
+        b=GWMaeJsruNdDzFwgxmKhvSS2hU0fPJkpEzhw0mVOV2euQ4dHcNzPsAxRSC6eQVkCGY
+         8MSL/HgcrgH206yLKskw8c09sDsYyr15uXRdVWxmk3SB2fssK80dA7gwDxi9w+Moopjx
+         tCfO7eFk6HWxYfzXXPagpl6IEItQ/acDIuNQXH2EgcoczCznH0caheJskmb91E59Wzax
+         E5iBaZ5GYr5aAQNih3IDsKlPXGNCFqkVpxViSG7YhZqKFgyruaElsRaTVBhhSTz0PNmV
+         nARz4RrvEo2xzH/NnRJxop/dF6PCjdz9VaMnLn1vRGH4Mv25UIrVG8HkrKb9I81z4yLD
+         IW4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780898599; x=1781503399;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=8ZSzr00MGkKxaluJZ1HWpON2lHxunjWudF+1j2Ezry4=;
+        b=dQ4M/DqZrNcg8Xa3p7JJHCaJyT6vo6NU3JiVjsMjuPdEGM/D3DKwnNCST1rbK/zU3V
+         tAJgIoePr1/Znz9EU811AAoqZKafgV3K3e2efx+stOe5HZHGyxAq8Y9Hq56b7pCw+UJY
+         B+YcT0RbgunxuD4wqXvJCTymHf8/SifEuj+vRTwrXvMG1MmQsrqu7l51/IbZJq14L3IV
+         Na+XhYDdVV54YLCa8Lvcnh93y0QdXmkPMFmT40O6bfDsmP06iypz68kxtb9u++wFCJs5
+         Evt/sWbBw+RqvIXWgN5yIdXtRmqrLeUs5003Ye32tM8Ekfu18F8n2vcWqc//CLYqptLv
+         qzSw==
+X-Forwarded-Encrypted: i=1; AFNElJ9Yvw+ckoHhWGmQ7Wpr7HtmxUu5xpiGD/kPTbUmoQvgMoO9sSAX9Vs3VlsyEvPyMLBTQ4HR+g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzYsGOW6Ul6mTODtx+qPYWeBjECw5Cuao3J24RnHdqq6XDs/Qbh
+	c8CYvuxDQIuRxoYqIoRHepRhaj3MwRjludEU0py2HIlFbgceOIm7Ab8w
+X-Gm-Gg: Acq92OGcmwFUTolBH7LYW9J218OV9vaPftLP/PLMIH/4jmWkDFAELRLnEw8hPXp49LS
+	yCMoBAa7H4S4YE7V2hN8CDpKQg3FkwfizEK6sC4+X1N/1TphQe8tUWiufzumKPG6/MuyduOkbIJ
+	DYQkzOsGsCPyO3i+xmzP9mXjGPAEingfdSiPQtZDWg9WGstUMf4xrD+42ivqGRB75FzAkpE0f23
+	09QY1C4x+CSG64I978fRxL/mk5OvpQdMuhMkgEauNEMMZuD57JH2QMcEyl15g+McWzRYWBcIuAY
+	7REa2Esb1mxjvpp/yC9BMqAXSLWeZcg7irZxWC35/x/57wdH4VCjns306bmAJkJOSUZq2t5Ghjr
+	HcXVWqHqMnEauDHAzvXdh4UkkhXLkpl50XnXUDowytVL7QFYqj03GyD/6NFUZGd7elKlpIfhW4d
+	A7oI3VtQ23luGvL3wSRg0reHQ/Pe2LilNsuwJalQawCFLMLCx4mOFwUis8ku1Djd7bXTXXtiZDz
+	kkkeKAnVpX0SFrJNSR9VNRb25JlsN7dISPPAA==
+X-Received: by 2002:a05:600c:3551:b0:490:b71f:2eb with SMTP id 5b1f17b1804b1-490c26220b7mr97147595e9.7.1780898598517;
+        Sun, 07 Jun 2026 23:03:18 -0700 (PDT)
+Received: from doehyun-dev.pradel.rg.cispa.de (x06.xlate.fw.cispa.de. [195.37.157.6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490be1f69bcsm392992805e9.8.2026.06.07.23.03.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jun 2026 20:32:09 -0700 (PDT)
-From: Cunlong Li <shenxiaogll@gmail.com>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+        Sun, 07 Jun 2026 23:03:18 -0700 (PDT)
+From: Doehyun Baek <doehyunbaek@gmail.com>
+To: Alex Shi <alexs@kernel.org>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Hu Haowen <2023002089@link.tyut.edu.cn>
+Cc: Dongliang Mu <dzm91@hust.edu.cn>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	SeongJae Park <sj@kernel.org>,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/vaddr: drop redundant mmap_read_lock from damon_va_three_regions
-Date: Mon,  8 Jun 2026 11:32:05 +0800
-Message-Id: <aiY3tCGC06k46wOG@debian>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260607173644.93883-1-sj@kernel.org>
-References: <20260607-rcu-v1-1-3c9f5995a3a0@gmail.com> <20260607173644.93883-1-sj@kernel.org>
-Mail-Followup-To: Cunlong Li <shenxiaogll@gmail.com>, SeongJae Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org
+	Doehyun Baek <doehyunbaek@gmail.com>
+Subject: [PATCH v2 0/2] docs/zh: update DAMON usage sysfs documentation
+Date: Mon,  8 Jun 2026 06:03:00 +0000
+Message-ID: <20260608060302.1564003-1-doehyunbaek@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260523094420.741003-1-doehyunbaek@gmail.com>
+References: <20260523094420.741003-1-doehyunbaek@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-On Sun, Jun 07, 2026 at 10:36:44AM -0700, SeongJae Park wrote:
-> Hello Cunlong,
-> 
-> On Sun, 07 Jun 2026 21:48:52 +0800 Cunlong Li <shenxiaogll@gmail.com> wrote:
-> 
-> > __damon_va_three_regions() already walks VMAs under rcu_read_lock(), so
-> > the outer mmap_read_lock() is no longer needed.
-> 
-> The function aims to read a snapshot of the virtual address space.  So I think
-> mmap_read_lock() is still required.  Please let me know if I'm missing
-> something.
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+Changes since v1:
+- Revise both commit messages to follow the translation update format
+  documented in Documentation/translations/zh_CN/how-to.rst.
 
-Yes — I understand this path is meant to obtain a snapshot of the VMA layout.
+Doehyun Baek (2):
+  docs/zh_CN: update DAMON usage Chinese translation
+  docs/zh_TW: update DAMON usage Traditional Chinese translation
 
-My thinking was that an exact snapshot may not be required here, and
-the RCU-protected traversal inside __damon_va_three_regions() already
-makes the walk safe, so the outer mmap_read_lock() might be redundant.
+ .../zh_CN/admin-guide/mm/damon/usage.rst      | 56 +++++++++++++------
+ .../zh_TW/admin-guide/mm/damon/usage.rst      | 56 +++++++++++++------
+ 2 files changed, 80 insertions(+), 32 deletions(-)
 
-But, if we want a consistent VMA layout here, mmap_read_lock() is the
-right mechanism and rcu_read_lock() alone is not enough.  I'll drop
-the patch :)
 
-Thanks,
-Cunlong
+base-commit: 4549871118cf616eecdd2d939f78e3b9e1dddc48
+-- 
+2.43.0
+
