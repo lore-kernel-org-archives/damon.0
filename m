@@ -1,143 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BEE384CE9
-	for <damon@lists.linux.dev>; Mon,  8 Jun 2026 06:10:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B361037204E
+	for <damon@lists.linux.dev>; Mon,  8 Jun 2026 06:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780899059; cv=none; b=hUxYShZmTEIw3875Jcdy1/Uda+nGgH4p3RwLAmOAgIRvgwXjDcqJYBB5KA6gOakssgqr95EUCfUg3dflbPiTKYif2lypiDb+dyrIHRcXhrPVWOBHb7dag+Awqnmu+S+rX3tkAUhxgO4fp7sA+bFcQ74UhcEwJisMaf0kzxhLOPo=
+	t=1780901876; cv=none; b=QA6AGJBTttrC+kp5eIIFK9cuIghJyNU8Moo/Hvn0MhX6ejtoo+SroMogWIBvN+uwP1t+2/S5APQgzVOOjNMEblrkRkSUrqdULpoa9KqS7BCvRHz44nUsJQuL68Izr6UsItW75oaVwJLfoA+7rMxE1SXpL84qlnPDmm70PdgGWnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780899059; c=relaxed/simple;
-	bh=QQ9mNuFCYxdNls8ssb9wcUKYteGZLLyP+Se1Ilw03jE=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=VZ3qGuvXo2pY/PXOqKnniNSiUAu7jdTyRGEbFzL6zU846M8n9BsRbp8DSSAahigjepj6/XCyWQ/DKo9RPBaK3iUvm9ehrRpNC7/BuXQTZ2LJkQb+PFufX2lSTy8X/5IFuLyVexvRCuFtKtlolZQ8RT/wv0aCKLHJe6z6WSxjf/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NRA5iyPk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780901876; c=relaxed/simple;
+	bh=4qchsheXtUN9lVoh9GlKQ7z1L47obZCT1Z7CnuIlt0w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=onERG7QnNHvWuAztFCgxrEzR9e5zQ9Z1S+YziTHmTZbeUMm4V5JFp5dzPndtE1VK0Fp5RyUAacFh7P7XKP4tSuPAbCLrr9ATCpLb1u5Cm4wT01EWm++KuRHyfeX8ZtGiNeZBZwBGjKIL02KLPKYWSEaTcxdHU8GHOXCtXFfi46c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VYT+dETA; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NRA5iyPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424C01F00893;
-	Mon,  8 Jun 2026 06:10:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780899058;
-	bh=QQ9mNuFCYxdNls8ssb9wcUKYteGZLLyP+Se1Ilw03jE=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=NRA5iyPkpubEsV/jpC4iVvb/9648o93zG1oSNFR81WimHek1XSN8gPYQK2AA9u/2m
-	 iTpM0SEoxYHgaytZ4TYDW8Whx2tevx98DJagNZTMiJe/6nhuabN8TK59TiYz2QBFR0
-	 wbhg7F1mEDoq9mTt7sPgkrHIhQMkH1DTX5ltTBHeLDkPZE/krmIrxsAMJ8cgdlBYLG
-	 JcFcvZabI6Y5ahlFo/mjRyQGqdJDFiGCSpO1hYJCawBnaFzgOKhhGpfgGJvhP08pAx
-	 0lTOr0OSZwXOfphpPza3hdEYF++Ps5L9oYgLwFR1WqYf6pFUfMnRKDTeMjuIwdZCMH
-	 c9WFLLUk/+yrQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 2/2] docs/zh_TW: update DAMON usage Traditional
- Chinese translation
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Doehyun Baek" <doehyunbaek@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260608060302.1564003-3-doehyunbaek@gmail.com>
-References: <20260608060302.1564003-3-doehyunbaek@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Date: Mon, 08 Jun 2026 06:10:57 +0000
-Message-Id: <20260608061058.424C01F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VYT+dETA"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-490a762c8d5so4403175e9.0
+        for <damon@lists.linux.dev>; Sun, 07 Jun 2026 23:57:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780901873; x=1781506673; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1ubq42riN1El7PoCOC8HhM4UEVQCQTgOWtnuKwiB/z8=;
+        b=VYT+dETAF0x4wYQM900SlUBW/kRdDGAwtawY8XaYEtXrSCulyWdrUClNQ9QFb8ea4b
+         T5D2RPaKN/gNafMlPA0p45fon1DH+oDNpUEAKn3gyZ5uPadG8SZIbthJlA9S0qrmexCm
+         mWmG8FpdGIFWLdWccoXYEx3u14MeSvWnkJVZuejttdUWyAbM1D7XKAz1Lv+GC7Ij9mSu
+         955mTJerMwLpeiQDa1m2MmK4LxX4gUey86cA6Z9VzIuO7B6hkFQZNZ/NLGpwMUMW2Wq5
+         rf8AJWngJZT+3Wx/V4HR5wkrfZ4Qxs/o63zqsTSL6xNmBSJAJ9FE7oQ8R/yoLEVqjDl8
+         aNvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780901873; x=1781506673;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1ubq42riN1El7PoCOC8HhM4UEVQCQTgOWtnuKwiB/z8=;
+        b=M5trX8rkyAPxDoZ5EUqoIOhfjNLLeqXcJb4diUxzytSH20wLyAG3DTgDkY0vXnukNS
+         iylWZ+ySHeRuCEB7Mw4pkQK7xQ3dH64shIJfQg6SQMOptGVMQeZv+5vvHva0RA8VfGHB
+         SXda7t7HjbAwGjsYl3gbT7UGhr1mWWyZojzno6uRGF1ychch6e5jw9XZRDOD94E3cpg/
+         GcmOR8Q3jsfbUEoPz/aWl2v7YEXwSIVwe5PWEcnc6D/GiDS+hYst+7k+b23c0ISl3VZT
+         Exv8St8QB9eHNcBQ4Oo6tVYoPsBYWwWL9W2qIKNu08JvjuKnqX1NvDqHY/gYDJ6zGXFL
+         oV+w==
+X-Forwarded-Encrypted: i=1; AFNElJ+rHi+I0369FOLxu3Am8o/QXKQ52Ea5uN80jCIeJr5rIACnSInTtp7M+B2Xq5uqi99ENnvnCg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxWmK1ObQ+SVrPE3YQU9NU+199Mu3O+OefHq3RaAdEVd0V88+WE
+	Z107s3zV9jnxHPthTE44qa/dqUOD28WXcEGrbiCK1IjWNvHIbeMXzi7P
+X-Gm-Gg: Acq92OESFwd7kFj3NrWdf4cGQDdTwO6hiZpQp8h95HSmWQWvS2nDAgMksIkH37ycBrc
+	+encWvbOpt2dp2sW7bIXPsrkLkYdhDLAGWZlV1UwrA93IdvG8Zb/OCqydwVrvP6pyuqhqm6qhBT
+	21NRhi/FCSLhbnzcm9n4kOVOv5M0h2sMYSrJbhhilBbTuE4fC5VdvkseDuSRLez4v+hOC4uls/F
+	VOhygLheoV4zPc5BU9PmRQFvnWlzHAwZWsD98Olm4SZWY3diqgvyPiXbT03T2mL8+w1ZtSRAd66
+	fU4SiqGsgy+ZrCbYnrAPvDmrC5l2B6fypUFvTmRc+s/2zhfQYwIxdjnKSyfV4aBnFOobsedsbPQ
+	B7tQbUaQT135/BRoh+dMWre+Xq8Z6xkXNHLU/7kFiVR+gwrMLVQZ5SNCl6xn9uyvrVq3BKQnBxP
+	kVPb3et/DeoMChY2tRLF5vJ4XmFbA8caZWtgLFP5G24inkdRbKM/ACj0PFJH7NgWjWAXTEVYB29
+	eJ4z+NILV3+I1opdD+LSVhXGcdKFyt6Q6JcHQ==
+X-Received: by 2002:a05:6000:1ac5:b0:448:8796:9c1e with SMTP id ffacd0b85a97d-4603019c601mr10555818f8f.0.1780901873053;
+        Sun, 07 Jun 2026 23:57:53 -0700 (PDT)
+Received: from doehyun-dev.pradel.rg.cispa.de (x06.xlate.fw.cispa.de. [195.37.157.6])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f351d69sm89908194f8f.29.2026.06.07.23.57.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 07 Jun 2026 23:57:52 -0700 (PDT)
+From: Doehyun Baek <doehyunbaek@gmail.com>
+To: Alex Shi <alexs@kernel.org>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Hu Haowen <2023002089@link.tyut.edu.cn>
+Cc: Dongliang Mu <dzm91@hust.edu.cn>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	SeongJae Park <sj@kernel.org>,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	damon@lists.linux.dev,
+	Doehyun Baek <doehyunbaek@gmail.com>
+Subject: [PATCH v3 0/2] docs/zh: update DAMON usage sysfs documentation
+Date: Mon,  8 Jun 2026 06:57:43 +0000
+Message-ID: <20260608065745.1587885-1-doehyunbaek@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260523094420.741003-1-doehyunbaek@gmail.com>
+References: <20260523094420.741003-1-doehyunbaek@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-VGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQg
-MSBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6DQotIFtNZWRpdW1dIFRoZSB0cmFuc2xh
-dGlvbiBjbGFpbXMgdG8gYmUgdXBkYXRlZCB0aHJvdWdoIGNvbW1pdCBkOWNmZTUxNWQzNmUsIGJ1
-dCBleHBsaWNpdGx5IG9taXRzIHNldmVyYWwgc3lzZnMgcGFyYW1ldGVycyBhbmQgZGlyZWN0b3Jp
-ZXMgcHJlc2VudCBpbiB0aGUgRW5nbGlzaCBvcmlnaW5hbCwgaGFyZGNvZGluZyBpbmNvcnJlY3Qg
-ZmlsZSBjb3VudHMuDQotLQ0KDQpjb21taXQgNjllZjI5OGMwZDgxZTM5ZDc1NTY3Njk5NzFlNzQy
-OGUzYzhkZjc0MQ0KQXV0aG9yOiBEb2VoeXVuIEJhZWsgPGRvZWh5dW5iYWVrQGdtYWlsLmNvbT4N
-Cg0KZG9jcy96aF9UVzogdXBkYXRlIERBTU9OIHVzYWdlIFRyYWRpdGlvbmFsIENoaW5lc2UgdHJh
-bnNsYXRpb24NCg0KVXBkYXRlIHRoZSB0cmFuc2xhdGlvbiBvZiAuLi4vYWRtaW4tZ3VpZGUvbW0v
-ZGFtb24vdXNhZ2UucnN0IGludG8NClRyYWRpdGlvbmFsIENoaW5lc2UuDQoNClVwZGF0ZSB0aGUg
-dHJhbnNsYXRpb24gdGhyb3VnaCBjb21taXQgZDljZmU1MTVkMzZlDQooIkRvY3MvYWRtaW4tZ3Vp
-ZGUvbW0vZGFtb24vdXNhZ2U6IGRvY3VtZW50IGdvYWxfdHVuZXIgc3lzZnMgZmlsZSIpDQoNCj4g
-ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vdHJhbnNsYXRpb25zL3poX1RXL2FkbWluLWd1aWRl
-L21tL2RhbW9uL3VzYWdlLnJzdCBiL0RvY3VtZW50YXRpb24vdHJhbnNsYXRpb25zL3poX1RXL2Fk
-bWluLWd1aWRlL21tL2RhbW9uL3VzYWdlLnJzdA0KPiBpbmRleCBkM2ZkNGY4NTA3OTMzLi5kZWJl
-NDU1NzIzYWZiIDEwMDY0NA0KPiAtLS0gYS9Eb2N1bWVudGF0aW9uL3RyYW5zbGF0aW9ucy96aF9U
-Vy9hZG1pbi1ndWlkZS9tbS9kYW1vbi91c2FnZS5yc3QNCj4gKysrIGIvRG9jdW1lbnRhdGlvbi90
-cmFuc2xhdGlvbnMvemhfVFcvYWRtaW4tZ3VpZGUvbW0vZGFtb24vdXNhZ2UucnN0DQpbIC4uLiBd
-DQo+IEBAIC01NSwxNCArNTksMTQgQEAgREFNT04gc3lzZnPmjqXlj6PnmoTmlofku7blsaTmrKHn
-tZDmp4vlpoLkuIvlnJbmiYDnpLrjgILlnKjkuIvlnJbkuK3vvIzniLblrZDpl5wNCj4gIA0KPiAg
-ICAgIC9zeXMva2VybmVsL21tL2RhbW9uL2FkbWluDQo+ICAgICAg4pSCIGtkYW1vbmRzL25yX2tk
-YW1vbmRzDQo+IC0gICAg4pSCIOKUgiAwL3N0YXRlLHBpZA0KPiArICAgIOKUgiDilIIgMC9zdGF0
-ZSxwaWQscmVmcmVzaF9tcw0KPiAgICAgIOKUgiDilIIg4pSCIGNvbnRleHRzL25yX2NvbnRleHRz
-DQo+IC0gICAg4pSCIOKUgiDilIIg4pSCIDAvb3BlcmF0aW9ucw0KPiArICAgIOKUgiDilIIg4pSC
-IOKUgiAwL29wZXJhdGlvbnMsYWRkcl91bml0DQoNCltTZXZlcml0eTogTWVkaXVtXQ0KU2luY2Ug
-dGhpcyBwYXRjaCB1cGRhdGVzIHRoZSB0cmFuc2xhdGlvbiB0aHJvdWdoIGNvbW1pdCBkOWNmZTUx
-NWQzNmUsIHNob3VsZA0KdGhlIHN5c2ZzIGhpZXJhcmNoeSBkaWFncmFtIGFsc28gYmUgdXBkYXRl
-ZCB0byBpbmNsdWRlIHRoZSBtaXNzaW5nIGZpZWxkcyBmcm9tDQp0aGUgRW5nbGlzaCBvcmlnaW5h
-bCBhdCB0aGF0IGNvbW1pdD8NCg0KRW50cmllcyBsaWtlIGF2YWlsX29wZXJhdGlvbnMsIGVmZmVj
-dGl2ZV9ieXRlcywgZmlsdGVycywgZGVzdHMsIGFuZA0KdGFyZ2V0X25pZCBhcHBlYXIgdG8gYmUg
-bWlzc2luZyBmcm9tIHRoZSBkaWFncmFtLg0KDQpbIC4uLiBdDQo+IEBAIC0xMjksOCArMTQwLDgg
-QEAga2RhbW9uZHMvPE4+L2NvbnRleHRzLw0KPiAgY29udGV4dHMvPE4+Lw0KPiAgLS0tLS0tLS0t
-LS0tLQ0KPiAgDQo+IC3lnKjmr4/lgIvkuIrkuIvmlofnm67pjITkuK3vvIzlrZjlnKjkuIDlgIvm
-lofku7YoYGBvcGVyYXRpb25zYGAp5ZKM5LiJ5YCL55uu6YyEKGBgbW9uaXRvcmluZ19hdHRyc2Bg
-LA0KPiAtYGB0YXJnZXRzYGAsIOWSjCBgYHNjaGVtZXNgYCnjgIINCj4gK+WcqOavj+WAi+S4iuS4
-i+aWh+ebrumMhOS4re+8jOWtmOWcqOWFqeWAi+aWh+S7tu+8iGBgb3BlcmF0aW9uc2BgIOWSjCBg
-YGFkZHJfdW5pdGBg77yJ5ZKM5LiJ5YCL55uu6YyEDQo+ICvvvIhgYG1vbml0b3JpbmdfYXR0cnNg
-YOOAgWBgdGFyZ2V0c2BgIOWSjCBgYHNjaGVtZXNgYO+8ieOAgg0KDQpbU2V2ZXJpdHk6IE1lZGl1
-bV0NCkRvZXMgdGhpcyBkZXNjcmlwdGlvbiBtaXNzIHRoZSBhdmFpbF9vcGVyYXRpb25zIGZpbGU/
-IFRoZSBFbmdsaXNoIHZlcnNpb24gYXQNCnRoZSB0YXJnZXRlZCBjb21taXQgaW5jbHVkZXMgaXQg
-aW4gdGhlIGNvbnRleHRzLzxOPi8gZGlyZWN0b3J5Lg0KDQpbIC4uLiBdDQo+IEBAIC0yMzksMTQg
-KzI1NiwyMCBAQCBzY2hlbWVzLzxOPi9xdW90YXMvDQo+ICDnlbbpoJDoqIjotoXpgY7phY3poY3p
-mZDliLbmmYLvvIxEQU1PTuacg+agueaTmiBgYOebruaomeioquWVj+aooeW8j2BgIOeahOWkp+Ww
-j+OAgeioquWVj+mgu+eOh+WSjOW5tOm9oe+8jOWwjeaJvuWIsOeahOWFp+WtmOWNgOWfnw0KPiAg
-6YCy6KGM5YSq5YWI5o6S5bqP44CC54iy5LqG6YCy6KGM5YCL5oCn5YyW55qE5YSq5YWI5o6S5bqP
-77yM55So5oi25Y+v5Lul54iy6YCZ5LiJ5YCL5bGs5oCn6Kit572u5qyK6YeN44CCDQo+ICANCj4g
-LeWcqCBgYHF1b3Rhc2BgIOebrumMhOS4i++8jOWtmOWcqOS4ieWAi+aWh+S7tu+8iGBgbXNgYCwg
-YGBieXRlc2BgLCBgYHJlc2V0X2ludGVydmFsX21zYGDvvInlkozkuIDlgIsNCj4gLeebrumMhChg
-YHdlaWdodHNgYCnvvIzlhbbkuK3mnInkuInlgIvmlofku7YoYGBzel9wZXJtaWxgYCwgYGBucl9h
-Y2Nlc3Nlc19wZXJtaWxgYCwg5ZKMDQo+IC1gYGFnZV9wZXJtaWxgYCnjgIINCj4gK+WcqCBgYHF1
-b3Rhc2BgIOebrumMhOS4i++8jOWtmOWcqOWbm+WAi+aWh+S7tu+8iGBgbXNgYOOAgWBgYnl0ZXNg
-YOOAgWBgcmVzZXRfaW50ZXJ2YWxfbXNgYCDlkowNCj4gK2BgZ29hbF90dW5lcmBg77yJ5ZKM5YWp
-5YCL55uu6YyE77yIYGB3ZWlnaHRzYGAg5ZKMIGBgZ29hbHNgYO+8ieOAgg0KDQpbU2V2ZXJpdHk6
-IE1lZGl1bV0NClNob3VsZCBlZmZlY3RpdmVfYnl0ZXMgYmUgaW5jbHVkZWQgaGVyZT8gVGhlIEVu
-Z2xpc2ggYmFzZWxpbmUgaGFzIGZpdmUgZmlsZXMNCmxpc3RlZCBmb3IgdGhlIHF1b3RhcyBkaXJl
-Y3RvcnkuDQoNCj4gIA0KPiAg5L2g5Y+v5Lul6Kit572u5Lul5q+r56eS54iy5Zau5L2N55qEIGBg
-5pmC6ZaT6YWN6aGNYGAg77yM5Lul5a2X56+A54iy5Zau5L2N55qEIGBg5aSn5bCP6YWN6aGNYGAg
-77yM5Lul5Y+K5Lul5q+r56eS54iy5Zau5L2N55qEIGBg6YeNDQo+ICDnva7plpPpmpRgYCDvvIzl
-iIbliKXlkJHpgJnkuInlgIvmlofku7blr6vlhaXmlbjlgLzjgILkvaDpgoTlj6/ku6XpgJrpgY7l
-kJEgYGB3ZWlnaHRzYGAg55uu6YyE5LiL55qE5LiJ5YCL5paH5Lu25a+r5YWl5pW45YC85L6G6Kit
-DQo+ICDnva7lpKflsI/jgIHoqKrllY/poLvnjoflkozlubTpvaHnmoTlhKrlhYjmrIrvvIzllq7k
-vY3niLLljYPliIbkuYvkuIDjgIINCj4gIA0KPiAr5L2g5Y+v5Lul6YCa6YGO5ZCRIGBgZ29hbF90
-dW5lcmBgIOaWh+S7tuWvq+WFpeeul+azleWQjeeose+8jOioree9ruimgeS9v+eUqOeahOWfuuaW
-vOebruaomeeahOacieaViOmFjemhjeiHquWLleiqv+WEqueul+azleOAgg0KPiAr6K6A5Y+W6Kmy
-5paH5Lu25pyD6L+U5Zue55W25YmN6YG45a6a55qE6Kq/5YSq5Zmo566X5rOV44CCDQo+ICsNCj4g
-K2BgZ29hbHNgYCDnm67pjITnlKjmlrzoqK3nva7oh6rli5XphY3poY3oqr/lhKrnm67mqJnjgILm
-r4/lgIvnm67mqJnnm67pjITljIXlkKsgYGB0YXJnZXRfbWV0cmljYGDjgIENCj4gK2BgdGFyZ2V0
-X3ZhbHVlYGDjgIFgYGN1cnJlbnRfdmFsdWVgYCDlkowgYGBuaWRgYCDmlofku7bjgILnlKjmiLbl
-j6/ku6XoroDlr6vpgJnkupvmlofku7bkvoboqK3nva7lkoznjbLlj5bphY3poY0NCj4gK+iHquWL
-leiqv+WEquebruaomeeahOWPg+aVuOOAgg0KDQpbU2V2ZXJpdHk6IE1lZGl1bV0NCklzIHRoZSBw
-YXRoIGZpbGUgbWlzc2luZyBmcm9tIHRoZSBnb2FscyBkaXJlY3RvcnkgbGlzdD8NCg0KWyAuLi4g
-XQ0KPiBAQCAtMjcxLDEwICsyOTQsMTEgQEAgc2NoZW1lcy88Tj4vc3RhdHMvDQo+ICBEQU1PTue1
-seioiOavj+WAi+aWueahiOiiq+WYl+ippuaHieeUqOeahOWNgOWfn+eahOe4veaVuOmHj+WSjOWt
-l+evgOaVuO+8jOavj+WAi+aWueahiOiiq+aIkOWKn+aHieeUqOeahOWNgOWfn+eahOWFqeWAi+aV
-uOWtl++8jOS7peWPig0KPiAg6LaF6YGO6YWN6aGN6ZmQ5Yi255qE57i95pW46YeP44CC6YCZ5Lqb
-57Wx6KiI5pW45pOa5Y+v55So5pa85Zyo57ea5YiG5p6Q5oiW6Kq/5pW05pa55qGI44CCDQo+ICAN
-Cj4gLeWPr+S7pemAmumBjuiugOWPliBgYHN0YXRzYGAg55uu6YyE5LiL55qE5paH5Lu2KGBgbnJf
-dHJpZWRgYCwgYGBzel90cmllZGBgLCBgYG5yX2FwcGxpZWRgYCwNCj4gLWBgc3pfYXBwbGllZGBg
-LCDlkowgYGBxdF9leGNlZWRzYGAp77yJ5YiG5Yil5qqi57Si6YCZ5Lqb57Wx6KiI5pW45pOa44CC
-6YCZ5Lqb5paH5Lu25LiN5piv5a+m5pmC5pu05paw55qE77yM5omA5LulDQo+IC3kvaDmh4noqbLo
-poHmsYJEQU1PTiBzeXNmc+aOpeWPo+mAmumBjuWcqOebuOmXnOeahCBgYGtkYW1vbmRzLzxOPi9z
-dGF0ZWBgIOaWh+S7tuS4reWvq+WFpeS4gOWAi+eJueauiueahOmXnOmNteWtlw0KPiAtYGB1cGRh
-dGVfc2NoZW1lc19zdGF0c2BgIOS+huabtOaWsOe1seioiOS/oeaBr+eahOaWh+S7tuWFp+WuueOA
-gg0KPiAr5Y+v5Lul6YCa6YGO6K6A5Y+WIGBgc3RhdHNgYCDnm67pjITkuIvnmoTmlofku7bvvIhg
-YG5yX3RyaWVkYGDjgIFgYHN6X3RyaWVkYGDjgIFgYG5yX2FwcGxpZWRgYOOAgQ0KPiArYGBzel9h
-cHBsaWVkYGDjgIFgYHF0X2V4Y2VlZHNgYOOAgWBgbnJfc25hcHNob3RzYGAg5ZKMIGBgbWF4X25y
-X3NuYXBzaG90c2Bg77yJ5YiG5Yil5qqi57Si6YCZ5LqbDQoNCltTZXZlcml0eTogTWVkaXVtXQ0K
-U2hvdWxkIHN6X29wc19maWx0ZXJfcGFzc2VkIGJlIGluY2x1ZGVkIGluIHRoaXMgbGlzdD8gVGhl
-IEVuZ2xpc2ggdmVyc2lvbiBhdA0KY29tbWl0IGQ5Y2ZlNTE1ZDM2ZSBsaXN0cyBpdCBpbiB0aGUg
-c3RhdHMgZGlyZWN0b3J5Lg0KDQo+ICvntbHoqIjmlbjmk5rjgILpgJnkupvmlofku7bpu5joqo3k
-uI3mmK/lr6bmmYLmm7TmlrDnmoTjgILkvaDmh4noqbLopoHmsYJEQU1PTiBzeXNmc+aOpeWPo+mA
-mumBjiBgYHJlZnJlc2hfbXNgYCDpgLHmnJ/mgKflnLANCj4gK+abtOaWsOmAmeS6m+aWh+S7tu+8
-jOaIluiAhemAmumBjuWcqOebuOmXnOeahCBgYGtkYW1vbmRzLzxOPi9zdGF0ZWBgIOaWh+S7tuS4
-reWvq+WFpeS4gOWAi+eJueauiueahOmXnOmNteWtlw0KPiArYGB1cGRhdGVfc2NoZW1lc19zdGF0
-c2BgIOS+huWft+ihjOS4gOasoeaAp+abtOaWsOOAgg0KPg0KDQotLSANClNhc2hpa28gQUkgcmV2
-aWV3IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9wYXRjaHNldC8yMDI2MDYwODA2MDMwMi4xNTY0
-MDAzLTEtZG9laHl1bmJhZWtAZ21haWwuY29tP3BhcnQ9Mg==
+Changes since v2:
+- Fix missing DAMON sysfs hierarchy entries and related file lists/counts.
+
+Changes since v1:
+- Revise both commit messages to follow the translation update format
+  documented in Documentation/translations/zh_CN/how-to.rst.
+
+Doehyun Baek (2):
+  docs/zh_CN: update DAMON usage Chinese translation
+  docs/zh_TW: update DAMON usage Traditional Chinese translation
+
+ .../zh_CN/admin-guide/mm/damon/usage.rst      | 92 +++++++++++++------
+ .../zh_TW/admin-guide/mm/damon/usage.rst      | 92 +++++++++++++------
+ 2 files changed, 130 insertions(+), 54 deletions(-)
+
+
+base-commit: 4549871118cf616eecdd2d939f78e3b9e1dddc48
+-- 
+2.43.0
+
