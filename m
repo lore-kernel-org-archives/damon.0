@@ -1,113 +1,129 @@
-Received: from canpmsgout12.his.huawei.com (canpmsgout12.his.huawei.com [113.46.200.227])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D03134B697
-	for <damon@lists.linux.dev>; Mon,  8 Jun 2026 11:15:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD01C2F5A13
+	for <damon@lists.linux.dev>; Mon,  8 Jun 2026 11:24:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780917347; cv=none; b=ihmPx+iCWWUYy7P2CbLNSZN1qgOwAI8ncdO96iXog4I1I6bCh7rDxgeP1nVHBIbqNHlbJYOBAtGRkXcCUVw/iWhRVGiorQiFS5YfQt0nDNlE7VQ8X5OKK8V3vxGIIeZH8gtL2BwT58SFLb+JKCEHE29yB3wgmQh9lRD+FrOavNA=
+	t=1780917896; cv=none; b=uIF684ZfEBecOz/4jtCgTfAPqJYdjXTmWVnBm7AOaZWSyWbWSlfgLumf8uT89Olnve0eWW2D4PUG0nI6GQiUG2W4rThgxVAXhmtmLtHFpm4S5/peCOhyhCzUu0wV7+A5YK26p/zIl3kaBdA2XvfXO+4Tnuro+HMeSX0Jv1NljX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780917347; c=relaxed/simple;
-	bh=mLsfLkVhy/gvj2ONK5Zx0NuE4AwPjfI+7Kf0QNkXDtE=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YEHbg4dVfW5dMmhmYeQ29v8uxOyq/GTi8GSVHflcwm98sIZzgtV8Pdc4B7ViPia5bu3/x9xQA0XFWC4DRGqwajWkYy/552+70zZzpk7QoncwByCOjSQk44dDlbwWZt7vNJDGAFL20K/arICkPn/TNfth9RJR6OuR8nr7VnO2AdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=MTm0efw7; arc=none smtp.client-ip=113.46.200.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1780917896; c=relaxed/simple;
+	bh=nSqa8ulaSJ8ivkiEVgSO2Y9u8yzyddjY6DeebhQANdg=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=TcJAAFBtrwT7y5NGVeX84avPaJQSzPHxIhsNzjbDsO/+plibxENnLdWFQpAgMofay6Nl+M8NHarlvcYIWseuwkJmVT0VhlkPOJ5IIYdAKLyr2W+GhcWmoFMwoMcjc1/+bGXOynk8FSTIpG9PIUGJXzixBhDPIgyxtlzCAmVXGvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/OWHAmd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="MTm0efw7"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=5FPC2aDwg5mBNqHLEf0QUYF464aa6oMYs9z5oC3+/mQ=;
-	b=MTm0efw7c9Kg084CS0dQqAJe5WrTttbpao8SeMxt3fefxTd2DcxZJBgejnC92rLgTGh2VQRaD
-	Xf48sm+p7iPqkzJPii/f/Tk9j+WBsTc4bm9DguS732djCEQoW2VNpQWqvHnzcUGS9UMUx8Rqbbi
-	zSWAaL1IO0t1RWfgKe52KfQ=
-Received: from mail.maildlp.com (unknown [172.19.163.163])
-	by canpmsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4gYq5L49b8znTVy;
-	Mon,  8 Jun 2026 19:07:50 +0800 (CST)
-Received: from kwepemk200017.china.huawei.com (unknown [7.202.194.83])
-	by mail.maildlp.com (Postfix) with ESMTPS id C20E640575;
-	Mon,  8 Jun 2026 19:15:40 +0800 (CST)
-Received: from DESKTOP-8RFUVS3.china.huawei.com (10.174.178.219) by
- kwepemk200017.china.huawei.com (7.202.194.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Mon, 8 Jun 2026 19:15:40 +0800
-From: Zenghui Yu <yuzenghui@huawei.com>
-To: <damon@lists.linux.dev>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-CC: <sj@kernel.org>, <akpm@linux-foundation.org>, <wangzhigang17@huawei.com>,
-	<liqiqi23@huawei.com>, Zenghui Yu <yuzenghui@huawei.com>
-Subject: [PATCH] samples/damon/mtier: fail early if address range parameters are invalid
-Date: Mon, 8 Jun 2026 19:15:34 +0800
-Message-ID: <20260608111534.264-1-yuzenghui@huawei.com>
-X-Mailer: git-send-email 2.23.0.windows.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/OWHAmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274231F00893;
+	Mon,  8 Jun 2026 11:24:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780917895;
+	bh=f/Df36jJgVBbiXUbl2np4wWdhV42M71ZUWY5OMz5J9s=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=P/OWHAmdCgNl2ZWhIOaVdoa95VXKfJwUvJNtcpuWKt32DjccAi378vjKEZX/Xkq7I
+	 0b2sUndSmrNgdO9svxNFzF3Pd/SYxZta9szelR1RkE3H4MHo2nMh624V4f2hcmC0eZ
+	 dVXyE0j1UkPj+KqPIzrahwt7Js6vXOUkFF0gCSdsv85iVWuKt3lAKwlA+rb0+tZH6S
+	 XrUaijQv6BfTz1HBRRYFY2eCTH4u62lQed+lhjZMI4FcoM1BqLClMGwSBZ71YLq6gU
+	 1qau9fZpniTgX4AKs3/0UkCIf1SKRC7Ct+4mHsVQUQGyINpR3VCFyUB7ltnJ+xXQgN
+	 pbqnfeQUENxlQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] samples/damon/mtier: fail early if address range
+ parameters are invalid
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Zenghui Yu" <yuzenghui@huawei.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260608111534.264-1-yuzenghui@huawei.com>
+References: <20260608111534.264-1-yuzenghui@huawei.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 08 Jun 2026 11:24:54 +0000
+Message-Id: <20260608112455.274231F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
- kwepemk200017.china.huawei.com (7.202.194.83)
 
-The comment on top of `struct damon_region` clearly says that
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-    For any use case, @ar should be non-zero positive size.
+New issues:
+- [Medium] The newly added validation for invalid address ranges bypasses t=
+he `detect_node_addresses` auto-detection path, leaving it vulnerable to th=
+e exact same `WARN_ONCE`.
 
-which is now verified in damon_verify_new_region() if the kernel is built
-with DAMON_DEBUG_SANITY.
+Pre-existing issues:
+- [High] Memory leak and potentially orphaned threads if `damon_start()` fa=
+ils.
+--
 
-The WARN_ONCE() can be triggered if the mtier sample module is enabled
-before node{0,1}_{start,end}_addr have been properly initialized, which is
-obviously not good.
+commit 08cd6a6fdfc8b3e6b6d9d4a3a29b99f99163573b
+Author: Zenghui Yu <yuzenghui@huawei.com>
 
- ------------[ cut here ]------------
- start 0 >= end 0
- WARNING: mm/damon/core.c:116 at damon_new_region+0xf0/0x118, CPU#39: bash/34144
- Call trace:
-  damon_new_region+0xf0/0x118 (P)
-  damon_sample_mtier_build_ctx+0xd4/0x368
-  damon_sample_mtier_start+0x1c/0x90
-  damon_sample_mtier_enable_store+0x98/0xb0
-  param_attr_store+0xb4/0x128
-  module_attr_store+0x2c/0x50
-  sysfs_kf_write+0x58/0x90
-  kernfs_fop_write_iter+0x16c/0x238
-  vfs_write+0x2c0/0x370
-  ksys_write+0x74/0x118
-  __arm64_sys_write+0x24/0x38
-  invoke_syscall+0xa8/0x118
-  el0_svc_common.constprop.0+0x48/0xf0
-  do_el0_svc+0x24/0x38
-  el0_svc+0x54/0x370
-  el0t_64_sync_handler+0xa0/0xe8
-  el0t_64_sync+0x1ac/0x1b0
- ---[ end trace 0000000000000000 ]---
+samples/damon/mtier: fail early if address range parameters are invalid
 
-Fix it by checking the validity of parameters right before
-damon_new_region() and fail early if they're invalid.
+This commit adds a validation check in damon_sample_mtier_build_ctx() to
+fail early if the start address is greater than or equal to the end address.
+This prevents a warning from triggering when damon_new_region() is called
+with invalid parameters before node addresses are properly initialized.
 
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
----
- samples/damon/mtier.c | 3 +++
- 1 file changed, 3 insertions(+)
+> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+> index 775838a23d935..4a5d3fb12e1b3 100644
+> --- a/samples/damon/mtier.c
+> +++ b/samples/damon/mtier.c
+> @@ -118,6 +118,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx=
+(bool promote)
+>  	} else {
+>  		addr.start =3D promote ? node1_start_addr : node0_start_addr;
+>  		addr.end =3D promote ? node1_end_addr : node0_end_addr;
+> +
+> +		if (addr.start >=3D addr.end)
+> +			goto free_out;
+>  	}
+> =20
+>  	region =3D damon_new_region(addr.start, addr.end);
 
-diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-index 775838a23d93..4a5d3fb12e1b 100644
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -118,6 +118,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- 	} else {
- 		addr.start = promote ? node1_start_addr : node0_start_addr;
- 		addr.end = promote ? node1_end_addr : node0_end_addr;
-+
-+		if (addr.start >= addr.end)
-+			goto free_out;
- 	}
- 
- 	region = damon_new_region(addr.start, addr.end);
--- 
-2.33.0
+[Severity: Medium]
+Does this leave the detect_node_addresses auto-detection path vulnerable to
+the same warning?
 
+If detect_node_addresses is true, nid_to_phys() is used to compute the
+address ranges. For online memoryless nodes (like CPU-only NUMA nodes),
+node_start_pfn equals node_end_pfn, which means addr.start =3D=3D addr.end.
+
+Since the new check is restricted to the else block, would the auto-detecti=
+on
+path bypass validation and still pass identical start and end values to
+damon_new_region()?
+
+[Severity: High]
+This is a pre-existing issue, but I noticed a potential memory leak and
+thread handling problem in damon_sample_mtier_start() when damon_start()
+fails.
+
+Looking at damon_sample_mtier_start():
+
+    ctxs[1] =3D ctx;
+    return damon_start(ctxs, 2, true);
+
+If damon_start() fails (for example, returning -EBUSY because another
+exclusive context is running), it returns an error code immediately without
+calling damon_destroy_ctx(). Does this permanently leak the dynamically
+allocated contexts?
+
+Additionally, in mm/damon/core.c:damon_start():
+
+    for (i =3D 0; i < nr_ctxs; i++) {
+        err =3D __damon_start(ctxs[i]);
+        if (err)
+            break;
+        nr_running_ctxs++;
+    }
+
+If damon_start() succeeds on ctxs[0] but fails on ctxs[1], it breaks out
+and returns an error without stopping the already started ctxs[0]. Will
+this leave ctxs[0] running indefinitely as an orphaned thread?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260608111534.264-=
+1-yuzenghui@huawei.com?part=3D1
