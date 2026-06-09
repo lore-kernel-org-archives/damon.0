@@ -1,109 +1,145 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DFF3438AD
-	for <damon@lists.linux.dev>; Tue,  9 Jun 2026 14:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5154761FFE
+	for <damon@lists.linux.dev>; Tue,  9 Jun 2026 14:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781015741; cv=none; b=phl7wjALHCMnWSM2wyDH0VJmJp+sbi0celvKQ6szlId23+x+lue35dnmUscWAemU7zZzV9s6BwW1U1ynb83Bhzb02tNxaacp4I2/dBNafdio6zCObpzkuBaVgNqyL+0D8qzHLwhV6kiczjoksqMLhXmt3LM1kIVxIg/uNMrzy2Y=
+	t=1781015780; cv=none; b=piBfkveVzsEgTqCZOdxb5wkWHMASYN2hqtytIb0rLDvnCMmxwJpmK4rAqgUIIUR65NmqMwyCEfiWM9cR3MbyHLVPye6bHxEIVsg0QU3LPqL0UK9VjTCaGz9wj9s9/A5cLI2Vlk4VJ6e83easA4/Gdrl/+Df1o3lmYzTxvvXJ9mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781015741; c=relaxed/simple;
-	bh=Er3g0apZZiyM7/uWVzg8oljgiO+wKs2N5y+/VDILtjc=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ZUYDYcsiCFfUHJJxBPedyfU9Z6hPAQQ2rRsUOCkzzK/sJzKDwLlYMLK4J3Eo4igEA4uDtpAHrCzZe4gj/UXhe83OHdsWmyzbvzaJXCIPdSMa64fn+02NbKXjQVSqkb/xshnj4HZUBE+1qH3DhkBYTW8IMb01NRqHfrb+KQLRYJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P3euNtSn; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781015780; c=relaxed/simple;
+	bh=VQBnaY0WLWcqwM8S3VHq58q4ED0xIgmMk9vFt8OQa9Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bYIeul5J1YZXvNaSO4gW4BHF+0ySgbeBuzUsTo3fRRA+Zbpl2GSBUXH5SY9agAkgkNxvEB9T7IX7mUa+QRiwTsDtxOrG/Hb6TzBkzshGuEOzaBFPJ/dVFAwEwPrV2Fy6NNWwJFR8TY6uaUxP98Qu3l2ZG/l8OGl5LRv7rSmBDKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NEpiEEN/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P3euNtSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6BF1F00893;
-	Tue,  9 Jun 2026 14:35:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NEpiEEN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF82B1F00893;
+	Tue,  9 Jun 2026 14:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781015739;
-	bh=vYW6Dq2fEKpiSJgoO7INNt8rC9UFGpdwdNCvGzA3Ju0=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=P3euNtSnnus6EFD04G80ltEHxvYv0PW6WiK3VDUTmuiJ0ohtNMkJbdv0yLBNE9TV+
-	 TqlruRd/GOtVwZ8hwXt7V6eRGSEw/Oqt49XqPB0sM/9oMifuLNh2f4/M9jW38LX0R9
-	 bP2K/8Bt4zi7vduq+z0RXEp+oI3Vjfnpfv97b4lCudzBWOOAxJRqJdCCkLepj0weSq
-	 jYBNjenUNo7XHc8pSv/i3ztHOYPKqtVcBId5H6QKfo0LLlJ84xP4oPI8Bz8g1yppz3
-	 Figq0aR5gv+fk1/KOTtbnbwWS2wY72NA2vanKPd/6tpziHNPGOMuwc8NkAD92wcmu6
-	 gJMsi/pk2lamg==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 1/2] samples/damon/mtier: handle damon_start()
- failure
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SeongJae Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260609142119.68120-2-sj@kernel.org>
-References: <20260609142119.68120-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 09 Jun 2026 14:35:38 +0000
-Message-Id: <20260609143539.9E6BF1F00893@smtp.kernel.org>
+	s=k20260515; t=1781015779;
+	bh=gD4/8xyEVuWUni2ulMEGs9rfa4mpEf8J7ghUlXct0Tw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=NEpiEEN/MG1dVdaS/4Loyp433/5uTP1yFk+WqDeiyFQebJMJFTKEmMw7lNj83dV8C
+	 7xTRKcpy9Rncycx0PdYHSUHuckxhKz2wqWQicFc+m3G4XZwFx74zcBP6WEen/zUafn
+	 ConEAy/mM5qabH1njBkFf5ev5mm4w2PtEJv0iAhzc0USh+e/hyTUwrthw0mGQZf5xr
+	 vNN3O6GjQZTCjBku6e+zeRHnYe5KODVkNGWUND4/ECZmKw9lP8BaPi4XQ4OTwVY/E2
+	 2PW2JkkTnMYd/xMwSYCmgBLlSvZ7R3gIGqxnWNweG39fFWkq6sYeIGerZ2YQa97gRe
+	 j2ViUSVMeGytQ==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	"Zenghui Yu" <yuzenghui@huawei.com>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH v2] samples/damon/mtier: fail early if address range parameters are invalid
+Date: Tue,  9 Jun 2026 07:36:15 -0700
+Message-ID: <20260609143615.69115-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260609065829.6CBAC1F00893@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+On Tue, 09 Jun 2026 06:58:28 +0000 sashiko-bot@kernel.org wrote:
 
-Pre-existing issues:
-- [High] Resource leak (struct damon_ctx, struct damos, struct damon_target=
-, and struct pid) on damon_start() failure.
---
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Memory leak of `damon_ctx` structures and potential orphaned `kdamond` threads when `damon_start()` fails.
+> - [High] Incomplete fix allowing integer overflow and resulting in `WARN_ONCE()` and massive region size.
+> --
+> 
+> commit 567b4e8a4b1811419a6203e400b62d93a47bfe84
+> Author: Zenghui Yu <yuzenghui@huawei.com>
+> 
+> samples/damon/mtier: fail early if address range parameters are invalid
+> 
+> This commit adds an early check in damon_sample_mtier_build_ctx() to ensure
+> the address range parameters are valid. This is intended to prevent a
+> WARN_ONCE() that occurs when the node address bounds are not properly
+> initialized before the module is enabled.
+> 
+> > diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+> > index eb1143de8df17..3785b0c7ffb17 100644
+> > --- a/samples/damon/mtier.c
+> > +++ b/samples/damon/mtier.c
+> > @@ -120,6 +120,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+> >  		addr.end = promote ? node1_end_addr : node0_end_addr;
+> >  	}
+> >  
+> > +	if (addr.start >= addr.end)
+> > +		goto free_out;
+> > +
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does this incomplete fix still
+> allow an integer overflow?
+> 
+> If addr.end is set to ULONG_MAX via sysfs and addr.start is a valid address,
+> this check passes. Later, damon_set_regions() calls ALIGN():
+> 
+> mm/damon/core.c:damon_set_regions() {
+>     ...
+>     ranges[i].end = ALIGN(ranges[i].end, min_region_sz);
+>     ...
+> }
+> 
+> The ALIGN macro will add min_region_sz - 1 to ULONG_MAX, causing an integer
+> overflow that wraps the value to 0. This results in calling
+> damon_new_region(start, 0), which triggers the exact WARN_ONCE() this
+> patch intended to fix.
 
-commit e95eb25cfbc21e60927df5e7e4eadcf5468c1c41
-Author: SeongJae Park <sj@kernel.org>
-samples/damon/mtier: handle damon_start() failure
+First of all, not a blocker of this patch.  I also don't think this is what
+normaal and real users would really do with a good intention, or easy to
+mistakenly set.  I don't think this needs a fix for now.  We could revisit this
+if it turns out this causes a real (not test-purpose) issue.
 
-This commit fixes a resource leak in the memory tiering DAMON sample module
-where failing to start the DAMON contexts leads to memory leaks and
-indefinitely running contexts.
+> 
+> Additionally, could this cause damon_sz_region() to return a massive value,
+> breaking the logic in damon_apply_min_nr_regions() and causing excessive
+> allocations?
 
-Link: https://lore.kernel.org/20260608112455.274231F00893@smtp.kernel.org
+DAMON manges the monitoring target address rannge with dynamic-sized regions.
+And the maximum number of regions can be set by users.  So I don't think this
+kind of issue can happen.
 
-> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-> --- a/samples/damon/mtier.c
-> +++ b/samples/damon/mtier.c
+> 
+> >  	range.start = addr.start;
+> >  	range.end = addr.end;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this code leak the context structures
+> and orphan the threads if damon_start() fails?
+> 
+> samples/damon/mtier.c:damon_sample_mtier_start() {
+>     ...
+> 	ctxs[1] = ctx;
+> 	return damon_start(ctxs, 2, true);
+> }
+> 
+> If damon_start() fails (e.g., returning -EBUSY or -ENOMEM), it returns the
+> error directly without cleaning up the dynamically allocated contexts in
+> ctxs[0] and ctxs[1].
+> 
+> The caller damon_sample_mtier_enable_store() sets enabled = false on error.
+> Subsequent attempts to enable the module will allocate new contexts and
+> overwrite the ctxs array, permanently leaking the previous contexts.
+> 
+> If damon_start() successfully starts the first context but fails on the
+> second, does the first context's kdamond thread remain running as an
+> orphaned thread?
 
-[ ... ]
+Not a blocker of this patch.  I'm separately working [1] on this.
 
-> @@ -185,7 +186,15 @@ static int damon_sample_mtier_start(void)
->  		return -ENOMEM;
->  	}
->  	ctxs[1] =3D ctx;
-> -	return damon_start(ctxs, 2, true);
-> +	err =3D damon_start(ctxs, 2, true);
-> +	if (!err)
-> +		return 0;
-> +
-> +	if (damon_is_running(ctxs[0]))
-> +		damon_stop(ctxs, 1);
-> +	damon_destroy_ctx(ctxs[0]);
-> +	damon_destroy_ctx(ctxs[1]);
-> +	return err;
->  }
+[1] https://lore.kernel.org/20260609142119.68120-1-sj@kernel.org
 
-[Severity: High]
-This is a pre-existing issue, but it looks like the exact same resource leak
-pattern exists in other DAMON sample modules when damon_start() fails.
 
-Looking at damon_sample_prcl_start() in samples/damon/prcl.c:
+Thanks,
+SJ
 
-	err =3D damon_start(&ctx, 1, true);
-	if (err)
-		return err;
-
-And similarly in damon_sample_wsse_start() in samples/damon/wsse.c:
-
-	err =3D damon_start(&ctx, 1, true);
-	if (err)
-		return err;
-
-Since they return directly without calling damon_destroy_ctx() or putting
-the target_pidp reference, do these modules also leak their newly allocated
-contexts and PID references when damon_start() fails?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260609142119.6812=
-0-1-sj@kernel.org?part=3D1
+[...]
