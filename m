@@ -1,86 +1,83 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE94D48A2A0
-	for <damon@lists.linux.dev>; Tue,  9 Jun 2026 15:50:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944CB3CFF56;
+	Tue,  9 Jun 2026 23:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781020232; cv=none; b=Cajk3qA2XHHS8tbWeLL0sTIdt/7HWXEMd7/vi5pzixBoNRWMo/OAqom7M+99DWTdg7spqIxsRgNAkWVkYuWEmAqXr6Lv1Ex/mvet+TFBFV48ZAGaIwYfA8MKHCL9d8xKrIUUnOLp0iDSvry5jZImGXS5TDARFOZxqlEmFci0ThQ=
+	t=1781049366; cv=none; b=P6bvgyKPB60N5lGs6Fhtrx/PWxO9kMO8+u/5mhsJA4VjJk/yErhHz4cvHe90UrxJS50SENn46jkESare/r8Q7DM+X/tqEGMyv7YT1jg0cnglClNAlbwTGkF2lu56/iiIJJfnc4kzCAQiYmZBv9tKQ4xq38XHffc4BOBlKwMFr5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781020232; c=relaxed/simple;
-	bh=Xqrqdax3GvTji0D3s2oXp61F4Ax/hXxDzkBP9MuGAy8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VScoJMgsyyGuiNP9TUBemFEGKFLuZ3+TnQl1E31GGerHzP5ixY98a62CV22GP5n+OQb7Pb1+f9QqKrvqjVmuVV0EaBr0cmlBnjNd6hZ0YBfqcuWFyvxxU2rjDr1ZKy6+s6ZVEfnVlW0iLPgB03bNbVnSTwn0DFa7mmK4mMHX7hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=q3AXpyJY; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1781049366; c=relaxed/simple;
+	bh=ivBgzWvravhZdDLyD7LukCd2Bu6awTYjolYyPt2hDq0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=agODoDKF8IHDBHNLMT7MKH3rpX9Igqp1s48RCDDzmeHsOYzYYJxm4nuccjZCgsAJgDtJ18BjOmAfUfhjTZb+x16lUFqzrr8Csr1OEHmfvgrMOGsUrIngl/VTCGl+lHuL+nTvHSYMFWYAqaluVZOKFl84vfxeVLhq252Pg1izHvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GfeFuMrQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="q3AXpyJY"
-Message-ID: <ed2a595e-bcc4-4af9-99b0-4029f2a13476@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781020227;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=m+6fcZSlWOlBCUqWc42EMaBGgUkNT9qApX3XmRXZGo4=;
-	b=q3AXpyJYO06/Xzod4bGBw+cxyrlUjodg9xT2dpSd3ijWO8Hh2CTigI8fxhDNAvpIkDvNXK
-	kJ6gBlfAJ11djJYYupjiyZ7pszRj9GhYrxI/76L6LIVaq4wYYK8F2zE3KXhdjyXEDwG3fu
-	6wTG2CLRA1CYjTYyDwxdj/y50erOyN8=
-Date: Tue, 9 Jun 2026 23:49:07 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GfeFuMrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09B01F00893;
+	Tue,  9 Jun 2026 23:56:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781049365;
+	bh=CqTDLJlr+PvJWmHo6xti7Q61COtf52VcvmEIeE8PPxw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=GfeFuMrQeHtAJ0O1r+EgeFD8C+04SN/7/OkJjmq3AiKIOh+vZ8kff8djlgSrlJ2s/
+	 l2kOga0lGu8UNtR6TuGhChemWVaH68vjwer/JbO3Qx55m83wJm5VFoDD/CwTSO7PhW
+	 S1ZGZqCOAzch+k3DX/z+W2JlZ2weKvI4549v4RpukkuMAFPR7dT82zTituN0i8vyP+
+	 wt9IBamdRJFf0E6twqZYW7QzVvD138vmbwBXzjAGAxr4CIauHJaU/gu/PlHbobjGoa
+	 5dn2hqCTuCx9aWpVzLV2q/QVxCFqe36zBgeyEM1DoBmswyYOEYXNEQcUIfVke0QidY
+	 M14HlrF/DgQ5Q==
+From: SeongJae Park <sj@kernel.org>
+To: Doehyun Baek <doehyunbaek@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Alex Shi <alexs@kernel.org>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Hu Haowen <2023002089@link.tyut.edu.cn>,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	damon@lists.linux.dev
+Subject: Re: [PATCH v4 0/2] docs/mm/damon: fix docs and update zh_CN
+Date: Tue,  9 Jun 2026 16:55:55 -0700
+Message-ID: <20260609235556.73472-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <cover.1781015560.git.doehyunbaek@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2] samples/damon/mtier: fail early if address range
- parameters are invalid
-To: SeongJae Park <sj@kernel.org>
-Cc: Zenghui Yu <yuzenghui@huawei.com>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org, akpm@linux-foundation.org,
- wangzhigang17@huawei.com, liqiqi23@huawei.com, stable@vger.kernel.org
-References: <20260609144918.69429-1-sj@kernel.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Zenghui Yu <zenghui.yu@linux.dev>
-In-Reply-To: <20260609144918.69429-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-Hi SeongJae,
+Hello Doehyun,
 
-On 6/9/26 10:49 PM, SeongJae Park wrote:
+On Tue,  9 Jun 2026 14:34:24 +0000 Doehyun Baek <doehyunbaek@gmail.com> wrote:
+
+> First of all, thank you very much, Dongliang, for your time and
+> dedication in reviewing the previous versions.
 > 
-> I think this deserves Fixes: and Cc: stable, like below.
+> This v4 sends the original English DAMON documentation fixes as the
+> first patch, and the Simplified Chinese translation update as the
+> second patch.
 > 
-> Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
-> Cc: <stable@vger.kernel.org> # 6.16.x
-> 
-> Other than that, looks good to me.
-> 
-> Reviewed-by: SeongJae Park <sj@kernel.org>
+> For zh_CN, I translated the current DAMON usage.rst paragraph by
+> paragraph, and added missing pieces such as stat.rst and the related
+> index/design references.  The zh_TW changes from earlier versions are
+> dropped from this series.
 
-Thanks!
+Thank you for sharing this patch series!  However, to my understanding, the
+path to the mainline for English documents and Chinese documents are different.
+Sending patches for English document and Chinese document as one series is
+therefore making it complicated, in my opinion.  Could you please rebase
+English document part to mm-new [1] and send as a separate patch?
 
-> 
-> I applied  this patch to damon/next [1] tree.  We are now quite close to next
-> merge window.  We (mm community) want to focus on making mm.git more stabilized
-> and therefore ready for the next merge window, rather than adding more changes
-> that are not really urgent.  I understand this series is not really urgent,
-> because it is causing only DAMON internal weird behavior and one time warning
-> on debug kernels.
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
-Yup!
-
-> 
-> Hence, Andrew might not add this patch until next -rc1 release.  In the case, I
-> will request adding this to mm.git after next -rc1 release.  So, no action from
-> your side is needed for now.  Let me know if you think this is really urgent or
-> I'm missing something.
-
-I agree with you that this is not urgent and can wait for the next -rc1.
 
 Thanks,
-Zenghui
+SJ
+
+[...]
