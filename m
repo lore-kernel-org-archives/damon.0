@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5154761FFE
-	for <damon@lists.linux.dev>; Tue,  9 Jun 2026 14:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCB6275AE4;
+	Tue,  9 Jun 2026 14:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781015780; cv=none; b=piBfkveVzsEgTqCZOdxb5wkWHMASYN2hqtytIb0rLDvnCMmxwJpmK4rAqgUIIUR65NmqMwyCEfiWM9cR3MbyHLVPye6bHxEIVsg0QU3LPqL0UK9VjTCaGz9wj9s9/A5cLI2Vlk4VJ6e83easA4/Gdrl/+Df1o3lmYzTxvvXJ9mY=
+	t=1781016569; cv=none; b=f50w0AD7WNRE1yTTtl5Nz6xzELfXuEUKxhJaPUZBgVY2dElKsRGCwB/+nUOsqWOb9sG2qQ1JSHYpJe9ZTCBuz7zcR1Fe15QCTjOvADZEuvrLtfzLHh0ECIg3Cyt4qKsdfORSuwLj7TMmegj1kdQMjpmovVs8ThEj4Wf6e6sesjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781015780; c=relaxed/simple;
-	bh=VQBnaY0WLWcqwM8S3VHq58q4ED0xIgmMk9vFt8OQa9Q=;
+	s=arc-20240116; t=1781016569; c=relaxed/simple;
+	bh=weRw5MX9+brHYT8Z5Ag+Xcyt7ecrQprt1rxxaMxTQ7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYIeul5J1YZXvNaSO4gW4BHF+0ySgbeBuzUsTo3fRRA+Zbpl2GSBUXH5SY9agAkgkNxvEB9T7IX7mUa+QRiwTsDtxOrG/Hb6TzBkzshGuEOzaBFPJ/dVFAwEwPrV2Fy6NNWwJFR8TY6uaUxP98Qu3l2ZG/l8OGl5LRv7rSmBDKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NEpiEEN/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O0qPQwMw/C4IKfHyXUUTsyU825Wo8O9+qkWzclcKtGcqIkH1ErqwgLsPPYGZ+86ohaG5gqHrTSLd9/pkI5sCG4ujLK+tZk5uQG37WjVY1ZpZcvgtKAPAYrY1/6XKqBjdQqsGSk2GEKBTwrAIt2uk95VAo+kQ0DJmDIiAzWc6GdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=erX6JcxZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NEpiEEN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF82B1F00893;
-	Tue,  9 Jun 2026 14:36:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="erX6JcxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230CF1F00893;
+	Tue,  9 Jun 2026 14:49:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781015779;
-	bh=gD4/8xyEVuWUni2ulMEGs9rfa4mpEf8J7ghUlXct0Tw=;
+	s=k20260515; t=1781016567;
+	bh=taRgX81yJwI75jVPUy3ya0pHHgm8A4dha5HwvheVriA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NEpiEEN/MG1dVdaS/4Loyp433/5uTP1yFk+WqDeiyFQebJMJFTKEmMw7lNj83dV8C
-	 7xTRKcpy9Rncycx0PdYHSUHuckxhKz2wqWQicFc+m3G4XZwFx74zcBP6WEen/zUafn
-	 ConEAy/mM5qabH1njBkFf5ev5mm4w2PtEJv0iAhzc0USh+e/hyTUwrthw0mGQZf5xr
-	 vNN3O6GjQZTCjBku6e+zeRHnYe5KODVkNGWUND4/ECZmKw9lP8BaPi4XQ4OTwVY/E2
-	 2PW2JkkTnMYd/xMwSYCmgBLlSvZ7R3gIGqxnWNweG39fFWkq6sYeIGerZ2YQa97gRe
-	 j2ViUSVMeGytQ==
+	b=erX6JcxZmIcrZHCAP2aqWFKZfJeXTO2GXWNjtqNyT3fI4ae3SFvQ+uj/xwBiSLWEm
+	 0XXbMJrQmYdX2XXxmSAZpAmKAEM+hczHm8PLuZDYQipS3uh0sqgKTiLcuenNPV0SDG
+	 KoV4yZGT6yb+sW6dwdzWh/pApVzsqvkOzR3F2y9BFXjzRlybBVrxzm0Rc7r3XAk0ff
+	 7zQQ+tnPRKcvBgnyR62eqIFoUkJ0Hm8PcpBg43sJJTjkbRaYSz3JTs5Ogo4L425H8d
+	 eIg0dyf4aJAnl/h4HfnEGY9yXmrV9v0i1NM47T3Hctkq1qF5cpJAEwFpCDlfhH2XBE
+	 n9XUCvNAnVceg==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Zenghui Yu <yuzenghui@huawei.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	"Zenghui Yu" <yuzenghui@huawei.com>,
-	damon@lists.linux.dev
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	akpm@linux-foundation.org,
+	wangzhigang17@huawei.com,
+	liqiqi23@huawei.com,
+	stable@vger.kernel.org
 Subject: Re: [PATCH v2] samples/damon/mtier: fail early if address range parameters are invalid
-Date: Tue,  9 Jun 2026 07:36:15 -0700
-Message-ID: <20260609143615.69115-1-sj@kernel.org>
+Date: Tue,  9 Jun 2026 07:49:17 -0700
+Message-ID: <20260609144918.69429-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260609065829.6CBAC1F00893@smtp.kernel.org>
+In-Reply-To: <20260609064653.1829-1-yuzenghui@huawei.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,98 +50,75 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 09 Jun 2026 06:58:28 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 9 Jun 2026 14:46:52 +0800 Zenghui Yu <yuzenghui@huawei.com> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> The comment on top of `struct damon_region` clearly says that
 > 
-> Pre-existing issues:
-> - [High] Memory leak of `damon_ctx` structures and potential orphaned `kdamond` threads when `damon_start()` fails.
-> - [High] Incomplete fix allowing integer overflow and resulting in `WARN_ONCE()` and massive region size.
-> --
+>     For any use case, @ar should be non-zero positive size.
 > 
-> commit 567b4e8a4b1811419a6203e400b62d93a47bfe84
-> Author: Zenghui Yu <yuzenghui@huawei.com>
+> which is now verified in damon_verify_new_region() if the kernel is built
+> with DAMON_DEBUG_SANITY.
 > 
-> samples/damon/mtier: fail early if address range parameters are invalid
+> The WARN_ONCE() can be triggered if the mtier sample module is enabled
+> before node{0,1}_{start,end}_addr have been properly initialized, which is
+> obviously not good.
 > 
-> This commit adds an early check in damon_sample_mtier_build_ctx() to ensure
-> the address range parameters are valid. This is intended to prevent a
-> WARN_ONCE() that occurs when the node address bounds are not properly
-> initialized before the module is enabled.
+>  ------------[ cut here ]------------
+>  start 0 >= end 0
+>  WARNING: mm/damon/core.c:217 at damon_new_region+0xf4/0x118, CPU#59: bash/341468
+>  Call trace:
+>   damon_new_region+0xf4/0x118 (P)
+>   damon_set_regions+0xfc/0x3c0
+>   damon_sample_mtier_build_ctx+0xe8/0x3a8
+>   damon_sample_mtier_start+0x1c/0x90
+>   damon_sample_mtier_enable_store+0x98/0xb0
+>   param_attr_store+0xb4/0x128
+>   module_attr_store+0x2c/0x50
+>   sysfs_kf_write+0x58/0x90
+>   kernfs_fop_write_iter+0x16c/0x238
+>   vfs_write+0x2c0/0x370
+>   ksys_write+0x74/0x118
+>   __arm64_sys_write+0x24/0x38
+>   invoke_syscall+0xa8/0x118
+>   el0_svc_common.constprop.0+0x48/0xf0
+>   do_el0_svc+0x24/0x38
+>   el0_svc+0x54/0x370
+>   el0t_64_sync_handler+0xa0/0xe8
+>   el0t_64_sync+0x1ac/0x1b0
+>  ---[ end trace 0000000000000000 ]---
 > 
-> > diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-> > index eb1143de8df17..3785b0c7ffb17 100644
-> > --- a/samples/damon/mtier.c
-> > +++ b/samples/damon/mtier.c
-> > @@ -120,6 +120,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
-> >  		addr.end = promote ? node1_end_addr : node0_end_addr;
-> >  	}
-> >  
-> > +	if (addr.start >= addr.end)
-> > +		goto free_out;
-> > +
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this incomplete fix still
-> allow an integer overflow?
-> 
-> If addr.end is set to ULONG_MAX via sysfs and addr.start is a valid address,
-> this check passes. Later, damon_set_regions() calls ALIGN():
-> 
-> mm/damon/core.c:damon_set_regions() {
->     ...
->     ranges[i].end = ALIGN(ranges[i].end, min_region_sz);
->     ...
-> }
-> 
-> The ALIGN macro will add min_region_sz - 1 to ULONG_MAX, causing an integer
-> overflow that wraps the value to 0. This results in calling
-> damon_new_region(start, 0), which triggers the exact WARN_ONCE() this
-> patch intended to fix.
+> Note that the same issue can happen if detect_node_addresses is true, and
+> node 0 or 1 is memoryless. Fix it together by checking the validity of
+> parameters right before damon_new_region() and fail early if they're
+> invalid.
 
-First of all, not a blocker of this patch.  I also don't think this is what
-normaal and real users would really do with a good intention, or easy to
-mistakenly set.  I don't think this needs a fix for now.  We could revisit this
-if it turns out this causes a real (not test-purpose) issue.
+Thank you for this patch, Zenghui!
 
 > 
-> Additionally, could this cause damon_sz_region() to return a massive value,
-> breaking the logic in damon_apply_min_nr_regions() and causing excessive
-> allocations?
+> Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
 
-DAMON manges the monitoring target address rannge with dynamic-sized regions.
-And the maximum number of regions can be set by users.  So I don't think this
-kind of issue can happen.
+I think this deserves Fixes: and Cc: stable, like below.
 
-> 
-> >  	range.start = addr.start;
-> >  	range.end = addr.end;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this code leak the context structures
-> and orphan the threads if damon_start() fails?
-> 
-> samples/damon/mtier.c:damon_sample_mtier_start() {
->     ...
-> 	ctxs[1] = ctx;
-> 	return damon_start(ctxs, 2, true);
-> }
-> 
-> If damon_start() fails (e.g., returning -EBUSY or -ENOMEM), it returns the
-> error directly without cleaning up the dynamically allocated contexts in
-> ctxs[0] and ctxs[1].
-> 
-> The caller damon_sample_mtier_enable_store() sets enabled = false on error.
-> Subsequent attempts to enable the module will allocate new contexts and
-> overwrite the ctxs array, permanently leaking the previous contexts.
-> 
-> If damon_start() successfully starts the first context but fails on the
-> second, does the first context's kdamond thread remain running as an
-> orphaned thread?
+Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
+Cc: <stable@vger.kernel.org> # 6.16.x
 
-Not a blocker of this patch.  I'm separately working [1] on this.
+Other than that, looks good to me.
 
-[1] https://lore.kernel.org/20260609142119.68120-1-sj@kernel.org
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+I applied  this patch to damon/next [1] tree.  We are now quite close to next
+merge window.  We (mm community) want to focus on making mm.git more stabilized
+and therefore ready for the next merge window, rather than adding more changes
+that are not really urgent.  I understand this series is not really urgent,
+because it is causing only DAMON internal weird behavior and one time warning
+on debug kernels.
+
+Hence, Andrew might not add this patch until next -rc1 release.  In the case, I
+will request adding this to mm.git after next -rc1 release.  So, no action from
+your side is needed for now.  Let me know if you think this is really urgent or
+I'm missing something.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
