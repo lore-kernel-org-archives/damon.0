@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDCD19C566
-	for <damon@lists.linux.dev>; Wed, 10 Jun 2026 01:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006BC221277
+	for <damon@lists.linux.dev>; Wed, 10 Jun 2026 01:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781054954; cv=none; b=HU9FsQ1qk+DFzVhDFq/76N1e41ozqr7ALDJqF11X57ctj9oJapdws7/kw9z/NR7JsE2B6yQZxftM5bJxsspUvwplPKXdNzXg8hOzm1dEAkv4rjTVaBdfc61KeCRSw5HbueU/vbHO4cva8PoqDZEjhTJdqgrfloFhJHEGUJ6OA+s=
+	t=1781054990; cv=none; b=etS1wOhikm+TgIaZYw+kOSH3muD83p3/49FL91iPb8dx+z01yZ1orwnTV25Q4IUeNPZsBh3vpxgNJYS55SN3oHMnlfbrcfUEkaCUsSJNIFEhznIjam9sTjMxXC4V2h1D6hV2OKmP8UNkezNxWnFWOCVsLwXTViTZIfVsBPIpa8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781054954; c=relaxed/simple;
-	bh=jZ0iQIRv/1b1oPTnLtK4kQBoD8YGv/snc5RUSiY7JJw=;
+	s=arc-20240116; t=1781054990; c=relaxed/simple;
+	bh=RofuGc1zYnqPEhgK1v1AQHZkKZNNZgoN9SKEDjY18Q8=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=TzobFkGuRDGWz5kIbrjO/JWxJKo6mHKzka2eU1QKgYCP1fBnY+04pWqlNpDghfLokVjTzPAG5Js18h4wsWfg8/T4QClLz61Bpu1ai643t8bRCf9eZHDn3CmMLJU8YTYXon8zN5XdhWINWXTmpWZ46PuQFchyVg4jDqHHvSkstYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dZnJbNeD; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=XINJJfDhh9dG628X/DHpbT+gmdZETsRDHfe57DwL94rU0sYZYWVhlpAXwka/XqAa7elyCw0Bd3vqN3UB27gjqNZaTIplrIZPFTAi92BnGixM10ap1yNsqD/xrQTPpAEwZLEAHZbSI9q8r+18YB7c/0pLPVFS9ePwpNgVc8LRobw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aAX+PSpc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dZnJbNeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E801F00893;
-	Wed, 10 Jun 2026 01:29:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aAX+PSpc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724B21F00893;
+	Wed, 10 Jun 2026 01:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781054952;
-	bh=AHeNRpuYDWxB5iqTgjB68qOhJX6o4s8UPnEX7urjj/8=;
+	s=k20260515; t=1781054988;
+	bh=c8LX+cLRtFURkRk0VZ9+sCw88K3tGVXYssRUDUw81a0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=dZnJbNeDAKc8dqkrz9I7RBR0NBg405VWzwY7hpMgxB2g3DPiqVfnFncD8YFLxXPh7
-	 HuwnAxcwpQxSi7oMbqt62Tecibm5qaiuOEyzKWzxs0kjmLwZ1AxUvKdw4OlzBU7MlS
-	 N7/YpS8PhWQZOO6o+DWpwo0ZvFHHQ9+hnZnoXYQhIGw3LImNvKFOIICOAtZckGLf7i
-	 Lp73+DBpNh1pqZVM2wPjVb8827UvzBQs+BBQYoARUeqT9eq+3zd+ifXwLdj9nxKaFK
-	 XTjvj1p9xqeceZqoSLCZyeo5qJQhosdLLkB40T23RMtCeNZVZepnWJwmCr6prTfpAf
-	 1qPrJIcYPPc/A==
+	b=aAX+PSpcihqNPe5slxaAIRdkiCeWI/oOw4/EloM1Tgk+oqcujpom5/ULEE5XgtTYi
+	 T1KJoJuyrT/4dS5F8kR5j1jO2CnLiOAohWbqPS0aQ03ETgq35ctylGckBb1vNKWpVE
+	 TR5POB/WyAweAa6YInbsv2ptt+Y3Q6AGaAIpmR9VDlpkb/j3mVJ30R1odQg/eg2Jda
+	 xd8JzUxCPHzIrqSRnO+nR1vqySO/as1zFp96uGmIz6EslkqG82VutAUjqF+Uo5jZCB
+	 WX8pbnPgGb/G9fc/Rg2Vh8ej2kOInc3BgkXWf1jJsk4IG3cYeDxgpRi4l7utSr4Lr2
+	 zWtkuHcamIE9A==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 1/4] samples/damon/wsse: handle damon_start()
+Subject: Re: [RFC PATCH v3 2/4] samples/damon/prcl: handle damon_start()
  failure
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260610011420.3018-2-sj@kernel.org>
-References: <20260610011420.3018-2-sj@kernel.org>
+In-Reply-To: <20260610011420.3018-3-sj@kernel.org>
+References: <20260610011420.3018-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 10 Jun 2026 01:29:12 +0000
-Message-Id: <20260610012912.C3E801F00893@smtp.kernel.org>
+Date: Wed, 10 Jun 2026 01:29:48 +0000
+Message-Id: <20260610012948.724B21F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,28 +48,29 @@ Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Unhandled failure of `damon_call()` leads to a permanent memory le=
-ak of the DAMON context.
-- [High] Concurrent execution of `module_init` and sysfs store causes Use-A=
-fter-Free and Double Free on the global `ctx`.
+- [High] Loading the module dynamically with the `enabled=3DY` parameter ca=
+uses a permanent DAMON thread and context leak.
+- [Medium] The DAMON context, targets, and schemes are leaked if `damon_cal=
+l()` fails in `damon_sample_prcl_start()`.
 --
 
-commit 6215f97f729272927aafd065cdad15da2af100a8
+commit 66049e90074b43852fd5c6e982d320d3e8718fb4
 Author: SeongJae Park <sj@kernel.org>
 
-samples/damon/wsse: handle damon_start() failure
+samples/damon/prcl: handle damon_start() failure
 
-This commit fixes a memory leak in damon_sample_wsse_start() by explicitly
-freeing the DAMON context if damon_start() fails.
+This commit fixes a memory leak in damon_sample_prcl_start() by destroying
+the Damon context if damon_start() fails. This addresses an issue where
+the context is leaked when the module fails to start in exclusive mode.
 
 Link: https://lore.kernel.org/20260609145814.70163-1-sj@kernel.org
 
-> diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
-> index 799ad44439434..bbd9392ab5b36 100644
-> --- a/samples/damon/wsse.c
-> +++ b/samples/damon/wsse.c
-> @@ -87,8 +87,10 @@ static int damon_sample_wsse_start(void)
->  	target->pid =3D target_pidp;
+> diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
+> index b7c50f2656ce7..0db2598946911 100644
+> --- a/samples/damon/prcl.c
+> +++ b/samples/damon/prcl.c
+> @@ -106,8 +106,10 @@ static int damon_sample_prcl_start(void)
+>  	damon_set_schemes(ctx, &scheme, 1);
 > =20
 >  	err =3D damon_start(&ctx, 1, true);
 > -	if (err)
@@ -77,41 +78,70 @@ Link: https://lore.kernel.org/20260609145814.70163-1-sj@kernel.org
 > +		damon_destroy_ctx(ctx);
 >  		return err;
 > +	}
-
-[Severity: High]
-This is a pre-existing issue, but does this new error path leave the global
-ctx pointer dangling?
-
-If the module is loaded with enabled=3D1, damon_sample_wsse_init() calls
-damon_sample_wsse_start(). Concurrently, user space can write 0 to the
-enabled sysfs parameter, which triggers damon_sample_wsse_stop().
-
-If damon_start() encounters an error, this new path calls
-damon_destroy_ctx(ctx) but ctx is not set to NULL. A concurrent
-damon_sample_wsse_stop() would see ctx !=3D NULL and call
-damon_destroy_ctx(ctx) again, leading to a double free.
-
-Similarly, if damon_sample_wsse_stop() executes while
-damon_sample_wsse_start() is running, stop() could call
-damon_destroy_ctx(ctx) while start() is actively using it, causing a
-use-after-free.
-
+> =20
 >  	repeat_call_control.data =3D ctx;
 >  	return damon_call(ctx, &repeat_call_control);
->  }
+
+[Severity: Medium]
+This is a pre-existing issue, but does this function also leak the Damon
+context, targets, and schemes if damon_call() fails?
+
+If damon_start() succeeds, it spawns the kdamond thread. If the newly spawn=
+ed
+thread terminates early, for example due to a memory allocation failure for
+regions_score_histogram in kdamond_fn(), it sets call_controls_obsolete.
+
+If this happens before damon_call() acquires the call_controls_lock:
+
+mm/damon/core.c:damon_call() {
+    ...
+	mutex_lock(&ctx->call_controls_lock);
+	if (ctx->call_controls_obsolete) {
+		mutex_unlock(&ctx->call_controls_lock);
+		return -ECANCELED;
+	}
+    ...
+}
+
+Because damon_sample_prcl_start() returns this error directly to the caller
+without cleanup, the caller receives the error and disables the module. This
+permanently bypasses damon_sample_prcl_stop(), meaning damon_destroy_ctx()
+is never executed.
 
 [Severity: High]
-This is a pre-existing issue, but does this return path leak the newly
-created ctx if damon_call() fails?
+This is also a pre-existing issue, but does loading the module dynamically
+with the enabled=3DY parameter cause a permanent Damon thread and context l=
+eak?
 
-If damon_call() returns an error (for example, -ECANCELED if the kdamond
-thread exits immediately and sets ctx->call_controls_obsolete to true), the
-error is returned directly to the caller.
+During module load, the kernel parses parameters and invokes the module's
+parameter callback before executing the init function. If enabled=3DY is
+passed, the callback successfully calls damon_sample_prcl_start(), which
+allocates the context and starts the kdamond thread in exclusive mode.
 
-Because the kdamond thread does not free the context itself when exiting,
-is damon_destroy_ctx(ctx) also needed here to prevent leaking the DAMON
-context and its associated objects?
+Then, do_init_module() executes damon_sample_prcl_init():
+
+samples/damon/prcl.c:damon_sample_prcl_init() {
+    ...
+	if (enabled) {
+		err =3D damon_sample_prcl_start();
+		if (err)
+			return err;
+	}
+    ...
+}
+
+Because the enabled flag is still true, damon_sample_prcl_init() erroneously
+calls damon_sample_prcl_start() a second time. This unconditionally allocat=
+es
+a new ctx, overwriting the global ctx pointer and losing the reference to t=
+he
+original context.
+
+The second damon_start() call fails with -EBUSY because the first thread is
+already running in exclusive mode. The original kdamond thread is left
+running forever and its context pointer is permanently lost, locking out any
+other Damon instances on the system until reboot.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260610011420.3018=
--1-sj@kernel.org?part=3D1
+-1-sj@kernel.org?part=3D2
