@@ -1,178 +1,139 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7991A5B90
-	for <damon@lists.linux.dev>; Wed, 10 Jun 2026 05:40:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439F3403123
+	for <damon@lists.linux.dev>; Wed, 10 Jun 2026 10:42:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781070008; cv=none; b=SoYYCQ6YFhMAIoHOzp3sFOaRQC7AAoS3O89+iCzBvw0v45mY0Fvu6du9//4ilXjpe74cjYkPKx5slUtGSgIsVDxS5Jo+wZxEnYm8utr6FPvpgFiww4/lGfFRxx/U2v1tUJLJ98Md72wl8I5r13BTfgyDYq5mYnTT4ilkTsn4Zcw=
+	t=1781088129; cv=none; b=KCUmNf3g3zqLAMJVOlLEVZo7IXCnFqn41U1h9Ccx4SF1amt8Q6NapQu9b8Enb5flfN4wsoUiUjLV4cK8bMwKbtqTBF39rR0nLuldLikhRYSIdnZZuFg72QFF+fiJOqvuYEkpV/Ky4cV5ZIPT+Vz3VhedCjzgtNuyZZbvPTsZ7cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781070008; c=relaxed/simple;
-	bh=Qux6qw0K8leQGi/4WMI+uwr8oZG72FXB/rZyakTsEdE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PUBC9pOh5Xp4dDwv/RcOFzWWu6Axkr8Nexc2RNb3pAo7ExWmMoCFQdRC4OuiijMkCeK77l3nGqEqix1NzWEyFhfGbfxrw6aF6Kf4bUNu7rZg70gSztNJq9kxxI0DMdXXOpM2dS6a/gQday8pBmFw+Cv55V/jUq9QvgqZjofc9o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UMLeh+hg; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781088129; c=relaxed/simple;
+	bh=rLAKx7oZEBl4l8VQ6/vsIVEV/nqRO6+w6w+1NuugFRI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sIz9OG+NQpQ8bxTmEdPJTXgmQdvqhAtQQ4tTnSxrIgRVkZN1KgPBGKLjv5dsm8XTaS2YFvGhFBIaAPzJggDMYOC36Jtb02jO1QKppxlqOOm1MKg4szLeDugOtJNH8kBJYRc17HI4HR5qKMiTtupffoXDA3OhlNF3jZdyXOUBWXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=BPiVZ/Zc; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UMLeh+hg"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-45ef9df68bcso354183f8f.2
-        for <damon@lists.linux.dev>; Tue, 09 Jun 2026 22:40:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="BPiVZ/Zc"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-8ce9ddeddefso71210636d6.0
+        for <damon@lists.linux.dev>; Wed, 10 Jun 2026 03:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781070006; x=1781674806; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZXdRRa/zk7c1is5MErVAcERRsYOulHfSrsDOswfrhUg=;
-        b=UMLeh+hg+L4wgsjjT4fL3MupMfABn0CaphGjKxHRhxWajOuQsUHJBMdNALMgYGAsGy
-         bTYt/xOF8ouP8dMpiZdjhRfx91hYw8t8wRqEu/GiK6RalzzqFQGJj+D3r5ojla5MGtcg
-         RkFK0mBQ/FfEUGlSE6Q/Jyobyt5i+QUyQ4d/MmIeFVHqd8BMcXUmtRdurqxJqxGOFHMU
-         mvRaXutL1yktz0OYavDYWYWsZ9nSAw9BIWaq8q7fss7IjH7g7l9lYOnIpe5W4NzoyiYC
-         zPRmjXJP1Acnp3pSSBPDTODjpwWtV0/tisK9vAGLWHAy2wTnw57a5s3cpH87p9xFNT0O
-         Mq1w==
+        d=gourry.net; s=google; t=1781088121; x=1781692921; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pgx1xgYrFcSjqIUoyhFqGxYUzhtvYzBpQalCqkbKQaU=;
+        b=BPiVZ/ZcsPpZMH/Byx7bgY6XETr4CxpBcZb/WcryIGZWO3OUE1JmmHkWJeNTMD91/7
+         u3tRGqggQXJif+IYT7WJaIoMspm4F61Y493NWdOA0zaxzpz9BaTHw1aO3SFse8fsIzIY
+         lrTF6kXjWvwlA9q+sld7jsSC8t3bNvYTcAbb+bl5D0CcBRrST756DFOf89LKSGuyhYSV
+         QKmg78aIl/8LPIpdHjKtQnQuiRWzi17HTvQARoh/wrmZ9y/j5SWkITBlCoLbQ42E73dl
+         lkmLALGKfZ08yuLkgPcd5Gm52gSgB93bDbjr0s4eyzYiLBbL/0KJugPR9b+wjjTdl9aQ
+         OKjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781070006; x=1781674806;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZXdRRa/zk7c1is5MErVAcERRsYOulHfSrsDOswfrhUg=;
-        b=mP4dRL75+gi4C61Nv2wDcmqSB2oal2hd2JDEcaX2tW7YsROACnwVCS6fDyhvzvvlgN
-         iOABRIAn3ZwhtZdCzaF3P3Izgqdj8kdtA7llGql8gNC5WGOVHvyjfpblkZ4KE1Z8GWE6
-         O4nLoPUSwm4d/U26gcMUrRTdnZQ4QA2yhDQxdk1BuRv8/g4iyP4FBEtlh/r6cmTZmkXV
-         I1F7zdKeAXa3sCKlnSfymQucNQO+Tb7pCQk498reeO+HKNgOtcK3sotXElpkVZpXTE6a
-         SIIuzNzB7YzUhWwGr6RrBubrO06knKt5AT/4sVmGVlBXwqt8qd8w/t11D+POYUrDS8b7
-         y/Vw==
-X-Forwarded-Encrypted: i=1; AFNElJ8HdubsEFRtZrhH7wcCloGEAkg6B6AmNlYJocetRNVWOnsdsbEvo3S3OHznXuot9k2O8HZjXg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwuEskccazr2RZsvUh0WghtyIZcZpY6hmyo06cqtCURia6rHTCN
-	AICfkx0tXaFvwMGywPHSQROoVBuUNBsf2kwPvCRbdmFcMfAU3n9ZM2JT
-X-Gm-Gg: Acq92OGaBO/8Vby8nV3CoqXwlfukjcQTFSU+91RqMO8uDp+kSLxX50p12PpUN/6Stl6
-	kvCtHw8IJFNTUurQ5lfrugmqL/gC4hyZ4B430tLy0LT7WBT7WQTmBQmxpJRwjAwnVsLUODgPH+7
-	kTBUbboL/wR7HD10IwzzNPWrBd5BXZl5wLT7q8O2pAsrg9eOq64qeP1raEnIMjtK4q7AolkT75J
-	6bbvj8MPrOpW6XXrbCgGTh6o0zL1Gr/4CeiYEqXV4l99GVK+8t146+yE7WTv+vu5yO69s18W6i3
-	wkBhO7bc1RUGKsSovLFlB26TIUxN7EnHRNV4jra6nNXmgkrLGa8T/7lUsp9bw8g3ZF3QENwuHgk
-	C23I43sgVuY4Oos+XOZLHd9zSgmBffvSSkLcyYPigFioNDZEqScQ3Dx4+hfJjxKIfYNCpz4u+SY
-	Qw/Tz6AOWQXI1/i1rT6ARoi70dfmE7ztbw9uDVnkfBsmIRogll9sfUwpTZ3QS9F+860N3RKuFgA
-	5wNONZ12ESFPN+0kETdYC57bzOEvragMU8K12AaI4tgz6x0
-X-Received: by 2002:a05:6000:70f:b0:45e:8a08:93fa with SMTP id ffacd0b85a97d-460566c1c21mr3027030f8f.4.1781070005579;
-        Tue, 09 Jun 2026 22:40:05 -0700 (PDT)
-Received: from doehyun-dev.pradel.rg.cispa.de (x06.xlate.fw.cispa.de. [195.37.157.6])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2f2710sm53831009f8f.14.2026.06.09.22.40.04
+        d=1e100.net; s=20251104; t=1781088121; x=1781692921;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pgx1xgYrFcSjqIUoyhFqGxYUzhtvYzBpQalCqkbKQaU=;
+        b=b6MEy0dBZo4b53wuiJfwGW7lefqkBTvXSBBdqPELaGe6SI8rCyQWgDq7nMLEP39BiW
+         C24148Bpd9B7M9qNZI7v+jWN+KeQgBlMJVJaEcxDuXDX2MSXj8lJx0ju+CWPfWnM7YCK
+         V0/zqnhoXipTLk56g8/RRFWSROI+5fWMCHC8tLztv9aXWo25EzrBKqvGW1aw2Q4gDFd6
+         8y/PpPOz0tc1v4coc78xNROB2M30LeEAdT0dJmZ9yRL58VSgu5uJ4yGpbGAbQBJTXxOQ
+         uDr9tLKvYQKS/5EvwGdSRQWj3olXFgpWcHvnkpvxN52Q+mfG/1zh85qLjK6kjy7jGeFu
+         ZEZw==
+X-Forwarded-Encrypted: i=1; AFNElJ8Rs1LzeV/PaWrrIhvqZKybPKWFymgjBd0vk/WkE6dYVY0EMbVVR65g8TAWLaLDho1Zt8/rFA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyJYtNDk7mYReS7x93p/rJ+1/2fVpFAIRpd8CEbhYp7V8WlhrEi
+	MClJAAPZqzNT0+iWQnjmcjAYRXiqawpLwMqClvDYde2614UH3uWaiyblA+Wd1iL+qKo=
+X-Gm-Gg: Acq92OGMtO4oRjfXCpvPsDkqOMwto1lLuxUh+idQD0vyrjYYNCgxpI0daGc85+yi+OD
+	10SLp1quUKH8J0fehYuLzjCFJyLs7V8NLgV26/bxRhdbedjttkidXW/ed/RmKLfCgiTDq4VkxKG
+	9sjkCYTNtOpLREyH2SmuDIQIw3qUFyefIPSACNOG3B4BFsrfHOJ+fWgwlbfu3Q38bxDFuCk+Q1h
+	tIer3Jk/G0BtNfPHR8qE/JMUokhw7yRQZpDrs8QoVC0A871Ov9i33yrdzGG7UxMlvBHTDxs0Qi/
+	e3eYCn0ciYB6g2H/a4m+RXq4zJdiOvA+adUC+YHOpYyqOrP8ecp8OMuiHiGnkkv3p/SyYP55gew
+	d+qzbbdpko/UST88TqBCZc1Hs2iF9rvBI3MEWspXaTxzew/N4Uikyln7yc4FkM8npSSJIU9lgtA
+	BhZRDntubC3JM9LKuWmLaQr5rr62dzH02+gJvMsZmIaBXc3ogIsqyIZsr1UlcNflJfzrRyVL2K9
+	4HQvosZx0wlcYOS3Q==
+X-Received: by 2002:a05:6214:c68:b0:8b5:6654:7556 with SMTP id 6a1803df08f44-8cee63e377emr394580386d6.42.1781088120984;
+        Wed, 10 Jun 2026 03:42:00 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cecd06e4d6sm231860136d6.36.2026.06.10.03.41.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 22:40:05 -0700 (PDT)
-From: Doehyun Baek <doehyunbaek@gmail.com>
-To: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Cc: Doehyun Baek <doehyunbaek@gmail.com>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v5] Docs/{admin-guide,mm}/damon: fix DAMON documentation details
-Date: Wed, 10 Jun 2026 05:39:50 +0000
-Message-ID: <20260610053951.553739-1-doehyunbaek@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        Wed, 10 Jun 2026 03:41:59 -0700 (PDT)
+Date: Wed, 10 Jun 2026 06:41:57 -0400
+From: Gregory Price <gourry@gourry.net>
+To: Balbir Singh <balbirs@nvidia.com>
+Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+	linux-cxl@vger.kernel.org, cgroups@vger.kernel.org,
+	linux-mm@kvack.org, linux-trace-kernel@vger.kernel.org,
+	damon@lists.linux.dev, kernel-team@meta.com,
+	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
+	dave@stgolabs.net, jonathan.cameron@huawei.com,
+	dave.jiang@intel.com, alison.schofield@intel.com,
+	vishal.l.verma@intel.com, ira.weiny@intel.com,
+	dan.j.williams@intel.com, longman@redhat.com,
+	akpm@linux-foundation.org, david@kernel.org,
+	lorenzo.stoakes@oracle.com, Liam.Howlett@oracle.com, vbabka@suse.cz,
+	rppt@kernel.org, surenb@google.com, mhocko@suse.com,
+	osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
+	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
+	ying.huang@linux.alibaba.com, apopple@nvidia.com,
+	axelrasmussen@google.com, yuanchu@google.com, weixugc@google.com,
+	yury.norov@gmail.com, linux@rasmusvillemoes.dk, mhiramat@kernel.org,
+	mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
+	mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
+	baolin.wang@linux.alibaba.com, npache@redhat.com,
+	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
+	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
+	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
+	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
+	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
+	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
+	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
+	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
+Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
+ Compressed RAM)
+Message-ID: <aik_ddHymus2DJ6D@gourry-fedora-PF4VCD3F>
+References: <20260222084842.1824063-1-gourry@gourry.net>
+ <ag6XyvxR-NU5rGn-@parvat>
+ <ahOqzpzAua96HVkn@gourry-fedora-PF4VCD3F>
+ <ah47NNhuiClgGCdn@parvat>
+ <ah6bDNxlB1zBUnzN@gourry-fedora-PF4VCD3F>
+ <ah-0CyZurn5D1ezY@parvat>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ah-0CyZurn5D1ezY@parvat>
 
-Fix minor DAMON documentation issues.  Correct the sysfs scheme file name
-apply_interval_us, the DAMON_STAT module count, a malformed reference, a
-misplaced label indentation, and a few typos.
+On Wed, Jun 03, 2026 at 03:00:01PM +1000, Balbir Singh wrote:
+> > 
+> >    __GFP_THISNODE cannot be overloaded to do anything useful here.
+> 
+> Let me clarify, I meant to say, let's use a nodemask for allocation
+> and __GFP_THISNODE gets us to the node we desire, if that is the only
+> node. My earlier comment might not have been clear.
+> 
 
-Signed-off-by: Doehyun Baek <doehyunbaek@gmail.com>
----
-Changes from v4:
-- Rebased on mm-new.
-- Sent the English documentation fixes as a standalone patch.
-- Dropped the Chinese translation patch from this submission.
+I've been tested an stripped back patch set where I drop all FALLBACK
+entries for private nodes (including for itself) and only keep the
+NOFALLBACK entry for private nodes.
 
- Documentation/admin-guide/mm/damon/usage.rst |  8 ++++----
- Documentation/mm/damon/design.rst            | 12 ++++++------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+This effectively isolates the nodes for any allocation without
+__GFP_THISNODE.
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index 011296f1e7c2..b2649ea011f9 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -246,7 +246,7 @@ writing to and reading from the files.
- Under ``nr_regions`` directory, two files for the lower-bound and upper-bound
- of DAMON's monitoring regions (``min`` and ``max``, respectively), which
- controls the monitoring overhead, exist.  You can set and get the values by
--writing to and rading from the files.
-+writing to and reading from the files.
- 
- For more details about the intervals and monitoring regions range, please refer
- to the Design document (:doc:`/mm/damon/design`).
-@@ -264,7 +264,7 @@ Please refer to  the :ref:`design document of the feature
- <damon_design_monitoring_intervals_autotuning>` for the internal of the tuning
- mechanism.  Reading and writing the four files under ``intervals_goal``
- directory shows and updates the tuning parameters that described in the
--:ref:design doc <damon_design_monitoring_intervals_autotuning>` with the same
-+:ref:`design doc <damon_design_monitoring_intervals_autotuning>` with the same
- names.  The tuning starts with the user-set ``sample_us`` and ``aggr_us``.  The
- tuning-applied current values of the two intervals can be read from the
- ``sample_us`` and ``aggr_us`` files after writing ``update_tuned_intervals`` to
-@@ -377,7 +377,7 @@ schemes/<N>/
- In each scheme directory, nine directories (``access_pattern``, ``quotas``,
- ``watermarks``, ``core_filters``, ``ops_filters``, ``filters``, ``dests``,
- ``stats``, and ``tried_regions``) and three files (``action``, ``target_nid``
--and ``apply_interval``) exist.
-+and ``apply_interval_us``) exist.
- 
- The ``action`` file is for setting and getting the scheme's :ref:`action
- <damon_design_damos_action>`.  The keywords that can be written to and read
-@@ -743,7 +743,7 @@ counter).  Finally the tenth field (``X``) shows the ``age`` of the region
- (refer to :ref:`design <damon_design_age_tracking>` for more details of the
- counter).
- 
--If the event was ``damon:damos_beofre_apply``, the ``perf script`` output would
-+If the event was ``damon:damos_before_apply``, the ``perf script`` output would
- be somewhat like below::
- 
-     kdamond.0 47293 [000] 80801.060214: damon:damos_before_apply: ctx_idx=0 scheme_idx=0 target_idx=0 nr_regions=11 121932607488-135128711168: 0 136
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 2da7ca0d3d17..c16a3bb288d0 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -86,7 +86,7 @@ To know how user-space can do the configuration via :ref:`DAMON sysfs interface
- documentation.
- 
- 
-- .. _damon_design_vaddr_target_regions_construction:
-+.. _damon_design_vaddr_target_regions_construction:
- 
- VMA-based Target Address Range Construction
- -------------------------------------------
-@@ -930,11 +930,11 @@ control parameters for the usage would also need to be optimized for the
- purpose.
- 
- To support such cases, yet more DAMON API user kernel modules that provide more
--simple and optimized user space interfaces are available.  Currently, two
--modules for proactive reclamation and LRU lists manipulation are provided.  For
--more detail, please read the usage documents for those
--(:doc:`/admin-guide/mm/damon/stat`, :doc:`/admin-guide/mm/damon/reclaim` and
--:doc:`/admin-guide/mm/damon/lru_sort`).
-+simple and optimized user space interfaces are available.  Currently, three
-+modules for access monitoring statistics, proactive reclamation, and LRU lists
-+manipulation are provided.  For more detail, please read the usage documents for
-+those (:doc:`/admin-guide/mm/damon/stat`, :doc:`/admin-guide/mm/damon/reclaim`
-+and :doc:`/admin-guide/mm/damon/lru_sort`).
- 
- .. _damon_design_special_purpose_modules_exclusivity:
- 
+This also precludes these nodes from ever using non-mbind mempolicies,
+which I think is a completely reasonable compromise and something I was
+already expecting we would do.
 
-base-commit: ce70d5abbf4f9930a07eddb06f40a0ea3494e33a
--- 
-2.43.0
+Notably: slub.c injects __GFP_THISNODE internally on behalf of kmalloc,
+which causes spillage into private nodes because slub allows private
+nodes in its mask.  I think this is fixable.
 
+I have to inspect some other __GFP_THISNODE users (hugetlb, some arch
+code, etc), but it seems like fully dropping the FALLBACK entries and
+requiring __GFP_THISNODE might be sufficient.
+
+~Gregory
