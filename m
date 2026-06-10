@@ -1,166 +1,303 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8290A4192F9;
-	Wed, 10 Jun 2026 15:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC3134389A
+	for <damon@lists.linux.dev>; Wed, 10 Jun 2026 16:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781103655; cv=none; b=hk+tFqXlLemceZQVYljgsG32yRsxJVqZZ+eRNCZca5VCmdBguVWnx0Z/GTYUCS0UZ2N36YYdoTDElL6eWk9mTixQa/FoI1fqg1u2kOX8VFQCjgZ58Y6fVud4p+4vcHhf9+6VH0KkxLdblEjKFreFOgrXYMc3s68dT1SBOMQpHs8=
+	t=1781109460; cv=none; b=ViVRpjWn0k41Rax+1YtWTYxxQAKAqzj6yGiVEIWGtDSeVMcX6pkdaFjNUeucpdjxbZ0E3N1Xz76M/1wJd4/jfjoGglW1Dtgh5a+QxWegGqzEF0uOBuchGkRg3gMcFJkvPPjkoXNDavtMsfbNo2NpM038drMHQYIcCg7KO0w1ejk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781103655; c=relaxed/simple;
-	bh=cdfu6a8174Wa007irlBxGZAyGscAfwNswZpYHIKVIrc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YH5J753uageGQEFrQ5ii/aGodSp2tc/lIxCl2d/XQB09YE5NAtqGcBDKZR54Mhri3g/4ARfq23MrRcrtZkQa3JuHVfj/SpllUywbl4vbl5ETzAtc6VsCzIF+x7rJG8+rJaSGmHd4i/SgfBZiB3cr79nsQ0QBJffpV9s9VWyzSUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lHjoTr7s; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781109460; c=relaxed/simple;
+	bh=ubW61os22iPHl+RFlnY1FEaETS2knsxVWz5JYXskkiE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QGW3ss0byKRqh8DD4ah9DKZDzIIQ0VqpsT5poBN2twJTtzpgMwJqTbv8DmNcBrBmMj6vcYzF/nL7YPW4h4cheFBzxs9P6OE02L0Ddnxo0SmeAkh3CTPtdQzA8JG0uEA2eko6FahyVPB4a7EWprjMs6ZlDF6D2blf9W3ADgpD0fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=C3zlPwXm; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lHjoTr7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B991F00898;
-	Wed, 10 Jun 2026 15:00:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781103654;
-	bh=RTuU9FrMu80USEPHZIsR86q72HI9h9O4g+u2c63dTjM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=lHjoTr7sIlcC9HNescoIpEPVQhPYNXrrn8kuYOlfh41Cd/1Outqp9FnHfcUeTMY0W
-	 iEkxlDCU3g121k8qL8QB4vVFyvlUqmahDpoM0wbD8edNTZvDyu4kC9L/+4efEQZRg9
-	 9ug6ej2V7Wp/wLNPpr+vhhwio/AUSHk/cMZ3X0VOJN7l2YevgVwJt4HvwPKD5azCJG
-	 3SsQehi0gO+JbVNmV9/lYMQEJp8KkZYPn1kJg0aUkJmJdAkjrHcgY+pbbeBIYzyBH6
-	 dVPiOO+/ZBtF/BOxpPF09c9LCbWa+wijIvDfgmdiu0fzJngBcN+9tIejaPyPefGGlK
-	 1ZJJoJQDTfZsg==
-Message-ID: <c1b66e7a-bb95-4295-8193-55ceadaaa578@kernel.org>
-Date: Wed, 10 Jun 2026 17:00:33 +0200
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="C3zlPwXm"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-5177945a279so74248341cf.0
+        for <damon@lists.linux.dev>; Wed, 10 Jun 2026 09:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1781109458; x=1781714258; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SYADJHUyTsZxeNPAhkpfIZ+IyBSWkrAmnBG2JAxdu0A=;
+        b=C3zlPwXm87fl/ZmYjniJlPWK03KJCGchQYCQcm6HV4iBEg+bocCLXyNPZsvbUchFCH
+         +srGXeS/Ip0NvCYEJyc8Xg8vRUfXNJXnrzOfDF5ZFJWX50hB3RmXlNOijckmmLf8IucE
+         RbEVZThA295fbg3G1zPOjrmxmBFcwFs2J3JhStEEE4RfRFshYw1aDA+2Lo/ixoqiAyZi
+         cQFd2nYlgzKBqweNhHAgnlvnYDxFyPJ1TqJLOan1KrASHsxNb/HTmVQQ2YE1/PcAZISk
+         trATdOppXBdP7XuI8Z1a2iIbXf8TMWxYDgVTVofVAMoo9tyADUJ58IJ1T/rFlpooK03n
+         c7PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781109458; x=1781714258;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SYADJHUyTsZxeNPAhkpfIZ+IyBSWkrAmnBG2JAxdu0A=;
+        b=PHJWWp5WSjerUR7TLvyxhINWCtraDbRF/Wq6VBZOBkrBcRkfLTyMxLMhuL7EeLQovg
+         n8G28tMQt2I+RRmmRMivN31uJaOqSytmib5+MIbNvt5MI6RJFSL/mnE815cMt78Y5Pb6
+         qEtxuBkU+31n3bUX6AZr4YjTlK9fTS3ORbu24lG3SvlVANbLyFSn0baiQrLe0KtP7E6Q
+         5nS1zQEsSodqkBRssyRxV7KjWEgQuENYk5DehCraajGqi38l7Q9UyQMEyV60d7Zcc0BZ
+         U+1lnk7eS0i4LeDiLNYtW3l8b3t0W24Du4sHTfakQVCjRb0S74C8N7Vhrp/AX2hyTICo
+         TYww==
+X-Forwarded-Encrypted: i=1; AFNElJ+HgHqR+Zb6oTReXhDGHnK654Q/emF0LBzS5mOGRx5NVG5tx8OXu0WVgIq9s7RM1v0lsIB1/A==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxOP10/qNJ2S/18S3Doe6BGSfAG7BC9mx0ApMwPck8tImnHStcI
+	89DXDSaIiMjGY1an8HT85TAA7Si6q5ny/hNPnVXXtzseKUVIYFuJi5oa9xIR7477Xno=
+X-Gm-Gg: Acq92OFPtJgyeCYrSIK2pTuSGu9guA/9xHfLvjdzVd9wu9MTDvTBwD9gr916riu/7rX
+	6Q585Zq0YzHDExyEyzu4fk9p9gRNt/2a7emSUM7VDb29Op7S2WAwqatr6px+7xtQ1Yb+G5ULQwI
+	brd53hO3eHSRvvJcdbEOziMn4MWYUZqj1H6g2vX5KkV43rbph3mB6Pw4lYiP9XZ7NWGrPiR82oa
+	E60dj2rHPyfXwwotnWrwuWQHyMv0LnVnPcR9Hd+HpVY9p8K6Z/v547u0xC+BSNpm8TCYCDwmEX6
+	YS7X7YVVcj+uvuBhE4n5bbHEjp66iTmTcuoTyPW57j1i7/z7U8S+DqIaLDbyfhOLW0tsXp8KjzS
+	AWJiENkhyhJGFD6vQXthSfz7d4vR8Jc61g4PTNjfIAOZjEZkxGG7q3in2SSOZ4SfU2yltF1fk9s
+	JCZ2v+i/8rr/G+Cz4s6RZIJKLNYijQvIGBhBsaV3Y9J4ALs+J2XK9WiNcIWCY/9Bw2OiMsJm5eQ
+	MU+XoJ9mptFJq9V2g==
+X-Received: by 2002:a05:622a:6205:b0:517:85e1:38a2 with SMTP id d75a77b69052e-51795c22a42mr365134121cf.31.1781109457374;
+        Wed, 10 Jun 2026 09:37:37 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8cecd06b701sm233484876d6.34.2026.06.10.09.37.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jun 2026 09:37:36 -0700 (PDT)
+Date: Wed, 10 Jun 2026 12:37:34 -0400
+From: Gregory Price <gourry@gourry.net>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: Balbir Singh <balbirs@nvidia.com>, lsf-pc@lists.linux-foundation.org,
+	linux-kernel@vger.kernel.org, linux-cxl@vger.kernel.org,
+	cgroups@vger.kernel.org, linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
+	kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
+	dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
+	dave.jiang@intel.com, alison.schofield@intel.com,
+	vishal.l.verma@intel.com, ira.weiny@intel.com,
+	dan.j.williams@intel.com, longman@redhat.com,
+	akpm@linux-foundation.org, lorenzo.stoakes@oracle.com,
+	Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org,
+	surenb@google.com, mhocko@suse.com, osalvador@suse.de,
+	ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com,
+	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
+	apopple@nvidia.com, axelrasmussen@google.com, yuanchu@google.com,
+	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
+	mhiramat@kernel.org, mathieu.desnoyers@efficios.com, tj@kernel.org,
+	hannes@cmpxchg.org, mkoutny@suse.com, jackmanb@google.com,
+	sj@kernel.org, baolin.wang@linux.alibaba.com, npache@redhat.com,
+	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org,
+	lance.yang@linux.dev, muchun.song@linux.dev, xu.xin16@zte.com.cn,
+	chengming.zhou@linux.dev, jannh@google.com, linmiaohe@huawei.com,
+	nao.horiguchi@gmail.com, pfalcato@suse.de, rientjes@google.com,
+	shakeel.butt@linux.dev, riel@surriel.com, harry.yoo@oracle.com,
+	cl@gentwo.org, roman.gushchin@linux.dev, chrisl@kernel.org,
+	kasong@tencent.com, shikemeng@huaweicloud.com, nphamcs@gmail.com,
+	bhe@redhat.com, zhengqi.arch@bytedance.com, terry.bowman@amd.com
+Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
+ Compressed RAM)
+Message-ID: <aimSzvoJDrpeQsmM@gourry-fedora-PF4VCD3F>
+References: <20260222084842.1824063-1-gourry@gourry.net>
+ <ag6XyvxR-NU5rGn-@parvat>
+ <ahOqzpzAua96HVkn@gourry-fedora-PF4VCD3F>
+ <ah47NNhuiClgGCdn@parvat>
+ <ah6bDNxlB1zBUnzN@gourry-fedora-PF4VCD3F>
+ <ah-0CyZurn5D1ezY@parvat>
+ <aik_ddHymus2DJ6D@gourry-fedora-PF4VCD3F>
+ <c1b66e7a-bb95-4295-8193-55ceadaaa578@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory Nodes (w/
- Compressed RAM)
-To: Gregory Price <gourry@gourry.net>, Balbir Singh <balbirs@nvidia.com>
-Cc: lsf-pc@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
- linux-cxl@vger.kernel.org, cgroups@vger.kernel.org, linux-mm@kvack.org,
- linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev,
- kernel-team@meta.com, gregkh@linuxfoundation.org, rafael@kernel.org,
- dakr@kernel.org, dave@stgolabs.net, jonathan.cameron@huawei.com,
- dave.jiang@intel.com, alison.schofield@intel.com, vishal.l.verma@intel.com,
- ira.weiny@intel.com, dan.j.williams@intel.com, longman@redhat.com,
- akpm@linux-foundation.org, lorenzo.stoakes@oracle.com,
- Liam.Howlett@oracle.com, vbabka@suse.cz, rppt@kernel.org, surenb@google.com,
- mhocko@suse.com, osalvador@suse.de, ziy@nvidia.com, matthew.brost@intel.com,
- joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com,
- ying.huang@linux.alibaba.com, apopple@nvidia.com, axelrasmussen@google.com,
- yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com,
- linux@rasmusvillemoes.dk, mhiramat@kernel.org,
- mathieu.desnoyers@efficios.com, tj@kernel.org, hannes@cmpxchg.org,
- mkoutny@suse.com, jackmanb@google.com, sj@kernel.org,
- baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
- dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
- muchun.song@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev,
- jannh@google.com, linmiaohe@huawei.com, nao.horiguchi@gmail.com,
- pfalcato@suse.de, rientjes@google.com, shakeel.butt@linux.dev,
- riel@surriel.com, harry.yoo@oracle.com, cl@gentwo.org,
- roman.gushchin@linux.dev, chrisl@kernel.org, kasong@tencent.com,
- shikemeng@huaweicloud.com, nphamcs@gmail.com, bhe@redhat.com,
- zhengqi.arch@bytedance.com, terry.bowman@amd.com
-References: <20260222084842.1824063-1-gourry@gourry.net>
- <ag6XyvxR-NU5rGn-@parvat> <ahOqzpzAua96HVkn@gourry-fedora-PF4VCD3F>
- <ah47NNhuiClgGCdn@parvat> <ah6bDNxlB1zBUnzN@gourry-fedora-PF4VCD3F>
- <ah-0CyZurn5D1ezY@parvat> <aik_ddHymus2DJ6D@gourry-fedora-PF4VCD3F>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <aik_ddHymus2DJ6D@gourry-fedora-PF4VCD3F>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c1b66e7a-bb95-4295-8193-55ceadaaa578@kernel.org>
 
-On 6/10/26 12:41, Gregory Price wrote:
-> On Wed, Jun 03, 2026 at 03:00:01PM +1000, Balbir Singh wrote:
->>>
->>>    __GFP_THISNODE cannot be overloaded to do anything useful here.
->>
->> Let me clarify, I meant to say, let's use a nodemask for allocation
->> and __GFP_THISNODE gets us to the node we desire, if that is the only
->> node. My earlier comment might not have been clear.
->>
+On Wed, Jun 10, 2026 at 05:00:33PM +0200, David Hildenbrand (Arm) wrote:
+> On 6/10/26 12:41, Gregory Price wrote:
+> > On Wed, Jun 03, 2026 at 03:00:01PM +1000, Balbir Singh wrote:
+> > 
+> > Notably: slub.c injects __GFP_THISNODE internally on behalf of kmalloc,
+> > which causes spillage into private nodes because slub allows private
+> > nodes in its mask.  I think this is fixable.
+> > 
+> > I have to inspect some other __GFP_THISNODE users (hugetlb, some arch
+> > code, etc), but it seems like fully dropping the FALLBACK entries and
+> > requiring __GFP_THISNODE might be sufficient.
 > 
-> I've been tested an stripped back patch set where I drop all FALLBACK
-> entries for private nodes (including for itself) and only keep the
-> NOFALLBACK entry for private nodes.
+> Sorry, I haven't been able to follow up so far, and not sure if that's what you
+> are discussing here ...
 > 
-> This effectively isolates the nodes for any allocation without
-> __GFP_THISNODE.
+> After the LSF/MM session, I was wondering, whether if we focus on allowing only
+> folios allocations to end up on private memory nodes for now: could the
+> __GFP_THISNODE approach work there?
 > 
-> This also precludes these nodes from ever using non-mbind mempolicies,
-> which I think is a completely reasonable compromise and something I was
-> already expecting we would do.
+> Essentially, disallow any allocations on non-folio paths, and allow folio
+> allocation only with __GFP_THISNODE set.
 > 
-> Notably: slub.c injects __GFP_THISNODE internally on behalf of kmalloc,
-> which causes spillage into private nodes because slub allows private
-> nodes in its mask.  I think this is fixable.
+> I have to find time to read the other mails in this thread, on my todo list.
 > 
-> I have to inspect some other __GFP_THISNODE users (hugetlb, some arch
-> code, etc), but it seems like fully dropping the FALLBACK entries and
-> requiring __GFP_THISNODE might be sufficient.
+> So sorry if that is precisely what is being discussed here.
+> 
 
-Sorry, I haven't been able to follow up so far, and not sure if that's what you
-are discussing here ...
+So, I remember this being asked, and I didn't fully grok the request.
 
-After the LSF/MM session, I was wondering, whether if we focus on allowing only
-folios allocations to end up on private memory nodes for now: could the
-__GFP_THISNODE approach work there?
+I'm still not sure I fully understand the question, so apologies if I'm
+answer the wrong things here.
 
-Essentially, disallow any allocations on non-folio paths, and allow folio
-allocation only with __GFP_THISNODE set.
+I understand this question in two ways:
 
-I have to find time to read the other mails in this thread, on my todo list.
+  1) Can we disallow PAGE allocation and limit this to FOLIO allocation
+  2) Can we disallow [Feature] (i.e. slab) allocation targeting the node.
 
-So sorry if that is precisely what is being discussed here.
 
--- 
-Cheers,
+1) Can we disallow page allocation and limit this to folios?
 
-David
+No, I don't think so.
+
+Folio allocations are written in terms of page allocations, we would
+have to rewrite folio allocation interfaces and introduce a bunch of
+boilerplate for the sake of this.
+
+struct page *__alloc_pages_noprof(gfp_t gfp, unsigned int order,
+                int preferred_nid, nodemask_t *nodemask)
+{
+        struct page *page;
+
+        page = __alloc_frozen_pages_noprof(gfp, order, preferred_nid, nodemask);
+        if (page)
+                set_page_refcounted(page);
+        return page;
+}
+
+struct folio *__folio_alloc_noprof(gfp_t gfp, unsigned int order, int preferred_nid,
+                nodemask_t *nodemask)
+{
+        struct page *page = __alloc_pages_noprof(gfp | __GFP_COMP, order,
+                                        preferred_nid, nodemask);
+	return page_rmappable_folio(page);
+}
+
+At the end of the day, this all reduces to `get_pages_from_freelist`,
+and at that level we don't really care about folio vs page.
+
+__GFP_COMP is insufficient to differentiate between a non-folio compound
+page and a folio, and __GFP_COMP is passed into __alloc_pages_*
+interfaces all over the kernel.
+
+Trying to detach these paths things seems like a horrible rats nest /
+not feasible / will create a lot of boilerplate for little value.
+
+(I did not fully understand this request when it was asked, I do
+ not fully understand this request not, please let me know if I
+ have misunderstood what you were asking).
+
+
+
+2) Can we disallow SLAB allocation.
+
+Yeah, but I think a better question is whether there's a difference
+between alloc_pages_node() and kmalloc_node() when it all just sinks
+to the same fundamental code in mm/page_alloc.c
+
+Maybe there's an argument for something like NP_OPT_KMALLOC (allow slab
+allocations on the private node w/ __GFP_THISNODE)
+
+On my current set, I don't implement any explicit filtering at all in
+mm/page_alloc.c - the filtering is a function of the nodes not being
+present in the FALLBACK list and only having a NOFALLBACK list.
+
+What __GFP_THISNODE actually does under the hood is just switch
+which zone list (FALLBACK vs NOFALLBACK) is used for the target node.
+
+For isolation w/o __GFP_PRIVATE, we're removing N_MEMORY_PRIVATE nodes
+from *their own FALLBACK* list and only adding them to their NOFALLBACK
+list.  That means to reach a private node you MUST use __GFP_THISNODE.
+
+I realize this is confusing, but essentially we don't have to modify
+mm/page_alloc.c to get the __GFP_THISNODE filtering, we get this from
+the fallback/nofallback list construction.
+
+
+Ok, so how does this flush out in practice - and why do I call this
+filtering mechanism fragile?
+
+consider kmalloc_node() and __slab_alloc():
+
+kmalloc_node(...)
+  └─ ___slab_alloc()     mm/slub.c:4406   pc.flags |= __GFP_THISNODE
+      └─ new_slab(s, pc.flags, node)
+          └─ allocate_slab(s, flags, node)
+              └─ alloc_slab_page(flags, node, oo, …)
+                  └─ __alloc_frozen_pages(flags, order, node, NULL);
+
+Slab silently upgrades the page allocator flags here to include
+__GFP_THISNODE - even if the user didn't request that behavior.
+
+This is exactly the kind of "spillage" I said was hard to police at LSF.
+
+Without __GFP_PRIVATE, we have to keep an eye on what around the kernel
+is using __GFP_THISNODE and how.
+
+For mm/slub.c we can choose to do one of thwo things
+
+  1) 100% refuse slab allocations on private nodes, i.e.:
+
+     kmalloc_node(..., private_nid, __GFP_THISNODE)
+
+     And will fail (return NULL).
+
+  or
+
+  2) Do not upgrade private-node slab requests w/ __GFP_THISNODE
+     
+     This allows kmalloc_node() to work the same as folio_alloc()
+     or alloc_pages() interfaces (__GFP_THISNODE is the key), with
+     the understanding that any __GFP_THISNODE user
+
+We can opt these nodes into slab/kmalloc with a NP_OPT_SLAB
+if the owner wants kmalloc_node(), with the understanding that any
+caller using __GFP_THISNODE may get access.
+
+That's the kind of fragility I was trying to avoid.
+
+
+That said, in practice, I have found that basic kernel operations don't
+generally target use kmalloc_node() w/ __GFP_THISNODE - there's just
+nothing to prevent anyone from doing so.
+
+So this seems promising...
+And then theres arch/powerpc/platforms/powernv/memtrace.c
+
+static u64 memtrace_alloc_node(u32 nid, u64 size)
+{
+	... snip ...
+        page = alloc_contig_pages(nr_pages, GFP_KERNEL | __GFP_THISNODE |
+                                  __GFP_NOWARN | __GFP_ZERO, nid, NULL);
+	... snip ...
+}
+
+static int memtrace_init_regions_runtime(u64 size)
+{
+	... snip ...
+        for_each_online_node(nid) {
+                m = memtrace_alloc_node(nid, size);
+	... snip ...
+}
+
+static int memtrace_enable_set(void *data, u64 val)
+{
+	... snip ...
+        if (memtrace_init_regions_runtime(val))
+                goto out_unlock;
+	... snip ...
+}
+
+This is the *exact* pattern I said would be hard to police - and it
+doesn't look like a bug, just not informed that private nodes exist.
+
+This is why I'm concerned with trying to depend on __GFP_THISNODE as the
+filtering function.
+
+That said, the number of __GFP_THISNODE users is very limited
+kernel-wide, so maybe that's an acceptable maintenance burden?
+
+~Gregory
