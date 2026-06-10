@@ -1,99 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C428F235BE2;
-	Wed, 10 Jun 2026 01:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from azure-sdnproxy.icoremail.net (azure-sdnproxy.icoremail.net [13.76.78.106])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA5719D8BC
+	for <damon@lists.linux.dev>; Wed, 10 Jun 2026 01:15:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.76.78.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781054071; cv=none; b=rSDNYAsseEqqxGYtCkOov0qNzeuVX+zGt9+d2XFzw2fFVqlIgG59DYl+HMbCpDMC4YTnyagdYzfkNZn216OiTo6H8zgkNx18sRVr/yNWsM+HrnUCLkthptZyEk9E7NJE9Ok20yapLLOtCWQ82F64ooQ7tsLO2M2P4wE6gluVoV4=
+	t=1781054161; cv=none; b=CrurGg0f2UH/NYPMHWBbht75xvCZ9iaJWVKAvkSRbP2o8mYhDjW9PIb/P8tzusolfsG566bsv5FALLuaQoBJSCPwXvD1jAwabyUo93qfd9Kb433JI/Ex9OSZGfD9ITkJc2zASjPQcK7B7yy7irZALKvsVxXeumqLKrR0TJw9i6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781054071; c=relaxed/simple;
-	bh=enbigSKfZhHs55sFswY1ofWl2WsfR5xtqPL9/la+0Dw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7ctsfTB5qN1BQw/0tZzhRF/Aw5QPF12bofDShOPQpbEvo+O3hhY7hYjKlRwL8et+NCBNMJwXDNFTwNXfqBx3Ad1BJ+0TSBI6UiVACDu6wvRuTlw8MUgRIUPeaFqEtoHMT9hZU1G61Ys1NzH5PmR6D4f6o9IIH8i8iPJEa2Gw0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OO6bucwx; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OO6bucwx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE111F00898;
-	Wed, 10 Jun 2026 01:14:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781054070;
-	bh=wvTmgzWVeo+cgK/5Fasuy9LNL6Vq1lM40f7iFKommVk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OO6bucwx7vW5YEMf9brXc184EBcBckfFxzpfLJAKindDpNCCAwVjQ5kCkNUKTngNT
-	 NYxpjaSP1wymrtUvspJt+VwOlKLkkwDHT/plNs6NdxModjlMUBqYw2oLgNmWI2wN/i
-	 /9xxWMxiTCvyFRyco5xuNRQdpEpcWCPLvyIBbOO7KwEEE9OJbMcT/slewHi3pW3gzp
-	 x9PiEr42PNnPLaQDesMQGjajOY4DkPEYqGwp4lOk+aFqdZhLVI1kZePVCwIAoRhQR3
-	 qeLMcTkcOQCN2BulCCYNgKxweIxiDiwqjzzTMtEM9+IynkbPMr7BPLsiezp/SDapfY
-	 9LqourOYK8NdQ==
-From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 16 . x" <stable@vger.kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v3 4/4] samples/damon/mtier: handle damon_stop() failure
-Date: Tue,  9 Jun 2026 18:14:17 -0700
-Message-ID: <20260610011420.3018-5-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260610011420.3018-1-sj@kernel.org>
-References: <20260610011420.3018-1-sj@kernel.org>
+	s=arc-20240116; t=1781054161; c=relaxed/simple;
+	bh=zpyxIg705ZEXILEn0+/H6dTAHt6pC3npBae7gsmy1kY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OrIhPe9bZuLt1g6WKc4jFI3mNjMkTkMBN6rkEXBpIDNe5XsuHC4eOXGHpe0Wpi8jFlyt0TpPXf/no3U6nX2Wm77cxTioVyRA4qPihEsyZOWuRxpOxmMp7QbaUJrv06Qe7dfY3uMGKBLdu0oJn4G4ezCHqmx4Lf43XMHDkXaPeFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hust.edu.cn; spf=pass smtp.mailfrom=hust.edu.cn; arc=none smtp.client-ip=13.76.78.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hust.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hust.edu.cn
+Received: from hust.edu.cn (unknown [172.16.0.52])
+	by app2 (Coremail) with SMTP id HwEQrAB3_zXFuihqVtobAA--.32693S2;
+	Wed, 10 Jun 2026 09:15:49 +0800 (CST)
+Received: from [10.11.71.25] (unknown [10.11.71.25])
+	by gateway (Coremail) with SMTP id _____wCnrwvBuihqaaU7AA--.2041S2;
+	Wed, 10 Jun 2026 09:15:46 +0800 (CST)
+Message-ID: <d2a6a7f1-96e1-4e6b-abfb-e9b13dff3561@hust.edu.cn>
+Date: Wed, 10 Jun 2026 09:15:45 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/2] docs/mm/damon: fix docs and update zh_CN
+To: SeongJae Park <sj@kernel.org>, Doehyun Baek <doehyunbaek@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+ Alex Shi <alexs@kernel.org>, Yanteng Si <si.yanteng@linux.dev>,
+ Hu Haowen <2023002089@link.tyut.edu.cn>, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, damon@lists.linux.dev
+References: <20260609235556.73472-1-sj@kernel.org>
+From: Dongliang Mu <dzm91@hust.edu.cn>
+In-Reply-To: <20260609235556.73472-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:HwEQrAB3_zXFuihqVtobAA--.32693S2
+Authentication-Results: app2; spf=neutral smtp.mail=dzm91@hust.edu.cn;
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kr4DGw4DtF4kJF4xuw15Arb_yoW8Ar1Upa
+	yrKF4aka1DAFyvyr1xK3y8Zr1kG3sxGrW8Gas8JasrJF1YqFySgFyFyayYvFyDZr95Gay2
+	qw1UKFn7Ja1UAFJanT9S1TB71UUUUjUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUQFb7Iv0xC_Zr1lb4IE77IF4wAFc2x0x2IEx4CE42xK8VAvwI8I
+	cIk0rVWrJVCq3wA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjx
+	v20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4UJVWxJr1l84ACjcxK
+	6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1ln4kS14v26r
+	1Y6r17M2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI
+	12xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj64x0Y40En7xvr7AKxV
+	W8Jr0_Cr1UMcIj6x8ErcxFaVAv8VW8uFyUJr1UMcIj6xkF7I0En7xvr7AKxVW8Jr0_Cr1U
+	McvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY1x0262kKe7AKxVWUAVWUtwCF04
+	k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26r4fZr1UJr1l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
+	xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0
+	cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8V
+	AvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E
+	14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jy38nUUUUU=
+X-CM-SenderInfo: asqsiiirqrkko6kx23oohg3hdfq/
 
-damon_sample_mtier_stop() assumes its damon_stop() call will always
-successfully stops the two DAMON contexts.  Hence it deallocates the two
-DAMON contexts after the damon_stop() call.  However, if a given context
-is already stopped, damon_stop() fails and returns an error while
-letting the DAMON contexts that have not yet stopped keep running.  This
-kind of unexpected early DAMON context stops could happen due to memory
-allocation failures in kdamond_fn().  Because damon_sample_mtier_stop()
-just deallocates all DAMON contexts with damon_target and damon_region
-objects that are linked to the contexts, the execution of the unstopped
-DAMON context (kdamond) ends up using the memory that freed
-(use-after-free).  Fix the issue by separating the damon_stop() to be
-invoked per context.
 
-Note that DAMON_SYSFS also allows multiple DAMON contexts execution.
-But, it calls damon_stop() for each context one by one.  Hence this
-issue is only in mtier.
+On 6/10/26 7:55 AM, SeongJae Park wrote:
+> Hello Doehyun,
+>
+> On Tue,  9 Jun 2026 14:34:24 +0000 Doehyun Baek <doehyunbaek@gmail.com> wrote:
+>
+>> First of all, thank you very much, Dongliang, for your time and
+>> dedication in reviewing the previous versions.
+>>
+>> This v4 sends the original English DAMON documentation fixes as the
+>> first patch, and the Simplified Chinese translation update as the
+>> second patch.
 
-For the long term, it would be better to refactor damon_stop() to always
-ensure stopping all contexts regardless of the failures in the middle.
-Make this fix in the current way, though, to keep it simple and easy to
-backport.  I will do the refactoring later.
+Hi Doehyun,
 
-The issue was discovered [1] by Sashiko.
+I think my earlier message may have been unclear, so I’d like to clarify 
+the points below.
 
-[1] https://lore.kernel.org/20260609014219.3013-1-sj@kernel.org
+First, as suggested by SeongJae Park, please submit a standalone patch 
+to the |mm-new| or |linux-doc| tree to correct these typos.
 
-Fixes: 82a08bde3cf7 ("samples/damon: implement a DAMON module for memory tiering")
-Cc: <stable@vger.kernel.org> # 6.16.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- samples/damon/mtier.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Once this typo-fix patch is merged, you may proceed to submit the 
+Chinese translation patches.
 
-diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-index 66b591f2180fa..faaaaa12e6206 100644
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -199,7 +199,8 @@ static int damon_sample_mtier_start(void)
- 
- static void damon_sample_mtier_stop(void)
- {
--	damon_stop(ctxs, 2);
-+	damon_stop(ctxs, 1);
-+	damon_stop(&ctxs[1], 1);
- 	damon_destroy_ctx(ctxs[0]);
- 	damon_destroy_ctx(ctxs[1]);
- }
--- 
-2.47.3
+Additionally, please split patch 2/2 into two separate patches, with 
+each patch covering changes to only one file.
+
+Dongliang Mu
+
+>>
+>> For zh_CN, I translated the current DAMON usage.rst paragraph by
+>> paragraph, and added missing pieces such as stat.rst and the related
+>> index/design references.  The zh_TW changes from earlier versions are
+>> dropped from this series.
+> Thank you for sharing this patch series!  However, to my understanding, the
+> path to the mainline for English documents and Chinese documents are different.
+> Sending patches for English document and Chinese document as one series is
+> therefore making it complicated, in my opinion.  Could you please rebase
+> English document part to mm-new [1] and send as a separate patch?
+
+
+Totally agree. Please follow this suggestion.
+
+
+>
+> [1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
+
