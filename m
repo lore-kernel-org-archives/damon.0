@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944CB3CFF56;
-	Tue,  9 Jun 2026 23:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962F3233932;
+	Wed, 10 Jun 2026 01:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781049366; cv=none; b=P6bvgyKPB60N5lGs6Fhtrx/PWxO9kMO8+u/5mhsJA4VjJk/yErhHz4cvHe90UrxJS50SENn46jkESare/r8Q7DM+X/tqEGMyv7YT1jg0cnglClNAlbwTGkF2lu56/iiIJJfnc4kzCAQiYmZBv9tKQ4xq38XHffc4BOBlKwMFr5o=
+	t=1781054069; cv=none; b=qpkBqMVfeNqnbZFAORmifrxsTKGbzvt/1jNIZqzGYW+6MJ9EIKyM9dLCFJDE3DI1yi/eBk2ckUcM3UpmuxJ6yuV/rYruaqVBfKEiM1KLWlZWAWSvuY90T0fY2aXVFiwof3PPqui19JW9Z6zykG60ZvNulelTKThZgLX2oStkAkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781049366; c=relaxed/simple;
-	bh=ivBgzWvravhZdDLyD7LukCd2Bu6awTYjolYyPt2hDq0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agODoDKF8IHDBHNLMT7MKH3rpX9Igqp1s48RCDDzmeHsOYzYYJxm4nuccjZCgsAJgDtJ18BjOmAfUfhjTZb+x16lUFqzrr8Csr1OEHmfvgrMOGsUrIngl/VTCGl+lHuL+nTvHSYMFWYAqaluVZOKFl84vfxeVLhq252Pg1izHvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GfeFuMrQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781054069; c=relaxed/simple;
+	bh=uMVEwMVFrhCzwBVqhAabVTfwILN07guP822tmOWUmbw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mKhwhL5skuqyCMzAfk7IRQtAIeZAavQ0/Nk1ABHpL3oWPR7O0T5wGCHBO3knmztrvUH7EOgIunZIX0DGUWjQ6oKZKZgwcqXfKfCx4RDwT9GZb9zUGwVhphzC4TlMKJKp7++WqrH1D6ELwgx2PFJoBNpqw9Ryq+SC3YdKL9RREnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RI9v+5GR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GfeFuMrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09B01F00893;
-	Tue,  9 Jun 2026 23:56:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RI9v+5GR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3711F00893;
+	Wed, 10 Jun 2026 01:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781049365;
-	bh=CqTDLJlr+PvJWmHo6xti7Q61COtf52VcvmEIeE8PPxw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GfeFuMrQeHtAJ0O1r+EgeFD8C+04SN/7/OkJjmq3AiKIOh+vZ8kff8djlgSrlJ2s/
-	 l2kOga0lGu8UNtR6TuGhChemWVaH68vjwer/JbO3Qx55m83wJm5VFoDD/CwTSO7PhW
-	 S1ZGZqCOAzch+k3DX/z+W2JlZ2weKvI4549v4RpukkuMAFPR7dT82zTituN0i8vyP+
-	 wt9IBamdRJFf0E6twqZYW7QzVvD138vmbwBXzjAGAxr4CIauHJaU/gu/PlHbobjGoa
-	 5dn2hqCTuCx9aWpVzLV2q/QVxCFqe36zBgeyEM1DoBmswyYOEYXNEQcUIfVke0QidY
-	 M14HlrF/DgQ5Q==
+	s=k20260515; t=1781054068;
+	bh=nk5e65x0+gfzE8iKCczyf6SQjc2ncZIrrJUIfyl4290=;
+	h=From:To:Cc:Subject:Date;
+	b=RI9v+5GRjs2r/QxLEZ1S9doOh/Anm/jAi+G9SyO9Z0i4DC1y237xMHA5wVdt3UpMa
+	 3Mn+sBs6chHbnhJ9Dz2aud3Bc5xTdGAcVc0SQpMrsy3/yLivVP/Q/hk6cnHeMwUgmk
+	 NCIvMQm0j6VryyFUyutC01DlaVzYwbCY9Qg/xgsNwMCzwpZj8swxWp3g88Z122cLMJ
+	 9y9vk5f8nbqfVu9RnSKWsYLKv2rAL3bUI5flFiKwKcF/eedMiE0bf55/hJKVl1zJyO
+	 rEbDyVYmW/qhknrdS+u8HfmVwMjaeY5Utcx1Yw2fqL+GE5B3zEYaXb/r/vPuPpy7Vz
+	 lR7ZWlv1Jw4Nw==
 From: SeongJae Park <sj@kernel.org>
-To: Doehyun Baek <doehyunbaek@gmail.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Alex Shi <alexs@kernel.org>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Hu Haowen <2023002089@link.tyut.edu.cn>,
-	linux-doc@vger.kernel.org,
+	"# 6 . 14 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v4 0/2] docs/mm/damon: fix docs and update zh_CN
-Date: Tue,  9 Jun 2026 16:55:55 -0700
-Message-ID: <20260609235556.73472-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH v3 0/4] samples/damon: handle damon_{start,stop}() failures
+Date: Tue,  9 Jun 2026 18:14:13 -0700
+Message-ID: <20260610011420.3018-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <cover.1781015560.git.doehyunbaek@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -52,32 +45,30 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Doehyun,
+All DAMON sample modules are not correctly handling failures from
+damon_start().  Among those, mtier also has an additional problem for
+handling of damon_stop() failures.  As a result, memory leaks, next
+DAMON operation disruptions, and use-after-free can happen.  Fix those.
 
-On Tue,  9 Jun 2026 14:34:24 +0000 Doehyun Baek <doehyunbaek@gmail.com> wrote:
+Changes from RFC v2
+- RFC v2: https://lore.kernel.org/20260609142119.68120-1-sj@kernel.org
+- Add damon_start() failure handling fix for wsse and prcl.
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260609005443.2122-1-sj@kernel.org
+- Add damon_stop() failure handling fix to the series.
 
-> First of all, thank you very much, Dongliang, for your time and
-> dedication in reviewing the previous versions.
-> 
-> This v4 sends the original English DAMON documentation fixes as the
-> first patch, and the Simplified Chinese translation update as the
-> second patch.
-> 
-> For zh_CN, I translated the current DAMON usage.rst paragraph by
-> paragraph, and added missing pieces such as stat.rst and the related
-> index/design references.  The zh_TW changes from earlier versions are
-> dropped from this series.
+SeongJae Park (4):
+  samples/damon/wsse: handle damon_start() failure
+  samples/damon/prcl: handle damon_start() failure
+  samples/damon/mtier: handle damon_start() failure
+  samples/damon/mtier: handle damon_stop() failure
 
-Thank you for sharing this patch series!  However, to my understanding, the
-path to the mainline for English documents and Chinese documents are different.
-Sending patches for English document and Chinese document as one series is
-therefore making it complicated, in my opinion.  Could you please rebase
-English document part to mm-new [1] and send as a separate patch?
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+ samples/damon/mtier.c | 14 ++++++++++++--
+ samples/damon/prcl.c  |  4 +++-
+ samples/damon/wsse.c  |  4 +++-
+ 3 files changed, 18 insertions(+), 4 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: e38932476396c4da618a9e904ba4e45f1891d910
+-- 
+2.47.3
