@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B35395ADA
-	for <damon@lists.linux.dev>; Thu, 11 Jun 2026 05:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A40EEBB;
+	Thu, 11 Jun 2026 12:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781154115; cv=none; b=W7ulBORdlnMXTnOpGI1q0EeYuU/paN71Xu9a767MtTY2nzK0L4Iy/dwIBDgAMiI2CSdzkqpzgcIoNtaXiGgLdiJRhhKEcBWqRKwH1CE4hlyeGBByCNJSrUFzcj5IdSbxSop6fbV1Xhf4mlnurdPbMFi9sjgbmp1b/+xZFtDORzk=
+	t=1781182630; cv=none; b=pCQKocz9Kx1heyOYxWF/ZA6ptaS6myztlE4ScC3/hRDearoxCCRmvj2Q+6ePiLPl4hK/aDHGkLfE5n8L6O1zk8AI6Ro8ZX+OFtbiEw9psI+c60t3tq4fIMtr2hmo4UGwIv5oQArZfUJd5iAueBZiOxIMxoMthCFtMNjH6tXk6tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781154115; c=relaxed/simple;
-	bh=BvV5PJDsBHyzM3gmn4vJosrh4j9efA7d6l5fm+1c0sA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3GdwHCFEM/f/uBjdWlkoc1oucUvz01vdgFfoUBcD4Cm4uw7SeTB/BkoDgv3CHlGPdOh3HUTZl3Mz6IfRMdgK4/lCDUdYVtO88MG/6029RlNN9SmQjVZ5nwxpJKDp4vMhi20KUx9ynRnNJ6/ljL218pVptt72ATpu1hUtdlQhIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QX/NJ2Zw; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781182630; c=relaxed/simple;
+	bh=8W+W8HbSywvSgQ+qMkK1eRDKNFns8qNmN4+ZrDI8EO4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Bt5ztao+CZQIcuP2x+/Qdmi/AViqUix7U6B7dpAS5jkdh0DsmpX0guDG7j7f+mUFsyT4kMCr88r/DJmMMTk3pQm+MfGnMTJtG7/qUO678fSY4XKSU2q8miyPfGhdjKn0RB/eUHkYH+a4w+MbHC3Bm94US47YXdmeFa1KNYsYifs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nNazy/7c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QX/NJ2Zw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65761F00893;
-	Thu, 11 Jun 2026 05:01:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nNazy/7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E5C1F00893;
+	Thu, 11 Jun 2026 12:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781154109;
-	bh=GPowqWpJy8qq+WnI7qFy6HW1NuvCrsfFhW8V3BwUdhg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QX/NJ2ZwBr0a+QmuDQ3Yl8/3kMD5/+ng/ub3n/QbxOY9byVUpBsgt5gSPBgNWiyOr
-	 YZ1E/iplHRT40hbbl2+wjdlTp4oAogoaGm0GuXDt2KtM+99qMhlSODWDAPOmOjYrHC
-	 tK2F1u+i6+l8K3PwZM/D0ZH/GxVbbLdsAMI74ZxjVarItP4kMhvoXLhTiYDfjgSJ3J
-	 rWWB8mjb75HVYa2pkQnddL1mTLN/OLEP7IiQHl+TutDyyBX8VdPOYiP2GyO0hnxMQn
-	 B/4Yq4dCjqnguxtlVJZLyU6jHVu0MlP91f1k3Z7eQb0JicBWVbbg697pTXmEGHEodl
-	 Udf0poHMVPuAA==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.2 01/14] mm/damon/core: safely handle no region case in damon_set_regions()
-Date: Wed, 10 Jun 2026 22:01:42 -0700
-Message-ID: <20260611050142.62825-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260522021642.87089-1-sj@kernel.org>
-References: 
+	s=k20260515; t=1781182629;
+	bh=geNwV4XsDcpW2nLuNQos/NDgwcU9+p+h0p71pBEkqdc=;
+	h=From:To:Cc:Subject:Date;
+	b=nNazy/7cpWAhMsGMZlG/ZznSRm6J7bfXp371Q8zmoJkEJWAokjfzD9k8J+LG7tk2b
+	 N2o9B//dFurcQjRQqqjjwo8tXElpWAt1rrbfIM8+507W8El7JAA0VnzgkVqfOFPK//
+	 OvRLWiVMeOX0O94sVIHJEtTGmE1I+T/cw3XruxlZlKAkjovqHp87erfzqmCveCuZQ4
+	 SBHHCR+55dw4RLRS5eE+WHgizUoTrpUE9rp387H/ZNalmljdajI+O4zLkIJ5vd461t
+	 GVrDtLHenw8CNVJ3Yx73uhq4C3/yrX+9jrDWqp0UBo4QHwP/f4eK8ZhQ0tIHEMWhI3
+	 B34t1OZ76bnnA==
+From: Arnd Bergmann <arnd@kernel.org>
+To: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev
+Subject: [PATCH] mm/damon/core: reduce kernel stack usage
+Date: Thu, 11 Jun 2026 14:56:57 +0200
+Message-Id: <20260611125704.3386176-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,69 +51,38 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 21 May 2026 19:16:42 -0700 SeongJae Park <sj@kernel.org> wrote:
+From: Arnd Bergmann <arnd@arndb.de>
 
-> On Thu, 21 May 2026 15:19:28 +0000 sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [Critical] The ALIGN() macro can overflow when processing malicious or overly large user-provided region 'end' values, creating invalid regions where start > end.
-> > - [High] min_region_sz can be a non-power-of-2 value, which corrupts region boundary calculations when passed to ALIGN() and ALIGN_DOWN().
-> > - [High] Userspace can maliciously trigger a kernel warning (WARN_ONCE) by providing a region where start == end via sysfs.
-> > - [High] A memory allocation failure during region creation results in a partial state update without a rollback, potentially leaving the running DAMON context corrupted.
-> 
-> No one is caused by this patch, so no blocker for this patch.
-> 
-> The last finding seems worthy to separately work for.  I will work on it.
-> 
-> Please read below for more details.
-> 
-> > --
-> > 
-> > commit fa588352eaf7b151171cca8c2acb0bb710a71c75
-> > Author: SeongJae Park <sj@kernel.org>
-> > 
-> > mm/damon/core: safely handle no region case in damon_set_regions()
-> > 
-> > This commit refactors damon_set_regions() to explicitly handle the empty
-> > region list case without depending on the internal implementation of
-> > list_first_entry().
-> > 
-> > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > index 4e223857a0f99..d0bdf6e01dff8 100644
-> > > --- a/mm/damon/core.c
-> > > +++ b/mm/damon/core.c
-> > > @@ -356,6 +356,19 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
-[...]
-> > > +			if (!r)
-> > > +				return -ENOMEM;
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but does this allocation failure leave the
-> > DAMON context in a corrupted state?
-> > 
-> > If damon_new_region() returns NULL due to memory pressure, the function
-> > immediately returns -ENOMEM without rolling back the regions that were
-> > already removed or added in the previous loop.
-> > 
-> > Could this leave the running kdamond thread with a partially modified list
-> > of regions?
-> 
-> Yes, and the caller should do damon_destroy_ctx() of the ctx.  And DAMON_SYSFS
-> does that, while vaddr doesn't.  I will work on this.
+The main thread function has recently grown to the point of
+exceeding stack frame size warning limits in some configurations.
+This is what I hit on s390 with clang and CONFIG_KASAN:
 
-Hmm, but the vaddr's damon_set_regions() calls are only for the automated
-mapping detection based monitoring target address rangs setup.  In the mode,
-the monitoring target address ranges setup is only the best effort, and
-continuously retried for every operation set update interval.  Hence, ignoring
-the error is actually intentional and fine.  So this is not a real issue and
-therefore no fix is needed.
+mm/damon/core.c:3440:31: error: stack frame size (1352) exceeds limit (1280) in 'kdamond_fn' [-Werror,-Wframe-larger-than]
+ 3440 | static int kdamond_fn(struct damon_ctx *ctx)
 
-Let me know if I'm missing something, though.
+The largest stack usage here is inside of the kdamond_tune_intervals(),
+so by marking that one as noinline_for_stack, the functions individually
+stay below the warning limit, though kdamond_fn() itself still uses
+hundreds of kilobytes for some reason.
 
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-SJ
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 265d51ade25b..69f38c48ac08 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2002,7 +2002,7 @@ static unsigned long damon_get_intervals_adaptation_bp(struct damon_ctx *c)
+ 	return adaptation_bp;
+ }
+ 
+-static void kdamond_tune_intervals(struct damon_ctx *c)
++static noinline_for_stack void kdamond_tune_intervals(struct damon_ctx *c)
+ {
+ 	unsigned long adaptation_bp;
+ 	struct damon_attrs new_attrs;
+-- 
+2.39.5
 
-[...]
