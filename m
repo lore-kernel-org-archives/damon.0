@@ -1,293 +1,196 @@
-Received: from out203-205-221-242.mail.qq.com (out203-205-221-242.mail.qq.com [203.205.221.242])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BC51DDC2B
-	for <damon@lists.linux.dev>; Thu, 11 Jun 2026 14:33:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.242
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2936A318EE7
+	for <damon@lists.linux.dev>; Thu, 11 Jun 2026 15:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781188388; cv=none; b=FBt3uEgSpXeLzw1uDy4TVYh5Ys/34f8+jZ+P/NxSw5XbE2P+57YIvDPVaXSnJmlhhtf+CF+SZORpJi+CvCGO07NtTWwRAFCrp6LCmu4iiuxd9fy65YVUD/PHljmag0MIzhC4HSDRrOx5XhGzIypdLV3avZniXWULQ2x/lpIgdBA=
+	t=1781190227; cv=none; b=QKqVkdGGbRQG8qgp2h0x5izNAskBbJmWopqiZ0FUZJPe7GsNouCF5uoEq04v0zPP6Y65+V/io/a2o8nEXJR07Q6m1p+bTOY6yhhrgwdJpy5Ivbaw+Y6cePnS9AaSzfxkesAT9gAz7dJ53ja4wJOfuEC06mj8PWKYg3ruul0HwLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781188388; c=relaxed/simple;
-	bh=HB7K+jVaZv27cy81EmFiJLFM4P1ClHwUSgR0KHUWFPA=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=itQZdM80yzBQli/WE8xguvVVDGiPn5h6UfzQ/6uyuqr/qQmU9xf4vSesDqn9pRFPF6oeTuJDO4TxPU+fPB0Pr+shJhX6/Yr01tcPKJOxSkR3v7m53xOMY2DvIe6LuHRCKWXTsVNdPDqP4m+jWHUKPM3Lub3eUV0QJdGyc1NTViw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=R5nN7avt; arc=none smtp.client-ip=203.205.221.242
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="R5nN7avt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1781188377; bh=GCDaKuGxRky1OF20sGbTfMxS2oYOT9Rm+psaVofsmUY=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=R5nN7avt2deSeu0eO8kiue4/E4LWRrW6SoUMeRBSxVmuF2C6IzdXTQGO46Ia3kr66
-	 jREXcE4c02VEGDbR9J6+V/18nswQAwi/JyFr3qSPsLu0FZaHEOWQv31CEtz4QEHHdV
-	 iQFs65+grwJutj5oQMvY+sJgH5tYD7EGuF+ak1DQ=
-Received: from [198.18.0.1] ([115.156.144.140])
-	by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
-	id 653B0A8F; Thu, 11 Jun 2026 22:25:19 +0800
-X-QQ-mid: xmsmtpt1781187919t56gozc6v
-Message-ID: <tencent_1B9710B1E0F61B5B50C2CA66799992F59009@qq.com>
-X-QQ-XMAILINFO: Mv5lfVmQmUA4wrFGI53zI1fWqzgrAoTLbUxf3+7Mao3Kk8M9JEL/10HTo19YlE
-	 JeNgpCp0UXeKakdY2a95reRwz7Iaa5Juq0Pw/U60PpG4mKCS1ogzDWfzSXD4vvDlyNwEvqS7KOwt
-	 EsfdgW5vmpxyVzvhS3g2xv4EHXBgcPoEOPQg1Sx0Qlu6emIO8mT0H/eOEcC+FO4vfw7vy6hMynaQ
-	 pX0iEuqVKynTMGwcWMt9RqDBUa6yy0v7CddNyIY3kHF/BbBD5FFHrS6MY7rxxre+4+OXHFUODHxH
-	 oy95YfmIgbixS2Ga4EDJ/1yNIJwsT6a8PelUeyO8C8gsKWjAaNSCFtS0dJyF8IqA8FkWCj4Er3Jo
-	 eoxWry1TPhFN3bsMl2RbI/xKKDFFvPySksjjyGBYpAikC1ulYxjzQkbazD8va1FhIikWWaiCPDsK
-	 UyaFcFhByfjsR4CQ2DmOPWLmebMEUAxfLwMxzqQLIjhLENSHGDiq9CS02QHTMc80167RSraWxQLY
-	 qM3H6lWmCO9RFAtuJaKARMfR4WYdK7r11LF+zmJWBz1/fu02MVSWFTnEQ487xXka4mf5qdru3Pa5
-	 D92h/Wk/p1PR2A+YpvIdl+E5cYKj8zSsvLNe7cCg0u5WmzmqiLQlB7Z2XFnYKHOQ1j3VnTglQFIT
-	 PC9LvSMrUrS4TDaLsvBigTnVIkfdbb+yuj3mh2d7F6yRSy6mDpjFuu7oIPLwnsdh/C4/WSKApGbw
-	 F6b1UFssFBl1e1cjpoVTe5ts/k/lKkFbF3P7YpMk8qpReLP59DZinsTlcKy7F8YDfpLd0ObGR+Wc
-	 JrqeSiGlnHFWSSWU56/XZTdDsSW/4aPpu8LyFNvVvYvE6KBKzy+TEf7sYdm6XtrjBvC3AjF3l1Xd
-	 L6mN+IiXiVjOHvihX6kjGncvVT53tVkCuuhxaU3AMOK4M/fq5ZfVXZVvTxW14yvBfbyw0VmZ3ugt
-	 ZjB31gtyvswbbFsf/llnA0+ySGwCTYl5c53Bf4FRPhEVZRM+DHVeqfQt2ulrVIwXCoc0xNC1pBTf
-	 DrAlCJh58OcxV8cR3veFrK0BzNRj8JbHiNMlZY9JUXsjPFYGROjTz0dozF84A=
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-X-OQ-MSGID: <73682011-0c51-470f-9f55-4b006dcc1534@qq.com>
-Date: Thu, 11 Jun 2026 22:25:19 +0800
+	s=arc-20240116; t=1781190227; c=relaxed/simple;
+	bh=8fdc65f3lRWLitWCfZLmOgnvFgadAS0MFLX+J3U6iYs=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kiNZ7o8+TAVPL3pCNozX9NK0lOO3GAYzX+m/NCKqpIlkDX3oAGgrgpu4kDH4zHZOoPJNeA3/7muOl1dUnVBtgELiGAwTEpK2IvKI3wI2W7tyjWapVLcqqChH1Y8jplTtWGB4GMmyfO+RC4m8aOFYavs3NlJ2SAy6xYaUUFQrRcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gbm9l4D8SzJ46bR;
+	Thu, 11 Jun 2026 23:03:23 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id D175F40571;
+	Thu, 11 Jun 2026 23:03:38 +0800 (CST)
+Received: from mscphis01197.huawei.com (10.123.65.218) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Thu, 11 Jun 2026 18:03:38 +0300
+From: <gutierrez.asier@huawei-partners.com>
+To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
+	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
+	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
+	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [RFC PATCH v4 4/4] Documentation/admin-guide/mm/damon: add DAMON-based Hugepage Management
+Date: Thu, 11 Jun 2026 15:02:44 +0000
+Message-ID: <20260611150244.3454699-5-gutierrez.asier@huawei-partners.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260611150244.3454699-1-gutierrez.asier@huawei-partners.com>
+References: <20260611150244.3454699-1-gutierrez.asier@huawei-partners.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: XIAO WU <xiaowu.417@qq.com>
-Subject: Re: [RFC PATCH] samples/damon/mtier: handle damon_start() failure
-To: SeongJae Park <sj@kernel.org>, sashiko-bot@kernel.org
-Cc: damon@lists.linux.dev
-References: <20260609014219.3013-1-sj@kernel.org>
-In-Reply-To: <20260609014219.3013-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-Hi, I've written a Poc for this issues which may be helpful and Please 
-see the details and the PoC code below:
+From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
+Add documentation for the DAMON-based Hugepage Management
+(SAMPLE_DAMON_HUGEPAGE) feature, which automatically manages
+huge pages by identifying hot memory regions and collapsing
+them back to regular pages. The documentation covers the
+module's features, operation, and all available module
+parameters.
 
-On 9/6/26 9:42, SeongJae Park wrote:
-> On Tue, 09 Jun 2026 01:06:15 +0000 sashiko-bot@kernel.org wrote:
-> 
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>
->> Pre-existing issues:
->> - [High] `damon_stop()` aborts its loop on the first error, leaving subsequent contexts running and triggering a Use-After-Free when their memory is destroyed.
->> --
->>
->> commit 6da87efa9d6982132beff965026bf155183e5c93
->> Author: SeongJae Park <sj@kernel.org>
->>
->> samples/damon/mtier: handle damon_start() failure
->>
->> This commit adds cleanup for damon_start() failures in the memory tiering
->> DAMON module. When damon_start() fails, it stops any running contexts
->> and frees them to prevent memory leaks and exclusive mode locks.
->>
->> Link: https://lore.kernel.org/20260608112455.274231F00893@smtp.kernel.org
->>
->>> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
->>> index eb1143de8df17..66b591f2180fa 100644
->>> --- a/samples/damon/mtier.c
->>> +++ b/samples/damon/mtier.c
->> [ ... ]
->>> @@ -185,7 +186,15 @@ static int damon_sample_mtier_start(void)
->>>   		return -ENOMEM;
->>>   	}
->>>   	ctxs[1] = ctx;
->>> -	return damon_start(ctxs, 2, true);
->>> +	err = damon_start(ctxs, 2, true);
->>> +	if (!err)
->>> +		return 0;
->>> +
->>> +	if (damon_is_running(ctxs[0]))
->>> +		damon_stop(ctxs, 1);
->>> +	damon_destroy_ctx(ctxs[0]);
->>> +	damon_destroy_ctx(ctxs[1]);
->>> +	return err;
->>>   }
->>>   
->>>   static void damon_sample_mtier_stop(void)
->>
->> [Severity: High]
->> This is a pre-existing issue,
-> 
-> So not a blocker of this patch.
-> 
->> but does damon_stop() leave contexts running
->> and cause a use-after-free here?
->>
->> Looking at damon_stop() in mm/damon/core.c:
->>
->> int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
->> {
->> 	int i, err = 0;
->>
->> 	for (i = 0; i < nr_ctxs; i++) {
->> 		err = __damon_stop(ctxs[i]);
->> 		if (err)
->> 			break;
->> 	}
->> 	return err;
->> }
->>
->> If __damon_stop() returns an error for the first context (for instance, if
->> the kthread exited prematurely due to an allocation failure), the loop
->> breaks immediately.
->>
->> When damon_sample_mtier_stop() calls damon_stop(ctxs, 2), this would mean
->> ctxs[1] is never stopped if stopping ctxs[0] returns an error.
->>
->> The subsequent unconditional calls to damon_destroy_ctx(ctxs[1]) in
->> damon_sample_mtier_stop() would then free the context, its targets, and its
->> schemes while kdamond is still executing and dereferencing them.
->>
->> Can this lead to a use-after-free?
-> 
-> Makes sense.  I will separately work on this.
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+---
+ .../admin-guide/mm/damon/hugepage.rst (new)   | 113 ++++++++++++++++++
+ Documentation/admin-guide/mm/damon/index.rst  |   1 +
+ 2 files changed, 114 insertions(+)
 
---- [PoC Start] ---
-
-/*
-  * POC for UAF in damon_sample_mtier
-  *
-  * Uses failslab to make kdamond_fn's kmalloc_array fail.
-  * This causes kdamond to exit spontaneously, setting ctx->kdamond=NULL.
-  * Then damon_sample_mtier_stop hits the break-early bug.
-  */
-#define _GNU_SOURCE
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-
-#define ENABLED_PATH "/sys/module/damon_sample_mtier/parameters/enabled"
-
-static void wf(const char *path, const char *s)
-{
-	int fd = open(path, O_WRONLY);
-	if (fd >= 0) { write(fd, s, strlen(s)); close(fd); }
-}
-
-int main(void)
-{
-	int i;
-	
-	/* Suppress verbose failslab messages */
-	wf("/sys/kernel/debug/failslab/verbose", "0");
-	wf("/sys/kernel/debug/failslab/verbose_ratelimit_burst", "10000");
-	wf("/sys/kernel/debug/failslab/verbose_ratelimit_interval_ms", "60000");
-	
-	/* Enable failslab: 1% probability, unlimited fails */
-	wf("/sys/kernel/debug/failslab/probability", "1");
-	wf("/sys/kernel/debug/failslab/times", "-1");
-	wf("/sys/kernel/debug/failslab/interval", "1");
-	wf("/sys/kernel/debug/failslab/task-filter", "0");
-	wf("/sys/kernel/debug/failslab/ignore-gfp-wait", "0");
-
-	fprintf(stderr, "[poc] failslab: 1%% unlimited, verbose=0. Start loop\n");
-
-	for (i = 0; i < 20000; i++) {
-		int fd;
-		fd = open(ENABLED_PATH, O_WRONLY);
-		if (fd >= 0) {
-			write(fd, "Y", 1);
-			close(fd);
-		}
-
-		fd = open(ENABLED_PATH, O_WRONLY);
-		if (fd >= 0) {
-			write(fd, "N", 1);
-			close(fd);
-		}
-
-		if ((i+1) % 2000 == 0)
-			fprintf(stderr, "[poc] %d/20000\n", i+1);
-	}
-
-	wf("/sys/kernel/debug/failslab/probability", "0");
-	wf("/sys/kernel/debug/failslab/times", "0");
-
-	fprintf(stderr, "[poc] Done. Checking dmesg...\n");
-	system("dmesg | grep -i -E 'BUG|KASAN|use-after-free|UAF|Oops|general 
-protection|kernel BUG|WARNING' | tail -20");
-	return 0;
-}
-
---- [PoC End] ---
-
-And some explanations here:
-
---- [EXPLANATIONS BEGIN] ---
-
-1. Bug Summary
-
-**Commit**: `6da87efa9d6982132beff965026bf155183e5c93` - 
-"samples/damon/mtier: handle damon_start() failure"
-
-**Bug Type**: Use-After-Free (UAF)
-
-**Location**: `samples/damon/mtier.c` - `damon_sample_mtier_stop()`
-
-2. Root Cause
-
-The commit adds cleanup code in `damon_sample_mtier_start()` for when 
-`damon_start()` fails:
-
-```c
-err = damon_start(ctxs, 2, true);
-if (!err)
-     return 0;
-
-if (damon_is_running(ctxs[0]))
-     damon_stop(ctxs, 1);
-damon_destroy_ctx(ctxs[0]);
-damon_destroy_ctx(ctxs[1]);
-return err;
-```
-
-The bug: `damon_stop()` in `mm/damon/core.c` loops over contexts and 
-breaks on the first error:
-
-```c
-int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
-{
-     int i, err = 0;
-     for (i = 0; i < nr_ctxs; i++) {
-         err = __damon_stop(ctxs[i]);
-         if (err)
-             break;
-     }
-     return err;
-}
-```
-
-`__damon_stop()` returns `-EPERM` if `ctx->kdamond` is NULL (the kdamond 
-thread already exited).
-
-If ctxs[0]'s kdamond thread has already exited due to an internal 
-failure (e.g., `kmalloc_array(GFP_KERNEL)` for `regions_score_histogram` 
-fails inside `kdamond_fn`), then:
-1. `damon_stop(ctxs, 2)` calls `__damon_stop(ctxs[0])` → returns -EPERM 
-→ loop breaks
-2. `__damon_stop(ctxs[1])` is **never called**
-3. `damon_destroy_ctx(ctxs[1])` frees ctxs[1] while its kdamond thread 
-is still running
-4. The running kdamond continues dereferencing freed ctxs[1] memory → 
-USE-AFTER-FREE
-
---- [EXPLANATIONS END] ---
-
-To fix this, damon_stop() should probably not abort on the first error,
-ensuring it iterates through all contexts to stop any surviving threads.
-Hope this helps with the patch.
-
-Best regards,
-XIAO WU
+diff --git a/Documentation/admin-guide/mm/damon/hugepage.rst b/Documentation/admin-guide/mm/damon/hugepage.rst
+new file mode 100644
+index 000000000000..470ae2bc8cc3
+--- /dev/null
++++ b/Documentation/admin-guide/mm/damon/hugepage.rst
+@@ -0,0 +1,113 @@
++================================
++DAMON-based huge page collapsing
++================================
++
++DAMON-based huge page collapsing (SAMPLE_DAMON_HUGEPAGE) is a static kernel
++module that aims to collapse hot regions into huge pages.
++
++Where Proactive huge page collapsing is Required?
++=================================================
++
++The amount of available memory grows faster than the amount of TLB entries.
++This leads to higher amount of TLB misses and excessive cycle wastes. Huge
++pages are meant to solve this problem. However, huge pages usually lead to
++memory fragmentation and memory waste.
++
++Collapsing selectively hot regions in a specific process can avoid big
++memory fragmentation, while increasing TLB performance.
++
++SAMPLE_DAMON_HUGEPAGE solves this by:
++
++- Identifying hot regions that have been accessed for a configured time
++- Automatically collapsing the regions into huge pages back
++- Auto tune the huge page usage ratio to meet desired targets
++- Controlling the collapse rate with configurable quotas to avoid performance
++  degradation
++
++
++How It Works?
++=============
++
++SAMPLE_DAMON_HUGEPAGE uses kdamond to identify anonymous memory regions that
++are:
++
++1. Large enough to be backed by huge pages (``HPAGE_PMD_SIZE`` or larger)
++2. Have been accessed for a configured time period
++
++Once identified, SAMPLE_DAMON_HUGEPAGE triggers synchronous partial collapse
++of those regions. The collapse operation is controlled by quotas to limit the
++impact on system performance.
++
++The module also supports automatic tuning of the collapse rate to achieve a
++desired huge page usage ratio. Administrators can configure a target percentage
++of huge page usage vs total anonymous memory usage.
++
++Additionally, the module accepts manual feedback from system administrators to
++adjust the effective quota level based on observed system behavior.
++
++Interface: Module Parameters
++============================
++
++To use this feature, you should first ensure your system is running on a kernel
++that is built with ``CONFIG_DAMON_HUGEPAGE=y``.
++
++To let sysadmins enable or disable it and tune for the given system,
++SAMPLE_DAMON_HUGEPAGE utilizes module parameters.  That is, you can put
++``damon_sample_hugepage.<parameter>=<value>`` on the kernel boot command line or
++write proper values to ``/sys/module/damon_sample_hugepage/parameters/<parameter>``
++files.
++
++Below are the description of each parameter.
++
++enabled
++-------
++
++Enable or disable SAMPLE_DAMON_HUGEPAGE.
++
++You can enable SAMPLE_DAMON_HUGEPAGE by setting the value of this parameter as ``Y``.
++Setting it as ``N`` disables SAMPLE_DAMON_HUGEPAGE.  Note that SAMPLE_DAMON_HUGEPAGE
++could do no real monitoring and collapse due to the activation condition.
++
++quota_autotune_feedback
++-----------------------
++
++User-specifiable feedback for auto-tuning of the effective quota.
++
++While keeping the caps that set by other quotas, SAMPLE_DAMON_HUGEPAGE
++automatically increases and decreases the effective level of the quota
++aiming receiving this feedback of value ``10,000`` from the user.
++SAMPLE_DAMON_HUGEPAGE assumes the feedback value and the quota are positively
++proportional.  Value zero means disabling this auto-tuning feature.
++
++Disabled by default.
++
++quota_percentage_hugepage
++-------------------------
++
++Huge page consumption to total memory anonymous memory consumption ratio goal
++in bp ``(10,000)``. SAMPLE_DAMON_HUGEPAGE automatically increases and
++decreases page collapse aggressiveness in order to achieve the given value.
++
++target_pid
++----------
++
++PID of the task that is going to be monitored for hot regions.
++
++
++Example
++=======
++
++Below runtime example commands make SAMPLE_DAMON_HUGEPAGE to find memory
++regions of  the task with PID 1234 that have been accessed in the last 100
++milliseconds or more and collpases those pages into huge pages. The page
++collapsing is limited to be done only up to 1 GiB per second to avoid
++SAMPLE_DAMON_HUGEPAGE consuming too much CPU time for the collapse operation. ::
++
++    # cd /sys/module/damon_sample_hugepage/parameters
++    # echo 1234 > target_pid
++    # echo Y > enabled
++
++Note that this module (SAMPLE_DAMON_HUGEPAGE) cannot run simultaneously
++with other DAMON-based special-purpose modules.  Refer to
++:ref:`DAMON design special purpose modules exclusivity
++<damon_design_special_purpose_modules_exclusivity>` for more details.
+\ No newline at end of file
+diff --git a/Documentation/admin-guide/mm/damon/index.rst b/Documentation/admin-guide/mm/damon/index.rst
+index 3ce3164480c7..6f2cad21a2da 100644
+--- a/Documentation/admin-guide/mm/damon/index.rst
++++ b/Documentation/admin-guide/mm/damon/index.rst
+@@ -15,3 +15,4 @@ access monitoring and access-aware system operations.
+    reclaim
+    lru_sort
+    stat
++   hugepage
+-- 
+2.43.0
 
