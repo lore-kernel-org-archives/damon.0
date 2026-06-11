@@ -1,143 +1,232 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDAB3B71D3
-	for <damon@lists.linux.dev>; Thu, 11 Jun 2026 18:50:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781203844; cv=none; b=t+7m9a3J5N6djvlLvtdxs7MbGPrygBh16G1abPxSWZCZqdK3iExAlm0dlA/UeUMsD6yEJsaBdg7dKWB5QMl9cQNnaOfxK2cCnRT7rzB6aJR+GM1l/w8mLa5bycpPjKeNeo7TasxSKhRpEKQXK+uV+Vwfod9h9wQGqjP5bCsxuHE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781203844; c=relaxed/simple;
-	bh=VUW8ZZgWRO6oBI/K1zuIFj0/8C/+Pr+bZK7RoXtN3jc=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RM+/7Sww2wzyJhLJw2ET2eKWB842ZaWvyP7/9oWCsWBGw9EN5Op7dwJHMtLMnlhRtyLa2YhB0Cup4XblURdFbaTCPxiYuwugdgp1xcrhWXK94d25U8hXyy52eldR9qTeYCm3f2qUOOszg2McPLduv3fyiN9W8S5fZ1hO5OrFusw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gBCz2JEc; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2AF48AE00
+	for <damon@lists.linux.dev>; Thu, 11 Jun 2026 20:37:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781210224; cv=pass; b=AduT/bN2Fx63v1FjvcYH8gIavEawWOgch50c1xmog6l1U4Hc4QerW5XPDDCv42a3AlRFGcuudHdxqL+mvfIwzdJ25ETDM+P/pXJYms+ZRRiNO+8CCNZeAhsu7fdxojQP+XApcJawBUHCKOU5BelHX+2CJApZN5195Brt44b88L4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781210224; c=relaxed/simple;
+	bh=K58UcHo+B3aFwDsgem6xE8uiuWZd8lb+WbYUU9ocaqA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Wt5iUbmYv6XIa8cP8l/6riEjM81thM62yRwOIlu9NbcTXSUQYyj7tzObMn88fJQy/mHUWBbmJxStjILtAncMwq7FYTyOL7gxhEkAObPBK6pA1T7mTaAeNXDGprJsBBLkdxjTbQGUoPHy9ygeNznef8c8mGcrM004NuEdCYp0ZAk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J8A8MiOx; arc=pass smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gBCz2JEc"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-45ef1629ff4so118914f8f.0
-        for <damon@lists.linux.dev>; Thu, 11 Jun 2026 11:50:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J8A8MiOx"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-6ce57a8b563so5071137.0
+        for <damon@lists.linux.dev>; Thu, 11 Jun 2026 13:37:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781210222; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lsLn5XYL9Q5+rQQ0q9Yy7dHlCav7uAcW1zQBajvN47LNkRY+xlTN+LXIcCdTYG1L6+
+         8mD28RNJ5rCgG8ifVduydCmTEftoe196SBadrMJlMpXZqkO3F+uC1FDxpokiuN/7D3lG
+         dwlPQZ+KnT59gplU2VIJQgdhY9hrBptc4lGJn7UwKoKrjHemLM5c5h4dkiaZHKNI3+Uo
+         z62ABPIeQmIgvi3OSnyOgcrRyHWI0tuH8BLv/urBTeCR56x+mIEEaruYeDy9dl+BDN3v
+         JFEP/JFIV4QFzvxk+2NSCXKPxCybuRRD5OBntGS/ezzhm3A+WWBk1HY4iw3ifvhCZsfi
+         jxCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=+sd3cdzhpA5EXsMbu0XJlZwk0ZLWyDF9YQvcNfzR1z4=;
+        fh=2YgeeGffSl0x66uTVsQN7Y4TI+Y7JHAW+UZLmLsYcRY=;
+        b=NXGNk0DJnTS11gkvUGNDQRy6Tl+Oa67qLEKP5IGTLVFMOktmBnnG4lPyyK9kfElY5g
+         4Gq1f4mVKi6VMqctS7BK9vT7/ajyVvDHdHM/sIPG2LM3Ud4I4Up+8e89qftOtlrnXw66
+         O8PH2CCj8znMiC3eAbE9QpxjF360YjGRozoem6685BV1s8khuk/6jj5lWM/2yAgRytl/
+         CO8tpFDtJh2CS3z4RfyaulIJNZd7cEiHvRcm9YDSGuxD4idTcdp/0VLMKXrKm2X+2SBj
+         Yi9R1tkxAICcwdF8JSsu9b/W3DMUWI2UoVmj3L+lPtmLw/KyO91cd/IL3q+yngJJhfLz
+         QKdA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781203840; x=1781808640; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781210222; x=1781815022; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aUxfWJt8IGWDlV52x/Qd1ZFtz3KlHMm4m7NO0v4ch/g=;
-        b=gBCz2JEc1cY+xP5LkHM1trEtwzQ/oIwFWjvf2LGdBB1Dg8Sk5hP6vZ9e7/zn1vp6d7
-         BGhIJlfhqqI3iXGKRnviBAoHtPrT7PcgidMBleqjPD1coxaSVQDnpr7OtJqTkbUbzRqg
-         pgo7CQw47VxeeJOX9mmg39AlSJMOb3bAAfhQlsFi6HYIF5dI0kp+tMV67e9sirLc5wHP
-         uGjCAixbC8xszdDYfdQ2H4vAadzcozEsCDlE2H4yLrUEo+vMfnaKnMvBK0VKE0ne+7ZS
-         VYF3E8WvaTjqRyCD+drZ2i825KHpqdR/oluX6MvjAH6Z+HQ4wKeSliYb9gphnMy8L4cg
-         Yv9Q==
+        bh=+sd3cdzhpA5EXsMbu0XJlZwk0ZLWyDF9YQvcNfzR1z4=;
+        b=J8A8MiOxNcCc6aUr7TIEQ5J5UC5O30UrWY8pqOjvqB1VMDHfsTTnjZS8ShNGrByHMt
+         skLhKwlRSyDVQKy5Ld3i63IyTjx90SNhsfz4sDIkomjFaOyj7bCAiT0LmP+xvq4iK0Rl
+         +QUTWKpRMH1VgRrKiSiHL8e4v3nW3s4QYrmVj0aP8DyHrLhJ9Co/8htpdapESLWGEXSz
+         PmgY7mUTDVnrRyWsUYgK+2uGGjrEyZV9+ZQIFhLzZsT4bhdbP4Bqv1IV/qW1rut2QVbn
+         LzwQqkWhhZ3iMbH35prL2zvAxaUE1fVYBX68rQzXyGbK1dUrDE+cSHiE0AR2d9pOjkkD
+         iPTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781203840; x=1781808640;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1781210222; x=1781815022;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=aUxfWJt8IGWDlV52x/Qd1ZFtz3KlHMm4m7NO0v4ch/g=;
-        b=KWnj3DpB6QIG6UnyWq/k/P9BI3SZn5v5OSWw3sWRZwBhs0sArAgr5Q91Khct47LtNx
-         m8nA4m8vVixXYkCqpUIDuaIY8eGdcG/+JXpTfVwoN931QgEstvd0qbkAoWKTH/9LcCkj
-         /HcDyQIOdLHe9MZCgCtIqqG3Mvga41QUbncw+LDIUqM0g2QF57ff/VP3EFczAHsGW/oP
-         o0WC4s5qgqYbsopbx3Xg6KDvFMUhMWWwq7UyI6n50adxgdvUqXMgSib2yh0znUF9bPt2
-         yiCnLrSY3LVpw4kgEyw3hCS3RpoZ8mLf2yFCyJ1Tq66kgAq6TbhGFXSc6jmbYJi3EjZP
-         gsoA==
-X-Forwarded-Encrypted: i=1; AFNElJ/oOSs4b9QOLKYXi8AQsCAmgNoDdqLJATR/p4psxcHuSE1VZWd/9iKhnZcDtzEDozCS+kusXQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxFvvpIWWjTms9aufF68MZpIv4LMElFa88OSdTsz9UdddgnkAE9
-	7niJKY4XjDmmck3vmTjPqeFApJL/KbmcXzXOxiYnv8V8N7dGnjH7gUOj
-X-Gm-Gg: Acq92OEtIuyLZDjXPVqmbP3KNpS7akcAX1V0Nccf5VrvakfD60YTG7sP+c2ugAXEOaM
-	bdMxjoNbPzJydUHaEB1lZegLHHid0bHXiOil1vaYHaFArzPQ2RYDKyUT/ykc34Pzj5MK5aaGObS
-	K7RA/mCFwuNoZBvhMcrdB5z+UjUsFixVmxqpqQgRAu6n+af9hFvhsRI5mjge1ZhG1wTcntQ3zOM
-	Ob5qQxw0/JHcPVfC9DzwXzB++Th8k6H9unfdSuehim0I+KCT83G3fUEvHPAKu1Hj89cwoRkf11O
-	U/gQRzazm+8hL7JdRTzBlOp1muUZ/vWwXaLdm7FUXfXDFzMxKbv6ZROWFq77Roa3uwyMPgpeLRV
-	Kyy2HEPBgXS6MSWCAHPcmiNxgWX3xU6VrNQDGLUwcau3T1A8n2TMHvKAEmC7lcTMxoUcUcEOCFL
-	0yn+KAdZFrg42DUmyMpcTch3fK7LFbriemz7m+KhD90RavVq0maOzgm5OEKT6+
-X-Received: by 2002:a05:600c:8b31:b0:485:9a50:3370 with SMTP id 5b1f17b1804b1-490e55c3ca2mr57651865e9.8.1781203839529;
-        Thu, 11 Jun 2026 11:50:39 -0700 (PDT)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490ea7c09bcsm3579135e9.2.2026.06.11.11.50.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jun 2026 11:50:39 -0700 (PDT)
-Date: Thu, 11 Jun 2026 19:50:37 +0100
-From: David Laight <david.laight.linux@gmail.com>
-To: Arnd Bergmann <arnd@kernel.org>
-Cc: SeongJae Park <sj@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, Nathan Chancellor <nathan@kernel.org>, Arnd
- Bergmann <arnd@arndb.de>, Nick Desaulniers
- <nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, Justin
- Stitt <justinstitt@google.com>, Ravi Jonnalagadda
- <ravis.opensrc@gmail.com>, Quanmin Yan <yanquanmin1@huawei.com>,
- damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev
-Subject: Re: [PATCH] mm/damon/core: reduce kernel stack usage
-Message-ID: <20260611195037.1adec04d@pumpkin>
-In-Reply-To: <20260611125704.3386176-1-arnd@kernel.org>
-References: <20260611125704.3386176-1-arnd@kernel.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+        bh=+sd3cdzhpA5EXsMbu0XJlZwk0ZLWyDF9YQvcNfzR1z4=;
+        b=DeP8jq8jMj4ZChQioyM8J7Yt1FFNfTFWYcGM7Es3wSq2mIx7fAerCBfck28MkIVbFO
+         dZbAojNAY28Oj11Tym8vxhT0s5WIlXTX7jftDY3m/03RltbceDAXwlUNdZlfSO91uGDS
+         diqga2dvShUXKGzPJn4rZ9Dy57AXaZCqZZqm6oI0a3dCorv+96NCtEofNE9ACBn9YPJE
+         gjXd8DxxkUAz05KcfuSZz7MJjyLoSyYNF0TehcSFQIEUrJ/BtF5dbxlFKkLlbYucmTeD
+         8EQfc3utSTcw1rmAjyRbScGFuVa1ilx20CifUw5lAXR1unBvlqT6ebq1j96+fgW6hPNA
+         OuDQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/TP16qA24BCwAmGVNWErM7os1UeaFkiLcRY2EyfUVa52RsidoxtkFOLg33ZMAP8e215oo4/Q==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxKLkK7yR9+ke/gk71Uqf2c6ua0E5ZRDEQ+jghdn5ZWeBIIE2zJ
+	u8x5KmJOKa+TTOUtZPDEYHO8+NaisFkFgCNUk8SVXXjUgHdJup/UwJ9LP7OlSrveylQ15f/sAuP
+	32bvS9e1mxzrXGjFU+mTzUYHL3gsLn9ZV+uow
+X-Gm-Gg: Acq92OGHBSSUaExCLTSMSfQ2svwrpf7cK2pskM+g/U6xSId10vfWNE4XrWHNEyinXY+
+	bSGN7YiOTnsCvUvqAdEJ/mUkW+lEDX/rA9MdQkbhDAhxMPzhi26gM7WwE88sVEkHH1uNM1JJ3b4
+	LVEwMkKJDBtIo6K4rRJPb+OC4pfOu+Ese1D/TPN/gpRXdLl0gBoh4vF0IgGYTpu7zJif/82QBIk
+	RiLLAxCh3mmMLzRbNd8cjXbQN5PsZ5LVBuge7Z249EQYleMdR2Vn+ch4AGxb/xp5vbLaAxvF1Va
+	JpiJlOPLYA==
+X-Received: by 2002:a05:6102:26cb:b0:631:4d32:a86 with SMTP id
+ ada2fe7eead31-71d5c67f824mr916400137.7.1781210221808; Thu, 11 Jun 2026
+ 13:37:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <CAF+TLO0TOKr3nef9RnbBuZ8A-jNpV1po26t1BO6JbSqMhfABvw@mail.gmail.com>
+ <20260606003627.88973-1-sj@kernel.org> <CAF+TLO3a2MBVp3-7jm3BPjuT8jhx4yzdWxuA_QPQ9YPVEj0XZw@mail.gmail.com>
+In-Reply-To: <CAF+TLO3a2MBVp3-7jm3BPjuT8jhx4yzdWxuA_QPQ9YPVEj0XZw@mail.gmail.com>
+From: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+Date: Fri, 12 Jun 2026 02:06:51 +0530
+X-Gm-Features: AVVi8Ce2REi4mUqmiQKXLcfNq0RParFt0ik2l5LBrnYnygRVam7OLZkXJS6yVMY
+Message-ID: <CAF+TLO2PX71_-9nKBEAJ50+NpjNkgipig6=9OLsvbgZtqF2yew@mail.gmail.com>
+Subject: Re: [PATCH v2] selftests/damon: add regression test for damos_walk()
+ vs kdamond exit race
+To: SeongJae Park <sj@kernel.org>
+Cc: shuah@kernel.org, damon@lists.linux.dev, linux-mm@kvack.org, 
+	linux-kselftest@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 11 Jun 2026 14:56:57 +0200
-Arnd Bergmann <arnd@kernel.org> wrote:
+Hello SeongJae,
 
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> The main thread function has recently grown to the point of
-> exceeding stack frame size warning limits in some configurations.
-> This is what I hit on s390 with clang and CONFIG_KASAN:
-> 
-> mm/damon/core.c:3440:31: error: stack frame size (1352) exceeds limit (1280) in 'kdamond_fn' [-Werror,-Wframe-larger-than]
->  3440 | static int kdamond_fn(struct damon_ctx *ctx)
-> 
-> The largest stack usage here is inside of the kdamond_tune_intervals(),
-> so by marking that one as noinline_for_stack, the functions individually
-> stay below the warning limit, though kdamond_fn() itself still uses
-> hundreds of kilobytes for some reason.
+Noted on inline replies - I'll follow that format from the next response.
 
-Does that actually reduce the stack use if the functions are called?
-Or just stop the compiler bleating and running the code is still likely
-to overflow the stack.
+Following up on this thread with progress.
 
-I keep thinking it should be possible to get (say) objtool to output
-the stack offsets of every call.
-With (I think it is) fine-ibt the hashes can be used so separate all the
-indirect calls (although you might need a 'salt' to separate the different
-'void (*)(void *)' functions - that probably ought to be done anyway).
-Then it is a SMOP to generate a maximal stack depth for each function and
-to detect the recursive loops.
+As discussed, I dropped the userspace selftest approach since it
+cannot reliably trigger the microsecond-wide race window.
 
-I did that many many years ago for an embedded system (no indirect calls),
-the outcome was that we didn't have enough memory to allow for the worst
-case stack use!
-The deep places were all (the equivalent of) printk() in pretty
-impossible error paths.
+I wrote a KUnit test instead, added to mm/damon/tests/core-kunit.h:
 
--- David
+- Creates a damon_ctx
+- Sets ctx->walk_control_obsolete =3D true under walk_control_lock,
+simulating the state just before kdamond_fn() exits
+- Calls damos_walk() and verifies it returns -ECANCELED immediately
+
+I built and ran this on a kernel with commit 33c3f6c2b48c
+("mm/damon/core: fix damos_walk() vs kdamond_fn() exit race") present,
+and the test passes along with all other 28 existing damon KUnit
+tests:
+
+  ok 29 damon_test_walk_control_obsolete
+  # damon: pass:29 fail:0 skip:0 total:29
+
+Since walk_control_obsolete is a field introduced by this fix, a
+kernel with the fix reverted would not compile this test (the field
+would not exist). So the usual "fails before fix, passes after fix"
+verification does not apply the same way here - the test directly
+validates the new field/behavior introduced by the fix.
+
+If this approach looks reasonable, I plan to send v3 with this KUnit
+test (replacing the userspace selftest from v1/v2), along with the
+commit message format and other minor fixes from your earlier review.
+
+Please let me know if you'd like any changes before I send v3.
+
+Thanks,
+Sailesh Nandanavanam
 
 
-> 
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
->  mm/damon/core.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 265d51ade25b..69f38c48ac08 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2002,7 +2002,7 @@ static unsigned long damon_get_intervals_adaptation_bp(struct damon_ctx *c)
->  	return adaptation_bp;
->  }
->  
-> -static void kdamond_tune_intervals(struct damon_ctx *c)
-> +static noinline_for_stack void kdamond_tune_intervals(struct damon_ctx *c)
->  {
->  	unsigned long adaptation_bp;
->  	struct damon_attrs new_attrs;
-
+On Fri, 12 Jun, 2026, 01:50 Sailesh Nandanavanam,
+<saileshnandanavanam@gmail.com> wrote:
+>
+> Hello SeongJae,
+>
+> Noted on inline replies - I'll follow that format from the next response.
+>
+> Following up on this thread with progress.
+>
+> As discussed, I dropped the userspace selftest approach since it cannot r=
+eliably trigger the microsecond-wide race window.
+>
+> I wrote a KUnit test instead, added to mm/damon/tests/core-kunit.h:
+>
+> - Creates a damon_ctx
+> - Sets ctx->walk_control_obsolete =3D true under walk_control_lock, simul=
+ating the state just before kdamond_fn() exits
+> - Calls damos_walk() and verifies it returns -ECANCELED immediately
+>
+> I built and ran this on a kernel with commit 33c3f6c2b48c ("mm/damon/core=
+: fix damos_walk() vs kdamond_fn() exit race") present, and the test passes=
+ along with all other 28 existing damon KUnit tests:
+>
+>   ok 29 damon_test_walk_control_obsolete
+>   # damon: pass:29 fail:0 skip:0 total:29
+>
+> Since walk_control_obsolete is a field introduced by this fix, a kernel w=
+ith the fix reverted would not compile this test (the field would not exist=
+). So the usual "fails before fix, passes after fix" verification does not =
+apply the same way here - the test directly validates the new field/behavio=
+r introduced by the fix.
+>
+> If this approach looks reasonable, I plan to send v3 with this KUnit test=
+ (replacing the userspace selftest from v1/v2), along with the commit messa=
+ge format and other minor fixes from your earlier review.
+>
+> Please let me know if you'd like any changes before I send v3.
+>
+> Thanks,
+> Sailesh
+>
+> On Sat, Jun 6, 2026 at 6:06=E2=80=AFAM SeongJae Park <sj@kernel.org> wrot=
+e:
+>>
+>> On Fri, 5 Jun 2026 12:44:50 +0530 Sailesh Nandanavanam <saileshnandanava=
+nam@gmail.com> wrote:
+>>
+>> > Hi SeongJae,
+>> >
+>> > Apologies for the delayed response.
+>>
+>> No worry!
+>>
+>> [...]
+>> > I agree that a KUnit test is the right approach since it runs inside t=
+he
+>> > kernel and can directly set walk_control_obsolete to simulate the race
+>> > condition reliably without timing dependencies.
+>> >
+>> > I will drop the userspace selftest approach and write a KUnit test for
+>> > damos_walk() functionality including walk_control_obsolete. I will ver=
+ify
+>> > it fails on a kernel with commit 33c3f6c2b48c ("mm/damon/core: fix
+>> > damos_walk() vs kdamond_fn() exit race") reverted and passes with the =
+fix
+>> > present before sending v3.
+>> >
+>> > Regarding other feedback:
+>> > - Will use correct commit description format with subject in brackets
+>> > - Will remove the Fixes: tag
+>> > - Will add blank line before _damon_sysfs import
+>> > - Will add changelog and link previous versions
+>> > - Will share revision plan and wait at least one day
+>> >   before sending new version
+>>
+>> Sounds good.  Please consider using in-line reply [1] from the next time=
+,
+>> though!
+>>
+>> >
+>> > Please give me some time to study mm/damon/tests/core-kunit.h and impl=
+ement
+>> > this properly.
+>>
+>> No rush, take your time.
+>>
+>> [1] https://subspace.kernel.org/etiquette.html#do-not-top-post-when-repl=
+ying
+>>
+>>
+>> Thanks,
+>> SJ
+>>
+>> [...]
