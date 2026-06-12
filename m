@@ -1,145 +1,212 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDBF3F44E4;
-	Fri, 12 Jun 2026 17:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4823A315785
+	for <damon@lists.linux.dev>; Fri, 12 Jun 2026 19:36:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781284143; cv=none; b=lrf517eVSucW4g5nvOfkeKBecosNPz6qS9L+sfe1O14D/oO7zRWwb7830O4i0J4GZ6dgJ0qyh5LrnSETokDfwpcxVp6Kd7cWRQ1ozS0JZoHdsDUYSKtOErmwqFBGK9pvl0YqA/+ruw13QrvnmP8UCoCAjLEBKOKHIqr5HZO8Ev8=
+	t=1781292984; cv=none; b=qY00XI7+AV/1Hm6xlsdmi+jwLOwwu5u/PZOPsICIAfaFdf5oW9Wpj9I2TnitukBAgpClmNWCmwJgpnk/Eh2WqV2pJON48dHUV9I4QAT1ZjS9G3qw/nfXhR9IQoQSC/APp7sTxs6vWRC5bU3vg7OHzzh95JpyTaRgcDBknn7s8Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781284143; c=relaxed/simple;
-	bh=7d41YRMa4Rf7SsehB3A8aFwHAWiwjjEy1l8em50ck8I=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ALIQMagl6qCiRVkdSwA5wnYdcXN3ilKvhEStZQ9o7j4rMX3C9VGa/YVnE86cZN883L2YpYFXOGGG/uBaXICqQYTlvlG1mD+96ExKPzeP69Iby9TQLhf8gJyjkx309l5P74ykOq0YpRBAMiIclVA9VQjgVXqTexqxoMwBlpBARVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=bquUaG7N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h7tMjQUf; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="bquUaG7N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h7tMjQUf"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B910B7A0148;
-	Fri, 12 Jun 2026 13:09:00 -0400 (EDT)
-Received: from phl-imap-05 ([10.202.2.95])
-  by phl-compute-04.internal (MEProxy); Fri, 12 Jun 2026 13:09:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1781284140;
-	 x=1781370540; bh=BsUebY2ZXG2/1TO6nMs7fw5YQPjV9f9LK+DvZ2Jcfhc=; b=
-	bquUaG7N6CdRZXhDzy7S2dRUm3jRKQ6L0LVoYqkHU18Jsg+ri8+8fMM9WBcV59QS
-	i9APzzg6XUH+ShtlW4AsiannDhuZJ14zoqwCo73/Y2bbkTT4Rcj7IBdww+LLqlK0
-	iZKwd4aHvsf7zOVZ0rQAJISYcuxal3Fgkl8nsDeufvTG3wQWz+39aIp/2/FlV/eE
-	3MxTRnS3litp11LMo5H3BheN8HK7cqqF9OuMPbPlzqoO3oO0IasFqrqN6mjNaDDk
-	cGLgV/M/GmLaqLYXevN0U6OVDg4zwdQdc8NwrwoNRDlO3fQ6Tyvmv7kzRaEeNpck
-	adtQKZ7CdSDxgruVrfcC7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1781284140; x=
-	1781370540; bh=BsUebY2ZXG2/1TO6nMs7fw5YQPjV9f9LK+DvZ2Jcfhc=; b=h
-	7tMjQUfH6zFenuqIJLzxcK8xG12he/XQo/ImA7umOkc7zWoHMHGQUt3rVGYHoMwp
-	wm9u1hlU8l2pYVim7SJ9vYZhGazTpcNR8wv6ceK7lRQwF+VcGmDzLFd8dFOhFSE/
-	0dVpcN8a3D61vz8AdEW5aySTV4lNedqYb2EdiaB8qxS9Pv/3R+tI8Ef6y31f7vwl
-	K9D20UqCCUjOMsdhtBINfiAgiXFp2lFnOsRvXgpiLGRpyHYeLcKqkhpwRwQSvZGA
-	TF/b1iOCV5CXHounvY+w4N/bLWd3kOh3K+7jz3yHq1jmkrKuq7FyQH17Pk5Z60Jd
-	S3QXsJBkecf3jfEyCAtBg==
-X-ME-Sender: <xms:LD0savSXV5zl7_--zguKxhEvrbskKYlLVyRh2YvonnF6JXtbsVKxDA>
-    <xme:LD0sarm-T8yPsQ9D2k4e0rQ4JW-wM7iUX4sMEzQmdxVH5_AAnurErA0s8FlZTDeFZ
-    iI8dbT02OthdSpl3KG0PJLDaW2IA-QSsl2cHrLosTGXuO1HU6pZI08>
-X-ME-Proxy-Cause: dmFkZTGwN+Ekeu17sMdaw9gASWSWOK9O1Zv6WScOHNDncCF07cLZEt8u3bD6JKiw70vsW5
-    gyk4kNWrdtL4pFHt07VYa6ueq6AfuzMpNyJ5O/P61NOVpiIvmo2U75TLSN99ln+iUsMfeT
-    mgxfr/nnyD5cckfWtpP3S42fIi/P2HV2KeFHQ47GGDTQWmoiCQywJ8H363tWJL16Zl1fhN
-    fb84euBh50u7OJWWBPMoLhu4+OmzW0j/ZBELvHtbvROJbDewuf2x9ahVLaozXAbI74QsvL
-    zGZK13k7Bj4cs+KCYq0u3ZGZdxwxfm6vDeOwboaoxEthvVrFdLmfecq7s7WWTejbwVaLGf
-    ezclml10ERX/lJf3eMC0WO0XNyiJQqPghg4DbRV0EcAq8g2lXR5kF6Yn0CUwmd1qt0zj3X
-    3wa1gWO/TGp4nqUp2PwtS87zJMSIwL5rnsLR+ZZg9hNk2qfuFc3sxnzLBki4MwOby9gWjZ
-    XV37tWK6+dn4i9Y5eZ6uQ34q9R66N+0x6Mjxqco7ZNUw5xfbCQkLBrW++b0wZHE3W1pfn4
-    f+xIsywnQUfzSyAyeTs0iQs4DiH3sDOIYehHPJ7lYjcNrdb0h8kH3bsD/CeGEKUNcaFTlS
-    46j7JHCRXozPG96KAmNLdMoqPFCehFKzOK3MRAm7NMl5+YZfkJ+NkFcaolgQ
-X-ME-Proxy: <xmx:LD0sahge6lPQ79-hlA-9zGwO2GZJyrDa4q9E7theuP66Ew4vx02gZw>
-    <xmx:LD0saibguOBbn3ns75KWJl9c3Fg-yLHDdGyT2TKZ7v9xPspm9HcLoA>
-    <xmx:LD0salgl3aExGE88O73YuF1R5qlx6JND46UvRasxbZ3CHi8iQYVnBw>
-    <xmx:LD0sakYLC9-VHquBVHNSb-Mmbo9fR-lH6_HUc9pVqqoPcdFYT_cq0g>
-    <xmx:LD0samHrYOlInMhF4Q8G40pcZfTTr6pnRcyJHmsiR1PTshu6yYKfN8gF>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id EF0C31820082; Fri, 12 Jun 2026 13:08:59 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1781292984; c=relaxed/simple;
+	bh=GlaP0P3AfV0LQbmpyjHKjMGcGwWbq/hS1UH96/1CJFg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ddd5MjdZeJD09J7EFs4jlKAUsoB25ws5vQRyK97rRqbSzuiKxA477RhhnzV24NdP/rABQqdW/ffjieW9mDUMbANx2yjJz1d6g5nPhrkNfoc6tbD5GzE0wdJTiT4DUDgre2tUDCwj66Vm43TIcyDe5IdcyrhWNeP1S0hfkx1ldes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gcV9l70Z2zJ4678;
+	Sat, 13 Jun 2026 03:35:55 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 31BFB40570;
+	Sat, 13 Jun 2026 03:36:13 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 12 Jun 2026 22:36:12 +0300
+Message-ID: <abc8acca-5145-4c16-aeb7-4127da234a62@huawei-partners.com>
+Date: Fri, 12 Jun 2026 22:36:11 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: AzfP_w-3vYjw
-Date: Fri, 12 Jun 2026 19:08:39 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "David Laight" <david.laight.linux@gmail.com>,
- "Arnd Bergmann" <arnd@kernel.org>
-Cc: "SeongJae Park" <sj@kernel.org>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Nathan Chancellor" <nathan@kernel.org>,
- "Nick Desaulniers" <nick.desaulniers+lkml@gmail.com>,
- "Bill Wendling" <morbo@google.com>, "Justin Stitt" <justinstitt@google.com>,
- "Ravi Jonnalagadda" <ravis.opensrc@gmail.com>,
- "Quanmin Yan" <yanquanmin1@huawei.com>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org, llvm@lists.linux.dev
-Message-Id: <139b11c0-dce8-4995-8f28-320dfd6cc70f@app.fastmail.com>
-In-Reply-To: <20260611195037.1adec04d@pumpkin>
-References: <20260611125704.3386176-1-arnd@kernel.org>
- <20260611195037.1adec04d@pumpkin>
-Subject: Re: [PATCH] mm/damon/core: reduce kernel stack usage
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 0/4] mm/damon: Introduce a huge page collapsing
+ mechanism using auto tuning
+To: SeongJae Park <sj@kernel.org>
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260612005631.83964-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260612005631.83964-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Thu, Jun 11, 2026, at 20:50, David Laight wrote:
-> On Thu, 11 Jun 2026 14:56:57 +0200
-> Arnd Bergmann <arnd@kernel.org> wrote:
->
->> From: Arnd Bergmann <arnd@arndb.de>
->> 
->> The main thread function has recently grown to the point of
->> exceeding stack frame size warning limits in some configurations.
->> This is what I hit on s390 with clang and CONFIG_KASAN:
->> 
->> mm/damon/core.c:3440:31: error: stack frame size (1352) exceeds limit (1280) in 'kdamond_fn' [-Werror,-Wframe-larger-than]
->>  3440 | static int kdamond_fn(struct damon_ctx *ctx)
->> 
->> The largest stack usage here is inside of the kdamond_tune_intervals(),
->> so by marking that one as noinline_for_stack, the functions individually
->> stay below the warning limit, though kdamond_fn() itself still uses
->> hundreds of kilobytes for some reason.
->
-> Does that actually reduce the stack use if the functions are called?
-> Or just stop the compiler bleating and running the code is still likely
-> to overflow the stack.
+Hi SJ,
 
-The one code path that was identified by the compiler does not
-improve, as the sum of the caller and the callee is still the
-same. As far as I can tell, the stack usage in gcc is similar
-in this code path, but it doesn't warn because the normal
-inliner does not combine these two.
+On 6/12/2026 3:56 AM, SeongJae Park wrote:
+> Hello Asier,
+> 
+> On Thu, 11 Jun 2026 15:02:40 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> 
+>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>
+>> Overview
+>> ========
+>>
+>> This patch set introduces a new autotuning which allows to collapse
+>> hot regions into hugepages.
+>>
+>> Motivation
+>> ==========
+>>
+>> Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+>> misses (or hits) is to use huge pages. Unfortunately, using "always"
+>> in THP leads to memory fragmentation and memory waste. For this reason,
+>> most application guides and system administrators suggest to disable THP.
+>>
+>> Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
+>> However, there is no way to tune the settings. It will collapse all the
+>> hot regions that meet the access pattern. If the server is a bare metal
+>> database or big data server, this will also lead to eventual fragmentation.
+>>
+>> Additionally, currently THP is set globally. Ideally, there should be a
+>> way to control which tasks can use huge pages.
+>>
+>> Solution
+>> ========
+>>
+>> DAMON has now a way to autotune some of the variables and adjust quotas
+>> automatically, so that DAMON is fired only under the right circumstances.
+>> It would be nice to have something similar, but for huge pages.
+>>
+>> A new autotuning quota goal[2], damos_hugepage_mem_bp, is introduced,
+>> which checks the huge page consumption to total memory consumption. This
+>> new quota mechanism reuses current autotuning architecture.
+>>
+>> A new module is introduced to demonstrate the use of huge pages
+>> collapse autotuning. The goal is to collapse hot regions of a given
+>> process into huge pages. The module launches a kdamond thread for a
+>> certain task provided by the user through monitored_pid module argument.
+>> Hugepage goal autotuning will automatically adjust the aggressiveness
+>> of hot region collapses.
+>>
+>> This module also has a user autotuning knob which allows the user to
+>> adjust the aggressiveness of page collapsing.
+>>
+>> Benchmarks
+>> ==========
+>>
+>> Huge page collapse autotuning was tested in a physicial machine with
+>> MariaDB 10.5.29 and sysbench as the benchmark framework.
+>>
+>> The hugepage module was set up in the following way:
+>>
+>> # echo 1000 > min_age
+>> # echo 1000 > quota_percentage_hugepage
+>> # echo $(pidof mariadbd) > monitored_pid
+>> # echo on > enabled
+>>
+>> The goal was to achieve 5% of the total memory used as hugepage.
+>> Since the database was not very big, we may not be able to achieve
+>> high amount of huge pages per total memory consumption ratio.
+>>
+>> The table below shows the memory consumption over time. Gaps in the
+>> timestamp means that no changes in the hugepage consumption happened
+>> over that period of time in MB.
+>>
+>> +-----------+----------------+----------------+----------------------+
+>> | timestamp | total mem used | huge page used | percentage hugepage  |
+>> +-----------+----------------+----------------+----------------------+
+>> | 0         | 3044.988281    | 0              | 0%                   |
+>> | 22        | 3160.207031    | 2              | 0.06%                |
+>> | 30        | 3250.90625     | 4              | 0.12%                |
+>> | 69        | 3781.238281    | 6              | 0.16%                |
+>> | 71        | 3822.226563    | 8              | 0.21%                |
+>> | 72        | 3846.578125    | 10             | 0.26%                |
+>> | 73        | 3852.402344    | 12             | 0.31%                |
+>> | 74        | 3868           | 14             | 0.36%                |
+>> | 75        | 3881.84375     | 104            | 2.68%                |
+>> | 275       | 4194.175781    | 106            | 2.52%                |
+>> +-----------+----------------+----------------+----------------------+
+>>
+>> After second 275, no more pages are collapsed into hugepages
+>>
+>> Performance:
+>> Baseline -> 18,124.1 transactions per second
+>> Hugepage autotune -> 18,163.64 transactions per second
+>>
+>> TODO
+>> ====
+>> - Support page splitting for cold hugepages.
+>>
+>> Patches Sequence
+>> ================
+>> Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP and autotuning
+>> Patch 2 -> Module that demonstrates how to use
+>>            DAMOS_QUOTA_HUGEPAGE_MEM_BP and DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
+>> Patch 3 -> Support for DAMOS_QUOTA_HUGEPAGE_MEM_BP in sysfs-schemes
+>> Patch 4 -> Documentation
+>>
+>> Changes from previous versions
+>> ==============================
+>> RFC 3[3] -> RFC 4
+>>   - Simplified the module
+>>   - Removed unnecessary parameters
+>>   - Renamed DAMOS_QUOTA_HUGEPAGE_MEM_BP to unify the
+>>     naming style
+>>   - Switched to DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
+>>   - Updated the documentation
+>>   - Removed new interface for context creation with
+>>     DAMON_OPS_VADDR
+> 
+> Thank you for keep revisioning this patch series!
+> 
+> I think now we are aligned on the overall direction of this series.  Let's add
+> the new metrics with the sample module.  The sample module's overall shape and
+> size looks reasonable to me.
+> 
+> So I think now is the time to start making this series be more seriously get
+> ready for the landing.  I find some parts in commit messages and cover letter
+> that not correctly updated for my feedbacks on last revision.  Particularly
+> tests and future work parts,  and sample module name are not addressing my
+> previous feedback.  I therefore skipping review of quite details in this
+> revision instead of adding same comments again.  That could be ok for early
+> stage RFC series, but let's move to the next stage.
+> 
+> From the next revision, could you please take more time on addressing all my
+> previous comments and updating everythings including comments be consistent?
+> If you have a reason to keep some of my previous comments not yet addressed for
+> the next revision, it is toally fine but please clarify.
+> 
+> Also, I'm not sure if I asked this same question before, but ...  Could you
+> please share your future plans for this specific series?  What change you want
+> to further make before dropping RFC?
+I will review once again all your comments.
 
-It does help in other leaf functions called by kdamond_fn() that
-now don't have the kdamond_tune_intervals() variables on the
-stack on top of their own ones, so in any other extern function
-called indirectly by kdamond_fn, more stack space is available.
+Since we are aligned, I plan to drop the RFC tag for the next revision.
 
-> I did that many many years ago for an embedded system (no indirect calls),
-> the outcome was that we didn't have enough memory to allow for the worst
-> case stack use!
-> The deep places were all (the equivalent of) printk() in pretty
-> impossible error paths.
+In the future, once this patch set lands in upstream, I plan to submit a new
+patch set to add cold page split in the sample module, so that we can have a
+full THP support.
 
-Yes, that is a well known problem: it is very easy to construct
-call chains that are possible in the kernel that go way beyond
-any sensible size limit. Importantly, any GFP_KERNEL allocation
-can end up in the file system reclaim path.
+Thanks a lot for your patience!
 
-The -Wframe-larger-than= warnings are just one way to make
-this less likely to happen.
+> 
+> Thanks,
+> SJ
+> 
+> [...]
+> 
 
-     Arnd
+-- 
+Asier Gutierrez
+Huawei
+
