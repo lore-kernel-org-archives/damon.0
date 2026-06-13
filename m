@@ -1,97 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4546B1A9FB7;
-	Sat, 13 Jun 2026 00:39:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC7114AD20
+	for <damon@lists.linux.dev>; Sat, 13 Jun 2026 02:33:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781311153; cv=none; b=tvUUNWv6KJ3TExwd8/Ouv/H2oNSDCwjpjdKh2pbH4wxU3frgb3LnG8CVxP7C5RGM3zZbelCeTMHD6VEKrVy+NTj9/rNh0zDvjBdJPs2GXXoZOWLRA3Bl8PNYI8XX0WjOUhgVbtoIJnRaFWXU7MeA+8AiYiTKI/GZ35KtEjveh2E=
+	t=1781317986; cv=none; b=Zs5lNphMo+zeRSBB3TYYMnL7g/yKQ55o6zKvW0OCDU867STOS7h4cKHnmcQIxEhE8nyKrBfRyD3UMM690CLTOD6mVOzn5/MumsFljoSU2EVuAW7CUQ4liZSJcv06Ar2tfe4kdlbLiFF2W/erWEgrxCraHZ0cD2lIb1zStufvb0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781311153; c=relaxed/simple;
-	bh=V7ivxE8Q6U6I5yIvW+G7FI0OwyM5ZgdYPkgMuZKYb/4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1AkaA26o3ql4p5NtRMBg0q8DQ3fcGoo1JLvripAi55Lxmn57j26z7/fiIjTuxSEniwm3p+oj8xl4sUTJa2TZMcfDbeyNIrmQk0Jj2InQdpc8lZT5JDsz2ePdCue7J9iapznJXV8feePzA1kdiecp/v2bSvcohtzc1xKnmvT9Mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RaB3KHbD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781317986; c=relaxed/simple;
+	bh=mi3ZV3Gt/r2lcK06u4jEt7t01Fy3KeVWrGhal3SlYAY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hkXm09i25eoyuVjAZvIiOrdqcjW3R7O/cA7skglhGdVbdcYuBs/2mdGoNBOd6tjoMt56YdhzFhy4Z1OYBqaznNyakfd1XG6Y2PJchGj+ou8cv8Z4DtB/YSYGLFI1tzyIVB6CF6hefMHMQ0gwzkMDyEz9jLmY84nq+d/3zGJlm8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Q91H3e+e; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RaB3KHbD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDDD1F000E9;
-	Sat, 13 Jun 2026 00:39:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781311151;
-	bh=TEI/oYL96D6QPPjj82L55jjg/d8h3AkIL0OSLpC5t+Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RaB3KHbDYrCrCpghgRrcfM7xtPFx2sUsgqe6B4GoO9Avmo+oVZwHtErMBqQo/xzlT
-	 fXlAFyT7ds9gvCZd3bt/CtHxpMO/pPmRxD5Bxfn76NSFLlYNqSm1hDhilDWa21fTG5
-	 ydnr/01AKEnZSclCf+X98zMvV4QYODluKYjvmDJsj1nvvST/YfZJSHP/D1rdH2h+hh
-	 kNqLm5IVSfExkZpxpo9l7iY7CmCxejdfol/VwdRrm+GPTqYv2TtTqAd1v1qup8A1QY
-	 8VESK4htyjib9pYl30SpCwNQVgCsNRQ1REp1lOpLYAogCvm5J8LvnNSMYvsjYY+CUH
-	 hVmTmZCbIl4aQ==
-From: SeongJae Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
-	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v4 0/4] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
-Date: Fri, 12 Jun 2026 17:39:04 -0700
-Message-ID: <20260613003904.1932-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <abc8acca-5145-4c16-aeb7-4127da234a62@huawei-partners.com>
-References: 
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Q91H3e+e"
+Message-ID: <4072c971-0a54-4bbe-8cb1-c06e13b22f05@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1781317981;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=BnBRu3NQHRa7FAIW+DrmHpdNjwA7eML12cXPHDJUAaQ=;
+	b=Q91H3e+eKXamFdv8sBIlHNxnrqyHVsVEpM1TULIuo0ooAmms7jIllIS+uDrWNEptRe/JXp
+	/Ke7BMWlhwEgH9xTEc0RngEAknMvG+CW+EY4XSytGGYpqDmgXrg9Lwy+GcvKuBpk73yHTb
+	m8FvKnAJL7+5lWBxT8pBi4FhpJkept0=
+Date: Sat, 13 Jun 2026 10:32:43 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] treewide: fix transposed "sign" typos and update
+ spelling.txt
+To: SeongJae Park <sj@kernel.org>
+Cc: Shardul Deshpande <iamsharduld@gmail.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Joe Perches <joe@perches.com>,
+ linux-kernel@vger.kernel.org, damon@lists.linux.dev
+References: <20260613000715.791-1-sj@kernel.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Zenghui Yu <zenghui.yu@linux.dev>
+In-Reply-To: <20260613000715.791-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, 12 Jun 2026 22:36:11 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
-
-> Hi SJ,
+On 6/13/26 8:07 AM, SeongJae Park wrote:
+> On Fri, 12 Jun 2026 23:46:32 +0530 Shardul Deshpande <iamsharduld@gmail.com> wrote:
 > 
-> On 6/12/2026 3:56 AM, SeongJae Park wrote:
-> > Hello Asier,
-> > 
-> > On Thu, 11 Jun 2026 15:02:40 +0000 <gutierrez.asier@huawei-partners.com> wrote:
-> > 
-> >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> >>
-> >> Overview
-> >> ========
-> >>
-> >> This patch set introduces a new autotuning which allows to collapse
-> >> hot regions into hugepages.
-[...]
-> > Also, I'm not sure if I asked this same question before, but ...  Could you
-> > please share your future plans for this specific series?  What change you want
-> > to further make before dropping RFC?
-> I will review once again all your comments.
+> > Several comments and one documentation file transpose the letters in
+> > "assigned" and "unsigned", spelling them with "sing" instead of "sign".
+> > Correct all of them.
+> >
+> > Of these, the misspelling of "assigned" is not yet flagged by
+> > checkpatch, so also add it to scripts/spelling.txt.
+> >
+> > The remaining matches of `grep -ri singed` are RISINGEDGE register and
+> > enum names, not typos.
+> >
+> > Suggested-by: Andrew Morton <akpm@linux-foundation.org>
+> > Signed-off-by: Shardul Deshpande <iamsharduld@gmail.com>
+> > ---
+> >  Documentation/mm/damon/design.rst          | 2 +-
+> >  arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi | 2 +-
+> >  drivers/gpu/drm/drm_color_mgmt.c           | 2 +-
+> >  drivers/scsi/elx/efct/efct_hw.h            | 2 +-
+> >  drivers/scsi/isci/host.c                   | 2 +-
+> >  drivers/scsi/isci/port.c                   | 2 +-
+> >  drivers/scsi/isci/port_config.c            | 2 +-
+> >  kernel/bpf/helpers.c                       | 2 +-
+> >  scripts/spelling.txt                       | 1 +
+> >  9 files changed, 9 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+> > index afc7d52bd..899ac9c69 100644
+> > --- a/Documentation/mm/damon/design.rst
+> > +++ b/Documentation/mm/damon/design.rst
+> > @@ -140,7 +140,7 @@ as Idle page tracking does.
+> >  Address Unit
+> >  ------------
+> >  
+> > -DAMON core layer uses ``unsinged long`` type for monitoring target address
+> > +DAMON core layer uses ``unsigned long`` type for monitoring target address
+> >  ranges.  In some cases, the address space for a given operations set could be
+> >  too large to be handled with the type.  ARM (32-bit) with large physical
+> >  address extension is an example.  For such cases, a per-operations set
 > 
-> Since we are aligned, I plan to drop the RFC tag for the next revision.
-
-Sounds good.
-
+> For the above DAMON part,
 > 
-> In the future, once this patch set lands in upstream, I plan to submit a new
-> patch set to add cold page split in the sample module, so that we can have a
-> full THP support.
+> Reviewed-by: SeongJae Park <sj@kernel.org>
 
-Cool, looking forward to that!
-
-> 
-> Thanks a lot for your patience!
-
-I'm glad to help!
-
+This one has already been fixed in mm-new. See
+https://lore.kernel.org/20260520012104.93602-3-sj@kernel.org .
 
 Thanks,
-SJ
-
-[...]
+Zenghui
