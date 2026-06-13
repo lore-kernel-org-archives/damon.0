@@ -1,53 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A1EE571;
-	Sat, 13 Jun 2026 00:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4546B1A9FB7;
+	Sat, 13 Jun 2026 00:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781309341; cv=none; b=omug8iQ77DLYjV2+Ts5E7kSug6r1zYcUySM3wtczJOK9SORwIaF+2tAyiL3n5HUShbHEq2tqgTE9fEGo6oETrvQ9vZkFmLE5I2J4O6uzmGCBsNp2ncJ+p7w1WeDj/pymZ41Y0RJ0Af8JpLecEGgeOsxr3Lb4Rjyo8PTrGtxEoz0=
+	t=1781311153; cv=none; b=tvUUNWv6KJ3TExwd8/Ouv/H2oNSDCwjpjdKh2pbH4wxU3frgb3LnG8CVxP7C5RGM3zZbelCeTMHD6VEKrVy+NTj9/rNh0zDvjBdJPs2GXXoZOWLRA3Bl8PNYI8XX0WjOUhgVbtoIJnRaFWXU7MeA+8AiYiTKI/GZ35KtEjveh2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781309341; c=relaxed/simple;
-	bh=lUURjHSIiLgxi8zWPDFGVEmDdY3l4ohEKl1HNP31F5w=;
+	s=arc-20240116; t=1781311153; c=relaxed/simple;
+	bh=V7ivxE8Q6U6I5yIvW+G7FI0OwyM5ZgdYPkgMuZKYb/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKj8pJFrn5ng2Ws9aMkqB9UKJb/0owu9/ITgViH38vkFOT8a1JY9izcXsgWzhEtPWLIHnj59G5YM6KO0JfBGAgL8Kd6RIv0Q7BRD74AvU8due6AM1fPU7JhN/Qg4hucP3fm/Eu4Z+YvaOJh7lHYFbEQS7OZQOdTaYDB1oY2mit0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WT/RpASS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V1AkaA26o3ql4p5NtRMBg0q8DQ3fcGoo1JLvripAi55Lxmn57j26z7/fiIjTuxSEniwm3p+oj8xl4sUTJa2TZMcfDbeyNIrmQk0Jj2InQdpc8lZT5JDsz2ePdCue7J9iapznJXV8feePzA1kdiecp/v2bSvcohtzc1xKnmvT9Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RaB3KHbD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WT/RpASS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8ABC1F000E9;
-	Sat, 13 Jun 2026 00:08:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RaB3KHbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDDD1F000E9;
+	Sat, 13 Jun 2026 00:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781309340;
-	bh=jwgdDxjpHcf51uQFCyHB9zZ8TZlVfxL9kvGTnnuc2og=;
+	s=k20260515; t=1781311151;
+	bh=TEI/oYL96D6QPPjj82L55jjg/d8h3AkIL0OSLpC5t+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WT/RpASSQHJBF/FCpzT7VvJcI/8vJCsTJVgtWdnX/u6SnGSXgt+9VBbPNygOHOuM3
-	 Xi5O97z8PSzS9rDITHCy/37Y0tPkWdYCaBgFOyfL8G0LHF26aTZ9m1nvmmgMCb4aUo
-	 4qxIbE4eYeEf9BA4rGrHfN1iz9LdP3D76YDWfmjYZsg9HyuXx1AMJtdwUnYfvyOgsn
-	 85GMHHWMt7zp8woZNLRcNrCwyD7bu4TpaKoJWLRiWEDY8A9xBixHpRlwbClICFyzJ0
-	 G2JLUEcyClWT3DaxJHlngGsOD25ag4WYye+S1Eu+2p/9OMU+NDO3xfOBUS97aMINZV
-	 BJJS2sdZA/EqQ==
+	b=RaB3KHbDYrCrCpghgRrcfM7xtPFx2sUsgqe6B4GoO9Avmo+oVZwHtErMBqQo/xzlT
+	 fXlAFyT7ds9gvCZd3bt/CtHxpMO/pPmRxD5Bxfn76NSFLlYNqSm1hDhilDWa21fTG5
+	 ydnr/01AKEnZSclCf+X98zMvV4QYODluKYjvmDJsj1nvvST/YfZJSHP/D1rdH2h+hh
+	 kNqLm5IVSfExkZpxpo9l7iY7CmCxejdfol/VwdRrm+GPTqYv2TtTqAd1v1qup8A1QY
+	 8VESK4htyjib9pYl30SpCwNQVgCsNRQ1REp1lOpLYAogCvm5J8LvnNSMYvsjYY+CUH
+	 hVmTmZCbIl4aQ==
 From: SeongJae Park <sj@kernel.org>
-To: Shardul Deshpande <iamsharduld@gmail.com>
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
 	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Docs/mm/damon/design: fix a typo in the Address Unit section
-Date: Fri, 12 Jun 2026 17:08:50 -0700
-Message-ID: <20260613000850.935-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v4 0/4] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Fri, 12 Jun 2026 17:39:04 -0700
+Message-ID: <20260613003904.1932-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260612154054.720363-1-iamsharduld@gmail.com>
+In-Reply-To: <abc8acca-5145-4c16-aeb7-4127da234a62@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -57,16 +52,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 12 Jun 2026 21:10:54 +0530 Shardul Deshpande <iamsharduld@gmail.com> wrote:
+On Fri, 12 Jun 2026 22:36:11 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-> The "Address Unit" section misspelled the C type that the DAMON core
-> layer uses for monitoring target address ranges.  Correct it to read
-> "unsigned long".
+> Hi SJ,
+> 
+> On 6/12/2026 3:56 AM, SeongJae Park wrote:
+> > Hello Asier,
+> > 
+> > On Thu, 11 Jun 2026 15:02:40 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> > 
+> >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> >>
+> >> Overview
+> >> ========
+> >>
+> >> This patch set introduces a new autotuning which allows to collapse
+> >> hot regions into hugepages.
+[...]
+> > Also, I'm not sure if I asked this same question before, but ...  Could you
+> > please share your future plans for this specific series?  What change you want
+> > to further make before dropping RFC?
+> I will review once again all your comments.
+> 
+> Since we are aligned, I plan to drop the RFC tag for the next revision.
 
-Thank you!  I found you sent another patch having this change following
-Andrew's comment.  So I reviewed there.
+Sounds good.
 
-[1] https://lore.kernel.org/20260613000715.791-1-sj@kernel.org
+> 
+> In the future, once this patch set lands in upstream, I plan to submit a new
+> patch set to add cold page split in the sample module, so that we can have a
+> full THP support.
+
+Cool, looking forward to that!
+
+> 
+> Thanks a lot for your patience!
+
+I'm glad to help!
 
 
 Thanks,
