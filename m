@@ -1,24 +1,24 @@
 Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD463AA9F3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE9E3BFAEA
 	for <damon@lists.linux.dev>; Tue, 16 Jun 2026 15:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622265; cv=none; b=aqCN7NKjDu7vASimAVmcuCtktIWwjaUYeZtcIayaeTJf1ZBGePxsjyi64iAFq3AnVpleBB3eoB//xLFjsFqiC6npIpLyNGg1STFMwCiw5+W4XCvB2OetFiMKPwr0+R8K7rzA9V/xRw1NrRKoTaxrEt8dZedIZfF5osjskFpz3jo=
+	t=1781622265; cv=none; b=GXEx6GY151DrsFk184OyxWsQBA4Sl9Bfp/xQSxqHn7tpeNwkRwEqT6FsLScZVqSsBzZo1X2i2/Jy99zUu8O2nrS0/QVArnPfO19UX3HWAiGs3Tk3cWyNS3VdpRPLB2pRQzc2G+r7vCJfSp/mNgJ1zysYnVMZ13JEQku1taI6EHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1781622265; c=relaxed/simple;
-	bh=nt7ikHYxsbo7RzaYQxATR43Fz7l/ET2fE25UZGbMggI=;
+	bh=blziWKxE1lDKqtR2E2VL+nYCESRy2d9pwALJkc48qqg=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P9nUVnnGIXgv8dapEXt/bgtV/ExzJnvwz2U8IhcEGqN3WdpFh5n36y6CH6/dTcxMIOVegKRQp3rZERvWWrScwoAQ8DRRL/JgqmcDYB1fOHK/OOvg0VGOCANhsmSwkCuIrvNgLbiGBQBOWASi6QtSKhm6wtfhrCQzsk4v75fknWE=
+	 MIME-Version:Content-Type; b=iXv72GyXALGC2SU4cXH5xI7nQ7zhwIGQiIvx8R4QAXe42uARr0wrz+hS38KuZE2OzVLwiJp5qW2PNBimGhLGpNCi69xPr1JUJyOXfP/P1+PtsBEWR7ES33Sz6Gimuh9sKBn+cIs2s36ObSIkXeVF5SabTePumdTCHBF18Ed1ji8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Received: from mail.maildlp.com (unknown [172.18.224.150])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gfqxz2cnWzJ46ck;
-	Tue, 16 Jun 2026 23:03:51 +0800 (CST)
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gfqy61K8PzHnGhd;
+	Tue, 16 Jun 2026 23:03:58 +0800 (CST)
 Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id DA63440575;
+	by mail.maildlp.com (Postfix) with ESMTPS id B0C1940575;
 	Tue, 16 Jun 2026 23:04:14 +0800 (CST)
 Received: from mscphis01197.huawei.com (10.123.65.218) by
  mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
@@ -30,9 +30,9 @@ To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
 	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
 	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
 	<linux-kernel@vger.kernel.org>
-Subject: [PATCH v1 3/3] mm/damon/sysfs: support hugepage_mem_bp quota goal metric
-Date: Tue, 16 Jun 2026 15:03:16 +0000
-Message-ID: <20260616150316.580819-4-gutierrez.asier@huawei-partners.com>
+Subject: [PATCH v1 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+Date: Tue, 16 Jun 2026 15:03:14 +0000
+Message-ID: <20260616150316.580819-2-gutierrez.asier@huawei-partners.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616150316.580819-1-gutierrez.asier@huawei-partners.com>
 References: <20260616150316.580819-1-gutierrez.asier@huawei-partners.com>
@@ -49,31 +49,68 @@ X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
 
 From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-DAMOS has a new autotune policy metric: DAMOS_QUOTA_HUGEPAGE_MEM_BP.
-This patch exposes DAMOS_QUOTA_HUGEPAGE_MEM_BP through sysfs.
-
-Add the "hugepage_mem_bp" to the sysfs-schemes interface.
+Introduce DAMOS_QUOTA_HUGEPAGE auto tuning Add a new
+DAMOS quota goal metric to measure the amount of huge page
+consumption to total memory consumption ratio.
 
 Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 ---
- mm/damon/sysfs-schemes.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/damon.h |  2 ++
+ mm/damon/core.c       | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 329cfd0bbe9f..4b5429a5b415 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1267,6 +1267,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
- 		.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
- 		.name = "node_eligible_mem_bp",
- 	},
-+	{
-+		.metric = DAMOS_QUOTA_HUGEPAGE_MEM_BP,
-+		.name = "hugepage_mem_bp",
-+	},
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 6f7edb3590ef..23a9cec05033 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -162,6 +162,7 @@ enum damos_action {
+  * @DAMOS_QUOTA_INACTIVE_MEM_BP:	Inactive to total LRU memory ratio.
+  * @DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:	Scheme-eligible memory ratio of a
+  *					node in basis points (0-10000).
++ * @DAMOS_QUOTA_HUGEPAGE_MEM_BP:	Huge page to total used memory ratio.
+  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
+  *
+  * Metrics equal to larger than @NR_DAMOS_QUOTA_GOAL_METRICS are unsupported.
+@@ -176,6 +177,7 @@ enum damos_quota_goal_metric {
+ 	DAMOS_QUOTA_ACTIVE_MEM_BP,
+ 	DAMOS_QUOTA_INACTIVE_MEM_BP,
+ 	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
++	DAMOS_QUOTA_HUGEPAGE_MEM_BP,
+ 	NR_DAMOS_QUOTA_GOAL_METRICS,
  };
  
- static ssize_t target_metric_show(struct kobject *kobj,
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 7e4b9affc5b0..b001f80681b1 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2795,6 +2795,17 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
+ 	return mult_frac(inactive, 10000, total);
+ }
+ 
++static unsigned int damos_hugepage_mem_bp(void)
++{
++	unsigned long thp, total;
++
++	thp = global_node_page_state(NR_ANON_THPS) +
++				global_node_page_state(NR_SHMEM_THPS) +
++				global_node_page_state(NR_FILE_THPS);
++	total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
++	return mult_frac(thp, 10000, total);
++}
++
+ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+ 		struct damos *s, struct damos_quota_goal *goal)
+ {
+@@ -2826,6 +2837,9 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+ 		goal->current_value = damos_get_node_eligible_mem_bp(c, s,
+ 				goal->nid);
+ 		break;
++	case DAMOS_QUOTA_HUGEPAGE_MEM_BP:
++		goal->current_value = damos_hugepage_mem_bp();
++		break;
+ 	default:
+ 		break;
+ 	}
 -- 
 2.43.0
 
