@@ -1,112 +1,176 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7203D88FE
-	for <damon@lists.linux.dev>; Tue, 16 Jun 2026 05:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5DC3A59A3
+	for <damon@lists.linux.dev>; Tue, 16 Jun 2026 11:58:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781588715; cv=none; b=UAqaPhCesS83tz214zWF3SJSKmwnaepJGMpQkqtHA9E+YLYyzoAKVLN++XV5boyabM3N6W3cXjA5BLm+eUo27HabXqOvFDgwBGkfKKBF+gVYKeF2Ihj4hAoSGGN83AorPJBNF5Frh+PJVIYkq5MfD6K+SDwirXGdtDumbg/ao6o=
+	t=1781611084; cv=none; b=BbL4CeuxDxs9H3gOCBihcA62NCOkpwG+SD5uYr7GUcuRjdlRM1NFQSrQL3J1rjFPgPk6gxoZ7W5ZLR8lyFf/YSx+lRvcAf4PdskDV4AHSSN6Wkvd1HwZZnJb1gIQsatF+vqayTYf9QXpnWrnXMh/bKY3Jewy56A3pnrQ5q9EPCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781588715; c=relaxed/simple;
-	bh=hJealirzMpRC0r6fjzj1gFkN0RnVf7JpXe5W4PMnhSc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBwfvLcTWq4X3GAICuy4ELKAtP6+bdptpb8PUOoxlhCkMHlcq6aBzobQAegolCp7UeugCgRYb8AaFqjODliGI8hKd/36Cow1UJd4MPIjwHRRMBTS5iwDJWID3sf6jTKnZQ53WwUg8I9BV+V/+Cin1txPJXpiefkCUwYPHS7SOpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZNmmycnB; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781611084; c=relaxed/simple;
+	bh=CTi4G0hnEufO03WtfWriNSEeYzXA3FYOKUM0aKDFwyg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=KKODYFEPL6WESQf71vRqkwOSFZP11JVtrg6ojFMLTdeAJnoD7Vq6j9xo1CGl+JvBcsAn5I7GoOubabLmg0HprqyLrYji/+4zEnUqsVdxquloEKg6yaYm++EzNcc299suiW4jtCJVt+GrWg5+hVsuVVIQtpXmZv2hIYu6TyOX7y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=d19EmUrp; arc=none smtp.client-ip=91.218.175.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZNmmycnB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BB91F00A3A;
-	Tue, 16 Jun 2026 05:45:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781588714;
-	bh=+p5QsX681n6vVHICJ0HE+UqOhyGx6c8IyLFDRnHqxxY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZNmmycnBbAZuTAi/851k2rRz4oxc9U97LLzUJHZc6HNCmhoE4ucuNByoduJY+Z7Vt
-	 Jm0xxkwlXDDiC8MY8JoeuD2Iyovs/EVn8P1aMHsCmrJxEGoGhnbL36w/yOmB3w56FA
-	 YNasDmVZcQxVDahCfuh+i80R+IjDdZwxRSd8rF1s9kiWU9qneV5u/98LiqRPvljNU8
-	 heBo/zaxJ9T6W0zWO5yFHqTcQlLzk1dgoY25GSJUxMmtwMcOzyXbFqJ58OFhvAZYYG
-	 w0wOr6+8kv9oYQw3QvEoOxBwEIuNpC55boalFbNUsVbq0/1yZtcmFsdEE6PQlheQCC
-	 sloH2JatiwDGQ==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2.1] mm/damon/sysfs-schemes: delete tried region in regions_rmdirs()
-Date: Mon, 15 Jun 2026 22:45:04 -0700
-Message-ID: <20260616054505.156611-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260517205828.6204-1-sj@kernel.org>
-References: 
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="d19EmUrp"
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1781611079;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Cj0OqIIza8TZpzIi89NPwfYz5Lr8KtiNgulM6qKZaEc=;
+	b=d19EmUrpyHfnY1cDkWr5Pgy+k+d7eFilIhNo+y4UIIjqndySCSOaazg/G8TshBKTyTYnND
+	XCyUVJJyDOLK/bkGHAJuXNKw+fdkrix2cFn368PgpUQyupyTl+Ld5Z1eUzw/MhgsQEQYZO
+	0Fwe6r3tB/j/kPtZNQWXjtsg7SB8wEw=
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 16 Jun 2026 11:57:42 +0000
+Message-Id: <DJAGEUY8S09F.3V3HF570G85OF@linux.dev>
+Cc: "Balbir Singh" <balbirs@nvidia.com>,
+ <lsf-pc@lists.linux-foundation.org>, <linux-kernel@vger.kernel.org>,
+ <linux-cxl@vger.kernel.org>, <cgroups@vger.kernel.org>,
+ <linux-mm@kvack.org>, <linux-trace-kernel@vger.kernel.org>,
+ <damon@lists.linux.dev>, <kernel-team@meta.com>,
+ <gregkh@linuxfoundation.org>, <rafael@kernel.org>, <dakr@kernel.org>,
+ <dave@stgolabs.net>, <jonathan.cameron@huawei.com>, <dave.jiang@intel.com>,
+ <alison.schofield@intel.com>, <vishal.l.verma@intel.com>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>, <longman@redhat.com>,
+ <akpm@linux-foundation.org>, <lorenzo.stoakes@oracle.com>,
+ <Liam.Howlett@oracle.com>, <vbabka@suse.cz>, <rppt@kernel.org>,
+ <surenb@google.com>, <mhocko@suse.com>, <osalvador@suse.de>,
+ <ziy@nvidia.com>, <matthew.brost@intel.com>, <joshua.hahnjy@gmail.com>,
+ <rakie.kim@sk.com>, <byungchul@sk.com>, <ying.huang@linux.alibaba.com>,
+ <apopple@nvidia.com>, <axelrasmussen@google.com>, <yuanchu@google.com>,
+ <weixugc@google.com>, <yury.norov@gmail.com>, <linux@rasmusvillemoes.dk>,
+ <mhiramat@kernel.org>, <mathieu.desnoyers@efficios.com>, <tj@kernel.org>,
+ <hannes@cmpxchg.org>, <mkoutny@suse.com>, <jackmanb@google.com>,
+ <sj@kernel.org>, <baolin.wang@linux.alibaba.com>, <npache@redhat.com>,
+ <ryan.roberts@arm.com>, <dev.jain@arm.com>, <baohua@kernel.org>,
+ <lance.yang@linux.dev>, <muchun.song@linux.dev>, <xu.xin16@zte.com.cn>,
+ <chengming.zhou@linux.dev>, <jannh@google.com>, <linmiaohe@huawei.com>,
+ <nao.horiguchi@gmail.com>, <pfalcato@suse.de>, <rientjes@google.com>,
+ <shakeel.butt@linux.dev>, <riel@surriel.com>, <harry.yoo@oracle.com>,
+ <cl@gentwo.org>, <roman.gushchin@linux.dev>, <chrisl@kernel.org>,
+ <kasong@tencent.com>, <shikemeng@huaweicloud.com>, <nphamcs@gmail.com>,
+ <bhe@redhat.com>, <zhengqi.arch@bytedance.com>, <terry.bowman@amd.com>,
+ "Matthew Wilcox" <willy@infradead.org>
+Subject: Re: [Lsf-pc] [LSF/MM/BPF TOPIC][RFC PATCH v4 00/27] Private Memory
+ Nodes (w/ Compressed RAM)
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Brendan Jackman" <brendan.jackman@linux.dev>
+To: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>, "Gregory Price"
+ <gourry@gourry.net>, "David Hildenbrand (Arm)" <david@kernel.org>
+References: <ag6XyvxR-NU5rGn-@parvat>
+ <ahOqzpzAua96HVkn@gourry-fedora-PF4VCD3F> <ah47NNhuiClgGCdn@parvat>
+ <ah6bDNxlB1zBUnzN@gourry-fedora-PF4VCD3F> <ah-0CyZurn5D1ezY@parvat>
+ <aik_ddHymus2DJ6D@gourry-fedora-PF4VCD3F>
+ <c1b66e7a-bb95-4295-8193-55ceadaaa578@kernel.org>
+ <aimSzvoJDrpeQsmM@gourry-fedora-PF4VCD3F>
+ <d01fb1ed-2418-42ee-aea2-37f9a5c5729c@kernel.org>
+ <ainFROZ3WrGioyuY@gourry-fedora-PF4VCD3F>
+ <aiwl4kCG814dpX7L@gourry-fedora-PF4VCD3F>
+ <9f1815b0-896b-44ab-9e6d-9316d8f11033@kernel.org>
+In-Reply-To: <9f1815b0-896b-44ab-9e6d-9316d8f11033@kernel.org>
+X-Migadu-Flow: FLOW_OUT
 
-On Sun, 17 May 2026 13:58:26 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Mon Jun 15, 2026 at 2:38 PM UTC, Vlastimil Babka (SUSE) wrote:
+> On 6/12/26 17:29, Gregory Price wrote:
+>> On Wed, Jun 10, 2026 at 04:12:52PM -0400, Gregory Price wrote:
+>>> On Wed, Jun 10, 2026 at 08:59:59PM +0200, David Hildenbrand (Arm) wrote=
+:
+>>> > >=20
+>>> > > I understand this question in two ways:
+>>> > >=20
+>>> > >   1) Can we disallow PAGE allocation and limit this to FOLIO alloca=
+tion
+>>> >=20
+>>> > Yes. Can we only allow folios to be allocated from private memory nod=
+es. So let
+>>> > me reply to that one below.
+>>> >=20
+>>> ... snip ...
+>>> >=20
+>>> > At LSF/MM we talked about how GFP flags are bad and how deriving stuf=
+f from the
+>>> > context might be better. I think there was also talk about how the me=
+malloc_*
+>>> > interface might be a better way forward. Maybe we would start giving =
+the
+>>> > allocator more context ("we are allocating a folio").
+>>> >=20
+>>> > The following is incomplete (esp. hugetlb stuff I assume), just as so=
+me idea:
+>>> >
+>>>=20
+>>> I will still probably send the next RFC version tomorrow or friday,
+>>> as I want to get some eyes on the __GFP_PRIVATE-less pattern.
+>>>=20
+>>> Also, I made a new `anondax` driver which enables userland testing
+>>> of this functionality without any specialty hardware.
+>>>=20
+>>=20
+>> (apologies for the length of this email: this will all be covered in
+>> the coming cover letter, but I just wanted to share a bit of a preview)
+>>=20
+>> =3D=3D=3D
+>>=20
+>> Just another small update - I am planning to post the RFC today once i
+>> get some mild cleanup done.  It will be based on the dax atomic hotplug
+>>=20
+>> https://lore.kernel.org/linux-mm/20260605211911.2160954-1-gourry@gourry.=
+net/
+>>=20
+>> But a couple specific details regarding the memalloc pieces that i've
+>> learned the past couple of days playing with it.
+>>=20
+>> 1) memalloc_folio is required to ensure non-folio allocations don't land
+>>    on the private node, even if it happens within a memalloc_private
+>>    context.  Since memalloc_folio may be useful in contexts outside of
+>>    private nodes, I kept this as a separate flag.
+>>=20
+>>    If we think there will *never* be additional users of memalloc_folio,
+>>    then we could fold _folio into _private to save the flag for now and
+>>    add it back when we actually need it.
+>>=20
+>> 2) memalloc_private is needed to unlock private nodes, but in the
+>>    original NOFALLBACK-only design, you also needed __GFP_THISNODE.
+>>=20
+>>    This is *highly* restrictive.  I found when playing with mbind that
+>>    MPOL_BIND + __GFP_THISNODE generates a WARN (valid WARN, it normally
+>>    implies a bug).=20
+>>=20
+>>    That leads me to #3
+>
+> I think the memalloc approach is dangerous due to unexpected nesting. The=
+re
+> might be nested page allocations in page allocation itself (due to some
+> debugging option). But also interrupts do not change what "current" point=
+s
+> to. Suddenly those could start requesting folios and/or private nodes and=
+ be
+> surprised, I'm afraid.
 
-> On Sun, 17 May 2026 18:27:49 +0000 sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [High] Moving the `sz_filter_passed` assignment to after `kobject_init_and_add()` exposes uninitialized kernel heap memory to user space.
-> > - [High] Relying solely on `kobject_put()` to remove directories from sysfs leaves directories visible if references are held.
-> > --
-> > 
-> > commit eda0f7269f695739057cee7bd02d81742d566163
-> > Author: SeongJae Park <sj@kernel.org>
-> > 
-> > mm/damon/sysfs-schemes: delete tried region in regions_rmdirs()
-> > 
-> > This commit updates DAMON sysfs to remove region objects from the linked list
-> > immediately before decrementing the kobject reference count to prevent
-> > use-after-free races. It also modifies region population to only add the
-> > region to the list after a successful kobject initialization.
-> > 
-> > Link: https://lore.kernel.org/20260513011920.119183-1-sj@kernel.org
-> > 
-> > > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > > --- a/mm/damon/sysfs-schemes.c
-> > > +++ b/mm/damon/sysfs-schemes.c
-> > > @@ -163,7 +163,7 @@ static void damon_sysfs_scheme_regions_rm_dirs(
-> > >  	struct damon_sysfs_scheme_region *r, *next;
-> > >  
-> > >  	list_for_each_entry_safe(r, next, &regions->regions_list, list) {
-> > > -		/* release function deletes it from the list */
-> > > +		list_del(&r->list);
-> > >  		kobject_put(&r->kobj);
-> > 
-> > This is not a new regression, but does relying solely on kobject_put() to
-> > remove directories from sysfs leave them visible if references are still
-> > held?
-> > 
-> > If an elevated reference count exists, such as a process having an open file
-> > descriptor to a sysfs attribute, the kobject is not immediately released and
-> > kobject_del() is delayed.
-> > 
-> > Could this leave the old region directory accessible in sysfs indefinitely,
-> > causing stale directories to accumulate alongside new ones? Should
-> > kobject_del(&r->kobj) be called explicitly before kobject_put() to cleanly
-> > and synchronously remove the directory?
+Minor side-note: couldn't we just define it such that the allocator
+ignores the context when not in_task() (and warn if you try to enter the
+context while not currently in_task())?
 
-Because opening sysfs file doesn't increase the reference count of the kobject,
-and DAMON sysfs files are managed by only DAMON, elevated reference count issue
-cannot happen.  Nonetheless, on CONFIG_DEBUG_KOBJECT_RELEASE enabled kernels,
-the kboject deletion is delayed.  As a result, new directory creation can fail
-due to name conflicts.
+(Don't think this would change the conclusion very much, e.g. doesn't
+help with the nesting issues. Mostly curious in case I'm missing a
+detail here).
 
-No catastrophic issues like memory corruption can happen, but the user
-experience will be arguably bad.
-
-> 
-> Makes sense, I will work on this.  Not a blocker of this patch, as Sashiko also
-> mentioned, though.
-
-Hence I'm keep working on this issue.  Just wanted to clarify the expected real
-user impacts.
-
-
-Thanks,
-SJ
-
-[...]
+> The memalloc scopes only work well when they restrict the context wrt
+> reclaim, and allocations in IRQ have to be already restricted heavily
+> (atomic) so further memalloc restrictions don't do anything in practice. =
+But
+> to make them change other aspects of the allocations like this won't work=
+.
