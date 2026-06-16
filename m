@@ -1,77 +1,82 @@
-Received: from mail-43103.protonmail.ch (mail-43103.protonmail.ch [185.70.43.103])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C9238F935
-	for <damon@lists.linux.dev>; Mon, 15 Jun 2026 21:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.103
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350D32E737C;
+	Tue, 16 Jun 2026 01:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781559721; cv=none; b=AyZyseSQAcU3Cvx8DPw5pkIz6dLyTE15o1DtbGOdfC4BEJbDqjb2ImEPPqFii6QcIwPoN9g1Iy2LU739+Kch4+Cz06vRKQolX2F3QJxETeqyIgoqzaYlU6yheUmb100MpXm+KtuKixDb72SsIutn5anTuQ7c3lNYinP0wavppQo=
+	t=1781571868; cv=none; b=Znqy7fFEnvRDskDo4Uel5PRcDUnOVwrPEVnoQwOVRQgwwKOotiT0huIReH/+EYGRFpE2n+S5i5yqdHrlWiWPmUiVbgOHfJRbPF1TUOYxq119xquvy4D6z6Vrm2ep3HWFKCmblzWZYE21zcL94nvagLD8eaEzvvynkvO8daRiG/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781559721; c=relaxed/simple;
-	bh=x6UgW44R7h5NkurG9BHrQPMsrVN8ouOfWyg/9Ih09Hw=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=oQmgLBUOQtfLwowyUcjvQ5XlWDW5qDe21yxouQJ0j3WoBJPMPIOsDjUb2cInWN8tT0tQ2B1ALRmPaGxt4+UHTVAiFt2Ru4sqT/i65/DsElwiPgkwesQu0/N1IKond0ZU0F6Apx64CIWz+HXRdPbShxNI9wirofH8AkvPuB1uE2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=CiHNkWzu; arc=none smtp.client-ip=185.70.43.103
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1781571868; c=relaxed/simple;
+	bh=OJ8Y5133l5l9mxYBYXKRWlvy9HhyNhEFaoeWJSOooV0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EoIihgqLESElyFpmr1ZtHTBCQeuJUf19hmuc0oyYHwGCa1zh8FXpJZGHK9dE1eC38y+eLcJO28xSwl9zrHkhqkMo2NEMTjndqi4Lwx7bNUrXNV87mCbja/TizHSJZErntOsCh9nb8Px6i85Muarh8Pp0yA7lHe9gacjEq0ERtd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cu4i8jOq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="CiHNkWzu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1781559709; x=1781818909;
-	bh=x6UgW44R7h5NkurG9BHrQPMsrVN8ouOfWyg/9Ih09Hw=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=CiHNkWzuvS6incPVViH7b4c/8S2KO7h9qf1ueeJTsPBx0+cHc1fvZWP7CSKpAl6ku
-	 XphCRMQhbtZGv3ix4kP4y0e1wET7/udkJR7NWUfKagSY+SNpKR36wTQoMS2Q1/2ueF
-	 LYAZqNi/1tO1MwHM0fgAk5CwNSzcZJvCG6cXTRChlpy8dEq0v7LJSrkyrtAMqyMBew
-	 YGN0Vk+aVDfWI2P/8rVW7MsQsi8S2tqO9aVtXv7MWsa7ahSR3camSRIVT5Ev8j5juH
-	 q4qTssCufwqMP1jH30pbwF6omOPDLUbshB0NPydDH3tnM7Lzr+mlji6LGMQui7Z1wZ
-	 WeCBqW1TxEBhg==
-Date: Mon, 15 Jun 2026 21:41:43 +0000
-To: Andrew Morton <akpm@linux-foundation.org>, SeongJae Park <sj@kernel.org>
-From: Philippe Laferriere <plafer@proton.me>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, Philippe Laferriere <plafer@proton.me>
-Subject: [PATCH] mm/damon/stat: use secs_to_jiffies() instead of msecs_to_jiffies()
-Message-ID: <20260615214113.122923-1-plafer@proton.me>
-Feedback-ID: 48859933:user:proton
-X-Pm-Message-ID: 113a8e10c485d39b550823dd0130e86e22ad2d35
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cu4i8jOq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969681F00A3A;
+	Tue, 16 Jun 2026 01:04:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781571866;
+	bh=Ov1bJ3cICSDL6GNTG8BcHE0AZKSzTa1Ldumid0EFUbA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Cu4i8jOq0eb3nLKCzcpITLXPtCr9fQxHlDpRekjeQWrzFVLIrZelyMU3g54CfePun
+	 +3rUIWfnHOiDB39IDH4TyZr0ZlrsH8/gHeXrQEegeqFHyO7pf1CQsEuD4vz6pYV0Wr
+	 gSHCCEfMLLf3AnvWjDFqWGQFBGmf4qhNgkrUbfVazGsJQtLoHBo2Ptk+vGvJ5pLlu7
+	 4yw8s1y0tJlFCG1RdL7CvAHT4BrjiOJzCc2vNOehv3LOycYv3GKcnGxCxLYSoNTZ1c
+	 F9ThgSD1wo+aUIihZGd03MrX+KrQGhI80l7itVyb/m/dq6Tk2hqb/wqdWSsjEhZ47d
+	 A4AlVn1TDyINg==
+From: SeongJae Park <sj@kernel.org>
+To: Philippe Laferriere <plafer@proton.me>
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/stat: use secs_to_jiffies() instead of msecs_to_jiffies()
+Date: Mon, 15 Jun 2026 18:04:18 -0700
+Message-ID: <20260616010419.142184-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260615214113.122923-1-plafer@proton.me>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-The conversion of a duration expressed in seconds reads as
-msecs_to_jiffies(5 * MSEC_PER_SEC), which obscures the intent and
-needlessly goes through milliseconds. Use the dedicated
-secs_to_jiffies() helper, which expresses the 5-second refresh
-interval directly. No functional change.
+On Mon, 15 Jun 2026 21:41:43 +0000 Philippe Laferriere <plafer@proton.me> wrote:
 
-Found using Coccinelle (scripts/coccinelle/misc/secs_to_jiffies.cocci).
+> The conversion of a duration expressed in seconds reads as
+> msecs_to_jiffies(5 * MSEC_PER_SEC), which obscures the intent and
+> needlessly goes through milliseconds. Use the dedicated
+> secs_to_jiffies() helper, which expresses the 5-second refresh
+> interval directly. No functional change.
 
-Signed-off-by: Philippe Laferriere <plafer@proton.me>
----
- mm/damon/stat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thank you for this patch!
 
-diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-index 0e14f5bb8f75..b05b68f73e10 100644
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -138,7 +138,7 @@ static int damon_stat_damon_call_fn(void *data)
-=20
- =09/* avoid unnecessarily frequent stat update */
- =09if (time_before_eq(jiffies, damon_stat_last_refresh_jiffies +
--=09=09=09=09msecs_to_jiffies(5 * MSEC_PER_SEC)))
-+=09=09=09=09secs_to_jiffies(5)))
- =09=09return 0;
- =09damon_stat_last_refresh_jiffies =3D jiffies;
-=20
+> 
+> Found using Coccinelle (scripts/coccinelle/misc/secs_to_jiffies.cocci).
+> 
+> Signed-off-by: Philippe Laferriere <plafer@proton.me>
 
-base-commit: e3d8707358ea76b78bdec9928937bb9a797f2c8f
---=20
-2.43.0
+Reviewed-by: SeongJae Park <sj@kernel.org>
+
+I applied  this patch to damon/next [1] tree.  We are now in the merge window.
+We (mm community) want to focus on making the stabilized mm changes be merged
+into the mainline until the merge window is closed, rather than adding more
+changes that are not really urgent.  I understand this patch is not really
+urgent.  Hence, Andrew might not add this patch until next -rc1 release.  In
+the case, I will request adding this to mm.git after next -rc1 release.  So, no
+action from your side is needed for now.  Let me know if you think this is
+really  urgent.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
+Thanks,
+SJ
+
+[...]
