@@ -1,41 +1,38 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4BF317148
-	for <damon@lists.linux.dev>; Wed, 17 Jun 2026 06:00:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226D23B8D7B
+	for <damon@lists.linux.dev>; Wed, 17 Jun 2026 06:58:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781676021; cv=none; b=RzHzEAMPYpeWDN/O7txPhgU6Laqe7j7PwlUHSjYCORUvzUA86kz9Ip+bGq4TmqoAelS50w7+jTFgPLluCWwNQ+BAIHoImCdUvr7kGusbZjApOvUAr650E1Xm5ayCEX+YYVLRG+GMH0UIk/Wau5PiSbZmF98CXhqkq+xKuNhbJ+M=
+	t=1781679500; cv=none; b=RpPD/5WoQuUDNRRYJD65mF4bujHu47D8bnsRaSiMRK8TSdbrfayYEGCEHdgps3GXm0QSQlge+luLBEGrkfFmfk1xGXSLHYCBCeEbm9HHEWQsxyxOZ4b/6qoQV3G55MCX359FCuAZaD9YCylJq+D89WJMV4ZylVumjYzgaJw31js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781676021; c=relaxed/simple;
-	bh=bSMfv1spy+mBBR22M1Gd27pq2C2D9uwfnyAnxg51T5g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/7UMe2+690YdX352tNsh0MlHaRzrRekuh+7mcrOopaGjMtkxZ6NbV5VAfbThxrippy7HKgUFuDiJZkvvxS7aAMNW51vfyFAyjrjlxPNYs10dPIb/Tvq5y4/LSmaWmlkYEguETkvV/1Di+tFIyk8pASn7XhYcjea//dCeMQMV6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CAb4DoEv; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CAb4DoEv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD0E1F00A3A;
-	Wed, 17 Jun 2026 06:00:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781676019;
-	bh=UJGxuK6Njs8VhsilJsqNDP4tUp0w2x46iVmmqZAIjL4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CAb4DoEv4PPfU7pondQV76ezUxXeuYQr8drwML+X6hw4CVcl0Vr3jyjza0068Ez3O
-	 d8/LZ4DO0LqmXwdDTguZeRDA6dUXyb9P5TqQz1zFV09MOn4nCxF1iTP0RlaS5i5ab1
-	 1bOwnxiJ5yJTpoelU4xXnmbDMfCAMnM8fYkvHExY3lRVYWadgw1CiXdE9eIiD5HGd+
-	 i+7ylBLhguOquy0wiqkGeLk0pybrlxZxiaaJuax1FeRGUnh0g2Pa/G24dP+J2LBrK6
-	 S/0OQ63x1DowvedhU3bvvNsINDcNz0vdUE7WRNyCzI1PROYmoX2VlTGucDQJI4S/AX
-	 06XArX1NrMUdg==
-From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH] mm/damon/sysfs-schemes: put stats for scheme_add_dirs() internal error
-Date: Tue, 16 Jun 2026 23:00:05 -0700
-Message-ID: <20260617060005.86852-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260617054833.3E0681F000E9@smtp.kernel.org>
-References: 
+	s=arc-20240116; t=1781679500; c=relaxed/simple;
+	bh=IbRiJ/Gma2PBHsGo8yJlTx8HHE8NMr2ZWSwWgU+ci/w=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JojaLNbR4LccJnQApb/6HlasKKJDUurdfYSUNDFCZ/wTrpVCMPa8dyMg+pIWknB49r7FQJocDxsh7KDyLc1WpK+QuI8ug7Ad0b6BMqxVqdGTq5W463kMgI2b/cYF3wOah4tNsa+0VE+Rh8L9Y6SLhaJ0bpg5DggDcybSnmX7r7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4ggF6s2tqvzHnGg3;
+	Wed, 17 Jun 2026 14:57:57 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 412E740577;
+	Wed, 17 Jun 2026 14:58:15 +0800 (CST)
+Received: from mscphis01197.huawei.com (10.123.65.218) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 17 Jun 2026 09:58:14 +0300
+From: <gutierrez.asier@huawei-partners.com>
+To: <gutierrez.asier@huawei-partners.com>, <artem.kuzin@huawei.com>,
+	<stepanov.anatoly@huawei.com>, <wangkefeng.wang@huawei.com>,
+	<yanquanmin1@huawei.com>, <zuoze1@huawei.com>, <damon@lists.linux.dev>,
+	<sj@kernel.org>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH v1 1/1] samples/damon: Fix typo in Kconfig help text
+Date: Wed, 17 Jun 2026 06:57:16 +0000
+Message-ID: <20260617065716.750179-1-gutierrez.asier@huawei-partners.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -43,74 +40,33 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Wed, 17 Jun 2026 05:48:32 +0000 sashiko-bot@kernel.org wrote:
+From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Uninitialized Pointer Dereference in `damon_sysfs_access_pattern_add_dirs()` error path.
-> --
-> 
-> commit 3b785df7194b7541f02f158bcc66d968319b86ca
-> Author: SeongJae Park <sj@kernel.org>
-> Subject: mm/damon/sysfs-schemes: put stats for scheme_add_dirs() internal error
-> 
-> This commit fixes a bug in damon_sysfs_scheme_add_dirs() where the error
-> path incorrectly puts the uninitialized tried_regions directory instead
-> of the stats directory. This prevents a leak of the stats object and a
-> potential uninitialized pointer dereference.
-> 
-> Link: https://lore.kernel.org/20260617005223.96813-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 329cfd0bbe9f3..0668a0e539713 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
-> > @@ -2516,12 +2516,12 @@ static int damon_sysfs_scheme_add_dirs(struct damon_sysfs_scheme *scheme)
-> >  		goto put_filters_watermarks_quotas_access_pattern_out;
-> >  	err = damon_sysfs_scheme_set_tried_regions(scheme);
-> >  	if (err)
-> > -		goto put_tried_regions_out;
-> > +		goto put_stats_out;
-> >  	return 0;
-> >  
-> > -put_tried_regions_out:
-> > -	kobject_put(&scheme->tried_regions->kobj);
-> > -	scheme->tried_regions = NULL;
-> > +put_stats_out:
-> > +	kobject_put(&scheme->stats->kobj);
-> > +	scheme->stats = NULL;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does the identical bug exist in
-> damon_sysfs_access_pattern_add_dirs() within the same file?
-> 
-> Looking at damon_sysfs_access_pattern_alloc(), the access_pattern struct
-> is allocated using kmalloc_obj without zero-initialization, causing its
-> pointer fields like sz, nr_accesses, and age to hold garbage values.
-> 
-> If a directory setup fails in damon_sysfs_access_pattern_add_dirs() due to
-> a memory allocation failure, the error path attempts to clean up the failed
-> object rather than the previously successful allocations:
-> 
-> mm/damon/sysfs-schemes.c:damon_sysfs_access_pattern_add_dirs() {
->     ...
-> put_sz_out:
->     kobject_put(&access_pattern->sz->kobj);
->     access_pattern->sz = NULL;
->     ...
-> }
-> 
-> Could this cause a kernel panic by dereferencing an uninitialized garbage
-> pointer if the initial allocation fails, exactly like the issue fixed here
-> for scheme->tried_regions?
+Fix a typo in samples/damon/Kconfig help text. Change
+"Thps" to "This".
 
-Nice finding, I will make a fix of this and post as a series together with the
-scheme dir fix.
+Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+---
+ samples/damon/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/samples/damon/Kconfig b/samples/damon/Kconfig
+index cbf96fd8a8bf..182a59722879 100644
+--- a/samples/damon/Kconfig
++++ b/samples/damon/Kconfig
+@@ -31,7 +31,7 @@ config SAMPLE_DAMON_MTIER
+ 	bool "DAMON sample module for memory tiering"
+ 	depends on DAMON && DAMON_PADDR
+ 	help
+-	  Thps builds DAMON sample module for memory tierign.
++	  This builds DAMON sample module for memory tierign.
+ 
+ 	  The module assumes the system is constructed with two NUMA nodes,
+ 	  which seems as local and remote nodes to all CPUs.  For example,
+-- 
+2.43.0
 
-Thanks,
-SJ
-
-[...]
