@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB8047ECDB
-	for <damon@lists.linux.dev>; Wed, 17 Jun 2026 15:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C8B298CB2
+	for <damon@lists.linux.dev>; Wed, 17 Jun 2026 15:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781708623; cv=none; b=NQ2af/gHysbUnULOyq7AXr9AFiVOdNDNu0/sAn+A6noUSN9OBKjLsy2At9jQ5KYpFLo9E/bnbxLTn9lCHtKRZpWnRteJhpBBouBffmSgUWKk52aq6VlexhHmKj+cm62VmmHnc+R+K9Bht5cbGxsRo8FCyK9Y+wkyO1+TmN4OM80=
+	t=1781708776; cv=none; b=CSrLVtK+ePRFXXanFSno3iKOZ4SspEUbsnqOT3s6fJAgnXvkkTDEs3r/7aBtgQHQlDGTUENgCJifDWf4exa9DO74IBWrGR2ZS6idq1C7OgKDJp/Hx1SyE2uvh11xLbzrROmaM+VxZXkxhGxDxIoWZoreU0k6JyI/T8P5zqbQtRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781708623; c=relaxed/simple;
-	bh=TtI9nKuAMBJj5KaNml+It+EmC/xx8nVBfoq4cidHFq4=;
+	s=arc-20240116; t=1781708776; c=relaxed/simple;
+	bh=1QmDNZ+YCLX5v1bktJd0v2ODuDFuo9/lhBkBLb7MFGI=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=JuxaULRBPba+xG4vCBTFnoDZxIyz+KRcGC1jXKh4Qju14XW98GkBKGCGesKJ8wodHUUtlOWPr6lrRcf8y0g0gzukt1rZFlax/HLHL19vcdfh0dlYnZkFlRqcPWytvG5xVGH7kn6z6LMdpTuf47xVH3XcAfU298F9xv+usikAPTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TImgbd2O; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=iRcLKvrAzvzUsFCAJpJe+6PIm5aiJH5gpdrDUZNsCYMQqvuMz8Z7cBRTkkS9pIzGtGHyYniFHQU95LvdgDQf04rnpuTpN6AT4Wo7OBv760Q/rq7ioDUH7nUoY2m1D5r8RtW0ddoKJd8av+TTHtbkQ84aEVfyZ6sAKuyoxgekt8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KjO/NFrZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TImgbd2O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D8D1F00A3D;
-	Wed, 17 Jun 2026 15:03:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KjO/NFrZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983EC1F00A3A;
+	Wed, 17 Jun 2026 15:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781708622;
-	bh=h/uV8chL9UtXhv5XAyqRRz9MY0fsGWjeDgMN4HLdqVA=;
+	s=k20260515; t=1781708774;
+	bh=nrvmuBgzMSOgkFhdc7IOTbljMrf6W09pgirwoG69AMw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=TImgbd2OlJRy32zyfvjlkyDbdg41Hlz8bOuI2IQRCrOtjkmXl943Dz7XMz4TZWa/+
-	 fPohh/9SypcUQ/4+H1BI/w73kmRWhI8leNvWL73O4MnXrYUc+xLthTTL5gs/Z6f6xx
-	 p5BiutepxEENrXB9hj1zYiPtvgDNow3Nw/Q4HzP2gDdCXPV380JAHoFNXJxkO2b96f
-	 QqIURTe3c56vfBi/UbYMes4EIDuUdc+/9PQkFcVDTR5hsdvx4Qr4vBKS0pFsUy9dzK
-	 Alh9B7BW8Z1JkXvmKNt6PJsCHr4gaPFkD/JPCu8etNOkDAJBzykdZo7Ris8+IVimvj
-	 m0gQUNPgN2ljA==
+	b=KjO/NFrZpz4aDqG64+C4lFe8xZVfA2LkiZeCptbPTnm5WE43nCxEaPQkTvMVut2zJ
+	 DDe3n/XCPoS4yK9vIH0pry9eTwxKO07ok6tL79uANrViDHdOpe+pqYV6lw3Ql3pYhs
+	 VEWKSYYeS4OvwstqsJFls/PO43ENhfn3ImKHH2iD0BkcVvcyrZMa/GV8RVt0nnrmmJ
+	 YejH0d7wu462mr4PoovyAtk0oJzIB2Z4TttRoct6qmwP0oL2MYFzgfPC1D2gsKfTyF
+	 FfJ9KoM0E/jSlMJsG3OQpNv+AL0WgEO33f6KNXqogcoNY17y3k/b2OtezmwofscanE
+	 5mgFZckpP5E7Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 05/11] mm/damon/sysfs-schemes: kobject_del()
- scheme filter dirs
+Subject: Re: [RFC PATCH v1.1 02/11] mm/damon/sysfs: kobject_del() region and
+ target (error) dirs
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260617144807.91441-6-sj@kernel.org>
+In-Reply-To: <20260617144807.91441-3-sj@kernel.org>
 References: <20260617144807.91441-1-sj@kernel.org>
- <20260617144807.91441-6-sj@kernel.org>
+ <20260617144807.91441-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 17 Jun 2026 15:03:41 +0000
-Message-Id: <20260617150342.59D8D1F00A3D@smtp.kernel.org>
+Date: Wed, 17 Jun 2026 15:06:13 +0000
+Message-Id: <20260617150614.983EC1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,61 +49,90 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Incomplete bug fix: missing kobject_del() in damos_sysfs_probes_rm=
-_dirs() and damon_sysfs_schemes_add_dirs() error path.
+- [Medium] The patch series missed adding `kobject_del()` in the error path=
+ of `damon_sysfs_schemes_add_dirs()`. If `kobject_init_and_add()` succeeds =
+but the subsequent `damon_sysfs_scheme_add_dirs()` fails, the code jumps to=
+ the `out:` label and calls `kobject_put(&scheme->kobj)` without first call=
+ing `kobject_del()`. Because the parent `schemes` directory persists, the f=
+ailed scheme directory (e.g., '1') remains visible in sysfs until `CONFIG_D=
+EBUG_KOBJECT_RELEASE` finally frees it. If userspace retries updating `nr_s=
+chemes`, it will fail with `-EEXIST`.
 --
 
-commit ada3b579d341495d80858ab88063949ce50e3fd8
+commit 58b8f68e38892e33bea755abf310672a0f0bb285
 Author: SeongJae Park <sj@kernel.org>
 
-mm/damon/sysfs-schemes: kobject_del() scheme filter dirs
+mm/damon/sysfs: kobject_del() region and target (error) dirs
 
-This commit fixes directory creation failures caused by name conflicts by
-adding kobject_del() calls for scheme filter directories when
-CONFIG_DEBUG_KOBJECT_RELEASE is enabled.
+This commit fixes directory name conflicts caused by missing kobject_del() =
+calls.
+It ensures kobject_del() is called in the region directories removal path a=
+nd
+the target directories error path. This resolves failures when creating
+directories with CONFIG_DEBUG_KOBJECT_RELEASE enabled.
 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index bf08e6e1f1635..300930c2c5b3f 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
-> @@ -914,8 +914,10 @@ static void damon_sysfs_scheme_filters_rm_dirs(
->  	struct damon_sysfs_scheme_filter **filters_arr =3D filters->filters_arr;
->  	int i;
+Cc: <stable@vger.kernel.org> # 5.18.x
+
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index dba1c67fc188f..3c349f0fe80f0 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+
+[ ... ]
+
+> @@ -372,13 +374,15 @@ static int damon_sysfs_targets_add_dirs(struct damo=
+n_sysfs_targets *targets,
 > =20
-> -	for (i =3D 0; i < filters->nr; i++)
-> +	for (i =3D 0; i < filters->nr; i++) {
-> +		kobject_del(&filters_arr[i]->kobj);
->  		kobject_put(&filters_arr[i]->kobj);
-> +	}
+>  		err =3D damon_sysfs_target_add_dirs(target);
+>  		if (err)
+> -			goto out;
+> +			goto del_out;
+> =20
+>  		targets_arr[i] =3D target;
+>  		targets->nr++;
+>  	}
+>  	return 0;
+> =20
+> +del_out:
+> +	kobject_del(&target->kobj);
+>  out:
+>  	damon_sysfs_targets_rm_dirs(targets);
+>  	kobject_put(&target->kobj);
 
-[Severity: High]
-This is a pre-existing issue, but while we are adding kobject_del() here to=
-=20
-prevent name conflicts, are there other locations that need the same fix?
+[Severity: Medium]
+This is a pre-existing issue, but I noticed a similar pattern in
+mm/damon/sysfs-schemes.c that seems to be missing a kobject_del() call.
 
-For instance, in damos_sysfs_probes_rm_dirs(), the code iterates over=20
-probes_arr and calls kobject_put() without a preceding kobject_del():
+In mm/damon/sysfs-schemes.c:damon_sysfs_schemes_add_dirs():
 
-	for (i =3D 0; i < probes->nr; i++)
-		kobject_put(&probes_arr[i]->kobj);
+	err =3D kobject_init_and_add(&scheme->kobj,
+			&damon_sysfs_scheme_ktype, &schemes->kobj,
+			"%d", i);
+	if (err)
+		goto out;
+	err =3D damon_sysfs_scheme_add_dirs(scheme);
+	if (err)
+		goto out;
 
-Additionally, in the error path of damon_sysfs_schemes_add_dirs(), if=20
-damon_sysfs_scheme_add_dirs() fails after a successful kobject_init_and_add=
-(),=20
-the cleanup jumps to the out label:
+	schemes_arr[i] =3D scheme;
+	schemes->nr++;
+}
+return 0;
 
 out:
 	damon_sysfs_schemes_rm_dirs(schemes);
 	kobject_put(&scheme->kobj);
 	return err;
 
-Could these missing kobject_del() calls leave sysfs directories pending
-delayed release, allowing the same name conflict crashes to occur?
+If damon_sysfs_scheme_add_dirs() fails after a successful
+kobject_init_and_add(), we jump to out and call kobject_put() without first
+calling kobject_del().
 
->  	filters->nr =3D 0;
->  	kfree(filters_arr);
->  	filters->filters_arr =3D NULL;
+With CONFIG_DEBUG_KOBJECT_RELEASE enabled, could the persisting parent sche=
+mes
+directory cause an -EEXIST conflict if userspace retries updating nr_scheme=
+s?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260617144807.9144=
-1-1-sj@kernel.org?part=3D5
+1-1-sj@kernel.org?part=3D2
