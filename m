@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438D83C1F
-	for <damon@lists.linux.dev>; Wed, 17 Jun 2026 00:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960CC134CF
+	for <damon@lists.linux.dev>; Wed, 17 Jun 2026 00:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781657031; cv=none; b=kjZwg/zqNwJfBvlByeVqs19m8n5RUocCm0LDKrZ6FibOskZnNpUqLD0zgorqul8qSUsd0WeZAMf5XzSfkiPGOw5imhILulH7lmE86uMNC1hJqIKSeBms8egjmOA946T5uswq2dN09/oTx5SQyz7VJrcKooCHHHeRJhGVgkX4/0E=
+	t=1781657559; cv=none; b=WQaCixG5/I0FfK0xHCY3sN34s7BoBO4Qq4/l/UlaqF1Gw8TWwd4KaqM/NCRgSI3oqZYXAcLABkBx6LUNB2+iDEq+2BOCm6TVjLGrx8/xXQwCFA1yfxE4+qQXi1wfV5mKLuty2hSgORVIH04xZr/GabZHnk1431se4gI4pzePL5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781657031; c=relaxed/simple;
-	bh=14AMIYN9/ksYTmk+Q8m6qMuYQIHleSlHw5v+iXlUeBM=;
+	s=arc-20240116; t=1781657559; c=relaxed/simple;
+	bh=lShJFRKvR+5Uom1wDvUL+3tIczEbxGA291abkmsCgBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PuPYXqJSzEd3jqJZz3YZSsZ3l2hgjptjWndluGdux7F8LTK6+W9c2gY6UmxlxT1xbSnZ0/Fm2zKoXmcEi4pfF8IZ2txpbJm/qLwm5bHbK1BwEL/cLDmsLza1iTQ8oJvx+drFeZcoFFFmiXOsuk+3pndS8rkrLqTHxq6cw/UONd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aEskHdbP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GYplvEO5HxKCNyCbO7KTjO/5uYJfIw1c3tcEx4hNXqI1EWU59oXpsAUYVq2ajJznSAgxq8w3rEeRfNyZewBYyIPXUmL9auAFPj6sKdYKmwDreFCQmexVyDPGd0VKWnp3u/CVMjji/y0yUWTzmYLEE5hCHTyBGcdArE3LqQgoTSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gcvuLufU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aEskHdbP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CDA1F000E9;
-	Wed, 17 Jun 2026 00:43:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gcvuLufU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8EC1F000E9;
+	Wed, 17 Jun 2026 00:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781657029;
-	bh=xPOm1+O65SgJZpv4xC2V7pmznLjZuwFYEI37DV6iUhA=;
+	s=k20260515; t=1781657558;
+	bh=zil/SWCR8T+TzhzULOq6sb/mRg6lQ22/6qeLiUG4qxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEskHdbPKR20VUYc9C/Iy5cmqnSDRtO4TVTtEmWdTiLA+EhIk2W1IIWk6lT04sE2X
-	 twyGTE2/qSlJ3cbaaQRKpffKqtqNaoKEN+QpCv3NyBa6a564Wp3ePfJOLnkWPkJART
-	 6RX3WeVyfpidE2gD/zyZO56ihEn6+EovJ0H/XkfmMMZU2clnOlQxrx1cvkw+DdHkPJ
-	 7CQDgAtOkVwd7OtOAZNmYODZ/5YYuIynuxRiV3acFzGTBRd+kbZ/t3LcVZ/a1rdmGD
-	 qxDfUOZdrRP8hrLUrPgXiF5yhfVoB9hwLysDdyTe4QArw8y7+8xOsW2OweUlcyLUhv
-	 Qm+F0INWCzRqA==
+	b=gcvuLufUMFXv/gvYmYnJE0YTvyvNpZl8z397bW49jnTu4h0mrfD+mq7gQlj63X57y
+	 OgevLnFLU5HqFcq8R1rOPsXJbketjx1IxnRQuV+57S5mJt1GKs9q2nqsi1+RSl+H6A
+	 1fKpqxUz6gye63gq7ZbbTFS2gmSDnMiOwfx8KpCphdgyvXbq830qqfDZ8mMUZe6xfc
+	 req6todDIjmARIx2KfhJ80WL9C30YNjbl2X3cTA8ZfsRHQtH2/Kds1PzqG/Fmlpu+H
+	 lAoaXyCAxNmB5kyOpf04eQn5HwWSvXxtP7Nmbnvdb6kcS7A5U4nINsAUHXcyF225X+
+	 ifSQ0VYvwzYMA==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 4/9] mm/damon/sysfs-schemes: kobject_del() scheme region dirs
-Date: Tue, 16 Jun 2026 17:43:37 -0700
-Message-ID: <20260617004337.96212-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 3/9] mm/damon/sysfs-schemes: kobject_del() scheme dirs
+Date: Tue, 16 Jun 2026 17:52:22 -0700
+Message-ID: <20260617005223.96813-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260616152536.2481C1F00A3F@smtp.kernel.org>
+In-Reply-To: <20260616152703.04D771F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,107 +44,112 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 16 Jun 2026 15:25:35 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 16 Jun 2026 15:27:02 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Incomplete Fix / Missing kobject_del() in sysfs directory array teardown and error paths.
-> - [High] Memory leak of `stats` object in `damon_sysfs_scheme_add_dirs()` error path.
+> - [High] Incorrect `goto` ladder in `damon_sysfs_scheme_add_dirs` causes an uninitialized pointer dereference and a memory leak of the `stats` kobject.
+> - [Medium] Missing `kobject_del()` in the `out:` error paths of `*_add_dirs()` loops leads to delayed sysfs directory removal and name collisions.
 > --
 > 
-> commit 30488832bf0bcf915d5cbb6c2727b7cdedd8440e
+> commit a283ef4fe4b682b7b66cf9b57221cb6884b386cc
 > Author: SeongJae Park <sj@kernel.org>
-> Subject: mm/damon/sysfs-schemes: kobject_del() scheme region dirs
 > 
-> This commit addresses directory creation failures due to name conflicts
-> when CONFIG_DEBUG_KOBJECT_RELEASE is enabled. It fixes the issue by adding
-> missing kobject_del() calls before kobject_put() for scheme region
-> directories during removal.
+> mm/damon/sysfs-schemes: kobject_del() scheme dirs
 > 
-> Link: https://lore.kernel.org/20260517205828.6204-1-sj@kernel.org
+> On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
+> could cause directories creation failures due to the name conflicts. Fix
+> those issues for scheme directories by adding kobject_del() calls.
 > 
 > > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 37cf6edb54f17..bf08e6e1f1635 100644
+> > index 329cfd0bbe9f3..37cf6edb54f17 100644
 > > --- a/mm/damon/sysfs-schemes.c
 > > +++ b/mm/damon/sysfs-schemes.c
-> > @@ -334,6 +334,7 @@ static void damon_sysfs_scheme_regions_rm_dirs(
-> >  	list_for_each_entry_safe(r, next, &regions->regions_list, list) {
-> >  		damos_sysfs_region_rm_dirs(r);
-> >  		list_del(&r->list);
-> > +		kobject_del(&r->kobj);
+> > @@ -2686,6 +2686,7 @@ void damon_sysfs_schemes_rm_dirs(struct damon_sysfs_schemes *schemes)
+> >  
+> >  	for (i = 0; i < schemes->nr; i++) {
+> >  		damon_sysfs_scheme_rm_dirs(schemes_arr[i]);
+> > +		kobject_del(&schemes_arr[i]->kobj);
+> >  		kobject_put(&schemes_arr[i]->kobj);
+> >  	}
+> >  	schemes->nr = 0;
 > 
-> [Severity: High]
-> This is a pre-existing issue, but since we are adding kobject_del() here to
-> fix the name collision bug, could there be similar omissions in other array
-> teardown and error paths?
+> [Severity: Medium]
+> This isn't a bug introduced by this patch, but since we are fixing delayed
+> sysfs directory removal here, do we have the same name collision vulnerability
+> in the error paths of our *_add_dirs() loops?
 > 
-> For instance, looking at damos_sysfs_probes_rm_dirs() which is called
-> just above via damos_sysfs_region_rm_dirs():
+> If kobject_init_and_add() succeeds for a scheme, but damon_sysfs_scheme_add_dirs()
+> fails, the error path drops the reference without calling kobject_del():
 > 
-> mm/damon/sysfs-schemes.c:damos_sysfs_probes_rm_dirs() {
+> mm/damon/sysfs-schemes.c:damon_sysfs_schemes_add_dirs() {
 >     ...
->     for (i = 0; i < probes->nr; i++)
->         kobject_put(&probes_arr[i]->kobj);
->     ...
-> }
-> 
-> Does this code also omit kobject_del() during probes array teardown,
-> potentially leaving directories in sysfs during array resizing?
-
-No.  probe directories are generated as sub directories of scheme region
-directories, when scheme region is created.  They are also removed together
-with the region directory, which is kboject_del()-ed by this patch.  Hence, the
-not yet deleted probe directories are linked to the deleted region directory,
-so no name conflicts can happen.
-
-> 
-> Similarly, in several initialization loop error paths, such as in
-> damos_sysfs_populate_region_dir():
-> 
-> mm/damon/sysfs-schemes.c:damos_sysfs_populate_region_dir() {
+> 		err = kobject_init_and_add(&scheme->kobj,
+> 				&damon_sysfs_scheme_ktype, &schemes->kobj,
+> 				"%d", i);
+> 		if (err)
+> 			goto out;
+> 		err = damon_sysfs_scheme_add_dirs(scheme);
+> 		if (err)
+> 			goto out;
 >     ...
 > out:
->     kobject_put(&region->kobj);
+> 	damon_sysfs_schemes_rm_dirs(schemes);
+> 	kobject_put(&scheme->kobj);
+> 	return err;
 > }
 > 
-> If aborting region population, does this path fail to call kobject_del(),
-> breaking subsequent retries by leaving the directory name occupied?
+> Under CONFIG_DEBUG_KOBJECT_RELEASE, would the delayed kobject_release
+> callback leave the "%d" directory around temporarily, causing -EEXIST
+> if the user immediately retries?
 > 
-> Other functions like damon_sysfs_schemes_add_dirs(),
-> damon_sysfs_targets_add_dirs(), and damon_sysfs_contexts_add_dirs()
-> appear to have the same out path pattern omitting kobject_del() for
-> partially added objects. Would it make sense to update those paths as well?
+> The identical pattern appears to exist in damon_sysfs_targets_add_dirs(),
+> damon_sysfs_contexts_add_dirs(), and damon_sysfs_kdamonds_add_dirs().
 
-Good catch.  I will fix this in the next revision.
+Good catch, I will fix thse in the next revision.
 
-> 
-> >  		kobject_put(&r->kobj);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but I noticed a potential memory leak in
-> an error path nearby.
+> This is a pre-existing issue, but there appears to be an uninitialized pointer
+> dereference and a memory leak in the goto ladder of
+> damon_sysfs_scheme_add_dirs().
 > 
-> In damon_sysfs_scheme_add_dirs(), the error cleanup sequence handles
-> dropping the tried_regions and then ops_filters:
+> If damon_sysfs_scheme_set_tried_regions() fails, we jump to
+> put_tried_regions_out:
 > 
 > mm/damon/sysfs-schemes.c:damon_sysfs_scheme_add_dirs() {
 >     ...
+> 	err = damon_sysfs_scheme_set_stats(scheme);
+> 	if (err)
+> 		goto put_filters_watermarks_quotas_access_pattern_out;
+> 	err = damon_sysfs_scheme_set_tried_regions(scheme);
+> 	if (err)
+> 		goto put_tried_regions_out;
+> 	return 0;
+> 
 > put_tried_regions_out:
->     kobject_put(&scheme->tried_regions->kobj);
->     scheme->tried_regions = NULL;
+> 	kobject_put(&scheme->tried_regions->kobj);
+> 	scheme->tried_regions = NULL;
 > put_filters_watermarks_quotas_access_pattern_out:
->     kobject_put(&scheme->ops_filters->kobj);
 >     ...
 > }
 > 
-> Does this error path completely omit dropping the stats kobject?
-> 
-> The stats kobject is initialized prior to the failed call, so
-> wouldn't skipping kobject_put(&scheme->stats->kobj) leak it permanently?
+> Because scheme is allocated via kmalloc_obj() (which wraps kmalloc and doesn't
+> zero memory), and the failing set_tried_regions() doesn't initialize
+> scheme->tried_regions on error, doesn't scheme->tried_regions contain an
+> uninitialized value here? Dereferencing it would cause a panic.
 
-Good finding, but you already shared this with the reply to the first patch of
-this series.  I promised to separately work on it.
+Good finding, but this deserves another patch.  I will separately work on this.
+
+> 
+> Additionally, this jump target falls through to
+> put_filters_watermarks_quotas_access_pattern_out without ever calling
+> kobject_put(&scheme->stats->kobj), so wouldn't the successfully allocated
+> stats kobject be permanently leaked?
+
+Good finding, but you reported this in another reply to this thread and I
+promised to separately work on this.
 
 
 Thanks,
