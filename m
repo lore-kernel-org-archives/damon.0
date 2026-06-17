@@ -1,139 +1,158 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC4A3DA7C2;
-	Tue, 16 Jun 2026 19:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E1E2628D
+	for <damon@lists.linux.dev>; Wed, 17 Jun 2026 00:02:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781638526; cv=none; b=FAmUS2JnNXkUblIwNkEwEGT5tolriyddiEMclUPIJM1SqC7wGlsgrXdPsFFfyE1vOX+FUlF68YlwovWwySpp/KQoeqBin9RR6kanXuFCFPSJbzDSxnYCFcXneznM9hUhU8cxfhQSml3X86fBCUa8xl2baEM61ARCnMq1JhueZQ8=
+	t=1781654538; cv=none; b=PoLWaWzNF3VwKaxpuyCYhc8eipN/OTF3pnXU/tm7LI77Bo8TF9kH6TsVZ9+VqbvqdUhtwGPVIEPvWGp0EdxW5teOn5x/EGYNEhZs/gzPREtA/R1k+QCvhFIC9i2OXAkntddt/ant0/jX5KSg0cPzvjHBYe7I4uS4/x6hiVM1bb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781638526; c=relaxed/simple;
-	bh=PuimfJia3CSDx6hoNhV2fWNsfOlEYjF8E5z2Xqcf7GM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Xz0QUBMu+Oo5555NQa6k45105IEeGEUf2qNN96JtqXAW5aSmm7KYyKwV/nzqvi6N3hyQCAKm7GmXA/IZaV3QCMw9xqDncisQbxEEPzD5B12M9KluLVdYN7OPDTV9T/oRRpxHCkAff4q/GNrNdLYepNh29JcHw7zMIHBLRhouYIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
-Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gfxyp5DLJzJ467y;
-	Wed, 17 Jun 2026 03:34:58 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8967840584;
-	Wed, 17 Jun 2026 03:35:22 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 16 Jun 2026 22:35:22 +0300
-Message-ID: <6a2a30eb-2fd8-4ade-988e-9a9c93c09fe6@huawei-partners.com>
-Date: Tue, 16 Jun 2026 22:35:21 +0300
+	s=arc-20240116; t=1781654538; c=relaxed/simple;
+	bh=8Ecf7fdyq9O9CgaElztU5neyuka1YxhlepLvWG0T1ck=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HvGJpsLANHwjOcmOcoiSG+J4s4/apeHcOyRXp1gm8mzbbsqnHTxS4aRQTRP1gjAJt9P409SXaPGBY6ucub5pUmMdQXkEeSuXM6ab9srDAYLv7Ou2JUWX8Hc+t8jmWemRr4ZbfWa00lIbo12Bp5gejIFCx8DNFU11ZFTWFBwkhGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nt5XYjuB; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nt5XYjuB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63341F000E9;
+	Wed, 17 Jun 2026 00:02:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781654537;
+	bh=Y8GR55rYy2/Flw4HzSEhWAm5Ca0Y4EPJdACybVwXqAI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Nt5XYjuBL6FN6EetW9QMS8jhTqtUVQ7iNfx0S8o0g9RvZjFVsvAqMlFysJ9K+Ews0
+	 9VFBxfZvAAA37H6B0RA22eXM6W5A9ZGbp8PnYLYCXhyYMuKioJzLk8roBa5i9D2bV6
+	 kpYI2WOH+Ru/ycxg3mhjzuNRKA8QjwDnRbFbaVMicxEYwX+v9m0fu5i6LIeBwPWMRT
+	 WKT1A1TESSX5yOxlVe9/RNgNzlXMFEV+oj8uSDozfboH9uWa2teVlugn7l7GkC3eZV
+	 +2UwQqgdLwM07MZG4pyq+J7vqkk0kFTw5f6SVB/vtWhi8T+Mmhmu0r51MYPZ4Ue2xV
+	 nZMl6RosjDdtw==
+From: SeongJae Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH 1/9] mm/damon/sysfs: kobject_del() target, context and kdamond dirs
+Date: Tue, 16 Jun 2026 17:02:08 -0700
+Message-ID: <20260617000209.91653-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260616152553.C97A01F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] mm/damon/sysfs: support hugepage_mem_bp quota goal
- metric
-To: <sashiko-reviews@lists.linux.dev>
-CC: <damon@lists.linux.dev>
-References: <20260616150316.580819-4-gutierrez.asier@huawei-partners.com>
- <20260616152153.6F75F1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260616152153.6F75F1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+Content-Transfer-Encoding: 8bit
 
+On Tue, 16 Jun 2026 15:25:52 +0000 sashiko-bot@kernel.org wrote:
 
-
-On 6/16/2026 6:21 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [Low] The new `DAMOS_QUOTA_HUGEPAGE_MEM_BP` metric is exposed via sysfs but lacks required documentation updates.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [Critical] Potential divide-by-zero in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` due to an unhandled zero denominator.
-> - [High] 32-bit integer overflow in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` when calculating memory ratios.
+> - [High] Incomplete fix: Missing kobject_del() in sysfs directory creation error paths leads to persistent -EEXIST collisions.
 > --
 > 
-> commit be304699fb94d4d73bd979237fb4d7b08b7216f7
-> Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> commit 1c0329e17860c383f4ab90a119f917db75ecacee
+> Author: SeongJae Park <sj@kernel.org>
 > 
-> mm/damon/sysfs: support hugepage_mem_bp quota goal metric
+> mm/damon/sysfs: kobject_del() target, context and kdamond dirs
 > 
-> DAMOS has a new autotune policy metric: DAMOS_QUOTA_HUGEPAGE_MEM_BP.
-> This patch exposes DAMOS_QUOTA_HUGEPAGE_MEM_BP through sysfs.
+> On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
+> could cause directories creation failures due to the name conflicts.
+> Fix those issues for target, context and kdamond directories by adding
+> kobject_del() calls.
 > 
->> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
->> index 329cfd0bbe9f3..4b5429a5b4158 100644
->> --- a/mm/damon/sysfs-schemes.c
->> +++ b/mm/damon/sysfs-schemes.c
->> @@ -1267,6 +1267,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
->>  		.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
->>  		.name = "node_eligible_mem_bp",
->>  	},
->> +	{
->> +		.metric = DAMOS_QUOTA_HUGEPAGE_MEM_BP,
->> +		.name = "hugepage_mem_bp",
->> +	},
+> Fixes: c951cd3b8901 ("mm/damon: implement a minimal stub for sysfs-based DAMON interface")
+> Cc: <stable@vger.kernel.org> # 5.18.x
 > 
-> [Severity: Critical]
-> This isn't a bug introduced by this patch, but exposing this metric directly
-> to userspace makes a potential divide-by-zero triggerable by users
-> configuring DAMON quotas.
+> > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> > index 2e95e3bac774d..d93f7919c3ca1 100644
+> > --- a/mm/damon/sysfs.c
+> > +++ b/mm/damon/sysfs.c
+> > @@ -333,6 +333,7 @@ static void damon_sysfs_targets_rm_dirs(struct damon_sysfs_targets *targets)
+> >  
+> >  	for (i = 0; i < targets->nr; i++) {
+> >  		damon_sysfs_target_rm_dirs(targets_arr[i]);
+> > +		kobject_del(&targets_arr[i]->kobj);
 > 
-> In mm/damon/core.c:damos_hugepage_mem_bp(), the denominator is computed as:
-> 
->     total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
-> 
-> Due to per-CPU vmstat lag or an idle system, the free pages counter can equal
-> totalram_pages(), resulting in total being 0. This is then passed to
-> mult_frac():
-> 
->     return mult_frac(thp, 10000, total);
-> 
-> This inherently computes thp / total, causing a strict division by zero and a
-> kernel panic. The same issue exists in damos_get_in_active_mem_bp() where
-> total = active + inactive, which can be 0 if the LRU lists are empty.
-> 
-> Should a zero-check on total be added before performing the division?
-DAMON is enabled after the system is fully loaded. total will not be 0 by then.
 > [Severity: High]
-> This is a pre-existing issue, but exposing this metric also surfaces a 32-bit
-> integer overflow in mm/damon/core.c:damos_hugepage_mem_bp().
+> This isn't a regression introduced by this patch, but while you are fixing
+> the -EEXIST name collisions in the rm_dirs() paths, are the same
+> kobject_del() calls also needed in the error paths of the corresponding
+> add_dirs() functions?
 > 
-> The mult_frac(x, n, d) macro performs the multiplication (x % d) * n. Here x
-> is thp, which is an unsigned long.
+> For example, in damon_sysfs_targets_add_dirs():
 > 
-> On 32-bit systems, if thp exceeds ~429,496 pages (around 1.75 GB),
-> (thp % total) * 10000 will silently overflow the 32-bit unsigned long type.
+>     mm/damon/sysfs.c:damon_sysfs_targets_add_dirs() {
+>         ...
+>             err = kobject_init_and_add(&target->kobj, ...);
+>             if (err)
+>                 goto out;
 > 
-> This wrap-around yields an erroneously low ratio instead of the correct value.
-> The same overflow applies to damos_get_in_active_mem_bp() if the active or
-> inactive pages exceed 1.75 GB.
+>             err = damon_sysfs_target_add_dirs(target);
+>             if (err)
+>                 goto out;
+>         ...
+>     out:
+>         damon_sysfs_targets_rm_dirs(targets);
+>         kobject_put(&target->kobj);
+>         return err;
+>     }
 > 
-> Could this be fixed by casting the first argument to u64 to prevent the
-> overflow?
-As described in this patch set, this will be the default behaviour in that
-case.
-> [Severity: Low]
-> Does this patch also require an update to the authoritative DAMON sysfs
-> documentation?
+> If damon_sysfs_target_add_dirs() fails, kobject_put() is called without
+> kobject_del(). Does this result in a lingering directory and a persistent
+> -EEXIST if the user retries?
 > 
-> Documentation/mm/damon/design.rst explicitly lists all valid string values
-> for the target_metric sysfs file, but does not include hugepage_mem_bp.
-> Without documenting the new metric, it may remain undiscoverable for users.
-I will update the documentation. 
->>  };
->>  
->>  static ssize_t target_metric_show(struct kobject *kobj,
+> Similarly, in mm/damon/sysfs-schemes.c:damos_sysfs_populate_region_dir():
 > 
+>     mm/damon/sysfs-schemes.c:damos_sysfs_populate_region_dir() {
+>         ...
+>         if (kobject_init_and_add(&region->kobj,
+>                     &damon_sysfs_scheme_region_ktype,
+>                     &sysfs_regions->kobj, "%d",
+>                     sysfs_regions->nr_regions))
+>             goto out;
+>         if (damos_sysfs_region_add_dirs(region, ctx, r))
+>             goto out;
+>         ...
+>         sysfs_regions->nr_regions++;
+>         return;
+> 
+>     out:
+>         kobject_put(&region->kobj);
+>     }
+> 
+> If this fails, it returns without incrementing sysfs_regions->nr_regions.
+> Could the next region processed in the loop then attempt to initialize with
+> the exact same name string, immediately hitting -EEXIST and breaking the
+> entire region population loop?
 
--- 
-Asier Gutierrez
-Huawei
+Good finding.  I will fix this in the next revision, like below:
 
+'''
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -374,13 +374,15 @@ static int damon_sysfs_targets_add_dirs(struct damon_sysfs_targets *targets,
+
+                err = damon_sysfs_target_add_dirs(target);
+                if (err)
+-                       goto out;
++                       goto del_out;
+
+                targets_arr[i] = target;
+                targets->nr++;
+        }
+        return 0;
+
++del_out:
++       kobject_del(&target->kobj);
+ out:
+        damon_sysfs_targets_rm_dirs(targets);
+        kobject_put(&target->kobj);
+'''
+
+
+Thanks,
+SJ
+
+[...]
