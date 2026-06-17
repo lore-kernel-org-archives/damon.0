@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D581A165F16;
-	Wed, 17 Jun 2026 04:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A045165F16;
+	Wed, 17 Jun 2026 04:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781669387; cv=none; b=IiosB8x2T51q1S6hBS6SA0aX74Rl7MDEg+2zobJZSDVgnkdQYLw3st3OkagXHHXXrztrWV6+ybj+hehe45nq+M2CNCjXCiBUK/QrihgbQ0O56NAt9NOiZThOvWtkLmas/FjS5Ewe8b5vczRdh9NzNl846hgegtxWxRl9kGw27To=
+	t=1781669730; cv=none; b=WoYXWMjrJ9KjIEfHex3R8t3u5dJ0OZtBlSONyhI6+zQkd6tFp9nGILkd0fsjdfRg22EOKhR6ETL6U1rHIWWCcHQK2nBounBH/rcBRYWJ6llHiv4dmksuKwAG1mSXVW/VxSTjgsBxwsS/le4fT+sul51oV7AWXvnRHBRU25FJ8kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781669387; c=relaxed/simple;
-	bh=Y70/qMc4N5TJjSi7pPN/aBwIegR+EMi4eyHKH1pnSSc=;
+	s=arc-20240116; t=1781669730; c=relaxed/simple;
+	bh=8HKLfsrsiHiQVVfsF5rixcHlOrNS+GnRI0+kT+Fcy0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBi60++WMpxnUViDNv48zbzqmG//0yYt5bWcLvzpDk6umuV/B17xRF6CqtmZogKEbgRkCxujjnkSFXyo5f91Y2tP9s52hv9fjxtGZ12YvbcgVKzDORpst16gzemlHXpsZSFoQaXpOCu3zIX1hckE7WNVJ+JTT1XENZvh3yeknHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TbtndDhK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N9KNVb0dS7WshZWH2W2oZ8qFAKXz0Uox6lzRm2GMRb9m7m60nzMBcmFvIDK9R2Tz5ghR9fwPB5v6KDqYPg2N0D4NwThsAlnFDsgWXru3+POF0uKXMylABtmYomBztvVrt36W4zgD8nv3DRggdRRIF17du6xPYSefJNpHfXnfHm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DgxuvPMJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TbtndDhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021EA1F000E9;
-	Wed, 17 Jun 2026 04:09:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DgxuvPMJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1761F000E9;
+	Wed, 17 Jun 2026 04:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781669386;
-	bh=hIYdb4x1bYhjBBCqfOz6SMCoFnhz3pHfuPe7DmSe1hw=;
+	s=k20260515; t=1781669729;
+	bh=BfuesadEZFqHVxr2opemKIotkjaDSbngRhowoxbWpJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbtndDhKhHKvWV5snZtKla3iu64kyGdPkqMtintGva4mF7shgbjwDr9wVfewDsnnz
-	 4OT8IfE3NSD5zlZ/y44vSg7tuuhom13bWTd1N5LFrJbNyT2oMr/teqXOIHsd1y9pEn
-	 2jRtvQdTh+kw6fPi7Vk2Ma1XPRnFNi00u3+Xa+JEHkQ1YT9+j6TxrFWW/jcKcZxGEK
-	 +ZvccEWr6xXqFvuMhVWNrivDl7uJ9Xiq0Yuf24UAz6ChEkv84UQbWD+xxBkOTg1QTb
-	 vAdZwhr6uLVLEkZkRuQ9S14jm3RYSGwwBRTqx6S+enWs7rLcHA8kkwkFyjPBO2Il19
-	 j/DFthDMe6pbw==
+	b=DgxuvPMJArHQR8/mJtBmswduDgt3ddI1m9LFJpgkUeKgi8tD7uRMrI9lEe0M57xMA
+	 NxxI2jdP/xlKiXkRWfWaQBDcOKmQl3lPlTbIW1aK2WVYZxRJpGGM9Y0RV+wJ830y1A
+	 0D4pqnlrr5vYzLCl9UrYFSIOSsCbqvQQWth22Wjz9C9e5Ca5Zj11g0HV+Q8l1mdVu4
+	 9TRa6JUoVOlZbl2trxczAnZpr0r08FNV5KaCphLrhvC06OWLn3J/EbWteJHenlc3ZK
+	 rvt1jFiZ57fteAvhasfZ+yGVL996u2+1RUUHha+9Eby7LkeNK+DbWVN8GNL3xkKtJG
+	 aTAItJ/pMF4Vw==
 From: SeongJae Park <sj@kernel.org>
 To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	sashiko-reviews@lists.linux.dev,
 	damon@lists.linux.dev
-Subject: Re: [PATCH v1 2/3] mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
-Date: Tue, 16 Jun 2026 21:09:37 -0700
-Message-ID: <20260617040938.98762-1-sj@kernel.org>
+Subject: Re: [PATCH v1 3/3] mm/damon/sysfs: support hugepage_mem_bp quota goal metric
+Date: Tue, 16 Jun 2026 21:15:15 -0700
+Message-ID: <20260617041515.98906-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <308b6783-a1cc-4f57-94d2-7421fd4362e9@huawei-partners.com>
+In-Reply-To: <6a2a30eb-2fd8-4ade-988e-9a9c93c09fe6@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,105 +45,66 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 16 Jun 2026 22:27:41 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+On Tue, 16 Jun 2026 22:35:21 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
 > 
 > 
 > On 6/16/2026 6:21 PM, sashiko-bot@kernel.org wrote:
 > > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > - [Medium] The `DAMOS_QUOTA_USER_INPUT` goal tuner feedback mechanism is statically stuck because `current_value` is never dynamically updated.
-> > - [Medium] The scheme applies the DAMOS_COLLAPSE action to all regions including completely cold ones, contradicting the patch description.
-> > - [Low] The module cannot be compiled due to a naming mismatch between the Kconfig symbol and the Makefile variable.
+> > 
+> > New issues:
+> > - [Low] The new `DAMOS_QUOTA_HUGEPAGE_MEM_BP` metric is exposed via sysfs but lacks required documentation updates.
+> > 
+> > Pre-existing issues:
+> > - [Critical] Potential divide-by-zero in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` due to an unhandled zero denominator.
+> > - [High] 32-bit integer overflow in `damos_hugepage_mem_bp()` and `damos_get_in_active_mem_bp()` when calculating memory ratios.
 > > --
 > > 
-> > commit 7e15caa860a55beb8439fc6bb5f299c5c42fb138
+> > commit be304699fb94d4d73bd979237fb4d7b08b7216f7
 > > Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 > > 
-> > mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
+> > mm/damon/sysfs: support hugepage_mem_bp quota goal metric
 > > 
-> > This patch introduces a new DAMON module (SAMPLE_DAMON_HPAGE)
-> > which collapses hot regions into huge pages. The module monitors
-> > a specific task using DAMON-based sampling and applies collapsing
-> > based on memory usage.
+> > DAMOS has a new autotune policy metric: DAMOS_QUOTA_HUGEPAGE_MEM_BP.
+> > This patch exposes DAMOS_QUOTA_HUGEPAGE_MEM_BP through sysfs.
 > > 
-> >> diff --git a/samples/damon/Makefile b/samples/damon/Makefile
-> >> index 72f68cbf422aa..a348dc74ddcb1 100644
-> >> --- a/samples/damon/Makefile
-> >> +++ b/samples/damon/Makefile
-> >> @@ -3,3 +3,4 @@
-> >>  obj-$(CONFIG_SAMPLE_DAMON_WSSE) += wsse.o
-> >>  obj-$(CONFIG_SAMPLE_DAMON_PRCL) += prcl.o
-> >>  obj-$(CONFIG_SAMPLE_DAMON_MTIER) += mtier.o
-> >> +obj-$(CONFIG_SAMPLE_DAMON_HUGEPAGE) += hpage.o
+> >> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> >> index 329cfd0bbe9f3..4b5429a5b4158 100644
+> >> --- a/mm/damon/sysfs-schemes.c
+> >> +++ b/mm/damon/sysfs-schemes.c
+> >> @@ -1267,6 +1267,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
+> >>  		.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+> >>  		.name = "node_eligible_mem_bp",
+> >>  	},
+> >> +	{
+> >> +		.metric = DAMOS_QUOTA_HUGEPAGE_MEM_BP,
+> >> +		.name = "hugepage_mem_bp",
+> >> +	},
 > > 
-> > [Severity: Low]
-> > Does this prevent the module from building? 
+> > [Severity: Critical]
+> > This isn't a bug introduced by this patch, but exposing this metric directly
+> > to userspace makes a potential divide-by-zero triggerable by users
+> > configuring DAMON quotas.
 > > 
-> > The Kconfig file defines the configuration option as SAMPLE_DAMON_HPAGE, 
-> > but the Makefile evaluates CONFIG_SAMPLE_DAMON_HUGEPAGE. This mismatch 
-> > means the build system might silently skip compiling hpage.o.
-> Yes, my bad when moving around code from different branches. Will
-> be fixed in v2.
-> >> diff --git a/samples/damon/hpage.c b/samples/damon/hpage.c
-> >> new file mode 100644
-> >> index 0000000000000..ebbe5e1be1a1d
-> >> --- /dev/null
-> >> +++ b/samples/damon/hpage.c
+> > In mm/damon/core.c:damos_hugepage_mem_bp(), the denominator is computed as:
 > > 
-> > [ ... ]
+> >     total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
 > > 
-> >> +	scheme = damon_new_scheme(&(struct damos_access_pattern) {
-> >> +				.min_sz_region = HPAGE_PMD_SIZE,
-> >> +				.max_sz_region = ULONG_MAX,
-> >> +				.min_nr_accesses = 0,
-> >> +				.max_nr_accesses = UINT_MAX,
+> > Due to per-CPU vmstat lag or an idle system, the free pages counter can equal
+> > totalram_pages(), resulting in total being 0. This is then passed to
+> > mult_frac():
 > > 
-> > [Severity: Medium]
-> > Will this apply the collapse action to completely cold regions? 
+> >     return mult_frac(thp, 10000, total);
 > > 
-> > The commit message states this module collapses "hot regions", but setting 
-> > min_nr_accesses to 0 instructs DAMON to apply the action to all regions 
-> > that meet the age threshold, including those with no accesses at all. 
+> > This inherently computes thp / total, causing a strict division by zero and a
+> > kernel panic. The same issue exists in damos_get_in_active_mem_bp() where
+> > total = active + inactive, which can be 0 if the LRU lists are empty.
 > > 
-> > Should this be set to a value strictly greater than 0 to only target 
-> > heavily accessed regions?
-> Good catch. I will update it to 1.
+> > Should a zero-check on total be added before performing the division?
+> DAMON is enabled after the system is fully loaded. total will not be 0 by then.
 
-I was assuming you intentionally set it to 0, since quota's access hotness
-based prioritization will anyway cut out cold regions.  But if it was not the
-intention, please feel free to update.
-
-> > [ ... ]
-> > 
-> >> +	if (quota_autotune_feedback) {
-> >> +		goal = damos_new_quota_goal(DAMOS_QUOTA_USER_INPUT, 10000);
-> >> +		if (!goal) {
-> >> +			damon_destroy_ctx(ctx);
-> >> +			return -ENOMEM;
-> >> +		}
-> >> +		goal->current_value = quota_autotune_feedback;
-> >> +		damos_add_quota_goal(&scheme->quota, goal);
-> >> +	}
-> > 
-> > [Severity: Medium]
-> > Is there a missing mechanism to dynamically update this feedback value?
-> > 
-> > Since the module parameter is assigned to current_value exactly once at 
-> > startup, without a dynamic update path while running, the auto-tuner will 
-> > receive a constant error value. 
-> > 
-> > Won't this continuously push the quota aggressiveness in one direction 
-> > until it hits the limits, rather than forming a proper feedback loop?
-> > 
-> This is a sample module. There is no commit mechanism as in the usual
-> DAMON modules. It should be set up before enabling the module.
-
-It means the user feedback is not really working.
-
-> 
-> I will document this behaviour in the documentation.
-
-I'd suggest to just drop this unused and untested feature.
+Could you please further clarify what "system is fully loaded" means, reaards
+to what Sashiko is claiming, particularly the per-CPU vmstat lag?
 
 
 Thanks,
