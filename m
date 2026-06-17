@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086011E1E04
-	for <damon@lists.linux.dev>; Wed, 17 Jun 2026 01:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740C31DA23;
+	Wed, 17 Jun 2026 01:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781658718; cv=none; b=VZLhdAje6R8jgp8r8Du/sZoDEDKuGosfPUy7BFrHr+Fc2SbFYaoVGRirBqAD6G7kQseGR1cIgWbbmhjMHdsQ21ofye9W/lbVvUfLKUPRtN9UjyQoDYJELEQ4bWMHpm8YmjwRHb3OIyReAFM4Q4vBnQ/uQF+5YDs+88Yrl/V1rcM=
+	t=1781658930; cv=none; b=Fs7y7OeHz2TUDo6W5CFVLJt8KuRlawZqgZkNU4jH3iyGE6FXoUJ98XnBw3YpR025BthIYH5t9ol/ROKx0ez1Jc2FEDa9vYo+ygb8FABAlD7eap5r6teDcN8S4fGr+hP4rlu39F0oUL1cXGVoyypbKmH+9PzGO2kelNhdyOv9bgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781658718; c=relaxed/simple;
-	bh=HkbJ/Bq/cGBFn/3V9VMHTlUCh2fFHjrXmlsFdrLc89w=;
+	s=arc-20240116; t=1781658930; c=relaxed/simple;
+	bh=TeaJbrTcCkVXCa67T1iKXQjBnSyzcdQ/W2DnWwjeazo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMJlscQx6aD4HZJqZvrXRj0mVfRoIql3kBJpXQaRZ8PzeTVWvjhnx+QUmTtBzVn5clh8DbNoQfw7HK0v+9j830YvLr/BTTv5M1ORrHPc9wf7lltw09GXC63FudVxp7G+vHfyGzbZxck3RFcvGMB/MfGHnsszJ32KpzmT0XTC/7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nwZ6KCOD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HxXBO38iZJBnIkZ6V1xc/8x2p3+zsW50W6BW5hxwdzNOF6+UDAbebynn3IaL9Z8sjn51eDppLXBgd81cfm+5QtEYQH25gsobL+BRPonBbBTG81tizyEAhUKacfxi012PmBib1VHOWTki74sPp2vNioc7ckRNprXkAoKiRYEnD/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XtVHyrcM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nwZ6KCOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FE91F000E9;
-	Wed, 17 Jun 2026 01:11:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtVHyrcM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404FE1F000E9;
+	Wed, 17 Jun 2026 01:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781658716;
-	bh=+aVI6aQiE4DBg2q8x1jsyHNi8iWCTavM7iz8PQ2kMoI=;
+	s=k20260515; t=1781658929;
+	bh=dM1CD/FOWTDMsQkMO4cV3iGVzS5NiXgDEdXuvMc7UEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nwZ6KCODJzbFn578WsVHFJyyjtI86i5k9i/7UXHGtJzdqmESF/IUJdZZe5p3eQeDt
-	 WmGJHOz0yjJ7jxiZy83YZndUhOVV7r+AfiLzn7Z2H6uWz2eTcwB4yBbipldkTGMnSS
-	 BGtTLXlk6NSZwBGKzCZFbklmjyhvX7QaycJdqhzAGAjDfKKaoIQ6vePBSRYGYZRsgQ
-	 Xqfud2Lu60nwGxPpgvArcnNZJy1N+uGCme6jTpbklm83r6168Xy57KHGyoJ/bIrYM/
-	 VQo06fzTFFpj6er0PgodQrCoJ/ZRZr9BhQG0T9H7VhrWAgsBRdDFLLfxMtA8oYCMp4
-	 nyJ7jb0JM4kQg==
+	b=XtVHyrcMIk5txVuolLmpB3cqHQ/dh64rbWqHqU9ALakHzhiZL+AyEpxmcxBg35Dlf
+	 H2Pzi1mToJGu+iHz/eQkvko8dIdLzkIVRen1S1oR4kW9vtiY0ELYbM5IQKxZGkaCuG
+	 Ign6lvUdpkJhuXmUyaoh3QY7W79MtmWTR8AyqZGauCG+ddX+FHjKv09bLrMijc9nCA
+	 XPVgUZm6CPJRoTfX2r+HIq8MjcS8fqgdyKHmKsWbGZOMmxokiAUzpywKaFsNIoo/In
+	 +FokXb7bOJNaJk4NnQaF5Al8jAlZwjw6wA1IjfNvyG+0ytsDMsyXtdq+7UR8JFBAlX
+	 ZjGxHFzo3QB4g==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 9/9] mm/damon/sysfs: kobject_del() probe dirs
-Date: Tue, 16 Jun 2026 18:11:45 -0700
-Message-ID: <20260617011146.97423-1-sj@kernel.org>
+To: SeongJae Park <sj@kernel.org>
+Cc: "# 5 . 18 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH 0/9] mm/damon/sysfs: kobject_del() directories that users can create/remove
+Date: Tue, 16 Jun 2026 18:15:18 -0700
+Message-ID: <20260617011519.97550-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260616152411.AD0241F000E9@smtp.kernel.org>
+In-Reply-To: <20260616150844.88305-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,65 +48,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 16 Jun 2026 15:24:11 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 16 Jun 2026 08:08:34 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> DAMON sysfs interface allows users to create and remove arbitrary number
+> of directories on sysfs, using a few files having 'nr_' prefix.  For
+> example, 'nr_kdamonds'.  When the user writes a number 'N' to the files,
+> directories having name starting from '0' to 'N - 1' are created in the
+> same directory.  The pre-existing number-named directories are removed
+> before creating the new directories.
 > 
-> Pre-existing issues:
-> - [Medium] The patch adds `kobject_del()` to `damon_sysfs_probes_rm_dirs()` to fix sysfs name collisions caused by delayed kobject releases, but misses the exact same flaw on the error paths of `damon_sysfs_probes_add_dirs()` and multiple other array-building functions. This leaves the system vulnerable to `-EEXIST` failures upon retry after an error.
-> --
+> For the removal of the existing directories, DAMON sysfs interface use
+> only kobject_put().  Because DAMON sysfs interface is the only kernel
+> component that manages the directories, there is no problem in normal
+> situations.  However, if CONFIG_DEBUG_KOBJECT_RELEASE is enabled, the
+> removal of dirs are delayed.  Let's suppose a user writes a non-zero
+> number to the 'nr_*' files while there are pre-existing number-named
+> directories, on the config enabled kernel.  DAMON sysfs interface
+> decreases the reference counts of the existing directories and
+> immediately creates new directories.  Because the removal of the sysfs
+> directories is delayed, it shows some pre-existing directories of the
+> same names when it tries to create the new directories, and fails.
 > 
-> commit 4a5efc2733f009261a15fd64a4d901ca19499bb5
-> Author: SeongJae Park <sj@kernel.org>
+> For example, the issue can be triggered like below:
 > 
-> mm/damon/sysfs: kobject_del() probe dirs
+>     # grep DEBUG_KOBJECT_RELEASE /boot/config-$(uname -r)
+>     CONFIG_DEBUG_KOBJECT_RELEASE=y
+>     # ls
+>     nr_kdamonds
+>     # echo 1 > nr_kdamonds
+>     # echo 1 > nr_kdamonds
+>     bash: echo: write error: File exists
+>     # dmesg
+>     [...]
+>     [  300.880458] kobject: kobject_add_internal failed for 0 with -EEXIST, don't try to register things with the same name in the same directory.
+>     [...]
 > 
-> This commit fixes a directory creation failure caused by name conflicts
-> when CONFIG_DEBUG_KOBJECT_RELEASE is enabled. It adds missing kobject_del()
-> calls during the removal of probe directories.
+> This doesn't cause catastrophic issues like kernel panics or memory
+> corruptions.  Users can work around by removing all directories first
+> (write 0 to the nr_* files) and then create new directories after
+> confirming the old directories are gone.  But, this is definitely a bug
+> that causes a bad user experience.
 > 
-> > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> > index 04725ff3d9f3c..04ca0a34e1206 100644
-> > --- a/mm/damon/sysfs.c
-> > +++ b/mm/damon/sysfs.c
-> > @@ -1139,6 +1139,7 @@ static void damon_sysfs_probes_rm_dirs(
-> >  
-> >  	for (i = 0; i < probes->nr; i++) {
-> >  		damon_sysfs_probe_rm_dirs(probes_arr[i]);
-> > +		kobject_del(&probes_arr[i]->kobj);
-> 
-> [Severity: Medium]
-> This is a pre-existing issue, but it looks like the same lack of
-> kobject_del() on error paths could cause name collisions upon retry.
-> 
-> For example, if damon_sysfs_probe_add_dirs() fails inside
-> damon_sysfs_probes_add_dirs(), the error path drops the probe by calling
-> kobject_put() without kobject_del():
-> 
-> mm/damon/sysfs.c:damon_sysfs_probes_add_dirs() {
->     ...
-> 		err = damon_sysfs_probe_add_dirs(probe);
-> 		if (err) {
-> 			kobject_put(&probe->kobj);
-> 			damon_sysfs_probes_rm_dirs(probes);
-> 			return err;
-> 		}
->     ...
-> }
-> 
-> Under CONFIG_DEBUG_KOBJECT_RELEASE, if userspace immediately retries the
-> operation after an error, won't kobject_init_and_add() fail with -EEXIST due
-> to a name collision with the lingering directory?
-> 
-> Should we also add synchronous sysfs deletion via kobject_del() to these
-> similar error paths?
-> - mm/damon/sysfs.c:damon_sysfs_targets_add_dirs()
-> - mm/damon/sysfs.c:damon_sysfs_contexts_add_dirs()
-> - mm/damon/sysfs.c:damon_sysfs_kdamonds_add_dirs()
-> - mm/damon/sysfs-schemes.c:damon_sysfs_schemes_add_dirs()
+> Fix the issues by calling kobject_del() before creating new directories.
 
-Yes.  Sashiko reported same issues in other replies to this thread and I will
-fix these in the next revision.
+Sashiko found existence of similar issues in error handling paths.  I will fix
+those in the next revision.
+
+Sashiko also found more issues of different classes that can cause memory leaks
+and uninitialized memory dereference.  The errors are unlikely (too small to
+fail?) but better to fix asap, and apparently deserves different patches.  I
+will prioritize fix of those.
 
 
 Thanks,
