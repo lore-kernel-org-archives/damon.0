@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CB127FD4B;
-	Wed, 17 Jun 2026 21:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8321E40D56F;
+	Thu, 18 Jun 2026 00:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781731329; cv=none; b=cElAXSaMshniJnsm6LB9vAadwaMUdz+urb13EihzxZP+3xwFsGPaOzPxuSD2hlnacF/otW7PI1KV8P/qktUtQdrvFdBG7PClKg86fniO/AMoOPBq3wBtKIJA+exq+VX2chFHcc5aOSQrceXRFO6reU4t76BDk9pon6sG1P7wOKk=
+	t=1781741781; cv=none; b=bu1d+e+tBK7I9a4zGXLlfI0dv5ildjZQ70qBxuHb8pQjx2YoSR0vD4OwNHwygjNgpoJm7UPuPl2f1zs34spieO7Jl5KPkTICuYhXoKUob7UdGiio3R8Sa4+p5Yh7Sppzc88r+ji1sQidiEDsoez+PV2GumnQYigb2SB2evVUN9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781731329; c=relaxed/simple;
-	bh=yPCNtLJjnhtWdMzs/28dp2I8exEjOw7ZEiXcbOBAiUw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GSx5alpRUJB5q+VyVncIQHVHK+ZEp/CtxTO5qMpLIChKW9uQA8TAGOewuIRawl9sjJ6jyRbPiw3OCqdoHF0ONQOwO/vLzUUwUXw6j6pz/oBCLw7Vro5S9rC6gu12kRbi3erYGGXxMrrB6vpEHEHZ1bx0QEJJUgBDPUlh8Ypl1gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EvgBeayl; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781741781; c=relaxed/simple;
+	bh=QiC1ilcbowaxmYykKMD+sRgAoHlaHOdxfYwImAHW/NI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ILdaA9p4//hK4zUuaq2guyx/UQQvwJdYMi2ppQs6afdsJeyRYxEgthQzaV9//1h/5gUYaChUifwNCkqjRIKCfEdcUm/0pgVn3Eldif2delruLA7S0rNQQ39Fl7XBPQQliX56OUrKOqE15FtQr275KubL0RDMDmgHsUODZKw9zq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mS8O7Ldl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EvgBeayl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1E31F000E9;
-	Wed, 17 Jun 2026 21:22:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mS8O7Ldl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF871F000E9;
+	Thu, 18 Jun 2026 00:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781731328;
-	bh=kUSLuADlGuyB6w8Kyvi/AxqjQ412r5lYEyZTSDVMugo=;
-	h=From:To:Cc:Subject:Date;
-	b=EvgBeayllHaViEBS5h9q08CKx5DMzcIgVNXIFEO4KwQe2U1XFQJBK+Ryu8feTtvdo
-	 L4uXXnQ4rDw58kGU1jthhJTYSJ7rfJX8U3n1B2bGXwi1duiSM1oK416D/bEtBT9iMD
-	 hfoIHeooJu1OQ4RtZXuJW2LAaQk09NfqCa4pr6MZL+1Lj6c3vIBH+8e3AZHzh9CQqW
-	 n/GDcg+dxk24DsDjL6AtVLAflq9srCyCExrKYeOCV+X2Gtm4u6ogpX1iDTJh69DOsX
-	 H38B7lVN2R92E5/rzmS9iPhRq/mb550L+08SGReJqBMv08pF1eQEiK/RBmbz6cX+Vc
-	 N3n+bPTwAk/jw==
+	s=k20260515; t=1781741780;
+	bh=l0kWAyRfonITHEKTmFqHGzAP61+hrxv6P9ACVWEGEu0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=mS8O7LdlB4rRbIWjF+Ru/oL0KgXE2iC8EIhFSLq6zjbxqntdp5RXsI4g0gvvKYN/o
+	 DsjWZq11bDZ707uQpDbPLBzivaiBAbZ6S3qpypIF/SOjMTUZKMGMIpeZZTEaHU9ua6
+	 BxAvW3IbfurZzKGnoMpu5Ev+iDCPo5EctbJEmyGao4+p2gtvnkpaSXdu2puniKbS6Y
+	 c3ws46trieNiNQoAeZlIUhsRRw9rkxOGdBZP/3l7JY3dSInIfnVS5u6K+syPeCadNP
+	 7K5BcB+fO/Pox+0S+MdpS/kT03P+vnS7a+tbkRR+T4TWoTR7LETSASUrhNh9RuKBeA
+	 FUHR09USFgVtA==
 From: SeongJae Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: gutierrez.asier@huawei-partners.com,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-06-22
-Date: Wed, 17 Jun 2026 14:22:06 -0700
-Message-ID: <20260617212207.4584-1-sj@kernel.org>
+Subject: Re: [PATCH v1 2/3] mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
+Date: Wed, 17 Jun 2026 17:16:08 -0700
+Message-ID: <20260618001609.83965-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260617040452.98621-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -42,36 +52,38 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+On Tue, 16 Jun 2026 21:04:52 -0700 SeongJae Park <sj@kernel.org> wrote:
 
+> On Tue, 16 Jun 2026 15:03:15 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> 
+> > From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> > 
+> > This patch introduces a new DAMON module (SAMPLE_DAMON_HPAGE)
+> > which collapses hot regions into huge pages.
 
-This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
-(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
-for the week of 2026-06-22.
+As I mentioned on the previous version of this series, this sample module looks
+much better than the initial shape to my humble eyes.  Much smaller and
+simpler.  I really appreciate Asier's efforts on making this.
 
-As usual, we have two time slots for meetings in the week.  Next six time slots
-are as below.
+However... I was asking myself if this module is really needed last night, and
+still got not real good and confident answer.
 
-2026-06-22 (Mon) 18:00 PT (not yet reserved)
-2026-06-23 (Tue) 09:30 PT (not yet reserved)
-2026-07-06 (Mon) 18:00 PT (not yet reserved)
-2026-07-07 (Tue) 09:30 PT (not yet reserved)
-2026-07-20 (Mon) 18:00 PT (not yet reserved)
-2026-07-21 (Tue) 09:30 PT (not yet reserved)
+After all, this is a sample module.  The purpose is to show sample code thhat
+helps people understanding how they can use DAMON API.  Maybe we can argue this
+module can be helpful at understanding how DAMOS quota goal can be used.  But,
+mtier is already showing that.  So I cannot say what new advantage this module
+is really bringing.
 
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.
+Meanwhile, this patch adds ~200 lines of code.  It is a very small and simple
+sample module, but still we should maintain it.  I, to be honest, getting
+little bit concerned about the maintenance overhead now.
 
-Please note that other time slots are also available on demands.
-
-Shared Calendar
----------------
-
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+So, if Asier has a good reason to add this module that I'm missing, I'd like to
+humbly ask to consider dropping of this module for now.  I'm so sorry for
+raising this concern this late.  But, Asier, may I ask what do you think?
 
 
 Thanks,
 SJ
+
+[...]
