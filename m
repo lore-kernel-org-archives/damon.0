@@ -1,49 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5762E4C6D;
-	Thu, 18 Jun 2026 15:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E772D9EE4;
+	Thu, 18 Jun 2026 15:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781795296; cv=none; b=F4hQMh8fr1vwkdGHVZwuNWgQnODz96Q5BGakwq0bBL09GMk6LfrAvPXvIARTzqbW7WnC2X6w7xCEwvi99nE/9y5f1c/d6lAiczzKsJM6ihegm2p/23AsOYMBk0KzxM4JET/nCeHt+M67kyetodP3F3nJHU3j2AZrjDn5zAw0+XA=
+	t=1781795729; cv=none; b=KyvHG16SEBBZZL3kZS7ZT8Z6vmHFm+efoMg90kZ3Ugi6OAuKpbuoz/SgvZJEwqzo5Ij0qsdQ0j4IciNvkPg+21YEuGSHJdtq+nDM2nqBSAmZJN8XnbusOjQo70XgSzlpKV6FwTdtA2sFxY+0XI4+UiwsHenJW9UfYaaEXIui9Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781795296; c=relaxed/simple;
-	bh=BxGB8QZuCL3ZdCOfyutbhbQ/Be+1aR6s86mm+SrOt+4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ce6yUCIWEYi9qc/DpU80bhF9QERnYDkuIYx6Xi+UpcCvcwH5/ByJaS57akXmTQ8wHbpp9A+keWeB3bsuEJ0LJZCpe9Nj7PppDI27JXjGPHeiJYqzJ6TcSSHaExVy41xeq0EZdXm/mamHOXzsnGnCdzLyQ/rSfi1bNsILXHgkfcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=APXAJZyH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781795729; c=relaxed/simple;
+	bh=lcUnEqhWTXGgFsnJ2GHSPjx/+5r2ez9z5eZ3Sg9Kwo0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HKgxPsQAGVhBIBmDKuZmHAjeGynqNuzn0HtGN84wLNM6nT3hibswl1oD+EkukVkDI/mhwjIYdXDHrc49qEOatSlmP/MyukJwVEBsTGFOdj7XZVkq8u+N2Hu5drESyO6DdFgNrjkn+p7m63ODszWds194IxMieyZO7dw0S5oBsm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I+ABRFxj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="APXAJZyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5E31F000E9;
-	Thu, 18 Jun 2026 15:08:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I+ABRFxj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C251F000E9;
+	Thu, 18 Jun 2026 15:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781795295;
-	bh=ADzzepRVWs1vwXTC05UkLfdDEKwQsxVaPIoo0M8ryYM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=APXAJZyHpcW+BxdLSoyVb7v4ZEHR1RrgW3ugOQFYVMEVErvF1fi22XxKELIMNa3i9
-	 mnTLYHuchwHCqdJTBBhUMut/nd1TnVuXIqeJ+JGHWmuBOr5MBjnVVFtbEj/EqijHYw
-	 Rs64F/MvMZU9ECYGrrP1uQgMlhc8IO4SPoRW9vF5IpBZjOzygrWpSweBAbmUu2lpt5
-	 KVI9pUCeLQ2DKxCi6ySH6ODqzxA/JtIc46EMeT/osmjYG57DmHLB6OsmfNsiB+/1Th
-	 xLN2iFTrFq+306Tpe15c36vNz5Ibst3rS1BR2MUcXQDtI9BUCB+j/KCvPNtGEEpIF+
-	 /5AV10/8DvOHQ==
+	s=k20260515; t=1781795728;
+	bh=TV4CqNhL96y47BkvUr+Vh2gUi09twBlCDxYoSxWN5Fg=;
+	h=From:To:Cc:Subject:Date;
+	b=I+ABRFxjLtSSQZOvjMDFRYRmy2ivQODBZl39LW7V/1yKoNLOB3it9SlE4vXHN4oJ/
+	 vbia9Gyo7xHYxafNmddewCNvUkLxEpK7EdIE3jRuhwmoqaYLmBgMP1wQ8ieh9bsGiu
+	 vUH1rf1hQulzRnCX4cKqyDkwLm5ak7kDWsTnOci5/XCbJPSFvjCIzwJ+CH9mlaLRWl
+	 FMuHDMswaSBc6suPqFG7+5q4ghJ5fidoyMPf41IFPCdEEg3fiUR19/G1/xFyWpVVY0
+	 TnlUm3dp/YLuGhMcB4WniAlN3frykeJ7KxXa6kR0odhumq3JhZ8JDnFOrvQo707L7U
+	 F56wIoGDM76ng==
 From: SeongJae Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
+	"# 5 . 18 . x" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
 	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 2/3] mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
-Date: Thu, 18 Jun 2026 08:08:05 -0700
-Message-ID: <20260618150806.4633-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v1.2 00/11] mm/damon/sysfs: kobject_del() directories that users can create/remove
+Date: Thu, 18 Jun 2026 08:15:04 -0700
+Message-ID: <20260618151517.5366-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <4cefc3af-67eb-4bde-89f6-8c3ea3c93588@huawei-partners.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -52,61 +46,85 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 18 Jun 2026 17:59:36 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+DAMON sysfs interface allows users to create and remove arbitrary number
+of directories on sysfs, using a few files having 'nr_' prefix.  For
+example, 'nr_kdamonds'.  When the user writes a number 'N' to the files,
+directories having name starting from '0' to 'N - 1' are created in the
+same directory.  The pre-existing number-named directories are removed
+before creating the new directories.
 
-> 
-> 
-> On 6/18/2026 5:57 PM, SeongJae Park wrote:
-> > On Thu, 18 Jun 2026 14:51:42 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
-> > 
-> >> Hi SJ,
-> >>
-> >> On 6/18/2026 3:16 AM, SeongJae Park wrote:
-> >>> On Tue, 16 Jun 2026 21:04:52 -0700 SeongJae Park <sj@kernel.org> wrote:
-> >>>
-> >>>> On Tue, 16 Jun 2026 15:03:15 +0000 <gutierrez.asier@huawei-partners.com> wrote:
-> >>>>
-> >>>>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> >>>>>
-> >>>>> This patch introduces a new DAMON module (SAMPLE_DAMON_HPAGE)
-> >>>>> which collapses hot regions into huge pages.
-> >>>
-> >>> As I mentioned on the previous version of this series, this sample module looks
-> >>> much better than the initial shape to my humble eyes.  Much smaller and
-> >>> simpler.  I really appreciate Asier's efforts on making this.
-> >>>
-> >>> However... I was asking myself if this module is really needed last night, and
-> >>> still got not real good and confident answer.
-> >>>
-> >>> After all, this is a sample module.  The purpose is to show sample code thhat
-> >>> helps people understanding how they can use DAMON API.  Maybe we can argue this
-> >>> module can be helpful at understanding how DAMOS quota goal can be used.  But,
-> >>> mtier is already showing that.  So I cannot say what new advantage this module
-> >>> is really bringing.
-> >> You are right, the main goal was to show how this quota goal can be used. 
-> >>> Meanwhile, this patch adds ~200 lines of code.  It is a very small and simple
-> >>> sample module, but still we should maintain it.  I, to be honest, getting
-> >>> little bit concerned about the maintenance overhead now.
-> >> I understand your concerns. I know code need maintenance, and DAMON is already
-> >> growing significantly.
-> >>> So, if Asier has a good reason to add this module that I'm missing, I'd like to
-> >>> humbly ask to consider dropping of this module for now.  I'm so sorry for
-> >>> raising this concern this late.  But, Asier, may I ask what do you think?
-> >> So, are you suggesting to drop the module and upstreaming only the DAMOS quota
-> >> goal stuff?> 
-> > 
-> > Yes, if you don't mind.
-> Sure. I will do it a bit later.
+For the removal of the existing directories, DAMON sysfs interface use
+only kobject_put().  Because DAMON sysfs interface is the only kernel
+component that manages the directories, there is no problem in normal
+situations.  However, if CONFIG_DEBUG_KOBJECT_RELEASE is enabled, the
+removal of dirs are delayed.  Let's suppose a user writes a non-zero
+number to the 'nr_*' files while there are pre-existing number-named
+directories, on the config enabled kernel.  DAMON sysfs interface
+decreases the reference counts of the existing directories and
+immediately creates new directories.  Because the removal of the sysfs
+directories is delayed, it shows some pre-existing directories of the
+same names when it tries to create the new directories, and fails.
 
-Thank you for kindly accepting my humble suggestion, Asier!
+For example, the issue can be triggered like below:
 
-> 
-> Thanks a lot for your help reviewing the code so far.
+    # grep DEBUG_KOBJECT_RELEASE /boot/config-$(uname -r)
+    CONFIG_DEBUG_KOBJECT_RELEASE=y
+    # ls
+    nr_kdamonds
+    # echo 1 > nr_kdamonds
+    # echo 1 > nr_kdamonds
+    bash: echo: write error: File exists
+    # dmesg
+    [...]
+    [  300.880458] kobject: kobject_add_internal failed for 0 with -EEXIST, don't try to register things with the same name in the same directory.
+    [...]
 
-I sincerely appreciate your contributions, too.
+Some of the error handling paths of the directories also lack the
+kobject_del() call.  If the user uses nr_* file right after the errors,
+similar issues can happen.
+
+This doesn't cause catastrophic issues like kernel panics or memory
+corruptions.  Users can work around by removing all directories first
+(write 0 to the nr_* files) and then create new directories after
+confirming the old directories are gone.  But, this is definitely a bug
+that causes a bad user experience.
+
+Fix the issues by calling kobject_del() before creating new directories.
+
+Patches Sequence
+================
+
+There are a number of bugs of this class that are introduced by eleven
+different commits.  The fixes are grouped and ordered for the
+introducing commits.
+
+Changes from RFC v1.1
+- RFC v1.1: https://lore.kernel.org/20260617144807.91441-1-sj@kernel.org
+- Add error path fix for damon_sysfs_schemes_add_dirs().
+- Rebase to latest mm-new.
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260616150844.88305-1-sj@kernel.org
+- Add error path fixes.
+
+SeongJae Park (11):
+  mm/damon/sysfs: kobject_del() target (normal), context and kdamond
+    dirs
+  mm/damon/sysfs: kobject_del() region and target (error) dirs
+  mm/damon/sysfs-schemes: kobject_del() scheme dirs
+  mm/damon/sysfs-schemes: kobject_del() scheme region dirs
+  mm/damon/sysfs-schemes: kobject_del() scheme filter dirs
+  mm/damon/sysfs-schemes: kobject_del() scheme quota goal dirs
+  mm/damon/sysfs-schemes: kobject_del() scheme action destination dirs
+  mm/damon/sysfs: kobject_del() probe dirs
+  mm/damon/sysfs: kobject_del() probe filter dirs
+  mm/damon/sysfs: kobject_del() probe dirs in probes_addd_dir error path
+  mm/damon/sysfs-schemes: kobject_del() region for populate_region error
+
+ mm/damon/sysfs-schemes.c | 22 +++++++++++++++++-----
+ mm/damon/sysfs.c         | 25 ++++++++++++++++++++-----
+ 2 files changed, 37 insertions(+), 10 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 30941f0c4e32b31d4dcf2956491c5a3ac9c5beb4
+-- 
+2.47.3
