@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8321E40D56F;
-	Thu, 18 Jun 2026 00:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C6340D56F;
+	Thu, 18 Jun 2026 00:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781741781; cv=none; b=bu1d+e+tBK7I9a4zGXLlfI0dv5ildjZQ70qBxuHb8pQjx2YoSR0vD4OwNHwygjNgpoJm7UPuPl2f1zs34spieO7Jl5KPkTICuYhXoKUob7UdGiio3R8Sa4+p5Yh7Sppzc88r+ji1sQidiEDsoez+PV2GumnQYigb2SB2evVUN9M=
+	t=1781741931; cv=none; b=bVR/iNBRzoz5233dCO7MHSTBMPOZPJhYrzBEUJjozXcvOei+L2+a/7zdENY8kwsOrg3FDbFQEQnlIY97RxnPF0olRby+947MTcuSllPB9V8ShDoluGy9RpLxX09MyD/mKFB9I44D37CIQwhy5BlE4Iok8p5FMIef9lIRlyVmd/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781741781; c=relaxed/simple;
-	bh=QiC1ilcbowaxmYykKMD+sRgAoHlaHOdxfYwImAHW/NI=;
+	s=arc-20240116; t=1781741931; c=relaxed/simple;
+	bh=yqKnjeOp3n9gZYZ/PPYL0Ydalo1gI4vUcE2hgi/NUsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILdaA9p4//hK4zUuaq2guyx/UQQvwJdYMi2ppQs6afdsJeyRYxEgthQzaV9//1h/5gUYaChUifwNCkqjRIKCfEdcUm/0pgVn3Eldif2delruLA7S0rNQQ39Fl7XBPQQliX56OUrKOqE15FtQr275KubL0RDMDmgHsUODZKw9zq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mS8O7Ldl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=igGqGl6Xvs0rOt+m/9uAu1G+7zEMAoKZgeErcwf7klEzX+hhGWOat1QTYQH10OwKNKzhgBbbF2MmVgcVn5QJWDbWXPQ2baeBCb19ty+4P0Yqubr86LnhAiwnNkb3f3imNjaEYf0Gs7LW1IDRXfQbKTEkYT57ieBChvvhK4PkjZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HcccTQhJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mS8O7Ldl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF871F000E9;
-	Thu, 18 Jun 2026 00:16:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HcccTQhJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729621F000E9;
+	Thu, 18 Jun 2026 00:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781741780;
-	bh=l0kWAyRfonITHEKTmFqHGzAP61+hrxv6P9ACVWEGEu0=;
+	s=k20260515; t=1781741930;
+	bh=Tq5Dd79ingLOtWDO9qXa2YQGMrnxMPixhR12ifZ1um4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mS8O7LdlB4rRbIWjF+Ru/oL0KgXE2iC8EIhFSLq6zjbxqntdp5RXsI4g0gvvKYN/o
-	 DsjWZq11bDZ707uQpDbPLBzivaiBAbZ6S3qpypIF/SOjMTUZKMGMIpeZZTEaHU9ua6
-	 BxAvW3IbfurZzKGnoMpu5Ev+iDCPo5EctbJEmyGao4+p2gtvnkpaSXdu2puniKbS6Y
-	 c3ws46trieNiNQoAeZlIUhsRRw9rkxOGdBZP/3l7JY3dSInIfnVS5u6K+syPeCadNP
-	 7K5BcB+fO/Pox+0S+MdpS/kT03P+vnS7a+tbkRR+T4TWoTR7LETSASUrhNh9RuKBeA
-	 FUHR09USFgVtA==
+	b=HcccTQhJVBeAAD+7CELP/GBd9OnSVPTJIyF94/gJgSbsXfLLDEkMQCct0S/zdGYrn
+	 DgoOvlKWcQKSTwcDx1VHp0b7TCgxJUoO1dUOhVpc2x0iVuFpzTeBZKlUUOFjmAmYVp
+	 pltGjON3/AWa09bqVy8u+cI5sA8+wGvVeqefrCQckaXiHq/nSWGe9qwkqU1vhiJaqR
+	 fzR63vcfz8IoJ7MOI1miBQKzmuXWcb807tBOaQPJoxaD0Kt27CeYC9ji5yX4RkDtQb
+	 Y+zAIr5vuLMDRmpOtDFjLQVrXAu+AHRWTh5VjbWRT4ZntFx7skj5WOFww+MFMFaLJy
+	 v89ZwAZA6FBbA==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: gutierrez.asier@huawei-partners.com,
+To: Julian Braha <julianbraha@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	gutierrez.asier@huawei-partners.com,
 	artem.kuzin@huawei.com,
 	stepanov.anatoly@huawei.com,
 	wangkefeng.wang@huawei.com,
@@ -39,10 +40,10 @@ Cc: gutierrez.asier@huawei-partners.com,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v1 2/3] mm/damon: introduce DAMON_HUGEPAGE for hot region hugepage collapsing
-Date: Wed, 17 Jun 2026 17:16:08 -0700
-Message-ID: <20260618001609.83965-1-sj@kernel.org>
+Date: Wed, 17 Jun 2026 17:18:41 -0700
+Message-ID: <20260618001842.84103-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260617040452.98621-1-sj@kernel.org>
+In-Reply-To: <39bf837e-d3c3-4b9b-b118-063caadcb700@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -52,35 +53,21 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 16 Jun 2026 21:04:52 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Wed, 17 Jun 2026 17:12:45 +0100 Julian Braha <julianbraha@gmail.com> wrote:
 
-> On Tue, 16 Jun 2026 15:03:15 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> Hi Asier,
 > 
-> > From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> > 
-> > This patch introduces a new DAMON module (SAMPLE_DAMON_HPAGE)
-> > which collapses hot regions into huge pages.
+> On 6/16/26 16:03, gutierrez.asier@huawei-partners.com wrote:
+> 
+> > +config SAMPLE_DAMON_HPAGE
+> > +	bool "Build DAMON-based collapse of hot regions (SAMPLE_DAMON_HPAGE)"
+> > +	depends on DAMON && DAMON_VADDR && TRANSPARENT_HUGEPAGE
+> The dependency on DAMON is unnecessary because you already depend on
+> DAMON_VADDR.
 
-As I mentioned on the previous version of this series, this sample module looks
-much better than the initial shape to my humble eyes.  Much smaller and
-simpler.  I really appreciate Asier's efforts on making this.
-
-However... I was asking myself if this module is really needed last night, and
-still got not real good and confident answer.
-
-After all, this is a sample module.  The purpose is to show sample code thhat
-helps people understanding how they can use DAMON API.  Maybe we can argue this
-module can be helpful at understanding how DAMOS quota goal can be used.  But,
-mtier is already showing that.  So I cannot say what new advantage this module
-is really bringing.
-
-Meanwhile, this patch adds ~200 lines of code.  It is a very small and simple
-sample module, but still we should maintain it.  I, to be honest, getting
-little bit concerned about the maintenance overhead now.
-
-So, if Asier has a good reason to add this module that I'm missing, I'd like to
-humbly ask to consider dropping of this module for now.  I'm so sorry for
-raising this concern this late.  But, Asier, may I ask what do you think?
+Nice findiing!  There are similar duplicated conditions for other sample
+modules, too.  If anyone willing to, please feel free to post patches for
+cleaning those out.
 
 
 Thanks,
