@@ -1,136 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F26233942
-	for <damon@lists.linux.dev>; Thu, 18 Jun 2026 15:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478FA32B134
+	for <damon@lists.linux.dev>; Thu, 18 Jun 2026 15:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781796892; cv=none; b=BiMqrKZVU0EtFraYJulUVwGqDeXOZOiC1nQisNV2EHiFc6UCvVou2HRPqQiVjudYG4rT4Z1brKE97Dwxnr8QAtxKibYcdGLu5ZQVo5IGwAgkgnPsaRfnD3mFxPRMcM2v0pA6dTALxyWR3+QCkD2v+LA/SA2iNs3rQsxu5wwHbW0=
+	t=1781797120; cv=none; b=SFj8tv5DFndJXf1IAuD7uwMB09Yf9GvkI6UsWqs8Z3cRa5zn8GgYPjWkT36SBdYcJGL6lZcjyS2dQTlxdE7VmpzV+9/Q2Wp/3S/YtbkLs+jrHwAh5Oiknps92m1r090n2yr4BuEJUR7fD50VeHrn66MHlZ/zsLXplRmLCZw5Tk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781796892; c=relaxed/simple;
-	bh=6cRnXFAX7Mc4O1wwRZeB/hYqC7+3UhIy1cdzcnFg7Cg=;
+	s=arc-20240116; t=1781797120; c=relaxed/simple;
+	bh=EtpJWq62gqX0LyqbzHBaiGkz7hQqMyb1IhIit70oiCQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Q8l158KeTLoXAglOpjZqRBNvaqVLQlLYg4MeIIGXp2VaqlGc+wd+899jby8afLD6ixKt1X5QDMYDfjmQTRSn76AZ0Q+QzesB5V0Pbuq54KiP6ug64T0/Q7uW5d09O6rv0T12rAm9FTO2DURsUNwNH3SJ4i/tz3Te7uvZl6W1PQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ILvpUiA8; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=IamkeXYp77ORjU0H11AxgzzJn52T/rTMMGhLXc69ekrAmBnIuk8fyl06NxT24zgy8eJsB0l+YI5Mb4oouky+4Ju7V8uXYhRcqoa9UNVd9tJYezOhDkvGaHfSxR20vNgBQbr4MO0UlcDNhBVKT2rwNtLUEihcR05NaD7N4CeynR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lNWzQmEl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ILvpUiA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7171F000E9;
-	Thu, 18 Jun 2026 15:34:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lNWzQmEl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6251F000E9;
+	Thu, 18 Jun 2026 15:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781796891;
-	bh=EYCDRw4yMvVgZwetbB2A0jhkZWUMXvvwmmz9zpCGQsw=;
+	s=k20260515; t=1781797118;
+	bh=zHqYcNq01aVqSby7LmXeu6CBRURmc/GXEzX0/mcR75Q=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ILvpUiA8JKbrKJEnaPE0R3tgfalKuoY9XHwcJ8xu+3aM0DIqIdezFp8+yq7D0TGpV
-	 miGl4pU0yh8Od4S1B27l+A29pSkiEDuG32AfallvWi7mmwsEnpCB47N+l8nRlgHoFd
-	 SsBkHaMOYebVJWOiGTiylPPKXaK48ke7Lyxhrs1zubauNb6msX2pGzfbs/R5LEKmGU
-	 ObF7JNcepqYJfjyS7HIHZBxXX+Th6AR4gYXbrNE3sxnxCn287kHlK8blXCMC33OsQW
-	 BY0mhxJMjNxzEcFFnROJXZlo+5kTg6vnyfQaG/me111PSLVKwnrGR0juphmE0XQkzi
-	 dl7keVqJRk2pQ==
+	b=lNWzQmElcJnsMLF6uNpLH9HX3XCFxF59ZDNdHfT1sFQaSYq1O/RtAx8uq8YRrdSJt
+	 R9x8GF80aSMI6xL7Ra3FnfvR51uLvPPzed9GM2W6QtVXN4Wia9YImm9eKvSig84oEk
+	 QnimnqShNB0rJIW2Y3iAhhakaCWRuO5Iwdk4Sg80ulgYitSlWAtTKPO1Bm+aMrsIeE
+	 p3eVcKFspF3jDRA33rpv5k1BJXvA6f5/egG4IkLs062mbAksQ+PJgyZjIs8AipgsX6
+	 FgeTxGaDAWA6brgBKA9kK6MZ3+c1iEFPzyblCBgA3KKYF4pgMEF8xN7qJVBvqDkTPk
+	 z4W6ZvujkbFwQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.2 09/11] mm/damon/sysfs: kobject_del() probe
- filter dirs
+Subject: Re: [RFC PATCH v1.2 11/11] mm/damon/sysfs-schemes: kobject_del()
+ region for populate_region error
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260618151517.5366-10-sj@kernel.org>
+In-Reply-To: <20260618151517.5366-12-sj@kernel.org>
 References: <20260618151517.5366-1-sj@kernel.org>
- <20260618151517.5366-10-sj@kernel.org>
+ <20260618151517.5366-12-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 18 Jun 2026 15:34:50 +0000
-Message-Id: <20260618153451.1E7171F000E9@smtp.kernel.org>
+Date: Thu, 18 Jun 2026 15:38:37 +0000
+Message-Id: <20260618153838.5A6251F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [Medium] Missing `kobject_del()` call in `damos_sysfs_region_add_dirs()` =
-error path causes delayed sysfs directory removal and subsequent `-EEXIST` =
-name conflicts.
-- [Medium] Missing `kobject_del()` in `damos_sysfs_probes_rm_dirs()` leaves=
- child probe directories lingering in sysfs on error paths.
+- [High] Memory leak in the error path of damon_sysfs_scheme_add_dirs() due=
+ to skipped cleanup of the 'stats' kobject.
 --
 
-commit 6a62b56c2acdfd514de2a6e4cd36c3839e0c6db5
+commit 73251d9a8366deae80fbc88ff7d3d42f79676704
 Author: SeongJae Park <sj@kernel.org>
-Subject: mm/damon/sysfs: kobject_del() probe filter dirs
 
-This commit fixes directory creation failures due to name conflicts on kern=
-els
-with CONFIG_DEBUG_KOBJECT_RELEASE. It does so by adding missing kobject_del=
-()
-calls before kobject_put() in the data attribute probe filter directories'
-teardown path.
+mm/damon/sysfs-schemes: kobject_del() region for populate_region error
 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 5ca45654cdd39..36a0e82601697 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -962,8 +962,10 @@ static void damon_sysfs_filters_rm_dirs(struct damon=
-_sysfs_filters *filters)
->  	struct damon_sysfs_filter **filters_arr =3D filters->filters_arr;
->  	int i;
-> =20
-> -	for (i =3D 0; i < filters->nr; i++)
-> +	for (i =3D 0; i < filters->nr; i++) {
-> +		kobject_del(&filters_arr[i]->kobj);
->  		kobject_put(&filters_arr[i]->kobj);
-> +	}
->  	filters->nr =3D 0;
->  	kfree(filters_arr);
->  	filters->filters_arr =3D NULL;
+This patch fixes directory creation failures due to name conflicts when
+CONFIG_DEBUG_KOBJECT_RELEASE is enabled. It adds a missing kobject_del()
+call to properly clean up tried region directories in the error path of
+damos_sysfs_populate_region_dir().
 
-[Severity: Medium]
-This is a pre-existing issue, but since we are fixing missing kobject_del()
-calls here, should we also update damos_sysfs_probes_rm_dirs() in
-mm/damon/sysfs-schemes.c?
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index ebc692682481d..0b8a6f1f6b9fc 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+[ ... ]
 
-When tearing down probe directories, the loop iterates over child probes and
-calls kobject_put(), but omitting kobject_del() might leave the successfully
-added child directories in sysfs pending delayed release:
+[Severity: High]
+This isn't a bug introduced by this patch, but while reviewing the kobject
+cleanup in this file, I noticed a memory leak in the error path of
+damon_sysfs_scheme_add_dirs():
 
-mm/damon/sysfs-schemes.c:damos_sysfs_probes_rm_dirs() {
+mm/damon/sysfs-schemes.c:damon_sysfs_scheme_add_dirs() {
     ...
-	for (i =3D 0; i < probes->nr; i++)
-		kobject_put(&probes_arr[i]->kobj);
+	err =3D damon_sysfs_scheme_set_stats(scheme);
+	if (err)
+		goto put_filters_watermarks_quotas_access_pattern_out;
+	err =3D damon_sysfs_scheme_set_tried_regions(scheme);
+	if (err)
+		goto put_tried_regions_out;
+	return 0;
+
+put_tried_regions_out:
+	kobject_put(&scheme->tried_regions->kobj);
+	scheme->tried_regions =3D NULL;
+put_filters_watermarks_quotas_access_pattern_out:
+	kobject_put(&scheme->ops_filters->kobj);
     ...
 }
 
-Would this also result in -EEXIST name collisions on subsequent retry attem=
-pts?
+If damon_sysfs_scheme_set_tried_regions() fails, it jumps to
+put_tried_regions_out. This attempts to clean up the failed tried_regions
+allocation, but then falls through to the next label.
 
-[Severity: Medium]
-This isn't a bug introduced by this patch, but does the error path in
-damos_sysfs_region_add_dirs() need similar handling?
-
-If kobject_init_and_add() succeeds but the subsequent call to
-damos_sysfs_probes_add_dirs() fails, we jump to the fail path:
-
-mm/damon/sysfs-schemes.c:damos_sysfs_region_add_dirs() {
-    ...
-	err =3D kobject_init_and_add(&probes->kobj, &damos_sysfs_probes_ktype,
-			&region->kobj, "probes");
-	if (err)
-		goto fail;
-
-	err =3D damos_sysfs_probes_add_dirs(probes, ctx, dregion);
-	if (err)
-		goto fail;
-    ...
-fail:
-	kobject_put(&probes->kobj);
-	return err;
-}
-
-Could the lack of kobject_del(&probes->kobj) here delay the removal of the
-sysfs directory and cause an unexpected -EEXIST conflict if userspace
-attempts to recreate the region?
+Does this completely skip cleaning up the successfully allocated
+scheme->stats->kobj? Missing a call to kobject_put(&scheme->stats->kobj)
+here appears to permanently leak the stats kobject and its associated
+sysfs state.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260618151517.5366=
--1-sj@kernel.org?part=3D9
+-1-sj@kernel.org?part=3D11
