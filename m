@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96E423C50A;
-	Thu, 18 Jun 2026 15:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0F43FCB13;
+	Thu, 18 Jun 2026 15:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781795737; cv=none; b=byignq+BtkG2E3A0e4IGnSD5C7JqWr39eEFiWRflwNJP5Ngq2uK7/ktbfMLIFWi4x+jCKOzjl3Bf3wvBvSDUp/dvqkLsEWgkgByl9poGZZV+ChJSlEe0q8AXpJk8k7+z2XI8s8ymk1JG8NWAbgGNybuWvW4rMygFufhxhFzAe8Q=
+	t=1781795738; cv=none; b=XhQDreYnYKKuL36xCXF5GGL5hHbTgR9GfdjnnBq5+9+mB4zGSUll8vQdy7HO3eukynCAeqmFtc2rXy8GyN56l7fNxfRoFyvSNxIN6VD4gkZ4KNF1eU5in2WQx6j5aQV+Y+kOS7A8WxA+CtxRKu3GrKyQVbA5vgxoNkteMnKoDZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781795737; c=relaxed/simple;
-	bh=PrCUoNhHlTlE3ViwxH1NyTh+XS2Xv6AHDrJL2FJidVI=;
+	s=arc-20240116; t=1781795738; c=relaxed/simple;
+	bh=ke/B1GO+KWlUvOAV22leJSyJ7PePA1RsdVGopsukReU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoS6XyGpYSow39LS7+4cqKI9Bl3wvxtE9R0lqiZb20twmcI8kBxxd528h8NPFL0eALZiwiaP/1gwBnCDCIQ39jdb6R/93W3egOaDqbnZUAysuyWFiIGPO/gApOVjjx9lXKX1a6ViZxUl8XogcuVESql1L0FV09N9eqKULIEn128=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z6IRoX6r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FI3rIe3PaoLCZOlYy0LRWpvnkVgarxivAw/YxxAo5epn2Aw0iikaeV2Fu13gW3B9403XdIMcfFvQCptPh3xsvygph/YrcY6E3u/JXtgEooWCY/3dAPdUWOX/D8fE3i36A+wS6fLqJqcdtVJMzyBR5t1tXX3PyN56p9Gihw3YRbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ALenW2U0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z6IRoX6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66201F00A3A;
-	Thu, 18 Jun 2026 15:15:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ALenW2U0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A146B1F00A3D;
+	Thu, 18 Jun 2026 15:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781795734;
-	bh=wcaOZ+THlXEeNyxi5XOx757xXbcMuDB56hf+0XEr0ao=;
+	s=k20260515; t=1781795737;
+	bh=xDjjHeE3ik/DACcTjgmd/gOCffqc91TStH/d4lyl+0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z6IRoX6rTjCgJ5+uGS69LdhfK+neY28Ivn4UZDzL2vWa4NVi0Dlykg2xWYphkvxB8
-	 tT2eSMjIOIztvoXLALn7GvO/HcVe7yLGkbWZhn3MJ4StKcNuzBx1EocyFRWR406FDO
-	 iIz7jJjddEGRT6YFdYQuDmqx3TSOdEX9AeEfVpf9NeAjhGDGkF9Wd0GJXyVodbbA5g
-	 E1RIr8LwsuA5NgsUYntqiolCepCwO/utlXPOPtfKvjaVIjAcJFc1fbEIFguZ2zF0lR
-	 ttTAkQACdbsz1RmnfOuQAREcVkpssJSwZKvZQ+O6g1YsxXGXLnYk8Ae8Gs72/e673J
-	 4eMyjGj38bibw==
+	b=ALenW2U0K5kUc27EbhsCZv2lBW6BvHI3zAcUedzVXhwdTPW60prdfnOnJzSD6sboY
+	 2Esth1GWP8+y6/iWduNQqFr9wuyGGihgj21KOIrTD2Sut7mREF5aJbWrsthCA4W+L4
+	 EDoiMHnlhEZYbp7y7aAFAjUr74Y5N1pnHoJ/FGr2E+VDVvJFM+/OZfZaEuy7g9aJTy
+	 rln0BVDly/7Sp0Y9e1UiQln5SFlGwPeRclGXKe9jp5ezyLglUAc1vEkFpfPf23OckL
+	 RESd6X6FK8dKbN30OoyuD7QtZFypr9HJNjMwvDZPpReR5Ea3pwUbNA2tOX2vxIxez2
+	 auAdbGJ9MQrYg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"# 6 . 8 . x" <stable@vger.kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 06/11] mm/damon/sysfs-schemes: kobject_del() scheme quota goal dirs
-Date: Thu, 18 Jun 2026 08:15:10 -0700
-Message-ID: <20260618151517.5366-7-sj@kernel.org>
+Subject: [RFC PATCH v1.2 08/11] mm/damon/sysfs: kobject_del() probe dirs
+Date: Thu, 18 Jun 2026 08:15:12 -0700
+Message-ID: <20260618151517.5366-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260618151517.5366-1-sj@kernel.org>
 References: <20260618151517.5366-1-sj@kernel.org>
@@ -50,31 +49,26 @@ Content-Transfer-Encoding: 8bit
 
 On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
 could cause directories creation failures due to the name conflicts. Fix
-those issues for scheme quota goal directories by adding kobject_del()
-calls.
+those issues for data attribute probe directories by adding
+kobject_del() calls.
 
-Fixes: 7f262da0a30d ("mm/damon/sysfs-schemes: implement files for scheme quota goals setup")
-Cc: <stable@vger.kernel.org> # 6.8.x
+Fixes: bf3ea3d30880 ("mm/damon/sysfs: implement probe dir")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/damon/sysfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 2b0a1ac36420c..306c1d3d357c4 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1465,8 +1465,10 @@ static void damos_sysfs_quota_goals_rm_dirs(
- 	struct damos_sysfs_quota_goal **goals_arr = goals->goals_arr;
- 	int i;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 3c349f0fe80f0..5ca45654cdd39 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1139,6 +1139,7 @@ static void damon_sysfs_probes_rm_dirs(
  
--	for (i = 0; i < goals->nr; i++)
-+	for (i = 0; i < goals->nr; i++) {
-+		kobject_del(&goals_arr[i]->kobj);
- 		kobject_put(&goals_arr[i]->kobj);
-+	}
- 	goals->nr = 0;
- 	kfree(goals_arr);
- 	goals->goals_arr = NULL;
+ 	for (i = 0; i < probes->nr; i++) {
+ 		damon_sysfs_probe_rm_dirs(probes_arr[i]);
++		kobject_del(&probes_arr[i]->kobj);
+ 		kobject_put(&probes_arr[i]->kobj);
+ 	}
+ 	probes->nr = 0;
 -- 
 2.47.3
