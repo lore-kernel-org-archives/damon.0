@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6258C383C8D;
-	Fri, 19 Jun 2026 19:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33B4397329;
+	Fri, 19 Jun 2026 19:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781897677; cv=none; b=Bw7LxmypF0+VORdmRNe/8zfsFx8UlEsvamZ03yAoqE2OeFCuOOIyKcdbtjFQLQG+IjfF4PgIP7uVd0C7iOpwGUhfzSeTXlRA2VywTqO1qunsiOaiVAstaC0JwHTmiYlQ3aNGScUz5LG7h8c9zBBBSkZ0NxwWy63AO9csv6cdnQc=
+	t=1781897678; cv=none; b=MeCZWUc2bf1Rs4kQT/LbPxVnHGNuVJ5D26aesXfQBphdBrK84PI3dhaBDNLoXMqtt3f3lpf6wuA0p/CIkZM1ep2KiGd7KaiSNiBqL13duEtJMY/Q7Obv7dX3XLaFdrzxPo1g/j/kyQMlIqxoqOKKxzFDdhsaoxyB8U83ikmQUhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781897677; c=relaxed/simple;
-	bh=YQbiK5oFrL0PmZXpqXrxUx5dpnf6e2QoA3YU8rx/jWs=;
+	s=arc-20240116; t=1781897678; c=relaxed/simple;
+	bh=aIGhUJ4IoRlUb8jMftp99Tj2NImb49Pmhd/fzeAvk+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBocAAjDFW0x8p0peJfpdqLYCEDpCo0nf0ad+7W32a75fYnc2hTUWjcxWXldOVFwxHDV16/qC1634J/Oper6NTy0bZWA35z8TBF0OeyHsLmYVB7pSbm7Yi/a8UNfgfTQVBDBK/CrSQPVpZDAHScDRg3SGGLXBXqM3V4X3rjiwxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VE8lS8lg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sTE/T2yvQVMGrQbeQ4tWKZvwWfAqg/xS8nlyATzUJ3maV1SupRWHpsNNRfnp/nPLlT03lZltMGvw4ZDgdbmbNyI3C7FCqckgWdO7sZKq/xEsMcBKIz70CHEgXrPqbadMblbxdXVu4iMJgOL4ObifkiDqZslw6jkBooJo4W/PhCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QgQozR+E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VE8lS8lg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBCC31F00A3D;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QgQozR+E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E60A1F00A3A;
 	Fri, 19 Jun 2026 19:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781897676;
-	bh=wn0Yt3L/+VcBwshPHSrlOXJyN82jOMXxHwXqkPJym7M=;
+	s=k20260515; t=1781897674;
+	bh=HUk5Cck1sJbUUjMgjgxqdG3j5G1J/Fn/sddbtTw+llU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VE8lS8lgX/m+9KZwGEHGAnntHpiikNKYNo4gGbwPDs63d7FaPaZv01ifWhFO42XxY
-	 ze3ccSnuoW7FbmekSGApTNtMGHJrVpJaPyYniIUMNbrkVwTcdORlVa2sImaMMJOF8X
-	 eSsthRjorUaacPPI1u7tFm7/5zK6tN9kJ9IT6niYOGg8CGr5NWT3zJVUTFQKiqWyff
-	 NR7i9MDqvq5qW5+LS40IZalcOVS2A9GFbVUpBU8dcHDo1wL4SQ6GUdYr622GOt2/ti
-	 NYabqEFTfGnvXjGhOr6Sm0sxus1SUYKu7i0IMDpds2fL1A2kFo1ik+K9uRltEk6gkW
-	 j4x7BxGm+dFww==
+	b=QgQozR+Evjxx196nYAkpmjcXIrwW+sdgpUxyCTAjW8wWiUIxD6/xkdbLciJckZvuq
+	 VSgpPpKcMQibZqrAxL4gxG+23aw4+gas8EyJHsGfLK0G8588li0ummvEHKzgbe2bRd
+	 ZAqk0iTZch+Ab+Mv7P+FbcOKb+M1V7XHie6vxs5xngV1cLH3xekB211UI02FFoC089
+	 PNno4ZJqLjMQX4bU7LPIMmPthlrh4BNDS3zIJ8GCLf1J9OBqxjtzf/bR76SfkPNm44
+	 bEwLr9oMdClEc5DWiyaxoq8y4GrbjO/sG43p61qLt9zzKEKJxO95sUercut2mEzzOG
+	 NwC2TmaZxkgmg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 06/13] mm/damon/core: remove damon_warn_fix_nr_accesses_corruption()
-Date: Fri, 19 Jun 2026 12:33:51 -0700
-Message-ID: <20260619193415.73833-7-sj@kernel.org>
+Subject: [RFC PATCH 05/13] mm/damon/sysfs-schemes: use damon_nr_accesses_mvsum() for damo regions
+Date: Fri, 19 Jun 2026 12:33:50 -0700
+Message-ID: <20260619193415.73833-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260619193415.73833-1-sj@kernel.org>
 References: <20260619193415.73833-1-sj@kernel.org>
@@ -47,51 +47,48 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-nr_accesses_bp is delicate.  Once it is corrupted, the consequence is
-the bad madness of DAMON monitoring results.  From developments of
-features of size, we historically found nr_accesses_bp can be corrupted
-by complicated bugs that are not easy to debug.  Hence we added a
-function for finding the corruption and fixing it right away.
-
-There are no more uses of nr_accesses_bp.  Hence the function for
-corruption detection and fix is no more needed.  Rip it out.
+damon_nr_accesses_mvsum() returns a value same to nr_accesses_bp.  Also
+the function is more simple and therefore more tolerant to errors.
+Execution of the function would be more expensive than the simple read
+of the field, but because the function is quite simple, the overhead
+should be negligible.  Use it in the DAMON sysfs interface for
+scheme-tried regions, instead of the nr_accesses_bp.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ mm/damon/sysfs-schemes.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 2eddf2674f4fa..12d09d2f7ea1e 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1992,19 +1992,6 @@ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control)
- 	return 0;
- }
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 9d8fab32b80f7..30a007bcf82f4 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -159,7 +159,7 @@ struct damon_sysfs_scheme_region {
+ };
  
--/*
-- * Warn and fix corrupted ->nr_accesses[_bp] for investigations and preventing
-- * the problem being propagated.
-- */
--static void damon_warn_fix_nr_accesses_corruption(struct damon_region *r)
--{
--	if (r->nr_accesses_bp == r->nr_accesses * 10000)
--		return;
--	WARN_ONCE(true, "invalid nr_accesses_bp at reset: %u %u\n",
--			r->nr_accesses_bp, r->nr_accesses);
--	r->nr_accesses_bp = r->nr_accesses * 10000;
--}
--
- #ifdef CONFIG_DAMON_DEBUG_SANITY
- static void damon_verify_reset_aggregated(struct damon_region *r,
- 		struct damon_ctx *c)
-@@ -2046,7 +2033,6 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
- 			trace_damon_aggregated(ti, r, damon_nr_regions(t));
- 			trace_damon_region_aggregated(ti, r,
- 					damon_nr_regions(t), nr_probes);
--			damon_warn_fix_nr_accesses_corruption(r);
- 			r->last_nr_accesses = r->nr_accesses;
- 			r->nr_accesses = 0;
- 			for (i = 0; i < DAMON_MAX_PROBES; i++)
+ static struct damon_sysfs_scheme_region *damon_sysfs_scheme_region_alloc(
+-		struct damon_region *region)
++		struct damon_region *region, struct damon_ctx *ctx)
+ {
+ 	struct damon_sysfs_scheme_region *sysfs_region = kmalloc_obj(*sysfs_region);
+ 
+@@ -167,7 +167,7 @@ static struct damon_sysfs_scheme_region *damon_sysfs_scheme_region_alloc(
+ 		return NULL;
+ 	sysfs_region->kobj = (struct kobject){};
+ 	sysfs_region->ar = region->ar;
+-	sysfs_region->nr_accesses = region->nr_accesses_bp / 10000;
++	sysfs_region->nr_accesses = damon_nr_accesses_mvsum(region, ctx);
+ 	sysfs_region->age = region->age;
+ 	sysfs_region->probes = NULL;
+ 	INIT_LIST_HEAD(&sysfs_region->list);
+@@ -3124,7 +3124,7 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 	if (total_bytes_only)
+ 		return;
+ 
+-	region = damon_sysfs_scheme_region_alloc(r);
++	region = damon_sysfs_scheme_region_alloc(r, ctx);
+ 	if (!region)
+ 		return;
+ 	region->sz_filter_passed = sz_filter_passed;
 -- 
 2.47.3
