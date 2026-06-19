@@ -1,155 +1,153 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD28140E5F
-	for <damon@lists.linux.dev>; Fri, 19 Jun 2026 15:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACD03B19A9
+	for <damon@lists.linux.dev>; Fri, 19 Jun 2026 15:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781881946; cv=none; b=dcI+ChiqpSa5OoX2RUGP6IHpfU7sA4b2yw2twV2WlRfK0mSzVFRTsSiG1UU9IWkNPIoy5L7UqtPr2ZJ+gI0XfjG8hZfv/BrOH3WlXOTTq6cNHia+08gmTlmo+aHpCZvh4yDoEC/9V/c/hYRAn88lQFiQJX51tdwoMsjjEHzZzh4=
+	t=1781881982; cv=none; b=VE3mJoW0s8NevIHGOKSZidJnBh3I7NZz/eWuykccEiFY5WHHh7yPI8/uRIMaxD7vgk/EV0b/7w9XTbEOjjaKlVfDUlQXqIlfF4JKJ+JcTTqSwOwa79nSZmJPySRwFYldAr7gY5637uC4zPa4ACbKJ5I6qsHLEB/yTIkWEl641Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781881946; c=relaxed/simple;
-	bh=0nW5ik3PNWX0orMDgDyilBs/W1+6ZeX+CSlwp1mnwMQ=;
+	s=arc-20240116; t=1781881982; c=relaxed/simple;
+	bh=ZABqEJ8I0razCCqR700JiMpk2XylaoV4Gr9++SOHDZg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=b36KEaCliYiUMAvwdvPFas01TEz/t+5jnh3WW3pdFNYcjIg/IFLruLBUyDPs2zcQAiiM8O1Up3HyYNx8RjScme1h5b6dehXvMsgqbAKjULFnCUuf4D7uHbrB3otx4/JmWUjyXtJUE2BpBHAdDGQ/YyhJ1YmHVkAUtbpVXpQw9K0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y/ExGExf; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=m6IoR1uKCWrKRYHkDI8pKgYmAFdU2UFMoOAvD2Q70pDOtT0JdS5oFN1N/8YngcIcHBsibxH0UKjcl1K7FOdsbjYuB9ckEzMo7aRotdRAo0BuO8YaeYr19z6oDVnjmNylltCqjzLnNCjVeb8TyphHYObpPsSzdBV/GU1lCEFR0kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ByxgOR9H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y/ExGExf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66A31F00A3A;
-	Fri, 19 Jun 2026 15:12:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ByxgOR9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB971F000E9;
+	Fri, 19 Jun 2026 15:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781881944;
-	bh=NYkDUKA/1LYbEqBLnobyJfS1Hy3fiDMwrXQLxXwPQxI=;
+	s=k20260515; t=1781881980;
+	bh=vpQJDXjPERyqg17WutW72MRvTGg0HOw5GsPjotLYzeE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Y/ExGExfQ8Kr5EQKklTyjIo7dHI2mKQbuwYrh4MvWQyRoW/pYd3b1U/ofSPPCLjrJ
-	 vwMWJvkvyyN8F+m+tT1HHjUYduiyBnjNND5B8UmdETbp9n+GgPS+V2bINmBego4oZw
-	 qUBKu7Pw8nI6GTW7QipemiDrPQgbMRPzulSVqP0rva3nr3XF19RJMQiENL48w4AV/a
-	 67nv83736MSVdL13buthmg2YxGx4EJ7l6feRRSLlygHB5LZUGeKFkco4m8VHCA43+x
-	 9FOs80HQEsSv7+PW3SMqbEx/mDvfKD/mOVhxOi66k77KA0e9oVgImZqbUD0WyTx6vr
-	 RuzOJrmsTY8MQ==
+	b=ByxgOR9HDLYcXqEH1pUP45f0wNNHTKCaArm1uGyEa77qD615FgAu7H1SPPIp0ETa7
+	 i2K6y6I98G1EyexUT12V8mPIEtD7EechA8YJaHdC42XqWZ5PtE3JWD+uHbcBELJ8+j
+	 1lE61n9oYabMY4fh48huoGd5AIzxrvEaVapSsTUHcBXbamocvUzr0cfFfnJAPfLjDg
+	 ur7JbUVI1iiJWm+QFkHAJuCorscIBr9y2sw355Lv3Jn4s8JV2XUXScd97vOD1U9Db9
+	 DC6036x7ZWg2k6PfVFbFaWvxcZT53jEwpeFmnW8/0py90j8k2hE+sDrUycpY+E4FiQ
+	 /OPncxKUcfsdA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto
- tuning
+Subject: Re: [PATCH v2 2/3] mm/damon/sysfs: support hugepage_mem_bp quota
+ goal metric
 Reply-To: sashiko-reviews@lists.linux.dev
 To: gutierrez.asier@huawei-partners.com
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260619145821.2109933-2-gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260619145821.2109933-3-gutierrez.asier@huawei-partners.com>
 References: <20260619145821.2109933-1-gutierrez.asier@huawei-partners.com>
- <20260619145821.2109933-2-gutierrez.asier@huawei-partners.com>
+ <20260619145821.2109933-3-gutierrez.asier@huawei-partners.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 19 Jun 2026 15:12:24 +0000
-Message-Id: <20260619151224.A66A31F00A3A@smtp.kernel.org>
+Date: Fri, 19 Jun 2026 15:13:00 +0000
+Message-Id: <20260619151300.BDB971F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
-New issues:
-- [High] Missing zero check for `total` memory in `damos_hugepage_mem_bp()`=
- leads to a potential divide-by-zero kernel panic.
-- [Medium] `damos_hugepage_mem_bp()` fails to account for PTE-mapped large =
-folios (mTHPs), leading to inaccurate statistics.
-
 Pre-existing issues:
-- [High] Missing zero denominator check for `total` LRU memory in `damos_ge=
-t_in_active_mem_bp()` causes a divide-by-zero kernel panic.
-- [High] Missing zero denominator check in `damos_get_node_mem_bp()` and `d=
-amos_get_node_memcg_used_bp()` can cause a divide-by-zero kernel panic.
+- [High] Kernel panic if user sets DAMOS quota goal target_value to 0 via s=
+ysfs.
+- [High] Potential kernel panic in `damos_hugepage_mem_bp()` if system memo=
+ry usage drops to 0.
+- [High] Potential kernel panic in `damos_get_in_active_mem_bp()` if LRU li=
+sts are empty.
 --
 
-commit 93cbe76d8ef461360b9dc14ac3328663e6ee8602
+commit 2cad27ab47cb3fdb7470dc5639b19615c6ec257b
 Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+Subject: mm/damon/sysfs: support hugepage_mem_bp quota goal metric
 
-mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+This commit adds the DAMOS_QUOTA_HUGEPAGE_MEM_BP metric to the sysfs
+interface, allowing users to configure the hugepage_mem_bp quota goal
+metric for DAMOS autotune policies.
 
-This commit introduces DAMOS_QUOTA_HUGEPAGE_MEM_BP auto tuning. It adds
-a new DAMOS quota goal metric to measure the amount of huge page
-consumption to total memory consumption ratio.
-
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 7e4b9affc5b06..b001f80681b12 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2795,6 +2795,17 @@ static unsigned int damos_get_in_active_mem_bp(boo=
-l active_ratio)
->  	return mult_frac(inactive, 10000, total);
-
-[Severity: High]
-This is a pre-existing issue, but can this lead to a divide-by-zero panic?
-
-If a system or node has no evictable pages (for example, in constrained
-environments with only kernel slab allocations or purely unevictable/mlocked
-workloads), active and inactive LRU counts will both be 0.=20
-
-Could total be evaluated as 0 here, causing mult_frac() to trigger an
-unconditional divide-by-zero kernel panic?
-
->  }
-> =20
-> +static unsigned int damos_hugepage_mem_bp(void)
-> +{
-> +	unsigned long thp, total;
-> +
-> +	thp =3D global_node_page_state(NR_ANON_THPS) +
-> +				global_node_page_state(NR_SHMEM_THPS) +
-> +				global_node_page_state(NR_FILE_THPS);
-
-[Severity: Medium]
-Does this calculation miss PTE-mapped large folios (mTHPs)?
-
-These vmstat counters only track PMD-mapped transparent huge pages. They
-do not track PTE-mapped multi-size THPs (mTHPs), which increment separate
-counters such as MTHP_STAT_NR_ANON.=20
-
-Since modern kernels increasingly use mTHPs, will DAMON's quota
-auto-tuning underestimate the actual huge page consumption here?
-
-> +	total =3D totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
-> +	return mult_frac(thp, 10000, total);
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 329cfd0bbe9f3..4b5429a5b4158 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+> @@ -1267,6 +1267,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_q=
+goal_metric_names[] =3D {
+>  		.metric =3D DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+>  		.name =3D "node_eligible_mem_bp",
+>  	},
+> +	{
+> +		.metric =3D DAMOS_QUOTA_HUGEPAGE_MEM_BP,
+> +		.name =3D "hugepage_mem_bp",
+> +	},
 
 [Severity: High]
-Could total evaluate to zero here and cause a divide-by-zero panic?
+This isn't a bug introduced by this patch, but exposing this metric makes a
+pre-existing divide-by-zero pathway reachable. Can this cause a kernel panic
+if system memory usage drops to 0?
 
-If all managed memory on the system is free (e.g., in a specialized idle
-state) or if per-CPU counter drift causes
-global_zone_page_state(NR_FREE_PAGES) to momentarily equal
-totalram_pages(), total will evaluate to exactly 0.=20
+Looking at damos_hugepage_mem_bp() in mm/damon/core.c, it calculates total
+without verifying it is greater than zero:
 
-Since mult_frac() performs standard division without internal zero
-checks, could this trigger a hardware divide-by-zero exception and crash
-the kernel?
-
-> +}
-
-While reviewing the LRU metric above, I noticed a similar pattern in
-other DAMOS metric calculations:
-
-mm/damon/core.c:damos_get_node_mem_bp() {
+mm/damon/core.c:damos_hugepage_mem_bp() {
     ...
-    si_meminfo_node(&i, goal->nid);
-    ...
-    return mult_frac(numerator, 10000, i.totalram);
+    total =3D totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
+    return mult_frac(thp, 10000, total);
 }
 
+If the number of free pages equals totalram_pages() (which is possible on
+mostly empty systems, in tightly constrained VMs, or due to vmstat per-CPU
+drift), total becomes 0. Could this cause a divide-by-zero panic during
+quota adjustment?
+
 [Severity: High]
-This isn't a bug introduced by this patch, but does this code also suffer
-from a missing zero denominator check?
+This isn't a bug introduced by this patch, but while reviewing this sysfs
+exposure, I noticed another pre-existing divide-by-zero risk if LRU lists
+are empty. Does this code safely handle zero total active/inactive memory?
 
-damos_get_node_mem_bp() and damos_get_node_memcg_used_bp() filter valid
-nodes via !node_state(nid, N_MEMORY), but N_MEMORY only guarantees the
-presence of physical memory, not managed buddy pages.
+mm/damon/core.c:damos_get_in_active_mem_bp() {
+    ...
+    total =3D active + inactive;
+    if (active_ratio)
+        return mult_frac(active, 10000, total);
+    return mult_frac(inactive, 10000, total);
+}
 
-If all physical memory on a node is reserved (such as memblock
-reservations or crashkernel), managed_pages will be exactly 0, which
-means i.totalram populated by si_meminfo_node() will be 0.=20
+If there are no pages on the active and inactive LRU lists (e.g., in systems
+relying solely on Hugetlbfs, unevictable memory, or during early
+initialization), total evaluates to 0. Does this need a check to avoid a
+divide-by-zero panic?
 
-Could this result in a divide-by-zero panic when evaluated by
-mult_frac()?
+[Severity: High]
+This isn't a bug introduced by this patch, but since we are looking at quota
+goals, is there a risk of a kernel panic if a user sets target_value to 0
+via sysfs?
+
+Looking at target_value_store() in mm/damon/sysfs-schemes.c, user input is
+directly accepted:
+
+mm/damon/sysfs-schemes.c:target_value_store() {
+    ...
+    int err =3D kstrtoul(buf, 0, &goal->target_value);
+    ...
+}
+
+Then in damos_quota_score() in mm/damon/core.c, this target_value is used as
+a denominator:
+
+mm/damon/core.c:damos_quota_score() {
+    ...
+    highest_score =3D max(highest_score,
+                mult_frac(goal->current_value, 10000,
+                    goal->target_value));
+    ...
+}
+
+Since kdamond will trigger a divide-by-zero if target_value is 0, should
+there be validation in target_value_store() to reject a value of 0?
+
+>  };
+> =20
+>  static ssize_t target_metric_show(struct kobject *kobj,
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260619145821.2109=
-933-1-gutierrez.asier@huawei-partners.com?part=3D1
+933-1-gutierrez.asier@huawei-partners.com?part=3D2
