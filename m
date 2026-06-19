@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582F24964F
-	for <damon@lists.linux.dev>; Fri, 19 Jun 2026 19:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BBB4964F
+	for <damon@lists.linux.dev>; Fri, 19 Jun 2026 19:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781898702; cv=none; b=gU+uMVQ6VHJ+yl3SFchiyczqUk7F9N/sTAbEZHcFVJBFj41qbc11iY7bmhZsLckA9YlHAkQcPt06Gh3XKSzQ0AaHUhzvogk2myoRL+hLA19hLJe9NebYzqCrsKe9FrHHSJOpdWpEwa/WYnmnR/qME6CPJBNAOSs3n/4VJgaiOO8=
+	t=1781898753; cv=none; b=c/xG2kxVz87mY9BOqhLkmPPXts+/KWN9mfrsJ0GpDWZ0n461siM1sEo50g4KlLnai7GDUvckqiyNc/aC5oIIO0qHICGskshYC7M3uCAs1jaRUJyxfKdcX4vgRgYLfDRWkT29UC9VrH7yA4mK2gT1uWLRpNFFOKODX6CBcOOv4Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781898702; c=relaxed/simple;
-	bh=rUBA9gcQAOT8sS9cGOIdTdnAB0Y/I+P/CNmvC/0CqMg=;
+	s=arc-20240116; t=1781898753; c=relaxed/simple;
+	bh=uxMie8sD97AzGwteBhpTkRPj8/c7hEUDfBce12LLOi0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=QojU3oifREvr57NE/gMFSHTe+2nsscEkftXOt9vrvw2GmoPa61g25pZPP2Q1hDlR8GVKMEn/t9zcJFUXBMkcqHwyZPszvYD67CY6NYsGCRqwMaAPVvBqtDJ9T684iRUF8tOH1VhnsF4sgmZ1onW0Cn38xv2RvdL6GD7EtKNPA1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Si0j67RT; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=H4T1yvXlPNk9CBx+P/Sfhs+efPxiQ9jsBJksua5TMT50Nb8qTAl+9V/xwvVV9JDPD8iRTE0wRm848sK1XjVTK6LZxFCOFUhd+ib0srtyhIeQhvFs8J69v2JYosiwXVi6T0wXavPnI/xQsadeHkRIAe8pxbyVzT4OCILlvIEDwiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z9pobXt5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Si0j67RT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03221F000E9;
-	Fri, 19 Jun 2026 19:51:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z9pobXt5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C9B1F000E9;
+	Fri, 19 Jun 2026 19:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781898701;
-	bh=DEorfvJ2KT3pmy/YTUcJAX7Gr0TzxKCQrEimQfK3BVs=;
+	s=k20260515; t=1781898752;
+	bh=7kLeJz/s12b3hKOPA5jWSD7eKMo5TasOGlVWzXW4M3o=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Si0j67RTLBk67ZqvYfqihNTWc7GDBZ7uuP3vM2i+YveHmr99GfY0otl0mJ9BUntR/
-	 7jBQrj1pbh6iqffa6GudbkJ+Utl2p2W0HVNP5mB5sErCNN8RVp4IjRAWB8JiRVOv1r
-	 r4sE2GdYDbXvGgeex6LndWuv/vN3rSD/DEHYggs3u9KWf0iMaC3psOnEG1CypVoUnm
-	 0Gm8d9D9VMCyBiAy0Mp/qzy86UY8CTwmNrFhcl5Z5brWHbPQ/LmxWo7QZYNHxfzYBW
-	 TQajtPuimrWggk0Qnjk/f1gOJZjSJodcNDdJQpwLLOJyMlveaCV6lxg1P+8m7UbPi6
-	 lge0ua/M0Yufg==
+	b=Z9pobXt5sQQzdFKJkxD+2lDNomZSVX1DSNlvvnf34xUFatSj1ogxf3uMezptTsGjp
+	 KXOsydz/yqJEGPsiUwgBOUIN+CdnWrUpvK0ymXRE+Gm8P8eVPPqZHDDMwlHFe7Gk+V
+	 oIBEGADj8wfe8PgnNkcGzpntKegVcE5i+DJ1xqm4xlQVeVd/9F4tqwRWYXFFyPvewX
+	 hvMh3w44RsCxkRbp9g1hrfzHtdNJwK9yU1cCSN1CPx6uCcYj7TWAoIBkE1BwpBdnjO
+	 l+mbWsoIUkE5hHl3oF0iqiL5fkjMK1G/hJzZ66+HTPfMZIsw24iPXs7U8HcraT1L79
+	 Eu39RzyZuiQsQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 04/13] mm/damon/core: use damon_nr_accesses_mvsum()
- for damos region tracing
+Subject: Re: [RFC PATCH 09/13] mm/damon/tests/core-kunit: remove
+ nr_accesses_bp setup and tests
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260619193415.73833-5-sj@kernel.org>
+In-Reply-To: <20260619193415.73833-10-sj@kernel.org>
 References: <20260619193415.73833-1-sj@kernel.org>
- <20260619193415.73833-5-sj@kernel.org>
+ <20260619193415.73833-10-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 19 Jun 2026 19:51:40 +0000
-Message-Id: <20260619195140.E03221F000E9@smtp.kernel.org>
+Date: Fri, 19 Jun 2026 19:52:31 +0000
+Message-Id: <20260619195232.61C9B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,98 +49,82 @@ Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 New issues:
-- [Medium] Unconditional evaluation of an expensive function (`damon_nr_acc=
-esses_mvsum`) as an argument to a tracepoint, causing performance overhead =
-when tracing is disabled.
+- [High] Divide-by-zero in `damon_nr_accesses_mvsum()` when `aggr_interval`=
+ is 0.
 
 Pre-existing issues:
-- [Critical] Pre-existing vulnerability where setting aggr_interval to 0 tr=
-iggers a divide-by-zero kernel panic in damon_nr_accesses_mvsum().
+- [High] Divide-by-zero in `damon_max_nr_accesses()` when `sample_interval`=
+ is 0.
 --
 
-commit a32ac0de542ee6f63cc5519f32be214de8a6347f
+commit 6519e9a3b09dd0793b79fa00b085d57ba68bc353
 Author: SeongJae Park <sj@kernel.org>
 
-mm/damon/core: use damon_nr_accesses_mvsum() for damos region tracing
-
-damon_nr_accesses_mvsum() returns a value same to nr_accesses_bp.  Also
-the function is more simple and therefore more tolerant to errors.
-Execution of the function would be more expensive than the simple read
-of the field, but because the function is quite simple, the overhead
-should be negligible.  Use it in the DAMON region exporting trace points
-instead of the nr_accesses_bp.
-
-Signed-off-by: SeongJae Park <sj@kernel.org>
-
-> diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-> index 78388538acf44..8851727ae1627 100644
-> --- a/include/trace/events/damon.h
-> +++ b/include/trace/events/damon.h
-> @@ -78,9 +78,11 @@ TRACE_EVENT_CONDITION(damos_before_apply,
-> =20
->  	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
->  		unsigned int target_idx, struct damon_region *r,
-> -		unsigned int nr_regions, bool do_trace),
-> +		unsigned int nr_accesses, unsigned int nr_regions,
-> +		bool do_trace),
-
-[ ... ]
+mm/damon/tests/core-kunit: remove nr_accesses_bp setup and tests
+   =20
+DAMON core unit tests set up nr_accesses_bp for representing realistic
+damon_region, and also test the field.  nr_acceses_bp is no longer being
+used for a real use case.  Remove the setup and tests.
 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index f45f030a72d82..a7b45b3cad508 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-> @@ -2463,6 +2463,7 @@ static void damos_apply_scheme(struct damon_ctx *c,=
- struct damon_target *t,
->  			return;
->  		ktime_get_coarse_ts64(&begin);
->  		trace_damos_before_apply(cidx, sidx, tidx, r,
-> +				damon_nr_accesses_mvsum(r, c),
->  				damon_nr_regions(t), do_trace);
+> @@ -210,6 +210,61 @@ static struct damon_probe *damon_nth_probe(int n, st=
+ruct damon_ctx *ctx)
+[ ... ]
+> +unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
+> +		struct damon_ctx *ctx)
+> +{
+> +	unsigned long sample_interval, window_len, left_window, left_window_bp;
+> +
+> +	sample_interval =3D ctx->attrs.sample_interval ? : 1;
+> +	window_len =3D ctx->attrs.aggr_interval / sample_interval;
+> +	left_window =3D ctx->next_aggregation_sis - ctx->passed_sample_interval=
+s;
+> +	left_window_bp =3D mult_frac(left_window, 10000, window_len);
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[Severity: High]
+If `ctx->attrs.aggr_interval` is 0, `window_len` evaluates to 0.
 
-[Severity: Medium]
-Will this unconditionally evaluate damon_nr_accesses_mvsum() even when
-tracing is disabled?
+Since `damon_set_attrs()` accepts configurations where both `sample_us` and
+`aggr_us` are 0, does this lead to a divide-by-zero here?
 
-Because trace_damos_before_apply() is an inline function wrapper, its
-arguments are evaluated before the function is called. This means
-damon_nr_accesses_mvsum() will execute on the hot path for every valid
-region, regardless of whether the tracepoint is active. It also causes
-the function to be evaluated a second time per region, since it was
-already called in __damos_valid_target().
+When the kdamond thread evaluates user-defined schemes, it appears to
+unconditionally call __damos_valid_target() -> damon_nr_accesses_mvsum().
 
-Would it be better to pass the DAMON context pointer c into the tracepoint
-prototype and defer the execution of damon_nr_accesses_mvsum() entirely to
-TP_fast_assign() to avoid this overhead?
+Could this regression be triggered via the DAMON sysfs interface to cause
+a crash?
 
+> +
+> +	return damon_mvsum(r->nr_accesses, r->last_nr_accesses,
+> +			left_window_bp);
+> +}
 
-[Severity: Critical]
-This is a pre-existing issue, but does damon_nr_accesses_mvsum() have a
-divide-by-zero vulnerability when userspace configures both sample_interval
-and aggr_interval to 0?
-
-Userspace can configure DAMON via sysfs. In damon_set_attrs(), the validati=
-on
-logic accepts configurations where both intervals are 0:
-
-mm/damon/core.c:damon_set_attrs() {
+include/linux/damon.h:damon_max_nr_accesses() {
     ...
-	if (attrs->sample_interval > attrs->aggr_interval)
-		return -EINVAL;
+    static inline unsigned int damon_max_nr_accesses(const struct damon_att=
+rs *attrs)
+    {
+        /* {aggr,sample}_interval are unsigned long, hence could overflow */
+        return min(attrs->aggr_interval / attrs->sample_interval,
+                (unsigned long)UINT_MAX);
+    }
     ...
 }
 
-Since 0 > 0 evaluates to false, this configuration is accepted.
+[Severity: High]
+This isn't a bug introduced by this patch, but there is a pre-existing
+divide-by-zero risk if `sample_interval` is 0.
 
-When damon_nr_accesses_mvsum() is subsequently called, it computes
-window_len =3D ctx->attrs.aggr_interval / sample_interval, which evaluates =
-to 0.
-It then calls mult_frac(left_window, 10000, window_len), which divides
-by window_len and will cause an immediate kernel panic.
+Does this calculation cause an immediate divide-by-zero exception?
 
->  		sz_applied =3D c->ops.apply_scheme(c, t, r, s,
->  				&sz_ops_filter_passed);
+Userspace can configure `sample_us` to 0 via sysfs, which avoids validation
+in `damon_set_attrs()` if `aggr_us` is also 0.
+
+Since `damon_get_scheme_score()` unconditionally invokes
+`damon_max_nr_accesses()` when evaluating user-defined schemes, could this
+allow a user to intentionally crash the kernel?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260619193415.7383=
-3-1-sj@kernel.org?part=3D4
+3-1-sj@kernel.org?part=3D9
