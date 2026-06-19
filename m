@@ -1,124 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F40B39F19F
-	for <damon@lists.linux.dev>; Fri, 19 Jun 2026 19:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D204964F
+	for <damon@lists.linux.dev>; Fri, 19 Jun 2026 19:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781898473; cv=none; b=uN5zJuCiMVkkF5NYUQqNkLGR9ixtCIlbQoRjruqmERtC9WHX1E3sbdBTLltsu7wr3Z59AGeEXDLhdcULdlWNUnRgfR72wZS9PFBhst3OSpHnS03rVdDQAYo9gPrk1A/JZU9irhUEY0OTMorI5SyUxSs1z5/ivTF7kN5UK4rwtRw=
+	t=1781898544; cv=none; b=acPDBFFA6BM8VMACpFYUhsv8e5q60UHSibQcqmmWTRW6xMeTvaCne+FJaFCNjDrBvNb+ElgNVeBbi+2ZKK9PXVAHHHQfAcn1KA9+o3bdqGPIKZEp82Ti3Kvo4+gQLOtgDjpkrHIFYAVvjllruo9Flb9NgzuvXbDxZCqQBldJsD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781898473; c=relaxed/simple;
-	bh=0Jy+/OoxLaLiXPEWXVDbMK2T+Icwd5VDFEVXbPslbOo=;
+	s=arc-20240116; t=1781898544; c=relaxed/simple;
+	bh=FfBiiExV/n0RB0n8evT083lbZCxV9DTqYF20BR9CX3Y=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=luK9sNt2xpLdr/pYrtnuwtBrUSaXADHEoxQotz6mxR5jGJ9pTtAAUA5ceAkteGqLmnqzd6JVqhCusqfMmLgtRB10s1wO7ygExyeyNguX16hmOn3YO+RAZJa0BNphJkiNWG5UhpbPZTP6pi0NcBQtBhpQpzDRtPBzhAF0rcS3UIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kpZTo97Q; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=km4w92Hv/JUATYXuhuIXTn2obNrLg7ONUH5L1wGKho6ahj3AChv3a/2eFXwpVIu96mPiNcHSUjFcyZfLNH0DhHoDWzwJHklqYxzVstixrQ+XUustQ0lSwUJ3KzEUngJzxkvDkraZl9OXytt6E7kr8dTckKL2HfPGTIVeoJdalzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eiFkyFIz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kpZTo97Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30821F00A3A;
-	Fri, 19 Jun 2026 19:47:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eiFkyFIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86311F000E9;
+	Fri, 19 Jun 2026 19:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781898470;
-	bh=iqD0yO9XvvMNydS8kspKMmuK39hbI7Li/84FeUTsWnY=;
+	s=k20260515; t=1781898542;
+	bh=jfOuPRITNof+LxQ0qkA33ZIWtXaFkWzEi10A8I8Qbws=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kpZTo97QbgFHJi0MSpSq1NEZCI7UxJI2YQuRN19ODaFCl+2wI6NUlFcT6P4S/6Clu
-	 zhh+kN5rckfraSf3FnCDlfhPWRtTvp/K3JabV9P7BOwHI1S4IwhnF1k4/CdU6DJZV5
-	 4EFfoLZQqzUThHdcOZ94vUSneJ51ZaSBlwUDK++16Kiyrf6lRx8sDP/CL3vok7bYR3
-	 umOlO3juynelZyLQ/0x/QAmXkHyGOoX/6cq26ivGbVyUHDolJcf1683KtnQlw2QlHY
-	 6OBIiWCqEdDJBHAhSXqTc3gokKnRSBELvU65hEdp2j4ZTxFne9+h1h/JljNNzvyR7v
-	 HBAr2vakI+DQA==
+	b=eiFkyFIzDolpUpA8Q15iKGOn/usJPCV6JhWj6mB2LsdVwdhQJ6cjW4XEzNWytEVuJ
+	 UeFrLaTKpLxIBoxnTwjJpVwAjlWRv9RYQrfKZoE4M/V/MjrHu198BnJDc7LqO19Lcx
+	 HTIaoik5hy3dNDZMvuCqzWFMUAT//d43HxUHEqo1ZOM65QKcnjqsuLZ4Ss/Fk8KLz2
+	 svHq3dMX1KD67AKt2IDudNNrs9KQkIMyfU3txf23+ilHr4sYdmh4PmI7TJUcHS3BGI
+	 0QwmvR04csVJx2bPj2wezL2evJfREhbmWY2UFchBFYrmdNM7l6lrgtJEZk5vk8RUiO
+	 U7neYboNw8GUA==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 05/13] mm/damon/sysfs-schemes: use
- damon_nr_accesses_mvsum() for damo regions
+Subject: Re: [RFC PATCH 13/13] mm/damon: remove damon_region->nr_accesses_bp
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260619193415.73833-6-sj@kernel.org>
+In-Reply-To: <20260619193415.73833-14-sj@kernel.org>
 References: <20260619193415.73833-1-sj@kernel.org>
- <20260619193415.73833-6-sj@kernel.org>
+ <20260619193415.73833-14-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 19 Jun 2026 19:47:50 +0000
-Message-Id: <20260619194750.B30821F00A3A@smtp.kernel.org>
+Date: Fri, 19 Jun 2026 19:49:02 +0000
+Message-Id: <20260619194902.A86311F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Calling `damon_nr_accesses_mvsum()` triggers a division by zero ke=
-rnel panic when `aggr_interval` and `sample_interval` are configured to 0.
-- [Medium] Integer overflow in `damon_nr_accesses_mvsum()` on 32-bit archit=
-ectures when `window_len` is large.
+- [Low] Stale comment in kdamond_fn() references the removed nr_accesses_bp=
+ field.
 --
 
-commit 66c2d8d0e11cf5ef0032d41b0f9dcf8d2fd41a3b
+commit 7fe8c1a02c74da4804760b45a04f15189947a500
 Author: SeongJae Park <sj@kernel.org>
 
-mm/damon/sysfs-schemes: use damon_nr_accesses_mvsum() for damo regions
+mm/damon: remove damon_region->nr_accesses_bp
 
-This commit updates the DAMON sysfs interface to use=20
-damon_nr_accesses_mvsum() for scheme-tried regions instead of reading=20
-nr_accesses_bp directly.
+This commit removes the unused nr_accesses_bp field from struct damon_regio=
+n,
+as well as its associated kernel-doc comments.
 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 329cfd0bbe9f3..e648b0f809332 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
-> @@ -159,7 +159,7 @@ struct damon_sysfs_scheme_region {
->  };
-> =20
->  static struct damon_sysfs_scheme_region *damon_sysfs_scheme_region_alloc(
-> -		struct damon_region *region)
-> +		struct damon_region *region, struct damon_ctx *ctx)
->  {
->  	struct damon_sysfs_scheme_region *sysfs_region =3D kmalloc_obj(*sysfs_r=
-egion);
-> =20
-> @@ -167,7 +167,7 @@ static struct damon_sysfs_scheme_region *damon_sysfs_=
-scheme_region_alloc(
->  		return NULL;
->  	sysfs_region->kobj =3D (struct kobject){};
->  	sysfs_region->ar =3D region->ar;
-> -	sysfs_region->nr_accesses =3D region->nr_accesses_bp / 10000;
-> +	sysfs_region->nr_accesses =3D damon_nr_accesses_mvsum(region, ctx);
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 4f73d27979f0b..a18d905f28e14 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+[ ... ]
+> @@ -77,7 +68,6 @@ struct damon_region {
+>  	struct damon_addr_range ar;
+>  	unsigned long sampling_addr;
+>  	unsigned int nr_accesses;
+> -	unsigned int nr_accesses_bp;
 
-[Severity: High]
-Could this new call trigger a divide-by-zero kernel panic?
+[Severity: Low]
+Is this a minor regression that leaves a stale comment in kdamond_fn()?
 
-If a user configures both aggr_interval and sample_interval to 0 via the
-DAMON sysfs interface, damon_set_attrs() accepts these values. During the
-calculation of the moving sum in damon_nr_accesses_mvsum(), window_len
-evaluates to 0:
+Looking at mm/damon/core.c, kdamond_fn() still explicitly references the
+nr_accesses_bp field:
 
-mm/damon/core.c:damon_nr_accesses_mvsum() {
-    sample_interval =3D ctx->attrs.sample_interval ? : 1;
-    window_len =3D ctx->attrs.aggr_interval / sample_interval;
+mm/damon/core.c:kdamond_fn() {
     ...
-    left_window_bp =3D mult_frac(left_window, 10000, window_len);
+				 * information reset for all regions.  Then,
+				 * following kdamond_reset_aggregated() call
+				 * will make the region information invalid,
+				 * particularly for ->nr_accesses_bp.
     ...
 }
 
-Since window_len becomes 0/1 =3D 0, the subsequent call to mult_frac()
-performs a division by window_len, which would crash the system.
+Should this comment in mm/damon/core.c be updated or removed to reflect the
+field's deletion?
 
-[Severity: Medium]
-Also, does this calculation cause an integer overflow on 32-bit architectur=
-es?
-
-The mult_frac macro expands to (rem * 10000) / window_len. On 32-bit
-systems where unsigned long is 32 bits, if the aggregation interval is large
-and sample interval is small, window_len can exceed 429,496.
-
-As rem approaches window_len, the intermediate multiplication (rem * 10000)
-exceeds ULONG_MAX and wraps around, corrupting the moving sum access
-statistics.
-
->  	sysfs_region->age =3D region->age;
->  	sysfs_region->probes =3D NULL;
->  	INIT_LIST_HEAD(&sysfs_region->list);
+>  	unsigned char probe_hits[DAMON_MAX_PROBES];
+>  	struct list_head list;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260619193415.7383=
-3-1-sj@kernel.org?part=3D5
+3-1-sj@kernel.org?part=3D13
