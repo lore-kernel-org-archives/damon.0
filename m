@@ -1,42 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A10233932;
-	Sat, 20 Jun 2026 17:14:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648E724677B
+	for <damon@lists.linux.dev>; Sat, 20 Jun 2026 17:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781975670; cv=none; b=pi/KqUQfN8osbVoXz4dR+KfS/0NYqQcRfI5CVTxlASZ3oq0IQmlvT9um2Min9QK0o0UyZb3WMcQIsPfa/vncOVhK/40E0ipllI1YaB/Ng17ROpvLTsXhhLPugajb5S9y1VD0MV48+TTPD9gBI1yWufI2Fl0LAdjbuwM8khx+WkQ=
+	t=1781976042; cv=none; b=PwXXGfsSzKU1Gk20JJhRbWPgTy8sy+SrvkM4zK+Pcnq3p3/cSG/kuNoK11xwxfPr3q9WZqm+ZDvgpcjZraOMgr0J9oOxICuUyE4IALGXFrIFchJhRNK7n37FwvCYJVOBmgIUMEQM05l7nORZWCCK7sEHel4zBoU1eeShxQu1GdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781975670; c=relaxed/simple;
-	bh=DkVmf9s8+C20fkMT6Fl/M3tchkl0qQA5hzUeAGZ//rQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kQn/nnvtsO6AiCNRk7zm3WmAe3ro24Yv7vYF2VvhvzlQ5fCyvgJXC1MS/JckvGI4wQZVHSLgEZGPAU+TRTL4ECG91uMKdVve6fzkGzxHYIWkhcmzE7+YBs7WjTXxoFVG1fvZK4eBVcyOq/wofykt8uL/E1njy0YSLnq55WlE6+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=klcEEeG5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781976042; c=relaxed/simple;
+	bh=2TdgMWRr2s45zf2CRds4OwO6qMuavpApSwfTh/s1olI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KCqPjbL0Zvd1ADuy5Q6FzYPiZJPiCjupL+aaVbGxndYC6FcgtaP0j7KFM/alOc8IGPXY6NMhuj5gsFgT7STV6NBp5c9GMX7tyNXx7huucRwGehWO4FZdD2kJHbz84V/YH95T4y4VZVMyMMLLRemVp+13xZ0a+hJ1HZMUOQfwjBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ij7Btq4P; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="klcEEeG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B1B1F000E9;
-	Sat, 20 Jun 2026 17:14:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781975668;
-	bh=a6OOm5mIlaO4OHi3hOERfzN/vc5dfThAoOyHWEebZLc=;
-	h=From:To:Cc:Subject:Date;
-	b=klcEEeG5r26a752OnGHWbItqLU1kKKo46ac8VLwBGsFHh4YmfAP4a9hs3sNU1/D0W
-	 6mrdpuhP7/fsUJRbDiyLfUw7Nd0McK5X6oSG92ohLLEwJQW0KvJE7nNA2RPxZPKKto
-	 hBXzW7FlMVEnDmZyJatR5w1zD7cuecdayNSZ+yByNCElJFzudbZq2AuUIr1DluRMFn
-	 pAdn5vGiJ1rZzu2G3WU/rT717w9D5dn4qaUYA1QVDS7R8ilTM7RhKw1K+iZrcCNDJy
-	 6XGsDDxcvGusUf6ecl1W7tI6H4wnxf7NtAkDScQDOb9x3g5o88/TelXd3b+qt09XvQ
-	 GTDiBkfHgY/Yg==
-From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	"# 5 . 16 . x" <stable@vger.kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1] mm/damon/core: handle zero intervals in damon_max_nr_accesses()
-Date: Sat, 20 Jun 2026 10:14:12 -0700
-Message-ID: <20260620171413.89555-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ij7Btq4P"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4923fb1f095so18181975e9.1
+        for <damon@lists.linux.dev>; Sat, 20 Jun 2026 10:20:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781976040; x=1782580840; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2TdgMWRr2s45zf2CRds4OwO6qMuavpApSwfTh/s1olI=;
+        b=ij7Btq4PVWKISngZcjHPPEZHTl+kiZ/cy5sad1M0KGEzfXp3JfbbldUIaxUCOmWUr3
+         enp+uCvPhXhYhSZ+r2n0AGSrj4Xtcx5ZV50Q/pcpoVkgnNETh3EjwMUeFdwBOI1aIyB9
+         XZ9Pjkn1JchpNH+cJEeluU70XJhaiiz7L7HbA7lsRUr+ljOocWVOEUix2D91Z8H2yfKT
+         Hq01M6PjbOIrd5QdriFDt6VfwQHx2srfvaPLSCClGY7+h9z1DtXHJxjOhK70lF0mAo+U
+         yAIVvmYEbJwC9JE9sBf0bf1MZg8xSTDn5K57hvvj59EldFBpO+D3QK8b7xGlnwlV0xCQ
+         6vVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781976040; x=1782580840;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2TdgMWRr2s45zf2CRds4OwO6qMuavpApSwfTh/s1olI=;
+        b=Sg3Y5nmnbaIHboLCC878QMtVL4WrC1Eoaju2SacdsFra2D6JXMCGh3Me1TmjzKo8v/
+         oyGW0FGQwaQNCuWnPRdxDggN0xhIS84ArZL9+ZAkSJeuptZQO+waxFM8o+I2HiPLj1J0
+         nJ+ZZ6A1QNOS8eOWuHeBxBEAJgoucbgaQcSLKskokIJK3fV++XjUUlR6DEWG/V74SH8I
+         X0DCuVTWTNLOuaW9mYBM7SA26drwbHgc+XpbfMNiRCopts9S57nQ/b1ZQ8lQ2w29p1y3
+         Y2J8XtXmv+B8jdneJB8W2nao7ayEmb7JiSxT2Y46WJibAXzZoTtB/ZFdPCFfLXhigY0h
+         EdiQ==
+X-Gm-Message-State: AOJu0Yz4EEJ/0ZxfWpMHKzk98HVVDCrx0JtAcIFWmmq7fvwmo84RTLHH
+	JIPcAlXM5L29kzM10L/uXwWR5em4Pvjo+wY7tqNNYZBCV8lH49V5m4mS
+X-Gm-Gg: AfdE7cmzCG4DjygbPdvPsvmczYOiKtgUTxfZ5miLbnWWpJpOZRPRgWDhHNGTsYVtAvp
+	kHO6UyXZw+YocYxWkDCMrsX9mipwA1iVdQwf0zjNNmIEUhTFA5GNIKLi/g6ForoFmPJWYqg2GOz
+	WhXd05HBlNcsWxYMLhFW2HrazEq80q9qD0e+YLkO+lswiTflnjuZK+nY2xCtZ7gda8RuvEbul/s
+	ekvCpfnyZXbi2PzdJEk03wCSX4Far/FAMKDQuzxWKWdmWZ0hlYo4TGJfXkLAEgAuc/mdUSZhL3e
+	az/Ej376WQ1IJAW0UdGDF7RfyvAtmiF3hsylZmronvSfS5mGGBzkHyPzfDPF5XJtVmKcUUS9sNf
+	3JMzyfPPIl1ojiEASmZRALuRpr0W3H0htyMpLorrlZ6DgRQtcUEq55p9qxcLURAyIvWNWSJ1guV
+	gAFx8Mv/BDfIE=
+X-Received: by 2002:a05:600c:3b01:b0:492:4911:8a with SMTP id 5b1f17b1804b1-49249110250mr54012005e9.12.1781976039950;
+        Sat, 20 Jun 2026 10:20:39 -0700 (PDT)
+Received: from user ([104.28.162.145])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49249238bfbsm83974275e9.5.2026.06.20.10.20.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Jun 2026 10:20:39 -0700 (PDT)
+From: yahia <yahia.a.abdrabou@gmail.com>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] mm/damon/reclaim: fix potential memory leak
+Date: Sat, 20 Jun 2026 20:20:37 +0300
+Message-ID: <20260620172037.13894-1-yahia.a.abdrabou@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260620170935.89236-1-sj@kernel.org>
+References: <20260620170935.89236-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,53 +76,10 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_max_nr_accesses() causes a divide-by-zero if the sampling interval
-is set to zero by the user.  If the aggregation interval is set to zero,
-the function returns zero.  It is wrong, since the real maximum
-nr_acceses in the setup should be one.  Worse yet, it can causes another
-divide-by-zero from its caller, damon_hot_score(), since it uses
-damon_max_nr_accesses() return value as a denominator.
+Hi SJ,
 
-Fix the problem by setting the denominator in the function as 1 when the
-sampling interval is zero.  Also ensure the return value is always 1 or
-greater.
+Thank you for your clarification
+on the design intentions.
 
-The issue was dicovered [1] by Sashiko.
-
-[1] https://lore.kernel.org/20260619202459.145010-1-sj@kernel.org
-
-Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
-Changes from RFC v1
-- rfc v1: https://lore.kernel.org/20260619205144.150664-1-sj@kernel.org
-- Handle zero aggr_interval case.
-
- include/linux/damon.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 64d75c78f4df4..02ac34537df9a 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -1066,9 +1066,13 @@ static inline bool damon_target_has_pid(const struct damon_ctx *ctx)
- 
- static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs)
- {
--	/* {aggr,sample}_interval are unsigned long, hence could overflow */
--	return min(attrs->aggr_interval / attrs->sample_interval,
-+	unsigned long sample_interval;
-+	unsigned long max_nr_accesses;
-+
-+	sample_interval = attrs->sample_interval ? : 1;
-+	max_nr_accesses = min(attrs->aggr_interval / sample_interval,
- 			(unsigned long)UINT_MAX);
-+	return max_nr_accesses ? : 1;
- }
- 
- 
-
-base-commit: 7a58ae62cdf3c006a53b805bbb12079ab2621a07
--- 
-2.47.3
+Best regards,
+Yahia
