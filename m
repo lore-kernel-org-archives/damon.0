@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AD0342538
-	for <damon@lists.linux.dev>; Sat, 20 Jun 2026 18:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D148330D28
+	for <damon@lists.linux.dev>; Sat, 20 Jun 2026 18:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781979570; cv=none; b=m1a7M6hyeuPUYHzR6Lo+PuiLT4WoOSu0xGAuOV5w0eKhf6zCKQ1EUK8aoP5zkH9IFzSLa05vC1ykInK81HMcrKPH0JcoMb/lsN8Oq1sRn/t1qTzy1wABY+XjL2mqWzxUHTkL1Ct+zKac7QpgL2AwKsdqSZ/JY/x/+zdvF2Ww+U8=
+	t=1781979662; cv=none; b=S5yey6e5kbSeDuewvvVplGiUOMBgvT5dne+E/R36OV759g63Rp7aZedXDJgfReltMc2aT0Qu780lvahy8Tmq0B5ctXXZb39Lb0POVSghz6k/Je5VWtRY5a5QipiZiGHVt1/uUZz/AVSXyl8nU9kEshiM4MuB+VLlqwN1TEoyd9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781979570; c=relaxed/simple;
-	bh=+AcGD1UTx35X3koRvDPlEROsbO+oaLazbNLdW7XJQjI=;
+	s=arc-20240116; t=1781979662; c=relaxed/simple;
+	bh=TBvVXVaoCvYgFGMs+MGQEyfutR/RPhh0I6VfNYwQCr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CzWBiW+48C/gpEqy8+xZamV67Ud0ME3Qn5qeI63BZnyeO+J/NUtcVOQT2ak5OAZ8+CmdMEK5GeAbpzyvjEWTLYU+JP5PVTYiVl1ytuDKIJ50ffDye5xT/Xve6K28vBV8u6XyoUDQX2IaLnOMzGCkRDv3nGYvF1HSdt++ojt1Woo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GCNoEZ2M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D2oimTOFrZkNf+WzWZVRWqF0GTAaYJOpsOyl4F8NtoBuI519myqCs8j2OSUSGE9gVe8vrNVjS0E1qOczpBZLjDsIPvbHTjbAJ28TUvtrFtw8iMveYwPBxU9N6vN1FiXXA29sIK9JvIY9i8LiZctnS2RkUt/Q4VqBTiCNAp7m8tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XyCw8LSX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GCNoEZ2M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5C41F000E9;
-	Sat, 20 Jun 2026 18:19:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XyCw8LSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6411A1F000E9;
+	Sat, 20 Jun 2026 18:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781979569;
-	bh=akeADLAm9VQ+W+I72eH7rKsEj5+PnVuEYSTzXNR8CBo=;
+	s=k20260515; t=1781979660;
+	bh=WCH1cmcbKkTYMxWwnMKBJncVglrgW/0EDgmzFz48UNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GCNoEZ2MpY8M0zFrjOs3FwmhSBQcg9vqcgpLJs4JhweV3gIOU53x9SSVkaHDnTGxK
-	 WvNao6FWoNbWEaJlrU0ue/ym2IhhzqM3hN8bNH+uSwDwXbH7uzrf6jgAGeSckMSyxd
-	 cGwvCriu7KLtf/+goIF6/DeEpmishzjbdasyroy/szkvjJJVswN1uCdXSbmOYAWEvj
-	 RTDgbCDouw2dGeQdSMIkmr1t7lCAW+EBlRBrJcy3C970oDWKmhZ9TFjEsZnXass5Pa
-	 XNt1Y1EEpf7vFeS6w+ahXhykFw38EqAlIq8kpcVpkP4xOvPCYKVzPK7L/cXQaFBho6
-	 EM5G1OLT4frkg==
+	b=XyCw8LSX8Fa3yjK/Brk2CSqQvzaits1jrPYQBrtRoIDmwmkgAiW6Zx5Nx5NoDYhk3
+	 4w80tOawEbKmXPX5x25LnAldbAhYzBnMTfhM9rc3qrCnd2DrOzlvqj4I6Usu/qAU/t
+	 kOm5IaaaSVNz8iQXq3eWebXwW+8LIcckrYgRO4ZmgUHzjeBJ/tEqUj6wu2YzBPoBQQ
+	 FzpV7FNXVOJ7Xx8rNxmghvBf5/gZSjcGntzS0NOULZa4X7RG8bn9XuhNVHy9j9uF1T
+	 G3R8JYFF6LxLhN+hPR8Hr0OL8GQZ5tHq/mgR9cm1r4HJ3+tRz5OU63deKJxuvIqz7/
+	 923kLF4BkVZlg==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
+To: SeongJae Park <sj@kernel.org>
+Cc: sashiko-bot@kernel.org,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 05/13] mm/damon/sysfs-schemes: use damon_nr_accesses_mvsum() for damo regions
-Date: Sat, 20 Jun 2026 11:19:23 -0700
-Message-ID: <20260620181925.93600-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.1 11/13] mm/damon/core: remove nr_accesses_bp setups and updates
+Date: Sat, 20 Jun 2026 11:20:50 -0700
+Message-ID: <20260620182050.93721-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260620173749.28BE01F000E9@smtp.kernel.org>
+In-Reply-To: <20260620174553.92751-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,70 +44,62 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 20 Jun 2026 17:37:48 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 20 Jun 2026 10:45:52 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] If a user configures `sample_interval=0` and `aggr_interval=0`, the time difference calculation inside `damon_nr_accesses_mvsum()` underflows, resulting in a huge garbage value for `nr_accesses`. This corrupts sysfs outputs and erratically influences DAMOS operations.
-> --
+> On Sat, 20 Jun 2026 17:34:30 +0000 sashiko-bot@kernel.org wrote:
 > 
-> commit 2a77ab9c787a549b18af4699f5ffa8d3e4d60ca2
-> Author: SeongJae Park <sj@kernel.org>
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Low] The `attrs` parameter in `damon_update_region_access_rate()` is completely unused after this patch.
+> > --
+> > 
+> > commit ecb338097e9822ecdcbfa5f88676102211ac76ca
+> > Author: SeongJae Park <sj@kernel.org>
+> > 
+> > mm/damon/core: remove nr_accesses_bp setups and updates
+> > 
+> > This commit removes the setups and updates of the nr_accesses_bp field
+> > in the DAMON core. The field is no longer used for any real purpose and
+> > has been replaced by a simpler function.
+> > 
+> > > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > > index 53568a3c3ad9b..a41b66b26a472 100644
+> > > --- a/mm/damon/core.c
+> > > +++ b/mm/damon/core.c
+> > 
+> > [ ... ]
+> > 
+> > > @@ -3779,18 +3774,6 @@ static unsigned int damon_moving_sum(unsigned int mvsum, unsigned int nomvsum,
+> > >  void damon_update_region_access_rate(struct damon_region *r, bool accessed,
+> > >  		struct damon_attrs *attrs)
+> > >  {
+> > > -	unsigned int len_window = 1;
+> > > -
+> > > -	/*
+> > > -	 * sample_interval can be zero, but cannot be larger than
+> > > -	 * aggr_interval, owing to validation of damon_set_attrs().
+> > > -	 */
+> > > -	if (attrs->sample_interval)
+> > > -		len_window = damon_max_nr_accesses(attrs);
+> > > -	r->nr_accesses_bp = damon_moving_sum(r->nr_accesses_bp,
+> > > -			r->last_nr_accesses * 10000, len_window,
+> > > -			accessed ? 10000 : 0);
+> > > -
+> > >  	if (accessed)
+> > >  		r->nr_accesses++;
+> > >  }
+> > 
+> > [Severity: Low]
+> > Does this leave the attrs parameter completely unused in
+> > damon_update_region_access_rate()? 
+> > 
+> > Since the removal of the damon_moving_sum() logic removes the only use of
+> > attrs inside this function, could we also drop the struct damon_attrs *attrs
+> > parameter from the signature and its callers to fully clean up the API?
 > 
-> mm/damon/sysfs-schemes: use damon_nr_accesses_mvsum() for damo regions
-> 
-> This commit modifies the DAMON sysfs interface to calculate region
-> accesses using damon_nr_accesses_mvsum() rather than a simple division.
-> 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 329cfd0bbe9f3..e648b0f809332 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
-> > @@ -159,7 +159,7 @@ struct damon_sysfs_scheme_region {
-> >  };
-> >  
-> >  static struct damon_sysfs_scheme_region *damon_sysfs_scheme_region_alloc(
-> > -		struct damon_region *region)
-> > +		struct damon_region *region, struct damon_ctx *ctx)
-> >  {
-> >  	struct damon_sysfs_scheme_region *sysfs_region = kmalloc_obj(*sysfs_region);
-> >  
-> > @@ -167,7 +167,7 @@ static struct damon_sysfs_scheme_region *damon_sysfs_scheme_region_alloc(
-> >  		return NULL;
-> >  	sysfs_region->kobj = (struct kobject){};
-> >  	sysfs_region->ar = region->ar;
-> > -	sysfs_region->nr_accesses = region->nr_accesses_bp / 10000;
-> > +	sysfs_region->nr_accesses = damon_nr_accesses_mvsum(region, ctx);
-> 
-> [Severity: High]
-> Could this lead to an unsigned integer underflow if a user configures
-> both sample_us and aggr_us to 0 via sysfs?
-> 
-> If a user configures sample_interval=0 and aggr_interval=0, the
-> intervals bypass the validation in damon_set_attrs(). Inside kdamond_fn(),
-> ctx->next_aggregation_sis is updated by adding 0 and never advances,
-> but ctx->passed_sample_intervals continues to increment on every loop
-> iteration.
-> 
-> When damon_nr_accesses_mvsum() is called, it calculates the difference:
-> 
-> mm/damon/core.c:damon_nr_accesses_mvsum() {
->         ...
->         left_window = ctx->next_aggregation_sis - ctx->passed_sample_intervals;
->         ...
-> }
-> 
-> Because ctx->passed_sample_intervals quickly exceeds
-> ctx->next_aggregation_sis, does this subtraction result in an unsigned
-> integer underflow?
-> 
-> If left_window becomes a massive value, it appears it would propagate
-> through mult_frac() and damon_mvsum() to yield a garbage value for
-> nr_accesses. Since __damos_valid_target() evaluates scheme criteria
-> using this value, could this cause DAMON to act on wildly inaccurate
-> access scores and disrupt system stability?
+> Good finding.  But not necessarily as a part of this series.  I will add this
+> as a todo.
 
-Good finding.  I will fix this by making damon_nr_accesses_mvsum() aware of
-this case.
+I changed my mind.  I will do this as part of this series in the next revision.
 
 
 Thanks,
