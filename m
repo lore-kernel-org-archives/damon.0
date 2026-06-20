@@ -1,73 +1,50 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648E724677B
-	for <damon@lists.linux.dev>; Sat, 20 Jun 2026 17:20:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6A024677B;
+	Sat, 20 Jun 2026 17:22:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781976042; cv=none; b=PwXXGfsSzKU1Gk20JJhRbWPgTy8sy+SrvkM4zK+Pcnq3p3/cSG/kuNoK11xwxfPr3q9WZqm+ZDvgpcjZraOMgr0J9oOxICuUyE4IALGXFrIFchJhRNK7n37FwvCYJVOBmgIUMEQM05l7nORZWCCK7sEHel4zBoU1eeShxQu1GdM=
+	t=1781976177; cv=none; b=p+xk1soQZ6AS5Jn35AiqP0GrKVUTYecchibe91O5zv4hmfFE8xVvQwIpGYmI49a+PUlETaxrXnqlg5S7jYIG70VjMmUzMOuNj2jcLaS/MOWDuMnu9mn2jSX2mGjOuNs1UfPcKzHvjjm4Kvt18+L/gILNaQSPtbPcPpvdzuNn6Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781976042; c=relaxed/simple;
-	bh=2TdgMWRr2s45zf2CRds4OwO6qMuavpApSwfTh/s1olI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KCqPjbL0Zvd1ADuy5Q6FzYPiZJPiCjupL+aaVbGxndYC6FcgtaP0j7KFM/alOc8IGPXY6NMhuj5gsFgT7STV6NBp5c9GMX7tyNXx7huucRwGehWO4FZdD2kJHbz84V/YH95T4y4VZVMyMMLLRemVp+13xZ0a+hJ1HZMUOQfwjBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ij7Btq4P; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781976177; c=relaxed/simple;
+	bh=8Aanmz0Dvd1GDoZkhHNkaix+Wtm6xY3dMVaOWfddS+Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NRYxtv0Ydo6FU5wZGZ1txwP5R/VCc/MQnoZjHd534zAiGNpF88609a7O3WOM1DaeIauGLzCtsyKscupWamXYcZgsXpQt7bjBK1G08+DOJ+y25xJj1t24YEaRW6puORaCpSq6AuxSZnsmMtDX140MZvrBzWLSmWrnX8gewRGX9Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iuyi5ggm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ij7Btq4P"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4923fb1f095so18181975e9.1
-        for <damon@lists.linux.dev>; Sat, 20 Jun 2026 10:20:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781976040; x=1782580840; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2TdgMWRr2s45zf2CRds4OwO6qMuavpApSwfTh/s1olI=;
-        b=ij7Btq4PVWKISngZcjHPPEZHTl+kiZ/cy5sad1M0KGEzfXp3JfbbldUIaxUCOmWUr3
-         enp+uCvPhXhYhSZ+r2n0AGSrj4Xtcx5ZV50Q/pcpoVkgnNETh3EjwMUeFdwBOI1aIyB9
-         XZ9Pjkn1JchpNH+cJEeluU70XJhaiiz7L7HbA7lsRUr+ljOocWVOEUix2D91Z8H2yfKT
-         Hq01M6PjbOIrd5QdriFDt6VfwQHx2srfvaPLSCClGY7+h9z1DtXHJxjOhK70lF0mAo+U
-         yAIVvmYEbJwC9JE9sBf0bf1MZg8xSTDn5K57hvvj59EldFBpO+D3QK8b7xGlnwlV0xCQ
-         6vVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781976040; x=1782580840;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=2TdgMWRr2s45zf2CRds4OwO6qMuavpApSwfTh/s1olI=;
-        b=Sg3Y5nmnbaIHboLCC878QMtVL4WrC1Eoaju2SacdsFra2D6JXMCGh3Me1TmjzKo8v/
-         oyGW0FGQwaQNCuWnPRdxDggN0xhIS84ArZL9+ZAkSJeuptZQO+waxFM8o+I2HiPLj1J0
-         nJ+ZZ6A1QNOS8eOWuHeBxBEAJgoucbgaQcSLKskokIJK3fV++XjUUlR6DEWG/V74SH8I
-         X0DCuVTWTNLOuaW9mYBM7SA26drwbHgc+XpbfMNiRCopts9S57nQ/b1ZQ8lQ2w29p1y3
-         Y2J8XtXmv+B8jdneJB8W2nao7ayEmb7JiSxT2Y46WJibAXzZoTtB/ZFdPCFfLXhigY0h
-         EdiQ==
-X-Gm-Message-State: AOJu0Yz4EEJ/0ZxfWpMHKzk98HVVDCrx0JtAcIFWmmq7fvwmo84RTLHH
-	JIPcAlXM5L29kzM10L/uXwWR5em4Pvjo+wY7tqNNYZBCV8lH49V5m4mS
-X-Gm-Gg: AfdE7cmzCG4DjygbPdvPsvmczYOiKtgUTxfZ5miLbnWWpJpOZRPRgWDhHNGTsYVtAvp
-	kHO6UyXZw+YocYxWkDCMrsX9mipwA1iVdQwf0zjNNmIEUhTFA5GNIKLi/g6ForoFmPJWYqg2GOz
-	WhXd05HBlNcsWxYMLhFW2HrazEq80q9qD0e+YLkO+lswiTflnjuZK+nY2xCtZ7gda8RuvEbul/s
-	ekvCpfnyZXbi2PzdJEk03wCSX4Far/FAMKDQuzxWKWdmWZ0hlYo4TGJfXkLAEgAuc/mdUSZhL3e
-	az/Ej376WQ1IJAW0UdGDF7RfyvAtmiF3hsylZmronvSfS5mGGBzkHyPzfDPF5XJtVmKcUUS9sNf
-	3JMzyfPPIl1ojiEASmZRALuRpr0W3H0htyMpLorrlZ6DgRQtcUEq55p9qxcLURAyIvWNWSJ1guV
-	gAFx8Mv/BDfIE=
-X-Received: by 2002:a05:600c:3b01:b0:492:4911:8a with SMTP id 5b1f17b1804b1-49249110250mr54012005e9.12.1781976039950;
-        Sat, 20 Jun 2026 10:20:39 -0700 (PDT)
-Received: from user ([104.28.162.145])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49249238bfbsm83974275e9.5.2026.06.20.10.20.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jun 2026 10:20:39 -0700 (PDT)
-From: yahia <yahia.a.abdrabou@gmail.com>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iuyi5ggm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2101F000E9;
+	Sat, 20 Jun 2026 17:22:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781976175;
+	bh=h+feMnzBSlgDokl+hk6/kvzQur6aofhh+JGbxs86k9Y=;
+	h=From:To:Cc:Subject:Date;
+	b=Iuyi5ggmnFZk67+k61TzLwwpXd6dzbhiq7CxDCPQ/2O/N5G+wA3Wg4UZBzSOxSZBN
+	 PzPBG8YhoTSjWxscMc9YONVhbn7gxxe8I7WMfsBeEZ4rsjRt4nesvgr5dzRtvzDp92
+	 W+OdkOPjiKC5LJclbKZyFFGD3q4vBuKrsyLuZhi5JVpdePvujfSAb2jSS5xm4X+Q5f
+	 tJ+RdTQVDkdHqhlXKwlakoqfJGDqdhxKHzX3HfFjWAZ8ZhOV5DrgBCQ8wYBx8A43hK
+	 1KOfwv56Z2AGdk/t448u07ExluqcE3zq91CYXPsHvYxgjiOYnjcP/oZkHdwjT8KKZE
+	 vzW4fl5IDUCyQ==
+From: SeongJae Park <sj@kernel.org>
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] mm/damon/reclaim: fix potential memory leak
-Date: Sat, 20 Jun 2026 20:20:37 +0300
-Message-ID: <20260620172037.13894-1-yahia.a.abdrabou@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260620170935.89236-1-sj@kernel.org>
-References: <20260620170935.89236-1-sj@kernel.org>
+	linux-trace-kernel@vger.kernel.org
+Subject: [RFC PATCH v1.1 00/13] mm/damon: optimize out nr_accesses_bp
+Date: Sat, 20 Jun 2026 10:22:30 -0700
+Message-ID: <20260620172244.90953-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -76,10 +53,109 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi SJ,
+TLDR: Replace damon_region->nr_accesses_bp, which is easy to be wrong,
+with a simpler on-demand moving sum function, damon_nr_accesses_mvsum().
 
-Thank you for your clarification
-on the design intentions.
+Background
+==========
 
-Best regards,
-Yahia
+DAMON's monitoring output (access pattern snapshot, or more technically
+speaking, damon_region->nr_accesses) is completed once per aggregation
+interval, which is 100 ms by default.  Users can arbitrarily increase
+the interval for demand.  Under the suggested intervals auto-tuning
+setup, it can span up to 200 seconds.  If the aggregation interval is
+too long, the snapshot users cannot use it in reasonable time.  To
+mitigate this, we introduced a new field of damon_region, namely
+nr_accesses_bp.  It contains a pseudo moving sum of nr_accesses in bp
+units and is updated for each sampling interval.
+
+It turned out keeping it correctly updated every sampling interval is
+not that easy.  From online parameter update feature development and
+more experimental hacks, we found it is easy to be corrupted.  Once it
+is corrupted, DAMON's monitoring outputs become quite insane.  Hence we
+added a few validation checks.  It is easy  to be corrupted because it
+requires every update per sampling interval to be correct.
+
+Solution
+========
+
+There is no real reason to keep it updated every sampling interval.  Due
+to the simple pseudo-moving sum mechanism and existing helper field
+(last_nr_accesses), we can also calculate the pseudo moving sum on
+demand in a much simpler way.
+
+Implement a function for getting the pseudo moving sum on demand, and
+replace nr_accessses_bp uses with the new function.  Also remove no more
+needed tests for nr_accesses_bp and the per-sampling interval update
+functions.  Finally, remove the nr_accesses_bp.  The new function is
+quite simple.
+
+Discussion
+==========
+
+Depending on the use case, multiple nr_accesses readers could be
+executed in the same kdamond_fn() main loop iteration, which is executed
+once per sampling interval.  Such readers include DAMON region exporting
+tracepoints (damon_[region_]aggregated and damos_before_apply), DAMOS,
+and DAMON sysfs interface logic for update_schemes_tried_regions
+command.  In this case, the new function will be called multiple times
+and this could be overhead compared to the old logic, which simply reads
+the field without any additional work.  Nonetheless, the new function is
+quite simple.  And the new approach does nothing while there is no need
+to read.  The old approach had to execute its update function for each
+region for every sampling interval.  Hence the new approach is believed
+to be even more lightweight in common case, and the overhead is anyway
+negligible.
+
+One more advantage of this change is that one field from the
+damon_region struct is removed.  On setups that uses a high number of
+DAMON regions, this could be a potential memory space benefit.
+
+Patches Sequence
+================
+
+Patch 1 introduces the new function for getting the pseudo moving sum of
+nr_accesses on demands.  Patch 2 implements a unit test for the new
+function's internal logic.  Patches 3-5 replace uses of nr_accesses_bp
+in DAMOS, tracepoints and DAMON sysfs interface with the new function,
+respectively.  Patches 6-8 removes nr_accesses_bp validation functions
+in DAMON core, one by one.  Patches 9 and 10 further remove tests and
+test helper for nr_accesses_bp, respectively. Patches 11 removes the
+setups and updates or nr_accesses_bp field.  Patch 12 removes the
+function that was used for updating nr_accesses_bp field with its unit
+test, which is the single remaining caller of the function.  Finally,
+patch 13 removes damon_region->nr_accesses_bp field.
+
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260619193415.73833-1-sj@kernel.org
+- Avoid divide-by-zero from zero aggregation interval.
+- Call damon_nr_accesses_mvsum() for damos tracing only when it is enabled.
+- Remove obsolete mentioning of nr_accesses_bp in comments.
+
+SeongJae Park (13):
+  mm/damon: introduce damon_nr_accesses_mvsum()
+  mm/damon/tests/core-kunit: test damon_mvsum()
+  mm/damon/core: use damon_nr_accesses_mvsum() in __damos_valid_target()
+  mm/damon/core: use damon_nr_accesses_mvsum() for damos region tracing
+  mm/damon/sysfs-schemes: use damon_nr_accesses_mvsum() for damo regions
+  mm/damon/core: remove damon_warn_fix_nr_accesses_corruption()
+  mm/damon/core: remove damon_verify_reset_aggregated()
+  mm/damon/core: remove damon_verify_merge_regions_of()
+  mm/damon/tests/core-kunit: remove nr_accesses_bp setup and tests
+  selftests/damon/drgn_dump_damon_status: do not dump nr_accesses_bp
+  mm/damon/core: remove nr_accesses_bp setups and updates
+  mm/damon/core: remove damon_moving_sum() and its unit test
+  mm/damon: remove damon_region->nr_accesses_bp
+
+ include/linux/damon.h                         |  12 +-
+ include/trace/events/damon.h                  |   8 +-
+ mm/damon/core.c                               | 180 +++++++-----------
+ mm/damon/sysfs-schemes.c                      |   6 +-
+ mm/damon/tests/core-kunit.h                   |  37 ++--
+ .../selftests/damon/drgn_dump_damon_status.py |   1 -
+ 6 files changed, 96 insertions(+), 148 deletions(-)
+
+
+base-commit: a74bff7aaa4b3a64070425b4b367a459388a8233
+-- 
+2.47.3
