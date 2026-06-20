@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D148330D28
-	for <damon@lists.linux.dev>; Sat, 20 Jun 2026 18:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5ED02F0C79;
+	Sat, 20 Jun 2026 20:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781979662; cv=none; b=S5yey6e5kbSeDuewvvVplGiUOMBgvT5dne+E/R36OV759g63Rp7aZedXDJgfReltMc2aT0Qu780lvahy8Tmq0B5ctXXZb39Lb0POVSghz6k/Je5VWtRY5a5QipiZiGHVt1/uUZz/AVSXyl8nU9kEshiM4MuB+VLlqwN1TEoyd9k=
+	t=1781985785; cv=none; b=tJtCkLEccv0X2bmxF37Ggm/e5o0Pj4LTN8/zDJnPVGP3C76LBb6MHjSbosFmFtNr2Bu/6XxRgZyeLZbfpGmQh5zOxFBrC5VmqdSuVMn4M7UlLSk4LvfhyGvTZk9HhPbf5oOVHyuaIoCDtzXQlbnvWKaeU7W3t4fszXMhlap3JLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781979662; c=relaxed/simple;
-	bh=TBvVXVaoCvYgFGMs+MGQEyfutR/RPhh0I6VfNYwQCr8=;
+	s=arc-20240116; t=1781985785; c=relaxed/simple;
+	bh=l7IiFDLjWCbWphvYQYW0wyLgoS+j4+9Zs3qXZNL4J0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2oimTOFrZkNf+WzWZVRWqF0GTAaYJOpsOyl4F8NtoBuI519myqCs8j2OSUSGE9gVe8vrNVjS0E1qOczpBZLjDsIPvbHTjbAJ28TUvtrFtw8iMveYwPBxU9N6vN1FiXXA29sIK9JvIY9i8LiZctnS2RkUt/Q4VqBTiCNAp7m8tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XyCw8LSX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OuGDNn5MdCAcIIGRRQt4D3yyMG3f1iClumIgKHomE3zgweAiUIsDTF11qJoCBbOhMG3pLIzjYJ7v4gZRgCLB2U6cLgrSpqfIn7ObqHJfJYNLbq2EOlXndoWekw0fhQ1ouByiLM6dbDnQZBmG+liyqAXXgaLTDqrljtieqHb2H7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hgh3Z7pj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XyCw8LSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6411A1F000E9;
-	Sat, 20 Jun 2026 18:21:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hgh3Z7pj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6138D1F00A3D;
+	Sat, 20 Jun 2026 20:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781979660;
-	bh=WCH1cmcbKkTYMxWwnMKBJncVglrgW/0EDgmzFz48UNA=;
+	s=k20260515; t=1781985783;
+	bh=+V/nAeifB5VEq/rPpwRtE8xn5fnyyOaKygkoYbZu20k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XyCw8LSX8Fa3yjK/Brk2CSqQvzaits1jrPYQBrtRoIDmwmkgAiW6Zx5Nx5NoDYhk3
-	 4w80tOawEbKmXPX5x25LnAldbAhYzBnMTfhM9rc3qrCnd2DrOzlvqj4I6Usu/qAU/t
-	 kOm5IaaaSVNz8iQXq3eWebXwW+8LIcckrYgRO4ZmgUHzjeBJ/tEqUj6wu2YzBPoBQQ
-	 FzpV7FNXVOJ7Xx8rNxmghvBf5/gZSjcGntzS0NOULZa4X7RG8bn9XuhNVHy9j9uF1T
-	 G3R8JYFF6LxLhN+hPR8Hr0OL8GQZ5tHq/mgR9cm1r4HJ3+tRz5OU63deKJxuvIqz7/
-	 923kLF4BkVZlg==
+	b=Hgh3Z7pjw+UqlX/kTDLsD6kuW2iTXPImdkFUslNcitwLzbGesmdX5UYIei048SYoh
+	 hsOcQ+TGZDUm77p4OOH9NlUufOvK73nOeWPg7MYtpkmz2jQhadUHncUVzaIvjEWVXV
+	 jfHCQzsI2X3082DjjcFsuHHNhJ1gbtKsDs1JBAlsxVqB+jmn9omBly8Z/HveO6QjNJ
+	 2yVQ8amfLAiYwlm2qfQJO7Gmrfxt6j/kdlMTOOGAT0L4OyYbYj2td2yEiiAEETwklO
+	 9Czcr9uGdsiWg2R+2sCEna9pEeJiu8BaCy/X4OVaWUnoDUpjzLgFi+GWzr3DZp4b55
+	 zTS2mZNCuTnaw==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 11/13] mm/damon/core: remove nr_accesses_bp setups and updates
-Date: Sat, 20 Jun 2026 11:20:50 -0700
-Message-ID: <20260620182050.93721-1-sj@kernel.org>
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 0/3] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Sat, 20 Jun 2026 13:02:54 -0700
+Message-ID: <20260620200254.82414-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260620174553.92751-1-sj@kernel.org>
+In-Reply-To: <665a31f2-2a42-4caf-be62-8429dc225f42@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,62 +52,262 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 20 Jun 2026 10:45:52 -0700 SeongJae Park <sj@kernel.org> wrote:
+On Sat, 20 Jun 2026 20:11:46 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-> On Sat, 20 Jun 2026 17:34:30 +0000 sashiko-bot@kernel.org wrote:
+> Hi SJ,
 > 
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Low] The `attrs` parameter in `damon_update_region_access_rate()` is completely unused after this patch.
-> > --
-> > 
-> > commit ecb338097e9822ecdcbfa5f88676102211ac76ca
-> > Author: SeongJae Park <sj@kernel.org>
-> > 
-> > mm/damon/core: remove nr_accesses_bp setups and updates
-> > 
-> > This commit removes the setups and updates of the nr_accesses_bp field
-> > in the DAMON core. The field is no longer used for any real purpose and
-> > has been replaced by a simpler function.
-> > 
-> > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > index 53568a3c3ad9b..a41b66b26a472 100644
-> > > --- a/mm/damon/core.c
-> > > +++ b/mm/damon/core.c
-> > 
-> > [ ... ]
-> > 
-> > > @@ -3779,18 +3774,6 @@ static unsigned int damon_moving_sum(unsigned int mvsum, unsigned int nomvsum,
-> > >  void damon_update_region_access_rate(struct damon_region *r, bool accessed,
-> > >  		struct damon_attrs *attrs)
-> > >  {
-> > > -	unsigned int len_window = 1;
-> > > -
-> > > -	/*
-> > > -	 * sample_interval can be zero, but cannot be larger than
-> > > -	 * aggr_interval, owing to validation of damon_set_attrs().
-> > > -	 */
-> > > -	if (attrs->sample_interval)
-> > > -		len_window = damon_max_nr_accesses(attrs);
-> > > -	r->nr_accesses_bp = damon_moving_sum(r->nr_accesses_bp,
-> > > -			r->last_nr_accesses * 10000, len_window,
-> > > -			accessed ? 10000 : 0);
-> > > -
-> > >  	if (accessed)
-> > >  		r->nr_accesses++;
-> > >  }
-> > 
-> > [Severity: Low]
-> > Does this leave the attrs parameter completely unused in
-> > damon_update_region_access_rate()? 
-> > 
-> > Since the removal of the damon_moving_sum() logic removes the only use of
-> > attrs inside this function, could we also drop the struct damon_attrs *attrs
-> > parameter from the signature and its callers to fully clean up the API?
+> So sorry, I missed your email. I just found it. Sorry for the late answer.
 > 
-> Good finding.  But not necessarily as a part of this series.  I will add this
-> as a todo.
+> On 6/17/2026 4:44 AM, SeongJae Park wrote:
+> > On Tue, 16 Jun 2026 15:03:13 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> > 
+> >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> >>
+> >> Overview
+> >> ========
+> >>
+> >> This patch set introduces a new autotuning which allows to collapse
+> >> hot regions into hugepages.
+> >>
+> >> Motivation
+> >> ==========
+> >>
+> >> Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+> >> misses (or hits) is to use huge pages. Unfortunately, using "always"
+> >> in THP leads to memory fragmentation and memory waste. For this reason,
+> >> most application guides and system administrators suggest to disable THP.
+> >>
+> >> Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
+> >> However, there is no way to tune the settings. It will collapse all the
+> >> hot regions that meet the access pattern. If the server is a bare metal
+> >> database or big data server, this will also lead to eventual fragmentation.
+> >>
+> >> Additionally, currently THP is set globally. Ideally, there should be a
+> >> way to control which tasks can use huge pages.
+> > 
+> > Could you please reword for prctl(PR_SET_THP_DISABLE) like per-process control
+> > cases, as we discussed [1] on RFC v3?
+> > 
+> >>
+> >> Solution
+> >> ========
+> >>
+> >> DAMON has now a way to autotune some of the variables and adjust quotas
+> >> automatically, so that DAMON is fired only under the right circumstances.
+> >> It would be nice to have something similar, but for huge pages.
+> >>
+> >> A new autotuning quota goal[2], damos_hugepage_mem_bp, is introduced,
+> >> which checks the huge page consumption to total memory consumption. This
+> >> new quota mechanism reuses current autotuning architecture.
+> >>
+> >> A new sample module (SAMPLE_DAMON_HPAGE) is introduced to demonstrate
+> >> the use of huge pages collapse autotuning. The goal is to collapse hot
+> >> regions of a given process into huge pages. The sample module launches
+> >> a kdamond thread for a certain task provided by the user through
+> >> taget_pid module argument. Hugepage goal autotuning will automatically
+> >> adjust the aggressiveness of hot region collapses.
+> >>
+> >> This sample module also has a user autotuning knob which allows the
+> >> user to adjust the aggressiveness of page collapsing.
+> >>
+> >> Benchmarks
+> >> ==========
+> >>
+> >> Huge page collapse autotuning was tested in a physicial machine with
+> >> MariaDB 10.5.29 and sysbench as the benchmark framework.
+> >>
+> >> The hugepage module was set up in the following way:
+> >>
+> >> # echo 1000 > min_age
+> >> # echo 1000 > quota_percentage_hugepage
+> > 
+> > I guess this is the quota goal?  What is the unit?  I guess it is aparently not
+> > percentage?  The name doesn't sound like very consistent or intuitive.  How
+> > about hugepage_mem_bp or target_hugepage_mem_bp?
+> Right, we agreed to change the name. I will correct it.
 
-I changed my mind.  I will do this as part of this series in the next revision.
+Thank you.  Because we agreed to drop the module, this could simply be dropped?
+
+> >> # echo $(pidof mariadbd) > taget_pid
+> >> # echo on > enabled
+> >>
+> >> The goal was to achieve 5% of the total memory used as hugepage.
+> > 
+> > I guess this is what the above example is setting using
+> > 'quotta_percentage_hugepage'?  If so, it means the unit is 1/20000 ?  Is this
+> > correct...?
+> I actually set it to 500. I will update the cover letter.
+
+I think changes of this series is matured and very close to land.
+Discrepancies in the cover letter and commit messages are my concern that
+blocking this series.  Please keep everything up to date and in high quality,
+from the next version.
+
+> >> Since the database was not very big, we may not be able to achieve
+> >> high amount of huge pages per total memory consumption ratio.
+> > 
+> > I believe this patch series will work as you explained.  But, it seems bit
+> > weird to show a test result that doesn't demonstrate what this patch is aimed
+> > to achive.  Could you increase the size of the database?  IIRC, you were able
+> > to show the percentage is over-achived case in an early version.
+> Actually, this is what I got using the TEMPORAL quota goals. With the regular
+> quota goals, it actually over-achieves the goal.
+> 
+> Is this an actual bug in the TEMPORAL quota goal?
+
+You mentioned "Since the database was not very big, we may not be able to ...".
+Based on that, I was assuming you will be able to make the goal achieved, by
+increasing the database size.  Now you are saying about the goal.
+
+Do you mean the database size is not expected to contributed to this result?
+
+Of course TEMPORAL goal might have bugs.  I find no clue from this datta,
+though.  Do you have some evidences that make you suspect it?  If so, could you
+please share?
+
+> >>
+> >> The table below shows the memory consumption over time. Timestamp is in
+> >> second and the memory usage in is MBytes. Gaps in the timestamp means
+> >> that no changes in the hugepage consumption happened over that period
+> >> of time in MB. The total used memory is calculated as
+> >> mem_total - mem free. The huge page used is calculated as
+> >> huge_page_anon + huge_page_shmem + huge_page_file. The table also
+> >> shows the huge pages to total memory ratio.
+> >>
+> >> Hugepage autotune benchmark:
+> >> +-----------+----------------+----------------+----------------------+
+> >> | timestamp | total mem used | huge page used | percentage hugepage  |
+> >> +-----------+----------------+----------------+----------------------+
+> >> | 0         | 3044.988281    | 0              | 0%                   |
+> >> | 22        | 3160.207031    | 2              | 0.06%                |
+> >> | 30        | 3250.90625     | 4              | 0.12%                |
+> >> | 69        | 3781.238281    | 6              | 0.16%                |
+> >> | 71        | 3822.226563    | 8              | 0.21%                |
+> >> | 72        | 3846.578125    | 10             | 0.26%                |
+> >> | 73        | 3852.402344    | 12             | 0.31%                |
+> >> | 74        | 3868           | 14             | 0.36%                |
+> >> | 75        | 3881.84375     | 104            | 2.68%                |
+> >> | 275       | 4194.175781    | 106            | 2.52%                |
+> >> +-----------+----------------+----------------+----------------------+
+> >> After second 275, no more pages are collapsed into hugepages
+> >>
+> >>
+> >> THP (always) benchmark:
+> >> +-----------+----------------+----------------+---------------------+
+> >> | timestamp | total mem used | huge page used | percentage hugepage |
+> >> +-----------+----------------+----------------+---------------------+
+> >> |         1 |    4489.320313 |            184 |         4.098615986 |
+> >> |        15 |    4581.871094 |            214 |         4.670580984 |
+> >> |        30 |    4757.742188 |            376 |         7.902908253 |
+> >> |        45 |    4937.574219 |            558 |         11.30109595 |
+> >> |        60 |    5147.867188 |            728 |         14.14177898 |
+> >> |        75 |      5407.0625 |            918 |         16.97779524 |
+> >> |        95 |    5668.796875 |           1040 |         18.34604455 |
+> >> |       105 |    5723.839844 |           1056 |         18.44915352 |
+> >> |       115 |     5736.84375 |           1072 |         18.68623317 |
+> >> |       125 |    5732.042969 |           1088 |         18.98101612 |
+> >> |       186 |    5753.601563 |           1184 |         20.57841488 |
+> >> |       246 |    5746.398438 |           1280 |         22.27482159 |
+> >> |       306 |    5752.128906 |           1376 |         23.92157795 |
+> >> |       367 |      5772.5625 |           1472 |         25.49994045 |
+> >> |       427 |    5832.019531 |           1568 |         26.88605536 |
+> >> |       488 |    5813.246094 |           1664 |         28.62428277 |
+> >> |       548 |    5807.621094 |           1760 |         30.30500736 |
+> >> |       598 |    5841.253906 |           1822 |         31.19193292 |
+> >> |       669 |    5982.160156 |           1854 |         30.99214918 |
+> >> |       931 |    5946.605469 |           1868 |         31.41287933 |
+> >> |       981 |    6020.207031 |           1896 |         31.49393352 |
+> >> |       991 |    5988.445313 |           1910 |         31.89475566 |
+> >> |      1011 |    5988.570313 |           1926 |         32.16126554 |
+> >> |      1032 |    6016.039063 |           1936 |         32.18064211 |
+> >> |      1575 |    6057.289063 |           1968 |         32.48978181 |
+> >> |      1606 |    6026.167969 |           2000 |         33.18858702 |
+> >> +-----------+----------------+----------------+---------------------+
+> >> I ignored some points to make the table shorter. Anyway, the amount
+> >> of memory consumption, total and huge pages, is a lot higher than
+> >> with DAMON hugepage autotuning.
+> > 
+> > Could you further clarify why it is, and what this means
+> Memory fragmentation. I will add information about memory fragmentation
+> in the next cover letter. >>
+
+Yes, please.  Let's make the complete story of the benchmark.
+
+> >>
+> >> Performance:
+> >> Baseline (no THP, module off) -> 18,162.45 transactions per second
+> >> Hugepage autotune -> 18,211.82 transactions per second (+0.27% improvement)
+> >> THP always -> 18,388.3 (+1.24%)
+> >> THP madvise -> 18,179.25 (+0.09%)
+> >>
+> >> Improvement is due to lower TLB misses
+> > 
+> > So this result says THP always is much better than the Hugepage autotune in
+> > terms of the performance.  Maybe you want to claim Hugepage autotune is better
+> > in terms of the memory efficiency?  Could you please clarify further?
+> It's better than THP "never", but worse than THP "always". THP "always" is worse
+> in terms of memory consumption, "always" is worse.
+
+I think it is arguable, but yes, please make the argument clear.  We can
+discuss only after that.
+
+Since we agreed to drop the module, you may need to do the benchmark again,
+using DAMON sysfs interface of 'damo'.  I'd encourage 'damo' path.  Extending
+it for ddamos_quota_hugepage_mem_bp should be easy.  Let me know if you need my
+help.
+
+Because the change is simple, I wouldn't request you to show clear performance
+benefit.  But I want it to clearly show the functionality.  That is, by
+applying the new feature, we should be able to show the hugepage memory ratio
+is controllable.
+
+> >>
+> >> Patches Sequence
+> >> ================
+> >> Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP and autotuning
+> >> Patch 2 -> Module that demonstrates how to use
+> >>            DAMOS_QUOTA_HUGEPAGE_MEM_BP and DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
+> >> Patch 3 -> Support for DAMOS_QUOTA_HUGEPAGE_MEM_BP in sysfs-schemes
+> >>
+> >> Changes from previous versions
+> >> ==============================
+> >> RFC 4[3] -> v1
+> >>   - Renamed config to SAMPLE_DAMON_HPAGE, file to hpage.c and
+> >>     functions to damon_sample_hpage_...
+> >>   - Make the module depend on TRANSPARENT_HUGEPAGE, since
+> >>     the module will need some THP functions anyway
+> >>   - Removed documentation, since this is just a sample module
+> >>   - Removed DAMOS_QUOTA_HUGEPAGE_MEM_BP from
+> >>     damos_sysfs_add_quota_score
+> >>   - Added a short description of the module in Kconfig
+> > 
+> > Thank you for continuing this work!
+> > 
+> > [...]
+> > 
+> >> [1] https://dl.acm.org/doi/pdf/10.1145/3307650.3322227
+> >> [2] https://lore.kernel.org/e67f05ad-dbb9-45e6-ba30-b167a99ac67d@huawei-partners.com
+> >> [3] https://lore.kernel.org/20260611150244.3454699-1-gutierrez.asier@huawei-partners.com
+> >> [4] https://lore.kernel.org/20260604150338.501128-1-gutierrez.asier@huawei-partners.com
+> >> [5] https://lore.kernel.org/20260522145518.158910-1-gutierrez.asier@huawei-partners.com
+> >> [6] https://lore.kernel.org/20260522171210.900B11F00A3D@smtp.kernel.org
+> >> [7] https://lore.kernel.org/20260522171633.AAF5B1F000E9@smtp.kernel.org
+> >> [8] https://lore.kernel.org/20260430134139.2446417-1-gutierrez.asier@huawei-partners.com
+> >> [9] https://lore.kernel.org/all/20260430154338.E22E6C2BCB3@smtp.kernel.org/
+> > 
+> > [1] https://lore.kernel.org/9f9e2159-5a6b-496f-9633-fa06c0217948@huawei-partners.com
+> > 
+> > 
+> > Thanks,
+> > SJ
+> > 
+> > [...]
+> > 
+> 
+> SJ, once again, sorry for the late answer. Please, disregard my new patch set, I will fix
+> it with your feedback.
+
+No worries.  Thank you for your grateful continued work on this.
 
 
 Thanks,
