@@ -1,76 +1,77 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F90199949
-	for <damon@lists.linux.dev>; Sat, 20 Jun 2026 00:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34E619C553
+	for <damon@lists.linux.dev>; Sat, 20 Jun 2026 00:36:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781915765; cv=none; b=IE6AnZvIBTiGr39jS5Fq7/OwzK8RYJO9aXMFNyA+kqnu+0P5UPe8+R6qPEonxMPD2wxEZnHr7YtQy97NncB/j/5/Y3jI8XYtyyCbtuqGAg28PGWh+zMt68Aj504b62Kk6NgwCDFyjqtpOfE1sktuztKJPFxW1IIdOtCA+1XqkYQ=
+	t=1781915770; cv=none; b=VakZ6Rhc7O87CPT2SYe/akW32bdCWlQkfJzTEG5e6OxG3+usPORK67LL3akLT6XqiMC5/xrceFZ0EJ1PerLwbYABrMgZ+rm/Kov4dgkEYdTvISc7sSxXiAsct/VxuhzET901UBCByW2IlFcXfkasiyZs1MXf7MxgcqOpyiy7P54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781915765; c=relaxed/simple;
-	bh=vno3oObMENIImjf3uX9yhXtURG/6ZQ78f0PME+W88Vk=;
+	s=arc-20240116; t=1781915770; c=relaxed/simple;
+	bh=2bE4ImrZ9UdonKeKOAXifOWKKCwYPBW+WnFXsLxbx2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BfI7eV9BM58WRvUE5WGfoXdlJFE0gukKFpfViTxJRL8o/PIn0lKmzRYDdoGk6/mdaolULS24wcMEhfmilEnY9THFOm90kW3tozfy9F2ONLNK4+HobdgQ8MPEi3fY6cOVnqd5D5MuMTyWSe1sPAwhQJtIBQc18P6APOc1BNpNcoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jEcHPWN+; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version; b=rWX0F/fdp7/ViwOnv2LvhmFx8Ur4+HRS67xuW7s8p89hlQFjyFhHbiH44y/vzOU0eRP1Wb3p1ZnZ0rZ9uAbUfZ1Gz7tEyEVkIaWw9IKMWPNfaphzK7G3wjAH34irJsAH9RMYjwhBwTWmuANqiaYV+/c0s0q89xGpcdlkIkX5ZMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G1RVxoKr; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jEcHPWN+"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-45ef29c5561so1524096f8f.0
-        for <damon@lists.linux.dev>; Fri, 19 Jun 2026 17:36:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G1RVxoKr"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49222fb062bso25433465e9.1
+        for <damon@lists.linux.dev>; Fri, 19 Jun 2026 17:36:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781915763; x=1782520563; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781915766; x=1782520566; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lZGHTu7ZWt8+LY2ZTmgpTwhyxwOuYUCiNXzS8M6bQ5c=;
-        b=jEcHPWN+wahkgHDe2b78CTK8unw3a5TQpgFojorR0s116j/nFjc7uitWzadGz2U8/W
-         WDbu9nOso+aoIQk+wMDxdRxcRJeD84Cdg9KZ5gB4cP7clmJQx5iJVEYA7cb3eSDpcP9P
-         iZVhPUczMw+O7oVwtxTbUWyWeM4z9TwBOPavManHLqri0vcsY7nIYl5tA8d3pNBDWisv
-         XFo+EAODe6V+zaJ3MjlGcnz79jrm3vPbxy3BjkRWTYt+6Txj4upC8chKhGrDJPumAn9P
-         RauPRXQJyL3fi9nzcMITgzBrtgjAW+/2WHv+wyQdDxoMh8y3mjVKkJpDNkH0soPpVmVC
-         0wtA==
+        bh=3l61wqrGf66LLbRNZjHAl/GibXycfmnzPDWP2VbrWWo=;
+        b=G1RVxoKrexU2Bda0GOhDRfquB9y7Frazl0vVSWveKYzgZuqXu5sLjYAYmCyKNZRJsK
+         xsoESd+1FHIBITwlnezsDz+ATyt3W4cM20GvxJJP6r7K3KN9R4v2qtAKkn8EZUJbOssU
+         9l77OIGXyPdqjntkai/980FKZIwFWBmw5hEfHjX9Kn6gUuhx1sNyrEq8SOhpcGoLNM7p
+         zDD3OmJOsLQvh10iHVCO6ZaDMWBM+TPEkh20iAtuxsrPXfOTGKC4tHCYse7oWvjJbRfR
+         KMsVvR53L4OSb1e10BcNCIaTtZsJDp1Ww6zoDewTbheFBnnLO7eZnW5VfAwA6F3+k0z1
+         l9lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781915763; x=1782520563;
+        d=1e100.net; s=20251104; t=1781915766; x=1782520566;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=lZGHTu7ZWt8+LY2ZTmgpTwhyxwOuYUCiNXzS8M6bQ5c=;
-        b=JzLFbPTtH76sJoOt7vW7FVshzoqjpDeEYzIc7Bl0UhKdMWgyofzOYb/m94D087/JEd
-         HuYTcdgfXrLA0lpr4ikGn/sWz+nVnKeH9j0jj052hxR4PdazSQ6d+X49GjpnTwLppWAL
-         irvPcKhRcVA7hAio7/lUtJ4n1zgEgStW+UYeoeIBdP2hvJ9MckdPCPoLQ8yslNxvRWr4
-         cXGNY+OcMIa68ABiI8AVgMjCbZnBiN9eao/w4apXfd+rz06+GURCGsHXTQ8MUS+LQukU
-         0OHVnSzjEJd4+7mJUGKtT6kfZIFS/XdtG4PwwA0Ad+jvp8bGeTzn+PMj1sEiXrTorCKD
-         ulFw==
-X-Forwarded-Encrypted: i=1; AFNElJ+fGQhZ9pX4FiwsbqtWELV5oLVk8czZ419mknaye/KO7OfEzSbwvudQqlLlpAIllW6OiLvigA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxNyUDBHnHrQr+FVY6MENTTUMQ7PnyEcNCCUSrbpkrHehtKcX2B
-	/VCh86sKOjqDiRGJwDfMvkzWHty5eGpkRGVFL9oaAHkXYFmWFcqPYhki
-X-Gm-Gg: AfdE7ckqS9YXo7qS5H2cYA9G2QG6g1PRQZKDYCRClHsFv/exNTqb283pEO28pJlOK/X
-	c2N8280oSyHco35z2DQLsJVsgp7pnVCww600JRSXxZJzG2w2RDbfqAOhw0uKjNKwL9RQ2aG+CQC
-	e8DoaEXiYa71CGqG2vkB/rUwGcTToDPytVXvhLWEDVThUCJ5LchNTQ5eNwzbUk3CiN30NxPR0M/
-	Q8XlPYEME7QeqRWm7er3Nq1ydb1mBH0hB27qDi90VAGprLwjgUnKppQJ83o2Xj/TwrrEP7h/xLV
-	KNsE9M836Z6IRfSFRJASsV3ue8LenavnGX6IBYOk9axB9At3zkmytoTpYAJ/U94HzLU5ENZrBeK
-	8hmfvaA5sqh6qXhDOLTCs6iZY7V05KmO7P7dSkBa5UdPDe1T4dHOACEtifwbPI7hNpX+oCasHwz
-	olePdhR9xQPESAahUV4prCtg==
-X-Received: by 2002:a05:600c:4e11:b0:48e:6db3:ff2e with SMTP id 5b1f17b1804b1-4923f33d921mr101272725e9.15.1781915762907;
-        Fri, 19 Jun 2026 17:36:02 -0700 (PDT)
+        bh=3l61wqrGf66LLbRNZjHAl/GibXycfmnzPDWP2VbrWWo=;
+        b=MXEohYohPoUdG0f0ERAxNxUZvdPb5dp31nDW9p+VYXKM8br+whJcnwuwz9+ZfQy+du
+         51w1EfKrrYKG7oIudye8ywC6k1PrLl61CAIltm2vgykQXTXrpG60x8T78x76oHkVtfqZ
+         IpqKIbjPZeXzuAamLyHZbimCDjhbQmk0O3r4IagxR0qSPV1U5uL6lycW258HMf17d3qk
+         WMFwWZrXsfAp2xoKsPqiaA80jueEHTqjFkXOJHDT8g8kOUJv3x9ymqfoNckUgyjhGNzi
+         FRaOQ5FwdPoVD9cLzKwAhJe2O9Gqil2HVqSC3VDQLZ8p8RzWt8bdV3wAYyOl/P3Zr5io
+         Kqaw==
+X-Forwarded-Encrypted: i=1; AFNElJ9qBo8WjaOJsfar8dcgexHbNYGXPLte8ubO/2T8JU3zfKa3GW9wAMOBiFBnHwVbz3ccDU8fCw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzCWpZKBOSV51dMMgFCWih7of04k90KEljn0uI32Lepz69q3OO+
+	hpTpVMDyxamKq9PR+ynQk7elqtS9ZoC8z+MgDIZRFJQAt7X38Ugb6R+f
+X-Gm-Gg: AfdE7ckUEZR4Rl6qCZUvAK1dp/YcQT3wwrvYoflZHHYdMp/LHtIMj51miX8+E1TrldY
+	oGmYzhXuBBJAahe3BIXrAf/7vmhcefXKstcIKhp/aHlYRwz0eCmnQ0QJmo2Tql7HU+pS9/p6DEa
+	agY0EVhKitG1sZ02DiOCG6x5lrFCIhDiwFDEeqGx02Yb/xCbHCo5YlFlqTa2eYxGy+FGZKuJcyf
+	YMIHfPe/38aq1C3SJw/+cxUgF9oTc2PZzWdI1XZ0jGjqXSf5/pfKN71A7YBcOZyAVfqc2Qo9XIf
+	veJztnINCZLEZk7qUd9FHbXQW1pqHwAPcaRS4+9Lew/tunVIC2uZv5l4PJHFFQUAQcAGhXri+NV
+	HmJmeFTGPEmwAM8I3RGOUsecSDpU0ypNZcPSEbfPoQHAASoygKcUFH7+LfxQSrKC4fHVuv4absG
+	5FZ+8QWwxBojA=
+X-Received: by 2002:a05:600c:3510:b0:492:4161:ae9d with SMTP id 5b1f17b1804b1-4924161af05mr83964385e9.8.1781915766153;
+        Fri, 19 Jun 2026 17:36:06 -0700 (PDT)
 Received: from user ([104.28.163.163])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-492494497ffsm22020185e9.11.2026.06.19.17.36.01
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-492494497ffsm22020185e9.11.2026.06.19.17.36.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jun 2026 17:36:02 -0700 (PDT)
+        Fri, 19 Jun 2026 17:36:05 -0700 (PDT)
 From: yahia <yahia.a.abdrabou@gmail.com>
 To: sj@kernel.org
 Cc: akpm@linux-foundation.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	yahia ahmed <yahia.a.abdrabou@gmail.com>
-Subject: [PATCH v2 0/1] fix initialization and parameter issues
-Date: Sat, 20 Jun 2026 03:35:56 +0300
-Message-ID: <20260620003557.243313-1-yahia.a.abdrabou@gmail.com>
+	yahia <yahia.a.abdrabou@gmail.com>
+Subject: [PATCH v2 1/1] mm/damon/reclaim: fix potential memory leak
+Date: Sat, 20 Jun 2026 03:35:57 +0300
+Message-ID: <20260620003557.243313-2-yahia.a.abdrabou@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260620002614.83004-1-sj@kernel.org>
+In-Reply-To: <20260620003557.243313-1-yahia.a.abdrabou@gmail.com>
 References: <20260620002614.83004-1-sj@kernel.org>
+ <20260620003557.243313-1-yahia.a.abdrabou@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -79,26 +80,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: yahia ahmed <yahia.a.abdrabou@gmail.com>
-
-Fixed a potential memory leak by removing the
-early return to let the function continue with
-out and set the ctx variable to NULL to prevent
-a use after free, In damon_reclaim_init() function
-if an error is returned, the ctx variable is never
-freed.
-~~~
-Changes in v2:
-- Remove early return
-- Set ctx to NULL to avoid a use after free
-- Fix typo
-
-yahia (1):
-  mm/damon/reclaim: fix potential memory leak
-
+Signed-off-by: yahia <yahia.a.abdrabou@gmail.com>
+---
  mm/damon/reclaim.c | 5 +++++
  1 file changed, 5 insertions(+)
 
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index ce4499cf4b8b..6601b08996c6 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -478,6 +478,11 @@ static int __init damon_reclaim_init(void)
+ out:
+ 	if (err && enabled)
+ 		enabled = false;
++
++	if (err && ctx) {
++		damon_destroy_ctx(ctx);
++		ctx = NULL;
++	}
+ 	return err;
+ }
+ 
 -- 
 2.54.0
 
