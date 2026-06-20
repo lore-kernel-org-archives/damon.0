@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D332E6BD;
-	Sat, 20 Jun 2026 17:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B509331ECF;
+	Sat, 20 Jun 2026 17:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781976191; cv=none; b=a7JeB9ibppkxBOJMkcz7nrzs1xvERuwvIEhEfrB0u+nBPpeBr4jq8iHKfzsSjAgGhWFURVqmM3KezueuKDFixQq9TPAWivbnN6WL/38udIeVflASMnYPieWnmTDNcOX6b/D71L+IWrsZxg2jIsYO21hAH5V0ML1HjyLHn2RX3dI=
+	t=1781976202; cv=none; b=Z1iGMm+copq1Lci1Dgbb5gBEO3fqYTcn6Wd2iPHGDxXOw5RmOzGr93i+TYud2mh3aPO53hYD7/up/NdVjlxLKqan7+G0rHKJByA/rgAJeabU/W8fD87hDcLUzpYatpwS6Re7BNC9WvuQ7XkCoe/55J71SqxTyn/Tn7hk3E0OO2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781976191; c=relaxed/simple;
-	bh=StZJS8x4LUv8h1L7ZDg1KAq2Bf+sG/tg7ahu7lA0q9w=;
+	s=arc-20240116; t=1781976202; c=relaxed/simple;
+	bh=Okct9WxhDCRl3pYyIXEvkAEkUhK1r6Acebvy/YPoM7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pdeBKW0kf9d2nEp5P6sc9ECjppKzLaizh12n8VIWGjqyRaVZLaTlmZJefHclmFA/jyD9mfZirxe3m+uSkEI0i+XHQ8PIl75vYWPrWVodCGElCBduRgmmfNtQJ72Z8343w7ZtgRFQQ4Pa/Ohr3b85S6Nvkh6DoHh+dRdDvUFOSY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L/vk2Zwl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h124JDFUOlX0lGCIvIC7QaGAy3kNCd+YvaLRxG5nljySJHab+u67utNdO7xMR8bI0wDBua04yU8jNJPsbrTzCeMcUBkCOkQAidf7Jw5l7Fm2hCzn4tbiM+ewW/+4bBbaguN5tsVTLJVajTtPDoY4MuD2US7UEYXPyc6tNS1CAZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EoWhKPDO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L/vk2Zwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDE31F00ACF;
-	Sat, 20 Jun 2026 17:23:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EoWhKPDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BE81F00A3A;
+	Sat, 20 Jun 2026 17:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781976190;
-	bh=A3RbtE69bByxdhP29KXrthoi8Z7pSsaegAvxhCquZFE=;
+	s=k20260515; t=1781976191;
+	bh=E40P358cYrxpYfQ/+KC5PiFZHdq8eKTdsuOzYb/xPVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/vk2ZwlDmGI/W/mpDtQp9cU6aMHFl1EwT3t32yZv5rgtmnJuTNsVJYSW2RAVeaA7
-	 IZQqQoMQK3rJXD1rBEgiANFF62acHACc3TTeELWr7AjucHjLIjQKDdQsDjcdN6cv3U
-	 YoIp67dl7f6C6eRAdqoGsEVjUKccDIGIR1EWc8G7SVRVOmDEePg1QNSuvHwZn27qim
-	 3CZmluttVnUJfuD8UuQ/m/UvvKWpa7BcS6JqI+Q8jV4SgYiX84SzniGwPuRZetyNzV
-	 ljeGpT1OzyzAgqefxdeQJ0dwIdXEn+HijU2Dp95Kri8dIqkFLVzle1y/sMQ2UJHgMg
-	 p+nZZWJi7OqSg==
+	b=EoWhKPDObMVUxx7K89FLrUtlZYwPL/utX18TjsuF0ZzniJ5Ct4iTEFlGy5pr5MPnl
+	 y6aTbVwIJtyzjFDlYCaBqqs6Em5VnLIcl4gcyz1Ss1YA5zTDA0pDkVKIf041eUaJJ3
+	 7YFJNM0r7Uww7y9mnPnMLpPXYv16Si+t2mMnnDC5shMEMJaCwDplAdTT1zpYJekmX6
+	 m8vmTeUyE2YSeqivZbkIMV3XNneYX61zlYJ+bz42qjt8RXNhUyNK1Yl1sWTq0WHk1P
+	 cuLKMT5NHP7WQP0OfdqCmwCfk3xj9d/QBxyqN2FDggFAf6WgSFcACl9yjDGgTrp9WY
+	 ghvM94y6jC56Q==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 12/13] mm/damon/core: remove damon_moving_sum() and its unit test
-Date: Sat, 20 Jun 2026 10:22:42 -0700
-Message-ID: <20260620172244.90953-13-sj@kernel.org>
+Subject: [RFC PATCH v1.1 13/13] mm/damon: remove damon_region->nr_accesses_bp
+Date: Sat, 20 Jun 2026 10:22:43 -0700
+Message-ID: <20260620172244.90953-14-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260620172244.90953-1-sj@kernel.org>
 References: <20260620172244.90953-1-sj@kernel.org>
@@ -47,100 +47,62 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_moving_sum() is no longer being called for real purpose but its
-unit test.  Testing a function that is not being used for real users
-makes no sense.  Remove the test and the function.
+No code touches damon_region->nr_accesses_bp field.  Remove it.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c             | 40 -------------------------------------
- mm/damon/tests/core-kunit.h | 16 ---------------
- 2 files changed, 56 deletions(-)
+ include/linux/damon.h | 10 ----------
+ mm/damon/core.c       |  3 +--
+ 2 files changed, 1 insertion(+), 12 deletions(-)
 
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 55a743d99b567..90d2910b3217a 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -47,8 +47,6 @@ struct damon_size_range {
+  * @ar:			The address range of the region.
+  * @sampling_addr:	Address of the sample for the next access check.
+  * @nr_accesses:	Access frequency of this region.
+- * @nr_accesses_bp:	@nr_accesses in basis point (0.01%) that updated for
+- *			each sampling interval.
+  * @probe_hits:		Number of probe-positive region samples.
+  * @list:		List head for siblings.
+  * @age:		Age of this region.
+@@ -61,13 +59,6 @@ struct damon_size_range {
+  * not be done with direct access but with the helper function,
+  * damon_update_region_access_rate().
+  *
+- * @nr_accesses_bp is another representation of @nr_accesses in basis point
+- * (1 in 10,000) that updated for every &damon_attrs->sample_interval in a
+- * manner similar to moving sum.  By the algorithm, this value becomes
+- * @nr_accesses * 10000 for every &struct damon_attrs->aggr_interval.  This can
+- * be used when the aggregation interval is too huge and therefore cannot wait
+- * for it before getting the access monitoring results.
+- *
+  * @age is initially zero, increased for each aggregation interval, and reset
+  * to zero again if the access frequency is significantly changed.  If two
+  * regions are merged into a new region, both @nr_accesses and @age of the new
+@@ -77,7 +68,6 @@ struct damon_region {
+ 	struct damon_addr_range ar;
+ 	unsigned long sampling_addr;
+ 	unsigned int nr_accesses;
+-	unsigned int nr_accesses_bp;
+ 	unsigned char probe_hits[DAMON_MAX_PROBES];
+ 	struct list_head list;
+ 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 471b58e8e31b9..f96f54a7f178a 100644
+index f96f54a7f178a..abccac9e9f9e8 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -3720,46 +3720,6 @@ int damon_set_region_system_rams_default(struct damon_target *t,
- 	return damon_set_regions(t, &addr_range, 1, min_region_sz);
- }
- 
--/*
-- * damon_moving_sum() - Calculate an inferred moving sum value.
-- * @mvsum:	Inferred sum of the last @len_window values.
-- * @nomvsum:	Non-moving sum of the last discrete @len_window window values.
-- * @len_window:	The number of last values to take care of.
-- * @new_value:	New value that will be added to the pseudo moving sum.
-- *
-- * Moving sum (moving average * window size) is good for handling noise, but
-- * the cost of keeping past values can be high for arbitrary window size.  This
-- * function implements a lightweight pseudo moving sum function that doesn't
-- * keep the past window values.
-- *
-- * It simply assumes there was no noise in the past, and get the no-noise
-- * assumed past value to drop from @nomvsum and @len_window.  @nomvsum is a
-- * non-moving sum of the last window.  For example, if @len_window is 10 and we
-- * have 25 values, @nomvsum is the sum of the 11th to 20th values of the 25
-- * values.  Hence, this function simply drops @nomvsum / @len_window from
-- * given @mvsum and add @new_value.
-- *
-- * For example, if @len_window is 10 and @nomvsum is 50, the last 10 values for
-- * the last window could be vary, e.g., 0, 10, 0, 10, 0, 10, 0, 0, 0, 20.  For
-- * calculating next moving sum with a new value, we should drop 0 from 50 and
-- * add the new value.  However, this function assumes it got value 5 for each
-- * of the last ten times.  Based on the assumption, when the next value is
-- * measured, it drops the assumed past value, 5 from the current sum, and add
-- * the new value to get the updated pseduo-moving average.
-- *
-- * This means the value could have errors, but the errors will be disappeared
-- * for every @len_window aligned calls.  For example, if @len_window is 10, the
-- * pseudo moving sum with 11th value to 19th value would have an error.  But
-- * the sum with 20th value will not have the error.
-- *
-- * Return: Pseudo-moving average after getting the @new_value.
-- */
--static unsigned int damon_moving_sum(unsigned int mvsum, unsigned int nomvsum,
--		unsigned int len_window, unsigned int new_value)
--{
--	return mvsum - nomvsum / len_window + new_value;
--}
--
- /**
-  * damon_update_region_access_rate() - Update the access rate of a region.
-  * @r:		The DAMON region to update for its access check result.
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index d1f019ab6fc25..df16cc070eeb0 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -600,21 +600,6 @@ static void damon_test_set_attrs(struct kunit *test)
- 	damon_destroy_ctx(c);
- }
- 
--static void damon_test_moving_sum(struct kunit *test)
--{
--	unsigned int mvsum = 50000, nomvsum = 50000, len_window = 10;
--	unsigned int new_values[] = {10000, 0, 10000, 0, 0, 0, 10000, 0, 0, 0};
--	unsigned int expects[] = {55000, 50000, 55000, 50000, 45000, 40000,
--		45000, 40000, 35000, 30000};
--	int i;
--
--	for (i = 0; i < ARRAY_SIZE(new_values); i++) {
--		mvsum = damon_moving_sum(mvsum, nomvsum, len_window,
--				new_values[i]);
--		KUNIT_EXPECT_EQ(test, mvsum, expects[i]);
--	}
--}
--
- static void damon_test_mvsum(struct kunit *test)
- {
- 	unsigned long input_expects[] = {
-@@ -1516,7 +1501,6 @@ static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_nr_accesses_to_accesses_bp),
- 	KUNIT_CASE(damon_test_update_monitoring_result),
- 	KUNIT_CASE(damon_test_set_attrs),
--	KUNIT_CASE(damon_test_moving_sum),
- 	KUNIT_CASE(damon_test_mvsum),
- 	KUNIT_CASE(damos_test_new_filter),
- 	KUNIT_CASE(damos_test_commit_quota_goal),
+@@ -3580,8 +3580,7 @@ static int kdamond_fn(void *data)
+ 				 * aggregation, and make aggregation
+ 				 * information reset for all regions.  Then,
+ 				 * following kdamond_reset_aggregated() call
+-				 * will make the region information invalid,
+-				 * particularly for ->nr_accesses_bp.
++				 * will make the region information invalid.
+ 				 *
+ 				 * Reset ->next_aggregation_sis to avoid that.
+ 				 * It will anyway correctly updated after this
 -- 
 2.47.3
