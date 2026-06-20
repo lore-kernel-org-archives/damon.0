@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6A024677B;
-	Sat, 20 Jun 2026 17:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B099F30F7F7;
+	Sat, 20 Jun 2026 17:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781976177; cv=none; b=p+xk1soQZ6AS5Jn35AiqP0GrKVUTYecchibe91O5zv4hmfFE8xVvQwIpGYmI49a+PUlETaxrXnqlg5S7jYIG70VjMmUzMOuNj2jcLaS/MOWDuMnu9mn2jSX2mGjOuNs1UfPcKzHvjjm4Kvt18+L/gILNaQSPtbPcPpvdzuNn6Bc=
+	t=1781976177; cv=none; b=H+0tCeWaiaudqRgK9UxAj33RWhLtwon6r4BH6CKL0nv60Yx19KJHa8Z3cIAxza+G8lUf4Jh59mAQLDS1uXrAABSnJtKxkkWQvRRozsOVvmWaT2VZCn6Nn9tGxP8hmOHl+d1uEvc5opHJAFCwqxt79Bf4U35D/NNDccRbJ++nT9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1781976177; c=relaxed/simple;
-	bh=8Aanmz0Dvd1GDoZkhHNkaix+Wtm6xY3dMVaOWfddS+Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NRYxtv0Ydo6FU5wZGZ1txwP5R/VCc/MQnoZjHd534zAiGNpF88609a7O3WOM1DaeIauGLzCtsyKscupWamXYcZgsXpQt7bjBK1G08+DOJ+y25xJj1t24YEaRW6puORaCpSq6AuxSZnsmMtDX140MZvrBzWLSmWrnX8gewRGX9Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iuyi5ggm; arc=none smtp.client-ip=100.103.45.18
+	bh=dXJW4FebP06DDkwQkpqUNQM1Ep1TKgfySo0seEIRBFk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=iF+jEqr2qtmEC0zFD2lQ6GgjbAgEsDscCMBxDTHxASMaKuDlF8GfqAAb/U3X9LBrSfaCIhuHCJRwn6H9gMU4jrHBGhml8R9/65VLDzRUUi+AjPWJd44RjEynqec0T4XFz/9JfJAud7Y8+8AAHFgciLkmDm79hCmPPyETRgfglIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bJGVboc4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iuyi5ggm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2101F000E9;
-	Sat, 20 Jun 2026 17:22:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bJGVboc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EBE1F00A3A;
+	Sat, 20 Jun 2026 17:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781976175;
-	bh=h+feMnzBSlgDokl+hk6/kvzQur6aofhh+JGbxs86k9Y=;
-	h=From:To:Cc:Subject:Date;
-	b=Iuyi5ggmnFZk67+k61TzLwwpXd6dzbhiq7CxDCPQ/2O/N5G+wA3Wg4UZBzSOxSZBN
-	 PzPBG8YhoTSjWxscMc9YONVhbn7gxxe8I7WMfsBeEZ4rsjRt4nesvgr5dzRtvzDp92
-	 W+OdkOPjiKC5LJclbKZyFFGD3q4vBuKrsyLuZhi5JVpdePvujfSAb2jSS5xm4X+Q5f
-	 tJ+RdTQVDkdHqhlXKwlakoqfJGDqdhxKHzX3HfFjWAZ8ZhOV5DrgBCQ8wYBx8A43hK
-	 1KOfwv56Z2AGdk/t448u07ExluqcE3zq91CYXPsHvYxgjiOYnjcP/oZkHdwjT8KKZE
-	 vzW4fl5IDUCyQ==
+	s=k20260515; t=1781976176;
+	bh=dLCAfBHDChwPdrWPfXNspXQv9mabG8os1lau8ZVdRzE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=bJGVboc4eLqvEwRRd7VH1UikCMPDDiqQ/Q3H8jvrsgSx9z/5uBL4oTLBg+Bd5UYdM
+	 0pBE3j8Fwbw8D7WGZ/gmWpaGxmY/kKjF4zr4lcvie4d/9iuGccdLBxpk3H+rvOo9Dg
+	 oPZw8kUoY7RCCJfYviLsK1zd7lWAbiPGkxxNiWMbDTSjqRByRG+x4+TCqTPv+/h29d
+	 BpbvSAm8MzwTGrC4Vb+RCVZwOEsdiRGVp3Rh+ZyN1HGKLZF0C8JSM5rs9bD/SHzu0t
+	 l6g6cnsEQNkqO/euuD/jBnQgHaG6LrN0srIoFOPMYAZsqrUq5Fi41AlrctzdZGRtEZ
+	 YT8cO8Wm7v1bA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org
-Subject: [RFC PATCH v1.1 00/13] mm/damon: optimize out nr_accesses_bp
-Date: Sat, 20 Jun 2026 10:22:30 -0700
-Message-ID: <20260620172244.90953-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH v1.1 01/13] mm/damon: introduce damon_nr_accesses_mvsum()
+Date: Sat, 20 Jun 2026 10:22:31 -0700
+Message-ID: <20260620172244.90953-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260620172244.90953-1-sj@kernel.org>
+References: <20260620172244.90953-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -53,109 +47,100 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-TLDR: Replace damon_region->nr_accesses_bp, which is easy to be wrong,
-with a simpler on-demand moving sum function, damon_nr_accesses_mvsum().
+Introduce a new DAMON core function, damon_nr_accesses_mvsum().  It
+returns a pseudo moving sum value of a given region's nr_accesses for
+the last aggregation interval.  The internal logic is the same to
+nr_accesses_bp.  The difference is that nr_accesses_bp is updated for
+each sampling interval, while the new function needs to be executed only
+when requested.  Hence the function's return value is the same as the
+value of nr_accesses_bp.
 
-Background
-==========
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ include/linux/damon.h |  2 ++
+ mm/damon/core.c       | 57 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
-DAMON's monitoring output (access pattern snapshot, or more technically
-speaking, damon_region->nr_accesses) is completed once per aggregation
-interval, which is 100 ms by default.  Users can arbitrarily increase
-the interval for demand.  Under the suggested intervals auto-tuning
-setup, it can span up to 200 seconds.  If the aggregation interval is
-too long, the snapshot users cannot use it in reasonable time.  To
-mitigate this, we introduced a new field of damon_region, namely
-nr_accesses_bp.  It contains a pseudo moving sum of nr_accesses in bp
-units and is updated for each sampling interval.
-
-It turned out keeping it correctly updated every sampling interval is
-not that easy.  From online parameter update feature development and
-more experimental hacks, we found it is easy to be corrupted.  Once it
-is corrupted, DAMON's monitoring outputs become quite insane.  Hence we
-added a few validation checks.  It is easy  to be corrupted because it
-requires every update per sampling interval to be correct.
-
-Solution
-========
-
-There is no real reason to keep it updated every sampling interval.  Due
-to the simple pseudo-moving sum mechanism and existing helper field
-(last_nr_accesses), we can also calculate the pseudo moving sum on
-demand in a much simpler way.
-
-Implement a function for getting the pseudo moving sum on demand, and
-replace nr_accessses_bp uses with the new function.  Also remove no more
-needed tests for nr_accesses_bp and the per-sampling interval update
-functions.  Finally, remove the nr_accesses_bp.  The new function is
-quite simple.
-
-Discussion
-==========
-
-Depending on the use case, multiple nr_accesses readers could be
-executed in the same kdamond_fn() main loop iteration, which is executed
-once per sampling interval.  Such readers include DAMON region exporting
-tracepoints (damon_[region_]aggregated and damos_before_apply), DAMOS,
-and DAMON sysfs interface logic for update_schemes_tried_regions
-command.  In this case, the new function will be called multiple times
-and this could be overhead compared to the old logic, which simply reads
-the field without any additional work.  Nonetheless, the new function is
-quite simple.  And the new approach does nothing while there is no need
-to read.  The old approach had to execute its update function for each
-region for every sampling interval.  Hence the new approach is believed
-to be even more lightweight in common case, and the overhead is anyway
-negligible.
-
-One more advantage of this change is that one field from the
-damon_region struct is removed.  On setups that uses a high number of
-DAMON regions, this could be a potential memory space benefit.
-
-Patches Sequence
-================
-
-Patch 1 introduces the new function for getting the pseudo moving sum of
-nr_accesses on demands.  Patch 2 implements a unit test for the new
-function's internal logic.  Patches 3-5 replace uses of nr_accesses_bp
-in DAMOS, tracepoints and DAMON sysfs interface with the new function,
-respectively.  Patches 6-8 removes nr_accesses_bp validation functions
-in DAMON core, one by one.  Patches 9 and 10 further remove tests and
-test helper for nr_accesses_bp, respectively. Patches 11 removes the
-setups and updates or nr_accesses_bp field.  Patch 12 removes the
-function that was used for updating nr_accesses_bp field with its unit
-test, which is the single remaining caller of the function.  Finally,
-patch 13 removes damon_region->nr_accesses_bp field.
-
-Changes from RFC v1
-- RFC v1: https://lore.kernel.org/20260619193415.73833-1-sj@kernel.org
-- Avoid divide-by-zero from zero aggregation interval.
-- Call damon_nr_accesses_mvsum() for damos tracing only when it is enabled.
-- Remove obsolete mentioning of nr_accesses_bp in comments.
-
-SeongJae Park (13):
-  mm/damon: introduce damon_nr_accesses_mvsum()
-  mm/damon/tests/core-kunit: test damon_mvsum()
-  mm/damon/core: use damon_nr_accesses_mvsum() in __damos_valid_target()
-  mm/damon/core: use damon_nr_accesses_mvsum() for damos region tracing
-  mm/damon/sysfs-schemes: use damon_nr_accesses_mvsum() for damo regions
-  mm/damon/core: remove damon_warn_fix_nr_accesses_corruption()
-  mm/damon/core: remove damon_verify_reset_aggregated()
-  mm/damon/core: remove damon_verify_merge_regions_of()
-  mm/damon/tests/core-kunit: remove nr_accesses_bp setup and tests
-  selftests/damon/drgn_dump_damon_status: do not dump nr_accesses_bp
-  mm/damon/core: remove nr_accesses_bp setups and updates
-  mm/damon/core: remove damon_moving_sum() and its unit test
-  mm/damon: remove damon_region->nr_accesses_bp
-
- include/linux/damon.h                         |  12 +-
- include/trace/events/damon.h                  |   8 +-
- mm/damon/core.c                               | 180 +++++++-----------
- mm/damon/sysfs-schemes.c                      |   6 +-
- mm/damon/tests/core-kunit.h                   |  37 ++--
- .../selftests/damon/drgn_dump_damon_status.py |   1 -
- 6 files changed, 96 insertions(+), 148 deletions(-)
-
-
-base-commit: a74bff7aaa4b3a64070425b4b367a459388a8233
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 02ac34537df9a..55a743d99b567 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -1013,6 +1013,8 @@ struct damon_probe *damon_new_probe(void);
+ void damon_add_probe(struct damon_ctx *ctx, struct damon_probe *probe);
+ 
+ struct damon_region *damon_new_region(unsigned long start, unsigned long end);
++unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
++		struct damon_ctx *ctx);
+ 
+ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 		unsigned int nr_ranges, unsigned long min_region_sz);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 5b84b3ce3fcff..687aa2ea1d013 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -210,6 +210,63 @@ static struct damon_probe *damon_nth_probe(int n, struct damon_ctx *ctx)
+ 	return NULL;
+ }
+ 
++/*
++ * damon_mvsum() - Returns pseudo moving sum value for a time window.
++ * @current_nr:		The value of the current aggregation window.
++ * @last_nr:		The value of the last aggregation window.
++ * @left_window_bp:	Left time of the current aggregation window.
++ *
++ * This function calculates a pseudo moving sum value of a counter that is
++ * aggregated for each time window.  @current_nr is the value of the counter
++ * that aggregated so far (maybe not yet complete), from the beginning of the
++ * current aggregation time window.  @last_nr is the value of the counter that
++ * has completely aggregated in the last aggregation time window.
++ * @left_window_bp represents how much time is left for the current aggregation
++ * time window in bp (1/10,000).  For example, the aggregation time window is
++ * for every 10 seconds and 7 seconds has passed since the beginning of the
++ * current window, this parameter will be 3000 ((10 - 7) / 10 * 10000).
++ *
++ * The logic assumes the aggregation in the last phase was made in a single
++ * speed.  Based on the assumption, the value from the last window that needs
++ * to be added to the current value is calculated as a portion of the last
++ * value based on the remaining time window.
++ */
++static unsigned long damon_mvsum(unsigned long current_nr,
++		unsigned long last_nr, unsigned long left_window_bp)
++{
++	return current_nr + mult_frac(last_nr, left_window_bp, 10000);
++}
++
++/**
++ * damon_nr_accesses_mvsum() - Returns moving sum access frequency score.
++ * @r:		Region to get the access frequency of.
++ * @ctx:	DAMON context of @r.
++ *
++ * This function returns for how many sampling iterations in the last
++ * aggregation interval (&damon_attrs->aggr_interval) the region was found to
++ * be accessed.  Hence the value can be interpreted as the relative access
++ * frequency score of the region (@r).  The value is calculated as a pseudo
++ * moving sum, and hence it is not an exact value but just a best-effort
++ * reasonable estimation.
++ *
++ * Return: the pseudo moving sum access frequency score.
++ */
++unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
++		struct damon_ctx *ctx)
++{
++	unsigned long sample_interval, aggr_interval;
++	unsigned long window_len, left_window, left_window_bp;
++
++	sample_interval = ctx->attrs.sample_interval ? : 1;
++	aggr_interval = ctx->attrs.aggr_interval ? : 1;
++	window_len = aggr_interval / sample_interval;
++	left_window = ctx->next_aggregation_sis - ctx->passed_sample_intervals;
++	left_window_bp = mult_frac(left_window, 10000, window_len);
++
++	return damon_mvsum(r->nr_accesses, r->last_nr_accesses,
++			left_window_bp);
++}
++
+ #ifdef CONFIG_DAMON_DEBUG_SANITY
+ static void damon_verify_new_region(unsigned long start, unsigned long end)
+ {
 -- 
 2.47.3
