@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E625330301;
-	Sat, 20 Jun 2026 17:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D332E6BD;
+	Sat, 20 Jun 2026 17:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781976189; cv=none; b=un/z/XBxORQhfou2+usb2IXeQDpd+iHcyM1SWxb6o5YhOfbmovn/+PgRO/h1hRBuKSMSoNe5gI5sUPuvRi1ukPEi4WgcJHeWncQhmc5TZQa1eSjUzbaV7SLUPY8KjEbt9l+Pu10oEiqflu2ONkncg/M+NQqbWc9j2no/Z/UagTI=
+	t=1781976191; cv=none; b=a7JeB9ibppkxBOJMkcz7nrzs1xvERuwvIEhEfrB0u+nBPpeBr4jq8iHKfzsSjAgGhWFURVqmM3KezueuKDFixQq9TPAWivbnN6WL/38udIeVflASMnYPieWnmTDNcOX6b/D71L+IWrsZxg2jIsYO21hAH5V0ML1HjyLHn2RX3dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781976189; c=relaxed/simple;
-	bh=GkbHtiyoumMXFs02DEzXmukw4lBiHSdG52I8CIiGYxs=;
+	s=arc-20240116; t=1781976191; c=relaxed/simple;
+	bh=StZJS8x4LUv8h1L7ZDg1KAq2Bf+sG/tg7ahu7lA0q9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGL4fjUFcgnu9HOyjRepYWMJd5apa+euOzi5CqwSh5jzM4aiqyXqEFFZ1oQI78JxadiZRMcbTndXWTGJEs5wu1XF21EPswjrE5Pb/KSROZKl9sC2BrzOs6K9DFlP1ZML7oVqKizWxkVw1b4+bdiIkp3oK4XMlFDOjtPZYHW4ugU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kh5e7YFA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pdeBKW0kf9d2nEp5P6sc9ECjppKzLaizh12n8VIWGjqyRaVZLaTlmZJefHclmFA/jyD9mfZirxe3m+uSkEI0i+XHQ8PIl75vYWPrWVodCGElCBduRgmmfNtQJ72Z8343w7ZtgRFQQ4Pa/Ohr3b85S6Nvkh6DoHh+dRdDvUFOSY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L/vk2Zwl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kh5e7YFA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B281F00A3D;
-	Sat, 20 Jun 2026 17:23:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L/vk2Zwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDE31F00ACF;
+	Sat, 20 Jun 2026 17:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781976185;
-	bh=eFwh7/bBrNQXMDavjXH4Q3alYmiXXZ8Rq6jleDMJWMs=;
+	s=k20260515; t=1781976190;
+	bh=A3RbtE69bByxdhP29KXrthoi8Z7pSsaegAvxhCquZFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kh5e7YFALX3Zt8CIcu02a7+ci/zQC7/GHELkBuKf+Si0eZab1Mw/9EPr6GyZPhF0P
-	 hLnaQnmkXYh/jAugYhVEl6MIbRnYHikwTlG6LC6jmQa8eRUrD88gGzNGQp7XAMFmC/
-	 hV0jzFhgavNgEo29XXVgh1kx4gKg69wWM9FhLcQgue5B3x6XZuvN5e2tMBVdYqVitp
-	 z3d/GHOJxfFkjOUmrX8+Fhw5VoYi1ZyQXSSFkaHvTMglH7Y/xaF6h3RljlNreAWoJy
-	 n/M73OZclCe5foS/EU7MSTcoW7mfHEh5IIIeUremgDpF0dPzIn3etQW7tWtNX2czsd
-	 VaB4XQYZs53NA==
+	b=L/vk2ZwlDmGI/W/mpDtQp9cU6aMHFl1EwT3t32yZv5rgtmnJuTNsVJYSW2RAVeaA7
+	 IZQqQoMQK3rJXD1rBEgiANFF62acHACc3TTeELWr7AjucHjLIjQKDdQsDjcdN6cv3U
+	 YoIp67dl7f6C6eRAdqoGsEVjUKccDIGIR1EWc8G7SVRVOmDEePg1QNSuvHwZn27qim
+	 3CZmluttVnUJfuD8UuQ/m/UvvKWpa7BcS6JqI+Q8jV4SgYiX84SzniGwPuRZetyNzV
+	 ljeGpT1OzyzAgqefxdeQJ0dwIdXEn+HijU2Dp95Kri8dIqkFLVzle1y/sMQ2UJHgMg
+	 p+nZZWJi7OqSg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 09/13] mm/damon/tests/core-kunit: remove nr_accesses_bp setup and tests
-Date: Sat, 20 Jun 2026 10:22:39 -0700
-Message-ID: <20260620172244.90953-10-sj@kernel.org>
+Subject: [RFC PATCH v1.1 12/13] mm/damon/core: remove damon_moving_sum() and its unit test
+Date: Sat, 20 Jun 2026 10:22:42 -0700
+Message-ID: <20260620172244.90953-13-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260620172244.90953-1-sj@kernel.org>
 References: <20260620172244.90953-1-sj@kernel.org>
@@ -51,82 +47,100 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON core unit tests set up nr_accesses_bp for representing realistic
-damon_region, and also test the field.  nr_acceses_bp is no longer being
-used for a real use case.  Remove the setup and tests.
+damon_moving_sum() is no longer being called for real purpose but its
+unit test.  Testing a function that is not being used for real users
+makes no sense.  Remove the test and the function.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/tests/core-kunit.h | 8 --------
- 1 file changed, 8 deletions(-)
+ mm/damon/core.c             | 40 -------------------------------------
+ mm/damon/tests/core-kunit.h | 16 ---------------
+ 2 files changed, 56 deletions(-)
 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 471b58e8e31b9..f96f54a7f178a 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3720,46 +3720,6 @@ int damon_set_region_system_rams_default(struct damon_target *t,
+ 	return damon_set_regions(t, &addr_range, 1, min_region_sz);
+ }
+ 
+-/*
+- * damon_moving_sum() - Calculate an inferred moving sum value.
+- * @mvsum:	Inferred sum of the last @len_window values.
+- * @nomvsum:	Non-moving sum of the last discrete @len_window window values.
+- * @len_window:	The number of last values to take care of.
+- * @new_value:	New value that will be added to the pseudo moving sum.
+- *
+- * Moving sum (moving average * window size) is good for handling noise, but
+- * the cost of keeping past values can be high for arbitrary window size.  This
+- * function implements a lightweight pseudo moving sum function that doesn't
+- * keep the past window values.
+- *
+- * It simply assumes there was no noise in the past, and get the no-noise
+- * assumed past value to drop from @nomvsum and @len_window.  @nomvsum is a
+- * non-moving sum of the last window.  For example, if @len_window is 10 and we
+- * have 25 values, @nomvsum is the sum of the 11th to 20th values of the 25
+- * values.  Hence, this function simply drops @nomvsum / @len_window from
+- * given @mvsum and add @new_value.
+- *
+- * For example, if @len_window is 10 and @nomvsum is 50, the last 10 values for
+- * the last window could be vary, e.g., 0, 10, 0, 10, 0, 10, 0, 0, 0, 20.  For
+- * calculating next moving sum with a new value, we should drop 0 from 50 and
+- * add the new value.  However, this function assumes it got value 5 for each
+- * of the last ten times.  Based on the assumption, when the next value is
+- * measured, it drops the assumed past value, 5 from the current sum, and add
+- * the new value to get the updated pseduo-moving average.
+- *
+- * This means the value could have errors, but the errors will be disappeared
+- * for every @len_window aligned calls.  For example, if @len_window is 10, the
+- * pseudo moving sum with 11th value to 19th value would have an error.  But
+- * the sum with 20th value will not have the error.
+- *
+- * Return: Pseudo-moving average after getting the @new_value.
+- */
+-static unsigned int damon_moving_sum(unsigned int mvsum, unsigned int nomvsum,
+-		unsigned int len_window, unsigned int new_value)
+-{
+-	return mvsum - nomvsum / len_window + new_value;
+-}
+-
+ /**
+  * damon_update_region_access_rate() - Update the access rate of a region.
+  * @r:		The DAMON region to update for its access check result.
 diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index cdab14396250f..d1f019ab6fc25 100644
+index d1f019ab6fc25..df16cc070eeb0 100644
 --- a/mm/damon/tests/core-kunit.h
 +++ b/mm/damon/tests/core-kunit.h
-@@ -118,7 +118,6 @@ static void damon_test_aggregate(struct kunit *test)
- 				kunit_skip(test, "region alloc fail");
- 			}
- 			r->nr_accesses = accesses[it][ir];
--			r->nr_accesses_bp = accesses[it][ir] * 10000;
- 			damon_add_region(r, t);
- 		}
- 		it++;
-@@ -155,7 +154,6 @@ static void damon_test_split_at(struct kunit *test)
- 		damon_free_target(t);
- 		kunit_skip(test, "region alloc fail");
- 	}
--	r->nr_accesses_bp = 420000;
- 	r->nr_accesses = 42;
- 	r->last_nr_accesses = 15;
- 	r->age = 10;
-@@ -168,7 +166,6 @@ static void damon_test_split_at(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, r_new->ar.start, 25ul);
- 	KUNIT_EXPECT_EQ(test, r_new->ar.end, 100ul);
+@@ -600,21 +600,6 @@ static void damon_test_set_attrs(struct kunit *test)
+ 	damon_destroy_ctx(c);
+ }
  
--	KUNIT_EXPECT_EQ(test, r->nr_accesses_bp, r_new->nr_accesses_bp);
- 	KUNIT_EXPECT_EQ(test, r->nr_accesses, r_new->nr_accesses);
- 	KUNIT_EXPECT_EQ(test, r->last_nr_accesses, r_new->last_nr_accesses);
- 	KUNIT_EXPECT_EQ(test, r->age, r_new->age);
-@@ -191,7 +188,6 @@ static void damon_test_merge_two(struct kunit *test)
- 		kunit_skip(test, "region alloc fail");
- 	}
- 	r->nr_accesses = 10;
--	r->nr_accesses_bp = 100000;
- 	r->age = 9;
- 	damon_add_region(r, t);
- 	r2 = damon_new_region(100, 300);
-@@ -200,7 +196,6 @@ static void damon_test_merge_two(struct kunit *test)
- 		kunit_skip(test, "second region alloc fail");
- 	}
- 	r2->nr_accesses = 20;
--	r2->nr_accesses_bp = 200000;
- 	r2->age = 21;
- 	damon_add_region(r2, t);
- 
-@@ -208,7 +203,6 @@ static void damon_test_merge_two(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, 300ul);
- 	KUNIT_EXPECT_EQ(test, r->nr_accesses, 16u);
--	KUNIT_EXPECT_EQ(test, r->nr_accesses_bp, 160000u);
- 	KUNIT_EXPECT_EQ(test, r->age, 17u);
- 
- 	i = 0;
-@@ -256,7 +250,6 @@ static void damon_test_merge_regions_of(struct kunit *test)
- 			kunit_skip(test, "region alloc fail");
- 		}
- 		r->nr_accesses = nrs[i];
--		r->nr_accesses_bp = nrs[i] * 10000;
- 		damon_add_region(r, t);
- 	}
- 
-@@ -556,7 +549,6 @@ static void damon_test_update_monitoring_result(struct kunit *test)
- 		kunit_skip(test, "region alloc fail");
- 
- 	r->nr_accesses = 15;
--	r->nr_accesses_bp = 150000;
- 	r->age = 20;
- 
- 	new_attrs = (struct damon_attrs){
+-static void damon_test_moving_sum(struct kunit *test)
+-{
+-	unsigned int mvsum = 50000, nomvsum = 50000, len_window = 10;
+-	unsigned int new_values[] = {10000, 0, 10000, 0, 0, 0, 10000, 0, 0, 0};
+-	unsigned int expects[] = {55000, 50000, 55000, 50000, 45000, 40000,
+-		45000, 40000, 35000, 30000};
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(new_values); i++) {
+-		mvsum = damon_moving_sum(mvsum, nomvsum, len_window,
+-				new_values[i]);
+-		KUNIT_EXPECT_EQ(test, mvsum, expects[i]);
+-	}
+-}
+-
+ static void damon_test_mvsum(struct kunit *test)
+ {
+ 	unsigned long input_expects[] = {
+@@ -1516,7 +1501,6 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_nr_accesses_to_accesses_bp),
+ 	KUNIT_CASE(damon_test_update_monitoring_result),
+ 	KUNIT_CASE(damon_test_set_attrs),
+-	KUNIT_CASE(damon_test_moving_sum),
+ 	KUNIT_CASE(damon_test_mvsum),
+ 	KUNIT_CASE(damos_test_new_filter),
+ 	KUNIT_CASE(damos_test_commit_quota_goal),
 -- 
 2.47.3
