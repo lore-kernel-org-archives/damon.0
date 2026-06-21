@@ -1,78 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6AE2E1746;
-	Sun, 21 Jun 2026 18:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0D642050
+	for <damon@lists.linux.dev>; Sun, 21 Jun 2026 18:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782065041; cv=none; b=PxACMC6TuaQevwxe5Rscv18mPzb98gzUIyFdo4yvmG2QAXLOraHcjgJAjtl4+zfS2wrBSqSbFWmJCGBbGCt4HAF3O5l6bKkyTLML/BMmzku7Gnu6LdrpCVmx0m+feXNMkmtCGO/N47w+F/URvLVnOtpqnYldtlyIoKfVZ6j5y20=
+	t=1782065396; cv=none; b=mVRz2EHGNaaMYU8lTWVf1v2pcP+WzOpj/jCmLk2FyCh9LqFKCy7EWSO++XJFZagQehyh3zT8wH2YseMtCvzkS9Z1dVg3tVS3zi1Jnf6esyrPRAz30Q5dJFitKonsOfIPkX+/CBGnCJw0m+1dWebzExB3zZdh6E+lusPo3SEKXPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782065041; c=relaxed/simple;
-	bh=urV3/Hya5bWJMcInGDRFF2WF7uruU9KgDFH488Jfv6I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lq+k3bA1+izlgqdZUF8ZHTk8sWpGM/2uuzZJwlRRXhxupz/BCHEQ/QYGLCyTxotW0Q6fJAopGlcG63mvv0T6oDrBik9CfXXVZNXGUCg0nRZQHoSMt8oFmA4IFqtg4S6LCTBCW3XmV8HlYbU9xzjqaVTO0WT3d/pXd4/xb8Wo1AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l0YSS5Dh; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782065396; c=relaxed/simple;
+	bh=F8hKRIciYATc+UM3ygbXtxfXXKiwYEBdypRCNCLSGZ8=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=jW037uKO9iwCaLHn5N9wr/BBFDkH4R6hT+CHFPmRmTZ7XxwCO94Rg2ug9D73jIxWPr0KCEVsEEeSg13TrwcGSI2nsXYXF4ulHPsL3kX/PmtRjL48qZQ8D+/bHvilD9wSr1/8cLZypiW69qB8HNfUnX0UsODOl8vpuvlg/R089CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D0S4J1oU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l0YSS5Dh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA0F1F000E9;
-	Sun, 21 Jun 2026 18:03:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D0S4J1oU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442ED1F000E9;
+	Sun, 21 Jun 2026 18:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782065039;
-	bh=54TyF7XxWkGv+SmhhNpIN1Mr1dGEVPPbVs82yylKPaY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0YSS5Dh6e/G7+zzbyorV8r97fLmf6IUEwf9ogcwCELprQUPx6gmVUJBhK/HXRoY9
-	 LKPQPCvnZz8IsJgmWJBIMS6Fcy9C6R3oOu2zQ1v7xwOgL64Xu7Ito4qX+U0S195aB5
-	 6X1juTWcf3xtoFh6B5GWEDcZRmoZz6fvC8kMuzoN5hlfpT6XFawpT3EzVGqxIAxGFd
-	 w7REcOpnrH9uc/RNYlfP7MLc7SEi7Ncl/MOQ3oWmP3BXN4EfMKHU6+XWmXERQgWcny
-	 ogQRLZzMMUgQkZZw0+bBoBjC5jf62bDT2uWZLlehFyQ/HmK3xDBAZ1X1sdN24e9MFW
-	 KI3Z+FScSoCJw==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	"# 5 . 16 . x" <stable@vger.kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH] mm/damon/core: handle zero intervals in damon_max_nr_accesses()
-Date: Sun, 21 Jun 2026 11:03:47 -0700
-Message-ID: <20260621180348.92118-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260621154808.86431-1-sj@kernel.org>
-References: 
+	s=k20260515; t=1782065395;
+	bh=NYYKLhitE0IaNG9lar7LO27WmG57QjUBVaodG4AZi0Y=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=D0S4J1oUQ620p41NB/b3SuNq6bxFLIyYrWD4PCuEdtCDYctrTmPiteSphIFtqfbXD
+	 tD1FmIxT4XOZDkl9D3xotFa2XIUMCDajRe1GxavrOsAT0XnCOlyoSOGWCsihKoD9Gb
+	 +1JVsrM9HoXau6D2Oen28hU/DqXPSbsxNVHo2HSKDqazdij5f6LvKPwWcoB4jJCpP9
+	 AF1XVeN5QXzDzbukax8ZwW+DwtWi/6wH7sXFFqfVseQ+gYsBqSn0pXe0Nd/vgMiF7K
+	 FQxYIhuamySzL0W1lU91fJnAUG2VLHsrUAU/9nlGByc2sds/V/OUvVX1tWbaWNrohb
+	 VscQlmDuZUlBw==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v1.2 09/17] mm/damon/core: remove
+ damon_verify_merge_regions_of()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260621155715.87932-10-sj@kernel.org>
+References: <20260621155715.87932-1-sj@kernel.org>
+ <20260621155715.87932-10-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 21 Jun 2026 18:09:54 +0000
+Message-Id: <20260621180955.442ED1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Sun, 21 Jun 2026 08:48:06 -0700 SeongJae Park <sj@kernel.org> wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-> damon_max_nr_accesses() causes a divide-by-zero if the sampling interval
-> is set to zero by the user.  If the aggregation interval is set to zero,
-> the function returns zero.  It is wrong, since the real maximum
-> nr_acceses in the setup should be one.  Worse yet, it can cause another
-> divide-by-zero from its caller, damon_hot_score(), since it uses
-> damon_max_nr_accesses() return value as a denominator.
-> 
-> Fix the problem by setting the denominator in the function as 1 when the
-> sampling interval is zero.  Also ensure the return value is always 1 or
-> greater.
-> 
-> The issue was discovered [1] by Sashiko.
-> 
-> [1] https://lore.kernel.org/20260619202459.145010-1-sj@kernel.org
-> 
-> Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
+Pre-existing issues:
+- [High] Missing size-weighted averaging for `last_nr_accesses` upon region=
+ merge causes erroneous age resets and corrupted metrics.
+--
 
-Sashiko found [1] another bug that was introduced by another commit.  I will
-repost this patch with a fix for the another bug.
+commit 6d81112ae07520e7dd1deaeaf23912d17d4d8a57
+Author: SeongJae Park <sj@kernel.org>
 
-[1] https://lore.kernel.org/20260621175849.91990-1-sj@kernel.org
+mm/damon/core: remove damon_verify_merge_regions_of()
 
+This commit removes the damon_verify_merge_regions_of() validation check.
+The nr_accesses_bp field is no longer used for a real purpose, making this
+validation unnecessary.
 
-Thanks,
-SJ
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index ee19238d62f5f..94d8ec2965451 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -3114,20 +3114,6 @@ static void damon_merge_two_regions(struct damon_t=
+arget *t,
+>  	damon_destroy_region(r, t);
+>  }
 
-[...]
+[Severity: High]
+This is a pre-existing issue, but does damon_merge_two_regions() need to
+calculate a size-weighted average for last_nr_accesses alongside nr_accesses
+and age?
+
+Currently, when two adjacent regions are combined, last_nr_accesses appears
+to be omitted from the averaging logic, causing the newly merged region to
+strictly inherit the left region's history.
+
+Because kdamond_merge_regions() iterates its merge loop until the region
+limit is satisfied, a region merged in the first iteration will be evaluated
+again in the second iteration:
+
+mm/damon/core.c:damon_merge_regions_of() {
+        ...
+        if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
+                r->age =3D 0;
+        ...
+}
+
+Since r->nr_accesses was size-averaged but r->last_nr_accesses was not,
+this comparison evaluates against mismatched data. Could this frequently
+cause it to erroneously reset r->age to 0?
+
+If so, this seems like it might break DAMON schemes that rely on region age
+(such as pageout schemes meant to reclaim cold memory) by continuously
+resetting the region's age. It might also skew policy frequency scores in
+damon_nr_accesses_mvsum() if damon_set_attrs() is called from a user context
+before the aggregation interval resets.
+
+> -#ifdef CONFIG_DAMON_DEBUG_SANITY
+> -static void damon_verify_merge_regions_of(struct damon_region *r)
+> -{
+> -	WARN_ONCE(r->nr_accesses !=3D r->nr_accesses_bp / 10000,
+> -			"nr_accesses (%u) !=3D nr_accesses_bp (%u)\n",
+> -			r->nr_accesses, r->nr_accesses_bp);
+> -}
+> -#else
+> -static void damon_verify_merge_regions_of(struct damon_region *r)
+> -{
+> -}
+> -#endif
+> -
+> -
+>  /*
+>   * Merge adjacent regions having similar access frequencies
+
+[ ... ]
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260621155715.8793=
+2-1-sj@kernel.org?part=3D9
