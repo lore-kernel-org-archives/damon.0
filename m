@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDC92DC76A
-	for <damon@lists.linux.dev>; Sun, 21 Jun 2026 20:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E3E26B777
+	for <damon@lists.linux.dev>; Sun, 21 Jun 2026 20:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782074470; cv=none; b=l1MJ5d16laxYfeSHYxDeV1KkLpn4KJZiMILQ+f5T4SGTPLHKtLDvRcvItCIwoIulMHDft07TulQXe5X/Zh9g+fpTJIX/b8TEM/FN3gv6W9WNOXSj1AeDwH9zL2SZJkngJ+Cw0V8Q/jXoZC4nZu7yaJtmbZWcp2nAAFeX6A3fIv8=
+	t=1782074555; cv=none; b=NZnxn8paJkBHArDWp1IEsXYhY5O71uIPeewoUxHVeB19i+q7cB4hz4m7JVxBoJ8STYX0s5hGrPktiYdI/aMo2lu8XJq0eadVZTaloiP+HX+kjo81ju1TDgjQRbOlIQRkdSwArTRQm/dETrbRnWCGIbSIY634LWwj4sSBM53CZGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782074470; c=relaxed/simple;
-	bh=M5bS69SKlTUkhlOiKNr19pHr2+xEn66pO3AsFu+yeDk=;
+	s=arc-20240116; t=1782074555; c=relaxed/simple;
+	bh=OPQ4+nx5uk0fMLb+gZTBbpDrkU0zoD1Lt6beBOUWcSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aCI/V9lzzUjiJHau/wReZGHf9Y2POv7jNtx4AkbNkARk7kNj0aUkMDnkoHXJnaSg49dccpUNaSoM7aabiDelEguTseMat2gRPIGt0UUD+dNIu4VuC32kemlLsKHLio2xISBMTae8PG8xHZeSp6UC7eHMF734Js8592I3869skdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RELxHagQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DnByxtWfLXYya0W+79miadUhLBj0M8k6JTO/yzVOpaYoLdXlsQ3fu0qb9dvolPUZQNIM+VMMEN8Lp3YsH0FJqHIzSNDoFSAfQMxZwP8ym2vlYcFWyJvKdE72MC/JBHANsm5Ry78dHas69HcO1I8SdmecEMReYXl7a/DBCpe9jXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c7VNUmBz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RELxHagQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1724D1F000E9;
-	Sun, 21 Jun 2026 20:41:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c7VNUmBz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A661F000E9;
+	Sun, 21 Jun 2026 20:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782074468;
-	bh=XNjxgFCjS6onY5wCiNyJp3sfG5tGKsP5w/0r8RpNwSs=;
+	s=k20260515; t=1782074554;
+	bh=yY3b2eChyaTkxEi4Eyx62nKY2jf6nAkDbvkFnrtpuLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RELxHagQQwKURqg0MExPfTkviuaW3Dw8BejmFOLSZ2LLfL8YzRxSG8y+6GmyiXA3d
-	 xTrNdnRPtOlX79/T/4UsSVydezXjdOKmOux2UrVlZbc93VKLe3Il3ZiDymaHzeln5w
-	 GqPql4gMyZDBknrLOC1e/ZaX7amrNVeVlTi7Mr4dUtSvo7WkQ7TmkkHQIXKIhYhzWr
-	 1cnK1igBdu+4vb6NwbNQeQ+bNPRP6TXMgFxRhL+FwhBvlVFu/RYWKi4wVqQPPa6dc5
-	 y54wfQDtyR1BbAcMnieR0nyztlm57XsJvB2s/mcErbZTE/AHH+y8718RQnetm0BGRV
-	 Uot8hWv8DS5RA==
+	b=c7VNUmBzvnn2w9T/+ZJHCIzKotOYecZVyAQ9inZGG8uUpVWyQ6FL+oTS1DlMgVQdK
+	 qzrz+HD0kih++f1ZITjQfs3uR88/qvtDV4maP2nFHZUqEkd9Qx6lmdJJA4+ynY6Qs7
+	 amQEWkSA3rS4l8zLPO7chP9XC3I4RGJXnU5KqXk+LHaO4gK0cBlFKewAiEUTzF4JW3
+	 Dt90NTS251ms+B/xZAnbbA6YliSqe63VdgmpiBL2k9DJJK4zCHGd2o4EOLEActKmMa
+	 i/tjAHz+HxNOofIGhksce6G72GUUhIovwGRqg9EF+7uSqbmLH9o9V4dfsuPDuoFGel
+	 62zHy+VcT/rvg==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.2 13/17] mm/damon/core: remove attrs param from damon_update_region_access_rate()
-Date: Sun, 21 Jun 2026 13:40:49 -0700
-Message-ID: <20260621204050.10993-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.2 14/17] mm/damonn/paddr: remove attrs param from __damon_pa_check_access()
+Date: Sun, 21 Jun 2026 13:42:29 -0700
+Message-ID: <20260621204230.11117-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260621161456.F23981F000E9@smtp.kernel.org>
+In-Reply-To: <20260621160741.BB95C1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,74 +44,14 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 21 Jun 2026 16:14:56 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 21 Jun 2026 16:07:41 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Unprotected static local variables in access check functions cause cross-thread data races and cross-context access measurement pollution.
-> --
-> 
-> commit cc8a115fada6e1595d5b8a6c2e994e38ac982a9c
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/core: remove attrs param from damon_update_region_access_rate()
-> 
-> This commit removes the unused attrs parameter from
-> damon_update_region_access_rate() and updates callers in the core,
-> physical address, and virtual address monitoring code to match the new
-> signature.
-> 
-> [ ... ]
-> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> > index d0598f5f26882..db48ad274b078 100644
-> > --- a/mm/damon/paddr.c
-> > +++ b/mm/damon/paddr.c
-> > @@ -93,12 +93,12 @@ static void __damon_pa_check_access(struct damon_region *r,
-> >  	/* If the region is in the last checked page, reuse the result */
-> >  	if (ALIGN_DOWN(last_addr, last_folio_sz) ==
-> >  				ALIGN_DOWN(sampling_addr, last_folio_sz)) {
-> > -		damon_update_region_access_rate(r, last_accessed, attrs);
-> > +		damon_update_region_access_rate(r, last_accessed);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does relying on last_accessed here cause
-> data races when multiple kdamond threads run concurrently?
-> 
-> In __damon_pa_check_access(), last_addr, last_folio_sz, and last_accessed
-> are defined as static variables. Because they are shared globally across all
-> concurrent damon contexts without synchronization, multiple kdamond threads
-> will read and write them simultaneously.
-> 
-> Could this allow one thread to incorrectly reuse a last_accessed result
-> generated by a completely different thread monitoring a different physical
-> region, corrupting the measurement accuracy?
+> - [High] Data race on static variables across multiple kdamond threads.
 
-Nice finding.  Not a blocker of this patch, though.  I will separatelly work on
-this.
-> 
-> >  		return;
-> >  	}
-> 
-> [ ... ]
-> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> > index d271476035641..2e12cc628fea0 100644
-> > --- a/mm/damon/vaddr.c
-> > +++ b/mm/damon/vaddr.c
-> > @@ -503,19 +503,19 @@ static void __damon_va_check_access(struct mm_struct *mm,
-> >  	static bool last_accessed;
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but this static variable shares the
-> same cross-thread data race issue as the physical address check.
-> 
-> If multiple contexts are monitoring different processes, they will write to
-> these variables simultaneously.
-> 
-> Does this data race allow one kdamond thread to accidentally reuse the
-> last_accessed result from another thread, breaking context isolation?
-
-Ditto.
+I'll separately work on this.
 
 
 Thanks,
