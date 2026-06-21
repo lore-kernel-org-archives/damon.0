@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CDD23507B;
-	Sun, 21 Jun 2026 15:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED15F2EF652;
+	Sun, 21 Jun 2026 15:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782057456; cv=none; b=Be53tMyCKZwriR1hxCZcvI+zklIYYXAg+ecjvVYFUdAi/QtoKJkdjcY5HKCLNRxJE0q8l/YGPPdr4HK76zim0hjpluQCytgWxx45k9c5Z8tuaIkQC+APdImQOVl2QWOST5ro5IwU3iNm0GJCOZduWJzDViMCbTVSnLYtrDyDh0U=
+	t=1782057459; cv=none; b=F2WmBINOQrfEV6+GmkahVr3UlTOkW1pMG//+5DevOMUFZ9DAba7C426pwspzbJ58XaJn02EQPljGu7opZ28Wt/bXbHadwyh9fq1LkoNOU1FGDeEQ2bPRZln0iaLnf7WXOi0O+2dJpOrZmcgpdM6uTguPLzxYiX3VXSSfx6s2FwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782057456; c=relaxed/simple;
-	bh=1xloznShsPaRhrvASD16OJM7AzsURaUokYBiDt13F2M=;
+	s=arc-20240116; t=1782057459; c=relaxed/simple;
+	bh=GkbHtiyoumMXFs02DEzXmukw4lBiHSdG52I8CIiGYxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2fHVd3CrNRlXcEwMaEAofAqQu882GTNwVDDVvQ9Vy4HpNrUukE5i8ARmBvEfGZlZOTvzu4YaBGECzLdnVvvS6AN7JbtoRWlurExccysDULmECXTD5v11ZLyKPn1C38q7FDyLUEBbe3kmF11mP7iuI8z9/BfHNYfhgYGSrG/RRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cW2GoLyI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i37SH4BugGYyQ1P24qbqObk/gPDZElnuRULKUba1R1DvtZzh+rCtPy3RPlp9Km7ZSrCsj8n508mMzMtpp6rlSGtRvitEvi5D0R9b4WEeF2r0WQLEYA2C6gxxmWrS3CysRhsqEGeIyBI1CN2mWaiI3xAR22T8i1Z+sdwEugPIE2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoUi32Eg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cW2GoLyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89E81F00A3A;
-	Sun, 21 Jun 2026 15:57:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoUi32Eg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269001F000E9;
+	Sun, 21 Jun 2026 15:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782057454;
-	bh=R/pl2bi5tI7QFS3HurXX2t06T9A2H6ZIRc1GLfHuo8E=;
+	s=k20260515; t=1782057457;
+	bh=eFwh7/bBrNQXMDavjXH4Q3alYmiXXZ8Rq6jleDMJWMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cW2GoLyIwZhzSxBjM55UKe8LNQBbiM6mjjKGIS5BgZbuLVKbyAhzyKvs2HebegsTZ
-	 Ch8xWIjjJl+BQI4gqQEV1ENiC5Deq//NlPLugx8jIQn69gZBcWfiHqxPfOnYecDD/N
-	 AqE7R5btOOxRZ30u2z8Lg7obzt1s1AN0IY+jmKtf+Kz8EC97Ppz+739WVDYAfjjk/w
-	 OKN2rUVkoH/A98Qfv72+EW4RJd+Z8j7GzP4U/vbIAS19dq0Zlb3yA/Ds5p3S7uOmB9
-	 ZDJZKcDwY4y3sxzg7dNPeqS/d147Y6d0lsN6Z1l5V4NNo9Fph56avb4lWlY22pp1cA
-	 L2ziKBy+93NTg==
+	b=eoUi32EgTXBZFLXkIFq6RL6kNp0DN3OL8RjPyY0eQyPFaufLPOtBUYGxXxOuXwWNL
+	 yph3MhvEiOTsRk409Kz7F8MOmFoSusttagpTKOEDYqPk4gVbeOuKQ+cD34bq9pXerD
+	 POR6Wlhc4mhCMWe7Z588vIXmAdVf9rIiK8EwXZHa8oEjkHxLiYcqYrstAIc8vxFTLa
+	 +sDfHVEAsIdT3xJZvgcdyiUdYDpMDp6A4/BIYCfFcNJ6iQo8+T8gMJCfCytnv0LHbN
+	 OusyM2xcQLT1GbIVHYbXizjS04BqqazL+Y6TNTYWBYezA5u4m7KC/fnSc2a0LiYUrz
+	 b+XQSABVlra7g==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 08/17] mm/damon/core: remove damon_verify_reset_aggregated()
-Date: Sun, 21 Jun 2026 08:57:04 -0700
-Message-ID: <20260621155715.87932-9-sj@kernel.org>
+Subject: [RFC PATCH v1.2 10/17] mm/damon/tests/core-kunit: remove nr_accesses_bp setup and tests
+Date: Sun, 21 Jun 2026 08:57:06 -0700
+Message-ID: <20260621155715.87932-11-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260621155715.87932-1-sj@kernel.org>
 References: <20260621155715.87932-1-sj@kernel.org>
@@ -47,49 +51,82 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-nr_accesse_bp is no longer being used in real use cases.  Remove its
-validation function.
+DAMON core unit tests set up nr_accesses_bp for representing realistic
+damon_region, and also test the field.  nr_acceses_bp is no longer being
+used for a real use case.  Remove the setup and tests.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ mm/damon/tests/core-kunit.h | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 1a10eb0694aca..7bb9b3c32d6fc 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1999,23 +1999,6 @@ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control)
- 	return 0;
- }
- 
--#ifdef CONFIG_DAMON_DEBUG_SANITY
--static void damon_verify_reset_aggregated(struct damon_region *r,
--		struct damon_ctx *c)
--{
--	WARN_ONCE(r->nr_accesses_bp != r->last_nr_accesses * 10000,
--			"nr_accesses_bp %u last_nr_accesses %u sis %lu %lu\n",
--			r->nr_accesses_bp, r->last_nr_accesses,
--			c->passed_sample_intervals, c->next_aggregation_sis);
--}
--#else
--static void damon_verify_reset_aggregated(struct damon_region *r,
--		struct damon_ctx *c)
--{
--}
--#endif
--
--
- /*
-  * Reset the aggregated monitoring results ('nr_accesses' of each region).
-  */
-@@ -2044,7 +2027,6 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
- 			r->nr_accesses = 0;
- 			for (i = 0; i < DAMON_MAX_PROBES; i++)
- 				r->probe_hits[i] = 0;
--			damon_verify_reset_aggregated(r, c);
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index cdab14396250f..d1f019ab6fc25 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -118,7 +118,6 @@ static void damon_test_aggregate(struct kunit *test)
+ 				kunit_skip(test, "region alloc fail");
+ 			}
+ 			r->nr_accesses = accesses[it][ir];
+-			r->nr_accesses_bp = accesses[it][ir] * 10000;
+ 			damon_add_region(r, t);
  		}
- 		ti++;
+ 		it++;
+@@ -155,7 +154,6 @@ static void damon_test_split_at(struct kunit *test)
+ 		damon_free_target(t);
+ 		kunit_skip(test, "region alloc fail");
  	}
+-	r->nr_accesses_bp = 420000;
+ 	r->nr_accesses = 42;
+ 	r->last_nr_accesses = 15;
+ 	r->age = 10;
+@@ -168,7 +166,6 @@ static void damon_test_split_at(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, r_new->ar.start, 25ul);
+ 	KUNIT_EXPECT_EQ(test, r_new->ar.end, 100ul);
+ 
+-	KUNIT_EXPECT_EQ(test, r->nr_accesses_bp, r_new->nr_accesses_bp);
+ 	KUNIT_EXPECT_EQ(test, r->nr_accesses, r_new->nr_accesses);
+ 	KUNIT_EXPECT_EQ(test, r->last_nr_accesses, r_new->last_nr_accesses);
+ 	KUNIT_EXPECT_EQ(test, r->age, r_new->age);
+@@ -191,7 +188,6 @@ static void damon_test_merge_two(struct kunit *test)
+ 		kunit_skip(test, "region alloc fail");
+ 	}
+ 	r->nr_accesses = 10;
+-	r->nr_accesses_bp = 100000;
+ 	r->age = 9;
+ 	damon_add_region(r, t);
+ 	r2 = damon_new_region(100, 300);
+@@ -200,7 +196,6 @@ static void damon_test_merge_two(struct kunit *test)
+ 		kunit_skip(test, "second region alloc fail");
+ 	}
+ 	r2->nr_accesses = 20;
+-	r2->nr_accesses_bp = 200000;
+ 	r2->age = 21;
+ 	damon_add_region(r2, t);
+ 
+@@ -208,7 +203,6 @@ static void damon_test_merge_two(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, 300ul);
+ 	KUNIT_EXPECT_EQ(test, r->nr_accesses, 16u);
+-	KUNIT_EXPECT_EQ(test, r->nr_accesses_bp, 160000u);
+ 	KUNIT_EXPECT_EQ(test, r->age, 17u);
+ 
+ 	i = 0;
+@@ -256,7 +250,6 @@ static void damon_test_merge_regions_of(struct kunit *test)
+ 			kunit_skip(test, "region alloc fail");
+ 		}
+ 		r->nr_accesses = nrs[i];
+-		r->nr_accesses_bp = nrs[i] * 10000;
+ 		damon_add_region(r, t);
+ 	}
+ 
+@@ -556,7 +549,6 @@ static void damon_test_update_monitoring_result(struct kunit *test)
+ 		kunit_skip(test, "region alloc fail");
+ 
+ 	r->nr_accesses = 15;
+-	r->nr_accesses_bp = 150000;
+ 	r->age = 20;
+ 
+ 	new_attrs = (struct damon_attrs){
 -- 
 2.47.3
