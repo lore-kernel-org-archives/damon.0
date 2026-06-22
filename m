@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C6B3B9D9F;
-	Mon, 22 Jun 2026 14:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306503BADB7;
+	Mon, 22 Jun 2026 14:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782138111; cv=none; b=VzfL8ErXU92sY1YyKsapfGCuwAhBO1ZwPV8QhSefM7QlxQqlsSETxAje1nN4W4DMbmCQJha5bmskbkPIiFKNr31eOfshwpBmUvlpKi25oB/NWXEF8Ky0nQ/W1uIvd/hITGQyK8KJJfxz396ANI5yDN8hyUvBS5pCJWO9r8jzeCg=
+	t=1782138113; cv=none; b=lUjtNT55s4Qdqf0bkVEEx9Dmnd/Kjns2kX0g6bumEP/wzdmTEFRyea74pNBlP0Q0Lit6Bl3aZMpZzrm5YY3PEG58uHR8tFd7NBa+onvdxe91ZGn/EZzh4cysZrl83IzQIR7ahlN6IEFlFzPA3GCErYWJ/sZEaW8vph/EaOvzQgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782138111; c=relaxed/simple;
-	bh=8GSXboQk0t8LCnK0MqH9QrJU+rQC4ZxbRPR0oI7HBqk=;
+	s=arc-20240116; t=1782138113; c=relaxed/simple;
+	bh=HvPJLmvRUDxCK1LU7PPkPseOZLauww/ECkLe0KIyfng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asInAZxS+aKiJd87olEP6meQDsxNBTaLz6yvhHoitPJXfMWdZWDGB9sNw2yHT0vjTTA+TmDj7KjscJzfQHWUW44mtzBi/1w4RxN4sD48AwYVLve4Jdrvkb58EJtiib83t6ndu6BRJjL01tgR/LHBpDiemkd46Bv1uHD+kW+2gEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FnKATpWv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkHo25Vt4mctd30vSRAiOnNx79lSccmfnFWpsrVisRcHWIkiUdTmj/JA5Z/IZZgy0zW6Q9ZLpDz0v3/5wEgBjcBylp6zP/NvOMiNozAJKq4Zu4XycQy2+qLud2d01i74JiM83P7rutZf4QRVRh3GkApSySetJ6hXi0chlRxDJmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O/gsGAEn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FnKATpWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3151F00A3E;
-	Mon, 22 Jun 2026 14:21:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/gsGAEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7521F000E9;
+	Mon, 22 Jun 2026 14:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782138110;
-	bh=PQradOyUplHOgC8HnoJqDwUCjl6LH6os+/rkUZXzJJQ=;
+	s=k20260515; t=1782138111;
+	bh=vYxKAARUNBtbGSRQbbixuaBWR8GWiG7hC3Axny9Vo6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FnKATpWvDwkHRwdi9Uav1cD+mTAY2mfWw9x4neKuDXB+UkN3ME3GrN0aTqK3bnXKR
-	 UahrR9MatgNRQp8lcBKKxTCp44jVg6UdjIDyPWtNas6yFDl8E8PxfCUfrxyqg6s9z7
-	 4X8JiaU0kCdrp+SZ3TrAGpCu+2iF8abRAx2swsglG/mCp5WCPmf+12o0cfJ4fdFx/d
-	 +jC4BdEwcAL3TT7V0mQ7tmXBTHXF6uNR60ZyLWS2jSYoYpCmQPGJgn8imLYKCvyYEc
-	 /SvhOqO1BtPJN0Kch5b3h9z1RyNM+fQzI9s2KDWPpOzDtK5l7dhIlUgooKIxv5y9FE
-	 Bjg4YrbyBTk/w==
+	b=O/gsGAEnXlSwNYVDUgTYyT2hdhwlfwt/Iv9ZnbcnNwYNjfkYlv+kvws666V2jPyq5
+	 awGM7v/K6ob7qeo32zuOefsUakp3DX0sbyfiwzcRR084kFhnIwUMSsbHw+mElnoLzX
+	 E+28v+qIrUCDwMCda/NMGGoTIm+ajE1EQxIbqFhOwJ4ZDNWb/yVxwn6d1AMp48Fn7r
+	 ywyJI3WVLOtBoBzUcvYKzM+1uYqj3JGj2OA1CBUu/E9FGVw59fvAvygAQkfbyjiMDY
+	 9ab7v8gNsWc9Lriv4ihnq1D047BGtaiR2tatzmfpemwpLcZVIc2nVWnk2A8kCKieDy
+	 pgwxuVoYL+1iw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.3 03/18] mm/damon/core: always update ->last_nr_accesses for intervals change
-Date: Mon, 22 Jun 2026 07:21:23 -0700
-Message-ID: <20260622142139.30269-4-sj@kernel.org>
+Subject: [RFC PATCH v1.3 04/18] mm/damon/core: handle unreset nr_accesses in damon_nr_accesses_mvsum()
+Date: Mon, 22 Jun 2026 07:21:24 -0700
+Message-ID: <20260622142139.30269-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260622142139.30269-1-sj@kernel.org>
 References: <20260622142139.30269-1-sj@kernel.org>
@@ -47,53 +47,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Each iteration of kdamond_fn() main loop caches and use the next
-aggregation time (next_aggregation_sis) because it can be updated in the
-middle, inside kdamond_call().  If that happens,
-damon_update_monitoring_result() is called for scaling the access
-frequency information of each region according to the changed intervals.
-The function does not update damon_region->last_nr_accesses when it is
-at the end of the aggregation, because it will anyway be reset after the
-function is executed, in kdamond_reset_aggregated().
+damon_set_attrs() works like reverting aggregations that were made so
+far for this aggregation window.  If this is the end of the aggregation,
+however, kdamond_fn() will do the operations at the end of the
+aggregation interval, using cached timestamps.  For such operations that
+rely on damon_region->nr_accesses, damon_update_monitoring_results()
+doesn't reset the nr_accesses if it is called at the end of the
+aggregation window.
 
-Let's suppose damon_nr_accesses_mvsum() is called with the not yet
-updated last_nr_accesses.  It will use the fresh next_aggregation_sis in
-the context instead of the cached one, unlike kdamond_fn().  As a
-result, use of not updated last_nr_acceses with the updated
-next_aggregation_sis result in returning wrong value.
-
-There is no such damon_nr_accesses_nvsum() call at the moment, so this
-is no problem.  It is planned to add such calls, though.  Prevent the
-issue by updating last_nr_accesses always.  This adds overhead, but
-that's fine because the overhead is not big, and it is anyway not a fast
-path.
+damon_nr_accesses_mvsum() works with fresh timestamps, though.  The
+nr_accesses that are not reset in this case can make the logic to
+unnecessarily count nr_accesses, resulting in returning
+higher-than-expected pseudo moving sum nr_accesses.  No code is using
+damon_nr_accesses_mvsum() yet, so this is not causing a real problem.
+Following commits will add usage of the function, though.  For safe
+usages, calculate the pseudo moving sum without nr_accesses if the
+remaining window is full.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/damon/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 2cc911fa221aa..191533685cf2f 100644
+index 191533685cf2f..9d501ad34f44c 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -873,6 +873,8 @@ static void damon_update_monitoring_result(struct damon_region *r,
- 		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs,
- 		bool aggregating)
- {
-+	r->last_nr_accesses = damon_nr_accesses_for_new_attrs(
-+			r->last_nr_accesses, old_attrs, new_attrs);
- 	if (!aggregating) {
- 		r->nr_accesses = damon_nr_accesses_for_new_attrs(
- 				r->nr_accesses, old_attrs, new_attrs);
-@@ -884,8 +886,6 @@ static void damon_update_monitoring_result(struct damon_region *r,
- 		 * interval.  In other words, make the status like
- 		 * kdamond_reset_aggregated() is called.
- 		 */
--		r->last_nr_accesses = damon_nr_accesses_for_new_attrs(
--				r->last_nr_accesses, old_attrs, new_attrs);
- 		r->nr_accesses_bp = r->last_nr_accesses * 10000;
- 		r->nr_accesses = 0;
- 	}
+@@ -268,6 +268,9 @@ unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
+ 			ctx->passed_sample_intervals;
+ 	left_window_bp = mult_frac(left_window, 10000, window_len);
+ 
++	if (left_window_bp == 10000)
++		return r->last_nr_accesses;
++
+ 	return damon_mvsum(r->nr_accesses, r->last_nr_accesses,
+ 			left_window_bp);
+ }
 -- 
 2.47.3
