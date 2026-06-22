@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E77730F7F7
-	for <damon@lists.linux.dev>; Mon, 22 Jun 2026 14:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BB9B640;
+	Mon, 22 Jun 2026 15:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782140018; cv=none; b=O2tuQSqrcySdXC2PyWxpVSGQOWz0IdtabhJF/H7UNPgyi+5cC/HT9gJ2rv6B209AMbcVLrHLhCHqrPdXZYi5pqymjR51ItVSTH0G2HZojYEgi70DAyjxdL0pOYIuaKITjl0jPTCtcZVrPjB3BW5dWk6mqkFxzNRSnZfnjX01WXE=
+	t=1782141884; cv=none; b=Tccg1lPrDhHlpnqJua2ztfidxyZOTWQti6RUad8GrS06rPtUD+gfdFO7YNDeKXPmc21AG/AZKd7MH2/TMtZfYb1zZR+LhV0rBgDaexGpZSCaafWQMV9VSHBMLNiPbA58ver6K0PVJd9fCWLlDZ+EfiSPS/fNJj0PsfQR9nBAPig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782140018; c=relaxed/simple;
-	bh=3XQvtP9G6kMVdoa0SDcsYvLcA+Smtb8LRohkBETGb8g=;
+	s=arc-20240116; t=1782141884; c=relaxed/simple;
+	bh=GOqrwno8peDDCuPmOw0aLZQLfeS43smmrR9SHk4ERC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNzE5xZhgcN6lg1UH8fJQR/O0EUVQxtbwICGhDnPrUA53QRdmStJ6PoXMYuSq7+X6hlK3lOenzvb6EwqEHxZPLZ3/deUarATLzBO5opkOTaA8DXxhxTVkqDHB1wevoxeUOkgmfd8WoOsagVWgvTcOBTW+sej0XbW/eOh4qSsfNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ta7sDrtc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aRS91z/dVVtSxWc2Lql2tNLGBFXsMcYz5sUQH6l8531lerbwceTwb12sBS8Tyc45lXOfIZpA/6PYnGYm7ViiqEppQt/qrZlhr2hRQi6+Je1N79krVFhOU8jAdeCm0x4JJLsEL7+7lum4TPDnmp0aLYnRWez7yogD8lymRHxlMQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=capR852c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ta7sDrtc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512031F000E9;
-	Mon, 22 Jun 2026 14:53:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="capR852c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37031F00A3A;
+	Mon, 22 Jun 2026 15:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782140017;
-	bh=JSCf837z55768NT9pPnNeadMVHFosgBKJTj9gMoyxyI=;
+	s=k20260515; t=1782141882;
+	bh=v/7JLpCVAOrmGznTvr/mcoaVuKnUl+ivQA+JolHqsiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ta7sDrtcpbd9Unkiq15zdG2Yp6CSjZjDn6Swvzk761BWUCG7EDwvU3eSDa66lOYNm
-	 oCkNLH21PRCyNor5B7qzYaq3rl3gL+ERrfQecGWfyk3M/GDA9bbyFSlABiL3ISKDZr
-	 shnEUWNsXiMHXdQHwbbTINLCMEheIlj6V5fq7ilF6eFk3FYFWfpruTDM+A4ritovz1
-	 i3UTyjRlK8bOuTfO5gG1cPC9hR5kY+REf0kFuz4IitWXl3nnjGkfB//OJ8dHDo4oW4
-	 hEacOyti2GYYTJRsn+RTtUQWLrdSeLkDefI0QNc24JdvjJB4rFuK6xBdqzsPedmrCr
-	 m5NPxqOsIAdow==
+	b=capR852cI47C9SpOoLeVKzi8B+YEOzzDrP4iN5DnPW2w7ZkX7WI+p1T64TN4wINuj
+	 tMtb7cCbmX2rVLqAJheMcfQ8Jt55qg4tVQQIjIzkwPe7/AD4VQpcvzAKdux3Twvnwr
+	 GiH3nQLaUO0csq2RtevjjPlGr5W7iVLWpP32eamsTy9k1WzmRqWp/YWn8GOfZIBJ1C
+	 puqcWfJTf+6GvStaPaaFwB2XHGRv4EcMi7otpjPaHs405wV+Mzfj6QDc3qE+JlBaoz
+	 AhUA6CgcnjZshEDv6oiKqAcZ84jcBzzYjmia7NeW1m5ddmCZ9jkbrCxFR0BJXSRLLJ
+	 Cgry2tjgnYvBA==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.2 2/2] mm/damon/ops-common: prevent >DAMON_MAX_SUBSCORE freq_subscore
-Date: Mon, 22 Jun 2026 07:53:27 -0700
-Message-ID: <20260622145328.32421-1-sj@kernel.org>
+To: Akinobu Mita <akinobu.mita@gmail.com>
+Cc: SeongJae Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-perf-users@vger.kernel.org,
+	ravis.opensrc@gmail.com
+Subject: Re: [RFC PATCH 0/2] damo: support perf event configuration
+Date: Mon, 22 Jun 2026 08:24:32 -0700
+Message-ID: <20260622152432.32788-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260622144234.31725-1-sj@kernel.org>
+In-Reply-To: <20260622134933.35773-1-akinobu.mita@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,70 +46,30 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 22 Jun 2026 07:42:43 -0700 SeongJae Park <sj@kernel.org> wrote:
+Hello Akinobu,
 
-> On Mon, 22 Jun 2026 14:24:27 +0000 sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [Critical] The patch attempts to fix an out-of-bounds array access by capping `freq_subscore`, but fails to account for integer overflow, leaving the vulnerability fully exploitable.
-> > - [Critical] The `hotness` weighted average calculation is vulnerable to integer overflows via unchecked user-provided weights, leading to an arbitrary out-of-bounds array write.
-> > --
-> > 
-> > commit 0014f07b693432d299630c4586e19c0cad5fbec9
-> > Author: SeongJae Park <sj@kernel.org>
-> > 
-> > mm/damon/ops-common: prevent >DAMON_MAX_SUBSCORE freq_subscore
-> > 
-> > When a zero sampling interval and a zero aggregation interval are
-> > online-committed, some regions could have nr_acceses values that are
-> > larger than damon_max_nr_accesses() for the remaining aggregation window.
-> > This commit attempts to fix out-of-bounds array accesses by applying an
-> > upper bound of DAMON_MAX_SUBSCORE to the freq_subscore.
-> > 
-> > Link: https://lore.kernel.org/20260621175849.91990-1-sj@kernel.org
-> > 
-> > > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> > > index 5c93ef2bb8a97..8d516851a69e4 100644
-> > > --- a/mm/damon/ops-common.c
-> > > +++ b/mm/damon/ops-common.c
-> > > @@ -115,6 +115,9 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
-> > >  
-> > >  	freq_subscore = r->nr_accesses * DAMON_MAX_SUBSCORE /
-> > >  		damon_max_nr_accesses(&c->attrs);
-> > > +	/* TODO: update monitoring results always to avoid this. */
-> > > +	if (freq_subscore > DAMON_MAX_SUBSCORE)
-> > > +		freq_subscore = DAMON_MAX_SUBSCORE;
-> > 
-> > [Severity: Critical]
-> > This is a pre-existing issue, but does the new bounds check fully prevent the
-> > out-of-bounds access if freq_subscore overflows and becomes negative?
-> > 
-> > Since r->nr_accesses is an unsigned int and DAMON_MAX_SUBSCORE is 100,
-> > r->nr_accesses * DAMON_MAX_SUBSCORE is evaluated as an unsigned int.
-> > 
-> > If a user previously configured a large aggregation interval, r->nr_accesses
-> > can grow up to ~22,000,000. If intervals are then online-committed to 0,
-> > damon_update_monitoring_results() skips scaling, leaving nr_accesses at
-> > its large value, while damon_max_nr_accesses() returns 1.
-> > 
-> > When r->nr_accesses * 100 exceeds 2^31 - 1, the division result assigned
-> > to the signed int freq_subscore overflows and becomes a large negative value.
-> > 
-> > The newly added check if (freq_subscore > DAMON_MAX_SUBSCORE) uses signed
-> > comparison, evaluates to false for negative values, and entirely bypasses
-> > the clamp.
-> > 
-> > This negative value propagates to the hotness score. Finally,
-> > damos_adjust_quota() implicitly casts this negative score to an unsigned int
-> > array index, resulting in a huge offset causing an arbitrary out-of-bounds
-> > memory write on c->regions_score_histogram.
-> 
-> Nice finding.  I will fix this in the next revision.
+On Mon, 22 Jun 2026 22:49:31 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
 
-Hmm, no.  This is not related to zero interval.  I will fix this out of this
-series.
+> This patch set aims to make it easier to specify the perf event settings
+> proposed for DAMON by Ravi's hardware-sampled access reports patch set [1]
+> from the damo tool.
+
+Seems this patch is built on top of the per-CPU/thread/read/write monitoring
+patch series [1].  We made a plan [2] to use another user interface, though.
+The plan is, making the interface ready for page table accessed bits based
+monitoring by LPC'26 (milestone 1), and implementing the perf event based
+monitoring on top of it, by LSFMMBPF'27 (milestone 2).
+
+So the eventual damo part change for supporting perf event based monitoring
+will be quite different from this series.  I guess you are sharing this series
+not because you aiming to merge it as is right now, but just for sharing the
+code with other stakeholders like Ravis, not me?  If I'm not wrong, I will skip
+this series for now, to focus on the milestone 1.
+
+Please let me know if you want more of my feedback.
+
+[1] https://lore.kernel.org/20251208062943.68824-1-sj@kernel.org
+[2] https://lore.kernel.org/20260525225208.1179-1-sj@kernel.org/
 
 
 Thanks,
