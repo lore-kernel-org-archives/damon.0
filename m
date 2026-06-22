@@ -1,132 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409D03B3883
-	for <damon@lists.linux.dev>; Mon, 22 Jun 2026 14:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9758939AD25
+	for <damon@lists.linux.dev>; Mon, 22 Jun 2026 14:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782138580; cv=none; b=QtjMdL+0/9768CFVrbVv/FXp0SYHL0Oz2inABEIWeRc6O8gJdeYrsCxzOEnc31YjczAH6DL5zNnb9rdnwsyS9EiN0q5VwWlyRmpZpVMuqZPv3vM4f1Q2p8Q89UALaBfwywq/8m/1S8+hmq9FAUU+zFHQMMLRjpMPD//otd1mtrY=
+	t=1782138970; cv=none; b=bqodYv/7cM4GxaoM0puasSOZLtScdobEDdnqddJJdj/v8YieHTnIvisINK6sRMce5w1bR2JYpgyoaofOK75qgg0C4kkHDtU1qtRfxGLi23AznGfdwgdB5PBOG+MwcJpGpcPaGfLaXzOGmKIMn+1/Eq1tY1ZE07EgIKifqypYJ78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782138580; c=relaxed/simple;
-	bh=tzusP0Z/YMtZ5M83At6Qj4sX4M1mwvoW4aClEw7WV4w=;
+	s=arc-20240116; t=1782138970; c=relaxed/simple;
+	bh=FO8205LuMLf1omqoqol3hQMgoanTplpxOE9sgnEJXxg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=uFkzdBZQ82772TGPzDtE8bo6Uabg9y4zOh+kaEGN3jZsd/g1NNI2UQnY9Mc3c02fzcwtIC2OnabJLSaWlmQlnr3/iPUqUB/Clm2YE65gBE7DS5zzvHjpJxgdMleBqYHLfx75R1VSwqHiBEo+4PwF7pAw3+un0EfKhUbrMa+oIOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X4KkbIT6; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=GTnfNS/3der7dEH9zdYGl0DCXAGVwZMmjwqvMNGuSzo5JwZPw2FnzV8l5YUUeusC8TYDSa5E1HU2kYstzRWOa5qaMYr+u2CTgxpnEcjJ3xMmAtsXs9Uk5L0oKzBzzjHZqA8lOzHtAeSM1nKNVCC2yvuTG+uSGdQH6Vb0iIKx5PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OifGb+Pw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X4KkbIT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579571F000E9;
-	Mon, 22 Jun 2026 14:29:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OifGb+Pw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1668B1F000E9;
+	Mon, 22 Jun 2026 14:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782138577;
-	bh=qxAmUp25kyaZwzY4yd8q3Exikud7qkIeK7kSyNj6Rto=;
+	s=k20260515; t=1782138969;
+	bh=AXH1VaA+3GZDgFh4QJ4i+mXMmyltmemtwzCm6vKW8Lk=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=X4KkbIT6fpHdDHGuYMMUzW1+OIqDlZR3lwlzPPbPgczYlbJQNoXMbkVHZ2RpMk6pu
-	 4kFDepVpaLwWV6g8o/8tIHMqrhMLIFAo9yHWWjI0vTkoRRWvZxjCC7Av/+mw0oF6Ai
-	 erzf6dzUyQMhLqMxpLO0AJvSwz9flHLlyfe//YsYUrD3cBG3TxwJi8LtJeZfXIpzaN
-	 pAlySYfwbF15crLUfb91X9Mf/pt8H+XtWYtGomNe4S9SbTHgPmsVBEK5AwvFMYj0AM
-	 blW1BeoqN2pK4RT6v9yPYBXg+ETuEe3G3g2VFIptKri/7OrBGpH9QpJ2gTZ6u8/uG8
-	 9Sj0GpUgJagtQ==
+	b=OifGb+PwXcjkBGZNydT8SlSqDHnf12ISCf3F0ze+m+KpPtKVMI/LWTtrgq/mWVBzi
+	 PD7hvSDnVxODRvE7iPiLtsFH6MRn/pkIBv4oxpkUobMXMMYE1Lc4UjIuqZlyNb5IXK
+	 mrFireD5wGDG5oCgZmaj+s7MdEMHFmaPo3t5Q08vqvSBNon8z3+suhBgvy3N4BKr91
+	 lJgALIDEDv7SCLl988NtjLqNDDWIHedyXLFbdnDlkiPEw884m7sJKQmqejoxcKK2Bs
+	 6qOZnf82IbSu7lqdAAM/Qo0N4FCe+xZtqZ/ZeqUGbh1uVp9cy9orVT3IDNOY0BWxtP
+	 opG8RrI6qLEDg==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.2 1/2] mm/damon/core: handle zero intervals in
- damon_max_nr_accesses()
+Subject: Re: [RFC PATCH v1.3 01/18] mm/damon: introduce
+ damon_nr_accesses_mvsum()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260622141027.29145-2-sj@kernel.org>
-References: <20260622141027.29145-1-sj@kernel.org>
- <20260622141027.29145-2-sj@kernel.org>
+In-Reply-To: <20260622142139.30269-2-sj@kernel.org>
+References: <20260622142139.30269-1-sj@kernel.org>
+ <20260622142139.30269-2-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 22 Jun 2026 14:29:36 +0000
-Message-Id: <20260622142937.579571F000E9@smtp.kernel.org>
+Date: Mon, 22 Jun 2026 14:36:08 +0000
+Message-Id: <20260622143609.1668B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Integer underflow and state corruption in `nr_accesses_bp` calcula=
-tion when `sample_interval =3D=3D 0`.
-- [High] 32-bit integer overflow in access rate scaling and hotness scoring=
- silently breaks region statistics for long aggregation intervals.
+- [Medium] Potential 32-bit integer overflow in `damon_nr_accesses_mvsum()`=
+ when calculating `left_window_bp` using `mult_frac()` for large interval r=
+atios.
 --
 
-commit 4e734fc35404d39d1209a202d1c72aa4e9ef543f
+commit e0ac3f6397c85ca0b28c3db5a3bfa0bbe79402ee
 Author: SeongJae Park <sj@kernel.org>
 
-mm/damon/core: handle zero intervals in damon_max_nr_accesses()
+mm/damon: introduce damon_nr_accesses_mvsum()
 
-This commit addresses a divide-by-zero error in damon_max_nr_accesses()
-by forcing a denominator of 1 when the sampling interval is zero. It also
-ensures the function always returns at least 1.
+This commit introduces a new DAMON core function, damon_nr_accesses_mvsum(),
+which returns a pseudo moving sum value of a given region's nr_accesses for
+the last aggregation interval.
 
-Link: https://lore.kernel.org/20260619202459.145010-1-sj@kernel.org
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 6f7edb3590ef9..888570f55b416 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -1065,9 +1065,13 @@ static inline bool damon_target_has_pid(const stru=
-ct damon_ctx *ctx)
-> =20
->  static inline unsigned int damon_max_nr_accesses(const struct damon_attr=
-s *attrs)
->  {
-> -	/* {aggr,sample}_interval are unsigned long, hence could overflow */
-> -	return min(attrs->aggr_interval / attrs->sample_interval,
-> +	unsigned long sample_interval;
-> +	unsigned long max_nr_accesses;
+[ ... ]
+
+> @@ -210,6 +210,68 @@ static struct damon_probe *damon_nth_probe(int n, st=
+ruct damon_ctx *ctx)
+
+[ ... ]
+
+> +unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
+> +		struct damon_ctx *ctx)
+> +{
+> +	unsigned long sample_interval, aggr_interval;
+> +	unsigned long window_len, left_window, left_window_bp;
 > +
-> +	sample_interval =3D attrs->sample_interval ? : 1;
-> +	max_nr_accesses =3D min(attrs->aggr_interval / sample_interval,
->  			(unsigned long)UINT_MAX);
-> +	return max_nr_accesses ? : 1;
->  }
+> +	sample_interval =3D ctx->attrs.sample_interval ? : 1;
+> +	aggr_interval =3D ctx->attrs.aggr_interval ? : 1;
+> +	window_len =3D aggr_interval / sample_interval;
+> +	if (time_after_eq(ctx->passed_sample_intervals,
+> +				ctx->next_aggregation_sis))
+> +		left_window =3D 0;
+> +	else
+> +		left_window =3D ctx->next_aggregation_sis -
+> +			ctx->passed_sample_intervals;
+> +	left_window_bp =3D mult_frac(left_window, 10000, window_len);
 
-[Severity: High]
-This isn't a bug introduced by this patch, but while this commit fixes the
-zero interval handling inside damon_max_nr_accesses(), there is a bypass in
-mm/damon/core.c that still relies on sample_interval:
+[Severity: Medium]
+Can this cause a 32-bit integer overflow on 32-bit architectures?
 
-mm/damon/core.c:damon_update_region_access_rate()
-	if (attrs->sample_interval)
-		len_window =3D damon_max_nr_accesses(attrs);
+The mult_frac(x, n, d) macro internally computes the remainder multiplied b=
+y n
+using the native type of x. Since left_window is an unsigned long, it will =
+be
+32 bits on 32-bit architectures.
 
-When sample_interval is 0, this bypass circumvents the properly fixed
-damon_max_nr_accesses() function, locking len_window at 1. During the
-next aggregation window, damon_moving_sum() recalculates the moving
-average. Because len_window is stuck at 1, the entire nomvsum is
-subtracted from a smaller mvsum.
+If window_len (and thus left_window) exceeds 429,496, the multiplication
+left_window * 10000 will overflow the 32-bit integer maximum (~4.29 billion)
+before division.
 
-Will this cause nr_accesses_bp to massively underflow its unsigned int
-type and wrap around, corrupting the region's access metrics?
+This easily occurs if a user configures a long aggregation interval via sys=
+fs.
+For example, a 1 hour aggregation interval (3,600,000,000 us) with a 5,000 =
+us
+sampling interval gives a window_len of 720,000.
 
-[Severity: High]
-This is also a pre-existing issue, but does damon_update_monitoring_result()
-suffer from a 32-bit integer overflow for long aggregation intervals?
+This overflow would result in an incorrect left_window_bp and consequently =
+an
+inaccurate pseudo moving sum access score, which could improperly drive DAM=
+OS
+policies.
 
-When a long aggregation interval and short sample interval are configured,
-the accesses can be quite large:
-
-mm/damon/core.c:damon_update_monitoring_result()
-	r->nr_accesses_bp =3D r->nr_accesses * 10000;
-
-If nr_accesses is very high, does this 32-bit unsigned int arithmetic
-silently wrap around, heavily corrupting nr_accesses_bp?
-
-A similar overflow appears in damon_hot_score():
-
-mm/damon/ops-common.c:damon_hot_score()
-	freq_subscore =3D r->nr_accesses * DAMON_MAX_SUBSCORE /
-			damon_max_nr_accesses(&c->attrs);
-
-Does the numerator multiplication overflow the 32-bit bounds before
-the division, resulting in an artificially skewed, low hotness score?
+> +
+> +	return damon_mvsum(r->nr_accesses, r->last_nr_accesses,
+> +			left_window_bp);
+> +}
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260622141027.2914=
-5-1-sj@kernel.org?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260622142139.3026=
+9-1-sj@kernel.org?part=3D1
