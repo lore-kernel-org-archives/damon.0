@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35353B9D91;
-	Mon, 22 Jun 2026 14:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB48F3BE636;
+	Mon, 22 Jun 2026 14:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782138124; cv=none; b=JDbnbazK4nZ+k4YPsd3+ShkJk7I2w/poei7ZlPAaRYCg22qCaixgoWStJd9EntQ0QbA50U0pO+ab7+GQJ+AKCpcF8K+DIWUzvU2/w69N/GzQA2SN+bnICoaZTuepD8VEPj407IA6s8qE9fSWByNZzW123r72pK2ZOG+F1A2y6fY=
+	t=1782138125; cv=none; b=bE1znWfNxG76PeoyZkgnW9jLkUszIiJyuZ58B0vPirVJ8UOaU3rzQx4fv56mtTOUK0lUX1ekQdH7u/JTmL1bvyAqjvF2Vg2eetfjAafpC5gS21DbactQHAD2+mgcQJDI6L6jexn3I9Xu+g5k5+wZUnRQCKcqGXemi5lM+Pwv3OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782138124; c=relaxed/simple;
-	bh=ckmKQgjNP1Y3L76JDcK/l1LXO+8dsi+M33MXj+hcDAQ=;
+	s=arc-20240116; t=1782138125; c=relaxed/simple;
+	bh=3k5/sgMyEFl7Pm61/oDYcT/SsoNqJArhNImPs3atqMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKqoImhYgBWo7dW9D+ee7ftLzqqj3Wi4WLmBsRaHLnt6a/78SKaWzfSeSv+YtpBbbq6fxlz4jzv0VS62+NrtMK85VM/qh3jTP3Ictr7B7XvnOJw+6SL6tC7CU6WoGNP0cUkvi4CRnLezoLP0S976/ehRwtrhgnntWOvQwOC/Knw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1GeE3Ri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iqi4RcqYyIw7jaeS2Qfbmx/qBGyz7tIdVQy3neopemCc5zdeOAMd//PKmf6Lg+9svwbyCHmP9KWu9THiujKohNWg/Fel3BFMceFgHhFtFq6kSz5PZBzoIR2vg6t2tdh9PW1M+QJrWl4rDoFMihAYXmkGYYDBEtSbiL3TfzS9kPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gLzrbKBC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1GeE3Ri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C085E1F00A3D;
-	Mon, 22 Jun 2026 14:22:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gLzrbKBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48CD1F00A3A;
+	Mon, 22 Jun 2026 14:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782138123;
-	bh=XBlT7kxUiLnizW5xmXI1w/7C7n4H7InmdeB786HKy9s=;
+	s=k20260515; t=1782138124;
+	bh=ZFWaG18Q1S2T37NGDzr0/yr5IxRaKdmsNfBt6SXMm64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N1GeE3Rimhm90PTpmyBYjuH0I+UeI83Zq1rxWm6kga1EygE/D68j1xB+g72I5aPxB
-	 f9WrqoyHHcxDOqkLKyKr8sVwLglum9wY2C6XlpbPxRSf9pzydo621hII/VCJVqLoq6
-	 +iZmKeNu02F/RnRw1l8k1oDliYBNlcjTod07ZfX4nWtgVpkJeSlG0Ivqk5xKtPx3Fj
-	 k6Cm1rKnqyd0AWggYoQzWt0HAEc9hp10YPVX0jtbacROTpGTGDixlsOdyxuWlzd/X+
-	 kuCPfvZ9BePdyamSw/KzSkEZ9RjveN3pe+Ytb0qMMG2FP5i+596pqsWQ4zQ++4QTmw
-	 nCjD3Pun6sIiQ==
+	b=gLzrbKBCZEQt7wyxBpv4Q96/r5dgTtOv9wq4fhy50NxZwjlFY92gv75SeROaBvwXj
+	 inPw7ndaGjFDP22G+mLlJ0gbKpEtgl3XrdGESAiJhBpO6XcJtILubsitaeEaxL6wLI
+	 mfpKglUHuGT/vlemS+kWO4IEC2qjNTAf9YOgjMnncul58DV9fmif1UWsKJEL7GI4bk
+	 1DC06Rmj/ugzl9fRfNj75DaH6EQ4R05I/dhrw8QFVZKLmM6sVMo4uLVJccxDrRW0PQ
+	 CYb+n19md7+9nx743LuLzujioJetuxLp1FFfO7SsyzmtNpR9uESs1ZyXeSxcZSMnta
+	 wN7pFr5j35gsw==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.3 12/18] selftests/damon/drgn_dump_damon_status: do not dump nr_accesses_bp
-Date: Mon, 22 Jun 2026 07:21:32 -0700
-Message-ID: <20260622142139.30269-13-sj@kernel.org>
+Subject: [RFC PATCH v1.3 13/18] mm/damon/core: remove nr_accesses_bp setups and updates
+Date: Mon, 22 Jun 2026 07:21:33 -0700
+Message-ID: <20260622142139.30269-14-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260622142139.30269-1-sj@kernel.org>
 References: <20260622142139.30269-1-sj@kernel.org>
@@ -48,26 +47,85 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-drgn_dump_damon_status is dumping nr_accesses_bp field for future use
-case.  nr_accesses_bp is not being used for a real purpose, though.
-Hence there will be no future test for it.  Do not dump it.
+DAMON core sets and updates nr_accesses_bp in multiple places.  It
+explains how delicate it is.  The field is no more being used for any
+real purpose, and replaced by a simpler function.  Remove the setups and
+updates.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/drgn_dump_damon_status.py | 1 -
- 1 file changed, 1 deletion(-)
+ mm/damon/core.c | 22 ++--------------------
+ 1 file changed, 2 insertions(+), 20 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/drgn_dump_damon_status.py b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-index 26b207e44268d..09552e91bc782 100755
---- a/tools/testing/selftests/damon/drgn_dump_damon_status.py
-+++ b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-@@ -59,7 +59,6 @@ def region_to_dict(region):
-         ['ar', addr_range_to_dict],
-         ['sampling_addr', int],
-         ['nr_accesses', int],
--        ['nr_accesses_bp', int],
-         ['age', int],
-         ])
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 80c1b34062312..b095f053c6fa6 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -304,7 +304,6 @@ struct damon_region *damon_new_region(unsigned long start, unsigned long end)
+ 	region->ar.start = start;
+ 	region->ar.end = end;
+ 	region->nr_accesses = 0;
+-	region->nr_accesses_bp = 0;
+ 	for (i = 0; i < DAMON_MAX_PROBES; i++)
+ 		region->probe_hits[i] = 0;
+ 	INIT_LIST_HEAD(&region->list);
+@@ -878,20 +877,17 @@ static void damon_update_monitoring_result(struct damon_region *r,
+ {
+ 	r->last_nr_accesses = damon_nr_accesses_for_new_attrs(
+ 			r->last_nr_accesses, old_attrs, new_attrs);
+-	if (!aggregating) {
++	if (!aggregating)
+ 		r->nr_accesses = damon_nr_accesses_for_new_attrs(
+ 				r->nr_accesses, old_attrs, new_attrs);
+-		r->nr_accesses_bp = r->nr_accesses * 10000;
+-	} else {
++	else
+ 		/*
+ 		 * if this is called in the middle of the aggregation, reset
+ 		 * the aggregations we made so far for this aggregation
+ 		 * interval.  In other words, make the status like
+ 		 * kdamond_reset_aggregated() is called.
+ 		 */
+-		r->nr_accesses_bp = r->last_nr_accesses * 10000;
+ 		r->nr_accesses = 0;
+-	}
+ 	r->age = damon_age_for_new_attrs(r->age, old_attrs, new_attrs);
+ }
  
+@@ -3106,7 +3102,6 @@ static void damon_merge_two_regions(struct damon_target *t,
+ 
+ 	l->nr_accesses = (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
+ 			(sz_l + sz_r);
+-	l->nr_accesses_bp = l->nr_accesses * 10000;
+ 	l->age = (l->age * sz_l + r->age * sz_r) / (sz_l + sz_r);
+ 	l->ar.end = r->ar.end;
+ 	/* todo: do this for only installed probes */
+@@ -3218,7 +3213,6 @@ static void damon_split_region_at(struct damon_target *t,
+ 
+ 	new->age = r->age;
+ 	new->last_nr_accesses = r->last_nr_accesses;
+-	new->nr_accesses_bp = r->nr_accesses_bp;
+ 	new->nr_accesses = r->nr_accesses;
+ 	/* todo: do this for only installed probes */
+ 	memcpy(new->probe_hits, r->probe_hits, sizeof(r->probe_hits));
+@@ -3787,18 +3781,6 @@ static unsigned int damon_moving_sum(unsigned int mvsum, unsigned int nomvsum,
+ void damon_update_region_access_rate(struct damon_region *r, bool accessed,
+ 		struct damon_attrs *attrs)
+ {
+-	unsigned int len_window = 1;
+-
+-	/*
+-	 * sample_interval can be zero, but cannot be larger than
+-	 * aggr_interval, owing to validation of damon_set_attrs().
+-	 */
+-	if (attrs->sample_interval)
+-		len_window = damon_max_nr_accesses(attrs);
+-	r->nr_accesses_bp = damon_moving_sum(r->nr_accesses_bp,
+-			r->last_nr_accesses * 10000, len_window,
+-			accessed ? 10000 : 0);
+-
+ 	if (accessed)
+ 		r->nr_accesses++;
+ }
 -- 
 2.47.3
