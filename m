@@ -1,117 +1,126 @@
-Received: from canpmsgout02.his.huawei.com (canpmsgout02.his.huawei.com [113.46.200.217])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D47A367B72
-	for <damon@lists.linux.dev>; Tue, 23 Jun 2026 14:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.217
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B373845D0
+	for <damon@lists.linux.dev>; Tue, 23 Jun 2026 14:15:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782223691; cv=none; b=bWvBMKn7kXjWWfc+LO5mpQjDSu/xCj2FCaqGsAz7/dMBaDVMQk6mmEknOPkzpArrSfmcCFAfKOeSGwd8UeDCC6lC026qfHk+E2htikhNv4Bcm58w39++q58/reRXvj97NojU6K7N/b9AmcW5jtmOuvT2xN0Fcggv5e2gLkt/I88=
+	t=1782224128; cv=none; b=nGqsb6flHKsPJ257dSRnbUTPpLF8KYLCW+vxIfFHX1FsQijX5gUgZUqle1KrTMPlN51rSv1p/UB4AGHLX2jmpUCvlVSg6JJ/hZtlvve7ndrimj8w40ka/ZQmzkNRo2EMQlbT1pd7Ftu5OcAm6vYPUitZhV+Lp3SKJMYoZxmtXiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782223691; c=relaxed/simple;
-	bh=tM88ehV0vRS7fFmScYoO3fuXe+FKN3oyB1IesDMdkWI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=UzR4vz2T8lomLGhs+HGqJQ92A8B49fz1ZXLu7Jk+hGx6s7y7Oq3gwYs0UsbUhjZrXoRIACw9dy/Kxi3FHZb/v385o1nbzDAJ80urpMzjPh75qiZYpEsY6qmZ3lHhIqFaRn077cuUPBuSmS6fVjBltIxbaIG8rGOV5EhbMI7o4R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=h-partners.com; dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b=f2mWTIgR; dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b=f2mWTIgR; arc=none smtp.client-ip=113.46.200.217
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h-partners.com
+	s=arc-20240116; t=1782224128; c=relaxed/simple;
+	bh=Qhx2lfBjPapoGPGrUP3Jo9rOslZcu/9XqdhNfl//ObE=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=ryi6pJG7ESNUm4+wQWKULSfR/XvQwoIGJhUleP7Tf7fjyuH2TV0xi6DFNicyjzHJYltc8cV/crjD5xkOtkpWKMTawobb80WYoxiHXFEI8oa7EqT+ENUsxrtBMo4KfjYFJt1teYjg1CSFES5XhQfKKTJeI7OiUBA/MuXNn6xqbLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ea6SbRDO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b="f2mWTIgR";
-	dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b="f2mWTIgR"
-dkim-signature: v=1; a=rsa-sha256; d=h-partners.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=4Kjc0ILl0J/jDwE6Rp8VeaX8HsM6FVKzVv2KZZcpLvE=;
-	b=f2mWTIgRI0OMt+a5DXk7llvGYG+YSSaNqEUOMlOA2s03QZHIYyfSkzRV1Z6b4x+STugLrsIPq
-	3m6oP+Rzqb0N2IaFfkxaKjYTPJucaumO6NrvPZ1nl2cSchKOLvsCKiwkRUAFEbcYKgg7VAPrMAf
-	PHbGQXpQFpA89e2wK8OSTX0=
-Received: from canpmsgout01.his.huawei.com (unknown [172.19.92.178])
-	by canpmsgout02.his.huawei.com (SkyGuard) with ESMTPS id 4gl6BT3pzczcb3n;
-	Tue, 23 Jun 2026 21:59:29 +0800 (CST)
-dkim-signature: v=1; a=rsa-sha256; d=h-partners.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=4Kjc0ILl0J/jDwE6Rp8VeaX8HsM6FVKzVv2KZZcpLvE=;
-	b=f2mWTIgRI0OMt+a5DXk7llvGYG+YSSaNqEUOMlOA2s03QZHIYyfSkzRV1Z6b4x+STugLrsIPq
-	3m6oP+Rzqb0N2IaFfkxaKjYTPJucaumO6NrvPZ1nl2cSchKOLvsCKiwkRUAFEbcYKgg7VAPrMAf
-	PHbGQXpQFpA89e2wK8OSTX0=
-Received: from mail.maildlp.com (unknown [172.19.163.104])
-	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4gl6BP4B7gz1T4GM;
-	Tue, 23 Jun 2026 21:59:25 +0800 (CST)
-Received: from kwepemf100008.china.huawei.com (unknown [7.202.181.222])
-	by mail.maildlp.com (Postfix) with ESMTPS id 460EE40363;
-	Tue, 23 Jun 2026 22:08:05 +0800 (CST)
-Received: from [10.174.179.37] (10.174.179.37) by
- kwepemf100008.china.huawei.com (7.202.181.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.36; Tue, 23 Jun 2026 22:08:04 +0800
-Message-ID: <7d46a48c-8805-09e1-4818-807953898fb4@huawei.com>
-Date: Tue, 23 Jun 2026 22:08:03 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ea6SbRDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044D11F000E9;
+	Tue, 23 Jun 2026 14:15:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782224127;
+	bh=Qd3V2shYzZjXQK20HsTz/EyRlCIt4xwphGH9DJ5P0zg=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Ea6SbRDO78pejx2NQGUqB/EZsqhtGe5zZg1G+ZKXFAyUWWw/zO3lP4hwgdnwCT3Qs
+	 cPBFTo3j+HLQDatK1wC7GoP2oQBc+V/GoklYAmZ4Mr9A2iQzgwwGQKxI9Sa6LZ4VW8
+	 xAy2FBW9cFnmUraHdGa65zOiCY501ggR6r80uzt+f7DEThXKeda5xpbwl4NJ1vEozV
+	 7aP9fi6tzo7meQxumTsZX6Tr01sKTqzl9TuhyDo1FKvuC0A37G6JoRPSI07Uo2DHIr
+	 qQ5ysonAuvJz391YjW1z5pPNoWIOA5sQcm/EoFkQKjza67i8D0//tNTwvjd2LH0ZDP
+	 ewa1t4enJxMjg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] mm/damon/ops-common: handle extreme intervals in
+ damon_hot_score()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260623135834.67189-1-sj@kernel.org>
+References: <20260623135834.67189-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 23 Jun 2026 14:15:26 +0000
+Message-Id: <20260623141527.044D11F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFC PATCH 0/6] mm/damon: hardware-sampled access reports
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>, <sj@kernel.org>,
-	<akinobu.mita@gmail.com>, <damon@lists.linux.dev>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>
-CC: <akpm@linux-foundation.org>, <corbet@lwn.net>, <bijan311@gmail.com>,
-	<ajayjoshi@micron.com>, <honggyu.kim@sk.com>, <yunjeong.mun@sk.com>
-References: <20260529165640.820-1-ravis.opensrc@gmail.com>
-Content-Language: en-US
-From: Zeng Heng <zengheng4@huawei.com>
-In-Reply-To: <20260529165640.820-1-ravis.opensrc@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
- kwepemf100008.china.huawei.com (7.202.181.222)
 
-Hi Ravi,
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-On 2026/5/30 0:56, Ravi Jonnalagadda wrote:
-> This series introduces a vendor and PMU-agnostic substrate inside DAMON
-> that consumes hardware-sampled access reports through the standard
-> perf-event interface.  Userspace selects the PMU through sysfs (raw
-> type/config knobs), driving either Intel PEBS L3-miss sampling or AMD
-> IBS Op sampling.
-> 
+Pre-existing issues:
+- [High] Multiplication in `freq_subscore` calculation overflows 32-bit `un=
+signed int` for extreme intervals, reversing region hotness prioritization.
+- [High] User-supplied sysfs weights can overflow, resulting in a bypassed =
+division and Signed Integer Overflow (UB).
+--
 
-[...]
+commit 8323dd74c4905401bc8701431eb5fd1a6b12a452
+Author: SeongJae Park <sj@kernel.org>
 
-> 
-> Ravi Jonnalagadda (6):
->    mm/damon: add struct damon_perf_event{,_attr} and per-ctx perf_events
->      list
->    mm/damon/sysfs-sample: expose perf_events configuration via sysfs
->    mm/damon/sysfs: install perf_events on apply
->    mm/damon/core: per-CPU SPSC ring drain and damon_perf_event lifecycle
->    mm/damon/vaddr: implement perf-event access check
->    mm/damon: add damos_node_eligible_mem_bp tracepoint
-> 
->   include/linux/damon.h        |  80 +++++
->   include/trace/events/damon.h |  49 +++
->   mm/damon/core.c              | 403 ++++++++++++++++++++----
->   mm/damon/ops-common.h        |  39 +++
->   mm/damon/sysfs-common.h      |   6 +
->   mm/damon/sysfs-sample.c      | 579 +++++++++++++++++++++++++++++++++++
->   mm/damon/sysfs.c             |   3 +
->   mm/damon/vaddr.c             | 267 ++++++++++++++++
->   8 files changed, 1370 insertions(+), 56 deletions(-)
-> 
-> 
-> base-commit: 4c8ad15abf15eb480d3ad85f902001e35465ef18
+mm/damon/ops-common: handle extreme intervals in damon_hot_score()
 
-I wasn't able to apply this patch series to the linux (and linux-next)
-mainline branch, and also had trouble identifying the source of the base
-commit.
+Fix three issues in damon_hot_score() that comes from wrong handling of
+extreme (zero or too high) monitoring intervals user setup.
 
-Would you mind sharing where this baseline is from?
+Link: https://lore.kernel.org/20260619202459.145010-1-sj@kernel.org
 
-Thanks in advance!
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index 5c93ef2bb8a97..d1842e2b00ef8 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+> @@ -143,6 +143,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon=
+_region *r,
 
+[Severity: High]
+This isn't a bug introduced by this patch, but could the freq_subscore
+calculation overflow earlier in this function?
 
-Best Regards,
-Zeng Heng
+If a user configures a normal sample_interval (e.g., 100us) but a long
+aggr_interval (e.g., 2 hours), r->nr_accesses can legitimately reach
+72,000,000.
+
+mm/damon/ops-common.c:damon_hot_score() {
+    ...
+    freq_subscore =3D r->nr_accesses * DAMON_MAX_SUBSCORE /
+                    damon_max_nr_accesses(&c->attrs);
+    ...
+}
+
+The multiplication of r->nr_accesses * DAMON_MAX_SUBSCORE (100) evaluates
+to 7,200,000,000, which wraps around modulo 2^32, causing extremely hot
+memory regions to be incorrectly scored as completely cold.
+
+[Severity: High]
+This is also a pre-existing issue, but can user-supplied sysfs weights
+overflow and bypass the averaging division before this transformation?
+
+mm/damon/ops-common.c:damon_hot_score() {
+    ...
+    if (freq_weight + age_weight)
+        hotness /=3D freq_weight + age_weight;
+    ...
+}
+
+If a user supplies weights for weight_nr_accesses and weight_age whose
+sum is exactly UINT_MAX + 1 (e.g., 4,000,000,000 and 294,967,296), the
+unsigned addition overflows to 0.
+
+This causes the branch to evaluate as false, bypassing the averaging
+division. The unaveraged weighted sum then evaluates to a large positive
+integer.
+
+>  	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
+>  	 */
+>  	hotness =3D hotness * DAMOS_MAX_SCORE / DAMON_MAX_SUBSCORE;
+
+Multiplying it by DAMOS_MAX_SCORE (99) here then overflows the signed int
+result, resulting in undefined behavior.
+
+> +	hotness =3D max(min(hotness, DAMOS_MAX_SCORE), 0);
+> =20
+>  	return hotness;
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260623135834.6718=
+9-1-sj@kernel.org?part=3D1
