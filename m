@@ -1,139 +1,149 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD823859EB
-	for <damon@lists.linux.dev>; Tue, 23 Jun 2026 01:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782178469; cv=none; b=fHCvbfdjonQDHDcV1Ug5a3w11SfRNgG8W1vhDioGs8HuGGsslOpPQP/6SQ/3Nv3lYi2DK16HszMIviPTnYbA6rc/XX0PPa6HoFih9/hnSslw6q+RAXoRQ8YuCC8mTovluCc9a6Ma/i4iMspEE6/yGWOsk22KDUfYVaf0g4ATGyw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782178469; c=relaxed/simple;
-	bh=33ybJHO9yj0W6p1owZqWssyOFj3jkwgY64pvK1DMoDw=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=fuGBGvU9ZU72FJWPe5XLcB2z24actG2cuqDOGbvKeH9xUsYX7COGcer2B2zAkHYqaA6jvAOy7C3h+t0PjVXRz4D4XpjkxRS2plw9QhJjzUQ4YeGmTcZVq+uGWcU55vn3gXr2iWNaZ1+9SU3ttoIiPTRAVuvBQ1mUXRyhk/8jl40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=imbdmBKY; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA89327C09
+	for <damon@lists.linux.dev>; Tue, 23 Jun 2026 13:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782221395; cv=pass; b=jDEdX6mwuDzu4IuQNcLnM3OsVRkP3Rp/H8y5Q03xK4W2is1TcBMfZwGt7JMt0xGmfsRIrxFqLoeD4kY2eqegIlQ+Zj5pzl1WyI7JD7iBAha8wNGMgvriCwbRGDihVF4kPJcOO3qwsl7j+oMv8wgFJRbLNgrcnebEMaZynq4iGKk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782221395; c=relaxed/simple;
+	bh=pvopdsMv5vMxVcxFnrVZ7Q3OIZo7brgzX0LyyVbmd/g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PJifC9m7qm8XlALc5Oq4bwH/QbcfODeyVsPyHWKM9THAvS4VqZPCmt3ghR3ZmgdqCFMbmXgRiHy1MHFW1ctx67JmZIwWsK6mD0CVxSeLx5ItRw0yYuUWgWYHHRdxlQAlxnQ4kkLeyU0k39qdHCTxTDuROU4EqpaNfdgg/CaNPgo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZdQISPJr; arc=pass smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="imbdmBKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8D61F000E9;
-	Tue, 23 Jun 2026 01:34:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782178468;
-	bh=9cAclIXCQ3YJbZkGDXd+wil/4Pj65zdO532nRcPw5H8=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=imbdmBKYd9DRn2gfQFQCEvL4Ygv4o5R6w6TTnRCFqHvWX6EMV9w33CNdKQT+ywe3X
-	 0lkTqmBtgCgjVMCST214R/4RuCJoj2FvzM3mRL1bQfZfgwX8z4Xq5ykjUKT9wx5VVX
-	 ffcY/LO8HahT/OQFUOgVlOaap2LDxuBk0rIwIbCKOHg0WTEwPZBF03kQYAsQd0AW2s
-	 Y4eePmzZzsurqjPyZaWKGAkHImrhgPOZDmbsgFzzIaQJ8JHQW5tXSzXCiWVg9hht7D
-	 KMH/GDvO2UsDX5cNaoziqA8hRl8NDTWHVU4A0P1up1xM6ZiSeGOsuwnGh2Z0SHRyKG
-	 X+4I9Kf2GvvxQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.3] mm/damon/ops-common: handle extreme intervals
- in damon_hot_score()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SeongJae Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260623011652.1354-1-sj@kernel.org>
-References: <20260623011652.1354-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 23 Jun 2026 01:34:24 +0000
-Message-Id: <20260623013428.4A8D61F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZdQISPJr"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7dc6fbf3e86so61985407b3.3
+        for <damon@lists.linux.dev>; Tue, 23 Jun 2026 06:29:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782221394; cv=none;
+        d=google.com; s=arc-20240605;
+        b=F+bLWS/0+QF57ufwItWDXplAwsY0tA63Kg3gu/obdHCaP+0gJgBfNjduYQoxeFsomo
+         LQLqnTE61FaY9/qvxnt/4FucoJF6NfqfQ+c6VRzWboR90jLzYBtWKSUC7f7UcsR8Au7L
+         btanoBSIFWuZ3o5J6/m96QVC3AjhG4wAocSktfnG4wepPRpCjDenmsF7v1q79i/HDJL5
+         Ft9Hd0S/QhRYisdfhUPIqJKFX9dltCCTZ+EMleWLbtz5D5KQp7RXfvHG0bWMxYIkQvkf
+         8YOsrVrfStKaWbbFHnTUsTe+v7rHynoUN47KsmRFP6FEqG5KXtWM0LKMOls+SgTSK7Q8
+         Qa5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=FmHmIXXw9DS5fEEeykM6L+uF9W8BEvYOXYiQBx9JZS4=;
+        fh=9/H8MzIoRJ+4tm3tDGzNkpk8SKR80b2sLi41+uvnoiA=;
+        b=MUWN/eYzrmdjgR3apLEeLA9+G/6iOkdtRyNbUGkIfq2Vdnd33mgCK34vchaTFQB/FF
+         X3Xi+mmIcBfZgMcxkfcmwl5n925ekuchDazJ1rt6CfcqJ4t/d/dZIa6u+h3ENMOlerTz
+         BjVvsIKKMS8Gd9gtaL3BkWQa1LkqPjwp2aHDe6a+PhoLDsqNxFv/RCTNEqZvW4LwTxJU
+         Yckxi8+Rai7Sz2z8VLrRz4wwQJsIwgkZ2tle5D+5UQFRrbZuDzc67Y02aE8Q1/+0SbwB
+         iwq9E3qyKplTlSvW6zieUmNjeY00VA8hGkPJf9Mdf+6hwY47S6ljdPpFP5+7hhPiXHJd
+         XYFg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782221394; x=1782826194; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FmHmIXXw9DS5fEEeykM6L+uF9W8BEvYOXYiQBx9JZS4=;
+        b=ZdQISPJricTuXEjNZiJjitRaHDKfEdPRgSNMCkXNGx1VZR8zV0OKiDbbBzvZfGUbRq
+         bb7BkIpcHJ7O13IEiDxG8rUriweLiDVteSbQpSixgRvGOnELq23jRYs/+xJJVXEVHlIo
+         Tzs8X1eCsQfvlw8vPuVEoyJdMYVYGU3cboUYeCSXsOquZW6DnOqM51B6zcn+6lF4nbRi
+         En4R1FV+6f4zwXbcglOS2Dyd6ZffbDH4koKwekauSEH6r82mvYFZJSinCGpFRJzbczLN
+         5yK9PQIZIJMb5V+sxNrcKYszDIGhq8ebs3CViwVHfcaU4lDTkVCg3gP0nmR0gu7HSj5I
+         PXOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782221394; x=1782826194;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FmHmIXXw9DS5fEEeykM6L+uF9W8BEvYOXYiQBx9JZS4=;
+        b=mq8OTlS8Xp89JuGyXr2NeBMwPK3jVdAgyO8MzrseXgbghmUWyW8l5t0gU62mR3EaHJ
+         8a/DhoiFZA8CQaNDT+OGaEvHqLqw2XcEdSzpIt/sxRxcGwyVMfSci+f4AIfH4pL706vs
+         sxJdJq/Ekfrk46kj7ks5LY2U/ZELnP5ba0NPIlAWtodtCvv6XfgxplHpMzfdWgk7bK0u
+         2jUaIFpEg/amxU3p8Q/QjE+UEotS4bK1zH8OMcJmlSvEywmHruolUhE/FFhZ7CycpYzM
+         PGJV+65GSv9c2rVVWAXvRkE6wTM0V1Q/SbJ0FPKBCJVwy8uFkD5FFTKcTxIIFZegrLnS
+         RhAA==
+X-Gm-Message-State: AOJu0YwSoITdBfuQ0KFMCKQO1fwTksh+t1NSCDv6/kvOnAcwdQWX8B92
+	WBsdz7DlCRD0B7AM8MWE7M6j9HpFN1CiTaLIM38eGkWoqO9+9rxWRAT10eDmAdxHEG5H+dYm1IG
+	ZzZA+/eWyOdYPPA6u7U1buEP8qVmybkk=
+X-Gm-Gg: AfdE7cn97EKDtqOw+/HcdFPQRrgRhZ8BrIE42oAa3rEaR4me1aHx9uHzlRNfOPKKYP+
+	TAv87yGdZntT9Xvp+fFTFOCvy6Qdt4oy0LxTSmPde/KnHt1Zz+XlhflglPUQISxxdXI3EU8JspF
+	atBIpOHEdzfqblrdjuLVu5RU7za/Mq+2cbhEOzhOr5TnFjnbhUr18Y0b18POh1hZ2EMzPEaujFk
+	83SE2qt/SFDoIZ8qOCk1/qmiJIcwrH27kuryjZDhw0AJT3sCtuRll5AalFtBA/b9XeubtUEJVEo
+	fiiDsVcUOABC+6FjqztIRENwMdwUtX5t+GU=
+X-Received: by 2002:a05:690c:9b0a:b0:7fd:2b49:181a with SMTP id
+ 00721157ae682-806c226341dmr27480367b3.19.1782221393456; Tue, 23 Jun 2026
+ 06:29:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+References: <20260622134933.35773-1-akinobu.mita@gmail.com> <20260622152432.32788-1-sj@kernel.org>
+In-Reply-To: <20260622152432.32788-1-sj@kernel.org>
+From: Akinobu Mita <akinobu.mita@gmail.com>
+Date: Tue, 23 Jun 2026 22:29:42 +0900
+X-Gm-Features: AVVi8CfnlzfNTmMwHdN7shEapsXJbXkpYk4ewUy7jToRUMM10YJXpvwK5mFO01E
+Message-ID: <CAC5umyi0v8Z3Frtr4yL_LRZu9O7wWF1HZfVbutagORde_i-7XQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] damo: support perf event configuration
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	ravis.opensrc@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
+2026=E5=B9=B46=E6=9C=8823=E6=97=A5(=E7=81=AB) 0:24 SeongJae Park <sj@kernel=
+.org>:
+>
+> Hello Akinobu,
+>
+> On Mon, 22 Jun 2026 22:49:31 +0900 Akinobu Mita <akinobu.mita@gmail.com> =
+wrote:
+>
+> > This patch set aims to make it easier to specify the perf event setting=
+s
+> > proposed for DAMON by Ravi's hardware-sampled access reports patch set =
+[1]
+> > from the damo tool.
+>
+> Seems this patch is built on top of the per-CPU/thread/read/write monitor=
+ing
+> patch series [1].  We made a plan [2] to use another user interface, thou=
+gh.
+> The plan is, making the interface ready for page table accessed bits base=
+d
+> monitoring by LPC'26 (milestone 1), and implementing the perf event based
+> monitoring on top of it, by LSFMMBPF'27 (milestone 2).
+>
+> So the eventual damo part change for supporting perf event based monitori=
+ng
+> will be quite different from this series.  I guess you are sharing this s=
+eries
+> not because you aiming to merge it as is right now, but just for sharing =
+the
+> code with other stakeholders like Ravis, not me?  If I'm not wrong, I wil=
+l skip
+> this series for now, to focus on the milestone 1.
 
-Pre-existing issues:
-- [High] The `age_in_sec` calculation silently overflows on 32-bit architec=
-tures, breaking age-based subscores.
-- [Medium] Multiplication of `r->nr_accesses` by `DAMON_MAX_SUBSCORE` silen=
-tly overflows 32-bit arithmetic for heavily accessed regions, breaking hotn=
-ess scoring.
-- [Medium] Weighted average calculation in `damon_hot_score` can overflow i=
-f large weights are provided via sysfs.
---
+Since I will align with the final user interface later, please focus on
+the optimal interface for Milestone 1 without worrying about that.
 
-commit 9cb0813af4dd40334d721106d6d0be2f72fa88ca
-Author: SeongJae Park <sj@kernel.org>
+> Please let me know if you want more of my feedback.
 
-mm/damon/ops-common: handle extreme intervals in damon_hot_score()
+However, even if the interface ends up being completely different from the
+current one, I believe that enabling configuration via `damo` using
+symbolic event names like this would still require calling the perf
+python interface (`import perf`) from damo and modifying the `perf` tool
+itself; could you please check if that approach is acceptable?
 
-This patch fixes three issues in damon_hot_score() caused by extreme
-monitoring intervals. It explicitly handles zero intervals to prevent
-divide-by-zero errors and bounds the return value to prevent out-of-bounds
-array access.
+Thank you for your continued excellent work on improving DAMON.
 
-Link: https://lore.kernel.org/20260619202459.145010-1-sj@kernel.org
-
-[ ... ]
-
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index 5c93ef2bb8a97..d1842e2b00ef8 100644
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
-> @@ -143,6 +143,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon=
-_region *r,
-
-[Severity: Medium]
-This is a pre-existing issue, but while we are fixing extreme intervals in
-damon_hot_score(), could the frequency subscore calculation silently overfl=
-ow
-on 32-bit architectures?
-
-Looking at the calculation earlier in the function:
-
-freq_subscore =3D r->nr_accesses * DAMON_MAX_SUBSCORE /
-                damon_max_nr_accesses(&c->attrs);
-
-If an administrator configures a large aggr_interval and a small
-sample_interval, a frequently accessed region's nr_accesses could exceed
-42,949,672. Since DAMON_MAX_SUBSCORE is 100, the multiplication would silen=
-tly
-wrap around modulo 2^32. This might give hot memory regions an artificially
-low frequency score.
-
-[Severity: High]
-This is also a pre-existing issue, but does the age calculation earlier in
-this function suffer from a similar 32-bit overflow?
-
-age_in_sec =3D (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
-
-On 32-bit architectures where unsigned long is 32 bits, with a default
-aggr_interval of 100,000 us (100ms), r->age increments every 100ms. After
-about 71.6 minutes of continuous inactivity, r->age reaches 42,950. The
-product reaches 4,295,000,000, overflowing ULONG_MAX (4,294,967,295).
-
-The wrapped value divided by 1,000,000 yields 0, which artificially resets
-age_in_sec to 0 and could cause old cold memory regions to be misclassified
-as young.
-
-[Severity: Medium]
-This isn't a bug introduced by this patch, but could the weighted average
-calculation also overflow if large weights are provided via sysfs?
-
-hotness =3D (freq_weight * freq_subscore + age_weight * age_subscore);
-if (freq_weight + age_weight)
-        hotness /=3D freq_weight + age_weight;
-
-The weights freq_weight and age_weight are read from sysfs and accept up to
-UINT_MAX. This expression evaluates entirely in 32-bit unsigned math. If
-large weights are provided, the calculation will wrap around the 32-bit
-boundary. Because the intermediate hotness variable wraps and is later cast
-to a signed int, this could result in wildly incorrect or even negative
-prioritizations before clamping.
-
->  	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
->  	 */
->  	hotness =3D hotness * DAMOS_MAX_SCORE / DAMON_MAX_SUBSCORE;
-> +	hotness =3D max(min(hotness, DAMOS_MAX_SCORE), 0);
-> =20
->  	return hotness;
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260623011652.1354=
--1-sj@kernel.org?part=3D1
+> [1] https://lore.kernel.org/20251208062943.68824-1-sj@kernel.org
+> [2] https://lore.kernel.org/20260525225208.1179-1-sj@kernel.org/
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
