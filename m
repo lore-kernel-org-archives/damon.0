@@ -1,136 +1,261 @@
-Received: from canpmsgout06.his.huawei.com (canpmsgout06.his.huawei.com [113.46.200.221])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F4D2DAFCB
-	for <damon@lists.linux.dev>; Wed, 24 Jun 2026 11:23:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.221
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1D0368D5E
+	for <damon@lists.linux.dev>; Wed, 24 Jun 2026 12:30:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782300194; cv=none; b=W4PpGixMHHqyH+aCTrozd5u1lmNd37UHDqH5GXZ/aHcSYldJZ5RTE+2SOKDzvZxZNBWxJy6ZiHcthN44u0tjIwhvKUG50N7tucEmXTgbLvoVK4kMePgZaN/6kioOTy9vQVnz46KXeuZf5gEr7Xih2gHPjAhp8awQp8t/McVYjXw=
+	t=1782304211; cv=none; b=ECOQvirKCkIxXU6mmv8a2gTsafO/beO857H1CHWQjDO5sfMJevm2VbJgBvKyGxdzFn4u7iEkgFPIrS2mNOl59Ow0Lx97pPfHyXK6bXZvmEnw1wfLZDpkh4TPEq8rbmRz68wiI0fU6bieFqoIOrhNlSNwGmVFA+UOpX7AU8rEmB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782300194; c=relaxed/simple;
-	bh=m5g8Ivr73tCK84dznPafxj6EpMaAUfm1GvFUg8Q4iOI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Z2vIsVFChoEHwxRxd8Cn1YWzZXYirFTidEhpz1vSqsKC4bzy12R7KAdGuTyaYnnoiN6jLkwz0zOpFQBQAvJNO2L4JXuW8r02Q/tyIUM7RLRbd9ydclseqYBjvyHGd5/e/lSmip9x/aIZOrJSubup7EMzYYMSO2mRDmkgJjnYeUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=h-partners.com; dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b=p26qdZbB; arc=none smtp.client-ip=113.46.200.221
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h-partners.com
+	s=arc-20240116; t=1782304211; c=relaxed/simple;
+	bh=x+wrByIgOH4VvEI96gvWujAPl3WM8xGYqVOhtQGJNvw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uD29StXT8KBuXsAVFLCZPlkAZexRlAMcVcNZ2gTb0dsqLkPU3wtnAPiAfpOL0xNKL5cbaJ/iLfxA/nuZxDiruel64fMc7E7MHrOh98SxNNiq5ckdfHOFCUe8jBH1D3CEjUHtaXEGAC+SCB/2Iz1dXC1SEUr0fC/QyH7qlEqm+Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=R0l5uaRB; arc=none smtp.client-ip=95.215.58.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b="p26qdZbB"
-dkim-signature: v=1; a=rsa-sha256; d=h-partners.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=GasGCMkpqsIfVRcBaW6bgI7a5DEAvqZjljpM0MMljkg=;
-	b=p26qdZbBK7+67oTpFgKBqJ3oBUDKLNh5aZ1m8FS9MTuXBCHiRdW81JTcl4N03FDRSm8g6TMcH
-	qqnijijEnCSX9wv8ejoUIE5BnX0Yd70asQsWAJqnvaEfYcN3adfLOUjwhbGL0k3+cJI5k4+7fjK
-	tQnoa4PYwpY9zT1Fp0AVKc4=
-Received: from mail.maildlp.com (unknown [172.19.162.140])
-	by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4glfT341j1zRhSH;
-	Wed, 24 Jun 2026 19:13:59 +0800 (CST)
-Received: from kwepemf100008.china.huawei.com (unknown [7.202.181.222])
-	by mail.maildlp.com (Postfix) with ESMTPS id A29152012A;
-	Wed, 24 Jun 2026 19:23:03 +0800 (CST)
-Received: from [10.174.179.37] (10.174.179.37) by
- kwepemf100008.china.huawei.com (7.202.181.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.36; Wed, 24 Jun 2026 19:23:02 +0800
-Message-ID: <a9018e68-866a-c251-9e0a-67e31f4baec2@huawei.com>
-Date: Wed, 24 Jun 2026 19:23:02 +0800
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="R0l5uaRB"
+Message-ID: <f99b70cc-e11c-42a9-a986-d20b3f232a31@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782304195;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eNfuHxO86n8b93ev9jYNFJxXkathlRXlXpz1k/8S9nI=;
+	b=R0l5uaRBMcxiN2aXXeE7sJmbbWZ+nIwvYOIBg2hW4xeZNywWJj11l3PcvXG3Ip7YlbinqT
+	P/PQ6kfAvOv13VlW7fdMv2tpC85uXP91R5VJRz9HOOc6aZfnOL/SuWOVvCXI8elJq6bVmX
+	Hq88NW9qj4aWnLm21y4nDBq7fAgYa9M=
+Date: Wed, 24 Jun 2026 20:29:26 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFC PATCH 0/6] mm/damon: hardware-sampled access reports
-Content-Language: en-US
-To: SeongJae Park <sj@kernel.org>
-CC: Ravi Jonnalagadda <ravis.opensrc@gmail.com>, <akinobu.mita@gmail.com>,
-	<damon@lists.linux.dev>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-	<akpm@linux-foundation.org>, <corbet@lwn.net>, <bijan311@gmail.com>,
-	<ajayjoshi@micron.com>, <honggyu.kim@sk.com>, <yunjeong.mun@sk.com>
-References: <20260624001425.77489-1-sj@kernel.org>
-From: Zeng Heng <zengheng4@huawei.com>
-In-Reply-To: <20260624001425.77489-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
- kwepemf100008.china.huawei.com (7.202.181.222)
+Subject: Re: [PATCH v3 0/7] Prepare mutable list iterators to cache cursor
+ state
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+ Tejun Heo <tj@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>, Alexei Starovoitov <ast@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Peter Zijlstra <peterz@infradead.org>,
+ Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
+ Juri Lelli <juri.lelli@redhat.com>,
+ Vincent Guittot <vincent.guittot@linaro.org>,
+ Paul Moore <paul@paul-moore.com>, "Paul E. McKenney" <paulmck@kernel.org>,
+ Shakeel Butt <shakeel.butt@linux.dev>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ David Howells <dhowells@redhat.com>, Simona Vetter <simona.vetter@ffwll.ch>,
+ Randy Dunlap <rdunlap@infradead.org>,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Philipp Stanner <phasta@kernel.org>, linux-block@vger.kernel.org,
+ LKML <linux-kernel@vger.kernel.org>,
+ "open list:CONTROL GROUP (CGROUP)" <cgroups@vger.kernel.org>,
+ linux-ntfs-dev@lists.sourceforge.net,
+ Linux-Fsdevel <linux-fsdevel@vger.kernel.org>,
+ io-uring <io-uring@vger.kernel.org>, audit@vger.kernel.org,
+ bpf <bpf@vger.kernel.org>, Network Development <netdev@vger.kernel.org>,
+ dri-devel@lists.freedesktop.org,
+ "linux-perf-use." <linux-perf-users@vger.kernel.org>,
+ linux-trace-kernel <linux-trace-kernel@vger.kernel.org>,
+ kexec@lists.infradead.org, live-patching@vger.kernel.org,
+ linux-modules@vger.kernel.org,
+ Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+ Linux Power Management <linux-pm@vger.kernel.org>, rcu@vger.kernel.org,
+ sched-ext@lists.linux.dev, linux-mm <linux-mm@kvack.org>,
+ virtualization@lists.linux.dev, damon@lists.linux.dev,
+ clang-built-linux <llvm@lists.linux.dev>,
+ chengkaitao <chengkaitao@kylinos.cn>, Muchun Song <muchun.song@linux.dev>
+References: <20260622040533.29824-1-kaitao.cheng@linux.dev>
+ <CAADnVQJmPWFT01b7DuLdtafv=8FyB84GYHNZ8zSTck+9Aw0JpA@mail.gmail.com>
+ <8c8f1849-86d3-4c69-be27-30bbdffdf616@linux.dev>
+ <ajkSftEbdGoiJXYs@ashevche-desk.local>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Kaitao Cheng <kaitao.cheng@linux.dev>
+In-Reply-To: <ajkSftEbdGoiJXYs@ashevche-desk.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-Hi SeongJae,
 
-On 2026/6/24 8:14, SeongJae Park wrote:
-> Hello Zeng,
+
+在 2026/6/22 18:46, Andy Shevchenko 写道:
+> On Mon, Jun 22, 2026 at 02:15:01PM +0800, Kaitao Cheng wrote:
+>> 在 2026/6/22 13:28, Alexei Starovoitov 写道:
+>>> On Sun, Jun 21, 2026 at 9:06 PM Kaitao Cheng <kaitao.cheng@linux.dev> wrote:
 > 
-> On Tue, 23 Jun 2026 22:08:03 +0800 Zeng Heng <zengheng4@huawei.com> wrote:
+> ...
 > 
->> Hi Ravi,
->>
->> On 2026/5/30 0:56, Ravi Jonnalagadda wrote:
->>> This series introduces a vendor and PMU-agnostic substrate inside DAMON
->>> that consumes hardware-sampled access reports through the standard
->>> perf-event interface.  Userspace selects the PMU through sysfs (raw
->>> type/config knobs), driving either Intel PEBS L3-miss sampling or AMD
->>> IBS Op sampling.
+>>>>  block/bfq-iosched.c                 |  17 +-
+>>>>  block/blk-cgroup.c                  |  12 +-
+>>>>  block/blk-flush.c                   |   4 +-
+>>>>  block/blk-iocost.c                  |  18 +-
+>>>>  block/blk-mq.c                      |   8 +-
+>>>>  block/blk-throttle.c                |   4 +-
+>>>>  block/kyber-iosched.c               |   4 +-
+>>>>  block/partitions/ldm.c              |   8 +-
+>>>>  block/sed-opal.c                    |   4 +-
+>>>>  include/linux/list.h                | 269 ++++++++++++++++++++++++----
+>>>>  include/linux/llist.h               |  81 +++++++--
+>>>>  init/initramfs.c                    |   5 +-
+>>>>  io_uring/cancel.c                   |   6 +-
+>>>>  io_uring/poll.c                     |   3 +-
+>>>>  io_uring/rw.c                       |   4 +-
+>>>>  io_uring/timeout.c                  |   8 +-
+>>>>  io_uring/uring_cmd.c                |   3 +-
+>>>>  kernel/audit_tree.c                 |   4 +-
+>>>>  kernel/audit_watch.c                |  16 +-
+>>>>  kernel/auditfilter.c                |   4 +-
+>>>>  kernel/auditsc.c                    |   4 +-
+>>>>  kernel/bpf/arena.c                  |  10 +-
+>>>>  kernel/bpf/arraymap.c               |   8 +-
+>>>>  kernel/bpf/bpf_local_storage.c      |   3 +-
+>>>>  kernel/bpf/bpf_lru_list.c           |  25 ++-
+>>>>  kernel/bpf/btf.c                    |  18 +-
+>>>>  kernel/bpf/cgroup.c                 |   7 +-
+>>>>  kernel/bpf/cpumap.c                 |   4 +-
+>>>>  kernel/bpf/devmap.c                 |  10 +-
+>>>>  kernel/bpf/helpers.c                |   8 +-
+>>>>  kernel/bpf/local_storage.c          |   4 +-
+>>>>  kernel/bpf/memalloc.c               |  16 +-
+>>>>  kernel/bpf/offload.c                |   8 +-
+>>>>  kernel/bpf/states.c                 |   4 +-
+>>>>  kernel/bpf/stream.c                 |   4 +-
+>>>>  kernel/bpf/verifier.c               |   6 +-
+>>>>  kernel/cgroup/cgroup-v1.c           |   4 +-
+>>>>  kernel/cgroup/cgroup.c              |  54 +++---
+>>>>  kernel/cgroup/dmem.c                |  12 +-
+>>>>  kernel/cgroup/rdma.c                |   8 +-
+>>>>  kernel/events/core.c                |  44 +++--
+>>>>  kernel/events/uprobes.c             |  12 +-
+>>>>  kernel/exit.c                       |   8 +-
+>>>>  kernel/fail_function.c              |   4 +-
+>>>>  kernel/gcov/clang.c                 |   4 +-
+>>>>  kernel/irq_work.c                   |   4 +-
+>>>>  kernel/kexec_core.c                 |   4 +-
+>>>>  kernel/kprobes.c                    |  16 +-
+>>>>  kernel/livepatch/core.c             |   4 +-
+>>>>  kernel/livepatch/core.h             |   4 +-
+>>>>  kernel/liveupdate/kho_block.c       |   4 +-
+>>>>  kernel/liveupdate/luo_flb.c         |   4 +-
+>>>>  kernel/locking/rwsem.c              |   2 +-
+>>>>  kernel/locking/test-ww_mutex.c      |   2 +-
+>>>>  kernel/module/main.c                |  11 +-
+>>>>  kernel/padata.c                     |   4 +-
+>>>>  kernel/power/snapshot.c             |   8 +-
+>>>>  kernel/power/wakelock.c             |   4 +-
+>>>>  kernel/printk/printk.c              |  11 +-
+>>>>  kernel/ptrace.c                     |   4 +-
+>>>>  kernel/rcu/rcutorture.c             |   3 +-
+>>>>  kernel/rcu/tasks.h                  |   9 +-
+>>>>  kernel/rcu/tree.c                   |   6 +-
+>>>>  kernel/resource.c                   |   4 +-
+>>>>  kernel/sched/core.c                 |   4 +-
+>>>>  kernel/sched/ext.c                  |  22 +--
+>>>>  kernel/sched/fair.c                 |  28 +--
+>>>>  kernel/sched/topology.c             |   4 +-
+>>>>  kernel/sched/wait.c                 |   4 +-
+>>>>  kernel/seccomp.c                    |   4 +-
+>>>>  kernel/signal.c                     |  11 +-
+>>>>  kernel/smp.c                        |   4 +-
+>>>>  kernel/taskstats.c                  |   8 +-
+>>>>  kernel/time/clockevents.c           |   6 +-
+>>>>  kernel/time/clocksource.c           |   4 +-
+>>>>  kernel/time/posix-cpu-timers.c      |   4 +-
+>>>>  kernel/time/posix-timers.c          |   3 +-
+>>>>  kernel/torture.c                    |   3 +-
+>>>>  kernel/trace/bpf_trace.c            |   4 +-
+>>>>  kernel/trace/ftrace.c               |  49 +++--
+>>>>  kernel/trace/ring_buffer.c          |  25 ++-
+>>>>  kernel/trace/trace.c                |  12 +-
+>>>>  kernel/trace/trace_dynevent.c       |   6 +-
+>>>>  kernel/trace/trace_dynevent.h       |   5 +-
+>>>>  kernel/trace/trace_events.c         |  35 ++--
+>>>>  kernel/trace/trace_events_filter.c  |   4 +-
+>>>>  kernel/trace/trace_events_hist.c    |   8 +-
+>>>>  kernel/trace/trace_events_trigger.c |  17 +-
+>>>>  kernel/trace/trace_events_user.c    |  16 +-
+>>>>  kernel/trace/trace_stat.c           |   4 +-
+>>>>  kernel/user-return-notifier.c       |   3 +-
+>>>>  kernel/workqueue.c                  |  16 +-
+>>>>  mm/backing-dev.c                    |   8 +-
+>>>>  mm/balloon.c                        |   8 +-
+>>>>  mm/cma.c                            |   4 +-
+>>>>  mm/compaction.c                     |   4 +-
+>>>>  mm/damon/core.c                     |   4 +-
+>>>>  mm/damon/sysfs-schemes.c            |   4 +-
+>>>>  mm/dmapool.c                        |   4 +-
+>>>>  mm/huge_memory.c                    |   8 +-
+>>>>  mm/hugetlb.c                        |  56 +++---
+>>>>  mm/hugetlb_vmemmap.c                |  16 +-
+>>>>  mm/khugepaged.c                     |  14 +-
+>>>>  mm/kmemleak.c                       |   7 +-
+>>>>  mm/ksm.c                            |  25 +--
+>>>>  mm/list_lru.c                       |   4 +-
+>>>>  mm/memcontrol-v1.c                  |   8 +-
+>>>>  mm/memory-failure.c                 |  12 +-
+>>>>  mm/memory-tiers.c                   |   4 +-
+>>>>  mm/migrate.c                        |  23 ++-
+>>>>  mm/mmu_notifier.c                   |   9 +-
+>>>>  mm/page_alloc.c                     |   8 +-
+>>>>  mm/page_reporting.c                 |   2 +-
+>>>>  mm/percpu.c                         |  11 +-
+>>>>  mm/pgtable-generic.c                |   4 +-
+>>>>  mm/rmap.c                           |  10 +-
+>>>>  mm/shmem.c                          |   9 +-
+>>>>  mm/slab_common.c                    |  14 +-
+>>>>  mm/slub.c                           |  33 ++--
+>>>>  mm/swapfile.c                       |   4 +-
+>>>>  mm/userfaultfd.c                    |  12 +-
+>>>>  mm/vmalloc.c                        |  24 +--
+>>>>  mm/vmscan.c                         |   7 +-
+>>>>  mm/zsmalloc.c                       |   4 +-
+>>>>  124 files changed, 875 insertions(+), 681 deletions(-)
 >>>
+>>> Not sure what you were thinking, but this diff stat
+>>> is not landable.
 >>
->> [...]
+>> [PATCH v3 1/7] and [PATCH v3 2/7] contain the main logic and can
+>> be merged directly. They are also compatible with the old API.
+>> [PATCH v3 3/7] through [PATCH v3 7/7] are just simple interface
+>> replacements and do not change any functional logic. They can be
+>> left unmerged for now; individual modules can pick them up later
+>> if needed.
 >>
->>>
->>> Ravi Jonnalagadda (6):
->>>     mm/damon: add struct damon_perf_event{,_attr} and per-ctx perf_events
->>>       list
->>>     mm/damon/sysfs-sample: expose perf_events configuration via sysfs
->>>     mm/damon/sysfs: install perf_events on apply
->>>     mm/damon/core: per-CPU SPSC ring drain and damon_perf_event lifecycle
->>>     mm/damon/vaddr: implement perf-event access check
->>>     mm/damon: add damos_node_eligible_mem_bp tracepoint
->>>
->>>    include/linux/damon.h        |  80 +++++
->>>    include/trace/events/damon.h |  49 +++
->>>    mm/damon/core.c              | 403 ++++++++++++++++++++----
->>>    mm/damon/ops-common.h        |  39 +++
->>>    mm/damon/sysfs-common.h      |   6 +
->>>    mm/damon/sysfs-sample.c      | 579 +++++++++++++++++++++++++++++++++++
->>>    mm/damon/sysfs.c             |   3 +
->>>    mm/damon/vaddr.c             | 267 ++++++++++++++++
->>>    8 files changed, 1370 insertions(+), 56 deletions(-)
->>>
->>>
->>> base-commit: 4c8ad15abf15eb480d3ad85f902001e35465ef18
->>
->> I wasn't able to apply this patch series to the linux (and linux-next)
->> mainline branch, and also had trouble identifying the source of the base
->> commit.
->>
->> Would you mind sharing where this baseline is from?
+>> In v2, Andy Shevchenko mentioned: "If it's done by Linus himself
+>> during the day when he prepares -rc1, it's fine."
 > 
-> TLDR: I pushed [1] a tree having this series applied on top of the baseline to
-> GitHub.  Please feel free to use it.
-> 
-> I think the baseline was a commit on damon/next tree [2].  Because damon/next
-> is continuously rebased, we cannot get the commit in a simple way.  Fortunately
-> the commit is still available on my local tree.  So I applied this patch series
-> on top of the commit and pushed [1] to a branch of DAMON kernel tree at GitHub.
-> 
-> Note that the branch is not guaranteed to exist there for long term.  But
-> hopefully this series will be merged into the mainline before that.
-> 
-> [1] https://github.com/damonitor/linux/tree/ravi_hw_sampled_access_reports_rfc_v1
-> [2] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-> 
-> 
-> Thanks,
-> SJ
-> 
+> Yes, but you need to get his blessing first to go with this.
+> Have you communicated with him on this?
 
-Thanks a lot for providing the branch on GitHub. I've pulled it and
-confirmed it builds cleanly on my end.
+Not yet, because the overall approach is still not mature. People
+have different opinions on the implementation details and on how
+to move this forward, so I think we should iterate through a few
+versions first before making a final decision.
 
-Appreciate the help!
+>> Even so, the
+>> changes in this patch series are indeed quite large and touch
+>> almost every subsystem. I have only converted part of them for
+>> now, so I wanted to send this out first and see what people think.
+> 
+> That's why it's better to provide a script to convert (e.g., coccinelle)
+> instead of tons of patches.
 
+I tried writing conversion scripts with Coccinelle, but there were
+always cases that got missed. In contrast, I found that using AI
+for focused replacements was actually more efficient.
 
-Best Regards,
-Zeng Heng
+As David Hildenbrand mentioned, "If we decide we want this, I guess
+we should target per-subsystem conversions." I would like to provide
+the new interface first; adapting each subsystem on demand later may
+be easier to achieve.
+-- 
+Thanks
+Kaitao Cheng
+
