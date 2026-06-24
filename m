@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394AC3C10BB;
-	Wed, 24 Jun 2026 14:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CFE3C1085;
+	Wed, 24 Jun 2026 14:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782310826; cv=none; b=J9zvEYaGinppzcw0wGGUcKZE/45rBUVwKNcwRPFS4vVCJZtGzhWT8w7PcDoOMX9whe2iugWaIWdr9M7uAWyYsSwsU4My3bJ9PosSFCnxrPBsfiIDQWVWRDq3ULZtfZUpBt1sL41BxtKwj9YMK3+s6xCbWswjsyl9cx2hyadx0/g=
+	t=1782310828; cv=none; b=bCDK6PcDMJ/xTqaAFJdQI2Ip0R+zYuQWj5bwmY6LXGBfMKWD4RVob77NT3UlRBLE2vnDDr4b3KKYJAciXpqkUUCk9E/6XcnI7DzdpOYEVicnJDiTKpDpa/m9L6zq0rcY4xlf8A06Z04SIip1bAIBpQYLCnKXCPjStcflAmRvkOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782310826; c=relaxed/simple;
-	bh=uOiyrJxsccXEayG3zZdWsgShhfLJR0Pfi1nhu3l4yiA=;
+	s=arc-20240116; t=1782310828; c=relaxed/simple;
+	bh=nubvS2VDtVju1y6WYgkOejoitMWvC9O6QM8HO1reoRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YORvvA/LC5Nvm6SMGZoXcm1QsJwen4GMRYkS5UA6RU0+4VOYWw3A8f8KsNN+O9904aA0fstOBBB4EkGbnYjcbi3B49Hkr1oR9F7o7Uy5hmHExfEb8D7lNjYlw0Q8BN5K0erUXmR3vGXhx2eqLEEJL9UQ5rvRI4IS5RjFCi1Thlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IjzXCQu+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RliDLRbVJzMg30eHsHTTKlLJ5F6I/JgyW1ItD1rihDD2vF07+KXji3iwIah+niODGXvAhgQfc2lX/AL4sSSg1vhnfxAdmJeQ6hnuEPDolxIck/8JCUUeLwymYeadKMvbg55b0o5WDl+nJNMcYiQh11Yi8qpaPp3iK2yQopHtqYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BnR1B/g5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IjzXCQu+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556B91F000E9;
-	Wed, 24 Jun 2026 14:20:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BnR1B/g5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980811F000E9;
+	Wed, 24 Jun 2026 14:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782310824;
-	bh=ARqAM43ohvafn9UnTqgU4RPIXqjonzaqaC6qJIpJbfo=;
+	s=k20260515; t=1782310827;
+	bh=r93tCIhwYTvoKawcFrjLmwPxR1Kntzh6Ey6FCsL943Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IjzXCQu++yR1i3ggwiu2WUOZOwR0zBCvwDCxPbAa9CbdTd7CB9Sd/83XmklRrdxC3
-	 7LzNXSoVWDZ+hcviXzTXVQXDcVpLIoukQJ2g7zHwfc2TRxlbcZuFaLwoIw9S2fBby/
-	 JD8qv4UHoVfDCSBmFfzOq9jP+s8J60Cw25r2rIvsWJvWPtGEFYx3WVx7vTTDUnTIo5
-	 d2r1o0y27pac5Lrw0IxlZxfso649hocAiUxlhl2O3jsYj15kaa1fyLHK7aPBz5rBEW
-	 cPCytv5OGS4gfs3KmsR71kdIDbBR+BHST0wf8XKbu+KjmXyyUc2QzOc7aIlHRWGxPA
-	 E0+dvG3FZMTug==
+	b=BnR1B/g5Cfc26bM4njpw6UNzV5hrILh0j3rSX4S5TxEZXDgF9eDpYuYgp0xhpP+ML
+	 BccNFa88UwLxfcwR+7nmpH/M9ps0xVmIdaHpmA669+MgSKd+T7045ZgZkcCph/0i5f
+	 cDtkicGsbJvpSaoXJgGuI2Pami+EwLYDCJ0ZvSsFii8yuLjGImZSfyw97helfbsPap
+	 URtFInac9pI6r8rh74DyKoaycBDEWrYN4ipzRFOv3KfN+PWZz84WYfMczIMQ62d23L
+	 3BNtjFGjAVrLrE5akn3X9RWD8pDfMWstXva23vOCfbPS2d0QeCbAXZrdveib6Q86V8
+	 iuJOmEjAzQ6TQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 02/11] Docs/ABI/damon: document probe files
-Date: Wed, 24 Jun 2026 07:19:58 -0700
-Message-ID: <20260624142008.87180-3-sj@kernel.org>
+Subject: [RFC PATCH 03/11] mm/damon/tests/core-kunit: test damon_rand()
+Date: Wed, 24 Jun 2026 07:19:59 -0700
+Message-ID: <20260624142008.87180-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260624142008.87180-1-sj@kernel.org>
 References: <20260624142008.87180-1-sj@kernel.org>
@@ -54,64 +51,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON ABI document is not updated for the DAMON probe sysfs files.
-Update.
+Commit 9012c4e647df ("mm/damon: replace damon_rand() with a per-ctx
+lockless PRNG") optimized DAMON for better performance.  Add a kunit
+test for ensuring the pseudo randomness quality.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- .../ABI/testing/sysfs-kernel-mm-damon         | 40 +++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ mm/damon/tests/core-kunit.h | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index b73e6bc28ea5f..2815f6bc05c18 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -157,6 +157,46 @@ Description:	Writing a value to this file sets the maximum number of
- 		monitoring regions of the DAMON context as the value.  Reading
- 		this file returns the value.
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index df16cc070eeb0..a1ba807d59a13 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -1488,6 +1488,26 @@ static void damon_test_walk_control_obsolete(struct kunit *test)
+ 	damon_destroy_ctx(ctx);
+ }
  
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/nr_probes
-+Date:		May 2026
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing a number 'N' to this file creates the number of
-+		directories for each DAMON probe named '0' to 'N-1' under the
-+		probes/ directory.
++static void damon_test_rand(struct kunit *test)
++{
++	struct damon_ctx ctx;
++	int counts[10] = {};
++	int i;
 +
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/nr_filters
-+Date:		May 2026
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing a number 'N' to this file creates the number of
-+		directories for each DAMON probe filter named '0' to 'N-1'
-+		under the filters/ directory.
++	prandom_seed_state(&ctx.rnd_state, get_random_u64());
++	for (i = 0; i < 10000; i++) {
++		unsigned long rnd = damon_rand(&ctx, 0, 10);
 +
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/type
-+Date:		May 2026
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing to and reading from this file sets and gets the type of
-+		the memory of the interest.
++		KUNIT_EXPECT_GE(test, rnd, 0);
++		KUNIT_EXPECT_LE(test, rnd, 9);
++		counts[rnd]++;
++	}
++	for (i = 0; i < 10; i++) {
++		KUNIT_EXPECT_GE(test, counts[i], 900);
++		KUNIT_EXPECT_LE(test, counts[i], 1100);
++	}
++}
 +
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/path
-+Date:		May 2026
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	If 'memmcg' is written to the 'type' file, writing to and
-+		reading from this file sets and geets the path to the memory
-+		cgroup of the interest.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/matching
-+Date:		May 2026
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing 'Y' or 'N' to this file sets whether the filter is for
-+		the memory of the 'type', or all except the 'type'.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/allow
-+Date:		May 2026
-+Contact:	SeongJae Park <sj@kernel.org>
-+Description:	Writing 'Y' or 'N' to this file sets whether to allow or reject
-+		hitting the probe for the memory that satisfies the 'type' and
-+		the 'matching' of the directory.
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/targets/nr_targets
- Date:		Mar 2022
- Contact:	SeongJae Park <sj@kernel.org>
+ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_target),
+ 	KUNIT_CASE(damon_test_regions),
+@@ -1518,6 +1538,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_apply_min_nr_regions),
+ 	KUNIT_CASE(damon_test_is_last_region),
+ 	KUNIT_CASE(damon_test_walk_control_obsolete),
++	KUNIT_CASE(damon_test_rand),
+ 	{},
+ };
+ 
 -- 
 2.47.3
