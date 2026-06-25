@@ -1,41 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CA1351C17
-	for <damon@lists.linux.dev>; Thu, 25 Jun 2026 14:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933D31EA65;
+	Thu, 25 Jun 2026 14:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782396543; cv=none; b=JLlZ1fvEIQ0uNfDAMmTFcBbzKS4rxpxQWYnjJaPJ+iYQeowYWf7PmgeHAKOJrwris6rL21oiPYCO2/ZCTssGiJNV0hLKs0PAk3r/SvwC1Mo+fRPlQrY9k8/57Fw2Aq9+fTbkfimTIS3KedKg7NNzSCww+Ezii7U4ts8uS/rBh1E=
+	t=1782397472; cv=none; b=F1BMfaYP2IdCOL9hYUfGc0PjHgYSDDzCRoO8cjKfc+oqHJVqp6uRrj6NoJZcO49atU55xOd8IWHM26CjdtFxDD7Cjovj4ARTPIKoxOQXA/MnFRymRIEFgn4gnAS2zHogHqizL/CDg2fsYhWeDTqBuTUIwXAqrDr/iWJ8dcEviVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782396543; c=relaxed/simple;
-	bh=V9QOgHNrtIZw/knvSsLYPuFB8thfz0CA5sfrGH+AVEA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lz+4IImxhT80ebrUyWj++VmUnxHHDo/klT/8KIKJQ0U+PJjsDNEjNOzugyXNMdbloY/ZhHIZXGexOgaI+1Uvj6QytjvITCWU0E62zxpHN0RcWf1prbQW8RncsVnK3mXd3Bv1fD2QV13obBjnTwEAEFFV1i8gNKMa8IHpY+EdADY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/BBMGG8; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782397472; c=relaxed/simple;
+	bh=TtVvXUa4e83o2CSHr2VG8/v8m++SEzWD+87YWhkSHP0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bGVxoevx5sa/hAiIIDOKvSPK8wGmI+LVjR71pE4wuqU1KJL02MO9x4VKxcpwWLgNS49MqKnfQyRp42hFPsUtIW2gpFuIQkGOU3Y9029DCdXnqM9vesEqcuRDPRmVEILydXHp6/YS+YG5yxpOOQmJauHsMYcNxBb6TjWcofsNwjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nIUhv7+C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/BBMGG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBD21F000E9;
-	Thu, 25 Jun 2026 14:09:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nIUhv7+C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E131F00A3A;
+	Thu, 25 Jun 2026 14:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782396541;
-	bh=9MU8JuLK9IKvGdEk5rm42o8O1nqs1tzqVYLyPxz97og=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R/BBMGG8ZnuLaB/F500WJN4kBK54C5EdRuUVKQrmzlVWNz+vsW0FXinQ5QwAYRhgV
-	 j91yMsSJEQ6q3uqN6LEb3vi6/s23hGT5qjg0t2/q2COX2X4qESNIHtfa6pf70d3GPj
-	 nYYAey7gqbfgXXhmP6NSM7z1KlGtiuPAMBrfhKyn7LTfmMCiTlC1SuSIc3j13nGX8P
-	 w7YrZSwGQUPzhIMlrs6nSWh4JngTBTpjTh2qx4+gTJmCIp9LGwOZ+uiLByPNfuoK/5
-	 uuONKLsp4Rk/DqT2HRHIbMNesTjqp3/fGeWvopnG2UAOqydJQnOzdO9EPjykiXEpQJ
-	 cBFyfLzOQ+vuA==
+	s=k20260515; t=1782397471;
+	bh=LZrmGHo3vflvh1oEeSShAdbEXA+TKacvFO2pVZr+qWo=;
+	h=From:To:Cc:Subject:Date;
+	b=nIUhv7+C8biL1usYwmhv0V2C5fEWQ1cND8G5CDAa+tzyP3ZfsNzmqyV3F/4qInD/a
+	 FVGGWpQJiLeVueVbTK+oPwFmOmDNKChtSaANHgnd6FP0wqUH0/Qe0Mp8jMfDogYKUf
+	 zdn1mGgjwDF1tFnxTtpJgPxTzEB3Wy7Q8mc8OQiFM9GVENLCRehlO3cNzVkxfvYk1r
+	 swKx80fMe3iUaS6DUdeg3VgLLDMRKzgNwFzcpnejgE3bmMtL/0/RacN3jAawkktqmh
+	 +H2KUzGmn/srKA8+9GKHQpN61CKFx+3NwGV2cATlkic5oG7V3P97TVC7fM3ZvVEN7/
+	 LNCIGw0NIUHag==
 From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 03/11] mm/damon/tests/core-kunit: test damon_rand()
-Date: Thu, 25 Jun 2026 07:08:51 -0700
-Message-ID: <20260625140853.102403-1-sj@kernel.org>
+To: 
+Cc: SeongJae Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v1.2 00/11] mm/damon: update, optimize, and clean up doc, tests, and code
+Date: Thu, 25 Jun 2026 07:23:45 -0700
+Message-ID: <20260625142357.103500-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260625053751.92864-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,72 +59,45 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 24 Jun 2026 22:38:06 -0700 SeongJae Park <sj@kernel.org> wrote:
+Patches 1 and 2 update the design and ABI documents for recently added
+DAMON features.  Patches 3-7 add or update more unit and self tests for
+DAMON to cover recently changed or added functions and sysfs files.
+Patch 8 optimizes damon_commit_target_regions() to skip unnecessary
+adjacent ranges setup.  Patches 9-11 clean and fix up recently added
+DAMON sysfs interface code for readability.
 
-> On Thu, 25 Jun 2026 05:13:51 +0000 sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] The KUnit test uses a non-deterministic seed with tight probability bounds, which will cause sporadic test failures.
-> > --
-> > 
-> > commit bc9f1073820b74c3fbb6ac52d5ca363629f99f3d
-> > Author: SeongJae Park <sj@kernel.org>
-> > 
-> > mm/damon/tests/core-kunit: test damon_rand()
-> > 
-> > Commit 9012c4e647df ("mm/damon: replace damon_rand() with a per-ctx
-> > lockless PRNG") optimized DAMON for better performance.  Add a kunit
-> > test for ensuring the pseudo randomness quality.
-> > 
-> > > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> > > index 1cfb8c176b873..756f3b9e2ed3b 100644
-> > > --- a/mm/damon/tests/core-kunit.h
-> > > +++ b/mm/damon/tests/core-kunit.h
-> > 
-> > [ ... ]
-> > 
-> > > @@ -1460,6 +1460,26 @@ static void damon_test_is_last_region(struct kunit *test)
-> > >  	damon_free_target(t);
-> > >  }
-> > >  
-> > > +static void damon_test_rand(struct kunit *test)
-> > > +{
-> > > +	struct damon_ctx ctx;
-> > > +	int counts[10] = {};
-> > > +	int i;
-> > > +
-> > > +	prandom_seed_state(&ctx.rnd_state, get_random_u64());
-> > > +	for (i = 0; i < 10000; i++) {
-> > > +		unsigned long rnd = damon_rand(&ctx, 0, 10);
-> > > +
-> > > +		KUNIT_EXPECT_GE(test, rnd, 0);
-> > > +		KUNIT_EXPECT_LE(test, rnd, 9);
-> > > +		counts[rnd]++;
-> > > +	}
-> > > +	for (i = 0; i < 10; i++) {
-> > > +		KUNIT_EXPECT_GE(test, counts[i], 900);
-> > > +		KUNIT_EXPECT_LE(test, counts[i], 1100);
-> > 
-> > [Severity: Medium]
-> > The test uses a true random seed to initialize the PRNG state, making the
-> > test output non-deterministic. Is it possible that these tight expectation
-> > bounds will cause sporadic test failures in automated CI environments?
-> > 
-> > Statistically, a binomial distribution with n=10,000 and p=0.1 has a
-> > standard deviation of 30. The allowed variation of +/- 100 is roughly
-> > +/- 3.33 standard deviations. The probability of any single bin falling
-> > outside this range is around 0.086%.
-> > 
-> > Over 10 bins, does this mean the test could spuriously fail about 0.86%
-> > of the time (roughly 1 in 117 runs)?
-> 
-> Good catch.  I will modify the test to widen the bound to [800, 1200].
+Changes from RFC v1.1
+- RFC v1.1: https://lore.kernel.org/20260625050756.91115-1-sj@kernel.org
+- Document nid requirement for node_eligible_mem_bp.
+- Fix typos: s/memmcg/memcg/, s/geets/gets/.
+- Drop damon_rnd() randomness test case; test boundness only.
+- Fixup dests dir selftest to do real test with correct file permission checks.
+Changes from RFC
+- RFC: https://lore.kernel.org/20260624142008.87180-1-sj@kernel.org
+- Rebase directly to latest mm-new.
 
-In my second thought, the logic is quite straightforward.  I will simply drop
-the randomness test, and keep only the bound test.
+SeongJae Park (11):
+  Docs/mm/damon/design: update for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP
+  Docs/ABI/damon: document probe files
+  mm/damon/tests/core-kunit: test damon_rand()
+  selftests/damon/sysfs.sh: test multiple probe dirs creation
+  selftests/damon/sysfs.sh: test {core,ops}_filters/ directories
+  selftests/damon/sysfs.sh: test dests dir
+  selftests/damon/sysfs.sh: test all files in quota goal dir
+  mm/damon/core: reduce range setup in damon_commit_target_regions()
+  mm/damon/sysfs: split probe setup function out
+  mm/damon/sysfs: split out filters setup function
+  mm/damon/sysfs: fix typos in probe_{add,rm}_dirs: s/attr/probe/
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |  40 +++++++
+ Documentation/mm/damon/design.rst             |   6 +-
+ mm/damon/core.c                               |  22 +++-
+ mm/damon/sysfs.c                              | 102 ++++++++++--------
+ mm/damon/tests/core-kunit.h                   |  17 +++
+ tools/testing/selftests/damon/sysfs.sh        |  71 +++++++++++-
+ 6 files changed, 205 insertions(+), 53 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: ada7832345164eed1bbca10543b0c46f13738215
+-- 
+2.47.3
