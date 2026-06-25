@@ -1,103 +1,89 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4622305691;
-	Thu, 25 Jun 2026 05:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DE721773D
+	for <damon@lists.linux.dev>; Thu, 25 Jun 2026 05:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782364109; cv=none; b=i+RKhArK68Vig+0VFNlFRpXqNCmKueiIxA5hIH07ssf8kBF8dqFAZJ3AcYCveXl6WjZ1isw/9tmw7IGOVmc931U39aYlpagLUHQvJ7R5Qgu3ab8kOBywbtEqpyEKx5XvkWTRjuwlfgVO2eR0QBKY0lmn6nXTqrp2cn6+S0PglRE=
+	t=1782364432; cv=none; b=qYVsLtjEKIiE2m2tBlKKttcr3/s5nJELOWPc5f4/K/QGiQjI3OemRQFtP8JxEWzUHJpVzDpHOQ/mLp3PcM5Qh0y8mz8fx9YZ0+dpOCyqh1Kie7VwExe1lR/y0dvDDisfUpPNMJVtrEAJQWAtHbRfoAlNElFoz7McY33EhJEwsTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782364109; c=relaxed/simple;
-	bh=nOMs+/z/SrAEJ4IqmwwKaSHP52fTwHkyEWdYdhRQTMA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcWFlTv818aMf2Ijk548PKi7Jfdjf3Wtex5xHMLlWgUhYfQPcjl+V4QUvGyM8T/4ot8RkqiG60OFYMWAQv65KHBtcDvGXkwRktO6PPRoqo/KzQvg4/hvLFa0//rKAHwaL1P/MNSSrdEuwzxGGcxDyFxsXngdL/nVd4UedsBPSGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dhevelcq; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782364432; c=relaxed/simple;
+	bh=huUEHgL/JqkjIMZKbhn1gbkt0tdh6AEfPDymqvmKbXw=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=GjbxYmvtrax09a7idxO/1NGmEGSz4dBaeZkpBcZYTs0ID8oH112YmSEAo5OLKh57c1UAWbNZkoILrNxIkaPcLqhbpImc79MvBZ2HR7zxIjg0rCi0lTjc5xZKg0CuOafuiiPO9yHTjov2S+Druq/zlIrw/ubGGypKfYfsC+yytmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eT9Ph/V5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dhevelcq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FAA01F00A3D;
-	Thu, 25 Jun 2026 05:08:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eT9Ph/V5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419A51F000E9;
+	Thu, 25 Jun 2026 05:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782364107;
-	bh=sQV3GfOG7VWGJtv7W6ZwKyzWFgMIO6rC7OdU4Z34lgE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dhevelcq64era/6pxT7EePZrcWe7Fj58AEygJmXqmsyOHj7e9N2U9XdcW23kB+J6y
-	 6zelKo67pdkntEByDGfpEJJyMrRymy86tDrk0DdQ7OMxEQhhFypV4w9qxP29pwizC5
-	 X0MNQ4FTsEB3qrociZXTL83V6tpnE3/44rIJV7tSQukq/q9iUp8oc4pdL02vEV+uRg
-	 TOprJwnU3kTSB1rbs6z77SU37b9C2Id5o0XhVjFzOJnpfSPwR6zFVZMZCSByAg+5HV
-	 oO7C88H7yXO9nxv5T2s6+W4VO1P6PtYaJdiXXZbbL6+0zGIp4pWcgz8Ne1tgHrfXyU
-	 23j2/dcOqJiag==
-From: SeongJae Park <sj@kernel.org>
-To: 
-Cc: SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 11/11] mm/damon/sysfs: fix typos in probe_{add,rm}_dirs: s/attr/probe/
-Date: Wed, 24 Jun 2026 22:07:54 -0700
-Message-ID: <20260625050756.91115-12-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260625050756.91115-1-sj@kernel.org>
+	s=k20260515; t=1782364431;
+	bh=GjFYOp27KwRQ1B3dWIFeUOVJ4HwDEEIVVy1EjY2dXlc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=eT9Ph/V5BGAtDesADaNbsBeupp0KKccTEFX+W2b97PEdRB78aqEzEFNzAKVJkt49X
+	 fYjKX7DGJWdwPIWVgcy5dlm+jCTU2o2ast1SftluVDIZEdQnb7YSOtyDAoLBjNCl5u
+	 JOtvGBf1jivROOKOg+A/1lLdgGQeD1dGIhtaEawa0UBeXhpPamY26GEbJeyQfxcFSr
+	 fBf1mQTQwKGzk5cg2xE2O4UEy5nTYNyu91OvhubGfk239KYDg6lfFUiO+sOk2HDbuE
+	 TY9nblk1xMQ6FvqGaWoBc7DsksziBgzaDQYlysrwaVYnywS9JS2P+roRdsB/U/wQuM
+	 4i+6NKo7XmJxw==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v1.1 01/11] Docs/mm/damon/design: update for
+ DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SeongJae Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260625050756.91115-2-sj@kernel.org>
 References: <20260625050756.91115-1-sj@kernel.org>
+ <20260625050756.91115-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 25 Jun 2026 05:13:50 +0000
+Message-Id: <20260625051351.419A51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-damon_sysfs_probe_{add,rm}_dirs names a variable for damon_sysf_probe
-as 'attr'.  Probably a trivial copy-pasta error, but it makes the code
-not pleasant to read.  Fix those.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] The patch introduces an internal inconsistency in the design docume=
+nt by documenting the `node_eligible_mem_bp` metric but failing to update t=
+he adjacent sentence that lists which metrics require the `nid` parameter.
+--
 
-Signed-off-by: SeongJae Park <sj@kernel.org>
----
- mm/damon/sysfs.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+commit 77a1ee91d398d22fd9a42b16bbf085e55f72a94a
+Author: SeongJae Park <sj@kernel.org>
+Docs/mm/damon/design: update for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index f3bb146b204df..36d71f1675426 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1068,7 +1068,7 @@ static struct damon_sysfs_probe *damon_sysfs_probe_alloc(void)
- 	return kzalloc_obj(struct damon_sysfs_probe);
- }
- 
--static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *attr)
-+static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *probe)
- {
- 	struct damon_sysfs_filters *filters;
- 	int err;
-@@ -1076,22 +1076,22 @@ static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *attr)
- 	filters = damon_sysfs_filters_alloc();
- 	if (!filters)
- 		return -ENOMEM;
--	attr->filters = filters;
-+	probe->filters = filters;
- 
- 	err = kobject_init_and_add(&filters->kobj, &damon_sysfs_filters_ktype,
--			&attr->kobj, "filters");
-+			&probe->kobj, "filters");
- 	if (err) {
- 		kobject_put(&filters->kobj);
--		attr->filters = NULL;
-+		probe->filters = NULL;
- 	}
- 	return err;
- }
- 
--static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *attr)
-+static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *probe)
- {
--	if (attr->filters) {
--		damon_sysfs_filters_rm_dirs(attr->filters);
--		kobject_put(&attr->filters->kobj);
-+	if (probe->filters) {
-+		damon_sysfs_filters_rm_dirs(probe->filters);
-+		kobject_put(&probe->filters->kobj);
- 	}
- }
- 
--- 
-2.47.3
+This commit updates the DAMON design document to include the
+node_eligible_mem_bp goal metric that was introduced in an earlier commit.
+
+> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/d=
+esign.rst
+> --- a/Documentation/mm/damon/design.rst
+> +++ b/Documentation/mm/damon/design.rst
+> @@ -686,6 +686,8 @@ mechanism tries to make ``current_value`` of ``target=
+_metric`` be same to
+>    (1/10,000).
+>  - ``inactive_mem_bp``: Inactive to active + inactive (LRU) memory size r=
+atio in
+>    bp (1/10,000).
+> +- ``node_eligible_mem_bp``: Scheme target access pattern-eligible memory=
+ ratio
+> +  of a node in bp (1/10,000).
+> =20
+>  ``nid`` is optionally required for only ``node_mem_used_bp``,
+>  ``node_mem_free_bp``, ``node_memcg_used_bp`` and ``node_memcg_free_bp`` =
+to
+
+[Severity: Low]
+Since node_eligible_mem_bp is a node-specific metric, should it also be
+added to this list of metrics that optionally require nid? As currently
+written, the use of the word "only" implies that node_eligible_mem_bp does
+not use an nid parameter, which could be misleading for users trying to
+configure this metric.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260625050756.9111=
+5-1-sj@kernel.org?part=3D1
