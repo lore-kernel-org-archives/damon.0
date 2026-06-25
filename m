@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC0D3783AC;
-	Thu, 25 Jun 2026 14:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39E237FF6D;
+	Thu, 25 Jun 2026 14:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782397496; cv=none; b=ZLhd1i9WQcsQHOjE4prD0hmp9wKp365ZHoypozvZQ5zBnYKbK0oaDEttnwldPuvleQzq3nB3DjFHM82Ely6REqr7d5xUKx8Dxc7feF7WjrDA+L4eTtR3rYX4/5PDv4sftGSukCM5/mForrgGaruiJ1N5mE4OrslpVVs0apNmVKg=
+	t=1782397498; cv=none; b=n8kOR7M28ynf7Hzz3vPH1pjKZASI1p0u5mR0qSu9pVg1wKRnhKSPzZEgchQe0FNKl7/uNqavxHSNkejkjgD12gl0AbBTrLldZ7WkKvTAsJmCJ5qqj70SzxS9incEBIbMbvQPgWwsWNAfbL7K+ICyE0M5NykoXhsKfRv0M9xhEqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782397496; c=relaxed/simple;
-	bh=RA5E0IVRziTxkehe8RwMfImo5CCC3gzpNK3zQdywLIY=;
+	s=arc-20240116; t=1782397498; c=relaxed/simple;
+	bh=nOMs+/z/SrAEJ4IqmwwKaSHP52fTwHkyEWdYdhRQTMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YcCsaBRdwrO7BACsZBEf/SPSUL4BdRaCI3xOEHp99hSpCbd3/BGgiwIGPC+w5XTRc6K4EeB7EabisK1Sg4grzb3mdAjd0GpGURDG2mBadgp044uFYxBBAVgIKepWvb2yyjWLA1zqrvybHqh5VERUwxbwIGCPBAsEF7ygXFTcHuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e7ootxeA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fGFEvYiOwSzIJiN2DeBsDDByVPKhv3ADqtynQGBk+ywXKOYWMm/g67GOTeGZkKd8xCl0rY85572lhyt60srhTf34egSapfz4N0YiesTYobYJjiqek9ElO7c9K174JPOMYbVrA6viUCBkbUZLzvd4NcqQT0PdJ7ZIfqt9RIN35a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HRu6XGK/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e7ootxeA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64CF1F00A3D;
-	Thu, 25 Jun 2026 14:24:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HRu6XGK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5FC1F00A3E;
+	Thu, 25 Jun 2026 14:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782397495;
-	bh=QU3Mdz0QWuS68FFe2kfHvyIPhX+22pphhD8CNUTJFTE=;
+	s=k20260515; t=1782397497;
+	bh=sQV3GfOG7VWGJtv7W6ZwKyzWFgMIO6rC7OdU4Z34lgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e7ootxeAFvxb1hfB81Mthn2cZCaLFZAowIOZ9rKmqjaSAM8KO62ef8i4HhnevDN3X
-	 mxGcab7l17Hgm2Erlzv7YA/udIle5opylGgzMrN7qXMWKzc8vJ/yzFwYZsdlEXSrC0
-	 zZc141hQocD7AVvrMGy95WE1hzaUTJnvB7XqW5Mm1sJyBUwk0G5DPk8dlHE77AbdyN
-	 tPNecPjY0WNYEfzC+c/HXQJcnvcv1QtyC75evsvT1V1kZ3i8iQmWH/fVs1kfUWu4ZX
-	 RldtfzEvv2BI5xvE45J721RrC1Egdd9R4V6sSabskJyqULoSxia2ufU+v1DOX4IeAU
-	 TcW4aG1srvdfA==
+	b=HRu6XGK/qCH+dKSN5MszLTK92Z1d/NPfPB2x7DBDMM1CgMtQx7HErEfemIgaBfioC
+	 cI4L9vQeWDKIEmkQGvxta3Up0cDBe8ewcQLVDuv61CCH69qBCPJG7aMXVBKIF37ufZ
+	 xnhrk3fsMvZq5pda+HfgF7v0so7Th9GXVn4PvHq2SHScvYQAApvdE7p4AgHLvmhnKh
+	 q8bdbLYxbuZwQHbvefJ6O27h/idEG7VsLBvnlIq97g6h8J6WcpGSZ3eD97eBQqLQte
+	 9pSopfDti6CnyNIYGTZv0P9XP3ZwV9zsFyujmZ0xz/70x3flybnvnq3bbgpCEFpgQg
+	 PC+SoymK/NUUg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 10/11] mm/damon/sysfs: split out filters setup function
-Date: Thu, 25 Jun 2026 07:23:55 -0700
-Message-ID: <20260625142357.103500-11-sj@kernel.org>
+Subject: [RFC PATCH v1.2 11/11] mm/damon/sysfs: fix typos in probe_{add,rm}_dirs: s/attr/probe/
+Date: Thu, 25 Jun 2026 07:23:56 -0700
+Message-ID: <20260625142357.103500-12-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260625142357.103500-1-sj@kernel.org>
 References: <20260625142357.103500-1-sj@kernel.org>
@@ -47,54 +47,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_sysfs_set_probe() is doing not only probe setup but also filters
-setup.  Split out filters setup for readability.
+damon_sysfs_probe_{add,rm}_dirs names a variable for damon_sysf_probe
+as 'attr'.  Probably a trivial copy-pasta error, but it makes the code
+not pleasant to read.  Fix those.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ mm/damon/sysfs.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 982d824f63c21..f3bb146b204df 100644
+index f3bb146b204df..36d71f1675426 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1899,16 +1899,11 @@ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
- 	return damon_set_attrs(ctx, &attrs);
+@@ -1068,7 +1068,7 @@ static struct damon_sysfs_probe *damon_sysfs_probe_alloc(void)
+ 	return kzalloc_obj(struct damon_sysfs_probe);
  }
  
--static int damon_sysfs_set_probe(struct damon_probe *probe,
--		struct damon_sysfs_probe *sys_probe)
-+static int damon_sysfs_set_filters(struct damon_probe *probe,
-+		struct damon_sysfs_filters *sys_filters)
+-static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *attr)
++static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *probe)
  {
--	struct damon_sysfs_filters *sys_filters;
- 	int i;
+ 	struct damon_sysfs_filters *filters;
+ 	int err;
+@@ -1076,22 +1076,22 @@ static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *attr)
+ 	filters = damon_sysfs_filters_alloc();
+ 	if (!filters)
+ 		return -ENOMEM;
+-	attr->filters = filters;
++	probe->filters = filters;
  
--	sys_filters = sys_probe->filters;
--	if (!sys_filters)
--		return 0;
--
- 	for (i = 0; i < sys_filters->nr; i++) {
- 		struct damon_sysfs_filter *sys_filter =
- 			sys_filters->filters_arr[i];
-@@ -1935,6 +1930,17 @@ static int damon_sysfs_set_probe(struct damon_probe *probe,
- 	return 0;
+ 	err = kobject_init_and_add(&filters->kobj, &damon_sysfs_filters_ktype,
+-			&attr->kobj, "filters");
++			&probe->kobj, "filters");
+ 	if (err) {
+ 		kobject_put(&filters->kobj);
+-		attr->filters = NULL;
++		probe->filters = NULL;
+ 	}
+ 	return err;
  }
  
-+static int damon_sysfs_set_probe(struct damon_probe *probe,
-+		struct damon_sysfs_probe *sys_probe)
-+{
-+	struct damon_sysfs_filters *sys_filters;
-+
-+	sys_filters = sys_probe->filters;
-+	if (!sys_filters)
-+		return 0;
-+	return damon_sysfs_set_filters(probe, sys_filters);
-+}
-+
- static int damon_sysfs_set_probes(struct damon_ctx *ctx,
- 		struct damon_sysfs_probes *sys_probes)
+-static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *attr)
++static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *probe)
  {
+-	if (attr->filters) {
+-		damon_sysfs_filters_rm_dirs(attr->filters);
+-		kobject_put(&attr->filters->kobj);
++	if (probe->filters) {
++		damon_sysfs_filters_rm_dirs(probe->filters);
++		kobject_put(&probe->filters->kobj);
+ 	}
+ }
+ 
 -- 
 2.47.3
