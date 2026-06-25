@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ECC37D113;
-	Thu, 25 Jun 2026 14:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BC737E2FB;
+	Thu, 25 Jun 2026 14:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782397491; cv=none; b=cfjP7/1r/5mFtKuLRwApz3HK519Q+WQvS4frpT5K2ty2ugVt0dokORPGPkegktW7yXdSF7Q3tG3WamTV7JqCC0uMlNn2q3pJwDXJ95CvFjJ/+sczW7kStSwvu3RJzWdG6fZlzd6H0hpZvdAdSw9GpiiClPrQtOB0cMRwflaVp3w=
+	t=1782397494; cv=none; b=J0qY9A5z0z9bgUNTQfhoRIrRDzbQe0JbWDYMCJwYF3VP16exHulMcYkPZcrckneffA0AvB1opW8v7oai9eODMc8vxzVzoUaxuLgd3AYZG4DP6/9rKlxeU7i+mpI7+mt3S6aS8yPc7pAjjiH1F5CeMn9oC2SbztCWyeM1kKh/x2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782397491; c=relaxed/simple;
-	bh=3kFNcksddTMoPl6d1RNPtllzhSXlxi+x+OM5EDF9YpY=;
+	s=arc-20240116; t=1782397494; c=relaxed/simple;
+	bh=okIK07moQLx3ER5ErmrgTfwRe5dUBIZuWmrnRf1ysJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Su0jsr5qD++Iv7C35OZiCV5rgKCqWW4UU5wpfTQjtdL2qCdvK6fXW8jaYw9i67sXzKBEC9R0KTW/OsYVtoVNCrGWKObeQLE9sioWWx+TaP1yXJLeZ/OOcl0uaNx2BgY33iHZGXeQx1DdWvgGyAY9PIQJHbVG12migFibT55Vijc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kdAoFumM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QU2EOhVjaie4vB7FXCqPAxHQjBUTVX43MudWKn7HNn4OjWLHD7K7JtHiahofmCQsxLkLmLokFHz+m86cjm0ylvSL4E3Aw0/uAUgPnXPBoVZZItuOlBcuYohzGrXZHGSAXnRDGqbZTrjr7Rxx+9bfx1oPHjaeEAIAw0B4WTWqFdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bX6h3onx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kdAoFumM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C441F00A3E;
-	Thu, 25 Jun 2026 14:24:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bX6h3onx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1391F00A3A;
+	Thu, 25 Jun 2026 14:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782397490;
-	bh=HI/zoVaSGKDNLoA6cct9QoJPib3MnUiHJc9KJcrjGCA=;
+	s=k20260515; t=1782397492;
+	bh=rt+skPoflDd8ZOfYhc/MuTewnEe5bpXk/xs4uU5zeT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kdAoFumMFmi8lT19UnVawdo/dF2kT1jrR8Zpwb1bBDvnk5ceyRoTQhg8gVQjibl0d
-	 lIPsINw6UFSNllBr8tHQs4ab+lrffozZWkxzXV35ueEto6mG27HfvKwuDg0W+ZjIoE
-	 xnVqQY03+pDWmkQef7urPe5XGKmBDsnhH09Uahn+MI1CiC1FH+/jI8Y4rf5hZHPj+e
-	 TYnyYPdax/RtAbWo+IZ2uOWYL6cacsu3n/Cnn3SqprbSP5phS6I7TulDGAUIDsy8fB
-	 rrX/QxRE/1Dr0V3zLrJfOuZ/DEM8M1aKecVwQAVDPB31xD/VAp1DrgNBhoPAVk1wu0
-	 2RUGOhCnRndoA==
+	b=bX6h3onxlEPGQYf3PNZ2j6wn2PBhLPtbrlz7+2QYO4tIjFYsRBZdRhINQOUiue6Jc
+	 qHbXiLxUNAQ/5efM6gM1ViuqNaYAp+yTEWlF7ED28r1vRTuNh9vYEWUwNfPfe1mP5L
+	 ucmdbBsz0FvwS6l12z8b6vMLMF8TTHmFk8axWIuB8XCV2JUiCRC3YdQ0gYxq25Av6f
+	 U6jwbOFbtqhCdOTaUGckvY0P6JrerlrkwV2WQ52XmDZCacXw5VPHIH/LFBRf5DlwEy
+	 3JGgty2p7/6Zz40inUICEuardN9dBWESYxM9cGsG6L2f/sU1vHPPWO/BpxI+dnvVv8
+	 LrBm9ImAXP/Wg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 08/11] mm/damon/core: reduce range setup in damon_commit_target_regions()
-Date: Thu, 25 Jun 2026 07:23:53 -0700
-Message-ID: <20260625142357.103500-9-sj@kernel.org>
+Subject: [RFC PATCH v1.2 09/11] mm/damon/sysfs: split probe setup function out
+Date: Thu, 25 Jun 2026 07:23:54 -0700
+Message-ID: <20260625142357.103500-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260625142357.103500-1-sj@kernel.org>
 References: <20260625142357.103500-1-sj@kernel.org>
@@ -47,67 +47,112 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_commit_target_regions() calls damon_set_regions() for updating the
-destination target's monitoring target region boundaries.  It sets the
-boundaries same to source target's monitoring regions, even if they are
-adjacent.  Meanwhile, damon_set_region() sets the destination target
-regions exactly the same to the source, only when the target regions are
-empty.  When there are existing target regions, only a few regions are
-expanded or shrunk to fit on only the boundaries for disjoint regions in
-the source.  Hence the adjacent source ranges mean nothing in common
-cases.  When there are many regions, such adjacent range setup is only a
-waste of time and space.  We recently found [1] it is actually causing
-memory overhead.  Setup the ranges for only distinct ranges.
-
-[1] https://lore.kernel.org/20260603112306.58490-1-akinobu.mita@gmail.com
+damon_sysfs_set_probes() function is relatively long.  It has two nested
+loop for setting two nested entities, namely probe and filter.  Split
+out the probe level setup for readability.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- mm/damon/core.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ mm/damon/sysfs.c | 80 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 46 insertions(+), 34 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 7e4b9affc5b06..ce5294cb1b4f3 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1349,21 +1349,33 @@ static struct damon_target *damon_nth_target(int n, struct damon_ctx *ctx)
- static int damon_commit_target_regions(struct damon_target *dst,
- 		struct damon_target *src, unsigned long src_min_region_sz)
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 2e95e3bac774d..982d824f63c21 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1899,47 +1899,59 @@ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
+ 	return damon_set_attrs(ctx, &attrs);
+ }
+ 
+-static int damon_sysfs_set_probes(struct damon_ctx *ctx,
+-		struct damon_sysfs_probes *sys_probes)
++static int damon_sysfs_set_probe(struct damon_probe *probe,
++		struct damon_sysfs_probe *sys_probe)
  {
--	struct damon_region *src_region;
-+	struct damon_region *src_region, *prev = NULL;
- 	struct damon_addr_range *ranges;
- 	int i = 0, err;
++	struct damon_sysfs_filters *sys_filters;
+ 	int i;
  
--	damon_for_each_region(src_region, src)
--		i++;
-+	damon_for_each_region(src_region, src) {
-+		if (!prev || prev->ar.end != src_region->ar.start)
-+			i++;
-+		prev = src_region;
-+	}
- 	if (!i)
- 		return 0;
+-	for (i = 0; i < sys_probes->nr; i++) {
+-		struct damon_sysfs_filters *sys_filters =
+-			sys_probes->probes_arr[i]->filters;
+-		struct damon_probe *c;
+-		int j;
++	sys_filters = sys_probe->filters;
++	if (!sys_filters)
++		return 0;
  
- 	ranges = kmalloc_objs(*ranges, i, GFP_KERNEL | __GFP_NOWARN);
- 	if (!ranges)
- 		return -ENOMEM;
-+	prev = NULL;
- 	i = 0;
--	damon_for_each_region(src_region, src)
--		ranges[i++] = src_region->ar;
-+	damon_for_each_region(src_region, src) {
-+		if (!prev) {
-+			ranges[i].start = src_region->ar.start;
-+		} else if (prev->ar.end != src_region->ar.start) {
-+			ranges[i++].end = prev->ar.end;
-+			ranges[i].start = src_region->ar.start;
-+		}
-+		prev = src_region;
+-		if (!sys_filters)
+-			continue;
+-		c = damon_new_probe();
+-		if (!c)
++	for (i = 0; i < sys_filters->nr; i++) {
++		struct damon_sysfs_filter *sys_filter =
++			sys_filters->filters_arr[i];
++		struct damon_filter *filter;
++
++		filter = damon_new_filter(sys_filter->type,
++				sys_filter->matching,
++				sys_filter->allow);
++		if (!filter)
+ 			return -ENOMEM;
+-		damon_add_probe(ctx, c);
+-
+-		for (j = 0; j < sys_filters->nr; j++) {
+-			struct damon_sysfs_filter *sys_filter =
+-				sys_filters->filters_arr[j];
+-			struct damon_filter *filter;
+-
+-			filter = damon_new_filter(sys_filter->type,
+-					sys_filter->matching,
+-					sys_filter->allow);
+-			if (!filter)
+-				return -ENOMEM;
+-			if (filter->type == DAMON_FILTER_TYPE_MEMCG) {
+-				int err;
+-
+-				err = damon_sysfs_memcg_path_to_id(
+-						sys_filter->path,
+-						&filter->memcg_id);
+-				if (err) {
+-					damon_destroy_filter(filter);
+-					return err;
+-				}
++		if (filter->type == DAMON_FILTER_TYPE_MEMCG) {
++			int err;
++
++			err = damon_sysfs_memcg_path_to_id(
++					sys_filter->path,
++					&filter->memcg_id);
++			if (err) {
++				damon_destroy_filter(filter);
++				return err;
+ 			}
+-			damon_add_filter(c, filter);
+ 		}
++		damon_add_filter(probe, filter);
 +	}
-+	ranges[i++].end = damon_last_region(src)->ar.end;
- 	err = damon_set_regions(dst, ranges, i, src_min_region_sz);
- 	kfree(ranges);
- 	return err;
++	return 0;
++}
++
++static int damon_sysfs_set_probes(struct damon_ctx *ctx,
++		struct damon_sysfs_probes *sys_probes)
++{
++	int i, err;
++
++	for (i = 0; i < sys_probes->nr; i++) {
++		struct damon_sysfs_probe *sys_probe;
++		struct damon_probe *p;
++
++		p = damon_new_probe();
++		if (!p)
++			return -ENOMEM;
++		damon_add_probe(ctx, p);
++		sys_probe = sys_probes->probes_arr[i];
++		err = damon_sysfs_set_probe(p, sys_probe);
++		if (err)
++			return err;
+ 	}
+ 	return 0;
+ }
 -- 
 2.47.3
