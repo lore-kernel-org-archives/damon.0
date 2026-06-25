@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DA22EC57C
-	for <damon@lists.linux.dev>; Thu, 25 Jun 2026 05:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E6B19ADA4
+	for <damon@lists.linux.dev>; Thu, 25 Jun 2026 05:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782365137; cv=none; b=B4tDQM84F7V0cvioFfTN8pqRiupQONMmXzQpd/jONJreLB+EQh6snWxj4BW6pVMiLMOzbkjpfi1MDhKUBlEE9b0adqGP8EGrowLXBfk2nVSGlYdXf/loOxwNh8+Zsc3nIa4LIl+bjlqcqAdq0BScr+D3Q0bJ6k+UHu3f77i5k/o=
+	t=1782365887; cv=none; b=qsyUcJAaFOqyVS487VLBDJrSxKB27aRixLfItHqkeFn5Vtw2UbdhMcnzPaef4gHcPglUnKXIVMkfbokc/Gz+k4Uww4zsz0GRbHry5C+ZWYZjDIxwruVwl0BLwfHqRudqHmR0NkW3yeTeb/kCcx5OmyIN9EEZvXtcW6hiCd7Wdmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782365137; c=relaxed/simple;
-	bh=M/8nPvQXO6LiZ4xdWaVFs7yGxq1nwYE+9ZmYuVr/1DA=;
+	s=arc-20240116; t=1782365887; c=relaxed/simple;
+	bh=e/YLCJ2cpy5NsukRlrAxLorAqM2PItYwprEZRGzU1Mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vh6NwFM4Ta5Cnmf5GmCFFU54r/JckbGckssOzB7WSoMzvV+60RYuVY+JLCpjXUkMynJC9xXQAbJrFKbC3COnwDedETx99ng7/rmlwYxzop5O0FqJgERWytDbeebM6BItfpXogv7tEFzgNmmm6Nc/z76HXEyPcz+6xCiaZTiXoN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HrYbcyRS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kdaFWuF5ycgtMTXQaZfIXr2DdPcVwPpWxh8C6wbZFrDDWQKxoU5DTZuGhj7LptmeTDBZKHq+oHR2hMo5tr0pO0flgEotrxRa8cOQ2YiI/bAWeg2xYA7aJx2sa6zffjE7J8H0GbJTItwgdf/E0ngjp4Xk/xCJNRWsu3kbKK3aOXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GRyYkUbz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HrYbcyRS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A301F000E9;
-	Thu, 25 Jun 2026 05:25:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GRyYkUbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A358A1F000E9;
+	Thu, 25 Jun 2026 05:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782365135;
-	bh=yDfqOrnClq3YZyN0+dcIY317LkD9GEJEAc9Vcak6nfc=;
+	s=k20260515; t=1782365886;
+	bh=GjORBhJJCuzre1OXE3OpMwJeeNkIyzkpfvXKLTve+Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HrYbcyRSYQGL1C5fDXl+dMKczZaHGndK7TkUFQGLiGrbrCGLl/LVt2nl53Avb6a8u
-	 J37/AdOZpwLAjU0wccOvoHbp3PkmdEiR1SRR+9/RCdO+rpQQgm9yyulbPuUi+fn196
-	 qy2QxL/ZY0udwRpadGqwssLiBDx/Uzmy4IduEzwhbKx6hkr8+3iElNbEZJsNBo+GmE
-	 W7wsH6hk8wo3qcAOzhaPu2mZF/3+SaM4hkJr/AcGzWVNCwnsHxTsvEQ7iiZOYCWuql
-	 UXjafU5YvD8QTTT6wFx4cYXv16ORQG145O9n7xLILch2SGJh/eMc18Fb5NipunK/Ca
-	 rmdmo6ydQZfuA==
+	b=GRyYkUbzJGuwTSuosz8s9G96SiaauKe4RL99XJIv0nFCsG7whQv6SrrxYixSJerBb
+	 0pDyYw2EwvZ/ZdbnKHGZkJ/D6SpR8ZDKOGZyMbaIHyHBR356i1BkBmpi1jdNvARKri
+	 0TSLqIT8WiG4f1iQpcQEjNfDpmJSWJK8CRA1McaCAP3TMDCgZ6tjaivXQi/kJEot/O
+	 Mb+gaZwk8kapYofkUD8Vwis7GNXH8y2m9rCJACS0ec1bsVusFWAlNMz4WZKeS/tIB/
+	 cZNjtENQA8dKg/Lo4aURHSBb2OKgAtu8ycEGqf8xamUtHH2DPyF/fJjmvTMe82Qoq1
+	 hTLX30G/YBySA==
 From: SeongJae Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 02/11] Docs/ABI/damon: document probe files
-Date: Wed, 24 Jun 2026 22:25:19 -0700
-Message-ID: <20260625052520.92614-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.1 03/11] mm/damon/tests/core-kunit: test damon_rand()
+Date: Wed, 24 Jun 2026 22:37:50 -0700
+Message-ID: <20260625053751.92864-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260625051413.972291F000E9@smtp.kernel.org>
+In-Reply-To: <20260625051352.040991F00A3A@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,46 +44,64 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 25 Jun 2026 05:14:13 +0000 sashiko-bot@kernel.org wrote:
+On Thu, 25 Jun 2026 05:13:51 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Incorrect sysfs value 'memmcg' and typographical errors in DAMON probe ABI documentation.
+> - [Medium] The KUnit test uses a non-deterministic seed with tight probability bounds, which will cause sporadic test failures.
 > --
 > 
-> commit 0777dacf66fdc3cce9315b7348cc989aa1d048f8
+> commit bc9f1073820b74c3fbb6ac52d5ca363629f99f3d
 > Author: SeongJae Park <sj@kernel.org>
 > 
-> Docs/ABI/damon: document probe files
+> mm/damon/tests/core-kunit: test damon_rand()
 > 
-> This commit updates the DAMON ABI documentation to include the new DAMON
-> probe sysfs files, defining directories for probes, filters, and attributes.
+> Commit 9012c4e647df ("mm/damon: replace damon_rand() with a per-ctx
+> lockless PRNG") optimized DAMON for better performance.  Add a kunit
+> test for ensuring the pseudo randomness quality.
 > 
-> > diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-> > index b73e6bc28ea5f..2815f6bc05c18 100644
-> > --- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-> > +++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> > index 1cfb8c176b873..756f3b9e2ed3b 100644
+> > --- a/mm/damon/tests/core-kunit.h
+> > +++ b/mm/damon/tests/core-kunit.h
+> 
 > [ ... ]
-> > +What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/path
-> > +Date:		May 2026
-> > +Contact:	SeongJae Park <sj@kernel.org>
-> > +Description:	If 'memmcg' is written to the 'type' file, writing to and
-> > +		reading from this file sets and geets the path to the memory
-> > +		cgroup of the interest.
+> 
+> > @@ -1460,6 +1460,26 @@ static void damon_test_is_last_region(struct kunit *test)
+> >  	damon_free_target(t);
+> >  }
+> >  
+> > +static void damon_test_rand(struct kunit *test)
+> > +{
+> > +	struct damon_ctx ctx;
+> > +	int counts[10] = {};
+> > +	int i;
+> > +
+> > +	prandom_seed_state(&ctx.rnd_state, get_random_u64());
+> > +	for (i = 0; i < 10000; i++) {
+> > +		unsigned long rnd = damon_rand(&ctx, 0, 10);
+> > +
+> > +		KUNIT_EXPECT_GE(test, rnd, 0);
+> > +		KUNIT_EXPECT_LE(test, rnd, 9);
+> > +		counts[rnd]++;
+> > +	}
+> > +	for (i = 0; i < 10; i++) {
+> > +		KUNIT_EXPECT_GE(test, counts[i], 900);
+> > +		KUNIT_EXPECT_LE(test, counts[i], 1100);
 > 
 > [Severity: Medium]
-> Is the expected type value documented correctly here? The documentation
-> instructs users to write 'memmcg' to the type file, but the underlying kernel
-> code strictly expects 'memcg'. If userspace follows this documentation, will
-> the kernel reject the input with an -EINVAL error?
+> The test uses a true random seed to initialize the PRNG state, making the
+> test output non-deterministic. Is it possible that these tight expectation
+> bounds will cause sporadic test failures in automated CI environments?
 > 
-> Also, this isn't a bug, but there is a typo in this sentence where "geets"
-> is written instead of "gets".
+> Statistically, a binomial distribution with n=10,000 and p=0.1 has a
+> standard deviation of 30. The allowed variation of +/- 100 is roughly
+> +/- 3.33 standard deviations. The probability of any single bin falling
+> outside this range is around 0.086%.
+> 
+> Over 10 bins, does this mean the test could spuriously fail about 0.86%
+> of the time (roughly 1 in 117 runs)?
 
-Good catches.  Those are typos.  Somehow nowadays my computer shows lags at
-multiple things including BT keyboard input catch...
-
-I will fix these in the next revision.
-
+Good catch.  I will modify the test to widen the bound to [800, 1200].
 
 
 Thanks,
