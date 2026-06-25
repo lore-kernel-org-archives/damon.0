@@ -1,132 +1,287 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4BB7080D
-	for <damon@lists.linux.dev>; Wed, 24 Jun 2026 14:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26392F6904
+	for <damon@lists.linux.dev>; Thu, 25 Jun 2026 03:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782312986; cv=none; b=gFe7FQux2V9rFyjBcGwyNx3IMLNhdDqdtsWzccG3jCmTrIBZ1I4WT31jmUb4kQjWYkMXlgVnipZwCmcIShlsV5aXPn0ZwwmoUYphKMi3KlFU+t3oQPoMbyMgZ1k4tGXXlpDCTPSRNg1MBOdZEYQMestQM8GP4JDI5hxEVnBaZkg=
+	t=1782356543; cv=none; b=oa8wOeG8PKyp8X0kmymR7ViGFrQ2L3bCOiM+QAL8+hhHV19Nqh47Gm0GwobptjzPRcWZtypCOhArgXQkfOmLDep7YrSVFBpLDUcVJkwma3D6Fvtw4jonZa3DJWSSDwACSLddRnFsZjMR5InW7ziQt1ensuX1GZGDtwweXdPcAxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782312986; c=relaxed/simple;
-	bh=m1Ghz2zCosCICehLFgWTWdwxpVWCq855mhI8FXV4K58=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6Eiop3yknnYMUI5URPe8SBBOLZJ3TKcCRScjudgcXEvwsLxrKyW/1K1nxU19erDWta5vMvN1VZ0az7W0O1mgDDXDOwrjiLYi0g8lxtQHURwrW2CK0Q24OsrPGDTpn8itaAXzdAM7TkMb4KcLzCeX3dyudDFM9ZLJUbXyPnFJSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fMDqFHYv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782356543; c=relaxed/simple;
+	bh=AJ5z7v+xj1bwU2aG0Bcmfo35foG9ftC+wsjfKkRv/5U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BjXucv1liYP0EmCgcKzo4NSWws2+lH40XcC2KZ1nYfju5ecbLK/pqKHLYYxNqdERQgk8TvJS9UMIIQWA12USyZR1PlHesB9oc8Dsd0N3MSA7dEdK026t7plbaWDNarurtnm5or9ydy5rQbYZ0mL0JGaP1pAiD4o2NP2jFS0elBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=f3XfhSe6; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fMDqFHYv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EA11F00A3A;
-	Wed, 24 Jun 2026 14:56:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782312984;
-	bh=KPwftRQ8xnhhZbR0y281yyfH8ninPosFGwGIpR9p0Kw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fMDqFHYvYchX5jvxBnGrEO7kFh5/8ZtfX4L/TJsMjPBObg6tvXTMQOfv3L1TGPMmn
-	 9a0uLUhoZSmJPXh219CZjWo5sW2HhyLaJLmZXDlNGKNj+UAqKVW0xxJ31s4CSlQoR3
-	 +535yxSNHYWwv0y+VNV6Oz6Vz2LBsCC42UsiqgkH4gpphjGPQYIZ5ajuDQBSj74sgO
-	 J8iE4t6vvo14lwPaZVf9mjQCrnAoOyyfX52GBpfSR8/RqAUib7/WZA89ao63N3xwtS
-	 J9uIlev/dKPhLSO/aNUzAWje+GwWl8ATGitRUS8+ShSZaIiKc17tsuc0a6kg9xZ6pU
-	 7bKoHJSUpY+OA==
-From: SeongJae Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Andrew Paniakin <apanyaki@amazon.com>
-Subject: Re: Roadmap for extending DAMON beyond pte-accessed bit
-Date: Wed, 24 Jun 2026 07:56:14 -0700
-Message-ID: <20260624145614.89437-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260525225208.1179-1-sj@kernel.org>
-References: 
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="f3XfhSe6"
+Message-ID: <0ed6b5c3-e955-46e2-9fc6-075a0dfd1c4f@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1782356535;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bg7TU7hDzDNv/08FHHH/On04xmb+0Xhy9JCW39bnqOs=;
+	b=f3XfhSe6G7brFNVp6GZqjOXNU3vcFca4poUFfkwgVZymI1EYtq9zeoyJzoopay7HWx5JvC
+	E0YJXxuEv9p9ioc24zHIhHD7MfpA8W6eQqa3vo59Vdd3bvTmswHZxeWqPUReOxJ21Oxizv
+	nnsvKa6R3D4a+gLxizvgKiVabRJ3kcE=
+Date: Thu, 25 Jun 2026 11:01:21 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Subject: Re: [PATCH v3 1/7] list: Add mutable iterator variants
+To: David Laight <david.laight.linux@gmail.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>,
+ Alexei Starovoitov <ast@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>, Jens Axboe <axboe@kernel.dk>,
+ Tejun Heo <tj@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Peter Zijlstra <peterz@infradead.org>,
+ Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
+ Juri Lelli <juri.lelli@redhat.com>,
+ Vincent Guittot <vincent.guittot@linaro.org>,
+ Paul Moore <paul@paul-moore.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ "Paul E. McKenney" <paulmck@kernel.org>,
+ Shakeel Butt <shakeel.butt@linux.dev>, David Howells <dhowells@redhat.com>,
+ Simona Vetter <simona.vetter@ffwll.ch>, Randy Dunlap
+ <rdunlap@infradead.org>, Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Philipp Stanner <phasta@kernel.org>, linux-block@vger.kernel.org,
+ linux-kernel@vger.kernel.org, cgroups@vger.kernel.org,
+ linux-ntfs-dev@lists.sourceforge.net, linux-fsdevel@vger.kernel.org,
+ io-uring@vger.kernel.org, audit@vger.kernel.org, bpf@vger.kernel.org,
+ netdev@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-perf-users@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ kexec@lists.infradead.org, live-patching@vger.kernel.org,
+ linux-modules@vger.kernel.org, linux-crypto@vger.kernel.org,
+ linux-pm@vger.kernel.org, rcu@vger.kernel.org, sched-ext@lists.linux.dev,
+ linux-mm@kvack.org, virtualization@lists.linux.dev, damon@lists.linux.dev,
+ llvm@lists.linux.dev, Kaitao Cheng <chengkaitao@kylinos.cn>,
+ Muchun Song <muchun.song@linux.dev>
+References: <20260622040533.29824-1-kaitao.cheng@linux.dev>
+ <20260622040533.29824-2-kaitao.cheng@linux.dev>
+ <20260622094242.64531b9a@pumpkin>
+ <351a6b67-b394-4c58-aee2-88b6c8089ad5@linux.dev>
+ <cf8467c7-b98f-44a5-9cf9-60b43b5da711@amd.com>
+ <20260624152324.3def88ce@pumpkin>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Kaitao Cheng <kaitao.cheng@linux.dev>
+In-Reply-To: <20260624152324.3def88ce@pumpkin>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, 25 May 2026 15:52:08 -0700 SeongJae Park <sj@kernel.org> wrote:
-
-> Hello,
+在 2026/6/24 22:23, David Laight 写道:
+> On Wed, 24 Jun 2026 15:23:47 +0200
+> Christian König <christian.koenig@amd.com> wrote:
+>> On 6/24/26 15:14, Kaitao Cheng wrote:
+>>> 在 2026/6/22 16:42, David Laight 写道:  
+>>>> On Mon, 22 Jun 2026 12:05:31 +0800
+>>>> Kaitao Cheng <kaitao.cheng@linux.dev> wrote:
+>>>>  
+>>>>> From: Kaitao Cheng <chengkaitao@kylinos.cn>
+>>>>>
+>>>>> The list_for_each*_safe() helpers are used when the loop body may
+>>>>> remove the current entry.  Their API exposes the temporary cursor at
+>>>>> every call site, even though most users only need it for the iterator
+>>>>> implementation and never reference it in the loop body.
+>>>>>
+>>>>> Add *_mutable() variants for list and hlist iteration.  The new helpers
+>>>>> support both forms: callers may keep passing an explicit temporary cursor
+>>>>> when they need to inspect or reset it, or omit it and let the helper use
+>>>>> a unique internal cursor.  
+>>>>
+>>>> I'm not really sure 'mutable' means anything either.
+>>>> It is possible to make it valid for the loop body (or even other threads)
+>>>> to delete arbitrary list items - but that needs significant extra overheads.
+>>>>
+>>>> It might be worth doing something that doesn't need the extra variable,
+>>>> but there is little point doing all the churn just to rename things.
+>>>>  
+>>>>>
+>>>>> This makes call sites that only mutate the list through the current entry
+>>>>> less noisy, while keeping the existing *_safe() helpers available for
+>>>>> compatibility.
+>>>>>
+>>>>> Signed-off-by: Kaitao Cheng <chengkaitao@kylinos.cn>
+>>>>> ---
+>>>>>  include/linux/list.h | 269 +++++++++++++++++++++++++++++++++++++------
+>>>>>  1 file changed, 231 insertions(+), 38 deletions(-)
+>>>>>
+>>>>> diff --git a/include/linux/list.h b/include/linux/list.h
+>>>>> index 09d979976b3b..1081def7cea9 100644
+>>>>> --- a/include/linux/list.h
+>>>>> +++ b/include/linux/list.h
+>>>>> @@ -7,6 +7,7 @@
+>>>>>  #include <linux/stddef.h>
+>>>>>  #include <linux/poison.h>
+>>>>>  #include <linux/const.h>
+>>>>> +#include <linux/args.h>
+>>>>>  
+>>>>>  #include <asm/barrier.h>
+>>>>>  
+>>>>> @@ -763,28 +764,72 @@ static inline void list_splice_tail_init(struct list_head *list,
+>>>>>  #define list_for_each_prev(pos, head) \
+>>>>>  	for (pos = (head)->prev; !list_is_head(pos, (head)); pos = pos->prev)
+>>>>>  
+>>>>> -/**
+>>>>> - * list_for_each_safe - iterate over a list safe against removal of list entry
+>>>>> - * @pos:	the &struct list_head to use as a loop cursor.
+>>>>> - * @n:		another &struct list_head to use as temporary storage
+>>>>> - * @head:	the head for your list.
+>>>>> +/*
+>>>>> + * list_for_each_safe is an old interface, use list_for_each_mutable instead.
+>>>>>   */
+>>>>>  #define list_for_each_safe(pos, n, head) \
+>>>>>  	for (pos = (head)->next, n = pos->next; \
+>>>>>  	     !list_is_head(pos, (head)); \
+>>>>>  	     pos = n, n = pos->next)
+>>>>>  
+>>>>> +#define __list_for_each_mutable_internal(pos, tmp, head)		\
+>>>>> +	for (typeof(pos) tmp = (pos = (head)->next)->next;		\  
+>>>>
+>>>> Use auto
+>>>>  
+>>>>> +	     !list_is_head(pos, (head));				\
+>>>>> +	     pos = tmp, tmp = pos->next)
+>>>>> +
+>>>>> +#define __list_for_each_mutable1(pos, head)				\
+>>>>> +	__list_for_each_mutable_internal(pos, __UNIQUE_ID(next), head)
+>>>>> +
+>>>>> +#define __list_for_each_mutable2(pos, next, head)			\
+>>>>> +	list_for_each_safe(pos, next, head)
+>>>>> +
+>>>>>  /**
+>>>>> - * list_for_each_prev_safe - iterate over a list backwards safe against removal of list entry
+>>>>> + * list_for_each_mutable - iterate over a list safe against entry removal
+>>>>>   * @pos:	the &struct list_head to use as a loop cursor.
+>>>>> - * @n:		another &struct list_head to use as temporary storage
+>>>>> - * @head:	the head for your list.
+>>>>> + * @...:	either (head) or (next, head)
+>>>>> + *
+>>>>> + * next:	another &struct list_head to use as optional temporary storage.
+>>>>> + *		The temporary cursor is internal unless explicitly supplied by
+>>>>> + *		the caller.
+>>>>> + * head:	the head for your list.
+>>>>> + */
+>>>>> +#define list_for_each_mutable(pos, ...)					\
+>>>>> +	CONCATENATE(__list_for_each_mutable, COUNT_ARGS(__VA_ARGS__))	\
+>>>>> +		(pos, __VA_ARGS__)  
+>>>>
+>>>> The variable argument count logic really just slows down compilation.
+>>>> Maybe there aren't enough copies of this code to make that significant.
+>>>> But just because you can do it doesn't mean it is a gooD idea.
+>>>> I'm also not sure it really adds anything to the readability.
+>>>>
+>>>> And, it you are going to make the middle argument optional there is
+>>>> no need to change the macro name.  
+>>>
+>>> Christian König and Jani Nikula also disagree with the variadic-argument
+>>> implementation approach. If we abandon that method, it means we will
+>>> inevitably need to add some new macros. If mutable is not a good name,
+>>> suggestions for better alternatives would be welcome; coming up with a
+>>> suitable name is indeed rather tricky.  
+>>
+>> I don't think you need to add a new macro for the specific use case that people want to modify the next element of the iteration.
+>>
+>> If I remember your numbers correctly that is a really corner case and keeping using the existing *_safe() macros for that sounds perfectly fine to me.
 > 
+> IIRC currently you have a choice of either:
+> 	define               Item that can't be deleted
+> 	list_for_each()	     The current item.
+> 	list_for_each_safe() The next item.
+> There is also likely to be code that updates the variables to allow
+> for other scenarios.
 > 
-> TLDR: Let's extend DAMON for data attributes monitoring, andd then further
-> extend that for multiple access check primitives including page faults, perf
-> memory-access events and optimized AMD IBS-like h/w feature drivers.
-[...] 
-> Roadmap
-> =======
+> Note that if increase a reference count and release a lock then list_for_each()
+> is likely safer than list_for_each_safe() :-)
 > 
-> Assuming you agree to use the data attributes monitoring interface, I suggest
-> us to do the work in below roadmap.
+> list.h has 9 variants of the 'safe' loop.
+> The bloat of another 9 is getting excessive.
 > 
-> Milestone 1: PTE Accessed bit as one of the data attributes
-> -----------------------------------------------------------
-> 
-> I will work on stabilizing and further extending the data attributes interface
-> and internal framework to be able to support PTE Accessed bit.  This may take
-> no small amount of efforts, but hopefully doable by the end of this year.
+> It has to be said that this is one of my least favourite type of list...
 
-Let me share more detailed plan for this milestone.  Nothing is set on the
-stone.  Everything can be changed on the road.
+Hi Christian König, David Laight, Jani Nikula, David Hildenbrand,
+Andy Shevchenko, Alexei Starovoitov
 
-The overall goal is, making attributes monitoring be able to do everything we
-are doing now with PTE Accessed-bit based monitoring.  It is needed because we
-want to do everythin we can do now with the PMU/page fault-based DAMON.  Also
-it is needed because we will need to deprecate nr_accesses in long term without
-breaking users.  For this, below changes will be made.
+For ease of discussion, I need to summarize the currently possible
+approaches and briefly describe their respective pros and cons,
+using the list_for_each_entry* interfaces as examples.
 
-1. Support moving sum for probe_hits
+1. Add list_for_each_entry_mutable, while keeping list_for_each_entry
+and list_for_each_entry_safe unchanged. list_for_each_entry_mutable
+would be used specifically for safe deletion scenarios that do not
+need to expose the temporary cursor externally. The code can refer to
+the v1 version.
 
-nr_accesses is providing a pseudo moving sum for convenient and fast monitoring
-snapshot retrieval.  Data attributes monitoring results (probe_hits) is not.
-To make attributes monitoring be a foundation for the future PMU-like things
-based data access monitoring, we will first make probe_hits be able to provide
-the psuedo moving sum.  Currently two patch series for this purpose are posted
-on the mailing list:
+Pros: Does not depend on immediate per-subsystem adaptation and can be
+      merged directly.
+Cons: Requires adding a whole set of mutable interfaces, which makes the
+      code somewhat redundant.
 
-- nr_accesses_bp infra cleanup/optimization
-  https://lore.kernel.org/20260622142139.30269-1-sj@kernel.org
-- exposing probe_hits pseudo moving sum
-  https://lore.kernel.org/20260621214231.13449-1-sj@kernel.org
+2. Directly optimize away the temporary cursor in list_for_each_entry_safe
+and define it inside the loop instead, changing the interface from four
+arguments to three.
 
-I aim these to be merged into the next merge window (7.3-rc1).
+Pros: Does not add redundant interfaces.
+Cons: (1) Users need to manually update special cases that use the
+      traversal variable of list_for_each_entry_safe, the new
+      list_for_each_entry_safe would no longer apply there and would
+      need to be open-coded.
+      (2) Because the macro arguments changes, all list_for_each_entry_safe
+      callers would need to be modified and merged together, making it
+      difficult to merge such a large amount of code at once.
 
-2. Support attrs-only monitoring
+3. Use a variadic macro approach to optimize list_for_each_entry_safe,
+so that it supports both three and four arguments.
 
-As a next step, we will add an toption to stop doing the PTE Accessed bit but
-only attributes monitoring.  It will allow users to set weights for each probe,
-and do the regions split/merge operations based on the weighted average of the
-probe_hits.  In this way, DAMON can run in two modes: access + attrs and
-attrs-only modes.
+Pros: (1) Does not add redundant interfaces.
+      (2) Does not depend on immediate per-subsystem adaptation and can
+      be merged directly.
+Cons: (1) Increases compile time.
+      (2) Makes the interface harder for users to use.
 
-3. Extend attrs for PTE Accessed bit check
+4. Optimize list_for_each_entry by defining the temporary cursor internally,
+making it compatible with the functionality of list_for_each_entry_safe.
+The code can refer to the v2 version.
 
-Further, we will extend DAMON attributes monitoring to handle PTE Accessed bit
-check.  We will extend it to let users configure probing preparation
-operations.  The first operation to support will be the PTE Accessed bit
-clearing operation.  Together, we will introduce new DAMON probe filter that
-checks the PTE Accessed bit.  Using those, users will be able to do the
-PTE Accessed bit based access monitoring in attrs-only monitoring mode.
+Pros: (1) Does not add redundant interfaces.
+      (2) The number of externally visible arguments of list_for_each_entry
+      remains unchanged, still three.
+Cons: (1) list_for_each_entry and list_for_each_entry_safe would be merged
+      into one, and list_for_each_entry_safe would gradually be deprecated.
+      (2) Users need to manually update special cases that use the traversal
+      variable of list_for_each_entry, the new list_for_each_entry would no
+      longer apply there and would need to be open-coded. There are 15 such
+      cases in total.
 
-4. Extend attrs for DAMOS
+5. Use a variadic macro approach to optimize list_for_each_entry, so that
+it supports both three and four arguments.
 
-Finally, we will extend DAMOS to be able to run with probe_hits.  That is, it
-will be extended to let users configure the DAMOS target access pattern and do
-its quota-prioritization based on the probe_hits.
+Pros: (1) Does not add redundant interfaces.
+      (2) Does not depend on immediate per-subsystem adaptation and can be
+      merged directly.
+Cons: (1) Increases compile time.
+      (2) list_for_each_entry and list_for_each_entry_safe would be merged
+      into one, and list_for_each_entry_safe would gradually be deprecated.
 
-After the four major changes are made, the attributes only mode DAMON can do
-everything current DAAMON is doing, without nr_accesses.  We will then move on
-to the milestone 2 of this project, and start a long term nr_accesses
-deprecation.
-
-I hope all changes to be landed by 7.5-rc1.
-
-Please feel free to let me knoow if you have any questions.
+6. Make no changes, keep the current logic unchanged, and close the current
+email discussion.
 
 
-Thanks,
-SJ
+Which of the six solutions above do people prefer?
 
-[...]
+-- 
+Thanks
+Kaitao Cheng
+
