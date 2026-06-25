@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312CF2D6E44;
-	Thu, 25 Jun 2026 05:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823FA2EC57C;
+	Thu, 25 Jun 2026 05:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782364101; cv=none; b=jS9dg2ApBxZPZ/3a/KDkd2Ecfs9QROt8aH/i/tWhNaHNfZubb1NRF7mb7TglC3janR7ESkEiK42TiIJvDgCPuYrjLm8ZpzupfMpzVNu0CpZ/Xac2iWju/qzlp50AZ+GqQ8mOKhJm8SVZZ/y1OpW8oL7OPCoIZue6uCZxqh9t2e4=
+	t=1782364102; cv=none; b=iXCUU0JUO+oTjIvXlljDGwiV6CfLc4iXoy58F8kZDXpStdtEWlATGhOuwpm+7rc313Jbr64tvBH6qkjB6+wgOCjvcty+a4bt1U0ADi01F08nc4jVyVPl7aNuoc9r4AmHfntuVVBVW9CByDzEdcC1B5qc9y3vKf4JwcTitlIrYTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782364101; c=relaxed/simple;
-	bh=irUOTcJDS40kj5q2PmLr/HEp0tTGrG6+foGChxwm9VM=;
+	s=arc-20240116; t=1782364102; c=relaxed/simple;
+	bh=mM19ffUFzj/+BJnJCXB8ayH89UMMGNj0eC581UymSQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMc40++g1Nz7iyukO7ZhXMLpqm4D44XqfXy9dkLnf7H7AS5+w9osrma77kndxDymm2CJFtc/R2/X37WhJqTKr2gAOYBWnLjZuwvwstIP+ieuEDqfBFfS+1CmjrZn3hvuSQ8QRrmneCeHl1V4MN5O4taORZLJfpLsqg+/UnProLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VaJRpyT4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gqKfl53ovii7Wo3JdS010ukyyMg4V8froRLi79OmltIdHCHbLyrC4KFVXNCBLcaLZ9NZ/zO5y4P2AiMo+ElcobDpjAbGQIPsCHiOs7la7X7885DztRbDNb0pDC0Oi82wy9ZoGanWaKne4+yGQCipTsD+qFUB13JAmGe3hct5df8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DXmjOlvo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VaJRpyT4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD611F00A3D;
-	Thu, 25 Jun 2026 05:08:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DXmjOlvo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EEA1F00A3F;
+	Thu, 25 Jun 2026 05:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782364099;
-	bh=L4nqp2h8NJB/cbBvBAnNHXHs1MQz+3ybtLtYTB71w34=;
+	s=k20260515; t=1782364101;
+	bh=cdSH2MRv6NGKB8iMyxrijXWFPfgdd88XHA0wpbHvk+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VaJRpyT44V81xCKSMTidxJDBudtkzs0adTpZz0z6TI6CjpWXHsz4nupNV2nb01PiX
-	 Av2+3po2X7I+mjhqUpmmH4y+mag3GZt0pjo0bPuCxl24jLqnorytIlqbRubMrd/49E
-	 NvosAJTM6cIwR/mkvVhwuDIsCLSWf87ADzaePkwHKbb3sXFXgrRc3rFZ3z4sU2OrRY
-	 23AodH2CxfINTr9tANFA9zzmg6PAdOBc0ctcLVFCrgTYqHwfPgz70RRacHqz2Z7o4r
-	 JXoqvJFqVB0pC7KpbxwQG371NDseDp+ra6eqLNOIdMHGKmkeid0jR6w42PhXgsW6Q9
-	 XXLx3I/bne+Kw==
+	b=DXmjOlvoBSA+R/FxQs4eki71+5iBL+SrEZNBykwv30cCMD2KdzmCY6D13T358GAXk
+	 wFftkkPcL+zHZ2eE3Pc0kB/+XdzIa/bwxB4RPy58lXSKsbVeqUK4sSX91a357wzw1S
+	 QA9eqi5ZqGWwKslc1rpm2jJTtnqCCR2YGFTw9VF4xptS9S9J8468OrBH9rLXaR4PP9
+	 NSSrY+rK2GnT/hYOXqY1IBromG6qcMxS+9ZU7ZoG7C4by7T1MR0CXvhbO5jm11CnFg
+	 Bm44d8jZBJtH38FneAhYjVXu4f6zowXO326b7wP9Qyz0vAUjiFv/isVLApFYgcbnJ9
+	 BUkc0NsbcE0zA==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 06/11] selftests/damon/sysfs.sh: test dests dir
-Date: Wed, 24 Jun 2026 22:07:49 -0700
-Message-ID: <20260625050756.91115-7-sj@kernel.org>
+Subject: [RFC PATCH v1.1 07/11] selftests/damon/sysfs.sh: test all files in quota goal dir
+Date: Wed, 24 Jun 2026 22:07:50 -0700
+Message-ID: <20260625050756.91115-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260625050756.91115-1-sj@kernel.org>
 References: <20260625050756.91115-1-sj@kernel.org>
@@ -48,47 +48,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON selftest interface essential file operations test (sysfs.sh) is
-not testing DAMOS dests/ directory.  Add the test.
+DAMON sysfs interface for DAMOS quota has quite extended since its
+initial introduction.  The test case for that in DAMON sysfs interface
+essential file operations test (sysfs.sh) has not accordingly extended,
+though.  Extend the test case to test all existing files.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ tools/testing/selftests/damon/sysfs.sh | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-index 07a33995be852..ffa8413b5ab3d 100755
+index ffa8413b5ab3d..15fb9df928818 100755
 --- a/tools/testing/selftests/damon/sysfs.sh
 +++ b/tools/testing/selftests/damon/sysfs.sh
-@@ -99,6 +99,29 @@ test_stats()
- 	done
+@@ -199,6 +199,20 @@ test_goal()
+ 	ensure_dir "$goal_dir" "exist"
+ 	ensure_file "$goal_dir/target_value" "exist" "600"
+ 	ensure_file "$goal_dir/current_value" "exist" "600"
++	ensure_file "$goal_dir/target_metric" "exist" "600"
++	local fpath="$goal_dir/target_metric"
++	ensure_write_succ "$fpath" "user_input" "valid input"
++	ensure_write_succ "$fpath" "some_mem_psi_us" "valid input"
++	ensure_write_succ "$fpath" "node_mem_used_bp" "valid input"
++	ensure_write_succ "$fpath" "node_mem_free_bp" "valid input"
++	ensure_write_succ "$fpath" "node_memcg_used_bp" "valid input"
++	ensure_write_succ "$fpath" "node_memcg_free_bp" "valid input"
++	ensure_write_succ "$fpath" "active_mem_bp" "valid input"
++	ensure_write_succ "$fpath" "inactive_mem_bp" "valid input"
++	ensure_write_succ "$fpath" "node_eligible_mem_bp" "valid input"
++	ensure_write_fail "$fpath" "foo" "invalid input"
++	ensure_file "$goal_dir/nid" "exist" "600"
++	ensure_file "$goal_dir/path" "exist" "600"
  }
  
-+test_dest()
-+{
-+	dest_dir=$1
-+	ensure_file "$dest_dir/id" "exist"
-+	ensure_file "$dest_dir/weight" "exist"
-+}
-+
-+test_dests()
-+{
-+	dests_dir=$1
-+	ensure_file "$dests_dir/nr_dests" "exist" "600"
-+	ensure_write_succ "$dests_dir/nr_dests" "1" "valid input"
-+	test_dest "$dests_dir/0"
-+
-+	ensure_write_succ "$dests_dir/nr_dests" "2" "valid input"
-+	test_dest "$dests_dir/0"
-+	test_dest "$dests_dir/1"
-+
-+	ensure_write_succ "$dests_dir/nr_dests" "0" "valid input"
-+	ensure_dir "$dests_dir/0" "not_exist"
-+	ensure_dir "$dests_dir/1" "not_exist"
-+}
-+
- test_filter()
- {
- 	filter_dir=$1
+ test_goals()
 -- 
 2.47.3
