@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069742F7F14;
-	Thu, 25 Jun 2026 05:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A5F1DE8AE;
+	Thu, 25 Jun 2026 05:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782364096; cv=none; b=Wxx8wy6Q8YtdO82a1ddXI2f/a8W51vzTgsz4dxkmvDZFFreKTbRQ4UR11Mj2wFcKu2Guh0RT1HTDiXocTgLs9c15rVckYW2yQS3oPqwdqs0WdJE8i1ktYXBN0gmYWpy3UwcADr0VkMw/iBhA/PGszEGEZdn2APnhTWQ/Ez3IDhQ=
+	t=1782364100; cv=none; b=SkiBgtq/1BEbGZzbxFznZNHr7lVe1IwqdQ3/HAq+XZ1f0peOgKeoS5EZaIjBFql/AmAcDR3yVLfF3aM85iEjFmamoOFgahOT2q7urdewhw/5D/mTZ1vR1bj9aEsQEV+AiAZo7lRoLA1a9lqLoJmsKuMTON1a0dMuMl2xIsTl3yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782364096; c=relaxed/simple;
-	bh=MqS+ZHG2zkT+o5XBFF2sr1VtC8YNDSVJ+53UKoyp7I8=;
+	s=arc-20240116; t=1782364100; c=relaxed/simple;
+	bh=PL/6ZIZjnOan1gOeFnHjJMR4b9XjaBpSrUTwBJCajJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXXJMyvgnLnCwPtXiXxrrllQvspV35FL2ZNHtCKJ1CObmEmJMZX03+BwgCNlk2p4UMfR22zYx7KpUnS0ny7uOdYJpGkYmt7HCrLLLRwFYNyIhyztGj3QRwswe9A+hCSMpZmtRYnginbUjlWD7xLfv5XnSA/NKRyp3q84eFbPUGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nVhawKbp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RHtIk+39AYHILoQTeJRoT5F4eIJd43mCWQCsTeqSwO6gNIVfyf8SVJ1i50S64dYcpjcNzbNyQuh3LKXLOgMzUOwwOA0dEY2QrpkHPIwmqBE56eCDXE0aa4Z3sR6THERX4NdmVA5T5CAGTRyvupitWsIjFEijHzBfBZeAj4H8Dsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YmFjRnSe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nVhawKbp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF30E1F00A3D;
-	Thu, 25 Jun 2026 05:08:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YmFjRnSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BB01F000E9;
+	Thu, 25 Jun 2026 05:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782364094;
-	bh=61iW0clYSHE8gzHIMRcuF9jxdl/Em5VRtXAIIrwedXw=;
+	s=k20260515; t=1782364099;
+	bh=e/lP4pJsEcdBFV2cPdsUW/Ogh7Izs8xLb+p1m+SLBac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVhawKbpCGZoP530+IaNcaMO6FdWyaE17WQTJdXc41vAEw94WUo4G0hZxy9h2p+fI
-	 k4YZjLzvWzNEPpmK0rN1MaY5m5y1d+PG8ZnEZp419ZUfuHuTqI67vwsMV4Nta18dKY
-	 pzeNEqp/ZOCf/1gNeKZfyq68Feg2rn2p84Qtk6JYgsNubfWJ8ucrkLyCY52vxAdkLs
-	 kjA65+/QL12t8twWO8cvZLg4nOS6rOEBDv3nB6+SIKOObLYAppwk3k76yIfkcnNaM5
-	 5ExUVyOu2qAX+NR62dh5QOJkKpO5oPlelGBy/tnYvbQMKwvuZT5I+YJHOw2PGLdv3r
-	 lnQP3m104NcTg==
+	b=YmFjRnSe+PXIIKUGaKMql6Wmtw+qOREVgGsXpixF6JzHStIbuxKFBphSso72ZDzFt
+	 +Ou5J8Ia3M0puUsvMqpNk+iX5+rjwqfG1jvSbHs31/69I71gi3mUEXUiQmm+TgKiHK
+	 3UZFoNGZmnT7THa+iV2oj/68fgv82FNthRHnuzm+W0RzLwQ1YzQTJaXoXi71XdJqg9
+	 WvLaZoOJjKdMhk280D2G81NYlDD5Cv+9XkjtCwzW47ls2lyA4I08OAtdwVuA+HzzDH
+	 kM1V7kPlcNTgZto0kPgJTHVopZ7YkY/LQoapipdWBYHs5wxPYouiQkZ0sRViS9jbFq
+	 rcE2FVdCk8pmg==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
@@ -34,9 +34,9 @@ Cc: SeongJae Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 04/11] selftests/damon/sysfs.sh: test multiple probe dirs creation
-Date: Wed, 24 Jun 2026 22:07:47 -0700
-Message-ID: <20260625050756.91115-5-sj@kernel.org>
+Subject: [RFC PATCH v1.1 05/11] selftests/damon/sysfs.sh: test {core,ops}_filters/ directories
+Date: Wed, 24 Jun 2026 22:07:48 -0700
+Message-ID: <20260625050756.91115-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260625050756.91115-1-sj@kernel.org>
 References: <20260625050756.91115-1-sj@kernel.org>
@@ -48,34 +48,59 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs essential file operations test (sysfs.sh) was extended to
-test DAMON probes sysfs directory, by commit 14885da09b0f
-("selftests/damon/sysfs.sh: test probes dir").  Unlike other DAMON sysfs
-files, it is testing only a single directory case.  Extend it for
-multiple directories.
+DAMON sysfs interface essential file operations test (sysf.sh) is not
+testing DAMOS {core,ops}_filters directories.  Add the tests.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/testing/selftests/damon/sysfs.sh | 28 ++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
 diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-index 78f4badb5bebb..0f2ef462a6b6a 100755
+index 0f2ef462a6b6a..07a33995be852 100755
 --- a/tools/testing/selftests/damon/sysfs.sh
 +++ b/tools/testing/selftests/damon/sysfs.sh
-@@ -346,8 +346,13 @@ test_probes()
- 	ensure_write_succ "$probes_dir/nr_probes" "1" "valid input"
- 	test_probe "$probes_dir/0"
- 
-+	ensure_write_succ "$probes_dir/nr_probes" "2" "valid input"
-+	test_probe "$probes_dir/0"
-+	test_probe "$probes_dir/1"
+@@ -103,10 +103,28 @@ test_filter()
+ {
+ 	filter_dir=$1
+ 	ensure_file "$filter_dir/type" "exist" "600"
+-	ensure_write_succ "$filter_dir/type" "anon" "valid input"
+-	ensure_write_succ "$filter_dir/type" "memcg" "valid input"
+-	ensure_write_succ "$filter_dir/type" "addr" "valid input"
+-	ensure_write_succ "$filter_dir/type" "target" "valid input"
 +
- 	ensure_write_succ "$probes_dir/nr_probes" "0" "valid input"
- 	ensure_dir "$probes_dir/0" "not_exist"
-+	ensure_dir "$probes_dir/1" "not_exist"
++	local dir_name=$(basename "$(dirname "$filter_dir")")
++	if  [ "$dir_name" = "filters" ] || [ "$dir_name" = "ops_filters" ]
++	then
++		ensure_write_succ "$filter_dir/type" "anon" "valid input"
++		ensure_write_succ "$filter_dir/type" "memcg" "valid input"
++	fi
++	if  [ "$dir_name" = "filters" ] || [ "$dir_name" = "core_filters" ]
++	then
++		ensure_write_succ "$filter_dir/type" "addr" "valid input"
++		ensure_write_succ "$filter_dir/type" "target" "valid input"
++	fi
++	if [ "$dir_name" = "core_filters" ]
++	then
++		ensure_write_fail "$filter_dir/type" "anon" "ops type"
++		ensure_write_fail "$filter_dir/type" "memcg" "ops type"
++	fi
++	if [ "$dir_name"  = "ops_filters" ]
++	then
++		ensure_write_fail "$filter_dir/type" "addr" "core type"
++		ensure_write_fail "$filter_dir/type" "target" "core type"
++	fi
+ 	ensure_write_fail "$filter_dir/type" "foo" "invalid input"
+ 	ensure_file "$filter_dir/matching" "exist" "600"
+ 	ensure_file "$filter_dir/memcg_path" "exist" "600"
+@@ -208,6 +226,8 @@ test_scheme()
+ 	test_quotas "$scheme_dir/quotas"
+ 	test_watermarks "$scheme_dir/watermarks"
+ 	test_filters "$scheme_dir/filters"
++	test_filters "$scheme_dir/core_filters"
++	test_filters "$scheme_dir/ops_filters"
+ 	test_stats "$scheme_dir/stats"
+ 	test_tried_regions "$scheme_dir/tried_regions"
  }
- 
- test_monitoring_attrs()
 -- 
 2.47.3
