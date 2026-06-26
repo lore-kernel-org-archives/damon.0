@@ -1,51 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1435625B087;
-	Fri, 26 Jun 2026 00:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E89D2820AC;
+	Fri, 26 Jun 2026 00:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782433021; cv=none; b=gbYe8X6J+wAsMkxtAqHObzRtBzz2EmHjTQy7NdJw0fdZ6r3ptTlXSKOanN7xh2NzFO4uRfrQupzEJvcxdTHUbBMGdKmpn5IUKn5WgXDKu3MbEixxDdgWfl9vG7xNULYU/0p2IQy1tlJy7YuBSiBPfcPbQLte3X/fjRrNBfSUJEA=
+	t=1782433023; cv=none; b=FyEYyZrkEubtq8+e9yFbmF2k+dsi9/SKiVWp+8FkVmK8HOZqA5ZaWP0aCczOA28CNVIE1wOJ//O1tsgf8X6aV1FjbvVVPO+68DtWLahpzA+rPvw2Q5SxhgSOdIC3gUKhI4OxzhNZJzEKIDsX1aCxaEjREw9czT4KxKzqSfjerlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782433021; c=relaxed/simple;
-	bh=JtiCXAgV1NzVF6OXtSFqRwlXwQF3WJU35MlaHYuZCdw=;
+	s=arc-20240116; t=1782433023; c=relaxed/simple;
+	bh=U83CuGGTpz/l3QnDhUGShfNAF1oKHyDrOUzyv1RWKCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asob+rb4lXBfv3bI9He3qEjP7rZ/djSqZDe4eOig+B3P3zYusGW1ShLEEsXm+SaJ2Vo+JW/PGsRSaXgfvq1R4304EXktchFm4a20IS6F8Q55PuRrmApEfY2CeEmpJZpEJt6g7K4LGjqNmMmPVEwG+Alil7ZHEKQAK7xWjm4ZhPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QnR1gZzR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o8oCgYlAY5DQvtLMCGWLugrzNWT/zkyIBfKyZhSSyLedFe5ZbXnNSCW0+dpIGuxYM9BxqwZ+AZHPg6NCGKndM5RXCzk6yzytXD7iXFQrcvwVWUcRmh2npC+MyinDzNB4XsdX91zpGGjbIVKs/S84YT27LcWZY0nqDE8SfpSFfL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kOEykp8A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QnR1gZzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A917A1F00A3A;
-	Fri, 26 Jun 2026 00:16:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kOEykp8A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC641F000E9;
+	Fri, 26 Jun 2026 00:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782433019;
-	bh=pRKZafStRhOZUg4JkpnCijAYobhpC1LwOvV2Kj0cqgI=;
+	s=k20260515; t=1782433022;
+	bh=o5OttG5aZqvfe3QoWDGJ8CJoxJmlu+HgiCPFZDVymoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QnR1gZzRhRPKnJAQ2r2PCT4CxE2aafs15g/Z2MBYLUx/poayWUtFh03IxNoZsUpnM
-	 f2io6H6SIKaedqp/Y5aBZZrrpSpgNelqaMQ1ZeX5UmQn6/LuC8tl9ISObGYA3uMxqc
-	 heuwrpPbH7q+yk/GZH3m+C2gg+3iTs3rQgli9ES1OhUF7CYJdyXzPaXO3Y9WBDMvBE
-	 5icDCsNA3GGaXXRlMokCWRKyhi0iNTd+1G9gVPAlwyi+HLsERw5FRfZ7TGaQAdP5AC
-	 g5T1cIGjNEdQCitrUIjzbh+rVADtX8fBq/b+JIs9jGGq76RtXaqmU5dOx+17jEOM1E
-	 Z9ddFQvv26dYw==
+	b=kOEykp8Aw4uSG4MkL/hC+myXzf5b/i6f4lWOYRGYw0UrtrwpIoObKUx8k8bDRzECj
+	 04UfY5cs5t3evs/EauKc0MMeoa+grytqlqfAEjO2I7KxdAHk4X8zzUV/VJO6yB0EVs
+	 BLui4h1dr7WL3v0BUmj6DKHKCKFH1YBoCPkPSqegWXWwwID8fcRDI9JHuO/oAm2pwa
+	 UvLKIsYWih7X/5ekyQzAap8178gKbCWGU0IHgbiix2v1x+NmRVB9NjLsbhxrdIIAdG
+	 4ZY3+KUyr9EWdw3C0S8qdqWmek83h0ai/YBkiVoOGXByl4cO879gOm75mVttd/Flan
+	 +737vQcnTDujQ==
 From: SeongJae Park <sj@kernel.org>
 To: 
 Cc: SeongJae Park <sj@kernel.org>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	Lorenzo Stoakes <ljs@kernel.org>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.3 01/11] Docs/mm/damon/design: update for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP
-Date: Thu, 25 Jun 2026 17:16:32 -0700
-Message-ID: <20260626001644.85825-2-sj@kernel.org>
+Subject: [RFC PATCH v1.3 02/11] Docs/ABI/damon: document probe files
+Date: Thu, 25 Jun 2026 17:16:33 -0700
+Message-ID: <20260626001644.85825-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260626001644.85825-1-sj@kernel.org>
 References: <20260626001644.85825-1-sj@kernel.org>
@@ -57,32 +54,64 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit 9138e27a3bc3 ("mm/damon: add node_eligible_mem_bp goal metric")
-introduced DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP but forgot updating the
-DAMON design document for that.  Update.
+DAMON ABI document is not updated for the DAMON probe sysfs files.
+Update.
 
 Signed-off-by: SeongJae Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../ABI/testing/sysfs-kernel-mm-damon         | 40 +++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 2da7ca0d3d17a..f4efb51688853 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -686,9 +686,11 @@ mechanism tries to make ``current_value`` of ``target_metric`` be same to
-   (1/10,000).
- - ``inactive_mem_bp``: Inactive to active + inactive (LRU) memory size ratio in
-   bp (1/10,000).
-+- ``node_eligible_mem_bp``: Scheme target access pattern-eligible memory ratio
-+  of a node in bp (1/10,000).
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index b73e6bc28ea5f..f914aab79fced 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -157,6 +157,46 @@ Description:	Writing a value to this file sets the maximum number of
+ 		monitoring regions of the DAMON context as the value.  Reading
+ 		this file returns the value.
  
--``nid`` is optionally required for only ``node_mem_used_bp``,
--``node_mem_free_bp``, ``node_memcg_used_bp`` and ``node_memcg_free_bp`` to
-+``nid`` is optionally required for ``node_mem_used_bp``, ``node_mem_free_bp``,
-+``node_memcg_used_bp``, ``node_memcg_free_bp`` and ``node_eligible_mem_bp`` to
- point the specific NUMA node.
- 
- ``path`` is optionally required for only ``node_memcg_used_bp`` and
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/nr_probes
++Date:		May 2026
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing a number 'N' to this file creates the number of
++		directories for each DAMON probe named '0' to 'N-1' under the
++		probes/ directory.
++
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/nr_filters
++Date:		May 2026
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing a number 'N' to this file creates the number of
++		directories for each DAMON probe filter named '0' to 'N-1'
++		under the filters/ directory.
++
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/type
++Date:		May 2026
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing to and reading from this file sets and gets the type of
++		the memory of the interest.
++
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/path
++Date:		May 2026
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	If 'memcg' is written to the 'type' file, writing to and
++		reading from this file sets and gets the path to the memory
++		cgroup of the interest.
++
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/matching
++Date:		May 2026
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing 'Y' or 'N' to this file sets whether the filter is for
++		the memory of the 'type', or all except the 'type'.
++
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/<F>/allow
++Date:		May 2026
++Contact:	SeongJae Park <sj@kernel.org>
++Description:	Writing 'Y' or 'N' to this file sets whether to allow or reject
++		hitting the probe for the memory that satisfies the 'type' and
++		the 'matching' of the directory.
++
+ What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/targets/nr_targets
+ Date:		Mar 2022
+ Contact:	SeongJae Park <sj@kernel.org>
 -- 
 2.47.3
