@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDB43F9F2B;
-	Fri, 26 Jun 2026 14:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C0837C0FA;
+	Fri, 26 Jun 2026 15:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782485971; cv=none; b=NYD8EITdugeOuWbn/3SI/nqze3RJGwFv6gYaPV/sdDz2jA7iBZRHMcfneUmvqj3cLxhveRqR0RBO87+KcoHeONrz44irEJe76S81H9OTlXdylX/vZ9QiH4Frllt7DodcRbQWZtguF2Nxp3Gg3sPrtS/7NFr4TDPapBAYmtU0RGE=
+	t=1782486684; cv=none; b=Jsc+tcoW3EkQ4hIlRDFBkscWzObsE2XDUVh4uR7J3DyAl8CkP2DG7CihikWncH2izVYwC2H21yQZhPR8mzcU+9l6y8we+oN89dE1Kv9CsZOKyEC3DjPHGEB2PVBVUBrR6zLKQ0xFpzsbVjOkg6hp6mzobB5dwojQiEd8CYjltxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782485971; c=relaxed/simple;
-	bh=Kz90amDPMzyconLN0t1O9z8pcQIDSZWe5ONwJoco054=;
+	s=arc-20240116; t=1782486684; c=relaxed/simple;
+	bh=HLesOPYJkipgMtEXgj+X0m1CujMFA3L5DtR77zhaeLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LVzdxZ1zNGinjeyb/D+tBw5XGrka/uU1KkqFMAAHXMO+QCs1tvdAYTp7VuqRGef7TsODUAvKqle5fXDAgVk1G9ZJSNmXstRH1wkvy0NV7UiLCfm9aHo9lf2FBwcLO5gWkFpP4q2o6suABjHfcxDgGv4WicCWSnUzrxPlTEgw178=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UEXyo0RY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ef6Skp5TFhGi2W1Be05cfqR+w7cCY6tRYWoIhfdhd3YGJgijnxYQjnM3gtpNQQ+WFbad8qQmcAjZDhWFRFxhsNMwRh5ZYy8HB8Y1AQETg7ahoHACLkCTEf0RDmGbfqtzK5YnrS9KQssVWaQ5mjd0fCwahyPtA+XLol00IiqAXCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZEEYlLiY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UEXyo0RY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BF11F000E9;
-	Fri, 26 Jun 2026 14:59:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZEEYlLiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F7B1F000E9;
+	Fri, 26 Jun 2026 15:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782485965;
-	bh=x9LvqpwysSqofZzAIdP9KQqPtkdx0PkmmB9N5eDhoqM=;
+	s=k20260515; t=1782486679;
+	bh=HUtZMqCOdCenr50gEulAE+IUtkAdGzFUI1qYzhYf1RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UEXyo0RYES2I1TolfWEle3jihyB9LeVYjE/KYQdQCdqT+zL3Thznkkv3+9IrEe/a8
-	 evwMe7Gs5LCKcdkQLvgCj89zymBD9J4MPUtX1maookb8ha6Tu8ngb4DOUoBiiSwLky
-	 vTZQ016vyJVG366HcrGkJAERZlbWsmkR0Dg2P+330kGOV0uOPhw3tp7oOrJqIf2dBw
-	 uOfkl7W9abmkfAjq0GNZofBAGtUBELMINSMd608F3NkHBldl5goGzekX7clHPUFSZl
-	 S1IhHB6VQ+H4BoDoVmp4/+3tRaZHRW7t7WHCyuEEtvr7F8nm2TX7iHevmyDlH7a/1C
-	 h5FpbmULqIewQ==
+	b=ZEEYlLiYFtPkSn8WOsmXnHi+2QBy06Jg2Z/jRWe3s+VfvHtNEtokgPFZoftjpMH8H
+	 HTfwXFGWdbPY8xS1/iRyzHMijj8q21ns9T+nkNy39sThXxqPgxAyjfb3G5PxX7liBE
+	 voqt5LWraogJ6n5Mo3cXc7hVvWiSwc3JxA6VpT8FFIwuJG2J01Z0yfr3QFLUZuGWy8
+	 2L0ADCeea7I4Gev6Z6si44rfTV9ON9BITsYUS2vQOZG3ieaXI3LLBM5fqyzevrUtiL
+	 XOZIzN1fSKZbzs01W3zVKT/aG3XLSiz4+7MKCQnUaYGEdAJ0KrWJO8LP+D8gsvgcTc
+	 10jdgpMzL2YUg==
 From: SeongJae Park <sj@kernel.org>
-To: Jiayuan Chen <jiayuan.chen@linux.dev>
+To: Akinobu Mita <akinobu.mita@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	jiayuan.chen@shopee.com,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shu Anzai <shu17az@gmail.com>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] mm/damon/core: detect internal variation above max_nr_regions/2
-Date: Fri, 26 Jun 2026 07:59:09 -0700
-Message-ID: <20260626145910.88535-1-sj@kernel.org>
+	linux-perf-users@vger.kernel.org,
+	ravis.opensrc@gmail.com
+Subject: Re: [RFC PATCH 0/2] damo: support perf event configuration
+Date: Fri, 26 Jun 2026 08:11:10 -0700
+Message-ID: <20260626151113.116999-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260626085851.70754-1-jiayuan.chen@linux.dev>
+In-Reply-To: <CAC5umyj0qTqR0HpHux6+G6bvGCQqtM8CVVXSZSCt66OtJU7+AA@mail.gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,83 +44,79 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 26 Jun 2026 16:58:36 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+On Fri, 26 Jun 2026 22:56:24 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
 
-> Sorry for the late.
+> 2026年6月23日(火) 22:50 SeongJae Park <sj@kernel.org>:
+> >
+> > On Tue, 23 Jun 2026 22:29:42 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+> >
+> > > 2026年6月23日(火) 0:24 SeongJae Park <sj@kernel.org>:
+> > > >
+> > > > Hello Akinobu,
+> > > >
+> > > > On Mon, 22 Jun 2026 22:49:31 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+> > > >
+> > > > > This patch set aims to make it easier to specify the perf event settings
+> > > > > proposed for DAMON by Ravi's hardware-sampled access reports patch set [1]
+> > > > > from the damo tool.
+> > > >
+> > > > Seems this patch is built on top of the per-CPU/thread/read/write monitoring
+> > > > patch series [1].  We made a plan [2] to use another user interface, though.
+> > > > The plan is, making the interface ready for page table accessed bits based
+> > > > monitoring by LPC'26 (milestone 1), and implementing the perf event based
+> > > > monitoring on top of it, by LSFMMBPF'27 (milestone 2).
+> > > >
+> > > > So the eventual damo part change for supporting perf event based monitoring
+> > > > will be quite different from this series.  I guess you are sharing this series
+> > > > not because you aiming to merge it as is right now, but just for sharing the
+> > > > code with other stakeholders like Ravis, not me?  If I'm not wrong, I will skip
+> > > > this series for now, to focus on the milestone 1.
+> > >
+> > > Since I will align with the final user interface later, please focus on
+> > > the optimal interface for Milestone 1 without worrying about that.
+> >
+> > Thank you, Akinobu.
+> >
+> > >
+> > > > Please let me know if you want more of my feedback.
+> > >
+> > > However, even if the interface ends up being completely different from the
+> > > current one, I believe that enabling configuration via `damo` using
+> > > symbolic event names like this would still require calling the perf
+> > > python interface (`import perf`) from damo and modifying the `perf` tool
+> > > itself; could you please check if that approach is acceptable?
+> >
+> > I'm bit concerned at having such dependencies.  I'd prefer making DAMON sysfs
+> > interface uses a symbolic names and just use it from damo if possible.  If that
+> > is not possible, could you share more details about why such changes are
+> > required?  I'm still lazily delaying studying about perf events, so please bear
+> > in mind with me.
+> 
+> Theoretically, it might be possible to initialize `perf_event_attr` within
+> the kernel based on the symbolic names of specified PMU events.
+> However, doing so would require implementing logic to read
+> `/sys/bus/event_source/devices/<pmu>/format/*`, as well as duplicating
+> functionality within the kernel that is currently provided by the `perf`
+> user-space tools.
+> 
+> However, if we limit processing to only the minimal format, such as
+> `pmu/config=M,config1=N,config3=K/`, described in the explanation of the
+> `-e` option in `tools/perf/Documentation/perf-record.txt`, it may be
+> possible to minimize duplication.
 
-No worry!
+Sounds good.
 
-> 
-> kdamond_split_regions() bails out early when nr_regions is already
-> above max_nr_regions / 2.  A large region that picks up new internal
-> variation after that point never gets split, so we lose visibility
-> into its hot/cold structure.
-> 
-> We hit this with damon-paddr on hugepage workloads and damon-vaddr
-> on processes that mmap a large anonymous range.
-> 
-> Example with max_nr_regions == 1500.  A target ends up with 799
-> small hot/cold regions plus one big region (an earlier merge
-> collapsed a uniformly-accessed range into a single piece):
-> 
-> H:hot
-> C:cold
-> 
->       r1     r2     r3                 r800
->     HHHHHH|CCCCCC|HHHHHH|...|HHHHHH..........................|
-> 
->     nr_regions = 800  >  max_nr_regions / 2 = 750
-> 
-> Now a cold subarea shows up inside r800:
-> 
->       r1     r2     r3                 r800
->     HHHHHH|CCCCCC|HHHHHH|...|HHHHHH........CCCCCC.............|
-> 
-> The small regions can't merge with each other (their access counts
-> differ), so budget never frees up.  r800 can't be split because
-> nr_regions > max_nr_regions / 2 returns early.  The cold subarea
-> stays invisible.
-> 
-> Patch 1 keeps refining on this path: when nr_regions is above
-> max_nr_regions / 2 but still under the maximum, it splits a fraction
-> of the regions instead of returning.  The fraction shrinks as the
-> remaining budget shrinks, so the count approaches max_nr_regions
-> smoothly.  A useless split is undone by the next merge cycle.
+I'd prefer making DAMON interface as human readable as possible, as long as it
+is not duplicating things too much.
 
-I assume you confirmed this change is making somee progress in a test or on
-your real use case?  It would be great if you can confirm that and/or even
-share your measurements.
-
-> 
-> Patch 2 adds a KUnit test for the case where nr_regions is already
-> above max_nr_regions / 2.
-> 
-> Thanks to SeongJae for the suggestion to drive the split fraction
-> from the remaining budget rather than an age-based filter.
-
-I'm glad to help this grateful improvement!
-
-> 
-> 
-> v1 -> v2: Some feedback from SJ.
-> v1: https://lore.kernel.org/damon/20260521045236.115749-1-jiayuan.chen@linux.dev/
-> 
-> Jiayuan Chen (2):
->   mm/damon/core: split a fraction of regions when nr_regions exceeds
->     max/2
->   mm/damon/tests/core-kunit: test split above max_nr_regions/2
-
-I have trivial comments to the second patch, but all looks good enough.
-
-I will apply this series to damon/next [1] tree.  If this patch is not added to
-mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
-to pick this.  So, no action from your side is needed for now.  If it seems I
-also forgot doing that or you cannot wait for my action, please feel free to
-directly ask that to Andrew.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+I wouldn't mind adding changes that depend on perf user-space tools or
+libraries in 'damo' for making it even more human-readable, as long as it
+doesn't break the backward compatibility of 'damo', and perf developers are ok
+with the perf-side change.  Anyway 'damo' is using 'perf' internally ;)  And
+seems perf developers are thankfully very open minded :)
 
 
 Thanks,
