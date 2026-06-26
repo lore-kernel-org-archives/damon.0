@@ -1,32 +1,32 @@
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEC13E8345
-	for <damon@lists.linux.dev>; Fri, 26 Jun 2026 08:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555AF3E7BA7
+	for <damon@lists.linux.dev>; Fri, 26 Jun 2026 09:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782464398; cv=none; b=O5xJA4aA7mbiJ5RbYg81SXjTL1gTRoMG+sSYkgpIcY/urpTOYsoXuweZZ0k5Jg33scTzov09IFHbX873rdMfh/5TnP3CZD76bVHkgG+GbRBWH1oJtXZaRqPvwCK4/IrWCwffLtQYGBVjZEcgS8apOl7uyHuhLQhY2g+FkI3cSQ8=
+	t=1782464407; cv=none; b=Et9TMBcsMsFLjJGxIcwqtHXLYNd8XYd7JGUuo8QLr1VvEYJ0AikHgcVxw4vVusH+4+vrHKd474fG0T2Fzyda+dNq6L83z9XkmG8OOayT7I8aUa6wpnUb9mZigl115zkPMfVVFAMh/b6LiEP/mMybhyJwUkkGcDIDRJ0bVmtpgz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782464398; c=relaxed/simple;
-	bh=SPCcEpGfkluEqaIPY1rO0mYTGBVaaXe+Br7oVTeZiFQ=;
+	s=arc-20240116; t=1782464407; c=relaxed/simple;
+	bh=Ds3LdZWnr3AWaeQztKl7qNplh+TcKtAjHrlOs/N++Sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPe1sWUNNDc6rbUQLWSO0RAzP716JLhkHOxSSPOcnpgvggAlOO//GJar5Dna823Y/N6CvYJGAPH5HXtup9w0+S+gE4/SwsLlfmr2V5TY6iXPwogAKKiyaR7qUk0kzrovlmYnIgbuOlO4X+z2PmiQaJOEDFVEwin4CXEShNoxmjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TWTPuoHN; arc=none smtp.client-ip=95.215.58.177
+	 MIME-Version; b=NyaWMYpJHe5xQfTRncVuvyNIrkR+4zB1TbD3uuUYLt3FXBHAPqKOnLgCPwm1Rq43O0KmUFVuz9iujAIwyQNtbDjwixZUOBPrz10tUMj0lVU3adBJUCo7kDoBEKm2gmT4tU4IuTb6fy8Pm94amjLZ8GF7R4vPyGn1IHSglJvwBtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BZC2sX83; arc=none smtp.client-ip=95.215.58.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TWTPuoHN"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BZC2sX83"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782464393;
+	t=1782464402;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=o/AKESdZLDH+aWzHoqnqaRdmen2KGUt9vPtou3JWZ00=;
-	b=TWTPuoHNMpUrutD9Nj5/mAVZStDcfAmZBTehgtlcu4Pw1KjmDMv6X8cIENgSdluXtb2DiO
-	rDcUEbC/8L/P7nXqzUCERKrX1CMhLuZ9eCdUtfE2U6eDRoiN4Arr85sfdy+2e/dFL205//
-	v6ZGeIiQGRf1NGv6mLwnvxX3zOCHK3w=
+	bh=RiF+ZZp+CVU1sZqeDDRKvFPYiBeZ08llaMDiB0IH+P0=;
+	b=BZC2sX83iCPGiP8u4V/j2JFHHAvan3ttXTMNSWEawRTRc+lBxqRdNidDx4QEoApuNeJhAT
+	BgdopX6rtN9K9+8I+cLEXF9ye8+IOW3/ZuUeXXpWrpCbv6N7VonvJYEtiyZ43uTJ3qsC3P
+	ZqY5ujY+QkxJyy2C1NoBP7ZADQVxNFU=
 From: Jiayuan Chen <jiayuan.chen@linux.dev>
 To: damon@lists.linux.dev
 Cc: jiayuan.chen@shopee.com,
@@ -36,9 +36,9 @@ Cc: jiayuan.chen@shopee.com,
 	Shu Anzai <shu17az@gmail.com>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/2] mm/damon/core: split a fraction of regions when nr_regions exceeds max/2
-Date: Fri, 26 Jun 2026 16:58:37 +0800
-Message-ID: <20260626085851.70754-2-jiayuan.chen@linux.dev>
+Subject: [PATCH v2 2/2] mm/damon/tests/core-kunit: test split above max_nr_regions/2
+Date: Fri, 26 Jun 2026 16:58:38 +0800
+Message-ID: <20260626085851.70754-3-jiayuan.chen@linux.dev>
 In-Reply-To: <20260626085851.70754-1-jiayuan.chen@linux.dev>
 References: <20260626085851.70754-1-jiayuan.chen@linux.dev>
 Precedence: bulk
@@ -52,132 +52,106 @@ X-Migadu-Flow: FLOW_OUT
 
 From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-kdamond_split_regions() returns early when nr_regions is above
-max_nr_regions / 2, leaving internal access variation inside a large
-region undetected.
+Add a test that exercises kdamond_split_regions() when the total
+region count is already above max_nr_regions / 2, asserting that the
+function still splits a fraction of the regions (makes progress) and
+does not overshoot max_nr_regions.
 
-Such a layout is common with damon-paddr on hugepage workloads or
-damon-vaddr on processes with a large anonymous mmap.
+The region size and min_region_sz are picked so the split arithmetic
+does not depend on the page size.
 
-For example, with max_nr_regions == 1500, a target may end up with
-799 small alternating-temperature regions plus one large region that
-absorbed a uniformly-accessed range during an earlier merge:
-
-H:hot
-C:cold
-
-      r1     r2     r3                 r800
-    HHHHHH|CCCCCC|HHHHHH|...|HHHHHH..........................|
-
-    nr_regions = 800  >  max_nr_regions / 2 = 750
-
-If a cold subarea later emerges inside r800:
-
-      r1     r2     r3                 r800
-    HHHHHH|CCCCCC|HHHHHH|...|HHHHHH........CCCCCC.............|
-
-The small regions cannot merge with each other (different access
-counts), so the budget stays full.  r800 cannot be split because
-nr_regions > max_nr_regions / 2 causes an early return.  The cold
-subarea is never discovered.
-
-When nr_regions is above max_nr_regions / 2 but still under the
-maximum, split only a fraction of the regions instead of returning.
-One region in every 'max_nr_regions / budget' regions is split, where
-budget is the remaining room (max_nr_regions - nr_regions), starting
-from a rotating offset so different regions get picked over time.  The
-fraction shrinks as the budget shrinks, so the region count keeps
-refining while approaching max_nr_regions smoothly rather than
-overshooting it.  An unnecessary split is reverted by the next
-kdamond_merge_regions().
+All tests pass:
+  damon: pass:31 fail:0 skip:0 total:31
+  Totals: pass:31 fail:0 skip:0 total:31
 
 Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
 Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
 ---
- mm/damon/core.c | 49 ++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 44 insertions(+), 5 deletions(-)
+ mm/damon/tests/core-kunit.h | 64 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index d0cbfb6d1e4c..26a2cdb935f5 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3712,6 +3712,37 @@ static void damon_split_regions_of(struct damon_ctx *ctx,
- 	}
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 29fbe495e532..6fe7abcd670d 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -341,6 +341,69 @@ static void damon_test_split_regions_of(struct kunit *test)
+ 	damon_destroy_ctx(c);
  }
  
-+/* Split one in every @split_step regions into two, from a rotating offset */
-+static void damon_split_some_regions(struct damon_ctx *ctx,
-+				     unsigned long split_step)
++/*
++ * When the total region count is already above max_nr_regions / 2,
++ * kdamond_split_regions() must keep refining the resolution by splitting a
++ * fraction of the regions (making progress), without exceeding
++ * max_nr_regions.
++ */
++static void damon_test_split_above_half_progresses(struct kunit *test)
 +{
-+	static unsigned long rotation;
++	struct damon_ctx *c;
 +	struct damon_target *t;
-+	struct damon_region *r, *next;
-+	unsigned long offset = rotation++ % split_step;
-+	unsigned long idx = 0;
++	struct damon_region *r;
++	unsigned long start;
++	unsigned int nr_before, nr_after, i;
++	const unsigned int nr_init = 760;
++	const unsigned long region_sz = 100;
 +
-+	damon_for_each_target(t, ctx) {
-+		damon_for_each_region_safe(r, next, t) {
-+			unsigned long sz_region, sz_sub;
++	c = damon_new_ctx();
++	if (!c)
++		kunit_skip(test, "ctx alloc fail");
 +
-+			if (idx++ % split_step != offset)
-+				continue;
-+			sz_region = damon_sz_region(r);
-+			if (sz_region < 2 * ctx->min_region_sz)
-+				continue;
++	/* Keep the split arithmetic independent of the page size */
++	c->min_region_sz = 1;
++	c->attrs.min_nr_regions = 10;
++	c->attrs.max_nr_regions = 1500;
 +
-+			sz_sub = ALIGN_DOWN(damon_rand(ctx, 1, 10) *
-+					sz_region / 10, ctx->min_region_sz);
-+			/* Do not allow blank region */
-+			if (sz_sub == 0 || sz_sub >= sz_region)
-+				continue;
-+
-+			damon_split_region_at(t, r, sz_sub);
-+		}
++	t = damon_new_target();
++	if (!t) {
++		damon_destroy_ctx(c);
++		kunit_skip(test, "target alloc fail");
 +	}
++
++	for (i = 0; i < nr_init; i++) {
++		start = i * region_sz;
++		r = damon_new_region(start, start + region_sz);
++		if (!r) {
++			damon_free_target(t);
++			damon_destroy_ctx(c);
++			kunit_skip(test, "region alloc fail");
++		}
++		r->nr_accesses = (i & 1) ? 0 : 100;
++		r->age = 5;
++		damon_add_region(r, t);
++	}
++
++	damon_add_target(c, t);
++
++	nr_before = damon_nr_regions(t);
++	/* Above max_nr_regions / 2, so the blanket-split path is skipped */
++	KUNIT_EXPECT_GT(test, (unsigned long)nr_before,
++			c->attrs.max_nr_regions / 2);
++
++	kdamond_split_regions(c);
++
++	nr_after = damon_nr_regions(t);
++	/* Still made progress ... */
++	KUNIT_EXPECT_GT(test, nr_after, nr_before);
++	/* ... but did not overshoot the configured maximum */
++	KUNIT_EXPECT_LE(test, (unsigned long)nr_after,
++			c->attrs.max_nr_regions);
++
++	damon_destroy_ctx(c);
 +}
 +
- /*
-  * Split every target region into randomly-sized small regions
-  *
-@@ -3725,25 +3756,33 @@ static void damon_split_regions_of(struct damon_ctx *ctx,
- static void kdamond_split_regions(struct damon_ctx *ctx)
+ static void damon_test_ops_registration(struct kunit *test)
  {
- 	struct damon_target *t;
--	unsigned int nr_regions = 0;
--	static unsigned int last_nr_regions;
-+	unsigned long nr_regions = 0;
-+	unsigned long max_nr_regions = ctx->attrs.max_nr_regions;
-+	static unsigned long last_nr_regions;
- 	int nr_subregions = 2;
- 
- 	damon_for_each_target(t, ctx)
- 		nr_regions += damon_nr_regions(t);
- 
--	if (nr_regions > ctx->attrs.max_nr_regions / 2)
--		return;
-+	if (nr_regions >= max_nr_regions)
-+		goto done;
-+
-+	if (nr_regions > max_nr_regions / 2) {
-+		damon_split_some_regions(ctx,
-+			max_nr_regions / (max_nr_regions - nr_regions));
-+		goto done;
-+	}
- 
- 	/* Maybe the middle of the region has different access frequency */
- 	if (last_nr_regions == nr_regions &&
--			nr_regions < ctx->attrs.max_nr_regions / 3)
-+			nr_regions < max_nr_regions / 3)
- 		nr_subregions = 3;
- 
- 	damon_for_each_target(t, ctx)
- 		damon_split_regions_of(ctx, t, nr_subregions,
- 				       ctx->min_region_sz);
- 
-+done:
- 	last_nr_regions = nr_regions;
- }
- 
+ 	struct damon_ctx *c = damon_new_ctx();
+@@ -1521,6 +1584,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_merge_two),
+ 	KUNIT_CASE(damon_test_merge_regions_of),
+ 	KUNIT_CASE(damon_test_split_regions_of),
++	KUNIT_CASE(damon_test_split_above_half_progresses),
+ 	KUNIT_CASE(damon_test_ops_registration),
+ 	KUNIT_CASE(damon_test_set_regions),
+ 	KUNIT_CASE(damon_test_nr_accesses_to_accesses_bp),
 -- 
 2.43.0
 
