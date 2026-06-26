@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998B5381AF
-	for <damon@lists.linux.dev>; Fri, 26 Jun 2026 00:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E86A12CDA5
+	for <damon@lists.linux.dev>; Fri, 26 Jun 2026 00:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782433490; cv=none; b=qlwI6cLhb9A5QbtCazr7Qj3THLO672ZmG99Wt5QVEGFJUqzhq95aBJXeb/Lp/qMCwsOyKKDQhUgP6cVNmpiqXFHXhu7I3zwIhDRQWF/mo9XmlzkXSbGkeSPd6R4x2qf8nT70h8d32qqWz9o1ZtSAi0DQ9P22LWZYMzTqAwpJha0=
+	t=1782433521; cv=none; b=GMH9dmkpkNwXHu9uoBtP4TAd4bkZS6dqBzM9MFckf9sh8QPhenk5uK8pwu3TAkW6MwIKiWVLKgz7HoP0LOtri6TtShQhOqZBSBzTS/1sippzfTisHol/uX1PljsSFe9/kqm9NoEHr1j7l6S/mh8JqLuaWR9ga6DP0x/I6xD4l1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782433490; c=relaxed/simple;
-	bh=AlIPh9YM1J/Wt1sQFXqXOs2tb402CphdBMbAMUXWL5M=;
+	s=arc-20240116; t=1782433521; c=relaxed/simple;
+	bh=hKSj2P+QWjf+G+aDasSWqMSMZw8Ur2D6mgkwrODSpkk=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=r0SztquhEtAev+xtWeacyqsIY45/xu8+R7xq60PvbFL75aXJqU8hXe/T7wbkDsc+gupq8TVyfT25UB+jzzcNYdNdUeFlafw6ZwbYv/9C7XVSpu6nR9i4G5F00G8QRoWWTFOubLuydjwTYFvJfJSChChIlcFjDtaz7LS6I0ZXiLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aqXP89DB; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=ggxelL/3/hnI+e5c1lgRSzmqlkkDb9g5jvaTIPHzDM7bFxRHDZWpmodTrohEiH2mo87GkbKnF1kBiLDEGEwX9WJvpvsI4tb4BCltMFjhtMjHjQKsLTyM7AF2jm9KSAVvfikR/gKZUx+mIaWLvt2+tyMQu6k/GVhCfYenMQ1ALio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EDXnbZgo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aqXP89DB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975E21F000E9;
-	Fri, 26 Jun 2026 00:24:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EDXnbZgo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BBB1F000E9;
+	Fri, 26 Jun 2026 00:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782433488;
-	bh=zdlm//3vbp2Z6CaHzXD3uQWwu3l6C3DemNgkVBTrKoI=;
+	s=k20260515; t=1782433519;
+	bh=hmDIh8kw2pyN74NBwbBJY+RErWxVPFxFMbwNZ5jZido=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=aqXP89DBKfZyllcOtc0aGqfAp4s6RiP24Lc7pDcAROSlp2rzNOgAhCO8jLxRu7HV9
-	 W3PHSRp6l4XygKv7AWz5v8Cq4DH/G2w7ZCjZJT91e0TQBOH6qB/jf8ZMI4O73wmjV2
-	 WPflA4LrWLeNNr9vqmkmr54OM3NZX+AtHFQAMM3sO2PGQMk0KE32ocTbfIFHSfdNVp
-	 Qzmgo7NUFpihYhxTiK1ZrO+Rm97PEdI0uVPaocLvV+gcO8ernoral95IXHUUUDFy2I
-	 rwTpLOa7RKGY+DbR/pdl/UOmlrtEmzYdr8DHZNP2CGF8Bg2R8YKS6Pre5qbX8Ff3Gw
-	 3Bom4vo4HhxJg==
+	b=EDXnbZgosgCfA6D42WnCa4GFLxHiM6kOirdfl9t1BRI5RNoc3lfBXQQuJRrKydi73
+	 bWCkIrDNy8TupFDNBFRycpYnPrGWS+fpxISCKPdoP3PfaCYWKqVujs2pfhaUxm4A8o
+	 0cH4rlWM8HXRJmbJnOivI4g4WP7RmPQJenDpK8KO24VtUoh9ZV85/i7/T92wDLCyC/
+	 RBZAxpzxDHIS2buVD1sQb07yvL0LrztFF8ojMUbTivSwU4EKL3xrXRUHQ+Fhd3z/mb
+	 LEnURPqg3UZk9HvM14jbnPZhRF9E4h+SSWYyFD7rD9RVh15uXcUHVyM9SdJCvDzuSj
+	 Vh++mp2JOaTmA==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.3 01/11] Docs/mm/damon/design: update for
- DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP
+Subject: Re: [RFC PATCH v1.3 03/11] mm/damon/tests/core-kunit: test
+ damon_rand()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SeongJae Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260626001644.85825-2-sj@kernel.org>
+In-Reply-To: <20260626001644.85825-4-sj@kernel.org>
 References: <20260626001644.85825-1-sj@kernel.org>
- <20260626001644.85825-2-sj@kernel.org>
+ <20260626001644.85825-4-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 26 Jun 2026 00:24:48 +0000
-Message-Id: <20260626002448.975E21F000E9@smtp.kernel.org>
+Date: Fri, 26 Jun 2026 00:25:19 +0000
+Message-Id: <20260626002519.C1BBB1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,59 +47,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Truncation of 64-bit phys_addr_t to 32-bit unsigned long in damos_=
-get_node_eligible_mem_bp leads to incorrect metric calculation on 32-bit sy=
-stems.
+- [Low] Incomplete test coverage: the test misses the 64-bit execution bran=
+ch of damon_rand().
 --
 
-commit 569eb38d08bfaf4718faa6440d86cad7ba9478b7
+commit e5514cf11386fbde6faace5ed2dc4b93fedc4bf8
 Author: SeongJae Park <sj@kernel.org>
 
-Docs/mm/damon/design: update for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP
+mm/damon/tests/core-kunit: test damon_rand()
 
-Commit 9138e27a3bc3 introduced DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP but forgot
-updating the DAMON design document for that. This commit updates the
-documentation to include the missing metric.
+This commit adds a KUnit test for the recently introduced lockless PRNG in
+damon_rand(). It validates that the generated numbers stay within the
+requested bounds.
 
-> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/d=
-esign.rst
-> --- a/Documentation/mm/damon/design.rst
-> +++ b/Documentation/mm/damon/design.rst
-> @@ -686,9 +686,11 @@ mechanism tries to make ``current_value`` of ``targe=
-t_metric`` be same to
->    (1/10,000).
->  - ``inactive_mem_bp``: Inactive to active + inactive (LRU) memory size r=
-atio in
->    bp (1/10,000).
-> +- ``node_eligible_mem_bp``: Scheme target access pattern-eligible memory=
- ratio
-> +  of a node in bp (1/10,000).
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index 1cfb8c176b873..282670b0fa908 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
 
-[Severity: High]
-This isn't a bug introduced by this patch, but while reviewing this metric,=
- I
-noticed a pre-existing issue in its implementation.
+[ ... ]
 
-In mm/damon/core.c:damos_get_node_eligible_mem_bp(), 64-bit phys_addr_t byte
-counts are cast to 32-bit unsigned long before ratio calculation:
+> @@ -1460,6 +1460,20 @@ static void damon_test_is_last_region(struct kunit=
+ *test)
+>  	damon_free_target(t);
+>  }
+> =20
+> +static void damon_test_rand(struct kunit *test)
+> +{
+> +	struct damon_ctx ctx;
+> +	int i;
+> +
+> +	prandom_seed_state(&ctx.rnd_state, get_random_u64());
+> +	for (i =3D 0; i < 10000; i++) {
+> +		unsigned long rnd =3D damon_rand(&ctx, 0, 10);
 
-	if (!(unsigned long)total_eligible)
-		return 0;
+[Severity: Low]
+Does this test miss the 64-bit execution branch of damon_rand()?
 
-	return mult_frac((unsigned long)node_eligible, 10000,
-			(unsigned long)total_eligible);
+The damon_rand() function implements two distinct calculation paths: one for
+spans <=3D U32_MAX and a 64-bit fallback for larger spans using
+mul_u64_u64_shr().
 
-On 32-bit systems with PAE, if the amount of eligible memory exceeds 4GB,
-will this truncation cause the metric to calculate completely incorrect rat=
-ios
-(e.g., reporting > 10000 basis points) or erroneously return 0 due to modulo
-arithmetic?
+Because this test hardcodes the bounds 0 and 10, the span evaluates to
+<=3D U32_MAX. This guarantees that only the 32-bit path is executed, leaving
+the 64-bit logic entirely untested on 64-bit architectures.
 
-This could cause the DAMOS quota tuner to adjust quotas wrongly, potentially
-resulting in extremely aggressive or completely ineffective memory actions.
+Would it be helpful to add another iteration or separate test case with a
+span greater than U32_MAX to ensure full coverage of damon_rand()?
+
+> +
+> +		KUNIT_EXPECT_GE(test, rnd, 0);
+> +		KUNIT_EXPECT_LE(test, rnd, 9);
+> +	}
+> +}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260626001644.8582=
-5-1-sj@kernel.org?part=3D1
+5-1-sj@kernel.org?part=3D3
