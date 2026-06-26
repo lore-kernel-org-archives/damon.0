@@ -1,214 +1,245 @@
-Received: from mail-dl1-f67.google.com (mail-dl1-f67.google.com [74.125.82.67])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717782C11E6
-	for <damon@lists.linux.dev>; Fri, 26 Jun 2026 01:14:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.67
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782436444; cv=pass; b=JIXJb/HBLHuM9uTikyUlIkFRbzeAT9PyB2RhXcUJHg+f2RDRGXaUQteRKhXVFWZQfvxMlqmHIlyuu8aplly3Wv/9xrOAcz6XLPSpwIIEnP3FjKo9Mtx/R9ricMQSIXSwXSxOcUJfzHn/bqIdM1vf774TzBGqqW4zMx9cdc8LaeQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782436444; c=relaxed/simple;
-	bh=rtrg3DQaQYSKGWCB0QbtWivfJ+mli+yXS4Opc9OEzwM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZPmly12DAHJoJYmIr8hLOcvZoFcMs4H4KL9DYecyII8KIG5Cd131tERAPCkwer/mdnDjNqo6cp0cFTDGCprEb4QkIb6T24rdjQr1h/g3oSVfEZf5vDY9Gd+YXOiPJrnv7JhubFRRxpDiDKI5GdHzbaXOx1wny7wnKBfUWj7vm3M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qpi55YlB; arc=pass smtp.client-ip=74.125.82.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F363A9639
+	for <damon@lists.linux.dev>; Fri, 26 Jun 2026 08:10:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1782461435; cv=none; b=XQ/wXhRwXktklwDnn59hjXmA+a1FF/HCqfjyz+DDOn9iVAL4j718o49NCMTW9H/Nh2TgVZczNq/0XC7o1UUi+clfyONE3hNOoRY8oXNI6/ROA0T34AiwEBi+nuiLEG+dMNm+JLvxpasATO+krBSOG5JTyjxEBFYzGtDCjZLtQ4Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1782461435; c=relaxed/simple;
+	bh=ylVJPo4xI4IQ5MMsxnyeXfMOa3DRhh9YA0pi+ctJbVA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Pt71IWDC9czsQPW7UUcvurQABl9hv0jL9eqVsGvmxDJKMVyQ21mPt9j+yAaIZmymgx55YXtffe0dlUWeWu43heT+/I5+G/QRzwIqt1w7HynfRrVSw8dmzCmaWvXSa/Po1gBGASAdtgQ+p+mEc//rsjgV3P0e7DOC6e/ziUsrG78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WpeQGR4h; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qpi55YlB"
-Received: by mail-dl1-f67.google.com with SMTP id a92af1059eb24-13986d61b4fso664028c88.0
-        for <damon@lists.linux.dev>; Thu, 25 Jun 2026 18:14:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782436441; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NWLBernngmynEh2P8R763SUbtQ2foq3Y+wK7hodb42AD6y26SJGkjb7hz8uVQVYfu+
-         suhq2PemH6IgCcTWYK92YHO3XI407jqO3UCLnAVJRplGHefa42Q4K5NoPquawVXyaYTR
-         kT1rklYXoB5bHr4Uiq7zbslaeQvY+kcOywsZztTXK400X5g3YQy5Z1EwmPubUR+9HUKu
-         n5eWUb6SJJYuqppr5Q4KpcgbqEV+slLMH1YOHCcff0+7lS4J4gQ6KOR4IjPzVW44rIwp
-         bwAtZpzYHW18DbJ3PMrxtvKytFhL+QbhMf8MwdUVYwUekb0NoEWuS6gNFHSTmDmF8JiW
-         PMzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=0QrPux/jb9B/TQh4lL67jDfn0fMtva20UhkYnPdI7a0=;
-        fh=s47PAcKipJ9bw9j9yCxJQPiV0kVDCtA0ao3w48gUVJU=;
-        b=aerIHXMIqY9M3xiO5sJMltLo6IYumuiS3RwMyhKT/9d3sBf6gtj4n3+u0HC+ikCZ34
-         5G7lNyzJ3j8DOiNZUw4sv7AyRlN/VwzAVtmCiOp5nVAA3qnsQS3pUz9wu6Ylk+khv9w5
-         FgGg3VppAU3/6+5BmUuEB7Q+HDU6+YOWiQZl4OHt2y0NrbkEMALoc1x0XA6jtizG4Txh
-         s6HKE5VlCfaXDbdl0AFX9DVzG6QOPNye67r4Xk0kZpttftkWZMMtsBSQlVqWENAQR1ye
-         8a/p2gIrb/+vgu+kNaj90y5ABBXlA2/pO4rY2FugRuYJL1nBklRLAUj/jQ5AeZU2p8W2
-         e5fQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WpeQGR4h"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c80879c36eso3100775ad.1
+        for <damon@lists.linux.dev>; Fri, 26 Jun 2026 01:10:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782436441; x=1783041241; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0QrPux/jb9B/TQh4lL67jDfn0fMtva20UhkYnPdI7a0=;
-        b=qpi55YlBJSN1zFX/tG7zNTTqp5WKMubTbUTI04DlbRI5Cx2VTex1ydjAe1uQQ8jYXu
-         tzRemNVVw6K9iasDYeDL/MvVTmGP4e1chS5ZH1qm+kbFvfNIFaYCPSYuO04gQ9ycosMw
-         nfRkyxa/axF3+STKTu3c+j19xQ8vOMSeaFLMJCH3KmY0uEN2t7Hg/JPsAr1pdy6/Ffnh
-         5MXW5PVQ0ROVGMpeFr4bsGUs3HUXdviISByQz1J8HVqcEPwpUguYsUtbV1oqz+HS7A0J
-         tmbp0mQ006jO0CWKRQ2/v+HI0/DRvYDcEFFm9ch4ss3jo1y4uwuzXt5+h3dVzTuF+FwT
-         HuuA==
+        d=gmail.com; s=20251104; t=1782461434; x=1783066234; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=48i67nzh9pxu8NTOl7eRiJOeiFO+TayVZ9b4xMQJyfc=;
+        b=WpeQGR4hznBdqVvEh2lZS0smqG9ZZK8Oq+3rGOrK91XgZVc1gqaKGVvXLFTkj0tyR9
+         7W3LWJXn4J2fJ7j2nJBkeI3GJXvc7RvbzsBscNZmiB+zIziYk2F8uytBLCQjyXv+7KW7
+         Z+yhLnGQXAd18PB7wTbuWKY3dHNR7vkcKmGmHPvTlypfbs/nzo9kbkyX1nqV2QLiCsxd
+         OqbmwkhcV2jnBLKIUQlb40ofLC5PKZ0RH/QWfOtjZYrCbJ7HHWDpkcEKq+VcXAcOVyxK
+         LnHwlcASklKqcjXalmYXPo3Hnafhzqhc+OBf0qjQXuw2GhghXad8Y2IdY/VU82FV63zr
+         F+tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782436441; x=1783041241;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=0QrPux/jb9B/TQh4lL67jDfn0fMtva20UhkYnPdI7a0=;
-        b=B5Qjg0lHeWL6185yjU1X8IUBcMUgRsVlHtM4Ti6qohneVOXm+KL7C65oKU1JDjXp2X
-         P+PUM8f74uRBZgKuqVtL3SSOjTqpNooSMKir1TjIvb44kSJU+5bIaE1OVKloQKnyNF+8
-         W/vgO89xBDnWqwBALsb9S+N/a3l8I0wU22owTywbMoIpENoAtkCdvd6XLw3wDYS34z/2
-         YHRdkE1j70puRfRwYjaTFWHPaOm1jGT6oomHHTKYGtu+7EJZS7aNph4LsLfpS5VpjzSX
-         n0oLLxJesbJzaT/UU0zDHiWw6PFi/ig6RD8qXN/Di2HWh2WM/c4ZN6GQQNugtDUEvYzs
-         En1Q==
-X-Forwarded-Encrypted: i=1; AFNElJ9uVVhfblxzuwqctZuthFBmVqZ5MR8YExqTEcoQ8Va3WaNwwr0EM+gWGFSEV97X0m/Rs8AXHw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyLdneCzDGDQvxQyu5S7gFRaV29jg7sh3fiiiFnQYQgRg+WZ4AT
-	ijb2fRcWczVkFrtf/78HJ4paSMib866gzHkI+vh5Ugf0LiIp9RzJuOYsiIaMbPrjYe/sXfbZlWk
-	OB5wYB3HTg5V6yYpEFIg3yK9Dfjnhaw==
-X-Gm-Gg: AfdE7cmES0aRkp6TgyHaiOvZaAj3FzYh3+wE9JRSDonsidngih9O/Sr99u0ebahO3sv
-	Jmq/KQFXEjYWFl+CL762SoCSf9EfSZEBtQDfuxtJ8yED7He6c9NNWyEUSYooIvtA6/6E3WmCh28
-	O+bxlvqmXGhqE4z4UeStR95tBYzgDKxwKbe+UQcrDz92VtigZ1FFPUVPMuMpNx11cXy60xcweBA
-	243TBCN86peKLDAR9pvpn1pnMOqRuV5Njyne1osRDt0sCmZx3hrOsPc6R1N9B2jFYhvxw==
-X-Received: by 2002:a05:7022:6726:b0:137:f4ec:29ff with SMTP id
- a92af1059eb24-139dbaa660amr3557337c88.22.1782436441314; Thu, 25 Jun 2026
- 18:14:01 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782461434; x=1783066234;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=48i67nzh9pxu8NTOl7eRiJOeiFO+TayVZ9b4xMQJyfc=;
+        b=ixojGXXg2DnDBGwWo3qbpkszM4lLlQVVQ4Q7MFA4lffGfTdJvTn3oUNp0FyLRuC0Fh
+         uCoZONdxZ6OndGFU1/5F3GNi5RXAHh5E/F++NMLA/SfDUSUvPUVKlDKr8Bx1AuL2bscO
+         Q6eknGvRQsKCKbWz6clKoZncQI04dQXERgpSQTf4mDqe1KU/WtqJVt5rLh6FlfjThPwH
+         E9HdRV9XS5aD330io7sr/VsBomzOgm4y6o0IZlVwS1/UpE5BIpZjNOdezoWbgMPw3/Uv
+         hjyTqGSF2l4AHb3MBL8EMJ7WI9fwBNBuQeYobWP9X9nBM+MXMAzaCRWgJ22GDxQAdYS8
+         EhFg==
+X-Gm-Message-State: AOJu0YyllM/tBjED2vnYKlfRzknKBvluDrlPWIq0kqj5ZVF99H5VzTAP
+	r7xNH6RPJXXpII/a6TfzoQLEVjTBTS5DCXqdt6uYc0uA6tK49nJ9kwNp
+X-Gm-Gg: AfdE7ck1U/d6MPmLRhPxI06ILoemwTMbzXZDbdaj96vfBfHWe4HwPPaYBzB6YXUVutx
+	5/leO585PHN5c+vHQisbq0MHp4Ts0H5nYN4ZhrJ5JoKjyNnyhpK4aR7X6qAXZyesL6t1+z6CwYA
+	VLWAEfotV+DycnwsaTEcGutWMUIWLB55MhwSD2aSjsYTsNFs3F3I37ZbPH6NDeosgxx47V252ah
+	enA9Kes2Mnt+xZ/rXlssiyHnRMerf3xTtvLa4HKPUt3cgjdtwavwUqa6zy/G4IduqrcuhhM5bdY
+	45s2fTEFVFZxD8oTWOZKmURbZ2M23u/2YHAW2Ecq7CDqkM+4hAXJWfxvLrruWQXHw7GtfjLR2l7
+	2GRA5B8ZtzwY7DgZBiBXjCaAHzZyxgqnNIWJHY9jqM0gKpouQv1C3QdWuZ40c7nFjTLM+EE9B6h
+	kQlrnNNzxaUKjQthz33wGRovzUQqvQ9Ha6W1N/thuPxYHQ5G5Wmys=
+X-Received: by 2002:a17:902:ebc6:b0:2c6:af4b:99a1 with SMTP id d9443c01a7336-2c7c3d2a805mr134249435ad.3.1782461433641;
+        Fri, 26 Jun 2026 01:10:33 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:9a5:e298:5467:317e:e807:794b])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c7f63cfe81sm34154045ad.55.2026.06.26.01.10.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jun 2026 01:10:33 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: SeongJae Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	Liew Rui Yan <aethernet65535@gmail.com>
+Subject: [RFC PATCH] mm/damon/reclaim: add 'available' memory as an optional watermarks metric
+Date: Fri, 26 Jun 2026 16:10:38 +0800
+Message-ID: <20260626081038.46569-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260624001425.77489-1-sj@kernel.org> <a9018e68-866a-c251-9e0a-67e31f4baec2@huawei.com>
-In-Reply-To: <a9018e68-866a-c251-9e0a-67e31f4baec2@huawei.com>
-From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Date: Thu, 25 Jun 2026 18:13:50 -0700
-X-Gm-Features: AVVi8CfGl0EXx2soTnROovfPq8W8ILXy4EngHWeoIXW7I1TDJmmJsZwRtoDNA1Q
-Message-ID: <CALa+Y15kQbXW8NnZtbjr79_K9ooBBy5JemgHXqASABsNPJRqgw@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/6] mm/damon: hardware-sampled access reports
-To: Zeng Heng <zengheng4@huawei.com>
-Cc: SeongJae Park <sj@kernel.org>, akinobu.mita@gmail.com, damon@lists.linux.dev, 
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
-	akpm@linux-foundation.org, corbet@lwn.net, bijan311@gmail.com, 
-	ajayjoshi@micron.com, honggyu.kim@sk.com, yunjeong.mun@sk.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hello Zeng and SJ,
+Problem
+=======
 
-  Glad the branch built cleanly for you.
+Currently, DAMON's watermarks metric is calculated based on the
+proportion of the system's free memory.
 
-  You can also refer to this branch, which carries the same series
-with a few fixes from an internal sashiko run, folded in preparation
-for v2.
+However, on devices like Android, the system typically maintains a very
+low amount of free memory, even when the available memory is abundant.
+This causes DAMON_RECLAIM to prematurely or aggressive trigger memory
+reclamation, thereby increasing the risk of page refaults.
 
-  https://github.com/ravis-opensrc/linux/tree/damon/perf-event-integrated-r=
-fc-v2
+Solution
+========
 
-  Note this is still based on the v1 sysfs surface (raw type/config
-knobs). The v2 I post to the list will reshape that userspace surface
-to align with SJ's milestone plan, so the configuration interface will
-change:
+Introduce a new sysfs parameter 'memrate_type' to DAMON_RECLAIM. Users
+can switch DAMON's watermark metric evaluation to be based on available
+memory by writing 'available' to this parameter and commit the change.
 
-  https://lore.kernel.org/all/20260525225208.1179-1-sj@kernel.org/
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
+ include/linux/damon.h    |  9 ++++---
+ mm/damon/core.c          |  6 +++++
+ mm/damon/reclaim.c       | 56 ++++++++++++++++++++++++++++++++++++++++
+ mm/damon/sysfs-schemes.c |  4 +++
+ 4 files changed, 72 insertions(+), 3 deletions(-)
 
-  Happy to help if you hit anything while testing =E2=80=94 particularly
-interested in which PMU you're sampling with (PEBS / IBS / something
-on your platform).
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 6f7edb3590ef..0006e3a25317 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -314,13 +314,16 @@ struct damos_quota {
+ /**
+  * enum damos_wmark_metric - Represents the watermark metric.
+  *
+- * @DAMOS_WMARK_NONE:		Ignore the watermarks of the given scheme.
+- * @DAMOS_WMARK_FREE_MEM_RATE:	Free memory rate of the system in [0,1000].
+- * @NR_DAMOS_WMARK_METRICS:	Total number of DAMOS watermark metrics
++ * @DAMOS_WMARK_NONE:		    Ignore the watermarks of the given scheme.
++ * @DAMOS_WMARK_FREE_MEM_RATE:	    Free memory rate of the system in [0,1000].
++ * @DAMOS_WMARK_AVAILABLE_MEM_RATE: Available memory rate of the system in
++ *				    [0,1000].
++ * @NR_DAMOS_WMARK_METRICS:	    Total number of DAMOS watermark metrics
+  */
+ enum damos_wmark_metric {
+ 	DAMOS_WMARK_NONE,
+ 	DAMOS_WMARK_FREE_MEM_RATE,
++	DAMOS_WMARK_AVAILABLE_MEM_RATE,
+ 	NR_DAMOS_WMARK_METRICS,
+ };
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 7e4b9affc5b0..f12d06081d70 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3300,11 +3300,17 @@ static bool kdamond_need_stop(struct damon_ctx *ctx)
+ static int damos_get_wmark_metric_value(enum damos_wmark_metric metric,
+ 					unsigned long *metric_value)
+ {
++	long available_pages;
++
+ 	switch (metric) {
+ 	case DAMOS_WMARK_FREE_MEM_RATE:
+ 		*metric_value = global_zone_page_state(NR_FREE_PAGES) * 1000 /
+ 		       totalram_pages();
+ 		return 0;
++	case DAMOS_WMARK_AVAILABLE_MEM_RATE:
++		available_pages = si_mem_available();
++		*metric_value = available_pages * 1000 / totalram_pages();
++		return 0;
+ 	default:
+ 		break;
+ 	}
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index ce4499cf4b8b..229bc68bb1ad 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -159,6 +159,17 @@ static unsigned long addr_unit __read_mostly = 1;
+ static bool skip_anon __read_mostly;
+ module_param(skip_anon, bool, 0600);
+ 
++/*
++ * Watermarks metric options.
++ *
++ * If this parameter is set as ``free``, DAMON_RECLAIM calculates the watermark
++ * metric based on the system's free memory rate. If set as ``available``, it
++ * calculates the metric based on the system's available memory rate.
++ *
++ * Default is ``free``.
++ */
++static enum damos_wmark_metric memrate_type = DAMOS_WMARK_FREE_MEM_RATE;
++
+ static struct damos_stat damon_reclaim_stat;
+ DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_reclaim_stat,
+ 		reclaim_tried_regions, reclaimed_regions, quota_exceeds);
+@@ -220,6 +231,8 @@ static int damon_reclaim_apply_parameters(void)
+ 		goto out;
+ 	}
+ 
++	damon_reclaim_wmarks.metric = memrate_type;
++
+ 	attrs = damon_reclaim_mon_attrs;
+ 	if (autotune_monitoring_intervals) {
+ 		attrs.sample_interval = 5000;
+@@ -376,6 +389,49 @@ module_param_cb(addr_unit, &addr_unit_param_ops, &addr_unit, 0600);
+ MODULE_PARM_DESC(addr_unit,
+ 	"Scale factor for DAMON_RECLAIM to ops address conversion (default: 1)");
+ 
++static int damon_reclaim_memrate_type_store(const char *val,
++					    const struct kernel_param *kp)
++{
++	if (sysfs_streq(val, "free"))
++		memrate_type = DAMOS_WMARK_FREE_MEM_RATE;
++	else if (sysfs_streq(val, "available"))
++		memrate_type = DAMOS_WMARK_AVAILABLE_MEM_RATE;
++	else
++		return -EINVAL;
++
++	return 0;
++}
++
++static int damon_reclaim_memrate_type_load(char *buffer,
++					   const struct kernel_param *kp)
++{
++	int type = READ_ONCE(memrate_type);
++	int len = 0;
++
++	if (type == DAMOS_WMARK_FREE_MEM_RATE)
++		len += sysfs_emit_at(buffer, len, "[free] ");
++	else
++		len += sysfs_emit_at(buffer, len, "free ");
++
++	if (type == DAMOS_WMARK_AVAILABLE_MEM_RATE)
++		len += sysfs_emit_at(buffer, len, "[available] ");
++	else
++		len += sysfs_emit_at(buffer, len, "available ");
++
++	len += sysfs_emit_at(buffer, len, "\n");
++
++	return len;
++}
++
++static const struct kernel_param_ops memrate_type_param_ops = {
++	.set = damon_reclaim_memrate_type_store,
++	.get = damon_reclaim_memrate_type_load,
++};
++module_param_cb(memrate_type, &memrate_type_param_ops, &memrate_type, 0600);
++MODULE_PARM_DESC(memrate_type,
++		 "Memory rate type for watermarks metric "
++		 "(free or available, default: free)");
++
+ static bool damon_reclaim_enabled(void)
+ {
+ 	if (!ctx)
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 329cfd0bbe9f..5d6636433bd6 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1056,6 +1056,10 @@ damos_sysfs_wmark_metric_names[] = {
+ 		.metric = DAMOS_WMARK_FREE_MEM_RATE,
+ 		.name = "free_mem_rate",
+ 	},
++	{
++		.metric = DAMOS_WMARK_AVAILABLE_MEM_RATE,
++		.name = "available_mem_rate",
++	},
+ };
+ 
+ static ssize_t metric_show(struct kobject *kobj, struct kobj_attribute *attr,
+-- 
+2.54.0
 
-  Best,
-  Ravi
-
-On Wed, Jun 24, 2026 at 4:23=E2=80=AFAM Zeng Heng <zengheng4@huawei.com> wr=
-ote:
->
-> Hi SeongJae,
->
-> On 2026/6/24 8:14, SeongJae Park wrote:
-> > Hello Zeng,
-> >
-> > On Tue, 23 Jun 2026 22:08:03 +0800 Zeng Heng <zengheng4@huawei.com> wro=
-te:
-> >
-> >> Hi Ravi,
-> >>
-> >> On 2026/5/30 0:56, Ravi Jonnalagadda wrote:
-> >>> This series introduces a vendor and PMU-agnostic substrate inside DAM=
-ON
-> >>> that consumes hardware-sampled access reports through the standard
-> >>> perf-event interface.  Userspace selects the PMU through sysfs (raw
-> >>> type/config knobs), driving either Intel PEBS L3-miss sampling or AMD
-> >>> IBS Op sampling.
-> >>>
-> >>
-> >> [...]
-> >>
-> >>>
-> >>> Ravi Jonnalagadda (6):
-> >>>     mm/damon: add struct damon_perf_event{,_attr} and per-ctx perf_ev=
-ents
-> >>>       list
-> >>>     mm/damon/sysfs-sample: expose perf_events configuration via sysfs
-> >>>     mm/damon/sysfs: install perf_events on apply
-> >>>     mm/damon/core: per-CPU SPSC ring drain and damon_perf_event lifec=
-ycle
-> >>>     mm/damon/vaddr: implement perf-event access check
-> >>>     mm/damon: add damos_node_eligible_mem_bp tracepoint
-> >>>
-> >>>    include/linux/damon.h        |  80 +++++
-> >>>    include/trace/events/damon.h |  49 +++
-> >>>    mm/damon/core.c              | 403 ++++++++++++++++++++----
-> >>>    mm/damon/ops-common.h        |  39 +++
-> >>>    mm/damon/sysfs-common.h      |   6 +
-> >>>    mm/damon/sysfs-sample.c      | 579 +++++++++++++++++++++++++++++++=
-++++
-> >>>    mm/damon/sysfs.c             |   3 +
-> >>>    mm/damon/vaddr.c             | 267 ++++++++++++++++
-> >>>    8 files changed, 1370 insertions(+), 56 deletions(-)
-> >>>
-> >>>
-> >>> base-commit: 4c8ad15abf15eb480d3ad85f902001e35465ef18
-> >>
-> >> I wasn't able to apply this patch series to the linux (and linux-next)
-> >> mainline branch, and also had trouble identifying the source of the ba=
-se
-> >> commit.
-> >>
-> >> Would you mind sharing where this baseline is from?
-> >
-> > TLDR: I pushed [1] a tree having this series applied on top of the base=
-line to
-> > GitHub.  Please feel free to use it.
-> >
-> > I think the baseline was a commit on damon/next tree [2].  Because damo=
-n/next
-> > is continuously rebased, we cannot get the commit in a simple way.  For=
-tunately
-> > the commit is still available on my local tree.  So I applied this patc=
-h series
-> > on top of the commit and pushed [1] to a branch of DAMON kernel tree at=
- GitHub.
-> >
-> > Note that the branch is not guaranteed to exist there for long term.  B=
-ut
-> > hopefully this series will be merged into the mainline before that.
-> >
-> > [1] https://github.com/damonitor/linux/tree/ravi_hw_sampled_access_repo=
-rts_rfc_v1
-> > [2] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profi=
-le.html#scm-trees
-> >
-> >
-> > Thanks,
-> > SJ
-> >
->
-> Thanks a lot for providing the branch on GitHub. I've pulled it and
-> confirmed it builds cleanly on my end.
->
-> Appreciate the help!
->
->
-> Best Regards,
-> Zeng Heng
