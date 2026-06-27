@@ -1,149 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EAF3B1B3
-	for <damon@lists.linux.dev>; Sat, 27 Jun 2026 20:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F24C3B1B3;
+	Sat, 27 Jun 2026 20:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782590430; cv=none; b=MlOGSmyX1aQHaQNyROJZSRyDQa2PF/135qjGOgW9vV6tm5Iw7K2IjM4417HNRrZ8WeNS47V7QYvC8wgUeRGu15ylY9t+S5ox58/5w+Zd9kc8/wpIFJOdTI06IP2+OEXiqwqns3txYD2drce1DvZ3jZ4JTpL68Ir8MmYInIfvloQ=
+	t=1782590450; cv=none; b=eJAPWDr0WuqSZwX0QAZTtc2EYqjIh5k7oqPl062Pjp8+smwSAjFovIJDTz+fK9DUmyEHv0/Z63OkNtqSOMYTLFlnzYQEXOBrTmn5vPhez0blKcqBZlRPCW98BZU0fNEYZ/C/H/ocBlHEOPEAz/NbySe5sgrRgPloB78yAlZtL9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782590430; c=relaxed/simple;
-	bh=2aEENKqWHfzzxte6dVSVSPegxTIagedACwS2vrktVY8=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=gT0x0ykaSBStnS9z0JqZyMnt/rQCO/CqjfufVsHzBme/TInbZUgIC4z1s6/uAfAucDFfPIi8mWqmryxo3FErCaGIFvTrpWNVYcXa7ktxAnTwlLle2C72pLIzFwqV9rgKACIqVTkdQYCttLj/o8otnlxKIp6mI+d1tZG2FAmZ5rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ev5EfNuN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782590450; c=relaxed/simple;
+	bh=f527CLu6mDRgsWD/bgLLx83lG1rZOEcbh2Lt45pTY+U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FtS9i/m2q+kUezSBP50Yg4Q1/M1IYMY5UNf4wWJTwKVYKqnnmTRARAH35xgYZdAFOt5zdb0K7qQ50I1kakylFTITrJAiefa8N2a4rnaV/JmhjUEbJSKTm5LL2IRH/T/2iTgUqECFpwDh3ZjEYmrEdHojeKFGfA4R6Z6mrKjJTfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgTXvMRO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ev5EfNuN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75DF1F000E9;
-	Sat, 27 Jun 2026 20:00:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgTXvMRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80AF1F000E9;
+	Sat, 27 Jun 2026 20:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782590429;
-	bh=7gl1OHM5mM/JHH7Y6HfrThWg+UPfuwLcKVGy7nh2/vE=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Ev5EfNuNe6mMhyHxbTBrTg9WghDej0IRAlspexiCcyC6BG8gKrCMRq4nLIr9dl1a1
-	 dRP3Ks/u4ANL37UesUlPKAjWFm/Z8nuQ9enyveoAhsKReC1SGXqZCOMetBjCDY9nL9
-	 8Uh+g1j7TOx0BdPI9dt2ljvlybsB6yOnTUGFW+DZN0VENU7MIFbeCal8keuQEFVkiH
-	 D/AkX1Snn8YblEPxaHku7O9lePeN4xLxdoUUJBxQkE9iTULoqlcL0VT/jEByYLeU9p
-	 pYF6FTbqGqG7/mzJzd2Rw0wStG9X1E57eQVw+829lzbdRhm1HXCv6uCfgiFihIJoks
-	 tegmYcMdFN6Gg==
-From: sashiko-bot@kernel.org
+	s=k20260515; t=1782590449;
+	bh=f527CLu6mDRgsWD/bgLLx83lG1rZOEcbh2Lt45pTY+U=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=HgTXvMROlLUUssXMcUCvh/+cvDKX6k2vlwK6v8qdReaM3u1h1ioSE4Me+2fRXcyIk
+	 inJLDQ1zjxXW8B3VIney1ILvGQ4cv7u3xhm67TBCRhDVBK7K+pSxdw+5L9SuobUoLd
+	 2tPKBI7gaIxak504FRJjlnNKMv/xwsnCKUHE5naYXeKu9I3JsqxOZMqMm9gR+IGtzA
+	 2QVqn9YlRc7OVbPFNQqiH/7FEr+zxfh6wPaSsQVhm9ExSY2FGd28zVDxvrpfilRxG5
+	 Dy6eMrPEBFsKwYeFbZLI6Kwjn74gWbs8oGQUmidx+piLTLf/N6NyWXvH3F58yKHP7h
+	 1KwZOfmzMu1CQ==
+From: SJ Park <sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
 Subject: Re: [PATCH] MAINTAINERS: s/SeongJae/SJ/
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
+Date: Sat, 27 Jun 2026 13:00:45 -0700
+Message-ID: <20260627200046.24616-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260627195630.24519-1-sj@kernel.org>
-References: <20260627195630.24519-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 27 Jun 2026 20:00:28 +0000
-Message-Id: <20260627200028.E75DF1F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] Unintended Code Deletion / Copyright Removal
---
+On Sat, 27 Jun 2026 12:56:29 -0700 SJ Park <sj@kernel.org> wrote:
 
-commit 7824bc7fc9af6bcdbf6c2338af2a70179e7f0325
-Author: SJ Park <sj@kernel.org>
+> My legal name and preferred first names are SeongJae and SJ,
 
-MAINTAINERS: s/SeongJae/SJ/
+s/name /
 
-This commit changes instances of the author's name from "SeongJae" to the
-preferred name "SJ" to avoid confusion.
+Andrew, could you please apply the above when you pick this?
 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 6f7edb3590ef9..8bb28d5682dd8 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -1,8 +1,6 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
->  /*
->   * DAMON api
-> - *
-> - * Author: SeongJae Park <sj@kernel.org>
->   */
-> =20
->  #ifndef _DAMON_H_
 
-[Severity: Medium]
-Was it intentional to completely delete the Author attribution here instead=
- of=20
-updating it to SJ Park?
+Thanks,
+SJ
 
-[ ... ]
-
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 2e95e3bac774d..a9e187158067d 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -1,8 +1,6 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /*
->   * DAMON sysfs Interface
-> - *
-> - * Copyright (c) 2022 SeongJae Park <sj@kernel.org>
->   */
-> =20
->  #include <linux/pid.h>
-
-[Severity: Medium]
-Does this code intentionally drop the copyright notice rather than updating=
- the
-name? The commit message only mentions substituting the name.
-
-[ ... ]
-
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 1cfb8c176b873..fcf7c7fadb5fe 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-> @@ -1,10 +1,6 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
->  /*
->   * Data Access Monitor Unit Tests
-> - *
-> - * Copyright 2019 Amazon.com, Inc. or its affiliates.  All rights reserv=
-ed.
-> - *
-> - * Author: SeongJae Park <sj@kernel.org>
->   */
-> =20
->  #ifdef CONFIG_DAMON_KUNIT_TEST
-
-[Severity: Medium]
-Is it intended to remove the Amazon.com copyright notice entirely along wit=
-h the
-Author line? It looks like this might have been an accidental deletion while
-searching and replacing the name.
-
-[ ... ]
-
-> diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-> index 563fbc7e3f448..61f844336ffb5 100644
-> --- a/mm/damon/tests/vaddr-kunit.h
-> +++ b/mm/damon/tests/vaddr-kunit.h
-> @@ -1,10 +1,6 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
->  /*
->   * Data Access Monitor Unit Tests
-> - *
-> - * Copyright 2019 Amazon.com, Inc. or its affiliates.  All rights reserv=
-ed.
-> - *
-> - * Author: SeongJae Park <sj@kernel.org>
->   */
-> =20
->  #ifdef CONFIG_DAMON_VADDR_KUNIT_TEST
-
-[Severity: Medium]
-Similar to core-kunit.h, is it correct to delete the Amazon copyright notice
-here as well?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260627195630.2451=
-9-1-sj@kernel.org?part=3D1
+[...]
