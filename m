@@ -1,125 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C0837C0FA;
-	Fri, 26 Jun 2026 15:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F57223DCE;
+	Sat, 27 Jun 2026 17:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782486684; cv=none; b=Jsc+tcoW3EkQ4hIlRDFBkscWzObsE2XDUVh4uR7J3DyAl8CkP2DG7CihikWncH2izVYwC2H21yQZhPR8mzcU+9l6y8we+oN89dE1Kv9CsZOKyEC3DjPHGEB2PVBVUBrR6zLKQ0xFpzsbVjOkg6hp6mzobB5dwojQiEd8CYjltxY=
+	t=1782579668; cv=none; b=UvRSQIuWrY+8W9hSmtqtIoJ2Xm44fpOVDjP/nI+Iu8jiLd9ENGDsU/banqfEdWv4/m4biO8pPiKI47ZfPUVfSCcoThJHRGjn0/d8j3u2RZZ9BC2hocFbcas2oJn3wdrNcjjVDvVZLfYOrpfcE6KKbGU05eRhh1swHkKo1iTAj+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782486684; c=relaxed/simple;
-	bh=HLesOPYJkipgMtEXgj+X0m1CujMFA3L5DtR77zhaeLc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ef6Skp5TFhGi2W1Be05cfqR+w7cCY6tRYWoIhfdhd3YGJgijnxYQjnM3gtpNQQ+WFbad8qQmcAjZDhWFRFxhsNMwRh5ZYy8HB8Y1AQETg7ahoHACLkCTEf0RDmGbfqtzK5YnrS9KQssVWaQ5mjd0fCwahyPtA+XLol00IiqAXCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZEEYlLiY; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782579668; c=relaxed/simple;
+	bh=TulduVJ3UOJV8TsyJ7ffk1l75Pt4FkT2/HyvATqxan4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JC1Adp5X5OhnQBBuXZ8wM/SpWDHO4CCPRmfCtwjbAfckru0vWUKIECQ5d/YhFT2NRzEoZFdyQtsnlbKAgBtJqrZLCLv1s41YU6DoSxWTON3tAshTbVHo7HbII5GveYnNBDQa5TdXlkBG86UmXdkAJgRvXguG/Jnkaq7LzF8bp4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PesMaXNu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZEEYlLiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F7B1F000E9;
-	Fri, 26 Jun 2026 15:11:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PesMaXNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E9F1F000E9;
+	Sat, 27 Jun 2026 17:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782486679;
-	bh=HUtZMqCOdCenr50gEulAE+IUtkAdGzFUI1qYzhYf1RI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZEEYlLiYFtPkSn8WOsmXnHi+2QBy06Jg2Z/jRWe3s+VfvHtNEtokgPFZoftjpMH8H
-	 HTfwXFGWdbPY8xS1/iRyzHMijj8q21ns9T+nkNy39sThXxqPgxAyjfb3G5PxX7liBE
-	 voqt5LWraogJ6n5Mo3cXc7hVvWiSwc3JxA6VpT8FFIwuJG2J01Z0yfr3QFLUZuGWy8
-	 2L0ADCeea7I4Gev6Z6si44rfTV9ON9BITsYUS2vQOZG3ieaXI3LLBM5fqyzevrUtiL
-	 XOZIzN1fSKZbzs01W3zVKT/aG3XLSiz4+7MKCQnUaYGEdAJ0KrWJO8LP+D8gsvgcTc
-	 10jdgpMzL2YUg==
+	s=k20260515; t=1782579666;
+	bh=hEn2zn5pWhG25VPBcYCkS7+7B1NjobplNjZ+d8XjyHk=;
+	h=From:To:Cc:Subject:Date;
+	b=PesMaXNupjJJGZuvo+yqSgEunZs+pIOijrjAHoAz5KrDeHs0eigW5qDmImhC3o89x
+	 3b05rCW3a4MZW5+hrLKEXgTaI6tudKUTTVvihDNtu3HdxuR1GuIj2Mzxgr6RiY1SWh
+	 MsmNSEeCYz2UitAgd6o8IWpfmoVHW0ELS1mJAMEDeDOzBRoNaW4L14iN1um4STbEmJ
+	 Rm6tlfZuBEb4TplCTLPpgBz2BYti0F6F65IB9CEOdRVIlh1MPC7NU+uakrRCaYMKC2
+	 vxE+vucgP/CpLxAX0vYqKHLzaVSul7ngSaIxty8mvzcKvekNwYDXW7dmjT+X5k3KoU
+	 FpI7CLVly3dqw==
 From: SeongJae Park <sj@kernel.org>
-To: Akinobu Mita <akinobu.mita@gmail.com>
+To: 
 Cc: SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	damon@lists.linux.dev,
-	linux-perf-users@vger.kernel.org,
-	ravis.opensrc@gmail.com
-Subject: Re: [RFC PATCH 0/2] damo: support perf event configuration
-Date: Fri, 26 Jun 2026 08:11:10 -0700
-Message-ID: <20260626151113.116999-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: [RFC PATCH] mm/damon/core: validate ranges in damon_set_regions()
+Date: Sat, 27 Jun 2026 10:00:56 -0700
+Message-ID: <20260627170057.1867-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAC5umyj0qTqR0HpHux6+G6bvGCQqtM8CVVXSZSCt66OtJU7+AA@mail.gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 26 Jun 2026 22:56:24 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
+DAMON core logic assumes zero length regions don't exist.  However, a
+few DAMON API callers including DAMON_SYSFS, DAMON_RECLAIM and
+DAMON_LRU_SORT allow users to set empty monitoring target regions.  This
+could result in WARN_ONCE() on CONFIG_DAMON_DEBUG_SANITY enabled kernel,
+and divide-by-zero from damon_merge_two_regions().
 
-> 2026年6月23日(火) 22:50 SeongJae Park <sj@kernel.org>:
-> >
-> > On Tue, 23 Jun 2026 22:29:42 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> >
-> > > 2026年6月23日(火) 0:24 SeongJae Park <sj@kernel.org>:
-> > > >
-> > > > Hello Akinobu,
-> > > >
-> > > > On Mon, 22 Jun 2026 22:49:31 +0900 Akinobu Mita <akinobu.mita@gmail.com> wrote:
-> > > >
-> > > > > This patch set aims to make it easier to specify the perf event settings
-> > > > > proposed for DAMON by Ravi's hardware-sampled access reports patch set [1]
-> > > > > from the damo tool.
-> > > >
-> > > > Seems this patch is built on top of the per-CPU/thread/read/write monitoring
-> > > > patch series [1].  We made a plan [2] to use another user interface, though.
-> > > > The plan is, making the interface ready for page table accessed bits based
-> > > > monitoring by LPC'26 (milestone 1), and implementing the perf event based
-> > > > monitoring on top of it, by LSFMMBPF'27 (milestone 2).
-> > > >
-> > > > So the eventual damo part change for supporting perf event based monitoring
-> > > > will be quite different from this series.  I guess you are sharing this series
-> > > > not because you aiming to merge it as is right now, but just for sharing the
-> > > > code with other stakeholders like Ravis, not me?  If I'm not wrong, I will skip
-> > > > this series for now, to focus on the milestone 1.
-> > >
-> > > Since I will align with the final user interface later, please focus on
-> > > the optimal interface for Milestone 1 without worrying about that.
-> >
-> > Thank you, Akinobu.
-> >
-> > >
-> > > > Please let me know if you want more of my feedback.
-> > >
-> > > However, even if the interface ends up being completely different from the
-> > > current one, I believe that enabling configuration via `damo` using
-> > > symbolic event names like this would still require calling the perf
-> > > python interface (`import perf`) from damo and modifying the `perf` tool
-> > > itself; could you please check if that approach is acceptable?
-> >
-> > I'm bit concerned at having such dependencies.  I'd prefer making DAMON sysfs
-> > interface uses a symbolic names and just use it from damo if possible.  If that
-> > is not possible, could you share more details about why such changes are
-> > required?  I'm still lazily delaying studying about perf events, so please bear
-> > in mind with me.
-> 
-> Theoretically, it might be possible to initialize `perf_event_attr` within
-> the kernel based on the symbolic names of specified PMU events.
-> However, doing so would require implementing logic to read
-> `/sys/bus/event_source/devices/<pmu>/format/*`, as well as duplicating
-> functionality within the kernel that is currently provided by the `perf`
-> user-space tools.
-> 
-> However, if we limit processing to only the minimal format, such as
-> `pmu/config=M,config1=N,config3=K/`, described in the explanation of the
-> `-e` option in `tools/perf/Documentation/perf-record.txt`, it may be
-> possible to minimize duplication.
+For example, the WANR_ONCE() can be triggered like below.
 
-Sounds good.
+    # grep DAMON_DEBUG_SANITY /boot/config-$(uname -r)
+    # CONFIG_DAMON_DEBUG_SANITY=y
+    # damo start
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0
+    # echo 0 > contexts/0/targets/0/regions/0/start
+    # echo 0 > contexts/0/targets/0/regions/0/end
+    # echo commit > state
+    # dmesg
+    [....]
+    [   73.705780] ------------[ cut here ]------------
+    [   73.707552] start 0 >= end 0
+    [   73.708452] WARNING: mm/damon/core.c:359 at damon_new_region+0x6e/0x80, CPU#1: kdamond.0/758
+    [...]
 
-I'd prefer making DAMON interface as human readable as possible, as long as it
-is not duplicating things too much.
+Disallow empty region user inputs by updating the validation logic.
 
-I wouldn't mind adding changes that depend on perf user-space tools or
-libraries in 'damo' for making it even more human-readable, as long as it
-doesn't break the backward compatibility of 'damo', and perf developers are ok
-with the perf-side change.  Anyway 'damo' is using 'perf' internally ;)  And
-seems perf developers are thankfully very open minded :)
+Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: SeongJae Park <sj@kernel.org>
+---
+ mm/damon/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 7e4b9affc5b06..b3100d7fa5596 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -358,6 +358,11 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 	unsigned int i;
+ 	int err;
+ 
++	for (i = 0; i < nr_ranges; i++) {
++		if (ranges[i].start >= ranges[i].end)
++			return -EINVAL;
++	}
++
+ 	/* Remove regions which are not in the new ranges */
+ 	damon_for_each_region_safe(r, next, t) {
+ 		for (i = 0; i < nr_ranges; i++) {
 
-Thanks,
-SJ
-
-[...]
+base-commit: f5cde2d41633df3fb1965efa00bfa827ca41836c
+-- 
+2.47.3
