@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BA21C5F1B
-	for <damon@lists.linux.dev>; Sat, 27 Jun 2026 17:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FD4227EA4;
+	Sat, 27 Jun 2026 17:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782581050; cv=none; b=K3kzXZJ87O39ibHaxCpKfg/sFx8uk/Zdq+66aBYnpKcIqzk2qKrCZ/y8Lz2+9hKlK4hiCSstZM7iHzLhgAnAP1rLk9qCdvbADS5V7VdqdUAbvc6EZnFtmOiBZLGA8QFliwfosG17Q++2Z6lYGttnUy8UIcEcV2nfmIGe4MhspZg=
+	t=1782581200; cv=none; b=W04g9EQzlcLajJJBZw18f0SRxp/pzOv+c18nBWZWJzBqpW6SJeyzYMrtYZbkdbIbKOF/mNlddyQYFEU1vzBe70ecSZoOk7zZ00xbgn+1+CKF6dk5H1tfiAxT15xn5DMFi/oLfmH1YqINVfAsKzarKwsPWJ7TOYiBHzReTzGGUKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782581050; c=relaxed/simple;
-	bh=iYdLC02S4etbBwAYpk8wMivdQ3WF7ZgehYA4vmHp+Rs=;
+	s=arc-20240116; t=1782581200; c=relaxed/simple;
+	bh=qX6NZ+okwh2mZnH7WQDx5tvtSGr+dLkueoTmpTwKr2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9aTzMAEUKOFpvjSHPwoQtmMxTMOIxNyaNvn7XeElfUjREfiyVfyiae0Hx1SbYFCe5dREuAVbmiVAPBVYwSSOV2K0ElVhwI6cHyjj/ecBbbLg0tnwt7KDBkdhZNnystY4L9765Fow3THyWyrQsy1gMxW0LfeeEP7dmTdz/LrYqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LOmE+H7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hdmpsCNw3jXRsrn361IyrVSpWXeCmCwd6cMsWCv/LIipidI6o4n/4ZwZLw9lX+UWWrUpPe06VUyvJyDsmTes4Fu7x2rObWU7/MJskg77ZcU/XlAEhuq0x7T+BnD7XAGPa1HZDzvCVhW71ZeJg/CgTZ10qpq0OHWilC3B0j/8u5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qmc6DOAw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LOmE+H7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BAA1F000E9;
-	Sat, 27 Jun 2026 17:24:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qmc6DOAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E7D1F000E9;
+	Sat, 27 Jun 2026 17:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782581048;
-	bh=3/whHgLTWKZeIz5GkFXSrC49l6nXdX8YGMbI104GaYQ=;
+	s=k20260515; t=1782581198;
+	bh=FQEZdzMR4S9EJURSnXOi0A7QXVE9gI14e3OGLriAsys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LOmE+H7HohuButecJuqpJKQVENn0lByo3L0afVF1e+zbW5Raxyh7sxOh18nPjXow6
-	 f4YbX+WBvN2fdMPb06B8TjvBFYi5GPFDc3TEIqwBg0rOp6lRT5gUhRvcM+RB4kABBI
-	 LabB8nkmtJLnmTKDdzAYhkKD5wyzvDGMZmgYpgXYmxupcx4N8Kq+uKpSUyzZLSbnR+
-	 v/V+7wbJENOuZae1KJGGWVbx1I6X1plWWmTiztPfyXmoP5XCXZ9ujIDg/WY/jm2AN8
-	 +L2ITbE2koTcG9GxzWPNw1Y7px1OgI8DP1xz1COJ3i6zATNgNbddgVBppZcSWG2+zt
-	 pX9Vwzx7Q9qMg==
+	b=Qmc6DOAwKXcAP+pOtkC6rejUGyAHxjO/U5tybrHEyTyFKTp/3VjGhisml9GONUBhi
+	 emVNvUHwnVMSMfFdCRgYE8hWnnt8EYcJvfjfll5iFqw97elZpbMJIvcFvmoUF+T6Nu
+	 jNBi3Xpqv6fgwcTryQZ47RXt6hbbVWEAYReckGFTfyhOzFmy8/NrWM/yoqsJw1rqYU
+	 YeadqQfyZnrcsrlRp6Y9Yejto0hw9Y4nGfoimiAVXW+PQj+LAoA4yYOmy5lwwynmJD
+	 HSKqqg0MWiEYBeOAvxHpAomZGuvRX7AB5XqMMkwH7pPdij3KwDvM7M/fGH5jiVCdqN
+	 acnSntl1VPKug==
 From: SeongJae Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
 Subject: Re: [RFC PATCH] mm/damon/core: validate ranges in damon_set_regions()
-Date: Sat, 27 Jun 2026 10:24:05 -0700
-Message-ID: <20260627172406.3794-1-sj@kernel.org>
+Date: Sat, 27 Jun 2026 10:26:31 -0700
+Message-ID: <20260627172631.3923-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260627171911.1A7181F000E9@smtp.kernel.org>
+In-Reply-To: <20260627170057.1867-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,105 +48,62 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 27 Jun 2026 17:19:10 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 27 Jun 2026 10:00:56 -0700 SeongJae Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> DAMON core logic assumes zero length regions don't exist.  However, a
+> few DAMON API callers including DAMON_SYSFS, DAMON_RECLAIM and
+> DAMON_LRU_SORT allow users to set empty monitoring target regions.  This
+> could result in WARN_ONCE() on CONFIG_DAMON_DEBUG_SANITY enabled kernel,
+> and divide-by-zero from damon_merge_two_regions().
 > 
-> Pre-existing issues:
-> - [High] The validation check to prevent empty regions is bypassed due to integer overflow in ALIGN(), leaving the divide-by-zero vulnerability unpatched.
-> - [High] Memory allocation failure during region updates leaves the running DAMON context with a corrupted, partially updated region list.
-> --
+> For example, the WANR_ONCE() can be triggered like below.
 > 
-> commit e67b2388e5d46f77944a06f1bd1d3d550638fade
-> Author: SeongJae Park <sj@kernel.org>
+>     # grep DAMON_DEBUG_SANITY /boot/config-$(uname -r)
+>     # CONFIG_DAMON_DEBUG_SANITY=y
+>     # damo start
+>     # cd /sys/kernel/mm/damon/admin/kdamonds/0
+>     # echo 0 > contexts/0/targets/0/regions/0/start
+>     # echo 0 > contexts/0/targets/0/regions/0/end
+>     # echo commit > state
+>     # dmesg
+>     [....]
+>     [   73.705780] ------------[ cut here ]------------
+>     [   73.707552] start 0 >= end 0
+>     [   73.708452] WARNING: mm/damon/core.c:359 at damon_new_region+0x6e/0x80, CPU#1: kdamond.0/758
+>     [...]
 > 
-> mm/damon/core: validate ranges in damon_set_regions()
-> 
-> This patch updates damon_set_regions() to validate ranges and reject
-> inputs where the start address is greater than or equal to the end
-> address. This aims to prevent zero-length regions which can cause
-> divide-by-zero errors in damon_merge_two_regions().
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 7e4b9affc5b06..b3100d7fa5596 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -358,6 +358,11 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
-> >  	unsigned int i;
-> >  	int err;
-> >  
-> > +	for (i = 0; i < nr_ranges; i++) {
-> > +		if (ranges[i].start >= ranges[i].end)
-> > +			return -EINVAL;
-> > +	}
-> > +
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this validation check 
-> sufficiently protect against overflow when the regions are aligned later?
-> 
-> If a user supplies a region where the end address is ULONG_MAX,
-> ALIGN(ULONG_MAX, min_region_sz) will wrap around to 0.
-> 
-> Since this validation check uses unaligned inputs, ULONG_MAX passes
-> the check here. Later, during allocation:
-> 
-> damon_set_regions() {
->     ...
->     r = damon_new_region(
->             ALIGN_DOWN(ranges[i].start, min_region_sz),
->             ALIGN(ranges[i].end, min_region_sz));
->     ...
-> }
-> 
-> This creates a region with a wrapped and inverted size. If the adjacent
-> regions sum to a size of 0, for example 4096 + (ULONG_MAX - 4095),
-> can this lead to a divide-by-zero crash in damon_merge_two_regions()
-> when the sizes are added together?
-> 
-> damon_merge_two_regions() {
->     ...
->     l->nr_accesses = (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
->             (sz_l + sz_r);
->     ...
-> }
+> Disallow empty region user inputs by updating the validation logic.
 
-Nice catch.  The next revision will do the validation with the aligned
-addresses.
+The above description is wrong, since this is not updating an existing
+validation but adding a new validation.
 
 > 
-> [Severity: High]
-> This is also a pre-existing issue, but what happens to the region list if
-> memory allocation fails after existing regions are destroyed?
+> Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
+> Cc: <stable@vger.kernel.org> # 5.16.x
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  mm/damon/core.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> In damon_set_regions(), existing regions not in the new ranges are
-> destroyed. If a subsequent damon_new_region() fails and returns -ENOMEM:
-> 
-> damon_set_regions() {
->     ...
->     if (!r)
->         return -ENOMEM;
->     damon_add_region(r, t);
->     ...
-> }
-> 
-> The error rollback path in damon_revert_target_commits() does not restore
-> the regions_list state:
-> 
-> damon_revert_target_commits() {
->     ...
->     damon_for_each_target(target, dst) {
->         if (target == failed)
->             return;
->         put_pid(target->pid);
->     }
-> }
-> 
-> Will this transient allocation failure permanently leave the running damon
-> context with a corrupted or partially updated region list, silencing
-> reclamation daemons?
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 7e4b9affc5b06..b3100d7fa5596 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -358,6 +358,11 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+>  	unsigned int i;
+>  	int err;
+>  
+> +	for (i = 0; i < nr_ranges; i++) {
+> +		if (ranges[i].start >= ranges[i].end)
+> +			return -EINVAL;
+> +	}
+> +
 
-No issue.  The caller should destroy the context in the case.
+Sashiko found [1] this is not complete, since eventually this function uses
+aligned addresses.  I will address that in the next revision by doing the
+validation with the aligned addresses.
+
+[1] https://lore.kernel.org/20260627172406.3794-1-sj@kernel.org
 
 
 Thanks,
