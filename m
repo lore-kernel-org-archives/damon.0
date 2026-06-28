@@ -1,128 +1,113 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBB8800
-	for <damon@lists.linux.dev>; Sat, 27 Jun 2026 22:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF05914A60F;
+	Sun, 28 Jun 2026 00:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782599211; cv=none; b=D0N6XijJGX06NE7JvXuttuRqJi9yoWrdSuBGK3tIBBdS3wXXZVzlNlAS8v8TS+NfqZPh/GcFFyRT12AJv2NZq1KrLAhzVpiT8Z8xfwF4cUQa/ZcnXeJARgTjFDRpMtcWgYvAiGej5w/VmP2zaFjg6WoTYmhy02Ntcc2Y9uIJJ2M=
+	t=1782608249; cv=none; b=LwuLLkZYZqIDUXbjC63P/P845Dr74bJ8tHVOgbtVpPRZF6UMdt2YILj27CPxl5L3DTZHgbG4JEm7WvubEWUsNfITl3ylwXv8WeQkEEAeLqokTO/FlQxxfoyVpW+5nLwBNy6AjvBmPWFsnkCWBJtotHWthonysESyPhTG7MtTVBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782599211; c=relaxed/simple;
-	bh=JSkw9Z0bKQNusSZTsQuEGrGYblHpHWEWikh7UfWmx1E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CFTMP7UZp9jBcwMG+pCAYIGLFrwO2bXga9dFCJ0InZK6uOnk4CPvnc3821oStTYfAo7HMbGJpOghpEhOCkbBjYq+e1nf3M7/Q0Xd1XROkBfCHavjDBk2uxkPG/P/yilQhnp15uzZOa+P0+jDIViIXjdS4BY+f22NrRba0N9wlrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BiaMHCNE; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782608249; c=relaxed/simple;
+	bh=K1cEz/iitud3LvmFxGB0jbqbtJ/55PTUSVs/uhRx8IQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YsFKarBj3eIHePNgxxkTiOw6HV1M9wtCFa8zUMyJ+Flgfu2Rv0KzYw8tRRoCejpdNbsWcrus/PBJ586V2lYVbwyvZ1IwL/0cB7uHV1q+9Kc5ZlTCIaciiFy7gCZRhoI8xQ8QMyJ+KSlpsF4KqDh2PF7NSDz8AyeLeseNbAW2ztM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQoWwsCX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BiaMHCNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966F91F00A3A;
-	Sat, 27 Jun 2026 22:26:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQoWwsCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04AA1F000E9;
+	Sun, 28 Jun 2026 00:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782599209;
-	bh=ZNhuZf4EzNX+x+mPYeLipgASXqtM4sleYQ2JqrvbmuU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BiaMHCNEgYRSLBK49xOzbr4x3ibBYZBjeim+jIKiXM3UaUyp59DAKUYWwC/JD4zHl
-	 mEwhkniH8sqzOjM0s3PMVz/gl7DOCrN+83gtMKfKPz8lET3hQt/l31n+oHMpyeplxE
-	 ePie9HaSLTJ6tKUQH8NFey5Zn4HLTU89UE3y/3cLAmzg65o7QE0FRBDiyEiE82E3W2
-	 Ijg9mLfBH9lyevCUComaEMRSXPi4zIxLt6DsVlEhILgXiiN/3HUqAUc+HXG8oIFttJ
-	 vOAO4L51ePXIoIUGWXNhBci3cUBtcD4exLgXR5c5TBjrCz5PNvX53F9WAEG/K0TjKj
-	 Z8IM+G2iKaXnA==
+	s=k20260515; t=1782608248;
+	bh=tznSpU7jKgoi/IAc701RjRwzUrhhlndb6N0yCpqUF6Y=;
+	h=From:To:Cc:Subject:Date;
+	b=ZQoWwsCX3UlTCy9mLO8MoRulCOcTI/rsGY6DC+7jYEDPeCSwHh3DuH6UUYn/qvglO
+	 QeTKbLss8rNnaeU7rPAlafnix+x2kEETjfv6ZqkZfHogiEnIagnXH0I1FEVVrIMMhf
+	 HzmndrWiHEBMFTQrKyHNCkgozfwLjTCNvtzjD8Q7+7twokBaA8NWh8dxk8dBE+PVcN
+	 SLPWtrgdbrBfurx9a9mfbbpRmiijXXK3T0Uw0gQowPODmqJgobSD8x+36sikkGjeLR
+	 ebX3SI80TknbXFhnECtX10/IvQbWBqpRjjcbslINxKkY3KLhGNVea6YHrac4Tbvb4o
+	 ZRRkqzqVJRy3Q==
 From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: 
 Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon/reclaim: add 'available' memory as an optional watermarks metric
-Date: Sat, 27 Jun 2026 15:26:43 -0700
-Message-ID: <20260627222645.26834-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: [RFC PATCH v1.1] mm/damon/core: validate ranges in damon_set_regions()
+Date: Sat, 27 Jun 2026 17:57:22 -0700
+Message-ID: <20260628005723.28549-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260627213651.19000-1-aethernet65535@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 28 Jun 2026 05:36:50 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+DAMON core logic assumes zero length regions don't exist.  However, a
+few DAMON API callers including DAMON_SYSFS, DAMON_RECLAIM and
+DAMON_LRU_SORT allow users to set empty monitoring target regions.  This
+could result in WARN_ONCE() on CONFIG_DAMON_DEBUG_SANITY enabled kernel,
+and divide-by-zero from damon_merge_two_regions().
 
-> Hi SeongJae,
-> 
-> On Fri, 26 Jun 2026 07:18:18 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > How about using DAMOS quota with its aim-based auto-tuning, instead?
-> > 
-> > I developed DAMOS watermarks and quota as safe guards of DAMOS.  In more
-> > detail, DAMOS quota is for restricting only resource usage of DAMOS.
-> > Meanwhile, watermarks is for restricting resource usage of both DAMON and
-> > DAMOS.  That is, when the watermarks condition is met, not only DAMOS but also
-> > DAMON is completely paused.  Also, watermarks feature was considered smarter
-> > than quota, because it is a kind of auto-tuning.
-> > 
-> > However, it turned out completely turning DAMON off is not a very good idea,
-> > because it drops monitoring results when the watermarks condition is met and
-> > therefore completely stops DAMON and DAMOS.  It drops the region shapes and
-> > 'age' information.  Especially, 'age' of some regions commonly cumulated up to
-> > hours or even days.  Dropping that was a problem in production use cases.
-> 
-> I looked at the code and noticed that kdamond_wait_activation()
-> doesn't seem to free the regions, the data remains in memory.
+For example, the WANR_ONCE() can be triggered like below.
 
-Ah, you are correct.
+    # grep DAMON_DEBUG_SANITY /boot/config-$(uname -r)
+    # CONFIG_DAMON_DEBUG_SANITY=y
+    # damo start
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0
+    # echo 0 > contexts/0/targets/0/regions/0/start
+    # echo 0 > contexts/0/targets/0/regions/0/end
+    # echo commit > state
+    # dmesg
+    [....]
+    [   73.705780] ------------[ cut here ]------------
+    [   73.707552] start 0 >= end 0
+    [   73.708452] WARNING: mm/damon/core.c:359 at damon_new_region+0x6e/0x80, CPU#1: kdamond.0/758
+    [...]
 
-> By "drops",
-> do you mean the age information becomes stale/unreliable during the
-> inactive period rather than being literally discarded?
+All DAMON API callers eventually use damon_set_regions() to setup the
+regions.  Add the validation logic in the function.
 
-I was just wrongly recall the detail ;)  But, yes, your representation is
-correct and much better.
+Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260627170057.1867-1-sj@kernel.org
+- Fixup the commit message for how the fix is made.
+- Do the validation with min_region_sz-aligned addresses.
 
-> 
-> > 
-> > Meanwhile, we introduced aim-oriented DAMOS quota auto-tuning (a.k.a DAMOS
-> > quota goal).  It made DAMOS quota smarter and easier to extend than watermarks.
-> > Nowadays, users can also pause and resume [1] DAMON/DAMOS without losing the
-> > monitoring information when they want.
-> > 
-> > So, I personally don't encourage people to use watermarks.  Of course, I may
-> > missing some problems in alternatives.  Hence I'm asking the question to you.
-> > 
-> > How about using DAMOS quota with its aim-based auto-tuning, instead?  If you
-> > cannot, could you share more details?
-> > 
-> > I'll hold reviewing the code until this high level discussion is resolved.
-> > 
-> > [1] https://lore.kernel.org/20260427151231.113429-1-sj@kernel.org
-> 
-> Thank you for the detailed explanation. I now understand that watermarks
-> pause the entire DAMON monitoring loop rather than just gating DAMOS
-> actions. I agree this makes watermarks unsuitable for the Android use
-> case I described.
-> 
-> I will drop this patch. I think controlling DAMOS pause/rusume
-> separately might be better suited for execution in user space (such as
-> controlling‘quota_ms’ and ‘quota_sz’).
+FYI, this fix cannot be applied as is to the commit that introduced this
+class of bugs, because damon_set_regions() was introduced after the bug.
+I considered making three fixes for each caller to make the backporting
+on the old kernels easy.  However, the first LTS kernel having the bug
+is 6.1.y, which has damon_set_regions() and all the callers are using
+it.  So porting this to necessary stable kernels should be easy enough.
 
-For explicit DAMOS-only pause/resume, you may also be interested in
-max_nr_snapshots [1] feature.
+ mm/damon/core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> 
-> By the way, I sent you an email about three weeks ago (Fri, 5 Jun 2026
-> 20:28:00 +0800) introducing a userspace auto-tuner program I wrote for
-> DAMON_RECLAIM's 'min_age', and asking for your thoughts. I am not sure
-> if it reached you, could you please check? I would really appreciate
-> your feedback on that as well.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d99f7a297fdde..df0cc699494fe 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -356,6 +356,12 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 	unsigned int i;
+ 	int err;
+ 
++	for (i = 0; i < nr_ranges; i++) {
++		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=
++				ALIGN_DOWN(ranges[i].end, min_region_sz))
++			return -EINVAL;
++	}
++
+ 	/* Remove regions which are not in the new ranges */
+ 	damon_for_each_region_safe(r, next, t) {
+ 		for (i = 0; i < nr_ranges; i++) {
 
-I don't recall that mail.  Did you send that to damon@lists.linux.dev or other
-public mailing lists?  If so, could you share the message id or lore.kernel.org
-link of the mail?  If not, could you please resend?
-
-[1] https://lkml.kernel.org/r/20251216080128.42991-8-sj@kernel.org
-
-
-Thanks,
-SJ
-
-[...]
+base-commit: 7c001190b88a32f80c93a6ac302af59a9756309c
+-- 
+2.47.3
