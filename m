@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E4D374735;
-	Sun, 28 Jun 2026 21:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4223B71D7;
+	Sun, 28 Jun 2026 21:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782682934; cv=none; b=t3O1oFl82kf6uOuZwkCjTp4/sTnREppi1snudSWHioViLJNonK3I5CFWk5aC1xbdNC1ue8Flp83bacSzHkwxCFsB4T1ytc0IvQc+o+iU+uX0xGvGvwm0Tw9JRFe2aMwJRneX5hABN2dSjKNOylDGJn3OIAUDFs5M163xOocvzAI=
+	t=1782683694; cv=none; b=E03eSEJMSJp6Zr891zbpIoskBkEOQKAqfkqJBtdJaKGH5VTWJQ6cw+IJw+ofrAw1dcIlia0ATPC2Ri1W//rBBT2Ga+9JGzk4TzczHut4dqpwWxXDSLVrOC6WzzWTczop82bCcs2rRsAI89PjU2Nw93sPh9xCeCQi9cJ8d/+erjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782682934; c=relaxed/simple;
-	bh=jDqk4rAnBBz+pHzIPz/8ZmuIj2JF44Jakg0T1AJv+T0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gyPu0mvgdD2lJCxBAeSRKMiR7MksO1g9MllEVtW0qv18QJ/GfrUs1u4TrHQ/aXxGJ0s2sVZlHS0mR/aTliy6x1EpQZuJbso47seCy0oQ6aW+0/8i9TKaEIYaTPwkFXQPQE/komEYEaXq7dBZvvCDmYuxBTSoWK6exQ/IeCJCNUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BzQP8hnP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782683694; c=relaxed/simple;
+	bh=RCTr6WzinCBRJCf76iFIZiBNOnNNLIMbUYmMVNswliY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fr7TdGB4AIfqmxEDSYReYxUrlhInTfe24x/tGudSsWMeIWC10oEkAczqcJq6VfU7UF6bXKE7e5zvSOC3CcVYvJzD7JljFffG1C/3AUSOXd7/vzjcnvEEMG58LGggS8BaIndQpFPYQjOiKuGpE+cHBIWb+evYTvU8mr5MR2C7Ees=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=odQNqTH2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BzQP8hnP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338D41F000E9;
-	Sun, 28 Jun 2026 21:42:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="odQNqTH2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E499F1F000E9;
+	Sun, 28 Jun 2026 21:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782682932;
-	bh=EbdMQQtZX/wQMqAhMHFL3ANnWsMXWow+5Kt3DUx2tcM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BzQP8hnP9w8tQjAlNhhCeNJYVMnTumfbEguSTvHdROlE3x2ub3H8uev+FllmpXJeS
-	 oPo2iWuJKX6ISqKynapiZz6QoeBPP4NZD0gm5+iqS4JWa5iaRtT//0im6OL1xEaoDK
-	 33iz663ery6mQiUmLZSH+tcf5X0vgl9juP3G2kI9qzRNzOk5PiXJ199LNZwA5gWy/N
-	 2PhfWqdBjRrs74m7xEZ2YN3U6w6USTiQZEfPmTw09Ipd8GiHthMFYzDVYoXotO4q0C
-	 l0AU/vgxJjIoEmkqN731PVuP4oFOgIw4P13A8e/XLn9oI/mlPD46eUhjyBzX7FOVgs
-	 5SxIVvR4BkfFA==
+	s=k20260515; t=1782683693;
+	bh=wb/G2WI6U+bmHwkuU5P84fH/ZMN31r6Got3AOveygXo=;
+	h=From:To:Cc:Subject:Date;
+	b=odQNqTH2ZMrhe7ZozN5h/oAQeRqYWv82de3+V/fqJgmGDBk4t48gPKmL9/QgDbl3O
+	 hFyMymvuoOnpaWxR5Qg5jdHIU8rv7ZTf2fJUom07/pKHToC8vka2u23rxOUJUQ5TRg
+	 F0X0RE3Wl1TOgopWvBD075KKymx+dKmtqlbGxm3PrPDERUwc5ojjy8piMxg1fkRzK/
+	 HSkLXPUm/qb8YSM5yN5WDE1RCcvuAhjNB/1Pk6K1DJ99Xcs4fcEwSqb6TXH7LUKKUm
+	 LnGig2acjXxO5jfQ4/0ej89esSErXW2DdRqMWI/gWdnfLnGTPg5V9UVeE/7ytF6ueK
+	 JUxZyyoShCbFw==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: DAMON Release Newsletter for v7.2-rc1
-Date: Sun, 28 Jun 2026 14:42:08 -0700
-Message-ID: <20260628214208.94619-1-sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	"# 6 . 14 . x" <stable@vger.kernel.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 0/6] samples/damon: handle damon_{start,stop}() failures
+Date: Sun, 28 Jun 2026 14:54:39 -0700
+Message-ID: <20260628215447.96166-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260628211904.94361-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,39 +44,45 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 28 Jun 2026 14:19:03 -0700 SJ Park <sj@kernel.org> wrote:
+All DAMON sample modules are not correctly handling failures from
+damon_start().  Among those, mtier also has an additional problem for
+handling of damon_stop() failures.  wsse and prcl also have a problem in
+their damon_call() failure handling.  As a result, memory leaks, next
+DAMON operation disruptions, and use-after-free can happen.  Fix those.
 
-> Hello community,
-> 
-> 
-> This newsletter covers DAMON features that landed on the mainline, queued for
-> the mainline, development statistics and misc events that were interesting to
-> me that happened in v7.1-rc1..v7.2-rc1 time period (2026-04-26..2026-06-28).
-> 
-> The newsletter covering the previous release cycle (v7.0-rc1..v7.1-rc1) is
-> also available [1].
-> 
-> TLDR
-> ====
-> 
-> The last development cycle for DAMON was the busiest cycle of its mainline
-> history (~6 years, since 2021 September).  12 Authors landed 106 DAMON patches
+Note that only the damon_start() failure caused issues can reliably be
+reproduced.  Reproducing those issues require the admin permission,
+though.
 
-s/6 years/5 years/
+Changes from RFC v4
+- RFC v4: https://lore.kernel.org/20260610135546.64943-1-sj@kernel.org/
+- Collect R-b: from Zenghui Yu.
+- Rebase to latest mm-new.
+- Drop RFC.
+Changes from RFC v3
+- RFC v3: https://lore.kernel.org/20260610011420.3018-1-sj@kernel.org
+- Add damon_Call() failure handling fixes for wsse and prcl.
+Changes from RFC v2
+- RFC v2: https://lore.kernel.org/20260609142119.68120-1-sj@kernel.org
+- Add damon_start() failure handling fixes for wsse and prcl.
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260609005443.2122-1-sj@kernel.org
+- Add damon_stop() failure handling fix to the series.
 
-Sorry, I'm definitely not good at counting.  Sometimes even worse than LLM.
+SJ Park (6):
+  samples/damon/wsse: handle damon_start() failure
+  samples/damon/prcl: handle damon_start() failure
+  samples/damon/mtier: handle damon_start() failure
+  samples/damon/mtier: handle damon_stop() failure
+  samples/damon/wsse: stop and free damon ctx when damon_call() fails
+  samples/damon/prcl: stop and free damon ctx when damon_call() fails
 
-> for a number of changes including 7 new features on the mainline.  A roadmap
-> for extending DAMON to utilize AMD IBS, Intel PEBS like h/w features and do
-> per-CPUs/threads/reads/writes monitoring is made.
-[...]
-> The 6.17 development cycle was the busiest DAMON development cycle in history
-> (~6 years since 5.15).  This cycle broke the record.
-
-s/6 years/5 years/
+ samples/damon/mtier.c | 14 ++++++++++++--
+ samples/damon/prcl.c  | 11 +++++++++--
+ samples/damon/wsse.c  | 11 +++++++++--
+ 3 files changed, 30 insertions(+), 6 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 77fe35dfe005f7d55c8e729e1543b87cfc805a21
+-- 
+2.47.3
