@@ -1,52 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0292293B5F;
-	Sun, 28 Jun 2026 16:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15D5148850;
+	Sun, 28 Jun 2026 16:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782665430; cv=none; b=XXoVlU+AnUrLZK8QfzEp7+FRzAs0hLqIRI72B7y53/yO8N8F9Ds6qk2GCp6CKIi9rF6+YIfuqwk/IfInb3PtOVtSslTW0UOzQfTVKv82wMo6R6Khe35jlSGPHCesGm7c7TrieIsEbuAsovIVXqGasgnXGVbHxAMB3NEH+6zHvJs=
+	t=1782665706; cv=none; b=MRqptSVVU+8ZMUlhDJqdKT8VgE24HUT9htM4mEoPy+YXypDj1iwOOjDl8ffajXhemwwKaYrIrVIzt9Qty8xBD8qrd0e3yv47im5EwFvK2wgZCiJgt9JkfGIU7VDxe1+2MP3mvtETpQuVla4g9ZlweImHjgb8xabl6xYr0kLjHTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782665430; c=relaxed/simple;
-	bh=EQFc6WIkd2y+a5dZpYrFuSXzwXemq0x5CnxJSS631pA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TNbX7sZCuC2DgEXRBOjp4V9ju0kBCIznWmTtr5oMDFFX1/Ytb0eb+YY/tF7hVgA3ZRB61YHLwQL9pmEBCvpQDSVlIpAl2nEJU30u3YftJ+HE+uXFw+u07l6Yf3Q3Me2POHWNiNzS4eosRYUH/vNAPJqO9oI/vjzGUHOyvJkgz+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mqE78tfj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782665706; c=relaxed/simple;
+	bh=amVSJ/GVsC1ebNfCxl39jJ2vXx6oRDIzstnIJPSgnHo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d8XZhnJCPwALRzzpNSAYK4jQDClXrn1RuwGxWVRzOhNyHqp8x81ynHGuqQiHdliP+eiPhx6PO6qhZ9x2IEbmLeM+gkCr/Z5llqMYHDWH7PVAAdZjNBN11j1FeG5hPf5pBMDlSBg0x+p1PLAm/Em6rsN2x76yPpiYft7uxN2wirg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IvUnhp7n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mqE78tfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD681F000E9;
-	Sun, 28 Jun 2026 16:50:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IvUnhp7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CA61F000E9;
+	Sun, 28 Jun 2026 16:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782665429;
-	bh=4tNWb0g/fFPdngLw0tQabxt79dLq+ueJy5cbexUblyY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mqE78tfjm25WDHjpzvrUDuASfQ6RRBt6XmsrhSHc2ipd0VA/+OiPFBeE/vPDD4nhJ
-	 DKdBQVZOU9pgmzEEj2SOammBx39+0Xfn3enODddgHhenBIMmQhaOesQQjnCPvnG2hd
-	 Ap51hzwMwf125cxQSSdYFEWCmrUbbv87L6k2gvoUIytUoefawvO6QTpqM2JDvMHdL/
-	 SFXpWUHJv8eHULhLUtq9aZhcwsqQKyjnFd0EDyFeOyrdcIBvaqgazf24VVtAH0tcAz
-	 8xuSk80DH5Vr92CeP9a8QBaCj4VRiR8afNvJD6kSuJldAdX4UayAPFHMb13EFEQnwG
-	 QmOXDp68rg0ew==
+	s=k20260515; t=1782665705;
+	bh=WnNx7JGiiiPZrlprnXcKYwyKhDFTWq0vvPCdgz5lwaQ=;
+	h=From:To:Cc:Subject:Date;
+	b=IvUnhp7nb/iw/yn1ckX19zJmPsB3c5cYpg6Or5AuCQnNUIccZVZJcrYXoAPHVo9we
+	 ZWcXaoKKiGXDgUva+BaJ8w807AdfgsE+NaPBclzG8+8+nXoMa8ZucaZJXbcQqVqcGp
+	 p8OBzAgpAr3NYVFoDe+Xlxw8xajgJ4BVduxORZQJO1Z/UI0CB25jUlxQ5/zT4eVcnn
+	 n9ereCDbVxOukVLLp0CJxVpFn/7sjnPLKkX1DFO7FtBPqH+1ObU4GXbPh3cP8iH1G9
+	 xByqjDst/Ky+ElD5Xq6NLB/z/VV5j3C6dRxme201bs9XCaiR5GURBlYypn8X3q3QkR
+	 MgyGI9ZY5T32A==
 From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: 
 Cc: SJ Park <sj@kernel.org>,
-	Arnd Bergmann <arnd@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: Re: [PATCH] mm/damon/core: reduce kernel stack usage
-Date: Sun, 28 Jun 2026 09:50:20 -0700
-Message-ID: <20260628165021.85893-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: [RFC PATCH v1.2] mm/damon/core: validate ranges in damon_set_regions()
+Date: Sun, 28 Jun 2026 09:54:41 -0700
+Message-ID: <20260628165447.86217-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260627223405.3533412b4010b6ce658da01f@linux-foundation.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -55,23 +46,71 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 27 Jun 2026 22:34:05 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
+DAMON core logic assumes zero length regions don't exist.  However, a
+few DAMON API callers including DAMON_SYSFS, DAMON_RECLAIM and
+DAMON_LRU_SORT allow users to set empty monitoring target regions.  This
+could result in WARN_ONCE() on CONFIG_DAMON_DEBUG_SANITY enabled kernel,
+and divide-by-zero from damon_merge_two_regions().
 
-> On Thu, 11 Jun 2026 06:56:07 -0700 SeongJae Park <sj@kernel.org> wrote:
-> 
-> > On Thu, 11 Jun 2026 14:56:57 +0200 Arnd Bergmann <arnd@kernel.org> wrote:
-[...]
-> > Should we add Fixes: and Cc: stable@ too?  This function was introduced by
-> > commit f04b0fedbe71 ("mm/damon/core: implement intervals auto-tuning") which
-> > was merged into 6.15.
-> 
-> I don't think so - kernel is full of these offenders and it will be a
-> long and painstaking process to weed them out.
+For example, the WANR_ONCE() can be triggered like below.
 
-Thank you for input, Andrew.  I agree.
+    # grep DAMON_DEBUG_SANITY /boot/config-$(uname -r)
+    # CONFIG_DAMON_DEBUG_SANITY=y
+    # damo start
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0
+    # echo 0 > contexts/0/targets/0/regions/0/start
+    # echo 0 > contexts/0/targets/0/regions/0/end
+    # echo commit > state
+    # dmesg
+    [....]
+    [   73.705780] ------------[ cut here ]------------
+    [   73.707552] start 0 >= end 0
+    [   73.708452] WARNING: mm/damon/core.c:359 at damon_new_region+0x6e/0x80, CPU#1: kdamond.0/758
+    [...]
 
+All DAMON API callers eventually use damon_set_regions() to setup the
+regions.  Add the validation logic in the function.
 
-Thanks,
-SJ
+Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from RFC v1.1
+- RFC v1.1: https://lore.kernel.org/20260628005723.28549-1-sj@kernel.org
+- Use ALIGN() for end address.
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260627170057.1867-1-sj@kernel.org
+- Fixup the commit message for how the fix is made.
+- Do the validation with min_region_sz-aligned addresses.
 
-Sent using hkml (https://github.com/sjp38/hackermail)
+FYI, this fix cannot be applied as is to the commit that introduced this
+class of bugs, because damon_set_regions() was introduced after the bug.
+I considered making three fixes for each caller to make the backporting
+on the old kernels easy.  However, the first LTS kernel having the bug
+is 6.1.y, which has damon_set_regions() and all the callers are using
+it.  So porting this to necessary stable kernels should be easy enough.
+
+ mm/damon/core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d99f7a297fdde..949d5309d54d3 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -356,6 +356,12 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 	unsigned int i;
+ 	int err;
+ 
++	for (i = 0; i < nr_ranges; i++) {
++		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=
++				ALIGN(ranges[i].end, min_region_sz))
++			return -EINVAL;
++	}
++
+ 	/* Remove regions which are not in the new ranges */
+ 	damon_for_each_region_safe(r, next, t) {
+ 		for (i = 0; i < nr_ranges; i++) {
+
+base-commit: a5e5bb743e4c174689e5d57b25fa8c78c49546e8
+-- 
+2.47.3
