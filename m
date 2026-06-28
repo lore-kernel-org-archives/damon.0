@@ -1,94 +1,88 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F75F2DF3DA
-	for <damon@lists.linux.dev>; Sun, 28 Jun 2026 17:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39532E5429
+	for <damon@lists.linux.dev>; Sun, 28 Jun 2026 17:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782666302; cv=none; b=jA+6vrcZL4B0+Xa7Y64T/IBtV6C5zJhMoOJHhwluBLmV9vIqZZ7ZTryZYwNDMPodPPyl5QbuWquqqarn5vmGe3Eu0rwi08fbOxTduBYIgEvwhYJZcxW1FC2nfGWq89S0eOZ/7qPmIww/S8G4EqOgDOL5ozZBkcXAw1cMXsehFH8=
+	t=1782666563; cv=none; b=IzhFjkaU85z06OKPeabgiYn+32Fuup6sndVrmgdC0+v3EXwBN09E/8LW9edJjQEgcypXaUknAMdCKB8n0qnDTQIzSN9b0UdAL54PoaE7/7/C7FXe9EAq3SQKTT49yeDEIaM73B8UEKCTbzbtDp5EawuPLO9JuJzB5PTQq1p3Vrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782666302; c=relaxed/simple;
-	bh=7edhWxlAT7p3uGUAXujBkPV7O8n2yQgUDtRVQ62nP4w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IQl9fb78hEzMqfEtnOmZ7+nGymJo9RcUAV0utMnONae5rY9yYmi7YQmGD7UXtn5a6Oy6M8llzt0qk15gRat+BpWLqfYXZ3w1SJOOamBTR3Ln62EiqrRs/AOCauZDY+ympAYn0hCBVY+G2imoDWu0CXBTvqEpcBXfdfjm7aSLF5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aBVRzBQl; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aBVRzBQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985881F000E9;
-	Sun, 28 Jun 2026 17:04:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782666299;
-	bh=/ymacN+/8XLk9vgGgQDu7elYRViiHjsgkD4GV6NQOeo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aBVRzBQlIrFuu2OUTsWUbIox+hZloXoDBTy2pGUmntedummE3L9kqa8ZfGuBBGr7Q
-	 uYshUqMV/yFoM8+/atUm/RI/XgPlJQi2ba/siXveguUzhb5eUD1GhwSehIrTMQ/lOB
-	 cvwjL5Ie+qOqKMYW4toDZ9Cua/RE+4A2QnlpX47+VMJgBhCpH3bzrfARSKFfNr/P82
-	 YpH9wkVYtOFcOcnidfqvV7tq6hKjr8i6oGARSx3dyoJIihFOx4FJTENEu5sMDdEnxL
-	 xrKnJWXOiCw3EdgO0u/3eoxXnSZNaPIiXM+PNmcjpyDwJMxvXUcVnriiFdfGJf5NoZ
-	 Hj38E/WLv3Q5A==
-From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon/reclaim: add 'available' memory as an optional watermarks metric
-Date: Sun, 28 Jun 2026 10:04:45 -0700
-Message-ID: <20260628170447.88064-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260628085547.21814-1-aethernet65535@gmail.com>
-References: 
+	s=arc-20240116; t=1782666563; c=relaxed/simple;
+	bh=XGuSAlyhE2uxddEA5f8DKDV3+xXSTfDAvM7JpWNDdis=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=fbNj7voDx9NGOT0NKR4kSmXgVgsj2oIcMpuoVzeidXYE3UJUog2yez71f1zWDkzXUNeYsCZq7ymUPM+vjo//2vEL+W9+jsDLaIW7YPLFxNg/9G+hoOY5uoOlPVG9iMtIlm+zc20YGZabVr1SqWSY+m1hIL4V5ZpVzQj5AtXLpsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597F81F000E9;
+	Sun, 28 Jun 2026 17:09:22 +0000 (UTC)
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v1.2] mm/damon/core: validate ranges in
+ damon_set_regions()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260628165447.86217-1-sj@kernel.org>
+References: <20260628165447.86217-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 28 Jun 2026 17:09:21 +0000
+Message-Id: <20260628170922.597F81F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-On Sun, 28 Jun 2026 16:55:38 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] Flawed Validation Logic for Empty and Inverted Regions
+--
 
-> On Sat, 27 Jun 2026 15:26:43 -0700 SJ Park <sj@kernel.org> wrote:
-> 
-> > > I will drop this patch. I think controlling DAMOS pause/rusume
-> > > separately might be better suited for execution in user space (such as
-> > > controlling‘quota_ms’ and ‘quota_sz’).
-> > 
-> > For explicit DAMOS-only pause/resume, you may also be interested in
-> > max_nr_snapshots [1] feature.
-> 
-> Thank you for the pointer to the 'max_nr_snapshots' feature!
+commit 663c371bd35c3a6e3044a1a0a7c4a31852e3924f
+Author: SJ Park <sj@kernel.org>
 
-Feel free to let me know if you have any question for the feature.
+mm/damon/core: validate ranges in damon_set_regions()
 
-> 
-> > > 
-> > > By the way, I sent you an email about three weeks ago (Fri, 5 Jun 2026
-> > > 20:28:00 +0800) introducing a userspace auto-tuner program I wrote for
-> > > DAMON_RECLAIM's 'min_age', and asking for your thoughts. I am not sure
-> > > if it reached you, could you please check? I would really appreciate
-> > > your feedback on that as well.
-> > 
-> > I don't recall that mail.  Did you send that to damon@lists.linux.dev or other
-> > public mailing lists?  If so, could you share the message id or lore.kernel.org
-> > link of the mail?  If not, could you please resend?
-> 
-> I hadn't previously sent this to damon@lists.linux.dev or any public
-> mailing list.
-> 
-> Since I have completely rewritten it (the email) and it focuses on a
-> standalone userspace program/daemon, I have submitted it as a new
-> independent RFC thread [1] to avoid biasing this patch's topic.
+This commit adds validation logic to damon_set_regions() to ensure that=20
+empty monitoring target regions are rejected. This prevents division-by-zer=
+o=20
+errors and sanity check warnings within the DAMON core logic.
 
-Makes perfect sense.  I will review.
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -358,6 +358,12 @@ int damon_set_regions(struct damon_target *t, struct=
+ damon_addr_range *ranges,
+>  	unsigned int i;
+>  	int err;
+> =20
+> +	for (i =3D 0; i < nr_ranges; i++) {
+> +		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=3D
+> +				ALIGN(ranges[i].end, min_region_sz))
+> +			return -EINVAL;
+> +	}
+> +
 
-> 
-> > [1] https://lkml.kernel.org/r/20251216080128.42991-8-sj@kernel.org
-> 
-> [1] https://lore.kernel.org/damon/20260628085155.20828-1-aethernet65535@gmail.com
+[Severity: Medium]
+Does this validation logic correctly reject unaligned empty or inverted
+ranges?
 
+It looks like the alignment macros are applied before evaluating the bounds.
+If a caller provides an unaligned empty range like [4097, 4097], ALIGN_DOWN=
+=20
+makes the start 4096, and ALIGN makes the end 8192. This evaluates to=20
+4096 >=3D 8192, which is false, allowing the empty range to bypass the chec=
+k=20
+and silently expand into a valid monitoring region.
 
-Thanks,
-SJ
+Conversely, a page-aligned empty range like [4096, 4096] evaluates as=20
+4096 >=3D 4096 and is correctly rejected. Similarly, an inverted range like=
+=20
+[4000, 3000] would align to [0, 4096) and be accepted.
 
-[...]
+Should the raw input bounds (ranges[i].start >=3D ranges[i].end) be validat=
+ed
+prior to applying the alignment macros?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260628165447.8621=
+7-1-sj@kernel.org?part=3D1
