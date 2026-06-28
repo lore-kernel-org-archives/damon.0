@@ -1,81 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F9E3BE64C;
-	Sun, 28 Jun 2026 22:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49961D7E5C;
+	Sun, 28 Jun 2026 22:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782684092; cv=none; b=vCQxpgVvug8JRV58D4U9asi1rGSP3phORenRG+5/27vASA0J3yiYKvdUEl48Jwi7kZppf1ti/FvOHA93jnlYCrIaldy6oekvh7RYPToQ5KAThkVXRHaxnDd8uT2l1snfcccwXdqW1r0TEEX4/lwRSpwwMafsoS166OFs2c24MY8=
+	t=1782684499; cv=none; b=tnGPRQTJUT1lRR/OW+gqIPjHKjgQT3dBIqObOZSNDq3esjBHCovgxv2D9TYmybtTfDzMNPoIcYq2Q0bdwBNbm1X7xrPfPZIoc2KagE5EXVsWUZJH8j+/Us8k7DlErN8gVKRVoD1xyL646r4n97qip4kRhZ/EZXlADpQWNtwxhqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782684092; c=relaxed/simple;
-	bh=wLSIJJxL/N5karrdU0P3w+WOpiSjx28s4i+7MHUL/2w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aD+iDm1RI2o7cLxK/Dd7fqTcK0n78T/t5iGf12DwRT65q3rT2h5yqVJJ8S8c3aHqK0GLPeDBYpCzb8zRpGTz3YEdALXM1BV7qguvVSdqfALpzjUV/LQlYPsCgmPd3Kf0F/09xARCJykr1XzrQfWVMF7lxxXHbP87GzcQLcyqSnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BsJUW92c; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BsJUW92c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339DB1F00A3A;
-	Sun, 28 Jun 2026 22:01:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782684090;
-	bh=hGvHa5tYAkEF4rEB2p2YMvPKhuvQYixaBRxfKvPf83g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BsJUW92cGcgXzmfE5Cl1tSjzny41PlHDmRuN+PtYodY46D8cHIVHe0C5VL9WO6Qi3
-	 LOfS8C/HodvSXQkndzhRImzWg9X2v13W6Gy6DEiSYaYPn+YioEc8BxTgh0mz29bAMR
-	 c4JxnIOjXJOswqok3QcLOpFNbujsBEjrxrfEno3HkLRvnubkEWXaP11d8kU/PnTZrF
-	 Pm6HO9a8WdwfXRYF30NaIPSOgXcaAPNMiSJ7rK1K/PrgMr6zakhtKOx0kFmw6U6oHZ
-	 CQsJNhSXDmVHdzz+ks6i7cQHPvPxsI0kS7PeWkazYCIUM6aJGR1vagMs9T4Kn+3JQ7
-	 YkxKf0Khk4Jig==
+	s=arc-20240116; t=1782684499; c=relaxed/simple;
+	bh=GHdV2dH8IrCPgct5pC1g4kt8vQR0ccTKg17QZVW5EnE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=b6DwBKU+SwA1sM+KW2rIgJOusncF8JVgnAr3UMIFPGbzWfbScp6a/tA59UbX6UDbQ0eH7bKQzNQwnwrvBbKfOs9i0q9knDfbrPlaO0qaeH+DUhuOrq4TalLos5JChRF/6N9G1AAo77BAWn9wbv6OYZiaPv4A4f5tmYkvGylIxSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111101F000E9;
+	Sun, 28 Jun 2026 22:08:18 +0000 (UTC)
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 11/11] mm/damon/sysfs-schemes: kobject_del() region for populate_region error
-Date: Sun, 28 Jun 2026 15:01:20 -0700
-Message-ID: <20260628220121.97360-12-sj@kernel.org>
+Subject: [PATCH 0/2] mm/damon: add kernel-doc comments for probes and rnd_state of damon_ctx
+Date: Sun, 28 Jun 2026 15:08:02 -0700
+Message-ID: <20260628220808.98931-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260628220121.97360-1-sj@kernel.org>
-References: <20260628220121.97360-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
-could cause directories creation failures due to the name conflicts.
-Fix the issue for tried region directories in the error handling path of
-damon_sysfs_populate_region_dir() by adding a kobject_del() call.
+The two fields of damon_ctx struct don’t have their kernel-doc comments.
+That causes kernel document builds to warn.  Fix those.
 
-Fixes: b574a82d10de ("mm/damon/sysfs-schemes: implement tried_regions/<r>/probes/")
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/sysfs-schemes.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+The broken commits are in the mm-stable tree.  As the issue is not
+significant and the next merge window for 7.2 is expected to open today,
+apparently it is too late to squash these fixes to the broken commits. I
+hope these to be merged into 7.2 release after the merge window, so that
+those don't bother stable@.
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index e2c8716be6c9c..41f93a1823bf1 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -3132,12 +3132,14 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
- 				sysfs_regions->nr_regions))
- 		goto out;
- 	if (damos_sysfs_region_add_dirs(region, ctx, r))
--		goto out;
-+		goto del_out;
- 
- 	list_add_tail(&region->list, &sysfs_regions->regions_list);
- 	sysfs_regions->nr_regions++;
- 	return;
- 
-+del_out:
-+	kobject_del(&region->kobj);
- out:
- 	kobject_put(&region->kobj);
- }
+SJ Park (2):
+  mm/damon: add a kernel-doc comment for damon_ctx->probes
+  mm/damon: add a kernel-doc comment for damon_ctx->rnd_state
+
+ include/linux/damon.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+
+base-commit: 7875263842e9465bb31d0dbbcbd899610dfe43b4
 -- 
 2.47.3
