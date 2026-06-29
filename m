@@ -1,54 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91DA2E06E4;
-	Mon, 29 Jun 2026 14:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DE22D3ECF;
+	Mon, 29 Jun 2026 14:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782744944; cv=none; b=a8fAD0aHe6yussXeC2QRwRN9/e5f6TgJTyTh013f4A03A82VS1uObca0TD50i7RCBGZ1+HwFhaYwd9m/Z5EtjxPpMZOjXmUQEe9B6AQ8QheITPVIR3Mgw477Swo95YI9AA3DaZgLsA4wS7JdyNNPQDqX7BD1CtA30JQp+IVo3Po=
+	t=1782744945; cv=none; b=L6p2EsjPijo0c7yhLAq27xdHfL9S/VM17TIyxpCTVn6ZhS6bR/OvcBQPk3pPXQN8IgOdx2/NSstdILX6BRoeyMp5iTtBcsWkr/r1JF1HRiIwLyQXupzzNJrWrBxuNfuDMuIS2YPmzB7LHdoCcr+XT9ZYliO/yc/pfbv7GlmXGGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782744944; c=relaxed/simple;
-	bh=D7N5a7qo/YAKktxwJ4n2nVSy5WQVGmL6DjXBnoaN3BM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SgZsFc0Ktkiv5PDymIw3TH+lBM7aj6JoKys+xRnGlp9ayGMnSA/HqQhJ/x5lbe1UUKRtCeSyaY0aCEcpFwcvT98XEyhCWslLpNsujzB6MPY57gW+CG6FA7Se42piIv9JUQ5QsB5YFiaTJRiQedTCcAFGFrThae8rE+yKvnyiqVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ab23CYWO; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782744945; c=relaxed/simple;
+	bh=Mql/l83FECvFqg0Gh57RZqJvWvCvaXofOvjdJf4tikE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EJHO2+bH3XOMRJiovgycseuS6nSZjyPmG4R4uyC7gEbn3+Z8jQEfftsjtghMXFv3r2v00srtD+7TPB3Ddmhvzlb5krr1NSZL5wkHaeadm0G+FtrnL+yrxNGiAXXcs7vAQV9GTXuv149R1H+LYqOHnS1Dga76lN5bQLasVxen2YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f+GrKNZl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ab23CYWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4208E1F00A3D;
-	Mon, 29 Jun 2026 14:55:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f+GrKNZl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC58C1F000E9;
+	Mon, 29 Jun 2026 14:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782744943;
-	bh=ttGyzzeHcyljjJxDkR2hOA9v80OHBSDRc7TeCp+VQP8=;
-	h=From:To:Cc:Subject:Date;
-	b=Ab23CYWOV3R+jpaIPE9R0BH1pPzkKLGN9yekJMEuyHJSGLOiW95ZIKQhVlSXKcc69
-	 jJa0VyN9iR4gaTg+wwjnarmCYMOsJeLQl+kSw+AD2+qpJXKCLLUx8yZnaJGEX10knk
-	 1ET102mc69Sbjd8CcoicFTKmLNpVf8/SgvhlUUT20WrdfXo2BJd3c9XT/ZfIiiq5F1
-	 BPIkWBIcc773ohFNpPn8yhjl8mOtQI7eorbvIgIxIaxj3D4fT4x9EYsvH49pCx1N3P
-	 U55ZUewOXAfMBD/jRdoLuDAKH6mzoHygxc5Mx9/Itt9FVy98qTpKWsZoPtYu/khVmg
-	 bPdasO5kJ4vhA==
+	s=k20260515; t=1782744944;
+	bh=pL/OIFxAfmJMENrJselHOaTQtQ71A4Uv2SXDoGfSIdk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=f+GrKNZl7rNDdeHLjnA2IB+t3bNGbNvt5GRbLNylwd+JKc+cKoP7w8Fz4BYL4Rqqr
+	 gFT6c0KH0T1AalBrpEGas5knLBzNAM3qvYqjZgmVuUOlBw+q9989VvK6+yPzWb2UyW
+	 e0QOaZ+MVQJzwy1ggUIhkmRczkXuvnc7fh8IPD9if0B3NKooMt8jss/76jTUfviBmy
+	 /aoSOQH24JiPeacnNEtiIjHbY0GUe4qWT/w7Q318mehq/RvzxycjrT4l+0+hXqwr8i
+	 6Z611YYQ+KzizEl3blr1WDy8CDzWgtqALDZj2RvKi44PiqoDTMlN4NBVQwzv99uzb2
+	 pfz8FLfsvZcNg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+Cc: Akinobu Mita <akinobu.mita@gmail.com>,
+	SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 0/5] mm/damon: five misc fixups
-Date: Mon, 29 Jun 2026 07:55:31 -0700
-Message-ID: <20260629145538.134832-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	SJ Park <sj@kkernel.org>
+Subject: [PATCH 1/5] mm/damon/core: use kvmalloc for target regions array
+Date: Mon, 29 Jun 2026 07:55:32 -0700
+Message-ID: <20260629145538.134832-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260629145538.134832-1-sj@kernel.org>
+References: <20260629145538.134832-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -57,40 +48,48 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Five patches for miscellaneous DAMON fixups.  Use better fit kernel
-functions, cleanup/fixup documents, and add unit tests.
+From: Akinobu Mita <akinobu.mita@gmail.com>
 
-Below is a note that is better to drop from the final commit message.
-The five patches were initially sent and revisioned by different
-individuals.  Each patch contains changelog on their commentary area.
-The patches are curated into this series by SJ, for the convenience in
-reposting.
+damon_commit_target_regions() temporarily allocates a single contiguous
+memory region using kmalloc to store copies of all damon_regions of the
+damon_target.
+However, if the damon_target has a large number of damon_regions, the
+total size may exceed KMALLOC_MAX_SIZE.
 
-Akinobu Mita (1):
-  mm/damon/core: use kvmalloc for target regions array
+This problem can be avoided by using kvmalloc instead of kmalloc.
 
-Asier Gutierrez (1):
-  samples/damon: Fix typos in Kconfig help text
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Reviewed-by: SJ Park <sj@kkernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from v1
+- v1: https://lore.kernel.org/20260603112306.58490-1-akinobu.mita@gmail.com
+- Collect R-b: from SJ.
+- Rebase to latest mm-new.
 
-Doehyun Baek (1):
-  Docs/{admin-guide,mm}/damon: fix DAMON documentation details
+ mm/damon/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Philippe Laferriere (1):
-  mm/damon/stat: use secs_to_jiffies() instead of msecs_to_jiffies()
-
-Sailesh Nandanavanam (1):
-  mm/damon/tests/core-kunit: add KUnit test for walk_control_obsolete
-    behavior
-
- Documentation/admin-guide/mm/damon/usage.rst |  8 +++---
- Documentation/mm/damon/design.rst            | 12 ++++-----
- mm/damon/core.c                              |  4 +--
- mm/damon/stat.c                              |  2 +-
- mm/damon/tests/core-kunit.h                  | 28 ++++++++++++++++++++
- samples/damon/Kconfig                        |  2 +-
- 6 files changed, 42 insertions(+), 14 deletions(-)
-
-
-base-commit: 58a53a487b7a86995fdfba07723fb8416fccf830
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3dd2750c2ef20..ded76719e8a14 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1362,14 +1362,14 @@ static int damon_commit_target_regions(struct damon_target *dst,
+ 	if (!i)
+ 		return 0;
+ 
+-	ranges = kmalloc_objs(*ranges, i, GFP_KERNEL | __GFP_NOWARN);
++	ranges = kvmalloc_objs(*ranges, i, GFP_KERNEL | __GFP_NOWARN);
+ 	if (!ranges)
+ 		return -ENOMEM;
+ 	i = 0;
+ 	damon_for_each_region(src_region, src)
+ 		ranges[i++] = src_region->ar;
+ 	err = damon_set_regions(dst, ranges, i, src_min_region_sz);
+-	kfree(ranges);
++	kvfree(ranges);
+ 	return err;
+ }
+ 
 -- 
 2.47.3
