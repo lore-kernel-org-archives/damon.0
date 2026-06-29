@@ -1,117 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6303D2D3A7C;
-	Mon, 29 Jun 2026 16:41:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290194611EE
+	for <damon@lists.linux.dev>; Mon, 29 Jun 2026 16:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782751300; cv=none; b=koSUHby8zUQFSqcjCeW+76yEam6DRu5el4+bx3YmWkiJo3cMKhAcE5cjTOdHLloAD7ivBNz04+TkHX2jBowjA3j65mGsAu6rAWOxzvuydTeyA5kvVJl2AqOMGjixRkJJeYNE51fnT6bImddHe6+sTKSgrIOx9NVcb1LP8nYCRhU=
+	t=1782752041; cv=none; b=Wc5l0cg9Ioyi/l2WteKS5mNJZYcXpo3h1Q/KyY8RwVqGP9GZONogPdGoYbQln6YN3ODf5/Oo5/RkPuVWyIRUmc1iMyELskmFLXqh0EJVv8toRbbtY4re4e4qnr1e58IA68XXLnOJKTY8l8kzRx1CnEhjQBu0KeO3EAm06JIhSBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782751300; c=relaxed/simple;
-	bh=CFEM9BgDLXz04FkWaVKAh5iws54Pp4c6vKoWw6aTPlE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OZQ1IHqYT9yZcLnSh4AFO3sHBs75UsLAOG30u8eilW7biqsa/SlglBSccYaK2C9LHccp5UrZM3IVrthY7uD4h+5z/o0IY/khah4AbagZkB+FeAA6RLCm0qmYX6cV9LwQu46e5XWKk1wYL9/xxwSMnWoU/yuOhcm0nAt2SxmibVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hJmAai/5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782752041; c=relaxed/simple;
+	bh=a+2PvNuDwXK8/ZiMQMFDYT+Fh98zwsQTtsnzBpDdpiY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GGo3zg2ArWKQjveOvf/OkMJOfCjQ8LfUMlRnu8Ih8M8dK4MheEndCFG8dMgRg5Ehdjua5TsS2hHQp3dM4E3OB5zvCeuOLfumrWM3miNc06P9oBydkcJPmJJdU7izA3dlyk9dfjpf4Eg6skSr/mx6Je8+vF4KC+8d7CfRpEUI0pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h4FOVTkc; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hJmAai/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027B21F000E9;
-	Mon, 29 Jun 2026 16:41:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782751299;
-	bh=ch5CI1toUlORlovajdCC+YMRoe+PpJQnl8a5VV79Qi0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hJmAai/5vkibkmO6VFkWSq/Ll1y5jE3j/DzaeyyPFKyq6xwAWxIjO79R0qGEP4vSC
-	 dscAlrX5ctbgTMNUAbj21/JNqvHk3lRwZZOF6r/Ta4FjjCdP3/PBnSN/C4tlpR5j9j
-	 HSF7Dlc0aoj7gsDTbePMQtjCP/xBpH87s7MdWxQs9Zuf/RhQ5LBVu/X3uV1WM1uMla
-	 uNw5QZ+z1TPY33Q7kIG03f2R4Eax2CqGoQK5L9fO6gf9Y0pff5oJ8krKULZnitJWl+
-	 HfINykNpBBlOytN9AKxyPcJqJfMwdZgfi0f/ZXCpWHSG44+9HDMHmBql5baxz3zYvY
-	 zey7OMeB60fnA==
-Date: Mon, 29 Jun 2026 17:41:16 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Gregory Price <gourry@gourry.net>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Pedro Falcato <pfalcato@suse.de>, Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, 
-	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 05/30] mm/rmap: update mm/interval_tree.c comments
-Message-ID: <akKfAl-wdIAbexNR@lucifer>
-References: <cover.1782735110.git.ljs@kernel.org>
- <80d482a927b2e9862487b812e0ab48ebc1289a70.1782735110.git.ljs@kernel.org>
- <akKWvnU2Ua-8ceSb@gourry-fedora-PF4VCD3F>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h4FOVTkc"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5aeb77b3afbso1768237e87.1
+        for <damon@lists.linux.dev>; Mon, 29 Jun 2026 09:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782752038; x=1783356838; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=467nTLX0LnAbWRx2UyG//0H8fEY44fM4VWbD3i/nXkM=;
+        b=h4FOVTkcCXtADLZAaoxaJPAJ5i/SHUTG3NIZ2pJh+MS1cqWDgVwet60qZL3748u34d
+         +ZGiWfJqHgk2OatHpE6IVsozzvhsfoGTKthrTR/1sbZ2s5+uYxZVUgITnY3eUvm/32Wc
+         E93Ee6+BfSXmWYsVjfaL8ECqFWywhYDYu8vc8Pz/hJfQkgecLpDwxh34iymXUZItisVZ
+         gDU2Ji79PtDj5BMwUxSuOBlo7BxyKrr44bVSCr2W5bwYs83f+M/RyqfU7zPxcmuzYQPI
+         Wh/a252KUTNc5sHpAM55o+iv7VK3okzr3k9ARCmb8HQD/v1yY29ZWvSJf3Cb42+YbnU7
+         e58w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782752038; x=1783356838;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=467nTLX0LnAbWRx2UyG//0H8fEY44fM4VWbD3i/nXkM=;
+        b=iF77pzPluj68jErHqo6erYLY/VnytTk76KMF2VhOeIuXVkgLKoaeORSGTJHzM8B/uJ
+         Anf+d+HNujdf/RfGfbOfn3Ec4P528wV07FF5FXvijIK6nuX/6oK5LnjOoOAO0ATdz6aj
+         ibqm7cPN6geM6nWvbQvHIySaPVfx8MUT7B4Rft7dfwDL1pFPDD9YOgBdmmW3pZ/5hHpw
+         BG+n27fNOBIDoEOh6CTTIGm7HeaVKp37cT9hjAYZ4nxsl1hTWSck3dkx3U0r2/8fp1MS
+         4cr9Dhcr2VquTLLExela6FFWuoukke+z+47XgmsaoFK/w2VMyEvBN0aoreP1zJNoc7cL
+         1oQQ==
+X-Gm-Message-State: AOJu0YwtaDNrztv1S60IYCYgxkPbASmkztclVuiTbRwoMoVVvEinsFcy
+	izb5rwmO98hGW7leFUPPVTwJQt6RLSNM5UmZI6zHz9bYhFM4MTGJ3LUECWWTIH6OoK0=
+X-Gm-Gg: AfdE7ckONgR/EtSA+eITGjSaaB+q917o0dOD5efJFivEwAd7LlijHmLcMil5VbIpwHM
+	mi3gABn0srdiFh/rDhipEMxe3S+47RfN0SqdGqK+voCFVqTXSS8bCoh7e/TjrS4Zlo2BoBkcG2I
+	qO0gyGTJjlEl5iuTKP7f2LgQGRgkUVUzFyRsC4xEg6qlQlyirVdxajRAyUnRdl3iw68OF8SCFsF
+	tfkOtq2PjZuCIGdaErjW+6+Pa5sLGcsap9mbur7FDLvVI/n8ECFEG3yBG/FmYa5CRRVN1z1JnO8
+	JB/Iglx7FwshQYmWX9dQmydLzk6/L1BN9QqLN4iq1yv+QRQZfT8oedHJYzG9tyBG5TIfjhpcO9+
+	WOajLNhDLoWTq7Ti3YQ2DhlNKu9fXRGkCa+yLUB31lkGn/DUSJRAKnrz/kWXIf57zVRPY4vPzIv
+	el7KdXm1XCj09NfkbegmVyEN/kSMdhVEYLcN3Hck6BYlYsS+LFF2wjommE7noiXgfrPMOX6TE6y
+	hyYlLw5EcPdPKePHA==
+X-Received: by 2002:a05:6512:3e26:b0:5ae:b9e6:afac with SMTP id 2adb3069b0e04-5aebdbac01cmr25716e87.23.1782752038072;
+        Mon, 29 Jun 2026 09:53:58 -0700 (PDT)
+Received: from debian.localdomain (95-25-158-125.broadband.corbina.ru. [95.25.158.125])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad69551195sm5957139e87.27.2026.06.29.09.53.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jun 2026 09:53:57 -0700 (PDT)
+From: IgorpetinDev <igorpetindev@gmail.com>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	IgorpetinDev <igorpetindev@gmail.com>
+Subject: [PATCH] mm/damon/vaddr: remove redundant RCU lock
+Date: Mon, 29 Jun 2026 19:53:49 +0300
+Message-ID: <20260629165349.4260-1-igorpetindev@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <akKWvnU2Ua-8ceSb@gourry-fedora-PF4VCD3F>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 29, 2026 at 12:01:02PM -0400, Gregory Price wrote:
-> On Mon, Jun 29, 2026 at 01:23:16PM +0100, Lorenzo Stoakes wrote:
-> > Update the file comment to clarify that both file-backed and anonymous
-> > interval trees are provided, referencing the relevant data types for
-> > clarity.
-> >
->
-> Isn't this self-evident by nature of the function definitions?
-> (one takes a vm_area_struct, the other takes an anon_vma_chain)
+__damon_va_three_regions() is called only by damon_va_three_regions(),
+which already holds mmap_read_lock(). Since mmap_read_lock() is held,
+the maple tree and VMA list are protected from concurrent changes.
+Remove the unnecessary rcu_read_lock() and rcu_read_unlock() calls.
 
-Well you see you're already hitting up on issues there, they both take an
-rb_root_cached and the vma_*() ones do not instantly scream 'file-backed' do
-they? As VMAs are obviously used for buth anon and file-backed...
+Signed-off-by: IgorpetinDev <igorpetindev@gmail.com>
+---
+ mm/damon/vaddr.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-But later patches fix this stuff :)
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index d27147603..345b89b5d 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -84,7 +84,6 @@ static int __damon_va_three_regions(struct mm_struct *mm,
+ 	 * If this is too slow, it can be optimised to examine the maple
+ 	 * tree gaps.
+ 	 */
+-	rcu_read_lock();
+ 	for_each_vma(vmi, vma) {
+ 		unsigned long gap;
+ 
+@@ -105,7 +104,6 @@ static int __damon_va_three_regions(struct mm_struct *mm,
+ next:
+ 		prev = vma;
+ 	}
+-	rcu_read_unlock();
+ 
+ 	if (!sz_range(&second_gap) || !sz_range(&first_gap))
+ 		return -EINVAL;
+-- 
+2.47.3
 
-And I feel it's hard visually to see where one set of definitions end and
-another begins, which was really the motive for this, as trivial as it is!
-
->
-> > -	VM_BUG_ON_VMA(vma_start_pgoff(node) != vma_start_pgoff(prev), node);
-> > +	VM_WARN_ON_ONCE_VMA(vma_start_pgoff(node) != vma_start_pgoff(prev), node);
-> >
->
-> For my own edification - I know not to add new BUG(), should I be
-> converting BUG->WARN/something when i find them in areas i happen to be
-> working in?
-
-Yeah pretty much in all cases.
-
-It's very rare that you'd want the kernel to definitely oops, and I can't think
-of any circumstance where you'd only what that if CONFIG_DEBUG_VM was set :))
-
->
-> ~Gregory
-
-Cheers, Lorenzo
