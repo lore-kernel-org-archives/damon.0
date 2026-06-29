@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5421379C31;
-	Mon, 29 Jun 2026 14:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3253793B4;
+	Mon, 29 Jun 2026 14:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782744496; cv=none; b=abd2M8ojkKu6O4nfoMtESRkF1I3dqNNasxJwWjIaHWgyrJYOzsC8P/8eT+HEPff8EJLJK72cQ848oZ0zTno/18uupO8ermSNaZCPLawEadarUwQiSyOH9Cf2mSta1iq0B+DPXPcO7teUH/HNorUz+adXjVvr+8AMiRen76ENR2M=
+	t=1782744497; cv=none; b=Ej2pNvTTcusit4AnSe9vW1ZQRBfrZPpw5EJzu24wIJjqmzRPpfaG+/EeQNk6N3uTkUsPRIwfmbK1QXodn6ROt/gLo3mv3F4exicghRKVuX4/z1K8hfsYW3An00PqqOidJq+SlSBQLT+iRacuAZmq699Z+7q4LvbRiyOTCD2D5YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782744496; c=relaxed/simple;
-	bh=Kwzuz6DuwKd065Jne4Y4me5e+oxTq2PrVrL/2lKz8D4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QeuiJdofwNAbe+O3QniJWNFh+td/p8hvDFZA6W+KNLzxCuGiiKUdx/mqrlJq3UmIreyNulHqsYwtk9GynSXUy78frJbsDQhzsL30zka8KUQWcCGDrzZSEGb99q/G7SiNZCrvXukNfXYd43epex2EIbBEo5axVau2xHgg4cdmQtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hATrsdHO; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782744497; c=relaxed/simple;
+	bh=6IlV4sy55Ni5byGqDjVzcW6OMClRbHRDFUCkgTKs3aI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jiKfC2XXYJWjVaUvQjVnVvUldmFh2hMyv3mjkz/SZ/2n2UCuPNT489Te7fTYrTFh5ZUh7u5bnZJhf6HVV8m65g0/9B853RI889hCOIrl0PDhsjkWah0a3oFbxxZoNIX9ycvBmywvIXbsNPfyu4vYoaqFYMq+vnorg5X5gVjOEIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DMyUZu0P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hATrsdHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852CA1F000E9;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DMyUZu0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40991F00A3A;
 	Mon, 29 Jun 2026 14:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782744495;
-	bh=Br7Ex/IiLw8lCRB440Qh40MypLwSStBTcOqHVSbRwdk=;
-	h=From:To:Cc:Subject:Date;
-	b=hATrsdHOFRVmCCWsmVipAjo7dTzB7xOskMSbaNA1pV4gFlPkzzQ+RL0PBNpDyDAf6
-	 qtnQpjab16uu6WJbM6c12dEYTJT9HuAVJBUZgRb3ic+zmcfje5umMDi8rWWo+ZFL3j
-	 OdR145B3UwbmaFb7XDvGQPyX+edjygKOto/BGxHVv8hi+w+Isoxk0j0kynfvjBYk92
-	 Tu79AL9MZnfgwP4aHgYnPguY92YRoUnIBxgpZtPMp6R52YFzMq0yfnHl82wdZsrjOo
-	 UXTAq6LmsAQt5EL+AqXxK6j3nzJUdR+/MusdkFaG9isvpXl1LRN/lf3jd1sWUycOll
-	 x5iTyC+gKNhhw==
+	s=k20260515; t=1782744496;
+	bh=2yxnk7FH9lXDjwhbBu4C9JlpZuxnrq1wW91k5ivVgec=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=DMyUZu0Pq+zo4eZxxoOn74Zaolckd9dEMMSeylV8rzYmiroI1kZ4wcYPq/MU9o5hZ
+	 srmTi+u98fnrttnQdAe+GWjGn1JiL3E07ud2xkZHVNae8eANx8qvT6QCiKMPmg64pD
+	 N6W88poOrLhdIp98xHQlxQnqhiXmBOxEnrGv+hiUIfzPZc56sLd0g3VtdEvG2UQhGP
+	 n1wAKtILukUZvQTNEK4VWSDBjJFa+Wq3Qn08JPhiatvXCFz9/Ubh1MhKHubeTsx6A5
+	 1kzT6vsmV1qVjudSgDiBZPt+0WTXylwIpsUtaG5v607jb3m3CXug34sHJCLUns0ESI
+	 A8s1oOLcvgrqg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
+Cc: Cheng Nie <niecheng1@uniontech.com>,
+	SJ Park <sj@kernel.org>,
 	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v5 0/2] selftests/damon: fix memcg_path staging handling
-Date: Mon, 29 Jun 2026 07:48:09 -0700
-Message-ID: <20260629144812.134159-1-sj@kernel.org>
+Subject: [PATCH v5 1/2] selftests/damon/_damon_sysfs.py: fix memcg_path assignment
+Date: Mon, 29 Jun 2026 07:48:10 -0700
+Message-ID: <20260629144812.134159-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260629144812.134159-1-sj@kernel.org>
+References: <20260629144812.134159-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,34 +49,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Fix a bug in _damon_sysfs.py for damos_filter memcg_path setup, and add
-a test case of it in sysfs.py.
+From: Cheng Nie <niecheng1@uniontech.com>
 
-Changes from v4:
-- v4: https://lore.kernel.org/7E6EAB7C1BE04DEA+20260601090119.238457-1-niecheng1@uniontech.com
-- Collect R-b: from SJ.
-- Rebase to latest mm-new.
-Changes from v3:
-- v3: https://lore.kernel.org/E4B88E7D4879D1B1+20260601074250.203583-1-niecheng1@uniontech.com
-- call stop() for cleanup without checking its return value
-Changes from v2:
-- v2: https://lore.kernel.org/4CDA28DC581FDCF8+20260529090845.1696845-1-niecheng1@uniontech.com
-- configure memcg filter before start(), remove commit(), ignore
-  start() failure, verify memcg_path staging readback only
-- use print-style error messages as suggested
-Changes from v1:
-- v1: https://lore.kernel.org/406BD1BA0F6AE326+20260528081039.1192194-3-niecheng1@uniontech.com
-- unknown.
+DamosFilter stores memcg_path for sysfs staging, but the constructor
+assigns it with a trailing comma and therefore turns it into a tuple.
 
-Cheng Nie (2):
-  selftests/damon/_damon_sysfs.py: fix memcg_path assignment
-  selftests/damon/sysfs.py: validate memcg_path staging readback
+Fix the assignment so memcg_path is stored as the intended string.
+This makes memcg filter staging and follow-up validation use the
+written path correctly.
 
- tools/testing/selftests/damon/_damon_sysfs.py |  2 +-
- tools/testing/selftests/damon/sysfs.py        | 31 +++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
+Link: https://lore.kernel.org/464AE12D4BC6B6F4+20260601090519.240482-1-niecheng1@uniontech.com
+Signed-off-by: Cheng Nie <niecheng1@uniontech.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ tools/testing/selftests/damon/_damon_sysfs.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: 544856bcdccf456fc27f85e5d5b0a49f7b8e6019
+diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
+index f6127081dfb2e..c197ab99bcc0a 100644
+--- a/tools/testing/selftests/damon/_damon_sysfs.py
++++ b/tools/testing/selftests/damon/_damon_sysfs.py
+@@ -271,7 +271,7 @@ class DamosFilter:
+         self.type_ = type_
+         self.matching = matching
+         self.allow = allow
+-        self.memcg_path = memcg_path,
++        self.memcg_path = memcg_path
+         self.addr_start = addr_start
+         self.addr_end = addr_end
+         self.target_idx = target_idx
 -- 
 2.47.3
