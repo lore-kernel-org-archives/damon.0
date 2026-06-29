@@ -1,147 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD204218AE;
-	Mon, 29 Jun 2026 14:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22A741C2E1
+	for <damon@lists.linux.dev>; Mon, 29 Jun 2026 14:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782744947; cv=none; b=IpdW0qDwgW4ahiLyfHR4G84U+447rG0cbyxjuf+1tjcRBSyeK6fnJJ3Yd1iKSSzRP0V+6XMzwYm9xGPuSk/fxMOv9s9ThBI7SKRO7+PrTQZwXIsKXNgDHi7DnYXoIvB891zh+nn19tGRK5Gca64xmEg+w8UX0NFFWtKrPl8JVy8=
+	t=1782744954; cv=none; b=rUOR6gxwWsJzm866Ua1+i+TldPNr27Yde6VgrPdvXvmkijbmN08d1mR7gCu0K7XFzVCY7GhTnfnOMVQA8AmN3eX4LGuS7Z7HVHGj0HmW8Spwss868fdeBxO7mWztv6M7Aezs4iA0QwxMJjylBkQVR4AsFc5NiHDBrnWqO2wU5RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782744947; c=relaxed/simple;
-	bh=Sfcxn1x6pwwPm7Lpr7PVfZ7Dc2oD5JKUbz3rGJ96MIc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JFe5qDNkvn6coQn/01bWZ9aZ03Ei7mlF6sIMc32bahm55IkjiyAEq2e8kigjQs7/FHzoFPqUQ9Rzl9XIl09JJqWrvQnhYup4FgoqOlKCcgrgEh7F4LN2SYtLIj1ZYRHxMt7SpO7/0jive3eXTA3Q4MTovSYzFkKIpqfaRD87sBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V5qQPFvO; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782744954; c=relaxed/simple;
+	bh=8ZWgTDJjdcP/Tb+8OP5QRGlkjG0ITnaUGgpUQvakfts=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=KFI9B8Y+D35QRAmfMUdnJGyRHicqtjN7mRe4QyuDraoVNG1IdFwdURtiGT9gJvGadO42LkyHb7HsgrbvGbGTeZ0v+YWjs5Gh4dpmWl7i68krv1cGtHDGAMRft6hfYBip7l16DdakfJHo5513M2g2/t/pvCymJa+18cpHHUxwqko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKCRiwJD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V5qQPFvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F961F00A3E;
-	Mon, 29 Jun 2026 14:55:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKCRiwJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275BB1F00A3A;
+	Mon, 29 Jun 2026 14:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782744946;
-	bh=YEMOORj6+k+v752vYE0fvW8oE/gyV10AxdEBNRJjrnM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V5qQPFvOwWuoHblsWDCUSPcMaUkfQr0s673YQXPIpHGuxpWZJzMj2fGfNmEgQUS8T
-	 mcPlhF+P8MqFhjMeAxmUor3NAuTDNdUB7Mv6SCedZ8pTsScwx5+7h99ZZlZwUxJ3xm
-	 HGd2KiTTD5rdSSHQa/MuyUs8eMd6fDyTHqE7GL5D/K14xl+7SHetvbuYeKh5ZoJ0yS
-	 o9q3oluA3W8T/ZCgLcWeUcabzeCPVhl4NAfATyKlam+pwiYG0eX87W3wdxl0ODQ0CR
-	 AS3LydIvR9iIMB7pVG1rErUeAFNlsQjYydbXZrELnWnhiRZt2knJOPYkJOtpXpZBhv
-	 tyJlYUwHs0b0w==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 5/5] mm/damon/tests/core-kunit: add KUnit test for walk_control_obsolete behavior
-Date: Mon, 29 Jun 2026 07:55:36 -0700
-Message-ID: <20260629145538.134832-6-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260629145538.134832-1-sj@kernel.org>
-References: <20260629145538.134832-1-sj@kernel.org>
+	s=k20260515; t=1782744953;
+	bh=H3SGBHV/UV0VcilfigfESiWkq+eAzuFQ3t1oToXu3kw=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=VKCRiwJDTAQN3ev7TRjXz9EWjRWZJtR6aTd+PEnDTLUGziU44mK/PtE7UscCFSMv7
+	 E3+k1AuBSuVG7xSvJdh01rrMwFqG5fnmfUK8sMPOaOkV9u2IWY0v8sT2owYNS0tF26
+	 BGA9DEP2jRa+/AnCCPGFsEGmVpye3JT2EPAnLb4HyOrWbln5lcXAL6PsTDCQYKk0VT
+	 vR3YpUpwRV47qA/kijAMcQTjusWZZNsnJSPBGERtzUx7kbpXUsiumTZrNIgNLp3kfZ
+	 TmWeF07B3B5UgYQ3B2skEP6e8uOrzWMhhhKGDLbMpWNWnXpFezhBba6TNtaFlOqHdw
+	 DeCgb20lFHYgw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 1/3] selftests/damon: prevent cross-context state
+ pollution in DamonCtx
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260629144648.134092-2-sj@kernel.org>
+References: <20260629144648.134092-1-sj@kernel.org>
+ <20260629144648.134092-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 29 Jun 2026 14:55:52 +0000
+Message-Id: <20260629145553.275BB1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] The patch introduces a split-brain state corruption in `DamonCtx=
+` by implementing an incomplete fix for Python mutable default arguments. W=
+hile it replaces the defaults in `DamonCtx.__init__` with `None` sentinels =
+and instantiates them at runtime (e.g., `monitoring_attrs =3D DamonAttrs()`=
+), it misses the fact that `DamonAttrs.__init__` still uses a mutable defau=
+lt (`intervals_goal=3DIntervalsGoal()`).
 
-Add a KUnit test to verify that damos_walk() rejects
-new requests when walk_control_obsolete is set.
+Because `DamonAttrs()` is now called multiple times (once per `DamonCtx`), =
+multiple `DamonAttrs` instances are created, but they all silently share th=
+e exact same `IntervalsGoal` instance. During `DamonAttrs.__init__`, the sh=
+ared `IntervalsGoal` instance's `attrs` back-reference is overwritten to po=
+int to the newest `DamonAttrs` (`self.intervals_goal.attrs =3D self`).=20
 
-Commit 33c3f6c2b48c ("mm/damon/core: fix damos_walk() vs
-kdamond_fn() exit race") introduced walk_control_obsolete
-to prevent a race condition where new requests could be
-registered during kdamond shutdown and never handled.
+As a result, when an older `DamonCtx` calls `stage()`, its base attributes =
+correctly route to its own sysfs directory, but its `intervals_goal` writes=
+ route to the sysfs directory of the most recently created `DamonCtx`. This=
+ is a newly introduced inconsistency, as prior to the patch, all properties=
+ incorrectly routed to the same directory together. Additionally, the patch=
+ leaves identical mutable default bugs untouched in `DamosFilters`, `DamosD=
+ests`, `Damos`, `Kdamond`, and `Kdamonds`.
+--
 
-This test simulates the shutdown condition by setting
-walk_control_obsolete and verifies that damos_walk()
-returns -ECANCELED immediately.
+commit 7d9280d7450287d38ab4b080317de0093ab71119
+Author: Kunwu Chan <chentao@kylinos.cn>
 
-This validates the invariant introduced by the fix and
-helps prevent regressions.
+selftests/damon: prevent cross-context state pollution in DamonCtx
 
-Link: https://patch.msgid.link/20260612062337.2459-1-saileshnandanavanam@gmail.com
-Suggested-by: SJ Park <sj@kernel.org>
-Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from v3
-- v3: https://lore.kernel.org/20260612062337.2459-1-saileshnandanavanam@gmail.com
-- Collect R-b: from SJ.
-- Rebase to latest mm-new.
-Changes since v2
-- v2: https://lore.kernel.org/20260524100258.36819-1-saileshnandanavanam@gmail.com
-- Dropped the userspace selftest approach entirely. SJ tested
-  v2 100 times on a kernel with the fix reverted and it always
-  passed, confirming the microsecond-wide race window cannot be
-  reliably hit from userspace due to syscall overhead.
-- Added a KUnit test for damos_walk() + walk_control_obsolete
-  instead, as suggested by SJ. This directly sets the
-  obsolete flag and verifies damos_walk() returns -ECANCELED
-  immediately, without timing dependency.
-Changes since v1
-- v1: https://lore.kernel.org/20260524091812.35283-1-saileshnandanavanam@gmail.com
-- Addressed sashiko bot review comments (execute bit, threading,
-  dynamic sysfs path, OSError handling) - superseded by the v3
-  approach above.
+DamonCtx.__init__() uses mutable default values for monitoring_attrs, targe=
+ts,
+and schemes. In Python these are evaluated once at function definition time,
+so multiple DamonCtx instances can unintentionally share the same lists and
+DamonAttrs instance. Replace the mutable defaults with None sentinels and
+initialize the objects when needed.
 
- mm/damon/tests/core-kunit.h | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+Link: https://lore.kernel.org/20260601032314.424013-2-kunwu.chan@linux.dev
 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index fcf7c7fadb5fe..c5f5124c3d1f4 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -1456,6 +1456,33 @@ static void damon_test_is_last_region(struct kunit *test)
- 	damon_free_target(t);
- }
- 
-+/*
-+ * Verify that damos_walk() rejects new requests when
-+ * walk_control_obsolete is set.
-+ *
-+ * This tests the invariant introduced by:
-+ * commit 33c3f6c2b48c ("mm/damon/core: fix damos_walk() vs kdamond_fn() exit race")
-+ */
-+static void damon_test_walk_control_obsolete(struct kunit *test)
-+{
-+	struct damon_ctx *ctx;
-+	struct damos_walk_control control = {};
-+	int ret;
-+
-+	ctx = damon_new_ctx();
-+	if (!ctx)
-+		kunit_skip(test, "ctx alloc fail");
-+
-+	/* Simulate shutdown phase */
-+	ctx->walk_control_obsolete = true;
-+
-+	ret = damos_walk(ctx, &control);
-+
-+	KUNIT_EXPECT_EQ(test, ret, -ECANCELED);
-+
-+	damon_destroy_ctx(ctx);
-+}
-+
- static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_target),
- 	KUNIT_CASE(damon_test_regions),
-@@ -1485,6 +1512,7 @@ static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_set_filters_default_reject),
- 	KUNIT_CASE(damon_test_apply_min_nr_regions),
- 	KUNIT_CASE(damon_test_is_last_region),
-+	KUNIT_CASE(damon_test_walk_control_obsolete),
- 	{},
- };
- 
--- 
-2.47.3
+> diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testin=
+g/selftests/damon/_damon_sysfs.py
+> index 8b12cc0484405..2f6f2699db256 100644
+> --- a/tools/testing/selftests/damon/_damon_sysfs.py
+> +++ b/tools/testing/selftests/damon/_damon_sysfs.py
+> @@ -624,17 +624,23 @@ class DamonCtx:
+>      pause =3D None
+>      idx =3D None
+> =20
+> -    def __init__(self, ops=3D'paddr', monitoring_attrs=3DDamonAttrs(), t=
+argets=3D[],
+> -            schemes=3D[], pause=3DFalse):
+> +    def __init__(self, ops=3D'paddr', monitoring_attrs=3DNone, targets=
+=3DNone,
+> +            schemes=3DNone, pause=3DFalse):
+>          self.ops =3D ops
+> +        if monitoring_attrs is None:
+> +            monitoring_attrs =3D DamonAttrs()
+
+[Severity: Medium]
+Does this incomplete fix introduce a split-brain state regression?
+
+Because DamonAttrs() is now called multiple times (once per DamonCtx),
+multiple DamonAttrs instances are created. However, DamonAttrs.__init__
+still uses a mutable default for intervals_goal:
+
+tools/testing/selftests/damon/_damon_sysfs.py:DamonAttrs.__init__() {
+    def __init__(self, sample_us=3D5000, aggr_us=3D100000,
+                 intervals_goal=3DIntervalsGoal(), update_us=3D1000000,
+...
+        self.intervals_goal.attrs =3D self
+}
+
+This causes all newly created DamonCtx instances to silently share the
+exact same IntervalsGoal instance. During DamonAttrs.__init__, the shared
+IntervalsGoal instance's attrs back-reference is overwritten to point to
+the newest DamonAttrs.
+
+As a result, when an older DamonCtx calls stage(), its base attributes
+correctly route to its own sysfs directory, but its intervals_goal writes
+route to the sysfs directory of the most recently created DamonCtx.
+
+Additionally, could there be other similar mutable default bugs left
+untouched, such as in Damos.__init__:
+
+tools/testing/selftests/damon/_damon_sysfs.py:Damos.__init__() {
+    def __init__(self, action=3D'stat', access_pattern=3DDamosAccessPattern=
+(),
+                 quota=3DDamosQuota(), watermarks=3DDamosWatermarks(),
+                 core_filters=3D[], ops_filters=3D[], filters=3D[], target_=
+nid=3D0,
+}
+
+>          self.monitoring_attrs =3D monitoring_attrs
+>          self.monitoring_attrs.context =3D self
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260629144648.1340=
+92-1-sj@kernel.org?part=3D1
