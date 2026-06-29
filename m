@@ -1,64 +1,63 @@
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658BC3E6DC5
-	for <damon@lists.linux.dev>; Mon, 29 Jun 2026 15:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6EC37C108
+	for <damon@lists.linux.dev>; Mon, 29 Jun 2026 15:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782747079; cv=none; b=oW8cxmfye5KrPE9kV51dqn84wtYz9FsHQhugrQf1gistyZpSu+b4Gm4JsLxg9FxYkjN7suNV8CtmMfUZkLQWLj1sPnZVHezcYLIm/6SzaVKqFA0VqBb/7hHcfMRQ6c+EROw0YjuHObFJKHRFVu1sIc6doa45PSPimHf+4rK3SRU=
+	t=1782747623; cv=none; b=bzepr7GXRBpgd30I3oinzsFSr3BH/wTV+kiXySNpNTN75v7jFmpKPgh1YUUWNRiLBHtyE5NzhiypwxWfBZdKjs63E93uagdlHSAs4XgHXNlJ/UErzsjyAsJvDjisWrOR2zwZcdllXZpx7iw7SNnDSvx3vheVWdxyjP+6y6oZz/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782747079; c=relaxed/simple;
-	bh=eSLebA2K6K0JqwA20gSpIaLBxceDZU1DyvE+HEyhHoc=;
+	s=arc-20240116; t=1782747623; c=relaxed/simple;
+	bh=wTZ867cLvl3NEk7csUy7NtkIFljCREofjieQ4f4eY6U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GWpnJPy3whFOtKkyaiYBQStLngnLWUD1VlyUwEbGWz4IzRgHmoTNBK+S5jJLSRQhy5nuIhRyq0tHMHUJamc1ZbrbW3R+Q2Nb1le6bkJjAor8krPUhDf/FCoppZbRgRuSNRw85vjdq6teA2tg0L8OVHry4cZ0zAeAFhxRm1u+yEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=ixk/6iiM; arc=none smtp.client-ip=209.85.161.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=VWNXQ/pOFtR2w90rPWwoBHjyQQAPbMCjYPZjYiC6Oz6PwU7DhI0f7TefRnjXj1v6sX7dynordomY79pOObQXojaNnHlriavCikpGjxM2spDu+aeALVeD/+jsljw4CtcEvRsWHiaYUv+YXcj3YqitnL8mDJlky4zvRNkChOxAZqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=dZT4vYGK; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="ixk/6iiM"
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-69de16f5f79so1731159eaf.0
-        for <damon@lists.linux.dev>; Mon, 29 Jun 2026 08:31:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="dZT4vYGK"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-51c0ecfaee7so1470021cf.0
+        for <damon@lists.linux.dev>; Mon, 29 Jun 2026 08:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1782747077; x=1783351877; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1782747619; x=1783352419; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TtnRVAeDbe2jCD/DHkmGFKsvQqrt7nLFRBhYCay7qN4=;
-        b=ixk/6iiMBqEtYZ1TFLxzipN2MI1SDz5m+sdkHlRgPpGJSNl/NKtFPtNjRJUFWOy9vE
-         3Emx16WDSvd+Eqe9/xGpPUfpGrmpPFMkPM863hEKBrsTHFmkHrYf+UZ2MVQqF7PGoLeB
-         549LflqTcyZAu/qLFbmCYzCftSvnLSlqPILlpCfkTqz5Nb5tB1PbDCenBOHJ1lTdWoC4
-         modxbuMzK2o1L7CwDVJM3F7dQ05XYMZaQe011BMwVYF7Yfap62N+uU/bZOX7SA3kjQCI
-         hHnZ9B89RuKjdEzVvyPxlbXM3Z7NZaMdyYN0SBX82HaqcAzxRBkAUkIbm3/QrB9zkN33
-         FlbA==
+        bh=VwgemlAWVZOfyfvrJ+7cyHmQGRLai3JgFnH6EFj5//k=;
+        b=dZT4vYGKcz19n0TwwHG1zDIsyBQ5YZSd90fIQcZJrGVdUJPF1A78XW5JJHpIAcJdDp
+         RMRd7gFoZmDvu99N/EK8T4i5uVPPDczSxv+bFB7yaMi/e7bJPJTw5TJgAI/ieilxgFvS
+         pq7q/gy/wuUOWKlFozYd8cnQ6rxnSkwwXyaS4BNuzvIIydhBqM1cQ+foSDbTz59ecL+b
+         Oh7NeTvw/u+aL/BNYEA635pa1KDy13LfdHVFXCAFJGIB3/bXDDHBAAb1yiTpBjglwlGj
+         X7U1nDQ4cKGkNusLIDSyqWROgZLCQ0/Q1h3tqxkSIqLHM/eBIXSeglzxUoYCymZv+Ge6
+         aIeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782747077; x=1783351877;
+        d=1e100.net; s=20251104; t=1782747619; x=1783352419;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TtnRVAeDbe2jCD/DHkmGFKsvQqrt7nLFRBhYCay7qN4=;
-        b=StFv/BB5QDPJsRZK8z0MfAdeFspjKNCzAsoPFjvAjqNvx6viW/Vy4wnA0KF5h5IgNV
-         tkUa/ClXxHKCzEdJCGwcGa4CaRRJIFCNgRL1nAf4TPGCl3VOZaMn5LusMxOIlNdrwPCx
-         24ZXHFAkxnKw78KqpoZQ5YqLKfEKbz+WPXG99Xc3BqdT8rjWEbMyoGOjBL+QlXspVq07
-         5JIj4ZOowESBqM8swDiAmRa+z3836SOVU8XvT26uKKnca2Wphq1P7sHNMOAWaL0c0ICW
-         8brBErTN0qmo9PwN/qx5JOhMEE3gLYkM44gM61wjyB9oH6JtRY543HP8Nmt4VbJDs/Zx
-         FSxw==
-X-Forwarded-Encrypted: i=1; AFNElJ+2yFl+WlQPk8BE5uMg+EfD6wEeWQ/7XYjoo7jk41MeY9Or7Dd7Q3h3zb83EOonYj1WcCvLPg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwUEknsl2gpfp5mlOVq1sY/hVMjHmjnCYO6bAcGUzq9ZYa1HQSE
-	1roIxVDGo8d47byMqCGpz89zYT+dXixZ8Wtm3aCqh63EXzKI+N1JkJz7+j9OTJB6x0c=
-X-Gm-Gg: AfdE7clrAYxBvLwgTO0y3tryF5YdJucnk59TPSKoGbz+L/TQMazggDqdw1zbBoiKA/+
-	sMBjw+uwi3jCzkHZT+FrfcCcMbtUlCbD/E3vf9vXLEgx0/h5jYPnyxwrM+KOpBUk0bLodmy/WQP
-	E0SSt1tHfT3fE2O0yoQBcXvmrnLEm6DLRA5i58tPOBX2GOoV5ciYrp82T2Qn4Nh6qA4Lhcq+y2N
-	u0xU0QGgA3EhWJsDIU7hujcO9tji6RXH5YaBy70O0sQHndssJ1w/yqtLGZ/Ggi2MNocSFaF/nlB
-	88strD+yS3ybv+CLeYeEsogwbqzDWZzdzeARmul6PAbQrlWXoDdt6GBS6dzm+RfUfC7PnIX6TIa
-	d5TAOnMt396PswpQ5hGbVL02RdCimqeGBfZzwqTTjky+T7W9341F0dcjSQFC9CXPKTEzJ5EX7KQ
-	Ug3Qc4zMVBuV/Ezzz4eaDIrmWSk7pUkN7lQFCJKxqqgIC6mBH+Q8K3Fwyxzzh7ioq8mhTS+pbYV
-	ninPYE=
-X-Received: by 2002:a4a:e914:0:b0:6a1:524b:1f5 with SMTP id 006d021491bc7-6a1891b6f09mr98038eaf.42.1782747077395;
-        Mon, 29 Jun 2026 08:31:17 -0700 (PDT)
+        bh=VwgemlAWVZOfyfvrJ+7cyHmQGRLai3JgFnH6EFj5//k=;
+        b=Gs/Rrjom+npDPEdMrK5NzEuR4XNgWpAGUw+QuHnljuJ6F8Rdlm6iWH4b01XLQd7RW2
+         qlsjUfkAG/CaBlXOneaoNGaRH4CTEbVpYGHLp7z5uO30YU3fGw+wnuUaRxcju+L2tQEG
+         sn9DxN9cyD1J5Gfi/HZyTFejOzhtu/RnTqmfvnlR/tONzljEwCXU4kJ6VOyk7orEl6sL
+         ot9szu23HLPhHoAeq3iK3johize0KNKq3fydPtb98bz3jY+L9XlnRiz8SruCq/7edYCT
+         9dPV3ILNsJPY/sWcQwZ0vMJFZk7Pr0JDXxLM1yKtgUsO6gmJ0OSsQQn3sK2/P0rwCWVl
+         ZTNQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/yEQKEZ6Qwa00YTbrOzGH5Fj8DEo+EukjBhc7y2eqlK4QMPxoijr/9h5p9e1xbP3aCCh9UBw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxwT0kYbr7Dys+39WkT2PFpQWnwPoujKFSns4FbIrysTeorUibB
+	8Pqrg+hEzopA9L/u7THeR2GLz5tFn/VDxSVzu+8nbmSvYPYuUbBRiO4+J7IGRzPsRUg=
+X-Gm-Gg: AfdE7cnF2UmYhcayFxS7H9Z4M4IBUx9Eev3FdQkKvRVuAeV9S3EOEOgXsbk67eVdPJH
+	Y2LdlHNx0hX1h19ZeSu85axLHqDDgUZl+urbWGadN6Fj47wAFjS1x8NSqRYUkY9es98+H3WNqf0
+	RzK8HXA5Z7mIJt0NcElzhj7PvKPARQ9ntTYjXgosdFIyCoTmpsAD+I+s2GHA3Lf9ltMzD1H6ApY
+	JavFb4kBU0mAxUlZHBZr4PbJjTzFZbQ8atfjePzI2lD+KGuUkdSKi3bAxjpER0ZtSuuFpMYEZcf
+	wYR8q3v5RCwT0hHBQEVndKR6sr9dlnHuzuraY8ABEKN6efophiMlRYQjWrjhNQsnPIhU3PbDhMA
+	0+KO3qFddbkG/uGlgnsEXb6aOJ0nz6Xrrv/4YlP3Ugtuh3hvw3bNg3hQU/Xgdts0JI95UvfsnTQ
+	oe5eR6ZFYgUk2IwMlMXbYFJWK4vztiTGPaV6OTshA+Sq2U/dflGcaCC5CXLu7vSU5RRwdy
+X-Received: by 2002:a05:622a:5987:b0:51b:f635:9aa1 with SMTP id d75a77b69052e-51bf6359eadmr68650541cf.48.1782747619393;
+        Mon, 29 Jun 2026 08:40:19 -0700 (PDT)
 Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e6213b95esm9184285a.5.2026.06.29.08.31.15
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51a876c888bsm78114501cf.9.2026.06.29.08.40.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jun 2026 08:31:16 -0700 (PDT)
-Date: Mon, 29 Jun 2026 11:31:11 -0400
+        Mon, 29 Jun 2026 08:40:18 -0700 (PDT)
+Date: Mon, 29 Jun 2026 11:40:13 -0400
 From: Gregory Price <gourry@gourry.net>
 To: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -116,10 +115,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
 	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
 	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 02/30] mm: add kdoc comments for vma_start/last_pgoff()
-Message-ID: <akKPvwYs-4TwYwKO@gourry-fedora-PF4VCD3F>
+Subject: Re: [PATCH 03/30] tools/testing/vma: use vma_start_pgoff() in merge
+ tests
+Message-ID: <akKR3bFV7393yOUs@gourry-fedora-PF4VCD3F>
 References: <cover.1782735110.git.ljs@kernel.org>
- <8c618dfd7de419e3b797b8bd1cd921d4c5b8878b.1782735110.git.ljs@kernel.org>
+ <b501eca378b9d9734e83838102aadc9276590fba.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -128,18 +128,22 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8c618dfd7de419e3b797b8bd1cd921d4c5b8878b.1782735110.git.ljs@kernel.org>
+In-Reply-To: <b501eca378b9d9734e83838102aadc9276590fba.1782735110.git.ljs@kernel.org>
 
-On Mon, Jun 29, 2026 at 01:23:13PM +0100, Lorenzo Stoakes wrote:
-> Describe what vma_start_pgoff() and vma_last_pgoff() actually provide in
-> detail.
-> 
-> This is in order that we can differentiate this between functions that will
-> be added in a subsequent patch which provide a different page offset.
+On Mon, Jun 29, 2026 at 01:23:14PM +0100, Lorenzo Stoakes wrote:
+> Now we have the vma_start_pgoff() helper, update the merge tests to make
+> use of it for consistency.
 > 
 > No functional change intended.
 > 
 > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-Reviewed-by: Gregory Price <gourry@gourry.net>
+Question: Should we have primitive tests for vma_*_pgoff() since
+the behavior changes depending on file/anon?
 
+Nice to have the cleanup and clarity. Maybe worth asserting no
+one ever breaks this.
+
+for this patch though
+
+Reviewed-by: Gregory Price <gourry@gourry.net>
