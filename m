@@ -1,144 +1,187 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22A741C2E1
-	for <damon@lists.linux.dev>; Mon, 29 Jun 2026 14:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7DC4218B5;
+	Mon, 29 Jun 2026 14:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782744954; cv=none; b=rUOR6gxwWsJzm866Ua1+i+TldPNr27Yde6VgrPdvXvmkijbmN08d1mR7gCu0K7XFzVCY7GhTnfnOMVQA8AmN3eX4LGuS7Z7HVHGj0HmW8Spwss868fdeBxO7mWztv6M7Aezs4iA0QwxMJjylBkQVR4AsFc5NiHDBrnWqO2wU5RU=
+	t=1782745002; cv=none; b=fPvBvb6dcuhJirfRO95T85qlRRkrPctmTdGby5vDE6vWzNyy1hsOWgPFCp8S4Kuq5100b/aj0oOSoRxb6kQ0tdfrkAmG6+815gDOOUH3Z/ONpZCbZIABIK0LCsoW4uUFzeWnyQmHcyfkvYzbDRkgXtSZNnlpYaG+RaCHDKMXBJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782744954; c=relaxed/simple;
-	bh=8ZWgTDJjdcP/Tb+8OP5QRGlkjG0ITnaUGgpUQvakfts=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=KFI9B8Y+D35QRAmfMUdnJGyRHicqtjN7mRe4QyuDraoVNG1IdFwdURtiGT9gJvGadO42LkyHb7HsgrbvGbGTeZ0v+YWjs5Gh4dpmWl7i68krv1cGtHDGAMRft6hfYBip7l16DdakfJHo5513M2g2/t/pvCymJa+18cpHHUxwqko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKCRiwJD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782745002; c=relaxed/simple;
+	bh=iYb14wWPEhz8XfyzAIE9KabxXIwWufN9XYxRAJ2J9hA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DWhl6CExdSzM6wPYI51gOKiGxlsjNAA5wW/xk1j8Eu+FUey3d9AstnJgBOTiaCep61QqZYlGg6VVbiiHIgKu2tUUWebYcGDEJlhj5+wXNzUFdDq72PgwaHB4NAqqVwFgRfzIgaWROofnLrAd7mLrhsiodEO2JP61BivE1hLdcAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PJRDV1f4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKCRiwJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275BB1F00A3A;
-	Mon, 29 Jun 2026 14:55:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PJRDV1f4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75A61F00AC4;
+	Mon, 29 Jun 2026 14:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782744953;
-	bh=H3SGBHV/UV0VcilfigfESiWkq+eAzuFQ3t1oToXu3kw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VKCRiwJDTAQN3ev7TRjXz9EWjRWZJtR6aTd+PEnDTLUGziU44mK/PtE7UscCFSMv7
-	 E3+k1AuBSuVG7xSvJdh01rrMwFqG5fnmfUK8sMPOaOkV9u2IWY0v8sT2owYNS0tF26
-	 BGA9DEP2jRa+/AnCCPGFsEGmVpye3JT2EPAnLb4HyOrWbln5lcXAL6PsTDCQYKk0VT
-	 vR3YpUpwRV47qA/kijAMcQTjusWZZNsnJSPBGERtzUx7kbpXUsiumTZrNIgNLp3kfZ
-	 TmWeF07B3B5UgYQ3B2skEP6e8uOrzWMhhhKGDLbMpWNWnXpFezhBba6TNtaFlOqHdw
-	 DeCgb20lFHYgw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 1/3] selftests/damon: prevent cross-context state
- pollution in DamonCtx
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260629144648.134092-2-sj@kernel.org>
-References: <20260629144648.134092-1-sj@kernel.org>
- <20260629144648.134092-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 29 Jun 2026 14:55:52 +0000
-Message-Id: <20260629145553.275BB1F00A3A@smtp.kernel.org>
+	s=k20260515; t=1782744999;
+	bh=NatPVMmr6lCmbwrlx8nymHKQLSth5j//NGxvrJ4IneU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=PJRDV1f4my+izevuENYAHKkEumYnZ2U6dtePGJAVwunGLNbZNgrq3imspiQVL6zOw
+	 5iV4NRR8ojJUinocwL/VoKfkP9WaqOsroCXEgq6nCNZdkmq3h9lC8/G/6XebN3SHOx
+	 eieNMwPMJtATCYbQcn1xrSRqCv3nzrkFoqST+lATlEFCi+C6qCDQkxVQxCaoaJL2Fy
+	 03vqCdsqh7tJMDsy79Ee0lWkdBzOQsKgiZ5AtZNq8a9ndiQcE4UxBLpb+4bBAwxiw4
+	 rp9ktpeSBiFbmeK1FpPPZ77C0LpwFk1N0cIq+bUt7fVBNZ+GkAlDC4EmneVtg55ZXR
+	 IALxxuDZEIquA==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	SJ Park <sj@kernel.org>,
+	Shu Anzai <shu17az@gmail.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v3 1/2] mm/damon/core: split a fraction of regions when nr_regions exceeds max/2
+Date: Mon, 29 Jun 2026 07:56:28 -0700
+Message-ID: <20260629145630.134891-2-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260629145630.134891-1-sj@kernel.org>
+References: <20260629145630.134891-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] The patch introduces a split-brain state corruption in `DamonCtx=
-` by implementing an incomplete fix for Python mutable default arguments. W=
-hile it replaces the defaults in `DamonCtx.__init__` with `None` sentinels =
-and instantiates them at runtime (e.g., `monitoring_attrs =3D DamonAttrs()`=
-), it misses the fact that `DamonAttrs.__init__` still uses a mutable defau=
-lt (`intervals_goal=3DIntervalsGoal()`).
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-Because `DamonAttrs()` is now called multiple times (once per `DamonCtx`), =
-multiple `DamonAttrs` instances are created, but they all silently share th=
-e exact same `IntervalsGoal` instance. During `DamonAttrs.__init__`, the sh=
-ared `IntervalsGoal` instance's `attrs` back-reference is overwritten to po=
-int to the newest `DamonAttrs` (`self.intervals_goal.attrs =3D self`).=20
+kdamond_split_regions() returns early when nr_regions is above
+max_nr_regions / 2, leaving internal access variation inside a large
+region undetected.
 
-As a result, when an older `DamonCtx` calls `stage()`, its base attributes =
-correctly route to its own sysfs directory, but its `intervals_goal` writes=
- route to the sysfs directory of the most recently created `DamonCtx`. This=
- is a newly introduced inconsistency, as prior to the patch, all properties=
- incorrectly routed to the same directory together. Additionally, the patch=
- leaves identical mutable default bugs untouched in `DamosFilters`, `DamosD=
-ests`, `Damos`, `Kdamond`, and `Kdamonds`.
---
+Such a layout is common with damon-paddr on hugepage workloads or
+damon-vaddr on processes with a large anonymous mmap.
 
-commit 7d9280d7450287d38ab4b080317de0093ab71119
-Author: Kunwu Chan <chentao@kylinos.cn>
+For example, with max_nr_regions == 1500, a target may end up with
+799 small alternating-temperature regions plus one large region that
+absorbed a uniformly-accessed range during an earlier merge:
 
-selftests/damon: prevent cross-context state pollution in DamonCtx
+H:hot
+C:cold
 
-DamonCtx.__init__() uses mutable default values for monitoring_attrs, targe=
-ts,
-and schemes. In Python these are evaluated once at function definition time,
-so multiple DamonCtx instances can unintentionally share the same lists and
-DamonAttrs instance. Replace the mutable defaults with None sentinels and
-initialize the objects when needed.
+      r1     r2     r3                 r800
+    HHHHHH|CCCCCC|HHHHHH|...|HHHHHH..........................|
 
-Link: https://lore.kernel.org/20260601032314.424013-2-kunwu.chan@linux.dev
+    nr_regions = 800  >  max_nr_regions / 2 = 750
 
-> diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testin=
-g/selftests/damon/_damon_sysfs.py
-> index 8b12cc0484405..2f6f2699db256 100644
-> --- a/tools/testing/selftests/damon/_damon_sysfs.py
-> +++ b/tools/testing/selftests/damon/_damon_sysfs.py
-> @@ -624,17 +624,23 @@ class DamonCtx:
->      pause =3D None
->      idx =3D None
-> =20
-> -    def __init__(self, ops=3D'paddr', monitoring_attrs=3DDamonAttrs(), t=
-argets=3D[],
-> -            schemes=3D[], pause=3DFalse):
-> +    def __init__(self, ops=3D'paddr', monitoring_attrs=3DNone, targets=
-=3DNone,
-> +            schemes=3DNone, pause=3DFalse):
->          self.ops =3D ops
-> +        if monitoring_attrs is None:
-> +            monitoring_attrs =3D DamonAttrs()
+If a cold subarea later emerges inside r800:
 
-[Severity: Medium]
-Does this incomplete fix introduce a split-brain state regression?
+      r1     r2     r3                 r800
+    HHHHHH|CCCCCC|HHHHHH|...|HHHHHH........CCCCCC.............|
 
-Because DamonAttrs() is now called multiple times (once per DamonCtx),
-multiple DamonAttrs instances are created. However, DamonAttrs.__init__
-still uses a mutable default for intervals_goal:
+The small regions cannot merge with each other (different access
+counts), so the budget stays full.  r800 cannot be split because
+nr_regions > max_nr_regions / 2 causes an early return.  The cold
+subarea is never discovered.
 
-tools/testing/selftests/damon/_damon_sysfs.py:DamonAttrs.__init__() {
-    def __init__(self, sample_us=3D5000, aggr_us=3D100000,
-                 intervals_goal=3DIntervalsGoal(), update_us=3D1000000,
-...
-        self.intervals_goal.attrs =3D self
-}
+When nr_regions is above max_nr_regions / 2 but still under the
+maximum, split only a fraction of the regions instead of returning.
+One region in every 'max_nr_regions / budget' regions is split, where
+budget is the remaining room (max_nr_regions - nr_regions), starting
+from a rotating offset so different regions get picked over time.  The
+fraction shrinks as the budget shrinks, so the region count keeps
+refining while approaching max_nr_regions smoothly rather than
+overshooting it.  An unnecessary split is reverted by the next
+kdamond_merge_regions().
 
-This causes all newly created DamonCtx instances to silently share the
-exact same IntervalsGoal instance. During DamonAttrs.__init__, the shared
-IntervalsGoal instance's attrs back-reference is overwritten to point to
-the newest DamonAttrs.
+Link: https://lore.kernel.org/20260626085851.70754-2-jiayuan.chen@linux.dev
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Cc: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Shu Anzai <shu17az@gmail.com>
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 49 ++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 44 insertions(+), 5 deletions(-)
 
-As a result, when an older DamonCtx calls stage(), its base attributes
-correctly route to its own sysfs directory, but its intervals_goal writes
-route to the sysfs directory of the most recently created DamonCtx.
-
-Additionally, could there be other similar mutable default bugs left
-untouched, such as in Damos.__init__:
-
-tools/testing/selftests/damon/_damon_sysfs.py:Damos.__init__() {
-    def __init__(self, action=3D'stat', access_pattern=3DDamosAccessPattern=
-(),
-                 quota=3DDamosQuota(), watermarks=3DDamosWatermarks(),
-                 core_filters=3D[], ops_filters=3D[], filters=3D[], target_=
-nid=3D0,
-}
-
->          self.monitoring_attrs =3D monitoring_attrs
->          self.monitoring_attrs.context =3D self
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260629144648.1340=
-92-1-sj@kernel.org?part=3D1
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index ded76719e8a14..972a19fcee3ec 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3240,6 +3240,37 @@ static void damon_split_regions_of(struct damon_ctx *ctx,
+ 	}
+ }
+ 
++/* Split one in every @split_step regions into two, from a rotating offset */
++static void damon_split_some_regions(struct damon_ctx *ctx,
++				     unsigned long split_step)
++{
++	static unsigned long rotation;
++	struct damon_target *t;
++	struct damon_region *r, *next;
++	unsigned long offset = rotation++ % split_step;
++	unsigned long idx = 0;
++
++	damon_for_each_target(t, ctx) {
++		damon_for_each_region_safe(r, next, t) {
++			unsigned long sz_region, sz_sub;
++
++			if (idx++ % split_step != offset)
++				continue;
++			sz_region = damon_sz_region(r);
++			if (sz_region < 2 * ctx->min_region_sz)
++				continue;
++
++			sz_sub = ALIGN_DOWN(damon_rand(ctx, 1, 10) *
++					sz_region / 10, ctx->min_region_sz);
++			/* Do not allow blank region */
++			if (sz_sub == 0 || sz_sub >= sz_region)
++				continue;
++
++			damon_split_region_at(t, r, sz_sub);
++		}
++	}
++}
++
+ /*
+  * Split every target region into randomly-sized small regions
+  *
+@@ -3253,25 +3284,33 @@ static void damon_split_regions_of(struct damon_ctx *ctx,
+ static void kdamond_split_regions(struct damon_ctx *ctx)
+ {
+ 	struct damon_target *t;
+-	unsigned int nr_regions = 0;
+-	static unsigned int last_nr_regions;
++	unsigned long nr_regions = 0;
++	unsigned long max_nr_regions = ctx->attrs.max_nr_regions;
++	static unsigned long last_nr_regions;
+ 	int nr_subregions = 2;
+ 
+ 	damon_for_each_target(t, ctx)
+ 		nr_regions += damon_nr_regions(t);
+ 
+-	if (nr_regions > ctx->attrs.max_nr_regions / 2)
+-		return;
++	if (nr_regions >= max_nr_regions)
++		goto done;
++
++	if (nr_regions > max_nr_regions / 2) {
++		damon_split_some_regions(ctx,
++			max_nr_regions / (max_nr_regions - nr_regions));
++		goto done;
++	}
+ 
+ 	/* Maybe the middle of the region has different access frequency */
+ 	if (last_nr_regions == nr_regions &&
+-			nr_regions < ctx->attrs.max_nr_regions / 3)
++			nr_regions < max_nr_regions / 3)
+ 		nr_subregions = 3;
+ 
+ 	damon_for_each_target(t, ctx)
+ 		damon_split_regions_of(ctx, t, nr_subregions,
+ 				       ctx->min_region_sz);
+ 
++done:
+ 	last_nr_regions = nr_regions;
+ }
+ 
+-- 
+2.47.3
