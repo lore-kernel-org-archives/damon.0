@@ -1,344 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235FD3E2AA1;
-	Mon, 29 Jun 2026 14:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80F5423152
+	for <damon@lists.linux.dev>; Mon, 29 Jun 2026 15:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782745032; cv=none; b=k+3WDCFauvgrn3wjhCIfjjQlN18OhLIIUYCZE/vOwlGbxO19o0shaX8WQYww1KfC4bAKEA9grHmTP9qUEbom/hnPm3rC1WQyDqfm7ySvNW2sAFwPE1sUAXcbIpZIWKDBlVXSuqXozawHn1wOPNp9d+Mv7mD/k/2eDciEXwjIl6s=
+	t=1782745278; cv=none; b=hfOEP0xg7DdGr4yyBrcAlX0wwgn5bcxomfuDC6Znd6EfLLGi49jsRXdgx59oocuwpTFq+qDTAgUtpCtaz44zrVWP92MzW6reR7d9Lug7QZ5O3cFdBL/a5qqaU/20O6QGjHTxdd/iJ29oxGpz0gmvIVzVyiMl/E+vFeTjHFMkvw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782745032; c=relaxed/simple;
-	bh=LNgB0LZoHZw0fP3mNzpypR694eprJdbAT8t2kv7BsKU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GI5/5Ra45V/YDwNMQz8ePGi4cIwOMbqC2HJnXjf5w0BEYBatRgQbj7tczWiijqHkQ7/4oIbkOokcphb3MA8FcCQX0eBE4REHvb6MyP2hRLev9vZbyT9xWMfZcF58B7hG+65FCiqyJotAVyWNfsJ7b8uKGTU9MMv6a+ggv3Fs/+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fb4gXdfC; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782745278; c=relaxed/simple;
+	bh=buINkP9eZAvdY4i6xWIBNf97SSpBCjm+pS5+4jXQVCY=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=XYIcKerm8vCxlrAnEpMvHt15zIsJb3lG3zPiXGNuwo/ox6iOqw9ceQHGkdWlThruGBuFkRNhV7Prleydj7C/JmTTyPgctYZUYc+ZLURknmQKXovHUIoZVzWWEtf6FyED1T1+5Mvy4RYXjs2c7ZgIDJ5d2vZoKbzXLLniah/GveM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FUbRWyHt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fb4gXdfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466751F00A3A;
-	Mon, 29 Jun 2026 14:56:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FUbRWyHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6EE1F000E9;
+	Mon, 29 Jun 2026 15:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782745029;
-	bh=c8iLIqBeF3LyAyaueUWtK1sqEjRS1M9AqqZ5Dyw7Z58=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Fb4gXdfCr+2KFrFMF2IByaqjqN6OTvaWqQOC5SC3n+FH76BIVh2JDagVQM04zbj4i
-	 z9UqiAHTat+mRSFXdSoYoJyzmoUlF3p6Jal6xe6vOj0QLi7S2K5h9jaYFUYjI+BSuq
-	 9d7IwNlxDTjp3VQUkRtwL9oT//Ua6zIzQzWpQkWh48TlIzq75ChfxoMs7JMB6YBa+Q
-	 ZxwQy1+SAoBg4NhXVNiEOzrZ3Dhl/wVvyFl01n5vJfnD+QDhnTEyYlWVs30E2o8W8y
-	 wepBBBkvWmHWS2C9RD6SaF8XQCZzAuIK1yFyi3oKvRdndjk8kenHlAuuXYQ9iZ77Xx
-	 OWjGalyUwbbUQ==
-Date: Mon, 29 Jun 2026 15:56:48 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
-	Thierry Reding <thierry.reding@kernel.org>, Mikko Perttunen <mperttunen@nvidia.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Christian Koenig <christian.koenig@amd.com>, 
-	Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Pedro Falcato <pfalcato@suse.de>, Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, 
-	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 19/30] mm: use linear_page_[index, delta]() consistently
-Message-ID: <akKHUPxEVCSlifn5@lucifer>
-References: <cover.1782735110.git.ljs@kernel.org>
- <bf56e2e98b512962a2fb88900d535a0e9e6769d8.1782735110.git.ljs@kernel.org>
- <21c4d96a-cd1b-4c65-8a66-2223df3b6109@suse.de>
+	s=k20260515; t=1782745276;
+	bh=ZTLi6UQAI+kokh/ntutwCKwUY5k0Scn+KFmOb1xu/tI=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=FUbRWyHtG+A9w3D+MnWENV9Ig59oByh5iMNq1zv47fwPBK8DWUHh4wnsOJEf05ah/
+	 2ltrQYskV/NNDi2EzEMs04dMJj1L9iI4l+nP/UAsHvBkVFdWEr6dhKL1AiF5Su4Qtk
+	 mQRbW1ELdTODwp1mXPtjjN8LCzKBwzltEG0PxHQ+K5CuHYpZlqQkmWL8fC0cp+VdQP
+	 gLirA+24zfiee4f3D7YamXmYQyh9Hts4+QXCBK8DvwD4oBoN1GbLxWuIekqTRUqQPS
+	 3F8Hzr6Kihq3uFBaZZ2pSVtT50i4VzOFPOWD4IuEGzPqmTLZi83RsudwxBJYdYZObw
+	 zbsFfgOqpaLpw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3] samples/damon/mtier: fail early if address range
+ parameters are invalid
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260629144432.133962-1-sj@kernel.org>
+References: <20260629144432.133962-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 29 Jun 2026 15:01:15 +0000
+Message-Id: <20260629150116.1C6EE1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <21c4d96a-cd1b-4c65-8a66-2223df3b6109@suse.de>
 
-On Mon, Jun 29, 2026 at 03:56:33PM +0200, Thomas Zimmermann wrote:
-> Hi
->
-> Am 29.06.26 um 14:23 schrieb Lorenzo Stoakes:
-> > There are a number of places where we open code what linear_page_index()
-> > and linear_page_delta() calculate.
-> >
-> > Replace this code with the appropriate functions for consistency.
-> >
-> > No functional change intended.
-> >
-> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
->
-> For the DRM changes:
->
-> Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-Thanks!
+Pre-existing issues:
+- [High] The sysfs interface allows creating zero-sized regions, leading to=
+ a division by zero kernel panic in `damon_merge_two_regions()` when mergin=
+g adjacent zero-sized regions.
+--
 
->
-> See below for two additional comments.
->
->
-> > ---
-> >   arch/arm/mm/fault-armv.c              | 2 +-
-> >   arch/x86/kernel/cpu/sgx/virt.c        | 3 ++-
-> >   drivers/comedi/comedi_fops.c          | 3 ++-
-> >   drivers/gpu/drm/etnaviv/etnaviv_gem.c | 3 ++-
-> >   drivers/gpu/drm/gma500/gem.c          | 2 +-
-> >   drivers/gpu/drm/msm/msm_gem.c         | 3 ++-
-> >   drivers/gpu/drm/omapdrm/omap_gem.c    | 5 +++--
-> >   drivers/gpu/drm/tegra/gem.c           | 3 ++-
-> >   drivers/gpu/drm/ttm/ttm_bo_vm.c       | 7 ++++---
-> >   drivers/vfio/pci/nvgrace-gpu/main.c   | 3 ++-
-> >   drivers/vfio/pci/vfio_pci_core.c      | 3 ++-
-> >   mm/nommu.c                            | 2 +-
-> >   mm/vma.c                              | 2 +-
-> >   virt/kvm/guest_memfd.c                | 2 +-
-> >   14 files changed, 26 insertions(+), 17 deletions(-)
-> >
->
-> [...]
->
-> >   #include <linux/io.h>
-> >   #include <linux/uaccess.h>
-> > @@ -2462,7 +2463,7 @@ static int comedi_vm_access(struct vm_area_struct *vma, unsigned long addr,
-> >   {
-> >   	struct comedi_buf_map *bm = vma->vm_private_data;
-> >   	unsigned long offset =
-> > -	    addr - vma->vm_start + (vma->vm_pgoff << PAGE_SHIFT);
-> > +	    addr - vma->vm_start + (vma_start_pgoff(vma) << PAGE_SHIFT);
->
-> This doesn't seem to belong here.
+commit 049fc008d25fe73be336de6b00bf5512c8f6ec71
+Author: Zenghui Yu <yuzenghui@huawei.com>
 
-Ah yeah, I'll move that on a respin thanks!
+samples/damon/mtier: fail early if address range parameters are invalid
 
->
-> >   	if (len < 0)
-> >   		return -EINVAL;
-> > diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-> > index b0436a1e103f..2e4d6d117ee2 100644
-> > --- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-> > +++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-> > @@ -6,6 +6,7 @@
-> >   #include <drm/drm_prime.h>
-> >   #include <drm/drm_print.h>
-> >   #include <linux/dma-mapping.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/shmem_fs.h>
-> >   #include <linux/spinlock.h>
-> >   #include <linux/vmalloc.h>
-> > @@ -188,7 +189,7 @@ static vm_fault_t etnaviv_gem_fault(struct vm_fault *vmf)
-> >   	}
-> >   	/* We don't use vmf->pgoff since that has the fake offset: */
-> > -	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	pgoff = linear_page_delta(vma, vmf->address);
-> >   	pfn = page_to_pfn(pages[pgoff]);
-> > diff --git a/drivers/gpu/drm/gma500/gem.c b/drivers/gpu/drm/gma500/gem.c
-> > index 88f1e86c8903..2708e8c68f4c 100644
-> > --- a/drivers/gpu/drm/gma500/gem.c
-> > +++ b/drivers/gpu/drm/gma500/gem.c
-> > @@ -288,7 +288,7 @@ static vm_fault_t psb_gem_fault(struct vm_fault *vmf)
-> >   	/* Page relative to the VMA start - we must calculate this ourselves
-> >   	   because vmf->pgoff is the fake GEM offset */
-> > -	page_offset = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	page_offset = linear_page_delta(vma, vmf->address);
-> >   	/* CPU view of the page, don't go via the GART for CPU writes */
-> >   	if (pobj->stolen)
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> > index efd3d3c9a449..cbf723a5d86f 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem.c
-> > @@ -9,6 +9,7 @@
-> >   #include <linux/spinlock.h>
-> >   #include <linux/shmem_fs.h>
-> >   #include <linux/dma-buf.h>
-> > +#include <linux/pagemap.h>
-> >   #include <drm/drm_dumb_buffers.h>
-> >   #include <drm/drm_prime.h>
-> > @@ -360,7 +361,7 @@ static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
-> >   	}
-> >   	/* We don't use vmf->pgoff since that has the fake offset: */
-> > -	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	pgoff = linear_page_delta(vma, vmf->address);
-> >   	pfn = page_to_pfn(pages[pgoff]);
-> > diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
-> > index 8e013e4f2c6b..00404fb6c29a 100644
-> > --- a/drivers/gpu/drm/omapdrm/omap_gem.c
-> > +++ b/drivers/gpu/drm/omapdrm/omap_gem.c
-> > @@ -5,6 +5,7 @@
-> >    */
-> >   #include <linux/dma-mapping.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/seq_file.h>
-> >   #include <linux/shmem_fs.h>
-> >   #include <linux/spinlock.h>
-> > @@ -359,7 +360,7 @@ static vm_fault_t omap_gem_fault_1d(struct drm_gem_object *obj,
-> >   	pgoff_t pgoff;
-> >   	/* We don't use vmf->pgoff since that has the fake offset: */
-> > -	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	pgoff = linear_page_delta(vma, vmf->address);
-> >   	if (omap_obj->pages) {
-> >   		omap_gem_cpu_sync_page(obj, pgoff);
-> > @@ -407,7 +408,7 @@ static vm_fault_t omap_gem_fault_2d(struct drm_gem_object *obj,
-> >   	const int m = DIV_ROUND_UP(omap_obj->width << fmt, PAGE_SIZE);
-> >   	/* We don't use vmf->pgoff since that has the fake offset: */
-> > -	pgoff = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	pgoff = linear_page_delta(vma, vmf->address);
-> >   	/*
-> >   	 * Actual address we start mapping at is rounded down to previous slot
-> > diff --git a/drivers/gpu/drm/tegra/gem.c b/drivers/gpu/drm/tegra/gem.c
-> > index 436394e04812..1d8d27a5ea89 100644
-> > --- a/drivers/gpu/drm/tegra/gem.c
-> > +++ b/drivers/gpu/drm/tegra/gem.c
-> > @@ -13,6 +13,7 @@
-> >   #include <linux/dma-buf.h>
-> >   #include <linux/iommu.h>
-> >   #include <linux/module.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/vmalloc.h>
-> >   #include <drm/drm_drv.h>
-> > @@ -564,7 +565,7 @@ static vm_fault_t tegra_bo_fault(struct vm_fault *vmf)
-> >   	if (!bo->pages)
-> >   		return VM_FAULT_SIGBUS;
-> > -	offset = (vmf->address - vma->vm_start) >> PAGE_SHIFT;
-> > +	offset = linear_page_delta(vma, vmf->address);
-> >   	page = bo->pages[offset];
-> >   	return vmf_insert_page(vma, vmf->address, page);
-> > diff --git a/drivers/gpu/drm/ttm/ttm_bo_vm.c b/drivers/gpu/drm/ttm/ttm_bo_vm.c
-> > index a80510489c45..88babf435ac2 100644
-> > --- a/drivers/gpu/drm/ttm/ttm_bo_vm.c
-> > +++ b/drivers/gpu/drm/ttm/ttm_bo_vm.c
-> > @@ -32,6 +32,7 @@
-> >   #define pr_fmt(fmt) "[TTM] " fmt
-> >   #include <linux/export.h>
-> > +#include <linux/pagemap.h>
-> >   #include <drm/ttm/ttm_bo.h>
-> >   #include <drm/ttm/ttm_placement.h>
-> > @@ -208,9 +209,9 @@ vm_fault_t ttm_bo_vm_fault_reserved(struct vm_fault *vmf,
-> >   	if (unlikely(err != 0))
-> >   		return VM_FAULT_SIGBUS;
-> > -	page_offset = ((address - vma->vm_start) >> PAGE_SHIFT) +
-> > -		vma->vm_pgoff - drm_vma_node_start(&bo->base.vma_node);
-> > -	page_last = vma_pages(vma) + vma->vm_pgoff -
-> > +	page_offset = linear_page_index(vma, address) -
-> > +		drm_vma_node_start(&bo->base.vma_node);
-> > +	page_last = vma_end_pgoff(vma) -
-> >   		drm_vma_node_start(&bo->base.vma_node);
->
-> Not your fault, but page_last seems misnamed here.
+This commit fixes an issue where invalid node address ranges could trigger a
+WARN_ONCE. It prevents zero-sized or negatively-sized regions by adding an
+early failure check if the start address is greater than or equal to the end
+address.
 
-Yeah :)
+> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+> index faaaaa12e6206..e567f4edd80ea 100644
+> --- a/samples/damon/mtier.c
+> +++ b/samples/damon/mtier.c
+[ ... ]
+> @@ -120,6 +120,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx=
+(bool promote)
+>  		addr.end =3D promote ? node1_end_addr : node0_end_addr;
+>  	}
+> =20
+> +	if (addr.start >=3D addr.end)
+> +		goto free_out;
+> +
 
->
-> Best regards
-> Thomas
->
-> >   	if (unlikely(page_offset >= PFN_UP(bo->base.size)))
-> > diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgrace-gpu/main.c
-> > index d07dcacb76bd..963fd8ded20d 100644
-> > --- a/drivers/vfio/pci/nvgrace-gpu/main.c
-> > +++ b/drivers/vfio/pci/nvgrace-gpu/main.c
-> > @@ -11,6 +11,7 @@
-> >   #include <linux/jiffies.h>
-> >   #include <linux/sched.h>
-> >   #include <linux/pci-p2pdma.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/pm_runtime.h>
-> >   #include <linux/memory-failure.h>
-> > @@ -385,7 +386,7 @@ static unsigned long addr_to_pgoff(struct vm_area_struct *vma,
-> >   	u64 pgoff = vma->vm_pgoff &
-> >   		((1U << (VFIO_PCI_OFFSET_SHIFT - PAGE_SHIFT)) - 1);
-> > -	return ((addr - vma->vm_start) >> PAGE_SHIFT) + pgoff;
-> > +	return linear_page_delta(vma, addr) + pgoff;
-> >   }
-> >   static vm_fault_t nvgrace_gpu_vfio_pci_huge_fault(struct vm_fault *vmf,
-> > diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-> > index a28f1e99362c..55d4937d495a 100644
-> > --- a/drivers/vfio/pci/vfio_pci_core.c
-> > +++ b/drivers/vfio/pci/vfio_pci_core.c
-> > @@ -19,6 +19,7 @@
-> >   #include <linux/module.h>
-> >   #include <linux/mutex.h>
-> >   #include <linux/notifier.h>
-> > +#include <linux/pagemap.h>
-> >   #include <linux/pci.h>
-> >   #include <linux/pm_runtime.h>
-> >   #include <linux/slab.h>
-> > @@ -1727,7 +1728,7 @@ static vm_fault_t vfio_pci_mmap_huge_fault(struct vm_fault *vmf,
-> >   	struct vm_area_struct *vma = vmf->vma;
-> >   	struct vfio_pci_core_device *vdev = vma->vm_private_data;
-> >   	unsigned long addr = vmf->address & ~((PAGE_SIZE << order) - 1);
-> > -	unsigned long pgoff = (addr - vma->vm_start) >> PAGE_SHIFT;
-> > +	unsigned long pgoff = linear_page_delta(vma, addr);
-> >   	unsigned long pfn = vma_to_pfn(vma) + pgoff;
-> >   	vm_fault_t ret = VM_FAULT_FALLBACK;
-> > diff --git a/mm/nommu.c b/mm/nommu.c
-> > index 60560b2c457e..7333d855e974 100644
-> > --- a/mm/nommu.c
-> > +++ b/mm/nommu.c
-> > @@ -1332,7 +1332,7 @@ static int split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-> >   	*region = *vma->vm_region;
-> >   	new->vm_region = region;
-> > -	npages = (addr - vma->vm_start) >> PAGE_SHIFT;
-> > +	npages = linear_page_delta(vma, addr);
-> >   	if (new_below) {
-> >   		region->vm_top = region->vm_end = new->vm_end = addr;
-> > diff --git a/mm/vma.c b/mm/vma.c
-> > index ee3a8ca13d07..185d07397ca6 100644
-> > --- a/mm/vma.c
-> > +++ b/mm/vma.c
-> > @@ -517,7 +517,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
-> >   		new->vm_end = addr;
-> >   	} else {
-> >   		new->vm_start = addr;
-> > -		new->vm_pgoff += ((addr - vma->vm_start) >> PAGE_SHIFT);
-> > +		new->vm_pgoff += linear_page_delta(vma, addr);
-> >   	}
-> >   	err = -ENOMEM;
-> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> > index db57c5766ab6..f0e5da490866 100644
-> > --- a/virt/kvm/guest_memfd.c
-> > +++ b/virt/kvm/guest_memfd.c
-> > @@ -440,7 +440,7 @@ static int kvm_gmem_set_policy(struct vm_area_struct *vma, struct mempolicy *mpo
-> >   static struct mempolicy *kvm_gmem_get_policy(struct vm_area_struct *vma,
-> >   					     unsigned long addr, pgoff_t *ilx)
-> >   {
-> > -	pgoff_t pgoff = vma->vm_pgoff + ((addr - vma->vm_start) >> PAGE_SHIFT);
-> > +	pgoff_t pgoff = linear_page_index(vma, addr);
-> >   	struct inode *inode = file_inode(vma->vm_file);
-> >   	*ilx = inode->i_ino;
->
-> --
-> --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-> GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
->
+[Severity: High]
+This is a pre-existing issue, but while you are fixing zero-sized regions
+here, does the DAMON sysfs interface have a similar vulnerability that can
+cause a kernel panic?
+
+Looking at damon_sysfs_set_regions() in mm/damon/sysfs.c, the bounds check
+only uses strictly greater than instead of greater than or equal to:
+
+    if (sys_region->ar.start > sys_region->ar.end)
+            goto out;
+
+If a user configures two identical zero-sized regions via sysfs (e.g.,
+start=3D4096 and end=3D4096), this check passes. Furthermore, the overlap
+check allows consecutive identical zero-sized regions because exact boundary
+matches evaluate to false.
+
+When DAMON executes damon_merge_regions_of(), it identifies these as
+perfectly adjacent and attempts to merge them in damon_merge_two_regions():
+
+mm/damon/core.c:damon_merge_two_regions() {
+    ...
+    l->nr_accesses =3D (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
+            (sz_l + sz_r);
+    ...
+}
+
+Since both regions are zero-sized, sz_l + sz_r evaluates to 0, which would
+cause a division by zero kernel panic. Should the sysfs interface also be
+updated to use >=3D to prevent this?
+
+>  	range.start =3D addr.start;
+>  	range.end =3D addr.end;
 >
 
-Cheers, Lorenzo
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260629144432.1339=
+62-1-sj@kernel.org?part=3D1
