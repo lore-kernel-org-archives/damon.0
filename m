@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886DB32FA30
-	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 03:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E215D385D9D;
+	Tue, 30 Jun 2026 04:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782791656; cv=none; b=GdtfrK3R9KNOGxppIzCEUUcoJFBgGWDChfIPgmJMDEGe+kqO8ncrHcQJK0sTLdHTZPZYicWdktmgiMD67+iN2rrnf31sQ0pBi0RXE2Q3iWpahDKD6k/kgnWRGaggC5QkR5p0dmS6xkQHuOzANq/FTJ5Iu7GhA2OA5cky317Nu+c=
+	t=1782792505; cv=none; b=fprdDWyeLqhBb7mwsolMPwBZGxOKPPYRrUPi/l6JIUjwu0q4Vu8x8TNC+XAZddnLom3BmrJp8CWpWFmPThZidhGQW4PM2T/XRVYIAU/5Gmj0eaGt+hklmkodvz9r8t1mvxk3SAfgHCvEWwS3KoYDjkQ4sR+rSDn7DlvY4isl7js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782791656; c=relaxed/simple;
-	bh=+jqyZTgo5GBmBrrv1akKlZxgPpcliJtqM0BiaPPLerY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anCM63IKUff1Gov8PHMIezSqJx0xAJuraml3xeibAkujJX7mzwc98PI0+67tjV0ph1lHduGc2LccO6wCbfD/B893NRboSziEL4Dyq1rCLxQncoyZi4mKE4zWwudP+0QJ7aHQ5mUKCYbz5/R7pFuFKe/RE+0pfui0mJAtyfnv+g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MjPPAzyK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782792505; c=relaxed/simple;
+	bh=3LphVwVPtpVRlk3FzEgwH6Td+zJzjF86FNpR8CFWPZk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=C96igO130XcA0WzGCA+GnlNjMPOiS/tTzcNsaco3HiOcBrnqEHEYWmWJwAEPYmLjd5ajGGpM5zFxsLiPOFDmRyPIyRoMdAz5B1jRDOvh474Suvdu3zxhCObvg0uxuFXTLdWxy/PCD4O67HqjbdmjRg0uU8SjmX8s1QU3ZjX6qGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WQXXX8vo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MjPPAzyK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E951F000E9;
-	Tue, 30 Jun 2026 03:54:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WQXXX8vo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119801F000E9;
+	Tue, 30 Jun 2026 04:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782791655;
-	bh=cH5os8POeGEP5DIHBLSx9NLSUKRf/AGBhoWEzxgoLyk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MjPPAzyK3qNco+lI7m4/v3IQtTdPljhxaeJtkQh3uOvayf2XbGzsW7MXvR4e+Pr1q
-	 /j8U5/T2WwUMAOnDeuyqU89cA1hmdYoVRGQvdrnnkc1szMLlnYDRLGTii8yNUDkLB8
-	 HevEK4/lqplAhQMWDeGhjp6Gs4L9sJnSCJPZdK3/Yxb+GxEgXMK3OX1ism1Y9XinZb
-	 1cTPyYDjMvkeB78h/qtDqj3WhjbwGmYsayYn/8Xxc6tlgRn/urx8fgimuhWA7rFRg4
-	 BirW2eHxALdPT2EIMXtIMn4UqpjLpNhpJk2Ld3JaCj6uo9uIKqfGVoNQ2NEgj+CWY7
-	 ++k+NTlDk294Q==
+	s=k20260515; t=1782792503;
+	bh=xbDQiekMgO/KFya5RKRP9Live6IJ6QFxvQeuI2/y3bM=;
+	h=From:To:Cc:Subject:Date;
+	b=WQXXX8voRMwhZsrn4r0dr2n/sgzaxhek7sKjB+Fz8GP1KKjI+oMS0gt5wvz9fMWH1
+	 d0eirhGW0NqVn6ThgyCXuoxtW2xpfsaOZkwM6W77a8nvfr5WOJaM8vvPu4ITECnbgp
+	 id1FK7KTwEE5hMEBDXcb9xShQQws2IJOZAXcJ1g42fiVLe+SHJl3DHNlmNOspguKpS
+	 RGEgnTfNtEfL2Uag26TZv4b/nwuv+93MGHDkDsCvWsNrlVK5fsQlJqtTpUeMo2oaZD
+	 CCKssA3H46Jib9CQdPnIcc+AJhhJDsqWaqbNSZt4DpZY8ogU0SVt43se8wfBFywhVr
+	 QOha/uAvsBmjQ==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v2] MAINTAINERS: s/SeongJae/SJ/
-Date: Mon, 29 Jun 2026 20:54:11 -0700
-Message-ID: <20260630035411.146557-1-sj@kernel.org>
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-trace-kernel@vger.kernel.org
+Subject: [PATCH 00/18] mm/damon: optimize out nr_accesses_bp
+Date: Mon, 29 Jun 2026 21:07:53 -0700
+Message-ID: <20260630040812.149729-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260630014230.B10B81F000E9@smtp.kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,75 +52,137 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 30 Jun 2026 01:42:30 +0000 sashiko-bot@kernel.org wrote:
+TLDR: Replace damon_region->nr_accesses_bp, which is easy to be wrong,
+with a simpler on-demand moving sum function, damon_nr_accesses_mvsum().
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Unjustified removal of third-party corporate copyright notices.
-> --
-> 
-> commit 01dda7537f36dfeb49164318c8fee42788b1510a
-> Author: SJ Park <sj@kernel.org>
-> 
-> MAINTAINERS: s/SeongJae/SJ/
-> 
-> This patch updates the author's preferred name across the DAMON subsystem,
-> including sysfs documentation, source files, and MAINTAINERS. It also removes
-> copyright notes from these files, stating that they can be confusing.
-> 
-> [ ... ]
-> 
-> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> > index 1cfb8c176b873..fcf7c7fadb5fe 100644
-> > --- a/mm/damon/tests/core-kunit.h
-> > +++ b/mm/damon/tests/core-kunit.h
-> > @@ -1,10 +1,6 @@
-> >  /* SPDX-License-Identifier: GPL-2.0 */
-> >  /*
-> >   * Data Access Monitor Unit Tests
-> > - *
-> > - * Copyright 2019 Amazon.com, Inc. or its affiliates.  All rights reserved.
-> 
-> [Severity: Medium]
-> Is it okay to remove third-party corporate copyright notices like this?
-> 
-> While the commit message mentions removing copyright notes because they can
-> be confusing, removing another entity's copyright (Amazon.com, Inc.)
-> without explicit sign-off or authorization might violate standard kernel
-> legal practices and risk copyright disputes.
-> 
-> Should these specific notices be retained unless there is explicit
-> authorization from the copyright holder?
+Background
+==========
 
-I'll reconsider if a human raises a concern.
+DAMON's monitoring output (access pattern snapshot, or more technically
+speaking, damon_region->nr_accesses) is completed once per aggregation
+interval, which is 100 ms by default.  Users can arbitrarily increase
+the interval for demand.  Under the suggested intervals auto-tuning
+setup, it can span up to 200 seconds.  If the aggregation interval is
+too long, the snapshot users cannot use it in reasonable time.  To
+mitigate this, we introduced a new field of damon_region, namely
+nr_accesses_bp.  It contains a pseudo moving sum of nr_accesses in bp
+units and is updated for each sampling interval.
 
-> 
-> > - *
-> > - * Author: SeongJae Park <sj@kernel.org>
-> >   */
-> >  
-> >  #ifdef CONFIG_DAMON_KUNIT_TEST
-> 
-> [ ... ]
-> 
-> > diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-> > index 563fbc7e3f448..61f844336ffb5 100644
-> > --- a/mm/damon/tests/vaddr-kunit.h
-> > +++ b/mm/damon/tests/vaddr-kunit.h
-> > @@ -1,10 +1,6 @@
-> >  /* SPDX-License-Identifier: GPL-2.0 */
-> >  /*
-> >   * Data Access Monitor Unit Tests
-> > - *
-> > - * Copyright 2019 Amazon.com, Inc. or its affiliates.  All rights reserved.
-> 
-> [Severity: Medium]
-> Does the same third-party copyright removal concern apply to this file
-> as well?
+It turned out keeping it correctly updated every sampling interval is
+not that easy.  From online parameter update feature development and
+more experimental hacks, we found it is easy to be corrupted.  Once it
+is corrupted, DAMON's monitoring outputs become quite insane.  Hence we
+added a few validation checks.  It is easy  to be corrupted because it
+requires every update per sampling interval to be correct.
 
-Ditto.
+Solution
+========
+
+There is no real reason to keep it updated every sampling interval.  Due
+to the simple pseudo-moving sum mechanism and existing helper field
+(last_nr_accesses), we can also calculate the pseudo moving sum on
+demand in a much simpler way.
+
+Implement a function for getting the pseudo moving sum on demand, and
+replace nr_accessses_bp uses with the new function.  Also remove no more
+needed tests for nr_accesses_bp and the per-sampling interval update
+functions.  Finally, remove the nr_accesses_bp.  The new function is
+quite simple.
+
+Discussion
+==========
+
+Depending on the use case, multiple nr_accesses readers could be
+executed in the same kdamond_fn() main loop iteration, which is executed
+once per sampling interval.  Such readers include DAMON region exporting
+tracepoints (damon_[region_]aggregated and damos_before_apply), DAMOS,
+and DAMON sysfs interface logic for update_schemes_tried_regions
+command.  In this case, the new function will be called multiple times
+and this could be overhead compared to the old logic, which simply reads
+the field without any additional work.  Nonetheless, the new function is
+quite simple.  And the new approach does nothing while there is no need
+to read.  The old approach had to execute its update function for each
+region for every sampling interval.  Hence the new approach is believed
+to be even more lightweight in common case, and the overhead is anyway
+negligible.
+
+One more advantage of this change is that one field from the
+damon_region struct is removed.  On setups that uses a high number of
+DAMON regions, this could be a potential memory space benefit.
+
+Patches Sequence
+================
+
+Patch 1 introduces the new function for getting the pseudo moving sum of
+nr_accesses on demands.  Patch 2 implements a unit test for the new
+function's internal logic.  Patch 3 and 4 update monitoring logic and
+the new function to ready for safe use on the existing logic.  Patches
+5-7 replace uses of nr_accesses_bp in DAMOS, tracepoints and DAMON sysfs
+interface with the new function, respectively.  Patches 8-10 removes
+nr_accesses_bp validation functions in DAMON core, one by one.  Patches
+11 and 12 further remove tests and test helper for nr_accesses_bp,
+respectively.  Patches 13 removes the setups and updates or
+nr_accesses_bp field.  Patches 14-16 cleans up function parameters that
+are no more being used due to the previous patch.  Patch 17 removes the
+function that was used for updating nr_accesses_bp field with its unit
+test, which is the single remaining caller of the function.  Finally,
+patch 18 removes damon_region->nr_accesses_bp field.
+
+Changes from RFC v1.3
+- RFC v1.3: https://lore.kernel.org/20260622142139.30269-1-sj@kernel.org
+- Wordsmith and fixup commit subjects.
+- Drop RFC tag.
+- Rebase to latest mm-new.
+Changes from RFC v1.2
+- RFC v1.2: https://lore.kernel.org/20260621155715.87932-1-sj@kernel.org
+- Explicitly ignore nr_accesses from mvsum at the beginning of
+  aggregation.
+- Fix a typo in a commit message.
+Changes from RFC v1.1
+- RFC v1.1: https://lore.kernel.org/20260620172244.90953-1-sj@kernel.org
+- Handle next_aggregation_sis < passed_sample_intervals in
+  nr_accesses_mvsum().
+- Always rescale ->last_nr_accesss for parameter changes.
+- Remove unused attrs params from damon_update_region_access_rate() and
+  its callers.
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260619193415.73833-1-sj@kernel.org
+- Avoid divide-by-zero from zero aggregation interval.
+- Call damon_nr_accesses_mvsum() for damos tracing only when it is enabled.
+- Remove obsolete mentions of nr_accesses_bp in comments.
+
+SJ Park (18):
+  mm/damon/core: introduce damon_nr_accesses_mvsum()
+  mm/damon/tests/core-kunit: test damon_mvsum()
+  mm/damon/core: always update ->last_nr_accesses for intervals change
+  mm/damon/core: handle unreset nr_accesses in damon_nr_accesses_mvsum()
+  mm/damon/core: use damon_nr_accesses_mvsum() in __damos_valid_target()
+  mm/damon/core: use damon_nr_accesses_mvsum() for damos region tracing
+  mm/damon/sysfs-schemes: use damon_nr_accesses_mvsum() for damo regions
+  mm/damon/core: remove damon_warn_fix_nr_accesses_corruption()
+  mm/damon/core: remove damon_verify_reset_aggregated()
+  mm/damon/core: remove damon_verify_merge_regions_of()
+  mm/damon/tests/core-kunit: remove nr_accesses_bp setup and tests
+  selftests/damon/drgn_dump_damon_status: do not dump nr_accesses_bp
+  mm/damon/core: remove nr_accesses_bp setups and updates
+  mm/damon/core: remove attrs param from
+    damon_update_region_access_rate()
+  mm/damon/paddr: remove attrs param from __damon_pa_check_access()
+  mm/damon/vaddr: remove attrs param from __damon_va_check_access()
+  mm/damon/core: remove damon_moving_sum() and its unit test
+  mm/damon/core: remove damon_region->nr_accesses_bp
+
+ include/linux/damon.h                         |  15 +-
+ include/trace/events/damon.h                  |   8 +-
+ mm/damon/core.c                               | 201 +++++++-----------
+ mm/damon/paddr.c                              |   9 +-
+ mm/damon/sysfs-schemes.c                      |   6 +-
+ mm/damon/tests/core-kunit.h                   |  37 ++--
+ mm/damon/vaddr.c                              |  12 +-
+ .../selftests/damon/drgn_dump_damon_status.py |   1 -
+ 8 files changed, 119 insertions(+), 170 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: d74f4c01f930b32580e172a786efbcb352c312f1
+-- 
+2.47.3
