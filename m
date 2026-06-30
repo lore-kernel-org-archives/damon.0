@@ -1,118 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF0528466F
-	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 01:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07177219A8A;
+	Tue, 30 Jun 2026 03:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782783753; cv=none; b=s+QPq9vk2HvwF9SfyTKnDgJOZJL6INtxYAevTAMGYdhgJRqsOINRWEE2UWGhHPlTjqwf77a6foTigF+7d6TDPbiSZIQMFktk9VUMDZR76CYRSpreei0JIZWupuSCXdHX2JJr8mRVttIA6ZiYBROp34ydMvLxq+xJXvrT+juyReI=
+	t=1782791552; cv=none; b=e2QcRFbVSxa7sWQCJBi2MqfdDmykNs+oUvam4VIAe81PjANIINEQZ2DknnmZr8S1yXFJHgYnILv+JwbbKAnytr5LpsCmTjtmu2JJ4qxT2EBNWxxRh8sSsEw703+U/odCqcGhW0HxMu8/zYpGrkD1l0U/yFKnlSUk8oYc+y2AD/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782783753; c=relaxed/simple;
-	bh=nCb6V7ROpSzETrtr6YL6pwqC7i1+OAD/MXV+SL2xYZ4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=DL4jbFczQl17MmblHA0WyGI0rTAUT3ywKAAz/w+j0tDgDLFC2A3kxkmGxuzeAQDK/j7+EZkANRqlxCaBaFRdf6lhfUKVAq+Xym9m8KwoY3W/TYFm6G+uEjhOpTiJWVYBgy1ZIzwC2HEOAdgaIzKFbRlQsWY9keN0bmib0Zq4eCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cXBMF9Da; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782791552; c=relaxed/simple;
+	bh=w97OAoK3vAYojf+1DNyodckx2XQcsTLl+URCPzKVqOk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EHk2jjJea8ScFFNiShdC6AbPMaS9xYekpWD0eM8082IAfwNg0z8rqDxjUHGDR0SPCijSMK3potbX8ZICeQwV6I/HQLXgvK5xaasoYTLBImGkNYPLM/wIMdQLn4dwMycQjFWczmRaeHORhdfblo0UVRE9S9SuqfDB+NjmhxuHj4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQscV47n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXBMF9Da"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10B81F000E9;
-	Tue, 30 Jun 2026 01:42:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BQscV47n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667CB1F000E9;
+	Tue, 30 Jun 2026 03:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782783750;
-	bh=CTnPcXEdLgFeRMJomjyePK00H+gFn8UoCy+bG9dPXlQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=cXBMF9Da+qjvQTBcKBIG8wJUMtdchtA8u8beGtpJ5+1Uk2w/j6L6XpB91XqxczSDT
-	 06jwCPqKXshlFNJKQhhDDaIK0ZaG28HTWnNx8gF0kKIacwzSIZaPeF5XPX7DCVnYjz
-	 4BOxxChboBqoHMy6eZz4qCVdBiBefWnJXf3BqKXSEkBb33WMx5tUSOjl+3qsgsNF7Z
-	 RvhGrnbQ5jrZHmjpRWxYmVrwRxjysibuRC/bABBqO5/DlRW/pQ5ms3g04eO8tPGB2L
-	 Sau72b4l+1YHTBke8s3kkEE/+MYtcCzmudnqAFtKXYvAvMJYMgeRk7iv4Iuhit+yMC
-	 bPmCfbWydxQHg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] MAINTAINERS: s/SeongJae/SJ/
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260630013820.143366-1-sj@kernel.org>
-References: <20260630013820.143366-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 30 Jun 2026 01:42:30 +0000
-Message-Id: <20260630014230.B10B81F000E9@smtp.kernel.org>
+	s=k20260515; t=1782791550;
+	bh=oWQGO6JAGeGVOvqhfdihogE5K82vJ74Pirejh7VlOVk=;
+	h=From:To:Cc:Subject:Date;
+	b=BQscV47nr6fwdYaNNmhl0m94aO6hG1wDTviAy8/A28ojaC/br9mLIo6ifH9zaXntd
+	 sRq5nbTZQUJnxrBjnWd69s2L9mMytrsXomveu8oJ7EGI50EhiTfcugqeOf/7yPm+YL
+	 kP6ZeD31uorveDYQfb/POcnWvqXttsvsjbs5temCSPbjXhsD7ThZxvPkQDjyKnxO1a
+	 vGVdtQgBmweOL9aYPnXhmOPEh7ZZK3uvfsshU1mgRfghhzj2BdgIy/RkPz72yjYjrN
+	 JYH8oPyv5qoHwCYK5glCAS+HxMUnhcUo8DAVbDzFq5PDWgZ8Zt/GVyj+kYVxLk0O0b
+	 mGS4wq/S/VNwg==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: [PATCH] mm/damon/core: validate ranges in damon_set_regions()
+Date: Mon, 29 Jun 2026 20:52:19 -0700
+Message-ID: <20260630035221.146458-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] Unjustified removal of third-party corporate copyright notices.
---
+DAMON core logic assumes zero length regions don't exist.  However, a
+few DAMON API callers including DAMON_SYSFS, DAMON_RECLAIM and
+DAMON_LRU_SORT allow users to set empty monitoring target regions.  This
+could result in WARN_ONCE() on CONFIG_DAMON_DEBUG_SANITY enabled kernel,
+and divide-by-zero from damon_merge_two_regions().
 
-commit 01dda7537f36dfeb49164318c8fee42788b1510a
-Author: SJ Park <sj@kernel.org>
+For example, the WANR_ONCE() can be triggered like below.
 
-MAINTAINERS: s/SeongJae/SJ/
+    # grep DAMON_DEBUG_SANITY /boot/config-$(uname -r)
+    # CONFIG_DAMON_DEBUG_SANITY=y
+    # damo start
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0
+    # echo 0 > contexts/0/targets/0/regions/0/start
+    # echo 0 > contexts/0/targets/0/regions/0/end
+    # echo commit > state
+    # dmesg
+    [....]
+    [   73.705780] ------------[ cut here ]------------
+    [   73.707552] start 0 >= end 0
+    [   73.708452] WARNING: mm/damon/core.c:359 at damon_new_region+0x6e/0x80, CPU#1: kdamond.0/758
+    [...]
 
-This patch updates the author's preferred name across the DAMON subsystem,
-including sysfs documentation, source files, and MAINTAINERS. It also remov=
-es
-copyright notes from these files, stating that they can be confusing.
+All DAMON API callers eventually use damon_set_regions() to setup the
+regions.  Add the validation logic in the function.
 
-[ ... ]
+Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from RFC v1.2
+- RFC v1.2: https://lore.kernel.org/20260628165447.86217-1-sj@kernel.org
+- Drop RFC tag.
+- Rebase to latest mm-new.
+Changes from RFC v1.1
+- RFC v1.1: https://lore.kernel.org/20260628005723.28549-1-sj@kernel.org
+- Use ALIGN() for end address.
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260627170057.1867-1-sj@kernel.org
+- Fixup the commit message for how the fix is made.
+- Do the validation with min_region_sz-aligned addresses.
 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 1cfb8c176b873..fcf7c7fadb5fe 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-> @@ -1,10 +1,6 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
->  /*
->   * Data Access Monitor Unit Tests
-> - *
-> - * Copyright 2019 Amazon.com, Inc. or its affiliates.  All rights reserv=
-ed.
+FYI, this fix cannot be applied as is to the commit that introduced this
+class of bugs, because damon_set_regions() was introduced after the bug.
+I considered making three fixes for each caller to make the backporting
+on the old kernels easy.  However, the first LTS kernel having the bug
+is 6.1.y, which has damon_set_regions() and all the callers are using
+it.  So porting this to necessary stable kernels should be easy enough.
 
-[Severity: Medium]
-Is it okay to remove third-party corporate copyright notices like this?
+ mm/damon/core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-While the commit message mentions removing copyright notes because they can
-be confusing, removing another entity's copyright (Amazon.com, Inc.)
-without explicit sign-off or authorization might violate standard kernel
-legal practices and risk copyright disputes.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 027250e43c66f..3dd2750c2ef20 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -356,6 +356,12 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 	unsigned int i;
+ 	int err;
+ 
++	for (i = 0; i < nr_ranges; i++) {
++		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=
++				ALIGN(ranges[i].end, min_region_sz))
++			return -EINVAL;
++	}
++
+ 	/* Remove regions which are not in the new ranges */
+ 	damon_for_each_region_safe(r, next, t) {
+ 		for (i = 0; i < nr_ranges; i++) {
 
-Should these specific notices be retained unless there is explicit
-authorization from the copyright holder?
-
-> - *
-> - * Author: SeongJae Park <sj@kernel.org>
->   */
-> =20
->  #ifdef CONFIG_DAMON_KUNIT_TEST
-
-[ ... ]
-
-> diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-> index 563fbc7e3f448..61f844336ffb5 100644
-> --- a/mm/damon/tests/vaddr-kunit.h
-> +++ b/mm/damon/tests/vaddr-kunit.h
-> @@ -1,10 +1,6 @@
->  /* SPDX-License-Identifier: GPL-2.0 */
->  /*
->   * Data Access Monitor Unit Tests
-> - *
-> - * Copyright 2019 Amazon.com, Inc. or its affiliates.  All rights reserv=
-ed.
-
-[Severity: Medium]
-Does the same third-party copyright removal concern apply to this file
-as well?
-
-> - *
-> - * Author: SeongJae Park <sj@kernel.org>
->   */
-> =20
->  #ifdef CONFIG_DAMON_VADDR_KUNIT_TEST
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260630013820.1433=
-66-1-sj@kernel.org?part=3D1
+base-commit: e861a804dfa410dde21e8d2d20179df9c66edd8d
+-- 
+2.47.3
