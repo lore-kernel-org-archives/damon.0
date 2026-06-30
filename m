@@ -1,102 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DB542E004;
-	Tue, 30 Jun 2026 14:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F215C22424C
+	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 14:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782829074; cv=none; b=tRXGMw9UH1S19+fmbHA8xr2/XxSK5tXdzx9LsM2zVD6kyeEpFoJMmoPO+L1LHtNanUxcdgM1OOQDYL5G3np3vfLeQDXDDUbBp3qn9nMCJG3kdKMyWhEqinfSP6WKmI4U3Iq9Y3NLyDZBcYsEqZ05ynWzr2jx4LsqqAFTyUU0Wmg=
+	t=1782829504; cv=none; b=cIefxIb2F0Z5Jw2n9YPrCgE5LRcdFB6CTQUd1kI6WmmkkKr+pYnb2N0zFUzcxXjp4tl0L6it9Kjr6yQJbUdDNwrC9pcNcM1gpSEY2aEoi8i9Gmv7p/wdJ4aZYVU1IO65duSv/XKwLCZVG27WFpraEegow7h+SBS6yLlpf3j2TL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782829074; c=relaxed/simple;
-	bh=neHHjunVZZcJYZGka9GDjW0aXNw1zD0+JhTPLlvuVZE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLb+6mLnC4firTvCfBJsHQ7R09l4prOCnMe7Wn5gn9U9qDkoCiLMlVqrFL5kIeKrgo2v9AdmETiZLTs+GSrxyK/m6uQyfbTH/jSoVOJeMZ5blnLWp9AJC+pAxE0KkAINROUX7JOTQRDD6dRF5ryRgDmk4VAtOO2271X7dSr60yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fz/LToBM; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782829504; c=relaxed/simple;
+	bh=Hj1PsWdoPrBDHrgQ/uY2Jp5WrmZD4VEi3Nry/VJmDLw=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=rdfJkOvST6xuF+ZQJcQuyNY1g0WebCxOGWDRjTbHvBugpbBOED0wTnj/TqxjvY09/KvylLmmRzi5u0imU7EcmVnOBKnui5hWH5FDTD7w/48TPbtBsOpqJam4vCgonmeh9SxC68pR8hdU7d8lDaXphhfbrgfIx68gONO1OBetvhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aKkLLpQN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fz/LToBM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 536D31F00A3A;
-	Tue, 30 Jun 2026 14:17:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aKkLLpQN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7100A1F000E9;
+	Tue, 30 Jun 2026 14:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782829073;
-	bh=1jHOfEbKPidZLAY+bFapF4i2vITVSQIXVAPEhh+0hhg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fz/LToBMBiIU0dTtYMuOu1omoRZUmMba6sk3xwiWQ+2FlTbc4NT/i6KAp+qJezenZ
-	 KzCA11SA1VTDR8nwaETWW88mX9V86UuvFnbIXHY6vt+FPrNntkTRkPU7xbG5caEFNI
-	 mgrdtFJf96a0cWhPaZrhVUtCUEKpiFMh0VMX7Fv8EgoVZmb0fVY1s12b72lDc7SNFF
-	 7jsrxtiunnjIscevZfDMmqrhom7j1ceHahl8gf4aYGrKAsCaIDbAvbejzza7P/ESBI
-	 N2iCEPXfoVbplhTSfbUHX8L65L1w5CgCleHGC20NE+NWC3GaF0ZMdqQr9R6oJgTZg4
-	 FE9dt4tMtLgKg==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 11/11] mm/damon/sysfs: fix typos in probe_{add,rm}_dirs: s/attr/probe/
-Date: Tue, 30 Jun 2026 07:17:25 -0700
-Message-ID: <20260630141726.92246-12-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260630141726.92246-1-sj@kernel.org>
+	s=k20260515; t=1782829503;
+	bh=T258iS9xRM7W+MR5bvljNzLMNfOUkMswJ7YvzCJx5to=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=aKkLLpQNibUHaPh2GLuB3sVizQkLGELzgG+2E7KVZ6RPi500ElXomozz2UugLyOAe
+	 U4FyzwKXQj8ZnfAm5SfzHxphjhkoqFTHQyPPKLZsEi+zB9A88GRMmou4k85vtt+gpU
+	 Oz8WmhG13SwsP3ep0FoO3Vu89Luz5A1TsIUXNwdproxXKHaZ+YUB6wAk9InN+YptL/
+	 3rnegn1t0Cfrx9/YNfwKtdvldvb7ld5c7TxOmkWeNPTJW4P6YwpiSbNNAXxXbNaaPm
+	 J9iakQkgFaxsb5Zi1fNv5p9cdcyWVsTpWa9iClulvx3DygLGeU/PLtz3M20yV2iAxK
+	 NMb1ropljsOQw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 03/11] mm/damon/tests/core-kunit: test damon_rand()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260630141726.92246-4-sj@kernel.org>
 References: <20260630141726.92246-1-sj@kernel.org>
+ <20260630141726.92246-4-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 30 Jun 2026 14:25:02 +0000
+Message-Id: <20260630142503.7100A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-damon_sysfs_probe_{add,rm}_dirs names a variable for damon_sysf_probe
-as 'attr'.  Probably a trivial copy-pasta error, but it makes the code
-not pleasant to read.  Fix those.
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [Medium] The lower bound check `KUNIT_EXPECT_GE(test, rnd, 0)` is a tauto=
+logy and fails to test the lower bound offset logic.
+- [Low] The test completely misses the 64-bit slow path of `damon_rand()`.
+--
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/sysfs.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+commit 3514b0c5edd38e0cdd6bf2d3e8b3ba10d7e617d2
+Author: SJ Park <sj@kernel.org>
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 5b2ae2fe948fa..6710b6d019bf5 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1073,7 +1073,7 @@ static struct damon_sysfs_probe *damon_sysfs_probe_alloc(void)
- 	return kzalloc_obj(struct damon_sysfs_probe);
- }
- 
--static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *attr)
-+static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *probe)
- {
- 	struct damon_sysfs_filters *filters;
- 	int err;
-@@ -1081,22 +1081,22 @@ static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *attr)
- 	filters = damon_sysfs_filters_alloc();
- 	if (!filters)
- 		return -ENOMEM;
--	attr->filters = filters;
-+	probe->filters = filters;
- 
- 	err = kobject_init_and_add(&filters->kobj, &damon_sysfs_filters_ktype,
--			&attr->kobj, "filters");
-+			&probe->kobj, "filters");
- 	if (err) {
- 		kobject_put(&filters->kobj);
--		attr->filters = NULL;
-+		probe->filters = NULL;
- 	}
- 	return err;
- }
- 
--static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *attr)
-+static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *probe)
- {
--	if (attr->filters) {
--		damon_sysfs_filters_rm_dirs(attr->filters);
--		kobject_put(&attr->filters->kobj);
-+	if (probe->filters) {
-+		damon_sysfs_filters_rm_dirs(probe->filters);
-+		kobject_put(&probe->filters->kobj);
- 	}
- }
- 
--- 
-2.47.3
+mm/damon/tests/core-kunit: test damon_rand()
+
+This commit introduces a kunit test for the damon_rand() PRNG to ensure that
+the generated output respects the expected bounds.
+
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index a00168730445d..0ec7d14d354e7 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
+
+[ ... ]
+
+> +static void damon_test_rand(struct kunit *test)
+> +{
+> +	struct damon_ctx ctx;
+> +	int i;
+> +
+> +	prandom_seed_state(&ctx.rnd_state, get_random_u64());
+> +	for (i =3D 0; i < 10000; i++) {
+> +		unsigned long rnd =3D damon_rand(&ctx, 0, 10);
+
+[Severity: Low]
+Does this test miss the 64-bit fallback path in damon_rand()?
+
+Looking at the implementation of damon_rand(), it contains specific logic f=
+or
+spans exceeding U32_MAX. By hardcoding a span of 10, the test exclusively
+exercises the 32-bit fast path and leaves the 64-bit arithmetic
+(mul_u64_u64_shr) completely untested.
+
+Could we add cases that test spans larger than U32_MAX?
+
+> +
+> +		KUNIT_EXPECT_GE(test, rnd, 0);
+
+[Severity: Medium]
+Is this comparison inherently tautological?
+
+Since rnd is an unsigned long, rnd >=3D 0 is always true, which renders this
+assertion ineffective and might trigger compiler warnings for tautological
+comparisons.
+
+Additionally, because the test uses 0 for the lower bound, does it properly
+verify that damon_rand() correctly applies the lower bound offset to its
+output? If the implementation failed to add the lower bound, this test would
+not catch it.
+
+> +		KUNIT_EXPECT_LE(test, rnd, 9);
+> +	}
+> +}
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260630141726.9224=
+6-1-sj@kernel.org?part=3D3
