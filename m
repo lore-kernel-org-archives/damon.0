@@ -1,113 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D3138AC61;
-	Tue, 30 Jun 2026 05:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6BE3E172B;
+	Tue, 30 Jun 2026 05:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782796744; cv=none; b=JFH2TVV8q012n0/eBVhbMMSf2aTghxMjhfKwJ1qXkM21PGF9U7Bf4bt/Y6uSz34gjFzGk3vxOe72NOebJCMVYJMZmSvv/5+wwOt9NeSRtqCvzw7iio4F1VierphZ6VlbTfc+xNWH8XO/+9yV57BQ7X4w+DFvuSSvIgk1WfRPia4=
+	t=1782799045; cv=none; b=JBjO26yKjenR7rY4DEkJrxQydUcVS6e+tNqMBEVX1c4kKddzaldV6eUie23U0qhjvVmcPrup5tg7gPqPJtzuzruamIM9PDoFpH8lZG/1K0rg8wziSrdsNrpbK0szJCBJz53U/hcZQ49x13II7K09DUwWhHQbRrL/sTCY/ZGzFMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782796744; c=relaxed/simple;
-	bh=tcYgYSJ8HaA3l6NUUQCGPaVO1Hi9WoDiW0OcUPp/6XA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BviNe+hO7JWitIOgoK+io+A+KDojgHuImc/e92iEtbxJoA6v0FD3usSrki9kCGCpnp8ezCJcvN+zsZHAUjV0GBvtk2WB0exxz07FZgAzjCR2of6VuacDOAxSiGEvmOjj76enRN9h1T9YCggpTfIaNRVZ/V6hr4T3DkjYRK+stwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UgsFi+y0; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782799045; c=relaxed/simple;
+	bh=5yOgCR3gE3wWNiiZNV04Wm7fghNtrivSYHgYEze5x/Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=E778TNafj/uLMThiLiERL9HPiAB5tGRM/6hRt/MS6mCP9KYioVoZyTOyJJSfLLkwBxxEz+gclbHkd6cwj+2KNaGmpC4HaWj6AYBKlJwyORS/xcUP3262v9xm/25zjQccTN0t5tiUtPVMJ0R6oaMd9ZxyfhhkRGL153OI+cY6zZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aJ/kntS7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UgsFi+y0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BF61F000E9;
-	Tue, 30 Jun 2026 05:19:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aJ/kntS7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D07A1F000E9;
+	Tue, 30 Jun 2026 05:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782796743;
-	bh=VrONtPVV7zUCula2/YAHjJXiKOtVpzbmkuviUSsjv3Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=UgsFi+y0UrCMsD/dl3fNCkuiCapjOvPAyXn6lZoMmcJNxVzU0c29Qawv53Xkp1Ump
-	 nCo/3G83tjQRRXa6gaTUg6ic2gssezYNdp53m4e+zp27cxQMvCfbvskPs2TlF//Jiu
-	 wzcFI+sPf92PhMp0u3jC26CNiIdUKrjPc4znrtN+6zlBJArV/SJ+tJqbShk1p0bQ7c
-	 8nIStgaY290Jy5KXR4OEFW+u9VijZ2PtxlvecnUzqlWlFHeWNLxwn5Fc4k8tiHD28J
-	 eyxPxOPcXsj2sMhJnnSJFS5Av0LPRtlTJgcedk5Jcg/KUmMot9QC2DxOLNRkLbFicq
-	 ybFaIKWezuyxg==
-Message-ID: <d9c198e9-498b-4f4c-966a-17fa39427f21@kernel.org>
-Date: Tue, 30 Jun 2026 07:18:59 +0200
+	s=k20260515; t=1782799043;
+	bh=LyJYCsE6xTmRMMFlBTBzhXZGR3rpltmstKwqZS6lHeM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=aJ/kntS7PgCT1G8W5IO936nUF8aVjpmcFkkMsElMuw+flusPuWyYIWQarTbMgdreE
+	 YkqozLGV6ncLJMBOG2CbejlYvtP0S68tiEJ4wNLXexNw4ab+rbBYCxvPNjVwXzwP6h
+	 7aAeXdyC1TCDMRhyLIYpyvx0keOQy5pDNG60SFN4t9xxtFG4t3FRUla8HGrr++4UtX
+	 dW2WNDiQlvQw40XG0vi8ILnGt+CpCVBkX6X0CEq4kxhRziRn9OiLpgPfqIyW+esgLA
+	 OgDyJqTeOIaNB3zNThXp5tU/ae9yDUdbfGZHAhZKRPAPNuDzweYrQfsS/jU/Tenbop
+	 Sy+GKDYneQHaA==
+From: SJ Park <sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	SJ Park <sj@kkernel.org>
+Subject: Re: [PATCH 1/5] mm/damon/core: use kvmalloc for target regions array
+Date: Mon, 29 Jun 2026 22:57:15 -0700
+Message-ID: <20260630055716.87704-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260629145538.134832-2-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] MAINTAINERS: s/SeongJae/SJ/
-To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
-Cc: "Liam R. Howlett" <liam@infradead.org>, Lorenzo Stoakes <ljs@kernel.org>,
- Michal Hocko <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>, Vlastimil Babka <vbabka@kernel.org>,
- damon@lists.linux.dev, linux-kernel@vger.kernel.org, linux-mm@kvack.org
-References: <20260630013820.143366-1-sj@kernel.org>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20260630013820.143366-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 6/30/26 03:38, SJ Park wrote:
-> My legal and preferred first names are SeongJae and SJ, respectively.  I
-> was using the legal name for commits and tags, while using the preferred
-> name for conversations.  It sometimes confuses people including myself.
-> Consistently use the preferred name.
+On Mon, 29 Jun 2026 07:55:32 -0700 SJ Park <sj@kernel.org> wrote:
+
+> From: Akinobu Mita <akinobu.mita@gmail.com>
 > 
-> Together remove copyright notes on files.  Those are only confusing for
-> people who are not familiar with the law.  Meanwhile, we can infer the
-> information in a better way from git logs and public information.
+> damon_commit_target_regions() temporarily allocates a single contiguous
+> memory region using kmalloc to store copies of all damon_regions of the
+> damon_target.
+> However, if the damon_target has a large number of damon_regions, the
+> total size may exceed KMALLOC_MAX_SIZE.
 > 
-> Acked-by: Lorenzo Stoakes <ljs@kernel.org>
-> Signed-off-by: SJ Park <sj@kernel.org>
-> ---
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+> This problem can be avoided by using kvmalloc instead of kmalloc.
+> 
+> Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+> Reviewed-by: SJ Park <sj@kkernel.org>
 
--- 
-Cheers,
+Oops, another typo...  Should do s/kkernel/kernel/
 
-David
+Andrew, I saw this is already picked up to mm-new.  Could you please fix this
+up in place?  Let me know if you'd prefer sending a new revision with the fix.
+
+
+Thanks,
+SJ
+
+[...]
