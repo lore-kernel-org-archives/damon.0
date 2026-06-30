@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F1142980A;
-	Tue, 30 Jun 2026 14:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7F8429825;
+	Tue, 30 Jun 2026 14:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782829068; cv=none; b=RwdyctfzB3LLqwzTY+i1Bvu9sSLAnKWYtwf88AlI9dynZ64PCUk+q7PYYFFZfg8vEguswcMy7QAXF1/xl/Rh1AZhwrbaEnTZZt4eWZUrdZzYiAKttcgFmICo7GK1otm+wxEYkyHooAd3soulJh1BceXF+T/zV1wUtvNnIODafm8=
+	t=1782829068; cv=none; b=eaazgyfybuDI2CD76omfg0a5MLmeb6uzdRTJs6QRRvTjp10ppZ8NGTbGOjA2NC7ooXWlvJ0tDyTd5cmkTQknce4khHnTz9U7Vltx5Zxt68AuIaVj3Fy4hkYQAKEFUtf3r/SDx9hTFBZ0Yi4T1lJcfzt5XgUSa2xoe2gigs2OS9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1782829068; c=relaxed/simple;
-	bh=XIWpcFIHixSvYXZQ+SKpLh2H3jFB0SEZDqNLf57i9nc=;
+	bh=G/ZpBa5u6B8jXpyKowGiDeGK38MbRvqczLtYl8jj3kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7NpgvKJu9ZMp7q+bN3C0dAuxXSA/1c8EiumnDVjF3r0v09RpfhqUvB/TVsNqWmUueiOZCC/ZgM21QkyQKduDzNfIYrYy4VYAE2xKyWjWBb+4eFfXeQc3Uhj/xi0C2YYtcqzrx35KebFBCIotr1FPJHlVv4UbZXE4Zz0GhT7ms8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGDSF9eW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=goYu2r8YgbgTqRx0DJFhqXtOjU/wdTdtv57p6oBFIv6B5pwsWBcXcw0nDTE2oL2fs+iuMe+s1j4LV/p0IKSet3ESGsqprUhCMuVCAurTQ2JwdwowOgEPADMTIbHogX7PB+MptqHdVlQjBn1RE4LZCH/KB3LLIO3FDYh/2Xpgeds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rky3Uhju; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGDSF9eW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887781F000E9;
-	Tue, 30 Jun 2026 14:17:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rky3Uhju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BED1F00A3A;
+	Tue, 30 Jun 2026 14:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782829066;
-	bh=TdcCZC5+16+6AUY31I6DEOKh1l2S9+UDKyW2frHuiC4=;
+	s=k20260515; t=1782829067;
+	bh=LL+0Zjf9t3hBYduoXGS/7g+XduqJe2JKqWYU56ceygg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WGDSF9eWezY7AOmV3hce+Aatjtmmvb4UhJ4cNMn+ahNooClledOIQVYD5XakxAxU0
-	 jrGkvaDMtG++MkZw21q1GjavHnrDLzgzRmdWbcjF2nnL1mD6UQMiWUYvplegTiBNIC
-	 TOvSzhjzn216+x3N+Jn1TjsAKlAFzqGqvu9O7t4AKK95IyDHblhteFOEi0KZ4DG9UX
-	 uI7MRNuj/nwASfjt4c6jmnAX94f/8cubbslUAq9RTppXcNYMXhhnJZzIppT2e/ahZi
-	 ymIplfq0Zexz9H5UhbzjplxYKWOQShp6dBtdQ0ONner488g7z0NvmwUxGgRaFSG+Oq
-	 C/Vb2R2Kbu/KQ==
+	b=Rky3UhjuG2xBomQeg45ocsbvupyHFy7vbiUOjvY3IXqdgzv0LhvKiCXe5Kxw8+az3
+	 PqOXy5FyuIEaFHdt0UYIUkm9RUX3IhHh4SkwcD4rSvF8fK+PLNlozG84Fk3+udaS2p
+	 8LCW3PG0c8avqaDX9XhMmIMHAsIf7CwNAugK00CIds46WobXpWmTFcdsZ0lPjBQ5NQ
+	 xJvV/2BmIN6cBTQol4jPir7YE+zR6Zo9nftxGK7pGRF0n88dVZCx74/sKbongXM0EA
+	 +s++AHYy8nD6mv3L3ggJMwzmvCDuaFo4czT0oARLf80MwSvot4z0pDIAYJXzlhtzTy
+	 pMUj2RRIWX82A==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 07/11] selftests/damon/sysfs.sh: test all files in quota goal dir
-Date: Tue, 30 Jun 2026 07:17:21 -0700
-Message-ID: <20260630141726.92246-8-sj@kernel.org>
+Subject: [PATCH 08/11] mm/damon/core: reduce range setup in damon_commit_target_regions()
+Date: Tue, 30 Jun 2026 07:17:22 -0700
+Message-ID: <20260630141726.92246-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260630141726.92246-1-sj@kernel.org>
 References: <20260630141726.92246-1-sj@kernel.org>
@@ -48,40 +46,67 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface for DAMOS quota has quite extended since its
-initial introduction.  The test case for that in DAMON sysfs interface
-essential file operations test (sysfs.sh) has not accordingly extended,
-though.  Extend the test case to test all existing files.
+damon_commit_target_regions() calls damon_set_regions() for updating the
+destination target's monitoring target region boundaries.  It sets the
+boundaries same to source target's monitoring regions, even if they are
+adjacent.  Meanwhile, damon_set_region() sets the destination target
+regions exactly the same to the source, only when the target regions are
+empty.  When there are existing target regions, only a few regions are
+expanded or shrunk to fit on only the boundaries for disjoint regions in
+the source.  Hence the adjacent source ranges mean nothing in common
+cases.  When there are many regions, such adjacent range setup is only a
+waste of time and space.  We recently found [1] it is actually causing
+memory overhead.  Setup the ranges for only distinct ranges.
+
+[1] https://lore.kernel.org/20260603112306.58490-1-akinobu.mita@gmail.com
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.sh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mm/damon/core.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-index f8d2092be004d..b43deee60fe95 100755
---- a/tools/testing/selftests/damon/sysfs.sh
-+++ b/tools/testing/selftests/damon/sysfs.sh
-@@ -199,6 +199,20 @@ test_goal()
- 	ensure_dir "$goal_dir" "exist"
- 	ensure_file "$goal_dir/target_value" "exist" "600"
- 	ensure_file "$goal_dir/current_value" "exist" "600"
-+	ensure_file "$goal_dir/target_metric" "exist" "600"
-+	local fpath="$goal_dir/target_metric"
-+	ensure_write_succ "$fpath" "user_input" "valid input"
-+	ensure_write_succ "$fpath" "some_mem_psi_us" "valid input"
-+	ensure_write_succ "$fpath" "node_mem_used_bp" "valid input"
-+	ensure_write_succ "$fpath" "node_mem_free_bp" "valid input"
-+	ensure_write_succ "$fpath" "node_memcg_used_bp" "valid input"
-+	ensure_write_succ "$fpath" "node_memcg_free_bp" "valid input"
-+	ensure_write_succ "$fpath" "active_mem_bp" "valid input"
-+	ensure_write_succ "$fpath" "inactive_mem_bp" "valid input"
-+	ensure_write_succ "$fpath" "node_eligible_mem_bp" "valid input"
-+	ensure_write_fail "$fpath" "foo" "invalid input"
-+	ensure_file "$goal_dir/nid" "exist" "600"
-+	ensure_file "$goal_dir/path" "exist" "600"
- }
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 59a91a0ab6d45..c6fc35be633b3 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1414,21 +1414,33 @@ static struct damon_target *damon_nth_target(int n, struct damon_ctx *ctx)
+ static int damon_commit_target_regions(struct damon_target *dst,
+ 		struct damon_target *src, unsigned long src_min_region_sz)
+ {
+-	struct damon_region *src_region;
++	struct damon_region *src_region, *prev = NULL;
+ 	struct damon_addr_range *ranges;
+ 	int i = 0, err;
  
- test_goals()
+-	damon_for_each_region(src_region, src)
+-		i++;
++	damon_for_each_region(src_region, src) {
++		if (!prev || prev->ar.end != src_region->ar.start)
++			i++;
++		prev = src_region;
++	}
+ 	if (!i)
+ 		return 0;
+ 
+ 	ranges = kvmalloc_objs(*ranges, i, GFP_KERNEL | __GFP_NOWARN);
+ 	if (!ranges)
+ 		return -ENOMEM;
++	prev = NULL;
+ 	i = 0;
+-	damon_for_each_region(src_region, src)
+-		ranges[i++] = src_region->ar;
++	damon_for_each_region(src_region, src) {
++		if (!prev) {
++			ranges[i].start = src_region->ar.start;
++		} else if (prev->ar.end != src_region->ar.start) {
++			ranges[i++].end = prev->ar.end;
++			ranges[i].start = src_region->ar.start;
++		}
++		prev = src_region;
++	}
++	ranges[i++].end = damon_last_region(src)->ar.end;
+ 	err = damon_set_regions(dst, ranges, i, src_min_region_sz);
+ 	kvfree(ranges);
+ 	return err;
 -- 
 2.47.3
