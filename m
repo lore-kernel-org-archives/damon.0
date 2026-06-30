@@ -1,40 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A186042EEBC
-	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 14:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015D12609FD;
+	Tue, 30 Jun 2026 14:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782831300; cv=none; b=DFnDc8q30itg+YBui2h/wunU0pWNR9lPf+GZmQlsAG+HrS8vMN//rY8yPil/WcVrFyLIbE+iptHldZuoKbRDFPFizEMftzVav3/QCZwDmOd2wt0sNHu7mKi6f3ajGJvZE1PlJ0kDsVfkLPYdDeL4JtEIlib2PC5nY5kPLWW9VVg=
+	t=1782831453; cv=none; b=sGSvzPQeAQyT+qvZVs8zU+mQkCZKKXpoIpymnobhE6setlfhxbL6kA+wxDDkffGqh0t4TFimgpxjkcuCoE0WpO5xDRtQd4K7JcLU53m7rQfL8DzLJcDU59ZDh9ZUQAnnWAicrXhRZZf4ATyzg7mbb/3krURnr+++jpY1ZG8OHi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782831300; c=relaxed/simple;
-	bh=ge0N5n2jDlrG35kqUaWfXTXy5x8MrqPSepuTS6AuEYg=;
+	s=arc-20240116; t=1782831453; c=relaxed/simple;
+	bh=wCS3CGlTAPFqjpzIeJR1CFEGc4FBDpqHNkDW/1nY3eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VpeO2490KOR3uv2fCVYYC4BxcP3KSUPycjbKEPyYxx/ehZQvyg8yjKXFWGWeBKa3+Gq6S5c/y3Jya1gTP22/wJ9JwI1xIIvBo4v5Z6HjZJCsy18ofHIB40EaMyUoXuB2zBNAaHsBn9unXiLhM0DOzJ64zmajL251gPdkCFS7Db0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HeRulfJ0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ESt4s5RW05eZoBj/9cjnXc0nU888CPwh+HNakVPf+HVlfN354DKN2vjjrK1DJQOH64FMIhgqXaEkqE24dj6X5ddRizaVEINyavHJFgdITxv8dgTbYbt+I3Pw5SfXEaugJqd6P6cLP3vwj73KoL3xIqsS1wymsQkrEfunAKUGUJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mKqN86No; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HeRulfJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09911F000E9;
-	Tue, 30 Jun 2026 14:54:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mKqN86No"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35631F000E9;
+	Tue, 30 Jun 2026 14:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782831299;
-	bh=4y5VBCHZLxSpxg9L8gOfuSOoR7z4hptNQejQI6Ge/jU=;
+	s=k20260515; t=1782831452;
+	bh=Rt/iGbOFCZMV9bCDf5rxqRe3XsLLEE61YR1XtIhNQok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HeRulfJ0vWGuRxz7tTREaIXtBEe7ate1B7c0/GQohqr6+TXRtZQlLmCyqWCQPqL4s
-	 4REmAEINcl7ar4fYl3XGuF5aQVvsyfZupf1iP4BSFGkzevayWTDunaKDeSmDVnA+Gd
-	 mo6LVAqx/3Ihzt8iNgHODmH0CdzvFQc7O4S8vEnRL/yJagCfMOWK574YbWCY8dEFW1
-	 f7lGy7oxHR1SzbCm5f1GJMsJVMwnKAk3iOwYzlVM0m7hIijBzCbxFQfdmPjUHgaJG2
-	 DexziG2pDOeEAHYADeD3p10tBJqSG6GRSRWsNb9RhNe119IKJid3UJSM90hF22D1mL
-	 1/Y3n0nMbS1nA==
+	b=mKqN86NodSgPmPa0daU/LTKKagv0DcFCeGMhS6MgVwObdnzmatyb5UisR30Aa67Xk
+	 UF8Yikd4V0jvra1ltipSVud//K1T/IbdgT0XbO+HgUp9mX4tyeXS3/nNd0FXWYurSb
+	 GeFtNYI1dABj6rRvj/tn6uBv7VbcA+YNI+vCD04myI1Sg6Svkd0+P2ENuvY//ghV1i
+	 0uW5zDuVnefztjVi8KSuS5DqaDXi1RgNx+np4UHs+Lcj4U/Rl1ywlHHxoKE+EnF5/d
+	 HyQ1jyi3BzKD6JnuwYd9olgGQdLoHVj/hjNNwDE1tSYfGEocOE4Vgnc4fNc/dJMZAB
+	 LHuQYbCiN4W6A==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 03/11] mm/damon/tests/core-kunit: test damon_rand()
-Date: Tue, 30 Jun 2026 07:54:50 -0700
-Message-ID: <20260630145451.93002-1-sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 00/11] mm/damon: update, optimize, and clean up doc, tests, and code
+Date: Tue, 30 Jun 2026 07:57:24 -0700
+Message-ID: <20260630145724.93141-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260630142503.7100A1F000E9@smtp.kernel.org>
+In-Reply-To: <20260630141726.92246-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,70 +61,23 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 30 Jun 2026 14:25:02 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 30 Jun 2026 07:17:14 -0700 SJ Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The lower bound check `KUNIT_EXPECT_GE(test, rnd, 0)` is a tautology and fails to test the lower bound offset logic.
-> - [Low] The test completely misses the 64-bit slow path of `damon_rand()`.
-> --
-> 
-> commit 3514b0c5edd38e0cdd6bf2d3e8b3ba10d7e617d2
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/tests/core-kunit: test damon_rand()
-> 
-> This commit introduces a kunit test for the damon_rand() PRNG to ensure that
-> the generated output respects the expected bounds.
-> 
-> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> > index a00168730445d..0ec7d14d354e7 100644
-> > --- a/mm/damon/tests/core-kunit.h
-> > +++ b/mm/damon/tests/core-kunit.h
-> 
-> [ ... ]
-> 
-> > +static void damon_test_rand(struct kunit *test)
-> > +{
-> > +	struct damon_ctx ctx;
-> > +	int i;
-> > +
-> > +	prandom_seed_state(&ctx.rnd_state, get_random_u64());
-> > +	for (i = 0; i < 10000; i++) {
-> > +		unsigned long rnd = damon_rand(&ctx, 0, 10);
-> 
-> [Severity: Low]
-> Does this test miss the 64-bit fallback path in damon_rand()?
-> 
-> Looking at the implementation of damon_rand(), it contains specific logic for
-> spans exceeding U32_MAX. By hardcoding a span of 10, the test exclusively
-> exercises the 32-bit fast path and leaves the 64-bit arithmetic
-> (mul_u64_u64_shr) completely untested.
-> 
-> Could we add cases that test spans larger than U32_MAX?
+> Patches 1 and 2 update the design and ABI documents for recently added
+> DAMON features.  Patches 3-7 add or update more unit and self tests for
+> DAMON to cover recently changed or added functions and sysfs files.
+> Patch 8 optimizes damon_commit_target_regions() to skip unnecessary
+> adjacent ranges setup.  Patches 9-11 clean and fix up recently added
+> DAMON sysfs interface code for readability.
 
-As I previously replied, that could be a good enhancement future work.  Not a
-blocker for this patch, though.
+Sashiko found a few things that could be good future works, but none of those
+is a blocker of this series, in my opinion.  Please read the full thread [1] in
+lore.kernel.org if you want more details of Sashiko findings and my replies.
 
-> 
-> > +
-> > +		KUNIT_EXPECT_GE(test, rnd, 0);
-> 
-> [Severity: Medium]
-> Is this comparison inherently tautological?
-> 
-> Since rnd is an unsigned long, rnd >= 0 is always true, which renders this
-> assertion ineffective and might trigger compiler warnings for tautological
-> comparisons.
-> 
-> Additionally, because the test uses 0 for the lower bound, does it properly
-> verify that damon_rand() correctly applies the lower bound offset to its
-> output? If the implementation failed to add the lower bound, this test would
-> not catch it.
-
-Again, nice improvement candidate rather than a blocker for this patch.
+[1] https://lore.kernel.org/20260630141726.92246-1-sj@kernel.org
 
 
-Thanks,
+THanks,
 SJ
 
 [...]
