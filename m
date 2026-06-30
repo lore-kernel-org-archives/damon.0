@@ -1,110 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F215C22424C
-	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 14:25:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7965122424C
+	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 14:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782829504; cv=none; b=cIefxIb2F0Z5Jw2n9YPrCgE5LRcdFB6CTQUd1kI6WmmkkKr+pYnb2N0zFUzcxXjp4tl0L6it9Kjr6yQJbUdDNwrC9pcNcM1gpSEY2aEoi8i9Gmv7p/wdJ4aZYVU1IO65duSv/XKwLCZVG27WFpraEegow7h+SBS6yLlpf3j2TL0=
+	t=1782829552; cv=none; b=csshClJ7I3QqsFGBJ+h7nefDkgQwxvPko/w4qboMeeCBcaMfV+BankJ60sJpv9jlyCV40iYDV0WyurZhouQkGrsNS9ezUfAabNp4uPdl2JSIuJOZ9oRwqDDZ3tx8MrMI4sYjS2FoaoKIqDkWdcLEhRAcFPCFTcV1Qi55oJOPeS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782829504; c=relaxed/simple;
-	bh=Hj1PsWdoPrBDHrgQ/uY2Jp5WrmZD4VEi3Nry/VJmDLw=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=rdfJkOvST6xuF+ZQJcQuyNY1g0WebCxOGWDRjTbHvBugpbBOED0wTnj/TqxjvY09/KvylLmmRzi5u0imU7EcmVnOBKnui5hWH5FDTD7w/48TPbtBsOpqJam4vCgonmeh9SxC68pR8hdU7d8lDaXphhfbrgfIx68gONO1OBetvhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aKkLLpQN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782829552; c=relaxed/simple;
+	bh=LyaBlvtzLg3/D7avMailtRtNnHXXt7CQFthCD76A1P8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ASOhh+nhrGb/Q6ptcjgDypXDEEkJ4kT5vzZUg7DWwVEce/8mu8xU1c+Uj26rWmnfXu/FMO0PHb8VHly3DtFjbiBWv15x/53iEgcTf2iyaHtj4eaGPSZtNJ3ltFOrS2qSE/jDLh75+31CpMmBzHdPn+AeQyM+ahNDYdsSMEVu04Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=q4K7FyS2; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aKkLLpQN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7100A1F000E9;
-	Tue, 30 Jun 2026 14:25:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782829503;
-	bh=T258iS9xRM7W+MR5bvljNzLMNfOUkMswJ7YvzCJx5to=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=aKkLLpQNibUHaPh2GLuB3sVizQkLGELzgG+2E7KVZ6RPi500ElXomozz2UugLyOAe
-	 U4FyzwKXQj8ZnfAm5SfzHxphjhkoqFTHQyPPKLZsEi+zB9A88GRMmou4k85vtt+gpU
-	 Oz8WmhG13SwsP3ep0FoO3Vu89Luz5A1TsIUXNwdproxXKHaZ+YUB6wAk9InN+YptL/
-	 3rnegn1t0Cfrx9/YNfwKtdvldvb7ld5c7TxOmkWeNPTJW4P6YwpiSbNNAXxXbNaaPm
-	 J9iakQkgFaxsb5Zi1fNv5p9cdcyWVsTpWa9iClulvx3DygLGeU/PLtz3M20yV2iAxK
-	 NMb1ropljsOQw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 03/11] mm/damon/tests/core-kunit: test damon_rand()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260630141726.92246-4-sj@kernel.org>
-References: <20260630141726.92246-1-sj@kernel.org>
- <20260630141726.92246-4-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 30 Jun 2026 14:25:02 +0000
-Message-Id: <20260630142503.7100A1F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q4K7FyS2"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5aeb8870485so1913571e87.2
+        for <damon@lists.linux.dev>; Tue, 30 Jun 2026 07:25:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782829549; x=1783434349; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LyaBlvtzLg3/D7avMailtRtNnHXXt7CQFthCD76A1P8=;
+        b=q4K7FyS2XB+QaJcZBRoP4PHgVqHzIHqxDUEFqXPOICqa1p/Naw72EKeIBp9PTk6tdd
+         rihJljA2SJrT41kmOvmcUUcAdQh3HGRQldlR0I1ibkKaxMMxhFB/t8/HG+LULut1FpNG
+         F1i66M3b9JYRBuXbuxOZ4ASKKub+7h3enW4Z3VXNiy/nOcFE73ALjY2h2FEbGRoXr1To
+         gaKcXbKNd8hP0EY52di+qmFjXrfeLStM1KOzZw/tk5D6/THtbhGeAKIUlg2KOZmf8HH1
+         6KeG5iVunpI9+ucmAIWLg8d9xYANIF/38FhaQvGgNWiShMDjvV4sBQEF2mUIRAkH1I1I
+         XAlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782829549; x=1783434349;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=LyaBlvtzLg3/D7avMailtRtNnHXXt7CQFthCD76A1P8=;
+        b=d7cN0mfqe8ECRWnIwrWjlJNCTHs+5Lpe2cwe9MwTAQ+IIJBnkILExSCOYKI0nYA0hF
+         U59Wb7iZVYket4KL4tgzARXx4eaVyVKe0heFoVVq712qwg4jhP/cgyGuoQX87qdP+oq1
+         MObs/gsTjcPQO6Bxo9mE0Y4KTqjh1yB88Hkz1Zxvzz5LPqiM6LqgLiVKkcuMD20HaTLO
+         zw8u6OpjubGjLcHQ0uwiwj7kv0HIhC0Iy5qV5dcKmqwqIh2kwvn8NsWln+W3lxME5zPI
+         5RhlugjRB7ULz61WeBBNfahBUF9uYwNQ/QBXDEGqy8doiLFp0ToAqdCYi/D7+NB8+OG8
+         HBsw==
+X-Gm-Message-State: AOJu0Ywnpr774R+zLuP8uYzPqGX3Pdedkq6m3CGXG0S/6e0C7Y0HtcwQ
+	l/jOnCeAbUEWXU3n/cnJzilF9HXyoMxv8red22iCbCVxkVF3e5l//qC7
+X-Gm-Gg: AfdE7clNCV56flawpe9yN6zRaJC4SLvE/WpErdjZq9r/xRMAgNgleYfGM+PpR08wJGj
+	7Lmtk+VcyMiDg185gbxq6j79LpyEYyW4qfCVmqBQpLKAVM7nHZeYbH/v6pbsgYJzRjVsOmLcWaf
+	MAxmgrYfc2+Pik1cEJEl2njaZiv9aSgfyMAKIZXSsFpT5OwjRUMVOlviSQD/HBJOpOKWqGG0Ufw
+	nIhX0ipnua2U9QFb1KfXgv4AIz1glIVmuJXXGTp4DBHRFA09RhwS8rCpUQgJxHS8jE8PGLRkqEb
+	JWJCzv1ZTqt1TuzzwmIQLHfkHh5dTfXF9Ipysvz031TPOhN35ywtUrBKp7LLOmgV0/T90N9ADAi
+	RAsvqAiSI0ugEJO8w4WUPzuvvAJVsgZmP6Hxrx27hffO9sPTn09QxOPC+JbNru6/JP7x78qFKt+
+	TZIa67djY79KwcoN1EvSmnK39WPi50aE0uW+215vGlQc/zr2xNtIqHppukZ3Lm8PeyNmLw8Ek+i
+	HQ1NfWG7v+nC/sn/Q==
+X-Received: by 2002:a05:6512:8050:b0:5aa:6fff:c3e3 with SMTP id 2adb3069b0e04-5aebdbc6e03mr726250e87.33.1782829548247;
+        Tue, 30 Jun 2026 07:25:48 -0700 (PDT)
+Received: from debian.localdomain (95-25-158-125.broadband.corbina.ru. [95.25.158.125])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aebe4985eesm629795e87.46.2026.06.30.07.25.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jun 2026 07:25:47 -0700 (PDT)
+From: Igor Putko <igorpetindev@gmail.com>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/vaddr: remove redundant RCU lock
+Date: Tue, 30 Jun 2026 17:25:22 +0300
+Message-ID: <20260630102400.reply-damon@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260629165349.4260-1-igorpetindev@gmail.com>
+References: <20260629165349.4260-1-igorpetindev@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Medium] The lower bound check `KUNIT_EXPECT_GE(test, rnd, 0)` is a tauto=
-logy and fails to test the lower bound offset logic.
-- [Low] The test completely misses the 64-bit slow path of `damon_rand()`.
---
+Hi SJ,
 
-commit 3514b0c5edd38e0cdd6bf2d3e8b3ba10d7e617d2
-Author: SJ Park <sj@kernel.org>
+Thanks for the reply and the pointers!
+Regarding the issue Sashiko AI flagged - I dug into damon/vaddr.c, and I think it's a real bug, but it's isolated to __damon_va_three_regions().
+damon_va_walk_page_range() is fine here, since lock_vma_under_rcu() handles stability on its own. __damon_va_three_regions() is the problematic one: right after mmap_read_lock(mm) is taken in the caller, it sets up a VMA_ITERATOR and runs for_each_vma(). But mmap_read_lock doesn't stop the OOM reaper from running concurrently, setting MMF_UNSTABLE, and leaving empty markers in the maple tree. Walking the tree in that state without a check_stable_address_space(mm) call could lead to a NULL pointer dereference.
+Since this looks like a separate issue, I'll prepare a dedicated fix and send it as its own patch thread, so it doesn't hold up the current cleanup. Let me know if that approach works for you.
 
-mm/damon/tests/core-kunit: test damon_rand()
-
-This commit introduces a kunit test for the damon_rand() PRNG to ensure that
-the generated output respects the expected bounds.
-
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index a00168730445d..0ec7d14d354e7 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-
-[ ... ]
-
-> +static void damon_test_rand(struct kunit *test)
-> +{
-> +	struct damon_ctx ctx;
-> +	int i;
-> +
-> +	prandom_seed_state(&ctx.rnd_state, get_random_u64());
-> +	for (i =3D 0; i < 10000; i++) {
-> +		unsigned long rnd =3D damon_rand(&ctx, 0, 10);
-
-[Severity: Low]
-Does this test miss the 64-bit fallback path in damon_rand()?
-
-Looking at the implementation of damon_rand(), it contains specific logic f=
-or
-spans exceeding U32_MAX. By hardcoding a span of 10, the test exclusively
-exercises the 32-bit fast path and leaves the 64-bit arithmetic
-(mul_u64_u64_shr) completely untested.
-
-Could we add cases that test spans larger than U32_MAX?
-
-> +
-> +		KUNIT_EXPECT_GE(test, rnd, 0);
-
-[Severity: Medium]
-Is this comparison inherently tautological?
-
-Since rnd is an unsigned long, rnd >=3D 0 is always true, which renders this
-assertion ineffective and might trigger compiler warnings for tautological
-comparisons.
-
-Additionally, because the test uses 0 for the lower bound, does it properly
-verify that damon_rand() correctly applies the lower bound offset to its
-output? If the implementation failed to add the lower bound, this test would
-not catch it.
-
-> +		KUNIT_EXPECT_LE(test, rnd, 9);
-> +	}
-> +}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260630141726.9224=
-6-1-sj@kernel.org?part=3D3
+Thanks,
+Igor
