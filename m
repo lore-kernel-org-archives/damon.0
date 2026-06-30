@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8C5366823
-	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 04:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAA73A8739
+	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 04:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782794100; cv=none; b=i59MIKIIa+jUHEn71ESJiQ0TenGbOXhqOqNbm4YMg/P/t/E2WkfjWIKlcUYnfMd5CsTkwi1Yuxuh/cODay0HsbqavqfQDUJZPX/BAgameR4lzBAm1CSO51ylP4DBStK8binwc5jCtwdUNw8RJNBlomqwmlJ6bt5+Na9E1u9AxuM=
+	t=1782794379; cv=none; b=R6+tyN+1SReTEOON4ghXfH+r85uxZXM5yuX4iRK8ktOrvmN0SbFoHgRiQislGjVKllzDsQ6jchgV5QyhRwfsAC5hNe0sXa1NEjf0q3X43LR5l+rvtz81MntOcGb+NpaIblRVurg8xMFiHlMxWDeqUppwadoNuO8sCScUCR+DSSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782794100; c=relaxed/simple;
-	bh=Fb8Gbnv9Ax/t625x9btt5n7/1YZV5KHXml+cvZw4yvc=;
+	s=arc-20240116; t=1782794379; c=relaxed/simple;
+	bh=IikN+t4rhV9FW49ntsCNWepQ/TBrz/yjfOGamClal/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mqJzkUxa48RC63xQjaGkYJU70Sb4nTD8e/hmoD+u8G5J1ukjpm3TlIkP6uzwrZOQCnVVBVdk3OWVugRt01GdNU4tiqR17Y4fnJudxotrHOiZpP/kJn/3P27mZcI6lsim/0HtNfY9zo7wP5IwNXrMvSfN0Gtmcl2Wi3A7Q43sK1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A+0trvcJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oQ5Hxe8kJFrMTFxMTwwYdSkD+NQZmR3u71PzTvZ0vhoLQpTrWX3pPehkaeb6KhqYU2YXaZG2ZHv/uiVcOMdHymDitKH2TaRBs5XGzF0AknYfixO3+3tQaB9AE2YlQAp0ftsPSa2sKhsWi5pIGNYluoMFDmGtoNB2PjwB5g/trG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQnluxYA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A+0trvcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2C51F000E9;
-	Tue, 30 Jun 2026 04:34:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQnluxYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266891F000E9;
+	Tue, 30 Jun 2026 04:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782794098;
-	bh=Fgep95wFuMgHBre1Qic4CZ5EZAlvwvICkrFf4uXcmNg=;
+	s=k20260515; t=1782794378;
+	bh=gO8O1rp20/ZlrzfB2DqIID9ZNGhaAi/anm3vJ2dlSXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A+0trvcJkzv+ERgQ9at/Tkk2kEbnonL5tdPFGbiTiVW1e7uzzcuHaU59jSqPdVUOL
-	 TY5qjplsnnTg2XZfhGV/fP/SIYAEeREkd9Za5WtynJfeTQrnr+4ERSH41jP6l3xJ/f
-	 GTACYNxukSRLVs/unXJp31DvKlgjMiLtoeVWkcqImPy5lc1rn1WNTs/LZB4jer6Zwt
-	 IJ96l5NlR4rAmt6SC13jsE0R/K7cDADN68zfjvm5P28Lx50EprAqzFKhxEjre96Ew4
-	 /xEFTyhsOEPVYvg1jcm0gtlm+DUi9qZXZueL1yyU+ptfuBNVPylGHkJfOLME2wH4jZ
-	 6IGdrYw5HqMaQ==
+	b=kQnluxYAecRGSHmgtyfRjO1WPoCZFVQfxAI8Inl96FLfN4Kt72BtRC8IaA97AQo27
+	 heFkdBA+IsiJ5OAXaW3XV0UTbQ2HHThnLlLTmemtF+cQKVntepPohfViayn0Ldh028
+	 bQp6nTebW0S37uRS6osyYNr7/gcfP/EzYB1lvrm0M5JhLhGQaCwU0/3O8c9MXvPR6Z
+	 2CccY4ES6r8dwIBsfVqVmU6kB0/AAmMS/rhXAXKr7heIUlQ1NHgYUg9nukOOnvDwoc
+	 SamR3yWZhsSTyZApOidWwaFfh3MHC+Ah0wEazMjDDLt6DdP5p9hFpwQ1K74XkJscar
+	 DbEf1EveE4Y3g==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH 05/18] mm/damon/core: use damon_nr_accesses_mvsum() in __damos_valid_target()
-Date: Mon, 29 Jun 2026 21:34:50 -0700
-Message-ID: <20260630043451.151900-1-sj@kernel.org>
+Subject: Re: [PATCH 14/18] mm/damon/core: remove attrs param from damon_update_region_access_rate()
+Date: Mon, 29 Jun 2026 21:39:29 -0700
+Message-ID: <20260630043929.152043-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260630042540.7F8461F000E9@smtp.kernel.org>
+In-Reply-To: <20260630041923.94D851F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,61 +44,101 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 30 Jun 2026 04:25:40 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 30 Jun 2026 04:19:23 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] 32-bit integer overflow in `damon_nr_accesses_mvsum()` when calculating `left_window_bp` via `mult_frac()`.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [Low] Typo in the commit message referencing the wrong function name.
+> 
+> Pre-existing issues:
+> - [High] Static local variables used for caching access checks cause data races and cross-context contamination between concurrent DAMON threads.
 > --
 > 
-> commit 73c4d41e08fa85ce70e1cc04b1dee325a553e44e
+> commit 75de4af226707e222be94ee075dde34562b3817d
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: use damon_nr_accesses_mvsum() in __damos_valid_target()
+> mm/damon/core: remove attrs param from damon_update_region_access_rate()
 > 
-> This commit replaces the direct read of nr_accesses_bp with a call to
-> damon_nr_accesses_mvsum() in __damos_valid_target(). This calculates the
-> access score dynamically to be more tolerant to errors.
+> The damon_update_region_access_rate() function does not use the attrs
+> parameter. This commit removes the unused parameter to clean up the code.
 > 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index df79f4d10bdc3..50939c3359bf7 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> [ ... ]
-> > @@ -2126,10 +2126,11 @@ static noinline_for_stack void kdamond_tune_intervals(struct damon_ctx *c)
-> >  	damon_set_attrs(c, &new_attrs);
-> >  }
-> >  
-> > -static bool __damos_valid_target(struct damon_region *r, struct damos *s)
-> > +static bool __damos_valid_target(struct damon_region *r, struct damos *s,
-> > +		struct damon_ctx *c)
-> >  {
-> >  	unsigned long sz;
-> > -	unsigned int nr_accesses = r->nr_accesses_bp / 10000;
-> > +	unsigned int nr_accesses = damon_nr_accesses_mvsum(r, c);
+> > damon_region_access_rate() is not using attrs parameter.  Remove it.
 > 
-> [Severity: Medium]
-> Does wiring up damon_nr_accesses_mvsum() to the active DAMOS region filtering
-> path expose a 32-bit integer overflow?
-> 
-> Inside damon_nr_accesses_mvsum(), the calculation of left_window_bp uses
-> the mult_frac() macro:
-> 
-> left_window_bp = mult_frac(left_window, 10000, window_len);
-> 
-> If a user or auto-tuning configures an aggr_interval / sample_interval ratio
-> greater than ~429,496 (for example, an aggr_interval of 5,000,000 us and a
-> sample_interval of 10 us), the intermediate multiplication inside mult_frac()
-> can exceed the maximum 32-bit unsigned long value on 32-bit architectures:
-> 
-> (left_window % window_len) * 10000
-> 
-> This truncation would result in a severely deflated left_window_bp, leading
-> to incorrect moving sum access scores. 
-> 
-> Could this cause DAMOS schemes to evaluate targets improperly, leading to 
-> sub-optimal memory reclaim or migration decisions?
+> [Severity: Low]
+> This isn't a bug, but there's a typo in the commit message referencing
+> damon_region_access_rate() instead of damon_update_region_access_rate().
 
-Known low priority issue.  Not a blocker for this patch.
+Good finding.  I will ask Andrew to fix up when he picks this, unless I end up
+posting a new revision.
+
+> 
+> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> > index 5c2da45f988cf..8530213086691 100644
+> > --- a/mm/damon/paddr.c
+> > +++ b/mm/damon/paddr.c
+> > @@ -91,12 +91,12 @@ static void __damon_pa_check_access(struct damon_region *r,
+> >  	/* If the region is in the last checked page, reuse the result */
+> >  	if (ALIGN_DOWN(last_addr, last_folio_sz) ==
+> >  				ALIGN_DOWN(sampling_addr, last_folio_sz)) {
+> > -		damon_update_region_access_rate(r, last_accessed, attrs);
+> > +		damon_update_region_access_rate(r, last_accessed);
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does using function-scoped static variables
+> for last_addr, last_folio_sz, and last_accessed here in 
+> __damon_pa_check_access() cause data races when multiple DAMON threads run 
+> concurrently?
+> 
+> Since these variables are shared globally across all DAMON physical address 
+> monitoring threads without synchronization, it seems an interleaved execution
+> could overwrite the cached access state. Could this result in cross-context
+> contamination where one thread erroneously reuses last_accessed for a 
+> completely different memory region?
+
+The same issue was found by Sashiko before, and I'm separately working on it.
+Not a blocker of this issue, anyway.
+
+> 
+> >  		return;
+> >  	}
+> >  
+> >  	last_accessed = damon_pa_young(sampling_addr, &last_folio_sz);
+> > -	damon_update_region_access_rate(r, last_accessed, attrs);
+> > +	damon_update_region_access_rate(r, last_accessed);
+> >  
+> >  	last_addr = sampling_addr;
+> >  }
+> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> > index e73ec1ce016e5..2eaced0765e26 100644
+> > --- a/mm/damon/vaddr.c
+> > +++ b/mm/damon/vaddr.c
+> [ ... ]
+> > @@ -501,19 +501,19 @@ static void __damon_va_check_access(struct mm_struct *mm,
+> >  	static bool last_accessed;
+> >  
+> >  	if (!mm) {
+> > -		damon_update_region_access_rate(r, false, attrs);
+> > +		damon_update_region_access_rate(r, false);
+> >  		return;
+> >  	}
+> >  
+> >  	/* If the region is in the last checked page, reuse the result */
+> >  	if (same_target && (ALIGN_DOWN(last_addr, last_folio_sz) ==
+> >  				ALIGN_DOWN(r->sampling_addr, last_folio_sz))) {
+> > -		damon_update_region_access_rate(r, last_accessed, attrs);
+> > +		damon_update_region_access_rate(r, last_accessed);
+> 
+> [Severity: High]
+> This is also a pre-existing issue, but do the static local variables in
+> __damon_va_check_access() present the same data race risk?
+> 
+> When multiple concurrent kdamond threads check virtual memory accesses, they
+> share these unprotected variables. If identical virtual addresses exist in
+> different monitored processes, could one context reuse the last_accessed result
+> from another process due to interleaved thread execution?
+
+Ditto.
 
 
 Thanks,
