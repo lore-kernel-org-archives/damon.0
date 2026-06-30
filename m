@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9705C3DCDA2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37F53DD500;
 	Tue, 30 Jun 2026 04:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782792507; cv=none; b=b4bJ20P8JQurm8ajrdlvq0CZCOAOp2Pn15ToasgztkYVW01JCC8ZyDgWzHRLaffUkMvK9Grz7nxNMfFwjpBekOvVJmap4dRqAfpKDVuqDklLv598VDW/CJufCGxPpgD26S4U09NIfqZpqNEURz5PcZxT2APjmGu/4HrCGfunv2g=
+	t=1782792507; cv=none; b=YWhh2qAYQgNWMLspWAM2FpfjYo7O2oncFJ7cVBV1b5myWANa2g1F+2yG2xlCOm04wI7M4eI2qv4ZBUM7JATebn+nYouiPnB7CEpxWqKDVDtSgCDsQSOo9/SsBhbPVUT0zaFGrFO6eu0U72NflAH4zWZ6eFpEu2UxyIsBu1ON3gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1782792507; c=relaxed/simple;
-	bh=NdfqHmuFvUTbKmH+z4m8qTmycgi66M1SiKXAm6lkGMk=;
+	bh=CMN9iU8vgz8xP+r6dIaL6i+7njMOOT2M28PNEbwShh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQ7exR1jf/w4Yt+o/faTQkgFXdZRHZkJIxJGv9mamPEH8qnKraf78pWr9Xw0DZQ6OmF4cVdLe3wAe88AWKgKLupDN3GvufnWIk8NlSbX9A3w0fFXt5US5qAX43ZPfZiL97mPuj+5fMVkOtdKkfL+LcGNQuCxdw0/7qXPlngPDkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c+0Jv1tM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UuC4M32SSD1UxCOScUDyGZvB7UmJOLzu+z6SYcQRBx9iEIs0A4BD3XPsS7QTMy/hlBRut2rd8utmvwvjGn0dyJT7V2Zfxk8eryHGyb2VV8DtFvZgD/Gq13u/AXU0Bfx9RquQDfiDezGs/MKRX2xVQ0bJnHvIWNdSCdOsdH/M+vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mF3MoQG/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c+0Jv1tM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD521F00A3A;
-	Tue, 30 Jun 2026 04:08:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mF3MoQG/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D3A1F00A3D;
+	Tue, 30 Jun 2026 04:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1782792506;
-	bh=ml7y0LvVhQqERVNHIB3ApkqZyRkL9+NFf2FisR6UbJs=;
+	bh=qVKKQyZNxinKbnhBlGVW7XhXLiIyfL9tA4LU8cChtL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c+0Jv1tMNOwwWRJ+FwBMPxmFvYvnd7TIKabeliF2famUim5vqBZQ8Q1j47gOLNYNp
-	 iUdL9jhyoqsGir+hPD1EgW41cvoWcf7iR2u+p9HTbQNSGOoZU7RZpsbCn3M0IkbXEb
-	 TZ6bK+wq2Z17kVPdu4GKlnoghfl7rgrZXJp5OJQWsomGo6bM8ZzSMkwXD+ZWrgop/D
-	 IBRBSiMZD2CWtvNTjVoPfdMxY7UFQN7OMg0Of55v+5bpCRl3/a6mBdmG7ArtyZakT6
-	 0QR+a6RC9pgc3+yPLmy/XDwoZvdxWPbQbQ8+MQeA5/O7hdz8oQGh58iETPNHfRhzOP
-	 g3AGnwHZqvCBg==
+	b=mF3MoQG/P2hCjrSEvrbxYB5IrFcDVx2kd5qTnlBgzdPoRqt5e5hGTSGGxNK/ojTz8
+	 1u8rcs6tmzSJv496Y9Pg7uw1iZG7T6CmiVpxseUg2EbzoeIRv6ooizXw3J55meeV8v
+	 Rk9RndqGCivT43hCq6bejGBQHwthNOJqOpD17JE6zd4WmGLH6fc5tW61XP/WspvbZY
+	 eCYPMzE18LEal/VJQ8bWvlUD//CkQgLO2OrBLV2kgZB19WM+HWm7u+nu3k1njf3Eh7
+	 X897mGZvDc0+IcE0opQ420Ia4L5GhNC+VLdnW4o83iz3Yif83HaYQqf9QBPD2d5yuI
+	 fUcyB+CoZaNuQ==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	linux-trace-kernel@vger.kernel.org
-Subject: [PATCH 06/18] mm/damon/core: use damon_nr_accesses_mvsum() for damos region tracing
-Date: Mon, 29 Jun 2026 21:07:59 -0700
-Message-ID: <20260630040812.149729-7-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [PATCH 07/18] mm/damon/sysfs-schemes: use damon_nr_accesses_mvsum() for damo regions
+Date: Mon, 29 Jun 2026 21:08:00 -0700
+Message-ID: <20260630040812.149729-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260630040812.149729-1-sj@kernel.org>
 References: <20260630040812.149729-1-sj@kernel.org>
@@ -54,71 +50,44 @@ damon_nr_accesses_mvsum() returns a value same to nr_accesses_bp.  Also
 the function is more simple and therefore more tolerant to errors.
 Execution of the function would be more expensive than the simple read
 of the field, but because the function is quite simple, the overhead
-should be negligible.  Use it in the DAMON region exporting trace points
-instead of the nr_accesses_bp.
+should be negligible.  Use it in the DAMON sysfs interface for
+scheme-tried regions, instead of the nr_accesses_bp.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/trace/events/damon.h | 8 +++++---
- mm/damon/core.c              | 5 +++--
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ mm/damon/sysfs-schemes.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-index 78388538acf44..8851727ae1627 100644
---- a/include/trace/events/damon.h
-+++ b/include/trace/events/damon.h
-@@ -78,9 +78,11 @@ TRACE_EVENT_CONDITION(damos_before_apply,
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 41f93a1823bf1..dbf2b0515d582 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -157,7 +157,7 @@ struct damon_sysfs_scheme_region {
+ };
  
- 	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
- 		unsigned int target_idx, struct damon_region *r,
--		unsigned int nr_regions, bool do_trace),
-+		unsigned int nr_accesses, unsigned int nr_regions,
-+		bool do_trace),
+ static struct damon_sysfs_scheme_region *damon_sysfs_scheme_region_alloc(
+-		struct damon_region *region)
++		struct damon_region *region, struct damon_ctx *ctx)
+ {
+ 	struct damon_sysfs_scheme_region *sysfs_region = kmalloc_obj(*sysfs_region);
  
--	TP_ARGS(context_idx, scheme_idx, target_idx, r, nr_regions, do_trace),
-+	TP_ARGS(context_idx, scheme_idx, target_idx, r, nr_accesses,
-+		nr_regions, do_trace),
+@@ -165,7 +165,7 @@ static struct damon_sysfs_scheme_region *damon_sysfs_scheme_region_alloc(
+ 		return NULL;
+ 	sysfs_region->kobj = (struct kobject){};
+ 	sysfs_region->ar = region->ar;
+-	sysfs_region->nr_accesses = region->nr_accesses_bp / 10000;
++	sysfs_region->nr_accesses = damon_nr_accesses_mvsum(region, ctx);
+ 	sysfs_region->age = region->age;
+ 	sysfs_region->probes = NULL;
+ 	INIT_LIST_HEAD(&sysfs_region->list);
+@@ -3122,7 +3122,7 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
+ 	if (total_bytes_only)
+ 		return;
  
- 	TP_CONDITION(do_trace),
- 
-@@ -101,7 +103,7 @@ TRACE_EVENT_CONDITION(damos_before_apply,
- 		__entry->target_idx = target_idx;
- 		__entry->start = r->ar.start;
- 		__entry->end = r->ar.end;
--		__entry->nr_accesses = r->nr_accesses_bp / 10000;
-+		__entry->nr_accesses = nr_accesses;
- 		__entry->age = r->age;
- 		__entry->nr_regions = nr_regions;
- 	),
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 612762490e866..6423e7417c24b 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2446,7 +2446,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 	struct damos *siter;		/* schemes iterator */
- 	unsigned int sidx = 0;
- 	struct damon_target *titer;	/* targets iterator */
--	unsigned int tidx = 0;
-+	unsigned int tidx = 0, nr_accesses = 0;
- 	bool do_trace = false;
- 
- 	/* get indices for trace_damos_before_apply() */
-@@ -2461,6 +2461,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 				break;
- 			tidx++;
- 		}
-+		nr_accesses = damon_nr_accesses_mvsum(r, c);
- 		do_trace = true;
- 	}
- 
-@@ -2476,7 +2477,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		if (damos_core_filter_out(c, t, r, s))
- 			return;
- 		ktime_get_coarse_ts64(&begin);
--		trace_damos_before_apply(cidx, sidx, tidx, r,
-+		trace_damos_before_apply(cidx, sidx, tidx, r, nr_accesses,
- 				damon_nr_regions(t), do_trace);
- 		sz_applied = c->ops.apply_scheme(c, t, r, s,
- 				&sz_ops_filter_passed);
+-	region = damon_sysfs_scheme_region_alloc(r);
++	region = damon_sysfs_scheme_region_alloc(r, ctx);
+ 	if (!region)
+ 		return;
+ 	region->sz_filter_passed = sz_filter_passed;
 -- 
 2.47.3
