@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87BE40D58A
-	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 04:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6463F3DFC6B
+	for <damon@lists.linux.dev>; Tue, 30 Jun 2026 04:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782793699; cv=none; b=pIG4/nr0mjsZjgT7XrUEpWuv4WJVmtcMykC02buEKQOza83z1qlnqQrz6MNFegZYV8ZKM6KMyzD8cdxqM4Wr3jYiAR2R5CfrLTX4UjS7+sNDfXYGCiwkdDQ9DI7503T/GUjvYsP1mt0EYdlwGWN1B1bwVrFNa6om3vVBkpxz8Zw=
+	t=1782793818; cv=none; b=MKJRaGP32EyokOHNuNRdm70O1Lz1N+//47M3P6u0oRRESAsGhxVsPdr0ov+MElaR5/oyOR1X5LM+Y8Y4A0dZduzfhTaaXkIA+QJ5JkClYyJ4+vs5trzWToM7xOSruxppv8HTFGNx8B7fdSIVDjULVR1U7bU4fZXgOnPGILXeGrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782793699; c=relaxed/simple;
-	bh=jVewIjSNxnrPU1WKtXqD0oXDOu++SV1gv7xBbDy5IVM=;
+	s=arc-20240116; t=1782793818; c=relaxed/simple;
+	bh=rbYegyFGuWIr0WFwR46lKs4cp4txXhMoWPzhqtge4iE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8VhM8hgsLl2qLYyEG3aM38ZfnbVRYafSrbSEbffxPX7ee7hB4lic3WP5X5eFmiuUDi744gbiOS5DFGaw9pJ4uYA1WphhAzMpo98qSxoIkBGhU0p+ZtZB8tgPthQkoWE04vvW7+4UJqqi4tM2cPiAHF/azQPaQsKS6oSxtDK+sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HrSC6OG3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ok8yPquYBwCytZTTMcV6vQBw/NZUvR2WzYxbHbTQtm6KmPApMYWWEYQCo2MTRgQ8BcPEuyvBUDszJ4tH61DtultZmnGhNHcN0C2pHW4KnKZCqItw66DrtKuyR/2VFKTMjsGI0HxVuWiufS3Eo5iT/NLUejrCQvDX31N/nq79sIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OW1H3qoC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HrSC6OG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DF11F000E9;
-	Tue, 30 Jun 2026 04:28:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OW1H3qoC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2493E1F000E9;
+	Tue, 30 Jun 2026 04:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782793698;
-	bh=CgeMa80LpD3plt85TLlC/rltfSkL4ZyqoxzR8E74DLo=;
+	s=k20260515; t=1782793817;
+	bh=3+cR1hmqjHrM0YGXJtltXU0ZMIXcW6MvYvsiwXliYBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HrSC6OG3hnQxEaXCq5Y4cWlSGdcL9Xm5KlxEZWLkxe4Yx4djW6tTcz9uXtwzuNZ48
-	 nwv5a8O+QullWprmV4QG3Fr8iI5h/aoEM9EHBlLxgB9y/dkP0NZ+PFdvszR+lUxFwF
-	 LObDw94X1w2Bh/jZrbC4jYVn30zgB3q5y34KgBggb/KevbL1/OPTYLFz3hujm++TjH
-	 k1hHXfI/vxx9JSTMOenxJLfbtF0FnKJXHFS6cvKYiNMquzBJEBhs3wCoWFUcraclp3
-	 LnX5rUuQox/O7tbJMzmP0JKtNqF3SNQDWftgWSs0uWtra4msZxuLOG+XGN6DqTK5zc
-	 TI1QrTfmdV6hQ==
+	b=OW1H3qoCXGCqhMhiQoIIHVUYH/x9g5DaaeH8EeSM1iS1MMsx2OTeYNC0FF6O97l4U
+	 nLGkaAq8xt6verX1o/CNL79o6wfoNeHBH+c1Reu5xiN2feL+5+U9pZv0aeCH9RUogS
+	 rXJKIl7bO6DQk3bl20P2RKmxmu69QgadZSh/SMySj+DTrclQmntllcMu7/xWrhYXaK
+	 +8n1eRD0BnVsChTwi86t1OgePtg6Vq5X9+uOKn8aPv54soq/7w6dI9fnpbWFyp/mcI
+	 4fwGOGg1akwt/Xw4c6cGMmPTNI/8v/r1dReQAOyd501fb/vEbM0GPZoYgXLO3VTVMM
+	 FT0HLDDyz7Fmg==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH 01/18] mm/damon/core: introduce damon_nr_accesses_mvsum()
-Date: Mon, 29 Jun 2026 21:28:13 -0700
-Message-ID: <20260630042814.151495-1-sj@kernel.org>
+Subject: Re: [PATCH 03/18] mm/damon/core: always update ->last_nr_accesses for intervals change
+Date: Mon, 29 Jun 2026 21:30:09 -0700
+Message-ID: <20260630043010.151633-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260630041935.2076E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260630042143.7C5261F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,88 +44,64 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 30 Jun 2026 04:19:34 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 30 Jun 2026 04:21:43 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Calculation of `left_window_bp` and moving sums in `damon_nr_accesses_mvsum()` and `damon_mvsum()` suffers from an integer overflow on 32-bit architectures when `window_len > 429,496`.
+> 
+> Pre-existing issues:
+> - [High] A 32-bit unsigned integer overflow in `mult_frac()` silently corrupts region access basis point conversions when the aggregation interval is significantly larger than the sample interval.
 > --
 > 
-> commit 55e8315faa6caec232a35b71d630c4dd8cbb568f
+> commit f786cbe1a79f2e1958843b60ee1875084aebedbc
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: introduce damon_nr_accesses_mvsum()
+> mm/damon/core: always update ->last_nr_accesses for intervals change
 > 
-> Introduce a new DAMON core function, damon_nr_accesses_mvsum(). It returns a
-> pseudo moving sum value of a given region's nr_accesses for the last
-> aggregation interval.
+> Each iteration of kdamond_fn() caches the next aggregation time. This patch
+> ensures last_nr_accesses is always updated to prevent returning wrong values
+> when damon_nr_accesses_mvsum() is called during an intervals change.
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 027250e43c66f..fe4c470726d0b 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> > @@ -208,6 +208,68 @@ static struct damon_probe *damon_nth_probe(int n, struct damon_ctx *ctx)
-> >  	return NULL;
-> >  }
-> >  
-> > +/*
-> > + * damon_mvsum() - Returns pseudo moving sum value for a time window.
+> > @@ -871,6 +871,8 @@ static void damon_update_monitoring_result(struct damon_region *r,
+> >  		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs,
+> >  		bool aggregating)
+> >  {
+> > +	r->last_nr_accesses = damon_nr_accesses_for_new_attrs(
+> > +			r->last_nr_accesses, old_attrs, new_attrs);
 > 
-> [ ... ]
+> [Severity: High]
+> This is a pre-existing issue, but does the underlying access basis point
+> conversion silently overflow on 32-bit values?
 > 
-> > +static unsigned long damon_mvsum(unsigned long current_nr,
-> > +		unsigned long last_nr, unsigned long left_window_bp)
-> > +{
-> > +	return current_nr + mult_frac(last_nr, left_window_bp, 10000);
+> When this calls damon_nr_accesses_for_new_attrs(), it relies on
+> damon_nr_accesses_to_accesses_bp() to calculate the scaling:
 > 
-> [Severity: Medium]
-> Could this mult_frac() calculation suffer from an integer overflow on 32-bit
-> architectures?
+> mm/damon/core.c:damon_nr_accesses_to_accesses_bp() {
+>     return mult_frac(nr_accesses, 10000, damon_max_nr_accesses(attrs));
+> }
 > 
-> If a user configures DAMON with a large aggr_interval and a small
-> sample_interval such that window_len exceeds 429,496, last_nr could be
-> equally large. Since unsigned long is 32 bits on those systems, can the
-> internal multiplication inside mult_frac() silently overflow and result in
-> incorrect moving sums?
+> Because mult_frac() evaluates the multiplication using the type of
+> nr_accesses (a 32-bit unsigned int), multiplying by 10000 will silently wrap
+> around if nr_accesses exceeds ~429,496. This could happen if a large ratio
+> between the aggregation interval and sample interval is configured via sysfs,
+> causing hot memory regions to be incorrectly evaluated as cold.
+> 
+> A similar issue appears to exist in damon_nr_accesses_mvsum() where
+> left_window (a 32-bit unsigned long on 32-bit architectures) is multiplied
+> by 10000 inside mult_frac():
+> 
+> mm/damon/core.c:damon_nr_accesses_mvsum() {
+>     ...
+>     left_window_bp = mult_frac(left_window, 10000, window_len);
+>     ...
+> }
+> 
+> Could these operands be safely cast to a larger type to prevent the overflow
+> before passing them to mult_frac()?
 
-Known low priority issue.  Not a blocker for this patch.
-
-> 
-> > +}
-> > +
-> > +/**
-> > + * damon_nr_accesses_mvsum() - Returns moving sum access frequency score.
-> 
-> [ ... ]
-> 
-> > +unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
-> > +		struct damon_ctx *ctx)
-> > +{
-> > +	unsigned long sample_interval, aggr_interval;
-> > +	unsigned long window_len, left_window, left_window_bp;
-> > +
-> > +	sample_interval = ctx->attrs.sample_interval ? : 1;
-> > +	aggr_interval = ctx->attrs.aggr_interval ? : 1;
-> > +	window_len = aggr_interval / sample_interval;
-> > +	if (time_after_eq(ctx->passed_sample_intervals,
-> > +				ctx->next_aggregation_sis))
-> > +		left_window = 0;
-> > +	else
-> > +		left_window = ctx->next_aggregation_sis -
-> > +			ctx->passed_sample_intervals;
-> > +	left_window_bp = mult_frac(left_window, 10000, window_len);
-> 
-> [Severity: Medium]
-> Does this calculation also overflow on 32-bit systems?
-> 
-> The mult_frac() macro calculates (left_window % window_len) * 10000. If
-> left_window is greater than 429,496, multiplying by 10000 will exceed the
-> maximum 32-bit unsigned long limit (4,294,967,295), causing a truncated
-> left_window_bp result.
-> 
-> Should these calculations use 64-bit arithmetic, such as div64_ul(), to
-> safely support large intervals on 32-bit systems?
-
-Known low priority issue.  Not a blocker for this patch.
+Known low priority issue.  No blocker for this patch.
 
 
 Thanks,
