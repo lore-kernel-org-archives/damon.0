@@ -1,111 +1,170 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27277153BE9;
-	Wed,  1 Jul 2026 03:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D496B3B27EE;
+	Wed,  1 Jul 2026 09:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782877766; cv=none; b=lWI80VVWS0A+Q9/Gnhb7sH2tOwBpNBxCeRrzPSgx/m5hczkeVjoM9svgelJHfwzc4F6G6edWmF1F8doW2oFHwjCw1hPml7CXxHYUI8gIksOYffFbcqQjEA5NR0Llze+OjO4p46e3oHO5NZLHYnqNGiajVHfmh/El+xuOFE1/0Bc=
+	t=1782898985; cv=none; b=YA1foMsAWrG8Xryxl9NriODU7LtvqYZPDVYNtjgrY+RYVkUFSUz9+zWSA/yrexiq2jNnSAcbXh5Hxov2xrE/qVUGv8Tr1Q3rFodUU/8QPIkYk+3cfkwlHOU95aNa9T1ib1+cau0Xunj6PBkg8aY8cazb8JuBzhFpWxNCMWDSat0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782877766; c=relaxed/simple;
-	bh=HzrrCs8h6iLWxsQVSConV5FaL92OEu3gjLyX+IPW5vU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oV/nXzbewfJmE6nON3Y/ZNzQSFY0eANwmX+xwSaKibSkB60d9QjPlKtNsmBD/me+JOq7tz8iEP1p2ZT7Bw+wir37PTQ1N20SzAJEOpMANr4R+7MmFgdUMu7UI7yyrGZGHUO44YIH15LhZrW1zRrKTsYs0SGGVZ2HBohhuyl4BQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m7UyyaqM; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782898985; c=relaxed/simple;
+	bh=EJTWrCholcPIoSl8RFtuUpkQI/cEAyQCVknR64tfFn8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M92xdCP275uHH+5fvb+Izen4goeAE9iL/PiykJS/6bqIlNTtlnW/6AiCC8yuSBtN2Cs13JlS6yxiYmfWhec/BYE0gA22MXdf2QBdmdRX1NLYbJ+mLwIqEzoxQOu8guFzFgDnPmq8vvf6DL6PHgkV4f6gpIes+O6k5gHImsfBnbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NMvirreP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m7UyyaqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D981F000E9;
-	Wed,  1 Jul 2026 03:49:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NMvirreP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C261F000E9;
+	Wed,  1 Jul 2026 09:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782877764;
-	bh=DSsNvKEhBE5WjxBTWWMLlI7db6DTdt9TNuLjxtRycHA=;
-	h=From:To:Cc:Subject:Date;
-	b=m7UyyaqMGmKsZsCAJyJQIIEUp67RIhDIq9y+b8ac8fOpQA5Qk0uxhOTa8cdStG01z
-	 /1Tdb0AIOaZupv744SiazIjaDztqrQ2zGJ3PxkGL1c93AXu50nQt36EWsCkbB1h8y9
-	 q4GwLsFj+XmGhSKW1eWE+z5Bv1RZKD6YBk/+8zHzhfovpNWLTZW3BDpf9vsofZcxUP
-	 k/mdIcYiR3kAQon4kkcDeYF3gsMWqqXHYpir9Muy2eGe3V31w432OUZZlISooK5UIB
-	 b9/wK++cYeuakV225wYzRCgQWKnbYrwjEMPQ4DZfjKWVtiUv+gtVKvYRQtdqwGp5zQ
-	 YAFh32ZeTaarg==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	"# 5 . 19 . x" <stable@vger.kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH] mm/damon/core: disallow overlapping input ranges for damon_set_regions()
-Date: Tue, 30 Jun 2026 20:49:18 -0700
-Message-ID: <20260701034921.99179-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	s=k20260515; t=1782898984;
+	bh=yD2RrJDZdDL6RXjT+lWLw24YuDCa/4sSWtW/fyWFcdQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=NMvirreP+CX8s1HLyn6zgBtUDz2oDbR9gIrXRS6YaNTcLZcnF2rsBWbQVm+Jl25Sr
+	 A8lJ4z61L/giXcR/ptNpe3o3puYpqxx0hsQHO+85EjYqDjCEIO/1lP13eBb0n33jbM
+	 UqdM041iHE/nTaNAA42LQ7VXM81xgA3Bi0FchvCuGazRU+YOdfKqe2mJyLfx4J0AJ1
+	 B3RyYF4D778BuLdBJm0jXf0mSpjvs1QuEQapPlpQ8TZMICq6soqt5v87zbEEbs2TAJ
+	 FdEluByUsfWooss92oIM/tmJ0RAV1NPZbvuLQEU3DJQZvF/ZXYqF3+AFDc5BkN379N
+	 fKMeFEDS7Kh+w==
+Date: Wed, 1 Jul 2026 10:42:43 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
+To: Pedro Falcato <pfalcato@suse.de>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 01/30] mm: move vma_start_pgoff() into mm.h and clean up
+Message-ID: <akTfDTjDnnZ-8zwE@lucifer>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <b28b698df4c009e85c4728446ca5863d8e633164.1782735110.git.ljs@kernel.org>
+ <akPqIfmQLOs4gI7h@pedro-suse.lan>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <akPqIfmQLOs4gI7h@pedro-suse.lan>
 
-damon_set_regions() assumes the input ranges are sorted by the address
-and don't overlap each other.  Hence the assumption was initially to be
-explicitly validated.  But commit 97d482f4592f ("mm/damon/sysfs: reuse
-damon_set_regions() for regions setting") has mistakenly removed the
-validation.
+On Tue, Jun 30, 2026 at 05:10:55PM +0100, Pedro Falcato wrote:
+> On Mon, Jun 29, 2026 at 01:23:12PM +0100, Lorenzo Stoakes wrote:
+> > vma_last_pgoff() already lives there, so it's a bit odd to keep
+> > vma_start_pgoff() in mm/interval_tree.c. Move them together.
+>
+> Hmm, a part of me wonders if this is the part where we should start cleaning
+> up mm.h into vma.h or something. Probably not, it would be extra churn right
+> now.
 
-This can make DAMON behave in unexpected ways.  At the best, the
-monitoring results snapshot will just look weird since there will be
-overlapping regions.  DAMOS will also work weirdly, applying the same
-action multiple times for overlapping regions, and make DAMOS quota
-weird. More seriously, depending on the setup and regions updates
-sequence, negative size regions can be made.  It will trigger
-WARN_ONCE() if the kernel is built with CONFIG_DAMON_DEBUG_SANITY=y.
-Depending on the monitoring results, the negative size region can
-further trigger division by zero in damon_merge_two_regions().
+Yeah the issue is there's some confusion about vma.h - mm.h should be for
+stuff that is used outside of mm, and these helpers are definitely like
+that.
 
-Fix the problems by checking the assumption and returning an error if
-the input ranges don't meet the assumption.
+vma.h is purely for internal mm vma stuff, and most people should be accessing
+that via internal.h (I address that in patch 27).
 
-The issue was discovered [1] by Sashiko.
+I do wonder if that could be done more nicely but punt that to another time.
 
-[1] https://lore.kernel.org/20260630041806.151124-1-sj@kernel.org
+But also probably worth doing a pass over some of the defines, I have a
+bunch of series chur^W changing stuff lately so can do a follow up on that
+maybe.
 
-Fixes: 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for regions setting")
-Cc: <stable@vger.kernel.org> # 5.19.x
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Note that some of the consequences including the WARN_ONCE() and the
-divide by zero depend on commits that were introduced after the original
-broken commit.
+>
+> >
+> > These each return unsigned long, which pgoff_t is typedef'd to. Make this
+> > consistent and have these functions return pgoff_t instead.
+> >
+> > Additionally, express vma_last_pgoff() in terms of vma_start_pgoff(), since
+> > we wrap the vma->vm_pgoff access, we may as well use it here.
+> >
+> > Also while we're here, const-ify the VMA and cleanup a bit.
+> >
+> > No functional change intended.
+> >
+> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+>
+> Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 
- mm/damon/core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+Thanks!
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 972a19fcee3ec..a99458c578518 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -354,12 +354,19 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
- {
- 	struct damon_region *r, *next;
- 	unsigned int i;
-+	unsigned long last_end;
- 	int err;
- 
- 	for (i = 0; i < nr_ranges; i++) {
--		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=
--				ALIGN(ranges[i].end, min_region_sz))
-+		unsigned long start, end;
-+
-+		start = ALIGN_DOWN(ranges[i].start, min_region_sz);
-+		end = ALIGN(ranges[i].end, min_region_sz);
-+		if (start >= end)
-+			return -EINVAL;
-+		if (i > 0 && last_end > start)
- 			return -EINVAL;
-+		last_end = end;
- 	}
- 
- 	/* Remove regions which are not in the new ranges */
+>
+> > ---
+> >  include/linux/mm.h | 9 +++++++--
+> >  mm/interval_tree.c | 5 -----
+> >  2 files changed, 7 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/include/linux/mm.h b/include/linux/mm.h
+> > index 485df9c2dbdd..059144435729 100644
+> > --- a/include/linux/mm.h
+> > +++ b/include/linux/mm.h
+> > @@ -4278,9 +4278,14 @@ static inline unsigned long vma_pages(const struct vm_area_struct *vma)
+> >  	return (vma->vm_end - vma->vm_start) >> PAGE_SHIFT;
+> >  }
+> >
+> > -static inline unsigned long vma_last_pgoff(struct vm_area_struct *vma)
+> > +static inline pgoff_t vma_start_pgoff(const struct vm_area_struct *vma)
+> >  {
+> > -	return vma->vm_pgoff + vma_pages(vma) - 1;
+> > +	return vma->vm_pgoff;
+> > +}
+> > +
+> > +static inline pgoff_t vma_last_pgoff(const struct vm_area_struct *vma)
+> > +{
+> > +	return vma_start_pgoff(vma) + vma_pages(vma) - 1;
+> >  }
+> >
+> >  static inline unsigned long vma_desc_size(const struct vm_area_desc *desc)
+> > diff --git a/mm/interval_tree.c b/mm/interval_tree.c
+> > index 32bcfbfcf15f..344d1f5946c7 100644
+> > --- a/mm/interval_tree.c
+> > +++ b/mm/interval_tree.c
+> > @@ -10,11 +10,6 @@
+> >  #include <linux/rmap.h>
+> >  #include <linux/interval_tree_generic.h>
+> >
+> > -static inline unsigned long vma_start_pgoff(struct vm_area_struct *v)
+> > -{
+> > -	return v->vm_pgoff;
+> > -}
+> > -
+> >  INTERVAL_TREE_DEFINE(struct vm_area_struct, shared.rb,
+> >  		     unsigned long, shared.rb_subtree_last,
+> >  		     vma_start_pgoff, vma_last_pgoff, /* empty */, vma_interval_tree)
+> > --
+> > 2.54.0
+> >
+>
+> --
+> Pedro
 
-base-commit: 81c085116d080d3f35279353cdec773e02f43fe1
--- 
-2.47.3
+Cheers, Lorenzo
