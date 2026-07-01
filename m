@@ -1,194 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C61547A0D7
-	for <damon@lists.linux.dev>; Wed,  1 Jul 2026 12:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9507237700A
+	for <damon@lists.linux.dev>; Wed,  1 Jul 2026 12:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782907348; cv=none; b=Wzoi6tnF2KODOvYbftGoqgkgl72ZzDFOb8/URRh7BxpiGv4Umt5q346hiLDyiSPaVTrGBix7IEkoUFrbFd+Ik9TWavk6OGIx3u1/AXhL6lxOYIJd5/PqaDbGaXQCGlvo3xQP7Yr5R+dvmrY1lpVFmoIBhRYXBT4m9A2htJSM8Dw=
+	t=1782907477; cv=none; b=LNLc/eEc8Z8OMLMi4Zria1E9hsItW3CKZ+ALK9q1XxOSLneFTdhiPk96ioLPs4j5PEWgX95GVXJDM06WoD2Gg42fHDFe0ye8RehT6Zrh/JDA3tQQkc79K9AkDRaQnw0zaAfic5glTW9w2MHmRxAYMyNCqJ3DfEcx8696W/MTOZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782907348; c=relaxed/simple;
-	bh=XQSDPQBEhYxWA0tPod0hXwFwxfJM6kIh5iL1opWZTrI=;
+	s=arc-20240116; t=1782907477; c=relaxed/simple;
+	bh=t00/0SDfH0CLbE+RhrXgRjkeezSA83TDAoE1mSh+y60=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=CpKs4MKwNz7Ag0HaBdmEjkL5DBpGZxL+YNLsoNmk0l3qawt5bvR//fkkexX9fuQNQPXswpfh/TRSfJ6Did9rJSm64GmJPlZm9N4ffnK4gZT26UuAfpXQCYQN3fdQvVXeRt9zpwKZULknuZKgbzhMbRaNrhX4sd2amvhFsDw8m7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VzqALeA1; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=l8zOrAWW3nCONmKUmIm40ArOwDoeolYDR5sneMumSBhD6v3Rg1pIP3cy6o4tTUSBZQ1aj+0XBssH+gJnXCK26J0al3k7gIinPdhf6qGx6Soh1Yd3jjCtDqAgGBq2V4DQU/w8JMwm7eA9odxLAmD9RNVtY1E6SADqvd9TEe0dzJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KZJIYn2e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VzqALeA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8811F000E9;
-	Wed,  1 Jul 2026 12:02:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KZJIYn2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206361F000E9;
+	Wed,  1 Jul 2026 12:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782907347;
-	bh=mQ8rWbwIRCKAOOOEx/9RN5fgaZTzbzXX15iU36j+nJI=;
+	s=k20260515; t=1782907476;
+	bh=TID9KAGQMERUH0wT9dQRI0Owuxry2KZxy5QrE3BY/WY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VzqALeA1GcZkuB7uqJzKfgecbMY4+XcFZyAxmQ9xaU+WctL1VxL69GhDc2vTQXjs1
-	 byACwK0pXkThdb97d//L0NPGYH5JmElo1Ajxr00PF22+bEUcwTyiAiM/KmyDENR9+F
-	 nE5JNBozrIh3WnOw9G/NTP/U0YRKDIOeSvWJFJIZ9rF6y4HJy9lkfnaJRGCL5C72Yj
-	 TGeOPse6yFwq8ofNZN3dOCjEjBqQOGKmVMFO/tyhbYOTr3GkTfnjS+lEuJ31Mp44ir
-	 8F5dTHrNqIrph3ygc5PoI8xLHp9+3I8o5RQ9LGZhdJjvIMMWh0BfyNJCLej8YvLj/x
-	 CN0l2Fmczmj7A==
+	b=KZJIYn2epVQRQ+7hzu3e5mlq+I8Lcql9mc5ui6I4wXftL80oiGoDBvMa4mM9dx8XF
+	 z68zB6InjgPcKO3XC9DUVdOVNJtL68lXcwciUp0wzObV/U+vIF8P8iO8tKOJdMQP73
+	 VCRcRheJI3EHcKAcBd5Aktmm6r6X59YYe6s6ePOQePHzI/X1kaFRuMJZkXcFbNRFJ4
+	 VdPPlO8YEPcopM+x+pFtnk7TKvBTOCMCPf0QPpPht1WWwu86hShpFNZAvS+ii1rlLh
+	 dA/y4yy2sT2OgiDeItPxSjqmdDv1uBrsNBpsVAPlvU+EmcHBw82DhlwmzTencjBUkY
+	 4nQohcF8R4vcw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 2/5] mm/khugepaged: add damon_collapse_folio_range()
- for external callers
+Subject: Re: [PATCH v2 4/5] mm/damon: introduce DAMOS_SPLIT action
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "wang lian" <lianux.mm@gmail.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260701114716.56503-3-lianux.mm@gmail.com>
+In-Reply-To: <20260701114716.56503-5-lianux.mm@gmail.com>
 References: <20260701114716.56503-1-lianux.mm@gmail.com>
- <20260701114716.56503-3-lianux.mm@gmail.com>
+ <20260701114716.56503-5-lianux.mm@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 01 Jul 2026 12:02:26 +0000
-Message-Id: <20260701120226.DD8811F000E9@smtp.kernel.org>
+Date: Wed, 01 Jul 2026 12:04:35 +0000
+Message-Id: <20260701120436.206361F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [High] Allocating the large `struct collapse_control` directly on the ker=
-nel stack risks stack overflow.
-- [High] Bypassing the PMD pre-scan phase violates khugepaged invariants, c=
-ausing logic errors, performance degradation, and potential crashes.
-- [Medium] Missing `lru_add_drain_all()` before collapsing causes spurious =
-collapse failures due to inflated page refcounts.
-- [Medium] Successful pre-existing THP state (`SCAN_PMD_MAPPED`) is incorre=
-ctly translated into a hard `-EINVAL` error.
+- [Medium] TOCTOU race in damon_sysfs_mk_scheme() allows bypassing bounds v=
+alidation for DAMOS_SPLIT target_order.
+- [Medium] Uninitialized target_order field in damon_sysfs_scheme_alloc() l=
+eaks kernel memory to userspace.
+- [Low] Unconditional use of HPAGE_PMD_ORDER causes a build failure when hu=
+ge pages are disabled.
 --
 
-commit bb75d3df2a4ada9ebcc7237ae7417a21c9fbc4f8
+commit 3d569aafbbd14d480f96311f5d7fa6a898ce6974
 Author: Wang Lian <lianux.mm@gmail.com>
 
-mm/khugepaged: add damon_collapse_folio_range() for external callers
+mm/damon: introduce DAMOS_SPLIT action
 
-Export a wrapper around collapse_huge_page() that allows external
-subsystems such as DAMON to trigger THP collapse on a target address range.
+Add DAMOS_SPLIT to the damos_action enum for splitting large folios
+into smaller mTHP-order folios.  Add a target_order field to struct
+damos to specify the desired split order.
 
-> diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-> index 617bca76db49b..0387841ba2e7d 100644
-> --- a/mm/khugepaged.c
-> +++ b/mm/khugepaged.c
-> @@ -3272,3 +3272,42 @@ int madvise_collapse(struct vm_area_struct *vma, u=
-nsigned long start,
->  	return thps =3D=3D ((hend - hstart) >> HPAGE_PMD_SHIFT) ? 0
->  			: madvise_collapse_errno(last_fail);
->  }
-> +
-> +/**
-> + * damon_collapse_folio_range() - Collapse base pages in range into a THP
-> + * @mm:         mm_struct of the target process
-> + * @start_addr: start address (must be order-aligned)
-> + * @target_order: page order of the collapse result (currently only
-> + *                HPAGE_PMD_ORDER is supported)
-> + *
-> + * Thin wrapper around collapse_huge_page() for external callers such as
-> + * DAMON.  The caller must hold a reference to @mm.  Do not hold mmap
-> + * lock: collapse_huge_page() acquires mmap_read_lock for validation,
-> + * releases it, then acquires mmap_write_lock for the collapse.  Holding
-> + * an outer mmap_read_lock would self-deadlock.
-> + *
-> + * Return: 0 on success, -EINVAL on bad arguments, negative error from
-> + *         madvise_collapse_errno() otherwise.
-> + */
-> +int damon_collapse_folio_range(struct mm_struct *mm, unsigned long start=
-_addr,
-> +			       unsigned int target_order)
-> +{
-> +	struct collapse_control cc =3D {
-> +		.is_khugepaged =3D false,
-> +	};
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 35b90b47e35a0..766984a1e63c5 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+[ ... ]
+> @@ -571,8 +573,11 @@ struct damos {
+>  	struct damos_access_pattern pattern;
+>  	enum damos_action action;
+>  	/*
+> -	 * @target_order: target order for mTHP actions (DAMOS_COLLAPSE).
+> -	 * 0 means system default (PMD order).  Valid: 0, 2..HPAGE_PMD_ORDER.
+> +	 * @target_order: target mTHP order for DAMOS_COLLAPSE and
+> +	 * DAMOS_SPLIT.  For COLLAPSE, 0 means PMD order default,
+> +	 * valid values: 0, 2..HPAGE_PMD_ORDER.  For SPLIT,
+> +	 * valid values: 2..HPAGE_PMD_ORDER-1; 0 and HPAGE_PMD_ORDER
+> +	 * are rejected at scheme creation time (defaulting to 2).
+>  	 */
+>  	unsigned int target_order;
+>  	unsigned long apply_interval_us;
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 085b8042d1250..00d502119c3a5 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+[ ... ]
+> @@ -3053,6 +3057,14 @@ static struct damos *damon_sysfs_mk_scheme(
+>  			HPAGE_PMD_ORDER, HPAGE_PMD_ORDER);
+>  		sysfs_scheme->target_order =3D 0;
+>  	}
+> +	if (sysfs_scheme->action =3D=3D DAMOS_SPLIT &&
+> +	    (sysfs_scheme->target_order =3D=3D 0 ||
+> +	     sysfs_scheme->target_order >=3D HPAGE_PMD_ORDER)) {
 
-[Severity: High]
-Does allocating struct collapse_control directly on the stack risk a stack
-overflow?
+[Severity: Low]
+When huge pages are disabled, HPAGE_PMD_ORDER can evaluate to a BUILD_BUG()
+expression on some architectures. Will using it unconditionally here cause a
+build failure during compile time?
 
-The collapse_control structure contains a large array:
-
-struct collapse_control {
-	...
-	u32 node_load[MAX_NUMNODES];
-	...
-};
-
-With CONFIG_NODES_SHIFT=3D10 on x86_64, MAX_NUMNODES is 1024, making the st=
-ruct
-larger than 4KB. Allocating this directly on the stack could overflow the
-kernel stack.
-
-Should this be heap-allocated with kmalloc_obj() as done in
-madvise_collapse()?
-
-> +	enum scan_result result;
-> +
-> +	if (target_order !=3D HPAGE_PMD_ORDER) {
-> +		pr_warn_once("%s: only PMD order (%u) is supported, got %u\n",
-> +			     __func__, HPAGE_PMD_ORDER, target_order);
-> +		return -EINVAL;
+> +		pr_warn("DAMON split: target_order %u invalid, need 2..%u. Defaulting =
+to 2.\n",
+> +			sysfs_scheme->target_order,
+> +			HPAGE_PMD_ORDER - 1);
+> +		sysfs_scheme->target_order =3D 2;
 > +	}
-> +	if (start_addr & ((PAGE_SIZE << target_order) - 1))
-> +		return -EINVAL;
-> +
-> +	result =3D collapse_huge_page(mm, start_addr, 1, 0, &cc, target_order);
+>  	scheme->target_order =3D sysfs_scheme->target_order;
 
-[Severity: High]
-Is it safe to bypass the collapse_scan_pmd() pre-scan phase and directly ca=
-ll
-collapse_huge_page()?
+[Severity: Medium]
+Could a concurrent sysfs write change sysfs_scheme->target_order between
+the validation above and this assignment?
 
-By skipping the pre-scan, several issues appear to occur:
+If sysfs_scheme->target_order is modified locklessly, it might bypass
+the boundary checks and assign an invalid value to scheme->target_order.
 
-First, collapse_huge_page() unconditionally allocates and charges a 2MB fol=
-io
-before validating the VMA:
+[Severity: Medium]
+It appears sysfs_scheme->target_order might be uninitialized when a scheme
+is first allocated. In damon_sysfs_scheme_alloc(), the scheme structure is
+allocated without zeroing:
 
-static enum scan_result collapse_huge_page(...)
-{
+mm/damon/sysfs-schemes.c:damon_sysfs_scheme_alloc() {
 	...
-	result =3D alloc_charge_folio(&folio, mm, cc, order);
+	struct damon_sysfs_scheme *scheme =3D kmalloc_obj(*scheme);
 	...
 }
 
-Second, because cc.node_load is never populated by the scan,
-collapse_find_target_node() always defaults to node 0, breaking NUMA locali=
-ty.
+If target_order_show() reads this field before it is explicitly set:
 
-Finally, if a non-anonymous page is legitimately mapped into an anonymous V=
-MA,
-__collapse_huge_page_isolate() could trigger a kernel panic via:
+mm/damon/sysfs-schemes.c:target_order_show() {
+	...
+	return sysfs_emit(buf, "%u\n", scheme->target_order);
+}
 
-	VM_BUG_ON_FOLIO(!folio_test_anon(folio), folio);
+Could this leak uninitialized kernel memory to userspace?
 
-Does this sequence need to invoke the pre-scan phase before collapsing?
-
-[Severity: Medium]
-Will this reliably fail to collapse pages that are currently in per-CPU LRU
-batches?
-
-Without calling lru_add_drain_all() before collapse_huge_page(), transient
-references held by the LRU batches inflate the page reference counts. The
-strict exclusivity check in __collapse_huge_page_isolate() will then return
-SCAN_PAGE_COUNT, resulting in a spurious -EAGAIN failure.
-
-> +	if (result =3D=3D SCAN_SUCCEED)
-> +		return 0;
-> +	return madvise_collapse_errno(result);
-
-[Severity: Medium]
-Does this code handle SCAN_PMD_MAPPED correctly when memory is already back=
-ed
-by a THP?
-
-If the range is already PMD-mapped, collapse_huge_page() detects this in
-find_pmd_or_thp_or_none() and returns SCAN_PMD_MAPPED. Because this function
-only checks for SCAN_SUCCEED, SCAN_PMD_MAPPED falls through to
-madvise_collapse_errno(), which lacks a case for it and returns -EINVAL.
-
-Should SCAN_PMD_MAPPED be treated as a success case?
-
-> +}
-> +EXPORT_SYMBOL_GPL(damon_collapse_folio_range);
+> =20
+>  	err =3D damos_sysfs_add_quota_score(sysfs_quotas->goals, &scheme->quota=
+);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260701114716.5650=
-3-1-lianux.mm@gmail.com?part=3D2
+3-1-lianux.mm@gmail.com?part=3D4
