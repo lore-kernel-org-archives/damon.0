@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9034F348C75
-	for <damon@lists.linux.dev>; Wed,  1 Jul 2026 15:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FC33B775A
+	for <damon@lists.linux.dev>; Wed,  1 Jul 2026 15:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782920579; cv=none; b=YGCAYb+EvwL292JxNATvoDa/cttYPDbgVNrgbY22qCGmq6JPjQzos9M3cWre/VtOD1CrzOHq8SIsbY05yOH/zWD7oRUO4Z3TdTz50pm8HI7w1D5GxVA22kUSxA8nQIPk7ykgibeWxEGvdlD6qK/yFBUTq9H+g6hYU4KJTs9J3K0=
+	t=1782921385; cv=none; b=r+pN3paBYhudsfh3olFy2vqxvdmCMpULoqUflhbdBOIVtoLZ3+3NzYctSEmyOZg0se3A2b/7zziu3JpfH/eVz1PKLMQ4fufhTYaly4IZMu0OmXf0bs61doaEqXb/9kP+AMP6D2c0Ay9HvyZrE9faca6NQ/HgsnyLISFarqHHjQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782920579; c=relaxed/simple;
-	bh=BpdCtIhR4FwXN27Lb14IWjPCmvwh6gQthZliui8DXGQ=;
+	s=arc-20240116; t=1782921385; c=relaxed/simple;
+	bh=1x3/IbLB/4bmb0d0rXgU96lyjAPX0GARO9zvXbvGIM8=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=PBlmj4HxwVs5iPlKePB4B4AoUSzhxLnrugN/cWZ+6TBkRLGpLU2ZjKqSHajeGcn0Iigxh7lS1EAyeYQfEBZbkZkrbl9fcELxlK9VAvgkUNY736WJ0PRYLJtubB6S7SsI1IGzcXftxa7ChRk3oDrqkKwt3dr2r50owJPffxPwcWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BsUA3XLr; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=dcArmmNxCtEb3bnWHy5Yt3cfAtQHkEutnZX229iKU3bqVdHOY+jKP8HXB+7Zdv/8fwwJ0XcjfeiZ27ZvpNUh99UW037TB9/Q7p8w8joRjcCkEEx7xW68cF7a4wK99vcEL3B2f4WkucNNxhiWE8wAS3D5emNlp+kShaixe4vTU1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mHBEIcFr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BsUA3XLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191FD1F000E9;
-	Wed,  1 Jul 2026 15:42:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mHBEIcFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DD61F000E9;
+	Wed,  1 Jul 2026 15:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782920578;
-	bh=lk0duhjOz+r/K0rPsyV12v1jp7WBHD7SQCflbc7BbEI=;
+	s=k20260515; t=1782921384;
+	bh=nAFXvMX1SbIkk0fph84DwbNlObRAgX3+S5fpgCuGsIo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=BsUA3XLrYWx3aCo48gci8g1kB2o8r5xVFleAXltes8zRjmsnh8TpJzDnWItv4mkAi
-	 f7bUf7FvBZ15GqLg3JdRRskjuEArgVhG98DLleq01ycjLPFqLKaD/PhjsMUpCEEuXj
-	 AvjtrcBBwG7sAsY+7E2EO0iV6bwIoORb2RKRPjYGhnpVHh4ri9KM0c9SiM5RRB9RX6
-	 AgRCxqIuNwBTmA6F1U1qD2qqE91wgg2w9dzYsrUHdN4uDQOEjA0FQbj9RkWJqHfWsJ
-	 3Gw7e8fP4AfEIau2NNuzQoKwLi6qGc2n9S1IhEXNXBP7ONboK0q1j0XAGUh1SJIYFn
-	 faNlPJ0TDsk8g==
+	b=mHBEIcFrsA+xM/3rf8VDIvgOmo2r7G+EmC+/SxO/XbDi6CLIshEjHDvLFtLmNCm1v
+	 D0FQXTzrkQnvgT2N0AqDKs1kiIpxHLC9i9N+ao5O+K5tdUTAUekMQdvPQom/lLGEOl
+	 b81/koJbmjYzyF2zdxQjD5MToaIWspQ5eV/k9Xs0eWBya5CwfmFHV24lojy0CQh4+z
+	 ZM9mkgPz3fdql6BZyCrE7bYI3wf3FqLFfQXhhBCI9lH5vzDBt2LBJr7TCdSd3ugq8d
+	 dn19ob+s4MjGFjv6IoYuMtrQ/NWhWG809UgyVKSbFha8SDqLbfs14Z53AngkY16C9f
+	 k+TDRwqqKT+Hg==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 4/8] mm/damon/reclaim: remove duplicated
- min_region_sz power of 2 check
+Subject: Re: [RFC PATCH 5/8] mm/damon/lru_sort: remove duplicated
+ min_region_sz power_of_2() check
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260701144815.113325-5-sj@kernel.org>
+In-Reply-To: <20260701144815.113325-6-sj@kernel.org>
 References: <20260701144815.113325-1-sj@kernel.org>
- <20260701144815.113325-5-sj@kernel.org>
+ <20260701144815.113325-6-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 01 Jul 2026 15:42:57 +0000
-Message-Id: <20260701154258.191FD1F000E9@smtp.kernel.org>
+Date: Wed, 01 Jul 2026 15:56:23 +0000
+Message-Id: <20260701155623.E4DD61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,26 +47,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Removing the early `is_power_of_2()` check allows invalid `min_reg=
-ion_sz` inputs to reach `damon_commit_ctx()`, which exposes a bug introduce=
-d earlier in this series that corrupts the live context and silently termin=
-ates the DAMON background thread.
+- [High] Removing the `is_power_of_2()` validation exposes the system to un=
+defined behavior via `ALIGN` macros and silently kills the `kdamond` thread=
+ (Denial of Service).
 --
 
-commit f5d47eadcc06079427c142dd59c5a8aa8721caec
+commit da14a5f653fa82832f40f8b6d0be4ad4c3036287
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/reclaim: remove duplicated min_region_sz power of 2 check
+mm/damon/lru_sort: remove duplicated min_region_sz power_of_2() check
 
-DAMON_RECLAIM validates the user input for min_region_sz.  The same
+DAMON_LRU_SORT validates the user input for min_region_sz.  The same
 validation is done inside damon_start() and damon_commit_ctx().  Remove
-the duplicate.
+the unnecessary duplicate.
 
-> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-> index 11b70d0a9a6f0..6469b25cc34f9 100644
-> --- a/mm/damon/reclaim.c
-> +++ b/mm/damon/reclaim.c
-> @@ -208,11 +208,6 @@ static int damon_reclaim_apply_parameters(void)
+> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> index 32f41491b726b..2dd0cd0d26273 100644
+> --- a/mm/damon/lru_sort.c
+> +++ b/mm/damon/lru_sort.c
+> @@ -284,11 +284,6 @@ static int damon_lru_sort_apply_parameters(void)
 >  	param_ctx->addr_unit =3D addr_unit;
 >  	param_ctx->min_region_sz =3D max(DAMON_MIN_REGION_SZ / addr_unit, 1);
 > =20
@@ -74,49 +73,62 @@ the duplicate.
 > -		err =3D -EINVAL;
 > -		goto out;
 > -	}
+> -
 
 [Severity: High]
-Does removing this early check expose a bug introduced earlier in this seri=
-es?
+Does removing this early validation expose the rest of the DAMON subsystem =
+to
+a non-power-of-two min_region_sz?
 
-If the user provides an invalid addr_unit (e.g., 3), min_region_sz will not=
- be
-a power of 2. By removing the check here, this invalid parameter is passed
-to damon_commit_ctx().
+If a user writes a non-power-of-two module parameter (for example,
+addr_unit =3D 3), damon_lru_sort_apply_parameters() will calculate
+min_region_sz as 349525.
 
-Due to an issue in damon_commit_ctx() (from "mm/damon/core: safely validate
-src on damon_commit_ctx()"), the dry-run validates dst instead of src:
+This invalid size is then passed to damon_set_region_system_rams_default(),
+and eventually to damon_set_regions(), where it is passed into the ALIGN()
+and ALIGN_DOWN() macros:
 
-mm/damon/core.c:damon_commit_ctx() {
-	...
-	err =3D __damon_commit_ctx(test_ctx, dst);
-	if (err)
-		goto out;
-	err =3D __damon_commit_ctx(dst, src);
-	...
+mm/damon/core.c:damon_set_regions() {
+    ...
+    r =3D damon_new_region(
+        ALIGN_DOWN(ranges[i].start, min_region_sz),
+        ALIGN(ranges[i].end, min_region_sz));
+    ...
 }
 
-When __damon_commit_ctx() is called with the live dst and invalid src, it
-sets dst->maybe_corrupted before returning -EINVAL:
+These macros strictly require power-of-two alignment values to form bitwise
+masks.
+
+Can this result in meaningless garbage boundaries?
+
+Furthermore, the invalid size propagates to damon_commit_ctx(). Due to a bug
+in a prior patch in the series ('mm/damon/core: safely validate src on
+damon_commit_ctx()'), the safe validation dry-run incorrectly validates dst
+instead of src, leading directly to a call to __damon_commit_ctx():
 
 mm/damon/core.c:__damon_commit_ctx() {
-	...
-	dst->maybe_corrupted =3D true;
-	if (!is_power_of_2(src->min_region_sz))
-		return -EINVAL;
-	...
+    ...
+    dst->maybe_corrupted =3D true;
+    if (!is_power_of_2(src->min_region_sz))
+        return -EINVAL;
+    ...
 }
 
-Could this cause the background kdamond thread to see maybe_corrupted as tr=
-ue
-on its next iteration and permanently terminate, silently turning a simple
-configuration error into a denial of service for the subsystem?
+This function immediately sets dst->maybe_corrupted =3D true, evaluates
+!is_power_of_2(src->min_region_sz), and returns -EINVAL early.
 
-> -
->  	if (!damon_reclaim_mon_attrs.aggr_interval) {
+This leaves the running context's maybe_corrupted flag permanently set to
+true, which causes the kdamond background thread to abruptly terminate itse=
+lf
+on its next iteration.
+
+Could this lead to a denial of service by silently killing the kdamond thre=
+ad?
+
+>  	if (!damon_lru_sort_mon_attrs.sample_interval) {
 >  		err =3D -EINVAL;
 >  		goto out;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260701144815.1133=
-25-1-sj@kernel.org?part=3D4
+25-1-sj@kernel.org?part=3D5
