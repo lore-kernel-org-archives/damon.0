@@ -1,316 +1,247 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50815449ECB
-	for <damon@lists.linux.dev>; Wed,  1 Jul 2026 11:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A573330D34
+	for <damon@lists.linux.dev>; Wed,  1 Jul 2026 11:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782904106; cv=none; b=mimzS7Hpr7nPIaHHUyuJpx8tYMUl7TNtGIrZcx3gcpd+BvwFGMDSPDZDnpfkhLBMfAQJRSGKZqVanDep+UoHtuT1WQJLZim/It6VUQwyWc9jFzGOxAzlfm3PswK20NMTH4A4WvNJvgrOhkOCvHS32wLZ1ZyT4lSGzocM0DsjxQs=
+	t=1782906446; cv=none; b=s/WrOV50Tz4PoIV0YRp0g5zLTSDPCM1twsezYIicDC9ekNp9g+5BG+SPAnoLGhgIbeZMxvhsZptp2YfP0B+XCdiCIl9lWnmXqWx48tUSUA0ZFPsK5co577HaFguaNEItshCVlloro1vHtEe60qRNS4sbhmnA+3vccnrAr5AzJFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782904106; c=relaxed/simple;
-	bh=S9U/QQkOj2QcN7GOUDf8Nq4vJ3cWwPyQIEl2/pEFaPo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sZ5J/ZuH+/L1zNL0dUqpXbSiS6AGM7a3mc4/0guaZtgscG8i6aYT+0oW6AOTcudBtSXcar9/ug+rsmHO48WCEuYHb5IcI3zI2y4J1uSYNBiilK4/PtsubMP9CzVkkXHo5N4tEwhL43aw3zD/U5di4Ka1bC9kzIYNXs+VNo6rFSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=QRnvYhKi; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1782906446; c=relaxed/simple;
+	bh=3z4rekmB/4GpNO3f8meBp2YCXnkPr3lYM0+cTijoYr0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Q/ayCvgGf8fDU5KT9bCTm/6PTNxTiVBcPdhwJd301oIHY7mOCkXL+RfU5ItN4AlXfPL6S7cUIKzKajybnS1e8t0SEcO8FVw8dqT1Zy+r7fk1dr5zvX4XUbUwfKvnadORmAKDBXXozM2BcNQ6CpyXRa0cbzb2BPM2CnctPioJG50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXPtWqSG; arc=none smtp.client-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="QRnvYhKi"
-Message-ID: <0efcc0a9-a51d-4de8-8406-b8fa536a91b7@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782904099;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ieMgPSS1eIBfAPTWcoeMePMwN2vKLGAwkXUol+yS3JM=;
-	b=QRnvYhKi7ifn2CAOqwrrTALRRhFuKdBNRY4USBSzQESgxOH79yyPbWsw+wvjxJGm9pDQu3
-	75wHltVABewcdEultw97xVO9Srux+vxmHLrM1y3qkyY8Qi8RlcbW/19L2d+jmEkSOqKAw5
-	8d3ZpLHm3o4fEt3mWUbZ+Ie+mvfoBxk=
-Date: Wed, 1 Jul 2026 19:07:22 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXPtWqSG"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-30edfd9cff9so632603eec.1
+        for <damon@lists.linux.dev>; Wed, 01 Jul 2026 04:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782906445; x=1783511245; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sIUByjOvpuMIXwE7ycHcWkFtOVzaObJYqxXVUpWPPy0=;
+        b=nXPtWqSGW+3vcTlc/IYk513x8oWFdtV0mLz7FihR9BtdxwCiEyTVrKt2ucLSrkwJqA
+         xWyTtis68+V2LO2VG488nEiFkNyLL0avGYtMThzA1XTiV2uI9Rw43fzagwYCPV1qj6lL
+         0zfriE9ws8BZKHk1JrOvx17egke1gtaDbvTdjELW19KM1W8BxZ4pLm/zOSVdw3wCCGti
+         GRmqt2J4NY0pyJovQpIzw91dg4gi/rGaoQndB8Ee+uuO6x5a0WgkAWkeszQMDHAUfopf
+         Y/csU3m+oQ6anvwLofgztyJz66DUj9A5QhDh1TijbwTgMeh247eV9iPg+rK1paSSpFil
+         X5jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782906445; x=1783511245;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sIUByjOvpuMIXwE7ycHcWkFtOVzaObJYqxXVUpWPPy0=;
+        b=YvxUYzF1jT1+lZRbmf+3jg4wtLUsplC5uuMhhSZVTQeRa5HNnYXMCczuTeNbhXeAjL
+         EXjytPQhq3FvPLmMUGmXKncXauqI47PRAlpH9Ms82ZO0WNaZekNa5Dj10VSRfPHZgtD/
+         xX5B2FC4kGZmnH5Zw50Pa9ZpnYRtcsarDAZCJkTCAd+OBYVe1sW4TraA+SA/sA82W5Ng
+         Hf3HRYBTn5UXbQPgg1WmGBqQQpCWMrFxpo/PHe8D5Cew/xYDp+c4WAZi6rLGjKDJTQTo
+         kQE/SX4Fr3yyabeXdB/x1Vp238WBp5m2yrQpcbggFtbqUvHr/lZI80MDf5bGiBlHcJ7g
+         Wq/g==
+X-Gm-Message-State: AOJu0Yy81rktPaFM2RJrZZIOVAjIUTUCUQtlYovFKEqJvw98DPXocY1q
+	WC3ybjKKI9xh5Uo1dwCyWDX1IzJEIPnFMu8VfI5iBhCMcgA7/XRKiVSNOS5caf00
+X-Gm-Gg: AfdE7cmEqk1b7Rq/OO/br6NzQjh0G9q/LBO+fhaKfJvKahO7mE4VMa8t2EphViFFoWe
+	RZAkjZ/O2zThzoeV+fPVoDGF0OkxiQyu11PieuqvSZKTGN7a5JuGbGR9u2flWcs/Jiv0d2qTqvP
+	DkG+Jof+kbeshh5UfVtGVdoAsf5hx1AxCupJowxrJFYMSRJ2UDfiyg8JpGzvq++XASOXo4ReCQH
+	dPDr2YA8Ht0DJpBla4UGScGGkGotwM1KY5R2IOviKzAtxU3AJpJidAWsmrOxWhyjKkdxnGk3VW3
+	GxS0PKglWyIec/v7IWBeyNtPXjcnMGfMcEefJ3V6tsm4wTkvdN4LK8jwrKUdtxFxdMYPrSeyOT9
+	nhaOBluLUfDMFlX/RPWkqFkJf20mwFePdTE3uJEtuFD/vE8elZ5dFfAxt8I3iYZ8H6GvXOyFmk2
+	Uow+JjNFvG2z3V
+X-Received: by 2002:a05:7301:3d1b:b0:30c:ab4f:9ba4 with SMTP id 5a478bee46e88-30f0548b54bmr417068eec.44.1782906444364;
+        Wed, 01 Jul 2026 04:47:24 -0700 (PDT)
+Received: from localhost.localdomain ([2607:f130:0:11a::31])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30ee327cea7sm22518169eec.31.2026.07.01.04.47.21
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 01 Jul 2026 04:47:23 -0700 (PDT)
+From: wang lian <lianux.mm@gmail.com>
+To: damon@lists.linux.dev,
+	linux-mm@kvack.org
+Cc: linux-kernel@vger.kernel.org,
+	sj@kernel.org,
+	gutierrez.asier@huawei-partners.com,
+	daichaobing@sangfor.com.cn,
+	lianux.wang@processmission.com,
+	Wang Lian <lianux.mm@gmail.com>
+Subject: [PATCH v2 0/5] mm/damon: add mTHP collapse and split actions
+Date: Wed,  1 Jul 2026 19:47:11 +0800
+Message-ID: <20260701114716.56503-1-lianux.mm@gmail.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 1/7] list: Add mutable iterator variants
-To: Jani Nikula <jani.nikula@linux.intel.com>,
- David Laight <david.laight.linux@gmail.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- "David Hildenbrand (Arm)" <david@kernel.org>,
- Alexei Starovoitov <ast@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Jens Axboe <axboe@kernel.dk>,
- Tejun Heo <tj@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
- Christian Brauner <brauner@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>,
- Johannes Weiner <hannes@cmpxchg.org>, Peter Zijlstra <peterz@infradead.org>,
- Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>,
- Namhyung Kim <namhyung@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
- Juri Lelli <juri.lelli@redhat.com>,
- Vincent Guittot <vincent.guittot@linaro.org>,
- Paul Moore <paul@paul-moore.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Shakeel Butt <shakeel.butt@linux.dev>, David Howells <dhowells@redhat.com>,
- Simona Vetter <simona.vetter@ffwll.ch>, Randy Dunlap
- <rdunlap@infradead.org>, Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Philipp Stanner <phasta@kernel.org>, linux-block@vger.kernel.org,
- linux-kernel@vger.kernel.org, cgroups@vger.kernel.org,
- linux-ntfs-dev@lists.sourceforge.net, linux-fsdevel@vger.kernel.org,
- io-uring@vger.kernel.org, audit@vger.kernel.org, bpf@vger.kernel.org,
- netdev@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-perf-users@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
- kexec@lists.infradead.org, live-patching@vger.kernel.org,
- linux-modules@vger.kernel.org, linux-crypto@vger.kernel.org,
- linux-pm@vger.kernel.org, rcu@vger.kernel.org, sched-ext@lists.linux.dev,
- linux-mm@kvack.org, virtualization@lists.linux.dev, damon@lists.linux.dev,
- llvm@lists.linux.dev, Kaitao Cheng <chengkaitao@kylinos.cn>,
- Muchun Song <muchun.song@linux.dev>
-References: <20260622040533.29824-1-kaitao.cheng@linux.dev>
- <20260622040533.29824-2-kaitao.cheng@linux.dev>
- <20260622094242.64531b9a@pumpkin>
- <351a6b67-b394-4c58-aee2-88b6c8089ad5@linux.dev>
- <cf8467c7-b98f-44a5-9cf9-60b43b5da711@amd.com>
- <20260624152324.3def88ce@pumpkin>
- <0ed6b5c3-e955-46e2-9fc6-075a0dfd1c4f@linux.dev>
- <734f66ca51485ee3ec9788c0eaaead681e00664b@intel.com>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Kaitao Cheng <kaitao.cheng@linux.dev>
-In-Reply-To: <734f66ca51485ee3ec9788c0eaaead681e00664b@intel.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-在 2026/6/25 19:00, Jani Nikula 写道:
-> On Thu, 25 Jun 2026, Kaitao Cheng <kaitao.cheng@linux.dev> wrote:
->> 在 2026/6/24 22:23, David Laight 写道:
->>> On Wed, 24 Jun 2026 15:23:47 +0200
->>> Christian König <christian.koenig@amd.com> wrote:
->>>> On 6/24/26 15:14, Kaitao Cheng wrote:
->>>>> 在 2026/6/22 16:42, David Laight 写道:  
->>>>>> On Mon, 22 Jun 2026 12:05:31 +0800
->>>>>> Kaitao Cheng <kaitao.cheng@linux.dev> wrote:
->>>>>>  
->>>>>>> From: Kaitao Cheng <chengkaitao@kylinos.cn>
->>>>>>>
->>>>>>> The list_for_each*_safe() helpers are used when the loop body may
->>>>>>> remove the current entry.  Their API exposes the temporary cursor at
->>>>>>> every call site, even though most users only need it for the iterator
->>>>>>> implementation and never reference it in the loop body.
->>>>>>>
->>>>>>> Add *_mutable() variants for list and hlist iteration.  The new helpers
->>>>>>> support both forms: callers may keep passing an explicit temporary cursor
->>>>>>> when they need to inspect or reset it, or omit it and let the helper use
->>>>>>> a unique internal cursor.  
->>>>>>
->>>>>> I'm not really sure 'mutable' means anything either.
->>>>>> It is possible to make it valid for the loop body (or even other threads)
->>>>>> to delete arbitrary list items - but that needs significant extra overheads.
->>>>>>
->>>>>> It might be worth doing something that doesn't need the extra variable,
->>>>>> but there is little point doing all the churn just to rename things.
->>>>>>  
->>>>>>>
->>>>>>> This makes call sites that only mutate the list through the current entry
->>>>>>> less noisy, while keeping the existing *_safe() helpers available for
->>>>>>> compatibility.
->>>>>>>
->>>>>>> Signed-off-by: Kaitao Cheng <chengkaitao@kylinos.cn>
->>>>>>> ---
->>>>>>>  include/linux/list.h | 269 +++++++++++++++++++++++++++++++++++++------
->>>>>>>  1 file changed, 231 insertions(+), 38 deletions(-)
->>>>>>>
->>>>>>> diff --git a/include/linux/list.h b/include/linux/list.h
->>>>>>> index 09d979976b3b..1081def7cea9 100644
->>>>>>> --- a/include/linux/list.h
->>>>>>> +++ b/include/linux/list.h
->>>>>>> @@ -7,6 +7,7 @@
->>>>>>>  #include <linux/stddef.h>
->>>>>>>  #include <linux/poison.h>
->>>>>>>  #include <linux/const.h>
->>>>>>> +#include <linux/args.h>
->>>>>>>  
->>>>>>>  #include <asm/barrier.h>
->>>>>>>  
->>>>>>> @@ -763,28 +764,72 @@ static inline void list_splice_tail_init(struct list_head *list,
->>>>>>>  #define list_for_each_prev(pos, head) \
->>>>>>>  	for (pos = (head)->prev; !list_is_head(pos, (head)); pos = pos->prev)
->>>>>>>  
->>>>>>> -/**
->>>>>>> - * list_for_each_safe - iterate over a list safe against removal of list entry
->>>>>>> - * @pos:	the &struct list_head to use as a loop cursor.
->>>>>>> - * @n:		another &struct list_head to use as temporary storage
->>>>>>> - * @head:	the head for your list.
->>>>>>> +/*
->>>>>>> + * list_for_each_safe is an old interface, use list_for_each_mutable instead.
->>>>>>>   */
->>>>>>>  #define list_for_each_safe(pos, n, head) \
->>>>>>>  	for (pos = (head)->next, n = pos->next; \
->>>>>>>  	     !list_is_head(pos, (head)); \
->>>>>>>  	     pos = n, n = pos->next)
->>>>>>>  
->>>>>>> +#define __list_for_each_mutable_internal(pos, tmp, head)		\
->>>>>>> +	for (typeof(pos) tmp = (pos = (head)->next)->next;		\  
->>>>>>
->>>>>> Use auto
->>>>>>  
->>>>>>> +	     !list_is_head(pos, (head));				\
->>>>>>> +	     pos = tmp, tmp = pos->next)
->>>>>>> +
->>>>>>> +#define __list_for_each_mutable1(pos, head)				\
->>>>>>> +	__list_for_each_mutable_internal(pos, __UNIQUE_ID(next), head)
->>>>>>> +
->>>>>>> +#define __list_for_each_mutable2(pos, next, head)			\
->>>>>>> +	list_for_each_safe(pos, next, head)
->>>>>>> +
->>>>>>>  /**
->>>>>>> - * list_for_each_prev_safe - iterate over a list backwards safe against removal of list entry
->>>>>>> + * list_for_each_mutable - iterate over a list safe against entry removal
->>>>>>>   * @pos:	the &struct list_head to use as a loop cursor.
->>>>>>> - * @n:		another &struct list_head to use as temporary storage
->>>>>>> - * @head:	the head for your list.
->>>>>>> + * @...:	either (head) or (next, head)
->>>>>>> + *
->>>>>>> + * next:	another &struct list_head to use as optional temporary storage.
->>>>>>> + *		The temporary cursor is internal unless explicitly supplied by
->>>>>>> + *		the caller.
->>>>>>> + * head:	the head for your list.
->>>>>>> + */
->>>>>>> +#define list_for_each_mutable(pos, ...)					\
->>>>>>> +	CONCATENATE(__list_for_each_mutable, COUNT_ARGS(__VA_ARGS__))	\
->>>>>>> +		(pos, __VA_ARGS__)  
->>>>>>
->>>>>> The variable argument count logic really just slows down compilation.
->>>>>> Maybe there aren't enough copies of this code to make that significant.
->>>>>> But just because you can do it doesn't mean it is a gooD idea.
->>>>>> I'm also not sure it really adds anything to the readability.
->>>>>>
->>>>>> And, it you are going to make the middle argument optional there is
->>>>>> no need to change the macro name.  
->>>>>
->>>>> Christian König and Jani Nikula also disagree with the variadic-argument
->>>>> implementation approach. If we abandon that method, it means we will
->>>>> inevitably need to add some new macros. If mutable is not a good name,
->>>>> suggestions for better alternatives would be welcome; coming up with a
->>>>> suitable name is indeed rather tricky.  
->>>>
->>>> I don't think you need to add a new macro for the specific use case that people want to modify the next element of the iteration.
->>>>
->>>> If I remember your numbers correctly that is a really corner case and keeping using the existing *_safe() macros for that sounds perfectly fine to me.
->>>
->>> IIRC currently you have a choice of either:
->>> 	define               Item that can't be deleted
->>> 	list_for_each()	     The current item.
->>> 	list_for_each_safe() The next item.
->>> There is also likely to be code that updates the variables to allow
->>> for other scenarios.
->>>
->>> Note that if increase a reference count and release a lock then list_for_each()
->>> is likely safer than list_for_each_safe() :-)
->>>
->>> list.h has 9 variants of the 'safe' loop.
->>> The bloat of another 9 is getting excessive.
->>>
->>> It has to be said that this is one of my least favourite type of list...
->>
->> Hi Christian König, David Laight, Jani Nikula, David Hildenbrand,
->> Andy Shevchenko, Alexei Starovoitov
->>
->> For ease of discussion, I need to summarize the currently possible
->> approaches and briefly describe their respective pros and cons,
->> using the list_for_each_entry* interfaces as examples.
->>
->> 1. Add list_for_each_entry_mutable, while keeping list_for_each_entry
->> and list_for_each_entry_safe unchanged. list_for_each_entry_mutable
->> would be used specifically for safe deletion scenarios that do not
->> need to expose the temporary cursor externally. The code can refer to
->> the v1 version.
->>
->> Pros: Does not depend on immediate per-subsystem adaptation and can be
->>       merged directly.
->> Cons: Requires adding a whole set of mutable interfaces, which makes the
->>       code somewhat redundant.
-> 
-> Seems fine, and the original _safe naming is ambiguous anyway.
-> 
->> 2. Directly optimize away the temporary cursor in list_for_each_entry_safe
->> and define it inside the loop instead, changing the interface from four
->> arguments to three.
->>
->> Pros: Does not add redundant interfaces.
->> Cons: (1) Users need to manually update special cases that use the
->>       traversal variable of list_for_each_entry_safe, the new
->>       list_for_each_entry_safe would no longer apply there and would
->>       need to be open-coded.
->>       (2) Because the macro arguments changes, all list_for_each_entry_safe
->>       callers would need to be modified and merged together, making it
->>       difficult to merge such a large amount of code at once.
-> 
-> This won't fly because there are literally thousands of
-> list_for_each_entry_safe() users.
-> 
->> 3. Use a variadic macro approach to optimize list_for_each_entry_safe,
->> so that it supports both three and four arguments.
->>
->> Pros: (1) Does not add redundant interfaces.
->>       (2) Does not depend on immediate per-subsystem adaptation and can
->>       be merged directly.
->> Cons: (1) Increases compile time.
->>       (2) Makes the interface harder for users to use.
-> 
-> Basically I'm against any variadic macro tricks where the optional
-> argument is not the last argument. That's just way too surprising, and
-> goes against common practice in just about all other languages.
-> 
->> 4. Optimize list_for_each_entry by defining the temporary cursor internally,
->> making it compatible with the functionality of list_for_each_entry_safe.
->> The code can refer to the v2 version.
->>
->> Pros: (1) Does not add redundant interfaces.
->>       (2) The number of externally visible arguments of list_for_each_entry
->>       remains unchanged, still three.
->> Cons: (1) list_for_each_entry and list_for_each_entry_safe would be merged
->>       into one, and list_for_each_entry_safe would gradually be deprecated.
->>       (2) Users need to manually update special cases that use the traversal
->>       variable of list_for_each_entry, the new list_for_each_entry would no
->>       longer apply there and would need to be open-coded. There are 15 such
->>       cases in total.
-> 
-> This sounds good to me, though I take it there's some code size increase
-> and/or performance penalty?
-> 
-> Maybe the 15 cases are questionable anyway?
-> 
->> 5. Use a variadic macro approach to optimize list_for_each_entry, so that
->> it supports both three and four arguments.
->>
->> Pros: (1) Does not add redundant interfaces.
->>       (2) Does not depend on immediate per-subsystem adaptation and can be
->>       merged directly.
->> Cons: (1) Increases compile time.
->>       (2) list_for_each_entry and list_for_each_entry_safe would be merged
->>       into one, and list_for_each_entry_safe would gradually be deprecated.
-> 
-> Please don't do the macro tricks.
-> 
->> 6. Make no changes, keep the current logic unchanged, and close the current
->> email discussion.
-> 
-> I like hiding the temporary stuff when possible.
-> 
-> BR,
-> Jani.
+From: Wang Lian <lianux.mm@gmail.com>
 
-Hi all,
-If there are no objections, I will make the changes using the first approach.
+This series gives DAMOS two order-aware folio actions so that an
+access-aware policy can manage memory at mTHP granularity: a
+target_order field for the existing DAMOS_COLLAPSE, and a new
+DAMOS_SPLIT action.  The kernel provides the mechanism; deciding
+which specific address ranges to act on is left to user space and
+expressed through the existing DAMOS address filter.
+
+v1: https://lore.kernel.org/linux-mm/20260618094838.32805-1-lianux.mm@gmail.com/
+
+Changes since v1
+
+ - Rename DAMOS_MTHP_SPLIT -> DAMOS_SPLIT for naming consistency with
+   the existing actions (per SJ's review).
+ - Drop the per-scheme hot_threshold field.  Hotness policy does not
+   belong in the kernel; target selection now lives in user space and
+   is expressed to DAMOS via the address filter (per SJ's review).
+ - Drop the v1 SPE debugfs patch entirely.  debugfs is not the right
+   interface for a feature, and the SPE profiler belongs in user space
+   (see "User-space target selection" below).  v2 is kernel mechanism
+   only: 5 patches.
+ - Decouple T1 (a lab observation) from T2 (the production issue), and
+   correct the architecture claim: ptep_test_and_clear_young() skips
+   the TLB flush on both x86_64 and arm64, so the blind spot is
+   architecture-independent rather than arm64-only.
+ - Terminology: avoid "stale TLB".  A valid TLB entry is doing its
+   job; the point is only that it lets the CPU satisfy a translation
+   without a page-table walk, so the Accessed bit cleared by DAMON is
+   not re-set.
+
+Background
+
+Two effects degrade DAMON's PTE-Accessed-bit (AF) signal once THP is
+in play.  Both are described here as motivation only; this series does
+not change the AF monitoring path.
+
+T2 -- PMD-granularity inflation (production issue)
+
+A 2MB THP is tracked by a single PMD-level Accessed bit.  One access
+to any 4KB sub-page sets the AF for the whole 2MB, so DAMON reports
+the entire THP as hot and cannot distinguish a genuinely hot 2MB
+region from a 2MB region with a single hot 4KB page.  Cold memory
+hides inside "hot" THPs, and access-driven pageout/migration becomes
+coarse.
+
+This is the workload that drove the work: Sangfor's Kunpeng 920 KVM
+hosts running Oracle.  ARM SPE sampling of that workload shows 94.6%
+of THPs have fewer than 10% of their sub-pages actually accessed.
+
+T1 -- TLB-reach blind spot (lab observation)
+
+When the working set fits within L2 TLB reach (Kunpeng 920: 2048
+entries x 2MB = 4GB), the CPU keeps hitting the TLB and never walks
+the page table.  Because ptep_test_and_clear_young() does not flush
+the TLB, valid TLB entries continue to satisfy translations and the
+AF that DAMON cleared is never re-set, so DAMON sees nr_accesses=0 for
+memory that is in fact hot, and no scheme triggers.  This reproduces
+in the lab with small workloads; it is not something we have seen
+reported from production, where working sets exceed TLB reach.
+
+What this series adds
+
+Rather than change AF monitoring, this series adds two order-aware
+DAMOS actions so a policy layer can act at mTHP granularity:
+
+ - DAMOS_COLLAPSE + target_order (patches 1-3): collapse small folios
+   up to a chosen mTHP order.  Patch 1 adds the target_order field and
+   its sysfs file; patch 2 exports a khugepaged helper
+   (damon_collapse_folio_range()); patch 3 wires the vaddr handler.
+
+ - DAMOS_SPLIT + target_order (patches 4-5): split large folios down
+   to a chosen mTHP order via split_folio_to_order(), for both
+   anonymous and file-backed (tmpfs/shmem) folios.
+
+The two are complementary, not competing:
+
+   THP=never  + DAMOS_COLLAPSE: start at 4KB, grow hot regions up.
+   THP=always + DAMOS_SPLIT:    start at 2MB, shrink cold regions down.
+
+This dual-path design aligns with ideas discussed with Asier
+Gutierrez; we plan to unify our mTHP automation and evaluation
+roadmaps under this standard DAMOS_SPLIT action.
+
+A deployment can pick either baseline, or run both, and let DAMOS
+manage the placement.  THP is still wanted for the hot working set
+(fewer TLB misses, shallower walks); the goal is not "no THP" but
+"THP where it is hot, small pages where it is cold."
+
+User-space target selection
+
+The decision of *which* regions to collapse or split is left to user
+space and fed to DAMOS through the existing DAMOS address filter
+(DAMOS_FILTER_TYPE_ADDR) -- the interface suggested during v1 review.
+The kernel provides the mechanism; user space provides the policy,
+consistent with the perf/BPF "kernel samples, user space decides"
+model and with the DAMON-X direction.
+
+Because the AF signal is unreliable at PMD granularity (T1/T2), the
+scheme is run with min_nr_accesses=0 so it does not gate on access
+count, and the address filter selects targets.  min_nr_accesses=0 is
+also what unblocks the T1 case, where nr_accesses is pinned at 0.
+
+Why not just turn khugepaged off?  You can, but khugepaged is global
+and usually left enabled because other workloads rely on it; it cannot
+be disabled per region.  DAMOS_COLLAPSE gives per-region,
+access-pattern-driven collapse -- a more precise, targeted complement
+to khugepaged's global scan, not a replacement for it.  To handle the
+runtime race where khugepaged might aggressively re-collapse what
+DAMOS_SPLIT just split, we are evaluating a precise VMA-level handshake
+or back-off mechanism to prevent ping-pong effects in mixed
+environments.
+
+Two user-space data sources produce the candidate address ranges:
+
+ 1. ARM SPE (ARMv8.2+): perf record (SPE) -> per-2MB hot-fraction
+    histogram -> PA->VA via /proc/<pid>/pagemap -> sparse-THP VA
+    ranges.  SPE reads physical addresses from the CPU pipeline,
+    bypassing the TLB and page tables, so it is immune to T1 and T2.
+
+ 2. smaps fallback (no SPE): scan /proc/<pid>/smaps for THP-backed
+    VMAs and treat the 2MB-aligned ranges as split candidates.
+
+The SPE profiler stays in user space deliberately: the SPE PMU is a
+single-consumer resource, so a kernel consumer would lock out
+user-space perf and tooling (x86 PEBS / AMD IBS have the same
+property).  Keeping it in user space avoids that and keeps the metric
+source pluggable, in line with DAMON-X.  This is why v2 drops the v1
+SPE debugfs patch.
+
+Testing
+
+Tested on aarch64 with this series applied to 7.1.0-rc5, THP=always,
+using a DAMOS_SPLIT scheme (target_order=2, min_nr_accesses=0) and a
+single DAMOS address filter selecting one 2MB-aligned range:
+
+ - Anonymous THP: the filter splits exactly that one THP --
+   sz_applied=2MB and AnonHugePages drops by 2MB, the rest of the
+   256MB mapping untouched.
+ - File-backed THP (tmpfs/shmem mounted huge=always): the same setup
+   splits exactly one 2MB shmem THP -- sz_applied=2MB and
+   ShmemPmdMapped drops by 2MB.  This confirms split_folio_to_order()
+   works for shmem folios (the KVM-guest-on-THP-tmpfs case).
+ - The address filter is what bounds the action: sz_tried covers the
+   whole ~2GB monitored region while sz_applied is exactly the 2MB the
+   filter selected.
+ - A smaps-based path (for hosts without SPE) enumerates THP-backed
+   ranges and splits all THP in the target workload.
+ - checkpatch clean on all 5 patches.
+
+Wang Lian (5):
+  mm/damon: add target_order field for DAMOS_COLLAPSE
+  mm/khugepaged: add damon_collapse_folio_range() for external callers
+  mm/damon/vaddr: implement mTHP-aware DAMOS_COLLAPSE handler
+  mm/damon: introduce DAMOS_SPLIT action
+  mm/damon/vaddr: implement DAMOS_SPLIT handler
+
+ include/linux/damon.h      |  10 ++++
+ include/linux/khugepaged.h |   3 ++
+ mm/damon/sysfs-schemes.c   |  57 ++++++++++++++++++++
+ mm/damon/vaddr.c           | 106 +++++++++++++++++++++++++++++++++++++
+ mm/khugepaged.c            |  39 ++++++++++++++
+ 5 files changed, 215 insertions(+)
 
 
-Hi David Laight,
-You previously expressed a different opinion. Do you have any further comments
-on the current proposed approach?
-
--- 
-Thanks
-Kaitao Cheng
+base-commit: 01a87376d94249407343653a63e8ecfbe4c79cda
+--
+2.50.1 (Apple Git-155)
 
