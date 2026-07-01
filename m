@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F7025B0B8;
-	Wed,  1 Jul 2026 13:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0BC345749;
+	Wed,  1 Jul 2026 14:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782913954; cv=none; b=tl2L4K1JcFNl0d7G9tIr7URoU6i3wKzDBAQk6hRxt93auquBRLMLp4Al5fkt+VdOGM4088MFDeA0vPDsea7rcnReL0ZYszoY5Id2FGK0Di+H5hA3E3pR+x0XgcQjfOO7et8wHqI3D+++Zovp42I/B4GpFPiGkelrTDPrYO9xSog=
+	t=1782917305; cv=none; b=JPqsFtGIkeAwYMu0U3ViCc8Lj9q2SGdvjQA3zL+gk8Xx1btlKIeYBkx9JULZJtvF1/5P3djNYYKCf8ORhKv5kGQUFzN21M+RgaedcYFp9pX+xwumhsDEg3bw8cUl0yqUUy/modtaIkUdxUxbw4NvHkniGz9DNBOyEKqOKeZ0k+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782913954; c=relaxed/simple;
-	bh=/fnl8WkEpVVgiLor8TqCRgSkBzZUvjdPR1vaL+tkTNU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+RU/8TWy6s55YjOMkUMvBk908jFsLqFe4F8EFaOdqscMDdwvhQFYtrL2Uz6wY1X3UnPFaezG15nNu6uR3i3imtYfhssygihck0t+VeqEXOYXnti+G5+RC8GiSHrcaAFe/QdYwFI+5Jgi+M3U+I5npTG7IKuw9MGxqagZhUuL6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ICKU/rwX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782917305; c=relaxed/simple;
+	bh=UE4hFFWUaNQH1yubUubQqS2Z8MkxQC5qq4P+YSU00X0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iexBpf0gX1yyo+VIrZl12tNKajFlwByeEaLnPQcX0hDIPVIJ+Nito75xkT73EDrWdVz3hXMnKhZo8K5m6x5FnrO02xNgRxmTBDd4FBe7K6jIzMup6xxrax7IJpwnxg+M29hASuLli+DZ2LgIRGQ4UO1k2o2agdStElMrtF7mImM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLSV1hrS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ICKU/rwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EDB1F000E9;
-	Wed,  1 Jul 2026 13:52:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLSV1hrS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401101F000E9;
+	Wed,  1 Jul 2026 14:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782913953;
-	bh=+at3T66B8FFjiwV+efoDLf0oTrOtgBnk1d6ck6Y4yMQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ICKU/rwXY7DwkHITW7EMOoaGekRc1WyhuV5kJ0PG1c1/xLDWoHsjSC+42yZxut8NF
-	 l/C1PSWibS76Kz5ziVH/A/7m77ocXbhbr7jhv/tYxUJdONs4MvfFaGDv8tMiNBzfpm
-	 2Iel3q+VrqRLDymy5zYK7r4YjDeUJTxhqR4MsIDHypt0F4Lw82jcJ4ZumiUb42bcwv
-	 N2qHVv5UcBliLT+jZfZc80R0s/YLrq6r0Hyc291fr+GoKrmnxkJwn9Cso0Di+5wFau
-	 l0oR6W1mE+TNbuQHQOOgE/SWsYWQU1RJ7wICAgTgMWvujVttpQQjAJrO0xPagZpcsu
-	 7kwlqjRTJniJg==
+	s=k20260515; t=1782917304;
+	bh=u9li3f2mdhI97UWZZHyi3UM2e3i9g+HccBwSNR9mxb0=;
+	h=From:To:Cc:Subject:Date;
+	b=SLSV1hrSc0rRE1UYdFWJa1n9HxXt/0lHObGgfp8wE/j77sJfNfZnD6aU9QKm9Qvtj
+	 aYXSLwJw/Dn+9iIhC1o5yabwZHDKdkJEPog4CGsFLfeKsXAdEM82AzYuFQFNTNITEf
+	 eVlrKpCpYgPa1Tffz0V6fi58PYgz6xUYyUW/3HeqoLpuKwWsXBm2oQ7oFQ9Btpv1AZ
+	 Pfri6KvTRRxm1DVyUrFYXKkPkc8LYZuD4Dn2H9435TSdZzEiPW/x0QtYV7lC6nuiZ/
+	 hdb80YrZQRMNhljoS5hLSaz5a6OcnVckIpa+Z6v515VV0WKI3bTa7zURhYv4qRliZ+
+	 5IyBLuan/4/AQ==
 From: SJ Park <sj@kernel.org>
-To: wang lian <lianux.mm@gmail.com>
+To: 
 Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	gutierrez.asier@huawei-partners.com,
-	daichaobing@sangfor.com.cn,
-	lianux.wang@processmission.com
-Subject: Re: [PATCH v2 0/5] mm/damon: add mTHP collapse and split actions
-Date: Wed,  1 Jul 2026 06:52:19 -0700
-Message-ID: <20260701135220.93697-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/8] mm/damon: validate all parameters in the core
+Date: Wed,  1 Jul 2026 07:48:02 -0700
+Message-ID: <20260701144815.113325-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260701114716.56503-1-lianux.mm@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,22 +44,68 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is the first version of this series that has dropped the RFC tag.  From
-the next time, please reset the version number when you drop RFC.  E.g.,
+DAMON has a number of parameters.  Some of the parameters are validated
+by DAMON, while some are validated by DAMON API callers.  Each caller
+has their own set of parameters that are exposed to users.  Hence each
+caller has their own ways to do the validation.  There is no clear lines
+for the responsibilities.  It is confusing and easy to make mistakes at
+validations.  Actually we found a few bugs in the class.
 
-    RFC PATCH -> RFC PATCH v2 -> RFC PATCH v3 -> PATCH v1 -> PATCH v2
+Define DAMON core as the place to do all the validations and implement
+those.  damon_set_regions(), damon_start() and damon_commit_ctx() are
+the three main DAMON core API functions for setup of DAMON parameters.
+Make the three functions to do safe and holistic parameter checks.  The
+first one is already providing the validation, so changes are only for
+the last two functions.
 
-Also, droppping RFC means you think this patch is ready to be merged as-is.  It
-is important because the level of review should also be different for RFC and
-non-RFC patches.  I'm unsure if this is your intention or you just mistakenly
-dropped the tag, because I was expecting RFC v2 for this series.  Could you
-please clarify?
+This might add unnecessary validations for some use cases.  The overhead
+should be negligible as parameters update is expected to only rarely
+happen.  It reduces the number of places to check and fix for bugs of
+the class from all callers to the single component.  The maintenance
+efficiency gain is obvious.
 
-I will hold review of this series before the answer to the above question is
-clear.
+Further cleanup documents and caller code.  Make the lines of validation
+duties clearer.  Remove validations that are no more needed owing to the
+core validations.
+
+Patches Sequence
+================
+
+Patch 1 implements the core holistic parameters validation for
+damon_commit_ctx().  Patch 2 extends the validation to damon_start().
+Patch 3 removes the duplicated holistic parameters validation in DAMON
+sysfs interface, which is now embedded into the core layer.  Patches 4
+and 5 remove duplicated min_region_sz validation in DAMON modules.
+Patches 6 updates kernel doc to clarify damon_set_regions() is doing the
+range validation.  Patches 7 and 8 remove monitoring target range
+validations that doesn't necessary thanks to the validation in
+damon_set_regions().
+
+Note that the patch for providing the validation from
+damon_set_regions() is separately posted as a hotfix [1] but not yet
+picked into mm.git as of this writing.
+
+[1] https://lore.kernel.org/20260630035221.146458-1-sj@kernel.org
+
+SJ Park (8):
+  mm/damon/core: safely validate src on damon_commit_ctx()
+  mm/damon/core: do parameter testing commit on damon_start()
+  mm/damon/sysfs: remove duplicated commit input validity check
+  mm/damon/reclaim: remove duplicated min_region_sz power of 2 check
+  mm/damon/lru_sort: remove duplicated min_region_sz power_of_2() check
+  mm/damon: document region size validation in damon_set_regions()
+  mm/damon/core: remove start, end check in
+    damon_set_region_system_rams()
+  mm/damon/sysfs: remove region size validation
+
+ include/linux/damon.h |  3 +-
+ mm/damon/core.c       | 79 ++++++++++++++++++++++++++++++++-----------
+ mm/damon/lru_sort.c   |  5 ---
+ mm/damon/reclaim.c    |  5 ---
+ mm/damon/sysfs.c      | 35 +------------------
+ 5 files changed, 63 insertions(+), 64 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: fe39036ef6a25f1ce6674c04188fd67fc53402e7
+-- 
+2.47.3
