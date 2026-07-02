@@ -1,43 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F01369D56
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 18:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0174E30C608;
+	Thu,  2 Jul 2026 19:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783018312; cv=none; b=DcHANfPQ+ntEDvXlQebIgDtfHOWw3GOhv8/C/PHqYA7lilGV14xaeEph27ohEYlnUovCBs0CxiLOWAjYv3MKrOjUVi+6zZ2JrFcfHAqyYmYUvXzkxogvbm0+AuFtf0+fnz5/MLGa7k+I7jezqSAaGQGLamQFScDKrawV2rc/yTQ=
+	t=1783021441; cv=none; b=LWSL8m0J+KU+QiKS8cYkI04kjNgl/Es2rkcusOvSzhCgCUfdi+y00MR8w1F7YUsxFXDTuEUesmafuePRdkiBh0kOOobkDEXa5Zq2RYUfectOZfjOY6kNPPxPURsDih02OMKPRYLTUxGWDU4fhmiXtsexPaD+UBE021/xNRm8jIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783018312; c=relaxed/simple;
-	bh=AdFH1hHbX852vPMJa/RntNJvPqr6Bhz4n/Yk4IKCIQ8=;
+	s=arc-20240116; t=1783021441; c=relaxed/simple;
+	bh=K6ycMzLM1OhJDXmJKhBtIyBS+Mkc3oO4tVw2ofZT9YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQ0ucXoE2bDcZeRuRcLAR9xhC33L3C1fDqfMhil1H7b/BwooelmOQYpu9qnJ59PboTueQpRVWjZnHBWGb2DbvHzU1rel7s8M3Hof5xDbHEna0brX5AXoBYFI89MZshAKcIwOI/0dw2m6VeqB/qeQopWFzB2e87LhvDDh3qjUK0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iQozmxJd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ILqFbhuKKg58qOG7evRn1KzQ/tL8pURD/YPCISpYlTEShbg1uSm8qpqB3/VozPDeL0zIbHsD7Fraeq2lalaBXWCMwnX0e7IKlvt/Af8Q5uSkkGtABZw36cdHSXgH9MocRfxMruqfovpPermjBLnp67ncst09u25caCJbvoXTUF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h0yrWKeM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iQozmxJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA611F000E9;
-	Thu,  2 Jul 2026 18:51:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h0yrWKeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9D51F00A3A;
+	Thu,  2 Jul 2026 19:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783018310;
-	bh=GRvPQ6/Z0g76HRnzKKDLecrWTfumsay2ZV4G7sApkk8=;
+	s=k20260515; t=1783021439;
+	bh=q2PsvY3R2LHOj6IcES5Ab5eU1XEwA3syZT/3P9Yzi04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iQozmxJdkoRbRH5oLgqkPWRBXd+Qnd82D6mUzoSS5n4Q6rQTo02sW3z9jkxnXDNtF
-	 776BYNsJFUH2Gm6HxCjpw3Xqf5qdYWHJssvWv+lKw+CZxzNkj+VAjXjHqCZ7YzyTfx
-	 ZF8bQlg18Pt/G9dwGXoeLoYSE9yR9alB8rt7l5XpXGXh3iBBsu7RjZ8BJ34KI5+K0U
-	 LlhTdioZY7ZLfHuXzHBceHgdWcbzQSEAocedZqJVsl/3UhnqFr3VsTYC0kHuBY7cEl
-	 fTnCTkoIoTeULVqalWWKq8qvkkdqo08zG6EwZBrAkP6MLJ28dhWHWLuiN1gmutMWJP
-	 uDp/y5CCWdbGA==
+	b=h0yrWKeMu9pwVpTJjikV0jmmd1jEtIMRZ+SZnV7SwS0BdLuCK1iKhdY/64SN7bas1
+	 3RrBgfdoK+hNu4xb9GVyAGtuljGeW68cliYQPstJ58lX2RvBcutSp4IsCMRJ4eTXvz
+	 cBnhrbOcrRAGIblXQ99ELUniJLxylQGRA01RJLQj41tXdMan+9Uw6Ca6bqSiyKNhj8
+	 DzjRx0tN7AuQKLdJLAunLiL4HHMkXl27XJnGa0r1UpdGsciLoJswaGZo5X8PwTS4sV
+	 o/EfsllG7pK0e0r/MMJk2ORwnn6JQ+lBbMP9r3sHDySAY+6dlFoycxmP0JeyehcI3m
+	 HtzduSrhZ3RVQ==
 From: SJ Park <sj@kernel.org>
 To: Lian Wang <lianux.mm@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	daichaobing@sangfor.com.cn,
-	kunwu.chan@gmail.com
-Subject: Re: [RESEND RFC PATCH v2 1/5] mm/damon: add target_order field for DAMOS_COLLAPSE
-Date: Thu,  2 Jul 2026 11:51:37 -0700
-Message-ID: <20260702185137.91227-1-sj@kernel.org>
+	kunwu.chan@gmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Barry Song <baohua@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RESEND RFC PATCH v2 2/5] mm/khugepaged: add damon_collapse_folio_range() for external callers
+Date: Thu,  2 Jul 2026 12:43:53 -0700
+Message-ID: <20260702194353.91778-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260702094633.75658-2-lianux.mm@gmail.com>
+In-Reply-To: <akZDj6s8U5_Mnetv@lucifer>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,222 +59,233 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu,  2 Jul 2026 17:46:29 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
+On Thu, 2 Jul 2026 12:07:01 +0100 Lorenzo Stoakes <ljs@kernel.org> wrote:
 
-> DAMOS_COLLAPSE currently collapses into PMD-size THP only.  Add a
-> target_order field to express per-order mTHP collapse intent.  Zero
-> means system default (PMD order, same as current behavior).  Valid
-> values are 0 and 2..HPAGE_PMD_ORDER.
-> 
-> Wire up the sysfs interface: a per-scheme rw file "target_order".
+> (+cc missing people again)
 
-Unless there is a name conflict, let's just call it "order".
-
-> Validate at store time that the value is in range, and warn at scheme
-> creation time if DAMOS_COLLAPSE is used with an unsupported non-PMD
-> order, resetting to 0.
-
-I'm working [1] on centralize the user parameter validations into core layer.
-It is fine to have this for now.  But once the core layer validation is merged
-into mm-new, let's use it for the validation.  That is, just let the user
-writes invalidate target order.  But eventual attempt to use that via
-damon_start() or damon_commit() will fail.
+Thank you for adding the recipients, and review, Lorenzo!
 
 > 
-> The actual mTHP application via the khugepaged wrapper will be added
-> in subsequent patches.
+> Sorry but we're not going to accept anything that exports THP logic like this at
+> all.
 > 
-> Co-developed-by: Kunwu Chan <kunwu.chan@gmail.com>
-> Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
-> Signed-off-by: Lian Wang <lianux.mm@gmail.com>
-> Signed-off-by: Lian Wang <lianux.wang@processmission.com>
-
-Having two Signed-off-by: looks odd.  If you want to give a credit to your
-employer, you can add that to your signature, like:
-
-Signed-off-by: Lian Wang (Your employer name) <lianux.mm@gmail.com>
-
-That's a de-facto standard in mm community.
-
-> ---
->  include/linux/damon.h    |  5 ++++
->  mm/damon/core.c          |  2 ++
->  mm/damon/sysfs-schemes.c | 61 ++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 68 insertions(+)
+> And a damon wrapper in core mm code is just a non-starter, so you really need to
+> rethink your approach.
 > 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 6f7edb3590ef..5a0587556573 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -572,6 +572,11 @@ struct damos_migrate_dests {
->  struct damos {
->  	struct damos_access_pattern pattern;
->  	enum damos_action action;
-> +	/*
-> +	 * @target_order: target order for mTHP actions (DAMOS_COLLAPSE).
-> +	 * 0 means system default (PMD order).  Valid: 0, 2..HPAGE_PMD_ORDER.
-> +	 */
-> +	unsigned int target_order;
->  	unsigned long apply_interval_us;
+> I think SJ already commented on this in your v1 from what I can see? I'd listen
+> to his advice on this :)
 
-Let's rename to 'order'.  And put it in the union having 'target_nid' and
-'migrate_dests'.
+Lorenzo is right.  Not disrupting the world outside of mm/damon/ is the first
+principle of DAMON development.  Sometimes we may have to make some changes
+outside of mm/damon/, but we MUST make it not disruptive, small, and perfectly
+aligned with the developers of the area with respects.
 
->  /* private: internal use only */
->  	/*
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 265d51ade25b..be54defd4646 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -579,6 +579,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
->  
->  	scheme->migrate_dests = (struct damos_migrate_dests){};
->  	scheme->target_nid = target_nid;
-> +	scheme->target_order = 0;
->  
->  	return scheme;
->  }
-> @@ -1278,6 +1279,7 @@ static int damos_commit(struct damos *dst, struct damos *src)
->  
->  	dst->wmarks = src->wmarks;
->  	dst->target_nid = src->target_nid;
-> +	dst->target_order = src->target_order;
->  
->  	err = damos_commit_dests(&dst->migrate_dests, &src->migrate_dests);
->  	if (err)
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 329cfd0bbe9f..7dcd582ded86 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
-> @@ -6,7 +6,9 @@
->   */
->  
->  #include <linux/slab.h>
-> +#include <linux/mm.h>
->  #include <linux/numa.h>
-> +#include <linux/huge_mm.h>
->  
->  #include "sysfs-common.h"
->  
-> @@ -2257,6 +2259,7 @@ struct damon_sysfs_scheme {
->  	struct damon_sysfs_stats *stats;
->  	struct damon_sysfs_scheme_regions *tried_regions;
->  	int target_nid;
-> +	unsigned int target_order;
+> 
+> On Thu, Jul 02, 2026 at 05:46:30PM +0800, Lian Wang wrote:
+> > Export a thin wrapper around collapse_huge_page() that allows external
+> > subsystems such as DAMON to trigger THP collapse on a target address
+> > range.
+> >
+> > Currently restricted to PMD order (HPAGE_PMD_ORDER), since
+> > collapse_huge_page() does not yet support arbitrary mTHP orders.
+> > The restriction can be relaxed when khugepaged gains mTHP support.
+> >
+> > The caller must hold a reference to @mm.  Do not hold mmap lock:
+> > collapse_huge_page() acquires mmap_read_lock for validation, releases
+> > it, then acquires mmap_write_lock for the actual collapse.  Holding
+> > an outer mmap_read_lock would cause a self-deadlock when the same
+> > thread attempts the inner mmap_write_lock.
+> >
+> > Co-developed-by: Kunwu Chan <kunwu.chan@gmail.com>
+> > Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
+> > Signed-off-by: Lian Wang <lianux.mm@gmail.com>
+> > Signed-off-by: Lian Wang <lianux.wang@processmission.com>
+> 
+> This patch is exporting internal mm logic without proper safeguards so it's just
+> not something we're going to accept, sorry.
+> 
+> (Also not sure it's correct to have multiple S-o-b for the same person (unless
+> re-tagging a backport or something)? I'm not sure though)
 
-Let's rename to 'order' if there is no problem.  Same for below.
+I agree to Lorenzo.
 
->  	struct damos_sysfs_dests *dests;
->  };
->  
-> @@ -2323,6 +2326,7 @@ static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
->  	scheme->action = action;
->  	scheme->apply_interval_us = apply_interval_us;
->  	scheme->target_nid = NUMA_NO_NODE;
-> +	scheme->target_order = 0;
->  	return scheme;
->  }
->  
-> @@ -2642,6 +2646,39 @@ static ssize_t target_nid_store(struct kobject *kobj,
->  	return err ? err : count;
->  }
->  
-> +static ssize_t target_order_show(struct kobject *kobj,
-> +		struct kobj_attribute *attr, char *buf)
-> +{
-> +	struct damon_sysfs_scheme *scheme = container_of(kobj,
-> +			struct damon_sysfs_scheme, kobj);
-> +
-> +	return sysfs_emit(buf, "%u\n", scheme->target_order);
-> +}
-> +
-> +static ssize_t target_order_store(struct kobject *kobj,
-> +		struct kobj_attribute *attr, const char *buf, size_t count)
-> +{
-> +	struct damon_sysfs_scheme *scheme = container_of(kobj,
-> +			struct damon_sysfs_scheme, kobj);
-> +	unsigned int val;
-> +	int err;
-> +
-> +	err = kstrtouint(buf, 0, &val);
-> +	if (err)
-> +		return err;
-> +
-> +#ifdef CONFIG_TRANSPARENT_HUGEPAGE
-> +	if (val != 0 && (val < 2 || val > HPAGE_PMD_ORDER))
-> +		return -EINVAL;
-> +#else
-> +	if (val != 0)
-> +		return -EINVAL;
-> +#endif
+As I replied [1] to patch 1, if you just want to give a credit to your
+employer, you could add your employer name on the single tag, like "Lian Wang
+(processssmission) <lianux.mm@gmail.com>".
 
-As I mentioned above, this should eventually removed in lieu of core layer
-parameters validation.
+If it is for ensure the replies goes to not only your private inbox but also
+corporate email inbox, you can simply Cc: your corporate email address.
 
-> +
-> +	scheme->target_order = val;
-> +	return count;
-> +}
-> +
->  static void damon_sysfs_scheme_release(struct kobject *kobj)
->  {
->  	kfree(container_of(kobj, struct damon_sysfs_scheme, kobj));
-> @@ -2656,10 +2693,14 @@ static struct kobj_attribute damon_sysfs_scheme_apply_interval_us_attr =
->  static struct kobj_attribute damon_sysfs_scheme_target_nid_attr =
->  		__ATTR_RW_MODE(target_nid, 0600);
->  
-> +static struct kobj_attribute damon_sysfs_scheme_target_order_attr =
-> +		__ATTR_RW_MODE(target_order, 0600);
-> +
->  static struct attribute *damon_sysfs_scheme_attrs[] = {
->  	&damon_sysfs_scheme_action_attr.attr,
->  	&damon_sysfs_scheme_apply_interval_us_attr.attr,
->  	&damon_sysfs_scheme_target_nid_attr.attr,
-> +	&damon_sysfs_scheme_target_order_attr.attr,
->  	NULL,
->  };
->  ATTRIBUTE_GROUPS(damon_sysfs_scheme);
-> @@ -2970,6 +3011,7 @@ static struct damos *damon_sysfs_mk_scheme(
->  	struct damon_sysfs_weights *sysfs_weights = sysfs_quotas->weights;
->  	struct damon_sysfs_watermarks *sysfs_wmarks = sysfs_scheme->watermarks;
->  	struct damos *scheme;
-> +	unsigned int target_order;
->  	int err;
->  
->  	struct damos_access_pattern pattern = {
-> @@ -3005,6 +3047,25 @@ static struct damos *damon_sysfs_mk_scheme(
->  	if (!scheme)
->  		return NULL;
->  
-> +	target_order = sysfs_scheme->target_order;
-> +
-> +#ifdef CONFIG_TRANSPARENT_HUGEPAGE
-> +	if (sysfs_scheme->action == DAMOS_COLLAPSE &&
-> +	    target_order != 0 &&
-> +	    target_order != HPAGE_PMD_ORDER) {
-> +		pr_warn("DAMON collapse: target_order %u not supported, only PMD order (%u) is available. Use 0 or %u.\n",
-> +			target_order,
-> +			HPAGE_PMD_ORDER, HPAGE_PMD_ORDER);
-> +		target_order = 0;
-> +	}
+> 
+> > ---
+> >  include/linux/khugepaged.h |  9 ++++++++
+> >  mm/khugepaged.c            | 46 ++++++++++++++++++++++++++++++++++++++
+> >  2 files changed, 55 insertions(+)
+> >
+> > diff --git a/include/linux/khugepaged.h b/include/linux/khugepaged.h
+> > index d7a9053ff4fe..f7d49cba712f 100644
+> > --- a/include/linux/khugepaged.h
+> > +++ b/include/linux/khugepaged.h
+> > @@ -20,6 +20,9 @@ extern bool current_is_khugepaged(void);
+> >  void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr,
+> >  		bool install_pmd);
+> >
+> > +int damon_collapse_folio_range(struct mm_struct *mm, unsigned long start_addr,
+> > +			       unsigned int target_order);
+> 
+> No thanks. We're not putting damon wrappers into core code. This is breaking the
+> abstraction and letting arbitrary users invoke internal mm logic.
 
-Ditto.  This validation should eventually be removed.
+I agree.  First of all, having something with 'damon_' prefix in khugepaged.h
+makes no sense.  If we have to expose something, maybe mm/internal.h could be
+considered in my opinion.  But for only DAMON usage, include/linux/khugepaged.h
+is definitely wrong.
 
-> +#else
-> +	if (sysfs_scheme->action == DAMOS_COLLAPSE && target_order != 0) {
-> +		pr_warn("DAMON collapse: target_order not supported without THP. Use 0.\n");
-> +		target_order = 0;
-> +	}
-> +#endif
-> +	scheme->target_order = target_order;
-> +
->  	err = damos_sysfs_add_quota_score(sysfs_quotas->goals, &scheme->quota);
->  	if (err) {
->  		damon_destroy_scheme(scheme);
+> 
+> Plus you're literally exporting this so it can be abused by drivers.
 
-Overall, looks good.
+I was raising my eyebrows here.  I show this patch adds EXPORT_SYMBOL_GPL() at
+the end.  Lorenzo is completely right.  I believe Lian added that only by a
+mistake.
 
-[1] https://lore.kerneel.org/20260701144815.113325-1-sj@kernel.org
+> 
+> > +
+> >  static inline void khugepaged_fork(struct mm_struct *mm, struct mm_struct *oldmm)
+> >  {
+> >  	if (mm_flags_test(MMF_VM_HUGEPAGE, oldmm))
+> > @@ -47,6 +50,12 @@ static inline void collapse_pte_mapped_thp(struct mm_struct *mm,
+> >  {
+> >  }
+> >
+> > +static inline int damon_collapse_folio_range(struct mm_struct *mm,
+> > +		unsigned long start_addr, unsigned int target_order)
+> > +{
+> > +	return -EINVAL;
+> > +}
+> > +
+> >  static inline void khugepaged_min_free_kbytes_update(void)
+> >  {
+> >  }
+> > diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+> > index 617bca76db49..7fe9ce1e0533 100644
+> > --- a/mm/khugepaged.c
+> > +++ b/mm/khugepaged.c
+> > @@ -3272,3 +3272,49 @@ int madvise_collapse(struct vm_area_struct *vma, unsigned long start,
+> >  	return thps == ((hend - hstart) >> HPAGE_PMD_SHIFT) ? 0
+> >  			: madvise_collapse_errno(last_fail);
+> >  }
+> > +
+> > +/**
+> > + * damon_collapse_folio_range() - Collapse base pages in range into a THP
+> > + * @mm:         mm_struct of the target process
+> > + * @start_addr: start address (must be order-aligned)
+> > + * @target_order: page order of the collapse result (currently only
+> > + *                HPAGE_PMD_ORDER is supported)
+> > + *
+> > + * Thin wrapper around collapse_huge_page() for external callers such as
+> > + * DAMON.  The caller must hold a reference to @mm.  Do not hold mmap
+> 
+> This is really fragile and bug bait.
+> 
+> > + * lock: collapse_huge_page() acquires mmap_read_lock for validation,
+> 
+> This is just gross, you're now collapsing based on an outdated concept of
+> what the current VMA state is...
+> 
+> You're also losing literally everything that madvise_collapse() does.
+> 
+> AND you're overriding THP limitations like max_ptes_none, which is horrible...
+> 
+> > + * releases it, then acquires mmap_write_lock for the collapse.  Holding
+> > + * an outer mmap_read_lock would self-deadlock.
+> 
+> This is a sign the interface is wrong!
+> 
+> > + *
+> > + * Return: 0 on success, -EINVAL on bad arguments, negative error from
+> > + *         madvise_collapse_errno() otherwise.
+> > + */
+> > +int damon_collapse_folio_range(struct mm_struct *mm, unsigned long start_addr,
+> > +			       unsigned int target_order)
+> > +{
+> > +	struct collapse_control *cc;
+> > +	enum scan_result result;
+> > +
+> > +	if (target_order != HPAGE_PMD_ORDER) {
+> > +		pr_warn_once("%s: only PMD order (%u) is supported, got %u\n",
+> > +			     __func__, HPAGE_PMD_ORDER, target_order);
+> > +		return -EINVAL;
+> > +	}
+> > +	if (start_addr & ((PAGE_SIZE << target_order) - 1))
+> > +		return -EINVAL;
+> > +
+> > +	cc = kmalloc_obj(*cc);
+> > +	if (!cc)
+> > +		return -ENOMEM;
+> > +	cc->is_khugepaged = false;
+> > +	cc->progress = 0;
+> > +
+> > +	lru_add_drain_all();
+> 
+> This is quite literally a copy/paste from madvise_collapse(). No no no :) code
+> duplication like this is also unacceptable.
+
+Thank you for kind review, Lorenzo.
+
+I believe Lorenzo's concerns are valid and should all be addressed before
+dropping RFC tag of this patch.  Also, if you "have to" post the next revision
+before addressing those to get reviews of changes on other parts of this
+series, let's make sure the fact is very clearly described.  In the way, we
+can avoid wasting time of reviewers.  For example, you could add a note like
+below at the beginning of the next revision of this patch.
+
+"""
+NOTE to THP reviewers: This patch is not yet addressing problems that are found
+on the previous revision.  This version is posted for review of only other
+parts in the series.  Please ignore this patch for now.
+"""
+
+> 
+> > +
+> > +	result = collapse_huge_page(mm, start_addr, 1, 0, cc, target_order);
+> > +	kfree(cc);
+> > +	if (result == SCAN_SUCCEED || result == SCAN_PMD_MAPPED)
+> > +		return 0;
+> > +	return madvise_collapse_errno(result);
+> > +}
+> > +EXPORT_SYMBOL_GPL(damon_collapse_folio_range);
+> 
+> We _definitely_ cannot have internal mm logic _exported_.
+
+I completely agree.  Please drop this from the next version.
+
+> 
+> Yeah sorry you need to rethink this.
+
+I wonder if we could extend madvise_collapse() for mTHP and use it.
+
+I initially thought this is a silly idea, but
+'Documentation/admin-guide/mm/transhuge.rst' is saying "currently",
+madvise_collapse only supports collapsing to PMD-sized THPs and does not attemp
+mTHP collapse.  It reads to me like supporting mTHP from MADV_COLLAPSE is a
+possible TODO.  And it makes sense to me.  Users who do MADV_COLLAPSE may want
+it to at least have a best-effort mTHP.  The interface of madvise_collapse() is
+already receiving arbitrary address range, so fit with DAMON's purpose.
+
+If supporting mTHP with MADV_THP is not a real TODO but just a silly idea that
+better not to be implemented, I wonder if we can split out the core of
+madvise_collapse(), extend it for mTHP, and expose it on mm/internal.h.
+
+I concern if the above idea makes call depth unnecessarily deep, though.  A
+shallower approach would be renaming madvise_collapse() to somewhat general (I
+fail at making an example, but whatever without maddvise_ prefix) and extending
+it for mTHP support.
+
+Off the topic of this patch, but I find 'madvise_collapse()' is declared in
+include/linux/huge_mm.h, while it is being used only inside mm/.  Would it make
+sense to move the declaration to mm/internal.h?
+
+[1] https://lore.kernel.org/20260702185137.91227-1-sj@kernel.org
 
 
 Thanks,
