@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76C433E36A
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 21:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76482391837
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 21:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783027208; cv=none; b=esWGRMN6k+IdRgr/pkGV3FOgC/UCh1mBwPIoPBwv/Xqqi96Mqkh8r2S9RwEAFpwX+lCrnffHKASoT2Z3ogxXV/04wPulphpogVM4btGC03yv45jPhcUvLbFR61PjVTvACFIbyWhpZwF0SCvImO+CiVP6bIePRlsE0ge6WEkuGNM=
+	t=1783027304; cv=none; b=tR8NC+A90pyk6oUDNiaYLrdRpLu6V2ZiJ6EcCRhywzdWEolEcoHIR6ZAYpb/BDHuGyQlq7RWqkZp+eeSz/mtqkHYhTKp3e9nM5BEJAmPeFKhYFBHfnytpZoE/9KC5slWBBFnv3XvOdkyx7O6SZotXL3LacAKr+g104EdFgJdvv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783027208; c=relaxed/simple;
-	bh=O9gaLHCW0xxo7LIWR74/WThzNCWWOSnx+PYx9O+4qmg=;
+	s=arc-20240116; t=1783027304; c=relaxed/simple;
+	bh=1iYn35bcZd3qWaolQzOxVQwPF0/SI9kgtguD5F0O9C0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=blbQvH50N/XEPNVM/4GOhd9/rHbS/eR6UxJHtMDOAe8kFWRJprjHI2UmTbMumOH1mYXesiQdfrUC9WSqA69MbHBKLSrDLk8aJCLfxZn1Im1wtA/CrkWgiG0qV+vXAGffLoX9q6GfPw9a4zD66NhZLt7+2cJOnzfdebYAi6CHPC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JPeAKo4o; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=A5Zw/pcYTkRDTbRso/AqJRRTrJ1VcVM0xvZn5GvH7mA9mCba3dr1J2c2r7OYcde8pMjOVpLI4qFXNpfOjFW9NE0CWooBbHWIU5V1ld08VKvdY7GEv4t0eNkBWJrJXMd2mQ02dF8b0KJTRWQtlWP3evt5TlQQ+LSjYBFiYY0RP60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KqxSqrdw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JPeAKo4o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3901F000E9;
-	Thu,  2 Jul 2026 21:20:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KqxSqrdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB6D1F00A3D;
+	Thu,  2 Jul 2026 21:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783027206;
-	bh=AvX6jsrUy03XMRkGASrBV6WGA8C+/kenz8CR83L6Io4=;
+	s=k20260515; t=1783027303;
+	bh=kLmqrdXcJzUJcsrshVq9gBoBPyLS6PxPtRJ6MRJdgCg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=JPeAKo4ozvsIW+24zRwy5h0ONBdEf6yGFm+zsicLCneUS3zvOIEO9VDchT7uSMIzJ
-	 os/aqDHmWOvsCj1t5QYkoxBwqmEMDMKnw/7lATGDJxFDEK5/BCJpNdv0RaMlCwRMGa
-	 iOTHL4VilARfD3Z9vw1Wtpx89lj6j8o0PZ98WvwUR54vKiM6Vy/ha0UkujqDduCzGy
-	 ZveDun+ZFfnfk0eEZtfUukD+6FV6NhoaoS/ZCOCmDjFgrP+tIQbF+5r4Ho494n0fRQ
-	 Rmwz0bcqNeyKe4TGQ4yii77a61LH1o3FrgGnUgIVNDNSQyXDy2FTffuU6Is/s0zNQF
-	 aXYPOhrpO4UDA==
+	b=KqxSqrdwErdTRLz5uNtV8kQ1UV7gNXRCkAiKpkYIuqAch1I03JEnC37JL2JoATE50
+	 i7tDCbhXxAkyfV8IJI8cm/XGbeXKJSlimAtcQ9epjmTiAgaafVZiPQQjgIS5W374KT
+	 G5NW5wOrg99u5CUoC/sS4i2cxdy0+DB+nGcN/8JF2AR6mxPBX6Xf2Y39tDcuy9k+CJ
+	 C19UhoBPOBE4A8xNIpCpfgCruhIILIjdO+i8xkeo15eZewmUyNvhF7FCmJuwa/GJD2
+	 f7FO4zNS4fSqtYBWYbsTCagvsceAFCWi1Ko8h0W684SKG7eNZlTOtv5TsuG3vKHDZg
+	 lzfds6mD6ArFQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 5/8] mm/damon/lru_sort: remove duplicated
- min_region_sz power_of_2() check
+Subject: Re: [RFC PATCH v1.1 1/8] mm/damon/core: safely validate src on
+ damon_commit_ctx()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260702210551.95167-6-sj@kernel.org>
+In-Reply-To: <20260702210551.95167-2-sj@kernel.org>
 References: <20260702210551.95167-1-sj@kernel.org>
- <20260702210551.95167-6-sj@kernel.org>
+ <20260702210551.95167-2-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 02 Jul 2026 21:20:05 +0000
-Message-Id: <20260702212005.EF3901F000E9@smtp.kernel.org>
+Date: Thu, 02 Jul 2026 21:21:42 +0000
+Message-Id: <20260702212143.0CB6D1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,66 +47,97 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] Removing the early validation of `min_region_sz` causes persistent=
- corruption of the `monitor_region_start` and `monitor_region_end` module p=
-arameters on failure.
+
+Pre-existing issues:
+- [High] damon_commit_ctx() silently corrupts the quota charging state of r=
+unning schemes.
 --
 
-commit 982a6b66f4f61086f3bd8de5a2da757081d4fa94
+commit b274d76c061808ff0cd97c6e9433199f816cc1de
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/lru_sort: remove duplicated min_region_sz power_of_2() check
+mm/damon/core: safely validate src on damon_commit_ctx()
 
-This commit removes an explicit power-of-two check on min_region_sz from
-damon_lru_sort_apply_parameters(), as the same validation is performed
-later in damon_commit_ctx().
+damon_commit_ctx() does its holistic parameter set validation while
+applying the new parameter in the set one by one.  If it finds a
+parameter is invalid, because some invalid parameters may already be
+committed (it is called "commit" but not atomic and irreversable), it
+stops the running DAMON context.
 
-> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> index 32f41491b726b..2dd0cd0d26273 100644
-> --- a/mm/damon/lru_sort.c
-> +++ b/mm/damon/lru_sort.c
-> @@ -284,11 +284,6 @@ static int damon_lru_sort_apply_parameters(void)
->  	param_ctx->addr_unit =3D addr_unit;
->  	param_ctx->min_region_sz =3D max(DAMON_MIN_REGION_SZ / addr_unit, 1);
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index c6fc35be633b3..b523a18a7b971 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+
+[ ... ]
+
+> @@ -1702,6 +1689,52 @@ int damon_commit_ctx(struct damon_ctx *dst, struct=
+ damon_ctx *src)
+>  	return 0;
+>  }
 > =20
-> -	if (!is_power_of_2(param_ctx->min_region_sz)) {
-> -		err =3D -EINVAL;
-> -		goto out;
-> -	}
-> -
+> +static struct damon_ctx *damon_new_test_ctx(struct damon_ctx *dst)
+> +{
+> +	struct damon_ctx *test_ctx;
+> +	int err;
+> +
+> +	test_ctx =3D damon_new_ctx();
+> +	if (!test_ctx)
+> +		return NULL;
+> +	err =3D __damon_commit_ctx(test_ctx, dst);
 
 [Severity: High]
-Does removing this early validation allow execution to proceed with an inva=
-lid
-addr_unit?
+This is a pre-existing issue, but does this unintentionally corrupt the run=
+ning
+quota state?
 
-If the monitor_region_start and monitor_region_end parameters are 0
-(the default, triggering auto-detection), they are overwritten in-place
-with system bounds scaled by the invalid addr_unit when this function
-is called later in damon_lru_sort_apply_parameters():
+When __damon_commit_ctx() is called with the running context (dst) as the
+source, it copies the schemes via damon_commit_schemes(), which calls
+damon_new_scheme() and passes a pointer to the active scheme's quota:
 
-	err =3D damon_set_region_system_rams_default(param_target,
-					&monitor_region_start,
-					&monitor_region_end,
-					param_ctx->addr_unit,
-					param_ctx->min_region_sz);
+mm/damon/core.c:damon_commit_schemes() {
+	...
+	new_scheme =3D damon_new_scheme(&src_scheme->pattern,
+				src_scheme->action,
+				src_scheme->apply_interval_us,
+				&src_scheme->quota, &src_scheme->wmarks,
+				NUMA_NO_NODE);
+	...
+}
 
-When damon_commit_ctx() later rejects the configuration and returns -EINVAL,
-these corrupted values are not reverted.
+damon_new_scheme() then calls damos_quota_init() on that provided quota
+pointer:
 
-If a user then corrects addr_unit and applies again, will the now non-zero
-parameters bypass auto-detection and get scaled again? This could cause
-DAMON to monitor an incorrect and massive physical address range, forcing
-the kdamond thread into a long pfn_valid() loop that consumes excessive CPU.
+mm/damon/core.c:damon_new_scheme() {
+	...
+	scheme->quota =3D *(damos_quota_init(quota));
+	...
+}
 
-Is the same state corruption possible in mm/damon/reclaim.c:
-damon_reclaim_apply_parameters() due to a similar removal of the early
-power-of-two check?
+damos_quota_init() zeroes out the fields in-place:
 
->  	if (!damon_lru_sort_mon_attrs.sample_interval) {
->  		err =3D -EINVAL;
->  		goto out;
+mm/damon/core.c:damos_quota_init() {
+	...
+	quota->esz =3D 0;
+	quota->total_charged_sz =3D 0;
+	...
+}
+
+This mutates the running scheme's quota state, which would make the quota
+effectively "full" mid-interval and prevent the scheme from applying its
+actions until the next reset interval.
+
+Since this patch moves this test context logic into the core
+damon_commit_ctx(), doesn't this expose all API users like damon_reclaim
+and damon_lru_sort to this state corruption when parameters are committed?
+
+> +	if (err) {
+> +		damon_destroy_ctx(test_ctx);
+> +		return NULL;
+> +	}
+> +	return test_ctx;
+> +}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260702210551.9516=
-7-1-sj@kernel.org?part=3D5
+7-1-sj@kernel.org?part=3D1
