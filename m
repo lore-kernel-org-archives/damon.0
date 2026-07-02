@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BC633D4EC
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 18:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F01369D56
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 18:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783017361; cv=none; b=qopxqG3obI+zqYmbkcGZkfC6IL4dVsHKccI5SxbeH1f46oQBCaxwYO1kABgg2Kg+lCwt9my0Bw2+T/c8kaCB7/4KWU+Oeb3a0ZLzEdJ7xDPzUHW1yWHbDsgnmAuoqQKJEaaiNWIqjskRL6NZUyTPK3cSypUXPjczs6tSWOXJxlU=
+	t=1783018312; cv=none; b=DcHANfPQ+ntEDvXlQebIgDtfHOWw3GOhv8/C/PHqYA7lilGV14xaeEph27ohEYlnUovCBs0CxiLOWAjYv3MKrOjUVi+6zZ2JrFcfHAqyYmYUvXzkxogvbm0+AuFtf0+fnz5/MLGa7k+I7jezqSAaGQGLamQFScDKrawV2rc/yTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783017361; c=relaxed/simple;
-	bh=zeiGrdl78sD8QoA/g9RwDHYhQDmw5Djm2BxciEk/GxI=;
+	s=arc-20240116; t=1783018312; c=relaxed/simple;
+	bh=AdFH1hHbX852vPMJa/RntNJvPqr6Bhz4n/Yk4IKCIQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayo+7JixRQW8FEpYjqxLGYIVEDYpeyeiMrXZ2jHPXmNHd9XU0DyEvA71DSlcjucTjFqIp72pCLjz7WTuEXzZUSnH/vFwtl8uo7/K0FcEjjQdtGVWq3bOpYHdXYCR7X2vS2JbHBYQyZtdfT/RMEYbCkcFDoLa39CuvtyHPJNr6AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=habG5SnP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WQ0ucXoE2bDcZeRuRcLAR9xhC33L3C1fDqfMhil1H7b/BwooelmOQYpu9qnJ59PboTueQpRVWjZnHBWGb2DbvHzU1rel7s8M3Hof5xDbHEna0brX5AXoBYFI89MZshAKcIwOI/0dw2m6VeqB/qeQopWFzB2e87LhvDDh3qjUK0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iQozmxJd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="habG5SnP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415521F000E9;
-	Thu,  2 Jul 2026 18:35:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iQozmxJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA611F000E9;
+	Thu,  2 Jul 2026 18:51:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783017359;
-	bh=lEqziiIB4STneFn12q0ZQvXJ95tO62sFkbvLi/w3KcM=;
+	s=k20260515; t=1783018310;
+	bh=GRvPQ6/Z0g76HRnzKKDLecrWTfumsay2ZV4G7sApkk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=habG5SnPRwBjGuNNiw9jEqc0+C6Ndk6h6wRFg5GBqSO6f3xfjTjfq7FiWxlBZPZPH
-	 9mQBkVPUQFi5C9J5oQtIx94gB3kqgwAPh65c1trImbbDHfInpc5wXEmJGUSVCD/Pzz
-	 4dxqKikxjQZtWyfIRJMd08GNrzRWLRCGmT2ls3L1QLF0N0CZwywddhHZL+omWU5VKv
-	 gk8vBFWqYN58IrG4gYbmqVRxMDSlb5ALt7dwKS2yE9HBSgyO+lBrspQzRS6WximyxB
-	 AUvNpXK0B8vCHFfJQEfo6R0SVQBLuqJI9glQt0TjxH01nWfduZRiTqyagfUQACgo7K
-	 v4vcxUGXVik5A==
+	b=iQozmxJdkoRbRH5oLgqkPWRBXd+Qnd82D6mUzoSS5n4Q6rQTo02sW3z9jkxnXDNtF
+	 776BYNsJFUH2Gm6HxCjpw3Xqf5qdYWHJssvWv+lKw+CZxzNkj+VAjXjHqCZ7YzyTfx
+	 ZF8bQlg18Pt/G9dwGXoeLoYSE9yR9alB8rt7l5XpXGXh3iBBsu7RjZ8BJ34KI5+K0U
+	 LlhTdioZY7ZLfHuXzHBceHgdWcbzQSEAocedZqJVsl/3UhnqFr3VsTYC0kHuBY7cEl
+	 fTnCTkoIoTeULVqalWWKq8qvkkdqo08zG6EwZBrAkP6MLJ28dhWHWLuiN1gmutMWJP
+	 uDp/y5CCWdbGA==
 From: SJ Park <sj@kernel.org>
 To: Lian Wang <lianux.mm@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
@@ -33,11 +33,11 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	daichaobing@sangfor.com.cn,
 	kunwu.chan@gmail.com
-Subject: Re: [RESEND RFC PATCH v2 0/5] mm/damon: add mTHP collapse and split actions
-Date: Thu,  2 Jul 2026 11:35:51 -0700
-Message-ID: <20260702183551.91007-1-sj@kernel.org>
+Subject: Re: [RESEND RFC PATCH v2 1/5] mm/damon: add target_order field for DAMOS_COLLAPSE
+Date: Thu,  2 Jul 2026 11:51:37 -0700
+Message-ID: <20260702185137.91227-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260702094633.75658-1-lianux.mm@gmail.com>
+In-Reply-To: <20260702094633.75658-2-lianux.mm@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,280 +47,222 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu,  2 Jul 2026 17:46:28 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
+On Thu,  2 Jul 2026 17:46:29 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
 
-> Resend of v2 with the RFC tag restored (v1 was RFC PATCH, so v2 should
-> be RFC PATCH v2).
+> DAMOS_COLLAPSE currently collapses into PMD-size THP only.  Add a
+> target_order field to express per-order mTHP collapse intent.  Zero
+> means system default (PMD order, same as current behavior).  Valid
+> values are 0 and 2..HPAGE_PMD_ORDER.
 > 
-> This resend also includes fixes for issues identified during review of
-> the earlier mis-sent PATCH v2 thread: uninitialized memory, TOCTOU
-> races, BUILD_BUG guards, missing sysfs action name registration, and
-> stack allocation overflow.  The series has been re-tested on aarch64
-> (anonymous and file-backed THP split) and is checkpatch clean.
-> 
-> v1: https://lore.kernel.org/linux-mm/20260618094838.32805-1-lianux.mm@gmail.com/
+> Wire up the sysfs interface: a per-scheme rw file "target_order".
 
-Let's call it 'RFC v1'.
+Unless there is a name conflict, let's just call it "order".
 
-> 
-> Changes since v1
+> Validate at store time that the value is in range, and warn at scheme
+> creation time if DAMOS_COLLAPSE is used with an unsupported non-PMD
+> order, resetting to 0.
 
-Ditto.
-
-> 
->  - Rename DAMOS_MTHP_SPLIT -> DAMOS_SPLIT for naming consistency with
->    the existing actions (per SJ's review).
->  - Drop the per-scheme hot_threshold field.  Hotness policy does not
->    belong in the kernel; target selection now lives in user space and
->    is expressed to DAMOS via the address filter (per SJ's review).
->  - Drop the v1 SPE debugfs patch entirely.  debugfs is not the right
->    interface for a feature, and the SPE profiler belongs in user space
->    (see "User-space target selection" below).  v2 is kernel mechanism
->    only: 5 patches.
->  - Decouple T1 (a lab observation) from T2 (the production issue), and
->    correct the architecture claim: ptep_test_and_clear_young() skips
->    the TLB flush on both x86_64 and arm64, so the blind spot is
->    architecture-independent rather than arm64-only.
->  - Terminology: avoid "stale TLB".  A valid TLB entry is doing its
->    job; the point is only that it lets the CPU satisfy a translation
->    without a page-table walk, so the Accessed bit cleared by DAMON is
->    not re-set.
-
-Thank you for detailed changelog.  This is helpful for reviewers.
-> 
-> Background
-> 
-> Two effects degrade DAMON's PTE-Accessed-bit (AF) signal once THP is
-> in play.  Both are described here as motivation only; this series does
-> not change the AF monitoring path.
-> 
-> T2 -- PMD-granularity inflation (production issue)
-
-I think it is better to call this T1, for readers.
+I'm working [1] on centralize the user parameter validations into core layer.
+It is fine to have this for now.  But once the core layer validation is merged
+into mm-new, let's use it for the validation.  That is, just let the user
+writes invalidate target order.  But eventual attempt to use that via
+damon_start() or damon_commit() will fail.
 
 > 
-> A 2MB THP is tracked by a single PMD-level Accessed bit.  One access
-> to any 4KB sub-page sets the AF for the whole 2MB, so DAMON reports
-> the entire THP as hot and cannot distinguish a genuinely hot 2MB
-> region from a 2MB region with a single hot 4KB page.  Cold memory
-> hides inside "hot" THPs, and access-driven pageout/migration becomes
-> coarse.
+> The actual mTHP application via the khugepaged wrapper will be added
+> in subsequent patches.
 > 
-> This is the workload that drove the work: Sangfor's Kunpeng 920 KVM
-> hosts running Oracle.  ARM SPE sampling of that workload shows 94.6%
-> of THPs have fewer than 10% of their sub-pages actually accessed.
+> Co-developed-by: Kunwu Chan <kunwu.chan@gmail.com>
+> Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
+> Signed-off-by: Lian Wang <lianux.mm@gmail.com>
+> Signed-off-by: Lian Wang <lianux.wang@processmission.com>
 
-Cool finding, thank you for sharing.  What DB workloads were running there?
-Real production workload?  Or, synthetic benchmarks?
+Having two Signed-off-by: looks odd.  If you want to give a credit to your
+employer, you can add that to your signature, like:
 
-On the first read, I was wondering how you did ARM SPE sampling.  After reading
-this mail to the end, I now understand you use perf.  Briefly mentioning that
-here would  be nice.  E.g., "ARM SPE sampling of that worklaod using perf shows
-..."
+Signed-off-by: Lian Wang (Your employer name) <lianux.mm@gmail.com>
 
+That's a de-facto standard in mm community.
+
+> ---
+>  include/linux/damon.h    |  5 ++++
+>  mm/damon/core.c          |  2 ++
+>  mm/damon/sysfs-schemes.c | 61 ++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 68 insertions(+)
 > 
-> T1 -- TLB-reach blind spot (lab observation)
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 6f7edb3590ef..5a0587556573 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -572,6 +572,11 @@ struct damos_migrate_dests {
+>  struct damos {
+>  	struct damos_access_pattern pattern;
+>  	enum damos_action action;
+> +	/*
+> +	 * @target_order: target order for mTHP actions (DAMOS_COLLAPSE).
+> +	 * 0 means system default (PMD order).  Valid: 0, 2..HPAGE_PMD_ORDER.
+> +	 */
+> +	unsigned int target_order;
+>  	unsigned long apply_interval_us;
 
-I think it is better to call this T2, for readers.
+Let's rename to 'order'.  And put it in the union having 'target_nid' and
+'migrate_dests'.
 
-> 
-> When the working set fits within L2 TLB reach (measured at 2048
-> entries x 2MB = 4GB on Kunpeng 920; no public data available), the
-> CPU satisfies translations entirely from the TLB,
-> preventing translation table walks.  Because
-> ptep_test_and_clear_young() does not flush
+>  /* private: internal use only */
+>  	/*
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 265d51ade25b..be54defd4646 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -579,6 +579,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
+>  
+>  	scheme->migrate_dests = (struct damos_migrate_dests){};
+>  	scheme->target_nid = target_nid;
+> +	scheme->target_order = 0;
+>  
+>  	return scheme;
+>  }
+> @@ -1278,6 +1279,7 @@ static int damos_commit(struct damos *dst, struct damos *src)
+>  
+>  	dst->wmarks = src->wmarks;
+>  	dst->target_nid = src->target_nid;
+> +	dst->target_order = src->target_order;
+>  
+>  	err = damos_commit_dests(&dst->migrate_dests, &src->migrate_dests);
+>  	if (err)
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 329cfd0bbe9f..7dcd582ded86 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+> @@ -6,7 +6,9 @@
+>   */
+>  
+>  #include <linux/slab.h>
+> +#include <linux/mm.h>
+>  #include <linux/numa.h>
+> +#include <linux/huge_mm.h>
+>  
+>  #include "sysfs-common.h"
+>  
+> @@ -2257,6 +2259,7 @@ struct damon_sysfs_scheme {
+>  	struct damon_sysfs_stats *stats;
+>  	struct damon_sysfs_scheme_regions *tried_regions;
+>  	int target_nid;
+> +	unsigned int target_order;
 
-Wrapping text for the max columns is nice.  But let's not wrap it early when
-there are spaces.  That could reduce space, and even carbon emissions from
-people who want to read this nice cover letter after printing out on a paper.
+Let's rename to 'order' if there is no problem.  Same for below.
 
-> the TLB, valid TLB entries continue to satisfy translations and the
-> AF that DAMON cleared is never re-set, so DAMON sees nr_accesses=0 for
-> memory that is in fact hot, and no scheme triggers.  This reproduces
-> in the lab with small workloads; it is not something we have seen
-> reported from production, where working sets exceed TLB reach.
-> 
-> What this series adds
-> 
-> Rather than change AF monitoring, this series adds two order-aware
-> DAMOS actions so a policy layer can act at mTHP granularity:
+>  	struct damos_sysfs_dests *dests;
+>  };
+>  
+> @@ -2323,6 +2326,7 @@ static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
+>  	scheme->action = action;
+>  	scheme->apply_interval_us = apply_interval_us;
+>  	scheme->target_nid = NUMA_NO_NODE;
+> +	scheme->target_order = 0;
+>  	return scheme;
+>  }
+>  
+> @@ -2642,6 +2646,39 @@ static ssize_t target_nid_store(struct kobject *kobj,
+>  	return err ? err : count;
+>  }
+>  
+> +static ssize_t target_order_show(struct kobject *kobj,
+> +		struct kobj_attribute *attr, char *buf)
+> +{
+> +	struct damon_sysfs_scheme *scheme = container_of(kobj,
+> +			struct damon_sysfs_scheme, kobj);
+> +
+> +	return sysfs_emit(buf, "%u\n", scheme->target_order);
+> +}
+> +
+> +static ssize_t target_order_store(struct kobject *kobj,
+> +		struct kobj_attribute *attr, const char *buf, size_t count)
+> +{
+> +	struct damon_sysfs_scheme *scheme = container_of(kobj,
+> +			struct damon_sysfs_scheme, kobj);
+> +	unsigned int val;
+> +	int err;
+> +
+> +	err = kstrtouint(buf, 0, &val);
+> +	if (err)
+> +		return err;
+> +
+> +#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+> +	if (val != 0 && (val < 2 || val > HPAGE_PMD_ORDER))
+> +		return -EINVAL;
+> +#else
+> +	if (val != 0)
+> +		return -EINVAL;
+> +#endif
 
-The background explained rooms to improve in DAMON's THP access "monitoring".
-And this patch series is proposing adding new DAMOS actions for THP "handling".
-Those are two unrelated things.
+As I mentioned above, this should eventually removed in lieu of core layer
+parameters validation.
 
-I really appreciate sharing your findings with the background, but as those are
-not related to the proposal, I think it is better to be shared in a different
-way.
+> +
+> +	scheme->target_order = val;
+> +	return count;
+> +}
+> +
+>  static void damon_sysfs_scheme_release(struct kobject *kobj)
+>  {
+>  	kfree(container_of(kobj, struct damon_sysfs_scheme, kobj));
+> @@ -2656,10 +2693,14 @@ static struct kobj_attribute damon_sysfs_scheme_apply_interval_us_attr =
+>  static struct kobj_attribute damon_sysfs_scheme_target_nid_attr =
+>  		__ATTR_RW_MODE(target_nid, 0600);
+>  
+> +static struct kobj_attribute damon_sysfs_scheme_target_order_attr =
+> +		__ATTR_RW_MODE(target_order, 0600);
+> +
+>  static struct attribute *damon_sysfs_scheme_attrs[] = {
+>  	&damon_sysfs_scheme_action_attr.attr,
+>  	&damon_sysfs_scheme_apply_interval_us_attr.attr,
+>  	&damon_sysfs_scheme_target_nid_attr.attr,
+> +	&damon_sysfs_scheme_target_order_attr.attr,
+>  	NULL,
+>  };
+>  ATTRIBUTE_GROUPS(damon_sysfs_scheme);
+> @@ -2970,6 +3011,7 @@ static struct damos *damon_sysfs_mk_scheme(
+>  	struct damon_sysfs_weights *sysfs_weights = sysfs_quotas->weights;
+>  	struct damon_sysfs_watermarks *sysfs_wmarks = sysfs_scheme->watermarks;
+>  	struct damos *scheme;
+> +	unsigned int target_order;
+>  	int err;
+>  
+>  	struct damos_access_pattern pattern = {
+> @@ -3005,6 +3047,25 @@ static struct damos *damon_sysfs_mk_scheme(
+>  	if (!scheme)
+>  		return NULL;
+>  
+> +	target_order = sysfs_scheme->target_order;
+> +
+> +#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+> +	if (sysfs_scheme->action == DAMOS_COLLAPSE &&
+> +	    target_order != 0 &&
+> +	    target_order != HPAGE_PMD_ORDER) {
+> +		pr_warn("DAMON collapse: target_order %u not supported, only PMD order (%u) is available. Use 0 or %u.\n",
+> +			target_order,
+> +			HPAGE_PMD_ORDER, HPAGE_PMD_ORDER);
+> +		target_order = 0;
+> +	}
 
-I understand you are proposing this change because you know DAMON's hugepages
-monitoring is imperfect, but still useful enough to get some benefits.  If
-there were some findings that made you to think so, that could be good
-background.
+Ditto.  This validation should eventually be removed.
 
-Also, you may have a reason to believe it is a good idea to use larger mTHP for
-hot pages, and smaller mTHP for cold pages.  If so, and the description of the
-reason is not trivial, that could be good materials to add on background.
+> +#else
+> +	if (sysfs_scheme->action == DAMOS_COLLAPSE && target_order != 0) {
+> +		pr_warn("DAMON collapse: target_order not supported without THP. Use 0.\n");
+> +		target_order = 0;
+> +	}
+> +#endif
+> +	scheme->target_order = target_order;
+> +
+>  	err = damos_sysfs_add_quota_score(sysfs_quotas->goals, &scheme->quota);
+>  	if (err) {
+>  		damon_destroy_scheme(scheme);
 
-> 
->  - DAMOS_COLLAPSE + target_order (patches 1-3): collapse small folios
+Overall, looks good.
 
-This reads like you are introducing a new DAMOS action.  You indeed mentioned
-"this series adds two order-aware DAMOS actions".  That's not completely wrong
-in a sense, but more technically speaking you are adding a new mode of
-DAMOS_COLLAPSE.  I'd recommend rephrasing to "extend" DAMOS_COLLAPSE..
-
->    up to a chosen mTHP order.  Patch 1 adds the target_order field and
->    its sysfs file; patch 2 exports a khugepaged helper
->    (damon_collapse_folio_range());
-
-So patch 2 modifies khugepaged?  As Lorenzo mentioned on the other reply, that
-change should also be reviewed by THP developers on MAINTAINERS file.  Please
-ensure adding THP developers to the recipients list of the patch and this cover
-letter.
-
-The patch adds damon_collapse_folio_range() to khugepaged.h.  I understand
-DAMON is the only user for now, and therefore you are adding damon_ prefix to
-the name.  Not necesasrily DAMON is the only user forever.  And having damon_
-prefix in a land outside of DAMON feels weird.  To be consistent with other
-functions like collapse_pte_mapped_thp(), I'd suggest dropping the prefix from
-the name.
-
->    patch 3 wires the vaddr handler.
-> 
->  - DAMOS_SPLIT + target_order (patches 4-5): split large folios down
->    to a chosen mTHP order via split_folio_to_order(), for both
->    anonymous and file-backed (tmpfs/shmem) folios.
-> 
-> The two are complementary, not competing:
-> 
->    THP=never  + DAMOS_COLLAPSE: start at 4KB, grow hot regions up.
->    THP=always + DAMOS_SPLIT:    start at 2MB, shrink cold regions down.
-> 
-> This dual-path design aligns with ideas discussed with Asier
-> Gutierrez; we plan to unify our mTHP automation and evaluation
-> roadmaps under this standard DAMOS_SPLIT action.
-> 
-> A deployment can pick either baseline, or run both, and let DAMOS
-> manage the placement.  THP is still wanted for the hot working set
-> (fewer TLB misses, shallower walks); the goal is not "no THP" but
-> "THP where it is hot, small pages where it is cold."
-
-I think this is a good idea.  Could you further elaborate what benefit users
-can get from this in more detail, though?  Off the top of my head, I can expect
-the benefits would be 1) less TLB miss from hot data, and 2) less mTHP
-allocation failures from cold data occupying phsically contiguous memory.  But
-you might showing even more benefits.    Anyway I think those are better to be
-widely known by our kernel users.  Some of those may better to be put on the
-background section.
-
-> 
-> User-space target selection
-> 
-> The decision of *which* regions to collapse or split is left to user
-> space and fed to DAMOS through the existing DAMOS address filter
-> (DAMOS_FILTER_TYPE_ADDR) -- the interface suggested during v1 review.
-> The kernel provides the mechanism; user space provides the policy,
-> consistent with the perf/BPF "kernel samples, user space decides"
-> model and with the DAMON-X direction.
-> 
-> Because the AF signal is unreliable at PMD granularity (T1/T2), the
-> scheme is run with min_nr_accesses=0 so it does not gate on access
-> count, and the address filter selects targets.  min_nr_accesses=0 is
-> also what unblocks the T1 case, where nr_accesses is pinned at 0.
-
-Oh, so you are saying DAMON's huge pages monitoring is too problematic to use
-as-is, for your use case.  That's completely fair.  And that explains what you
-really want to do.  But this whole pictur is better to be described earlier
-than your changes proposal.
-
-From the beginning, explain why using larger mTHP for hot pages and smaller
-mTHP for cold pages are good idea.  After that, explain how DAMON can be
-extended for doing that.  Then, you can further explain your T1 and T2 findings
-that explain why DAMON-only appraoch is not feasible, and how user-space target
-selection can overcome it.
-
-Also, I understand DAMON-only approach is not optimum or just useless for your
-aimed use case.  But, is it completely useless for every possible use case?  I
-think it might still provide some benefit in some use cases.  Could you pleae
-clarify this point more in detail?  If you have data showing how useless
-DAMON-only appraoch is, and how user space approach improves, it would be
-awesome.
-
-> 
-> Why not just turn khugepaged off?  You can, but khugepaged is global
-> and usually left enabled because other workloads rely on it; it cannot
-> be disabled per region.  DAMOS_COLLAPSE gives per-region,
-> access-pattern-driven collapse -- a more precise, targeted complement
-> to khugepaged's global scan, not a replacement for it.  To handle the
-> runtime race where khugepaged might aggressively re-collapse what
-> DAMOS_SPLIT just split, we are evaluating a precise VMA-level handshake
-> or back-off mechanism to prevent ping-pong effects in mixed
-> environments.
-
-Good reasoning.  However, khugepaged can be turned off per process, using
-prctl().  How about turning khugepaged off for the process you want to use
-DAMOS_COLLAPSE/SPLIT for?
-
-> 
-> Two user-space data sources produce the candidate address ranges:
-> 
->  1. ARM SPE (ARMv8.2+): perf record (SPE) -> per-2MB hot-fraction
->     histogram -> PA->VA via /proc/<pid>/pagemap -> sparse-THP VA
->     ranges.  SPE reads physical addresses from the CPU pipeline,
->     bypassing the TLB and page tables, so it is immune to T1 and T2.
-> 
->  2. smaps fallback (no SPE): scan /proc/<pid>/smaps for THP-backed
->     VMAs and treat the 2MB-aligned ranges as split candidates.
-> 
-> The SPE profiler stays in user space deliberately: the SPE PMU is a
-> single-consumer resource, so a kernel consumer would lock out
-> user-space perf and tooling (x86 PEBS / AMD IBS have the same
-> property).  Keeping it in user space avoids that and keeps the metric
-> source pluggable, in line with DAMON-X.
-
-Maybe you are mentioning the perf events based DAMON, not DAMON-X.
-
-And I understand you plan to extend DAMON to use ARM SPE, on top of the perf
-events based DAMON as a future work.  As I mentioned before, I think that makes
-perfect sense and I'm aligned.  Maybe this paragraph can bit reworded to make
-it more clear, though.
-
-> This is why v2 drops the v1
-> SPE debugfs patch.
-> 
-> Testing
-> 
-> Tested on aarch64 with this series applied to 7.1.0-rc5, THP=always,
-> using a DAMOS_SPLIT scheme (target_order=2, min_nr_accesses=0) and a
-> single DAMOS address filter selecting one 2MB-aligned range:
-> 
->  - Anonymous THP: the filter splits exactly that one THP --
->    sz_applied=2MB and AnonHugePages drops by 2MB, the rest of the
->    256MB mapping untouched.
->  - File-backed THP (tmpfs/shmem mounted huge=always): the same setup
->    splits exactly one 2MB shmem THP -- sz_applied=2MB and
->    ShmemPmdMapped drops by 2MB.  This confirms split_folio_to_order()
->    works for shmem folios (the KVM-guest-on-THP-tmpfs case).
->  - The address filter is what bounds the action: sz_tried covers the
->    whole ~2GB monitored region while sz_applied is exactly the 2MB the
->    filter selected.
->  - A smaps-based path (for hosts without SPE) enumerates THP-backed
->    ranges and splits all THP in the target workload.
->  - checkpatch clean on all 5 patches.
-
-So, you tested only split part, for functionality.  Do you have plans to
-further test collapse part, and performance?
-
-> 
-> Test scripts and SPE-to-DAMON pipeline tools:
-> https://github.com/lianux-mm/damon_spe/tree/v2
-
-Thank you for sharing the code!
-
-So, I find rooms to improve on this cover letter for the readability and
-clarity of the idea.  But as I mentioned before, I like the overall idea of
-this series.
+[1] https://lore.kerneel.org/20260701144815.113325-1-sj@kernel.org
 
 
 Thanks,
