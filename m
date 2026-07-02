@@ -1,238 +1,110 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BB13A4267
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:37:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320723939C2
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782988644; cv=none; b=adPt2JLXCiMQ3xlbrsJjJeiLmhmG9QmMs7CNcEfe2+ubBRdk1DBSKKdRPY6yezZcZ13NP2oDmIc/cwCeaIjMS+np6LYzcl+z8xclYcUlzN2qneTTmyDIr6TT9OCmgjYedS9Knw4HgJn9+DgilgmPjiKKFwUE10Q5/0BfEJ+C15k=
+	t=1782988873; cv=none; b=dV32YzPJR3MVwqY19+5tSF2zkXeGDFBtsUjNc2Boeoa33ZAr9tXcYHPYvFmbmHvJePEcZ7FarUp3LkkTmTcxOo3m5WuwODuSE/J7LlUMBP2ClfEN3uFHiTruqRi8EHNBZxbGX9tEG4NnZbbLJgvrQv+eywXFLuGf3tzDDXkOwOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782988644; c=relaxed/simple;
-	bh=+KQX16ped1r/1I89bM4qTRjZccy6cVbjtQ6QZbCT7VU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ob6UKbxtDWdUt5L5g2fkFLba3of5q+xo3vNIxwstlOmbGhNMjhGnwpLkUuzZG5VJbwGUg2nNtQEywvyq94dAfiNFsewH6HOHs57GibxhX0TTdrccigiMoHGoZUIkC+p0C1k2MWgdZ6waqJ0ryHtSGMmmC8PceyfpPkC6NlNmSps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=kE2mS3r+; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=D+60qnzp; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oONF3XqM; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0UKXLPaB; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1782988873; c=relaxed/simple;
+	bh=jDQoIXsbwOvjrCng4gu/qIcBGVt0XAmT1jLY6FGFHPM=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=GFs4T6/dIjvPYpC30wI3fjfYKolydJ+gNXeiVYMmYFr0OAMzmwhP6tr+aTZBd0Dgcc7OLpXjqSNk4SrjGAv87G6TS8nKO8Ooq1Q8l1PGTSHe9emD1476+k1+heegK2aa1dzsg0pUF+dAtzk05SIiVg873ffWTcmpSH6YPBlYHAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CLqneaHU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="kE2mS3r+";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="D+60qnzp";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oONF3XqM";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="0UKXLPaB"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 1F52D74140;
-	Thu,  2 Jul 2026 10:37:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782988638; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+xpjuJ3xq8ZwM9C98H0+/B2HgccrB/M755Ut4TioEwI=;
-	b=kE2mS3r+s4uFAeeC60ChSDS9r2CTWPRmIt8qJ2SdMFCaSWpD42G4wOSiES4ZIlc4diBJzm
-	vs2deGla5IsTZbrZnzl064PvBzwLFLZhsuJVp4Vmh2C1zjs/3DIiNaZuGvoH/vYMtynx6R
-	mtZl7IZAiX4dJf/QBtjMLi10Se/cJUA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782988638;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+xpjuJ3xq8ZwM9C98H0+/B2HgccrB/M755Ut4TioEwI=;
-	b=D+60qnzp/BfT9fuN5kcly9Qm0cXvD8ADgrHEOIFBaXQPYPNp5xSr5/SG94H9lHVgKEIKBG
-	SFX6rV9ZUxdbSUCw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1782988637; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+xpjuJ3xq8ZwM9C98H0+/B2HgccrB/M755Ut4TioEwI=;
-	b=oONF3XqMMWJrykAtsu6pwaL2/kpEuxV9bCWy9bwB7V6/R2x+egjgfTgOLGAINpL/V2WiJS
-	A7tamtfaDyyraOw6tMc1hzICxYOm3EE6OJzs+0kJ0cpcpfXNJcWKrc6mCg5qeCi3ByW7Lk
-	blVKNlpa44SZeQTdHBLszXOFxxxAmfs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1782988637;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+xpjuJ3xq8ZwM9C98H0+/B2HgccrB/M755Ut4TioEwI=;
-	b=0UKXLPaBvpl4WYpis3D8Wt3jNFduWCDpcaSjWCCuLmFuWe+TD49vvHiAYk97AAjiw7TqoI
-	Ny5pfTmgmhZqSpAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B9471779AA;
-	Thu,  2 Jul 2026 10:37:12 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id cEPIKVg/RmrfQQAAD6G6ig
-	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 10:37:12 +0000
-Date: Thu, 2 Jul 2026 11:37:11 +0100
-From: Pedro Falcato <pfalcato@suse.de>
-To: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 13/30] mm/vma: refactor vmg_adjust_set_range() for clarity
-Message-ID: <akY-Z1fsp9rHSc70@pedro-suse.lan>
-References: <cover.1782735110.git.ljs@kernel.org>
- <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CLqneaHU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FEB1F000E9;
+	Thu,  2 Jul 2026 10:41:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782988871;
+	bh=jDQoIXsbwOvjrCng4gu/qIcBGVt0XAmT1jLY6FGFHPM=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=CLqneaHUQnfDsr8Ros6ioah1sLim3db0vkWifcflB5354Eeje4M7fdzy6bZv/RukZ
+	 QRCkHBLd+5rtL10JPB81E4jq1wHpwcCX4jD8AK4/A5EChUiFUKiCqwRX/Ahyc+i/7u
+	 zC/gnEnxjt8aqvlhso0+9e92Oi9dGJQFD7L1lPMAjAyt0Su+jbEza4uQdWXu4u0eD9
+	 cQUeJgPkpjnXd5pEiz7W7nwo460+bkvbIj8GU5ez6LrWRVBdSoUy9EERJfHLFjhAtu
+	 +cpga9gqpmlXmC0PBFNgr72a/AUvNi7ozd1M71jp2DsroZ8KV00lsCqoAwmEkf3xV8
+	 6gk8FoJjljzdw==
+From: sashiko-bot@kernel.org
+Subject: Re: [RESEND RFC PATCH v2 4/5] mm/damon: introduce DAMOS_SPLIT
+ action
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Lian Wang" <lianux.mm@gmail.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260702094633.75658-5-lianux.mm@gmail.com>
+References: <20260702094633.75658-1-lianux.mm@gmail.com>
+ <20260702094633.75658-5-lianux.mm@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 02 Jul 2026 10:41:11 +0000
+Message-Id: <20260702104111.A1FEB1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TAGGED_RCPT(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
-	R_RATELIMIT(0.00)[to_ip_from(RL3mhzhn45zpqpmgqn4z7synfm)];
-	TO_MATCH_ENVRCPT_SOME(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	RCVD_TLS_ALL(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[75];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,pedro-suse.lan:mid,suse.de:email]
-X-Spam-Level: 
-X-Spam-Score: -2.80
 
-On Mon, Jun 29, 2026 at 01:23:24PM +0100, Lorenzo Stoakes wrote:
-> Add comments with ASCII diagrams to describe what we're doing, avoid
-> dubious use of PHYS_PFN(), and use vma_start_pgoff().
-> 
-> The most complicated scenario represented here is vmg->__adjust_next_start
-> - when this is set, vmg->[start, end] actually indicate the range to be
-> retained, so take special care to describe this accurately.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
-> ---
->  mm/vma.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 47 insertions(+), 4 deletions(-)
-> 
-> diff --git a/mm/vma.c b/mm/vma.c
-> index 6296acecf3b7..1e99fe8aa6ef 100644
-> --- a/mm/vma.c
-> +++ b/mm/vma.c
-> @@ -704,11 +704,54 @@ static void vmg_adjust_set_range(struct vma_merge_struct *vmg)
->  	pgoff_t pgoff;
->  
->  	if (vmg->__adjust_middle_start) {
-> -		adjust = vmg->middle;
-> -		pgoff = adjust->vm_pgoff + PHYS_PFN(vmg->end - adjust->vm_start);
-> +		/*
-> +		 * vmg->start    vmg->end
-> +		 * |             |
-> +		 * v    merge    v
-> +		 * <------------->
-> +		 *         delta
-> +		 *        <------>
-> +		 * |------|----------------|
-> +		 * | prev |    middle      |
-> +		 * |------|----------------|
-> +		 *        ^
-> +		 *        |
-> +		 *        middle->vm_start
-> +		 */
-> +		struct vm_area_struct *middle = vmg->middle;
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
+s) to consider:
+- [High] `damos_va_collapse` and `damos_va_split` redundantly process memor=
+y and corrupt accounting quotas, while `split` skips memory chunks.
+- [Medium] `damos_va_collapse` and `damos_va_split` silently ignore DAMON o=
+perations layer filters.
+- [Low] Unconditional use of `HPAGE_PMD_ORDER` breaks the build on architec=
+tures without huge page support.
+- [Low] Implicit default target_order for DAMOS_SPLIT triggers a kernel war=
+ning on scheme creation.
+--
 
-FWIW this can be simplified to
-		adjust = middle;
-		const unsigned long delta = vmg->end - adjust->vm_start;
+Note: This report is provided as a free-form summary due to recitation
+restrictions preventing the inline quotation of the original patch code.
 
-But I guess you're looking for explicitness here?
+Commit: bad86cd869e24f6ecf3b06b8afd727d7561ea5eb
+Author: Lian Wang <lianux.mm@gmail.com>
+Subject: mm/damon: introduce DAMOS_SPLIT action
 
-> +		const unsigned long delta = vmg->end - middle->vm_start;
-> +
-> +		pgoff = vma_start_pgoff(middle) + (delta >> PAGE_SHIFT);
-> +		adjust = middle;
->  	} else if (vmg->__adjust_next_start) {
-> -		adjust = vmg->next;
-> -		pgoff = adjust->vm_pgoff - PHYS_PFN(adjust->vm_start - vmg->end);
-> +		/*
-> +		 *                Originally:
-> +		 *
-> +		 *            vmg->start   vmg->end
-> +		 *            |            |
-> +		 *            v    merge   v
-> +		 *            <------------>
-> +		 *            .            .
-> +		 * merge_existing_range() updates to:
-> +		 *            .            .
-> +		 * vmg->start vmg->end     .
-> +		 * |          |            .
-> +		 * v  retain  v            .
-> +		 * <---------->            .
-> +		 *             delta       .
-> +		 *            <----->      .
-> +		 * |----------------|------|
-> +		 * |    middle      | next |
-> +		 * |----------------|------|
-> +		 *                  ^
-> +		 *                  |
-> +		 *                  next->vm_start
-> +		 */
-> +		struct vm_area_struct *next = vmg->next;
-> +		const unsigned long delta = next->vm_start - vmg->end;
-> +
-> +		pgoff = vma_start_pgoff(next) - (delta >> PAGE_SHIFT);
-> +		adjust = next;
->  	} else {
->  		return;
->  	}
+This commit adds a new DAMOS_SPLIT action to the DAMON operations layer.
+It allows splitting large folios into smaller mTHP-order folios based on a
+target_order provided via the sysfs interface.
 
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+[Severity: Low]
+Could the unconditional use of HPAGE_PMD_ORDER in damos_va_collapse and
+damos_va_split in mm/damon/vaddr.c break the build on architectures without
+huge page support? On architectures where CONFIG_PGTABLE_HAS_HUGE_LEAVES is
+not defined, HPAGE_PMD_ORDER evaluates to a macro containing a BUILD_BUG,
+which might cause a compilation failure since vaddr.c does not depend on
+CONFIG_TRANSPARENT_HUGEPAGE.
 
--- 
-Pedro
+[Severity: High]
+Does damos_va_collapse redundantly process memory and inflate the accounting
+statistics? It uses a local variable last_chunk to prevent duplicate
+processing, but because the function is called per-region, last_chunk is
+reinitialized to ULONG_MAX each time, causing it to repeatedly process the
+same chunks.
+
+Additionally, in damos_va_split, if a small folio is encountered or the
+address is unmapped, does the address iterator incorrectly skip memory?
+It appears to increment the address by the full chunk_sz (2MB) instead of
+the folio size or PAGE_SIZE, which would skip the remaining folios in the
+PMD block.
+
+[Severity: Medium]
+Do damos_va_collapse and damos_va_split ignore DAMON operations layer
+filters? Unlike other actions that evaluate damos_va_filter_out on each
+folio, these functions appear to unconditionally increment the
+sz_filter_passed statistic. This might falsely report to the DAMON core
+that the memory passed user-configured filters like anon/file or age filter=
+s.
+
+[Severity: Low]
+Will creating a sysfs DAMON scheme for the split action trigger unnecessary
+kernel log spam if the target_order is left at its default? In
+damon_sysfs_mk_scheme in mm/damon/sysfs-schemes.c, the target_order is
+zero-initialized. The validation logic treats 0 as invalid for DAMOS_SPLIT,
+defaults it to 2, and emits a pr_warn, which might generate a warning every
+time such a scheme is committed.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260702094633.7565=
+8-1-lianux.mm@gmail.com?part=3D4
