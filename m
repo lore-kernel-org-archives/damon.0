@@ -1,45 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE3536A01E;
-	Thu,  2 Jul 2026 11:07:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7003AA195
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 11:16:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782990430; cv=none; b=BGFCRPqBNzdkLA4neRg9AHWy/pRE0zOoS0g7AzCEV7dXzJPF92mVASo82Hnp3SEi1UWNNs0PRJ45szydfHuhoNJcq+tX5wKIN803YLjFAsrdZec0KizxKSkX37XugxjwzW1JsNKHFNqCD2R1x/U/XtAer1Qgg/urlRvDN7fHRYQ=
+	t=1782991001; cv=none; b=bNb6djqc8u38AJfXgrkd2Ink7aTBB0dFnEo7BkeaguGMdAqDqhTCRXULfKLxtsAoAvlleqgpsrI/lHZ1pEU3ywpRR5bYGCFDcfTCB1igOJpInBm05mNIZTmef/5d/6elmIYil97UKsF48Naa9+s3EMpCLtgl7V0nAo6DtmwOb3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782990430; c=relaxed/simple;
-	bh=Y3Jny+C+WpwhQ3V+DCjvK1z/vLtgAy8jJFmBnCFy5pE=;
+	s=arc-20240116; t=1782991001; c=relaxed/simple;
+	bh=egNNIeSTqKDsuUgb2VZ0PZXU/HWv6jJeb1LiC5f7h6I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QxNIPCE/dca3CRX2/1lj9a1gwl8Da96oWlWx48XUzwzoEEv5ZWO786ohDCWi8canSkpUL7vD1j6KC4iBf+VghSjGlzybq+QGygJzwSD1P8JqcyBeq9Zb5nfF+3femBTlFL0UM+qP4PIc//f0e3JonNGo7mqo36JIU/gnvC5NHUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ElFvPb1V; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=WRbdaVb9WLv8EEvX6KhHWqxSW1wA3NlhDCgW8yJ5qnevFvSDdZ648+wD53eR+LJos+qBNFB9Ki9T5IbsWZ98z+X6KQDg5DAnRkVfaCRhKC7mjdd2bg78UnUwZRUhD51oRVpFEXzxdiiTlQTKj91fvsp45hQZGPDwpozEJiusqZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=MaQ0JND5; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3pvLQ4ye; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=MaQ0JND5; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=3pvLQ4ye; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ElFvPb1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF591F000E9;
-	Thu,  2 Jul 2026 11:07:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782990428;
-	bh=4d1wkfMy/kn2HrMiby9/+qbShSv+iY/X8urJnQHH9sA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ElFvPb1V13j7MFUteyYeiivDlYBLd1UZ1toxNM2jRHdSJy7T99kf2oGuENCoV8EAA
-	 4RZYzHAdmSmNiSp6TMtPg4TndbCz9NxwB0wcdr4qqtZllzxJZ3mwmSoiG7rxce+Jsa
-	 cUqb21JiJWR/XzTWtgBcFwmZxZT94zJJnZabSIWHh8ANvI6d2iLtUvykmmkJsYtIgj
-	 JK1+EmHk1yZ5QkuC+UWyTmb6Q/qJ0g5f3hWmqkjqhX2hTGhcO6YhAnxw5qpV7kH0aV
-	 +mnYn7rPsjWeHpAvEcOlc9WMVedEHP573+HoRYqnz2t/m6cAeWfGE4Qc0SUF0sR6OO
-	 RblHvFEojOWkw==
-Date: Thu, 2 Jul 2026 12:07:01 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Lian Wang <lianux.mm@gmail.com>
-Cc: sj@kernel.org, damon@lists.linux.dev, linux-mm@kvack.org, 
-	daichaobing@sangfor.com.cn, kunwu.chan@gmail.com, Andrew Morton <akpm@linux-foundation.org>, 
-	David Hildenbrand <david@kernel.org>, Zi Yan <ziy@nvidia.com>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, "Liam R. Howlett" <liam@infradead.org>, 
-	Nico Pache <npache@redhat.com>, Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
-	Barry Song <baohua@kernel.org>, Lance Yang <lance.yang@linux.dev>, linux-kernel@vger.kernel.org
-Subject: Re: [RESEND RFC PATCH v2 2/5] mm/khugepaged: add
- damon_collapse_folio_range() for external callers
-Message-ID: <akZDj6s8U5_Mnetv@lucifer>
-References: <20260702094633.75658-1-lianux.mm@gmail.com>
- <20260702094633.75658-3-lianux.mm@gmail.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="MaQ0JND5";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3pvLQ4ye";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="MaQ0JND5";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="3pvLQ4ye"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 7A215758C1;
+	Thu,  2 Jul 2026 11:16:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782990998; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eRBGEURpGsQZvwqVZtDQ4XJM7h1z4ZC8YrrvTCFqxmw=;
+	b=MaQ0JND5KWm4wpsJciLfkQvP3ai3tn4nmxHssSfFpsKDgKPYMo0CCpWKvNCaMeBjXitcJ3
+	ryZQphknx3FCsPabrXjnCA7E61K/L28Q+1mGAIXijYZw0KuJju507sLH6zDd+1GghLs0zF
+	8X9joVhTiON2oevqtL6uIb5F4wnvrBo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782990998;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eRBGEURpGsQZvwqVZtDQ4XJM7h1z4ZC8YrrvTCFqxmw=;
+	b=3pvLQ4yedxRGWLa9EIEPJidt5sWRqQteN0D5+X9wN34CbwAqs9zn4kp7F2+pWog96DCFuh
+	7UShynnYN7M9UJCQ==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MaQ0JND5;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=3pvLQ4ye
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782990998; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eRBGEURpGsQZvwqVZtDQ4XJM7h1z4ZC8YrrvTCFqxmw=;
+	b=MaQ0JND5KWm4wpsJciLfkQvP3ai3tn4nmxHssSfFpsKDgKPYMo0CCpWKvNCaMeBjXitcJ3
+	ryZQphknx3FCsPabrXjnCA7E61K/L28Q+1mGAIXijYZw0KuJju507sLH6zDd+1GghLs0zF
+	8X9joVhTiON2oevqtL6uIb5F4wnvrBo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782990998;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=eRBGEURpGsQZvwqVZtDQ4XJM7h1z4ZC8YrrvTCFqxmw=;
+	b=3pvLQ4yedxRGWLa9EIEPJidt5sWRqQteN0D5+X9wN34CbwAqs9zn4kp7F2+pWog96DCFuh
+	7UShynnYN7M9UJCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 13EB5779AA;
+	Thu,  2 Jul 2026 11:16:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id fWCIAZJIRmp4aQAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 11:16:34 +0000
+Date: Thu, 2 Jul 2026 12:16:32 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 20/30] mm/vma: introduce vma_assert_can_modify()
+Message-ID: <akZHWwVgJfqCwA2W@pedro-suse.lan>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <23c7602c58cacc23ef22618a27af9a2d54addf58.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,158 +118,106 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260702094633.75658-3-lianux.mm@gmail.com>
+In-Reply-To: <23c7602c58cacc23ef22618a27af9a2d54addf58.1782735110.git.ljs@kernel.org>
+X-Spam-Flag: NO
+X-Rspamd-Action: no action
+X-Spam-Level: 
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	MIME_TRACE(0.00)[0:+];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	R_RATELIMIT(0.00)[to_ip_from(RLziudqfrzo6b7hzgpxksh1d9i)];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[75];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pedro-suse.lan:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 7A215758C1
+X-Spam-Score: -3.01
 
-(+cc missing people again)
+On Mon, Jun 29, 2026 at 01:23:31PM +0100, Lorenzo Stoakes wrote:
+> vma_assert_write_locked() and vma_assert_attached() are useful for their
+> own purposes, however VMA code absolutely does allow the modification of
+> non-write locked VMAs if they are at that point detached (i.e. unreachable
+> from anywhere).
+> 
+> It's therefore useful to be able to assert that a VMA is either
+> detached (modification doesn't matter) or write locked (you're explicitly
+> locked for modification).
 
-Sorry but we're not going to accept anything that exports THP logic like this at
-all.
+Hmm, I was wondering why detached does not imply write_locked, and then
+realized that new VMAs aren't write-locked. Could we do it by default?
+Like a simple:
 
-And a damon wrapper in core mm code is just a non-starter, so you really need to
-rethink your approach.
+	vma->vm_lock_seq = __vma_raw_mm_seqnum(vma);
 
-I think SJ already commented on this in your v1 from what I can see? I'd listen
-to his advice on this :)
+might do the trick. I don't see why it wouldn't work? Is there some other
+case I am not considering?
 
-On Thu, Jul 02, 2026 at 05:46:30PM +0800, Lian Wang wrote:
-> Export a thin wrapper around collapse_huge_page() that allows external
-> subsystems such as DAMON to trigger THP collapse on a target address
-> range.
->
-> Currently restricted to PMD order (HPAGE_PMD_ORDER), since
-> collapse_huge_page() does not yet support arbitrary mTHP orders.
-> The restriction can be relaxed when khugepaged gains mTHP support.
->
-> The caller must hold a reference to @mm.  Do not hold mmap lock:
-> collapse_huge_page() acquires mmap_read_lock for validation, releases
-> it, then acquires mmap_write_lock for the actual collapse.  Holding
-> an outer mmap_read_lock would cause a self-deadlock when the same
-> thread attempts the inner mmap_write_lock.
->
-> Co-developed-by: Kunwu Chan <kunwu.chan@gmail.com>
-> Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
-> Signed-off-by: Lian Wang <lianux.mm@gmail.com>
-> Signed-off-by: Lian Wang <lianux.wang@processmission.com>
-
-This patch is exporting internal mm logic without proper safeguards so it's just
-not something we're going to accept, sorry.
-
-(Also not sure it's correct to have multiple S-o-b for the same person (unless
-re-tagging a backport or something)? I'm not sure though)
-
+> 
+> Therefore introduce vma_assert_can_modify() for this purpose.
+> 
+> While we're here, make vma_is_attached() available generally - if
+> !CONFIG_PER_VMA_LOCKS, then there's no sense in which a VMA is
+> detached (vma_mark_detached() is a noop), so have this default to true in
+> this case.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 > ---
->  include/linux/khugepaged.h |  9 ++++++++
->  mm/khugepaged.c            | 46 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 55 insertions(+)
->
-> diff --git a/include/linux/khugepaged.h b/include/linux/khugepaged.h
-> index d7a9053ff4fe..f7d49cba712f 100644
-> --- a/include/linux/khugepaged.h
-> +++ b/include/linux/khugepaged.h
-> @@ -20,6 +20,9 @@ extern bool current_is_khugepaged(void);
->  void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr,
->  		bool install_pmd);
->
-> +int damon_collapse_folio_range(struct mm_struct *mm, unsigned long start_addr,
-> +			       unsigned int target_order);
-
-No thanks. We're not putting damon wrappers into core code. This is breaking the
-abstraction and letting arbitrary users invoke internal mm logic.
-
-Plus you're literally exporting this so it can be abused by drivers.
-
-> +
->  static inline void khugepaged_fork(struct mm_struct *mm, struct mm_struct *oldmm)
->  {
->  	if (mm_flags_test(MMF_VM_HUGEPAGE, oldmm))
-> @@ -47,6 +50,12 @@ static inline void collapse_pte_mapped_thp(struct mm_struct *mm,
->  {
->  }
->
-> +static inline int damon_collapse_folio_range(struct mm_struct *mm,
-> +		unsigned long start_addr, unsigned int target_order)
+>  include/linux/mmap_lock.h | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/include/linux/mmap_lock.h b/include/linux/mmap_lock.h
+> index 04b8f61ece5d..d513286d8160 100644
+> --- a/include/linux/mmap_lock.h
+> +++ b/include/linux/mmap_lock.h
+> @@ -506,6 +506,8 @@ static inline __must_check
+>  int vma_start_write_killable(struct vm_area_struct *vma) { return 0; }
+>  static inline void vma_assert_write_locked(struct vm_area_struct *vma)
+>  		{ mmap_assert_write_locked(vma->vm_mm); }
+> +static inline bool vma_is_attached(struct vm_area_struct *vma)
+> +		{ return true; }
+>  static inline void vma_assert_attached(struct vm_area_struct *vma) {}
+>  static inline void vma_assert_detached(struct vm_area_struct *vma) {}
+>  static inline void vma_mark_attached(struct vm_area_struct *vma) {}
+> @@ -530,6 +532,12 @@ static inline void vma_assert_stabilised(struct vm_area_struct *vma)
+>  
+>  #endif /* CONFIG_PER_VMA_LOCK */
+>  
+> +static inline void vma_assert_can_modify(struct vm_area_struct *vma)
 > +{
-> +	return -EINVAL;
+> +	if (vma_is_attached(vma))
+> +		vma_assert_write_locked(vma);
 > +}
 > +
->  static inline void khugepaged_min_free_kbytes_update(void)
+>  static inline void mmap_write_lock(struct mm_struct *mm)
 >  {
->  }
-> diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-> index 617bca76db49..7fe9ce1e0533 100644
-> --- a/mm/khugepaged.c
-> +++ b/mm/khugepaged.c
-> @@ -3272,3 +3272,49 @@ int madvise_collapse(struct vm_area_struct *vma, unsigned long start,
->  	return thps == ((hend - hstart) >> HPAGE_PMD_SHIFT) ? 0
->  			: madvise_collapse_errno(last_fail);
->  }
-> +
-> +/**
-> + * damon_collapse_folio_range() - Collapse base pages in range into a THP
-> + * @mm:         mm_struct of the target process
-> + * @start_addr: start address (must be order-aligned)
-> + * @target_order: page order of the collapse result (currently only
-> + *                HPAGE_PMD_ORDER is supported)
-> + *
-> + * Thin wrapper around collapse_huge_page() for external callers such as
-> + * DAMON.  The caller must hold a reference to @mm.  Do not hold mmap
+>  	__mmap_lock_trace_start_locking(mm, true);
+> -- 
+> 2.54.0
+> 
 
-This is really fragile and bug bait.
-
-> + * lock: collapse_huge_page() acquires mmap_read_lock for validation,
-
-This is just gross, you're now collapsing based on an outdated concept of
-what the current VMA state is...
-
-You're also losing literally everything that madvise_collapse() does.
-
-AND you're overriding THP limitations like max_ptes_none, which is horrible...
-
-> + * releases it, then acquires mmap_write_lock for the collapse.  Holding
-> + * an outer mmap_read_lock would self-deadlock.
-
-This is a sign the interface is wrong!
-
-> + *
-> + * Return: 0 on success, -EINVAL on bad arguments, negative error from
-> + *         madvise_collapse_errno() otherwise.
-> + */
-> +int damon_collapse_folio_range(struct mm_struct *mm, unsigned long start_addr,
-> +			       unsigned int target_order)
-> +{
-> +	struct collapse_control *cc;
-> +	enum scan_result result;
-> +
-> +	if (target_order != HPAGE_PMD_ORDER) {
-> +		pr_warn_once("%s: only PMD order (%u) is supported, got %u\n",
-> +			     __func__, HPAGE_PMD_ORDER, target_order);
-> +		return -EINVAL;
-> +	}
-> +	if (start_addr & ((PAGE_SIZE << target_order) - 1))
-> +		return -EINVAL;
-> +
-> +	cc = kmalloc_obj(*cc);
-> +	if (!cc)
-> +		return -ENOMEM;
-> +	cc->is_khugepaged = false;
-> +	cc->progress = 0;
-> +
-> +	lru_add_drain_all();
-
-This is quite literally a copy/paste from madvise_collapse(). No no no :) code
-duplication like this is also unacceptable.
-
-> +
-> +	result = collapse_huge_page(mm, start_addr, 1, 0, cc, target_order);
-> +	kfree(cc);
-> +	if (result == SCAN_SUCCEED || result == SCAN_PMD_MAPPED)
-> +		return 0;
-> +	return madvise_collapse_errno(result);
-> +}
-> +EXPORT_SYMBOL_GPL(damon_collapse_folio_range);
-
-We _definitely_ cannot have internal mm logic _exported_.
-
-Yeah sorry you need to rethink this.
-
-Thanks, Lorenzo
+-- 
+Pedro
