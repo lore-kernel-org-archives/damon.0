@@ -1,211 +1,192 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2BB2853E0
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C7F28030E
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782988068; cv=none; b=AZSPvSb1xdFhznxhMIFCAW95nfHzQFPTrjHeILD9c/kNXYe9BETNeTvdcSWzRriu7fhv1RwGB78dI45D5VyM3e22q7kOXShl6wRnVUe7dEP4LLd+GWSqOSVwlCGtHyCf8Y9Y7O64laZt+MaOL/DALBOB1iwLahKceZH62JVmMuU=
+	t=1782988216; cv=none; b=PTrg+jOSkzG94HrcNmAbf/1MIotlCSPfEGWPVy3UmpP7UkRW/sZeVnYlmfGBMJZzI1Ag8ndaEUdYWHMucssJUvppImrrpJR3BmdYThyIsNlVZcw6ThiBymG3WkJtKxfXHKkhCkr6rEiyaTvkIx7+IcUoxR2eE/TQH852x5n+204=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782988068; c=relaxed/simple;
-	bh=6362Vqlcwb1xqjXcSUvUVGMDav30/XddMxyEemWkOIA=;
+	s=arc-20240116; t=1782988216; c=relaxed/simple;
+	bh=i9Ed7mxIvT3EXUN9kMXyVPzseRPfhFcE06C2ymAMsxM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Lhy19gq4XWYQNFYEhD6swWcdK0j1owKtrlmiGxvYNPG+A/WusBoGKyLNzFbN5GQCHTWTqpYft8ZVdU7X/ddEP9CzwKvA8d2k9wnxMxo8NZYOLpyYxSw1e4kYzcqXazfpCbQKa1WzgdXbC1j1+mLQ6jfGCS9O8cQcByDQCh50AVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SmJUuy/X; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=SbxHreYN81qwW8fhuyTgxOiFvHIW/n6Hu/pbwq+tdyCI86ltI4OYDoeCX8ZoNx0N7rx2cp99fWaZ9sJlnkX2zmlRAgfYGPVvQyiCWVGJxfIVAwgb9Qo6FXqXUaMtXmUc/8oDq7Dp9j/Z7vIxDd46pBZgKxF73EEjIV6Wawx/pIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJTFlzS6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SmJUuy/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C6C1F000E9;
-	Thu,  2 Jul 2026 10:27:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJTFlzS6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1581F000E9;
+	Thu,  2 Jul 2026 10:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782988067;
-	bh=T7BcQVFdUVdK8+aNudq8KP6krwFd4SMuJTYgI13hW8Y=;
+	s=k20260515; t=1782988214;
+	bh=/+u79sXkzm/g0ak/76bnVA2r0ZlXSrtsunyVsB20Gew=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=SmJUuy/Xb6IddKz3MDk0C3xQYLNnFOFCLN0d0VJLQSsJJLWxTC9s/b8mkWaXLwHDZ
-	 gFnwhcZRpWoSDZjSSWgcV39STp+rhIVvm+t4HaIaSNCzS5+8imtMl9OIi/Zcglsgsg
-	 Y8MRx2y8R5oQWKiMSJgZUDbG+Tsab7Jwqf9eSFw1TM824KBjACbI+jUUU5hT4eWIBG
-	 8exoQUeKBDLu5mc6Vt845zzUEpnJckSyeitOPWDAIGAvrGmtHl2tE32XLyC8T6tsnp
-	 AjkgYMDUKja7YA1mZFRqg6l6DfZsG84SUnugQwGhmf8fuWOC4QuwLntjMOigoofVMo
-	 5h/j65gRHx2Cw==
+	b=TJTFlzS6GHu92I/Ly9lF5FVBbuJ779QyrY888cwDOkZqnnFMBJc5lBVBKOGl9JQlN
+	 H5ldLA5C5aZvw3c0hjMP/kAplcNsZS5OIIfnfgYj6Ec1pUZ5ACWKmhnFcFRJUnOCSm
+	 2O1JZ6Gix7ua+/d1tJiOxk7QpZ3avY4xiKvPxry4gCp7VVZqMp8dN3O0yRUeKpIfBp
+	 eN2sImIiADlcyIGZdW1YNQ93oFEWhsH1v1o6mdTxJH3si2Aruxt6BF4yEjvL21n8OR
+	 WJV7s6VJGLdB1bDNfF63JNpLSu49e4NVBfaqmCsUr6CIds6GG3nhc0aq5stPouZgMy
+	 WVXfDrSjwOC1A==
 From: sashiko-bot@kernel.org
-Subject: Re: [RESEND RFC PATCH v2 3/5] mm/damon/vaddr: implement mTHP-aware
- DAMOS_COLLAPSE handler
+Subject: Re: [RESEND RFC PATCH v2 5/5] mm/damon/vaddr: implement DAMOS_SPLIT
+ handler
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Lian Wang" <lianux.mm@gmail.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260702095227.75866-4-lianux.mm@gmail.com>
+In-Reply-To: <20260702095227.75866-6-lianux.mm@gmail.com>
 References: <20260702095227.75866-1-lianux.mm@gmail.com>
- <20260702095227.75866-4-lianux.mm@gmail.com>
+ <20260702095227.75866-6-lianux.mm@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 02 Jul 2026 10:27:46 +0000
-Message-Id: <20260702102747.18C6C1F000E9@smtp.kernel.org>
+Date: Thu, 02 Jul 2026 10:30:13 +0000
+Message-Id: <20260702103014.7B1581F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 6 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [Critical] The `collapse_control` struct `cc` is allocated without zeroin=
-g, causing uninitialized memory usage.
-- [Critical] Calling `lru_add_drain_all()` and allocating huge pages per-ch=
-unk in a tight loop without VMA validation causes system-wide IPI storms an=
-d severe CPU stalls.
-- [High] damon_collapse_folio_range explicitly rejects non-PMD orders, brea=
-king the advertised mTHP support.
-- [High] DAMOS_COLLAPSE via `damos_va_collapse` silently fails on all file-=
-backed VMAs.
-- [Medium] Local `last_chunk` variable fails to deduplicate cross-region ch=
-unks, artificially inflating DAMON statistics.
-- [Low] Build break when CONFIG_TRANSPARENT_HUGEPAGE is disabled due to unc=
-onditional use of HPAGE_PMD_ORDER.
+- [High] Incorrect address range expansion and iteration logic in `damos_va=
+_split()` causes out-of-bounds folio processing and skips memory.
+- [High] `damos_va_split()` calls `split_folio_to_order()` on mapped compou=
+nd pages without verifying they are valid LRU folios, leading to kernel cra=
+shes.
 --
 
-commit 1758a6da0e4869c672603d9b92add29e2cab16d6
+commit 1aa5abadd8058bacb6959d3c7864cfd3e927e6df
 Author: Lian Wang <lianux.mm@gmail.com>
 
-mm/damon/vaddr: implement mTHP-aware DAMOS_COLLAPSE handler
+mm/damon/vaddr: implement DAMOS_SPLIT handler
 
-The commit implements an mTHP-aware DAMOS_COLLAPSE handler that iterates ov=
-er
-the target region in order-aligned chunks when a target mTHP order is provi=
-ded.
-It utilizes damon_collapse_folio_range() for the underlying memory collapse
-operations while falling back to the madvise path for default configuration=
-s.
+This commit implements the vaddr operations layer handler for DAMOS_SPLIT.
+It iterates over the target region and attempts to split any large folios
+that exceed the scheme's target order.
 
 > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 2058db9c01d52..8bfc6dcc635d5 100644
+> index 8bfc6dcc635d5..73cb61c655fc7 100644
 > --- a/mm/damon/vaddr.c
 > +++ b/mm/damon/vaddr.c
-> @@ -895,6 +896,50 @@ static unsigned long damos_va_stat(struct damon_targ=
-et *target,
->  	return 0;
+> @@ -940,6 +940,83 @@ static unsigned long damos_va_collapse(struct damon_=
+target *target,
+>  	return applied;
 >  }
 > =20
-> +static unsigned long damos_va_collapse(struct damon_target *target,
+> +static unsigned long damos_va_split(struct damon_target *target,
 > +		struct damon_region *r, struct damos *s,
 > +		unsigned long *sz_filter_passed)
 > +{
 > +	unsigned long addr, end, chunk_sz;
-> +	unsigned long last_chunk =3D ULONG_MAX;
 > +	unsigned int target_order =3D s->target_order;
 > +	unsigned long applied =3D 0;
 > +	struct mm_struct *mm;
-> +	int ret;
-> +
-> +	if (target_order < 2 || target_order > HPAGE_PMD_ORDER)
-
-[Severity: Low]
-Is this safe to use when CONFIG_TRANSPARENT_HUGEPAGE is disabled?
-
-In damos_va_collapse(), HPAGE_PMD_ORDER is unconditionally referenced. With=
-out
-THP, HPAGE_PMD_ORDER evaluates to an expression containing BUILD_BUG(), whi=
-ch
-can cause a build breakage.
-
-> +		return 0;
-> +
-> +	chunk_sz =3D PAGE_SIZE << target_order;
-> +	addr =3D ALIGN_DOWN(r->ar.start, chunk_sz);
-> +	end =3D ALIGN(r->ar.end, chunk_sz);
-> +	if (end < addr)
-> +		return 0;
+> +	struct vm_area_struct *vma;
+> +	struct folio *folio;
+> +	struct folio_walk fw;
 > +
 > +	mm =3D damon_get_mm(target);
 > +	if (!mm)
 > +		return 0;
 > +
+> +	chunk_sz =3D PAGE_SIZE << HPAGE_PMD_ORDER;
+> +	addr =3D ALIGN_DOWN(r->ar.start, chunk_sz);
+> +	end =3D ALIGN(r->ar.end, chunk_sz);
+
+[Severity: High]
+Does aligning the start and end to 2MB boundaries risk processing memory ou=
+tside
+the requested target region? It seems this could expand the iteration beyond
+the boundaries defined by r->ar.start and r->ar.end.
+
+> +	if (end < addr)
+> +		goto out_mmput;
+> +
 > +	while (addr < end) {
+> +		unsigned long folio_sz;
+> +
 > +		if (addr + chunk_sz < addr)
 > +			break;
-> +		if (addr =3D=3D last_chunk)
-> +			goto next;
-> +		last_chunk =3D addr;
-
-[Severity: Medium]
-Will this reliably deduplicate chunks across multiple DAMON regions?
-
-Because last_chunk is local to damos_va_collapse() and resets for each regi=
-on,
-adjacent or overlapping regions that map to the same chunk might bypass this
-check. This can result in the same range being processed multiple times,
-artificially inflating the sz_filter_passed and applied statistics.
-
 > +
-> +		ret =3D damon_collapse_folio_range(mm, addr, target_order);
+> +		mmap_read_lock(mm);
+> +		vma =3D find_vma(mm, addr);
+> +
+> +		if (!vma || addr < vma->vm_start ||
+> +		    vma->vm_flags & (VM_HUGETLB | VM_MIXEDMAP))
+> +			goto unlock;
+> +
+> +		folio =3D folio_walk_start(&fw, vma, addr, 0);
+> +		if (!folio)
+> +			goto unlock;
+> +
+> +		folio_sz =3D PAGE_SIZE << folio_order(folio);
+> +
+> +		if (folio_order(folio) > target_order) {
+> +			if (!folio_trylock(folio)) {
+> +				folio_walk_end(&fw, vma);
+> +				goto unlock;
+> +			}
+> +			folio_get(folio);
+> +			folio_walk_end(&fw, vma);
+> +
+> +			if (!split_folio_to_order(folio, target_order))
 
 [Severity: High]
-Will this function correctly handle mTHP orders smaller than PMD?
+Could this call to split_folio_to_order() encounter driver-allocated compou=
+nd
+pages?=20
 
-While damos_va_collapse() allows target_order values down to 2,
-damon_collapse_folio_range() in mm/khugepaged.c strictly rejects non-PMD
-orders:
+While VM_MIXEDMAP and VM_HUGETLB are filtered out, other normal VMAs
+might still be backed by compound pages that are not fully initialized LRU
+folios. Without checking if the folio is actually a valid LRU folio (e.g., =
+via
+folio_test_lru()), this might dereference uninitialized fields during the s=
+plit
+and cause kernel crashes.
 
-	if (target_order !=3D HPAGE_PMD_ORDER) {
-		...
-		return -EINVAL;
-	}
-
-Doesn't this unconditionally reject smaller mTHP orders, causing the collap=
-se
-to fail while still incorrectly incrementing the sz_filter_passed statistic?
-
-[Severity: Critical]
-Can this code cause uninitialized memory usage during the collapse?
-
-When damon_collapse_folio_range() allocates the collapse_control struct:
-
-	cc =3D kmalloc_obj(*cc);
-	if (!cc)
-		return -ENOMEM;
-	cc->is_khugepaged =3D false;
-	cc->progress =3D 0;
-
-The cc->node_load array and cc->alloc_nmask are left uninitialized because
-kmalloc_obj() does not zero memory. Since this bypasses collapse_scan_pmd()
-which normally initializes these fields, collapse_find_target_node() will
-later read garbage data to make NUMA node placement decisions.
-
-[Severity: Critical]
-Does this code handle unmapped virtual address ranges efficiently?
-
-Iterating over purely virtual address ranges without validating if they bel=
-ong
-to a VMA can be problematic. For each chunk, damon_collapse_folio_range()
-in mm/khugepaged.c executes heavy operations like lru_add_drain_all() and
-attempts huge page allocations.
-
-If a large unmapped memory hole is encountered, could this lead to severe
-CPU stalls and system-wide IPI storms before the VMA validation eventually
-fails?
+> +				applied +=3D folio_sz;
+> +
+> +			folio_unlock(folio);
+> +			folio_put(folio);
+> +			*sz_filter_passed +=3D folio_sz;
+> +			addr +=3D folio_sz;
+> +		} else {
+> +			folio_walk_end(&fw, vma);
+> +			*sz_filter_passed +=3D chunk_sz;
+> +			addr +=3D chunk_sz;
 
 [Severity: High]
-Does this silently fail on file-backed VMAs?
+When the folio order is smaller than or equal to the target order, does adv=
+ancing
+addr by a full 2MB chunk miss the remaining folios within that chunk?=20
 
-Looking at damon_collapse_folio_range() in mm/khugepaged.c, it directly wra=
-ps
-collapse_huge_page() which uses hugepage_vma_revalidate() with expect_anon
-set to true. This unconditionally rejects file-backed VMAs without falling
-back to collapse_file(), potentially breaking the collapse functionality for
-file-backed memory.
+If addr was advanced by folio_sz in a previous loop iteration, adding chunk=
+_sz
+here might overshoot and skip memory.
 
-> +		if (!ret)
-> +			applied +=3D chunk_sz;
+> +		}
+> +		mmap_read_unlock(mm);
+> +		cond_resched();
+> +		continue;
+> +
+> +unlock:
 > +		*sz_filter_passed +=3D chunk_sz;
-> +next:
 > +		addr +=3D chunk_sz;
+
+[Severity: High]
+Similarly, does advancing by chunk_sz on error paths (like missing VMAs, ho=
+les,
+or lock failures) skip intermediate memory and artificially inflate the
+sz_filter_passed statistic?
+
+> +		mmap_read_unlock(mm);
 > +		cond_resched();
 > +	}
 > +
+> +out_mmput:
 > +	mmput(mm);
 > +	return applied;
 > +}
 
-[ ... ]
-
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260702095227.7586=
-6-1-lianux.mm@gmail.com?part=3D3
+6-1-lianux.mm@gmail.com?part=3D5
