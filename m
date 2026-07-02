@@ -1,62 +1,62 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA3747DD47
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 09:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A0643DA51
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 09:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782985962; cv=none; b=ADcIPyF8qXgOdi5XT2WR4KjlYPDTfmhDxbil+ddMfy8xcDsu/klkhgrb24x3Ia+b4id1D7UTLdzCWbidqQQ6kNToYZRijfrty3sZf9eUF3GG6p31tGE+eW27gxM6V5M4ljEpMGBcWlPT+BRAf0z1FhhKxVFRHi1GHIiwKytKr/s=
+	t=1782985966; cv=none; b=dPnzBfIRDVwLjcnXOuw0z+CJhuh3EEI63GAgQOgHFJESO0QULKwRJlb34Be60YtfF4/RnfHvYFWKnUyotC0hsrm/qNJI8lAAd5RxDVmGCPK2pO6xPlVgOfS735MToUJ7igXqqcR0X4H5/1mGOi409OzQgI1W6UV7U9OYDaj0XTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782985962; c=relaxed/simple;
-	bh=Ydn0e55zkv5c4nUveVDaFWmz9V83VU4CaxFtaaheZhY=;
+	s=arc-20240116; t=1782985966; c=relaxed/simple;
+	bh=JwJSC6QBIXHZ6EVUA6kz1vznH9OKSQxIf7AtLS4NMYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+4aGUX7kxDrRHZylEYlkwy0lLUnvEmvvaMS34yylORn1c5KYY1oHm/BJ/7PWdw6DQ3bE7kmFaB4MkcqvN3QHQnt4zILR6HVn+blqo7wS8N4SMPC12CRBPnx5vr0KvnuEd6AU2Y4zplIwyPUjewJqguegxemQXQcxYMUr1k4gK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nfJGHaB5; arc=none smtp.client-ip=209.85.216.46
+	 MIME-Version; b=rRsEe5nwApEjTBflqZaOhY4wNnRjn87zbAXKtcRmmy4RdcZ5XGTrXqifMb64ZECtSHIbUdGnIuX+nD09MAmBmc8YbcNqj2yVC6ngkxLl9TSsWrvgyrzrLTbxehOIK6Dkne48N+oJpapdgUlvwZSUGGTHagyq+jjcn2M1/tX37uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SdQiU9D/; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nfJGHaB5"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-37e11438c66so905566a91.3
-        for <damon@lists.linux.dev>; Thu, 02 Jul 2026 02:52:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SdQiU9D/"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-37fc01a7835so1129043a91.3
+        for <damon@lists.linux.dev>; Thu, 02 Jul 2026 02:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782985960; x=1783590760; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1782985964; x=1783590764; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fpS96uEtjcbqmOVeroPMUCkO+BmAfanRLzlSYz1EmYQ=;
-        b=nfJGHaB5CVW/eJW2yx2xuz0KbBz51KbsyWFYXLNx3kTcY07F0W8CLitjeyMIU81BdP
-         tvTR6raAId72IO+9ECdk6In3TzHOpIYyQQydFVzBI4ESSD1e9MT5ODvD2y7yUXFNZgSV
-         3DSg7Y2LlmpKqGW/QPzJjvtudhsVOHOkhn7I5dXfRtv4J1aqkT99/tKJTHa34LsiQzqw
-         3uqQ2TLcKUk56HiTCfMES+ep8YJVllB6rzz6WVdoZvTGXJT+swDNDT7HgDyo+d0qy7Va
-         SwqqOvVPtRdoAJl2+6P860XRx5Rc6pEBqcG+vqRXWmPZ1ZZCQMSQxtLczsTL/sFJcvCT
-         lJdQ==
+        bh=icPP3MmY8t9qE9Xpwb6MvphYCRwC/sqcyq3pTHjWUnM=;
+        b=SdQiU9D/+OWfPj+Vs3WNhlh64KFbcjGj1QpipIDB52WXCKjrHuzXwkK9j/IaY9vkmH
+         +BRTWOP2H2Ylot0iGwb4vj5cUlNMVU7Rckw6NaPwkth06Hgc26uvowxYPuYLiNqJpOVI
+         Jk9Lwg83N14UB4nO9XEMeeFZ6yugsyYPD/rH2YMYw0M+vipyeh0L2rwKTCKGbER4dwdx
+         tokcEEsxab0pSKkYE4C4Y0D53ac+v0mwjFnjLQBdtSYunvfRDnnhtmnqSQGiCYOUuXcc
+         rTgGzMx0uwg0vpeT3JWKHxmTIp4NvkYz1ajFR0Er+o2drnWGbuSQI9fyx+x7PK4s/Vzf
+         lLQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782985960; x=1783590760;
+        d=1e100.net; s=20251104; t=1782985964; x=1783590764;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=fpS96uEtjcbqmOVeroPMUCkO+BmAfanRLzlSYz1EmYQ=;
-        b=lFKEZtbNmIu1l69sFTOs37gfnRcRS9KJ1N9SKIN6mW5SUzm+zSZgBJ+p39lY1nGu0Y
-         u40kRwLbf7/+KjalXY8iEEJmQIniXJwjY7FqvyegUEmHv1pjqYdUVTwycQUpwOY6+Ebx
-         +LIJcD5m3m8UdI81lduUSC4N6ZS1dOwChqsMDRFpYgZr7Dtwd0EoQHmPt/0aZaWxtKP5
-         YGFLTytfUlWstdQDGUnTJEWwspwmUTzlrIjY98J+cT3YAbGQR0xH6FDKo2ey8cv9As2/
-         dj73970ClV9XKHe8eNl9MyP3i2vkbYPI/W7zepkMPeneGpn9iByCGqeQXQscCKCRjT+j
-         /q9g==
-X-Gm-Message-State: AOJu0YxOROV+cwYEvkKPoWxwAVoaFaAZpDIR3GQD3N9lhd4ctZBZNOZl
-	FhNp7bKF0IV9+0t+KLWugEhQuksASK22DEwBhCUqNHDRZ1K1z5/5KZSeOS14MflpTo0=
-X-Gm-Gg: AfdE7cm7wyruu9b7Dxm7y6s024611oLSaQT7iuXy1UJ2Q9bBAgrMy9RQaf76/p/4CO0
-	EK5OQeVW/odHCegEK4dG/3KhUljw3uNMi8XqSXUiUTeszVczxnQu66hRrpzHXbReBXJgEMcm0iz
-	Jyy79frfX3WY53I9act4m1/EyCQZpiK7KSZL5AKmL30newZBFdO7SjyVJq+HcSdCcXXsxcN+p1U
-	2BFeYEP3oB9tN1cfULQdpktgJPEqJXpKrhTjniU+AODchD0vo3a4lXh8rrtZPzfubLZj+ONgl7O
-	k3bIDCFr6Vb4d4pvZBR5pY4xDJjLlm2UgPVCNTvlCHFIDOS8oDWKvXNvEjf+YSLg41Lj0i4qQ/8
-	7aWT74l9UGvoBR1Y0gRG04NxdCkwSja1c6tAP29FapGwKt5+HoOsQkPJmDBa+JX3nrgxki99rXO
-	qY+ZNHckxBYrLU
-X-Received: by 2002:a05:6a21:e0a6:b0:3b2:86cb:929e with SMTP id adf61e73a8af0-3bfed41d914mr6063142637.46.1782985960220;
-        Thu, 02 Jul 2026 02:52:40 -0700 (PDT)
+        bh=icPP3MmY8t9qE9Xpwb6MvphYCRwC/sqcyq3pTHjWUnM=;
+        b=BUeF97ddcDv3BJxey/uxzb+4ORhYk2zqKCgFTgNpM9kRdYq3kQTNW5S7SF1dtl8xjb
+         GEAxTcrmuomWhOXbl/IrXhBm/hGFmF+lLVR705di2BJJ6lH6+pDCFZUbKWogpFNxQWsy
+         J6f7Zdrp5Z3Wz6ZXvdmZO1GYSjqZQoIW/Z4UmMkjvq6KTbs9Mfk72GdnU0tQnQ/HubmD
+         CEYx93EtL1y/F57OnpfMH6cUVBaCGXvfF8B3VkDsLR+IwJzJmrd1/PKpeuI2nZwNncqG
+         /YRBBFBKuA9QFl9FRW0VZiALjEU8CaKvMkhFWnbaUseOlFUzi3QTyAeLLiKZZfWIIjvz
+         aLsg==
+X-Gm-Message-State: AOJu0YyeQ8hNrpC220Tu2l2vNaor/OlbVqj/3p6KV5K1GdvcpNaHcwfL
+	/A+U8v9xJxYIeZQtuQu7gIOF1HmqTd7Xpaw0fm6pPBLSwtpLmuWXnHkz+sEfeucTzpE=
+X-Gm-Gg: AfdE7ckL8eKNxZmauuHA+8QW5p545uCC0ddo2aVEgFVOZuj/Pt8JyU3hjTMkjpWhEM0
+	/hMH6kdXJSB732N+aPo7t/6hzjxS6Dn57gpT5ejRuOq052PYu4906Ff61zdvppIKzonFZwbBbz+
+	lEF/b0kr4+4dOUCYr40Ch6kDHcezqZ4lavHWU1HhPaCExGHvJKM0SL3161YnKJsNCTZPkN2rwUn
+	WN3EFP+JHTO6ViKcH+Uz1mCz/46P2sTUJzzSAn6Xi5MRfjU8p7RKYH5Jcuwx8fO8e0vHg3GaR1i
+	BfwltqSFokWUXTsDcsV7Q7WjQOpOo827UQf2YXmxs2P2BdMDZkouTM5p4cj7yxa4K8ENpBPj+SD
+	UatKnS25qnbUSWDr2AVyL7OWj+uldHpTMkRuSOItbxHOLGXWc8qr/TeO5gYqkNTupuBx/ZW0kSa
+	j0uA==
+X-Received: by 2002:a17:90b:534e:b0:37f:9cdf:f03e with SMTP id 98e67ed59e1d1-380baacf7dcmr4503411a91.33.1782985964047;
+        Thu, 02 Jul 2026 02:52:44 -0700 (PDT)
 Received: from localhost.localdomain ([2607:f130:0:11a::31])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f0b86ef6asm8348869eec.13.2026.07.02.02.52.36
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f0b86ef6asm8348869eec.13.2026.07.02.02.52.40
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 02 Jul 2026 02:52:39 -0700 (PDT)
+        Thu, 02 Jul 2026 02:52:43 -0700 (PDT)
 From: Lian Wang <lianux.mm@gmail.com>
 To: damon@lists.linux.dev,
 	linux-mm@kvack.org
@@ -67,9 +67,9 @@ Cc: linux-kernel@vger.kernel.org,
 	lianux.wang@processmission.com,
 	lianux.mm@gmail.com,
 	kunwu.chan@gmail.com
-Subject: [RESEND RFC PATCH v2 1/5] mm/damon: add target_order field for DAMOS_COLLAPSE
-Date: Thu,  2 Jul 2026 17:52:23 +0800
-Message-ID: <20260702095227.75866-2-lianux.mm@gmail.com>
+Subject: [RESEND RFC PATCH v2 2/5] mm/khugepaged: add damon_collapse_folio_range() for external callers
+Date: Thu,  2 Jul 2026 17:52:24 +0800
+Message-ID: <20260702095227.75866-3-lianux.mm@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260702095227.75866-1-lianux.mm@gmail.com>
 References: <20260702095227.75866-1-lianux.mm@gmail.com>
@@ -81,182 +81,108 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS_COLLAPSE currently collapses into PMD-size THP only.  Add a
-target_order field to express per-order mTHP collapse intent.  Zero
-means system default (PMD order, same as current behavior).  Valid
-values are 0 and 2..HPAGE_PMD_ORDER.
+Export a thin wrapper around collapse_huge_page() that allows external
+subsystems such as DAMON to trigger THP collapse on a target address
+range.
 
-Wire up the sysfs interface: a per-scheme rw file "target_order".
-Validate at store time that the value is in range, and warn at scheme
-creation time if DAMOS_COLLAPSE is used with an unsupported non-PMD
-order, resetting to 0.
+Currently restricted to PMD order (HPAGE_PMD_ORDER), since
+collapse_huge_page() does not yet support arbitrary mTHP orders.
+The restriction can be relaxed when khugepaged gains mTHP support.
 
-The actual mTHP application via the khugepaged wrapper will be added
-in subsequent patches.
+The caller must hold a reference to @mm.  Do not hold mmap lock:
+collapse_huge_page() acquires mmap_read_lock for validation, releases
+it, then acquires mmap_write_lock for the actual collapse.  Holding
+an outer mmap_read_lock would cause a self-deadlock when the same
+thread attempts the inner mmap_write_lock.
 
 Co-developed-by: Kunwu Chan <kunwu.chan@gmail.com>
 Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
 Signed-off-by: Lian Wang <lianux.mm@gmail.com>
 Signed-off-by: Lian Wang <lianux.wang@processmission.com>
 ---
- include/linux/damon.h    |  5 ++++
- mm/damon/core.c          |  2 ++
- mm/damon/sysfs-schemes.c | 61 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 68 insertions(+)
+ include/linux/khugepaged.h |  9 ++++++++
+ mm/khugepaged.c            | 46 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 6f7edb3590ef..5a0587556573 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -572,6 +572,11 @@ struct damos_migrate_dests {
- struct damos {
- 	struct damos_access_pattern pattern;
- 	enum damos_action action;
-+	/*
-+	 * @target_order: target order for mTHP actions (DAMOS_COLLAPSE).
-+	 * 0 means system default (PMD order).  Valid: 0, 2..HPAGE_PMD_ORDER.
-+	 */
-+	unsigned int target_order;
- 	unsigned long apply_interval_us;
- /* private: internal use only */
- 	/*
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 265d51ade25b..be54defd4646 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -579,6 +579,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
+diff --git a/include/linux/khugepaged.h b/include/linux/khugepaged.h
+index d7a9053ff4fe..f7d49cba712f 100644
+--- a/include/linux/khugepaged.h
++++ b/include/linux/khugepaged.h
+@@ -20,6 +20,9 @@ extern bool current_is_khugepaged(void);
+ void collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr,
+ 		bool install_pmd);
  
- 	scheme->migrate_dests = (struct damos_migrate_dests){};
- 	scheme->target_nid = target_nid;
-+	scheme->target_order = 0;
- 
- 	return scheme;
- }
-@@ -1278,6 +1279,7 @@ static int damos_commit(struct damos *dst, struct damos *src)
- 
- 	dst->wmarks = src->wmarks;
- 	dst->target_nid = src->target_nid;
-+	dst->target_order = src->target_order;
- 
- 	err = damos_commit_dests(&dst->migrate_dests, &src->migrate_dests);
- 	if (err)
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 329cfd0bbe9f..7dcd582ded86 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -6,7 +6,9 @@
-  */
- 
- #include <linux/slab.h>
-+#include <linux/mm.h>
- #include <linux/numa.h>
-+#include <linux/huge_mm.h>
- 
- #include "sysfs-common.h"
- 
-@@ -2257,6 +2259,7 @@ struct damon_sysfs_scheme {
- 	struct damon_sysfs_stats *stats;
- 	struct damon_sysfs_scheme_regions *tried_regions;
- 	int target_nid;
-+	unsigned int target_order;
- 	struct damos_sysfs_dests *dests;
- };
- 
-@@ -2323,6 +2326,7 @@ static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
- 	scheme->action = action;
- 	scheme->apply_interval_us = apply_interval_us;
- 	scheme->target_nid = NUMA_NO_NODE;
-+	scheme->target_order = 0;
- 	return scheme;
- }
- 
-@@ -2642,6 +2646,39 @@ static ssize_t target_nid_store(struct kobject *kobj,
- 	return err ? err : count;
- }
- 
-+static ssize_t target_order_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_scheme *scheme = container_of(kobj,
-+			struct damon_sysfs_scheme, kobj);
++int damon_collapse_folio_range(struct mm_struct *mm, unsigned long start_addr,
++			       unsigned int target_order);
 +
-+	return sysfs_emit(buf, "%u\n", scheme->target_order);
-+}
-+
-+static ssize_t target_order_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_scheme *scheme = container_of(kobj,
-+			struct damon_sysfs_scheme, kobj);
-+	unsigned int val;
-+	int err;
-+
-+	err = kstrtouint(buf, 0, &val);
-+	if (err)
-+		return err;
-+
-+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
-+	if (val != 0 && (val < 2 || val > HPAGE_PMD_ORDER))
-+		return -EINVAL;
-+#else
-+	if (val != 0)
-+		return -EINVAL;
-+#endif
-+
-+	scheme->target_order = val;
-+	return count;
-+}
-+
- static void damon_sysfs_scheme_release(struct kobject *kobj)
+ static inline void khugepaged_fork(struct mm_struct *mm, struct mm_struct *oldmm)
  {
- 	kfree(container_of(kobj, struct damon_sysfs_scheme, kobj));
-@@ -2656,10 +2693,14 @@ static struct kobj_attribute damon_sysfs_scheme_apply_interval_us_attr =
- static struct kobj_attribute damon_sysfs_scheme_target_nid_attr =
- 		__ATTR_RW_MODE(target_nid, 0600);
+ 	if (mm_flags_test(MMF_VM_HUGEPAGE, oldmm))
+@@ -47,6 +50,12 @@ static inline void collapse_pte_mapped_thp(struct mm_struct *mm,
+ {
+ }
  
-+static struct kobj_attribute damon_sysfs_scheme_target_order_attr =
-+		__ATTR_RW_MODE(target_order, 0600);
++static inline int damon_collapse_folio_range(struct mm_struct *mm,
++		unsigned long start_addr, unsigned int target_order)
++{
++	return -EINVAL;
++}
 +
- static struct attribute *damon_sysfs_scheme_attrs[] = {
- 	&damon_sysfs_scheme_action_attr.attr,
- 	&damon_sysfs_scheme_apply_interval_us_attr.attr,
- 	&damon_sysfs_scheme_target_nid_attr.attr,
-+	&damon_sysfs_scheme_target_order_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_scheme);
-@@ -2970,6 +3011,7 @@ static struct damos *damon_sysfs_mk_scheme(
- 	struct damon_sysfs_weights *sysfs_weights = sysfs_quotas->weights;
- 	struct damon_sysfs_watermarks *sysfs_wmarks = sysfs_scheme->watermarks;
- 	struct damos *scheme;
-+	unsigned int target_order;
- 	int err;
- 
- 	struct damos_access_pattern pattern = {
-@@ -3005,6 +3047,25 @@ static struct damos *damon_sysfs_mk_scheme(
- 	if (!scheme)
- 		return NULL;
- 
-+	target_order = sysfs_scheme->target_order;
+ static inline void khugepaged_min_free_kbytes_update(void)
+ {
+ }
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index 617bca76db49..7fe9ce1e0533 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -3272,3 +3272,49 @@ int madvise_collapse(struct vm_area_struct *vma, unsigned long start,
+ 	return thps == ((hend - hstart) >> HPAGE_PMD_SHIFT) ? 0
+ 			: madvise_collapse_errno(last_fail);
+ }
 +
-+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
-+	if (sysfs_scheme->action == DAMOS_COLLAPSE &&
-+	    target_order != 0 &&
-+	    target_order != HPAGE_PMD_ORDER) {
-+		pr_warn("DAMON collapse: target_order %u not supported, only PMD order (%u) is available. Use 0 or %u.\n",
-+			target_order,
-+			HPAGE_PMD_ORDER, HPAGE_PMD_ORDER);
-+		target_order = 0;
++/**
++ * damon_collapse_folio_range() - Collapse base pages in range into a THP
++ * @mm:         mm_struct of the target process
++ * @start_addr: start address (must be order-aligned)
++ * @target_order: page order of the collapse result (currently only
++ *                HPAGE_PMD_ORDER is supported)
++ *
++ * Thin wrapper around collapse_huge_page() for external callers such as
++ * DAMON.  The caller must hold a reference to @mm.  Do not hold mmap
++ * lock: collapse_huge_page() acquires mmap_read_lock for validation,
++ * releases it, then acquires mmap_write_lock for the collapse.  Holding
++ * an outer mmap_read_lock would self-deadlock.
++ *
++ * Return: 0 on success, -EINVAL on bad arguments, negative error from
++ *         madvise_collapse_errno() otherwise.
++ */
++int damon_collapse_folio_range(struct mm_struct *mm, unsigned long start_addr,
++			       unsigned int target_order)
++{
++	struct collapse_control *cc;
++	enum scan_result result;
++
++	if (target_order != HPAGE_PMD_ORDER) {
++		pr_warn_once("%s: only PMD order (%u) is supported, got %u\n",
++			     __func__, HPAGE_PMD_ORDER, target_order);
++		return -EINVAL;
 +	}
-+#else
-+	if (sysfs_scheme->action == DAMOS_COLLAPSE && target_order != 0) {
-+		pr_warn("DAMON collapse: target_order not supported without THP. Use 0.\n");
-+		target_order = 0;
-+	}
-+#endif
-+	scheme->target_order = target_order;
++	if (start_addr & ((PAGE_SIZE << target_order) - 1))
++		return -EINVAL;
 +
- 	err = damos_sysfs_add_quota_score(sysfs_quotas->goals, &scheme->quota);
- 	if (err) {
- 		damon_destroy_scheme(scheme);
++	cc = kmalloc_obj(*cc);
++	if (!cc)
++		return -ENOMEM;
++	cc->is_khugepaged = false;
++	cc->progress = 0;
++
++	lru_add_drain_all();
++
++	result = collapse_huge_page(mm, start_addr, 1, 0, cc, target_order);
++	kfree(cc);
++	if (result == SCAN_SUCCEED || result == SCAN_PMD_MAPPED)
++		return 0;
++	return madvise_collapse_errno(result);
++}
++EXPORT_SYMBOL_GPL(damon_collapse_folio_range);
 
