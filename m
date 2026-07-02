@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B067B181334
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 17:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C809F349AF6
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 17:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783013347; cv=none; b=jHND4eg9U8/m3pdBcUJXe4YmbOUZCK7LAFD+Vj78LppgGlBBntDEt4ms7HfHw29GanNJz7hCWz4k2VYkhLndCSl1lDysXzzCSAsnPK/oPeMkh1YGTUUlMQ6qC4YH/RJF5ugU96dwzEmD4t4Palbux+s4tFF4vZSKvqqjfXMLi98=
+	t=1783013529; cv=none; b=bcC8fQZBdVklUjCfQnE5T22eOcmfU/DfhFyQVc0aYQEJ1+/nJQBaX6FNGY3qkysiLZybWU71AYa4yAe5DMp2IL8FPvRC7PB7eZ5EZPUn2nbl7UumFoUa2u3AzsgTYcnRCoTH7uxFEamdmsGna//9ZTFx0iH6Qx5fVqp+Oca0Sbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783013347; c=relaxed/simple;
-	bh=4ToMK4fwoT9Lhoza39c/wlcDi8nsM/k501N47kT9iYk=;
+	s=arc-20240116; t=1783013529; c=relaxed/simple;
+	bh=AG7fIQ//ue1wL4yI1upLAaqXe/oaQ5fozCBo7rMzC34=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=KHldqc5h4ZVrKwxisGEtPMkLMqq9hi2eRgStEMP3Mum1+KbzGF63+XGXXpgRPfzgTeOaHcfAakOdp3UZHGjf3Uo32e2vRmmjCp/04u2pGuUVZHD0dt+BRqqERdEWDfKufBKCHOr4FGZ3ZcUje39QeXBLUV2mPV7CvYFZQJjQny0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UemkytAH; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=W2g7TFBxQoUG0nFz2Dp8Y4dTB/ggbPp+Gi65mXZ4OfWJHcviZwN+qjwU0zPjyKU5+c23cdpsp8nUgQHUhfx+yBgsVmfQ2B6vZGupZK3dfjbSaBMYRUk3YUoLhPOw+HPLAHWmxXuKqPCpxwKxKtRwNuV3bkBWGe7R3ySwP/t0U3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Os/u5IMz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UemkytAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403FC1F000E9;
-	Thu,  2 Jul 2026 17:29:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Os/u5IMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADACA1F000E9;
+	Thu,  2 Jul 2026 17:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783013346;
-	bh=0ER7uT0vbVzPsAtVtXSXeG+1Q+OAOfKAkTX476drpho=;
+	s=k20260515; t=1783013528;
+	bh=IQyzjLrY1BgJ4UtXmVzAVunvmbKo5qJ3kv6eO1cw+rs=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=UemkytAHkSb+RgnYVrAyVXpeenR4fOUeNv8GRCAscySk7p43IbMsNLPJ38cfQrrXE
-	 jJd4KoEJIGPMztWhjsBKRcMYlhhdXzpFe5LuI4WSXqhKpkV2m88k7qk1FBHhAsrH4x
-	 lA2kpO0GBrQAB1gDFS/XPfsCvypvmB8wb/54eeMPLIfIEyPu/hg7CxoaEkgHLSNJQd
-	 JXzwBJk/NpYb7AAql6J7N3vWKNgzXa18aAnei54t8leILuNL4tmJP+2jo5feR8ErVQ
-	 Rgh8ClswU94Z2XANiQ6DUnnRSq2ajgP0Tcqdr/eqC8ukyC8yyat8W51CZbsdNJ4lFM
-	 /ufuyN8Fx+64w==
+	b=Os/u5IMzcF64xza3NEPWcnaJvUoexDCCJRFnKEM4DY9D9gWRt1PI8BDrtc9nbCZc4
+	 cSmA3l0T9qO6KmFgCkVGyQ7UscIaidJs3iPfDz4Sjfe0IhjFB5DsBJ5rqXy83nnVLM
+	 0Jd9QcI+bMW9xG6k8zz76i5hbtebqmNX67XOIGxcz00BxToceqypSurb6EiIzHYz8z
+	 WO5lJbIeknaD2m2kJ671wwpRFzVbkwPUoyxJrRHGoApB8NCzoexbFQXD6ATp/mMKUB
+	 baP5+AkZ0O3aHWMALof8Wc+YP1mC1d9zrQvRfePYofBMmtHqp6drJLMtdrnFI1AJdI
+	 rTY1C5xIhb0BA==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 1/3] mm/damon: add
- damon_region->last_probe_hits
+Subject: Re: [RFC PATCH v1.1 3/3] mm/damon/sysfs-schemes: set probe hits as
+ pseudo moving sums
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260702171714.88278-2-sj@kernel.org>
+In-Reply-To: <20260702171714.88278-4-sj@kernel.org>
 References: <20260702171714.88278-1-sj@kernel.org>
- <20260702171714.88278-2-sj@kernel.org>
+ <20260702171714.88278-4-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 02 Jul 2026 17:29:05 +0000
-Message-Id: <20260702172906.403FC1F000E9@smtp.kernel.org>
+Date: Thu, 02 Jul 2026 17:32:07 +0000
+Message-Id: <20260702173207.ADACA1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,94 +47,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] When `damon_update_monitoring_result()` is called to apply new a=
-ttributes mid-aggregation, it resets `r->nr_accesses` but fails to clear `r=
-->probe_hits`. As a result, accumulated probe hits leak across the aborted =
-interval boundary. Furthermore, the newly introduced `r->last_probe_hits` f=
-ield is completely ignored by this function=E2=80=94it is neither scaled fo=
-r the new interval attributes (unlike `last_nr_accesses`) nor protected fro=
-m the `probe_hits` leak. This causes the newly introduced moving sum statis=
-tics exposed to userspace to become artificially inflated and mathematicall=
-y incorrect after an attribute update.
+- [Medium] damon_probe_hits_mvsum() returns an artificially inflated moving=
+ sum when left_window_bp =3D=3D 10000 after an attribute update.
 --
 
-commit c9f161ddb2f122eeb9bddfba63cb77e65fe86f9c
+commit aa52db4de056d7c850beaa9ef06ec63a3befcbf2
 Author: SJ Park <sj@kernel.org>
 
-mm/damon: add damon_region->last_probe_hits
-   =20
-Add new damon_region field, last_probe_hits. Maintain fully accumulated
-probe_hits values from the last aggregation interval in the field.
+mm/damon/sysfs-schemes: set probe hits as pseudo moving sums
 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 805e089ff4f2f..4f7e305b261c3 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -68,10 +68,10 @@ struct damon_region {
->  	unsigned int nr_accesses;
->  	unsigned char probe_hits[DAMON_MAX_PROBES];
->  	struct list_head list;
-> -
->  	unsigned int age;
->  /* private: Internal value for age calculation. */
->  	unsigned int last_nr_accesses;
-> +	unsigned char last_probe_hits[DAMON_MAX_PROBES];
->  };
+This commit updates the DAMON sysfs interface to expose probe hits using
+a pseudo moving sum instead of incomplete counters. It uses
+damon_probe_hits_mvsum() to calculate the value, similar to the logic
+used for nr_accesses.
+
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index dbf2b0515d582..32f495a96b17a 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+> @@ -110,7 +110,8 @@ static int damos_sysfs_probes_add_dirs(struct damos_s=
+ysfs_probes *probes,
+>  		struct damos_sysfs_probe *sys_probe;
+>  		int err;
 > =20
->  /**
-
-[ ... ]
-
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index c6fc35be633b3..60be3e9d87887 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-
-[ ... ]
-
-> @@ -2040,8 +2042,10 @@ static void kdamond_reset_aggregated(struct damon_=
-ctx *c)
->  					damon_nr_regions(t), nr_probes);
->  			r->last_nr_accesses =3D r->nr_accesses;
->  			r->nr_accesses =3D 0;
-> -			for (i =3D 0; i < DAMON_MAX_PROBES; i++)
-> +			for (i =3D 0; i < DAMON_MAX_PROBES; i++) {
-> +				r->last_probe_hits[i] =3D r->probe_hits[i];
->  				r->probe_hits[i] =3D 0;
-> +			}
+> -		sys_probe =3D damos_sysfs_probe_alloc(region->probe_hits[i]);
+> +		sys_probe =3D damos_sysfs_probe_alloc(
+> +				damon_probe_hits_mvsum(i, region, ctx));
 
 [Severity: Medium]
-Is there a regression in how statistics are updated when attributes change
-mid-aggregation?
+Can this result in an artificially inflated moving sum being exposed to
+userspace?
 
-If damon_update_monitoring_result() is called to apply new attributes, it
-resets nr_accesses but doesn't clear the probe_hits array:
+Looking at damon_probe_hits_mvsum() in mm/damon/core.c:
 
-mm/damon/core.c:damon_update_monitoring_result() {
+mm/damon/core.c:damon_probe_hits_mvsum() {
     ...
-	if (!aggregating)
-		r->nr_accesses =3D damon_nr_accesses_for_new_attrs(
-				r->nr_accesses, old_attrs, new_attrs);
-	else
-		/*
-		 * if this is called in the middle of the aggregation, reset
-		 * the aggregations we made so far for this aggregation
-		 * interval.  In other words, make the status like
-		 * kdamond_reset_aggregated() is called.
-		 */
-		r->nr_accesses =3D 0;
-    ...
+	return damon_mvsum(r->probe_hits[probe_idx],
+			r->last_probe_hits[probe_idx], left_window_bp);
 }
 
-This appears to completely ignore the newly introduced last_probe_hits arra=
-y.
+When left_window_bp =3D=3D 10000 after an attribute update, this calculates
+current + last.
 
-Since last_nr_accesses is scaled for the new interval attributes, should
-last_probe_hits also be scaled to maintain accurate moving sum statistics?
+Because r->probe_hits is not cleared during attribute updates, the
+un-cleared partial hits might be erroneously added to the previous
+interval's hits. This function seems to lack the safeguard for this
+condition that is present in damon_nr_accesses_mvsum().
 
-Also, should probe_hits be cleared for mid-aggregation updates to prevent
-leaking accumulated counts into the aborted interval?
+If users query the stats immediately after an update, could this
+silently overflow the unsigned char and expose incorrect statistics?
+
+>  		if (!sys_probe) {
+>  			damos_sysfs_probes_rm_dirs(probes);
+>  			return -ENOMEM;
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260702171714.8827=
-8-1-sj@kernel.org?part=3D1
+8-1-sj@kernel.org?part=3D3
