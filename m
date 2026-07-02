@@ -1,110 +1,175 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320723939C2
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:41:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2340738E5ED
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782988873; cv=none; b=dV32YzPJR3MVwqY19+5tSF2zkXeGDFBtsUjNc2Boeoa33ZAr9tXcYHPYvFmbmHvJePEcZ7FarUp3LkkTmTcxOo3m5WuwODuSE/J7LlUMBP2ClfEN3uFHiTruqRi8EHNBZxbGX9tEG4NnZbbLJgvrQv+eywXFLuGf3tzDDXkOwOI=
+	t=1782988877; cv=none; b=EMzpwMn12wYOh0An11sqKzEO5T332uN1NU+/XiAcUHrinKK3w1M7AL2aFEzZgkLq6i/4V6Y++7owJNkxSec12UFborAPewKX4UBxSYU2OzunTwabwGRvUN7TS1Ni67dolaom3224S5G97JAnbViwlypI9d/uOOz+Js5KWI/uSAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782988873; c=relaxed/simple;
-	bh=jDQoIXsbwOvjrCng4gu/qIcBGVt0XAmT1jLY6FGFHPM=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=GFs4T6/dIjvPYpC30wI3fjfYKolydJ+gNXeiVYMmYFr0OAMzmwhP6tr+aTZBd0Dgcc7OLpXjqSNk4SrjGAv87G6TS8nKO8Ooq1Q8l1PGTSHe9emD1476+k1+heegK2aa1dzsg0pUF+dAtzk05SIiVg873ffWTcmpSH6YPBlYHAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CLqneaHU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782988877; c=relaxed/simple;
+	bh=sRbDuySTqouksMsdM6nvwuDafEiD7Om7hHW78HVBhUg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MqLyB3fniD/LqcVZHA7Z7YBuobvfUPL77SAImm09Hn5zcRyG3C6RiqvKuh6m9PNXw0x6cnPwHmMM7at+BD+epcl+hMjORHvBl2BRHjxS8/y8xLWPlDfPB66JI7qv5FVzF+OTG+zRiKLwnMJ/cMwcfswU2I2szpAUNz40nj52Y3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=dYZCkTLz; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ItNfVIy6; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=dYZCkTLz; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ItNfVIy6; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CLqneaHU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FEB1F000E9;
-	Thu,  2 Jul 2026 10:41:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782988871;
-	bh=jDQoIXsbwOvjrCng4gu/qIcBGVt0XAmT1jLY6FGFHPM=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=CLqneaHUQnfDsr8Ros6ioah1sLim3db0vkWifcflB5354Eeje4M7fdzy6bZv/RukZ
-	 QRCkHBLd+5rtL10JPB81E4jq1wHpwcCX4jD8AK4/A5EChUiFUKiCqwRX/Ahyc+i/7u
-	 zC/gnEnxjt8aqvlhso0+9e92Oi9dGJQFD7L1lPMAjAyt0Su+jbEza4uQdWXu4u0eD9
-	 cQUeJgPkpjnXd5pEiz7W7nwo460+bkvbIj8GU5ez6LrWRVBdSoUy9EERJfHLFjhAtu
-	 +cpga9gqpmlXmC0PBFNgr72a/AUvNi7ozd1M71jp2DsroZ8KV00lsCqoAwmEkf3xV8
-	 6gk8FoJjljzdw==
-From: sashiko-bot@kernel.org
-Subject: Re: [RESEND RFC PATCH v2 4/5] mm/damon: introduce DAMOS_SPLIT
- action
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Lian Wang" <lianux.mm@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260702094633.75658-5-lianux.mm@gmail.com>
-References: <20260702094633.75658-1-lianux.mm@gmail.com>
- <20260702094633.75658-5-lianux.mm@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 02 Jul 2026 10:41:11 +0000
-Message-Id: <20260702104111.A1FEB1F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="dYZCkTLz";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ItNfVIy6";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="dYZCkTLz";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ItNfVIy6"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 35C3A74146;
+	Thu,  2 Jul 2026 10:41:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782988873; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/l1IoiEPWhF0NUagU+QG1naKUjVzwtSTp3zCZyqepZc=;
+	b=dYZCkTLznVTvd49bFo3cEDvQK37DLCAWep1ySDBJvB7ZI92Ux9VjWBQWDt5ZiNZ/MAt+Rf
+	SzQNzHZaEVpIjbXy/uyaJWZpC+VzAyMLTWh/KBVX3/Ba01/a1hlM8i+AAkQwy0bd8OWeyj
+	tIQv1CO4QzGYiN5OrnzOZIPNfoGNxQM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782988873;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/l1IoiEPWhF0NUagU+QG1naKUjVzwtSTp3zCZyqepZc=;
+	b=ItNfVIy6kMYjaoqa0HT5ce17bmb5Ga7RvZaIezfncv6NjBjaFvXdBCNueLLQX4mvtn3jty
+	yBkPLnjtG8WereDA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=dYZCkTLz;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ItNfVIy6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782988873; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/l1IoiEPWhF0NUagU+QG1naKUjVzwtSTp3zCZyqepZc=;
+	b=dYZCkTLznVTvd49bFo3cEDvQK37DLCAWep1ySDBJvB7ZI92Ux9VjWBQWDt5ZiNZ/MAt+Rf
+	SzQNzHZaEVpIjbXy/uyaJWZpC+VzAyMLTWh/KBVX3/Ba01/a1hlM8i+AAkQwy0bd8OWeyj
+	tIQv1CO4QzGYiN5OrnzOZIPNfoGNxQM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782988873;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/l1IoiEPWhF0NUagU+QG1naKUjVzwtSTp3zCZyqepZc=;
+	b=ItNfVIy6kMYjaoqa0HT5ce17bmb5Ga7RvZaIezfncv6NjBjaFvXdBCNueLLQX4mvtn3jty
+	yBkPLnjtG8WereDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B5619779AA;
+	Thu,  2 Jul 2026 10:41:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 7UHuKERARmr8RQAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 10:41:08 +0000
+Date: Thu, 2 Jul 2026 11:41:07 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 14/30] mm/vma: minor cleanup of expand_[upwards,
+ downwards]()
+Message-ID: <akZAL0H1Bxh_CNNL@pedro-suse.lan>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <b24f70b72f0a9e2a37b904e5b59d80b88bd42e4a.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b24f70b72f0a9e2a37b904e5b59d80b88bd42e4a.1782735110.git.ljs@kernel.org>
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 35C3A74146
+X-Spam-Flag: NO
+X-Spam-Score: -3.01
+X-Spam-Level: 
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_ALL(0.00)[];
+	ARC_NA(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	DKIM_TRACE(0.00)[suse.de:+];
+	R_RATELIMIT(0.00)[to_ip_from(RLziudqfrzo6b7hzgpxksh1d9i)];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+	RCPT_COUNT_GT_50(0.00)[75];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,pedro-suse.lan:mid]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
-- [High] `damos_va_collapse` and `damos_va_split` redundantly process memor=
-y and corrupt accounting quotas, while `split` skips memory chunks.
-- [Medium] `damos_va_collapse` and `damos_va_split` silently ignore DAMON o=
-perations layer filters.
-- [Low] Unconditional use of `HPAGE_PMD_ORDER` breaks the build on architec=
-tures without huge page support.
-- [Low] Implicit default target_order for DAMOS_SPLIT triggers a kernel war=
-ning on scheme creation.
---
+On Mon, Jun 29, 2026 at 01:23:25PM +0100, Lorenzo Stoakes wrote:
+> Adjust the stack expansion functions expand_upwards() and
+> expand_downwards() such that they are expressed in terms of named constant
+> values, and make use of vma_start_pgoff().
+> 
+> This clearly documents that we are referencing the page offset of the start
+> of the VMA.
+> 
+> Additionally this cleans up the overflow check in expand_upwards().
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-Note: This report is provided as a free-form summary due to recitation
-restrictions preventing the inline quotation of the original patch code.
+Reviewed-by: Pedro Falcato <pfalcato@suse.de> 
 
-Commit: bad86cd869e24f6ecf3b06b8afd727d7561ea5eb
-Author: Lian Wang <lianux.mm@gmail.com>
-Subject: mm/damon: introduce DAMOS_SPLIT action
-
-This commit adds a new DAMOS_SPLIT action to the DAMON operations layer.
-It allows splitting large folios into smaller mTHP-order folios based on a
-target_order provided via the sysfs interface.
-
-[Severity: Low]
-Could the unconditional use of HPAGE_PMD_ORDER in damos_va_collapse and
-damos_va_split in mm/damon/vaddr.c break the build on architectures without
-huge page support? On architectures where CONFIG_PGTABLE_HAS_HUGE_LEAVES is
-not defined, HPAGE_PMD_ORDER evaluates to a macro containing a BUILD_BUG,
-which might cause a compilation failure since vaddr.c does not depend on
-CONFIG_TRANSPARENT_HUGEPAGE.
-
-[Severity: High]
-Does damos_va_collapse redundantly process memory and inflate the accounting
-statistics? It uses a local variable last_chunk to prevent duplicate
-processing, but because the function is called per-region, last_chunk is
-reinitialized to ULONG_MAX each time, causing it to repeatedly process the
-same chunks.
-
-Additionally, in damos_va_split, if a small folio is encountered or the
-address is unmapped, does the address iterator incorrectly skip memory?
-It appears to increment the address by the full chunk_sz (2MB) instead of
-the folio size or PAGE_SIZE, which would skip the remaining folios in the
-PMD block.
-
-[Severity: Medium]
-Do damos_va_collapse and damos_va_split ignore DAMON operations layer
-filters? Unlike other actions that evaluate damos_va_filter_out on each
-folio, these functions appear to unconditionally increment the
-sz_filter_passed statistic. This might falsely report to the DAMON core
-that the memory passed user-configured filters like anon/file or age filter=
-s.
-
-[Severity: Low]
-Will creating a sysfs DAMON scheme for the split action trigger unnecessary
-kernel log spam if the target_order is left at its default? In
-damon_sysfs_mk_scheme in mm/damon/sysfs-schemes.c, the target_order is
-zero-initialized. The validation logic treats 0 as invalid for DAMOS_SPLIT,
-defaults it to 2, and emits a pr_warn, which might generate a warning every
-time such a scheme is committed.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260702094633.7565=
-8-1-lianux.mm@gmail.com?part=3D4
+-- 
+Pedro
