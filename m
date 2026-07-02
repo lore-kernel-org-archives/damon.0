@@ -1,46 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B0433BBB9;
-	Thu,  2 Jul 2026 16:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C8822D7B9;
+	Thu,  2 Jul 2026 16:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783010380; cv=none; b=rwt4LeXYpWi3U47Y9RxLRhbs5OwB5Xo2bDiGL1ZipuitI8gFJyrAdJgXXCi47GAZ+Mj/TAEz7C45ULlg5g8wnxJnw/sQRyTm8ktnR9yQNiCRfyn+s9fkG+XEsTVgL0KUHWZA24w8bdA3MvNLOQ9IwUy4nhdzmkxbl6gehOdkuIU=
+	t=1783011185; cv=none; b=VtMOu755l1FaoRgKK3IsXyYGfXohkqT6hOLkxTwn5kxblBE5qRxkHjoFkiB0LfYubXcMUPrDTNekEKAYgzi4+cyubomzUhEpqCqX4YeFSxj6TZpnW8qmSriRXY3UNbGZw7JlOqYdcTDLOA/wBAdHYZMhl3LWySMycHe73qbVC4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783010380; c=relaxed/simple;
-	bh=Mc+f9/wHAywQ867nU+MFi7RsxZ70GMTzp+iqziWSrNA=;
+	s=arc-20240116; t=1783011185; c=relaxed/simple;
+	bh=+SUPM17FyMkhdBqg05UJ5LJlBm3JZwNw8h+Mib6SGa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8Gr+N+THfU340dvDAZKpIgxZ59LfORZwFg9uiksZS2rTBi8Zy+Y6kAkfQIN014RY3N7eUj1OnFRglCC/kYr2dfkB1zQZWWctMVo8js52whWwmhw/Vm1sz7M8fHPE6uOjvPWSxq9veUeocyw/SC//lTWZ5Fst7VRu6YiSyyBlCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j3CntqjP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=djLNs5CWdTJwJtY0V4fZwxSkBO+Tkq3mOidLtogl3K0b8X8nywAh2eXVzCdm1KNl6fiYOnqhForifQErns8YNjBRxls+DHsPdS84PKXAy4wgQyy/QOgEjRmDL8O79ForHGP1XWnsmvH3mNkL+CpRqtNPymfQ1VRa5EZuZ8LUtuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Big/Uh5x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j3CntqjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D38B1F00A3A;
-	Thu,  2 Jul 2026 16:39:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Big/Uh5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FC41F000E9;
+	Thu,  2 Jul 2026 16:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783010379;
-	bh=3U4Pu3SkeAaU0OMoDMoDHcyux0m0zke1PXLSBG8YI/o=;
+	s=k20260515; t=1783011184;
+	bh=AdFubk+JD40bWGnDszpUR8QtopM4gDG6s4W5ZjSbVSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3CntqjPqMtofrH8ye6WRIp8cdPg5aZaX9MVSC6KQRKwqC+/r73jfrGirDW4Ov5BX
-	 MSbpLqCHbK1auotjClbW6NpXha6JiebYg0gyNHW1WpvICHkGNTLdJZECgnTyIi4ZPm
-	 Kz9yaVRjXzK9gVbXKz0NNVSqBEYYJ23q1YDWrxkHAURwizXXttOohahJD4ot1rAWYo
-	 utSCigkNJ5Icp7wy988bWL6IZoFhsdnk3Dvov2Z5LVfClibCqN7WblbmbwmzbmfjKH
-	 JkAmC9DXGvQEDflygr9xGJOG28wgaA9Oc1ext1jtIu/LwBf36WjSb2twB1I8oieZXG
-	 HfM0taTXs0qaw==
+	b=Big/Uh5x+p9UFUyrs0H+TX8SkxXowLs9309ENEt2bZHNEFPVeSIvL00bHj+6bpm/y
+	 s8udHbi4jszqqgXKeOlXpUA7KzmEVpFSNVFpyyDq6Q2tuQAlNTHZgadeL2wS+BpmDr
+	 6duTpmSGL4zT1r1ioPN028UWP/YtE5PatvwARH4Ev47D7gXUxGX5zO/VlTN87FBAj4
+	 1G3pLC0fuQw3cvxZISOhdXlr6cOuusPnuh2jpCqFPzERMGSM8ehDyvqT4qLyVPPXYT
+	 mvmg6zxqVvnS0/yc+YD9yAa6o+SLV0TJiBWDgaGH2m4YDAPlF5N6U0oQT202lLwHRc
+	 amVrZi3QepJIw==
 From: SJ Park <sj@kernel.org>
-To: Lian Wang <lianux.mm@gmail.com>
+To: Lorenzo Stoakes <ljs@kernel.org>
 Cc: SJ Park <sj@kernel.org>,
+	Lian Wang <lianux.mm@gmail.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	gutierrez.asier@huawei-partners.com,
 	daichaobing@sangfor.com.cn,
-	lianux.wang@processmission.com,
-	kunwu.chan@gmail.com
+	kunwu.chan@gmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Barry Song <baohua@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	linux-kernel@vger.kernel.org
 Subject: Re: [RESEND RFC PATCH v2 0/5] mm/damon: add mTHP collapse and split actions
-Date: Thu,  2 Jul 2026 09:39:05 -0700
-Message-ID: <20260702163905.86497-1-sj@kernel.org>
+Date: Thu,  2 Jul 2026 09:52:34 -0700
+Message-ID: <20260702165235.86684-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260702095227.75866-1-lianux.mm@gmail.com>
+In-Reply-To: <akY6ZzPnwk-CToMp@lucifer>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -50,14 +59,48 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu,  2 Jul 2026 17:52:22 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
+On Thu, 2 Jul 2026 11:23:55 +0100 Lorenzo Stoakes <ljs@kernel.org> wrote:
 
-> Resend of v2 with the RFC tag restored (v1 was RFC PATCH, so v2 should
-> be RFC PATCH v2).
+> +cc all those you missed.
 
-Somehow you sent this twice.  Maybe your email setup issue?  You also replied
-same message twice to my previous comment.  Anyway, I will review the later
-posted one: https://lore.kernel.org/20260702094633.75658-1-lianux.mm@gmail.com
+Thank you for doing this, Lorenzo.
+
+> 
+> I really need to write a bot to do this, because I'm getting a little tired of
+> pointing this out :))
+
+Good idea.  I will also consider implementing this kind of checks to to my lzy
+tool box [1] or hkml [2].
+
+> 
+> On Thu, Jul 02, 2026 at 05:46:28PM +0800, Lian Wang wrote:
+> >  include/linux/damon.h      |  10 +++
+> >  include/linux/khugepaged.h |   9 +++
+> >  mm/damon/core.c            |   2 +
+> >  mm/damon/sysfs-schemes.c   |  77 ++++++++++++++++++++++
+> >  mm/damon/vaddr.c           | 128 +++++++++++++++++++++++++++++++++++++
+> >  mm/khugepaged.c            |  46 +++++++++++++
+> >  6 files changed, 272 insertions(+)
+> 
+> You are doing damon changes, and that belongs to SJ, sure.
+> 
+> But you're also changing core THP code? Please ensure you cc- THP people because
+> without our approval this cannot be merged:
+
+Thank you for calling out this, Lorenzo.
+
+Lian, please do as Lorenzo kindly asked, from the next revision.  You don't
+need to add those recipients to all the patches if you worry their inbox
+volumes.  But do ensure adding them to at least patches that modifies
+khugepaged.h and khugepaged.c, and the cover letter.
+
+If it is cumbersome, consider using 'hkml patch format' [3].  It does that (run
+get_maintainer.pl and add recipients to each patch and the coverletter) for its
+users.
+
+[1] https://github.com/sjp38/lazybox
+[2] https://github.com/sjp38/hackermail
+[3] https://github.com/sjp38/hackermail/blob/master/USAGE.md#formatting-patches
 
 
 Thanks,
