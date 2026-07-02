@@ -1,113 +1,93 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A2A377006
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0435431E68;
+	Thu,  2 Jul 2026 10:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782987698; cv=none; b=i0FgCMeuqEqTIdjCSQyjMWJEC712NZr/YaETkZJ/mJmIxVrK7Nf8P6Hso/SXdX2A2jrn2VzODWrwt/s4THr05LQDDUSl19Ym0uu7Jg6Zms9xi9cCk0tLzoj/sXXLbcf9AoxXxFTeaCKZVOJGrlLue/hdGlZWkqsWOkX3lavZ1vA=
+	t=1782987844; cv=none; b=cojbH/WTiWmv9ZZ8qTIxCOkW/vWQ7q6NnKP6xtn6h04qkJhBbVJgs9qFO3I/6ui9md1rBXh9+cpfUiuyFRROLWqfyfZpoZNw12LPMKxxaGxtLOk0CWrFCLJ7B/hM1x1/Nwd8k/46vwDmHvNGdJOCj6HAWlHwcwCiF8HT433VbgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782987698; c=relaxed/simple;
-	bh=WGMbS16ct0K/swj8ovg7d8YcRalpB8mwfNBvB3NLMXM=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=a6bVteSt6Rav8pp0Scz/o3/zbwXsgmGg4AGxAHYeIqbNkl/ZvHBxWagOr3OGzNjHO9KnW7WYAk9P86D5UXup0uc2e61mAdGFCTaWFEK2jpCKtAX1P+tkQeDvb4fbSsXs8Tlov0MKIRfY/PIhgW64E6stGaY6RaKVCKkTtqWH1ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H7km7PzW; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782987844; c=relaxed/simple;
+	bh=OGcz5nFpJT7/819veniNCxoWNDvDubeWKYTlxYZzcN0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TDphgNPd/FGHnwJ9fC1DRwiHFAgNJtc+B1HOMH7kSQOSbOHaNrfNw6zB8BEShAmiEc5kW4VG1BYovvzEf8czm/zL6Q6XJhSfP9S/2aTqbNkXwJncFU91aU9dX2JzUmQ892hePxJe1X6tsYSse2xNTp1g4KJlJVSEv22nyW7g/X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RmePY3SJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H7km7PzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F7F1F000E9;
-	Thu,  2 Jul 2026 10:21:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RmePY3SJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED221F000E9;
+	Thu,  2 Jul 2026 10:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782987697;
-	bh=Ujq/W+nNWSYGSLZMYxHb2iNvcd7c3x8AtsbFZbqqgXg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=H7km7PzW78AeJpGScgT1yT/5t1MBb9cnD2vEJIbgMJrv5qVCssNFJCeZfIEFJmLKs
-	 eGxnKYMg681h3qxhpvwmDKWAJ6jmoV9Hs6HLxF0wYRmkrdonu7HT0rLGCM1r61sFq5
-	 Pz/0lgiEEmTxFQMjadf9QLArehwRPVUKMxLN/kshHc0pcsHR1iJy7vZrh5Gtlfe8Yl
-	 2w57B6H7XmkkJIF3nbWQ1Ash6VO12jmdpvZ8jTurEccy9WDteKRueLFlVGcU19stb3
-	 8hb6Eh6X59elggTuY0MwYsVN2ZzrPV7T2RmZ9nzEhoV1dw/+s99kAsLmWhRMcea8gF
-	 pqrunko9nSE1Q==
-From: sashiko-bot@kernel.org
-Subject: Re: [RESEND RFC PATCH v2 4/5] mm/damon: introduce DAMOS_SPLIT
- action
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Lian Wang" <lianux.mm@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260702095227.75866-5-lianux.mm@gmail.com>
-References: <20260702095227.75866-1-lianux.mm@gmail.com>
- <20260702095227.75866-5-lianux.mm@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 02 Jul 2026 10:21:36 +0000
-Message-Id: <20260702102137.12F7F1F000E9@smtp.kernel.org>
+	s=k20260515; t=1782987842;
+	bh=x41dzmPIh8BFvMrp+WHPC2Q6gxG4jWiV4wqOzoJYo7g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=RmePY3SJoW7j44vSGP2lOd1JwcLDzo6DXm8DRbPXFtXzYI8K2MP/QMaMhYw1WAKrv
+	 HLXngjAwEPtnex5RVLBCYgeqsXd6kgsdQ+/7cm4S9k/GhHX73h4aD+6+qg0OGvrWLj
+	 3t3KRJge9NvvjVUXeLiKk8PfDwVfhmPdyS7nn9NgffiYTdWRtIMtjW4u3hgJFWS7dQ
+	 g99pLdR8RByLH+8TV2aqgnC6zRgn5nlmFr3EeJ2vlapNFZPohcprxt3q3InD7iR8sP
+	 jaNXuzscThIbbrK8aK1lmHBZHMmrKxp8IoTUT4FDtDfXGDjkjUOl38fYu8AqMuNV4y
+	 PPeOm/ThvbcAw==
+Date: Thu, 2 Jul 2026 11:23:55 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
+To: Lian Wang <lianux.mm@gmail.com>
+Cc: sj@kernel.org, damon@lists.linux.dev, linux-mm@kvack.org, 
+	daichaobing@sangfor.com.cn, kunwu.chan@gmail.com, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@kernel.org>, Zi Yan <ziy@nvidia.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, "Liam R. Howlett" <liam@infradead.org>, 
+	Nico Pache <npache@redhat.com>, Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
+	Barry Song <baohua@kernel.org>, Lance Yang <lance.yang@linux.dev>, linux-kernel@vger.kernel.org
+Subject: Re: [RESEND RFC PATCH v2 0/5] mm/damon: add mTHP collapse and split
+ actions
+Message-ID: <akY6ZzPnwk-CToMp@lucifer>
+References: <20260702094633.75658-1-lianux.mm@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260702094633.75658-1-lianux.mm@gmail.com>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] Sysfs state inconsistency when an invalid target_order is suppli=
-ed for DAMOS_SPLIT
---
++cc all those you missed.
 
-commit 2142d0d071963cdc56d472e03ea29ec38eeda286
-Author: Lian Wang <lianux.mm@gmail.com>
+I really need to write a bot to do this, because I'm getting a little tired of
+pointing this out :))
 
-mm/damon: introduce DAMOS_SPLIT action
+On Thu, Jul 02, 2026 at 05:46:28PM +0800, Lian Wang wrote:
+>  include/linux/damon.h      |  10 +++
+>  include/linux/khugepaged.h |   9 +++
+>  mm/damon/core.c            |   2 +
+>  mm/damon/sysfs-schemes.c   |  77 ++++++++++++++++++++++
+>  mm/damon/vaddr.c           | 128 +++++++++++++++++++++++++++++++++++++
+>  mm/khugepaged.c            |  46 +++++++++++++
+>  6 files changed, 272 insertions(+)
 
-This commit adds the DAMOS_SPLIT action for splitting large folios into
-smaller mTHP-order folios. It exposes this action through the DAMON sysfs
-interface and validates the target_order to be within the allowed bounds.
+You are doing damon changes, and that belongs to SJ, sure.
 
-[ ... ]
+But you're also changing core THP code? Please ensure you cc- THP people because
+without our approval this cannot be merged:
 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 9067cb66632ed..198b64ca22598 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
+$ scripts/get_maintainer.pl 20260702094633.75658-1-lianux.mm@gmail.com.mbx
+SJ Park <sj@kernel.org> (maintainer:DAMON)
+Andrew Morton <akpm@linux-foundation.org> (maintainer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+David Hildenbrand <david@kernel.org> (maintainer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+Lorenzo Stoakes <ljs@kernel.org> (maintainer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+Zi Yan <ziy@nvidia.com> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+Baolin Wang <baolin.wang@linux.alibaba.com> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+"Liam R. Howlett" <liam@infradead.org> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+Nico Pache <npache@redhat.com> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+Ryan Roberts <ryan.roberts@arm.com> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+Dev Jain <dev.jain@arm.com> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+Barry Song <baohua@kernel.org> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+Lance Yang <lance.yang@linux.dev> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
+damon@lists.linux.dev (open list:DAMON)
+linux-mm@kvack.org (open list:DAMON)
+linux-kernel@vger.kernel.org (open list)
 
-[ ... ]
-
-> @@ -3063,11 +3067,23 @@ static struct damos *damon_sysfs_mk_scheme(
->  			HPAGE_PMD_ORDER, HPAGE_PMD_ORDER);
->  		target_order =3D 0;
->  	}
-> +	if (sysfs_scheme->action =3D=3D DAMOS_SPLIT &&
-> +	    (target_order =3D=3D 0 ||
-> +	     target_order >=3D HPAGE_PMD_ORDER)) {
-> +		pr_warn("DAMON split: target_order %u invalid, need 2..%u. Defaulting =
-to 2.\n",
-> +			target_order,
-> +			HPAGE_PMD_ORDER - 1);
-> +		target_order =3D 2;
-> +	}
-
-[Severity: Medium]
-Does this create a state inconsistency between the user-facing sysfs
-interface and the actual running kernel configuration?
-
-When an invalid target_order is supplied, target_order is overridden to a
-safe default for the internal scheme here, but the sysfs_scheme->target_ord=
-er
-field is left unmodified. As a result, the sysfs read interface will
-continue to report the incorrect value (such as 0) instead of the actual
-value (2) being used by the active scheme.
-
->  #else
->  	if (sysfs_scheme->action =3D=3D DAMOS_COLLAPSE && target_order !=3D 0) {
->  		pr_warn("DAMON collapse: target_order not supported without THP. Use 0=
-.\n");
->  		target_order =3D 0;
->  	}
-> +	if (sysfs_scheme->action =3D=3D DAMOS_SPLIT) {
-> +		pr_warn("DAMON split: not supported without THP.\n");
-> +		target_order =3D 2;
-> +	}
->  #endif
->  	scheme->target_order =3D target_order;
+>
+> --
+> 2.50.1 (Apple Git-155)
 >
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260702095227.7586=
-6-1-lianux.mm@gmail.com?part=3D4
+Thanks, Lorenzo
