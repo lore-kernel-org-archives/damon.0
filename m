@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8C330675F;
-	Thu,  2 Jul 2026 21:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85DD3803C7;
+	Thu,  2 Jul 2026 21:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783026375; cv=none; b=jy3x1Omu9E9cMa6h2dwS/I0HwtCTS6tCCoZl0riaNUuv8lxCMvJozPqjRs1a5CSw0nW8+/obozVLizeWUmyF6XNvmIJNJz2J4joRXRxV6HBrUKtSxJceXa3r5X36tC0fK/GqkitsD2WpFW7BJknxdPciCu7W5GBYuN+mOrVdYT4=
+	t=1783026375; cv=none; b=Gb17xM5q+0rAB8+vXtceHD7Dgo0sQvIwgf7hNUBCVrOSbN1TFeOw064auYU8p24g/r/j5BYPS04MInYtg48echbkfaiVuDkmr/1kPTVH1/dpsPsB4U6y1Rgxlx7dR8Bkz90S3IXBBLiRuEHPYrHb4bXzUrzkwdBAFJEz05AFXV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783026375; c=relaxed/simple;
-	bh=wzDfGXESiahJas2itrLvNt5M85oi6ewwf7xuOPxl2Lc=;
+	bh=goEuQ34q9K5GCZvxlQ4oxqPzSXhD969gZ0WIrYhCgNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipD+XPtrsUtZvgZrYVjzF8pSS2m/u9lTEKN6DkqlOmYj0aGPfMs8G0aOQkFWxYADh9CuWt/a31H9TnvFte3Us3eLvklJ8gqIgYm6gkjXKI9cIcUA+O6xn+jgeWIZtaeFtGjRAIoPuasUb83xrGWpGCOsLB6wTPO1jJPaI/20QSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oIyhVAgA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q52wqLY3cgmt3Srw+u8Sq4cuKvPYRU7AWBAdA3zJn7bn0L5S/9BmrdJnnP3GpZb/ZT+2AZu7PnMANT9YlMGzr0wz+ulT+lqAZTnzPfOYo8qGNeDuWqjRzFCDAUgynr02Pnyc+euEDBprrrZokSehDG+78BM4Nii9xb77FKvANJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XjJmr1gQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oIyhVAgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD471F000E9;
-	Thu,  2 Jul 2026 21:06:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XjJmr1gQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F951F00A3E;
+	Thu,  2 Jul 2026 21:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783026373;
-	bh=91/eIt5/uTjkLlfjnN3QJGjfo7AqpmKw2P22J/q/8zc=;
+	s=k20260515; t=1783026374;
+	bh=3BUtL0wdhRHBCOaPZNQsX8fjUI9m5nC+jbrg8ueFSt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oIyhVAgAGPFalJ2n/92cMP1H8mLrkWYwBgwSB8E5zjbYnccJE1uH3wnyrHaBxTRQx
-	 DdwZFVUHR79dS9+forn6IsKVZSxwi8zfJl6mVBkIsjiAv9MoGS3wB5cpOuQoSJIKW3
-	 /JjB1p5kgoC+4ekPpCWPWH2iRQD7yGnnayT398IJ+t0GDd1OPvZGIYs5tRA6A8Oo9J
-	 WChR3LvxO02xJBejePSBhi5kENBXZNcze3B4bccXZ3cI7yTwCY0evEB8aZdxXgaaAL
-	 SBHfWZssMyDedeiSnOvpd0WzaQ13gysUO9QI0ICS7fO0dwN3JC/u4T49iHGVOkjP9A
-	 avm16MbuYoc7Q==
+	b=XjJmr1gQ51HXvJVpcXxk/bKSPfbeoxDgQExOGa2UWh8rMvyKzhr1k4+rn794A4jD1
+	 Uncize0oEBLHFHMtajttgUcGKDfZPq128HITOPFHWlO2nezZAyDKmIc5NZgF1QVIJ/
+	 +g1Ixii4KVAr1aCJhWnW1P1tQbB0WJJc+6yYap7s9rWM1FyXTSt9K1lNDPXbC+OaeM
+	 IABNn7MGGQVgVm1hJbOwakWUajkzQS3e4YECRdaeh+4izzNvjFT8sDJ/QwayXDNe7Y
+	 d6aMfWSqftpt+BRoHY+bHJZ4Ic1PXEo8mYk7aBYTCK/5lQdp8dRiEaiGc+kj3OPcwE
+	 +WYi6Ms0NAj0g==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 6/8] mm/damon: document region size validation in damon_set_regions()
-Date: Thu,  2 Jul 2026 14:05:48 -0700
-Message-ID: <20260702210551.95167-7-sj@kernel.org>
+Subject: [RFC PATCH v1.1 7/8] mm/damon/core: remove start, end check in damon_set_region_system_rams()
+Date: Thu,  2 Jul 2026 14:05:49 -0700
+Message-ID: <20260702210551.95167-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260702210551.95167-1-sj@kernel.org>
 References: <20260702210551.95167-1-sj@kernel.org>
@@ -46,31 +47,30 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The kernel doc comment of damon_region clearly specifies every region
-should have positive size.  But it is unclear who should verify it.
-damon_set_regions() is the recommended DAMON core function for setting
-regions from the callers, and has the verification.  Update the comment
-to clarify the callers should be ok to pass any values for region
-addresses, as long as they use damon_set_regions().
+damon_set_region_system_rams() validates user inputs to avoid creating a
+negative size region.  But DAMON core avoids zero size, too.  The check
+is incomplete.  The complete check is done inside damon_set_regions(),
+which is eventually called from damon_set_region_system_rams_default().
+Drop the incomplete and unnecessary check.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/damon/core.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 616bdf0954b52..2661231c0ae82 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -49,7 +49,8 @@ struct damon_size_range {
-  * @list:		List head for siblings.
-  * @age:		Age of this region.
-  *
-- * For any use case, @ar should be non-zero positive size.
-+ * For any use case, @ar should be non-zero positive size.  damon_set_regions()
-+ * does the validation.
-  *
-  * @nr_accesses is reset to zero for every &damon_attrs->aggr_interval and be
-  * increased for every &damon_attrs->sample_interval if an access to the region
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index ca301abcb9ec5..3c5a46e1c079a 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3846,9 +3846,6 @@ int damon_set_region_system_rams_default(struct damon_target *t,
+ {
+ 	struct damon_addr_range addr_range;
+ 
+-	if (*start > *end)
+-		return -EINVAL;
+-
+ 	if (!*start && !*end &&
+ 		!damon_find_system_rams_range(start, end, addr_unit))
+ 		return -EINVAL;
 -- 
 2.47.3
