@@ -1,73 +1,70 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7103168E6
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 07:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FBB3C0A04
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 09:46:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782975781; cv=none; b=YwGvROfES+Pqh5ZSlLicY752uPUmf4fnvAnp0OjrrQ4LiETLiel7CiZ4ZMHHzJ1NcvWx+VgFDYEmZ011doD8SrHtpcpFNR9qfY5jR+Fcaz55WXzapD1jt1JJ7TurM6Wmj4nefhl1eTkYcb3xV6ybLQ0aBehW4wYuRAdGgBVVKEk=
+	t=1782985602; cv=none; b=oqezRUzIzuPKzwf3/5rmYNDX19nC4UZYmdkA16jiNYmZRzzPutIwcelnpfx7xtUUjQMt98JW5+Km//+d9BN8rXggThMwZGh6phEkuk7xxCjmfnzrrM3ANE670XXkNSDC81srTpFgNWJpYhxJTw5ANxNkyppa3JZ5MVIx81I/s3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782975781; c=relaxed/simple;
-	bh=7+7soT+TCrSVIA+ZgeYOhCKYh3ZYEoJSNWdBgMBvfB0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+MFh05ZMRbD1tWQAVtwq8fDVwciGT1xK8zYNGYjp9wf2wSKK1i9a2eNzaXvJGMg1fRlQIMtAtdxwiMvaqvE/vV3oQp24woZ35zCgNTLfPDCAMVhyRZ4hWJeZOf+0VT2F3pXbYml0vIhfb+Rzj4fAFjHov6IaFvH4JRlUIf9pzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mWg2hBP7; arc=none smtp.client-ip=209.85.216.42
+	s=arc-20240116; t=1782985602; c=relaxed/simple;
+	bh=MbvBf88g8BO2k9Ds85PsaQ+Vbj4Bn1GBSeFE+tRT3f4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EekI0CriV0JwtOcSVy+x1G27R1C/AgsvaRIUl/D7TYNBN1ArZU2lbqlqbnGvY81JAg5NmSmAlSkqbxdQJbgQnXb4VcIS/K5ba/fiBTvEjhy5XczwvR9OgyMePcxoGMefp09JLfaDS/ZBvElFJ6+scr5Wdxh8TOge9Kc5cMUlXCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sB8Bmq79; arc=none smtp.client-ip=209.85.214.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mWg2hBP7"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-37fb17e1435so943182a91.1
-        for <damon@lists.linux.dev>; Thu, 02 Jul 2026 00:02:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sB8Bmq79"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2ca06ad2d11so14843865ad.0
+        for <damon@lists.linux.dev>; Thu, 02 Jul 2026 02:46:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782975779; x=1783580579; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7+7soT+TCrSVIA+ZgeYOhCKYh3ZYEoJSNWdBgMBvfB0=;
-        b=mWg2hBP7diwkKtNQIPvZElnwNWAKFMDNssz79huvJneJnlXqwhCH17jGInpOQAcgNf
-         Ac8Xidfax/bimJ9E/OQBdzMrKs+A4a3IwOtMM357CGq/G2aHqpEbsyFZe+ikT4eLwxLF
-         OYp7BdkG9fS5b+rE9f5s00ma9dHvdAMft9fSzHbcrpJqT3ByInlU2R2+P9zZ1jZPUPzg
-         78QUxBQWzX3H2b0XgvDZbm+oXVUvfUzuIa+sp3qMppkxw06wDEph4WMJzV0CAWBoUxOW
-         MxescccY+dlenDSsVIh7uOEx9dJs48ntjlzN6Cb0uSF3dLKYdZe87DnGRyxoSkj3+foA
-         Ufpw==
+        d=gmail.com; s=20251104; t=1782985600; x=1783590400; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yOCV2PLDeQJYp2duRX7Uctst3enScKkQZb2Ju0zKuMY=;
+        b=sB8Bmq792wPXxnqrLFXbKD569Bm3wSTbLhB+wQWhror1RvXdYxDcEzqnxqOZO67RWD
+         vMqrvNItS5qBhStbmklRAYY5RNOSordemc/TBVAJj7/imOju3xQnhofhb5SEXJydDuQq
+         00eFMFY64yYRl4Q7Ms/zwDbd9BJXo1Ia7cJKYLQ06kKDgv9kSXqLW/GH4ZcfTHN/w4Nu
+         aLgf3WG5gHVAhNzJvMbk+JqUi5UOJotnadnPHJA8fbIUwLL1aEG7+snoOnSS31F2v4mI
+         xnmjQq2Ca4p4+z5NRZjhdim9ima3+iI1C6VnV2lTGQtj6nll0e4JMaDK0H3fnsbM+b7k
+         5D8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782975779; x=1783580579;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=7+7soT+TCrSVIA+ZgeYOhCKYh3ZYEoJSNWdBgMBvfB0=;
-        b=i/CbWVt8LenychzZSHidy1JU6WpDG+LL8xuP1xipw1GTrIuf4OPfwyumVTF1dmlhfW
-         lD7YWj7mJHhjsMyyMppKBVDcpLmDNCxpsQ8LBP8u8PU1psn260BAvYzzS/Q9yf22TOqx
-         Hb8KcBltE1OcQ/T8/AAEdPmyvGv8ymOY/rDsmwy4qU/+7kZr2mDSsvY+iYNNeJ0fkL9q
-         enT41w66P7lSiG0718EKG6BvX/cUTXRNrTXaft0OqKxQ9Iklv2WeRH9Ezd+hHRB7AT7g
-         4455nZ3wZ19q5xcu2jRWZCI5MqhRt9vBR6/LczYr0v0F69ReomVOqTGYdG5rwCB4QTcK
-         YAyg==
-X-Gm-Message-State: AOJu0YwtDNAzbvtOE4yItesboy23vhWDOFUJUx2Olg1Zx7wnnRleJ77X
-	Iuj4qglzGTKkv+Sl8AbXlIZUMMm9Y7eSXy982tYVUErrVl016VmyTRKt
-X-Gm-Gg: AfdE7clxMKPa9Rv2Ad1Tm5uQOU0jT7sPoKYuorvrIFWmqFjXf9Bs/6pK6EZ6YUH67c7
-	XAk1NoDkzgyxg41dIN+WSw7vZDqIdtBNhFIXGWO05OL27VF0PgOwaKbFyMW6ksTQDl+qP5Fv52J
-	Vd+mnjpB/kHKHYFBLIW4VxBHd923gw5HTrQB+fHUYz0PfbOcg/TkcTG0Yeuvvrkhigz3EKsVFLa
-	Nr6y+5wI/wXds9qNsz3B1RVP1W63Eth31Udw3n3RFWSwpQwt5280UWcFz5Y83QyOOMImQMrPENR
-	A2ILA1LPvklqYo+ypLybXjB93y87VwpKVwuFia+YX3YGNmL+84aduhRtzkSxHXu5avKx5MLeelk
-	E5cAn8RpyNzNZ8f38nLdwtFCqNSJvt80AfyGyb/SYCe0weDO9JmmcHeMjwH+JKuEMrV95pjo7h8
-	eeNQ==
-X-Received: by 2002:a17:90b:380f:b0:37f:eb45:e058 with SMTP id 98e67ed59e1d1-380aa1c7d63mr4870185a91.19.1782975778910;
-        Thu, 02 Jul 2026 00:02:58 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1782985600; x=1783590400;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yOCV2PLDeQJYp2duRX7Uctst3enScKkQZb2Ju0zKuMY=;
+        b=RpJRN3EhZ5301wE2uesbWQM9kVr81oH+Zwhc3yvPQzME/tB/4eiRodG5b5zRpV5E62
+         LNN3ubNKblSqqR4jOaJMYaqscte/Qy0z9pc/A52weH3RJBdd6YaDF6FQeY8gM1Oi36Sz
+         l64s58zM8UjQb4Jk6NNX/NUr5O4NsY2jlOVGR95lVSxfWo/ghviTvUjQNbtVneGdAl7Q
+         BABkh4FHqgFVXpxyzOtFhAHpTtX8k5gyTBrp9GI8N53MbacbaIIhgt37ttYg1Yee3jCA
+         Net9VlduhfkuewUP85nTGyjPTE7aHoLDfXaVQxnX/2eCjLz1ICPcUVQktCxIIVOwd6CV
+         5PfQ==
+X-Gm-Message-State: AOJu0Yx+RNKxKW7I5qXsvwmlGZ5l2j8nu2AbdaViNhBaGoG1I7O5WyLS
+	CpHsqHlENHOm/9Dt1BRrDI7cQUIZ5c7z0Hjd8Bn1c3BZIlMY1GebD2W9
+X-Gm-Gg: AfdE7ckdL/dJVh9pYQNcQYGzbtwFW31Rw+Byt81PPC6kAR4Wak67E5PfKEzKjSL/a1q
+	cLVZDz8MRqHec6xEtpPnBsVXamfTI90epd2ztMYtNnElRE0c896pYWRdtWldcxMp2qN8PXYhz1+
+	UOrHWZ2cwqd1GFwVVe1p77wWeFhKUH75LKla6wydQ2m2q2RVO7XBDpv6dZbIP77NifRZJux6KIv
+	yoXHiQegcPrYOWmCXf0fzJoj4OeS0+tBgA8NDCWWp1N72Kno5+uKLx9HD52sLGYxoXc4jgq1CwD
+	e0g8ufZpAUq0zTo1BoI5SePNyxkxQC6vzkqH+Y9HC6hSdFM0agepYua9Xhk6qPFd5OnbI23lfXB
+	LcBQ6hmUe73HmFua98JoNmOxkXWU4D3EdBj8sZdIa1awpmvGFtdtIQbkQ6PagGY5Zoq5MZamK7j
+	/LuA==
+X-Received: by 2002:a05:6a20:3944:b0:38d:fad1:cf2a with SMTP id adf61e73a8af0-3bfed1b2b94mr6842128637.13.1782985599376;
+        Thu, 02 Jul 2026 02:46:39 -0700 (PDT)
 Received: from localhost.localdomain ([2607:f130:0:11a::31])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f0bb84405sm7910815eec.17.2026.07.02.00.02.56
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f116065c5sm5261121eec.11.2026.07.02.02.46.37
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 02 Jul 2026 00:02:58 -0700 (PDT)
-From: wang lian <lianux.mm@gmail.com>
+        Thu, 02 Jul 2026 02:46:38 -0700 (PDT)
+From: Lian Wang <lianux.mm@gmail.com>
 To: sj@kernel.org
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	daichaobing@sangfor.com.cn
-Subject: Re: [PATCH v2 0/5] mm/damon: add mTHP collapse and split actions
-Date: Thu,  2 Jul 2026 15:02:51 +0800
-Message-ID: <20260702070251.70882-1-lianux.mm@gmail.com>
+	daichaobing@sangfor.com.cn,
+	kunwu.chan@gmail.com
+Subject: [RESEND RFC PATCH v2 0/5] mm/damon: add mTHP collapse and split actions
+Date: Thu,  2 Jul 2026 17:46:28 +0800
+Message-ID: <20260702094633.75658-1-lianux.mm@gmail.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260701135220.93697-1-sj@kernel.org>
-References: <20260701135220.93697-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -76,30 +73,175 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Wang Lian <lianux.mm@gmail.com>
+Resend of v2 with the RFC tag restored (v1 was RFC PATCH, so v2 should
+be RFC PATCH v2).
 
-Hi SJ,
+This resend also includes fixes for issues identified during review of
+the earlier mis-sent PATCH v2 thread: uninitialized memory, TOCTOU
+races, BUILD_BUG guards, missing sysfs action name registration, and
+stack allocation overflow.  The series has been re-tested on aarch64
+(anonymous and file-backed THP split) and is checkpatch clean.
 
-Thank you for correcting my misunderstanding of the versioning rules.
-This was indeed a mistake on my part, and I apologize for the confusion.
+v1: https://lore.kernel.org/linux-mm/20260618094838.32805-1-lianux.mm@gmail.com/
 
-I did not intend to claim that this series is ready to be merged as-is in its current state.
-I fully expected to send this iteration as an "RFC v2" to continue our high-level architectural
-discussion, especially given the major structural pivots we made from v1
-(dropping the debugfs pipeline and shifting the telemetry to user space).
-I mistakenly incremented the version number to [PATCH v2] while
-prematurely dropping the RFC tag.
+Changes since v1
 
-Since my true intention is to gather feedback on this new user-space control
-plane approach before any final merge integration, I would like to fix this immediately.
+ - Rename DAMOS_MTHP_SPLIT -> DAMOS_SPLIT for naming consistency with
+   the existing actions (per SJ's review).
+ - Drop the per-scheme hot_threshold field.  Hotness policy does not
+   belong in the kernel; target selection now lives in user space and
+   is expressed to DAMOS via the address filter (per SJ's review).
+ - Drop the v1 SPE debugfs patch entirely.  debugfs is not the right
+   interface for a feature, and the SPE profiler belongs in user space
+   (see "User-space target selection" below).  v2 is kernel mechanism
+   only: 5 patches.
+ - Decouple T1 (a lab observation) from T2 (the production issue), and
+   correct the architecture claim: ptep_test_and_clear_young() skips
+   the TLB flush on both x86_64 and arm64, so the blind spot is
+   architecture-independent rather than arm64-only.
+ - Terminology: avoid "stale TLB".  A valid TLB entry is doing its
+   job; the point is only that it lets the CPU satisfy a translation
+   without a page-table walk, so the Accessed bit cleared by DAMON is
+   not re-set.
 
-I will re-send this exact series right away with the correct tag:
-[RFC PATCH v2 0/5], following the versioning pipeline you suggested.
+Background
 
-Please hold off on reviewing this "PATCH v2" thread;
-I will get the proper "RFC v2" into your inbox in a moment.
+Two effects degrade DAMON's PTE-Accessed-bit (AF) signal once THP is
+in play.  Both are described here as motivation only; this series does
+not change the AF monitoring path.
 
-Thanks again for guiding me through the community conventions!
+T2 -- PMD-granularity inflation (production issue)
 
-Best regards,
-Wang Lian
+A 2MB THP is tracked by a single PMD-level Accessed bit.  One access
+to any 4KB sub-page sets the AF for the whole 2MB, so DAMON reports
+the entire THP as hot and cannot distinguish a genuinely hot 2MB
+region from a 2MB region with a single hot 4KB page.  Cold memory
+hides inside "hot" THPs, and access-driven pageout/migration becomes
+coarse.
+
+This is the workload that drove the work: Sangfor's Kunpeng 920 KVM
+hosts running Oracle.  ARM SPE sampling of that workload shows 94.6%
+of THPs have fewer than 10% of their sub-pages actually accessed.
+
+T1 -- TLB-reach blind spot (lab observation)
+
+When the working set fits within L2 TLB reach (measured at 2048
+entries x 2MB = 4GB on Kunpeng 920; no public data available), the
+CPU satisfies translations entirely from the TLB,
+preventing translation table walks.  Because
+ptep_test_and_clear_young() does not flush
+the TLB, valid TLB entries continue to satisfy translations and the
+AF that DAMON cleared is never re-set, so DAMON sees nr_accesses=0 for
+memory that is in fact hot, and no scheme triggers.  This reproduces
+in the lab with small workloads; it is not something we have seen
+reported from production, where working sets exceed TLB reach.
+
+What this series adds
+
+Rather than change AF monitoring, this series adds two order-aware
+DAMOS actions so a policy layer can act at mTHP granularity:
+
+ - DAMOS_COLLAPSE + target_order (patches 1-3): collapse small folios
+   up to a chosen mTHP order.  Patch 1 adds the target_order field and
+   its sysfs file; patch 2 exports a khugepaged helper
+   (damon_collapse_folio_range()); patch 3 wires the vaddr handler.
+
+ - DAMOS_SPLIT + target_order (patches 4-5): split large folios down
+   to a chosen mTHP order via split_folio_to_order(), for both
+   anonymous and file-backed (tmpfs/shmem) folios.
+
+The two are complementary, not competing:
+
+   THP=never  + DAMOS_COLLAPSE: start at 4KB, grow hot regions up.
+   THP=always + DAMOS_SPLIT:    start at 2MB, shrink cold regions down.
+
+This dual-path design aligns with ideas discussed with Asier
+Gutierrez; we plan to unify our mTHP automation and evaluation
+roadmaps under this standard DAMOS_SPLIT action.
+
+A deployment can pick either baseline, or run both, and let DAMOS
+manage the placement.  THP is still wanted for the hot working set
+(fewer TLB misses, shallower walks); the goal is not "no THP" but
+"THP where it is hot, small pages where it is cold."
+
+User-space target selection
+
+The decision of *which* regions to collapse or split is left to user
+space and fed to DAMOS through the existing DAMOS address filter
+(DAMOS_FILTER_TYPE_ADDR) -- the interface suggested during v1 review.
+The kernel provides the mechanism; user space provides the policy,
+consistent with the perf/BPF "kernel samples, user space decides"
+model and with the DAMON-X direction.
+
+Because the AF signal is unreliable at PMD granularity (T1/T2), the
+scheme is run with min_nr_accesses=0 so it does not gate on access
+count, and the address filter selects targets.  min_nr_accesses=0 is
+also what unblocks the T1 case, where nr_accesses is pinned at 0.
+
+Why not just turn khugepaged off?  You can, but khugepaged is global
+and usually left enabled because other workloads rely on it; it cannot
+be disabled per region.  DAMOS_COLLAPSE gives per-region,
+access-pattern-driven collapse -- a more precise, targeted complement
+to khugepaged's global scan, not a replacement for it.  To handle the
+runtime race where khugepaged might aggressively re-collapse what
+DAMOS_SPLIT just split, we are evaluating a precise VMA-level handshake
+or back-off mechanism to prevent ping-pong effects in mixed
+environments.
+
+Two user-space data sources produce the candidate address ranges:
+
+ 1. ARM SPE (ARMv8.2+): perf record (SPE) -> per-2MB hot-fraction
+    histogram -> PA->VA via /proc/<pid>/pagemap -> sparse-THP VA
+    ranges.  SPE reads physical addresses from the CPU pipeline,
+    bypassing the TLB and page tables, so it is immune to T1 and T2.
+
+ 2. smaps fallback (no SPE): scan /proc/<pid>/smaps for THP-backed
+    VMAs and treat the 2MB-aligned ranges as split candidates.
+
+The SPE profiler stays in user space deliberately: the SPE PMU is a
+single-consumer resource, so a kernel consumer would lock out
+user-space perf and tooling (x86 PEBS / AMD IBS have the same
+property).  Keeping it in user space avoids that and keeps the metric
+source pluggable, in line with DAMON-X.  This is why v2 drops the v1
+SPE debugfs patch.
+
+Testing
+
+Tested on aarch64 with this series applied to 7.1.0-rc5, THP=always,
+using a DAMOS_SPLIT scheme (target_order=2, min_nr_accesses=0) and a
+single DAMOS address filter selecting one 2MB-aligned range:
+
+ - Anonymous THP: the filter splits exactly that one THP --
+   sz_applied=2MB and AnonHugePages drops by 2MB, the rest of the
+   256MB mapping untouched.
+ - File-backed THP (tmpfs/shmem mounted huge=always): the same setup
+   splits exactly one 2MB shmem THP -- sz_applied=2MB and
+   ShmemPmdMapped drops by 2MB.  This confirms split_folio_to_order()
+   works for shmem folios (the KVM-guest-on-THP-tmpfs case).
+ - The address filter is what bounds the action: sz_tried covers the
+   whole ~2GB monitored region while sz_applied is exactly the 2MB the
+   filter selected.
+ - A smaps-based path (for hosts without SPE) enumerates THP-backed
+   ranges and splits all THP in the target workload.
+ - checkpatch clean on all 5 patches.
+
+Test scripts and SPE-to-DAMON pipeline tools:
+https://github.com/lianux-mm/damon_spe/tree/v2
+
+Lian Wang (5):
+  mm/damon: add target_order field for DAMOS_COLLAPSE
+  mm/khugepaged: add damon_collapse_folio_range() for external callers
+  mm/damon/vaddr: implement mTHP-aware DAMOS_COLLAPSE handler
+  mm/damon: introduce DAMOS_SPLIT action
+  mm/damon/vaddr: implement DAMOS_SPLIT handler
+
+ include/linux/damon.h      |  10 +++
+ include/linux/khugepaged.h |   9 +++
+ mm/damon/core.c            |   2 +
+ mm/damon/sysfs-schemes.c   |  77 ++++++++++++++++++++++
+ mm/damon/vaddr.c           | 128 +++++++++++++++++++++++++++++++++++++
+ mm/khugepaged.c            |  46 +++++++++++++
+ 6 files changed, 272 insertions(+)
+
+--
+2.50.1 (Apple Git-155)
