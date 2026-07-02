@@ -1,192 +1,238 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C7F28030E
-	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:30:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BB13A4267
+	for <damon@lists.linux.dev>; Thu,  2 Jul 2026 10:37:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782988216; cv=none; b=PTrg+jOSkzG94HrcNmAbf/1MIotlCSPfEGWPVy3UmpP7UkRW/sZeVnYlmfGBMJZzI1Ag8ndaEUdYWHMucssJUvppImrrpJR3BmdYThyIsNlVZcw6ThiBymG3WkJtKxfXHKkhCkr6rEiyaTvkIx7+IcUoxR2eE/TQH852x5n+204=
+	t=1782988644; cv=none; b=adPt2JLXCiMQ3xlbrsJjJeiLmhmG9QmMs7CNcEfe2+ubBRdk1DBSKKdRPY6yezZcZ13NP2oDmIc/cwCeaIjMS+np6LYzcl+z8xclYcUlzN2qneTTmyDIr6TT9OCmgjYedS9Knw4HgJn9+DgilgmPjiKKFwUE10Q5/0BfEJ+C15k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782988216; c=relaxed/simple;
-	bh=i9Ed7mxIvT3EXUN9kMXyVPzseRPfhFcE06C2ymAMsxM=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=SbxHreYN81qwW8fhuyTgxOiFvHIW/n6Hu/pbwq+tdyCI86ltI4OYDoeCX8ZoNx0N7rx2cp99fWaZ9sJlnkX2zmlRAgfYGPVvQyiCWVGJxfIVAwgb9Qo6FXqXUaMtXmUc/8oDq7Dp9j/Z7vIxDd46pBZgKxF73EEjIV6Wawx/pIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJTFlzS6; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782988644; c=relaxed/simple;
+	bh=+KQX16ped1r/1I89bM4qTRjZccy6cVbjtQ6QZbCT7VU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ob6UKbxtDWdUt5L5g2fkFLba3of5q+xo3vNIxwstlOmbGhNMjhGnwpLkUuzZG5VJbwGUg2nNtQEywvyq94dAfiNFsewH6HOHs57GibxhX0TTdrccigiMoHGoZUIkC+p0C1k2MWgdZ6waqJ0ryHtSGMmmC8PceyfpPkC6NlNmSps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=kE2mS3r+; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=D+60qnzp; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=oONF3XqM; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0UKXLPaB; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJTFlzS6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1581F000E9;
-	Thu,  2 Jul 2026 10:30:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782988214;
-	bh=/+u79sXkzm/g0ak/76bnVA2r0ZlXSrtsunyVsB20Gew=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=TJTFlzS6GHu92I/Ly9lF5FVBbuJ779QyrY888cwDOkZqnnFMBJc5lBVBKOGl9JQlN
-	 H5ldLA5C5aZvw3c0hjMP/kAplcNsZS5OIIfnfgYj6Ec1pUZ5ACWKmhnFcFRJUnOCSm
-	 2O1JZ6Gix7ua+/d1tJiOxk7QpZ3avY4xiKvPxry4gCp7VVZqMp8dN3O0yRUeKpIfBp
-	 eN2sImIiADlcyIGZdW1YNQ93oFEWhsH1v1o6mdTxJH3si2Aruxt6BF4yEjvL21n8OR
-	 WJV7s6VJGLdB1bDNfF63JNpLSu49e4NVBfaqmCsUr6CIds6GG3nhc0aq5stPouZgMy
-	 WVXfDrSjwOC1A==
-From: sashiko-bot@kernel.org
-Subject: Re: [RESEND RFC PATCH v2 5/5] mm/damon/vaddr: implement DAMOS_SPLIT
- handler
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Lian Wang" <lianux.mm@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260702095227.75866-6-lianux.mm@gmail.com>
-References: <20260702095227.75866-1-lianux.mm@gmail.com>
- <20260702095227.75866-6-lianux.mm@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 02 Jul 2026 10:30:13 +0000
-Message-Id: <20260702103014.7B1581F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="kE2mS3r+";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="D+60qnzp";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="oONF3XqM";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="0UKXLPaB"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 1F52D74140;
+	Thu,  2 Jul 2026 10:37:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782988638; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+xpjuJ3xq8ZwM9C98H0+/B2HgccrB/M755Ut4TioEwI=;
+	b=kE2mS3r+s4uFAeeC60ChSDS9r2CTWPRmIt8qJ2SdMFCaSWpD42G4wOSiES4ZIlc4diBJzm
+	vs2deGla5IsTZbrZnzl064PvBzwLFLZhsuJVp4Vmh2C1zjs/3DIiNaZuGvoH/vYMtynx6R
+	mtZl7IZAiX4dJf/QBtjMLi10Se/cJUA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782988638;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+xpjuJ3xq8ZwM9C98H0+/B2HgccrB/M755Ut4TioEwI=;
+	b=D+60qnzp/BfT9fuN5kcly9Qm0cXvD8ADgrHEOIFBaXQPYPNp5xSr5/SG94H9lHVgKEIKBG
+	SFX6rV9ZUxdbSUCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1782988637; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+xpjuJ3xq8ZwM9C98H0+/B2HgccrB/M755Ut4TioEwI=;
+	b=oONF3XqMMWJrykAtsu6pwaL2/kpEuxV9bCWy9bwB7V6/R2x+egjgfTgOLGAINpL/V2WiJS
+	A7tamtfaDyyraOw6tMc1hzICxYOm3EE6OJzs+0kJ0cpcpfXNJcWKrc6mCg5qeCi3ByW7Lk
+	blVKNlpa44SZeQTdHBLszXOFxxxAmfs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1782988637;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+xpjuJ3xq8ZwM9C98H0+/B2HgccrB/M755Ut4TioEwI=;
+	b=0UKXLPaBvpl4WYpis3D8Wt3jNFduWCDpcaSjWCCuLmFuWe+TD49vvHiAYk97AAjiw7TqoI
+	Ny5pfTmgmhZqSpAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B9471779AA;
+	Thu,  2 Jul 2026 10:37:12 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id cEPIKVg/RmrfQQAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Thu, 02 Jul 2026 10:37:12 +0000
+Date: Thu, 2 Jul 2026 11:37:11 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 13/30] mm/vma: refactor vmg_adjust_set_range() for clarity
+Message-ID: <akY-Z1fsp9rHSc70@pedro-suse.lan>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-2.80 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TAGGED_RCPT(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[linux-foundation.org,armlinux.org.uk,kernel.org,siemens-energy.com,hansenpartnership.com,gmx.de,redhat.com,alien8.de,linux.intel.com,mev.co.uk,visionengravers.com,pengutronix.de,gmail.com,ffwll.ch,suse.de,oss.qualcomm.com,ideasonboard.com,nvidia.com,amd.com,shazbot.org,zeniv.linux.org.uk,linux.dev,google.com,infradead.org,samsung.com,goodmis.org,huawei.com,vger.kernel.org,lists.infradead.org,lists.freedesktop.org,lists.linux.dev,kvack.org,googlegroups.com,surriel.com];
+	R_RATELIMIT(0.00)[to_ip_from(RL3mhzhn45zpqpmgqn4z7synfm)];
+	TO_MATCH_ENVRCPT_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_TLS_ALL(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[75];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,pedro-suse.lan:mid,suse.de:email]
+X-Spam-Level: 
+X-Spam-Score: -2.80
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [High] Incorrect address range expansion and iteration logic in `damos_va=
-_split()` causes out-of-bounds folio processing and skips memory.
-- [High] `damos_va_split()` calls `split_folio_to_order()` on mapped compou=
-nd pages without verifying they are valid LRU folios, leading to kernel cra=
-shes.
---
+On Mon, Jun 29, 2026 at 01:23:24PM +0100, Lorenzo Stoakes wrote:
+> Add comments with ASCII diagrams to describe what we're doing, avoid
+> dubious use of PHYS_PFN(), and use vma_start_pgoff().
+> 
+> The most complicated scenario represented here is vmg->__adjust_next_start
+> - when this is set, vmg->[start, end] actually indicate the range to be
+> retained, so take special care to describe this accurately.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> ---
+>  mm/vma.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 47 insertions(+), 4 deletions(-)
+> 
+> diff --git a/mm/vma.c b/mm/vma.c
+> index 6296acecf3b7..1e99fe8aa6ef 100644
+> --- a/mm/vma.c
+> +++ b/mm/vma.c
+> @@ -704,11 +704,54 @@ static void vmg_adjust_set_range(struct vma_merge_struct *vmg)
+>  	pgoff_t pgoff;
+>  
+>  	if (vmg->__adjust_middle_start) {
+> -		adjust = vmg->middle;
+> -		pgoff = adjust->vm_pgoff + PHYS_PFN(vmg->end - adjust->vm_start);
+> +		/*
+> +		 * vmg->start    vmg->end
+> +		 * |             |
+> +		 * v    merge    v
+> +		 * <------------->
+> +		 *         delta
+> +		 *        <------>
+> +		 * |------|----------------|
+> +		 * | prev |    middle      |
+> +		 * |------|----------------|
+> +		 *        ^
+> +		 *        |
+> +		 *        middle->vm_start
+> +		 */
+> +		struct vm_area_struct *middle = vmg->middle;
 
-commit 1aa5abadd8058bacb6959d3c7864cfd3e927e6df
-Author: Lian Wang <lianux.mm@gmail.com>
+FWIW this can be simplified to
+		adjust = middle;
+		const unsigned long delta = vmg->end - adjust->vm_start;
 
-mm/damon/vaddr: implement DAMOS_SPLIT handler
+But I guess you're looking for explicitness here?
 
-This commit implements the vaddr operations layer handler for DAMOS_SPLIT.
-It iterates over the target region and attempts to split any large folios
-that exceed the scheme's target order.
-
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 8bfc6dcc635d5..73cb61c655fc7 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -940,6 +940,83 @@ static unsigned long damos_va_collapse(struct damon_=
-target *target,
->  	return applied;
->  }
-> =20
-> +static unsigned long damos_va_split(struct damon_target *target,
-> +		struct damon_region *r, struct damos *s,
-> +		unsigned long *sz_filter_passed)
-> +{
-> +	unsigned long addr, end, chunk_sz;
-> +	unsigned int target_order =3D s->target_order;
-> +	unsigned long applied =3D 0;
-> +	struct mm_struct *mm;
-> +	struct vm_area_struct *vma;
-> +	struct folio *folio;
-> +	struct folio_walk fw;
+> +		const unsigned long delta = vmg->end - middle->vm_start;
 > +
-> +	mm =3D damon_get_mm(target);
-> +	if (!mm)
-> +		return 0;
+> +		pgoff = vma_start_pgoff(middle) + (delta >> PAGE_SHIFT);
+> +		adjust = middle;
+>  	} else if (vmg->__adjust_next_start) {
+> -		adjust = vmg->next;
+> -		pgoff = adjust->vm_pgoff - PHYS_PFN(adjust->vm_start - vmg->end);
+> +		/*
+> +		 *                Originally:
+> +		 *
+> +		 *            vmg->start   vmg->end
+> +		 *            |            |
+> +		 *            v    merge   v
+> +		 *            <------------>
+> +		 *            .            .
+> +		 * merge_existing_range() updates to:
+> +		 *            .            .
+> +		 * vmg->start vmg->end     .
+> +		 * |          |            .
+> +		 * v  retain  v            .
+> +		 * <---------->            .
+> +		 *             delta       .
+> +		 *            <----->      .
+> +		 * |----------------|------|
+> +		 * |    middle      | next |
+> +		 * |----------------|------|
+> +		 *                  ^
+> +		 *                  |
+> +		 *                  next->vm_start
+> +		 */
+> +		struct vm_area_struct *next = vmg->next;
+> +		const unsigned long delta = next->vm_start - vmg->end;
 > +
-> +	chunk_sz =3D PAGE_SIZE << HPAGE_PMD_ORDER;
-> +	addr =3D ALIGN_DOWN(r->ar.start, chunk_sz);
-> +	end =3D ALIGN(r->ar.end, chunk_sz);
+> +		pgoff = vma_start_pgoff(next) - (delta >> PAGE_SHIFT);
+> +		adjust = next;
+>  	} else {
+>  		return;
+>  	}
 
-[Severity: High]
-Does aligning the start and end to 2MB boundaries risk processing memory ou=
-tside
-the requested target region? It seems this could expand the iteration beyond
-the boundaries defined by r->ar.start and r->ar.end.
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 
-> +	if (end < addr)
-> +		goto out_mmput;
-> +
-> +	while (addr < end) {
-> +		unsigned long folio_sz;
-> +
-> +		if (addr + chunk_sz < addr)
-> +			break;
-> +
-> +		mmap_read_lock(mm);
-> +		vma =3D find_vma(mm, addr);
-> +
-> +		if (!vma || addr < vma->vm_start ||
-> +		    vma->vm_flags & (VM_HUGETLB | VM_MIXEDMAP))
-> +			goto unlock;
-> +
-> +		folio =3D folio_walk_start(&fw, vma, addr, 0);
-> +		if (!folio)
-> +			goto unlock;
-> +
-> +		folio_sz =3D PAGE_SIZE << folio_order(folio);
-> +
-> +		if (folio_order(folio) > target_order) {
-> +			if (!folio_trylock(folio)) {
-> +				folio_walk_end(&fw, vma);
-> +				goto unlock;
-> +			}
-> +			folio_get(folio);
-> +			folio_walk_end(&fw, vma);
-> +
-> +			if (!split_folio_to_order(folio, target_order))
-
-[Severity: High]
-Could this call to split_folio_to_order() encounter driver-allocated compou=
-nd
-pages?=20
-
-While VM_MIXEDMAP and VM_HUGETLB are filtered out, other normal VMAs
-might still be backed by compound pages that are not fully initialized LRU
-folios. Without checking if the folio is actually a valid LRU folio (e.g., =
-via
-folio_test_lru()), this might dereference uninitialized fields during the s=
-plit
-and cause kernel crashes.
-
-> +				applied +=3D folio_sz;
-> +
-> +			folio_unlock(folio);
-> +			folio_put(folio);
-> +			*sz_filter_passed +=3D folio_sz;
-> +			addr +=3D folio_sz;
-> +		} else {
-> +			folio_walk_end(&fw, vma);
-> +			*sz_filter_passed +=3D chunk_sz;
-> +			addr +=3D chunk_sz;
-
-[Severity: High]
-When the folio order is smaller than or equal to the target order, does adv=
-ancing
-addr by a full 2MB chunk miss the remaining folios within that chunk?=20
-
-If addr was advanced by folio_sz in a previous loop iteration, adding chunk=
-_sz
-here might overshoot and skip memory.
-
-> +		}
-> +		mmap_read_unlock(mm);
-> +		cond_resched();
-> +		continue;
-> +
-> +unlock:
-> +		*sz_filter_passed +=3D chunk_sz;
-> +		addr +=3D chunk_sz;
-
-[Severity: High]
-Similarly, does advancing by chunk_sz on error paths (like missing VMAs, ho=
-les,
-or lock failures) skip intermediate memory and artificially inflate the
-sz_filter_passed statistic?
-
-> +		mmap_read_unlock(mm);
-> +		cond_resched();
-> +	}
-> +
-> +out_mmput:
-> +	mmput(mm);
-> +	return applied;
-> +}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260702095227.7586=
-6-1-lianux.mm@gmail.com?part=3D5
+-- 
+Pedro
