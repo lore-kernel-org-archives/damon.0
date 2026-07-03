@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2189433E92;
-	Fri,  3 Jul 2026 17:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674152D73BC;
+	Fri,  3 Jul 2026 17:06:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783098372; cv=none; b=gPxAkFS9oMFh0Ll/PNdf3fBo6yDOpBe08xrdvtGhU0dMkQxEXNmkwFglwklmpPESea5SJEJBRRO0cJu2ILfBIarTn6ZBE2CsGy9dBJ7nCRGclnT4V7nD9KT/q9xBTQwNgTiwpPOzoZE9KuPtRJqd7mL/J8PCI6wvd6F9FPzHXis=
+	t=1783098372; cv=none; b=KAOvxLDYkyAu8sPoici/lTQvwOTtHXHUmC+QqHNId7MQHxrUyyKEfYkAzyuqA4+i0I7FlXkyktjBR5Vi+vtrC0HGBZgBJ2Z7jt+94PZmHtdXIWHJSSDFRNA7Si8vFt9tURuYQxey9yUk3xbAvkEkaPQX+PVDLyHf3dvrcyAeJ5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783098372; c=relaxed/simple;
-	bh=iVe6O9ELYy76l6bSd7gEWb1pgyNyMmzc1YP8sPYpXaU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=r7AdvsGC+xs54v+vrF+WiDN98ZsGpwITIsSWx1/f9AYGfdquYbVlyT0Rxu54OgE9AUI0wIKKRF/NF65wsXqgJthwoqCB+slUZLhHha4crAY/fBw8gQZxmG9MBPHRHSL4/M994sO740V1fCWhTI6+KoO3y318/KxA6fy+BjXe0CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ve2ee7u6; arc=none smtp.client-ip=100.103.45.18
+	bh=jrgIUoLLFqMVTSTWxKojT8UnjaDZsGJyBEimLQDP9AU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bwxADgDRGyd65MzsL5kj/8aTo9npEr0Xw60SNZQpgYo1GSxwK7p3/3xBn1KkDobv9Pcg+PKq/LCiFcAr4XgBG8fPtQa0nNRrWnGGfV4Nv0ub944V6AuSsdLvCkV0+mA+H/UrTlVWzBfuSDWkb0u1t/9Un948EjHC0YxHDGOl+hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CY+P8mRk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ve2ee7u6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40B91F000E9;
-	Fri,  3 Jul 2026 17:06:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CY+P8mRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C731F00ACF;
+	Fri,  3 Jul 2026 17:06:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783098370;
-	bh=KJy5PCwtKFgXV0xEcKKTT8ihzzqX9E1/Kam4u8NnZNc=;
-	h=From:To:Cc:Subject:Date;
-	b=Ve2ee7u65r8ZUPjBrSRGXBU/LnJFcwLhVngkHB4zjJ5/XOn4fNmEXp4e8KCK0Vhob
-	 pbMbXkvDAqFEAyDsF8qsQEI1NACRu9UFFjPRPUuDiVg2KtbqowSbrdqzhR9TyGhDnY
-	 KAfulYSFNAuH742OSkovW1nIVBUtcOmcsOyKm1xMRMZituOZIS8gB+PlJFZC+x3Q7v
-	 fGyJuhyePTmeqthKlXfVR7mATXc8OCK1PtClZZknwKCu1RWhkyvGFmFTHczDJ1j3jd
-	 ldmi9SgRIX6Zi+G/GVpop5nDjVjwKLYbk+bBRTs9kPn7g3p4n2pBodQsxzj8z7Tx5j
-	 RM1mrHXLv9ueA==
+	s=k20260515; t=1783098371;
+	bh=Gcy9SSkJ7cJu/6jz9kUdhF88DVRVIoJailmK3qTsD+c=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=CY+P8mRkXvwTm1h8+uEnZLKWUSGsJP+g7KFLKExw/zusH2OtmFWTcknvg3fr+MGqS
+	 NT8f1io8Lt0RXDKEJ9GliUKcAEqA9CqP8uCGrtLWDZTXE59vLJaaMSS8BxTixYPCup
+	 Ijn1uHrGzog/xVlADzoufRfPJYQczPGvx2No2NBttINLyDrwhBvZsdani0Z0+ANhtE
+	 RmPhTU7BUvE26hOoEKU1lA/XvId1JudWq0iPE/CDJrpVoz3cBcSSku6VpzOOQANHxJ
+	 ZAUlhS61sSv4wLUwqLNKFbE8bTVH/lKj0vJR9RbHKGXzUnBaM8y6BvzwvzbrPY9G5v
+	 FwOzpkVpXcVJw==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/3] mm/damon: provide pseudo moving sum probe_hits
-Date: Fri,  3 Jul 2026 10:06:00 -0700
-Message-ID: <20260703170605.94472-1-sj@kernel.org>
+Subject: [PATCH 2/3] mm/damon/core: introduce damon_probe_hits_mvsum()
+Date: Fri,  3 Jul 2026 10:06:02 -0700
+Message-ID: <20260703170605.94472-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260703170605.94472-1-sj@kernel.org>
+References: <20260703170605.94472-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -43,127 +46,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Data attribute counters (probe_hits) of DAMON are managed in the
-classical way.  The counter value is accumulated every sampling
-interval, gets the complete view at the end of the aggregation interval,
-and is reset when the next aggregation interval starts.  Hence, the
-complete view can be retrieved only once per aggregation interval, which
-can be quite long.  With the suggested intervals autotuning setup, it
-becomes 2-4 seconds in common real production systems.  It can span up
-to 200 seconds in theory.  This will restrict online monitoring use case
-of DAMON.
+Implement a function for getting a reasonable best effort quality pseudo
+moving sums of probe_hits on demands.  It reuses the internal function
+for the pseudo moving sum for data access frequency (nr_accesses).
 
-Actually DAMON is already providing online monitoring of probe_hits.
-DAMON sysfs interface exposes the values via schemes tried regions
-directory files.  However, due to the above mentioned limitation, it
-usually shows only partially accumulated hit counters and therefore not
-useful.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h |  2 ++
+ mm/damon/core.c       | 21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-DAMOS is not using probe_hits at the moment.  In the future, using it
-can further strengthen DAMOS.  However, a recommended setup of DAMOS is
-utilizing sampling/aggregation intervals auto-tuning, and having its own
-DAMOS apply_interval (1 second is mostly recommended).  In the setup,
-DAMOS will nearly always show incompletely accumulated probe_hits, which
-will not really be useful.
-
-Data frequency counter (nr_accesses) of DAMON solves this problem using
-the pseudo moving sum value.  The infrastructure is not limited to
-nr_accesses but general sampling based counters.  Maintain and provide
-the pseudo moving sum of probe_hits similar to nr_accesses, using the
-infrastructure.
-
-Tests
-=====
-
-On an idle system, I ran DAMON with an attribute probe filter for
-non-anonymous page, using DAMON user-space tool, damo [1], like below.
-
-    $ sudo ./damo start --probe_filter allow non anon
-
-Because the system is idle, nearly all memory is not an anonymous page
-but a free page, so the probe_hits are expected to be nearly always
-full.  In this setup, since the sampling interval is 5ms and the
-aggregation interval is 100ms, the counter value is expected to always
-be near 20.
-
-On kernels not having this series, if we retrieve the probe hits in an
-arbitrary time that is likely not aligned to the aggregation interval,
-the values are usually much lower than the expectation like below.  This
-is because the tool is showing the incompletely aggregated values.
-
-    $ sudo ./damo report access --format append region "probe_hits: <probe hits>"
-    heatmap: 00000000000000000000000000000000000000008999999711111111000000000000000000000000
-    # min/max temperatures: -1,630,000,000, 0, column size: 99.800 MiB
-    intervals: sample 5 ms aggr 100 ms (max access hz 200)
-    0   addr 4.000 KiB    size 3.898 GiB   access 0 hz   age 16.300 s     probe_hits: 11
-    1   addr 3.898 GiB    size 77.859 MiB  access 0 hz   age 1.500 s      probe_hits: 11
-    2   addr 3.974 GiB    size 700.770 MiB access 0 hz   age 0 ns         probe_hits: 11
-    3   addr 4.659 GiB    size 791.078 MiB access 0 hz   age 13.700 s     probe_hits: 11
-    4   addr 5.431 GiB    size 1.472 GiB   access 0 hz   age 15.800 s     probe_hits: 11
-    5   addr 6.903 GiB    size 915.059 MiB access 0 hz   age 15.300 s     probe_hits: 11
-    memory bw estimate: 0 B per second
-    total size: 7.797 GiB
-    record DAMON intervals: sample 5 ms, aggr 100 ms
-
-After applying this series, I was able to reliably show the expected
-results like below.
-
-    $ sudo ./damo report access --format append region "probe_hits: <probe hits>"
-    heatmap: 00000000333333330000000166666665111111139999999855555555333333333333333444444444
-    intervals: sample 5 ms aggr 100 ms (max access hz 200)
-    0   addr 4.000 KiB    size 790.496 MiB access 0 hz   age 1 m 33.300 s probe_hits: 20
-    1   addr 790.500 MiB  size 791.160 MiB access 0 hz   age 1 m 15.400 s probe_hits: 19
-    2   addr 1.545 GiB    size 792.316 MiB access 0 hz   age 1 m 32.400 s probe_hits: 19
-    3   addr 2.318 GiB    size 795.465 MiB access 0 hz   age 1 m 2.600 s  probe_hits: 19
-    4   addr 3.095 GiB    size 797.102 MiB access 0 hz   age 1 m 23.500 s probe_hits: 20
-    5   addr 3.874 GiB    size 797.293 MiB access 0 hz   age 47.900 s     probe_hits: 20
-    6   addr 4.652 GiB    size 787.516 MiB access 0 hz   age 1 m 3.800 s  probe_hits: 20
-    7   addr 5.421 GiB    size 784.461 MiB access 0 hz   age 1 m 14.400 s probe_hits: 19
-    8   addr 6.187 GiB    size 795.621 MiB access 0 hz   age 1 m 15.700 s probe_hits: 20
-    9   addr 6.964 GiB    size 798.000 MiB access 0 hz   age 1 m 10.200 s probe_hits: 20
-    10  addr 7.744 GiB    size 54.566 MiB  access 0 hz   age 1 m 9.300 s  probe_hits: 20
-    memory bw estimate: 0 B per second
-    total size: 7.797 GiB
-    record DAMON intervals: sample 5 ms, aggr 100 ms
-
-FYI, 'damo report access' output format has changed on v3.3.0.  Above
-outputs can be reproduced on <3.3.0 versions of damo.
-
-Patches Sequence
-================
-
-Patch 1 adds probe_hits counters for values that fully accumulated in
-the last aggregation interval.  This is required for using the moving
-sum infrastructure.  Patch 2 introduces a function for getting the
-moving sum values on demand, using the infrastructure.   Finally, patch
-3 updates the DAMON sysfs interface to expose the moving sum values to
-the schemes tried regions directory.
-
-Changelog
-=========
-
-Changes from RFC v1.1
-- RFC v1.1: https://lore.kernel.org/20260702171714.88278-1-sj@kernel.org
-- Drop RFC tag.
-- Rebase to latest mm-new.
-Changes from RFC v1
-- RFC v1: https://lore.kernel.org/20260621214231.13449-1-sj@kernel.org
-- Wordsmith cover letterr, specify damo version of the test.
-- Rebase to the latest mm-new.
-
-[1] https://github.com/damonitor/damo
-
-SJ Park (3):
-  mm/damon: add damon_region->last_probe_hits
-  mm/damon/core: introduce damon_probe_hits_mvsum()
-  mm/damon/sysfs-schemes: set probe hits as pseudo moving sums
-
- include/linux/damon.h    |  4 +++-
- mm/damon/core.c          | 31 +++++++++++++++++++++++++++++--
- mm/damon/sysfs-schemes.c |  3 ++-
- 3 files changed, 34 insertions(+), 4 deletions(-)
-
-
-base-commit: f0eadb83262e3eac82b67cb7fb5456c2e9db75f7
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 4f7e305b261c3..616bdf0954b52 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -1003,6 +1003,8 @@ void damon_add_probe(struct damon_ctx *ctx, struct damon_probe *probe);
+ struct damon_region *damon_new_region(unsigned long start, unsigned long end);
+ unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
+ 		struct damon_ctx *ctx);
++unsigned char damon_probe_hits_mvsum(int probe_idx, struct damon_region *r,
++		struct damon_ctx *ctx);
+ 
+ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+ 		unsigned int nr_ranges, unsigned long min_region_sz);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d45dc87fbbd9c..871c6f5257c9e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -273,6 +273,27 @@ unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
+ 			left_window_bp);
+ }
+ 
++unsigned char damon_probe_hits_mvsum(int probe_idx, struct damon_region *r,
++		struct damon_ctx *ctx)
++{
++	unsigned long sample_interval, aggr_interval;
++	unsigned long window_len, left_window, left_window_bp;
++
++	sample_interval = ctx->attrs.sample_interval ? : 1;
++	aggr_interval =  ctx->attrs.aggr_interval ? : 1;
++	window_len = aggr_interval / sample_interval;
++	if (time_after_eq(ctx->passed_sample_intervals,
++				ctx->next_aggregation_sis))
++		left_window = 0;
++	else
++		left_window = ctx->next_aggregation_sis -
++			ctx->passed_sample_intervals;
++	left_window_bp = mult_frac(left_window, 10000, window_len);
++
++	return damon_mvsum(r->probe_hits[probe_idx],
++			r->last_probe_hits[probe_idx], left_window_bp);
++}
++
+ #ifdef CONFIG_DAMON_DEBUG_SANITY
+ static void damon_verify_new_region(unsigned long start, unsigned long end)
+ {
 -- 
 2.47.3
