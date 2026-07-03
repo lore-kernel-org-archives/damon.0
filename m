@@ -1,168 +1,162 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395652C21C4
-	for <damon@lists.linux.dev>; Fri,  3 Jul 2026 17:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF0B2BE05A
+	for <damon@lists.linux.dev>; Fri,  3 Jul 2026 17:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783099467; cv=none; b=i0Pc7g7TVcRpqm91heHygJGWtZcFz/iU/G4qyf/5GIru1ZBf+aBXKbLI+ezvfMG6229Si51w+Czhj9Wt9toaUWOZ8rNcMZR8xWYOVYDpDpxxHZzhkBaeVJ/rf6FPPC5DpHFelEiMQ6O8j/B3TgC8D2xqm9vtROhDo1QbbSKpsms=
+	t=1783099490; cv=none; b=Gq6JmaoM6wns87Fnk43CI6kUoyo1mxHPIZzqQ7QpMt1AlkStAaMS8pCKIA3OgPx/upcvl0S3/Kw6p8RoqXQAgW9jTHiGnz69dPi/aS6GbeXe/hJ81IOjm4vVaRCbyptmGW+C2teAzZz91puIMnfczIT4OIVdEsD3avBtYhJQSXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783099467; c=relaxed/simple;
-	bh=V2u1PomqTlHTl9JP+mZwCipz2sX19s1B0B9TfWfeYiQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GYJpiaTcBsqQcQKshBR9jsUhuZQni/FTKCVqgW4PxHbRh/t0Mo0b+ZATBBqjDoCqXpBgU2umXuTi1MrFqCkpnw+J5cW8xE2PpDk0ofYXlhn7Lid1EOB1VVxy2bc6Sxy4adAVeTrQyZrkKlyjq+3pNKtqkxgWPdC7KHTpTDOUZxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MCMY7JUJ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783099490; c=relaxed/simple;
+	bh=3jLsqaXHP6DD+aFQ7GN/O3gVCWhUHDR9zDJt0OfWuEM=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=ru+wilRN8f7N0SJSPrw84tsbyTx2C4jqqB7rTp7Q//RTl5xRFyM0gGazaiudDN4TqixNc2Y2bnKwO3zkgKCtPMypYadOwv8yae1ERhSLScuwXZ2pb+WoV9pM6C24ZS+9Ju3WFEDXj64/s9UQYBGc4nAA/afH5xeSxwjujn/G6T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OWTUDfYg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MCMY7JUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BC71F000E9;
-	Fri,  3 Jul 2026 17:24:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OWTUDfYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE3C1F000E9;
+	Fri,  3 Jul 2026 17:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783099465;
-	bh=KGWObvyALrbc2mH5QAsjdfDuOtTm3T2EZUHDJT3a5wA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MCMY7JUJxTc+FFUIoTXS66+bnvtIvSmLqH57cVdrvMg4PNacAcCj5hrCc3BgLUCPt
-	 R35BQyG8HCa6uuDnIirrwFjUcJIUvz5HkcIC/JrW1vRFn1C091bHdwH7ii6JetymGo
-	 9c2ZZINZFLrnNVq4UPfS739yg12Iyqaun94cnFMDZof8cuVtaR6lRgVXRpgg3KcOUW
-	 21IkEWUVFpQ0t/GFClKP3AXdFcBugGSI45Y8dEpE4H76KBkg5FLquW5rCyBtgXZiUZ
-	 llVJaYsfXRRNxx0ApDSqMBkWVdlajZeHvOyEYiLC4dLk+ASQbjHIJ6Hkv6m77FNuY9
-	 hWgVTwS6NcsPQ==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH] mm/damon/core: disallow overlapping input ranges for damon_set_regions()
-Date: Fri,  3 Jul 2026 10:24:15 -0700
-Message-ID: <20260703172417.95426-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260703171141.F37E31F000E9@smtp.kernel.org>
-References: 
+	s=k20260515; t=1783099488;
+	bh=CqFkXSCQojZo7sc+bH4xSRFK0UxQ4q5MugbS86E/cqs=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=OWTUDfYgOqQvfGXlil45+MtfMSOWL5hm7vEiscIcwv/tekTms6YNQ2mlsRrzFLSMH
+	 0xHRPcNIMs8xGM50VX24xY2DVSZy+ib9LfDxte6Ec6PkTHQHa3UvIXXGR4+KNhl3ym
+	 zuscmg1mIf2yvP4TZRkUfVcj8ynoNWmYjGc/8x+O0yH8dX/cfhW2NSag6KeSgTVQsG
+	 HyYva7j36OmoXZaNonzURxsLGmSZs7LEaQMM/9ZoTLJi3PgrjKrWfMa1fPLAOwNIFl
+	 XjFU/aTefbXmat9KmwqA8qcdG8M4ObAH3o3hdWfnXiMPPSSdypBlCwMMGZsyGMH+7K
+	 Gw8MEeofiay+Q==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/3] mm/damon: add damon_region->last_probe_hits
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260703170605.94472-2-sj@kernel.org>
+References: <20260703170605.94472-1-sj@kernel.org>
+ <20260703170605.94472-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 03 Jul 2026 17:24:47 +0000
+Message-Id: <20260703172448.8AE3C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-On Fri, 03 Jul 2026 17:11:41 +0000 sashiko-bot@kernel.org wrote:
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+New issues:
+- [Medium] `damos_apply_target()` merges regions without validating or aver=
+aging the newly added `last_probe_hits` array.
+- [Medium] Missing reset of `probe_hits` when monitoring attributes change =
+dynamically mid-aggregation corrupts the new `last_probe_hits`.
 
-No blocker for this patch.
+Pre-existing issues:
+- [High] `last_nr_accesses` and newly added `last_probe_hits` are not updat=
+ed or averaged when regions are merged in `damon_merge_two_regions()`.
+--
 
-> 
-> Pre-existing issues:
-> - [High] Execution of ALIGN() and ALIGN_DOWN() macros with a non-power-of-two `min_region_sz`, violating alignment subsystem guidelines.
+commit 43369d5eda0b4a1301ca211bc77bce0681b92eac
+Author: SJ Park <sj@kernel.org>
 
-Wrong finding.
+mm/damon: add damon_region->last_probe_hits
 
-> - [High] TOCTOU race due to lockless concurrent reads of `sys_ctx->ops_id` and `sys_ctx->addr_unit`.
+This commit adds a new last_probe_hits array to the damon_region struct.
+It maintains fully accumulated probe_hits values from the last aggregation
+interval in this new field.
 
-Correct finding but not a blocker of this patch.
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 805e089ff4f2f..4f7e305b261c3 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -68,10 +68,10 @@ struct damon_region {
+>  	unsigned int nr_accesses;
+>  	unsigned char probe_hits[DAMON_MAX_PROBES];
+>  	struct list_head list;
+> -
+>  	unsigned int age;
+>  /* private: Internal value for age calculation. */
+>  	unsigned int last_nr_accesses;
+> +	unsigned char last_probe_hits[DAMON_MAX_PROBES];
+>  };
 
-> --
-> 
-> commit b68f48fc29d6aa945e1dd1ef0c694913e40d3854
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: disallow overlapping input ranges for damon_set_regions()
-> 
-> This commit reinstates validation in damon_set_regions() to ensure that input
-> ranges are sorted and do not overlap. It checks the boundaries and returns an
-> error if they are invalid, preventing unintended DAMON behavior.
-> 
-> Link: https://lore.kernel.org/20260630041806.151124-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index c6fc35be633b3..b2fc15a3804ff 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -418,12 +418,19 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
-> >  {
-> >  	struct damon_region *r, *next;
-> >  	unsigned int i;
-> > +	unsigned long last_end;
-> >  	int err;
-> >  
-> >  	for (i = 0; i < nr_ranges; i++) {
-> > -		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=
-> > -				ALIGN(ranges[i].end, min_region_sz))
-> > +		unsigned long start, end;
-> > +
-> > +		start = ALIGN_DOWN(ranges[i].start, min_region_sz);
-> > +		end = ALIGN(ranges[i].end, min_region_sz);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this safely handle a non-power-of-two
-> min_region_sz?
-> 
-> The ALIGN macros rely on bitwise operations that produce incorrect
-> boundaries if the alignment argument isn't a power of two. A user can
-> write a non-power-of-two value to addr_unit via sysfs, which sets
-> min_region_sz to a non-power-of-two in damon_sysfs_apply_inputs():
-> 
-> mm/damon/sysfs.c:damon_sysfs_apply_inputs() {
->     ...
->     ctx->min_region_sz = max(
->         DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
->     ...
-> }
-> 
-> Even though damon_commit_ctx() eventually validates and rejects the
-> configuration, these unaligned boundaries are actively used here to
-> allocate and merge regions during setup. Could this lead to overlapping
-> regions or division by zero before the rejection occurs?
+[Severity: High]
+This is a pre-existing issue, but does damon_merge_two_regions() also need
+to average last_nr_accesses and this newly added last_probe_hits array?
 
-We do the validation "after" the alignment, so no overlapping region can be
-created.  Hence no division by zero.
+In mm/damon/core.c:damon_merge_two_regions():
+    l->nr_accesses =3D (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
+                     (sz_l + sz_r);
+    l->age =3D (l->age * sz_l + r->age * sz_r) / (sz_l + sz_r);
+    l->ar.end =3D r->ar.end;
 
-> 
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can a time-of-check to
-> time-of-use (TOCTOU) race occur with sys_ctx->ops_id?
-> 
-> damon_sysfs_apply_inputs() locklessly reads sys_ctx->ops_id multiple
-> times:
-> 
-> mm/damon/sysfs.c:damon_sysfs_apply_inputs() {
->     ...
->     err = damon_select_ops(ctx, sys_ctx->ops_id);
->     ...
->     if (sys_ctx->ops_id == DAMON_OPS_PADDR) {
->     ...
-> }
-> 
-> Meanwhile, a concurrent sysfs write can update ops_id without acquiring
-> damon_sysfs_lock:
-> 
-> mm/damon/sysfs.c:operations_store() {
->     ...
->     context->ops_id = ops_name->ops_id;
->     ...
-> }
-> 
-> If ops_id is changed between the damon_select_ops() call and the
-> subsequent check, could it result in a torn configuration where the
-> context operates in one mode (e.g., DAMON_OPS_VADDR) but the region size
-> scaling logic is applied using rules for another mode (DAMON_OPS_PADDR)?
+Because last_nr_accesses and last_probe_hits are left unmodified as the left
+region's values, it seems this can cause spurious age resets in later loop
+passes. If the left region's last_nr_accesses was 0, but the newly averaged
+nr_accesses is non-zero, the condition ((r->nr_accesses =3D=3D 0) !=3D
+(r->last_nr_accesses =3D=3D 0)) evaluates to true and spuriously resets r->=
+age
+to 0.
 
-Nice catch!  Not a blocker of this patch, though, as Sashiko also mentioned.  I
-will separately work on this.
-> 
-> > +		if (start >= end)
-> > +			return -EINVAL;
-> > +		if (i > 0 && last_end > start)
-> >  			return -EINVAL;
-> > +		last_end = end;
-> >  	}
-> >  
-> >  	/* Remove regions which are not in the new ranges */
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260703165610.92894-1-sj@kernel.org?part=1
+[Severity: Medium]
+Should this newly added field also be validated in damos_apply_target()?
 
+When damos_apply_target() iterates over regions, it merges adjacent ones if
+their age, nr_accesses, and last_nr_accesses match:
 
-Thanks,
-SJ
+    if (prev_r->last_nr_accesses !=3D r->last_nr_accesses)
+        continue;
+    if (prev_r->nr_accesses !=3D r->nr_accesses)
+        continue;
+
+Because last_probe_hits isn't compared, regions with different probe statis=
+tics
+might be erroneously merged, and the right region's probe hits would be
+silently discarded.
+
+[ ... ]
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index c6fc35be633b3..60be3e9d87887 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+[ ... ]
+> @@ -2040,8 +2042,10 @@ static void kdamond_reset_aggregated(struct damon_=
+ctx *c)
+>  					damon_nr_regions(t), nr_probes);
+>  			r->last_nr_accesses =3D r->nr_accesses;
+>  			r->nr_accesses =3D 0;
+> -			for (i =3D 0; i < DAMON_MAX_PROBES; i++)
+> +			for (i =3D 0; i < DAMON_MAX_PROBES; i++) {
+> +				r->last_probe_hits[i] =3D r->probe_hits[i];
+>  				r->probe_hits[i] =3D 0;
+> +			}
+>  		}
+>  		ti++;
+>  	}
+
+[Severity: Medium]
+Could this copy un-reset, partial-interval probe_hits into last_probe_hits
+when monitoring attributes change dynamically?
+
+When damon_set_attrs() dynamically changes intervals mid-aggregation,
+damon_update_monitoring_result() explicitly resets nr_accesses to drop the
+partial state:
+
+    if (!aggregating)
+        r->nr_accesses =3D damon_nr_accesses_for_new_attrs(r->nr_accesses,
+                                                         old_attrs, new_att=
+rs);
+    else
+        r->nr_accesses =3D 0;
+
+However, probe_hits is not reset. When kdamond_reset_aggregated() fires nex=
+t,
+will it populate last_probe_hits with mixed-interval garbage, violating the
+fully accumulated semantic guarantee?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260703170605.9447=
+2-1-sj@kernel.org?part=3D1
