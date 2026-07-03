@@ -1,192 +1,184 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E58220687
-	for <damon@lists.linux.dev>; Fri,  3 Jul 2026 01:35:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6A83D75C7
+	for <damon@lists.linux.dev>; Fri,  3 Jul 2026 13:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783042548; cv=none; b=U9nPili/h8NKN50tkLWWpBGVxNp9Xlh56DqeXQxWmQ2SscdJYjHu29sVGHxhbl9JwDaXxSGTSKkbCk513gCpEFLjXZrkIR9Jyjhklu0fPI6F1T7IdeorwUhbpew1uVtM4CbGXGoze8d788E15LTzC9UfODKrUywWKc0ydDy6/SE=
+	t=1783085767; cv=none; b=LoEWgtbHUbVqdXNh6LYei2xKxOnohC5v+uDUiQXljmU0fyAT7jHVBk5qHmcPezHQp+mcqdOHBBgRN/5ht11LSvNj9ckHlmKF6PwAbj+ADbAPBiMn2B3sbhTm6LE/l7CdMueyYWMRNECDZIFoFzS+SQP6B1khnezL+x7FqdhuqVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783042548; c=relaxed/simple;
-	bh=amG2Pw5a0eapyXKEGpyor4/F0ywqco3vS7bWcAF7gHg=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=d8vjIhBxs84IJ1rSErV4XtvczRDqE4hS+6kkPZr4ETdD9VIBd2k+RIGBLcs+0Pf3cjm5w8tt8eWY9RHR2KX1Lf4sx9Qr0cP2wKbT1WnsXdFxP7vVGMb0VET9wCqhCb1UmClOmqyeGErQGRmYBaaB9HxpI5FK7fWLw4ZWXlWVUqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QRmnczCP; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783085767; c=relaxed/simple;
+	bh=3+iyZZJ72WgUSPLdNBTNWi2rabs+mKXDECi8R3MNjWs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AUbQU1PdFyjR6Ha0oxkPF1cb4dZBie9nhdJAQUm+OuMtnhiu+WUt1hgA7wZRfc5kmHlkBcHoKQI3W/9735pg1vlt2mr6PeXlTHSANIwnfLlKnMcSDv53B+O0XkWxxlpDvVvc9iw15d9/u9gahdJleJyOfITd81kAXoADUXYLkEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=LpqleAqI; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QRmnczCP"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c9e2489e117so29308a12.0
-        for <damon@lists.linux.dev>; Thu, 02 Jul 2026 18:35:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="LpqleAqI"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-493adc4ff7eso573885e9.0
+        for <damon@lists.linux.dev>; Fri, 03 Jul 2026 06:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783042547; x=1783647347; darn=lists.linux.dev;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8kSg3nzeojJtGncTC+IVv65TYIvUH3I5uxPnaBH7ssA=;
-        b=QRmnczCPCVLPdEONzipmS/qonF5rYYqLVgPs34siVGcAjDOgC4wtTJDXkgjwxOJiOq
-         oFtETRLzqVntlZeol8/7sLf2NlkxixEy2mJqXa2yR65Vb7crgvkQpYo/iQvNr6XDTZJa
-         TdALe8zTMVzX/ifTFF69MQP5xuLmwevdkZI8s/FF6EVM5VVyZ0y2xQBRpwmvueSsow4k
-         s56s9cCKBLlZ8H7p6tI/GkaX28D0sjXiuNcsD3KbRGQlK+qg05+HIn/XQo32Z9hTG9Z1
-         XJry456/u+E2HKJ4kb5sQQu9wj/V/Cqzj0NmQbrNT21pn4tsLdZzq5rfaFQ5TMXRlgoR
-         fwnQ==
+        d=suse.com; s=google; t=1783085763; x=1783690563; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FNBtslBmkdxYY8pJaB+biO9zOY0LMt3+psd/OnIDrZs=;
+        b=LpqleAqIS2Odv534JKdBdjoyA96HZY1DQLRn0ivzD8sMIhhIGWZ6UGeSJJoWHFirVH
+         9sla/xe9+bPIugh7XPS2NyvdWOfc9E0kSZ89xGBo56yFeKA6vE74XSk2Tu4P2B9cr17l
+         wSkO5IJhvBXinapUsdOOvgVrkxXqMT422cyl4E/YcQb18ukoXYyctfTfphjhFVQc1ICo
+         K7qkGor/TyaI2QLJW8KkQgC1uYgGL1AW8a3yTkGmiSnKWO0l3yCf5FPrICsM1B7JYeJ+
+         xu8Pe1U+YCoKAjM1OW+szeefFE4LLPHHJMOG4+Jtz0NLaGHNXyZpX0YLzLZnAEXcIUYU
+         g8CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783042547; x=1783647347;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8kSg3nzeojJtGncTC+IVv65TYIvUH3I5uxPnaBH7ssA=;
-        b=SksgrgYYGRNpA06pTokBkE2r2+lYqS88QhATJusqYMQwSfB0RDZ0meP47TqDJs84fH
-         d0YX2t4touwFhuXEfHNn8/GdPjvjm4ZOltdjh6PgzLTg4TD5QZSRXPxhUGzc4PkvXDff
-         SSSkYTKQncCRqyVW7z0pwAgT8or38LQXibhZ38QIMlATQvmiB0gy/LPptCO0NIqZkINa
-         ZNwGou3F7blxu7fvM5kT49EoJnqPFxmccDWV8F1ek2EsjfFe3feiBTT014YbINAqCGbV
-         SehrkcqWiPbxODY9vwGnaE7H1yqkDd5Vjhj/VgGzwSMiWnl7lRjCxsCZk0fF7aJ4hTYl
-         hZbw==
-X-Forwarded-Encrypted: i=1; AFNElJ/FGQWB5EkwyyUZAC7FkDDqrQE/nYf0efgpxOyH0jSRAeMM/6iEHSxqFKEVSDctSWojbalkVQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YydOtrXiYnOqMnjIR0y4fnvBTYf+Mo47NoIVQdYxSx9AuweYicX
-	FOXNETOqbRrE09Z5oT5N7Mjz/4rs+2rFIi+qD24DRXe8KPncWffigH04
-X-Gm-Gg: AfdE7cnrAOBs5YK7QV24CLw9pRsRUZIXbkqh2i4PFqZhDUxZv1TXh3tVNAPeuux7jrF
-	smzA8DDN8HFV9fMGPtASN4BXnTCjPr/HnMx+BM45agfNs8uKCz4ira7MgWqRmAV4o7k7lk/bQ6u
-	8p7ZNcQ/dhTQpSmMYhLsw/RyZukBUx5pKhoGp0kQxAfDo/fnll2PS9pFxPBKkM6oshUMa4XiuEH
-	c/Wqd2/A3MmmiN7wV43hhcSqpBmDArgqow/lrLialAXXFwTeW4xDGxK68ANpI30hEjRrZ0VAJY2
-	hHbtozaXh3ICGrWgUT1uFpafkuWPlqL/gnnVjuVedHTg5iKN4Gf1fUCk7spmND2rYWfAFIC7He/
-	R5SwiqqK5xKJ70MwfWy02yNSPsHEN+kw8d+neNB5L5pzEijDLyQnAKVo0lOXBnd0UTN/qsFs=
-X-Received: by 2002:a05:6a20:94cf:b0:3b3:1c7b:ff7 with SMTP id adf61e73a8af0-3bfed47e012mr9720045637.46.1783042546577;
-        Thu, 02 Jul 2026 18:35:46 -0700 (PDT)
-Received: from smtpclient.apple ([2607:f130:0:11a::31])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30f0b813cd9sm13515735eec.8.2026.07.02.18.35.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Jul 2026 18:35:46 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        d=1e100.net; s=20251104; t=1783085763; x=1783690563;
+        h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+         :references:cc:to:content-language:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FNBtslBmkdxYY8pJaB+biO9zOY0LMt3+psd/OnIDrZs=;
+        b=ZqhK2NpvRBx9YDmm5zKATMb8Sf61V2aOoSmOBF6S5UGune1UUFSydpJcn2oODWeDhc
+         wg2Vkog7M2QJpg7Nblzr5uVFaGzQ+7Wy8vuQVFDbhtxyixdzqI5mY1FHvjoB8y3sccyK
+         NJcsYh766VHRw2kwhjXbw5tEYvbdKGJVWEM5KF4zMghOgsRVOife9PCZKTtwQlWiNLNU
+         NZI1NG+zqAP3SFTR2Y7EBResndw23pdUGE1V7i9nZcgGdSwF2ryj1Jr7XTnZOFgo3t4J
+         CByc4jTDQC7mh44D24a+661NVT3RwOWNTlfZGRNmBJYfd5ni7ZfPEG2lZMUsX53VUB0C
+         pHWA==
+X-Forwarded-Encrypted: i=1; AFNElJ8DqBMOQfBOTpd7t9kAlABmM5dqLpHcreq2iUuxe0g2HTOW8pawdRPVCco3qZ3NldAEL8D9uw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywb+fZfe2O/XsWelfnr79GM+x/cf6h45YC8kWKKDDf+jEE4xwFk
+	TEMMx2NFJg/7XiY6VgUyRsGrc8YJa9do9HwDpXl3SvhnImNqGw52UG2d5DYqK2tpR2c=
+X-Gm-Gg: AfdE7cmz3rULsDasbTUyvpW7477SuUOWCVG0TxHmmrQnqoBeEp361EU0LKKYCQTJ8hP
+	0V59wTl4eOXOeJADKR2VVOLSPCkscgWW/R58G1IMazV07Get5oR73JzV9Eb2CUUKm7a0EluQonl
+	1qR6/Wh7wFuvqGQi4MX/FlNM/duLKgdusxzP8a26MDG1BALA3hmm2tcuh2h/yZmXl+uVHzzNXmq
+	5GWTYQypyfU6P7DH6PhLSceZnwhBBkujQFq9NikPIJKQu0UjrJG11NJ1kf+RBhxBGGmi6QP+U0X
+	Af0qOKXf3MTSrN2DCPwobu8YGL/gCB2LEOW2deF+eHuN/XCrRLHNzjEh8zu5/RWYDlZwxVci0MW
+	sgE1ek7hIo0GIYE0weCePr0EO6N8ORPIDCV/LcRls3vjuS6+JCICOmj2aOoFMqdZ3DeglirWkzf
+	CqJRHEaLo=
+X-Received: by 2002:a05:600c:1912:b0:493:bd67:315 with SMTP id 5b1f17b1804b1-493c2b91fe3mr73724125e9.5.1783085762867;
+        Fri, 03 Jul 2026 06:36:02 -0700 (PDT)
+Received: from ?IPV6:2001:1a48:8:903::e14? ([2001:1a48:8:903::e14])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493bef11338sm202929555e9.1.2026.07.03.06.36.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jul 2026 06:36:02 -0700 (PDT)
+Message-ID: <f0110241-eb12-49f8-81ce-3acf12939f45@suse.com>
+Date: Fri, 3 Jul 2026 15:36:00 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [RESEND RFC PATCH v2 0/5] mm/damon: add mTHP collapse and split
- actions
-From: wang lian <lianux.mm@gmail.com>
-In-Reply-To: <akY6ZzPnwk-CToMp@lucifer>
-Date: Fri, 3 Jul 2026 09:35:28 +0800
-Cc: sj@kernel.org,
- damon@lists.linux.dev,
- linux-mm@kvack.org,
- daichaobing@sangfor.com.cn,
- kunwu.chan@gmail.com,
- Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@kernel.org>,
- Zi Yan <ziy@nvidia.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- "Liam R. Howlett" <liam@infradead.org>,
- Nico Pache <npache@redhat.com>,
- Ryan Roberts <ryan.roberts@arm.com>,
- Dev Jain <dev.jain@arm.com>,
- Barry Song <baohua@kernel.org>,
- Lance Yang <lance.yang@linux.dev>,
- linux-kernel@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C7759CC5-6A63-4A48-B7A6-648742A5BC12@gmail.com>
-References: <20260702094633.75658-1-lianux.mm@gmail.com>
- <akY6ZzPnwk-CToMp@lucifer>
-To: Lorenzo Stoakes <ljs@kernel.org>
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/30] mm: move vma_start_pgoff() into mm.h and clean up
+Content-Language: en-US
+To: Lorenzo Stoakes <ljs@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>,
+ Simon Schuster <schuster.simon@siemens-energy.com>,
+ "James E . J . Bottomley" <James.Bottomley@HansenPartnership.com>,
+ Helge Deller <deller@gmx.de>, Jarkko Sakkinen <jarkko@kernel.org>,
+ Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
+ x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>,
+ H Hartley Sweeten <hsweeten@visionengravers.com>,
+ Lucas Stach <l.stach@pengutronix.de>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>,
+ Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+ Thierry Reding <thierry.reding@kernel.org>,
+ Mikko Perttunen <mperttunen@nvidia.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>,
+ Ankit Agrawal <ankita@nvidia.com>, Alex Williamson <alex@shazbot.org>,
+ Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>,
+ Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>,
+ David Hildenbrand <david@kernel.org>, Suren Baghdasaryan
+ <surenb@google.com>, "Liam R . Howlett" <liam@infradead.org>,
+ Matthew Wilcox <willy@infradead.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Peter Zijlstra <peterz@infradead.org>,
+ Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>, Masami Hiramatsu <mhiramat@kernel.org>,
+ Oleg Nesterov <oleg@redhat.com>, Steven Rostedt <rostedt@goodmis.org>,
+ SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>,
+ Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>,
+ Kees Cook <kees@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org,
+ etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ linux-tegra@vger.kernel.org, kvm@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org,
+ iommu@lists.linux.dev, linux-perf-users@vger.kernel.org,
+ linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
+ damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
+ Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
+ Jann Horn <jannh@google.com>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <b28b698df4c009e85c4728446ca5863d8e633164.1782735110.git.ljs@kernel.org>
+From: Vlastimil Babka <vbabka@suse.com>
+Autocrypt: addr=vbabka@suse.com; keydata=
+ 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
+ pYekxJujNeEDkUlky0Y=
+In-Reply-To: <b28b698df4c009e85c4728446ca5863d8e633164.1782735110.git.ljs@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Lorenzo,
+On 6/29/26 14:23, Lorenzo Stoakes wrote:
+> vma_last_pgoff() already lives there, so it's a bit odd to keep
+> vma_start_pgoff() in mm/interval_tree.c. Move them together.
+> 
+> These each return unsigned long, which pgoff_t is typedef'd to. Make this
+> consistent and have these functions return pgoff_t instead.
+> 
+> Additionally, express vma_last_pgoff() in terms of vma_start_pgoff(), since
+> we wrap the vma->vm_pgoff access, we may as well use it here.
+> 
+> Also while we're here, const-ify the VMA and cleanup a bit.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-> On Jul 2, 2026, at 18:23, Lorenzo Stoakes <ljs@kernel.org> wrote:
->=20
-> +cc all those you missed.
->=20
-> I really need to write a bot to do this, because I'm getting a little =
-tired of
-> pointing this out :))
->=20
-> On Thu, Jul 02, 2026 at 05:46:28PM +0800, Lian Wang wrote:
->> include/linux/damon.h      |  10 +++
->> include/linux/khugepaged.h |   9 +++
->> mm/damon/core.c            |   2 +
->> mm/damon/sysfs-schemes.c   |  77 ++++++++++++++++++++++
->> mm/damon/vaddr.c           | 128 =
-+++++++++++++++++++++++++++++++++++++
->> mm/khugepaged.c            |  46 +++++++++++++
->> 6 files changed, 272 insertions(+)
->=20
-> You are doing damon changes, and that belongs to SJ, sure.
->=20
-> But you're also changing core THP code? Please ensure you cc- THP =
-people because
-> without our approval this cannot be merged:
->=20
-> $ scripts/get_maintainer.pl =
-20260702094633.75658-1-lianux.mm@gmail.com.mbx
-> SJ Park <sj@kernel.org> (maintainer:DAMON)
-> Andrew Morton <akpm@linux-foundation.org> (maintainer:MEMORY =
-MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
-> David Hildenbrand <david@kernel.org> (maintainer:MEMORY MANAGEMENT - =
-THP (TRANSPARENT HUGE PAGE))
-> Lorenzo Stoakes <ljs@kernel.org> (maintainer:MEMORY MANAGEMENT - THP =
-(TRANSPARENT HUGE PAGE))
-> Zi Yan <ziy@nvidia.com> (reviewer:MEMORY MANAGEMENT - THP (TRANSPARENT =
-HUGE PAGE))
-> Baolin Wang <baolin.wang@linux.alibaba.com> (reviewer:MEMORY =
-MANAGEMENT - THP (TRANSPARENT HUGE PAGE))
-> "Liam R. Howlett" <liam@infradead.org> (reviewer:MEMORY MANAGEMENT - =
-THP (TRANSPARENT HUGE PAGE))
-> Nico Pache <npache@redhat.com> (reviewer:MEMORY MANAGEMENT - THP =
-(TRANSPARENT HUGE PAGE))
-> Ryan Roberts <ryan.roberts@arm.com> (reviewer:MEMORY MANAGEMENT - THP =
-(TRANSPARENT HUGE PAGE))
-> Dev Jain <dev.jain@arm.com> (reviewer:MEMORY MANAGEMENT - THP =
-(TRANSPARENT HUGE PAGE))
-> Barry Song <baohua@kernel.org> (reviewer:MEMORY MANAGEMENT - THP =
-(TRANSPARENT HUGE PAGE))
-> Lance Yang <lance.yang@linux.dev> (reviewer:MEMORY MANAGEMENT - THP =
-(TRANSPARENT HUGE PAGE))
-> damon@lists.linux.dev (open list:DAMON)
-> linux-mm@kvack.org (open list:DAMON)
-> linux-kernel@vger.kernel.org (open list)
->=20
->>=20
->> --
->> 2.50.1 (Apple Git-155)
->>=20
->=20
-Thank you for pointing this out again, and I deeply appreciate
-all the tedious work you do as a maintainer to keep the mailing
-lists aligned.
-
-As a newcomer trying to transition into complex feature
-development, I must admit my initial design is far from perfect.
-I leveraged AI tools to assist with certain implementation
-paths, and although I extensively self-reviewed, tested, and
-reasoned through every single line of code, your and SJ's
-feedback clearly shows there are still major architectural
-flaws.  Just like my very first kernel patch -- which was
-strictly reviewed and guided by you and David H. -- I know that
-your sharp feedback is exactly what will help me grow as a
-kernel engineer.
-
-I will completely step back and radically rethink the design of
-this series, especially regarding the cross-subsystem
-encapsulation and locking hazards.
-
-As for that bot you mentioned getting tired of running manually
--- let me write it for you.  An imperfect newcomer who just made
-these exact mistakes knows precisely where the traps are.  I can
-craft a pre-flight patch check script or a CI bot that
-automatically validates the get_maintainer.pl output against the
-patch file diffstat before any email is dispatched, throwing a
-loud warning if core MM files are touched but their respective
-maintainers are missing from the CC line.
-
-What do you think?  I would love to build this tool to save your
-and other maintainers' valuable time in the future.
-
-Thanks again for steering me in the right direction!
-
-Best regards,
-Wang Lian
-> Thanks, Lorenzo
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 
