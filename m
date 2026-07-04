@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7666328505E;
-	Fri,  3 Jul 2026 20:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69C034752B;
+	Sat,  4 Jul 2026 18:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783109176; cv=none; b=NZWjR+fa8yjvdJweHQjppIZiJuoVz+3JzB40Yw3m6y9QNEXNOqmhG9qa1HIUml2c4DIKTGt59sOjYLuIlI6nB9lwlFaEXsThcrpI3zJ4yuMq5hHqZ2EYnv/iQxnpW4bWXu0R32jBQ1VfFigJ4IwuUvdjuvk6mZYcBEVMlWtvbuo=
+	t=1783188705; cv=none; b=RiJaet6oM5tCr8bzeGeN9RXhQIQJ303E14be5nYysELqtMmDQCt0/ReeZuGhhBxhI7uRx9L2VXNJeQNnBhzQLymAA4y3A6gtGSpqWakVaB8+ZrgDK9OtlMV79Pd/d9vfbH2K/zcWHajf6gIa1kvD+aZWO74hxgjfD5L0//E5aYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783109176; c=relaxed/simple;
-	bh=2tSdN7Xec9YwW/M/VNRZbrOkU8fnl6XzXsMlJpm9S4Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFb5HldVQzspXNbep+Hs76KkCxO5eRm82kCD9Hcm7KuX03dD6kjtiCf6ouo+j1arPxqBTl6CTYlufImBts3AXlJQWg5aI2VWpUo1ERn5onDOdFAzfZs7PWb84Ik4Qqgvo5/T6Bifs2TPcvYhF9xBqi4a+To0wTq/bpPQ8ZZHOe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C1bchi5A; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783188705; c=relaxed/simple;
+	bh=D4HbXwGrhGeq0g95o5OFyyB9XczQy0zRAHosQY88ZiU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rWRKqN8QKcxd76+b4RSKgakxUfzLnHNalkWBY4h5MgQezcHqj2eJMGEGUBrLa8LmEgfodeZCGTkUv8mjGUFXm5uREBE4XPGxdx45BMXo9C60LM5+BI/68T/krHarPZHr/KT/VkKzn4eYo6cMCo0omw3jo3XXQ/14bFjKVYSgXyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h67Rk/Mg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C1bchi5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018071F000E9;
-	Fri,  3 Jul 2026 20:06:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h67Rk/Mg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E83D1F000E9;
+	Sat,  4 Jul 2026 18:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783109175;
-	bh=C8zf2oenIzK/5sv6TzeAsiMNLr4snDxOKcCQpjzACiw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C1bchi5AKR8Omb4EfoMSbv/1fj1Z+Oq8IzB1W6NVyGeehPhOvUPd/fhXjiC9u9FpF
-	 cuy0JSYbuvt2qYlHR5iG09086X2oUJ/jMr7fEXACQ1e/MIBPpXDvNTFITTohK/lKrH
-	 IsH6EcGeFPiEcxV8MFUF6ikINsDzt9sQhbuOxjJVjSmnZa6cQfcXtUbulKxYhPTPvf
-	 NTJWVQSuuVrUY4sa72suD1cA05Svu13wrDCVaxjnlFPKP9H2BlBq6uwtBneEVVKatN
-	 3VLhZcnaHBC4oewLz+CEG5mMB22tGVPCn/A+bEwGjKi5JP+XshqxDPytWPJF5XkQ06
-	 GYqzFrWbbVwWg==
+	s=k20260515; t=1783188704;
+	bh=02ZrVxmC2Pd3XoWJ6sPqCorhWK9k9abLsU09wkVMoMw=;
+	h=From:To:Cc:Subject:Date;
+	b=h67Rk/Mgh6v0/yt1TXHrNCtuEEH5o2qoHegLeGlNDBLYcwN1yd4ORLxymfm+mARqx
+	 8ykDCr4OlpJd6nqWIU24jSRypkf/8DAhuE7cpAt4IhaJoNw7Rk6IAqSCqto0o/YPzK
+	 ilQIHsXaDAAz3AGYtNgiTqdDBmed4sX7dBr3aqjNz/Z9l0ALUsHPym8r5omHRC9+r9
+	 Jxy/Uh/wIAjo+kkEZISKORtKQgrPzB5FhVMewrJrsp7a+OZ6daTIn7q4auBq6o4g+B
+	 M1iHWqw35cmU/0UvjjsKswrlVPwmWKw5L6bngXUhUHCfevojFI7sdAyLP+qPeEf1+z
+	 zKjfMtIp4T0LA==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: DAMON Release Newsletter for v7.2-rc1
-Date: Fri,  3 Jul 2026 13:06:11 -0700
-Message-ID: <20260703200612.102544-1-sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 00/11] mm/damon: refactor damon_{start,stop,commit}() for simple error handling
+Date: Sat,  4 Jul 2026 11:11:23 -0700
+Message-ID: <20260704181135.132956-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260628211904.94361-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,61 +44,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 28 Jun 2026 14:19:03 -0700 SJ Park <sj@kernel.org> wrote:
+damon_start() and damon_stop() could leave a few of requested DAMON
+contexts running when they return an error.  damon_commit() failure
+stops the DAMON context, but in an asynchronous way.  Callers should
+stop the left-over DAMON contexts.  It is easy to mistake, and indeed a
+few bugs from such mistakes were found and fixed.
 
-> Hello community,
-> 
-> 
-> This newsletter covers DAMON features that landed on the mainline, queued for
-> the mainline, development statistics and misc events that were interesting to
-> me that happened in v7.1-rc1..v7.2-rc1 time period (2026-04-26..2026-06-28).
-> 
-> The newsletter covering the previous release cycle (v7.0-rc1..v7.1-rc1) is
-> also available [1].
-[...]
-> Chanegs Landed for 7.2
-> ======================
-> 
-> During the 7.2-rc1 merge window, 95 DAMON patches have landed via the MM pull
-> requests [2,3].  Introducing a few of changes that could introduce non-trivial
-> user impacts.
-> 
-> New Features
-> ------------
-> 
-> In the merge window, below user-visible new features are added.
-> 
-> 1. Commit 9138e27a3bc38: "mm/damon: add node_eligible_mem_bp goal metric"
-> 2. Commit c7ec7d5f6b3d1 "mm/damon: introduce DAMOS failed region quota charge
->    ratio"
-> 3. Commit 3b9e3cc0405b4 "mm/damon: let DAMON be paused and resumed"
-> 4. Commit 70d8797c15d64 "mm/damon/reclaim,lru_sort: monitor all system rams by
->    default"
-> 5. Commit 0453f857eb32c "mm/damon/reclaim: support monitoring intervals
->    auto-tuning"
-> 6. Commit 3a0bc9568c354 "mm/damon/stat: add kdamond_pid parameter".
-> 7. Commit 45c49d9fd6089 "mm/damon: introduce data attributes monitoring".
-> 
-> Feature 1 is developed by Ravi at Micron, for their auto-tuned dynamic
-> DRAM/CXL memory interleaving for memory bandwidth optimization.
-> 
-> Features 2 and 3 make DAMOS be more deterministically controllable.
-> 
-> Features 4-6 improves DAMON modules for easier control and more reliable
-> operations.
-> 
-> Feature 7 introduces the data attributes monitoring, which enables light-weight
-> page level (e.g., cgroup-aware) access monitoring.  It will also be the
-> foundation of the ongoing collaboration project.
+Refactor the core API functions to stop all contexts to avoid the
+mistakes.  Also remove the unnecessary error handlings from callers.
 
-Sorry, I forgot mentioning one more important new feature.
+Patches Sequence
+================
 
-Commit 58996503b631 ("mm/damon: support MADV_COLLAPSE via DAMOS_COLLAPSE scheme
-action") is also merged into 7.2-rc1.  It is developed by Asier from Huawei,
-for DAMON-based THP collapsing.
+Patch 1 refactors damon_start() to ensure all contexts are stopped for
+failures.  Patch 2 updates unnecessary damon_start() error handling from
+mtier sample module.
+
+Patch 3 refactors damon_stop() to always success.  Patches 4-6 updates
+callers (damon_{sysfs,reclaim lru_sort}) to ignore the return value.
+Patch 7 update damon_stop() return value to void.  Patch 8 simplifies
+damon_stop() error handling in mtier sample module.
+
+Patch 9 refactors damon_call() to stop the context before returning the
+error.  Patches 10 and 11 remove unnecessary error handlings from
+callers (wsse and prcl sample modules).
+
+SJ Park (11):
+  mm/damon/core: stop ctxs in damon_start() before returning an error
+  samples/damon/mtier: do not stop first context for damon_start()
+    failure
+  mm/damon/core: make damon_stop() never fails
+  mm/damon/sysfs: ignore damon_stop() return value
+  mm/damon/reclaaim: ignore damon_stop() return value
+  mm/damon/lru_sort: ignore damon_stop() return value
+  mm/damon/core: change damon_stop() return type to void
+  samples/damon/mtier: stop all contexts with single damon_stop() call
+  mm/damon/core: stop ctx in damon_call() before reruning an error
+  samples/damon/wsse: do not stop ctx for damon_call() failure
+  samples/damon/prcl: do not stop DAMON for damon_call() failure
+
+ include/linux/damon.h |  2 +-
+ mm/damon/core.c       | 37 ++++++++++++++++++-------------------
+ mm/damon/lru_sort.c   |  6 ++++--
+ mm/damon/reclaim.c    |  6 ++++--
+ mm/damon/sysfs.c      |  3 ++-
+ samples/damon/mtier.c |  5 +----
+ samples/damon/prcl.c  |  4 +---
+ samples/damon/wsse.c  |  4 +---
+ 8 files changed, 32 insertions(+), 35 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 39f9f608b1858e65db6d2766d692a7a700b1e0fb
+-- 
+2.47.3
