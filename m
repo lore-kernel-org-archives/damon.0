@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C36E10785
-	for <damon@lists.linux.dev>; Sat,  4 Jul 2026 18:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C39196C7C
+	for <damon@lists.linux.dev>; Sat,  4 Jul 2026 19:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783190603; cv=none; b=uw48Ni2AQN2BiiKY8ZWg6+3VUspNPc8eAUO7XiZ204IqovXT16peUCvTfEo2hqdH7gRLdaxuD+SLi2PD7LxUp2bvQmRHtvP5YR9fT2QrS/alMA9dhEsR52KkqvP28ay07pHK4ecLerxCkG+vSFomK6p9yvKQaRbzG+lVMwKCKkA=
+	t=1783193702; cv=none; b=tBNBwDEoSwQ60NcXSuTVU5H0GC3ExSYkB/pst1p3IAjlKOLTg7l5Q0NIleOztxrcjc4tqC971XzBMYyw6k0GF7LDgBXsetMVb8PhuOdwXRaCUzHWQ40ZUNo64Kn8XNW2pAbP5rxPm4jZQ99Tg5eQttLUsXUfFgVlHqqzTy6qLvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783190603; c=relaxed/simple;
-	bh=xtxrmz/aovAL1DSBQCdwDnYQOI5eO+FFATWl0FbXYQk=;
+	s=arc-20240116; t=1783193702; c=relaxed/simple;
+	bh=L33hFmTFwOygAqmx4KgnMPeBORkq0YEelSR3XfUbSQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UvMDMfaNr2dVGX58BQhwL/Q3n7GDhrRIdM92S8z77KQfR8RDuokTpI91MEsx+kZFyndVp7H/ejTVMGWu3P7F6j/Drdew3lDhmb9oc27jVgmbVArRxLuHqSCbXHeWkdkFm0IEGLz+OHKg6dNWtYbzSOddzCqVkXXgtqPso8B42Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mpvH/Gnq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IOxaQhBI/N5cLI71aHI52fICJdnP8helcV5HpN1g6aS71Ta06vO0Ri6eIXbs/2kv2D7ZfS9bxQxocdAmu/v1SEvdjBHyLsTJAV4YRi8lAx0/+qr32VbIvkX+FCDZDiNTR265DqE4JIF1qDS81kcBtEAX4l1X2m+1jD1x7LKp7mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=joTI0ZzM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mpvH/Gnq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E7A1F000E9;
-	Sat,  4 Jul 2026 18:43:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="joTI0ZzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF161F000E9;
+	Sat,  4 Jul 2026 19:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783190602;
-	bh=yMz4zziGl9MV/Fv3CiVBAjiz7zA08n970GFWVwWgCu8=;
+	s=k20260515; t=1783193701;
+	bh=rFdzYHwA5U37cfx3fRjs6HSweTPEzUEtm2tNn6HDPNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mpvH/GnqpkvMnFGHL252xWlTCV5U7PnIpDh/PZbf8Sm5M7j2tMyd2jlPmuUhz6Jl2
-	 O3JCp2oxJe0tsWNMMlej8c9WszKLUPx/KXlWrezGIseiiE5QMiZE71zJRupY87YESE
-	 B73veFP0KXgNwweSNQH47Hn1hpWZ/fCmZO7r8C+P3/NoKEycOtiqQa0/tVWn75GcE6
-	 jTbe51CW97yjrmZutWxt5OLHd89reOwzGX9UFIHhEzddZ6318L4897WEqdabt+uAoC
-	 owvOv+4vtpi3RirXFRCGsKkA6XEECtTAxbJs7SDr41flhj/0Ym+K2+F5GJLOVIjteC
-	 ZYHXiNVJe9N0Q==
+	b=joTI0ZzM86XDPSweI9WvaxIeJQjJ3a+Yn3v48lu4+2YIYmzx0FZxwaKukEODXcSMS
+	 2uiRYaWfkfJfCLQsd1d+967BRBhkeFVUU0jwmKMfEGToD3+oQPGjx6XoBnJ/TUgkaj
+	 S/QAMROkjo7Wx5+nIDSytm3Y8tNVd4Yrt020yIwGkH3aD0rIvuAwoKP9eZnrohvdM6
+	 zcww8xu6PtNjALQH4CeNCDbl3pKRj8JoyJkoSo/t5g7SLjpAP0OJ6iauurMZpkFmLJ
+	 LWceMbLAIZ2OK3RH0qLRYcfvrjWRYTj8tn5hcnDVDo/FYj5wyIhzw1rW76FFRl8d1C
+	 iz9n3+K1UPlVQ==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 03/11] mm/damon/core: make damon_stop() never fails
-Date: Sat,  4 Jul 2026 11:43:17 -0700
-Message-ID: <20260704184318.136522-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 09/11] mm/damon/core: stop ctx in damon_call() before reruning an error
+Date: Sat,  4 Jul 2026 12:34:52 -0700
+Message-ID: <20260704193454.1094-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260704183003.219C81F000E9@smtp.kernel.org>
+In-Reply-To: <20260704182513.4D53B1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,99 +42,94 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 04 Jul 2026 18:30:02 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 04 Jul 2026 18:25:12 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] AB-BA deadlock in damon_start() error path when failing to start multiple contexts.
+> - [High] Concurrent invocations of `__damon_stop()` triggered by canceled `damon_call()`s lead to a double `kthread_stop()` deadlock.
 > --
 > 
-> commit c787674782fb673ed8c1babcfb03eca187f10a1d
+> commit 5b208204f87a1b80335c35ce1b66a42e8f74a1ba
 > Author: SJ Park <sj@kernel.org>
-> Subject: mm/damon/core: make damon_stop() never fails
 > 
-> This commit modifies damon_stop() and __damon_stop() to return void instead
-> of an error code. This simplifies the error handling in damon_stop() since
-> it no longer needs to break out of the loop on failure.
+> mm/damon/core: stop ctx in damon_call() before reruning an error
+> 
+> This commit updates damon_call() to ensure the DAMON context is explicitly
+> stopped when a call fails or is canceled.
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 45aa9acef4e30..0845d6b151f81 100644
+> > index aa48bf44c2a0b..9c15d44084af4 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
 > [ ... ]
-> > @@ -1865,31 +1863,24 @@ static int __damon_stop(struct damon_ctx *ctx)
-> [ ... ]
-> >  /**
-> >   * damon_stop() - Stops the monitorings for a given group of contexts.
-> >   * @ctxs:	an array of the pointers for contexts to stop monitoring
-> >   * @nr_ctxs:	size of @ctxs
-> > - *
-> > - * Return: 0 on success, negative error code otherwise.
-> >   */
-> >  int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
-> >  {
-> > -	int i, err = 0;
-> > +	int i;
-> >  
-> > -	for (i = 0; i < nr_ctxs; i++) {
-> > +	for (i = 0; i < nr_ctxs; i++)
-> >  		/* nr_running_ctxs is decremented in kdamond_fn */
-> > -		err = __damon_stop(ctxs[i]);
-> > -		if (err)
-> > -			break;
-> > -	}
-> > -	return err;
-> > +		__damon_stop(ctxs[i]);
+> > @@ -1956,8 +1958,13 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
+> >  		return 0;
+> >  	wait_for_completion(&control->completion);
+> >  	if (control->canceled)
+> > -		return -ECANCELED;
+> > +		goto canceled;
+> >  	return 0;
+> > +
+> > +canceled:
+> > +	__damon_stop(ctx);
 > 
 > [Severity: High]
-> Does calling damon_stop() here result in an AB-BA deadlock during a partial
-> startup failure?
+> Could this lead to a deadlock if multiple threads invoke damon_call()
+> concurrently on the same context?
 > 
-> While this issue was introduced by an earlier patch in the series, it remains
-> present here. If damon_start() successfully starts the first context but fails
-> to start a subsequent one, it calls damon_stop() while still holding
-> damon_lock:
+> If multiple threads are waiting in damon_call() and the kthread exits, it
+> cancels all pending controls and wakes the waiters. These threads will jump
+> to the canceled label and call __damon_stop(ctx) concurrently.
 > 
-> mm/damon/core.c:damon_start() {
->     ...
->     mutex_lock(&damon_lock);
->     ...
->     for (i = 0; i < nr_ctxs; i++) {
->         err = __damon_start(ctxs[i]);
->         if (err) {
->             damon_stop(ctxs, i);
->             break;
->         }
->         nr_running_ctxs++;
->     }
->     ...
->     mutex_unlock(&damon_lock);
+> Looking at __damon_stop(), it reads ctx->kdamond without clearing it:
+> 
+> static void __damon_stop(struct damon_ctx *ctx)
+> {
+> 	struct task_struct *tsk;
+> 
+> 	mutex_lock(&ctx->kdamond_lock);
+> 	tsk = ctx->kdamond;
+> 	if (tsk) {
+> 		get_task_struct(tsk);
+> 		mutex_unlock(&ctx->kdamond_lock);
+> 		kthread_stop_put(tsk);
+> 		return;
+> 	}
+> 	mutex_unlock(&ctx->kdamond_lock);
 > }
 > 
-> Inside damon_stop(), __damon_stop() calls kthread_stop_put(), which blocks
-> waiting for the running kdamond thread to exit. However, kdamond_fn() must
-> acquire damon_lock to decrement nr_running_ctxs before it can complete its
-> exit:
+> Does this allow multiple threads to fetch the same task struct and call
+> kthread_stop_put() concurrently? 
 > 
-> mm/damon/core.c:kdamond_fn() {
->     ...
-> done:
->     ...
->     mutex_lock(&damon_lock);
->     nr_running_ctxs--;
->     ...
->     mutex_unlock(&damon_lock);
->     return 0;
-> }
-> 
-> Can this cause damon_start() and the kdamond thread to deadlock waiting for
-> each other?
+> Since kthread_stop() waits on the kthread's exit completion which is
+> signaled via complete() (waking only one waiter), would the subsequent
+> threads block forever in kthread_stop(), causing a deadlock?
 
-Yes, I will fix damon_start() in the next revision.
+Good finding.  But there is no such parallel usage of damon_call() to my
+understanding.
+
+DAMON_SYSFS calls damon_call() for state file writes.  Multiple threads can
+write the file in parallel.  But the damon_call() from store file write
+callback (state_store()) is protected by global damon_sysfs_lock.
+
+DAMON modules can call damon_call() for parameters commit and initial start.
+But param file writing is protected by the param_lock.
+
+This may be better to be documented or make the code more robust.  But no real
+issue.
+
+> 
+> > +	return -ECANCELED;
+> > +
+> >  }
+> >  
+> >  /**
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260704181135.132956-1-sj@kernel.org?part=9
 
 
 Thanks,
 SJ
-
-[...]
