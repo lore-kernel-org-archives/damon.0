@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27725377015;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A4137702B;
 	Sat,  4 Jul 2026 18:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783188708; cv=none; b=fGkP5MgU1mroIc7y0iyZscDjQ0fZvjBKwvu5Yth/AAwwUGIhVjmV6u9AfbNdb1pyKfPOoTppWRuQyEGfqyedn/b6Vb0Q5d6oHov3EX2ktoJn0Iqm9gyfIuYGde7CfcaqIDfZaWd8+4Zl0n/mF1jtXe+LRIYEB6+lTzLAA0OmECA=
+	t=1783188708; cv=none; b=jOoxbl067c4bAEyBEQelN4KkMpwvAZr00bk69chmZKFRWANMucHxokxUlxja3NU0ayHC2j0ewW7VzWZTgAyXSMm4FbW1AY7zcFUz4csxOjUWmR3bDVTWXfCVR8TLDoTnyMv5WH7ewPvdTYeo1D3TaxOiAYVSRjWHXcTk+DyLGHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783188708; c=relaxed/simple;
-	bh=nbWAQRgqNy7FMFTkYigKuU7k9GA0MvfRwmrkbBkw1/A=;
+	bh=apYwkYgjta09iatlAqcBQzxffoVQ7J1TTsvqhGbrFRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttmVBOlscwsE8Eq0n8Q5Rx0E9vpAOQP1ji8bVPlezIpD1nDc4ppobpk72pgvLnlJJeE2SyCt8IxQQTwExCmjvet+63FJeaEUeq1WAPRpHqH3yR9GpLhm/6UzmrsSDsUhzpQJCxkylBifMJ3weUcWRheuQs+1R95AOY++DkOnTxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZxgyzLj+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iA/le8UiJRXs8YuwwZJYyOZHSgLbU2CTt7CldDC5Pla1yPlxgJ0Ufnyc6oWU5k/gaW3uDTeFn/XTwfBE3nAjxTuh9t9dIBsP+H5F1oGuEW+YGX3YaMXzRpztfkID3ThmjvLVyoxyVa8SfegFBt0DKIdGdLNbZLtFJIy8+9Na1IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JwjGmKH8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZxgyzLj+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C427A1F00A3D;
-	Sat,  4 Jul 2026 18:11:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JwjGmKH8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBDC1F00A3E;
+	Sat,  4 Jul 2026 18:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783188707;
-	bh=h0Px2pc5d57ZghupeXW8ij/6164Zuz/qXDwibedUcL4=;
+	bh=LS4CO1+OYp8+pSPAS3NbVTVyYCl94ZecPiNEYxC3hmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZxgyzLj+MBt/efF+VjBrUc09pF0OZcufMkNpkBjceDlB2aPG/3aJv3N8u4SE5Ek1e
-	 DbPYt8ivSd2IZzrqKgLqbpsUFJzkC/cH+n7TIsPCaFXr+er+yTEYoQ+fErR6gxmmMx
-	 Di0khw5Wa7d/HU01KjspUs56sOeUjeo9qGErnh/+tb/kasjjYUi7rqTiZWYkAjqWqN
-	 YhDvgVQCgpzbsKfHh5D7He1YuZ8CS85dfQVkWPcaayYBgcpjFZ76edf/fmV9Ai7UfZ
-	 guxxxpFXxZcVNK1qQrWN/p4Zxh/lwGxXiKqc3MqErD3V7v58o1zlpLruA7S6j07c1n
-	 nMw9+NE8Fsf+g==
+	b=JwjGmKH8EFGhoDc831CIAQSrtTGXEUzuPUo/drzvqVbSey/lZGCwsp++HLFvK8Ci8
+	 0ZwaKWeXPMjXieC/ALlqSwTXyaHUx95hH6XpL7nUeOB5Fws1aMqx8CIuX6yKtYwhJ+
+	 lcj4RAd/d8qUrKXV7IRufXex9bJddFpAKI9d9p03t45Us5pgzmh9bzsqFK2rfNEf5q
+	 DOYGDLhxo10R8YtJ8aZnvi7Hzn63kQTMY2ZiblwTUuCveq+EDxBvKiVXJlBykk9veF
+	 WS8uH842NJmjvX5v4+1pMlqrL8SDLQbKBUSVcxuvtD3ydhikrd8OwatiG+rj2XU/Nv
+	 UzPHHDHyCSdMA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 07/11] mm/damon/core: change damon_stop() return type to void
-Date: Sat,  4 Jul 2026 11:11:30 -0700
-Message-ID: <20260704181135.132956-8-sj@kernel.org>
+Subject: [RFC PATCH 08/11] samples/damon/mtier: stop all contexts with single damon_stop() call
+Date: Sat,  4 Jul 2026 11:11:31 -0700
+Message-ID: <20260704181135.132956-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260704181135.132956-1-sj@kernel.org>
 References: <20260704181135.132956-1-sj@kernel.org>
@@ -47,47 +46,30 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_stop() always returns 0, and nobody cares.  Change the return type
-to void.
+damon_stop() was theoretically able to return failure while keeping the
+second context for mtier running.  mtier stops its contexts one by one
+with two damon_stop() call for the reason.  damon_stop() is refactored
+to always successfully stop all requested DAMON contexts.  The two calls
+are unnecessary.  Use only single damon_stop() call for all contexts.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h | 2 +-
- mm/damon/core.c       | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ samples/damon/mtier.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 2661231c0ae82..19b7e839bde0b 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -1070,7 +1070,7 @@ static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs
+diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+index 90881e8bd441f..ac9c24b92ead8 100644
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -200,8 +200,7 @@ static int damon_sample_mtier_start(void)
  
- bool damon_initialized(void);
- int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
--int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
-+void damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
- bool damon_is_running(struct damon_ctx *ctx);
- int damon_kdamond_pid(struct damon_ctx *ctx);
- 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index ef40aa44850ff..1a6c30ae91711 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1946,14 +1946,13 @@ static void __damon_stop(struct damon_ctx *ctx)
-  * @ctxs:	an array of the pointers for contexts to stop monitoring
-  * @nr_ctxs:	size of @ctxs
-  */
--int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
-+void damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
+ static void damon_sample_mtier_stop(void)
  {
- 	int i;
- 
- 	for (i = 0; i < nr_ctxs; i++)
- 		/* nr_running_ctxs is decremented in kdamond_fn */
- 		__damon_stop(ctxs[i]);
--	return 0;
+-	damon_stop(ctxs, 1);
+-	damon_stop(&ctxs[1], 1);
++	damon_stop(ctxs, 2);
+ 	damon_destroy_ctx(ctxs[0]);
+ 	damon_destroy_ctx(ctxs[1]);
  }
- 
- /**
 -- 
 2.47.3
