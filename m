@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FC5373BF4;
-	Sat,  4 Jul 2026 18:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293593749F4;
+	Sat,  4 Jul 2026 18:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783188706; cv=none; b=ETHl8xOu9uqN1LLQFPSMOUEQ2wd/JfKXo5TqIGuUe5F0PoiF2EEuAbXQXQZifmEVmWJez/ZxbSWzvEVTgTk/3jMDi2IAL3rIt79wKMWbsGjBSRxZTvwwLq8CUCG9zKDbiT6pRBRUQrTIhYT8ke/fJu/uUrL7nd46LN2JOKmQMnU=
+	t=1783188707; cv=none; b=qZlJQlOA3w3hssWCEnj9wh+220TV55l2vlT4LgeFu62zByhNpDBWUzyTfqynNJmNwcRsNYQhxs9lmYudJoOlGEdKUfQkwTcYFaILJt8+xXakSZIVUGwq7CsehbVr0d3CDXmrdRRJFfm9wKvEXUw+bjR++xPW0bkDsWG2dC2h0xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783188706; c=relaxed/simple;
-	bh=TIkQy7N8bL6SyQuE3dGXOHv2Q7SDqoA/rTDaotYIq24=;
+	s=arc-20240116; t=1783188707; c=relaxed/simple;
+	bh=GcM9WomvUelKQMvW2BzflF22wI+CxMC31EP1q4nla1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8nb5eqIzrp7xfv4XA3VTXW7VQP0kf+vcAk9IVs2mzUgplB+MCtKCxguBBttnj9jo5cylZyslpHsHAVzyL/dThyLDruZ/TywPugZZByKt6His52EgUl2CUirtIwcEEJtWlUdcGn9G9H9WCz2i+KXXuQFyyy4OMQwG3JhQC6+5Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=duHAJKZl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WqtXFcYprn6wOtVWF+1QLnMKA3rGtrLJdYPJyi8k2wLczLEbI3RnZcdfRCfW0f8k9NFQcvK7QxxR+AAnBxRILfEHGMSmCvXrIXLiH1CengWVHvO4HyFMbC8fABnsdScBZa+VcgEu5A1oiWDKVCsqtbO3GEnmH3ksIanzATus86w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dWzj0rNe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="duHAJKZl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A641F00A3A;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dWzj0rNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27D81F00A3F;
 	Sat,  4 Jul 2026 18:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783188705;
-	bh=TjebM2OgtNiNXvN1yKT2/Mbtr9u3LW+BP8Dj45hR6WY=;
+	s=k20260515; t=1783188706;
+	bh=iM2Eb2ExS7GI1ym8vhWA/m10zp74Amrd4zSKSC4zHiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=duHAJKZlRh8gkpSHxn0maVrPXBXWSPe79zTVdhM7vaWgBlJD9LagcfE4p9BIz4lRj
-	 KH0QOm4JOlbtBSUrsIvGIF6ItBYdoFgJ4ynnzpwFPkMlvv/Hte9FpY7/YILYIh6Yo/
-	 S5zLPjKOIeghHHIUcgKQlWDXUqHiFMZctYls4xdc/1JX6CNdiJ0lF0Zdg4FPAA5hnr
-	 4SJ0Mtu6nDovF8gADoKe5OXTirSL6oF92PRXqRsYEKRac1BkvEOyehBLPyomZAaN3U
-	 lmMbcPPQnjYu/BIAkaUvEfF3IfEsD/594oCc0U+ZQdV4Hg0VXZrE6ZO2snpkPr+zo+
-	 EBilMIBxxosNQ==
+	b=dWzj0rNehdXjgnHmvP2SvRyGTlmdNS1ZLdg1+GnC52ueSO4Mm3a8QznUvmieKUZ+N
+	 nsSC0Zfh9MrnVyi8SAq1lxBxNJULRmIWbXkLIXQV6RllnHrsqFZ1udwnYx+CD4W5e/
+	 KiIICcOVC+/p+ObNMHa8hLIPFvD2aCZq7O7oDR5AMlxEM0O3VxZyMZe+xfs7j3Uxxw
+	 mEyiDjSlpeZUabHMNUAkAY9jhMi3Bzyk9IzHw3yk4hYVIr8LDa8f0UnVx+LGPTPlB4
+	 JUkY7RxPUEXuFRZ0YY02FkFwbW9Cp4FdPBujvag7RUtNuII553OMacjjNs9q0URspN
+	 eZ+3IFi3mVmUQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 03/11] mm/damon/core: make damon_stop() never fails
-Date: Sat,  4 Jul 2026 11:11:26 -0700
-Message-ID: <20260704181135.132956-4-sj@kernel.org>
+Subject: [RFC PATCH 04/11] mm/damon/sysfs: ignore damon_stop() return value
+Date: Sat,  4 Jul 2026 11:11:27 -0700
+Message-ID: <20260704181135.132956-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260704181135.132956-1-sj@kernel.org>
 References: <20260704181135.132956-1-sj@kernel.org>
@@ -47,68 +47,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_stop() has no reason to fail.  It returns an error code only for
-possible future changes that can make it fail.  Such a change has not
-been made yet, and this only makes the error handling complicated and
-confusing.  Ensure it returns no error.
+damon_stop() return value is guaranteed to be 0.  Ignore it.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 21 ++++++---------------
- 1 file changed, 6 insertions(+), 15 deletions(-)
+ mm/damon/sysfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 16d9223c33a72..ef40aa44850ff 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1925,10 +1925,8 @@ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive)
- /*
-  * __damon_stop() - Stops monitoring of a given context.
-  * @ctx:	monitoring context
-- *
-- * Return: 0 on success, negative error code otherwise.
-  */
--static int __damon_stop(struct damon_ctx *ctx)
-+static void __damon_stop(struct damon_ctx *ctx)
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index b65651498e0d1..6d7e36c9e509d 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2262,12 +2262,13 @@ static int damon_sysfs_turn_damon_off(struct damon_sysfs_kdamond *kdamond)
  {
- 	struct task_struct *tsk;
- 
-@@ -1938,31 +1936,24 @@ static int __damon_stop(struct damon_ctx *ctx)
- 		get_task_struct(tsk);
- 		mutex_unlock(&ctx->kdamond_lock);
- 		kthread_stop_put(tsk);
--		return 0;
-+		return;
- 	}
- 	mutex_unlock(&ctx->kdamond_lock);
--
--	return -EPERM;
- }
- 
- /**
-  * damon_stop() - Stops the monitorings for a given group of contexts.
-  * @ctxs:	an array of the pointers for contexts to stop monitoring
-  * @nr_ctxs:	size of @ctxs
-- *
-- * Return: 0 on success, negative error code otherwise.
-  */
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
- {
--	int i, err = 0;
-+	int i;
- 
--	for (i = 0; i < nr_ctxs; i++) {
-+	for (i = 0; i < nr_ctxs; i++)
- 		/* nr_running_ctxs is decremented in kdamond_fn */
--		err = __damon_stop(ctxs[i]);
--		if (err)
--			break;
--	}
--	return err;
-+		__damon_stop(ctxs[i]);
+ 	if (!kdamond->damon_ctx)
+ 		return -EINVAL;
+-	return damon_stop(&kdamond->damon_ctx, 1);
++	damon_stop(&kdamond->damon_ctx, 1);
+ 	/*
+ 	 * To allow users show final monitoring results of already turned-off
+ 	 * DAMON, we free kdamond->damon_ctx in next
+ 	 * damon_sysfs_turn_damon_on(), or kdamonds_nr_store()
+ 	 */
 +	return 0;
  }
  
- /**
+ static int damon_sysfs_damon_call(int (*fn)(void *data),
 -- 
 2.47.3
