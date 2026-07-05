@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B525253958
-	for <damon@lists.linux.dev>; Sun,  5 Jul 2026 21:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FD4253958
+	for <damon@lists.linux.dev>; Sun,  5 Jul 2026 21:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783288024; cv=none; b=mEe8znAnVJa+MvPGoneQr1+cMEf5rt5IVqGgt6wNsTJJhAnQPNqBpO83CXMqjqGuBPoJBsPL0A2qLgjDjhXEkhTF7kMIu8tlaQH2IGDdf4Firb18eyIN/I89uHuN8yB3VkejBcGLFRDFy2xyulzgkPUxyjnK9oBGuefSsYqAf54=
+	t=1783288100; cv=none; b=GVN8LVIMF+kd2a6fcnMIX4ToJtYkUZWSgqACBBOCtl6pB1VV8EKoPEb32aMlT4LwH5zxMmenTLg7Sb356oDWjiiGw9jEoemUSWAOyPSxeR0YWE23acJFXLV4z5is17SF95w1ibmJ3eRO2Jq31G1JJdnz2B9MHZNNq6CcSsbAsgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783288024; c=relaxed/simple;
-	bh=Zmxl+NP2sIe5KCskY/bcWHVY9MTf+lzMwBxxwsxV1kk=;
+	s=arc-20240116; t=1783288100; c=relaxed/simple;
+	bh=eIaqD3u5pAfPlIHowPcAmQMxDyl/kjf847VH7fs1AP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EJ5r+/rHyX9X+yW36BWAATC4o7tHCRf94qSFsALFVnRdb26LGNtrl39eiX+EcQi4W+KASTeUHQF8GroQNmLwDaLLIm/kdB90igUlUCLCjnVmXM/yoQdd7PJzV6T/BiyL9N/O7fndqb2wPBP54hsm9zSlvbskK1qhlHBPaIlOpFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWH0KaGg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ItfX5e4vNfHm6Okf0EKFeiq0WKWKbdR9904sLtu3+zyXq0N8sute0Vj/zZTQaz8bPya57sKA0O0Z3wRibk3J2q6T2icpf2Evb5whjM8OdgG2R8O7Ckbd8SBvTGKBUbjG5zgdM07Y6YQct7VzuP3yxxNxsV24Tb+/qxQb6071/lY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MVN0aSc6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWH0KaGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0BB1F000E9;
-	Sun,  5 Jul 2026 21:47:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MVN0aSc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934F81F000E9;
+	Sun,  5 Jul 2026 21:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783288023;
-	bh=7BMzk3qkb5xKj+tRNocL1B59FhWU7FkPOSPg3rn1+IE=;
+	s=k20260515; t=1783288098;
+	bh=mNzk4yP3noFb2V+6i433SyVEafaSDhXrkVmgesU2Zus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nWH0KaGgZFItsgaQIC5ReJQrNwpn0rFjcEriqC7pjDZw1kL2wZagWFcmlhGKII8RK
-	 rfSmOOCsQ4uasY5CxCGMHesyJ+xqJmPzK8AigevmZUT4E5pnlqtxEGZDvIlxezLd5L
-	 c6eNJhaIY7JnuFpT1WwdDXmbNv9R3lKXGStSO0Zglvu4ueWuEwr33SutPDHHIttNex
-	 Gsk70RE1cP9svsVbdzlObFEaliXEN4eeahUNz2Sd3hKuOIiqsGWb27hB5YOmDvFMjk
-	 pGJ/ifJt2N8UqSqqpI7ezJ+D/Ts5uGa1E579lgO435zWcUlmHUFH8JIh+thQKcDs0Q
-	 y0WLcAQkZHLVA==
+	b=MVN0aSc6FaT2isXW59riJqplSpl1bhti5eTTAcikG9joaIjdEr9GHCsAbk5bpmcIa
+	 d1gmKWvHAUaeGfKLZeg4td62KOdBpfGvFwFBC/vgmljzijBxxHXIQr0VnVKHtZIz8F
+	 YlLJ707F8LtVgeMEaPSW9kMYXOZfvWPJQUGCj0xYu6WvvtAvAnrALSEMaMTn35J4j9
+	 2TsbHxVo8E7ItdcGO8Q9MzbyugU/okoJ8+dqyDa7E9n58pc2iIwAKqwHH9vT/mZKP1
+	 P9wJaGS0RWCxHj/FuzQ0YhSTbBEavRixByr/htuFwJL1tMhc/zYtmKQfd7RosyYr0R
+	 An0vm+PrWBNVA==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 14/16] Docs/mm/damon/design: document attrs-only monitoring
-Date: Sun,  5 Jul 2026 14:46:53 -0700
-Message-ID: <20260705214655.101264-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 15/16] Docs/admin-guide/mm/damon/usage: document weight sysfs file
+Date: Sun,  5 Jul 2026 14:48:10 -0700
+Message-ID: <20260705214811.101516-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260705210519.D99B51F000E9@smtp.kernel.org>
+In-Reply-To: <20260705210706.C09271F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,69 +45,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 05 Jul 2026 21:05:19 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 05 Jul 2026 21:07:06 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Spelling mistakes in the newly added documentation: 'deeecided' and 'mechaanism'.
+> - [Low] Misspelled word 'atttributes' with three 't's in the added documentation.
 > --
 > 
-> commit 802f6df741c5d3bfcb1ed21eadbf33ebee4db496
+> commit 0678cc4de62904aa4e60ad181dd2e6c07336bf2d
 > Author: SJ Park <sj@kernel.org>
 > 
-> Docs/mm/damon/design: document attrs-only monitoring
+> Docs/admin-guide/mm/damon/usage: document weight sysfs file
 > 
-> This commit updates the DAMON design document to include a section
-> describing the data attributes-only monitoring mode.
+> This commit updates the DAMON usage document to include the newly added
+> probe weight file.
 > 
-> > diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-> > index 457d6e8bc7878..67398e2133036 100644
-> > --- a/Documentation/mm/damon/design.rst
-> > +++ b/Documentation/mm/damon/design.rst
+> > diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+> > index b2649ea011f93..4515088eba968 100644
+> > --- a/Documentation/admin-guide/mm/damon/usage.rst
+> > +++ b/Documentation/admin-guide/mm/damon/usage.rst
 > 
 > [ ... ]
 > 
-> > @@ -316,6 +316,26 @@ Another way to do this for higher accuracy is using :ref:`DAMOS filter
-> >  information in page level.  But, because it is operated in page level, the
-> >  overhead is proportional to the size of the memory.
+> > @@ -286,6 +287,10 @@ In each probe directory, one directory, ``filters`` exists.  The directory
+> >  contains files for installing filters for the probe, that is used to determine
+> >  the data attribute for the probe.
 > >  
-> > +Data Attributes-only Monitoring
-> > +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > +
-> > +Data access is the primary monitoring information for DAMON.  Hence it
-> > +:ref:`adjusts <damon_design_data_attrs_monitoring>` regions using the access
-> > +:ref:`counter <damon_design_region_based_sampling>` (``nr_accesses``).  In some
-> > +use cases, however, users may want some of :ref:`attributes
-> > +<damon_design_data_attrs_monitoring>` to be the primary information.
-> > +
-> > +Data attributes-only monitoring mode supports this use case.  For the mode,
-> > +each attribute probe has their priority weight value.  Users can describe by
-> > +what combination of the attributes the primary information is deeecided, by
+> > +Each probe directory also contains ``weight`` file.  Reading from and writing
+> > +to the file gets and sets the :ref:`atttributes-only monitoring
 > 
 > [Severity: Low]
-> This isn't a bug, but there is a typo here: "deeecided" should be "decided".
+> This isn't a bug, but there is a typo here. The word attributes is misspelled
+> with three ts.
 
-Good finding.  I will fix this in the next revision.
-
-> 
-> > +setting the priority weight value.  If the total sum of the weights is not
-> > +zero, the mode is enabled.  The regions adjustment mechaanism uses the weighted
-> 
-> [Severity: Low]
-> This isn't a bug, but there is another typo here: "mechaanism" should be
-> "mechanism".
-
-Ditto.
+Good finding, I will fix this in the next revision.
 
 > 
-> > +sum of the :ref:`probe hit counts <damon_design_data_attrs_monitoring>` instead
-> > +of ``nr_accesses`` in the case.  When the mode is enabled, access monitoring is
-> > +automatically turned off.  The access counter (``nr_accesses``) will always be
-> > +zero and not updated.  Hence the mode is called Data Attributes "only"
-> > +monitoring.
+> > +<damon_design_attrs_only_monitoring>` weight for the attribute of the probe.
 > > +
+> >  In the beginning, ``filters`` directory has only one file, ``nr_filters``.
+> >  Writing a number (``N``) to the file creates the number of child directories
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260705205743.98656-1-sj@kernel.org?part=14
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260705205743.98656-1-sj@kernel.org?part=15
 
 
 Thanks,
