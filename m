@@ -1,82 +1,83 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8123ACF18;
-	Sun,  5 Jul 2026 20:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72C1369D4F
+	for <damon@lists.linux.dev>; Sun,  5 Jul 2026 21:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783285082; cv=none; b=YRx4Xo5ME0+/mRsMEjkq8fIvN0M6aLCrv/dkDxdBQIZZb2Mg21Iky+zqxKZFK/feqIl5746zp3wYA0ho2TgXnZVy6TzOxDF/kn1rTiIfmxtH8HOL/J9dzLdxLoLJLTF9FdaBIfGPaZrXS/khmnJSv/eFlGFo//DBAUQJLg9Kevo=
+	t=1783285495; cv=none; b=eM3KLIjws99ha0GJzC8F9a9R2dxBdX6E4Yk+d0hwlIIkKOodA6lMuVA8brR/GXGkursBlv9M6FZ/V8QwZ4pNBok606hbKs+qNPqKQtQe1vKwfFVIEvnSJyFHlgA4bTeOIsLpE0nitGUhTYTw2sgRuZSdJECDLV6uZrZgBafV4Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783285082; c=relaxed/simple;
-	bh=76Ms7lr2E1n8a9s5BVP9BtK3Clv9+dktfC0KcnJw1zo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=McRV11bVTQPODBv1AxhPqM2Xbp+u8Jfw3lOVv3CdpRO+T8HJr1ninOuh+FekKVRUeMn8B407JSpUUc1pPICl09jKzgKh6izAd9mrqf5PIHGiJBLYK6LtbP2RY+QpPnAN8MgvCuQK2zPbjQo1zO2CoBTnQgD0fTCZqU2UI/gmpfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gTMI8lp6; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783285495; c=relaxed/simple;
+	bh=SBECTHNB4zUMKv7MPAurpCxt9NENVzDpwYnt0kTts8s=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=CEP3PAXmtqLh6bILqWKIayYZl11k81Z2T+mmZs/Dme99S9QfHNg9uVFgU1jafVNJxX6emYpNt9bzSu8ZcG3GMjd97QP5my+YgG19AR60qi30rJPp4kZgN3rq1AeUVPLFhFsSaw4wgdBGg6JOWgeTKBtwhXW9pHthmiIyXs86R3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=loIMeiZR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gTMI8lp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EBB1F000E9;
-	Sun,  5 Jul 2026 20:58:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="loIMeiZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FC51F000E9;
+	Sun,  5 Jul 2026 21:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783285081;
-	bh=KtGhb2uuQghnzvwRekFMe5vHCrkMdKOrMY5ghfXYhj4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gTMI8lp6qATBOVzhhoeE1r8uORiBxuX8LinFw2RoVESlZwD2Cdg2pNSXqElTaOXvC
-	 ZKOsV4icBCeUUaEpYlKbkEHAt9kRboadz1Gg1gwV9q29aiS3bB0B192nnnii7v05ru
-	 NCUGnJg/Ocwpz2QEzhRBThu6ldXWPFsLPn92Dwyi9udCOLwgnEG0TZZeTxkxk4LV5e
-	 UFOm3Ukxt1ugPLyEAYrPeKDQEZMoHSKDBQri5xq3BIyzN2FcptiMT/q0lyQHL2atVy
-	 KHrRUS4FIDKeRih0/LZmHQ6Jii9S3cRoinpTgJED/7p0IS6UI3IWpsShcpuKfQQ1BL
-	 S+xCDs2A2CN1g==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 16/16] Docs/ABI/damon: document probe weight file
-Date: Sun,  5 Jul 2026 13:57:38 -0700
-Message-ID: <20260705205743.98656-17-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260705205743.98656-1-sj@kernel.org>
+	s=k20260515; t=1783285494;
+	bh=3SySlFZr8twNYUH4jC3MGlUIOHqoBJnZHSGcQ+WezaE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=loIMeiZRq8t6bg9JuK+xijD3QPw3eby/qWse9jOWlkL6UDB2fM+QGBxG6zK/sN6Gu
+	 1mr/Pn+S5S1Et8bqLvV/DFZ/tB0vTmpiMYOw+D/8ovsYQi4jDRwYbyxL3nDUnQv3sT
+	 /4W0/O8csF2T5QAHV1azc+I2z8ULH7Ag1YSA1BNbUq9FSYWeMkTr4Af7Mh/qCJJL3N
+	 cZc3eWAkO23Pksjin4olRmQxVHOOufGptlDohl0Ez3lQzrAtGWJV7ejOySOirjasVp
+	 yzp/1VnFaFnpkb3CA1vqh7vlplHekKO8/9RvA0z4C+4/eHYjkXbwT++MGtrjnp4NTZ
+	 NnAX0AZV4uo3g==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH 01/16] mm/damon/core: introduce damon_probe->weight
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260705205743.98656-2-sj@kernel.org>
 References: <20260705205743.98656-1-sj@kernel.org>
+ <20260705205743.98656-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 05 Jul 2026 21:04:53 +0000
+Message-Id: <20260705210454.34FC51F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Update DAMON ABI document for the newly added probe weight sysfs file.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] Missing kernel-doc description for the new `weight` field in `struc=
+t damon_probe`.
+--
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 6 ++++++
- 1 file changed, 6 insertions(+)
+commit 4be82423c8a2e9beb3264e298ab3af6bd580eea9
+Author: SJ Park <sj@kernel.org>
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index dd6b5bd76e119..907a504fb64c5 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -164,6 +164,12 @@ Description:	Writing a number 'N' to this file creates the number of
- 		directories for each DAMON probe named '0' to 'N-1' under the
- 		probes/ directory.
- 
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/weight
-+Date:		Jul 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Writing to and reading from this file sets and gets the
-+		per-probe attribute weight.
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/nr_filters
- Date:		May 2026
- Contact:	SJ Park <sj@kernel.org>
--- 
-2.47.3
+mm/damon/core: introduce damon_probe->weight
+
+This commit adds a new weight field to the damon_probe structure. The field
+is used to specify the degree of the API caller's interest in the data
+attribute of the probe.
+
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 616bdf0954b52..257a4769296ab 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -763,6 +763,7 @@ struct damon_filter {
+>   * @list:	Siblings list.
+>   */
+>  struct damon_probe {
+> +	unsigned int weight;
+
+[Severity: Low]
+Should the kernel-doc comment block above struct damon_probe be updated to
+include a description for the new weight field? Without it, running
+scripts/kernel-doc might emit a warning about the undocumented field.
+
+>  	struct list_head filters;
+>  	struct list_head list;
+>  };
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260705205743.9865=
+6-1-sj@kernel.org?part=3D1
