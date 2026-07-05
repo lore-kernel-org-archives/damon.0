@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922F826ED37;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A7D2BEFFD;
 	Sun,  5 Jul 2026 16:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783267316; cv=none; b=lvjDJTPpW8QeeowgIlKwFZJ35hpu2Mk5MmkalJ4S9hxvKZNCmwfPgaQObnqqF/RLP8+nynE1tD+vjSKp51NoToO2Xy8TlTrSwygeCXwWL0TUjlAQrAsAHe9fWWSXguzxLRKM12P0ELarOLWEETnl0J01vrmOYw4J2IZwCuFp56k=
+	t=1783267317; cv=none; b=PjlXiGlWUQOPFdtGsIL5bwiwN24vZpMpwwNC5CAXySCn6CvKcTyIVXA1F8E5pKhLl28hrD2Xb6PfbHsbaqteyot7jjL7frrD4XM0QiqWDpohfr2HdBctz75ab6MLB+v954exotxDkF7NITYCubzii7tZyG4Czc0ihOiCb670xGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783267316; c=relaxed/simple;
-	bh=lPK2d6dABp5xJhyP1SmYkyJ2enrHAy+L6wm1OON1zZM=;
+	s=arc-20240116; t=1783267317; c=relaxed/simple;
+	bh=HJQcidpUpSoaFDrjW7LdUf/3O9Ylf2kc/fs9bqgKr3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHftkF8Jv86UVqP7LDMzYJdjFV11wVp6nDn2suKERlclIhgSmhE3e4beT0tqLkMbGAgWb0g79dFaZ85SKqvtk4pTvVO1wKKdEmPyA4cWWG7JL80t7G0ttYDX+Z41suAptuGN6LFf7l7DVXucilbbWHA+d8xxep1U7qr6YUwlMtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j44vOO7k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B10KApQYblu//3wSRlvI/S3tWIRnF2Pz2tmrEgMJ5TH1I5IgwhKQgcZB5dvvvp5+Q/O3TOtRZJjWLPIRf4aXjNKIVDajfLTV6KgYV8nW79nL15oXA1fDnrXpPrEp44Ur2zPsaAg8kIkkbQCQR9jm8OKZoIXW9FQWr52fDXEgga4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TW3jYsUn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j44vOO7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E79C1F00A3F;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TW3jYsUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3F41F00A3D;
 	Sun,  5 Jul 2026 16:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783267315;
-	bh=uJKL9EayamVjhe1Npp/S+XhWMj93f4Odi2+yyGbNAgU=;
+	bh=d/v/dE+FlmtwJgj5yRteS0MOxCozSQuxW5M8Uj1RzSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j44vOO7kQjAviWEITHTfruBjxIkGUmjYfFahmebFenaPcWLmgkypq6CaixJw48xUk
-	 gT1udXlgeWutyObvHy7QbGSjS+wcn7PnmNPC9c3pCpCj1MCDFaT9tGGuPki2S7I0Oj
-	 ddfYPk4BIrkS0WWa7u6xC+gfEwGVngGKk7W9/QCI20/21I5FW6K6HZQi3ScLpCpfqv
-	 FoLvcVTwHIbKDFwte9mzin7gLhSp+77/tMRVGJSDUHZ0LVzjaUsko9SuB/bCKZsD0Q
-	 qw0aFibpXm+5R9YGdGnLYsWF9Kl3reDBs/+RgJagFZbhYq28OjlWWOkXg/dir5/9DA
-	 u46JbaVm/b7ww==
+	b=TW3jYsUnmaIGxOT+B9VeJzZobrosiaK2eLvMXlwywcCygVzqc/gMMSTKxzwIN3ap/
+	 oRVVZEPnGJNJX8fHf2cRL2F6Sz5vqP/6NycQonk3kUS/iAIoqvQcdr3M9x1eBsiWLZ
+	 ORVfD85j2H0NKv1K4oc6wh0B55C3ZUQleqEfKNUZT1cT9eyiio9GgyAhOwvtddVJjb
+	 PFc8eGzR/nWVr0LhGbLSU8tD7rZM/8fL4ICAwF4PbHZxL6a0eTB2M8m1ZooaGqus1e
+	 x6Kh8IdkjnLbM9H7leZGgG7VTetv/iRNyF5TMceYsn2PayU0AQJaU4+o92rAx8Wpo7
+	 50V3wD0vaod2A==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 10/11] samples/damon/wsse: do not stop ctx for damon_call() failure
-Date: Sun,  5 Jul 2026 09:01:37 -0700
-Message-ID: <20260705160142.97308-11-sj@kernel.org>
+Subject: [RFC PATCH v1.1 11/11] samples/damon/prcl: do not stop DAMON for damon_call() failure
+Date: Sun,  5 Jul 2026 09:01:38 -0700
+Message-ID: <20260705160142.97308-12-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260705160142.97308-1-sj@kernel.org>
 References: <20260705160142.97308-1-sj@kernel.org>
@@ -53,15 +53,15 @@ own.  Remove the damon_stop() call from the damon_call() error handling.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- samples/damon/wsse.c | 4 +---
+ samples/damon/prcl.c | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
-index ff5e8a890f448..37fd5da201588 100644
---- a/samples/damon/wsse.c
-+++ b/samples/damon/wsse.c
-@@ -93,10 +93,8 @@ static int damon_sample_wsse_start(void)
- 	}
+diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
+index edeae145c4a8a..842099bd62286 100644
+--- a/samples/damon/prcl.c
++++ b/samples/damon/prcl.c
+@@ -113,10 +113,8 @@ static int damon_sample_prcl_start(void)
+ 
  	repeat_call_control.data = ctx;
  	err = damon_call(ctx, &repeat_call_control);
 -	if (err) {
