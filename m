@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383A129B766;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922F826ED37;
 	Sun,  5 Jul 2026 16:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783267316; cv=none; b=gSSZwybbR5hmK0/KlN/+KWBCw+sVmSgYTdlwiw4Ct57ICRMiY2CE6d1YorSMhekOVsUih2GKhlWtKe1nAqDkmQupOZW/5a7erLi6vTPTEGsG5xM+BcaTt6FA97DlVzvHKsnV7n40e0oTGj6c+b36pYN3uZKuMfbvWit2+KHMYlk=
+	t=1783267316; cv=none; b=lvjDJTPpW8QeeowgIlKwFZJ35hpu2Mk5MmkalJ4S9hxvKZNCmwfPgaQObnqqF/RLP8+nynE1tD+vjSKp51NoToO2Xy8TlTrSwygeCXwWL0TUjlAQrAsAHe9fWWSXguzxLRKM12P0ELarOLWEETnl0J01vrmOYw4J2IZwCuFp56k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783267316; c=relaxed/simple;
-	bh=hsps4kp0iyx9VZBNJp3v8TVLhzkGxP8sojUovOZB7wM=;
+	bh=lPK2d6dABp5xJhyP1SmYkyJ2enrHAy+L6wm1OON1zZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EQ99PJZlJveam2ixOzrl42CAWGDeRKP+vWUCR8tReI5HUNGF4Pia3Jqcl2IZucuqjNmezEc0SAgWACCJzNmfga4rGnenupGqI5penEUzmDSQl45P2CzOX0M11T1hajUO9TtMAP5SGcdj7d85oppZJHUs8/vZB4SdfPfVKjTIOzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UbbfNJdB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gHftkF8Jv86UVqP7LDMzYJdjFV11wVp6nDn2suKERlclIhgSmhE3e4beT0tqLkMbGAgWb0g79dFaZ85SKqvtk4pTvVO1wKKdEmPyA4cWWG7JL80t7G0ttYDX+Z41suAptuGN6LFf7l7DVXucilbbWHA+d8xxep1U7qr6YUwlMtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j44vOO7k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UbbfNJdB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17A11F00A3A;
-	Sun,  5 Jul 2026 16:01:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j44vOO7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E79C1F00A3F;
+	Sun,  5 Jul 2026 16:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783267315;
-	bh=3RIw27JTOSTlyfe8cMjSamOtT4EJIBcA1pGfiTgLcPw=;
+	bh=uJKL9EayamVjhe1Npp/S+XhWMj93f4Odi2+yyGbNAgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UbbfNJdB8QIuJ/3bBGJ0IeV1eniGxVgfpuuHEutH/bF1qVLpFVgwRADWGbOiqhvd7
-	 1OB4UcSonjLJkmfzbGKdMsgu1d7yYjXDx7mDMkt95e6HY/0i4+2KwXAM/WuOPVHUEz
-	 oiJJMoKYRt+FMz04uYPXox1egQGQ4uuJJuUWfCSDJoFnA3jbr6qxAyYFDOZEoloOpM
-	 yjRHswNIM6iSr7WmPtoYCF7VMP0QvsV9ePlgaayEJMiRsw4pn07+6u2l5g6hUgDCAQ
-	 WvC8lWeK1RQ8vyKzO2B36xFec8f7BeykQne1qV/Jb84Fx7/G39NhdtW4r7iarM5zyX
-	 gIyX3xEttj95Q==
+	b=j44vOO7kQjAviWEITHTfruBjxIkGUmjYfFahmebFenaPcWLmgkypq6CaixJw48xUk
+	 gT1udXlgeWutyObvHy7QbGSjS+wcn7PnmNPC9c3pCpCj1MCDFaT9tGGuPki2S7I0Oj
+	 ddfYPk4BIrkS0WWa7u6xC+gfEwGVngGKk7W9/QCI20/21I5FW6K6HZQi3ScLpCpfqv
+	 FoLvcVTwHIbKDFwte9mzin7gLhSp+77/tMRVGJSDUHZ0LVzjaUsko9SuB/bCKZsD0Q
+	 qw0aFibpXm+5R9YGdGnLYsWF9Kl3reDBs/+RgJagFZbhYq28OjlWWOkXg/dir5/9DA
+	 u46JbaVm/b7ww==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 09/11] mm/damon/core: wait ctx stop in damon_call() before reruning an error
-Date: Sun,  5 Jul 2026 09:01:36 -0700
-Message-ID: <20260705160142.97308-10-sj@kernel.org>
+Subject: [RFC PATCH v1.1 10/11] samples/damon/wsse: do not stop ctx for damon_call() failure
+Date: Sun,  5 Jul 2026 09:01:37 -0700
+Message-ID: <20260705160142.97308-11-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260705160142.97308-1-sj@kernel.org>
 References: <20260705160142.97308-1-sj@kernel.org>
@@ -47,56 +46,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_call() failure means the DAMON context started its termination.
-The termination is asynchronously done in kdamond thread.  The caller's
-error handling should handle the race, too.  It is complicated and easy
-to make mistakes.
-
-Update damon_call() to ensure the context is stopped in the case, by
-waiting until the completion is confirmed.
+damon_call() failure was causing the context to be stopped, but
+asynchronously by the kdamond thread.  To handle the race,   the caller
+had to stop the context.  damon_call() is updated to do the stop on its
+own.  Remove the damon_stop() call from the damon_call() error handling.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ samples/damon/wsse.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 08510bf9b38da..390e00b3685ef 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2010,6 +2010,8 @@ int damon_kdamond_pid(struct damon_ctx *ctx)
-  * @ctx has succeeded.  Otherwise, this function could fall into an indefinite
-  * wait.
-  *
-+ * When this function is failed, the @ctx is guaranteed to be stopped.
-+ *
-  * Return: 0 on success, negative error code otherwise.
-  */
- int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
-@@ -2022,7 +2024,7 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
- 	mutex_lock(&ctx->call_controls_lock);
- 	if (ctx->call_controls_obsolete) {
- 		mutex_unlock(&ctx->call_controls_lock);
--		return -ECANCELED;
-+		goto canceled;
+diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
+index ff5e8a890f448..37fd5da201588 100644
+--- a/samples/damon/wsse.c
++++ b/samples/damon/wsse.c
+@@ -93,10 +93,8 @@ static int damon_sample_wsse_start(void)
  	}
- 	list_add_tail(&control->list, &ctx->call_controls);
- 	mutex_unlock(&ctx->call_controls_lock);
-@@ -2030,8 +2032,14 @@ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
- 		return 0;
- 	wait_for_completion(&control->completion);
- 	if (control->canceled)
--		return -ECANCELED;
-+		goto canceled;
- 	return 0;
-+
-+canceled:
-+	while (damon_is_running(ctx))
-+		schedule_timeout_idle(msecs_to_jiffies(100));
-+	return -ECANCELED;
-+
+ 	repeat_call_control.data = ctx;
+ 	err = damon_call(ctx, &repeat_call_control);
+-	if (err) {
+-		damon_stop(&ctx, 1);
++	if (err)
+ 		damon_destroy_ctx(ctx);
+-	}
+ 	return err;
  }
  
- /**
 -- 
 2.47.3
