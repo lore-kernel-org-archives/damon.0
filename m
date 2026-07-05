@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A4826B95B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B5B2773F0;
 	Sun,  5 Jul 2026 16:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783267315; cv=none; b=GL6n6EV5BgncPNn46PAwef8sGi6GejIPdbgXbVqUc1REvU/UJXbZAIBZ2TzaIcF8mfHodiz9OYheTADqsVp4fCgdz/FZoidPffE4S9Lh8NkpIulkPkCFkuvReRG4x9Df0+bqlrF4fdJ3gTrU/ACmIZxi/XA3fqCG6KnSBaj3FJQ=
+	t=1783267315; cv=none; b=UXoIoHuob8bdsav6+ZxJpFc96N1M5fTowQgnAm/iDZM/+MIfJUpbnp0+0ST3fYKtB6BgpGnLyA0ERek6M/UgkI+gr/ZJIgGZA7fsxuWgdPd6Rlb73QzN6mIrcov+p4AsHzoVz83cL+sRZodZDaJHVbKctrxQwhpTWIAurzXy9lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783267315; c=relaxed/simple;
-	bh=zw18eCF9o/kXw8UfeN/aNgCviJlDOibZN7c7tPL19WA=;
+	bh=qA7aEmWvsXlBb5CZ0t0+ivvSN/TApACptnrIMsBXxj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fyeY9V3adfaC6sCzAwP7dxmbgzQcg8Mj4kurttA5mbRTsoF2phM2/4H2HvVMAUr1hJ0gQRxMiZsr9xjwGlibg4tA/sf1ixLgFFa5cFKYrXARg+6wZnbtsLFNqb769jl/OI/3nGXctGxE9tI8p9iQsa0I5YcTkNZYc9Uz12HZ3Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ROAUPDnF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HOugKlfzA8bP/Tx+iEtxMHfLja7JFYQbPSJVOFfBKE/DzI5n8vQKlevJ7B0iq88fX369O+PA4tyfqn9/OV0PKClItsXudslc9ouTInYm3RXwCwvr/lBGkVLxPMdtZBLl9tcy6IsWAAaw9E6cYcJrcgkhz9PjhOQLP3yzW/Tv5V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eSIXgO6Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ROAUPDnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E1D1F00A3D;
-	Sun,  5 Jul 2026 16:01:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eSIXgO6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4131F00ACA;
+	Sun,  5 Jul 2026 16:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783267314;
-	bh=XifFyfJolobUF4kXii9SDmtvZzvIFxqywQe1D4fl4uA=;
+	bh=h+1wlgb4/vhq8hic6IHVay1RAoaGPrWWDyvHtZVfeMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ROAUPDnF7g0SVKc8EEVwSnzosmZw/JCYYDGP+2yL4GZHCFn/CEjsT6WKOgsdKyfJG
-	 1gFiY4VHLhDHqrDYFMTGv1G1Pnx8bIdV30W2Y+ep5A7sU4LYSYeZQioRr6kRczBfTo
-	 q+3KKsd2uX3MqVJhWnaEgHJ9vJ7d81HZSUr+UYj3B4jlkXWLYF5yftLsRul+BSQQQe
-	 behg0MoGVRcygHTV7U7lSsRMUJSq0Ni1LpV7jWyW3FL9ePZUOyFPTHpCoFy4iD9auC
-	 /NuqYH4YDk7w1ycxwIgipgPvywioO6TxJT61autgeR9MfxQXIw7XpscQ95W3/EAvP9
-	 QtFzJQ26E9PIw==
+	b=eSIXgO6Y39Jn3yR6Y83ITTi34aztQHPintIirt4pPS/K8UusGSbAGwLRqq2nXXiZv
+	 KNToG+R5NR2v4tu+Hk2nDZF4kcL+MiopcqTNx9d1JxORowFWmPFO/tAZGvk0k52lP6
+	 C0rTf4Sf9jN1RwfUaCxBnFu3Uoeq/DZwaK5kgMvDTs8oq9Gjg+LU23WrtuXhHn6Rzl
+	 rgk3Mjrpp/Y7jgTI8V52UzyzoaLtaVZe86VEhQV8/+CYNHGp1QvYs6jxosj3zxtaHo
+	 Hz8GyXpoDet0mPXcIMaYvqtuNDNMl4ruAbSpDkwk3sjopnz0B5jAidTGvJeMndamGe
+	 f1tOVzfCIyBXQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 06/11] mm/damon/lru_sort: ignore damon_stop() return value
-Date: Sun,  5 Jul 2026 09:01:33 -0700
-Message-ID: <20260705160142.97308-7-sj@kernel.org>
+Subject: [RFC PATCH v1.1 07/11] mm/damon/core: change damon_stop() return type to void
+Date: Sun,  5 Jul 2026 09:01:34 -0700
+Message-ID: <20260705160142.97308-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260705160142.97308-1-sj@kernel.org>
 References: <20260705160142.97308-1-sj@kernel.org>
@@ -47,29 +47,47 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_stop() return value is guaranteed to be 0.  Ignore it.
+damon_stop() always returns 0, and nobody cares.  Change the return type
+to void.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/lru_sort.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/linux/damon.h | 2 +-
+ mm/damon/core.c       | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 2dd0cd0d26273..e8c389ad3226f 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -409,8 +409,10 @@ static int damon_lru_sort_turn(bool on)
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 2661231c0ae82..19b7e839bde0b 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -1070,7 +1070,7 @@ static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs
+ 
+ bool damon_initialized(void);
+ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
+-int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
++void damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
+ bool damon_is_running(struct damon_ctx *ctx);
+ int damon_kdamond_pid(struct damon_ctx *ctx);
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 84e400aa4e823..08510bf9b38da 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1947,14 +1947,13 @@ static void __damon_stop(struct damon_ctx *ctx)
+  * @ctxs:	an array of the pointers for contexts to stop monitoring
+  * @nr_ctxs:	size of @ctxs
+  */
+-int damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
++void damon_stop(struct damon_ctx **ctxs, int nr_ctxs)
  {
- 	int err;
+ 	int i;
  
--	if (!on)
--		return damon_stop(&ctx, 1);
-+	if (!on) {
-+		damon_stop(&ctx, 1);
-+		return 0;
-+	}
+ 	for (i = 0; i < nr_ctxs; i++)
+ 		/* nr_running_ctxs is decremented in kdamond_fn */
+ 		__damon_stop(ctxs[i]);
+-	return 0;
+ }
  
- 	err = damon_lru_sort_apply_parameters();
- 	if (err)
+ /**
 -- 
 2.47.3
