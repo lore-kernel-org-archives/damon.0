@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5751226CF6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0093225791;
 	Sun,  5 Jul 2026 16:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783267313; cv=none; b=dIl6gs34hN6P4OTXLS9IgGWB0sfuoZarcyOsIgvnBfqw28+S6Lhh3FgDZYXBBSbLEG6fQ2gyQlwgnQCAp8My/jHrzdMGgLnORU562s7C7AF0GPDaxj+LHHjEyhR0b4ukEGthy22dCgkFQ/g9ovLvMLA/DvRz4tK5aZx7wlCD7VA=
+	t=1783267314; cv=none; b=RjdP/syUa7ybCq5ygr/PEh7sk2nO41J/XuNd7uwrwb+Q7qIa6vrfqoJmJBM83iSKVCf7p18mSFzCDe976usC0IrB9kaYODmTAVSWG4cOUctm1lvczxPRcldZH4uvI5gWmr/DvVF0/52uJCt3FHZN6kV6uh7GBZC7EFgkgNe7UW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783267313; c=relaxed/simple;
-	bh=2GgULBFQpYDO6EvdC9vnTe3kQ/SAYL9X8uFLgsMgTWA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cca00ujV4cJffyWyoEHSfEJJokUh8cynko0FRGft3AaVRAPeNFSqhsRRkQ8IBpPA1JttMX57xj7QjZ1C7cftRHfTqZkkdhhzJ0U/HFcFlbrvJhx8S5Wx31lklgd2GblSJzFfSHuv/QN6tIMgS5VrS8sv0TRDRk+4ckQL4YD+m7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h74txumM; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783267314; c=relaxed/simple;
+	bh=nnpzAiu7fmMn5MWXUD1UtEgySfqfDzYdrpsL5HH2dJk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TAyUazNklbfmH7VqZFgZ1gCiRoCvyInvEUHb03tR8hPctrKEem6oBNLN+houRLi3lrUILrvYyCePBUm/9HrUIRAE+U/LjNu/nq8C1pSnnMV9ByWzxbTCYqGF9fvxZMMbNKDz0qP2+Ahw2EFVCIhjGFMUA+N5rh1Qtl5DanpKjTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SR0lMN6f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h74txumM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5ED1F00A3A;
-	Sun,  5 Jul 2026 16:01:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SR0lMN6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A951F000E9;
+	Sun,  5 Jul 2026 16:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783267312;
-	bh=D62Tcr+yrJC0pq2paze4YieMWP4BsC6k5oHO7N7uukw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h74txumMZpI38qJ+8ds0UgfG76kuq4dBZvZsG8oRgWixjR2ioLpnk9v+4nwkRD6/u
-	 Xz/1eZvdTrwXEp4IMCyTg+Ggi1TtktKm8ks1QKoC9z991+u0bmNKeUBV4H9899SevI
-	 AvbqFRnI03L6MGvKzOOwd+oGm8Wl8BzFMqwDcAsJsGL1EmfNaZAlib9Jb6ss9RQc9Z
-	 4jgwI3zptmWQHxcDStl4E6VnC8qxhFVemG0rk/VVMHifvZPrtr/7NMoWTn8LmwJZD2
-	 fNC4kU9jX8zspaQJ5CiwwClmIXnyRx2e/jwfzE7t2PZNPW9Bfsh/hug1pgWx/QR4ue
-	 BJOlbYx5UQPLg==
+	bh=1W0z3ibNTBH982L2YdX0/4RM6hemskh9KnNpifQK0MI=;
+	h=From:To:Cc:Subject:Date;
+	b=SR0lMN6flT0EFxpBZ+36fDvNVXyyKnZiHs1cFMhGevOEAQItisttVNkv+hCDi2sB1
+	 1QIKMFuyhQCnDomigvHYhGY/9qB6ZLJPb28KnkILt/bPc28v4Kq0i0QKZ+S5gVvavV
+	 DNbi0/qjtRSoEUxKgNkf16iiSDv9SZSlHkmD8IlOwm79itg2LlUn+GuNg0HBwzNRju
+	 HfyGNkPOqXrpR1K2RGRJPCEYqGDUjFPI6Jz5TtRZcgRHg1NhcwZKcj4QQyVs89hcKs
+	 YukTjrc8/izh557fMzIcOtwC16xblaHyQMY7god6HFUBodM3PajgMha8AXoA+NQrFT
+	 6b6fvUeVlkgqw==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 02/11] samples/damon/mtier: do not stop first context for damon_start() failure
-Date: Sun,  5 Jul 2026 09:01:29 -0700
-Message-ID: <20260705160142.97308-3-sj@kernel.org>
+Subject: [RFC PATCH v1.1 00/11] mm/damon: refactor damon_{start,stop,commit}() for simple error handling
+Date: Sun,  5 Jul 2026 09:01:27 -0700
+Message-ID: <20260705160142.97308-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260705160142.97308-1-sj@kernel.org>
-References: <20260705160142.97308-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,28 +44,65 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_start() was able to fail while keeping the first context running.
-mtier hence stops the first context in the case.  damon_start() is
-refactored to avoid that.  The error handling is no longer necessary.
-Remove it.
+damon_start() and damon_stop() could leave a few of requested DAMON
+contexts running when they return an error.  damon_commit() failure
+stops the DAMON context, but in an asynchronous way.  Callers should
+stop the left-over DAMON contexts.  It is easy to make mistakes, and
+indeed a few bugs from such mistakes were found and fixed.
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- samples/damon/mtier.c | 2 --
- 1 file changed, 2 deletions(-)
+Refactor the core API functions to guarantee contexts are completely
+stopped under failures.  Remove the caller side error handlers that are
+no longer needed due to the refactoring.
 
-diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-index e567f4edd80ea..90881e8bd441f 100644
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -193,8 +193,6 @@ static int damon_sample_mtier_start(void)
- 	if (!err)
- 		return 0;
- 
--	if (damon_is_running(ctxs[0]))
--		damon_stop(ctxs, 1);
- 	damon_destroy_ctx(ctxs[0]);
- 	damon_destroy_ctx(ctxs[1]);
- 	return err;
+Patches Sequence
+================
+
+Patch 1 refactors damon_start() to ensure all contexts are stopped for
+failures.  Patch 2 updates unnecessary damon_start() error handling from
+mtier sample module.
+
+Patch 3 refactors damon_stop() to always success.  Patches 4-6 updates
+callers (damon_{sysfs,reclaim lru_sort}) to ignore the return value.
+Patch 7 update damon_stop() return value to void.  Patch 8 simplifies
+damon_stop() error handling in mtier sample module.
+
+Patch 9 refactors damon_call() to return errors only after the context
+is completely stopped.  Patches 10 and 11 remove unnecessary error
+handlings from callers (wsse and prcl sample modules).
+
+Changelog
+=========
+
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260704181135.132956-1-sj@kernel.org
+- Fix ABBA deadlock in damon_start().
+- Wait instead of doing racy-stop in damon_call().
+
+SJ Park (11):
+  mm/damon/core: stop ctxs in damon_start() before returning an error
+  samples/damon/mtier: do not stop first context for damon_start()
+    failure
+  mm/damon/core: make damon_stop() never fails
+  mm/damon/sysfs: ignore damon_stop() return value
+  mm/damon/reclaaim: ignore damon_stop() return value
+  mm/damon/lru_sort: ignore damon_stop() return value
+  mm/damon/core: change damon_stop() return type to void
+  samples/damon/mtier: stop all contexts with single damon_stop() call
+  mm/damon/core: wait ctx stop in damon_call() before reruning an error
+  samples/damon/wsse: do not stop ctx for damon_call() failure
+  samples/damon/prcl: do not stop DAMON for damon_call() failure
+
+ include/linux/damon.h |  2 +-
+ mm/damon/core.c       | 37 +++++++++++++++++++------------------
+ mm/damon/lru_sort.c   |  6 ++++--
+ mm/damon/reclaim.c    |  6 ++++--
+ mm/damon/sysfs.c      |  3 ++-
+ samples/damon/mtier.c |  5 +----
+ samples/damon/prcl.c  |  4 +---
+ samples/damon/wsse.c  |  4 +---
+ 8 files changed, 33 insertions(+), 34 deletions(-)
+
+
+base-commit: abe5b65a9c676375c3f118d453037f2f9ebbb7ac
 -- 
 2.47.3
