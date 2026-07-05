@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A003221638D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5751226CF6;
 	Sun,  5 Jul 2026 16:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783267313; cv=none; b=Qoa0UV/MfK37SnDihqF5Az1QutKQMbOTmI57sy7r71VBRCaee34lmptiNf9m2irfwTcqKk7eQgGl2iHNnK9U4TlmWrnQ6z0Rp6XBeYtE1j0PGAgJGe1q3Nu9o2513jgI/lM9ET+Oe86mwRo1lWezFFsLv2KhXzjWhElII+r/EPA=
+	t=1783267313; cv=none; b=dIl6gs34hN6P4OTXLS9IgGWB0sfuoZarcyOsIgvnBfqw28+S6Lhh3FgDZYXBBSbLEG6fQ2gyQlwgnQCAp8My/jHrzdMGgLnORU562s7C7AF0GPDaxj+LHHjEyhR0b4ukEGthy22dCgkFQ/g9ovLvMLA/DvRz4tK5aZx7wlCD7VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783267313; c=relaxed/simple;
-	bh=0YWNBy/FeNrCieJO3gS1mCC45cQe4+RMNYEPleSetNY=;
+	bh=2GgULBFQpYDO6EvdC9vnTe3kQ/SAYL9X8uFLgsMgTWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMQsm7t9RxuiI7jmdXwdBaI+d31pwLJIpgiups+xEum0ro6e2gmrdF+HEH7q5eWAKXA8rqCRGaJX0Z9MywR8A0GO2VwCF0Kt7DPjUg2is+r8ziYgeABQiMnD6N//D56c8vCg90lBjSxvRjfsn7Du+sYl83pZGglaW4zPJayEFOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cr5MWrhd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cca00ujV4cJffyWyoEHSfEJJokUh8cynko0FRGft3AaVRAPeNFSqhsRRkQ8IBpPA1JttMX57xj7QjZ1C7cftRHfTqZkkdhhzJ0U/HFcFlbrvJhx8S5Wx31lklgd2GblSJzFfSHuv/QN6tIMgS5VrS8sv0TRDRk+4ckQL4YD+m7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h74txumM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cr5MWrhd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D6C1F00A3D;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h74txumM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5ED1F00A3A;
 	Sun,  5 Jul 2026 16:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783267312;
-	bh=QDJgGdtoA/IbgG+7ciI0YVsTZBt0XSBAZ9d0cV22mDE=;
+	bh=D62Tcr+yrJC0pq2paze4YieMWP4BsC6k5oHO7N7uukw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cr5MWrhdnyXSLPE6O3xug2SSK25OdsOyAMPxKtabIf/4+fMq0rM8V2Zh1U6LPbVx3
-	 s4SpewekBWzCFfDCmijodtPA/MZ8F3BAIhmho4r4hZ8ISsSUOjbNGTJWjdpZptPiXY
-	 ucSgFjMZuxbcvqPo+TjS1l4GvKjoDtult5+6hkjvzqgyjfFxcpJtpr6ZtScjCL+6l6
-	 757vNMjtQ961oS39rkE2orxwL2fG5dF2+oLr0M5zosMESXgz0EU4klFB0LenYKrNMU
-	 tW5ttm/UWDJly4eQ+MRA/2AOf7Cogc0ooKgmeRbQUu2JIXxHsxl5kxSeOYvPmB0/eL
-	 4uougHrZKpelA==
+	b=h74txumMZpI38qJ+8ds0UgfG76kuq4dBZvZsG8oRgWixjR2ioLpnk9v+4nwkRD6/u
+	 Xz/1eZvdTrwXEp4IMCyTg+Ggi1TtktKm8ks1QKoC9z991+u0bmNKeUBV4H9899SevI
+	 AvbqFRnI03L6MGvKzOOwd+oGm8Wl8BzFMqwDcAsJsGL1EmfNaZAlib9Jb6ss9RQc9Z
+	 4jgwI3zptmWQHxcDStl4E6VnC8qxhFVemG0rk/VVMHifvZPrtr/7NMoWTn8LmwJZD2
+	 fNC4kU9jX8zspaQJ5CiwwClmIXnyRx2e/jwfzE7t2PZNPW9Bfsh/hug1pgWx/QR4ue
+	 BJOlbYx5UQPLg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 01/11] mm/damon/core: stop ctxs in damon_start() before returning an error
-Date: Sun,  5 Jul 2026 09:01:28 -0700
-Message-ID: <20260705160142.97308-2-sj@kernel.org>
+Subject: [RFC PATCH v1.1 02/11] samples/damon/mtier: do not stop first context for damon_start() failure
+Date: Sun,  5 Jul 2026 09:01:29 -0700
+Message-ID: <20260705160142.97308-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260705160142.97308-1-sj@kernel.org>
 References: <20260705160142.97308-1-sj@kernel.org>
@@ -47,31 +46,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When multiple contexts are passed to damon_start(), the function starts
-the contexts one by one.  If any of the operations fails, it immediately
-returns an error.  Contexts that successfully started before the failure
-keep running.  The caller should catch this and stop the contexts.  It
-is complicated and easy to make mistakes.  Stop all contexts in
-damon_start() under the failures.
+damon_start() was able to fail while keeping the first context running.
+mtier hence stops the first context in the case.  damon_start() is
+refactored to avoid that.  The error handling is no longer necessary.
+Remove it.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ samples/damon/mtier.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 3c5a46e1c079a..d89a7f2faf350 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1917,6 +1917,9 @@ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive)
- 		running_exclusive_ctxs = true;
- 	mutex_unlock(&damon_lock);
+diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+index e567f4edd80ea..90881e8bd441f 100644
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -193,8 +193,6 @@ static int damon_sample_mtier_start(void)
+ 	if (!err)
+ 		return 0;
  
-+	if (i != nr_ctxs)
-+		damon_stop(ctxs, i);
-+
+-	if (damon_is_running(ctxs[0]))
+-		damon_stop(ctxs, 1);
+ 	damon_destroy_ctx(ctxs[0]);
+ 	damon_destroy_ctx(ctxs[1]);
  	return err;
- }
- 
 -- 
 2.47.3
