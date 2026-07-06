@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4F2378D8B;
-	Mon,  6 Jul 2026 14:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A7937996B;
+	Mon,  6 Jul 2026 14:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783346800; cv=none; b=UgybDj0cC68oT6Jsj9LuZdBBIZm+uPKx0tNukV7Gk7Fm9gN/PRlhUoTfwe1HaGcknLg4m8ts+9Ojp8BHKsFs/Ia5nbDNQiH/RQrcZHVKX2sVm/88PSy5dg8pKeQzx1G+orwC9qdAbh1NXRSEcwPl0oEoaBeLxPVI5CSchx1vn1w=
+	t=1783346801; cv=none; b=WgEaker/E7waaZCTarApPbQmO6hUESuu/9tj1i4WsZqDx89INhENnsGVR11UZkXxjBfrFFPzN1l6CFC28gC8VJbHr9duQtcSg4YlxcRWAEbH5iMVlkFxD34pIwdnn5Lo8fTnllrmL7xkAiKzW4WRgwc64+SJCoQQW0z+L7EpL/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783346800; c=relaxed/simple;
-	bh=s1aLOjBmxqWX4xTdDsDiZkYLIBBhUQOGpDfQK1578/0=;
+	s=arc-20240116; t=1783346801; c=relaxed/simple;
+	bh=zw18eCF9o/kXw8UfeN/aNgCviJlDOibZN7c7tPL19WA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUiyEyWnimwdLWju/EwyVrB4Yuop4ScFv0/Y0jSUMFvxblXwNu3HHpICvi4LCVEYULB2RBlCS+lbYJzVfSyf1O2brIpCI0vS9SuAN2KpXInzXKvQjvpOMsWok0QKiyDS6XITYLzUEWjT6GWLcWigB1zW6nxVIsFLqlwXVrnfac0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZmTaSjlS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kMljJnzWpjshwnGcgRjxNGtuweRrn126y5793ZaScXmpn94CvphpIYskBCjHmG+t7ZZii7LwwErIK29Oo5PZZUAgUoixaYjQfULiGlbAuilK2/ONmrrmSbxzSQEztCHCU43LCiH/U1iPOfcY3RuoPpr58AMygeQ61el/Xxyml9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HmS20j5y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZmTaSjlS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD681F000E9;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HmS20j5y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95831F00A3E;
 	Mon,  6 Jul 2026 14:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783346799;
-	bh=T/jrLjscVUQeC5WNYbMxUpcBegD3KHrAD9D5l1ftK2k=;
+	s=k20260515; t=1783346800;
+	bh=XifFyfJolobUF4kXii9SDmtvZzvIFxqywQe1D4fl4uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZmTaSjlSkck3iwEj9gVhrXicm+CzO9c1+gq57cboB9Ajg0W51Uf3h5owdMfar2Een
-	 WOYIrjkcbGNC328qPCH664pe+E6ekkiWWQJs9dvTDSkf5Us26DOzKc4RhzIIDFnbxc
-	 TW1TFqHIFn9hBdcE2hQR6PcDBqceZ+vo8DlI7lS4hqmKQ143JGP0+bBNw8xuEAA7aT
-	 nk+GTzqEvQ3pbqGGXpQzdQoR9wVZVx2266sYuayl+dTTyJt4xwW5P0XJvMKh5q/DBU
-	 timar1zT08KGl2y5qS61Cp+JPb21i/9qt5AfMsDA3V2xF2H17ZwUF7EjS66h6z6V0K
-	 M0v9b7ajjXV4Q==
+	b=HmS20j5yX7GzchH37nIJE6zHhT5G8cTgsMm2dkny6473IAR0QuA1rOCaUq1KW/Amt
+	 Buur8jyYC5oTn/tk8kAa8pvdxqOFxPj6lKGiLMlxYIFaJvJs1wSghplfo2+ZBDk0dN
+	 SFjmjtguJv+FgK1ZA1KM0ZYLaW84gkG222bVASSWxHX4bZx8kl9yj5pP0pL+11RwY4
+	 dL33ogYemO9Zx63+AXcnUoYBFKx9SpNjjNHXYUgeM6hGb2dO51ns5/p1YcpwoAlhGB
+	 RWaMZvo25oqrMzVqeedp8JKs0Q9gPxlzNrzaBTPmJzsgrxFDgz3c9sEUdYq1D1dGmG
+	 Ctzl4fBCyMtwQ==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 05/11] mm/damon/reclaaim: ignore damon_stop() return value
-Date: Mon,  6 Jul 2026 07:06:20 -0700
-Message-ID: <20260706140628.87414-6-sj@kernel.org>
+Subject: [PATCH 06/11] mm/damon/lru_sort: ignore damon_stop() return value
+Date: Mon,  6 Jul 2026 07:06:21 -0700
+Message-ID: <20260706140628.87414-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260706140628.87414-1-sj@kernel.org>
 References: <20260706140628.87414-1-sj@kernel.org>
@@ -50,14 +50,14 @@ damon_stop() return value is guaranteed to be 0.  Ignore it.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/reclaim.c | 6 ++++--
+ mm/damon/lru_sort.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index 6469b25cc34f9..09e941d75f67d 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -332,8 +332,10 @@ static int damon_reclaim_turn(bool on)
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index 2dd0cd0d26273..e8c389ad3226f 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -409,8 +409,10 @@ static int damon_lru_sort_turn(bool on)
  {
  	int err;
  
@@ -68,7 +68,7 @@ index 6469b25cc34f9..09e941d75f67d 100644
 +		return 0;
 +	}
  
- 	err = damon_reclaim_apply_parameters();
+ 	err = damon_lru_sort_apply_parameters();
  	if (err)
 -- 
 2.47.3
