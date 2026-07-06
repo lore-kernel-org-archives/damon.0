@@ -1,133 +1,280 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B706386575
-	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 15:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807E9386575
+	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 15:19:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783351181; cv=none; b=nb+TlkVOQyub6YyvtsIxEfxHOOGoC9KBack03pIUrPbjprO8pTltxFh8Lv5IIhphjiiLEyfpvaktezzLH+CT5bjozcQqXZDuwBzkoQly7V29aFhrDAciStFViJq5pQDUT0xTulG7iYhpOKb1fIKE8fgCAfiDureaESKsQu7Dw8A=
+	t=1783351197; cv=none; b=kXewlomVcAbxPUWvmdwhbuusyEaTRxb6zZtadOF4weE1iRdl9vIhxnZSug67THBqF1opopUbKp2U1zs+GNWv6iipcjGsNqAxklY/7ygtK3yXD7QH1FnEk/SyCmmdjTrI47CCJc7lNa6YUnpdyel+6GnwqVqA2ELD14NVljo6Lpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783351181; c=relaxed/simple;
-	bh=5zJsHwr1d4t+uQ/yHHfY8dj3cdH57/c1SgtmvMyHNIU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=SrGp35iKk53w1O9ukDWoOc2CA/UTboimakXU1k//nDwg5Y5XCPTNUC/aOPWFP2FGNxEAvLg9dR6crsYaAgo2VKj1NyZ96Y0J3GVVzo4AB9EFyjIDuj4lMIv8UMi4YwyekBclqGDD4kHvmuqSbFTdBETzMk6MvOJR4MhoMpZ/fgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lTmlqhJa; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lTmlqhJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 847A71F000E9;
-	Mon,  6 Jul 2026 15:19:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783351179;
-	bh=/dr6odETlhB3bEkKhLpEmFOSd86wA3ICGtTDyxB1TLw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=lTmlqhJac87KAiQcFMEDtyy1bEr2KgMmUXOxlfUmaftEb8dHVck76CtijJZxwzF8r
-	 c5wQ3Sl+IX46DJ6wAmrQnJ3Wjf5lh8Pz4hGa85VF9/kxRcFAdvcWcvc3yC/+ygQaS3
-	 ta4oljIxwXW3Cn5iMUHEuXWsYGXasznhwCDKvH1AmD5OyzCyfwM7Zs2vpkSuCgPaw0
-	 3pRWIXbHpeqc01W7igsxN94nrPNKkcjToqvqJHX+XUIg6EM/oFh3TBxUBDrKralIjz
-	 JpoqF1AUXvPTkU9d0wfbejRp5jsmnM8N6iMJHTqo4xwKo1A5eEfrgHGb8fARwtZhWN
-	 AtEg54iUgNg2Q==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 13/16] mm/damon/sysfs: implement probe/weight
- file
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260706141912.88445-14-sj@kernel.org>
-References: <20260706141912.88445-1-sj@kernel.org>
- <20260706141912.88445-14-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 06 Jul 2026 15:19:38 +0000
-Message-Id: <20260706151939.847A71F000E9@smtp.kernel.org>
+	s=arc-20240116; t=1783351197; c=relaxed/simple;
+	bh=0wWva1iwx4qLX37JXmkOlsNhUVBOzvg6x4IFq0W7BJA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=NF7q9nnaQa0hZ2SgetXmm1e9C1Rv2ySzep5wXGQyjoTQTn8GTSGM0ETndWzo7eeDBDoW4MBmdnGcKqmuMpJCYBlOjS8zARvuS77mC9MUUVOlebp1/vagCyaoJIWAoE6NnWdI+xVC7sSSIjLHz6Ct9lZfc/OAHMQMquH8JNv86lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4gv6z64C8lzHnH6K;
+	Mon,  6 Jul 2026 23:02:26 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id E5A6940574;
+	Mon,  6 Jul 2026 23:03:22 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 6 Jul 2026 18:03:22 +0300
+Message-ID: <a13ae1ad-7dc9-4cf0-8dff-a1ef71454b7e@huawei-partners.com>
+Date: Mon, 6 Jul 2026 18:03:03 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/3] mm/damon: Introduce a huge page collapsing
+ mechanism using auto tuning
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+To: SeongJae Park <sj@kernel.org>
+CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
+	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
+	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>
+References: <20260617014412.97819-1-sj@kernel.org>
+ <665a31f2-2a42-4caf-be62-8429dc225f42@huawei-partners.com>
+Content-Language: en-US
+In-Reply-To: <665a31f2-2a42-4caf-be62-8429dc225f42@huawei-partners.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [High] Unbounded `weight` from sysfs causes an integer overflow in `damon=
-_probe_hits_wsum()`, which corrupts the core region scoring algorithm.
-- [High] Setting a large `weight` via sysfs trivially bypasses the `max_nr_=
-regions` limit, leading to unbounded kernel memory usage and CPU starvation.
---
+Hi SJ,
 
-commit 13d5322850c993787f439a6daf8065f8717e7f80
-Author: SJ Park <sj@kernel.org>
+On 6/20/2026 8:11 PM, Gutierrez Asier wrote:
+> Hi SJ,
+> 
+> So sorry, I missed your email. I just found it. Sorry for the late answer.
+> 
+> On 6/17/2026 4:44 AM, SeongJae Park wrote:
+>> On Tue, 16 Jun 2026 15:03:13 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+>>
+>>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>>
+>>> Overview
+>>> ========
+>>>
+>>> This patch set introduces a new autotuning which allows to collapse
+>>> hot regions into hugepages.
+>>>
+>>> Motivation
+>>> ==========
+>>>
+>>> Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+>>> misses (or hits) is to use huge pages. Unfortunately, using "always"
+>>> in THP leads to memory fragmentation and memory waste. For this reason,
+>>> most application guides and system administrators suggest to disable THP.
+>>>
+>>> Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
+>>> However, there is no way to tune the settings. It will collapse all the
+>>> hot regions that meet the access pattern. If the server is a bare metal
+>>> database or big data server, this will also lead to eventual fragmentation.
+>>>
+>>> Additionally, currently THP is set globally. Ideally, there should be a
+>>> way to control which tasks can use huge pages.
+>>
+>> Could you please reword for prctl(PR_SET_THP_DISABLE) like per-process control
+>> cases, as we discussed [1] on RFC v3?
+>>
+>>>
+>>> Solution
+>>> ========
+>>>
+>>> DAMON has now a way to autotune some of the variables and adjust quotas
+>>> automatically, so that DAMON is fired only under the right circumstances.
+>>> It would be nice to have something similar, but for huge pages.
+>>>
+>>> A new autotuning quota goal[2], damos_hugepage_mem_bp, is introduced,
+>>> which checks the huge page consumption to total memory consumption. This
+>>> new quota mechanism reuses current autotuning architecture.
+>>>
+>>> A new sample module (SAMPLE_DAMON_HPAGE) is introduced to demonstrate
+>>> the use of huge pages collapse autotuning. The goal is to collapse hot
+>>> regions of a given process into huge pages. The sample module launches
+>>> a kdamond thread for a certain task provided by the user through
+>>> taget_pid module argument. Hugepage goal autotuning will automatically
+>>> adjust the aggressiveness of hot region collapses.
+>>>
+>>> This sample module also has a user autotuning knob which allows the
+>>> user to adjust the aggressiveness of page collapsing.
+>>>
+>>> Benchmarks
+>>> ==========
+>>>
+>>> Huge page collapse autotuning was tested in a physicial machine with
+>>> MariaDB 10.5.29 and sysbench as the benchmark framework.
+>>>
+>>> The hugepage module was set up in the following way:
+>>>
+>>> # echo 1000 > min_age
+>>> # echo 1000 > quota_percentage_hugepage
+>>
+>> I guess this is the quota goal?  What is the unit?  I guess it is aparently not
+>> percentage?  The name doesn't sound like very consistent or intuitive.  How
+>> about hugepage_mem_bp or target_hugepage_mem_bp?
+> Right, we agreed to change the name. I will correct it.
+>>> # echo $(pidof mariadbd) > taget_pid
+>>> # echo on > enabled
+>>>
+>>> The goal was to achieve 5% of the total memory used as hugepage.
+>>
+>> I guess this is what the above example is setting using
+>> 'quotta_percentage_hugepage'?  If so, it means the unit is 1/20000 ?  Is this
+>> correct...?
+> I actually set it to 500. I will update the cover letter.
+>>> Since the database was not very big, we may not be able to achieve
+>>> high amount of huge pages per total memory consumption ratio.
+>>
+>> I believe this patch series will work as you explained.  But, it seems bit
+>> weird to show a test result that doesn't demonstrate what this patch is aimed
+>> to achive.  Could you increase the size of the database?  IIRC, you were able
+>> to show the percentage is over-achived case in an early version.
+> Actually, this is what I got using the TEMPORAL quota goals. With the regular
+> quota goals, it actually over-achieves the goal.
+> 
+> Is this an actual bug in the TEMPORAL quota goal?
+>>>
+>>> The table below shows the memory consumption over time. Timestamp is in
+>>> second and the memory usage in is MBytes. Gaps in the timestamp means
+>>> that no changes in the hugepage consumption happened over that period
+>>> of time in MB. The total used memory is calculated as
+>>> mem_total - mem free. The huge page used is calculated as
+>>> huge_page_anon + huge_page_shmem + huge_page_file. The table also
+>>> shows the huge pages to total memory ratio.
+>>>
+>>> Hugepage autotune benchmark:
+>>> +-----------+----------------+----------------+----------------------+
+>>> | timestamp | total mem used | huge page used | percentage hugepage  |
+>>> +-----------+----------------+----------------+----------------------+
+>>> | 0         | 3044.988281    | 0              | 0%                   |
+>>> | 22        | 3160.207031    | 2              | 0.06%                |
+>>> | 30        | 3250.90625     | 4              | 0.12%                |
+>>> | 69        | 3781.238281    | 6              | 0.16%                |
+>>> | 71        | 3822.226563    | 8              | 0.21%                |
+>>> | 72        | 3846.578125    | 10             | 0.26%                |
+>>> | 73        | 3852.402344    | 12             | 0.31%                |
+>>> | 74        | 3868           | 14             | 0.36%                |
+>>> | 75        | 3881.84375     | 104            | 2.68%                |
+>>> | 275       | 4194.175781    | 106            | 2.52%                |
+>>> +-----------+----------------+----------------+----------------------+
+>>> After second 275, no more pages are collapsed into hugepages
+>>>
+>>>
+>>> THP (always) benchmark:
+>>> +-----------+----------------+----------------+---------------------+
+>>> | timestamp | total mem used | huge page used | percentage hugepage |
+>>> +-----------+----------------+----------------+---------------------+
+>>> |         1 |    4489.320313 |            184 |         4.098615986 |
+>>> |        15 |    4581.871094 |            214 |         4.670580984 |
+>>> |        30 |    4757.742188 |            376 |         7.902908253 |
+>>> |        45 |    4937.574219 |            558 |         11.30109595 |
+>>> |        60 |    5147.867188 |            728 |         14.14177898 |
+>>> |        75 |      5407.0625 |            918 |         16.97779524 |
+>>> |        95 |    5668.796875 |           1040 |         18.34604455 |
+>>> |       105 |    5723.839844 |           1056 |         18.44915352 |
+>>> |       115 |     5736.84375 |           1072 |         18.68623317 |
+>>> |       125 |    5732.042969 |           1088 |         18.98101612 |
+>>> |       186 |    5753.601563 |           1184 |         20.57841488 |
+>>> |       246 |    5746.398438 |           1280 |         22.27482159 |
+>>> |       306 |    5752.128906 |           1376 |         23.92157795 |
+>>> |       367 |      5772.5625 |           1472 |         25.49994045 |
+>>> |       427 |    5832.019531 |           1568 |         26.88605536 |
+>>> |       488 |    5813.246094 |           1664 |         28.62428277 |
+>>> |       548 |    5807.621094 |           1760 |         30.30500736 |
+>>> |       598 |    5841.253906 |           1822 |         31.19193292 |
+>>> |       669 |    5982.160156 |           1854 |         30.99214918 |
+>>> |       931 |    5946.605469 |           1868 |         31.41287933 |
+>>> |       981 |    6020.207031 |           1896 |         31.49393352 |
+>>> |       991 |    5988.445313 |           1910 |         31.89475566 |
+>>> |      1011 |    5988.570313 |           1926 |         32.16126554 |
+>>> |      1032 |    6016.039063 |           1936 |         32.18064211 |
+>>> |      1575 |    6057.289063 |           1968 |         32.48978181 |
+>>> |      1606 |    6026.167969 |           2000 |         33.18858702 |
+>>> +-----------+----------------+----------------+---------------------+
+>>> I ignored some points to make the table shorter. Anyway, the amount
+>>> of memory consumption, total and huge pages, is a lot higher than
+>>> with DAMON hugepage autotuning.
+>>
+>> Could you further clarify why it is, and what this means
+> Memory fragmentation. I will add information about memory fragmentation
+> in the next cover letter. >>
+>>>
+>>> Performance:
+>>> Baseline (no THP, module off) -> 18,162.45 transactions per second
+>>> Hugepage autotune -> 18,211.82 transactions per second (+0.27% improvement)
+>>> THP always -> 18,388.3 (+1.24%)
+>>> THP madvise -> 18,179.25 (+0.09%)
+>>>
+>>> Improvement is due to lower TLB misses
+>>
+>> So this result says THP always is much better than the Hugepage autotune in
+>> terms of the performance.  Maybe you want to claim Hugepage autotune is better
+>> in terms of the memory efficiency?  Could you please clarify further?
+> It's better than THP "never", but worse than THP "always". THP "always" is worse
+> in terms of memory consumption, "always" is worse.
+>>>
+>>> Patches Sequence
+>>> ================
+>>> Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP and autotuning
+>>> Patch 2 -> Module that demonstrates how to use
+>>>            DAMOS_QUOTA_HUGEPAGE_MEM_BP and DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
+>>> Patch 3 -> Support for DAMOS_QUOTA_HUGEPAGE_MEM_BP in sysfs-schemes
+>>>
+>>> Changes from previous versions
+>>> ==============================
+>>> RFC 4[3] -> v1
+>>>   - Renamed config to SAMPLE_DAMON_HPAGE, file to hpage.c and
+>>>     functions to damon_sample_hpage_...
+>>>   - Make the module depend on TRANSPARENT_HUGEPAGE, since
+>>>     the module will need some THP functions anyway
+>>>   - Removed documentation, since this is just a sample module
+>>>   - Removed DAMOS_QUOTA_HUGEPAGE_MEM_BP from
+>>>     damos_sysfs_add_quota_score
+>>>   - Added a short description of the module in Kconfig
+>>
+>> Thank you for continuing this work!
+>>
+>> [...]
+>>
+>>> [1] https://dl.acm.org/doi/pdf/10.1145/3307650.3322227
+>>> [2] https://lore.kernel.org/e67f05ad-dbb9-45e6-ba30-b167a99ac67d@huawei-partners.com
+>>> [3] https://lore.kernel.org/20260611150244.3454699-1-gutierrez.asier@huawei-partners.com
+>>> [4] https://lore.kernel.org/20260604150338.501128-1-gutierrez.asier@huawei-partners.com
+>>> [5] https://lore.kernel.org/20260522145518.158910-1-gutierrez.asier@huawei-partners.com
+>>> [6] https://lore.kernel.org/20260522171210.900B11F00A3D@smtp.kernel.org
+>>> [7] https://lore.kernel.org/20260522171633.AAF5B1F000E9@smtp.kernel.org
+>>> [8] https://lore.kernel.org/20260430134139.2446417-1-gutierrez.asier@huawei-partners.com
+>>> [9] https://lore.kernel.org/all/20260430154338.E22E6C2BCB3@smtp.kernel.org/
+>>
+>> [1] https://lore.kernel.org/9f9e2159-5a6b-496f-9633-fa06c0217948@huawei-partners.com
+>>
+>>
+>> Thanks,
+>> SJ
+>>
+>> [...]
+>>
+> 
+> SJ, once again, sorry for the late answer. Please, disregard my new patch set, I will fix
+> it with your feedback.
+> 
 
-mm/damon/sysfs: implement probe/weight file
+I didn't get a reply to this email.
 
-This commit implements a new sysfs file, weight, under the probe directory.
-Users can set the probe weight and enable monitoring using it.
+I will update the cover letter and submit a new patch set soon.
 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index b65651498e0d1..a8ef7903bf94f 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
+-- 
+Asier Gutierrez
+Huawei
 
-[ ... ]
-
-> @@ -1100,12 +1101,35 @@ static void damon_sysfs_probe_rm_dirs(struct damo=
-n_sysfs_probe *probe)
-
-[ ... ]
-
-> +static ssize_t weight_store(struct kobject *kobj,
-> +		struct kobj_attribute *attr, const char *buf, size_t count)
-> +{
-> +	struct damon_sysfs_probe *probe =3D container_of(kobj,
-> +			struct damon_sysfs_probe, kobj);
-> +	int err =3D kstrtouint(buf, 0, &probe->weight);
-
-[Severity: High]
-Does this allow an unbounded unsigned int weight to be set, potentially
-causing an integer overflow during calculation?
-
-In damon_probe_hits_wsum(), the score is calculated by multiplying the
-hits and the weight:
-
-mm/damon/core.c:damon_probe_hits_wsum() {
-    ...
-    sum +=3D r->last_probe_hits[i++] * probe->weight;
-    ...
-}
-
-Because weight is allowed to be up to UINT_MAX, and probe_hits can be up to
-255, could this calculation wrap around? If it wraps around, regions with a
-higher number of probe hits might erroneously compute a lower weighted sum
-than colder regions, which seems like it would break the ability to
-accurately track memory.
-
-
-[Severity: High]
-Could a large weight bypass the max_nr_regions limit and lead to unbounded
-region growth?
-
-In kdamond_merge_regions(), the merge loop condition checks against max_thr=
-es:
-
-mm/damon/core.c:kdamond_merge_regions() {
-    ...
-    } while (nr_regions > c->attrs.max_nr_regions &&
-             threshold / 2 < max_thres);
-    ...
-}
-
-The initial threshold scales with the unbounded weight. If a user configure=
-s a
-large weight, does threshold / 2 immediately exceed max_thres on the first
-loop iteration?
-
-This would cause the loop to terminate prematurely, failing to iteratively
-increase the threshold to merge regions. Could this allow the number of
-regions to grow without bound and lead to severe CPU starvation?
-
-> +
-> +	return err ? err : count;
-> +}
-> +
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706141912.8844=
-5-1-sj@kernel.org?part=3D13
