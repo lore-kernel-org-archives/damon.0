@@ -1,142 +1,122 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91687385D77
-	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 14:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BF73783BE
+	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 14:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783348896; cv=none; b=baPOx5kEiky0x6PRd0QameuTLpiMtjOlTL+IJFJhcWAN/GRKtEIFmJ8M+Ea7K2Hcf2iHcxMjvVkKFkgsa7i6V+qEhQ6ZW/frtCLXwb14gHYXZXizKAH4NY0QUTnU5j4WypYzxCkTLXFAp1QPBOUplxT24f3Zq3vHXV2S/iXlHlE=
+	t=1783349067; cv=none; b=Amm3EEwHqNU+WSyGKGDcxBr8LF5TlCyt2Gkw53duVq2js91XIeZN61WAH9aS0y/Rb882EljKXZLWFh7ZjIM9ToXySm3W1qTpt71R4GlZzHOLJOJG3zlPlh772kIjVE2iz56Sa7LulviOLc9Jk048GLhPqEAgvRxpJK0UVeIjZYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783348896; c=relaxed/simple;
-	bh=gutL5w51J0QK0ha/XUG92Gvfx+Gwri7dHD6On3z0QrI=;
+	s=arc-20240116; t=1783349067; c=relaxed/simple;
+	bh=Q5CvUNUbd9Dt5VyyyP57qZlYlUKsOKyWHSAxFuUvP9o=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=St9YukrfJsNMqtMGEdvx/5fOdhLsOZNopcn6YTInwV+WdNrayIX5zeRsRDYb3A/n8d/UsjAAVlkg91RqWMcEhn25zjlkt46sADhGBuF3xpBVSbC0JJ1351xZvUfBfy6swNt5uO5ySYI64MncWBMKc+s3bGYymTxvdQIDCtwxtg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9ObXd8J; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=avfdpLv41zjPODCLnaPFBfUWXgYnQ+bbVHejD40prsA0Xp88OcXtoFtpCVR7Ib1G2Xv+mKthivSTum6onJfJw8OBtg6RFmQkrhTsrja4tN83iWW4vjt+eUHpZWo0Mbd55YpD6N6WqdkpQTc0uQJ/kbgMRb2WvayluOBwsHbqoQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ztq2knpk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9ObXd8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1573D1F000E9;
-	Mon,  6 Jul 2026 14:41:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ztq2knpk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157E61F000E9;
+	Mon,  6 Jul 2026 14:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783348895;
-	bh=ejltgG+QqPUIpuOm1nqrY+vYlqQNxIExkYZujCfB8zo=;
+	s=k20260515; t=1783349066;
+	bh=vMZsXmFt8BAzStu5PmgT6PGKmsX2FDXKIWoiauWWIHE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=b9ObXd8JCOm9lgEZSa4h0IBCgE/E8dxrOLRbFqRkVQ7XFkxYDUakAaCdpKN1J0+UN
-	 AjOkIc/6XJYfWjcu/9IfLURoCLfTbmNmbtFXGwdjLw8xJ5tAyDnqHA3yZWLaAmSAa1
-	 q1p1OHFG1jcOf+Y5voHKyAdMi9f+FyowOvuh9iCTzJMM2hDWWQ+7hjVNIdFV7Ld6YS
-	 i2GKZSY7oBBhx4it5NVFCNue4RtpEznYhEb9BEicq+Pt2cPt0OV69k1YyrMwCzZO61
-	 uZMKklfleHTTIGHVLmbA6beW5Ov9PXpkzdfEF6uBDK03ZZ/JY4NQIt5RvO1dhZ/bf8
-	 zMP16zJtSuU9g==
+	b=Ztq2knpk2VArdtVugZzOGbj+ILwgmeTdb5wE7E97iRwv3JeKOfM1PEv6KL9CORPl4
+	 Ozp7qOK8OKGTMnPkx9AZRwSYebUBMd4hf2SCVF01JLZGb0tYw7KWzHhsK+BTaYGd0e
+	 JC8qReeKVa0QGAKmbYzKcMv9cHo7BSxxN2YDuFEnNciWKB3/zxfz0vrcxHn7JFxaUa
+	 W1RSIuJveG6mS6J4TewBgWeJos4BEJ82R9lRXwrhb8KId3nWUD03PIesQjQvLL0lFj
+	 A0GgV3Y3tQs8sFFauDpEmbbDbg/avHVEv6TgTUhGSS+QGnIGpTVwY+D3tLci5kpLQU
+	 dwYmTzAQktVkQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 05/16] mm/damon/core: implement
- damon_probe_hits_wsum()
+Subject: Re: [RFC PATCH v1.1 06/16] mm/damon/paddr: respect return_max_wsum
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260706141912.88445-6-sj@kernel.org>
+In-Reply-To: <20260706141912.88445-7-sj@kernel.org>
 References: <20260706141912.88445-1-sj@kernel.org>
- <20260706141912.88445-6-sj@kernel.org>
+ <20260706141912.88445-7-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 06 Jul 2026 14:41:34 +0000
-Message-Id: <20260706144135.1573D1F000E9@smtp.kernel.org>
+Date: Mon, 06 Jul 2026 14:44:25 +0000
+Message-Id: <20260706144426.157E61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
-New issues:
-- [High] The calculation of the weighted sum in `damon_probe_hits_wsum()` i=
-s vulnerable to integer overflow, resulting in a silent wrap-around.
-- [Low] Misspelled words in the kernel-doc comment for `damon_probe_hits_ws=
-um`.
-
 Pre-existing issues:
-- [High] `r->probe_hits[i]` is an 8-bit `unsigned char` but serves as a sam=
-ple counter across an aggregation interval, making it highly susceptible to=
- wrap-around.
+- [High] The `probe_hits` array in `struct damon_region` is of type `unsign=
+ed char`, causing silent wrap-around if the number of sampling intervals in=
+ an aggregation interval (`aggr_samples`) exceeds 255.
 --
 
-commit 627b12cd883dbd832e93cc6b4f4e3373c791b6d0
+commit d141f3812ddd7e9395e9f362f8ddc5918e7ab555
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: implement damon_probe_hits_wsum()
+mm/damon/paddr: respect return_max_wsum
 
-This commit implements damon_probe_hits_wsum() to calculate the weighted
-sum of probe hits for a DAMON region. This weighted sum is intended to be
-used by users as well as DAMON internal logic like region merging.
+apply_probes() ops implementation in DAMON_PADDR is ignoring
+return_max_wsum.  Respect it.
+
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index 3eba3564a31fc..b85f88a7a38f4 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
 
 [ ... ]
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index dbd1f86a0832f..42f27849af722 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -390,6 +390,30 @@ static bool damon_is_last_region(struct damon_region=
- *r,
->  	return list_is_last(&r->list, &t->regions_list);
+> @@ -193,9 +193,12 @@ static unsigned int damon_pa_apply_probes(struct dam=
+on_ctx *ctx,
+>  			}
+>  			if (folio)
+>  				folio_put(folio);
+> +			if (return_max_wsum)
+> +				max_wsum =3D max(damon_probe_hits_wsum(r, false,
+> +							ctx), max_wsum);
+>  		}
+>  	}
+> -	return 0;
+> +	return max_wsum;
 >  }
-> =20
-> +/**
-> + * damon_probe_hits_wsum() - Returns probe hits weighted sum of a region.
-> + * @r:		region to get the weigted sum of.
-> + * @last:	if the request is for last-window agggregated probe hits.
-
-[Severity: Low]
-This isn't a bug, but there are spelling errors in this kernel-doc block.
-
-"weigted" should be "weighted" and "agggregated" should be "aggregated".
-
-> + * @ctx:	context of &r.
-> + *
-> + * Return: the weighted sum of probe hits of the region.
-> + */
-> +unsigned int damon_probe_hits_wsum(struct damon_region *r, bool last,
-> +		struct damon_ctx *ctx)
-> +{
-> +	struct damon_probe *probe;
-> +	unsigned int sum =3D 0;
-> +	int i =3D 0;
-> +
-> +	damon_for_each_probe(probe, ctx) {
-> +		if (last)
-> +			sum +=3D r->last_probe_hits[i++] * probe->weight;
-> +		else
-> +			sum +=3D r->probe_hits[i++] * probe->weight;
 
 [Severity: High]
-Can the accumulation into sum silently overflow?
+This is a pre-existing issue, but I noticed something about the probe_hits
+array while reviewing this area. Does this code silently wrap around if the
+number of samples in an aggregation interval exceeds 255?
 
-If a large probe weight is configured via sysfs (e.g., > 16,843,009), the
-multiplication of this 32-bit unsigned int weight by r->probe_hits[i] could
-wrap around when accumulated into sum.
+Looking at the damon_region structure in include/linux/damon.h, probe_hits
+is defined as an unsigned char array:
 
-This might corrupt the DAMON region merge and split logic that relies on th=
-is
-score.
+include/linux/damon.h:struct damon_region {
+    ...
+    unsigned char probe_hits[DAMON_MAX_PROBES];
+    ...
+};
 
-[Severity: High]
-This is a pre-existing issue, but can r->probe_hits[i] wrap around during l=
-ong
-aggregation intervals?
+In mm/damon/paddr.c:damon_pa_apply_probes(), this value is incremented on
+every sampling interval without bounds checking:
 
-The probe_hits array is defined as an 8-bit unsigned char. If the user
-configures aggr_interval and sample_interval such that their ratio exceeds =
-255
-(for example, 1s aggregation and 1ms sample), the counter will silently wrap
-around to 0 without any bounds checking.
+mm/damon/paddr.c:damon_pa_apply_probes() {
+    ...
+    damon_for_each_probe(p, ctx) {
+        if (damon_pa_filter_pass(pa, folio, p))
+            r->probe_hits[i]++;
+        i++;
+    }
+    ...
+}
 
-This could severely degrade the accuracy of DAMON's monitoring, and is
-exacerbated here by relying on the potentially corrupted counter for the new
-weighted sum logic.
+If a user configures the sysfs settings such that the aggregation interval
+is significantly larger than the sample interval (for example, a 1ms
+sample interval and a 1s aggregation interval yields 1000 samples), will
+r->probe_hits[i] wrap around and start over from zero?
 
-> +	}
-> +	return sum;
-> +}
+If so, it appears this might break DAMON region merging and monitoring
+statistics by operating on incorrect, wrapped-around numbers.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706141912.8844=
-5-1-sj@kernel.org?part=3D5
+5-1-sj@kernel.org?part=3D6
