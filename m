@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E701F8AC5
-	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 23:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A41C3EB0FE
+	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 23:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783381945; cv=none; b=d/vEBd/nGjbv2jdUhpkNOt/fYYdK0mRNqe2F2PglzYErLG1HBRwd9A7iatWotRBuK9yU+RX/uATHu0mB8VlBMa3t9aaOf3G5jYame1AHP7OA6gnr5oBiCzkVUg+ZXWkJhqZCBE6lRb7v4DClnT+NmGCWAkHCLNS4bzdzA1DhVAM=
+	t=1783382095; cv=none; b=l9ciWX+90FeCCi1H6ZpjFwpgdVyuswy53fA8gcKqJ6x/JIzUwF+vbPBqz3M2I1h9Du1nkBX+byjb5k7GDS0ufAM33tgk+RGf9zliPJZGsXdxv9r2hyt/AJmR0rgC0MM3reLiv+QJ0Jpw2wMWcF+IDE5vhLXW61YVN8K+sjcNwsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783381945; c=relaxed/simple;
-	bh=Lhcp6jK/Uz1L5DcN0mDB9VTg2AZCkvPDY4b4um5DUQA=;
+	s=arc-20240116; t=1783382095; c=relaxed/simple;
+	bh=/upVbwYpk05kUYorwxnkUnCyd/LCwGDW1LqdbfxJ4u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u+xFnc/WWPMMYGXWmzvpW5/2+PjKtDzoIb1RDuhEpZOjUcuWcGwtxjnHWlV4HmLKxdX0tkr0eh4dtYjwa+Yb+zRLxf3rHkc5maiZMApX6rx9oS6eW9MSuUmYzHtV/Zzgpq03dpU5Eb4C9CCtzIoIX6tWETCrStZQPszrXQYXLxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EqApdey4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=I6NsbmFtTzyGpTXrqk5ZGdYSM5PzJj/JV4Hc1KQxkxfyyp94Lq6E1j/fQLB6VwVcoppU+KtLj4kOj/Jo5Uq8mpwhx5a/tFXz4QOpn8ZQ899IfYAJr/TuIw1GO1C1f42n+07W/edZIkL3kAlaixVGjPd1DrQBiW4Tzh0N9KoPifM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MHqZrzQo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EqApdey4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3784B1F000E9;
-	Mon,  6 Jul 2026 23:52:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MHqZrzQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F5F1F000E9;
+	Mon,  6 Jul 2026 23:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783381944;
-	bh=qsBn+YOGXH2d1o/G3Bl3NtZcTPbeAzx5cLVY/2E4YZM=;
+	s=k20260515; t=1783382093;
+	bh=tn5Xh9AqZFILTx1sxQQky4KuUcVT6yLwuKLWvfQYCbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EqApdey4TQ3KuOR0I7WpuZnfVMFsLEhzyFO0CI1B72VhxuaqeVj2e04bHpgR51q1F
-	 z6/M/xUefmLc/1UPsHTCexrVULOjRhOLHOuQoY7njb341FFE66GrqRHeZtj7ATqJN6
-	 ZlyWyZ1abykYMGXPJtUwHBZJc/eT9F4eXOJI27nRkcUaoIsM7ikjYEaRwrqidlwLey
-	 yRpk9Dgk+o2fSC0+Hf7SDwiHbAb+qRRklmFOooJ2ILW1KjhRlbD6JHNtr9CcOxiXIk
-	 C8JaQcs/UalEz3YjMMLsAL58/xDp4wyT+W4oiF7UOePeh7GcTH6EdBZoy/ybN7nVHx
-	 nSVHc2WF5czQQ==
+	b=MHqZrzQoVRRZV+Bpo9QTvt1MEH/nlHaL/lu6K1gyOOq1kU0s7KFbduEudlediyILR
+	 PVJsrJZp/Soj1Gr0wU4TtWgLCDficNDE5C60NKII4She1re0S7LtDghzUEZPDkp37T
+	 1/H8daqw61hjqjxeaPpAmrtSOXSWbbuXTSRgijmpOj/e1FCtYicbYkeUDu1eozlhzJ
+	 /QZC6pjFPkjdFFI+1FZpqZ2Z0hNl7Aml26dz+7CTk/lfaA0i2qQ+0GQpr0kJwWGrgd
+	 YlbWd+VRh3RhBkAlEmzrd0lABUtkgYkXyM/KWmPTMyNQCR0+No5VxOOcPZ0tamWSTT
+	 E/bUY2q7eY2ww==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 07/16] mm/damon/core: extend merge function to work with probe hits
-Date: Mon,  6 Jul 2026 16:52:00 -0700
-Message-ID: <20260706235215.97085-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.1 08/16] mm/damon/core: disable access monitoring when probe weights are set
+Date: Mon,  6 Jul 2026 16:54:42 -0700
+Message-ID: <20260706235445.97231-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260706145538.DF9291F000E9@smtp.kernel.org>
+In-Reply-To: <20260706150309.5272F1F00A3F@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,152 +45,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 06 Jul 2026 14:55:38 +0000 sashiko-bot@kernel.org wrote:
+On Mon, 06 Jul 2026 15:03:08 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] API Misuse / Silent Overflow: Using `abs()` on the difference of two large unsigned integers causes incorrect results.
-> - [High] Integer Overflow: `damon_probe_hits_wsum()` wraps around the 32-bit boundary when large weights are used.
+> - [High] The region merging loop termination condition is incompatible with weighted probe hits, leading to unbounded region growth.
+> - [High] Unconditionally disabling access checks forces `nr_accesses` to 0, breaking access-based DAMOS schemes and interval auto-tuning.
 > --
 > 
-> commit b2b82783307a6d10c78010502dd30f5168036627
+> commit d9de5e6aadab2e17a0c4428844dec0cfc05d08ef
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: extend merge function to work with probe hits
+> mm/damon/core: disable access monitoring when probe weights are set
 > 
-> When probe weights are set, this commit extends damon_merge_regions_of() to
-> work with the weighted sum of probe hits. It also introduces a placeholder
-> detection function to allow safe incremental changes.
+> When users set probe weights, they are interested in the data attributes
+> rather than data access patterns. This commit disables data access
+> monitoring when probe weights are set.
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 42f27849af722..7aff741d43bd4 100644
+> > index 7aff741d43bd4..a2f768bd07223 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -3230,6 +3235,16 @@ static void damon_merge_two_regions(struct damon_target *t,
-> >  	damon_destroy_region(r, t);
-> >  }
-> >  
-> > +static unsigned int damon_merge_score(struct damon_region *r, bool last,
-> > +		struct damon_ctx *ctx, bool use_probe_hits)
-> > +{
-> > +	if (use_probe_hits)
-> > +		return damon_probe_hits_wsum(r, last, ctx);
->                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+> > @@ -3713,17 +3713,18 @@ static int kdamond_fn(void *data)
+> >  		unsigned long next_aggregation_sis = ctx->next_aggregation_sis;
+> >  		unsigned long next_ops_update_sis = ctx->next_ops_update_sis;
+> >  		unsigned long sample_interval = ctx->attrs.sample_interval;
+> > +		bool access_check_disabled = damon_has_probe_weights(ctx);
 > 
 > [Severity: High]
-> Does this code wrap around the 32-bit boundary when large weights are used?
+> Can configuring probe weights lead to unbounded region growth during merging?
 > 
-> Looking at damon_probe_hits_wsum(), it accumulates probe_hits[i] * probe->weight
-> into a 32-bit unsigned int sum:
+> When damon_has_probe_weights(ctx) is true, the region merging loop in
+> kdamond_merge_regions() compares a threshold scaled with weighted probe hits
+> against max_thres:
 > 
-> mm/damon/core.c:damon_probe_hits_wsum() {
->     ...
->     unsigned int sum = 0;
->     ...
->         if (last)
->             sum += r->last_probe_hits[i++] * probe->weight;
->         else
->             sum += r->probe_hits[i++] * probe->weight;
->     ...
->     return sum;
+> mm/damon/core.c:kdamond_merge_regions() {
+> 	...
+> 	max_thres = c->attrs.aggr_interval /
+> 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
+> 	do {
+> 		...
+> 	} while (nr_regions > c->attrs.max_nr_regions &&
+> 			threshold / 2 < max_thres);
 > }
 > 
-> If a user configures a large weight (e.g., > 16,843,000) for a probe via
-> sysfs, this could wrap around (e.g., 255 hits * 40,000,000 weight = 10.2
-> billion, which wraps to ~1.6 billion).
+> Since max_thres is hardcoded to the maximum unscaled accesses
+> (aggr_interval / sample_interval) and doesn't account for probe weights, the
+> loop could terminate prematurely.
 > 
-> Could this break the scoring mechanism, causing damon_merge_regions_of() to
-> merge active and inactive regions incorrectly?
+> If weighted probe hits result in score differences exceeding this unscaled cap,
+> wouldn't this prevent regions from merging back down below the user-configured
+> max_nr_regions limit?
 
-Known low priority issue.  No blocker.
+No such issue can happen because damon_has_probe_weights() always returns
+false.
 
 > 
-> > +	if (last)
-> > +		return r->last_nr_accesses;
-> > +	return r->nr_accesses;
-> > +}
-> > +
-> 
-> [ ... ]
-> 
-> > @@ -3238,24 +3253,37 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
-> > -				   unsigned long sz_limit)
-> > +		unsigned long sz_limit, struct damon_ctx *ctx)
-> >  {
-> >  	struct damon_region *r, *prev = NULL, *next;
-> > +	bool use_probe_hits = damon_has_probe_weights(ctx);
 > >  
-> >  	damon_for_each_region_safe(r, next, t) {
-> > -		if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
-> > +		unsigned int score, last_score;
-> > +
-> > +		score = damon_merge_score(r, false, ctx, use_probe_hits);
-> > +		last_score = damon_merge_score(r, true, ctx, use_probe_hits);
-> > +
-> > +		if (abs(score - last_score) > thres)
->                    ^^^^^^^^^^^^^^^^^^^^^^^^
+> >  		if (kdamond_wait_activation(ctx))
+> >  			break;
+> >  
+> > -		if (ctx->ops.prepare_access_checks)
+> > +		if (!access_check_disabled && ctx->ops.prepare_access_checks)
+> >  			ctx->ops.prepare_access_checks(ctx);
+> >  
+> >  		kdamond_usleep(sample_interval);
+> >  		ctx->passed_sample_intervals++;
+> >  
+> > -		if (ctx->ops.check_accesses)
+> > +		if (!access_check_disabled && ctx->ops.check_accesses)
+> >  			max_nr_accesses = ctx->ops.check_accesses(ctx);
 > 
 > [Severity: High]
-> Can this call to abs() cause incorrect results due to silent overflow?
+> Does disabling the access checks here break DAMOS schemes and interval
+> auto-tuning?
 > 
-> Since score and last_score are unsigned integers, abs(score - last_score)
-> casts the unsigned difference to a signed int.
+> By preventing ctx->ops.check_accesses from running when probe weights are
+> configured, r->nr_accesses will remain 0.
 > 
-> If the actual difference exceeds the maximum signed integer value, it wraps
-> to a negative value, which abs() then negates into a smaller positive value.
+> Since damon_nr_accesses_mvsum() consumes these 0s, it seems this would cause
+> interval auto-tuning to exponentially increase the sampling interval until it
+> hits the maximum allowed value.
 > 
-> Could this falsely small difference cause the threshold check > thres to fail
-> incorrectly, allowing vastly different regions to be merged and affecting the
-> accuracy of the monitor?
+> Additionally, wouldn't this force all regions to instantly match any DAMOS
+> scheme configured to target low-access memory?
 
-Same issue exists for the above abs() call.  User impact is minor and I'm
-separately working [1] on it.
-
-> 
-> >  			r->age = 0;
-> > -		else if ((r->nr_accesses == 0) != (r->last_nr_accesses == 0))
-> > +		else if ((score == 0) != (last_score == 0))
-> >  			r->age = 0;
-> >  		else
-> >  			r->age++;
-> >  
-> > -		if (prev && prev->ar.end == r->ar.start &&
-> > -		    abs(prev->nr_accesses - r->nr_accesses) <= thres &&
-> > -		    damon_sz_region(prev) + damon_sz_region(r) <= sz_limit)
-> > -			damon_merge_two_regions(t, prev, r);
-> > -		else
-> > -			prev = r;
-> > +		if (!prev)
-> > +			goto set_prev_continue;
-> > +		if (prev->ar.end != r->ar.start)
-> > +			goto set_prev_continue;
-> > +		if (abs(damon_merge_score(prev, false, ctx, use_probe_hits) -
-> > +					score) > thres)
->                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> 
-> [Severity: High]
-> Does this second use of abs() on the unsigned difference of the merge scores
-> suffer from the exact same signed-integer overflow vulnerability?
-
-Ditto.
+That's the intended behavior.  Users are informed that access monitoring is
+disabled in the mode.
 
 > 
-> > +			goto set_prev_continue;
-> > +		if (damon_sz_region(prev) + damon_sz_region(r) > sz_limit)
-> > +			goto set_prev_continue;
-> > +		damon_merge_two_regions(t, prev, r);
-> > +		continue;
-> > +set_prev_continue:
-> > +		prev = r;
-> >  	}
-> >  }
+> >  		if (ctx->ops.apply_probes)
+> >  			ctx->ops.apply_probes(ctx, false, false);
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260706141912.88445-1-sj@kernel.org?part=7
-
-[1] https://lore.kernel.org/20260705211101.F2F061F000E9@smtp.kernel.org
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260706141912.88445-1-sj@kernel.org?part=8
 
 
 Thanks,
