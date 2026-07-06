@@ -1,110 +1,135 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263BC3914F8
-	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 14:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6DE3434E36
+	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 14:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783348563; cv=none; b=L8a+TXY8SGgZ9Hqq1QLc9bPRaW66FkMXh0fs3lVSaS6jcLEzO9HUjSTzIgQ/hFOeygwvPNIju0EGh5eLOtgef0WFKP+ZhQf4MVxd4ntnrIe2oDW5bcxxTY3f2k93JsSOJDiXGUOMZIUnQfgvVyNKBCmX/1rcnee4gBIzkxGXhsM=
+	t=1783348780; cv=none; b=Kz+vNc6OFjJHJ/roE79N4PXzrl+1uQaag8sYGtKyb6uSGcP+8eLQqea06zOY4WlQPdZLT1JOBcCKyW92eHh5mmflOankztSkGsyk0xQdjCxzyAmtQSOzWsbieZV3IEI74jDMNRhn+N2vX3NgZFNP7HVPLRS3sIfefLA/gakMHZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783348563; c=relaxed/simple;
-	bh=ogtovPKx4puWlMZ5seGTkT9y656Ef5pabF+iEceDYqQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IS7hbNxTUNMyMt2p954opcCQxq5j5Yp995H1Zbrdi9ljCt4jDOKxWE0DU2aHxsi+vA+HxyMyVlRc3GWLFVsNoHEWaVrfoA/DHN2LYOBhqg5+RK8/lE3GjThEFput/eqcrpglVcPytKJ2juwWUTvw1L2CAlsF1d94ArXZuDxa6F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iLPyRf2Q; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783348780; c=relaxed/simple;
+	bh=hhyIyNq6RoYxw47fPhqFXy7o3WHRggInFQAYd9kV05k=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=SggchF0uCfYSEy6HeAAKqjN43VmxQ0fQGV6KmW5VjVM99GR7Sa2cf7mJVYl+Xt58aBhkOsnmh1UAqxQminozDkQ1ieN2c07qsYuSerBdVL1c11+BaqE1VprwD3Jz2I+58U3YMCRvbqFF3fi6l3q7IDJz14S1CA2sss/Qtq/RZlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PrG2J3/4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iLPyRf2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44451F000E9;
-	Mon,  6 Jul 2026 14:36:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PrG2J3/4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310BA1F000E9;
+	Mon,  6 Jul 2026 14:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783348561;
-	bh=X6k/zCKHzJ1ANmNrfnYPEnou+eSkFvzQaZMoc6l6jnU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iLPyRf2QZW44tDJc9DwGWj4LFq0GbhjkqAfp3xu1BUXjbSQccqSdn8z10yvzhGCbE
-	 Z/7kALsdPu19U9PiPa4U/8+gGV7aOHStR0nadBoPEDCmjCkFVxV+PrpexDKnqE58PI
-	 wE1rkGrut3zxsPZubSjOtyIxutQQ+Vtv9LVwta9AwNOmfG/sJ9vuvtPKTaL71vdREe
-	 bTeZcqeUQBh0THgNNKtklaQrr223cNw3HWZ30OYGev/PfRzZsM4Xa/fY2G4uJ9Lm7w
-	 cPfnwkZh8QCGvymsbCKfJCv97cog2d1ofy9MyXi4LWhGdJxtU1p/+xiYaSTjw0H0Mp
-	 QIPZIq2NYIHGQ==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 08/11] samples/damon/mtier: stop all contexts with single damon_stop() call
-Date: Mon,  6 Jul 2026 07:35:52 -0700
-Message-ID: <20260706143554.94084-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260706142148.B2B1A1F000E9@smtp.kernel.org>
-References: 
+	s=k20260515; t=1783348778;
+	bh=LFRk72c+OtDwIkh1aagOZioAukQZVZRPwufneDa84lQ=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=PrG2J3/4eurXxuezZTqmtJev8btGVOsuJ5G6irYra1IJMm9UQKBw1qFHIP02C29uB
+	 J2aWhhnructkYW+i8gScHKqmHN8PPaTl5LCX2m5DSrEStoMsKR0s9xXnJ68SjWumQg
+	 u+7UAnS7C4KIoQVFVvRnHOUzXGytrqBvsb7z4MF85L8G1cd+aeBSUMljkSjgD3p2+b
+	 vhYUoCkLHli0jTOR9p2MQmwtHuw1Mvzxia4NfvnEjRRMSnSqRHGRSMVb6BTpbApS73
+	 Da7nWre+LVcMADjYcTYp+AuMof5zXvIYPr0aocZCHQkl/ZOSnc+n6AMGH6qkRz/biP
+	 rbHcHh/7iuo7g==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v1.1 04/16] mm/damon/core: ask apply_probe() to
+ return max probe hits weighted sum
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260706141912.88445-5-sj@kernel.org>
+References: <20260706141912.88445-1-sj@kernel.org>
+ <20260706141912.88445-5-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 06 Jul 2026 14:39:37 +0000
+Message-Id: <20260706143938.310BA1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-On Mon, 06 Jul 2026 14:21:47 +0000 sashiko-bot@kernel.org wrote:
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Missing synchronization between module initialization and the module parameter sysfs store callback can lead to Use-After-Free and NULL pointer dereference.
-> --
-> 
-> commit dbce89ab1942b321167e83b5cb17dfd9002ce893
-> Author: SJ Park <sj@kernel.org>
-> 
-> samples/damon/mtier: stop all contexts with single damon_stop() call
-> 
-> This commit refactors damon_sample_mtier_stop() to use a single
-> damon_stop() call to stop all requested DAMON contexts. The previous
-> implementation used two separate calls because damon_stop() could
-> theoretically return a failure, but it now always stops all contexts
-> successfully.
-> 
-> > diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-> > index 90881e8bd441f..ac9c24b92ead8 100644
-> > --- a/samples/damon/mtier.c
-> > +++ b/samples/damon/mtier.c
-> > @@ -200,8 +200,7 @@ static int damon_sample_mtier_start(void)
-> >  
-> >  static void damon_sample_mtier_stop(void)
-> >  {
-> > -	damon_stop(ctxs, 1);
-> > -	damon_stop(&ctxs[1], 1);
-> > +	damon_stop(ctxs, 2);
-> [Severity: High]
-> This is a pre-existing issue, but could a concurrent sysfs write
-> trigger a use-after-free and null pointer dereference here?
-> 
-> When the module is loaded with the enabled parameter set to true,
-> damon_sample_mtier_init() attempts to initialize the ctxs array. If
-> initialization fails, such as failing to allocate ctxs[1], it destroys
-> ctxs[0] but leaves it as a dangling pointer.
-> 
-> Concurrently, a userspace process writing to the enable sysfs parameter
-> triggers damon_sample_mtier_enable_store(). If this write observes the
-> global enabled state as true before the initialization failure resets it
-> to false, it proceeds to call damon_sample_mtier_stop().
-> 
-> When damon_sample_mtier_stop() calls damon_stop(ctxs, 2), it loops over
-> both array elements, calling __damon_stop() on them. This dereferences
-> the pointers to lock ctx->kdamond_lock, potentially causing a
-> use-after-free on ctxs[0] and a null pointer dereference on ctxs[1].
+Pre-existing issues:
+- [High] Advancing physical addresses using `addr +=3D folio_size(folio)` i=
+n large folio iteration paths skips memory when `addr` is not aligned to th=
+e start of the folio.
+- [High] Static local variables used for caching are shared across concurre=
+nt kernel threads without synchronization.
+--
 
-Wrong.  mtier is not a loadable module, so this race cannot happen.
+commit 1ecdc723ec9bfdc97493a942107d11622114a694
+Author: SJ Park <sj@kernel.org>
 
-> 
-> >  	damon_destroy_ctx(ctxs[0]);
-> >  	damon_destroy_ctx(ctxs[1]);
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260706140628.87414-1-sj@kernel.org?part=8
+mm/damon/core: ask apply_probe() to return max probe hits weighted sum
 
-Thanks,
-SJ
+check_accesses() DAMON ops callback returns the maximum nr_accesses of
+regions.  DAMON core uses it to calculate a reasonable region merge
+threshold.  The core will need to adjust regions for not nr_accesses but
+probe hits weighted sum in future.  For that, the core needs to know the
+maximum weighted sum of the regions.  Update the protocol for the task.
 
-[...]
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index ff4fcca949660..3eba3564a31fc 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+> @@ -166,7 +166,8 @@ static bool damon_pa_filter_pass(phys_addr_t pa, stru=
+ct folio *folio,
+>  	return pass;
+>  }
+> =20
+> -static void damon_pa_apply_probes(struct damon_ctx *ctx, bool set_sample=
+s)
+> +static unsigned int damon_pa_apply_probes(struct damon_ctx *ctx,
+> +		bool set_samples, bool return_max_wsum)
+>  {
+>  	struct damon_target *t;
+>  	struct damon_region *r;
+> @@ -194,6 +195,7 @@ static void damon_pa_apply_probes(struct damon_ctx *c=
+tx, bool set_samples)
+>  				folio_put(folio);
+>  		}
+>  	}
+> +	return 0;
+>  }
+
+[Severity: High]
+This isn't a bug introduced by this patch, but while reviewing the changes =
+in
+mm/damon/paddr.c, I noticed that __damon_pa_check_access() declares static
+local variables for caching:
+
+mm/damon/paddr.c:__damon_pa_check_access() {
+	static phys_addr_t last_addr;
+	static unsigned long last_folio_sz =3D PAGE_SIZE;
+	static bool last_accessed;
+	...
+}
+
+Because DAMON allows multiple contexts to be created and run concurrently,
+each in its own kdamond thread, could these static variables be modified
+concurrently without locking? Does this data race risk corrupting the cache
+state and misapplying access results between different monitoring contexts?
+
+[Severity: High]
+This is a pre-existing issue, but I also noticed a potential overshooting b=
+ug
+in multiple physical address iteration paths in mm/damon/paddr.c, such as in
+damon_pa_pageout():
+
+mm/damon/paddr.c:damon_pa_pageout() {
+	...
+	addr +=3D folio_size(folio);
+	...
+}
+
+If a region start address is not aligned to the size of the folio (for
+instance, starting in the middle of a 2MB THP), advancing the unaligned addr
+by the full folio size will overshoot the folio boundary. Could this silent=
+ly
+skip valid physical memory that falls in the gap?
+
+The same pattern appears to be used in damon_pa_de_activate(),
+damon_pa_migrate(), and damon_pa_stat().
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706141912.8844=
+5-1-sj@kernel.org?part=3D4
