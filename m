@@ -1,104 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BDE298CA3
-	for <damon@lists.linux.dev>; Mon,  6 Jul 2026 14:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E2A38B12C;
+	Mon,  6 Jul 2026 14:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783347710; cv=none; b=KHX25MjrusJzc7RXUE5Q7pbOoHTVHjE/ZmFCx2gB0ZYsTz1MQvpjwRxAyzDMNZreaX7vvU2oj7sS2I8/sQbDw55GjIpom574PT0Nfxk+GBdX1iWSkpS48yjRSDeHtp/hg+0EErrC2Lj+NbveE0kMGeKRsWxMEtD1dWhjGm+8HC8=
+	t=1783348175; cv=none; b=W+2Y0M7uttSQKRgR8aCPMHgxAZiqx9DuCxvqdrj1pF5YhaF8NKL0T5udwn+EPkLpOuIMIjAbsO/vkoWZCC5vlCVBRr6s6NZ7Qq9mYdDdPixfvgytqG5zTVkI6eMjy9t6V/YMwbX0l21i+DWc+3oXVyRPQBGdbmnuRUdRxpwauQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783347710; c=relaxed/simple;
-	bh=zUPugoWgBCjLLmKGR4wur7kdZsLbjbrLTtrHypmPtvs=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=GZHW41SnJa37Wa5Tn+y7z0DN69vP5JulihLqE0K3EFVow9nL/zJVCn/tfiXQ1tSK1tUQSdZhyZMNm0akY2Hcp4VjOj5ViddUWz8M9w5B3tr+xj6dG6B3dfmYqePJFs2M7XIPJuoklgmfwQKJI8GhFRb6Ti5PwRBH7lj/Uh5+dXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mwXJX6Zz; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783348175; c=relaxed/simple;
+	bh=IUBZBC8jM7ZqaMmrXQsElfN9XQ4z0aBp3JH2Ym6ekd8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Vm5BnJ7TjHVkUd48yFeMzzUWl5CnvP5Oml2+BeNOYtvGsiQ0Aq1oVv/d+jf/qhMcZGeXsh3aQ+66oIhKJor9xUXBkY7lBL2t0VC9paCZ4RZqyxMjO5oBkfW/33bhoP7dTmplSlKC69s17ornFCAmL00gI/fi1PSQ2Ci0hVOHaVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=grXeyKe1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mwXJX6Zz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B1A1F000E9;
-	Mon,  6 Jul 2026 14:21:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="grXeyKe1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CAD1F00A3D;
+	Mon,  6 Jul 2026 14:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783347708;
-	bh=2ATynKvldxvAla4FKbs12N2DZMWV8t9uZHtpxnTO2Mg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mwXJX6ZzSyy+gM0LpoEqOwKtkCeZA/2lGPhykXO3J3CaaxYctmifWP6+vo3SJBuKE
-	 RESyT3CQqJ05uAF+O1wvh+18L/Om3/ebP1TLy1BB6Nhaf425iNhMlajBYjW72fR+Zq
-	 G6w6fSq80wNuY7tc5jjma9BSA6ZQfu5RP0iWRYqvjezTpl3te8U3zbdQtZzR9VYImM
-	 MBqgH4EB3DOOIAeiacp2DeF0xOWCmvrXj39J7uSkQh0VJwT6kWnB8fp9AJP4TVlSxX
-	 mmyuqi/xdfyrfCXM4wGSLLphWHQ6bCdU15MSW/avwhM73GLCqKijHoPcg1Lo4cubBG
-	 NY5CEgXQ6MyGA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 08/11] samples/damon/mtier: stop all contexts with
- single damon_stop() call
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260706140628.87414-9-sj@kernel.org>
-References: <20260706140628.87414-1-sj@kernel.org>
- <20260706140628.87414-9-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 06 Jul 2026 14:21:47 +0000
-Message-Id: <20260706142148.B2B1A1F000E9@smtp.kernel.org>
+	s=k20260515; t=1783348174;
+	bh=SBCRhKZI583zCcBg/zj8+qNKFcYvMBYzCOYKUJEwpkU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=grXeyKe1dw9UXQJWwPd6e3WCw6WWVG0VN47dubQw6EL4/mx1gGIZFP0Y7ME+5KYvg
+	 yh4G9UUzszbFR9q6qW54Ebyek9BAoIZdFx4ki86ozkUCuuwL51TC/y9akZ/3zwYOU7
+	 rvEDsZVMIZJQ1WmsEOdhhwYtFFIRn+y4ep7jdesJaUBrlejcJ/0Mb7a0JG0mBFWaxy
+	 3ms1xNB/vSZcHE4wvEn60qP6Lani3uBhMi70R3IlllVow2OsZbZRzp8zZYx0CXEqiL
+	 QD9EbcBaUV78/0ezFV2bfY87Qh1e1kKdYA5c+wfav83OKa+jftcPWonwPF+jxqaoKp
+	 NOJ7lHhzO0bHA==
+From: SJ Park <sj@kernel.org>
+To: wang wei <a929244872@163.com>
+Cc: SJ Park <sj@kernel.org>,
+	shuah@kernel.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH] selftests/damon: check correct path in ensure_file() not_exist case
+Date: Mon,  6 Jul 2026 07:29:28 -0700
+Message-ID: <20260706142929.93146-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260706134305.5224-1-a929244872@163.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
++ Andrew
 
-Pre-existing issues:
-- [High] Missing synchronization between module initialization and the modu=
-le parameter sysfs store callback can lead to Use-After-Free and NULL point=
-er dereference.
---
+On Mon,  6 Jul 2026 21:43:04 +0800 wang wei <a929244872@163.com> wrote:
 
-commit dbce89ab1942b321167e83b5cb17dfd9002ce893
-Author: SJ Park <sj@kernel.org>
+> In the ensure_file() function, the "not_exist" code path checks
+> whether $dir exists as a regular file.  However, the intent is to
+> verify that the target file ($file) does not exist, not the $dir.
+> Testing $dir makes the existence check effectively useless --
+> it tests the wrong path and thus never catches the case
+> where the file is unexpectedly present.
+> 
+> Replace $dir with $file so the not_exist verification targets the
+> correct path.
 
-samples/damon/mtier: stop all contexts with single damon_stop() call
+Nice catch, thank you!
 
-This commit refactors damon_sample_mtier_stop() to use a single
-damon_stop() call to stop all requested DAMON contexts. The previous
-implementation used two separate calls because damon_stop() could
-theoretically return a failure, but it now always stops all contexts
-successfully.
+> 
+> Signed-off-by: wang wei <a929244872@163.com>
 
-> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-> index 90881e8bd441f..ac9c24b92ead8 100644
-> --- a/samples/damon/mtier.c
-> +++ b/samples/damon/mtier.c
-> @@ -200,8 +200,7 @@ static int damon_sample_mtier_start(void)
-> =20
->  static void damon_sample_mtier_stop(void)
->  {
-> -	damon_stop(ctxs, 1);
-> -	damon_stop(&ctxs[1], 1);
-> +	damon_stop(ctxs, 2);
-[Severity: High]
-This is a pre-existing issue, but could a concurrent sysfs write
-trigger a use-after-free and null pointer dereference here?
+Reviewed-by: SJ Park <sj@kernel.org>
 
-When the module is loaded with the enabled parameter set to true,
-damon_sample_mtier_init() attempts to initialize the ctxs array. If
-initialization fails, such as failing to allocate ctxs[1], it destroys
-ctxs[0] but leaves it as a dangling pointer.
+This patch is applied to damon/next [1] tree.  If this patch is not added to
+mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
+to pick this.  So, no action from your side is needed for now.  If it seems I
+also forgot doing that or you cannot wait for my action, please feel free to
+directly ask that to Andrew.
 
-Concurrently, a userspace process writing to the enable sysfs parameter
-triggers damon_sample_mtier_enable_store(). If this write observes the
-global enabled state as true before the initialization failure resets it
-to false, it proceeds to call damon_sample_mtier_stop().
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
-When damon_sample_mtier_stop() calls damon_stop(ctxs, 2), it loops over
-both array elements, calling __damon_stop() on them. This dereferences
-the pointers to lock ctx->kdamond_lock, potentially causing a
-use-after-free on ctxs[0] and a null pointer dereference on ctxs[1].
 
->  	damon_destroy_ctx(ctxs[0]);
->  	damon_destroy_ctx(ctxs[1]);
->  }
+Thanks,
+SJ
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260706140628.8741=
-4-1-sj@kernel.org?part=3D8
+[...]
