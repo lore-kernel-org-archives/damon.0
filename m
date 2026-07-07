@@ -1,120 +1,215 @@
-Received: from mta22.hihonor.com (mta22.hihonor.com [81.70.192.198])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF6C3101B6
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 08:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.192.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6432B2F8EB4
+	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 08:22:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783412494; cv=none; b=P3DufaoNldoOwI0deT9uaNfaW92Q0mwDo0zT9pXMYEoCtrtojcHb2oaiYHwvromRPG6Yv5J6rt80SaiqKWW/aBiLA01j9xcnuw5fSfrETYMaSr1khyv3CQoLJDryIJfSZgIb/bEtoSp9BOh1BWCa65TJei9Lgja48uxUoUfEjK4=
+	t=1783412558; cv=none; b=TPh0gGSB51No3ANbRoQ1fIJp3bQ0rsRO/Gt8yui2Hj21rWCcRqMIeva3Y8C+UJDaLs6fDrOJsKEBk4fq54XotLH6MC6Wd7lcTI8rJSWRPj5J5KU2Av0Xv6i7kPaj1M5iaxAfH7jUnLVILw9CZNnrTmZsa8SqKyxoSNLGrLHRqiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783412494; c=relaxed/simple;
-	bh=0qEYw/kORu+CHB2h/1PvcuGa9W8zXV/BEp8uiX+ijrc=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=fBNU4Dk1DWDzCxPZxykBav0hsYfZG2GStuSfYw1dEhCYOGwMwk/qy18SXUKQMKbHLuqnnfLG8FGQQR3UcVRXyp4YX0CHJTl1hpZKwltTn+5RzVkX08haDdF6hViaqkwndp/szgViy/iyjkuHCAxPXCzaZaN7D8kFnfCOJaXPQs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b=Pz4JCC5j; arc=none smtp.client-ip=81.70.192.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
+	s=arc-20240116; t=1783412558; c=relaxed/simple;
+	bh=W9ibZ60YhjBLhhr43cujQGaEtdWSDaORXCtVjXG2nnE=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=jbi0f3eIp2V/UMB9gH+CgzknKlMAjV2t6R7DQbato7e5h3R61+wlG2sM1eLeJ/putKoi9/3cFrrDBaTHtooyijZW+QGXv0Qb9bkt0gohhSAwSjMUTt8T7UpAchYuvUoTrgEwwuMKPPqpbUvUu2HE1UN7KvLINBj+MUcwFrU+pp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UcPytoAl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b="Pz4JCC5j"
-dkim-signature: v=1; a=rsa-sha256; d=honor.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=To:From;
-	bh=0qEYw/kORu+CHB2h/1PvcuGa9W8zXV/BEp8uiX+ijrc=;
-	b=Pz4JCC5jlXSi5X4B42t+HBGZjPXcu07/0QJzKOkROww8hc0n+LYFEueKq+YzBskjWdDfC7gwn
-	1H8vo4WsTs7uC2COJRcfMc7GyyM70t22qbv7XheS4lp/S98A3iFUlPsg7YpllfaEsbjXdOzLvM/
-	EmvokN6FPkEekmuGMpxr08g=
-Received: from TW004-1.hihonor.com (unknown [10.77.232.85])
-	by mta22.hihonor.com (SkyGuard) with ESMTPS id 4gvZ1x4kQfzYm4Nv;
-	Tue,  7 Jul 2026 16:21:25 +0800 (CST)
-Received: from TA001.hihonor.com (10.77.210.32) by TW004-1.hihonor.com
- (10.77.232.85) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Tue, 7 Jul
- 2026 16:21:25 +0800
-Received: from TA003.hihonor.com (10.72.0.43) by TA001.hihonor.com
- (10.77.210.32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Tue, 7 Jul
- 2026 16:21:24 +0800
-Received: from TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1]) by
- TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1%7]) with mapi id
- 15.02.2562.037; Tue, 7 Jul 2026 16:21:25 +0800
-From: wangtao <tao.wangtao@honor.com>
-To: "David Hildenbrand (Arm)" <david@kernel.org>, "akpm@linux-foundation.org"
-	<akpm@linux-foundation.org>, "catalin.marinas@arm.com"
-	<catalin.marinas@arm.com>, "will@kernel.org" <will@kernel.org>,
-	"tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>,
-	"bp@alien8.de" <bp@alien8.de>, "dave.hansen@linux.intel.com"
-	<dave.hansen@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>,
-	"willy@infradead.org" <willy@infradead.org>, "sj@kernel.org" <sj@kernel.org>,
-	"kees@kernel.org" <kees@kernel.org>, "luizcap@redhat.com"
-	<luizcap@redhat.com>, "zhangjiao2@cmss.chinamobile.com"
-	<zhangjiao2@cmss.chinamobile.com>, "kas@kernel.org" <kas@kernel.org>,
-	"ljs@kernel.org" <ljs@kernel.org>
-CC: "hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org"
-	<liam@infradead.org>, "vbabka@kernel.org" <vbabka@kernel.org>,
-	"rppt@kernel.org" <rppt@kernel.org>, "surenb@google.com" <surenb@google.com>,
-	"mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz" <jack@suse.cz>,
-	"riel@surriel.com" <riel@surriel.com>, "harry@kernel.org" <harry@kernel.org>,
-	"jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>,
-	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "peterx@redhat.com"
-	<peterx@redhat.com>, "ziy@nvidia.com" <ziy@nvidia.com>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
-	"npache@redhat.com" <npache@redhat.com>, "ryan.roberts@arm.com"
-	<ryan.roberts@arm.com>, "dev.jain@arm.com" <dev.jain@arm.com>,
-	"baohua@kernel.org" <baohua@kernel.org>, "lance.yang@linux.dev"
-	<lance.yang@linux.dev>, "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>,
-	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>,
-	"muchun.song@linux.dev" <muchun.song@linux.dev>, "baoquan.he@linux.dev"
-	<baoquan.he@linux.dev>, "nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>,
-	"matthew.brost@intel.com" <matthew.brost@intel.com>,
-	"joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, "rakie.kim@sk.com"
-	<rakie.kim@sk.com>, "byungchul@sk.com" <byungchul@sk.com>,
-	"gourry@gourry.net" <gourry@gourry.net>, "ying.huang@linux.alibaba.com"
-	<ying.huang@linux.alibaba.com>, "apopple@nvidia.com" <apopple@nvidia.com>,
-	"pfalcato@suse.de" <pfalcato@suse.de>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-fsdevel@vger.kernel.org"
-	<linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev"
-	<shakeel.butt@linux.dev>, "ryncsn@gmail.com" <ryncsn@gmail.com>,
-	"jparsana@google.com" <jparsana@google.com>, "dvander@google.com"
-	<dvander@google.com>, zhangji <zhangji1@honor.com>, wangzicheng
-	<wangzicheng@honor.com>
-Subject: RE: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
- anon_vma_chain
-Thread-Topic: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
- anon_vma_chain
-Thread-Index: AQHdDdtOKxyL+IwP/0+o3I4bi0Jgh7ZhGu0AgACbXoA=
-Date: Tue, 7 Jul 2026 08:21:24 +0000
-Message-ID: <b00a03d62c53430ca22b3f3c5e5327b5@honor.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UcPytoAl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E437D1F000E9;
+	Tue,  7 Jul 2026 08:22:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783412557;
+	bh=7I++CT2TnydnvaoBZDQ+80UkLeH8CL/7+iQY40CfTd0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=UcPytoAlaYnKtlrL3jl6O1b40ec29aKxBdC8CKZqsalq5sxwS/1vKdYtY6P855Y2m
+	 LEGzShPpSMFB5YtcnZfZQEzj/PaNgb07zjnJ11TjpIPtOr+w9VCsdoRVB5DKn3PEo2
+	 uLuy3pLbxHVzW10vZDVt9nmfZHUNVRG1UCZQ1Les/aknrr8FLpdT6K5JVdwFvHU94Q
+	 82BrpeYLGcq8FQz3kNoFIr/nOeMKMdojdf7exwHB05QA8ZF4aTQzMvUrnq9pMAs+bo
+	 GNCh4DMJhHAwTBxlA7FSb/U3m0aAEqB8E2qVJe3egaIXZ1d7HQ8AugJc5SidyzYrmb
+	 JVuoB+ERJgguw==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v2 05/13] mm: implement anon_node_fork_with_prev for
+ ANON_VMA_FRACTAL
+Reply-To: sashiko-reviews@lists.linux.dev
+To: tao <tao.wangtao@honor.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260707063308.29176-6-tao.wangtao@honor.com>
 References: <20260707063308.29176-1-tao.wangtao@honor.com>
- <08c001ab-320f-4676-830b-8e4ba6a05dee@kernel.org>
-In-Reply-To: <08c001ab-320f-4676-830b-8e4ba6a05dee@kernel.org>
-Accept-Language: en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <20260707063308.29176-6-tao.wangtao@honor.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 07 Jul 2026 08:22:36 +0000
+Message-Id: <20260707082236.E437D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
 
-PiANCj4gT24gNy83LzI2IDA4OjMyLCB0YW8gd3JvdGU6DQo+ID4gSGkgYWxsLA0KPiA+DQo+ID4g
-U2luY2UgdjEgd2FzIHJlbGF0aXZlbHkgY29tcGxleCBhbmQgZGlmZmljdWx0IHRvIGV4dGVuZCwg
-dGhpcyB2ZXJzaW9uDQo+ID4gYWRvcHRzIGEgc2ltcGxlciBhbm9uX3ZtYSBpbXBsZW1lbnRhdGlv
-biBhcHByb2FjaC4NCj4gDQo+IEkgcmVhbGx5IGhhdGUgdG8gcmVwZWF0IG15c2VsZiwgYnV0IHlv
-dSBzZWVtZWQgdG8gaGF2ZSBtaXNzZWQgbXkgbWFpbiBwb2ludA0KPiBbMV0NCj4gDQpJIHNhdyBp
-dCwgYW5kIEnigJl2ZSB3YWl0ZWQgZm9yIGEgd2hpbGUgYXMgd2VsbC4NCg0KSWYgdGhlcmUgYXJl
-IHRlY2huaWNhbCBpc3N1ZXMsIHBsZWFzZSBwb2ludCB0aGVtIG91dCBkaXJlY3RseS4NCk9yIGlz
-IHRoaXMgc2ltcGx5IGhvdyB0ZWNobmljYWwgZGlzY3Vzc2lvbnMgYXJlIHVzdWFsbHkgY29uZHVj
-dGVkIGluIHRoZSBMaW51eCBjb21tdW5pdHkgb3IgdGhlIG1tIHN1YnN5c3RlbT8NCg0KVGhhbmtz
-LA0KVGFvDQoNCj4gIkxvcmVuem8gaGFzIGJlZW4gaGFyZCBhdCB3b3JrIGV4cGxvcmluZyB2YXJp
-b3VzIGRlc2lnbiBvcHRpb25zIChhbmQgSSdtDQo+IGFmcmFpZCBoZSBtaWdodCBiZSBvbmUgb2Yg
-dGhlIDMgcGVvcGxlIG9uIHRoaXMgcGxhbmV0IHRoYXQgdW5kZXJzdGFuZA0KPiBhbm9uX3ZtYSBp
-biBmdWxsIGRldGFpbCksIHNvIEkgc3VnZ2VzdCB3ZSB3YWl0IGZvciBhIHJlZGVzaWduIHByb3Bv
-c2FsIGZyb20NCj4gaGltIGFuZCBzZWUgaWYgdGhhdCBpcyBkb2FibGU/Ig0KPiANCj4gWzFdIGh0
-dHBzOi8vbG9yZS5rZXJuZWwub3JnL2FsbC83MDM3NzYyNi01MDBkLTQ2ZjItYTNmNS0NCj4gYTBk
-MjkxNGNlMzY1QGtlcm5lbC5vcmcvDQo+IA0KPiAtLQ0KPiBDaGVlcnMsDQo+IA0KPiBEYXZpZA0K
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
+s) to consider:
+- [Critical] Missing child-to-parent reference pinning allows parent `anon_=
+node`s to be freed while descendants retain dangling pointers.
+- [Critical] Reusing an ancestor `anon_node` for a fork child VMA breaks th=
+e reverse mapping hierarchy, preventing shared pages from being unmapped.
+- [High] Lockless update of `node->mm` in `fork_reuse_ancestor()` creates a=
+ data race with concurrent page table walkers, leading to Use-After-Free.
+- [High] Child `anon_node`s are never unlinked from `fractal_list`, causing=
+ `anon_node_free()` to trigger `VM_BUG_ON` and leaving dangling pointers.
+- [High] Missing `unlink_anon_nodes` implementation results in a permanent =
+memory leak of all `anon_node` structs.
+--
+
+--- Patch [5]: [RFC PATCH v2 05/13] mm: implement anon_node_fork_with_prev =
+for ANON_VMA_FRACTAL ---
+commit 24cea8e5be0b7dbc9e5d9160c41d3819f2dc0c2e
+Author: tao <tao.wangtao@honor.com>
+
+mm: implement anon_node_fork_with_prev for ANON_VMA_FRACTAL
+
+Fork handling introduces two additional parameters to help child VMAs
+clone anon_node. The logic follows three cases:
+1) Fast path: clone the anon_node with the previous VMA.
+2) Reuse an empty anon_node from an ancestor.
+3) Allocate a new anon_node and insert it into fractal_list.
+
+> diff --git a/mm/rmap.c b/mm/rmap.c
+> index 9dc82e7438b00..9e86f64ea9e53 100644
+> --- a/mm/rmap.c
+> +++ b/mm/rmap.c
+
+[ ... ]
+
+> @@ -788,6 +799,67 @@ int anon_node_clone(struct vm_area_struct *vma,  str=
+uct vm_area_struct *src,
+>  	return anon_node_track_rmap(anon_nod, vma);
+>  }
+> =20
+> +static struct anon_node *fork_reuse_ancestor(struct anon_node *parent,
+> +		struct vm_area_struct *vma)
+> +{
+> +	struct anon_node *root =3D parent->root;
+> +	struct anon_node *node;
+> +	unsigned long new_rbc =3D vma_rmap_base(vma) + 1;
+> +	/* At least N anon_nodes between parent and root: P -> a1 .. aN -> R */
+> +	const unsigned int ANON_DEPTH_REUSE_THRESHOLD =3D 1 + (5 << 1);
+> +
+> +	if (parent->depth < ANON_DEPTH_REUSE_THRESHOLD)
+> +		return NULL;
+> +
+> +	/* Release from leaf only; parent is stable, no lock needed. */
+> +	for (node =3D parent; node !=3D root; node =3D node->parent) {
+
+[Severity: Critical]
+Does this traverse upwards using the unpinned node->parent pointer?
+
+It looks like anon_node_alloc() pins the root but fails to increment the
+refcount of its immediate parent:
+
+mm/rmap.c:anon_node_alloc() {
+    ...
+    anon_nod->parent =3D parent;
+    anon_nod->depth =3D parent->depth + (is_fork ? 2 : 1);
+    get_anon_node(parent->root);
+    ...
+}
+
+If all VMAs attached to the parent are unmapped, the parent node's refcount
+could drop to 0 and be freed. Could this regression result in a use-after-f=
+ree
+when this loop traverses node =3D node->parent?
+
+> +		if (READ_ONCE(node->nr_children) > 1)
+> +			continue;
+> +		/* Replace with the new_rbc atomically. */
+> +		if (!try_reuse_anon_node(node, new_rbc))
+> +			continue;
+> +
+> +		node->mm =3D vma->vm_mm;
+
+[Severity: High]
+Can updating node->mm locklessly after try_reuse_anon_node() cause a
+use-after-free regression?
+
+try_reuse_anon_node() atomically updates rbc, which publishes the node as a=
+ctive
+to concurrent rmap walkers traversing the fractal_list.
+
+Since node->mm is updated after this atomic operation, could a concurrent
+rmap walk observe the active node via rbc but read the old, potentially fre=
+ed
+node->mm pointer before the assignment completes?
+
+> +		vma_set_anon_node(vma, node, false);
+> +		return node;
+
+[Severity: Critical]
+Does reusing an ancestor anon_node for a fork child VMA break the reverse
+mapping hierarchy?
+
+The reverse mapping algorithm relies on traversing downwards from the anon_=
+node
+where a page was faulted to find all descendant VMAs sharing the page.
+
+If an empty ancestor node is assigned to the fork child without relocating =
+it
+in the tree, shared pages mapped by the parent before the fork will point to
+the parent's anon_node.
+
+When rmap_walk starts at the parent, will it completely miss the child VMA
+because its node (the ancestor) is structurally above the parent?
+
+> +	}
+> +
+> +	return NULL;
+> +}
+> +
+> +/* Clone an anon_node from prev or fork one from the parent pvma. */
+> +int anon_node_fork_with_prev(struct vm_area_struct *vma,
+> +	struct vm_area_struct *pvma, struct vm_area_struct *prev,
+> +	struct vm_area_struct *pvma_prev)
+> +{
+
+[ ... ]
+
+> +	/* 3) Fork a new anon_node. */
+> +	return anon_node_add_child(parent, vma, true);
+> +}
+
+[Severity: High]
+Are child anon_nodes ever unlinked from fractal_list?
+
+In anon_node_add_child(), new child nodes are added to their parent's
+fractal_list:
+
+mm/rmap.c:anon_node_add_child() {
+    ...
+    list_add(&child->fractal_list, &rbc_ch->fractal_list);
+    ...
+}
+
+However, there doesn't seem to be a corresponding list_del() for when the n=
+ode
+is destroyed. When a node is ultimately freed, won't anon_node_free() trigg=
+er
+its VM_BUG_ON(!list_empty(&anon_nod->fractal_list)), or leave a dangling po=
+inter
+in the parent's list?
+
+
+[Severity: High]
+Is the implementation of unlink_anon_nodes() missing from this patchset?
+
+mm/internal.h declares unlink_anon_nodes() to handle VMA teardown:
+
+mm/internal.h:
+    void unlink_anon_nodes(struct vm_area_struct *vma);
+
+But the function doesn't seem to be implemented or invoked. Additionally,
+vma_set_anon_node() does not add entries to vma->anon_vma_chain.
+
+Without a teardown hook executing, won't the anon_node refcounts never be
+decremented, resulting in a permanent memory leak regression?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707063308.2917=
+6-1-tao.wangtao@honor.com?part=3D5
