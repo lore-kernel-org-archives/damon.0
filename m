@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C71F4F1
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 03:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4800F4F1
+	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 03:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783395047; cv=none; b=MMUKOOUsiuiY7KQEfiVnJ7S+R6K/052sqSU5NH0NkeHz22XxTij34XrmCSJeD15JkKIXES0sYchj/GkCYqt1qR66NFAKekNL2YPw7Ac1I2TErDuJLdrts8JRhuBcQcSDHACBg6rHimTzKuGdJsO3VNOnqdnvHfo2piXfb40ogIU=
+	t=1783395345; cv=none; b=WaHKdPBFYrhP5TNWyDe8gYd1xpvo+ATl5sgCuvJpsZZzbAoP3JGWf4mdU+FhXcKCOry8a+D9cMpUE+9B5w9WReeg8vUsyo8OpLTo7O3xv0M4nIUyFTJE5+/Zu/9nHQQPtLFBz8SFxavLzJ/WSwztSdK3HCxfCFjW7lWFwZDdyuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783395047; c=relaxed/simple;
-	bh=H8ydP1yko4nyzYxX3j0us5ZmIlUxEDOjm+WszIK0upY=;
+	s=arc-20240116; t=1783395345; c=relaxed/simple;
+	bh=0nsY8qdPm6jR37RCpvnMjgz3rDYzal32QB7ViYX9VXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MmBx0GdCnpjIPmhVQkpM9CGt8k10DvGvcAS1ty6FXbSC2cNfEl2XoZwWTYuvbrU6hPgSXA87X+dXbaQIQNmRjPRUh0pItgLJioamgOOWJc/JJm8BDM4/H65iyVg+SVuDvYvtxnb6r0xRrt+o8cEpLOGUkXhD1r8asGbjwU6rjrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T8zI+KTX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rxO+t9qKHWeAhA9hpbm6CCr9g0sCJVmkROo7GBAnG+06xjJh3mAbqGX3pnjVv06W5bsaqdxzHN/BW+7spZVrFyinVLVrZ8C1AAtDzc/UpCg2MBkF4pWCw/S10b1RA/YvfnmPExBgJgExRh7NKpe3ukr4S/QEHSvcVOJRwhRHWVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohaUPE3N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T8zI+KTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C6C1F00A3A;
-	Tue,  7 Jul 2026 03:30:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohaUPE3N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3EE1F000E9;
+	Tue,  7 Jul 2026 03:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783395045;
-	bh=M75izGIAD67lwfhzLq4dsZs5fs4NmJeoksxiQ+OgA5E=;
+	s=k20260515; t=1783395344;
+	bh=1LCg/k50UjORn44apEAf64sbEfvKpdWQIT5coWulB9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T8zI+KTXe2A2FaG2axNDJR4jYttChRd/SSA8W9BNxSOHZX67hh3pw3+eeH9Aa8kp0
-	 CfPWZV8zfUPHlPro1US2awjiQfdfASeSSMJ8CpyXKOMnoaDbVu0p9mD6pM9UvUmDI0
-	 3DlEdMtMiVKJa0VCVsidzimJXaV+zvfpwg1mmKA/QVTgAStyP6sf+OKGXuJn7ZcvVk
-	 BlBryVvraN4wFxDl1LsYloaodkoMXWrG0jxlj1jR9qO2OeAswOsLgN43yLSmlRObRZ
-	 VNsM28wnxKcrP73+82iWCyYe0NmFyFVbDoRe+aFtsRi5QriO5nB7gkpQOaVwAFvUfU
-	 WouzT0uXddlyw==
+	b=ohaUPE3Nu0OgJoAuu/zN1j9AdCMMnVojP5RCpRqT9jy6ngCkgpGAX6X+xPRwq0Ggu
+	 Koj6k5ErUllzqqgCps9kc6YS6lSd1LepOaM/cIxDnakOWu7xhFPn5dBvVUcKBjmr75
+	 57CKeLaqS/AbwopfPz+ReUYoamJLASbgrMKNRwk1mswCgsgCox1DSBCjWc7/0y1vR3
+	 SD0rWh6VbniQn075kvdFXsPs5cWE1hKPuaQ3lBg4yTFOpSyFbnOFkLJgQhoLG9HmFD
+	 WZBUjaSEOqC/sTywmz/yfLaVdjPO8jVjwxrJ7ly25wTQ9+gPYFZ+Pl1fZEJpyECqB3
+	 5pJvPiz6ywcpg==
 From: SJ Park <sj@kernel.org>
 To: SJ Park <sj@kernel.org>
 Cc: sashiko-bot@kernel.org,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 07/16] mm/damon/core: extend merge function to work with probe hits
-Date: Mon,  6 Jul 2026 20:30:23 -0700
-Message-ID: <20260707033024.91856-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.1 11/16] mm/damon/core: get merge threshold from probe hits when weights are set
+Date: Mon,  6 Jul 2026 20:34:47 -0700
+Message-ID: <20260707033448.91993-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260706235215.97085-1-sj@kernel.org>
+In-Reply-To: <20260707000330.97519-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -44,113 +44,54 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon,  6 Jul 2026 16:52:00 -0700 SJ Park <sj@kernel.org> wrote:
+On Mon,  6 Jul 2026 17:03:28 -0700 SJ Park <sj@kernel.org> wrote:
 
-> On Mon, 06 Jul 2026 14:55:38 +0000 sashiko-bot@kernel.org wrote:
+> On Mon, 06 Jul 2026 15:18:01 +0000 sashiko-bot@kernel.org wrote:
 > 
 > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [High] API Misuse / Silent Overflow: Using `abs()` on the difference of two large unsigned integers causes incorrect results.
-> > - [High] Integer Overflow: `damon_probe_hits_wsum()` wraps around the 32-bit boundary when large weights are used.
+> > - [High] Region merge loop terminates prematurely because `max_thres` is unscaled for probe hit weighted sums, causing a failure to respect `max_nr_regions`.
+> > - [High] Adding probe weights to contexts using operations without `apply_probes` (e.g., `vaddr`) silently breaks all monitoring.
 > > --
 > > 
-> > commit b2b82783307a6d10c78010502dd30f5168036627
+> > commit f896f3e81bf75b446b16cb4f79f6673a154b512b
 > > Author: SJ Park <sj@kernel.org>
 > > 
-> > mm/damon/core: extend merge function to work with probe hits
-> > 
-> > When probe weights are set, this commit extends damon_merge_regions_of() to
-> > work with the weighted sum of probe hits. It also introduces a placeholder
-> > detection function to allow safe incremental changes.
+> > mm/damon/core: get merge threshold from probe hits when weights are set
+> >     
+> > When probe weights are set, DAMON merges regions based on their probe
+> > hits weighted sum.  But the merge threshold is calculated based on the
+> > access frequency.  Update it to retrieve the maximum probe hits weighted
+> > sum in the snapshot from apply_probes() ops callback, and generate the
+> > threshold based on it.
 > > 
 > > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > index 42f27849af722..7aff741d43bd4 100644
+> > > index be026c86384e4..fa78d8d592aa3 100644
 > > > --- a/mm/damon/core.c
 > > > +++ b/mm/damon/core.c
-> > 
 > > [ ... ]
-> > 
-> > > @@ -3230,6 +3235,16 @@ static void damon_merge_two_regions(struct damon_target *t,
-> > >  	damon_destroy_region(r, t);
-> > >  }
+> > > @@ -3726,9 +3727,18 @@ static int kdamond_fn(void *data)
 > > >  
-> > > +static unsigned int damon_merge_score(struct damon_region *r, bool last,
-> > > +		struct damon_ctx *ctx, bool use_probe_hits)
-> > > +{
-> > > +	if (use_probe_hits)
-> > > +		return damon_probe_hits_wsum(r, last, ctx);
-> >                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+> > >  		if (!access_check_disabled && ctx->ops.check_accesses)
+> > >  			max_merge_score = ctx->ops.check_accesses(ctx);
 > > 
 > > [Severity: High]
-> > Does this code wrap around the 32-bit boundary when large weights are used?
+> > Does setting probe weights on a context that lacks an apply_probes callback
+> > (like vaddr) silently break monitoring here?
 > > 
-> > Looking at damon_probe_hits_wsum(), it accumulates probe_hits[i] * probe->weight
-> > into a 32-bit unsigned int sum:
-> > 
-> > mm/damon/core.c:damon_probe_hits_wsum() {
-> >     ...
-> >     unsigned int sum = 0;
-> >     ...
-> >         if (last)
-> >             sum += r->last_probe_hits[i++] * probe->weight;
-> >         else
-> >             sum += r->probe_hits[i++] * probe->weight;
-> >     ...
-> >     return sum;
-> > }
-> > 
-> > If a user configures a large weight (e.g., > 16,843,000) for a probe via
-> > sysfs, this could wrap around (e.g., 255 hits * 40,000,000 weight = 10.2
-> > billion, which wraps to ~1.6 billion).
-> > 
-> > Could this break the scoring mechanism, causing damon_merge_regions_of() to
-> > merge active and inactive regions incorrectly?
+> > If a user sets probe weights via sysfs, access_check_disabled will be true.
+> > This skips check_accesses(), but since apply_probes is NULL, neither callback
+> > runs. The accesses are never updated, and all memory appears completely cold.
 > 
-> Known low priority issue.  No blocker.
-> 
-> > 
-> > > +	if (last)
-> > > +		return r->last_nr_accesses;
-> > > +	return r->nr_accesses;
-> > > +}
-> > > +
-> > 
-> > [ ... ]
-> > 
-> > > @@ -3238,24 +3253,37 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
-> > > -				   unsigned long sz_limit)
-> > > +		unsigned long sz_limit, struct damon_ctx *ctx)
-> > >  {
-> > >  	struct damon_region *r, *prev = NULL, *next;
-> > > +	bool use_probe_hits = damon_has_probe_weights(ctx);
-> > >  
-> > >  	damon_for_each_region_safe(r, next, t) {
-> > > -		if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
-> > > +		unsigned int score, last_score;
-> > > +
-> > > +		score = damon_merge_score(r, false, ctx, use_probe_hits);
-> > > +		last_score = damon_merge_score(r, true, ctx, use_probe_hits);
-> > > +
-> > > +		if (abs(score - last_score) > thres)
-> >                    ^^^^^^^^^^^^^^^^^^^^^^^^
-> > 
-> > [Severity: High]
-> > Can this call to abs() cause incorrect results due to silent overflow?
-> > 
-> > Since score and last_score are unsigned integers, abs(score - last_score)
-> > casts the unsigned difference to a signed int.
-> > 
-> > If the actual difference exceeds the maximum signed integer value, it wraps
-> > to a negative value, which abs() then negates into a smaller positive value.
-> > 
-> > Could this falsely small difference cause the threshold check > thres to fail
-> > incorrectly, allowing vastly different regions to be merged and affecting the
-> > accuracy of the monitor?
-> 
-> Same issue exists for the above abs() call.  User impact is minor and I'm
-> separately working [1] on it.
+> I was initially thinking this is no blocker.  But, since the core layer params
+> validation patch series is merged into mm-new, fixing this should be simple,
+> and we don't really need to rush for this series.  I will fix this in the next
+> spin.
 
-Now I think this has no reason to fix right now.  I'll fix it in the next
-revision.
+I changed my mind.  There are many features that supported by only specific
+DAMON ops implementations.  We allow setting such configuration, and later add
+supports if needed.  It is arguable, but I think keeping the consistency is the
+right thing for now.  I will keep this behavior unless someone argues
+differently.
 
 
 Thanks,
