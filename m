@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4800F4F1
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 03:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EEF188713;
+	Tue,  7 Jul 2026 04:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783395345; cv=none; b=WaHKdPBFYrhP5TNWyDe8gYd1xpvo+ATl5sgCuvJpsZZzbAoP3JGWf4mdU+FhXcKCOry8a+D9cMpUE+9B5w9WReeg8vUsyo8OpLTo7O3xv0M4nIUyFTJE5+/Zu/9nHQQPtLFBz8SFxavLzJ/WSwztSdK3HCxfCFjW7lWFwZDdyuo=
+	t=1783399137; cv=none; b=jYR7ss1eM6H3N28X3iNpgblZkMyRkxA7P6SD41Vp0a8MBKb6i5szFHZUNMBjhfzgGy1kW3DYn1D9gY74JRS5aUIJbl+ePYJJanEwTBrEbz20Fox+/wXja+H7Ni0NT9mZ7Zq7KhLYc/Sr2VYO9VT7sUQEtCyCIxAkbSjkALxi4Xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783395345; c=relaxed/simple;
-	bh=0nsY8qdPm6jR37RCpvnMjgz3rDYzal32QB7ViYX9VXs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxO+t9qKHWeAhA9hpbm6CCr9g0sCJVmkROo7GBAnG+06xjJh3mAbqGX3pnjVv06W5bsaqdxzHN/BW+7spZVrFyinVLVrZ8C1AAtDzc/UpCg2MBkF4pWCw/S10b1RA/YvfnmPExBgJgExRh7NKpe3ukr4S/QEHSvcVOJRwhRHWVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohaUPE3N; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783399137; c=relaxed/simple;
+	bh=AhKZVltV6KBr4Ar1OjtqWWq5A96YhecVbYo9SJ3RPvk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I4W893k3Uj7kUllmrIBkMrNpnUaT9vAyFFrDfEkPPoH1cPBDLTkDq23Pl2J5b2aBT5b5jK8BEbBAu9G3kTu6YxqJ91ssp772KH4S2teQFu3SnnUMfxcxR7fqh2uRRBcPF9UfGy+kD3qWTh4kMLe7hyRMDTld//VlcKeDXszwObM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mM6yA0+w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohaUPE3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3EE1F000E9;
-	Tue,  7 Jul 2026 03:35:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mM6yA0+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8369E1F000E9;
+	Tue,  7 Jul 2026 04:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783395344;
-	bh=1LCg/k50UjORn44apEAf64sbEfvKpdWQIT5coWulB9Y=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ohaUPE3Nu0OgJoAuu/zN1j9AdCMMnVojP5RCpRqT9jy6ngCkgpGAX6X+xPRwq0Ggu
-	 Koj6k5ErUllzqqgCps9kc6YS6lSd1LepOaM/cIxDnakOWu7xhFPn5dBvVUcKBjmr75
-	 57CKeLaqS/AbwopfPz+ReUYoamJLASbgrMKNRwk1mswCgsgCox1DSBCjWc7/0y1vR3
-	 SD0rWh6VbniQn075kvdFXsPs5cWE1hKPuaQ3lBg4yTFOpSyFbnOFkLJgQhoLG9HmFD
-	 WZBUjaSEOqC/sTywmz/yfLaVdjPO8jVjwxrJ7ly25wTQ9+gPYFZ+Pl1fZEJpyECqB3
-	 5pJvPiz6ywcpg==
+	s=k20260515; t=1783399136;
+	bh=I11t6FBnWMZblAU+RqSXZtxGf/n/Ve62MEApJyBiI2Q=;
+	h=From:To:Cc:Subject:Date;
+	b=mM6yA0+wSaOwfxOsLro7F5LsVoueGmA/4vXvSnJzHVHAfly0zgDiWK0WAzQh4tHZ5
+	 tPhn3yyEtyV+eNCkUXKyFSfQy6VyVBCpcWV2PiBpm9fcmd80GLmF0afk174Uwwgb8t
+	 4SBTndzXQYACVIDKy5IfnhEQ1blsv8OSU8YJ356nFWtE1IMjnSXMwvreQc9UDWI3F+
+	 iuuYZclEy0tLCjg/zFn0luYPtRnZb7K8tPSR5hea9Cbx//N5WU3Zxhf42CFP7nddlQ
+	 381Ui99XvxzozE59snxoHVN68OWO8ujvsMVmtANHI1jRt+m80aBUcKY1vzUfdpdGjv
+	 DdnQ16c0bRX4w==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 11/16] mm/damon/core: get merge threshold from probe hits when weights are set
-Date: Mon,  6 Jul 2026 20:34:47 -0700
-Message-ID: <20260707033448.91993-1-sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/6] mm/damon: update probe hits for runtime parameter commits
+Date: Mon,  6 Jul 2026 21:38:20 -0700
+Message-ID: <20260707043828.97900-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260707000330.97519-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,57 +44,37 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon,  6 Jul 2026 17:03:28 -0700 SJ Park <sj@kernel.org> wrote:
+DAMON users can update DAMON parameters such as sampling and aggregation
+intervals at runtime.  For such changes, monitoring results that depend
+on the intervals should be properly updated for better accuracy.  For
+example, the access frequency counter (nr_accesses) is updated.  The
+data attribute monitoring counter (probe_hits) is not being updated,
+though.  Do the updates for new parameters.
 
-> On Mon, 06 Jul 2026 15:18:01 +0000 sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [High] Region merge loop terminates prematurely because `max_thres` is unscaled for probe hit weighted sums, causing a failure to respect `max_nr_regions`.
-> > - [High] Adding probe weights to contexts using operations without `apply_probes` (e.g., `vaddr`) silently breaks all monitoring.
-> > --
-> > 
-> > commit f896f3e81bf75b446b16cb4f79f6673a154b512b
-> > Author: SJ Park <sj@kernel.org>
-> > 
-> > mm/damon/core: get merge threshold from probe hits when weights are set
-> >     
-> > When probe weights are set, DAMON merges regions based on their probe
-> > hits weighted sum.  But the merge threshold is calculated based on the
-> > access frequency.  Update it to retrieve the maximum probe hits weighted
-> > sum in the snapshot from apply_probes() ops callback, and generate the
-> > threshold based on it.
-> > 
-> > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > index be026c86384e4..fa78d8d592aa3 100644
-> > > --- a/mm/damon/core.c
-> > > +++ b/mm/damon/core.c
-> > [ ... ]
-> > > @@ -3726,9 +3727,18 @@ static int kdamond_fn(void *data)
-> > >  
-> > >  		if (!access_check_disabled && ctx->ops.check_accesses)
-> > >  			max_merge_score = ctx->ops.check_accesses(ctx);
-> > 
-> > [Severity: High]
-> > Does setting probe weights on a context that lacks an apply_probes callback
-> > (like vaddr) silently break monitoring here?
-> > 
-> > If a user sets probe weights via sysfs, access_check_disabled will be true.
-> > This skips check_accesses(), but since apply_probes is NULL, neither callback
-> > runs. The accesses are never updated, and all memory appears completely cold.
-> 
-> I was initially thinking this is no blocker.  But, since the core layer params
-> validation patch series is merged into mm-new, fixing this should be simple,
-> and we don't really need to rush for this series.  I will fix this in the next
-> spin.
+Patches Sequence
+================
 
-I changed my mind.  There are many features that supported by only specific
-DAMON ops implementations.  We allow setting such configuration, and later add
-supports if needed.  It is arguable, but I think keeping the consistency is the
-right thing for now.  I will keep this behavior unless someone argues
-differently.
+Patches 1-4 rename functions that are being used for nr_accesses update,
+to be able to be used for probe_hits without confusion.  Patch 5 does
+the probe_hits update.  Patch 6 update damon_probe_hits_mvsum() to cover
+a corner case from the update for better accuracy.
+
+SJ Park (6):
+  mm/damon/core: s/damon_max_nr_accesses()/damon_nr_samples_per_aggr()/
+  mm/damon/core: s/accesses_bp_to_nr_accesses/sample_bp_to_count/
+  mm/damon/core: s/nr_accesses_to_accesses_bp/sample_count_to_bp/
+  mm/damon/core: s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/
+  mm/damon/core: update probe hits for new parameter commit
+  mm/damon/core: handle unreset probe_hits in probe_hits_mvsum()
+
+ include/linux/damon.h       | 10 +++---
+ mm/damon/core.c             | 64 ++++++++++++++++++++++++-------------
+ mm/damon/lru_sort.c         |  2 +-
+ mm/damon/ops-common.c       |  2 +-
+ mm/damon/tests/core-kunit.h | 21 ++++++++----
+ 5 files changed, 63 insertions(+), 36 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 9765c7b820c4f11a416d8bc9d402e1914138f64c
+-- 
+2.47.3
