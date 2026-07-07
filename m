@@ -1,257 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mta22.hihonor.com (mta22.hihonor.com [81.70.192.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDB926FD9B
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 08:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF6C3101B6
+	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 08:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.192.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783411230; cv=none; b=tZkIb7zIoAgmjLBu6XLjYCu8Mjr8PckJ+MNobi/vPJ2KMIli/uecDh30kQ2Hm02rtcztSZgZaGN5iwMI2yzwv6OqzQj8BRMYAdY4xah2yXuQhgKY2nwa9NQ4ed1/S++HYcmvjwPcwMGnGmeX44Tkas7wgFR5Adm4oqYq7631oIw=
+	t=1783412494; cv=none; b=P3DufaoNldoOwI0deT9uaNfaW92Q0mwDo0zT9pXMYEoCtrtojcHb2oaiYHwvromRPG6Yv5J6rt80SaiqKWW/aBiLA01j9xcnuw5fSfrETYMaSr1khyv3CQoLJDryIJfSZgIb/bEtoSp9BOh1BWCa65TJei9Lgja48uxUoUfEjK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783411230; c=relaxed/simple;
-	bh=5ZENWkygTzFD3hztF/bn3gr7fEKGN0LMOncEihdN95M=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=AOmMwsgHu2Q3ophioimRYYelH13HjBPVumJMfsLaCabc0dsbBSsHMoFoZrcZ0cvjJdCwieFps87UQY0USO79aFMFshOKaY0NlE75K+jA5QRFlEu3nO1QG+Omjtq1ziLvNHZqzuWmAHnU46EFV547Jer/QpsD+t+iickxLDjcwRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5uaXW3B; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783412494; c=relaxed/simple;
+	bh=0qEYw/kORu+CHB2h/1PvcuGa9W8zXV/BEp8uiX+ijrc=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=fBNU4Dk1DWDzCxPZxykBav0hsYfZG2GStuSfYw1dEhCYOGwMwk/qy18SXUKQMKbHLuqnnfLG8FGQQR3UcVRXyp4YX0CHJTl1hpZKwltTn+5RzVkX08haDdF6hViaqkwndp/szgViy/iyjkuHCAxPXCzaZaN7D8kFnfCOJaXPQs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b=Pz4JCC5j; arc=none smtp.client-ip=81.70.192.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5uaXW3B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22E31F000E9;
-	Tue,  7 Jul 2026 08:00:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783411228;
-	bh=1QvXgqJfe6++NpusLiuvFU6UqaFL16UqwdjktIm6lNQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=S5uaXW3BTnYr9XFUs6rupJwqgcASs8IOC5vxVX0I61vDTI+iNCzHwq2+jYjmYN1q5
-	 Uyk3tbJpNSDel0gToQEX5IXwbn4viqMrE4yiVlOfQazuCL7P80VfIfxAlFC6Q7SGGM
-	 lcmIWX321yCYcUO5SFicCqAUwcpkK/xEDOwwMculs8+wmjSS2Mg6jqlQZQX506nYzV
-	 wJzrO8LI3WEm8ytlm3o1ituqGUr8gAsscY+v6uo/5c/kj/KS7XJIP9MRwQQGi+lTNB
-	 CYN4QgFMfzCstkh5ofM+x8mpuGX0gdXX4RhkoEQZSSGJza5UkYGQp2EEzYThz1d3o8
-	 uqTJCcMAyV1eA==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 04/13] mm: implement anon_node_clone for
- ANON_VMA_FRACTAL
-Reply-To: sashiko-reviews@lists.linux.dev
-To: tao <tao.wangtao@honor.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260707063308.29176-5-tao.wangtao@honor.com>
+	dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b="Pz4JCC5j"
+dkim-signature: v=1; a=rsa-sha256; d=honor.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=To:From;
+	bh=0qEYw/kORu+CHB2h/1PvcuGa9W8zXV/BEp8uiX+ijrc=;
+	b=Pz4JCC5jlXSi5X4B42t+HBGZjPXcu07/0QJzKOkROww8hc0n+LYFEueKq+YzBskjWdDfC7gwn
+	1H8vo4WsTs7uC2COJRcfMc7GyyM70t22qbv7XheS4lp/S98A3iFUlPsg7YpllfaEsbjXdOzLvM/
+	EmvokN6FPkEekmuGMpxr08g=
+Received: from TW004-1.hihonor.com (unknown [10.77.232.85])
+	by mta22.hihonor.com (SkyGuard) with ESMTPS id 4gvZ1x4kQfzYm4Nv;
+	Tue,  7 Jul 2026 16:21:25 +0800 (CST)
+Received: from TA001.hihonor.com (10.77.210.32) by TW004-1.hihonor.com
+ (10.77.232.85) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Tue, 7 Jul
+ 2026 16:21:25 +0800
+Received: from TA003.hihonor.com (10.72.0.43) by TA001.hihonor.com
+ (10.77.210.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Tue, 7 Jul
+ 2026 16:21:24 +0800
+Received: from TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1]) by
+ TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1%7]) with mapi id
+ 15.02.2562.037; Tue, 7 Jul 2026 16:21:25 +0800
+From: wangtao <tao.wangtao@honor.com>
+To: "David Hildenbrand (Arm)" <david@kernel.org>, "akpm@linux-foundation.org"
+	<akpm@linux-foundation.org>, "catalin.marinas@arm.com"
+	<catalin.marinas@arm.com>, "will@kernel.org" <will@kernel.org>,
+	"tglx@kernel.org" <tglx@kernel.org>, "mingo@redhat.com" <mingo@redhat.com>,
+	"bp@alien8.de" <bp@alien8.de>, "dave.hansen@linux.intel.com"
+	<dave.hansen@linux.intel.com>, "x86@kernel.org" <x86@kernel.org>,
+	"willy@infradead.org" <willy@infradead.org>, "sj@kernel.org" <sj@kernel.org>,
+	"kees@kernel.org" <kees@kernel.org>, "luizcap@redhat.com"
+	<luizcap@redhat.com>, "zhangjiao2@cmss.chinamobile.com"
+	<zhangjiao2@cmss.chinamobile.com>, "kas@kernel.org" <kas@kernel.org>,
+	"ljs@kernel.org" <ljs@kernel.org>
+CC: "hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org"
+	<liam@infradead.org>, "vbabka@kernel.org" <vbabka@kernel.org>,
+	"rppt@kernel.org" <rppt@kernel.org>, "surenb@google.com" <surenb@google.com>,
+	"mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz" <jack@suse.cz>,
+	"riel@surriel.com" <riel@surriel.com>, "harry@kernel.org" <harry@kernel.org>,
+	"jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>,
+	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "peterx@redhat.com"
+	<peterx@redhat.com>, "ziy@nvidia.com" <ziy@nvidia.com>,
+	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+	"npache@redhat.com" <npache@redhat.com>, "ryan.roberts@arm.com"
+	<ryan.roberts@arm.com>, "dev.jain@arm.com" <dev.jain@arm.com>,
+	"baohua@kernel.org" <baohua@kernel.org>, "lance.yang@linux.dev"
+	<lance.yang@linux.dev>, "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>,
+	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>,
+	"muchun.song@linux.dev" <muchun.song@linux.dev>, "baoquan.he@linux.dev"
+	<baoquan.he@linux.dev>, "nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>,
+	"matthew.brost@intel.com" <matthew.brost@intel.com>,
+	"joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, "rakie.kim@sk.com"
+	<rakie.kim@sk.com>, "byungchul@sk.com" <byungchul@sk.com>,
+	"gourry@gourry.net" <gourry@gourry.net>, "ying.huang@linux.alibaba.com"
+	<ying.huang@linux.alibaba.com>, "apopple@nvidia.com" <apopple@nvidia.com>,
+	"pfalcato@suse.de" <pfalcato@suse.de>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "linux-fsdevel@vger.kernel.org"
+	<linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev"
+	<shakeel.butt@linux.dev>, "ryncsn@gmail.com" <ryncsn@gmail.com>,
+	"jparsana@google.com" <jparsana@google.com>, "dvander@google.com"
+	<dvander@google.com>, zhangji <zhangji1@honor.com>, wangzicheng
+	<wangzicheng@honor.com>
+Subject: RE: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
+ anon_vma_chain
+Thread-Topic: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
+ anon_vma_chain
+Thread-Index: AQHdDdtOKxyL+IwP/0+o3I4bi0Jgh7ZhGu0AgACbXoA=
+Date: Tue, 7 Jul 2026 08:21:24 +0000
+Message-ID: <b00a03d62c53430ca22b3f3c5e5327b5@honor.com>
 References: <20260707063308.29176-1-tao.wangtao@honor.com>
- <20260707063308.29176-5-tao.wangtao@honor.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 07 Jul 2026 08:00:28 +0000
-Message-Id: <20260707080028.C22E31F000E9@smtp.kernel.org>
+ <08c001ab-320f-4676-830b-8e4ba6a05dee@kernel.org>
+In-Reply-To: <08c001ab-320f-4676-830b-8e4ba6a05dee@kernel.org>
+Accept-Language: en-US
+Content-Language: zh-CN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
 
-Thank you for your contribution! Sashiko AI review found 8 potential issue(=
-s) to consider:
-- [Critical] Flattening the fractal tree into a single list corrupts child =
-iteration when children have their own descendants, permanently severing th=
-e tree structure.
-- [Critical] VMA unlinking unconditionally casts anon_node to anon_vma and =
-overwrites mismatched fields.
-- [High] Unsynchronized read-modify-write of root->depth causes data races =
-and structural corruption of the fractal tree.
-- [High] Newly allocated anon_node objects are permanently leaked because t=
-heir reference counts are never decremented during VMA teardown.
-- [High] anon_node objects are never removed from fractal_list, leading to =
-a Kernel BUG and Use-After-Free.
-- [High] Intermediate anon_node structures can be freed while they still ha=
-ve children in their fractal_list, leading to a VM_BUG_ON panic or Use-Afte=
-r-Free.
-- [High] anon_node slab objects allocated in anon_node_track_rmap() with is=
-_fork=3Dfalse are permanently leaked because ownership is never transferred=
- to a VMA.
-- [Medium] Missing state re-validation after lock upgrade in anon_node_trac=
-k_rmap() leads to duplicate child node insertions.
---
-
---- Patch [4]: [RFC PATCH v2 04/13] mm: implement anon_node_clone for ANON_=
-VMA_FRACTAL ---
-commit d6053627649639aa9d6f587172befdbc0e783aed
-Author: tao <tao.wangtao@honor.com>
-
-mm: implement anon_node_clone for ANON_VMA_FRACTAL
-
-This commit implements anon_node_clone for ANON_VMA_FRACTAL. It creates
-a child anon_node when the VMA is remapped or when the VMA count exceeds
-the maximum trackable limit. Newly created nodes are inserted at the tail
-of the rbc children list.
-
-> diff --git a/mm/rmap.c b/mm/rmap.c
-> index 55074ee931967..9dc82e7438b00 100644
-> --- a/mm/rmap.c
-> +++ b/mm/rmap.c
-
-[ ... ]
-
-> +static inline void vma_set_anon_node(struct vm_area_struct *vma,
-> +		struct anon_node *anon_nod, bool is_locked)
-> +{
-> +	struct rw_semaphore *rmap_sem =3D anon_node_rmap_sem(anon_nod);
-> +
-> +	if (is_locked) {
-> +		vma->anon_vma =3D (struct anon_vma *)anon_nod;
-> +		return;
-> +	}
-> +	down_write(rmap_sem);
-> +	vma->anon_vma =3D (struct anon_vma *)anon_nod;
-
-[Severity: Critical]
-Does this type cast corrupt the anon_node structure during teardown?
-
-During teardown, the standard unlink_anon_vmas() flow operates on this poin=
-ter
-and executes active_anon_vma->num_active_vmas--. Since anon_node has a
-different layout and lacks num_active_vmas, won't this unconditionally write
-out of bounds and corrupt the anon_node fields?
-
-> +	up_write(rmap_sem);
-> +}
-> +
-> +static int anon_node_add_child(struct anon_node *anon_nod,
-> +	struct vm_area_struct *vma, bool is_fork)
-> +{
-> +	struct anon_node *child;
-> +	struct anon_node *root =3D anon_nod->root;
-> +	struct rw_semaphore *rmap_sem =3D anon_node_rmap_sem(root);
-> +	struct anon_node *rbc_ch =3D anon_nod, *next;
-> +
-> +	if (root->depth =3D=3D 0)
-> +		root->depth =3D 1;
-
-[Severity: High]
-Can this unsynchronized read-modify-write cause data races?
-
-root->depth is being modified outside of any locks. Could a concurrent thre=
-ad
-allocating a node via anon_node_alloc() read an incorrect parent->depth of 0
-instead of 1? Because tree traversals require accurate depths, won't an
-incorrectly initialized branch permanently break the tree structure?
-
-> +	child =3D anon_node_alloc(vma, anon_nod, is_fork);
-
-[Severity: High]
-Are these newly allocated anon_node objects permanently leaked?
-
-anon_node is allocated with a refcount of 1. During VMA teardown,
-unlink_anon_vmas() relies on iterating vma->anon_vma_chain to call
-put_anon_vma(). However, since anon_node logic never populates anon_vma_cha=
-in,
-won't the iteration loop silently skip over it and leak the memory?
-
-[Severity: High]
-Does anon_node_alloc() fail to pin the direct parent node?
-
-In anon_node_alloc(), the logic increments the refcount of the root node but
-doesn't increment the refcount of the direct parent. If an intermediate par=
-ent
-node is unmapped, won't its refcount drop to 0 and get freed while it still
-has children in its fractal_list? This could lead to a VM_BUG_ON panic or a
-use-after-free for the children.
-
-> +	if (!child)
-> +		return -ENOMEM;
-> +
-> +	rmap_sem =3D anon_node_rmap_sem(root);
-> +	down_write(rmap_sem);
-> +	/* Add new child to the tail of rbc children. */
-> +	while ((next =3D anon_node_next_rbc_child(anon_nod, rbc_ch)) !=3D NULL)=
- {
-> +		rbc_ch =3D next;
-> +	}
-> +	list_add(&child->fractal_list, &rbc_ch->fractal_list);
-
-[Severity: Critical]
-Does inserting the new child here corrupt the contiguous list iteration?
-
-The iterator macro anon_node_next_rbc_child() strictly expects contiguous
-children and returns NULL when node->depth !=3D parent->depth + 1:
-
-mm/internal.h:anon_node_next_rbc_child() {
-    ...
-    return node->depth =3D=3D anon_nod->depth + 1 ? node : NULL;
-}
-
-If an existing child has its own descendants, those descendants interrupt t=
-he
-contiguous sequence. The loop above stops prematurely at the first child wi=
-th
-descendants. By inserting the new child via list_add() immediately after th=
-at
-child, won't the new sibling be placed before the descendants? This would
-break the depth check for both anon_node_next_rbc_child() and
-anon_node_next_descendant(), permanently severing all subsequent subtrees.
-
-[Severity: High]
-Are anon_node objects ever removed from fractal_list during teardown?
-
-Nodes are added to the list here, but it doesn't appear there is a
-corresponding list_del() anywhere in the teardown logic. If anon_node_free()
-were reached, wouldn't it assert VM_BUG_ON(!list_empty(&anon_nod->fractal_l=
-ist))?
-Furthermore, freeing a node without removing it from the list would leave
-dangling list pointers in its parent and siblings, causing a use-after-free
-on the next tree traversal.
-
-> +	++anon_nod->nr_children;
-> +
-> +	if (is_fork)
-> +		vma_set_anon_node(vma, child, true);
-
-[Severity: High]
-Are anon_node objects allocated with is_fork=3Dfalse permanently leaked?
-
-When anon_node_track_rmap() expands tracking by calling anon_node_add_child=
-()
-with is_fork=3Dfalse, the vma_set_anon_node() call here is skipped. Because=
- the
-newly allocated child node is never attached to a VMA, is there any mechani=
-sm
-to track or decrement its initial reference count when the VMA is ultimately
-unmapped?
-
-> +	up_write(rmap_sem);
-> +	return 0;
-> +}
-> +
-> +/* Returns 0 on success, non-zero on failure. */
-> +static int anon_node_track_rmap(struct anon_node *anon_nod,
-> +		struct vm_area_struct *vma)
-> +{
-> +	struct rw_semaphore *rmap_sem =3D anon_node_rmap_sem(anon_nod);
-> +	unsigned long rmap_base =3D vma_rmap_base(vma);
-> +	struct anon_node *rbc_ch =3D anon_nod;
-> +
-> +	if (try_track_rmap(anon_nod, rmap_base))
-> +		return 0;
-> +
-> +	down_read(rmap_sem);
-> +	while ((rbc_ch =3D anon_node_next_rbc_child(anon_nod, rbc_ch)) !=3D NUL=
-L) {
-> +		if (try_track_rmap(rbc_ch, rmap_base))
-> +			break;
-> +	}
-> +	up_read(rmap_sem);
-> +	if (rbc_ch)
-> +		return 0;
-> +
-> +	return anon_node_add_child(anon_nod, vma, false);
-
-[Severity: Medium]
-Should the state be re-validated after acquiring the write lock?
-
-anon_node_track_rmap() searches for a capable child node under a read lock.
-If it fails, it drops the read lock and calls anon_node_add_child(), which
-takes a write lock to unconditionally allocate and append a node.
-
-Could concurrent threads that fail the read check queue up on the write lock
-and blindly append redundant tracking nodes for the exact same rmap_base?
-
-> +}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707063308.2917=
-6-1-tao.wangtao@honor.com?part=3D4
+PiANCj4gT24gNy83LzI2IDA4OjMyLCB0YW8gd3JvdGU6DQo+ID4gSGkgYWxsLA0KPiA+DQo+ID4g
+U2luY2UgdjEgd2FzIHJlbGF0aXZlbHkgY29tcGxleCBhbmQgZGlmZmljdWx0IHRvIGV4dGVuZCwg
+dGhpcyB2ZXJzaW9uDQo+ID4gYWRvcHRzIGEgc2ltcGxlciBhbm9uX3ZtYSBpbXBsZW1lbnRhdGlv
+biBhcHByb2FjaC4NCj4gDQo+IEkgcmVhbGx5IGhhdGUgdG8gcmVwZWF0IG15c2VsZiwgYnV0IHlv
+dSBzZWVtZWQgdG8gaGF2ZSBtaXNzZWQgbXkgbWFpbiBwb2ludA0KPiBbMV0NCj4gDQpJIHNhdyBp
+dCwgYW5kIEnigJl2ZSB3YWl0ZWQgZm9yIGEgd2hpbGUgYXMgd2VsbC4NCg0KSWYgdGhlcmUgYXJl
+IHRlY2huaWNhbCBpc3N1ZXMsIHBsZWFzZSBwb2ludCB0aGVtIG91dCBkaXJlY3RseS4NCk9yIGlz
+IHRoaXMgc2ltcGx5IGhvdyB0ZWNobmljYWwgZGlzY3Vzc2lvbnMgYXJlIHVzdWFsbHkgY29uZHVj
+dGVkIGluIHRoZSBMaW51eCBjb21tdW5pdHkgb3IgdGhlIG1tIHN1YnN5c3RlbT8NCg0KVGhhbmtz
+LA0KVGFvDQoNCj4gIkxvcmVuem8gaGFzIGJlZW4gaGFyZCBhdCB3b3JrIGV4cGxvcmluZyB2YXJp
+b3VzIGRlc2lnbiBvcHRpb25zIChhbmQgSSdtDQo+IGFmcmFpZCBoZSBtaWdodCBiZSBvbmUgb2Yg
+dGhlIDMgcGVvcGxlIG9uIHRoaXMgcGxhbmV0IHRoYXQgdW5kZXJzdGFuZA0KPiBhbm9uX3ZtYSBp
+biBmdWxsIGRldGFpbCksIHNvIEkgc3VnZ2VzdCB3ZSB3YWl0IGZvciBhIHJlZGVzaWduIHByb3Bv
+c2FsIGZyb20NCj4gaGltIGFuZCBzZWUgaWYgdGhhdCBpcyBkb2FibGU/Ig0KPiANCj4gWzFdIGh0
+dHBzOi8vbG9yZS5rZXJuZWwub3JnL2FsbC83MDM3NzYyNi01MDBkLTQ2ZjItYTNmNS0NCj4gYTBk
+MjkxNGNlMzY1QGtlcm5lbC5vcmcvDQo+IA0KPiAtLQ0KPiBDaGVlcnMsDQo+IA0KPiBEYXZpZA0K
