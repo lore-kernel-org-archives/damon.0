@@ -1,149 +1,363 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04A5429825
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 14:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255902AD0C;
+	Tue,  7 Jul 2026 14:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783433200; cv=none; b=PoRKhnexN3upCTy71rZ4EUmzYfTBXujKvyKudAfThTGgFTcV4iuKKieTfDcC6bX+ayQgBRPM5gAFZQMj0YFl7V6Rpf6AS/BIuOmHqn/+xrJvf/1p0uq7iVkanjrd32lJrCD4KZSlTHbvijI4uKmLPtMEM86Q8T6yl7dPQck5hxE=
+	t=1783433435; cv=none; b=aqt9Qylopbi6sQcnU+jQWl1/xYwaWogbo+pCE7aqFBsfaZJdUcqW1URfXY61qVSmGhsbjelQYQc5malH5ggjWzzrNMwB1ZfEk9XiBXEAm8t8GVQuPjOUk4o0xrcYPQ+fhM1jpsSoQQ8M45wM/k9g+30OLeeFWPng3XyKJuoU9lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783433200; c=relaxed/simple;
-	bh=KhMi2H+8QGA+lmV3OMO5j9j9geQ2hyiRIGLTUp2xx80=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=oZerYPv5BWJi8aQERU/lxmFYDqzktGX4lDsvb5o6HRNhrQWq1jHrDc4uTQASNaEuw9k7cophSqX3/acs/mLzLHBs3U8WJ43HBAfteIkLoXJaLEHhJizuFwpPoxyiP9zmD8COYMVY+Bq/hPw0Fe0rg+H0YLEMMQ6+yR3CO3Vup/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W2rLp8g5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783433435; c=relaxed/simple;
+	bh=21j6is8hUyK8TTHcD+E3ZU6+uvsTeMb3IsOLkR3TSG0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=p7o1GTaW1gfkjBHwzluMgqmKsCKkXI3jPHXWEpktMqGzIBMlDSzbvxIc8vnF38V0EMKRWmr3e9v47FlHjoVmuDF50PvDrqGL18JhgfSzPhcdwI2fpvcf0oGUYEHaEGIFsqL6U3AsvSZvnMii4pRsq5FRGggx7JCABsnjwRHXAHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O618xadB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W2rLp8g5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449861F000E9;
-	Tue,  7 Jul 2026 14:06:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O618xadB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79DC71F000E9;
+	Tue,  7 Jul 2026 14:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783433199;
-	bh=UmEZ99ZQ8mdSavD6tEEAmr7ligBD5PxDcDH1g+dvF3c=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=W2rLp8g5gFKpzLXICQ9zmvFuqTiq7irWgEP/kOBfKMBOiIt9VtpZiXjcEyuV5F2NY
-	 qX47B/nJQsHVooSMa74opnUGji8E0dheeNuLfLbqtC2I5xEvEe4vHurtbSDNa8+yro
-	 zxKAs0BNlKcBlyG8ake8Lck9ZzZtKyaN7KN8+aB3mkwLUgtFvX3dEPjWvjq/xTbfv/
-	 VtFsSWG9Qxe9DiHGLp2bENK8q75p6F14qzA3lMfj0F06Gza0dVpqmGNubtQmN2YdUF
-	 7pal70qbqL9A3mbpm80P1u3rwA1tjOpHbx9hl8deH43Ts1nI59AV3drz2BwF2df5a0
-	 9qv5JwSv7OFKA==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 6/7] mm/damon/core: update probe hits for new
- parameter commit
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260707135038.90068-7-sj@kernel.org>
-References: <20260707135038.90068-1-sj@kernel.org>
- <20260707135038.90068-7-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 07 Jul 2026 14:06:38 +0000
-Message-Id: <20260707140639.449861F000E9@smtp.kernel.org>
+	s=k20260515; t=1783433433;
+	bh=mGLrQS1SXvb0zHk0sihv3Er0QWw9XAVL5sq1bWYATZE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=O618xadBGVjtRibMkNXIPVsipD/j1QJvOqAFFl1H5a+0CL6fO/qpOd2kT5e6SW5fu
+	 2Eh5ZoiTEvWPZ52YRLtHwqTfTwA31amhtmkzhmRGJLhuDtapkSFgWTE35Nu7pyTbyX
+	 hhC33WlUBQZZovWa/jvtl+7dPprVm1onitxcRWY+KR6tWkRMI7tE9eQZlk1UCLzGu6
+	 J1tALKJ9863lI1r/5lEpII7w+F20VVL7ZoYk2udGQ1qMGZlYujhEQx9MeRwa/+2LAQ
+	 RBBlxUKCyKdk/v3Rmgq9nrEKGiGMujlDn521SKc64hg4qK1K/ShHWbkO6f5DmeST0j
+	 vUKWCOFqauieQ==
+From: SJ Park <sj@kernel.org>
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+Cc: SJ Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 0/3] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Tue,  7 Jul 2026 07:10:29 -0700
+Message-ID: <20260707141029.91064-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <9e29abd7-e6d8-4bb0-95f8-1dc3089ca2ce@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Medium] Silent integer truncation when assigning scaled `probe_hits` fro=
-m `unsigned int` to `unsigned char`.
-- [Low] The KUnit test update adds the required `ctx` parameter but entirel=
-y fails to test the new `probe_hits` logic.
---
+Hello Gutierrez,
 
---- Patch [6]: [RFC PATCH v1.1 6/7] mm/damon/core: update probe hits for ne=
-w parameter commit ---
-commit 4d31f2a415d3352c6ff9b689ba6991c3606580b1
-Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: update probe hits for new parameter commit
+Thank you for your replies.  I still find some of my comments are not replied,
+acknowledged or objected.  Could you please address those all before the next
+revision?
 
-Users can update DAMON parameters at runtime. If the samples and/or
-aggregation intervals are updated in this way, monitoring results depending=
- on
-the intervals should also be updated for a more accurate snapshot. This com=
-mit
-updates probe_hits to reflect these changes.
+On Tue, 7 Jul 2026 16:31:03 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index cda318806b65b..9a3ff0fe55a61 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -898,10 +898,32 @@ static unsigned int damon_nr_samples_for_new_attrs(=
-unsigned int nr_accesses,
->  			new_attrs);
->  }
-> =20
-> +static void damon_update_probe_hits(struct damon_region *r,
-> +		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs,
-> +		bool aggregating, struct damon_ctx *ctx)
-> +{
-> +	struct damon_probe *p;
-> +	int i =3D 0;
-> +
-> +	damon_for_each_probe(p, ctx) {
-> +		r->last_probe_hits[i] =3D damon_nr_samples_for_new_attrs(
-> +				r->last_probe_hits[i], old_attrs, new_attrs);
+> 
+> 
+> On 6/20/2026 11:02 PM, SeongJae Park wrote:
+> > On Sat, 20 Jun 2026 20:11:46 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+> > 
+> >> Hi SJ,
+> >>
+> >> So sorry, I missed your email. I just found it. Sorry for the late answer.
+> >>
+> >> On 6/17/2026 4:44 AM, SeongJae Park wrote:
+> >>> On Tue, 16 Jun 2026 15:03:13 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> >>>
+> >>>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> >>>>
+> >>>> Overview
+> >>>> ========
+> >>>>
+> >>>> This patch set introduces a new autotuning which allows to collapse
+> >>>> hot regions into hugepages.
+> >>>>
+> >>>> Motivation
+> >>>> ==========
+> >>>>
+> >>>> Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+> >>>> misses (or hits) is to use huge pages. Unfortunately, using "always"
+> >>>> in THP leads to memory fragmentation and memory waste. For this reason,
+> >>>> most application guides and system administrators suggest to disable THP.
+> >>>>
+> >>>> Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
+> >>>> However, there is no way to tune the settings. It will collapse all the
+> >>>> hot regions that meet the access pattern. If the server is a bare metal
+> >>>> database or big data server, this will also lead to eventual fragmentation.
+> >>>>
+> >>>> Additionally, currently THP is set globally. Ideally, there should be a
+> >>>> way to control which tasks can use huge pages.
+> >>>
+> >>> Could you please reword for prctl(PR_SET_THP_DISABLE) like per-process control
+> >>> cases, as we discussed [1] on RFC v3?
 
-[Severity: Medium]
-Does this code silently truncate the scaled sample counts?
+WDYT?
 
-The function damon_nr_samples_for_new_attrs() computes and returns an
-unsigned int. However, r->last_probe_hits and r->probe_hits are arrays of
-unsigned char.
+> >>>
+> >>>>
+> >>>> Solution
+> >>>> ========
+> >>>>
+> >>>> DAMON has now a way to autotune some of the variables and adjust quotas
+> >>>> automatically, so that DAMON is fired only under the right circumstances.
+> >>>> It would be nice to have something similar, but for huge pages.
+> >>>>
+> >>>> A new autotuning quota goal[2], damos_hugepage_mem_bp, is introduced,
+> >>>> which checks the huge page consumption to total memory consumption. This
+> >>>> new quota mechanism reuses current autotuning architecture.
+> >>>>
+> >>>> A new sample module (SAMPLE_DAMON_HPAGE) is introduced to demonstrate
+> >>>> the use of huge pages collapse autotuning. The goal is to collapse hot
+> >>>> regions of a given process into huge pages. The sample module launches
+> >>>> a kdamond thread for a certain task provided by the user through
+> >>>> taget_pid module argument. Hugepage goal autotuning will automatically
+> >>>> adjust the aggressiveness of hot region collapses.
+> >>>>
+> >>>> This sample module also has a user autotuning knob which allows the
+> >>>> user to adjust the aggressiveness of page collapsing.
+> >>>>
+> >>>> Benchmarks
+> >>>> ==========
+> >>>>
+> >>>> Huge page collapse autotuning was tested in a physicial machine with
+> >>>> MariaDB 10.5.29 and sysbench as the benchmark framework.
+> >>>>
+> >>>> The hugepage module was set up in the following way:
+> >>>>
+> >>>> # echo 1000 > min_age
+> >>>> # echo 1000 > quota_percentage_hugepage
+> >>>
+> >>> I guess this is the quota goal?  What is the unit?  I guess it is aparently not
+> >>> percentage?  The name doesn't sound like very consistent or intuitive.  How
+> >>> about hugepage_mem_bp or target_hugepage_mem_bp?
+> >> Right, we agreed to change the name. I will correct it.
+> > 
+> > Thank you.  Because we agreed to drop the module, this could simply be dropped?
 
-If a privileged user updates DAMON parameters via sysfs such that the new
-aggr_interval / sample_interval ratio scales the existing hits beyond 255, =
-it
-will silently truncate (modulo 256), losing the accuracy of the metric.=20
+WDYT?
 
-Should the result be explicitly clamped via min_t(), or the underlying type
-widened?
+> > 
+> >>>> # echo $(pidof mariadbd) > taget_pid
+> >>>> # echo on > enabled
+> >>>>
+> >>>> The goal was to achieve 5% of the total memory used as hugepage.
+> >>>
+> >>> I guess this is what the above example is setting using
+> >>> 'quotta_percentage_hugepage'?  If so, it means the unit is 1/20000 ?  Is this
+> >>> correct...?
+> >> I actually set it to 500. I will update the cover letter.
+> > 
+> > I think changes of this series is matured and very close to land.
+> > Discrepancies in the cover letter and commit messages are my concern that
+> > blocking this series.  Please keep everything up to date and in high quality,
+> > from the next version.
+> I will test it with a bigger database.
 
-> +		if (!aggregating)
-> +			r->probe_hits[i] =3D damon_nr_samples_for_new_attrs(
-> +					r->probe_hits[i], old_attrs,
-> +					new_attrs);
-> +		else
-> +			r->probe_hits[i] =3D 0;
-> +		i++;
-> +	}
-> +}
+Thank you.  Couuld you further clarify what you expect to see as the result,
+and how it will complete the story?
 
-[ ... ]
+> >>>> Since the database was not very big, we may not be able to achieve
+> >>>> high amount of huge pages per total memory consumption ratio.
+> >>>
+> >>> I believe this patch series will work as you explained.  But, it seems bit
+> >>> weird to show a test result that doesn't demonstrate what this patch is aimed
+> >>> to achive.  Could you increase the size of the database?  IIRC, you were able
+> >>> to show the percentage is over-achived case in an early version.
+> >> Actually, this is what I got using the TEMPORAL quota goals. With the regular
+> >> quota goals, it actually over-achieves the goal.
+> >>
+> >> Is this an actual bug in the TEMPORAL quota goal?
+> > 
+> > You mentioned "Since the database was not very big, we may not be able to ...".
+> > Based on that, I was assuming you will be able to make the goal achieved, by
+> > increasing the database size.  Now you are saying about the goal.
+> > 
+> > Do you mean the database size is not expected to contributed to this result?
+> > 
+> > Of course TEMPORAL goal might have bugs.  I find no clue from this datta,
+> > though.  Do you have some evidences that make you suspect it?  If so, could you
+> > please share?
 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 9e631b19b184a..b4feef1a460f4 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-> @@ -591,32 +591,39 @@ static void damon_test_update_monitoring_result(str=
-uct kunit *test)
->  		.sample_interval =3D 10, .aggr_interval =3D 1000,};
->  	struct damon_attrs new_attrs;
->  	struct damon_region *r =3D damon_new_region(3, 7);
-> +	struct damon_ctx *ctx;
-> =20
->  	if (!r)
->  		kunit_skip(test, "region alloc fail");
-> +	ctx =3D damon_new_ctx();
-> +	if (!ctx) {
-> +		damon_free_region(r);
-> +		kunit_skip(test, "ctx alloc fail");
-> +	}
+WDYT?
 
-[Severity: Low]
-Is the new probe_hits logic effectively dead code during this test?
+> > 
+> >>>>
+> >>>> The table below shows the memory consumption over time. Timestamp is in
+> >>>> second and the memory usage in is MBytes. Gaps in the timestamp means
+> >>>> that no changes in the hugepage consumption happened over that period
+> >>>> of time in MB. The total used memory is calculated as
+> >>>> mem_total - mem free. The huge page used is calculated as
+> >>>> huge_page_anon + huge_page_shmem + huge_page_file. The table also
+> >>>> shows the huge pages to total memory ratio.
+> >>>>
+> >>>> Hugepage autotune benchmark:
+> >>>> +-----------+----------------+----------------+----------------------+
+> >>>> | timestamp | total mem used | huge page used | percentage hugepage  |
+> >>>> +-----------+----------------+----------------+----------------------+
+> >>>> | 0         | 3044.988281    | 0              | 0%                   |
+> >>>> | 22        | 3160.207031    | 2              | 0.06%                |
+> >>>> | 30        | 3250.90625     | 4              | 0.12%                |
+> >>>> | 69        | 3781.238281    | 6              | 0.16%                |
+> >>>> | 71        | 3822.226563    | 8              | 0.21%                |
+> >>>> | 72        | 3846.578125    | 10             | 0.26%                |
+> >>>> | 73        | 3852.402344    | 12             | 0.31%                |
+> >>>> | 74        | 3868           | 14             | 0.36%                |
+> >>>> | 75        | 3881.84375     | 104            | 2.68%                |
+> >>>> | 275       | 4194.175781    | 106            | 2.52%                |
+> >>>> +-----------+----------------+----------------+----------------------+
+> >>>> After second 275, no more pages are collapsed into hugepages
+> >>>>
+> >>>>
+> >>>> THP (always) benchmark:
+> >>>> +-----------+----------------+----------------+---------------------+
+> >>>> | timestamp | total mem used | huge page used | percentage hugepage |
+> >>>> +-----------+----------------+----------------+---------------------+
+> >>>> |         1 |    4489.320313 |            184 |         4.098615986 |
+> >>>> |        15 |    4581.871094 |            214 |         4.670580984 |
+> >>>> |        30 |    4757.742188 |            376 |         7.902908253 |
+> >>>> |        45 |    4937.574219 |            558 |         11.30109595 |
+> >>>> |        60 |    5147.867188 |            728 |         14.14177898 |
+> >>>> |        75 |      5407.0625 |            918 |         16.97779524 |
+> >>>> |        95 |    5668.796875 |           1040 |         18.34604455 |
+> >>>> |       105 |    5723.839844 |           1056 |         18.44915352 |
+> >>>> |       115 |     5736.84375 |           1072 |         18.68623317 |
+> >>>> |       125 |    5732.042969 |           1088 |         18.98101612 |
+> >>>> |       186 |    5753.601563 |           1184 |         20.57841488 |
+> >>>> |       246 |    5746.398438 |           1280 |         22.27482159 |
+> >>>> |       306 |    5752.128906 |           1376 |         23.92157795 |
+> >>>> |       367 |      5772.5625 |           1472 |         25.49994045 |
+> >>>> |       427 |    5832.019531 |           1568 |         26.88605536 |
+> >>>> |       488 |    5813.246094 |           1664 |         28.62428277 |
+> >>>> |       548 |    5807.621094 |           1760 |         30.30500736 |
+> >>>> |       598 |    5841.253906 |           1822 |         31.19193292 |
+> >>>> |       669 |    5982.160156 |           1854 |         30.99214918 |
+> >>>> |       931 |    5946.605469 |           1868 |         31.41287933 |
+> >>>> |       981 |    6020.207031 |           1896 |         31.49393352 |
+> >>>> |       991 |    5988.445313 |           1910 |         31.89475566 |
+> >>>> |      1011 |    5988.570313 |           1926 |         32.16126554 |
+> >>>> |      1032 |    6016.039063 |           1936 |         32.18064211 |
+> >>>> |      1575 |    6057.289063 |           1968 |         32.48978181 |
+> >>>> |      1606 |    6026.167969 |           2000 |         33.18858702 |
+> >>>> +-----------+----------------+----------------+---------------------+
+> >>>> I ignored some points to make the table shorter. Anyway, the amount
+> >>>> of memory consumption, total and huge pages, is a lot higher than
+> >>>> with DAMON hugepage autotuning.
+> >>>
+> >>> Could you further clarify why it is, and what this means
+> >> Memory fragmentation. I will add information about memory fragmentation
+> >> in the next cover letter. >>
+> > 
+> > Yes, please.  Let's make the complete story of the benchmark.
 
-The test allocates a new damon_ctx via damon_new_ctx(), but it doesn't add
-any mock probes to it, nor does it initialize any probe_hits on the test
-region.=20
+I'd like to again call out I'd like to show "complete story".  I don't think
+additional data points that look interesting but not providing a complete story
+is really adding much values to this work.
 
-As a result, the new damon_for_each_probe() loop in
-damon_update_probe_hits() exits immediately without testing the scaling log=
-ic.
+If you want my feedback on benchmark results first, sending benchmark results
+(with your analysis an discussions) without the code change could be an option.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707135038.9006=
-8-1-sj@kernel.org?part=3D6
+> > 
+> >>>>
+> >>>> Performance:
+> >>>> Baseline (no THP, module off) -> 18,162.45 transactions per second
+> >>>> Hugepage autotune -> 18,211.82 transactions per second (+0.27% improvement)
+> >>>> THP always -> 18,388.3 (+1.24%)
+> >>>> THP madvise -> 18,179.25 (+0.09%)
+> >>>>
+> >>>> Improvement is due to lower TLB misses
+> >>>
+> >>> So this result says THP always is much better than the Hugepage autotune in
+> >>> terms of the performance.  Maybe you want to claim Hugepage autotune is better
+> >>> in terms of the memory efficiency?  Could you please clarify further?
+> >> It's better than THP "never", but worse than THP "always". THP "always" is worse
+> >> in terms of memory consumption, "always" is worse.
+> > 
+> > I think it is arguable, but yes, please make the argument clear.  We can
+> > discuss only after that.
+> > 
+> > Since we agreed to drop the module, you may need to do the benchmark again,
+> > using DAMON sysfs interface of 'damo'.  I'd encourage 'damo' path.  Extending
+> > it for ddamos_quota_hugepage_mem_bp should be easy.  Let me know if you need my
+> > help.
+> > 
+> > Because the change is simple, I wouldn't request you to show clear performance
+> > benefit.  But I want it to clearly show the functionality.  That is, by
+> > applying the new feature, we should be able to show the hugepage memory ratio
+> > is controllable.
+> I agree. I will start testing manually through sysfs first. Once it works,
+> I will fork damo, make small changes to support the functionality and provide
+> all the details in the cover letter using damo.
+
+For the damo side change, you could refer to this:
+https://github.com/damonitor/damo/commit/8b3fc4a55ead
+
+> >>>>
+> >>>> Patches Sequence
+> >>>> ================
+> >>>> Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP and autotuning
+> >>>> Patch 2 -> Module that demonstrates how to use
+> >>>>            DAMOS_QUOTA_HUGEPAGE_MEM_BP and DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
+> >>>> Patch 3 -> Support for DAMOS_QUOTA_HUGEPAGE_MEM_BP in sysfs-schemes
+> >>>>
+> >>>> Changes from previous versions
+> >>>> ==============================
+> >>>> RFC 4[3] -> v1
+> >>>>   - Renamed config to SAMPLE_DAMON_HPAGE, file to hpage.c and
+> >>>>     functions to damon_sample_hpage_...
+> >>>>   - Make the module depend on TRANSPARENT_HUGEPAGE, since
+> >>>>     the module will need some THP functions anyway
+> >>>>   - Removed documentation, since this is just a sample module
+> >>>>   - Removed DAMOS_QUOTA_HUGEPAGE_MEM_BP from
+> >>>>     damos_sysfs_add_quota_score
+> >>>>   - Added a short description of the module in Kconfig
+> >>>
+> >>> Thank you for continuing this work!
+> >>>
+> >>> [...]
+> >>>
+> >>>> [1] https://dl.acm.org/doi/pdf/10.1145/3307650.3322227
+> >>>> [2] https://lore.kernel.org/e67f05ad-dbb9-45e6-ba30-b167a99ac67d@huawei-partners.com
+> >>>> [3] https://lore.kernel.org/20260611150244.3454699-1-gutierrez.asier@huawei-partners.com
+> >>>> [4] https://lore.kernel.org/20260604150338.501128-1-gutierrez.asier@huawei-partners.com
+> >>>> [5] https://lore.kernel.org/20260522145518.158910-1-gutierrez.asier@huawei-partners.com
+> >>>> [6] https://lore.kernel.org/20260522171210.900B11F00A3D@smtp.kernel.org
+> >>>> [7] https://lore.kernel.org/20260522171633.AAF5B1F000E9@smtp.kernel.org
+> >>>> [8] https://lore.kernel.org/20260430134139.2446417-1-gutierrez.asier@huawei-partners.com
+> >>>> [9] https://lore.kernel.org/all/20260430154338.E22E6C2BCB3@smtp.kernel.org/
+> >>>
+> >>> [1] https://lore.kernel.org/9f9e2159-5a6b-496f-9633-fa06c0217948@huawei-partners.com
+> >>>
+> >>>
+> >>> Thanks,
+> >>> SJ
+> >>>
+> >>> [...]
+> >>>
+> >>
+> >> SJ, once again, sorry for the late answer. Please, disregard my new patch set, I will fix
+> >> it with your feedback.
+> > 
+> > No worries.  Thank you for your grateful continued work on this.
+> > 
+> > 
+> > Thanks,
+> > SJ
+> > 
+> > [...]
+> > 
+> 
+> -- 
+> Asier Gutierrez
+> Huawei
+
+Thanks,
+SJ
