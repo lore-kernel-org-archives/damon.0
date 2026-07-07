@@ -1,220 +1,158 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com [209.85.210.69])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A530372ED6;
-	Tue,  7 Jul 2026 17:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7FE38911F
+	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 21:33:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783444198; cv=none; b=oACstvpdT9IUoMJ+2hLWiP2WpghKkKrNmQajr6qrvVwBx78sSfrZ5N1+RZaKCtsAg5tIe8h9mY2HceyTpI1HHvjTkBj6YUocrknpZk35wjyxFKYUnE7Fs/kZsk6PCQBbRKJbPMmbyXTLpipNlMTSJPuCv9h9w9T+nNef6Tf/RuA=
+	t=1783459984; cv=none; b=WJIKqsGRCW2j7uKgOovEjxhTukn2EGFQFjH2DzXn4yuJaFOwFFc3ArLpwa0A25nb1POw0wTL6pfEenbnNPwIOl4GfISEXiL74+x6+EgWm7kYFlQS2+EEyf/f8e+uo925Snak0DL5MNSZs1RCmuNX6ajKoe3WtOpNC8onl4jR20o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783444198; c=relaxed/simple;
-	bh=Fli7YaSv2y6c6B2aCq4qlf+CIVVBRtRvVhuHOeOvDso=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ooNgo+30wL1/BbNezwdRM1agTfceoId5Zy2IViZiQrh0ropWFMVFkG3qPAZF0ltSZ+10jiVq5C9QgevAHKhAdEloF5eB6Oa/jnmcwGiHFz72xZbWMfb8mgw20UIV1ovSNhkB+bYOQLsz+K4Rwtttcse+S1xEvFIOojgzKnSV/Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ilfmc06F; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ilfmc06F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A401F000E9;
-	Tue,  7 Jul 2026 17:09:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783444196;
-	bh=6CUF4r7uPib5/E2O+eq3hGHhL62QsV+tEaoDwEyllTY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=ilfmc06FAFeATNBCfn3m2SaaaswmEuje9O4YPqE8sB9iRfOk/k8OX0VfmqDNRhP6F
-	 qm33s5+R7gsznyaFV/hM/pgRlfTDt3Z5jY6ANbJ7DBq5ynoVzGPdeFfGkXQP4pXSrB
-	 nWYyaG7n4i/eZatWysf8ih7R/aI/s3c1kJKNe7LDPMlBRhSSK5Ld4oVqd7IEFI4TLX
-	 7Rp0AfrrEN8+4u0LSC6IFY366eDcJHezNpreBLRis6DlGPQK9ZkiLGZKI9RbUnWxA1
-	 XuS7ffBN/zsdFdZHlfNUkcXDKGYn3JQ0nX7QDgtQcuuTL7P8NC8klsHAiXAkzBvuVn
-	 k6Dxp4ektc7ug==
-Message-ID: <66e8d008-5eaf-4a9a-9cca-e9b2bd8c9f9a@kernel.org>
-Date: Tue, 7 Jul 2026 19:09:42 +0200
+	s=arc-20240116; t=1783459984; c=relaxed/simple;
+	bh=jEqvd4EuPiFtruMx0AmvgitV0rlHUlhXdIoQyGq9uo0=;
+	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=hjrqqG2gFnkxRMUyaJ/xY2cEmj9BHD0h1InCLB4H5trlyrbo5H/wplmzKAWsI/pLhcpbJdPhtWw8aixunIuuX7M1wQqLh7VMQoE6DNzWsNXUW7B4Ku9yUf2BFvLuDJhuLQgX3swH5OlMm9zfg5qKtC0i+D1F1apK09UC7h4WPNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.210.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
+Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-7e9fa2cd5c9so77456a34.2
+        for <damon@lists.linux.dev>; Tue, 07 Jul 2026 14:33:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783459979; x=1784064779;
+        h=content-type:cc:to:from:subject:message-id:in-reply-to:date
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=ZbjaYNNT/DAa2ZgxKUTDH5wk4uWoo8h75GUG/OWPB4w=;
+        b=O/qDk0RB9O3f6JoPCBsZHuRDbFroOZBWU53/E5/N7vhofE0GicO8EpU2s1NYf0NvYt
+         5yXYQCP1LD14O0af9u8VZxtXrD88cHnccSewqkpbYtFsGGf0y0Td6gr/z6MssSYAlI0Q
+         kpvsYBYU75AFvc4d7OJZAvMEfeLV94OdCZ0jl2RO0ehAlFOb7HMqpAO+lMXT16nq2Vvq
+         irNPMwcOnvmcVwCEJ/bsJdBh7YeHFkvEuDPv7t5xOlQdJZVmmGCICIqhq525miQJ5gyX
+         olWTju+zXuBGeNFqKNEhHw3UyPaKlY51Rv9k+bFMWsIpzQPD8gLW4MH9FHufa1Wl5maZ
+         5sNQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9fSKhrCAkTPqp0ZmWnEuQBqCBhuHmszlTf4hTKF0Bm2y+A78yVJPbgkOq6i0T2PRX2RiXKBg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzjp/ovf/OFmib2VHE5aU27fKdkKWqhtNVJ0ArJ4kWBJXqd7pCS
+	ehsN+KZNeNTnTDMwfGbU3RgeTM61pmIhi5yATGwZk/DcN0zEWUOm7FbSB+Zf6T5Jj480Sdr+TWw
+	kAzn4kxzkcqtdRKvEsbrgwRUT10dE5vDTSp7JN7tyhbxzvBGuGhHtHu8qXwQ=
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
- anon_vma_chain
-To: wangtao <tao.wangtao@honor.com>,
- "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
- "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
- "will@kernel.org" <will@kernel.org>, "tglx@kernel.org" <tglx@kernel.org>,
- "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
- "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
- "x86@kernel.org" <x86@kernel.org>, "willy@infradead.org"
- <willy@infradead.org>, "sj@kernel.org" <sj@kernel.org>,
- "kees@kernel.org" <kees@kernel.org>, "luizcap@redhat.com"
- <luizcap@redhat.com>,
- "zhangjiao2@cmss.chinamobile.com" <zhangjiao2@cmss.chinamobile.com>,
- "kas@kernel.org" <kas@kernel.org>, "ljs@kernel.org" <ljs@kernel.org>
-Cc: "hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org"
- <liam@infradead.org>, "vbabka@kernel.org" <vbabka@kernel.org>,
- "rppt@kernel.org" <rppt@kernel.org>, "surenb@google.com"
- <surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>,
- "jack@suse.cz" <jack@suse.cz>, "riel@surriel.com" <riel@surriel.com>,
- "harry@kernel.org" <harry@kernel.org>, "jannh@google.com"
- <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>,
- "jhubbard@nvidia.com" <jhubbard@nvidia.com>,
- "peterx@redhat.com" <peterx@redhat.com>, "ziy@nvidia.com" <ziy@nvidia.com>,
- "baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
- "npache@redhat.com" <npache@redhat.com>,
- "ryan.roberts@arm.com" <ryan.roberts@arm.com>,
- "dev.jain@arm.com" <dev.jain@arm.com>, "baohua@kernel.org"
- <baohua@kernel.org>, "lance.yang@linux.dev" <lance.yang@linux.dev>,
- "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>,
- "chengming.zhou@linux.dev" <chengming.zhou@linux.dev>,
- "muchun.song@linux.dev" <muchun.song@linux.dev>,
- "baoquan.he@linux.dev" <baoquan.he@linux.dev>,
- "nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>,
- "matthew.brost@intel.com" <matthew.brost@intel.com>,
- "joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>,
- "rakie.kim@sk.com" <rakie.kim@sk.com>, "byungchul@sk.com"
- <byungchul@sk.com>, "gourry@gourry.net" <gourry@gourry.net>,
- "ying.huang@linux.alibaba.com" <ying.huang@linux.alibaba.com>,
- "apopple@nvidia.com" <apopple@nvidia.com>,
- "pfalcato@suse.de" <pfalcato@suse.de>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>,
- "damon@lists.linux.dev" <damon@lists.linux.dev>,
- "shakeel.butt@linux.dev" <shakeel.butt@linux.dev>,
- "ryncsn@gmail.com" <ryncsn@gmail.com>,
- "jparsana@google.com" <jparsana@google.com>,
- "dvander@google.com" <dvander@google.com>, zhangji <zhangji1@honor.com>,
- wangzicheng <wangzicheng@honor.com>
-References: <20260707063308.29176-1-tao.wangtao@honor.com>
- <08c001ab-320f-4676-830b-8e4ba6a05dee@kernel.org>
- <b00a03d62c53430ca22b3f3c5e5327b5@honor.com>
- <0e8e5a28-1111-4b81-b04f-b81e749eb3dd@kernel.org>
- <f640c89d9722462098bf1b7a0a6854c2@honor.com>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <f640c89d9722462098bf1b7a0a6854c2@honor.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Received: by 2002:a05:6820:1995:b0:6a1:5ca0:d52e with SMTP id
+ 006d021491bc7-6a355246c2emr4441088eaf.7.1783459978731; Tue, 07 Jul 2026
+ 14:32:58 -0700 (PDT)
+Date: Tue, 07 Jul 2026 14:32:58 -0700
+In-Reply-To: <20260707063308.29176-1-tao.wangtao@honor.com>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <6a4d708a.a1ad617e.25832.000c.GAE@google.com>
+Subject: [syzbot ci] Re: mm: rework anon_vma and remove anon_vma_chain
+From: syzbot ci <syzbot+cie73eac57e65eaf28@syzkaller.appspotmail.com>
+To: akpm@linux-foundation.org, apopple@nvidia.com, baohua@kernel.org, 
+	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, bp@alien8.de, 
+	byungchul@sk.com, catalin.marinas@arm.com, chengming.zhou@linux.dev, 
+	damon@lists.linux.dev, dave.hansen@linux.intel.com, david@kernel.org, 
+	dev.jain@arm.com, dvander@google.com, gourry@gourry.net, harry@kernel.org, 
+	hpa@zytor.com, jack@suse.cz, jannh@google.com, jgg@ziepe.ca, 
+	jhubbard@nvidia.com, joshua.hahnjy@gmail.com, jparsana@google.com, 
+	kas@kernel.org, kees@kernel.org, lance.yang@linux.dev, liam@infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-fsdevel@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org, ljs@kernel.org, 
+	luizcap@redhat.com, matthew.brost@intel.com, mhocko@suse.com, 
+	mingo@redhat.com, muchun.song@linux.dev, nao.horiguchi@gmail.com, 
+	npache@redhat.com, peterx@redhat.com, pfalcato@suse.de, rakie.kim@sk.com, 
+	riel@surriel.com, rppt@kernel.org, ryan.roberts@arm.com, ryncsn@gmail.com, 
+	shakeel.butt@linux.dev, sj@kernel.org, surenb@google.com, 
+	tao.wangtao@honor.com
+Cc: syzbot@lists.linux.dev, syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 7/7/26 11:20, wangtao wrote:
->>> I saw it, and I’ve waited for a while as well.
->>
->> Apparently you saw it but you didn't read my reply about slapping more
->> complexity on something complicated.
-> This v2 is a complete rewrite replacing the original anon_vma and anonymous-page
-> reverse-mapping traversal.
+syzbot ci has tested the following series
 
-Okay, it leaves the old code in place for now. Just as a general node without
-going into details: that won't fly. We don't need another MGLRU.
+[v2] mm: rework anon_vma and remove anon_vma_chain
+https://lore.kernel.org/all/20260707063308.29176-1-tao.wangtao@honor.com
+* [RFC PATCH v2 01/13] mm: add CONFIG_ANON_VMA_FRACTAL
+* [RFC PATCH v2 02/13] mm: implement helpers for ANON_VMA_FRACTAL
+* [RFC PATCH v2 03/13] mm: implement __anon_node_prepare for ANON_VMA_FRACTAL
+* [RFC PATCH v2 04/13] mm: implement anon_node_clone for ANON_VMA_FRACTAL
+* [RFC PATCH v2 05/13] mm: implement anon_node_fork_with_prev for ANON_VMA_FRACTAL
+* [RFC PATCH v2 06/13] mm: implement unlink_anon_nodes for ANON_VMA_FRACTAL
+* [RFC PATCH v2 07/13] mm: handle rmap_base changes for ANON_VMA_FRACTAL
+* [RFC PATCH v2 08/13] mm: implement anonymous folio rmap for ANON_VMA_FRACTAL
+* [RFC PATCH v2 09/13] mm: prepare anon_node replacement for ANON_VMA_FRACTAL
+* [RFC PATCH v2 10/13] mm: replace anon_vma with anon_node for ANON_VMA_FRACTAL
+* [RFC PATCH v2 11/13] mm: optimize rmap for ANON_VMA_FRACTAL with PVL
+* [RFC PATCH v2 12/13] mm: shared semaphores for ANON_VMA_FRACTAL
+* [RFC PATCH v2 13/13] mm: Enable CONFIG_ANON_VMA_FRACTAL by default
 
-> 
-> The new anon_vma hierarchy is represented using a simple doubly linked list with depth information,
-> replacing the complex topology of red-black trees maintained by each anon_vma in the original design,
-> and also removing anon_vma_chain.
+and found the following issue:
+WARNING: bad unlock balance in exc_page_fault
 
-Okay, but anon_vma fundamentally remains. Using a lipstick on a pig.
+Full report is available here:
+https://ci.syzbot.org/series/39466cf1-707b-420e-8f1e-11735bea6c66
 
-> 
-> Excluding patch 11, which optimizes leaf VMA rmap with PVL, and patch 12, which optimizes memory
-> usage through shared semaphores, the base version contains roughly 800 lines of code, including the
-> compatibility part replacing the original anon_vma implementation.
-> 
->>
->>  12 files changed, 1056 insertions(+), 54 deletions(-)
->>
->>>
->>> If there are technical issues, please point them out directly.
->>> Or is this simply how technical discussions are usually conducted in the
->> Linux community or the mm subsystem?
->>
->> I suggest you go back and read my email.
-> 
-> At first, I thought I was the only one who found anon_vma hard to understand. After reading your earlier email,
-> I realized that many people also consider it difficult to follow. 
+***
 
-Right, that's how Lorenzo started his work, trying to replace/remove anon_vma
-entirely.
+WARNING: bad unlock balance in exc_page_fault
 
-So I tried a different approach and implemented
-> anon_vma rmap using a simpler doubly linked list plus depth mechanism.
+tree:      mm-new
+URL:       https://kernel.googlesource.com/pub/scm/linux/kernel/git/akpm/mm.git
+base:      8ff49efd1cf18086320f3b43d1bd483c0b9e7e58
+arch:      amd64
+compiler:  Debian clang version 22.1.6 (++20260514074242+fc4aad7b5db3-1~exp1~20260514074407.73), Debian LLD 22.1.6
+config:    https://ci.syzbot.org/builds/c3a229e4-b949-4889-b309-dbdd1fadd95f/config
+syz repro: https://ci.syzbot.org/findings/29b52ad4-b463-41da-877c-4138356e3960/syz_repro
 
-And this is what I don't understand. You were told that Lorenzo is working on
-removing anon_vma, yet you decided to work on + send something that reworks
-anon_vma?
+=====================================
+WARNING: bad unlock balance detected!
+syzkaller #0 Not tainted
+-------------------------------------
+sshd/5593 is trying to release lock (vm_lock) at:
+[<ffffffff8bb5032a>] handle_page_fault arch/x86/mm/fault.c:1483 [inline]
+[<ffffffff8bb5032a>] exc_page_fault+0x6a/0xc0 arch/x86/mm/fault.c:1536
+but there are no more locks to release!
 
-Also, I am really curious about your expectation: not having a single patch
-contributed to MM, even worse, not a single RB tag or anything, yet you rework
-one of the most complicated part of MM repeatedly using other complicated
-approaches, and immediately start demand technical discussions? After sending an
-absolute horrible v1?
+other info that might help us debug this:
+no locks held by sshd/5593.
 
-I really try to be a nice person, but really, am I dreaming?
+stack backtrace:
+CPU: 1 UID: 0 PID: 5593 Comm: sshd Not tainted syzkaller #0 PREEMPT(full) 
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+ print_unlock_imbalance_bug+0xdc/0xf0 kernel/locking/lockdep.c:5298
+ __lock_release kernel/locking/lockdep.c:5527 [inline]
+ lock_release+0x1f1/0x3c0 kernel/locking/lockdep.c:5889
+ vma_refcount_put include/linux/mmap_lock.h:216 [inline]
+ vma_end_read include/linux/mmap_lock.h:264 [inline]
+ do_user_addr_fault+0xab0/0x1340 arch/x86/mm/fault.c:1345
+ handle_page_fault arch/x86/mm/fault.c:1483 [inline]
+ exc_page_fault+0x6a/0xc0 arch/x86/mm/fault.c:1536
+ asm_exc_page_fault+0x26/0x30 arch/x86/include/asm/idtentry.h:595
+RIP: 0033:0x5583206de68b
+Code: 04 25 28 00 00 00 48 89 44 24 08 31 c0 48 89 e2 e8 8c 5b ff ff 85 c0 78 13 31 c0 4d 85 e4 74 0c 48 8b 3c 24 48 89 de 4c 89 e1 <f3> a4 48 8b 54 24 08 64 48 2b 14 25 28 00 00 00 74 05 e8 5e 17 fc
+RSP: 002b:00007fff02a37e60 EFLAGS: 00010206
+RAX: 0000000000000000 RBX: 000055835a20d6fe RCX: 0000000000008000
+RDX: 0000000000000000 RSI: 000055835a20d6fe RDI: 00007fac5106c010
+RBP: 000055832073df00 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000008000
+R13: 000000000000005e R14: 00000000000000b3 R15: 00007fff02a37f88
+ </TASK>
 
 
-Obviously, Lorenzo is still working om his approach, about which there were
-discussions at conferences and LWN articles.
+***
 
-Stating "that you waited for a while" is ludicrous given that your old patch set
-was posted around one month ago, and a complete redesign -- moving away from
-anon_vma -- is not expected to be a short-term thing.
+If these findings have caused you to resend the series or submit a
+separate fix, please add the following tag to your commit message:
+  Tested-by: syzbot@syzkaller.appspotmail.com
 
-Meanwhile, Lorenzo is sending real cleanups [1] as preparation for bigger
-changes. ... which is what we usually expect on such fundamental reworks.
+---
+This report is generated by a bot. It may contain errors.
+syzbot ci engineers can be reached at syzkaller@googlegroups.com.
 
-I'm really left clueless here why we anyone should spend time trying to thing
-through yet another data structure and yet another locking scheme, for something
-we want to remove entirely?
+To test a patch for this bug, please reply with `#syz test`
+(should be on a separate line).
 
-Again, I really try to be a nice person, but something here just doesn't add up.
-
-[1] https://lore.kernel.org/r/cover.1782735110.git.ljs@kernel.org
-
--- 
-Cheers,
-
-David
+The patch should be attached to the email.
+Note: arguments like custom git repos and branches are not supported.
