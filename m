@@ -1,30 +1,30 @@
 Received: from mta21.hihonor.com (mta21.hihonor.com [81.70.160.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D053D2FE6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DE73D3314
 	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 06:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.160.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783407459; cv=none; b=SgDLOfpBLZI+wWVWV/xPyHqF6pC0eOwy+tDzlralN2ZoZiJFaOQ/mHPa/VeZiKwnrCZ2QLJoAnYbyOIguZ3D0n0c6x7C7FY/2bEPMuyO+FHatLk3QnPvZ7zFEIm75Q44AWaPNXgRqckiWL+JxafMbNa709GMUA2xHiJXBk+TQ2Y=
+	t=1783407460; cv=none; b=oAD4ihnlMIr75Rqo6Lx1huYKMvxR2Kes01mVo8CKrtphEcoY0uDv5u4WxoQOXkCjV1d/VoL6g7WeeELNPJ3zvQR4AMXJ++vAjFtgLPe5qBLNdT80sMaeaR7Kc0EcE9SluGI4R086DsQ6TWf3fo8q8Kf6x58qobBgzkxbeAYiK7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783407459; c=relaxed/simple;
-	bh=NCeN+XjamdXRlv4aSYJ4/A5Aw4jYENapGFozitIo3Co=;
+	s=arc-20240116; t=1783407460; c=relaxed/simple;
+	bh=fwXfFr9I8Qrv7AsTjkGpQNNTSx/ObgqQdRPomKbX3tY=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eahGHVBMTtFo8DFfl2WphtOMRL0PVTbni0ZUKcdkOjHQbJV8wOrRUukag8jYcdHEjyrb6nKuMi2DzsMBcslHTrEr2jEyc4SXL2DbKticVUWKKxdPh62sM4JqUI23PC1FqccdoJSz85qOmUOI3tB4+S6DVb2qTwI+O3+FkaiGnBU=
+	 MIME-Version:Content-Type; b=DbiuY/BRT1BOU6IPhQg16th3oBCnmU2q6+Eub8Bf6W1Wnb72fhe5Wz9qVlhflLWCD/RspYxEPELFPvOgZCxHjnhx+K0UfJ8yT4ARbng4k7FwmfVIJvDx29HdxF34+xXgE08bPR4QGnZzT4MGWmC97UKNtjIxROy16MGYdHpnFjA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; arc=none smtp.client-ip=81.70.160.142
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
 Received: from TW001.hihonor.com (unknown [10.77.229.151])
-	by mta21.hihonor.com (SkyGuard) with ESMTPS id 4gvWnG5QqZzYmSQd;
-	Tue,  7 Jul 2026 14:40:18 +0800 (CST)
+	by mta21.hihonor.com (SkyGuard) with ESMTPS id 4gvWnJ5jTJzYmWKW;
+	Tue,  7 Jul 2026 14:40:20 +0800 (CST)
 Received: from TA003.hihonor.com (10.72.0.43) by TW001.hihonor.com
  (10.77.229.151) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Tue, 7 Jul
- 2026 14:40:18 +0800
+ 2026 14:40:20 +0800
 Received: from localhost.localdomain (10.144.18.117) by TA003.hihonor.com
  (10.72.0.43) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Tue, 7 Jul
- 2026 14:40:18 +0800
+ 2026 14:40:20 +0800
 From: tao <tao.wangtao@honor.com>
 To: <akpm@linux-foundation.org>, <david@kernel.org>,
 	<catalin.marinas@arm.com>, <will@kernel.org>, <tglx@kernel.org>,
@@ -47,9 +47,9 @@ CC: <hpa@zytor.com>, <liam@infradead.org>, <vbabka@kernel.org>,
 	<linux-mm@kvack.org>, <damon@lists.linux.dev>, <shakeel.butt@linux.dev>,
 	<ryncsn@gmail.com>, <jparsana@google.com>, <dvander@google.com>,
 	<zhangji1@honor.com>, <wangzicheng@honor.com>, tao <tao.wangtao@honor.com>
-Subject: [RFC PATCH v2 04/13] mm: implement anon_node_clone for ANON_VMA_FRACTAL
-Date: Tue, 7 Jul 2026 14:32:59 +0800
-Message-ID: <20260707063308.29176-5-tao.wangtao@honor.com>
+Subject: [RFC PATCH v2 11/13] mm: optimize rmap for ANON_VMA_FRACTAL with PVL
+Date: Tue, 7 Jul 2026 14:33:06 +0800
+Message-ID: <20260707063308.29176-12-tao.wangtao@honor.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20260707063308.29176-1-tao.wangtao@honor.com>
 References: <20260707063308.29176-1-tao.wangtao@honor.com>
@@ -63,113 +63,172 @@ Content-Type: text/plain
 X-ClientProxiedBy: TW002-1.hihonor.com (10.72.0.137) To TA003.hihonor.com
  (10.72.0.43)
 
-Prefer using anon_node for tracking in anon_node_clone.
-If the VMA is remapped or the VMA count exceeds
-ANON_RMAP_BASE_COUNT_MAX, create a child anon_node.
-
-Newly created anon_node are inserted at the tail of the rbc children.
+Leaf anon_nodes have no children, and a given address can belong to at
+most one VMA. In this case, PVL can protect the rmap.
 
 Signed-off-by: tao <tao.wangtao@honor.com>
 ---
- mm/rmap.c | 85 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
+ mm/internal.h | 22 ++++++++++++++++++
+ mm/rmap.c     | 64 ++++++++++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 83 insertions(+), 3 deletions(-)
 
+diff --git a/mm/internal.h b/mm/internal.h
+index 205f1b5226aa..f8dd2120b780 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -354,6 +354,23 @@ int anon_node_trylock_rmap(struct anon_node *anon_nod);
+ void anon_node_lock_rmap(struct anon_node *anon_nod);
+ void anon_node_unlock_rmap(struct anon_node *anon_nod);
+ 
++#define ANON_RMAP_LEAF_VMA	1
++#define ANON_RMAP_FLAGS 	(ANON_RMAP_LEAF_VMA)
++
++static inline bool anon_rmap_is_leaf_vma(void *anon_rmap)
++{
++#ifdef CONFIG_PER_VMA_LOCK
++	return ((unsigned long)anon_rmap & ANON_RMAP_FLAGS) == ANON_RMAP_LEAF_VMA;
++#else
++	return false;
++#endif
++}
++
++static inline struct vm_area_struct *anon_rmap_to_leaf_vma(void *anon_rmap)
++{
++	return (void *)((unsigned long)anon_rmap & ~ANON_RMAP_FLAGS);
++}
++
+ #define ANON_RMAP_FOREACH_VMA(anon_vma, addr, start, last, rmap_proc_vma) \
+ do { \
+ 	struct vm_area_struct *vma = NULL; /* must be named vma */ \
+@@ -362,6 +379,11 @@ do { \
+ 	unsigned long _pgoff = (start); \
+ 	unsigned long _nr = 0, _total = 1; \
+ 	\
++	if (anon_rmap_is_leaf_vma(_anon_nod)) { \
++		vma = anon_rmap_to_leaf_vma(_anon_nod); \
++		(rmap_proc_vma); \
++		break; \
++	} \
+ 	while (_nod) { \
+ 		vma = anon_node_lookup_vma(_nod, (addr), _pgoff); \
+ 		if (vma) \
 diff --git a/mm/rmap.c b/mm/rmap.c
-index b98ba6a83272..74817876107a 100644
+index 11239838b722..d1099a2fef0a 100644
 --- a/mm/rmap.c
 +++ b/mm/rmap.c
-@@ -703,6 +703,91 @@ int __anon_node_prepare(struct vm_area_struct *vma)
- 	return 0;
- }
+@@ -572,6 +572,8 @@ void __put_anon_vma(struct anon_vma *anon_vma)
  
-+static inline struct anon_node *vma_anon_node(struct vm_area_struct *vma)
-+{
-+	return vma ? (struct anon_node *)vma->anon_vma : NULL;
-+}
+ static struct kmem_cache *anon_node_cachep;
+ 
 +
-+static inline void vma_set_anon_node(struct vm_area_struct *vma,
-+		struct anon_node *anon_nod, bool is_locked)
-+{
-+	struct rw_semaphore *rmap_sem = anon_node_rmap_sem(anon_nod);
 +
-+	if (is_locked) {
-+		vma->anon_vma = (struct anon_vma *)anon_nod;
+ static inline struct rw_semaphore *anon_node_rmap_sem(struct anon_node *node)
+ {
+ 	return &node->root->rwsem;
+@@ -1035,9 +1037,48 @@ void anon_node_lock_rmap(struct anon_node *anon_nod)
+ 
+ void anon_node_unlock_rmap(struct anon_node *anon_nod)
+ {
++#ifdef CONFIG_PER_VMA_LOCK
++	/* Corresponds to folio_lock_anon_vma_read(). */
++	if (anon_rmap_is_leaf_vma(anon_nod)) {
++		vma_refcount_put(anon_rmap_to_leaf_vma(anon_nod));
 +		return;
 +	}
-+	down_write(rmap_sem);
-+	vma->anon_vma = (struct anon_vma *)anon_nod;
-+	up_write(rmap_sem);
-+}
++#endif
 +
-+static int anon_node_add_child(struct anon_node *anon_nod,
-+	struct vm_area_struct *vma, bool is_fork)
+ 	up_read(anon_node_rmap_sem(anon_nod));
+ }
+ 
++static struct vm_area_struct *trylock_leaf_vma_rmap(
++		struct anon_node *anon_nod, const struct folio *folio,
++		struct mm_struct **other_mm)
 +{
-+	struct anon_node *child;
-+	struct anon_node *root = anon_nod->root;
-+	struct rw_semaphore *rmap_sem = anon_node_rmap_sem(root);
-+	struct anon_node *rbc_ch = anon_nod, *next;
++	unsigned long pgoff_start = folio_pgoff(folio);
++	unsigned long pgoff_end = pgoff_start + folio_nr_pages(folio) - 1;
++	unsigned long addr = anon_node_rmap_address(anon_nod, pgoff_start);
++	struct mm_struct *mm = anon_nod->mm;
++	struct vm_area_struct *vma;
++	int oldcnt;
 +
-+	if (root->depth == 0)
-+		root->depth = 1;
-+	child = anon_node_alloc(vma, anon_nod, is_fork);
-+	if (!child)
-+		return -ENOMEM;
++	if (anon_nod->nr_children)
++		return NULL;
 +
-+	rmap_sem = anon_node_rmap_sem(root);
-+	down_write(rmap_sem);
-+	/* Add new child to the tail of rbc children. */
-+	while ((next = anon_node_next_rbc_child(anon_nod, rbc_ch)) != NULL) {
-+		rbc_ch = next;
++	if (!addr || !mm || !mmget_not_zero(mm))
++		return NULL;
++
++	vma = vma_lookup(mm, addr);
++	mmput_async(mm);
++	if (!vma || vma_last_pgoff(vma) < pgoff_end)
++		return NULL;
++
++	if (!__refcount_inc_not_zero_limited_acquire(&vma->vm_refcnt, &oldcnt,
++						     VM_REFCNT_LIMIT)) {
++		return NULL;
 +	}
-+	list_add(&child->fractal_list, &rbc_ch->fractal_list);
-+	++anon_nod->nr_children;
 +
-+	if (is_fork)
-+		vma_set_anon_node(vma, child, true);
-+	up_write(rmap_sem);
-+	return 0;
-+}
-+
-+/* Returns 0 on success, non-zero on failure. */
-+static int anon_node_track_rmap(struct anon_node *anon_nod,
-+		struct vm_area_struct *vma)
-+{
-+	struct rw_semaphore *rmap_sem = anon_node_rmap_sem(anon_nod);
-+	unsigned long rmap_base = vma_rmap_base(vma);
-+	struct anon_node *rbc_ch = anon_nod;
-+
-+	if (try_track_rmap(anon_nod, rmap_base))
-+		return 0;
-+
-+	down_read(rmap_sem);
-+	while ((rbc_ch = anon_node_next_rbc_child(anon_nod, rbc_ch)) != NULL) {
-+		if (try_track_rmap(rbc_ch, rmap_base))
-+			break;
-+	}
-+	up_read(rmap_sem);
-+	if (rbc_ch)
-+		return 0;
-+
-+	return anon_node_add_child(anon_nod, vma, false);
-+}
-+
-+/* vma clones src anon_node and increments the count. */
-+int anon_node_clone(struct vm_area_struct *vma,  struct vm_area_struct *src,
-+	enum vma_operation operation)
-+{
-+	struct anon_node *anon_nod = vma_anon_node(src);
-+
-+	mmap_assert_write_locked(vma->vm_mm);
-+	if (!anon_nod)
-+		return 0;
-+
-+	VM_BUG_ON_VMA(vma->anon_vma != (void *)anon_nod, vma);
-+	return anon_node_track_rmap(anon_nod, vma);
++	*other_mm = (vma->vm_mm == mm) ? NULL : vma->vm_mm;
++	return vma;
 +}
 +
  #endif
  
  /*
+@@ -1117,6 +1158,8 @@ struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+ {
+ 	struct anon_vma *anon_vma = NULL;
+ 	struct anon_vma *root_anon_vma;
++	struct vm_area_struct *leaf_vma = NULL;
++	struct mm_struct *other_mm = NULL;
+ 	unsigned long anon_mapping;
+ 
+ 	VM_WARN_ON_FOLIO(!folio_test_locked(folio), folio);
+@@ -1130,6 +1173,15 @@ struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+ 
+ 	anon_vma = (struct anon_vma *) (anon_mapping - FOLIO_MAPPING_ANON);
+ 	root_anon_vma = READ_ONCE(anon_vma->root);
++#if defined(CONFIG_PER_VMA_LOCK) && defined(CONFIG_ANON_VMA_FRACTAL)
++	leaf_vma = trylock_leaf_vma_rmap(anon_vma, folio, &other_mm);
++	if (leaf_vma && !other_mm && folio_mapped(folio)) {
++		rcu_read_unlock();
++		return (void *)leaf_vma + ANON_RMAP_LEAF_VMA;
++	}
++	if (unlikely(other_mm))
++		mmgrab(other_mm); /* put vma after unlock. */
++#endif
+ 	if (down_read_trylock(&root_anon_vma->rwsem)) {
+ 		/*
+ 		 * If the folio is still mapped, then this anon_vma is still
+@@ -1156,9 +1208,8 @@ struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+ 	}
+ 
+ 	if (!folio_mapped(folio)) {
+-		rcu_read_unlock();
+ 		put_anon_vma(anon_vma);
+-		return NULL;
++		goto out;
+ 	}
+ 
+ 	/* we pinned the anon_vma, its safe to sleep */
+@@ -1176,10 +1227,17 @@ struct anon_vma *folio_lock_anon_vma_read(const struct folio *folio,
+ 		anon_vma = NULL;
+ 	}
+ 
+-	return anon_vma;
++	goto out_unlocked;
+ 
+ out:
+ 	rcu_read_unlock();
++out_unlocked:
++#ifdef CONFIG_PER_VMA_LOCK
++	if (leaf_vma)
++		vma_refcount_put(leaf_vma);
++#endif
++	if (other_mm)
++		mmdrop(other_mm);
+ 	return anon_vma;
+ }
+ 
 -- 
 2.17.1
 
