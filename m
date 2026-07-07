@@ -1,180 +1,177 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9518D3C0A1C
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 07:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BB13E5568
+	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 07:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783408317; cv=none; b=Izkh3I9YM3+XMOY+Rgdgk7gmjIUJ+Wnf8oDvFrSk+iDYdEQc1zYR2wEgA/bgaQO/F8s8tDjoybhEZWh4Pq1Nk0P5iTyJkiOQ5o2Y+FA3k9COWrwbgo53Co3FRjZkACUZzT6dqFeHqX/QjkYIxuR6jv7iqRBT4xPItJeP9cUXtkE=
+	t=1783409000; cv=none; b=pCQJnP/+B8Uf+ch3McALb4Bv4ajaeTYVFx7flj2XgAZOq2Vo8zIZP5Kz5hE11BlIGJvnNdoMmNGg/oGlCXMqez54QfP4Cj+B/Ujf7ON76H+8fs3UyombGDBH7CIW6GioMSDMtAxHoptgioiCWf5jBXJs/tApmnkEfI1yAaVAtTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783408317; c=relaxed/simple;
-	bh=E8N/V9lMWzZDSqohtcyNcBNozpGRuDf5r746E3WkGag=;
+	s=arc-20240116; t=1783409000; c=relaxed/simple;
+	bh=Cfj/oa+7h0mI3kb0aNPCbufEOQdkxAqGP3J0ImXV7t0=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Aw/3MOrrslcCjTXL7FK6sLrDlQS3bWp3Nh82W+x62p/pSKfLzYGB8f+YRmIAjBajui/7YLLY505NF4fv9DcM+W4ddjR4yoTKwJ5JwCm8wIHDfksxQBtJEDAw6oq0jMLHDCvs6A/wAzuaUEEKDSg4A6uCPw1sEpHdb8Y+tdFmGH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q+N9TnQ+; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=XIRW6M5MHiKOZB+UldM18JLcuqV5sBSn3is8JkCjkllW54bnQJyLYouYtK/u1vURFv9NKleGm7oxkGAXeBOQKnw7ECS+Jna/P8BrWCiMrFwHLm78h3R7pqfT1JJ2gkL/ktONG0iaFpOtKdsvzZ098FtzSxMCCVfEInH7bmscJ68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OvUaFY96; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q+N9TnQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EAF1F01558;
-	Tue,  7 Jul 2026 07:11:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OvUaFY96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700451F000E9;
+	Tue,  7 Jul 2026 07:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783408312;
-	bh=hum5V8dDiOMOai48JL72cxCWR7Ua5LDeCVYLbNZQD3o=;
+	s=k20260515; t=1783408989;
+	bh=s7I7tVpHzIz6IVPH2q3wEcj1155NdsLO5orGen9PjnY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Q+N9TnQ+UyojOQi0zK5iS4/9774W91OFm4EnQA2iwggbdQb3mFksryJHmccLf/DQS
-	 ptSt6rkObHDzGcJUiok0fsF0J6eDc6ZVuBcPHkiwEkA5yIqSYXpfO79U4NsjZUGcL8
-	 pjTbltN5pCAkjQC6LGP8GnEg7ydZgjjPbWnRlPJTKl/4irORDY156/a/kOBgsgOAnr
-	 yi37G4bga1I1QhuGUvVIg+RUVoWPPvAG3tdoNAY5yQzEHhseD9D/j04CADwogdpLLu
-	 2ESzi/1tfPv55VQjw45rVa+1PeGoPZ7QM+B0zOr0KG6Uu79gcbChLMD61dzvIrgikW
-	 dLtR9644kXP8w==
+	b=OvUaFY96IDRoKiF9xBh/AdmS68dwsGgdan1ulJpqXoTc7rhOOm8y1baaV3uR2PU/T
+	 SbaHXcK/8OMp/TCeqGNOADkA6Mgb0+GailpAoLMkjK7G/Qc5fu82LlsMI1q1aOMkb8
+	 qvrANFmDyWNq/q7B6kDw44uoqxoTta5bTol1A30jRvHgauHtg5YfhBp/rtjLIj5b1l
+	 2sWFAqVHlXxg/GzYAcl8q4i2H2Rd5LXydk+BHksahn2Ostx0sygQVFHlaga4vD8hQ4
+	 EvEAk4bPFOP/NGnh137UoaJg51+5+n8iJlg+Hecezv+3bKccYocna56YOdUZO8WYWR
+	 E7BBh9G4HPX0Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 01/13] mm: add CONFIG_ANON_VMA_FRACTAL
+Subject: Re: [RFC PATCH v2 02/13] mm: implement helpers for ANON_VMA_FRACTAL
 Reply-To: sashiko-reviews@lists.linux.dev
 To: tao <tao.wangtao@honor.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260707063308.29176-2-tao.wangtao@honor.com>
+In-Reply-To: <20260707063308.29176-3-tao.wangtao@honor.com>
 References: <20260707063308.29176-1-tao.wangtao@honor.com>
- <20260707063308.29176-2-tao.wangtao@honor.com>
+ <20260707063308.29176-3-tao.wangtao@honor.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 07 Jul 2026 07:11:51 +0000
-Message-Id: <20260707071152.20EAF1F01558@smtp.kernel.org>
+Date: Tue, 07 Jul 2026 07:23:09 +0000
+Message-Id: <20260707072309.700451F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 4 potential issue(=
 s) to consider:
-- [Critical] Pre-order tree traversal iterators are broken due to heterogen=
-eous depth increments, causing cross-process memory corruption and missed V=
-MAs during reverse mapping.
-- [Medium] PAGE_SIZE-dependent VMA sharing limit causes severe memory bloat=
- and arbitrary lock contention scaling.
-- [Low] Duplicate and conflicting type directives for ANON_VMA_FRACTAL.
+- [High] `anon_node_alloc()` fails to take a reference on the intermediate =
+`parent` node, leading to premature freeing and dangling parent pointers.
+- [High] `anon_vma_fractal_init()` is defined but never called, leaving `an=
+on_node_cachep` uninitialized.
+- [Medium] The `anon_node` structure caches a raw pointer to an `mm_struct`=
+ without holding a reference, which can lead to a Use-After-Free.
+- [Low] Unconditional access to conditionally compiled fields `rwsem` and `=
+vm_lock_ref` breaks the build when `CONFIG_ANON_VMA_SHARED_SEMS` is enabled.
 --
 
---- Patch [1]: [RFC PATCH v2 01/13] mm: add CONFIG_ANON_VMA_FRACTAL ---
-commit 7f3f3b3fc54ea6c9180e3a0f624b7af6752d7ca5
+--- Patch [2]: [RFC PATCH v2 02/13] mm: implement helpers for ANON_VMA_FRAC=
+TAL ---
+commit 353e80074df4a13790b7dd27f2e9eb1a62294b38
 Author: tao <tao.wangtao@honor.com>
 
-mm: add CONFIG_ANON_VMA_FRACTAL
+mm: implement helpers for ANON_VMA_FRACTAL
+   =20
+Implement basic helpers.
 
-This commit adds the CONFIG_ANON_VMA_FRACTAL option to replace the
-anon_vma_chain. It uses vma_rmap_base to compute page addresses and
-organizes anon_vmas into a fractal list based on fork depth.
-
-> diff --git a/include/linux/rmap.h b/include/linux/rmap.h
-> index 8dc0871e5f001..75738f4ede1f6 100644
-> --- a/include/linux/rmap.h
-> +++ b/include/linux/rmap.h
+> diff --git a/mm/rmap.c b/mm/rmap.c
+> index 9939400e77c79..54c5ccfee6813 100644
+> --- a/mm/rmap.c
+> +++ b/mm/rmap.c
 [ ... ]
-> @@ -67,6 +67,54 @@ struct anon_vma {
-[ ... ]
-> +/* Create rbc child anon_node on VMA remap or when count exceeds MAX. */
-> +#define ANON_RMAP_BASE_COUNT_MASK	(PAGE_SIZE - 1)
-> +#define ANON_RMAP_BASE_COUNT_MAX	(ANON_RMAP_BASE_COUNT_MASK)
-> +
-> +/*
-> + * Allow VMAs to share an anon_node only if the number of VMAs attached
-> + * is below this limit; keep it small to reduce lock contention.
-> + */
-> +#define ANON_NODE_SHARE_LIMIT	(ANON_RMAP_BASE_COUNT_MAX / 1000)
-
-[Severity: Medium]
-Since ANON_RMAP_BASE_COUNT_MAX relies on PAGE_SIZE, does this create an
-artificially low sharing limit on 4K systems?
-
-On a system with 4K pages, ANON_RMAP_BASE_COUNT_MAX would evaluate to 4095.
-Dividing by 1000 means ANON_NODE_SHARE_LIMIT becomes 4, which would force a
-new anon_node allocation very frequently and could cause memory bloat.
-
-> +
-> +#endif
-> +
->  /*
->   * The copy-on-write semantics of fork mean that an anon_vma
->   * can become associated with multiple processes. Furthermore,
-> diff --git a/mm/Kconfig b/mm/Kconfig
-> index f794a341d7422..e0a1e96c6835a 100644
-> --- a/mm/Kconfig
-> +++ b/mm/Kconfig
-> @@ -1451,6 +1451,34 @@ config LOCK_MM_AND_FIND_VMA
->  	bool
->  	depends on !STACK_GROWSUP
-> =20
-> +config ANON_VMA_FRACTAL
-> +	bool "anon_vma fractal list"
-> +	def_bool n
-
-[Severity: Low]
-This isn't a bug, but using both a bool prompt and def_bool together
-conflicts with standard Kconfig syntax. Could we just use bool and
-default n instead?
-
-> +	depends on MMU
-> +	help
-> +	  This option uses vma_rmap_base(vma) during rmap to compute the page
-[ ... ]
-> diff --git a/mm/internal.h b/mm/internal.h
-> index 841c27611627e..694d3194a6baf 100644
-> --- a/mm/internal.h
-> +++ b/mm/internal.h
-[ ... ]
-> @@ -252,6 +262,24 @@ static inline void anon_vma_unlock_read(struct anon_=
-vma *anon_vma)
->  	up_read(&anon_vma->root->rwsem);
+> @@ -558,6 +558,95 @@ void __init anon_vma_init(void)
+>  			SLAB_PANIC|SLAB_ACCOUNT);
 >  }
 > =20
 > +#ifdef CONFIG_ANON_VMA_FRACTAL
 > +
-> +static inline struct anon_node *anon_node_next_rbc_child(
-> +		struct anon_node *anon_nod, struct anon_node *node)
+> +static struct kmem_cache *anon_node_cachep;
+> +
+> +static inline struct rw_semaphore *anon_node_rmap_sem(struct anon_node *=
+node)
 > +{
-> +	node =3D list_next_entry(node, fractal_list);
-> +	return node->depth =3D=3D anon_nod->depth + 1 ? node : NULL;
+> +	return &node->root->rwsem;
+> +}
+> +
+> +static inline atomic_t *anon_node_vm_lock_ref(struct anon_node *node)
+> +{
+> +	return &node->root->vm_lock_ref;
+> +}
+> +
+> +static void anon_node_ctor(void *data)
+> +{
+> +	struct anon_node *anon_nod =3D data;
+> +
+> +	init_rwsem(&anon_nod->rwsem);
+> +	atomic_set(&anon_nod->vm_lock_ref, 0);
+> +	atomic_set(&anon_nod->refcount, 0);
 > +}
 
-[Severity: Critical]
-Will this iteration abort prematurely if the next entry in the list is a
-descendant of the RBC child?
+[Severity: Low]
+Does this cause a build failure when CONFIG_ANON_VMA_SHARED_SEMS is enabled?
 
-If an RBC child has its own descendants, they would immediately follow it in
-the list. Since anon_node_next_rbc_child() in mm/internal.h strictly expects
-the very next list entry to have depth =3D=3D anon_nod->depth + 1, it appea=
-rs it
-would return NULL and stop iteration early, potentially missing VMAs.
+The rwsem and vm_lock_ref fields in struct anon_node are conditionally
+compiled out when this config is set, but they are accessed unconditionally
+here in anon_node_ctor() and anon_node_rmap_sem().
 
 > +
-> +static inline struct anon_node *anon_node_next_descendant(
-> +		struct anon_node *anon_nod, struct anon_node *node)
+> +static inline void anon_vma_fractal_init(void)
 > +{
-> +	node =3D list_next_entry(node, fractal_list);
-> +	return node->depth > anon_nod->depth ? node : NULL;
+> +	struct kmem_cache_args args =3D {
+> +		.use_freeptr_offset =3D true,
+> +		.freeptr_offset =3D offsetof(struct anon_node, fractal_list),
+> +		.ctor =3D anon_node_ctor,
+> +	};
+> +
+> +	anon_node_cachep =3D kmem_cache_create("anon_node",
+> +			sizeof(struct anon_node), &args,
+> +			SLAB_TYPESAFE_BY_RCU|SLAB_PANIC|SLAB_ACCOUNT);
 > +}
 
-[Severity: Critical]
-Could this traversal yield unrelated siblings as descendants when depth
-increments are mixed?
+[Severity: High]
+Is anon_vma_fractal_init() ever called?
 
-Since RBC children increment depth by 1 and fork children increment by 2, a
-process calling mremap (creating an RBC child) followed by fork (creating a
-fork child) will create mixed increments.
+It doesn't appear to be hooked up to anon_vma_init() or anywhere else, which
+would leave anon_node_cachep uninitialized and result in a null pointer
+dereference crash on the first allocation.
 
-If we iterate descendants of an RBC child (depth P+1),
-anon_node_next_descendant() in mm/internal.h would continue as long as
-node->depth > anon_nod->depth. A sibling fork child with depth P+2 would
-satisfy this condition and incorrectly be yielded as a descendant,
-potentially leading to cross-process memory corruption during rmap
-traversals.
+[ ... ]
+> +static inline struct anon_node *anon_node_alloc(struct vm_area_struct *v=
+ma,
+> +		struct anon_node *parent, bool is_fork)
+> +{
+> +	struct anon_node *anon_nod;
+> +
+> +	anon_nod =3D kmem_cache_alloc(anon_node_cachep, GFP_KERNEL);
+> +	if (!anon_nod)
+> +		return NULL;
+> +
+> +	anon_nod->root =3D parent ? parent->root : anon_nod;
+> +	anon_nod->parent =3D parent;
+> +	atomic_set(&anon_nod->refcount, 1);
+> +	anon_nod->depth =3D 0;
+> +	if (parent) {
+> +		get_anon_node(parent->root);
+> +		anon_nod->depth =3D parent->depth + (1 << is_fork);
+> +	}
 
+[Severity: High]
+Does this code leave the intermediate parent node vulnerable to being freed?
+
+We assign anon_nod->parent =3D parent but only take a reference on parent->=
+root.
+If the intermediate parent is freed while this node is still alive,
+anon_nod->parent becomes a dangling pointer.
+
+> +	anon_nod->nr_children =3D 0;
+> +	INIT_LIST_HEAD(&anon_nod->fractal_list);
+> +	anon_nod->mm =3D vma->vm_mm;
+
+[Severity: Medium]
+Should we acquire a reference to the mm_struct using mmgrab() here?
+
+A process exiting will free its mm_struct. If child processes keep the
+parent's root anon_node alive via get_anon_node(parent->root), the
+anon_node->mm pointer could become a dangling pointer, leading to a
+use-after-free during lockless rmap walks.
+
+> +	atomic_long_set(&anon_nod->rbc, vma_rmap_base(vma) + 1);
+> +	return anon_nod;
+> +}
 > +
 > +#endif
-> +
->  struct anon_vma *folio_get_anon_vma(const struct folio *folio);
-> =20
->  /* Operations which modify VMAs. */
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260707063308.2917=
-6-1-tao.wangtao@honor.com?part=3D1
+6-1-tao.wangtao@honor.com?part=3D2
