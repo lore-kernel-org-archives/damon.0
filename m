@@ -1,143 +1,220 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D37434E40
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 16:26:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A530372ED6;
+	Tue,  7 Jul 2026 17:09:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783441616; cv=none; b=u6ZTdJp33IEDUO+X+jv9uP4RGj/3d+6utB2YiCGhK9BsTyF3bD8xsVlfiAmofD/4mSVYSGanGlt2UJb+u6ysmEq0IpwT16bOWRhIRUpWKW9p7EreTjHof659gtuVRoJL5DbUTu99BadNjsBoG/mAb4hKtd+w52d1wAE5tuId7RA=
+	t=1783444198; cv=none; b=oACstvpdT9IUoMJ+2hLWiP2WpghKkKrNmQajr6qrvVwBx78sSfrZ5N1+RZaKCtsAg5tIe8h9mY2HceyTpI1HHvjTkBj6YUocrknpZk35wjyxFKYUnE7Fs/kZsk6PCQBbRKJbPMmbyXTLpipNlMTSJPuCv9h9w9T+nNef6Tf/RuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783441616; c=relaxed/simple;
-	bh=YNUiKnsVmS0YnEoi5UBidfFcsIdy4Lv/4umM1P9hbyY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AETg2uRn3aQ9CFOgsPZdeNz3AvbPROFzBxBR+ymKpIXI7V7FiJ0iJvz525qBa+/3K6NGR4ZRUfrcH0lUEgJFPAoofB40SMcleiq0vl0WdYr5o7AyIbVr3T3YhVERlvbrK4N8eP3okeCzMZUR7jxUSlfTuDg9pSbnCY5QW2sEIno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=DgKeiTpC; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1783444198; c=relaxed/simple;
+	bh=Fli7YaSv2y6c6B2aCq4qlf+CIVVBRtRvVhuHOeOvDso=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ooNgo+30wL1/BbNezwdRM1agTfceoId5Zy2IViZiQrh0ropWFMVFkG3qPAZF0ltSZ+10jiVq5C9QgevAHKhAdEloF5eB6Oa/jnmcwGiHFz72xZbWMfb8mgw20UIV1ovSNhkB+bYOQLsz+K4Rwtttcse+S1xEvFIOojgzKnSV/Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ilfmc06F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="DgKeiTpC"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-9204711e831so370307185a.2
-        for <damon@lists.linux.dev>; Tue, 07 Jul 2026 09:26:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1783441611; x=1784046411; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=3pPJvCom7n6xLJkZnxYC/ipfbqNHo6N+N3CeZviAw0k=;
-        b=DgKeiTpC1241Cfioz7Dg65LdNkcANIi1laldlaYY/ldXRPsuwvBKFWPK/fhqp0l2OF
-         FD/fmwNNIjbhr224B5/yRDL2C47QHrIjuxQQmWziD1Ph3Ia6UOSlkSOlRWIr6Tm9g9jy
-         JCw/1DMvDlZyxJ1RpkVKf5HKS/vMbjEiqSF5ps1AHNbxOaGnA2udpL5rhenWJY2+Et9G
-         mz5XaPIXJNHdJu13ys+G+kKT3VDXYCEmPOd2/kny3rX77IOKD9rr/j3DHatgJxXnp9PR
-         14ZiUY5bhjsSDIqIVspNuwLJnpaxmcG8utD1OOOW3xignrFtlupX4f8y+hXA6Z5L4Fhv
-         DFoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783441611; x=1784046411;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3pPJvCom7n6xLJkZnxYC/ipfbqNHo6N+N3CeZviAw0k=;
-        b=N6EeXhEMtm4KSHxalITWD0jJ0cKVrQdAj7BeCqhN5uM/iLZDPXWRGEeOBO//vOGhmQ
-         c3e9BaeUfjK5JQ35NX3B+QU1xqmaOWN2y8nMhcAHFKwOKk4NJyo+bDCKCpJcl2Y170gS
-         MUKnt2o7dKi6/t40GPF7mavhYCkwGSqZ4fLzak+8ajSYYYMbFHj97e1cVn4/04VgjtsJ
-         vPrtGoW5wTk3NnkOPfHyd4LsvEO0/oJv5+oU/p12N4az/EJJSqvW8svD1QZPexjZMjpU
-         LQ0BU4pkWROoviJWiu266yYzMITyBtr0mgLsJVliFl+UkY13/0MBnSwPc/L+wPWNIYJk
-         nmAw==
-X-Forwarded-Encrypted: i=1; AHgh+RrMGyBAoTvOSOeWay0QuABiHpa3Sok8Fjoq8ViRBD5xE48plBPRWRYQyhl4k2o5F0C+TTyW8w==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx23pQ+7cqYLQ4V1WAo5XlEf4ba9EqBKF+VOfAfztxKHaGo5btN
-	loFZX0S74g0bBdPEenSmeOdqZcDD62KnDSshhYkHriFhB5Ly9srirjIpBRq+EsRxXVA=
-X-Gm-Gg: AfdE7cnUb2kywifT15z3BzJoTTeHiIMMmormdGsfjHqVbjTlztfBcUnFM2no9M6olMj
-	kqy4JedN4LvIc/I7vhpsGpF0XhJBb+h9/dqVeuVAocgitzpe6+mULnQdmdfxhwf0koSR9nOF2x9
-	wbXN4ZyfNg6sVKPsFenDqoQ9VhwGt0O6ldPQQDcddgGN3hC304RdJwsFjc8MsSiGpu30wsEADlg
-	tK7LitXxuw7wyX2KzxMdRCUktyNTdH6auFoHjSeYmy4dmzwxOdW24fCgUKCsgTjq0ed6RuLWeBb
-	B85mL7W0IQk+tkEYsisjwbXB9Ov/YmcZMvIjQfJtwBkkMX9V8B6sXESQm0GE35bfqy8q79QcGyd
-	2nnDnN0Xw+4ba2KenW9g5QySopzk6nhOxf4YqFNM/mp7IhLHYP9r2KM482MdrwlUBv9vw1MNCIP
-	B9ejxKFybrJb28ybqI7ReQYXO3Wbo+kaalPWHRAH+uwyTM3FgoDLelZgb86TK7iSCxGrpuCSP92
-	9sy2N0=
-X-Received: by 2002:a05:620a:a807:b0:92e:c118:18b9 with SMTP id af79cd13be357-92ec1181fa1mr324497185a.88.1783441610850;
-        Tue, 07 Jul 2026 09:26:50 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-92e90ba41fesm1231337385a.17.2026.07.07.09.26.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 09:26:49 -0700 (PDT)
-Date: Tue, 7 Jul 2026 12:26:43 -0400
-From: Gregory Price <gourry@gourry.net>
-To: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Russell King <linux@armlinux.org.uk>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	Simon Schuster <schuster.simon@siemens-energy.com>,
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
-	Helge Deller <deller@gmx.de>, Jarkko Sakkinen <jarkko@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	Ian Abbott <abbotti@mev.co.uk>,
-	H Hartley Sweeten <hsweeten@visionengravers.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Christian Koenig <christian.koenig@amd.com>,
-	Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>,
-	Alex Williamson <alex@shazbot.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Dan Williams <djbw@kernel.org>, Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	David Hildenbrand <david@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Liam R . Howlett" <liam@infradead.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>, Hugh Dickins <hughd@google.com>,
-	Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>,
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org,
-	linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-	kvm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
-	nvdimm@lists.linux.dev, linux-mm@kvack.org, iommu@lists.linux.dev,
-	linux-perf-users@vger.kernel.org,
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
-	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
-	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
-	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 12/30] mm/vma: clean up anon_vma_compatible()
-Message-ID: <ak0owyNkHX6mw4pe@gourry-fedora-PF4VCD3F>
-References: <cover.1782735110.git.ljs@kernel.org>
- <5a7a07bd2a774989849b0fea84f758059ed914df.1782735110.git.ljs@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ilfmc06F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A401F000E9;
+	Tue,  7 Jul 2026 17:09:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783444196;
+	bh=6CUF4r7uPib5/E2O+eq3hGHhL62QsV+tEaoDwEyllTY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=ilfmc06FAFeATNBCfn3m2SaaaswmEuje9O4YPqE8sB9iRfOk/k8OX0VfmqDNRhP6F
+	 qm33s5+R7gsznyaFV/hM/pgRlfTDt3Z5jY6ANbJ7DBq5ynoVzGPdeFfGkXQP4pXSrB
+	 nWYyaG7n4i/eZatWysf8ih7R/aI/s3c1kJKNe7LDPMlBRhSSK5Ld4oVqd7IEFI4TLX
+	 7Rp0AfrrEN8+4u0LSC6IFY366eDcJHezNpreBLRis6DlGPQK9ZkiLGZKI9RbUnWxA1
+	 XuS7ffBN/zsdFdZHlfNUkcXDKGYn3JQ0nX7QDgtQcuuTL7P8NC8klsHAiXAkzBvuVn
+	 k6Dxp4ektc7ug==
+Message-ID: <66e8d008-5eaf-4a9a-9cca-e9b2bd8c9f9a@kernel.org>
+Date: Tue, 7 Jul 2026 19:09:42 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5a7a07bd2a774989849b0fea84f758059ed914df.1782735110.git.ljs@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
+ anon_vma_chain
+To: wangtao <tao.wangtao@honor.com>,
+ "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+ "catalin.marinas@arm.com" <catalin.marinas@arm.com>,
+ "will@kernel.org" <will@kernel.org>, "tglx@kernel.org" <tglx@kernel.org>,
+ "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
+ "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+ "x86@kernel.org" <x86@kernel.org>, "willy@infradead.org"
+ <willy@infradead.org>, "sj@kernel.org" <sj@kernel.org>,
+ "kees@kernel.org" <kees@kernel.org>, "luizcap@redhat.com"
+ <luizcap@redhat.com>,
+ "zhangjiao2@cmss.chinamobile.com" <zhangjiao2@cmss.chinamobile.com>,
+ "kas@kernel.org" <kas@kernel.org>, "ljs@kernel.org" <ljs@kernel.org>
+Cc: "hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org"
+ <liam@infradead.org>, "vbabka@kernel.org" <vbabka@kernel.org>,
+ "rppt@kernel.org" <rppt@kernel.org>, "surenb@google.com"
+ <surenb@google.com>, "mhocko@suse.com" <mhocko@suse.com>,
+ "jack@suse.cz" <jack@suse.cz>, "riel@surriel.com" <riel@surriel.com>,
+ "harry@kernel.org" <harry@kernel.org>, "jannh@google.com"
+ <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>,
+ "jhubbard@nvidia.com" <jhubbard@nvidia.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "ziy@nvidia.com" <ziy@nvidia.com>,
+ "baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+ "npache@redhat.com" <npache@redhat.com>,
+ "ryan.roberts@arm.com" <ryan.roberts@arm.com>,
+ "dev.jain@arm.com" <dev.jain@arm.com>, "baohua@kernel.org"
+ <baohua@kernel.org>, "lance.yang@linux.dev" <lance.yang@linux.dev>,
+ "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>,
+ "chengming.zhou@linux.dev" <chengming.zhou@linux.dev>,
+ "muchun.song@linux.dev" <muchun.song@linux.dev>,
+ "baoquan.he@linux.dev" <baoquan.he@linux.dev>,
+ "nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>,
+ "matthew.brost@intel.com" <matthew.brost@intel.com>,
+ "joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>,
+ "rakie.kim@sk.com" <rakie.kim@sk.com>, "byungchul@sk.com"
+ <byungchul@sk.com>, "gourry@gourry.net" <gourry@gourry.net>,
+ "ying.huang@linux.alibaba.com" <ying.huang@linux.alibaba.com>,
+ "apopple@nvidia.com" <apopple@nvidia.com>,
+ "pfalcato@suse.de" <pfalcato@suse.de>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>,
+ "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ "damon@lists.linux.dev" <damon@lists.linux.dev>,
+ "shakeel.butt@linux.dev" <shakeel.butt@linux.dev>,
+ "ryncsn@gmail.com" <ryncsn@gmail.com>,
+ "jparsana@google.com" <jparsana@google.com>,
+ "dvander@google.com" <dvander@google.com>, zhangji <zhangji1@honor.com>,
+ wangzicheng <wangzicheng@honor.com>
+References: <20260707063308.29176-1-tao.wangtao@honor.com>
+ <08c001ab-320f-4676-830b-8e4ba6a05dee@kernel.org>
+ <b00a03d62c53430ca22b3f3c5e5327b5@honor.com>
+ <0e8e5a28-1111-4b81-b04f-b81e749eb3dd@kernel.org>
+ <f640c89d9722462098bf1b7a0a6854c2@honor.com>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <f640c89d9722462098bf1b7a0a6854c2@honor.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 29, 2026 at 01:23:23PM +0100, Lorenzo Stoakes wrote:
-> Break up the existing very large conditional, add comments and use
-> vma_[start/end]_pgoff() to make clearer what we're doing here.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+On 7/7/26 11:20, wangtao wrote:
+>>> I saw it, and I’ve waited for a while as well.
+>>
+>> Apparently you saw it but you didn't read my reply about slapping more
+>> complexity on something complicated.
+> This v2 is a complete rewrite replacing the original anon_vma and anonymous-page
+> reverse-mapping traversal.
 
-Reviewed-by: Gregory Price <gourry@gourry.net>
+Okay, it leaves the old code in place for now. Just as a general node without
+going into details: that won't fly. We don't need another MGLRU.
+
+> 
+> The new anon_vma hierarchy is represented using a simple doubly linked list with depth information,
+> replacing the complex topology of red-black trees maintained by each anon_vma in the original design,
+> and also removing anon_vma_chain.
+
+Okay, but anon_vma fundamentally remains. Using a lipstick on a pig.
+
+> 
+> Excluding patch 11, which optimizes leaf VMA rmap with PVL, and patch 12, which optimizes memory
+> usage through shared semaphores, the base version contains roughly 800 lines of code, including the
+> compatibility part replacing the original anon_vma implementation.
+> 
+>>
+>>  12 files changed, 1056 insertions(+), 54 deletions(-)
+>>
+>>>
+>>> If there are technical issues, please point them out directly.
+>>> Or is this simply how technical discussions are usually conducted in the
+>> Linux community or the mm subsystem?
+>>
+>> I suggest you go back and read my email.
+> 
+> At first, I thought I was the only one who found anon_vma hard to understand. After reading your earlier email,
+> I realized that many people also consider it difficult to follow. 
+
+Right, that's how Lorenzo started his work, trying to replace/remove anon_vma
+entirely.
+
+So I tried a different approach and implemented
+> anon_vma rmap using a simpler doubly linked list plus depth mechanism.
+
+And this is what I don't understand. You were told that Lorenzo is working on
+removing anon_vma, yet you decided to work on + send something that reworks
+anon_vma?
+
+Also, I am really curious about your expectation: not having a single patch
+contributed to MM, even worse, not a single RB tag or anything, yet you rework
+one of the most complicated part of MM repeatedly using other complicated
+approaches, and immediately start demand technical discussions? After sending an
+absolute horrible v1?
+
+I really try to be a nice person, but really, am I dreaming?
+
+
+Obviously, Lorenzo is still working om his approach, about which there were
+discussions at conferences and LWN articles.
+
+Stating "that you waited for a while" is ludicrous given that your old patch set
+was posted around one month ago, and a complete redesign -- moving away from
+anon_vma -- is not expected to be a short-term thing.
+
+Meanwhile, Lorenzo is sending real cleanups [1] as preparation for bigger
+changes. ... which is what we usually expect on such fundamental reworks.
+
+I'm really left clueless here why we anyone should spend time trying to thing
+through yet another data structure and yet another locking scheme, for something
+we want to remove entirely?
+
+Again, I really try to be a nice person, but something here just doesn't add up.
+
+[1] https://lore.kernel.org/r/cover.1782735110.git.ljs@kernel.org
+
+-- 
+Cheers,
+
+David
