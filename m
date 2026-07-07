@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC58542255B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B578169AD2;
 	Tue,  7 Jul 2026 13:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783432257; cv=none; b=Zd76MiajedH32xfShuflztUZ2C4h96R8em8eSUAaKNUxyZoyNGRiBVTG7Se5WICdY7QbJEO/dzDbP5ADer6BtsUpcayvB5IFIjnO+dtmQOEH2M/KwtAa1fLrSosC3miIlPJ5wP+91/OebUIA2coQSF5vqzTK2vbK4cXr0fNXXbQ=
+	t=1783432258; cv=none; b=sz8l6Ksduu353dI/oBosBuuyq2JPNXQU4879//vVSOruR5tPvUZRUARDEkyVdf1r/NJqhyWH+sCNYK+zqwmpLuzMF/dCtxyQZmVojvivUam9jfzbNBVOU2eoAfZdfcQvlJFiPkIOiW/tbaLVPyGVc15Uuw8zRCoO99XTnmZbzCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783432257; c=relaxed/simple;
-	bh=b14HA7gblrYPyKxeU6/uEYLXkDHaGcxC8w+RaEWGZXU=;
+	s=arc-20240116; t=1783432258; c=relaxed/simple;
+	bh=cLOlv97K5N2kWVxHiNtT4hdUxT+lYP5Q2fJ8noV6q/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfRcJFLYg4wxx6pQ7SDHVO81po8zfkflamRNADGsKZxbODv9rsjFIXcjndE4VrIT0+tb85dyw+/VDtNSVwT4I+oLANZAgNQBnWPgyHuwIodh5DDQAyGkJUNjwBNaBUWW2k4LvkZOygQyrAgB0b2j1pzHioYxKWOM4TEu9ZO5w+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VjX3EsM2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M1MVe3RyRHghnMICvw92QsYagMCtfMu6y1tgzQoqy+dMiA0h1h0PXjrCdDqriTR1sbT8iohg/DhtylevoFwJv2KH6fZuVB9dnLOHEr0oFY82cyTgMgDDiUZQpGbJVtedU3imyqPt08aYtza7zJFwKxM0GaqNBHL+3PlZrzQ93zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HcpfY5Cp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VjX3EsM2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877081F00ACA;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HcpfY5Cp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A461F00A3F;
 	Tue,  7 Jul 2026 13:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783432252;
-	bh=of1I7i7VNy1H4HcbkZacjpj2gDgZKYHy4CXBT3cnzFM=;
+	bh=mSLKaa7yn0oJb/A+VytGndaYYZZ4X6C/aSyAoRapHq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VjX3EsM2q3k/yVDTb4quyBr7dla8OOF2eiAEjfDZVvm5y1fbKAywgE8luHEFR4vX7
-	 Bog2C1GMW1QW+vQlw8XW9EfGQFhCcGvK0kS33yuTn9LiBaw4Xz+fJ0yCYCpdWxIpB1
-	 Arq8pFkyxdL33w2rKb6m7t8cE1SgcSJvehV0OvfDKOgBBPXinlnt0MqbZ24yimKmmm
-	 S/fjhu6lK4TovG5pVhJw/TRaJjHzSpj67ipJlxq+FF7b3P+pPNPFVE5fz0csBJbRD4
-	 SV/yfEj1dXrNa7CZabwnujff4MCN18GMuysHrHxyTurvjIe4WMP/RcFKco9WXi3ztE
-	 +wsgRQWVfA/BQ==
+	b=HcpfY5CpzJLvJb8OYL44EbLc7umxrd2jn0A+J85NlqQ+b/5iLnqdpee/RnCj2FApJ
+	 GMxI7EY2qDmaYg7zYMfSY4BYc90mVlZ0RQETc3LJZauFc0mulYPwgFW9gefAypZJJu
+	 REg2kiQmAftKvi60QWepshEnaDUCojit+N6Sin4TiOHeyS7Y/gOiPOi8u3j0aibVF0
+	 SVUE0NRu1Y2CV/NbI3ao1uxl3Ke/XXzfn9eVK8B6yKhxRCK0FvtaWKbUv1EqUZ1J0u
+	 GApy4J9nvkvx5lD7Yv3SZyrhF4bgVQycXAnBxl+cmlivlUTtBrtp1iIQpbG8a2HWlD
+	 2weKb2k1TUcWw==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 7/7] mm/damon/core: handle unreset probe_hits in probe_hits_mvsum()
-Date: Tue,  7 Jul 2026 06:50:36 -0700
-Message-ID: <20260707135038.90068-8-sj@kernel.org>
+Subject: [RFC PATCH v1.1 6/7] mm/damon/core: update probe hits for new parameter commit
+Date: Tue,  7 Jul 2026 06:50:35 -0700
+Message-ID: <20260707135038.90068-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260707135038.90068-1-sj@kernel.org>
 References: <20260707135038.90068-1-sj@kernel.org>
@@ -47,39 +47,113 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If damon_update_monitoring_result() is called at the end of the
-aggregation interval, probe_hits is not reset.  That's because the value
-will be exposed to the user via damon_region_aggregated trace event.
-
-Meanwhile, damon_probe_hits_mvsum() can be called in this state.  Due to
-its logic, it will return a value that is incorrectly high.  This could
-happen  if the user requested DAMOS schemes applied regions sysfs files
-update exactly in the time sequence.
-
-The impact is minor, but better to avoid.  Check the timing and simply
-return the fully aggregated last_probe_hits, like
-damon_nr_accesses_mvsum() also does.  It is not 100% accurate since it
-is the last interval's aggregation.  But better than the value that is
-completely reset.
+Users can update DAMON parameters at runtime.  If the samples and/or
+aggregation intervals are updated in this way, monitoring results
+depending on the intervals should also be updated for a more accurate
+snapshot.  The age and nr_accesses are properly updated, while
+probe_hits are not updated in the way.  Do the update.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/damon/core.c             | 28 +++++++++++++++++++++++++---
+ mm/damon/tests/core-kunit.h | 13 ++++++++++---
+ 2 files changed, 35 insertions(+), 6 deletions(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 9a3ff0fe55a61..093da5c0b3693 100644
+index cda318806b65b..9a3ff0fe55a61 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -290,6 +290,9 @@ unsigned char damon_probe_hits_mvsum(int probe_idx, struct damon_region *r,
- 			ctx->passed_sample_intervals;
- 	left_window_bp = mult_frac(left_window, 10000, window_len);
- 
-+	if (left_window_bp == 10000)
-+		return r->last_probe_hits[probe_idx];
-+
- 	return damon_mvsum(r->probe_hits[probe_idx],
- 			r->last_probe_hits[probe_idx], left_window_bp);
+@@ -898,10 +898,32 @@ static unsigned int damon_nr_samples_for_new_attrs(unsigned int nr_accesses,
+ 			new_attrs);
  }
+ 
++static void damon_update_probe_hits(struct damon_region *r,
++		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs,
++		bool aggregating, struct damon_ctx *ctx)
++{
++	struct damon_probe *p;
++	int i = 0;
++
++	damon_for_each_probe(p, ctx) {
++		r->last_probe_hits[i] = damon_nr_samples_for_new_attrs(
++				r->last_probe_hits[i], old_attrs, new_attrs);
++		if (!aggregating)
++			r->probe_hits[i] = damon_nr_samples_for_new_attrs(
++					r->probe_hits[i], old_attrs,
++					new_attrs);
++		else
++			r->probe_hits[i] = 0;
++		i++;
++	}
++}
++
+ static void damon_update_monitoring_result(struct damon_region *r,
+ 		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs,
+-		bool aggregating)
++		bool aggregating, struct damon_ctx *ctx)
+ {
++	damon_update_probe_hits(r, old_attrs, new_attrs, aggregating, ctx);
++
+ 	r->last_nr_accesses = damon_nr_samples_for_new_attrs(
+ 			r->last_nr_accesses, old_attrs, new_attrs);
+ 	if (!aggregating)
+@@ -941,8 +963,8 @@ static void damon_update_monitoring_results(struct damon_ctx *ctx,
+ 
+ 	damon_for_each_target(t, ctx)
+ 		damon_for_each_region(r, t)
+-			damon_update_monitoring_result(
+-					r, old_attrs, new_attrs, aggregating);
++			damon_update_monitoring_result(r, old_attrs, new_attrs,
++					aggregating, ctx);
+ }
+ 
+ /*
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 9e631b19b184a..b4feef1a460f4 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -591,32 +591,39 @@ static void damon_test_update_monitoring_result(struct kunit *test)
+ 		.sample_interval = 10, .aggr_interval = 1000,};
+ 	struct damon_attrs new_attrs;
+ 	struct damon_region *r = damon_new_region(3, 7);
++	struct damon_ctx *ctx;
+ 
+ 	if (!r)
+ 		kunit_skip(test, "region alloc fail");
++	ctx = damon_new_ctx();
++	if (!ctx) {
++		damon_free_region(r);
++		kunit_skip(test, "ctx alloc fail");
++	}
+ 
+ 	r->nr_accesses = 15;
+ 	r->age = 20;
+ 
+ 	new_attrs = (struct damon_attrs){
+ 		.sample_interval = 100, .aggr_interval = 10000,};
+-	damon_update_monitoring_result(r, &old_attrs, &new_attrs, false);
++	damon_update_monitoring_result(r, &old_attrs, &new_attrs, false, ctx);
+ 	KUNIT_EXPECT_EQ(test, r->nr_accesses, 15);
+ 	KUNIT_EXPECT_EQ(test, r->age, 2);
+ 
+ 	new_attrs = (struct damon_attrs){
+ 		.sample_interval = 1, .aggr_interval = 1000};
+-	damon_update_monitoring_result(r, &old_attrs, &new_attrs, false);
++	damon_update_monitoring_result(r, &old_attrs, &new_attrs, false, ctx);
+ 	KUNIT_EXPECT_EQ(test, r->nr_accesses, 150);
+ 	KUNIT_EXPECT_EQ(test, r->age, 2);
+ 
+ 	new_attrs = (struct damon_attrs){
+ 		.sample_interval = 1, .aggr_interval = 100};
+-	damon_update_monitoring_result(r, &old_attrs, &new_attrs, false);
++	damon_update_monitoring_result(r, &old_attrs, &new_attrs, false, ctx);
+ 	KUNIT_EXPECT_EQ(test, r->nr_accesses, 150);
+ 	KUNIT_EXPECT_EQ(test, r->age, 20);
+ 
+ 	damon_free_region(r);
++	damon_destroy_ctx(ctx);
+ }
+ 
+ static void damon_test_set_attrs(struct kunit *test)
 -- 
 2.47.3
