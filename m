@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EEF188713;
-	Tue,  7 Jul 2026 04:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D939324B06;
+	Tue,  7 Jul 2026 04:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783399137; cv=none; b=jYR7ss1eM6H3N28X3iNpgblZkMyRkxA7P6SD41Vp0a8MBKb6i5szFHZUNMBjhfzgGy1kW3DYn1D9gY74JRS5aUIJbl+ePYJJanEwTBrEbz20Fox+/wXja+H7Ni0NT9mZ7Zq7KhLYc/Sr2VYO9VT7sUQEtCyCIxAkbSjkALxi4Xk=
+	t=1783399138; cv=none; b=sfqn0XS2FPrjO1yG6+9Qkkk46X0omepAN26HZL0oK9RCxb1kjId5T9wbRHZZhIRpdMWAK1Ow2hutfFwp8NN2qthqxXJWaX4qCGZm4VBKpvcenkbhNgHzlmUAVOO9ji93WnyMNcp8n8vGYU7YqfeWTXeGToWO0FwW45a6LL5wFwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783399137; c=relaxed/simple;
-	bh=AhKZVltV6KBr4Ar1OjtqWWq5A96YhecVbYo9SJ3RPvk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I4W893k3Uj7kUllmrIBkMrNpnUaT9vAyFFrDfEkPPoH1cPBDLTkDq23Pl2J5b2aBT5b5jK8BEbBAu9G3kTu6YxqJ91ssp772KH4S2teQFu3SnnUMfxcxR7fqh2uRRBcPF9UfGy+kD3qWTh4kMLe7hyRMDTld//VlcKeDXszwObM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mM6yA0+w; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783399138; c=relaxed/simple;
+	bh=hEoQv/NxHRf29fIVVqzCPtt0DuTI4PYoP2d6f5zo+gM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UI/pBR7+cG8vGZ0eIP2mb6PKDDyM3xpv+MCnbviD6gLrG6NfOb8Fxt/zJToTvqTzVOe1E28wi994ygs3BLp26ySpvpxlje9mxQ90+DlK3i9gq2tbqQgyrKzXEXLxrNybR9sYbSV3E7bTetETVe3RHxKeKvb2xjzNfRJqLPaNuss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QbYLM8YI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mM6yA0+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8369E1F000E9;
-	Tue,  7 Jul 2026 04:38:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QbYLM8YI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9311F00A3A;
+	Tue,  7 Jul 2026 04:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783399136;
-	bh=I11t6FBnWMZblAU+RqSXZtxGf/n/Ve62MEApJyBiI2Q=;
-	h=From:To:Cc:Subject:Date;
-	b=mM6yA0+wSaOwfxOsLro7F5LsVoueGmA/4vXvSnJzHVHAfly0zgDiWK0WAzQh4tHZ5
-	 tPhn3yyEtyV+eNCkUXKyFSfQy6VyVBCpcWV2PiBpm9fcmd80GLmF0afk174Uwwgb8t
-	 4SBTndzXQYACVIDKy5IfnhEQ1blsv8OSU8YJ356nFWtE1IMjnSXMwvreQc9UDWI3F+
-	 iuuYZclEy0tLCjg/zFn0luYPtRnZb7K8tPSR5hea9Cbx//N5WU3Zxhf42CFP7nddlQ
-	 381Ui99XvxzozE59snxoHVN68OWO8ujvsMVmtANHI1jRt+m80aBUcKY1vzUfdpdGjv
-	 DdnQ16c0bRX4w==
+	s=k20260515; t=1783399137;
+	bh=1kmRJdh4Z8VN1Ohuf74eNOA0x8KVycvYKKr9s4i1Pxk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=QbYLM8YIak3lVTyAlz1SXClscTCpBsAbBbde1sCuXdTW9B7RSFS+/e5cNoPVG9dmO
+	 E9CyVTVsmcb8jb22qPhMKvWVwzIBKSYzUfI4B2xVHFNfqMvI8c9ivouS3YFyWKAs0A
+	 aM1i5MeVj4aY5ywgQol/dQhrUXWI8O47BCuaXocCFBb3c5S+kfRCixeAepO8LFf1xF
+	 4sDjomyXkeGLuD6FgKtkmZ+2csj0JinW8agHPH0vHpTGZzdIfIeKKelgROtqPf+L8B
+	 3RaE2dYQ0EK1gb3dyPcBekpbE7/juPJBgolnqOo8qBr0qiP8Q9K7ZywMcOZz3bP7wv
+	 a+35tBqMegBkA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -32,10 +33,12 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 0/6] mm/damon: update probe hits for runtime parameter commits
-Date: Mon,  6 Jul 2026 21:38:20 -0700
-Message-ID: <20260707043828.97900-1-sj@kernel.org>
+Subject: [RFC PATCH 1/6] mm/damon/core: s/damon_max_nr_accesses()/damon_nr_samples_per_aggr()/
+Date: Mon,  6 Jul 2026 21:38:21 -0700
+Message-ID: <20260707043828.97900-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260707043828.97900-1-sj@kernel.org>
+References: <20260707043828.97900-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,37 +47,92 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON users can update DAMON parameters such as sampling and aggregation
-intervals at runtime.  For such changes, monitoring results that depend
-on the intervals should be properly updated for better accuracy.  For
-example, the access frequency counter (nr_accesses) is updated.  The
-data attribute monitoring counter (probe_hits) is not being updated,
-though.  Do the updates for new parameters.
+damon_max_nr_accesses() actually returns the number of samples DAMON
+checks for each region per each aggregation interval.  Rename it to
+better describe what it really does and not confusing for more general
+uses.
 
-Patches Sequence
-================
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h | 10 ++++++----
+ mm/damon/core.c       |  4 ++--
+ mm/damon/lru_sort.c   |  2 +-
+ mm/damon/ops-common.c |  2 +-
+ 4 files changed, 10 insertions(+), 8 deletions(-)
 
-Patches 1-4 rename functions that are being used for nr_accesses update,
-to be able to be used for probe_hits without confusion.  Patch 5 does
-the probe_hits update.  Patch 6 update damon_probe_hits_mvsum() to cover
-a corner case from the update for better accuracy.
-
-SJ Park (6):
-  mm/damon/core: s/damon_max_nr_accesses()/damon_nr_samples_per_aggr()/
-  mm/damon/core: s/accesses_bp_to_nr_accesses/sample_bp_to_count/
-  mm/damon/core: s/nr_accesses_to_accesses_bp/sample_count_to_bp/
-  mm/damon/core: s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/
-  mm/damon/core: update probe hits for new parameter commit
-  mm/damon/core: handle unreset probe_hits in probe_hits_mvsum()
-
- include/linux/damon.h       | 10 +++---
- mm/damon/core.c             | 64 ++++++++++++++++++++++++-------------
- mm/damon/lru_sort.c         |  2 +-
- mm/damon/ops-common.c       |  2 +-
- mm/damon/tests/core-kunit.h | 21 ++++++++----
- 5 files changed, 63 insertions(+), 36 deletions(-)
-
-
-base-commit: 9765c7b820c4f11a416d8bc9d402e1914138f64c
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 19b7e839bde0b..63f596957c1f1 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -1056,15 +1056,17 @@ static inline bool damon_target_has_pid(const struct damon_ctx *ctx)
+ 	return ctx->ops.id == DAMON_OPS_VADDR || ctx->ops.id == DAMON_OPS_FVADDR;
+ }
+ 
+-static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs)
++/* Returns number of samples per aggregation interval */
++static inline unsigned int damon_nr_samples_per_aggr(
++		const struct damon_attrs *attrs)
+ {
+ 	unsigned long sample_interval;
+-	unsigned long max_nr_accesses;
++	unsigned long nr_samples;
+ 
+ 	sample_interval = attrs->sample_interval ? : 1;
+-	max_nr_accesses = min(attrs->aggr_interval / sample_interval,
++	nr_samples = min(attrs->aggr_interval / sample_interval,
+ 			(unsigned long)UINT_MAX);
+-	return max_nr_accesses ? : 1;
++	return nr_samples ? : 1;
+ }
+ 
+ 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 390e00b3685ef..e710e2789085e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -880,7 +880,7 @@ static unsigned int damon_age_for_new_attrs(unsigned int age,
+ static unsigned int damon_accesses_bp_to_nr_accesses(
+ 		unsigned int accesses_bp, struct damon_attrs *attrs)
+ {
+-	return accesses_bp * damon_max_nr_accesses(attrs) / 10000;
++	return accesses_bp * damon_nr_samples_per_aggr(attrs) / 10000;
+ }
+ 
+ /*
+@@ -893,7 +893,7 @@ static unsigned int damon_accesses_bp_to_nr_accesses(
+ static unsigned int damon_nr_accesses_to_accesses_bp(
+ 		unsigned int nr_accesses, struct damon_attrs *attrs)
+ {
+-	return mult_frac(nr_accesses, 10000, damon_max_nr_accesses(attrs));
++	return mult_frac(nr_accesses, 10000, damon_nr_samples_per_aggr(attrs));
+ }
+ 
+ static unsigned int damon_nr_accesses_for_new_attrs(unsigned int nr_accesses,
+diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+index e8c389ad3226f..7e077084cb03a 100644
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -303,7 +303,7 @@ static int damon_lru_sort_apply_parameters(void)
+ 		goto out;
+ 
+ 	err = -ENOMEM;
+-	hot_thres = damon_max_nr_accesses(&attrs) *
++	hot_thres = damon_nr_samples_per_aggr(&attrs) *
+ 		hot_thres_access_freq / 1000;
+ 	hot_scheme = damon_lru_sort_new_hot_scheme(hot_thres);
+ 	if (!hot_scheme)
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 6bdd1cfd3863a..89c694f6e4fa8 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -112,7 +112,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 	int hotness;
+ 
+ 	freq_subscore = r->nr_accesses * DAMON_MAX_SUBSCORE /
+-		damon_max_nr_accesses(&c->attrs);
++		damon_nr_samples_per_aggr(&c->attrs);
+ 
+ 	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
+ 	if (age_in_sec)
 -- 
 2.47.3
