@@ -1,35 +1,35 @@
-Received: from mta22.hihonor.com (mta22.hihonor.com [81.70.192.198])
+Received: from mta22.hihonor.com (mta22.honor.com [81.70.192.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A853A9D8D
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 06:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E323AA4E3
+	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 06:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.192.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783406427; cv=none; b=uyhFURgEtWrAet1NZ1dU2bPw27V1SuenBnxcsrsug/94YabalCsWku0zvwR+PrEkviEktaEEhxwthS7rwJiOMc5cYXGsDIfnDz8hF7C+HRHOuL/n9oCTWas5B/WPbsLsuZWwesv6mY8aovcRjnWxaxvkJGKhpouKNlnJx8gHfiw=
+	t=1783406432; cv=none; b=mD7lZjvy+9aSokErJMFseBFHgyv6De/fReaYX94uhdCyqATSvJjxmatbpE8wUrwbea0ucOqlTGH+LEttRG1iUV3ePnBlM49jkEQVDMjDYArO4JuhIc2XVRUR8fHPW+T7aH4ienJCDWZ0QWlVafjZlSCfI7gfK10iwy4PJrAuAlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783406427; c=relaxed/simple;
-	bh=i+IK+FdyVIBeI0AIwRWmEgVV17uLdeDl65HTXJ9Tv/0=;
+	s=arc-20240116; t=1783406432; c=relaxed/simple;
+	bh=Wp+tuwt1A/XVubwx/TCx1nOuSk6erQtT0+uDgSBXI2I=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m/MXRcosPuP/VvU5tmHzKXsLrhUf7H7FnEDMNhiY8ibgi4R2UVJUT54WwIl9hKPVh2pJbeyP1XuOHJIVe1tXeku/3M+tqs9IP9BZc+thU/hF7zRk0nTRcJG/yxPjQlNKG3DwhTlpd1OKC2R8zko2zgZSKWdbMEzbfwr/nVV2G8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b=b3/YRk8O; arc=none smtp.client-ip=81.70.192.198
+	 MIME-Version:Content-Type; b=MYt23weTuyPGVMqElTsN7n1AU5gbjIElE1dXSKg55fzajYSGjwOCb+EsaxbM0hGUP14NitqYAlWh4RKy6ErsU6fiTGXHXWa3yr/gHybws0a6Qpc9zsvrI5cUNdD1yQqjy4CX2zqLFTstlSgdrmSLfj2/83tAlcm5Gp/XRjRZlWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b=W+rm16pI; arc=none smtp.client-ip=81.70.192.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b="b3/YRk8O"
+	dkim=pass (1024-bit key) header.d=honor.com header.i=@honor.com header.b="W+rm16pI"
 dkim-signature: v=1; a=rsa-sha256; d=honor.com; s=dkim;
 	c=relaxed/relaxed; q=dns/txt;
 	h=To:From;
-	bh=eGNtwVHfuVDy5GapbH+T8NwebC+tLhi7ZU1R2y5r9g8=;
-	b=b3/YRk8OSyTll1bOdDjujqG3zEAoOB5TlFw9TniTtk0pgBWmZ2bmPswoyvedB1qA7LvzKEKcL
-	iel5VYOceoV5h2u5MhuUu7/TjcpnpA3+YJPmDe668ma/zqzwfHadNEoLVsHx1yrCrGMyQ05Eiar
-	IyBbFXI5GJKe4KY46n4C7qs=
-Received: from TW002-1.hihonor.com (unknown [10.72.0.137])
-	by mta22.hihonor.com (SkyGuard) with ESMTPS id 4gvWnH4XhTzYlxNj;
+	bh=2HAQWJ3pVwWfob9ODqC/Kr1JqfriaUqoCgw5Fb97ovc=;
+	b=W+rm16pI01FqtDtqFMYMSfa+ApAyTpe0XPZq3wSew34VUomsQ5Z38SmDdLwIE9QlWhhEVdpcA
+	893xUhztJ0YcExPDl1Ioi+xR5VoNJ4hPCJ9JRhKS/wLhu5pd8mtwlFTEF4t4fhjKTxFWhJgN+3y
+	uVHrTwHvP35Hm0vNQ4FwpEM=
+Received: from TW006-1.hihonor.com (unknown [10.77.215.153])
+	by mta22.hihonor.com (SkyGuard) with ESMTPS id 4gvWnH0THRzYl1nh;
 	Tue,  7 Jul 2026 14:40:19 +0800 (CST)
-Received: from TA003.hihonor.com (10.72.0.43) by TW002-1.hihonor.com
- (10.72.0.137) with Microsoft SMTP Server (version=TLS1_2,
+Received: from TA003.hihonor.com (10.72.0.43) by TW006-1.hihonor.com
+ (10.77.215.153) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Tue, 7 Jul
- 2026 14:40:19 +0800
+ 2026 14:40:18 +0800
 Received: from localhost.localdomain (10.144.18.117) by TA003.hihonor.com
  (10.72.0.43) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Tue, 7 Jul
@@ -56,9 +56,9 @@ CC: <hpa@zytor.com>, <liam@infradead.org>, <vbabka@kernel.org>,
 	<linux-mm@kvack.org>, <damon@lists.linux.dev>, <shakeel.butt@linux.dev>,
 	<ryncsn@gmail.com>, <jparsana@google.com>, <dvander@google.com>,
 	<zhangji1@honor.com>, <wangzicheng@honor.com>, tao <tao.wangtao@honor.com>
-Subject: [RFC PATCH v2 07/13] mm: handle rmap_base changes for ANON_VMA_FRACTAL
-Date: Tue, 7 Jul 2026 14:33:02 +0800
-Message-ID: <20260707063308.29176-8-tao.wangtao@honor.com>
+Subject: [RFC PATCH v2 05/13] mm: implement anon_node_fork_with_prev for ANON_VMA_FRACTAL
+Date: Tue, 7 Jul 2026 14:33:00 +0800
+Message-ID: <20260707063308.29176-6-tao.wangtao@honor.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20260707063308.29176-1-tao.wangtao@honor.com>
 References: <20260707063308.29176-1-tao.wangtao@honor.com>
@@ -72,278 +72,107 @@ Content-Type: text/plain
 X-ClientProxiedBy: TW002-1.hihonor.com (10.72.0.137) To TA003.hihonor.com
  (10.72.0.43)
 
-relocate_vma_down() updates vm_start without changing vm_pgoff, which
-causes the VMA rmap_base to change.
-
-track_rmap may need memory allocation and requires both old and new
-rmap_base, so this cannot be handled inside
-anon_vma_interval_tree_pre_update_vma() and
-anon_vma_interval_tree_post_update_vma().
-
-Introduce vma_pre_update_rmap_base() and
-vma_post_update_rmap_base(), and call them before vma_prepare()
-and after vma_complete() in vma_expand(), commit_merge(), and
-vma_shrink(), where rmap_base may change.
+Fork handling introduces two additional parameters to help child VMAs
+clone anon_node. The logic follows three cases:
+1) Fast path: clone the anon_node with the previous VMA.
+2) Reuse an empty anon_node from an ancestor.
+3) Allocate a new anon_node and insert it into fractal_list.
 
 Signed-off-by: tao <tao.wangtao@honor.com>
 ---
- mm/internal.h | 10 ++++++++-
- mm/rmap.c     | 60 ++++++++++++++++++++++++++++++++++++++++-----------
- mm/vma.c      | 20 +++++++++++++++--
- 3 files changed, 74 insertions(+), 16 deletions(-)
+ mm/rmap.c | 72 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
 
-diff --git a/mm/internal.h b/mm/internal.h
-index 710baf02575b..970f11b1af50 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -314,7 +314,12 @@ int anon_vma_fork(struct vm_area_struct *vma, struct vm_area_struct *pvma);
- int  __anon_vma_prepare(struct vm_area_struct *vma);
- void unlink_anon_vmas(struct vm_area_struct *vma);
- 
--#ifdef CONFIG_ANON_VMA_FRACTAL
-+#ifndef CONFIG_ANON_VMA_FRACTAL
-+static inline int vma_pre_update_rmap_base(struct vm_area_struct *vma,
-+	unsigned long diff) { return 0; }
-+static inline void vma_post_update_rmap_base(struct vm_area_struct *vma,
-+	unsigned long diff) {}
-+#else
- int anon_node_clone(struct vm_area_struct *vma, struct vm_area_struct *src,
- 	enum vma_operation operation);
- int anon_node_fork_with_prev(struct vm_area_struct *vma,
-@@ -322,6 +327,9 @@ int anon_node_fork_with_prev(struct vm_area_struct *vma,
- 	struct vm_area_struct *pvma_prev);
- int __anon_node_prepare(struct vm_area_struct *vma);
- void unlink_anon_nodes(struct vm_area_struct *vma);
-+/* relocate_vma_down() changes vma_rmap_base. */
-+int vma_pre_update_rmap_base(struct vm_area_struct *vma, unsigned long diff);
-+void vma_post_update_rmap_base(struct vm_area_struct *vma, unsigned long diff);
- 
- #endif
- 
 diff --git a/mm/rmap.c b/mm/rmap.c
-index ea3557d3b56c..fd22576b0f58 100644
+index 74817876107a..93fa04c5a007 100644
 --- a/mm/rmap.c
 +++ b/mm/rmap.c
-@@ -622,7 +622,7 @@ void __put_anon_node(struct anon_node *anon_nod)
+@@ -667,6 +667,17 @@ static inline bool try_untrack_rmap(struct anon_node *anon_nod,
+ 	return false;
  }
  
- static inline struct anon_node *anon_node_alloc(struct vm_area_struct *vma,
--		struct anon_node *parent, bool is_fork)
-+		struct anon_node *parent, unsigned long rmap_base, bool is_fork)
- {
- 	struct anon_node *anon_nod;
- 
-@@ -641,7 +641,7 @@ static inline struct anon_node *anon_node_alloc(struct vm_area_struct *vma,
- 	anon_nod->nr_children = 0;
- 	INIT_LIST_HEAD(&anon_nod->fractal_list);
- 	anon_nod->mm = vma->vm_mm;
--	atomic_long_set(&anon_nod->rbc, vma_rmap_base(vma) + 1);
-+	atomic_long_set(&anon_nod->rbc, rmap_base + 1);
- 	return anon_nod;
- }
- 
-@@ -700,7 +700,7 @@ int __anon_node_prepare(struct vm_area_struct *vma)
- 			return 0;
- 	}
- 
--	anon_nod = anon_node_alloc(vma, NULL, false);
-+	anon_nod = anon_node_alloc(vma, NULL, rmap_base, false);
- 	if (unlikely(!anon_nod))
- 		return -ENOMEM;
- 
-@@ -734,7 +734,7 @@ static inline void vma_set_anon_node(struct vm_area_struct *vma,
- }
- 
- static int anon_node_add_child(struct anon_node *anon_nod,
--	struct vm_area_struct *vma, bool is_fork)
-+	struct vm_area_struct *vma, unsigned long rmap_base, bool is_fork)
- {
- 	struct anon_node *child;
- 	struct anon_node *root = anon_nod->root;
-@@ -743,7 +743,7 @@ static int anon_node_add_child(struct anon_node *anon_nod,
- 
- 	if (root->depth == 0)
- 		root->depth = 1;
--	child = anon_node_alloc(vma, anon_nod, is_fork);
-+	child = anon_node_alloc(vma, anon_nod, rmap_base, is_fork);
- 	if (!child)
- 		return -ENOMEM;
- 
-@@ -764,10 +764,9 @@ static int anon_node_add_child(struct anon_node *anon_nod,
- 
- /* Returns 0 on success, non-zero on failure. */
- static int anon_node_track_rmap(struct anon_node *anon_nod,
--		struct vm_area_struct *vma)
-+		struct vm_area_struct *vma, unsigned long rmap_base)
- {
- 	struct rw_semaphore *rmap_sem = anon_node_rmap_sem(anon_nod);
--	unsigned long rmap_base = vma_rmap_base(vma);
- 	struct anon_node *rbc_ch = anon_nod;
- 
- 	if (try_track_rmap(anon_nod, rmap_base))
-@@ -782,7 +781,7 @@ static int anon_node_track_rmap(struct anon_node *anon_nod,
- 	if (rbc_ch)
- 		return 0;
- 
--	return anon_node_add_child(anon_nod, vma, false);
-+	return anon_node_add_child(anon_nod, vma, rmap_base, false);
- }
- 
- /* vma clones src anon_node and increments the count. */
-@@ -796,7 +795,7 @@ int anon_node_clone(struct vm_area_struct *vma,  struct vm_area_struct *src,
- 		return 0;
- 
- 	VM_BUG_ON_VMA(vma->anon_vma != (void *)anon_nod, vma);
--	return anon_node_track_rmap(anon_nod, vma);
-+	return anon_node_track_rmap(anon_nod, vma, vma_rmap_base(vma));
- }
- 
- static struct anon_node *fork_reuse_ancestor(struct anon_node *parent,
-@@ -856,12 +855,13 @@ int anon_node_fork_with_prev(struct vm_area_struct *vma,
- 		return 0;
- 
- 	/* 3) Fork a new anon_node. */
--	return anon_node_add_child(parent, vma, true);
-+	return anon_node_add_child(parent, vma, rmap_base, true);
- }
- 
- /* Returns true if untrack succeeds. */
- static bool anon_node_untrack_rmap_locked(struct anon_node *anon_nod,
--		struct vm_area_struct *vma, struct anon_node **release_node)
-+		struct vm_area_struct *vma, unsigned long rmap_base,
-+		struct anon_node **release_node)
- {
- 	struct anon_node *root = anon_nod->root;
- 	struct anon_node *node = anon_nod;
-@@ -869,7 +869,7 @@ static bool anon_node_untrack_rmap_locked(struct anon_node *anon_nod,
- 	bool test_empty = false;
- 
- 	do {
--		if (try_untrack_rmap(node, vma_rmap_base(vma), &test_empty))
-+		if (try_untrack_rmap(node, rmap_base, &test_empty))
- 			break;
- 		node = anon_node_next_rbc_child(anon_nod, node);
- 	} while (node);
-@@ -938,7 +938,8 @@ void unlink_anon_nodes(struct vm_area_struct *vma)
- 	down_write(rmap_sem);
- 	anon_nod = vma_anon_node(vma); /* Recheck after locking. */
- 	if (anon_nod) {
--		anon_node_untrack_rmap_locked(anon_nod, vma, &release_node);
-+		anon_node_untrack_rmap_locked(anon_nod, vma,
-+			vma_rmap_base(vma), &release_node);
- 		vma->anon_vma = NULL;
- 	}
- 	up_write(rmap_sem);
-@@ -947,6 +948,39 @@ void unlink_anon_nodes(struct vm_area_struct *vma)
- 		release_anon_nodes(release_node);
- }
- 
-+int vma_pre_update_rmap_base(struct vm_area_struct *vma, unsigned long diff)
++static bool try_reuse_anon_node(struct anon_node *anon_nod,
++		unsigned long new_rbc)
 +{
-+	struct anon_node *anon_nod = vma_anon_node(vma);
-+	int err;
++	long old_rbase;
 +
-+	vma_assert_write_locked(vma);
-+	if (!anon_nod || !diff)
++	if (anon_node_rmap_count(anon_nod))
++		return false;
++	old_rbase = anon_node_rmap_base(anon_nod);
++	return atomic_long_try_cmpxchg(&anon_nod->rbc, &old_rbase, new_rbc);
++}
++
+ /* attach an anon_node to the VMA. */
+ int __anon_node_prepare(struct vm_area_struct *vma)
+ {
+@@ -788,6 +799,67 @@ int anon_node_clone(struct vm_area_struct *vma,  struct vm_area_struct *src,
+ 	return anon_node_track_rmap(anon_nod, vma);
+ }
+ 
++static struct anon_node *fork_reuse_ancestor(struct anon_node *parent,
++		struct vm_area_struct *vma)
++{
++	struct anon_node *root = parent->root;
++	struct anon_node *node;
++	unsigned long new_rbc = vma_rmap_base(vma) + 1;
++	/* At least N anon_nodes between parent and root: P -> a1 .. aN -> R */
++	const unsigned int ANON_DEPTH_REUSE_THRESHOLD = 1 + (5 << 1);
++
++	if (parent->depth < ANON_DEPTH_REUSE_THRESHOLD)
++		return NULL;
++
++	/* Release from leaf only; parent is stable, no lock needed. */
++	for (node = parent; node != root; node = node->parent) {
++		if (READ_ONCE(node->nr_children) > 1)
++			continue;
++		/* Replace with the new_rbc atomically. */
++		if (!try_reuse_anon_node(node, new_rbc))
++			continue;
++
++		node->mm = vma->vm_mm;
++		vma_set_anon_node(vma, node, false);
++		return node;
++	}
++
++	return NULL;
++}
++
++/* Clone an anon_node from prev or fork one from the parent pvma. */
++int anon_node_fork_with_prev(struct vm_area_struct *vma,
++	struct vm_area_struct *pvma, struct vm_area_struct *prev,
++	struct vm_area_struct *pvma_prev)
++{
++	struct anon_node *parent = vma_anon_node(pvma);
++	struct anon_node *anon_nod = vma_anon_node(prev);
++	unsigned long rmap_base = vma_rmap_base(vma);
++
++	if (!parent)
 +		return 0;
 +
-+	err = anon_node_track_rmap(anon_nod, vma, vma_rmap_base(vma) + diff);
-+	if (!err)
-+		down_write(anon_node_rmap_sem(anon_nod));
-+	return err;
++	/* Drop inherited anon_nod. */
++	vma->anon_vma = NULL;
++
++	/* 1) Fast path: clone the anon_node with the previous VMA. */
++	if (anon_nod && pvma_prev && parent == vma_anon_node(pvma_prev)) {
++		if (try_track_rmap(anon_nod, rmap_base)) {
++			vma_set_anon_node(vma, anon_nod, false);
++			return 0;
++		}
++	}
++
++	/* 2) Reuse an existing anon_node. */
++	anon_nod = fork_reuse_ancestor(parent, vma);
++	if (anon_nod)
++		return 0;
++
++	/* 3) Fork a new anon_node. */
++	return anon_node_add_child(parent, vma, true);
 +}
 +
-+void vma_post_update_rmap_base(struct vm_area_struct *vma, unsigned long diff)
-+{
-+	struct anon_node *anon_nod = vma_anon_node(vma);
-+	struct rw_semaphore *rmap_sem;
-+	struct anon_node *release_node = NULL;
 +
-+	vma_assert_write_locked(vma);
-+	if (!anon_nod || !diff)
-+		return;
-+
-+	rmap_sem = anon_node_rmap_sem(anon_nod);
-+	rwsem_assert_held_write(rmap_sem);
-+	anon_node_untrack_rmap_locked(anon_nod, vma,
-+		vma_rmap_base(vma) - diff, &release_node);
-+	up_write(rmap_sem);
-+	if (release_node)
-+		release_anon_nodes(release_node);
-+}
- 
  #endif
  
-diff --git a/mm/vma.c b/mm/vma.c
-index 9eea2850818a..d2996369e30d 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -732,6 +732,7 @@ static int commit_merge(struct vma_merge_struct *vmg)
- {
- 	struct vm_area_struct *vma;
- 	struct vma_prepare vp;
-+	unsigned long rbase_diff;
- 
- 	if (vmg->__adjust_next_start) {
- 		/* We manipulate middle and adjust next, which is the target. */
-@@ -748,12 +749,16 @@ static int commit_merge(struct vma_merge_struct *vmg)
- 	/*
- 	 * If vmg->give_up_on_oom is set, we're safe, because we don't actually
- 	 * manipulate any VMAs until we succeed at preallocation.
--	 *
--	 * Past this point, we will not return an error.
- 	 */
- 	if (vma_iter_prealloc(vmg->vmi, vma))
- 		return -ENOMEM;
- 
-+	rbase_diff = rmap_base(vmg->start, vmg->pgoff) - vma_rmap_base(vma);
-+	if (rbase_diff && vma_pre_update_rmap_base(vma, rbase_diff)) {
-+		vma_iter_free(vmg->vmi);
-+		return -ENOMEM;
-+	}
-+
- 	vma_prepare(&vp);
- 	/*
- 	 * THP pages may need to do additional splits if we increase
-@@ -766,6 +771,8 @@ static int commit_merge(struct vma_merge_struct *vmg)
- 	vma_iter_store_overwrite(vmg->vmi, vmg->target);
- 
- 	vma_complete(&vp, vmg->vmi, vma->vm_mm);
-+	if (rbase_diff)
-+		vma_post_update_rmap_base(vma, rbase_diff);
- 
- 	return 0;
- }
-@@ -1248,6 +1255,7 @@ int vma_shrink(struct vma_iterator *vmi, struct vm_area_struct *vma,
- 	       unsigned long start, unsigned long end, pgoff_t pgoff)
- {
- 	struct vma_prepare vp;
-+	unsigned long rbase_diff;
- 
- 	WARN_ON((vma->vm_start != start) && (vma->vm_end != end));
- 
-@@ -1261,6 +1269,12 @@ int vma_shrink(struct vma_iterator *vmi, struct vm_area_struct *vma,
- 
- 	vma_start_write(vma);
- 
-+	rbase_diff = rmap_base(start, pgoff) - vma_rmap_base(vma);
-+	if (rbase_diff && vma_pre_update_rmap_base(vma, rbase_diff)) {
-+		vma_iter_free(vmi);
-+		return -ENOMEM;
-+	}
-+
- 	init_vma_prep(&vp, vma);
- 	vma_prepare(&vp);
- 	vma_adjust_trans_huge(vma, start, end, NULL);
-@@ -1268,6 +1282,8 @@ int vma_shrink(struct vma_iterator *vmi, struct vm_area_struct *vma,
- 	vma_iter_clear(vmi);
- 	vma_set_range(vma, start, end, pgoff);
- 	vma_complete(&vp, vmi, vma->vm_mm);
-+	if (rbase_diff)
-+		vma_post_update_rmap_base(vma, rbase_diff);
- 	validate_mm(vma->vm_mm);
- 	return 0;
- }
+ /*
 -- 
 2.17.1
 
