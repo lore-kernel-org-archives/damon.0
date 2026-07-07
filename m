@@ -1,131 +1,126 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED644229C8
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 16:19:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1A84302EA
+	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 16:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783441161; cv=none; b=h13SfsOYH/uhYkPt3OnORAH8Aq9bF+ESqROgdMPW6dw3HPFJrTsQ8K+IOSdM/J16npDTaE2syrmdFkCud6QTB1jfPtxMMRdUvwndW9OM9cyfF8Sd7XBDVN1D+bwjSriM5Zetz4T+v3RXsLEeqnL6gxn6+ZvhcGnagn2sDWw1tQ8=
+	t=1783441568; cv=none; b=j3HwULleTwTZldGcuPQGovG78cB9D1/i6GQG64Bpx2Zld0+TW+4ghg0ZmzDvPg/fdeoIDvc+wW2rarI8VtPQu9QR9shtLDKFZyTqUNwhLuWrUAB1ShvaBJvUBhKr045kZk+/g3jJ7+NfbTk/u260IFc1lu+VUWmygT486LsdTF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783441161; c=relaxed/simple;
-	bh=zSkYvM1j3bXBVN3GN9JHi3PTLk/FUppI2uWt99Lug5A=;
+	s=arc-20240116; t=1783441568; c=relaxed/simple;
+	bh=lrYSArpP0iVuUgDVG3d1222jafWM2daRLlBprnwN79M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h9ZTwEVjZWJS9RwaT2tbiecJtv6/8X9SJHPPOwdmJSiKbZz6YynNIDp8vujBGd6NU6brxJmZISFXT8E7QLaYHwUD8Tl1pbgJFQ0BbqCD32Z1O7yelExYUWhQU0pDzlOZLQjM9rx9/cj/kGS662MGgTb6kYu6azM2y7E6X3tIOtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=jS7y90J3; arc=none smtp.client-ip=209.85.160.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=YHpBnTLquCq5pNTSYMuZDra01ZbXuvn1TfK0sMbL3cva1JBzaAb0k5fkO7eQtV2mFL9fpjFm+gpAE+OMTiOnu60KXkAjKNoAeWd+weS8FKIUeYllkaTVqTeMZV5mWC6jQVADX9JONh1ipdVaUxKf62EIbCrxBRqd2jaZsEsX6pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=qXqjB2VL; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="jS7y90J3"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-51c149c5722so6807721cf.0
-        for <damon@lists.linux.dev>; Tue, 07 Jul 2026 09:19:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="qXqjB2VL"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-8eeb4508f29so34316176d6.0
+        for <damon@lists.linux.dev>; Tue, 07 Jul 2026 09:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1783441159; x=1784045959; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=shTm78OzX8lamx3AIG2aka+O0fr6RJu853HQxce+7Rc=;
-        b=jS7y90J3d5C1onMSiN+Akc0kejPsTlA4SSejdc769oSBgsRhDaSx/lBinDA1V0n33r
-         mfZDR8S8+DNVb8CeqrnsNCfPMmk1MbWX2v5c3+b9HD37I5fn7xcCQLTecIzwoZjO93T+
-         aWvybosuOs9TNStvnN3MyzT4/b3BBum5gr5eRSYMwFQsyGsv037/PNTvCLJbdIok++UK
-         CA7Gu8zlZMmLbM1XuWDvkfD8M831E1Eu634cySVnD22PPJB/70ca00sdK10mcZBFd7Re
-         x1lYbFdrkZMOkBSsOBIGA4l24DHQIwUcrWdWKx49pW97oeYueJsUQ6omxpQB9+44P1hk
-         PKVw==
+        d=gourry.net; s=google; t=1783441564; x=1784046364; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Abd7yWEQE6Vuyzvr8uj66ic6dsI9yDvEtRp+r0f0v0Y=;
+        b=qXqjB2VLktT7tWfv4MytgFOAlT42LGEDu9zLMVKSlBpLgozC5MZXASm1CArSwhGpIz
+         TX3i0YMt6Ob+kjTkKCfhCjPrYrOwYwEUznyrSwVr5grDjxDjs2a9vM8u7pNYeG8VfKaR
+         nJJNip0q168rQo4w6k+CSwly51q1Bupd/rVkI0Kbx7CLyjhaERrxZtYa1k5SkREjewfn
+         vI09f5PwVGwxnGjX8ya7VozjDQcosx0hB7lbLHH2UU2NIuXoCjjOiEkm2O/iJl4ThcL5
+         Q3UEebgNkyRBLPHBCP7qRaW+QNRzYUk5i1nzetCXo+y3WXrR2FZlZgOlEXvKz0ILyO2X
+         ZWDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783441159; x=1784045959;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=shTm78OzX8lamx3AIG2aka+O0fr6RJu853HQxce+7Rc=;
-        b=Vg4qMYnCvVYs8FuqzqkfD2RmIg7uZmoU0e3DGp7erRSRy4QSeF2JeRQju6p4yR0zpv
-         M3cjBPmcZemu1yzQhDa78b/XBqe9HsBZGGMo/xhZZ7qbt57ooa5rA3I2X6qJwvbPUxbg
-         U+gjrFmOsGMopZa3IKpKxKNMXDDKOgJSZ9WOn6v2S+2wQXzWmkZyuAji2FxVUnh0FDGd
-         gZwRJiNYpZk3y9UNXbU8HkcVwATXpjRTBT4Zj9qQ8pby3GHcTDnjUGBfBwYL9cIPC/xH
-         GDK/aMWvUkfJK4l8z7dwGFwt52ceSOtfc67/BWNyRER8CDOJXYF40hx2S27ZAzL0IG/A
-         mdSg==
-X-Forwarded-Encrypted: i=1; AHgh+Ro1ljqK6jC8CMX2f8qe0ks80xroQcY4WFWnPIEfI48UGDCcHos6RBPmSoNYTHatjs6US+7m7Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxhQtJtdq0aQR2e7hp/ijaPmUX8dVIzG0bN5B20+BptVu2Z2Qnv
-	YwF9wib8sFs9qUVqLW2eH3jcE2rb78ttlke5zLuiQ+E4a3VTqbLaJekE1qwpC/3f0cg=
-X-Gm-Gg: AfdE7ckAOW+XM4r7bYsLMr/G95UxIvG3C8xY3OFxduIeTUcaDx8XN4vimSbPlgkXeCq
-	aGqGVMwxMunz47VzY+zDb6uZNm7n80tDcZTm0R0Qj9q8GT83QvshIKVaKzWPML9gw4AKabd0OtZ
-	FgLIQdRHnuTuICNas/P0vCpVDUamRZpOj0PQoNC2NxvKFC6ma8k7qR1sFsqp6U2B8sXvgWE9HXD
-	jYP6sY+O5l3ioBl7jIlVOdCgp4HyTWCb2se4qIMQ8SnwBhpx5X8YTRJlVmyxjXLS1HwuZh5pHMH
-	Bhs+FB978+0WkfjiswDDr8C5gJ1QeYlfGMt2DIktgP2U8aPv6Bzs2HUuIGRybyeUF11HIGIn/hf
-	u+lMTiVYaK6MYnAvzxM32AvtAZa3UrN8qTjYuSKUHlfDjRi+KA0iZ0ibpxE+ndCKkrNC25odJRF
-	lMKqAHPozSJfa/VSe8WJUI39c6hfYlI1P0nssGeGer9T0l5PQsn17qWyzh2FNigwbrEboH
-X-Received: by 2002:a05:622a:124e:b0:51c:1f35:4638 with SMTP id d75a77b69052e-51c7a7515famr34037661cf.21.1783441158809;
-        Tue, 07 Jul 2026 09:19:18 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1783441564; x=1784046364;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Abd7yWEQE6Vuyzvr8uj66ic6dsI9yDvEtRp+r0f0v0Y=;
+        b=iqsX48Y4pdhGYT6pxXVSfzEgEF0njZhwRZFmjBkwAA4NqpFjxeoM+IzeY6UFIMJSKY
+         5mKVL1YpAAUeO8/uXB2Kvy3/AEJbyJessISem+Vit+jbxHsZ5kGAiIA3qpkg1R7/FJfN
+         POvzergQdDP4wCB4MrDBY2y9NEIp0dM+UI8KkfSSdrziBhbcEJcUuXxitb9U+Id9Jfpj
+         VyWDiT+viYRME2YfejbOfANZIO297vbTMOJJJBaxXW59bjW+B+/uMMB/YQGsAoUvLHKe
+         hOrsoPhfUdDOP9BpeU+NjymSrhYAuEqrA2QaOaokjSyPlKY8mw+6JOzDI149zhwyFy2s
+         c4cg==
+X-Forwarded-Encrypted: i=1; AHgh+RqvRT9sH6LHVoWzDfNGjKQHLj9KhUQFcrmKhHAvbCaQszPkIwe/2/n4vG5VneJAkBwO7a/WDQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yztmkg+aGK3/qpTHlXqQ0tc0qL6mp7z//8qt+4UuY+Dkqo3fkk+
+	tIknitxZCFQqZDOsPo214Kkp0fHOGG3S4kA8MKcKBFfSHAVsUPwpxr4jmxTqtNUUdR8=
+X-Gm-Gg: AfdE7cnTKJS0MEq4576Nfsf3+oK2yhiI0zmtJ9SK+Y0IZCrSFLZoE9bAUmg/K5TKXQQ
+	1+kBPQhaOclU8jmiycthZ46T+J/3FQi8QR5KA83oxGc2o5EPaHAnaZvgEU9anVTT8tpeBZlXumr
+	5gDim4sxJ8aOXKBptsVIkCxQ9NVYgnsvDj4mPs/J236tPcLdEzFSbKp+AL/78xCVmbZnMSotndL
+	rUctAZLRGPp0uTO8IeSszbxXcA1ClJs2mG61eGGH2SBW/FfWjdKi62Hf14Q6QDptEw9c5qHCOD7
+	a/JePKttkDTuF7Bx/XqisiIUnWfUrCBPJkx8Y3MnJqrnQAyADlPJBfWSdkjazb3jRGoq2EBBwyL
+	sz2B8KJd6GOQzoBXd8yNcEO3S7BhLxyxInUo8kWOJCXZo0KaP4Wi/kKMMBb1EKpsYeCbCd+LvEc
+	kJEJTmgcHMZCYXaiTVSPYurWUl0kKUrDDrBdMDUhjlwtJ7sSgYiv6phZnRptr5kgVIh/1c/tY0/
+	wL8d4Q=
+X-Received: by 2002:a05:6214:6011:b0:8fd:6de3:bbaa with SMTP id 6a1803df08f44-8fd6de3be6emr28372996d6.64.1783441563961;
+        Tue, 07 Jul 2026 09:26:03 -0700 (PDT)
 Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41da510dsm114014641cf.22.2026.07.07.09.19.17
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8f46f306123sm181382626d6.20.2026.07.07.09.26.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jul 2026 09:19:18 -0700 (PDT)
-Date: Tue, 7 Jul 2026 12:19:13 -0400
+        Tue, 07 Jul 2026 09:26:03 -0700 (PDT)
+Date: Tue, 7 Jul 2026 12:25:58 -0400
 From: Gregory Price <gourry@gourry.net>
-To: wangtao <tao.wangtao@honor.com>
-Cc: "David Hildenbrand (Arm)" <david@kernel.org>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-	"catalin.marinas@arm.com" <catalin.marinas@arm.com>,
-	"will@kernel.org" <will@kernel.org>,
-	"tglx@kernel.org" <tglx@kernel.org>,
-	"mingo@redhat.com" <mingo@redhat.com>,
-	"bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"x86@kernel.org" <x86@kernel.org>,
-	"willy@infradead.org" <willy@infradead.org>,
-	"sj@kernel.org" <sj@kernel.org>,
-	"kees@kernel.org" <kees@kernel.org>,
-	"luizcap@redhat.com" <luizcap@redhat.com>,
-	"zhangjiao2@cmss.chinamobile.com" <zhangjiao2@cmss.chinamobile.com>,
-	"kas@kernel.org" <kas@kernel.org>,
-	"ljs@kernel.org" <ljs@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
-	"liam@infradead.org" <liam@infradead.org>,
-	"vbabka@kernel.org" <vbabka@kernel.org>,
-	"rppt@kernel.org" <rppt@kernel.org>,
-	"surenb@google.com" <surenb@google.com>,
-	"mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz" <jack@suse.cz>,
-	"riel@surriel.com" <riel@surriel.com>,
-	"harry@kernel.org" <harry@kernel.org>,
-	"jannh@google.com" <jannh@google.com>,
-	"jgg@ziepe.ca" <jgg@ziepe.ca>,
-	"jhubbard@nvidia.com" <jhubbard@nvidia.com>,
-	"peterx@redhat.com" <peterx@redhat.com>,
-	"ziy@nvidia.com" <ziy@nvidia.com>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
-	"npache@redhat.com" <npache@redhat.com>,
-	"ryan.roberts@arm.com" <ryan.roberts@arm.com>,
-	"dev.jain@arm.com" <dev.jain@arm.com>,
-	"baohua@kernel.org" <baohua@kernel.org>,
-	"lance.yang@linux.dev" <lance.yang@linux.dev>,
-	"xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>,
-	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>,
-	"muchun.song@linux.dev" <muchun.song@linux.dev>,
-	"baoquan.he@linux.dev" <baoquan.he@linux.dev>,
-	"nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>,
-	"matthew.brost@intel.com" <matthew.brost@intel.com>,
-	"joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>,
-	"rakie.kim@sk.com" <rakie.kim@sk.com>,
-	"byungchul@sk.com" <byungchul@sk.com>,
-	"ying.huang@linux.alibaba.com" <ying.huang@linux.alibaba.com>,
-	"apopple@nvidia.com" <apopple@nvidia.com>,
-	"pfalcato@suse.de" <pfalcato@suse.de>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"damon@lists.linux.dev" <damon@lists.linux.dev>,
-	"shakeel.butt@linux.dev" <shakeel.butt@linux.dev>,
-	"ryncsn@gmail.com" <ryncsn@gmail.com>,
-	"jparsana@google.com" <jparsana@google.com>,
-	"dvander@google.com" <dvander@google.com>,
-	zhangji <zhangji1@honor.com>, wangzicheng <wangzicheng@honor.com>
-Subject: Re: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
- anon_vma_chain
-Message-ID: <ak0nAXzlwnQ-zPkN@gourry-fedora-PF4VCD3F>
-References: <20260707063308.29176-1-tao.wangtao@honor.com>
- <08c001ab-320f-4676-830b-8e4ba6a05dee@kernel.org>
- <b00a03d62c53430ca22b3f3c5e5327b5@honor.com>
- <0e8e5a28-1111-4b81-b04f-b81e749eb3dd@kernel.org>
- <f640c89d9722462098bf1b7a0a6854c2@honor.com>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Helge Deller <deller@gmx.de>, Jarkko Sakkinen <jarkko@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	Ian Abbott <abbotti@mev.co.uk>,
+	H Hartley Sweeten <hsweeten@visionengravers.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Christian Koenig <christian.koenig@amd.com>,
+	Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Dan Williams <djbw@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Liam R . Howlett" <liam@infradead.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>, Hugh Dickins <hughd@google.com>,
+	Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org,
+	linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+	kvm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	nvdimm@lists.linux.dev, linux-mm@kvack.org, iommu@lists.linux.dev,
+	linux-perf-users@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
+	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 11/30] mm/vma: introduce and use vmg_pages(), vmg_[start,
+ end]_pgoff()
+Message-ID: <ak0olp9zA6ERCXtO@gourry-fedora-PF4VCD3F>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <f7b4f8a611ab4d36eb3cf2e394610a3744a93895.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -134,34 +129,17 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f640c89d9722462098bf1b7a0a6854c2@honor.com>
+In-Reply-To: <f7b4f8a611ab4d36eb3cf2e394610a3744a93895.1782735110.git.ljs@kernel.org>
 
-On Tue, Jul 07, 2026 at 09:20:24AM +0000, wangtao wrote:
-> > >
-> > > If there are technical issues, please point them out directly.
-> > > Or is this simply how technical discussions are usually conducted in the
-> > Linux community or the mm subsystem?
-> > 
-> > I suggest you go back and read my email.
+On Mon, Jun 29, 2026 at 01:23:22PM +0100, Lorenzo Stoakes wrote:
+> In the VMA logic we often need to determine the number of pages in the
+> specified merge range, as well as the start and end page offsets of that
+> range.
 > 
-> At first, I thought I was the only one who found anon_vma hard to understand. After reading your earlier email,
-> I realized that many people also consider it difficult to follow. So I tried a different approach and implemented
-> anon_vma rmap using a simpler doubly linked list plus depth mechanism.
+> Introduce and use helpers for these purposes.
 > 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-The in-flight was discussed at LSF and then reported on by lwn
-
-https://lwn.net/Articles/1072378/
-
-https://git.kernel.org/pub/scm/linux/kernel/git/ljs/linux.git/log/?h=project/cow-context
-
-If you have issues with the in-flight work and think there's a better
-way, it would be good to engage on that front - rather than posting
-competing work and expecting maintainers to have to context switch
-between two solutions for an objectively hard to understand problem
-(which carries significant risk of regressions).
-
-No one is saying you can't engage, just trying to avoid doing the same
-work twice for negative value.
-
-~Gregory
+Reviewed-by: Gregory Price <gourry@gourry.net>
