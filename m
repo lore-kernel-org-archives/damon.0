@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A158F48034C
-	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 14:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C621A6822
+	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 14:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783520762; cv=none; b=dlOUWPlBZK9gRVbc6/cd73AUmIRxobxu1PrHC6UZ2t+H/5PZ5Cl/ZcsuD6oesrlNgDzYHYh+ICMP13kcnJPuoTgtI6b+FxVIih9dlgtFzuxw0ApoY6Kg97WbsnVstGl+Z8EMLvscQy1WTjoql55JE0pP+Wl9RgFwhCFvxg1q8Ik=
+	t=1783520808; cv=none; b=hlxSsEUsFc1uLtyreGUA+LomsJhZol0F0uZ6ruG4BneDQmqoq7LJY5bcueYH9mN5imTJtT+6Ietyat63I1kvTs6Tv+a35D2WmOrDz4q6dhJg2BY+Ok73pepkkpyBaPBue2OxzzlcT5UVdUHGa8Ux4DsznomaxzBcMh7pZ9VKiQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783520762; c=relaxed/simple;
-	bh=7mbhraUL8Q5wMnCl/4dTYQlByIwiMOI47tuNhJ2Dfb8=;
+	s=arc-20240116; t=1783520808; c=relaxed/simple;
+	bh=EeRLkuO0piL6nJODAJl69iZagnEcRwP5OTpMTckUQIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CBHH0mWeMeIlrS5KLOMziuwfP8DOLm8Hc6z66nbEt4mKibawSQcomwAltbJwSSHr17RoXedabAGTq2TIuoDbO18E7+yGeJISqORA6gn+HkkhoqT6yjkVXc/2GJbEiYc7pnRmCM7P8mLMahytJneMp3Ymfqm+me93KYFqI+duALY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DAPmqlP0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EMsq2x62Su7MjoZHLeEAsdcQbRQVl3zWYcxnF1aTB1K4WuQ6nkQQPvrb1Nx34hhEkJac/UUm/u43OikaNIv3RB9Q43043jXYBk3en5iafumNNmnyUYr6Kuxfw9w/0k2z7MASM5VKpQg3YUqcUVAKrguYaO8JAEKvukUlJw3/3A0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n4zLI1Z/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DAPmqlP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F6D1F000E9;
-	Wed,  8 Jul 2026 14:26:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n4zLI1Z/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18C21F000E9;
+	Wed,  8 Jul 2026 14:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783520761;
-	bh=D9rAYRvPPTIGXfCFgAXUwapTza03puyPnObv9hx9j+8=;
+	s=k20260515; t=1783520806;
+	bh=KgpcQWJhxjipI8iwU1MCRqSndsJDv/Xzwir4mVV35iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DAPmqlP0B7tEsmq1zxgYU3mByWOjRlNaWL5qPJBEoH43fZ7bJCDd50aCiD0x3mZID
-	 svmF12XTkO+WMr34u51H7wYYkV1SAM/s5cFhQHEgG2oEYgmFzvA//k4arQ7K+TH31C
-	 0BhDZYX8gr3g/OO548zqbr8BBunDSkzbs728V7p3/kT/nMrbGM/UZnah1NXXwvSAUT
-	 U4p0uxsiisy5Pf73DCOf2yZoVVpto8OPt1AQ6PBCrXfZPyBtPkWou+c/ZztERemgwE
-	 JgJ78Rr6bSXFxZaUJehgvcDMg4XtKQJs54ynDaHVtLHbXRoOcoSJf+kKADhMzMZsif
-	 NNCWNcAoJLyfg==
+	b=n4zLI1Z/j52XHjAqh9EzuulfES7tpXsnA06jgQJXalvEj7s6u55h40ucv9tBUPHB6
+	 a2FwUz8G4Kp6HQc5UMHKYz/6L4Cjyfln3uCSw7CcfHizRHAAZCAfkUTsgpht9ItOYc
+	 +pxp4tY+myuo8N5F90t3SKtbnDATGBAOpbfDwU0J2P18xSiwtB5WSrbBHYrb9DK1pU
+	 fVPYQU0H2dAvCirXyhqrGsSfCGOjSbUDXEvs93kGuodbdEz7+SPNtBMxciymqBmwe1
+	 jR0JxLbmJE9F3zAahTVc6vhU1aRyJ7QgPsBZru8lSnO2ekn78qtlruJh+dGA/SGZAf
+	 rbcBzPCYDnYRA==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH 1/7] mm/damon/core: remove comment and test for nr_to_bp() divide-by-zero
-Date: Wed,  8 Jul 2026 07:25:56 -0700
-Message-ID: <20260708142558.123894-1-sj@kernel.org>
+Subject: Re: [PATCH 4/7] mm/damon/core: s/nr_accesses_to_accesses_bp/sample_count_to_bp/
+Date: Wed,  8 Jul 2026 07:26:43 -0700
+Message-ID: <20260708142644.124034-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260708141335.C33741F000E9@smtp.kernel.org>
+In-Reply-To: <20260708140348.4A4F91F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,47 +45,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 08 Jul 2026 14:13:35 +0000 sashiko-bot@kernel.org wrote:
+On Wed, 08 Jul 2026 14:03:47 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The commit message incorrectly references `damon_nr_samples_per_aggr()` instead of `damon_max_nr_accesses()`.
+> 
+> Pre-existing issues:
+> - [High] The functions `damon_sample_bp_to_count` and `damon_sample_count_to_bp` are susceptible to 32-bit integer overflows when evaluating large aggregation intervals.
 > --
 > 
-> --- Patch [1]: [PATCH 1/7] mm/damon/core: remove comment and test for nr_to_bp() divide-by-zero ---
-> commit f8fbcab0a03e83756cdeec775b4f0bc25f753341
+> --- Patch [4]: [PATCH 4/7] mm/damon/core: s/nr_accesses_to_accesses_bp/sample_count_to_bp/ ---
+> commit 75d19025f9846da2b8b1718a4f36d8064a4aa832
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: remove comment and test for nr_to_bp() divide-by-zero
+> mm/damon/core: s/nr_accesses_to_accesses_bp/sample_count_to_bp/
 > 
-> This commit removes an obsolete comment on damon_nr_accesses_to_accesses_bp()
-> and its associated kunit test. Previous changes guarantee that the interval
-> calculations will not result in a division-by-zero.
+> This commit renames damon_nr_accesses_to_accesses_bp to
+> damon_sample_count_to_bp to better describe its actual behavior of
+> converting a positive sample count to a ratio.
 > 
-> > The comments on damon_nr_accesses_to_accesses_bp() and its unit test
-> > warn it can trigger division-by-zero when the aggregation interval is
-> > zero.  Commit 35d4a3cf70a8 ("mm/damon/ops-common: handle extreme
-> > intervals in damon_hot_score()") modified damon_nr_samples_per_aggr() to
-> > always return non-zero.  Hence no division-by-zero of the note can
-> > happen.
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index dea63083917b0..718268df27fa7 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -883,19 +883,18 @@ static unsigned int damon_sample_bp_to_count(
+> >  	return bp * damon_nr_samples_per_aggr(attrs) / 10000;
+> >  }
 > 
-> [Severity: Medium]
-> This isn't a bug, but is the function name referenced in the commit
-> message accurate?
+> [Severity: High]
+> This is a pre-existing issue, but does this multiplication overflow if the
+> total samples in an aggregation interval is large?
 > 
-> The commit message states that commit 35d4a3cf70a8 modified
-> damon_nr_samples_per_aggr() to always return non-zero. However, the function
-> that was modified and used to calculate maximum accesses is
-> damon_max_nr_accesses().
-> 
-> Could this description be updated to reference damon_max_nr_accesses() to
-> prevent confusion for future code archaeology and maintenance?
+> If an administrator configures a large aggr_interval compared to
+> sample_interval, making the sample ratio exceed 429,496, multiplying bp
+> (up to 10,000) by the number of samples could exceed the 32-bit limit of
+> unsigned int, causing incorrect bound calculations.
 
-Good finding.  I will ask Andrew to fix when he picks this up, unless I find
-more issues that deserve v2 of this series.
+Known low priority issue.
+
+> 
+> >  
+> > -/* Convert nr_accesses to access ratio in bp (per 10,000) */
+> > -static unsigned int damon_nr_accesses_to_accesses_bp(
+> > -		unsigned int nr_accesses, struct damon_attrs *attrs)
+> > +/* convert sample count to ratio in bp (per 10,000) */
+> > +static unsigned int damon_sample_count_to_bp(
+> > +		unsigned int count, struct damon_attrs *attrs)
+> >  {
+> > -	return mult_frac(nr_accesses, 10000, damon_nr_samples_per_aggr(attrs));
+> > +	return mult_frac(count, 10000, damon_nr_samples_per_aggr(attrs));
+> >  }
+> 
+> [Severity: High]
+> This is also a pre-existing issue, but can this use of mult_frac result in
+> an integer overflow?
+> 
+> The mult_frac macro evaluates (count % samples) * 10000 in 32-bit
+> arithmetic, which might overflow and produce an incorrect basis point
+> ratio when the sample count is very large.
+
+Known low priorrity issue.
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260708135359.122587-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260708135359.122587-1-sj@kernel.org?part=4
 
 
 Thanks,
