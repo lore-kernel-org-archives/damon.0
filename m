@@ -1,112 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E12926ADC
-	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 03:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B6023B638
+	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 03:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783479716; cv=none; b=VaG/WFmn+a0BhduyHiti3jI7DQRxQz9Z9ihyjjpVN4XH2J5dDhNHSTLMfI7l8WVk5WTuT3+RYsmipadx65567fBk7AMGAtfBkjKHogBX9Bc8LiC1gUWjjymjlWqtUSRc4uMMclwRiHoasE1BQqNwRV0q+rsEGN//O0mNBaZbPVQ=
+	t=1783479946; cv=none; b=L4uvBdxSDGc03xnBsNtMHSfQfqCKCVdcyowpal5+Db5+yURjEIbqDRNHhPH5dcBn1phWIjBckRRUjq8Pu8ERX2VPhiebrRSv5eWDo9Zt9qZxAV9ICNI4sSubBTOZz7v0cZsUmyUeHsXgy2dpZfymwZFKlA3mTv4MKWJ9AA40N1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783479716; c=relaxed/simple;
-	bh=AMWKtalljSrvdeD9knLMAba4zsKcknMmuh6OdHpiGAQ=;
+	s=arc-20240116; t=1783479946; c=relaxed/simple;
+	bh=aXIesHrhQZPE3T5HIs5EW0LL1e+TCEHH/QyQ9TKGB34=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=K8QlvPwaQvBFFuOUXf/DpM/cqLHkByMWAw+q522MiQsWVPxexE2da409wKrn2OX0CFuvHd89avOLhQ0R9G1OObjmymb8YS214tWqU7ZcXygC+f1yHtAGfaJs4g1Lr9/XlXLAV1iZ4eVNPsGE6y5/JShKQh3sy0t2742wGsr+AZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OWtgY2VR; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=n5Jf9kWUrik65JZ7MKSJ7QONGL8v+QXwK9111glbW5B7raSTGSu6ltuK74igc8ZVkplDVBRsgDPKReQ2fNvDBwUysBMi0/+YeFEnEfwBLdZmalqQrlYtAgr1KG8AV9UkT+ew72vEYoXsq0RdMaz/kgU2GBp0ZZt9qsEDv3cYjSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LWH+pU9Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OWtgY2VR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C441F000E9;
-	Wed,  8 Jul 2026 03:01:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LWH+pU9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBC61F000E9;
+	Wed,  8 Jul 2026 03:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783479715;
-	bh=br0QE4Kq4gthWD0skGPVP1F84r8+y4KQ4ITMU5H5k8M=;
+	s=k20260515; t=1783479944;
+	bh=B6UCTi85VZxkuZ5JTafzXut4FanYgYZ0amaWg/kNzR0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OWtgY2VRcdlaC49WGttwZVQUXwZblB1LaYwK21yJzcG/g7ypuEPUG9+RnmwPFI5mL
-	 pgBNk2zQKdySI108AYbCCcPIojMjBl/4W3Zu1SpMnzRBhtWFbflxABjzsy7xdHf1Gk
-	 i1t3Gj58ApymaaSsPPeGcnNsl44ycZkH3sd85h/Lg6SwKCyELkMXE74RPSk0eWN+Rb
-	 Q9DYKRTxi9V2fhfB55JJWjU+PMgT5n8HszDM32hMCn4OlGaQAW8AoP4SPPTD27nPDQ
-	 PvyZU13ewvax6VAUajULOnTr8Xy/HUx4fQ/HSVIQmQD01tU4cfbItbppWR3oZJ+4kA
-	 kWFxyfGf4H0wg==
+	b=LWH+pU9Q0sXM8EorkyuxiX99g5HFh6qTmNWRHMFoNM+9j88woERn7RxV1aTU5YcH6
+	 yb3xJ3MZm9eFmZX1LPxFPFGDzxxG4cC5Ezfp3nt1kOu+yNiE8kPwDDZThb4lobd06F
+	 81S961w2ITXG5XYVCQCqMH+IBhngfTW1u8iui7yWLug+DLaNlZdu9uaI4LClasXenq
+	 ET9gWrM+0Y2lyadMA9El5ucGKiEFaeRLP9M5a/wW/TQf4dcegNARWOelhl2x03OXod
+	 cIZiWqfhEMrJzWiKmN1Zk/X8OgoHxblAEufnkmyLyTc7ZXkoKYRO1b8Ac3dslJW3O9
+	 mKbdFbtLYyokA==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.3 5/7] mm/damon/core:
- s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/
+Subject: Re: [RFC PATCH v1.3 6/7] mm/damon/core: update probe hits for new
+ parameter commit
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260708024855.116614-6-sj@kernel.org>
+In-Reply-To: <20260708024855.116614-7-sj@kernel.org>
 References: <20260708024855.116614-1-sj@kernel.org>
- <20260708024855.116614-6-sj@kernel.org>
+ <20260708024855.116614-7-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 08 Jul 2026 03:01:54 +0000
-Message-Id: <20260708030154.C6C441F000E9@smtp.kernel.org>
+Date: Wed, 08 Jul 2026 03:05:43 +0000
+Message-Id: <20260708030544.6EBC61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] 32-bit integer overflow in sample scaling functions `damon_sample_=
-bp_to_count` and `damon_sample_count_to_bp`.
+- [High] Unbounded iteration over `ctx->probes` list writing to the statica=
+lly sized `probe_hits` array can lead to buffer overflow.
+- [Medium] Scaling `probe_hits` and `last_probe_hits` using `damon_nr_sampl=
+es_for_new_attrs()` assigns an `unsigned int` to an `unsigned char`, causin=
+g silent truncation and data corruption when the scaled count exceeds 255.
 --
 
---- Patch [5]: [RFC PATCH v1.3 5/7] mm/damon/core: s/nr_accesses_for_new_at=
-trs/nr_samples_for_new_attrs/ ---
-commit 9db3c90e1f930b4b71612a504362560074396989
+--- Patch [6]: [RFC PATCH v1.3 6/7] mm/damon/core: update probe hits for ne=
+w parameter commit ---
+commit 5d7c7277de18e07d88cf49d1f16d870a9dfc0f23
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/
+mm/damon/core: update probe hits for new parameter commit
 
-damon_nr_accesses_for_new_attrs() can be used for not only nr_accesses
-but also any positive sample count, like probe_hits.  Rename to be able
-to be used for such general uses without confusion.
+Users can update DAMON parameters at runtime.  If the samples and/or
+aggregation intervals are updated in this way, monitoring results
+depending on the intervals should also be updated for a more accurate
+snapshot.  The age and nr_accesses are properly updated, while
+probe_hits are not updated in the way.  Do the update.
 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 718268df27fa7..800ff6b6d2473 100644
+> index 800ff6b6d2473..15d31285515d6 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-> @@ -890,22 +890,21 @@ static unsigned int damon_sample_count_to_bp(
->  	return mult_frac(count, 10000, damon_nr_samples_per_aggr(attrs));
+
+[ ... ]
+
+> @@ -897,10 +897,32 @@ static unsigned int damon_nr_samples_for_new_attrs(=
+unsigned int nr,
+>  			damon_sample_count_to_bp(nr, old_attrs), new_attrs);
 >  }
+> =20
+> +static void damon_update_probe_hits(struct damon_region *r,
+> +		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs,
+> +		bool aggregating, struct damon_ctx *ctx)
+> +{
+> +	struct damon_probe *p;
+> +	int i =3D 0;
+> +
+> +	damon_for_each_probe(p, ctx) {
 
 [Severity: High]
-This isn't a bug introduced by this patch, but can the 32-bit unsigned
-integer multiplication here and in damon_sample_bp_to_count() overflow?
+Does this loop overflow the r->last_probe_hits[] and r->probe_hits[] arrays?
 
-When a privileged user configures an aggregation to sample interval ratio
-greater than ~429,496 via sysfs (e.g., 10s aggregation and 10us sampling),
-the mult_frac() macro performs a 32-bit multiplication of the remainder
-by 10000. This could overflow when the remainder exceeds 429,496.
+The probe_hits and last_probe_hits members are defined as fixed-size arrays=
+ of
+size DAMON_MAX_PROBES. Since there is no bounds checking on i, if there are
+more than DAMON_MAX_PROBES in the ctx->probes list, this will write past the
+end of the arrays and corrupt adjacent fields in struct damon_region.
 
-Similarly, in damon_sample_bp_to_count():
+> +		r->last_probe_hits[i] =3D damon_nr_samples_for_new_attrs(
+> +				r->last_probe_hits[i], old_attrs, new_attrs);
 
-mm/damon/core.c:damon_sample_bp_to_count() {
-	...
-	return bp * damon_nr_samples_per_aggr(attrs) / 10000;
-}
+[Severity: Medium]
+Will this assignment cause silent truncation and data corruption?
 
-The expression bp * damon_nr_samples_per_aggr(attrs) is performed as a
-32-bit unsigned int multiplication, which could overflow 4.29B.
+The last_probe_hits and probe_hits arrays are declared as unsigned char
+(8-bit) in struct damon_region, but damon_nr_samples_for_new_attrs() return=
+s an
+unsigned int (32-bit).
 
-Could this overflow silently corrupt region access counts, causing DAMON to
-make incorrect memory management decisions like paging out actively used
-memory?
+If the scaled count exceeds 255, assigning it directly will truncate the va=
+lue
+to a meaningless modulo-256 wrapped value rather than clamping it at a maxi=
+mum.
 
-> =20
-> -static unsigned int damon_nr_accesses_for_new_attrs(unsigned int nr_acce=
-sses,
-> +static unsigned int damon_nr_samples_for_new_attrs(unsigned int nr,
->  		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs)
->  {
->  	return damon_sample_bp_to_count(
-> -			damon_sample_count_to_bp(nr_accesses, old_attrs),
-> -			new_attrs);
-> +			damon_sample_count_to_bp(nr, old_attrs), new_attrs);
->  }
+> +		if (!aggregating)
+> +			r->probe_hits[i] =3D damon_nr_samples_for_new_attrs(
+> +					r->probe_hits[i], old_attrs,
+> +					new_attrs);
+> +		else
+> +			r->probe_hits[i] =3D 0;
+> +		i++;
+> +	}
+> +}
+> +
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708024855.1166=
-14-1-sj@kernel.org?part=3D5
+14-1-sj@kernel.org?part=3D6
