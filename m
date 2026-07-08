@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C621A6822
-	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 14:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA55F442118
+	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 14:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783520808; cv=none; b=hlxSsEUsFc1uLtyreGUA+LomsJhZol0F0uZ6ruG4BneDQmqoq7LJY5bcueYH9mN5imTJtT+6Ietyat63I1kvTs6Tv+a35D2WmOrDz4q6dhJg2BY+Ok73pepkkpyBaPBue2OxzzlcT5UVdUHGa8Ux4DsznomaxzBcMh7pZ9VKiQE=
+	t=1783520873; cv=none; b=JyjjR0d1Ixqc15xtc6dWROXyKK7lj7jLgJiPkTum2PPRP7CSGVsUzPc5G9CCo+7z46flaCgqBvdP2CIvqrebw0lmLJcmRAx/6El3GUxxjBDmHEAollqVdV+7d4Ft2beiPMT8Fy93aKvBYoeprqVmAOJuEzFCUWMh0OhtZfTrSfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783520808; c=relaxed/simple;
-	bh=EeRLkuO0piL6nJODAJl69iZagnEcRwP5OTpMTckUQIc=;
+	s=arc-20240116; t=1783520873; c=relaxed/simple;
+	bh=DOq7uidAUSc0seNoWK+1KUsUsA8eyf6dy/Ayw2xVoJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EMsq2x62Su7MjoZHLeEAsdcQbRQVl3zWYcxnF1aTB1K4WuQ6nkQQPvrb1Nx34hhEkJac/UUm/u43OikaNIv3RB9Q43043jXYBk3en5iafumNNmnyUYr6Kuxfw9w/0k2z7MASM5VKpQg3YUqcUVAKrguYaO8JAEKvukUlJw3/3A0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n4zLI1Z/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Dl9ihp+N+h9yeTbbRE1X+RB87NKXztu315110GRzG4GCFmTa75OltiqIs5BDV1jut864etyC7D1YmIAD+rXd4tVcd41v+hPSY3AAmA1rGPhOHDBzogS6xtgEpAERPAjuQ8391YejkEh8zINHUMWOFElXJLUMTDv0ZD5LvyTIpi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oyJ5CApv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n4zLI1Z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18C21F000E9;
-	Wed,  8 Jul 2026 14:26:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oyJ5CApv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339A61F000E9;
+	Wed,  8 Jul 2026 14:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783520806;
-	bh=KgpcQWJhxjipI8iwU1MCRqSndsJDv/Xzwir4mVV35iI=;
+	s=k20260515; t=1783520871;
+	bh=fQca5snBc66sxi7o2gyN55Cry+hOMN495J1ha8/O8XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n4zLI1Z/j52XHjAqh9EzuulfES7tpXsnA06jgQJXalvEj7s6u55h40ucv9tBUPHB6
-	 a2FwUz8G4Kp6HQc5UMHKYz/6L4Cjyfln3uCSw7CcfHizRHAAZCAfkUTsgpht9ItOYc
-	 +pxp4tY+myuo8N5F90t3SKtbnDATGBAOpbfDwU0J2P18xSiwtB5WSrbBHYrb9DK1pU
-	 fVPYQU0H2dAvCirXyhqrGsSfCGOjSbUDXEvs93kGuodbdEz7+SPNtBMxciymqBmwe1
-	 jR0JxLbmJE9F3zAahTVc6vhU1aRyJ7QgPsBZru8lSnO2ekn78qtlruJh+dGA/SGZAf
-	 rbcBzPCYDnYRA==
+	b=oyJ5CApvZw1QHARws317yKAjvR20on8pHogMWN2FAyo/+/SAfnuEb1Ou34tcHAUqo
+	 m7vlQnBIO5ult64oKfZsuZ8f3BnxDHbafNGbCZh/hqJFr+UrL4LTXAYJIfEsqd4xek
+	 dasFJ5gSn3Sv7S5taHaOVxoZKZE3uF4oGCu7Zs0Nq9u0rHKfuT2BrSIw8zXhoI08GY
+	 axCKrRqFIfPBiF7mfZw74y3pVtDyXHQwtbDLC5iCsh9q/DdCQY+Uj7ThAA2BM8OoDQ
+	 n9x0GJZRgWw72SxhMdtX1Yn6L/lY4wAwDWupwDfNWDVwp7HIT6dBKgOOPPrJgCYARl
+	 N0h/HkuCZgEZQ==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH 4/7] mm/damon/core: s/nr_accesses_to_accesses_bp/sample_count_to_bp/
-Date: Wed,  8 Jul 2026 07:26:43 -0700
-Message-ID: <20260708142644.124034-1-sj@kernel.org>
+Subject: Re: [PATCH 5/7] mm/damon/core: s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/
+Date: Wed,  8 Jul 2026 07:27:42 -0700
+Message-ID: <20260708142743.124162-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260708140348.4A4F91F000E9@smtp.kernel.org>
+In-Reply-To: <20260708140944.F26821F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,69 +45,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 08 Jul 2026 14:03:47 +0000 sashiko-bot@kernel.org wrote:
+On Wed, 08 Jul 2026 14:09:44 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] The functions `damon_sample_bp_to_count` and `damon_sample_count_to_bp` are susceptible to 32-bit integer overflows when evaluating large aggregation intervals.
+> - [High] 32-bit arithmetic overflow in sample count and basis points conversions leads to incorrect scaling for large interval ratios.
+> - [High] 32-bit integer overflow in `damon_age_for_new_attrs` when calculating region age during attribute updates on 32-bit architectures.
 > --
 > 
-> --- Patch [4]: [PATCH 4/7] mm/damon/core: s/nr_accesses_to_accesses_bp/sample_count_to_bp/ ---
-> commit 75d19025f9846da2b8b1718a4f36d8064a4aa832
+> --- Patch [5]: [PATCH 5/7] mm/damon/core: s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/ ---
+> commit 7659397725f64a348908ab982da60d557f63b8c0
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: s/nr_accesses_to_accesses_bp/sample_count_to_bp/
+> mm/damon/core: s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/
 > 
-> This commit renames damon_nr_accesses_to_accesses_bp to
-> damon_sample_count_to_bp to better describe its actual behavior of
-> converting a positive sample count to a ratio.
+> This commit renames damon_nr_accesses_for_new_attrs() to
+> damon_nr_samples_for_new_attrs() to reflect its general use for any positive
+> sample count.
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index dea63083917b0..718268df27fa7 100644
+> > index 718268df27fa7..800ff6b6d2473 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> > @@ -883,19 +883,18 @@ static unsigned int damon_sample_bp_to_count(
-> >  	return bp * damon_nr_samples_per_aggr(attrs) / 10000;
+> > @@ -890,22 +890,21 @@ static unsigned int damon_sample_count_to_bp(
+> >  	return mult_frac(count, 10000, damon_nr_samples_per_aggr(attrs));
 > >  }
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does this multiplication overflow if the
-> total samples in an aggregation interval is large?
+> This is a pre-existing issue, but does this code overflow 32-bit arithmetic
+> when the sample count is large?
 > 
-> If an administrator configures a large aggr_interval compared to
-> sample_interval, making the sample ratio exceed 429,496, multiplying bp
-> (up to 10,000) by the number of samples could exceed the 32-bit limit of
-> unsigned int, causing incorrect bound calculations.
+> In mm/damon/core.c:damon_sample_count_to_bp(), the mult_frac macro multiplies
+> the remainder by 10000, which can overflow 32-bit arithmetic.
+> 
+> Similarly, in damon_sample_bp_to_count(), the 32-bit multiplication overflows
+> since both operands are 32-bit unsigned integers:
+> 
+> mm/damon/core.c:damon_sample_bp_to_count() {
+> 	return bp * damon_nr_samples_per_aggr(attrs) / 10000;
+> }
+> 
+> This occurs when the number of samples per aggregation interval exceeds
+> roughly 429,496 (e.g., sample_interval=1us and aggr_interval=1s, yielding
+> 1,000,000 samples).
+> 
+> This could cause the region access tracking variables to be corrupted and
+> truncated during dynamic attribute updates (damon_set_attrs), rendering DAMOS
+> memory management schemes dysfunctional.
+> 
+> Both intervals are fully configurable by privileged users via DAMON
+> sysfs/debugfs interfaces, or dynamically updated by DAMON's auto-tuning
+> feature, making the overflow reachable in real-world scenarios.
 
 Known low priority issue.
 
 > 
-> >  
-> > -/* Convert nr_accesses to access ratio in bp (per 10,000) */
-> > -static unsigned int damon_nr_accesses_to_accesses_bp(
-> > -		unsigned int nr_accesses, struct damon_attrs *attrs)
-> > +/* convert sample count to ratio in bp (per 10,000) */
-> > +static unsigned int damon_sample_count_to_bp(
-> > +		unsigned int count, struct damon_attrs *attrs)
+> [Severity: High]
+> This is also a pre-existing issue, but can the region age calculation
+> overflow on 32-bit architectures during attribute updates?
+> 
+> Looking at damon_age_for_new_attrs(), the multiplication is limited to the
+> architecture's native unsigned long size:
+> 
+> mm/damon/core.c:damon_age_for_new_attrs() {
+> 	return age * old_attrs->aggr_interval / new_attrs->aggr_interval;
+> }
+> 
+> On 32-bit architectures, aggr_interval (unsigned long) and age (unsigned int)
+> are both 32-bit. The product exceeds ULONG_MAX (4,294,967,295) once the
+> stable time exceeds ~4,294 seconds.
+> 
+> This causes an integer overflow before the division, meaning any memory
+> region that remains stable for more than ~71.5 minutes will have its age
+> wrapped around and reset to an incorrectly small value when DAMON
+> attributes are dynamically updated.
+> 
+> This could break DAMOS schemes that target old pages for reclamation.
+> 
+> The bug is automatically triggered by DAMON's auto-tuning thread
+> (kdamond_tune_intervals), which periodically calls damon_set_attrs, or via
+> user-initiated sysfs attribute updates.
+
+Known low priority issue.
+
+> 
+> > -static unsigned int damon_nr_accesses_for_new_attrs(unsigned int nr_accesses,
+> > +static unsigned int damon_nr_samples_for_new_attrs(unsigned int nr,
+> >  		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs)
 > >  {
-> > -	return mult_frac(nr_accesses, 10000, damon_nr_samples_per_aggr(attrs));
-> > +	return mult_frac(count, 10000, damon_nr_samples_per_aggr(attrs));
+> >  	return damon_sample_bp_to_count(
+> > -			damon_sample_count_to_bp(nr_accesses, old_attrs),
+> > -			new_attrs);
+> > +			damon_sample_count_to_bp(nr, old_attrs), new_attrs);
 > >  }
 > 
-> [Severity: High]
-> This is also a pre-existing issue, but can this use of mult_frac result in
-> an integer overflow?
-> 
-> The mult_frac macro evaluates (count % samples) * 10000 in 32-bit
-> arithmetic, which might overflow and produce an incorrect basis point
-> ratio when the sample count is very large.
-
-Known low priorrity issue.
-
-> 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260708135359.122587-1-sj@kernel.org?part=4
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260708135359.122587-1-sj@kernel.org?part=5
 
 
 Thanks,
