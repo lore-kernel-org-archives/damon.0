@@ -1,158 +1,321 @@
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com [209.85.210.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7FE38911F
-	for <damon@lists.linux.dev>; Tue,  7 Jul 2026 21:33:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8E21A682C;
+	Wed,  8 Jul 2026 01:22:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783459984; cv=none; b=WJIKqsGRCW2j7uKgOovEjxhTukn2EGFQFjH2DzXn4yuJaFOwFFc3ArLpwa0A25nb1POw0wTL6pfEenbnNPwIOl4GfISEXiL74+x6+EgWm7kYFlQS2+EEyf/f8e+uo925Snak0DL5MNSZs1RCmuNX6ajKoe3WtOpNC8onl4jR20o=
+	t=1783473759; cv=none; b=kzDdrMldFLD3ZuNZOePtxq4uZ0X1vdigk+DwU0s3zySIepYDTqefVp87Ux4wn3rf/1I2+Iw8ByoxDMkNunhJD4mMnPGufESievvzCi7JeJVSQzxsrkRhM9ENcCBBSjBg36NU6oc6Bn/PSE0csbXE+4RZ+/b+uwdGSXp/DXyuAkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783459984; c=relaxed/simple;
-	bh=jEqvd4EuPiFtruMx0AmvgitV0rlHUlhXdIoQyGq9uo0=;
-	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=hjrqqG2gFnkxRMUyaJ/xY2cEmj9BHD0h1InCLB4H5trlyrbo5H/wplmzKAWsI/pLhcpbJdPhtWw8aixunIuuX7M1wQqLh7VMQoE6DNzWsNXUW7B4Ku9yUf2BFvLuDJhuLQgX3swH5OlMm9zfg5qKtC0i+D1F1apK09UC7h4WPNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.210.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-7e9fa2cd5c9so77456a34.2
-        for <damon@lists.linux.dev>; Tue, 07 Jul 2026 14:33:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783459979; x=1784064779;
-        h=content-type:cc:to:from:subject:message-id:in-reply-to:date
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ZbjaYNNT/DAa2ZgxKUTDH5wk4uWoo8h75GUG/OWPB4w=;
-        b=O/qDk0RB9O3f6JoPCBsZHuRDbFroOZBWU53/E5/N7vhofE0GicO8EpU2s1NYf0NvYt
-         5yXYQCP1LD14O0af9u8VZxtXrD88cHnccSewqkpbYtFsGGf0y0Td6gr/z6MssSYAlI0Q
-         kpvsYBYU75AFvc4d7OJZAvMEfeLV94OdCZ0jl2RO0ehAlFOb7HMqpAO+lMXT16nq2Vvq
-         irNPMwcOnvmcVwCEJ/bsJdBh7YeHFkvEuDPv7t5xOlQdJZVmmGCICIqhq525miQJ5gyX
-         olWTju+zXuBGeNFqKNEhHw3UyPaKlY51Rv9k+bFMWsIpzQPD8gLW4MH9FHufa1Wl5maZ
-         5sNQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9fSKhrCAkTPqp0ZmWnEuQBqCBhuHmszlTf4hTKF0Bm2y+A78yVJPbgkOq6i0T2PRX2RiXKBg==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzjp/ovf/OFmib2VHE5aU27fKdkKWqhtNVJ0ArJ4kWBJXqd7pCS
-	ehsN+KZNeNTnTDMwfGbU3RgeTM61pmIhi5yATGwZk/DcN0zEWUOm7FbSB+Zf6T5Jj480Sdr+TWw
-	kAzn4kxzkcqtdRKvEsbrgwRUT10dE5vDTSp7JN7tyhbxzvBGuGhHtHu8qXwQ=
+	s=arc-20240116; t=1783473759; c=relaxed/simple;
+	bh=yaT31FaI99WzfwUUbvG75mvQlWVXykzhM5rrQRnYcjE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SCuJ3UMh4fUzUuNbWF5bWaCIdcfxbb6awto+JESeI3tcG8YZ4VVCA4AEyQLt0Pe7ja4dXlsRaRk1Qzn8JlAIct2IucsYtCAkCdLO8lJbRJpoplAlb1csiFOUu5BXmzp3rflonbahuihe39qK4pB2LXJO0zweojPpnzL1Cw4g+JI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G6D42U4j; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G6D42U4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1CF1F000E9;
+	Wed,  8 Jul 2026 01:22:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783473758;
+	bh=+Lb/jkgxNgC6dvY0hK5vMR6pog+drE09r16IzbOKXwA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=G6D42U4jW0u9iZ2KfKwxSHncc86EbH7VO7FsvrbISBe6BzRSItxsNn0lnfjTcZl57
+	 FgRRtojmPt7DFMbFuOJUdwU5WTXc6GGHkK1PfgPTOJcX6Qg9IDevUfworOUw6hjhyA
+	 /uEX0h8wokA3X9BPVc5TTnbwVtAq772oe9u4JDUAo+8JF8iHgj2ircIrM8yNMkGdCP
+	 86uk0CjVpshWm9FT8CIfzjAmqIfsIu4T30mqmj8J2yEbG5k1goqBKin6XoPjaWBnRr
+	 EFFdrUYiI4aePlYwUnkd2s4s9a+OZuu8NMtbCaSJcYoGujvrNTmCsEXHca/p9aybnN
+	 4nd96S4W4qW+w==
+From: SJ Park <sj@kernel.org>
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+Cc: SJ Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 0/3] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Tue,  7 Jul 2026 18:22:33 -0700
+Message-ID: <20260708012234.92093-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <b786294f-0ba5-4b05-b956-d902c358dd88@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6820:1995:b0:6a1:5ca0:d52e with SMTP id
- 006d021491bc7-6a355246c2emr4441088eaf.7.1783459978731; Tue, 07 Jul 2026
- 14:32:58 -0700 (PDT)
-Date: Tue, 07 Jul 2026 14:32:58 -0700
-In-Reply-To: <20260707063308.29176-1-tao.wangtao@honor.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <6a4d708a.a1ad617e.25832.000c.GAE@google.com>
-Subject: [syzbot ci] Re: mm: rework anon_vma and remove anon_vma_chain
-From: syzbot ci <syzbot+cie73eac57e65eaf28@syzkaller.appspotmail.com>
-To: akpm@linux-foundation.org, apopple@nvidia.com, baohua@kernel.org, 
-	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, bp@alien8.de, 
-	byungchul@sk.com, catalin.marinas@arm.com, chengming.zhou@linux.dev, 
-	damon@lists.linux.dev, dave.hansen@linux.intel.com, david@kernel.org, 
-	dev.jain@arm.com, dvander@google.com, gourry@gourry.net, harry@kernel.org, 
-	hpa@zytor.com, jack@suse.cz, jannh@google.com, jgg@ziepe.ca, 
-	jhubbard@nvidia.com, joshua.hahnjy@gmail.com, jparsana@google.com, 
-	kas@kernel.org, kees@kernel.org, lance.yang@linux.dev, liam@infradead.org, 
-	linux-arm-kernel@lists.infradead.org, linux-fsdevel@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-mm@kvack.org, ljs@kernel.org, 
-	luizcap@redhat.com, matthew.brost@intel.com, mhocko@suse.com, 
-	mingo@redhat.com, muchun.song@linux.dev, nao.horiguchi@gmail.com, 
-	npache@redhat.com, peterx@redhat.com, pfalcato@suse.de, rakie.kim@sk.com, 
-	riel@surriel.com, rppt@kernel.org, ryan.roberts@arm.com, ryncsn@gmail.com, 
-	shakeel.butt@linux.dev, sj@kernel.org, surenb@google.com, 
-	tao.wangtao@honor.com
-Cc: syzbot@lists.linux.dev, syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-syzbot ci has tested the following series
+On Tue, 7 Jul 2026 17:25:36 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-[v2] mm: rework anon_vma and remove anon_vma_chain
-https://lore.kernel.org/all/20260707063308.29176-1-tao.wangtao@honor.com
-* [RFC PATCH v2 01/13] mm: add CONFIG_ANON_VMA_FRACTAL
-* [RFC PATCH v2 02/13] mm: implement helpers for ANON_VMA_FRACTAL
-* [RFC PATCH v2 03/13] mm: implement __anon_node_prepare for ANON_VMA_FRACTAL
-* [RFC PATCH v2 04/13] mm: implement anon_node_clone for ANON_VMA_FRACTAL
-* [RFC PATCH v2 05/13] mm: implement anon_node_fork_with_prev for ANON_VMA_FRACTAL
-* [RFC PATCH v2 06/13] mm: implement unlink_anon_nodes for ANON_VMA_FRACTAL
-* [RFC PATCH v2 07/13] mm: handle rmap_base changes for ANON_VMA_FRACTAL
-* [RFC PATCH v2 08/13] mm: implement anonymous folio rmap for ANON_VMA_FRACTAL
-* [RFC PATCH v2 09/13] mm: prepare anon_node replacement for ANON_VMA_FRACTAL
-* [RFC PATCH v2 10/13] mm: replace anon_vma with anon_node for ANON_VMA_FRACTAL
-* [RFC PATCH v2 11/13] mm: optimize rmap for ANON_VMA_FRACTAL with PVL
-* [RFC PATCH v2 12/13] mm: shared semaphores for ANON_VMA_FRACTAL
-* [RFC PATCH v2 13/13] mm: Enable CONFIG_ANON_VMA_FRACTAL by default
+> 
+> 
+> On 7/7/2026 5:10 PM, SJ Park wrote:
+> > Hello Gutierrez,
+> > 
+> > 
+> > Thank you for your replies.  I still find some of my comments are not replied,
+> > acknowledged or objected.  Could you please address those all before the next
+> > revision?
+> > 
+> > On Tue, 7 Jul 2026 16:31:03 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+> > 
+> >>
+> >>
+> >> On 6/20/2026 11:02 PM, SeongJae Park wrote:
+> >>> On Sat, 20 Jun 2026 20:11:46 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+> >>>
+> >>>> Hi SJ,
+> >>>>
+> >>>> So sorry, I missed your email. I just found it. Sorry for the late answer.
+> >>>>
+> >>>> On 6/17/2026 4:44 AM, SeongJae Park wrote:
+> >>>>> On Tue, 16 Jun 2026 15:03:13 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> >>>>>
+> >>>>>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> >>>>>>
+> >>>>>> Overview
+> >>>>>> ========
+> >>>>>>
+> >>>>>> This patch set introduces a new autotuning which allows to collapse
+> >>>>>> hot regions into hugepages.
+> >>>>>>
+> >>>>>> Motivation
+> >>>>>> ==========
+> >>>>>>
+> >>>>>> Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+> >>>>>> misses (or hits) is to use huge pages. Unfortunately, using "always"
+> >>>>>> in THP leads to memory fragmentation and memory waste. For this reason,
+> >>>>>> most application guides and system administrators suggest to disable THP.
+> >>>>>>
+> >>>>>> Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
+> >>>>>> However, there is no way to tune the settings. It will collapse all the
+> >>>>>> hot regions that meet the access pattern. If the server is a bare metal
+> >>>>>> database or big data server, this will also lead to eventual fragmentation.
+> >>>>>>
+> >>>>>> Additionally, currently THP is set globally. Ideally, there should be a
+> >>>>>> way to control which tasks can use huge pages.
+> >>>>>
+> >>>>> Could you please reword for prctl(PR_SET_THP_DISABLE) like per-process control
+> >>>>> cases, as we discussed [1] on RFC v3?
+> > 
+> > WDYT?
+> Yes, we can use prctl. However, I believe DAMON is more transparent and easier
+> for a sysadmin. I will rephrase this sentence to explain why DAMON makes sense
+> instead of other alternative.
 
-and found the following issue:
-WARNING: bad unlock balance in exc_page_fault
+Thank you, I agree to you.  But I just want the pointer be clear.  Your
+revision plan soudns like a good plan.
 
-Full report is available here:
-https://ci.syzbot.org/series/39466cf1-707b-420e-8f1e-11735bea6c66
+[...]
+> >>>>>> Benchmarks
+> >>>>>> ==========
+> >>>>>>
+> >>>>>> Huge page collapse autotuning was tested in a physicial machine with
+> >>>>>> MariaDB 10.5.29 and sysbench as the benchmark framework.
+> >>>>>>
+> >>>>>> The hugepage module was set up in the following way:
+> >>>>>>
+> >>>>>> # echo 1000 > min_age
+> >>>>>> # echo 1000 > quota_percentage_hugepage
+> >>>>>
+> >>>>> I guess this is the quota goal?  What is the unit?  I guess it is aparently not
+> >>>>> percentage?  The name doesn't sound like very consistent or intuitive.  How
+> >>>>> about hugepage_mem_bp or target_hugepage_mem_bp?
+> >>>> Right, we agreed to change the name. I will correct it.
+> >>>
+> >>> Thank you.  Because we agreed to drop the module, this could simply be dropped?
+> > 
+> > WDYT?
+> Yes, I will drop it. The new patch set will not include any of these parameters,
+> but just the target value for the quota and a new quota metric.
 
-***
+Thank you, sounds like a good revision plan.
 
-WARNING: bad unlock balance in exc_page_fault
+> >>>
+> >>>>>> # echo $(pidof mariadbd) > taget_pid
+> >>>>>> # echo on > enabled
+> >>>>>>
+> >>>>>> The goal was to achieve 5% of the total memory used as hugepage.
+> >>>>>
+> >>>>> I guess this is what the above example is setting using
+> >>>>> 'quotta_percentage_hugepage'?  If so, it means the unit is 1/20000 ?  Is this
+> >>>>> correct...?
+> >>>> I actually set it to 500. I will update the cover letter.
+> >>>
+> >>> I think changes of this series is matured and very close to land.
+> >>> Discrepancies in the cover letter and commit messages are my concern that
+> >>> blocking this series.  Please keep everything up to date and in high quality,
+> >>> from the next version.
+> >> I will test it with a bigger database.
+> > 
+> > Thank you.  Couuld you further clarify what you expect to see as the result,
+> > and how it will complete the story?
+> What I expect is DAMON to keep consistent huge page usage to total memory
+> usage ration according to the target value.
 
-tree:      mm-new
-URL:       https://kernel.googlesource.com/pub/scm/linux/kernel/git/akpm/mm.git
-base:      8ff49efd1cf18086320f3b43d1bd483c0b9e7e58
-arch:      amd64
-compiler:  Debian clang version 22.1.6 (++20260514074242+fc4aad7b5db3-1~exp1~20260514074407.73), Debian LLD 22.1.6
-config:    https://ci.syzbot.org/builds/c3a229e4-b949-4889-b309-dbdd1fadd95f/config
-syz repro: https://ci.syzbot.org/findings/29b52ad4-b463-41da-877c-4138356e3960/syz_repro
+Makes sense, as long as we have a sound theory.  But, I'm not sure if we really
+have such theory.  Please read my comment below for why I'm not really sure.
 
-=====================================
-WARNING: bad unlock balance detected!
-syzkaller #0 Not tainted
--------------------------------------
-sshd/5593 is trying to release lock (vm_lock) at:
-[<ffffffff8bb5032a>] handle_page_fault arch/x86/mm/fault.c:1483 [inline]
-[<ffffffff8bb5032a>] exc_page_fault+0x6a/0xc0 arch/x86/mm/fault.c:1536
-but there are no more locks to release!
+> 
+> Should I publish these results as well? I mean showing different target
+> values and the actually achieved values. And theses results for different
+> database sizes.
 
-other info that might help us debug this:
-no locks held by sshd/5593.
+Feel free to add as much data as you want to show.  Nonetheless, I'd recommend
+adding only data that gives us clear story in a condensed way.  The data on the
+cover letter will live forever in the git history.  Let's not make it
+unnecessarily long.
 
-stack backtrace:
-CPU: 1 UID: 0 PID: 5593 Comm: sshd Not tainted syzkaller #0 PREEMPT(full) 
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_unlock_imbalance_bug+0xdc/0xf0 kernel/locking/lockdep.c:5298
- __lock_release kernel/locking/lockdep.c:5527 [inline]
- lock_release+0x1f1/0x3c0 kernel/locking/lockdep.c:5889
- vma_refcount_put include/linux/mmap_lock.h:216 [inline]
- vma_end_read include/linux/mmap_lock.h:264 [inline]
- do_user_addr_fault+0xab0/0x1340 arch/x86/mm/fault.c:1345
- handle_page_fault arch/x86/mm/fault.c:1483 [inline]
- exc_page_fault+0x6a/0xc0 arch/x86/mm/fault.c:1536
- asm_exc_page_fault+0x26/0x30 arch/x86/include/asm/idtentry.h:595
-RIP: 0033:0x5583206de68b
-Code: 04 25 28 00 00 00 48 89 44 24 08 31 c0 48 89 e2 e8 8c 5b ff ff 85 c0 78 13 31 c0 4d 85 e4 74 0c 48 8b 3c 24 48 89 de 4c 89 e1 <f3> a4 48 8b 54 24 08 64 48 2b 14 25 28 00 00 00 74 05 e8 5e 17 fc
-RSP: 002b:00007fff02a37e60 EFLAGS: 00010206
-RAX: 0000000000000000 RBX: 000055835a20d6fe RCX: 0000000000008000
-RDX: 0000000000000000 RSI: 000055835a20d6fe RDI: 00007fac5106c010
-RBP: 000055832073df00 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000008000
-R13: 000000000000005e R14: 00000000000000b3 R15: 00007fff02a37f88
- </TASK>
+If you want to share your findings in volume for discussions, please feel free
+to share.  But not necessarily it should be the part of the permanent history.
+You can send it as a mail without the code diff.  Sending that as a reply to
+the patch series could also be a good option.
+
+> >>>>>> Since the database was not very big, we may not be able to achieve
+> >>>>>> high amount of huge pages per total memory consumption ratio.
+> >>>>>
+> >>>>> I believe this patch series will work as you explained.  But, it seems bit
+> >>>>> weird to show a test result that doesn't demonstrate what this patch is aimed
+> >>>>> to achive.  Could you increase the size of the database?  IIRC, you were able
+> >>>>> to show the percentage is over-achived case in an early version.
+> >>>> Actually, this is what I got using the TEMPORAL quota goals. With the regular
+> >>>> quota goals, it actually over-achieves the goal.
+> >>>>
+> >>>> Is this an actual bug in the TEMPORAL quota goal?
+> >>>
+> >>> You mentioned "Since the database was not very big, we may not be able to ...".
+> >>> Based on that, I was assuming you will be able to make the goal achieved, by
+> >>> increasing the database size.  Now you are saying about the goal.
+> >>>
+> >>> Do you mean the database size is not expected to contributed to this result?
+> >>>
+> >>> Of course TEMPORAL goal might have bugs.  I find no clue from this datta,
+> >>> though.  Do you have some evidences that make you suspect it?  If so, could you
+> >>> please share?
+> > 
+> > WDYT?
+> I have no idea, to be honest. I will try to test with different databasesizes with temporal and consistent policies. The behaviour was weird to me,
+> but I don't know if this was a TEMPORAL policy issue or I didn't set the
+> DAMON parameters correctly.
+
+Thank you for transparently sharing your thought.  And this is little bit
+concerning me.  It feels like we don't really have a good theory about what
+change will make what results for what reason.  It rather feels like we just
+doing random experiments and showing the random results.
+
+I understand having data first and developing the theory driven by data is also
+a good approach.  But I feel like this is a time to step back and think about
+what we're doing.
+
+IIRC, your initial experiment results on the very early version of this series
+looked promising.  But from a point, it looked like just random.  Maybe I gave
+you wrong change request, or some test environment has unexpectedly changed.
+
+How about summarizing what tests you did so far, what changes in the kernel and
+the test setup has made for each iteration, and how the results have changed?
+
+If it has been too long since the older tests, just doing the tests again or
+dive deep into debugging of your current setup with the all mighty printk() on
+core DAMON internall code can be an option.
+
+Have you also monitored DAMOS stats while the tests are ongoing?  Maybe that
+could also be a good debugging option for understanding what's going on as
+expected vs not.
+
+> 
+> >>>
+> >>>>>>
+> >>>>>> The table below shows the memory consumption over time. Timestamp is in
+> >>>>>> second and the memory usage in is MBytes. Gaps in the timestamp means
+> >>>>>> that no changes in the hugepage consumption happened over that period
+> >>>>>> of time in MB. The total used memory is calculated as
+> >>>>>> mem_total - mem free. The huge page used is calculated as
+> >>>>>> huge_page_anon + huge_page_shmem + huge_page_file. The table also
+> >>>>>> shows the huge pages to total memory ratio.
+> >>>>>>
+> >>>>>> Hugepage autotune benchmark:
+> >>>>>> +-----------+----------------+----------------+----------------------+
+> >>>>>> | timestamp | total mem used | huge page used | percentage hugepage  |
+> >>>>>> +-----------+----------------+----------------+----------------------+
+> >>>>>> | 0         | 3044.988281    | 0              | 0%                   |
+> >>>>>> | 22        | 3160.207031    | 2              | 0.06%                |
+> >>>>>> | 30        | 3250.90625     | 4              | 0.12%                |
+> >>>>>> | 69        | 3781.238281    | 6              | 0.16%                |
+> >>>>>> | 71        | 3822.226563    | 8              | 0.21%                |
+> >>>>>> | 72        | 3846.578125    | 10             | 0.26%                |
+> >>>>>> | 73        | 3852.402344    | 12             | 0.31%                |
+> >>>>>> | 74        | 3868           | 14             | 0.36%                |
+> >>>>>> | 75        | 3881.84375     | 104            | 2.68%                |
+> >>>>>> | 275       | 4194.175781    | 106            | 2.52%                |
+> >>>>>> +-----------+----------------+----------------+----------------------+
+> >>>>>> After second 275, no more pages are collapsed into hugepages
+> >>>>>>
+> >>>>>>
+> >>>>>> THP (always) benchmark:
+> >>>>>> +-----------+----------------+----------------+---------------------+
+> >>>>>> | timestamp | total mem used | huge page used | percentage hugepage |
+> >>>>>> +-----------+----------------+----------------+---------------------+
+> >>>>>> |         1 |    4489.320313 |            184 |         4.098615986 |
+> >>>>>> |        15 |    4581.871094 |            214 |         4.670580984 |
+> >>>>>> |        30 |    4757.742188 |            376 |         7.902908253 |
+> >>>>>> |        45 |    4937.574219 |            558 |         11.30109595 |
+> >>>>>> |        60 |    5147.867188 |            728 |         14.14177898 |
+> >>>>>> |        75 |      5407.0625 |            918 |         16.97779524 |
+> >>>>>> |        95 |    5668.796875 |           1040 |         18.34604455 |
+> >>>>>> |       105 |    5723.839844 |           1056 |         18.44915352 |
+> >>>>>> |       115 |     5736.84375 |           1072 |         18.68623317 |
+> >>>>>> |       125 |    5732.042969 |           1088 |         18.98101612 |
+> >>>>>> |       186 |    5753.601563 |           1184 |         20.57841488 |
+> >>>>>> |       246 |    5746.398438 |           1280 |         22.27482159 |
+> >>>>>> |       306 |    5752.128906 |           1376 |         23.92157795 |
+> >>>>>> |       367 |      5772.5625 |           1472 |         25.49994045 |
+> >>>>>> |       427 |    5832.019531 |           1568 |         26.88605536 |
+> >>>>>> |       488 |    5813.246094 |           1664 |         28.62428277 |
+> >>>>>> |       548 |    5807.621094 |           1760 |         30.30500736 |
+> >>>>>> |       598 |    5841.253906 |           1822 |         31.19193292 |
+> >>>>>> |       669 |    5982.160156 |           1854 |         30.99214918 |
+> >>>>>> |       931 |    5946.605469 |           1868 |         31.41287933 |
+> >>>>>> |       981 |    6020.207031 |           1896 |         31.49393352 |
+> >>>>>> |       991 |    5988.445313 |           1910 |         31.89475566 |
+> >>>>>> |      1011 |    5988.570313 |           1926 |         32.16126554 |
+> >>>>>> |      1032 |    6016.039063 |           1936 |         32.18064211 |
+> >>>>>> |      1575 |    6057.289063 |           1968 |         32.48978181 |
+> >>>>>> |      1606 |    6026.167969 |           2000 |         33.18858702 |
+> >>>>>> +-----------+----------------+----------------+---------------------+
+> >>>>>> I ignored some points to make the table shorter. Anyway, the amount
+> >>>>>> of memory consumption, total and huge pages, is a lot higher than
+> >>>>>> with DAMON hugepage autotuning.
+> >>>>>
+> >>>>> Could you further clarify why it is, and what this means
+> >>>> Memory fragmentation. I will add information about memory fragmentation
+> >>>> in the next cover letter. >>
+> >>>
+> >>> Yes, please.  Let's make the complete story of the benchmark.
+> > 
+> > I'd like to again call out I'd like to show "complete story".  I don't think
+> > additional data points that look interesting but not providing a complete story
+> > is really adding much values to this work.
+> > 
+> > If you want my feedback on benchmark results first, sending benchmark results
+> > (with your analysis an discussions) without the code change could be an option.
+> That makes sense. Maybe I will just reply for now on to get your thoughts.
+
+I suggested to take step back and look back what we tested so far to get a
+better idea on theory.  But, yes, adding even more data shouldn't harm us.
+Please feel free to share your findings.
+
+Thank you for replying to all my comments.  To recap, let's keep discussing
+about the test.
 
 
-***
+Thanks,
+SJ
 
-If these findings have caused you to resend the series or submit a
-separate fix, please add the following tag to your commit message:
-  Tested-by: syzbot@syzkaller.appspotmail.com
-
----
-This report is generated by a bot. It may contain errors.
-syzbot ci engineers can be reached at syzkaller@googlegroups.com.
-
-To test a patch for this bug, please reply with `#syz test`
-(should be on a separate line).
-
-The patch should be attached to the email.
-Note: arguments like custom git repos and branches are not supported.
+[...]
