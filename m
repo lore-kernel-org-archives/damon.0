@@ -1,131 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D20399019
-	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 03:56:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148813939B9
+	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 07:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783482975; cv=none; b=BPlZJchVfoBZhVw8URiECimvkIf20zXf6gSa7RSsyM5jiT3LWRTeGvT4xSTrxFHhTxbdH74D+PHL8dXTLtgZlTw+czBiYg7xFcQO8AtIFgmcAc22RHTKNPvuHqnlkAQyoCcKpwtM57s87ilb2ecs59j050c8hD8Dhdwl0vkFdHI=
+	t=1783495990; cv=none; b=LfjDY/9BF7I5Ki7aPipqLVq7rBE1SWccKeI4YwUOcmp9LRJbr8BdGYqrrbQvcpb5v30D7gST9Da7/0/8h167VQUVuIwuOjbuS7LbQ3HDSx7oK3R4DZaKRmSWnzqsqeFIDz6YeXiXSjXB5lT2HtG8UBG0hqfejioEDMuv+viwoWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783482975; c=relaxed/simple;
-	bh=N3xa5f32jW/7LzDCDWwstgzdDZoZ9uMb2aG5govPVwM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aJD1tC/FT7zBwV/Nz3gKQMAsKAejgUQUQlM7b8XyiU6BFWXC2OaNF21PMQD9ihKDdxCOYwnCCZA+D4VQ8hWIIuFXZG4U15PgHT1ICs/idgufbOop3N3XOiL2scezvih9WsBU2MW5fK7seyY0CdDm1Vhf8HGnDIdzhyEK6g8tAu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CVr9x+Qc; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783495990; c=relaxed/simple;
+	bh=hmawTu+JUlpKtBWubzA+MUL/MgkXPLRQsMsQmq+7zVo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=s1wC/Qogkijd8iq7ugYBbF4ra5HIb+IfQs55mNKCv/USdANvYIHo7yGuYjgwyU1vSFVJ/3ObH3aS0NegKiYei0qlTY/RJHUkjhwWyUxzKRfm5AFiCypz5x3aKVqlqA4uCE6foF/8V46qe5ik5n7tHAyuNXdtbX9ElkydKy50zkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=id/+DpaT; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CVr9x+Qc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59AB1F000E9;
-	Wed,  8 Jul 2026 03:56:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783482974;
-	bh=GDvPzWDMbPBKZem0lhDVwT1Cvuy9mh6R4ZIOf6xferY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CVr9x+QcP9v1jGsz6r/uQNclqUISTk234iBDPBtIhmFynlCxTrTfGsWHtv3oTQPg/
-	 eixtlHydXPpg6hy6gniEQGvew19EKJrWE34f4ShiAgk6tGOwrdzBg6+VpyeTBEEHPG
-	 9oo/eftH8qTOe5gD/UO9LRrAA7Ivv+PoT6RO0FCRgqd9KW+Sg2vc/jHgr7JnvZDEra
-	 fS9QtigjC9W5CuUJ35htCoRYmUS2DqHGQ6lkZJYl9jzzaM3Tnn6s1x4EC3OaUetoNE
-	 qKHXHJWSevU+yuTnywHUPGTdzF5/ZcquCYX2JXOLBGtiapZ4Yo2ywHxCU+9rS2FDQT
-	 CV3vwpQ+xVy2A==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.3 6/7] mm/damon/core: update probe hits for new parameter commit
-Date: Tue,  7 Jul 2026 20:56:04 -0700
-Message-ID: <20260708035606.118344-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260708030544.6EBC61F000E9@smtp.kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="id/+DpaT"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-470f53bdc70so6520f8f.2
+        for <damon@lists.linux.dev>; Wed, 08 Jul 2026 00:32:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1783495971; x=1784100771; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=cAmllN+se0JthLQV82NE0k64TaDaKEJudyrSmk0kR+o=;
+        b=id/+DpaTM+v48mkBfP1Lx7+Ml+KD6ZIn/aseYD1hhFfczhihhe3pCzDQHQ3JsXeDbY
+         MyLiwj7n4/NhwUeZ2NITcTAPp+ZC+UB/BSY6DkLXCdaeSTYrJHufPKkgbJYHosFGLN2U
+         I8aAlAZbJIrKHrVoh9EuG5h0/0XvAo7Wp09mj7r8kaK9eReSqId/Afj8qwhPwztaCVau
+         M23Gz3+BnniwZ0njz8kf+Sib3IxNNDmjtOh+er9VUNLnlM21RerjNnPJbv2sUWHco7lY
+         Cez/0PiI2sqzWlGyie0kT2Gj5kxQYF0YDXxlYgkDFdiJfIJ+2Lg7ftighH6sVCAmbFdN
+         sLyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783495971; x=1784100771;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=cAmllN+se0JthLQV82NE0k64TaDaKEJudyrSmk0kR+o=;
+        b=ZlMgL/fEyZ7bGUlZg2V8RzV+cO+ub9JNICb2DTtl+nU/lGhOI1EM9VbnXOn/XgwuQ/
+         BJ1szPlwsMEO4PgbriUfhTHn1Ks6+RskIgWK8HJL9rF+45ba0iIAEb3SNMIQ43SiETog
+         rb22V0I7G8avZXBwV9eoiXsaHeXhbAcEiVvDdBTi2P40nVozU7hKKDhJOTEXrNlauMCi
+         7IYacKUmSXrbRuNIwlMdL8OJD9tBh4pUDDrLIarJ7GUG8kv5COgFxvNpogjtV6Z7zHkc
+         JpYdQMLCOCuISC9yNRZNqJa9KgQ/mMeWLFC4mjh+B9HL9jhMPEAOUOt5I7nsb1o13TDz
+         Ee1w==
+X-Forwarded-Encrypted: i=1; AHgh+Rr31EWG/K7h03ECNpY0vIhsoLto2XMvPNolNv8bHuSk1/MKJo5HBi3RT/EBSG1SP5E4l/H5Eg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzsrQuIxMzNEXuAHLRLR/DWJQIXwKHqslE0ppVLa0O0aaQF0WtR
+	04t2y6IDW4ZNDbMJwk1Mcj/8NewcsVwdyoLBqhR5Xb7FMoqZfN92bu6d
+X-Gm-Gg: AfdE7cnVYf1Jd9HIbbzqnlWGPY25izq0FWG6JDiNyJ1ZDBCTpBme3us6ZmX+GJyeoba
+	1gVzC0+g1szTEiVN/0u/H/8b6bOZlzJioIKlgphZ+5O7QrSz0MJxkRJde33FKnVTDUvxnMutwIm
+	b9yVNshkxPfiJGbbcaWLLmJBT5ZX7ufA+CYGK+L8ZVGpS4K4foiBig5w4c0Q61fg9w4wnOgBBtP
+	P4kR5V7bOahoR6EsAN8r/N4lXfQ8QS7eD7lw8JaE30e/Z3ebnWDrr5iqDNhMVXZv08kHzpakQw0
+	EASoVZeUIXMIHHiD5I1QqFnwXJ3rDeK9dqrmSEDuMKYeqlskKlnOq0CfuGLgfiunOeswYDJkQUb
+	1GeT7D0GwxeIJu6vaVV1YgdYLGoF+/xLHBrMNj5DZnMbBShl/J3Bj9qcqDWoNLsyywS4fG+Yp57
+	FZnEqBCaNz31pRd/1W+FAeP5RYnQi0hxyuBsAyq7e9soCuuCp28eXrmzqVFwiw6ORhxkYrKwM6J
+	yTrlZ1e8Glxiu5C
+X-Received: by 2002:a05:600c:8284:b0:490:ec79:3046 with SMTP id 5b1f17b1804b1-493e684e722mr7381125e9.0.1783495970941;
+        Wed, 08 Jul 2026 00:32:50 -0700 (PDT)
+Received: from doehyun-dev.pradel.rg.cispa.de (x06.xlate.fw.cispa.de. [195.37.157.6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-493e610532fsm32876355e9.0.2026.07.08.00.32.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jul 2026 00:32:50 -0700 (PDT)
+From: Doehyun Baek <doehyunbaek@gmail.com>
+To: Alex Shi <alexs@kernel.org>,
+	Yanteng Si <si.yanteng@linux.dev>
+Cc: Dongliang Mu <dzm91@hust.edu.cn>,
+	SJ Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Doehyun Baek <doehyunbaek@gmail.com>
+Subject: [PATCH v6 0/7] docs/zh_CN: update DAMON translations
+Date: Wed,  8 Jul 2026 07:32:39 +0000
+Message-ID: <20260708073246.1652828-1-doehyunbaek@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 08 Jul 2026 03:05:43 +0000 sashiko-bot@kernel.org wrote:
+Update the Simplified Chinese DAMON documentation translations.  The
+series is split by file, as requested.  It is based on mm-new after the
+English DAMON documentation fixes have landed.
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Unbounded iteration over `ctx->probes` list writing to the statically sized `probe_hits` array can lead to buffer overflow.
-> - [Medium] Scaling `probe_hits` and `last_probe_hits` using `damon_nr_samples_for_new_attrs()` assigns an `unsigned int` to an `unsigned char`, causing silent truncation and data corruption when the scaled count exceeds 255.
-> --
-> 
-> --- Patch [6]: [RFC PATCH v1.3 6/7] mm/damon/core: update probe hits for new parameter commit ---
-> commit 5d7c7277de18e07d88cf49d1f16d870a9dfc0f23
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: update probe hits for new parameter commit
-> 
-> Users can update DAMON parameters at runtime.  If the samples and/or
-> aggregation intervals are updated in this way, monitoring results
-> depending on the intervals should also be updated for a more accurate
-> snapshot.  The age and nr_accesses are properly updated, while
-> probe_hits are not updated in the way.  Do the update.
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 800ff6b6d2473..15d31285515d6 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -897,10 +897,32 @@ static unsigned int damon_nr_samples_for_new_attrs(unsigned int nr,
-> >  			damon_sample_count_to_bp(nr, old_attrs), new_attrs);
-> >  }
-> >  
-> > +static void damon_update_probe_hits(struct damon_region *r,
-> > +		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs,
-> > +		bool aggregating, struct damon_ctx *ctx)
-> > +{
-> > +	struct damon_probe *p;
-> > +	int i = 0;
-> > +
-> > +	damon_for_each_probe(p, ctx) {
-> 
-> [Severity: High]
-> Does this loop overflow the r->last_probe_hits[] and r->probe_hits[] arrays?
-> 
-> The probe_hits and last_probe_hits members are defined as fixed-size arrays of
-> size DAMON_MAX_PROBES. Since there is no bounds checking on i, if there are
-> more than DAMON_MAX_PROBES in the ctx->probes list, this will write past the
-> end of the arrays and corrupt adjacent fields in struct damon_region.
+The intention of this series is to update
+Documentation/translations/zh_CN/admin-guide/mm/damon/.  This required
+choosing how to handle Documentation/translations/zh_CN/mm/damon/: do not
+update it at all, update only design.rst, or update it fully.  I chose to
+update only design.rst, because the admin-guide updates need its zh_CN
+anchors and references.  Updating the other files would broaden the scope
+beyond the requested admin-guide refresh.  I would do otherwise if
+requested.
 
-That cannot happen since DAMON_SYSFS is not accepting that input.   Read
-nr_probes_store() for more details.
+I checked the updated translations paragraph by paragraph and sentence by
+sentence.  Given the size of the update, some issues may remain.  In
+particular, usage.rst and design.rst were significantly outdated and needed
+near-complete updates.
 
-> 
-> > +		r->last_probe_hits[i] = damon_nr_samples_for_new_attrs(
-> > +				r->last_probe_hits[i], old_attrs, new_attrs);
-> 
-> [Severity: Medium]
-> Will this assignment cause silent truncation and data corruption?
-> 
-> The last_probe_hits and probe_hits arrays are declared as unsigned char
-> (8-bit) in struct damon_region, but damon_nr_samples_for_new_attrs() returns an
-> unsigned int (32-bit).
-> 
-> If the scaled count exceeds 255, assigning it directly will truncate the value
-> to a meaningless modulo-256 wrapped value rather than clamping it at a maximum.
+Doehyun Baek (7):
+  docs/zh_CN: update DAMON design translation
+  docs/zh_CN: add DAMON_STAT usage translation
+  docs/zh_CN: update DAMON index translation
+  docs/zh_CN: update DAMON start translation
+  docs/zh_CN: update DAMON usage translation
+  docs/zh_CN: update DAMON reclaim translation
+  docs/zh_CN: update DAMON LRU sort translation
 
-Known low priority issue.
-
-> 
-> > +		if (!aggregating)
-> > +			r->probe_hits[i] = damon_nr_samples_for_new_attrs(
-> > +					r->probe_hits[i], old_attrs,
-> > +					new_attrs);
-> > +		else
-> > +			r->probe_hits[i] = 0;
-> > +		i++;
-> > +	}
-> > +}
-> > +
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260708024855.116614-1-sj@kernel.org?part=6
+ .../zh_CN/admin-guide/mm/damon/index.rst      |  15 +-
+ .../zh_CN/admin-guide/mm/damon/lru_sort.rst   |  68 +-
+ .../zh_CN/admin-guide/mm/damon/reclaim.rst    |  82 ++-
+ .../zh_CN/admin-guide/mm/damon/start.rst      |  63 +-
+ .../zh_CN/admin-guide/mm/damon/stat.rst       |  94 +++
+ .../zh_CN/admin-guide/mm/damon/usage.rst      | 521 +++++++++++---
+ .../translations/zh_CN/mm/damon/design.rst    | 665 +++++++++++++++++-
+ 7 files changed, 1343 insertions(+), 165 deletions(-)
+ create mode 100644 Documentation/translations/zh_CN/admin-guide/mm/damon/stat.rst
 
 
-Thanks,
-SJ
+base-commit: db6ed2a3d31068ca5577466591b2521dee0508ca
+-- 
+2.43.0
+
