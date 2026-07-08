@@ -1,147 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC653815EF
-	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 14:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D992F49FD;
+	Wed,  8 Jul 2026 14:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783519786; cv=none; b=Kza3uNbqold0Vy7VVENUNQJLgghx555DEQPIt7cd0QXCNF8AdNws/rZ7RsMWY4h6RZvDclQifK4iJ6dhNL1AS8dA7lHP1WwV2JQveBOxc9uSCrZw4NtHZ+ela6dmweSSYBJ7X1r4ERaf1B7ULgNT9QEsvdeUiydT93BTACbG60Q=
+	t=1783519899; cv=none; b=s4wXqWXGzTfxIbOnHdaw37U4qTnXVqdl4saDnUp2+zCKnRP5CUxGtTXYzfkkTiTHFrtcbQ/HqlRCaqjFqa6FVZRCmfsrBtlNfLh0KwxbOIe/akd1bbH4uFU+L7LVxyqk3VyHYiO6GBeSHYlrm6wqin9zrtSwY+csDkwnQWHLt5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783519786; c=relaxed/simple;
-	bh=UQFZ/iyHOQFkiXrwJ/lJmWMti6/3JMNNRg+mnKp/fKY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=GBx2E42jUrIQpXma+448nOlnP37mfY/5N3cUC4NXp11g7AI2f0qQAkp/rm0gRf6ZL4AunAEyFxBcAGbCgQfT/Dg+oC/X0qcFPHMHPigyht6Khn6dyConoWVcJQvLd7DWC5Szicu+cg5nnWEd4qD4L9aJqYOhP8U+PmggbJxCp/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N9M8ez1D; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783519899; c=relaxed/simple;
+	bh=g+/R9e8kMmYBEjhykJ/JgMclt/rtf/u35Ssmi+dfqPw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MzIFMBihu1nHCKP+7MLZFtGRYZwkGDJ5RMHuqH672uQkqmRxB6ktYCn6zBsQTlit+7EN/EIogPrpL0cM3lAe1gtCMJgR2jtbij/GTNnSHJYzK9ZehJU+H2K5KtyBzxeUFnySJ5TBuVM9yHf/PidIftm5FB1mPX5qm5cizBbdGmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lKK7qS3a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N9M8ez1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26821F000E9;
-	Wed,  8 Jul 2026 14:09:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lKK7qS3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF251F00A3D;
+	Wed,  8 Jul 2026 14:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783519785;
-	bh=tOMepEjPtN/5FKBDLyzh0q+GcqryjZb51IvalyPK77o=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=N9M8ez1DZZjg6TTL8uw/Em6KR8FRkv/qL+Ptt84a/PKpUl3MQ9CnOjMYSpy0tYRkP
-	 ByfC+GMxjTlCgut7BG8Dpg6C20HbJ5u+Ql6gL2WfL/XYV1xGrw9Hh++IVaT90JTfB9
-	 utm8dhwWucJrPOjNUDk5RxSZX/rsJLPG3LY8YLHgFCIjsXfEt2v0lwdilmc1gATudQ
-	 xCryLKKaVeINgvjUthbtHRmITpChTMXeclidVnuAajBONDGT/4fblWmxVhAg4HSpix
-	 zSE9NxX/NNvyeFI7Jxuw0W0QrKseI/r4u7PL+8KOQ1mnKowfYJkpmQXb9SrZcxNu1d
-	 vsOTVECyM6htQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 5/7] mm/damon/core:
- s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260708135359.122587-6-sj@kernel.org>
-References: <20260708135359.122587-1-sj@kernel.org>
- <20260708135359.122587-6-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 08 Jul 2026 14:09:44 +0000
-Message-Id: <20260708140944.F26821F000E9@smtp.kernel.org>
+	s=k20260515; t=1783519898;
+	bh=oYNY6fayT8bgIf+rrVvdnnG8n7vDl1N8Udf7r3kCuck=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=lKK7qS3ayOUoGqbDi/TxN4vTUQ3c46MmEmzbBUj7+5tgh6t0FPyeD7sJH8+N+7eN6
+	 n4VRIjKu06gOYUah6DD63yV3pxz98udRx98r2J2kng87LWbCrR47I66j5SxjUDON1z
+	 /ifzB/LubUG0VxRxXXb6CxJ9N5VBoNo+xwWi5fjGMTBY6nz+Y/VCnmyHnQITS7R2YW
+	 aM72WF9/KZrqnZYjlRNnfJd+gUJmkNOeiZYvX1AAjz7q83GOOCaC2OX/cF28RGnqWS
+	 Ux9gp16W04ABGFXsAK6AGep466gRcm7OcBiQxxJ1dgSDMLpQ7LkwTVuWRJBrj2uuz4
+	 +fExMa0KST6MA==
+From: SJ Park <sj@kernel.org>
+To: zjh <jiahuitry@outlook.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon: prevent migration fallback to non-target nodes
+Date: Wed,  8 Jul 2026 07:11:33 -0700
+Message-ID: <20260708141134.123360-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To:  <BY5PR02MB6642F4D1A8BA92BFF3A034B4B5FF2@BY5PR02MB6642.namprd02.prod.outlook.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
+Hello jzh,
 
-Pre-existing issues:
-- [High] 32-bit arithmetic overflow in sample count and basis points conver=
-sions leads to incorrect scaling for large interval ratios.
-- [High] 32-bit integer overflow in `damon_age_for_new_attrs` when calculat=
-ing region age during attribute updates on 32-bit architectures.
---
+On Wed,  8 Jul 2026 01:07:54 -0700 zjh <jiahuitry@outlook.com> wrote:
 
---- Patch [5]: [PATCH 5/7] mm/damon/core: s/nr_accesses_for_new_attrs/nr_sa=
-mples_for_new_attrs/ ---
-commit 7659397725f64a348908ab982da60d557f63b8c0
-Author: SJ Park <sj@kernel.org>
+> DAMOS_MIGRATE_{HOT,COLD} passes a target NUMA node to migrate_pages().
+> But alloc_migration_target() treats mtc->nid as a preferred node unless
+> __GFP_THISNODE is set.  Hence target allocation can fall back to another
+> node, and migrate_pages() can report success without placing the folio on
+> the requested target node.
+> 
+> Make DAMON migration target allocation strict by setting __GFP_THISNODE.
+> This is consistent with alloc_misplaced_dst_folio() and
+> alloc_demote_folio(), which also use __GFP_THISNODE for migrations to an
+> explicit destination node.
 
-mm/damon/core: s/nr_accesses_for_new_attrs/nr_samples_for_new_attrs/
+Thank you for sharing this patch.  So this patch is introducing a small
+behavioral change.  May I ask why you think the new behavior is better?  Have
+you find some negative user impacts from the current behavior?
 
-This commit renames damon_nr_accesses_for_new_attrs() to
-damon_nr_samples_for_new_attrs() to reflect its general use for any positive
-sample count.
+> 
+> Signed-off-by: zjh <jiahuitry@outlook.com>
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 718268df27fa7..800ff6b6d2473 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -890,22 +890,21 @@ static unsigned int damon_sample_count_to_bp(
->  	return mult_frac(count, 10000, damon_nr_samples_per_aggr(attrs));
->  }
+We as the kernel community disallow [1] anonymous patch submissions.  Is zjh
+your preferred identity?  Also, it is not a strict rule, but we as the mm
+community prefer using a formal name if that's ok.
 
-[Severity: High]
-This is a pre-existing issue, but does this code overflow 32-bit arithmetic
-when the sample count is large?
+[1] https://docs.kernel.org/process/submitting-patches.html#developer-s-certificate-of-origin-1-1
 
-In mm/damon/core.c:damon_sample_count_to_bp(), the mult_frac macro multipli=
-es
-the remainder by 10000, which can overflow 32-bit arithmetic.
 
-Similarly, in damon_sample_bp_to_count(), the 32-bit multiplication overflo=
-ws
-since both operands are 32-bit unsigned integers:
+Thanks,
+SJ
 
-mm/damon/core.c:damon_sample_bp_to_count() {
-	return bp * damon_nr_samples_per_aggr(attrs) / 10000;
-}
-
-This occurs when the number of samples per aggregation interval exceeds
-roughly 429,496 (e.g., sample_interval=3D1us and aggr_interval=3D1s, yieldi=
-ng
-1,000,000 samples).
-
-This could cause the region access tracking variables to be corrupted and
-truncated during dynamic attribute updates (damon_set_attrs), rendering DAM=
-OS
-memory management schemes dysfunctional.
-
-Both intervals are fully configurable by privileged users via DAMON
-sysfs/debugfs interfaces, or dynamically updated by DAMON's auto-tuning
-feature, making the overflow reachable in real-world scenarios.
-
-[Severity: High]
-This is also a pre-existing issue, but can the region age calculation
-overflow on 32-bit architectures during attribute updates?
-
-Looking at damon_age_for_new_attrs(), the multiplication is limited to the
-architecture's native unsigned long size:
-
-mm/damon/core.c:damon_age_for_new_attrs() {
-	return age * old_attrs->aggr_interval / new_attrs->aggr_interval;
-}
-
-On 32-bit architectures, aggr_interval (unsigned long) and age (unsigned in=
-t)
-are both 32-bit. The product exceeds ULONG_MAX (4,294,967,295) once the
-stable time exceeds ~4,294 seconds.
-
-This causes an integer overflow before the division, meaning any memory
-region that remains stable for more than ~71.5 minutes will have its age
-wrapped around and reset to an incorrectly small value when DAMON
-attributes are dynamically updated.
-
-This could break DAMOS schemes that target old pages for reclamation.
-
-The bug is automatically triggered by DAMON's auto-tuning thread
-(kdamond_tune_intervals), which periodically calls damon_set_attrs, or via
-user-initiated sysfs attribute updates.
-
-> -static unsigned int damon_nr_accesses_for_new_attrs(unsigned int nr_acce=
-sses,
-> +static unsigned int damon_nr_samples_for_new_attrs(unsigned int nr,
->  		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs)
->  {
->  	return damon_sample_bp_to_count(
-> -			damon_sample_count_to_bp(nr_accesses, old_attrs),
-> -			new_attrs);
-> +			damon_sample_count_to_bp(nr, old_attrs), new_attrs);
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260708135359.1225=
-87-1-sj@kernel.org?part=3D5
+[...]
