@@ -1,131 +1,167 @@
-Received: from mta20.hihonor.com (mta20.honor.com [81.70.206.69])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E8E1F8755
-	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 03:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.70.206.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CC44315F
+	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 03:52:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783481179; cv=none; b=qytBZcphdmoC8R4XE68tVoSlex0qRQA20C7jVNG9Dlm8q2Qk2XsKe7xCJ9Wp0U1DX+v7BAkyzMGCoSbHnMRDSN68QKHFcrSa6tRAzBzlS1VYiln/j/xXjOEdDrGdms5o+CuG7sxR6ip7kDtX8llZhNALOfkH33wwLdcx4RomULo=
+	t=1783482755; cv=none; b=AGFGUNA6VeYBVb1GXfm0U9xx+4A3mnZYQkj3YDmT+7X3kPDy4cBT6MhYRwT8NLTveb8+mTh0MNFgq3yhxGU/OZhrb97SBhJ2UbA0aZGaNmP1oFMQdtE4hAKBJOF6JgXHTgXWVEt7gbGU02lScM6X/6y/1wbdGUvYohE9BYd2uIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783481179; c=relaxed/simple;
-	bh=NLJ62wJnOM/CYSwYpHvcAWjyOBzMkili30m5Qc5O84A=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=lpzHtENV6WsC3uLEXcde7nAGXsqqvmklc5V5BfPI5ThdmY9SYpYNh1NZhrDjXAtHKjSwXssuCUMZDmMrFbHzLyUBuRFvXUZsvyFfqCl+KfZis95Zt4mroiU9m46c+dvizH7rvdOO1cyxUdrD3H4JQW07mRgRp3oQ+fio0S+LmmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com; spf=pass smtp.mailfrom=honor.com; arc=none smtp.client-ip=81.70.206.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=honor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=honor.com
-Received: from TW001.hihonor.com (unknown [10.77.229.151])
-	by mta20.hihonor.com (SkyGuard) with ESMTPS id 4gw3Qt5ydyzYmMBf;
-	Wed,  8 Jul 2026 11:26:14 +0800 (CST)
-Received: from TA002.hihonor.com (10.77.230.8) by TW001.hihonor.com
- (10.77.229.151) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.43; Wed, 8 Jul
- 2026 11:26:14 +0800
-Received: from TA003.hihonor.com (10.72.0.43) by TA002.hihonor.com
- (10.77.230.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 8 Jul
- 2026 11:26:01 +0800
-Received: from TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1]) by
- TA003.hihonor.com ([fe80::998f:47ec:980d:bdf1%7]) with mapi id
- 15.02.2562.037; Wed, 8 Jul 2026 11:26:14 +0800
-From: wangtao <tao.wangtao@honor.com>
-To: "David Hildenbrand (Arm)" <david@kernel.org>, "akpm@linux-foundation.org"
-	<akpm@linux-foundation.org>, "will@kernel.org" <will@kernel.org>,
-	"mingo@redhat.com" <mingo@redhat.com>, "sj@kernel.org" <sj@kernel.org>,
-	"kees@kernel.org" <kees@kernel.org>, "luizcap@redhat.com"
-	<luizcap@redhat.com>, "zhangjiao2@cmss.chinamobile.com"
-	<zhangjiao2@cmss.chinamobile.com>, "kas@kernel.org" <kas@kernel.org>,
-	"ljs@kernel.org" <ljs@kernel.org>
-CC: "hpa@zytor.com" <hpa@zytor.com>, "liam@infradead.org"
-	<liam@infradead.org>, "vbabka@kernel.org" <vbabka@kernel.org>,
-	"rppt@kernel.org" <rppt@kernel.org>, "surenb@google.com" <surenb@google.com>,
-	"mhocko@suse.com" <mhocko@suse.com>, "jack@suse.cz" <jack@suse.cz>,
-	"riel@surriel.com" <riel@surriel.com>, "harry@kernel.org" <harry@kernel.org>,
-	"jannh@google.com" <jannh@google.com>, "jgg@ziepe.ca" <jgg@ziepe.ca>,
-	"jhubbard@nvidia.com" <jhubbard@nvidia.com>, "peterx@redhat.com"
-	<peterx@redhat.com>, "ziy@nvidia.com" <ziy@nvidia.com>,
-	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
-	"npache@redhat.com" <npache@redhat.com>, "ryan.roberts@arm.com"
-	<ryan.roberts@arm.com>, "dev.jain@arm.com" <dev.jain@arm.com>,
-	"baohua@kernel.org" <baohua@kernel.org>, "lance.yang@linux.dev"
-	<lance.yang@linux.dev>, "xu.xin16@zte.com.cn" <xu.xin16@zte.com.cn>,
-	"chengming.zhou@linux.dev" <chengming.zhou@linux.dev>,
-	"muchun.song@linux.dev" <muchun.song@linux.dev>, "baoquan.he@linux.dev"
-	<baoquan.he@linux.dev>, "nao.horiguchi@gmail.com" <nao.horiguchi@gmail.com>,
-	"matthew.brost@intel.com" <matthew.brost@intel.com>,
-	"joshua.hahnjy@gmail.com" <joshua.hahnjy@gmail.com>, "rakie.kim@sk.com"
-	<rakie.kim@sk.com>, "byungchul@sk.com" <byungchul@sk.com>,
-	"gourry@gourry.net" <gourry@gourry.net>, "ying.huang@linux.alibaba.com"
-	<ying.huang@linux.alibaba.com>, "apopple@nvidia.com" <apopple@nvidia.com>,
-	"pfalcato@suse.de" <pfalcato@suse.de>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-fsdevel@vger.kernel.org"
-	<linux-fsdevel@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"damon@lists.linux.dev" <damon@lists.linux.dev>, "shakeel.butt@linux.dev"
-	<shakeel.butt@linux.dev>, "ryncsn@gmail.com" <ryncsn@gmail.com>,
-	"jparsana@google.com" <jparsana@google.com>, "dvander@google.com"
-	<dvander@google.com>, zhangji <zhangji1@honor.com>, wangzicheng
-	<wangzicheng@honor.com>
-Subject: RE: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
- anon_vma_chain
-Thread-Topic: [RFC PATCH v2 00/13] mm: rework anon_vma and remove
- anon_vma_chain
-Thread-Index: AQHdDdtOKxyL+IwP/0+o3I4bi0Jgh7ZhGu0AgACbXoD//33xgIAAiIWwgAAIOQCAAS4i8A==
-Date: Wed, 8 Jul 2026 03:26:13 +0000
-Message-ID: <104a258dcf2f4e4387199b62a66141a6@honor.com>
-References: <20260707063308.29176-1-tao.wangtao@honor.com>
- <08c001ab-320f-4676-830b-8e4ba6a05dee@kernel.org>
- <b00a03d62c53430ca22b3f3c5e5327b5@honor.com>
- <0e8e5a28-1111-4b81-b04f-b81e749eb3dd@kernel.org>
- <f640c89d9722462098bf1b7a0a6854c2@honor.com>
- <66e8d008-5eaf-4a9a-9cca-e9b2bd8c9f9a@kernel.org>
-In-Reply-To: <66e8d008-5eaf-4a9a-9cca-e9b2bd8c9f9a@kernel.org>
-Accept-Language: en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	s=arc-20240116; t=1783482755; c=relaxed/simple;
+	bh=idJKBIKbdcQGShZv++zi5t4nR3nPeyWxg/CRW3c/MBg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ixyMRebHKfwwFgaziaJSTV5bUHa6iVxB7prpLu2yngCAjiflUXoHDcE8H81FtGeINb84URkgAJQcPDikEASZoJsF3OOGWivlRs/DzXl4jcqxQvAm7uoHX3kUuqcVpqPKzIG+B/yYyjgD/Zd5u7zKa3J6pxsojITKpD7YkvTfHhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GmdLdcYM; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GmdLdcYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1F01F000E9;
+	Wed,  8 Jul 2026 03:52:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783482752;
+	bh=Ydp/FBhYT0hlnM12ng5n/JTaBbluU7+eoBCFB47diAI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=GmdLdcYMBjRIHm63TAh0vzRB991RB8HqlQB3NrgZFcrPY0ZguHBtTc2JYSu968taD
+	 WIU1yk3Uid6lUoDAXM11198PRC31IbbmDCad0NwpgKZyGe2A0biFYGVGi71rOMlPUA
+	 Nj9+17OMT+b8Su5jm+99A9hwuTr4OHjPgmlRklcoQpUY7SeCykVTNRZbrwVJI6F2C0
+	 UrLpTme6+1ere7Nz7q5DZUZHbdKXinf6gHn3/Jpo2bvYB91MB6kCtpQ4AHAnsJaMUP
+	 KQN4iuR6iZFWL3XVBoq0U2BnmIgfWpdfU2ZetLC+PhuzZqNmtxk9+Os//qTPYU0hEX
+	 JOaCPBbZTp+Zw==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH v1.3 2/7] mm/damon/core: s/damon_max_nr_accesses()/damon_nr_samples_per_aggr()/
+Date: Tue,  7 Jul 2026 20:52:21 -0700
+Message-ID: <20260708035223.118057-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260708025818.BD9701F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-PiA+IEF0IGZpcnN0LCBJIHRob3VnaHQgSSB3YXMgdGhlIG9ubHkgb25lIHdobyBmb3VuZCBhbm9u
-X3ZtYSBoYXJkIHRvDQo+ID4gdW5kZXJzdGFuZC4gQWZ0ZXIgcmVhZGluZyB5b3VyIGVhcmxpZXIg
-ZW1haWwsIEkgcmVhbGl6ZWQgdGhhdCBtYW55IHBlb3BsZQ0KPiBhbHNvIGNvbnNpZGVyIGl0IGRp
-ZmZpY3VsdCB0byBmb2xsb3cuDQo+IA0KPiBSaWdodCwgdGhhdCdzIGhvdyBMb3JlbnpvIHN0YXJ0
-ZWQgaGlzIHdvcmssIHRyeWluZyB0byByZXBsYWNlL3JlbW92ZQ0KPiBhbm9uX3ZtYSBlbnRpcmVs
-eS4NCj4gDQo+IFNvIEkgdHJpZWQgYSBkaWZmZXJlbnQgYXBwcm9hY2ggYW5kIGltcGxlbWVudGVk
-DQo+ID4gYW5vbl92bWEgcm1hcCB1c2luZyBhIHNpbXBsZXIgZG91Ymx5IGxpbmtlZCBsaXN0IHBs
-dXMgZGVwdGggbWVjaGFuaXNtLg0KPiANCj4gQW5kIHRoaXMgaXMgd2hhdCBJIGRvbid0IHVuZGVy
-c3RhbmQuIFlvdSB3ZXJlIHRvbGQgdGhhdCBMb3JlbnpvIGlzIHdvcmtpbmcgb24NCj4gcmVtb3Zp
-bmcgYW5vbl92bWEsIHlldCB5b3UgZGVjaWRlZCB0byB3b3JrIG9uICsgc2VuZCBzb21ldGhpbmcg
-dGhhdA0KPiByZXdvcmtzIGFub25fdm1hPw0KPiANCj4gQWxzbywgSSBhbSByZWFsbHkgY3VyaW91
-cyBhYm91dCB5b3VyIGV4cGVjdGF0aW9uOiBub3QgaGF2aW5nIGEgc2luZ2xlIHBhdGNoDQo+IGNv
-bnRyaWJ1dGVkIHRvIE1NLCBldmVuIHdvcnNlLCBub3QgYSBzaW5nbGUgUkIgdGFnIG9yIGFueXRo
-aW5nLCB5ZXQgeW91DQo+IHJld29yayBvbmUgb2YgdGhlIG1vc3QgY29tcGxpY2F0ZWQgcGFydCBv
-ZiBNTSByZXBlYXRlZGx5IHVzaW5nIG90aGVyDQo+IGNvbXBsaWNhdGVkIGFwcHJvYWNoZXMsIGFu
-ZCBpbW1lZGlhdGVseSBzdGFydCBkZW1hbmQgdGVjaG5pY2FsIGRpc2N1c3Npb25zPw0KPiBBZnRl
-ciBzZW5kaW5nIGFuIGFic29sdXRlIGhvcnJpYmxlIHYxPw0KPiANCj4gSSByZWFsbHkgdHJ5IHRv
-IGJlIGEgbmljZSBwZXJzb24sIGJ1dCByZWFsbHksIGFtIEkgZHJlYW1pbmc/DQo+IA0KDQpJdOKA
-mXMgc2ltcGxlOiBvcHRpbWl6ZSBtZW1vcnkgdXNhZ2UgYW5kIHNoYXJlIGl0IHdpdGggdGhlIGNv
-bW11bml0eS4NCg0KV2lzaCB5b3UgYWxsIHRoZSBiZXN0Lg0KDQo+IA0KPiBPYnZpb3VzbHksIExv
-cmVuem8gaXMgc3RpbGwgd29ya2luZyBvbSBoaXMgYXBwcm9hY2gsIGFib3V0IHdoaWNoIHRoZXJl
-IHdlcmUNCj4gZGlzY3Vzc2lvbnMgYXQgY29uZmVyZW5jZXMgYW5kIExXTiBhcnRpY2xlcy4NCj4g
-DQo+IFN0YXRpbmcgInRoYXQgeW91IHdhaXRlZCBmb3IgYSB3aGlsZSIgaXMgbHVkaWNyb3VzIGdp
-dmVuIHRoYXQgeW91ciBvbGQgcGF0Y2ggc2V0DQo+IHdhcyBwb3N0ZWQgYXJvdW5kIG9uZSBtb250
-aCBhZ28sIGFuZCBhIGNvbXBsZXRlIHJlZGVzaWduIC0tIG1vdmluZyBhd2F5DQo+IGZyb20gYW5v
-bl92bWEgLS0gaXMgbm90IGV4cGVjdGVkIHRvIGJlIGEgc2hvcnQtdGVybSB0aGluZy4NCj4gDQo+
-IE1lYW53aGlsZSwgTG9yZW56byBpcyBzZW5kaW5nIHJlYWwgY2xlYW51cHMgWzFdIGFzIHByZXBh
-cmF0aW9uIGZvciBiaWdnZXINCj4gY2hhbmdlcy4gLi4uIHdoaWNoIGlzIHdoYXQgd2UgdXN1YWxs
-eSBleHBlY3Qgb24gc3VjaCBmdW5kYW1lbnRhbCByZXdvcmtzLg0KPiANCj4gSSdtIHJlYWxseSBs
-ZWZ0IGNsdWVsZXNzIGhlcmUgd2h5IHdlIGFueW9uZSBzaG91bGQgc3BlbmQgdGltZSB0cnlpbmcg
-dG8gdGhpbmcNCj4gdGhyb3VnaCB5ZXQgYW5vdGhlciBkYXRhIHN0cnVjdHVyZSBhbmQgeWV0IGFu
-b3RoZXIgbG9ja2luZyBzY2hlbWUsIGZvcg0KPiBzb21ldGhpbmcgd2Ugd2FudCB0byByZW1vdmUg
-ZW50aXJlbHk/DQo+IA0KPiBBZ2FpbiwgSSByZWFsbHkgdHJ5IHRvIGJlIGEgbmljZSBwZXJzb24s
-IGJ1dCBzb21ldGhpbmcgaGVyZSBqdXN0IGRvZXNuJ3QgYWRkIHVwLg0KPiANCj4gWzFdIGh0dHBz
-Oi8vbG9yZS5rZXJuZWwub3JnL3IvY292ZXIuMTc4MjczNTExMC5naXQubGpzQGtlcm5lbC5vcmcN
-Cj4gDQo+IC0tDQo+IENoZWVycywNCj4gDQo+IERhdmlkDQo=
+On Wed, 08 Jul 2026 02:58:18 +0000 sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Arithmetic overflow in DAMON access frequency calculations for large sample counts.
+> --
+> 
+> --- Patch [2]: [RFC PATCH v1.3 2/7] mm/damon/core: s/damon_max_nr_accesses()/damon_nr_samples_per_aggr()/ ---
+> commit f4e38af8a3753be681be346a7474a71c5bfadd23
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/core: s/damon_max_nr_accesses()/damon_nr_samples_per_aggr()/
+> 
+> This commit renames damon_max_nr_accesses() to damon_nr_samples_per_aggr()
+> to better describe that it returns the number of samples DAMON checks for
+> each region per aggregation interval.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index a15005db82899..177e5abc981ef 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> 
+> [ ... ]
+> 
+> > @@ -880,14 +880,14 @@ static unsigned int damon_age_for_new_attrs(unsigned int age,
+> >  static unsigned int damon_accesses_bp_to_nr_accesses(
+> >  		unsigned int accesses_bp, struct damon_attrs *attrs)
+> >  {
+> > -	return accesses_bp * damon_max_nr_accesses(attrs) / 10000;
+> > +	return accesses_bp * damon_nr_samples_per_aggr(attrs) / 10000;
+> >  }
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does multiplying accesses_bp by
+> damon_nr_samples_per_aggr() overflow 32-bit arithmetic?
+> 
+> If the total samples exceed ~429,496 (e.g., by configuring a large ratio
+> between the aggregation interval and sample interval), this calculation
+> seems to wrap around, leading to a drastically lower access count threshold.
+
+Known low priority issue.
+
+> 
+> >  /* Convert nr_accesses to access ratio in bp (per 10,000) */
+> >  static unsigned int damon_nr_accesses_to_accesses_bp(
+> >  		unsigned int nr_accesses, struct damon_attrs *attrs)
+> >  {
+> > -	return mult_frac(nr_accesses, 10000, damon_max_nr_accesses(attrs));
+> > +	return mult_frac(nr_accesses, 10000, damon_nr_samples_per_aggr(attrs));
+> >  }
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but can this use of mult_frac()
+> overflow?
+> 
+> The mult_frac macro internally multiplies the remainder of nr_accesses by
+> 10000, which appears to overflow 32-bit math for large interval
+> configurations.
+
+Known low priority issue.
+
+> 
+> > diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> > index e8c389ad3226f..7e077084cb03a 100644
+> > --- a/mm/damon/lru_sort.c
+> > +++ b/mm/damon/lru_sort.c
+> 
+> [ ... ]
+> 
+> > @@ -303,7 +303,7 @@ static int damon_lru_sort_apply_parameters(void)
+> >  		goto out;
+> >  
+> >  	err = -ENOMEM;
+> > -	hot_thres = damon_max_nr_accesses(&attrs) *
+> > +	hot_thres = damon_nr_samples_per_aggr(&attrs) *
+> >  		hot_thres_access_freq / 1000;
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this calculation overflow hot_thres?
+> 
+> Multiplication of the samples by hot_thres_access_freq (typically hundreds)
+> looks like it overflows a 32-bit integer when calculating the hot threshold
+> if samples exceed ~8.5 million.
+
+Known low priority issue.
+
+> 
+> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> > index 6bdd1cfd3863a..89c694f6e4fa8 100644
+> > --- a/mm/damon/ops-common.c
+> > +++ b/mm/damon/ops-common.c
+> 
+> [ ... ]
+> 
+> > @@ -112,7 +112,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+> >  	int hotness;
+> >  
+> >  	freq_subscore = r->nr_accesses * DAMON_MAX_SUBSCORE /
+> > -		damon_max_nr_accesses(&c->attrs);
+> > +		damon_nr_samples_per_aggr(&c->attrs);
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but could this multiplication
+> cause an integer overflow?
+> 
+> The r->nr_accesses variable is multiplied by DAMON_MAX_SUBSCORE, which is
+> 100. If nr_accesses exceeds ~42.9 million, it overflows a 32-bit integer,
+> resulting in a drastically lower or zeroed hotness score. This could lead to
+> miscalculating region hotness and erroneously reclaiming actively used pages.
+
+Known low priority issue.
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260708024855.116614-1-sj@kernel.org?part=2
+
+
+Thanks,
+SJ
