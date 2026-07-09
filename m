@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C567382F28
-	for <damon@lists.linux.dev>; Thu,  9 Jul 2026 14:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1921A222565
+	for <damon@lists.linux.dev>; Thu,  9 Jul 2026 15:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783609093; cv=none; b=sZdsPGprk6kopmliFkR5eG3ylWQuLF6entcG9r6hSsnHYGbYzBmjgnocOM27BXwziEZWWLCPXSt+gArs/L8lHc3QZLK3/DBP9ynJrS7dDieY8HpRNAE8lq9dl6+bdQXLtFcvWxKq4DS+b3hyUtb9kC8JMsl2j0xM8l03e+7l5MI=
+	t=1783609269; cv=none; b=KpBc6yc4PwQHspds2Fmh6elAAuuUUgK13FE4N42QSB9AzVWwUALfxHqbsvx8KjhhY5JFoz94PoWYixacURQQ8+VOvoQMMnxPlFO+FnH6hbPsW7Uj/FgQFGR3hgvHQ1gpF5zwxClllwGb5PwMts68eixd96OGsgN8RyXJdBAPrXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783609093; c=relaxed/simple;
-	bh=ysLvOGSVgAfq+pFBQ5F37iSb80M+3xim2snChkW0IvI=;
+	s=arc-20240116; t=1783609269; c=relaxed/simple;
+	bh=7mJuMz/KfBDZCEz17IYnwFe4uLODxMQr1AuHtnipXkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pPbcU+CaMDEFh/CUcx3f9N7EJ9Itk+Sd06dpcvMDRSOY5vykNiOwz1F9qtnx+7h+MWS6md7kWRDektocUcGR5Fl1RN9FwjhtJM9vb0l0psFVVFFDCE7/NEJcHthR8EKDCfdavtbD+2oa7DejIy8JGj2dYfMI2muswUoTko4n/zU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LUMlupa6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G1BYRH7kLZzXTBDfoEAFCmj9uvn1J8rbGD1seiNCOqeslP6essW2uJNTCDHP9ys2CJS+cqXpZEVI+fu+6G+KGffY5csVxU1i3CN5I4gfhutdbV10snCTUynqgEeMporEIr7i+bhNvxbP6mK9Y1YztHxqzyuT1tk5If4GF8a61Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DFt6MW72; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LUMlupa6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB0D1F000E9;
-	Thu,  9 Jul 2026 14:58:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DFt6MW72"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA001F000E9;
+	Thu,  9 Jul 2026 15:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783609092;
-	bh=9/1HqyWrkZyjYEF/IvFYN45GJgOoUw5a6qAk63F1iqk=;
+	s=k20260515; t=1783609267;
+	bh=QHWQVGFS03jqNN36guqBwCJP4SMcZohKHkWg0ox+2dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LUMlupa6hH9ZCnsAvhOcfNEa02zLm+5bNrfTtqyKbrpQL9ATlKLP6FdQy53R+KwHg
-	 Erg/af9obJhWp2KxvJ310FljiRoBSKAGVKgLi22kQu4GGOzILwG20e3xq4MFCdVvzO
-	 2uZnm5DHkb8SYNRYphP3QZ/msN3CwIJinmTWvM8u4oJqsTw9nOZI9djlfY2QsAS04Z
-	 3OMeLgr/TKLr+IVRMRILG1x32qF3PD5Nf9+NcyhgevVAIr+qLqhk6grPLGkzY7aUQi
-	 9g7tKZrw/+e1IK+azicTOjNygNp8bIwiszEH62B6CnFpTyRZsXgckEIrWle3rv7e5M
-	 67/hbOlX6SuQg==
+	b=DFt6MW72FmQP6V5P0InUe4BwJKdO/Qhz5cHR0Gl18K7NouplLlTtcm6IV/nfAgDm8
+	 KP9sC7+7PSWa18CIIWwE3X24hoffvzO2rFdAbKWO4gDr0Ckxz6yzsHNO1JoDx0qIno
+	 HKHksu2Wq6jkTwevBMcrmozdIEzOyw/Dfb+hpBEOGYQ9EOo/NRiVUmiVM7OSr63Eg6
+	 X/y433L5/MBW1ycf3Dhog8qJNiutEVzZdTBqbr99dsgWTK76PtzxSpxF1P5j3n3RgG
+	 BefZMHNttzome7Ov4H+0Faa8f0ihsc4gXBgyX0lOrSoB11tkvOMBQgrzktZbVK0zBq
+	 M0XtHrWjw1szg==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.2 10/19] mm/damon/core: validate params for probe hits weighted sum overflow
-Date: Thu,  9 Jul 2026 07:58:02 -0700
-Message-ID: <20260709145804.96776-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.2 12/19] mm/damon/core: set samples in apply_probes() if probe weights are set
+Date: Thu,  9 Jul 2026 08:00:58 -0700
+Message-ID: <20260709150059.96929-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260709143652.6A8E61F00A3A@smtp.kernel.org>
+In-Reply-To: <20260709144855.C811B1F00A3A@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,56 +45,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Thu, 09 Jul 2026 14:36:51 +0000 sashiko-bot@kernel.org wrote:
+On Thu, 09 Jul 2026 14:48:55 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Spelling mistake in comment.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] When access checks are disabled, `max_nr_accesses` is not updated but is still used for the region merge threshold. `apply_probes()` is incorrectly called without requesting or capturing the maximum weighted sum.
+> - [Medium] Setting probe weights on a context whose operations do not implement `.apply_probes` (e.g., `vaddr`) silently disables all monitoring.
 > --
 > 
-> --- Patch [10]: [RFC PATCH v1.2 10/19] mm/damon/core: validate params for probe hits weighted sum overflow ---
-> commit 3e76c3dde55500288f3eccb730acd26964bfdad2
+> --- Patch [12]: [RFC PATCH v1.2 12/19] mm/damon/core: set samples in apply_probes() if probe weights are set ---
+> commit ffce494dcbbb1125634a81b14be56b2f89aefe7e
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: validate params for probe hits weighted sum overflow
+>     mm/damon/core: set samples in apply_probes() if probe weights are set
 > 
-> This commit adds parameter validation to prevent probe hits weighted sum
-> overflow. It ensures that the combination of probe weights and aggregation
-> intervals does not exceed the maximum allowed values.
+> When probe weights are set, the prepare_access_checks() ops callback is
+> not invoked, so sampling addresses of regions are unset.  Ask
+> apply_probes() to set those together in the case.
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 4f1425e56950b..b585e4bf035f1 100644
+> > index e250b7080708d..f1be748e9a674 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> [ ... ]
-> > @@ -1342,6 +1345,18 @@ static bool damon_valid_probe_params(struct damon_ctx *ctx)
-> >  	sample_interval = ctx->attrs.sample_interval ? : 1;
-> >  	if (ctx->attrs.aggr_interval / sample_interval > U8_MAX)
-> >  		return false;
-> > +
-> > +	/* invlaid if probe hits weighted sum can overflow */
+> > @@ -3777,7 +3777,8 @@ static int kdamond_fn(void *data)
+> >  		if (!access_check_disabled && ctx->ops.check_accesses)
+> >  			max_nr_accesses = ctx->ops.check_accesses(ctx);
+> >  		if (ctx->ops.apply_probes)
+> > -			ctx->ops.apply_probes(ctx, false, false);
+> > +			ctx->ops.apply_probes(ctx, access_check_disabled,
+> > +					false);
 > 
-> [Severity: Low]
-> This isn't a bug, but there is a typo in this comment ("invlaid" instead of
-> "invalid").
+> [Severity: Medium]
+> When access checks are disabled, check_accesses() is bypassed and
+> max_nr_accesses is not updated.
+> 
+> Later in this function, kdamond_merge_regions() uses max_nr_accesses to
+> calculate the merge threshold:
+> 
+> 		if (time_after_eq(ctx->passed_sample_intervals,
+> 					next_aggregation_sis)) {
+> 			kdamond_merge_regions(ctx,
+> 					max_nr_accesses / 10,
+> 					sz_limit);
+> 
+> Since apply_probes() is called with return_max_wsum=false, it doesn't
+> update or return a max weighted sum.  Will kdamond_merge_regions() use an
+> invalid or stale threshold (often 0), breaking the merge algorithm?
 
-Good finding.  I will fix in the next revision.
+That will be implemented by a later patch of this series.
 
 > 
-> > +	max_probe_hits = damon_nr_samples_per_aggr(&ctx->attrs);
-> > +	wsum = 0;
-> > +	damon_for_each_probe(probe, ctx) {
-> > +		if (probe->weight > UINT_MAX / max_probe_hits)
-> > +			return false;
-> > +		wsum_to_add = probe->weight * max_probe_hits;
-> > +		if (UINT_MAX - wsum < wsum_to_add)
-> > +			return false;
-> > +		wsum += wsum_to_add;
-> > +	}
-> >  	return true;
-> >  }
+> [Severity: Medium]
+> If a user sets probe weights on a context whose operations do not implement
+> .apply_probes (e.g., vaddr), access_check_disabled will be true and
+> check_accesses() will be bypassed.
+> 
+> Since .apply_probes is not implemented, this block is also skipped.
+> 
+> Could this completely disable all monitoring for the target with no error
+> feedback to the user?
+> 
+> Validation in damon_valid_probe_params() successfully validates this state:
+> 
+> mm/damon/core.c:damon_valid_probe_params() {
+> ...
+> 	if (!damon_has_probe_weights(ctx))
+> 		return true;
+> ...
+> }
+> 
+> Should damon_valid_probe_params() check if ctx->ops.apply_probes is supported?
+
+This is an intentional design.  The user should config DAMON correctly.
+
+> 
+> >  
+> >  		if (time_after_eq(ctx->passed_sample_intervals,
+> >  					next_aggregation_sis)) {
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260709140600.90950-1-sj@kernel.org?part=10
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260709140600.90950-1-sj@kernel.org?part=12
 
 
 Thanks,
