@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938A442314E;
-	Thu,  9 Jul 2026 14:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32E3420E8A;
+	Thu,  9 Jul 2026 14:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783605968; cv=none; b=OjXOqP77oHIBeNdDcLutUQWRKqv6WDTa2HVuvDS7nC33sFrWZtilZC71RSHoe8skUc7TPgCpBhwua3RfvRM/rq1UU1caT5mpXFLx+L4vTl4pPkWBn1cQq9m5SLlRZs9DYoUAMDEIe+j4bbmkDMG1VIuNdMUiZKJZctNqhOoyVvk=
+	t=1783605969; cv=none; b=lMqu3HgcjhuXWgnLJHn5pF4IlWzMqS0Sd1AqwbXj6NnWr2sltJumiB3PkrApy+ExYfHU3IZQizyAFxCbyPAaVLsVBJIX3LDbucRKVatB+Cko2nGY+0QHcoUaZRbGNUIv6r6RilWa6M3vvc4kXnohU4WSkcWmE12i2iZgq9M65bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783605968; c=relaxed/simple;
-	bh=PhXQQpucptaaEPaLQbdUQsx9YHekTQ5o6U1OizAavYs=;
+	s=arc-20240116; t=1783605969; c=relaxed/simple;
+	bh=m097nX+o3GUQ1us51vIEofHr/BQDydOSq4G5qjcxZJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQNdd1Eyo0TR4qi/0pra6qZKdkjujwhvAEyE0JbB6COQI11FqPhugRVQZ5vl5gNIOOxYFPI4xu1xjfESqZ2e3n2oT9d9x8nWJFHJwrFf/MtSTJulEDg16ActXELBkM+wLnFLINcBo1iEywSRQkdPmAJRRCneeCVU8H3SU8ZQ2+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VeLgLUh+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CL/+15mwO1RI4qeDLM9pvDMR6vfW1v2RkgSeYiujpxm7ITkBmGFRLRdLvEjRQNsM7TzXMeKFNSdtc+f7VRsd+7aoBnPODRc/dO/XIoKvrfAQV56J6CfLg9X9B+CmfWi72Sg9jLo4CkEQ1s+SHr0MIMwPFC3EfzFTjyhfs9bvsJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a6W1hRdy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VeLgLUh+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FA61F00ACA;
-	Thu,  9 Jul 2026 14:06:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a6W1hRdy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32401F00A3F;
+	Thu,  9 Jul 2026 14:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783605967;
-	bh=uDi6I/gjqdQG3FZL7bTPNXi1XeJP146JhSzquekJpSI=;
+	s=k20260515; t=1783605966;
+	bh=J7ZtSpW2RnXSKPujLfG/ONrU6HhGNSKvAXYdnpd8R5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VeLgLUh+rr1bHaq7sAsIy8KkttF3Wk9ow6qqHLK2hG/4sPALyBUbRDsJmRf8ospen
-	 REGrUy2G3/+oGnrx5zKJkOpytHDB9lYZWKRWkGqLivz+ULyXeeoG88ox7gDBY2zdho
-	 N1SMT5+vlgdKW9OkLzXIfhLCcq3/vJOJi9vlzvqd2J9yb1RrqAv6gy30FT0y4EerdP
-	 WW97+iqsoD2gHlZhW8Gibfod756Rx4npI0mWW/vVkM23GN9UAnW3TFNqP9Ovige50x
-	 HDfeD9UV51vbH3MhDxAZqfngfhxJkwUMXqMbNlTJMhzSKMhW2iTNY/+Vpx3PR+SZT/
-	 f5WCzepUR5hRA==
+	b=a6W1hRdyqWBuDMlJyNXHSFZ+nwUAdFWZUd8a6SVHWFk5dAvmXelrl0K/7J3L4Uroi
+	 aZFvvcmjamabfjrofUoq6Y/tF1TuH6TRbaxuQnt+QtSrh5n5+frsNqhW8M7ng7Gshw
+	 RZLyoUHCqdmrcnUwDhwbneAXwOtaJYx5TrarEYkBvYWmMbFL9SKlvT/NUw6L5pbjD+
+	 46YRdelNH5WVUz6z4qQ3WcwvKhgSj4LO/zE0VFNm1ianeNXAJ5AlAczM6C+QwHHLLT
+	 zoR31M5bKPh7CBXJj1vmtznhSgx479gpRDZQ2sV+E5OiWHyYRxYK1WPkADzz10kaK1
+	 7ZlHTq/V9hTsQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 11/19] mm/damon/core: disable access monitoring when probe weights are set
-Date: Thu,  9 Jul 2026 07:05:49 -0700
-Message-ID: <20260709140600.90950-12-sj@kernel.org>
+Subject: [RFC PATCH v1.2 09/19] mm/damon/core: disallow probe_hits overflow on attrs only monitoring
+Date: Thu,  9 Jul 2026 07:05:47 -0700
+Message-ID: <20260709140600.90950-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260709140600.90950-1-sj@kernel.org>
 References: <20260709140600.90950-1-sj@kernel.org>
@@ -47,39 +47,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When users set probe weights, they are interested in the data
-attributes.  Not necessarily they are interested in data access
-patterns.  Disable the data access monitoring in the case.
+When any damon_probe->weight is set, DAMON will do only probe
+monitoring.  probe_hits is 'unsigned char'.  It could overflow when the
+aggregation interval is larger than the sampling interval times 256.
+damon_as_probe_weights() always return false, so such overflow cannot
+happen.  Even if it happens, it only degrades the monitoring results.
+
+That said, the overflow is not intentional.  It is better to be
+prevented as long as the cost is not expensive.  Disallow the overflow
+by adding a validation logic on the core layer parameters validation
+function.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/damon/core.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index b585e4bf035f1..e250b7080708d 100644
+index 7d49420ea26c4..4f1425e56950b 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -3763,17 +3763,18 @@ static int kdamond_fn(void *data)
- 		unsigned long next_aggregation_sis = ctx->next_aggregation_sis;
- 		unsigned long next_ops_update_sis = ctx->next_ops_update_sis;
- 		unsigned long sample_interval = ctx->attrs.sample_interval;
-+		bool access_check_disabled = damon_has_probe_weights(ctx);
+@@ -1332,6 +1332,19 @@ static void damos_set_filters_default_reject(struct damos *s)
+ 		damos_filters_default_reject(&s->ops_filters);
+ }
  
- 		if (kdamond_wait_activation(ctx))
- 			break;
++static bool damon_valid_probe_params(struct damon_ctx *ctx)
++{
++	unsigned long sample_interval;
++
++	if (!damon_has_probe_weights(ctx))
++		return true;
++
++	sample_interval = ctx->attrs.sample_interval ? : 1;
++	if (ctx->attrs.aggr_interval / sample_interval > U8_MAX)
++		return false;
++	return true;
++}
++
+ /*
+  * damos_commit_dests() - Copy migration destinations from @src to @dst.
+  * @dst:	Destination structure to update.
+@@ -1736,6 +1749,9 @@ static int __damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
+ 		}
+ 	}
  
--		if (ctx->ops.prepare_access_checks)
-+		if (!access_check_disabled && ctx->ops.prepare_access_checks)
- 			ctx->ops.prepare_access_checks(ctx);
- 
- 		kdamond_usleep(sample_interval);
- 		ctx->passed_sample_intervals++;
- 
--		if (ctx->ops.check_accesses)
-+		if (!access_check_disabled && ctx->ops.check_accesses)
- 			max_nr_accesses = ctx->ops.check_accesses(ctx);
- 		if (ctx->ops.apply_probes)
- 			ctx->ops.apply_probes(ctx, false, false);
++	if (!damon_valid_probe_params(src))
++		return -EINVAL;
++
+ 	err = damon_commit_schemes(dst, src);
+ 	if (err)
+ 		return err;
 -- 
 2.47.3
