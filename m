@@ -1,185 +1,150 @@
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azolkn19010019.outbound.protection.outlook.com [52.103.23.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C6B3BA241
-	for <damon@lists.linux.dev>; Wed,  8 Jul 2026 17:55:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.23.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096A815E97
+	for <damon@lists.linux.dev>; Thu,  9 Jul 2026 00:06:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.176
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783533317; cv=fail; b=XdFVtNOUwls3Hvv+Q2BQASER9B9TN/0hBM0WuhDEi2Q0knPdA02Ms58p3Vf29Y/JmJ+e7/S4L752qy6RMmhNZuzSZfrUHvdC5yFVYHiiLLoiZ3057+uU5Lke8A99LRLSjkKf6OynSFc76ehEOUP51JivMMKhU6x7m+J+ULl7CeA=
+	t=1783555568; cv=pass; b=FY0sVjfoMmAifyVU//IcYJtdsdxk6xP2ZjcooN85LBbBSgJwKWJ0iLA+i8I8eab8RfPVYzUR6muuyEcTi8fqcC1iUHCWoDzFBzCDCrZgP6cCYJyo4KagjC8/FUwTVFSf9JukxJebtPmce6T3cVdtWIdjQHb15ktXtET7fm7MRNM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783533317; c=relaxed/simple;
-	bh=tm9npR9cgg+1Ni5NAjpvVSd4/LwG8k9OeWsycGg89fU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=kGgJRtqmKZwwRu3uRsM9FAh03dyjspf7rPW7E9/IMBbWpsb4B4oukgSzul10LGmwtjQDjKXaSQWBoLQBiyPbJ236JXHhnBdOZNk24T1vb+weUw0hgzBWdb/Ufct5wVO8azCHIWsqflLWI7Kxpd2HSHJcXG+w3fBCFnjhkq52wFs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=ifk+2IIe; arc=fail smtp.client-ip=52.103.23.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	s=arc-20240116; t=1783555568; c=relaxed/simple;
+	bh=yJaHiIAKdt59/nUs88AHXAG1seHCynr9U+jmRjUBOEg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Xr8I7gO+FBZwTiL8OSr00MP+2+VWZooOFx912C0lL86rIGo2mBSyp540K2GSgFj8qb3BhxqLjFM0s/A8e5kA9Mu+WIO4IgR5FbHTESxTpmY0WZu3Evb69KzgQiwJ7rjJN+fIHul5UObb8eal5IhQe27HjmpuYpdAmm6PauxsI6g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mhJVIkM4; arc=pass smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="ifk+2IIe"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WVUeAgdQCa9svwMFIiQh2Dn72p/mN4m7RGZhEV+C1eUCjzxt5Fr7LZdAfR+C4vjml+iYeLkmlFAgTbJbc7a6gGjbgjWHR1OoTsPcNjBOJkmQaw6vog++dzwTBpAqQ3IqHSrJrcSnOV4/xqAz/GxxcIPczwd9GyKS3mwJvf8KRqCfG9lLaGVrk2gwXbDNc6O6QW8U3RPWpPRFXRiCRtx6QlXQQTUvKIRIOx5U9nwmPmk0yW7KR5Ap+q86Joojs8HqwU/qFsJXhK3Tigu+xLjji7cwhecF5rt4bjGmcGivB5ccKtTfsSgJuOkAnsth/2DJieZWbvKBVsBOFMuqVSKYfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tK308Hbv3khHV6wKnOB8APnVoMEGdx6YTUnp3NLXTdE=;
- b=S16d/0VJUA9QgP/wfuf8PMDJvKir9XnHbsoCyTPg9yf/uGW6sBAsYcQDoR66dsmGMcCDYH34wdLNXUxKFUzI4Pp5QmHaa22s4FGX5vpQPr8SzuzR49YNjGZJ8d3stS8xLspehIbvx4FE/0/3qYiafrghVDPBAl0wwfbuQKc/cgKiKjxaGprbACbgeCt11dpPr8maUEIgEoKJ1xoeyHymLcXLA1/Aa+rhiedBZ2dz7yi6hIqu1S7l6Kt+t9kDq5wlA1CtjGr58qZtJM5Y6u7oHDiKNW9j8oGr+uvFBUNcxbQJu6zWjK8NIzSOFzp845N+SsLBwi0An5JM0+NLmpDazA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tK308Hbv3khHV6wKnOB8APnVoMEGdx6YTUnp3NLXTdE=;
- b=ifk+2IIesy4ApVp0buFR4qeEDXxYZIF61C+BPWaSkfBn8h0LoSvMhVCpoIBHWAE1XaqT6rzG8CMFHzaDcvFK3yc0TuBWKVSLZNtdmvMfZjIgpG1RlHKxP48r1pF3I7cvu7UicBoUU8jhh20Y84NqrzqwN2WDXqdex0d/cP4uR22VGuTq8sG/TO+G+jrS0ciCsUSSBhhG7xisTNpht/bLpyomcaoYV2QUHB6QNvMsT/uDw4cLRcz6tiafj3a/oumQ29dsxsQ5FlI5c85TlqxlDnCBLWJ7/+012uqCL9NOc1Y71BxjQn3/0x1DmRdq/Gq1q6W1gjb54EoXWI6INZ67AA==
-Received: from BY5PR02MB6642.namprd02.prod.outlook.com (2603:10b6:a03:20c::23)
- by LV1PR02MB11998.namprd02.prod.outlook.com (2603:10b6:408:3f8::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.181.10; Wed, 8 Jul
- 2026 17:55:11 +0000
-Received: from BY5PR02MB6642.namprd02.prod.outlook.com
- ([fe80::97a8:6e72:40bb:875d]) by BY5PR02MB6642.namprd02.prod.outlook.com
- ([fe80::97a8:6e72:40bb:875d%5]) with mapi id 15.21.0181.012; Wed, 8 Jul 2026
- 17:55:11 +0000
-Date: Wed, 8 Jul 2026 10:55:05 -0700
-From: Jiahui Zhang <jiahuitry@outlook.com>
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: prevent migration fallback to non-target nodes
-Message-ID:
- <BY5PR02MB6642569E180FF82F147E7880B5FF2@BY5PR02MB6642.namprd02.prod.outlook.com>
-References: <BY5PR02MB6642F4D1A8BA92BFF3A034B4B5FF2@BY5PR02MB6642.namprd02.prod.outlook.com>
- <20260708141134.123360-1-sj@kernel.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260708141134.123360-1-sj@kernel.org>
-X-ClientProxiedBy: JH0PR01CA0010.apcprd01.prod.exchangelabs.com
- (2603:1096:990:56::19) To BY5PR02MB6642.namprd02.prod.outlook.com
- (2603:10b6:a03:20c::23)
-X-Microsoft-Original-Message-ID: <ak6LqsGOBhbtmvTU@s222>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mhJVIkM4"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c9d1fff21edso722541a12.1
+        for <damon@lists.linux.dev>; Wed, 08 Jul 2026 17:06:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783555565; cv=none;
+        d=google.com; s=arc-20260327;
+        b=K51F1owu1/s1E9iPsZHScXenbSaB/p52ccMOFyEhtmIEV3Iud8OgrLDXg9CbYnn5Vg
+         84OckPJk3fh0b3r/NkUXciki2PN0V6WnDzWdoyQmXA4rZuhLLTCoHq9i7LxvA3qTZ4ac
+         ItHSWf8HI0P1/EYet0iNcEdHicCy0a9RxSOghAWQ6cRt3e67txBGdtcL4wivqm7nPUex
+         nBaftsl2NtUiddH+HLT2B8KSNObq0jDr/7um+lCpIvODgVU8iVdcgm0iLo0Gf1jCzY5a
+         eZf8U/Gb/4VgsXc/jtp6j6RpzJHIi8Py1ltQC5tEocbB0rwHEs+ku3ZVE3qIACvppOL1
+         A2XQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:dkim-signature;
+        bh=yJaHiIAKdt59/nUs88AHXAG1seHCynr9U+jmRjUBOEg=;
+        fh=nh3hbzX2rKbdqLDBWQTVzvPBNUfAPVXzVgxOcmV3uEg=;
+        b=aMyULikrg1uiyxpFJzYcrlTrF45oN+sAq2dx+JqqsIOFqiTkN6qDugyoY5SV8fcLsx
+         gDap2OV9W3MQ7kLNKYKJuq8HwT9hq21Mh0EUXi+La2v7jMKH8Ak6X2tTnxvs0q1QKKC4
+         /khCnj2NAdMml1E4ZJRy+fzgnSdWbscMYKJhDAI4KdtBS05I7aEtFckh+QZCXsxh3GvT
+         dgyuALiaXORr9L/Z/nOxVJC7+zFbOrYCbqpqmLSjrP27rZ3e4qP+P5HVxwn5ik0PJVcm
+         oUGvt4evLquDsRR2SPYz1llzSXsZcvjksyfDW0RZseuwqxEzkZw4zKXtDZRImDsgKnxy
+         9E0w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1783555565; x=1784160365; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=yJaHiIAKdt59/nUs88AHXAG1seHCynr9U+jmRjUBOEg=;
+        b=mhJVIkM45OUDuijRQhJCGxMcU4BVaSp09AqI2hnS8Ki6Y6RNFNMGZ4/s5R5c1f5k7g
+         ziB/d0CifLhaaoJPcgMNTX2C4Y5sePITm80rllyzjo18F1N2XBSAFdelBGxCML25Dr+H
+         i/IOXVXIVf4nt32cpdS6iwjJ9QA/wGCnpVxulS7vrXczeqHIgpKYKq7NRz8vrh98O7KN
+         EUt7H5pa/xxqvKGKFJcdpcFeD/+SbVJVYdZwcEFNbf2iwKW/Kn2h13I/J4BZ13eC0LT4
+         DRrg1nj9suGX18iFVRUHlOkjYa0e75X9oxIKH+8iJ8QKKqjLU0//McufwrR9QMK1tg7x
+         /CXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783555565; x=1784160365;
+        h=content-type:cc:to:subject:message-id:date:mime-version:references
+         :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=yJaHiIAKdt59/nUs88AHXAG1seHCynr9U+jmRjUBOEg=;
+        b=i451JdLa3Chr+Q6lfTZURXF8Hj+Nv9qcK0wtN8g0F3CZidHtNR4W4RNEAsfu9b36by
+         qXZb5SkxysYsKKDNYj/nAsoR0UiQvPtQD0+1mtzxaURr94irw8ob+2X2Erv6OTV3WLxR
+         QtyC94GRvpY1RfINGwC/CxgqpUUGxUSpIiR7rEq0YjFA8iWwzIutHI5HE25vTu9Fa2zE
+         DybWEuOaAGPv5Y29X64B/C0+3s/MzCun/ylW6a1Jny+Yp/VfXP8BFQdAtbbQk9TuceVd
+         VvAWfcpYVhJacSWXyKXLV6r5R7k0EhsUVBmQJhYu71K9EKA2J5JIdFgLUB4JW1TGFubz
+         GQ+g==
+X-Forwarded-Encrypted: i=1; AHgh+Rr+CFu2NiCHkaiTs4rBAhP9HmHmcjrHst5a+nzNO4eOuBC5DYZpc/69q6wxlAudarLmi70HlA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyOXTrEgSBxLN6hOwYf4+/a0DrNeldaO5JWfBgy7QIWJYYcctIh
+	4nNhMoWFGRV9d4EAxDV/2Miuth7iuLSSQ8QGFZnHVmIvGk082MulR3lgig/HrztbKge2TT6eotw
+	0KsTuROTNER+LdJlipVFR9KCR30uTjy9kgKfqOu6+
+X-Gm-Gg: AfdE7clGOjjsPICUp3iVmAdcg8ZgnuIBs55Hkoq6VSv+/6Q6wpZdRYulf6Ixzf5EJSj
+	wD41bVbdlL+uiUMdVF6XIU5rtvrUbhzLZQrBIGXdH05YDbjb9jI6oBUnNhP7udItorhcqAWmY3n
+	o0r/9ZkuZ1gqcweeQUXJtjjtHBX+dI5vM3FGF4Z9tY2iNML7cqSKbYP755waV4Dtv2edyLiDQGQ
+	b+H7rz/tzjDATJ3Txv88fKUYCMW3lIyBoirTBNL8c/fJyC3AQ1u5RGsEEAb63s2ipxhM/Ja7uoi
+	z/eDtyX5DtTPi5112jpdmSVlyB7OzDLoWSWX/Reg6qB1O6pqndKrQ32E5fqoWfCqMecwSA==
+X-Received: by 2002:a05:6a21:7482:b0:3b4:669c:ee32 with SMTP id
+ adf61e73a8af0-3c0bcbc1353mr5760887637.37.1783555564841; Wed, 08 Jul 2026
+ 17:06:04 -0700 (PDT)
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 8 Jul 2026 17:06:04 -0700
+Received: from 176938342045 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 8 Jul 2026 17:06:03 -0700
+From: Ackerley Tng <ackerleytng@google.com>
+In-Reply-To: <eedf589778aaab33e6df2ad6556dcde536e13460.1782735110.git.ljs@kernel.org>
+References: <cover.1782735110.git.ljs@kernel.org> <eedf589778aaab33e6df2ad6556dcde536e13460.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR02MB6642:EE_|LV1PR02MB11998:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9067b631-5e49-4661-8c9a-08dedd1a0e5a
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|24021099003|23021999003|8060799015|19110799012|6090799003|5072599009|15080799012|51005399006|5040399003|40105399003|3430499035|18061999006|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?lGujeJ5XBsAs6q1G9Gwkx2YmUVpf2HJvI6hsyqx85shybSde0iVTOmX7NlZV?=
- =?us-ascii?Q?ewoNYreF+lnqfcAwE27INhiEoTyT68RrJgauW77LbtXAUyeC53WkJ9UWqLLW?=
- =?us-ascii?Q?fouEG/NQdEzPZzvy3n1WFmnr2AjemkBBA0+L/HwaTy/xjbIBuE9fUgKSu5zs?=
- =?us-ascii?Q?2Ss6Ze/F/evsku8xrvJgOdFxF4lvZWOJYySlKbWL/01TQ5ODND0Jpaoqgoti?=
- =?us-ascii?Q?/bi0uEGWPGZoLQVYIpxC7ZbIWenS0ESVUsyLpv98hoBftO8V4Oirbgdf8C4+?=
- =?us-ascii?Q?aBJr4LljAJkGSBycCf/DLurxEcchztf25rCb6ZP31u44bXoIUKsg9s4E1L0L?=
- =?us-ascii?Q?rDP9t0Elk723eB+TeL+cr7ptcqQjSGnRAJCvebSVkyFlHVu8H5hHT4k3lO1X?=
- =?us-ascii?Q?lg4gB/miW3mlZNylfkrDbzULciT32wIx0ZMGjUSrjsr55o440UOa49VOoONM?=
- =?us-ascii?Q?/TCVjfKaNvDG/QJBLKoHNxXnjQU3mRoGPz1gBW3BgR6/+doP0GbkiAgGwJPm?=
- =?us-ascii?Q?nxMGjGLnHNAiZIn+oC31F3Db5G4lMqznxiW501CsCflxjttfoS0jeevcvznQ?=
- =?us-ascii?Q?l0Vm1GK4nzva1os8fMD1qEBH4wy6KjP0xn/wgA1R5SUA8+9Fz7HBn8tjOqXC?=
- =?us-ascii?Q?7+X1PvwMQqm70l688rMZcxRq+nJsBXAocOsmVRDdktDeRljc9wWnpRVAv9S9?=
- =?us-ascii?Q?qGw4lmCqKin6dPeTafqp9csToiCDw1oNiZyqTYKazdR5lD4GNW6eHHSxSUTn?=
- =?us-ascii?Q?oqGnOHb1ysf0+0zwBT/oXsr00TZIj224izztJEiYswErgHeM1wnNU8rbmX+O?=
- =?us-ascii?Q?QWbttCmsfvGABkCauvuaobypVDYu434U3AR8lGgHTBd2ZgNpP3J7hTonIfZK?=
- =?us-ascii?Q?A5kTELNrCmHIaXx5pzcinbq9A/UDXbLWQgk+StCbc9rm78DlOeGUl6aSMUjq?=
- =?us-ascii?Q?UwMJ+7nXaL/e36Vp/o0hXRrEVx2SKkccN26RiIdVCSd1m5UZOLZXrTSl4hTl?=
- =?us-ascii?Q?fsHm?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3Q2L62MeNjb2OxtPjC0Wa4gkjJTbcVouVnloAjRElE50D+WBtnwC1RyqSpkM?=
- =?us-ascii?Q?uWiKaoJaabZkSC+8tEdvdQOb7QS5l5fgHtWR6tsYwRChu2hzac6kaRMVPIpH?=
- =?us-ascii?Q?NQD7RRH9eTNEIua/8FAAxrGruPTLVaTnnkubO+ytGLodO9URmDQ6+380GdFq?=
- =?us-ascii?Q?9BgNS99r3CqPNQGO7ZtcU0OT6mlii4VJcsLFTjfDG/QRrkP1GOYFXb7H+jYj?=
- =?us-ascii?Q?RVMulwuz7SBmuKwsWiGKTEGU64sRFPqRtYzPGTKpe3/9Acx1LpmZ3hevVr7i?=
- =?us-ascii?Q?+1lFpNzLfC70nXsLOC74h8WV0F3vCDWD343HJdTj5cvPssMxZrpq5kSF+8LO?=
- =?us-ascii?Q?9F1U+foeEU0f4FFRorADen9Dgq3INyrmbwlCW5S0RaoPq/n+owFoKWotuvdY?=
- =?us-ascii?Q?IctnQI9ii9Gi64v08evHg5bGgbW2VHpaVkRT2PrAxawc8woSQ9WWG7EQ83Pn?=
- =?us-ascii?Q?P/2IPZdEX8pg9MbQNcMj3J0A32DzPkO8Py4U/NYCSu/KKxuzpn3dvRbSzKb8?=
- =?us-ascii?Q?p3Z6ze9dkUW52x8u+CM2cYaEuRLmkgNlHlIGdeDSxsthvOkVkwf4hPcN4Xzc?=
- =?us-ascii?Q?GMiMzOJdMV9+DnzgjFtiyC/GlVEBDZl4PxgmVK+jfAYkM6kN84Ggft1n08JN?=
- =?us-ascii?Q?VVGBBgPF16dWP8ZT3gYjKgTp8JgkDGmsqZCchNKq42xbC6HsJWl2iKZ6t2xj?=
- =?us-ascii?Q?S7qfi8bN2DzkL1EtIdG5J3JAFh+/8a+2PkASShPqgUbLHODgBHO09Y93qsvo?=
- =?us-ascii?Q?IOixMMXCLqDW6Bk2uI24DP6hAoxtcUZC4lDU/oh5NZ+JYYQWAn/wc+obf/bv?=
- =?us-ascii?Q?dCzAQ/ptrE/xMhEkEqBlf64bbwB7W9+8v//cWguv5uNEXYa5GYAq8T3Q6smk?=
- =?us-ascii?Q?EBL4kRgALy2yGAG+D6oTkDrTeJslX3gBnZL4b6IVstQSSBiIDoO1pPV/JEY6?=
- =?us-ascii?Q?rXoXbi9JlOySh+xRWRhkWp498VobgNL2WVcwyLtJqLX67DWM44YDWpVjOElH?=
- =?us-ascii?Q?UdvvcbWXLfrC40MT3FfFg7umu2F8bu5QFUlyLGO/7jFaG0Yp37ThE6NYcoCz?=
- =?us-ascii?Q?dt/KVaOSWfI05ykSHQw3Ny2RjRrIh9Ok4MlcskKglTx8Q9qWGfra8jFIWxsQ?=
- =?us-ascii?Q?K0VO/Xq7t4gKZvmXxgtZWnFDyC47SzkJncKjOypNtKZujcMqGmMo9Pf6Pb/6?=
- =?us-ascii?Q?Wlfirt84mS5TIsiZHqKBYMk0JAf4zFTJPqBitXUm4Uzj/ib4oxKo/QADlYri?=
- =?us-ascii?Q?p05xCTrA+o9cQm/t+tPJX+/Nf0UeeNFu4TAIoQyhpHi7uBFqXOmVEX9wmCfE?=
- =?us-ascii?Q?poRtaVQVRUYdLUDt9rt2bUytDz5brw+kTwucU0UbUqT0YGZiAxvuvV9fqjuz?=
- =?us-ascii?Q?ZQdMiVtYfxvXE1AZSoEVc41SOGGk?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9067b631-5e49-4661-8c9a-08dedd1a0e5a
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB6642.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jul 2026 17:55:11.7128
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV1PR02MB11998
+Date: Wed, 8 Jul 2026 17:06:03 -0700
+X-Gm-Features: AVVi8Ceg-PSWltTScKU18ZF0mdbBsNHDv0s-VKhIaqzjwQ-q80D6zfZMKk_VWII
+Message-ID: <CAEvNRgE-JJAzC0jp+bY8+e1+gYSH+MjT6JqX_DfCcpaxOM-Dtw@mail.gmail.com>
+Subject: Re: [PATCH 15/30] mm: introduce and use linear_page_delta()
+To: Lorenzo Stoakes <ljs@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+Cc: Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>, 
+	Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
+	Ian Abbott <abbotti@mev.co.uk>, H Hartley Sweeten <hsweeten@visionengravers.com>, 
+	Lucas Stach <l.stach@pengutronix.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+	Thierry Reding <thierry.reding@kernel.org>, Mikko Perttunen <mperttunen@nvidia.com>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Christian Koenig <christian.koenig@amd.com>, 
+	Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, 
+	linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, 
+	kvm@vger.kernel.org, linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, 
+	linux-mm@kvack.org, iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, 
+	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>, Rik van Riel <riel@surriel.com>, 
+	Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi SJ,
+Lorenzo Stoakes <ljs@kernel.org> writes:
 
-Thank you for the review.
+> It's often useful to obtain the number of pages a given address lies at
+> within a VMA.
+>
+> Add linear_page_delta() to determine this and update linear_page_index() to
+> make use of it.
+>
+> Add comments to describe both linear_page_delta() and linear_page_index().
+>
+> No functional change intended.
+>
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-On Wed, Jul 08, 2026 at 07:11:33AM -0700, SJ Park wrote:
-> So this patch is introducing a small behavioral change.  May I ask
-> why you think the new behavior is better?  Have you find some 
-> negative user impacts from the current behavior?
+Reviewed-by: Ackerley Tng <ackerleytng@google.com>
 
-Consider a two-node tiered system, where node 0 is the fast tier and 
-node 1 is a CPU-less slow tier, such as CXL memory.  Suppose node 0 
-is nearly full and the user wants to promote hot regions (which reside
-on node 1) to node 0 with a command like:
-
-  sudo damo start --ops vaddr --target_pid ${workload_pid} \
-      --damos_action migrate_hot 0 \
-      --damos_access_rate 70% max
-
-Without the __GFP_THISNODE flag, when the memory allocator finds that
-node 0 is nearly full, it can fall back to node 1 without waking up 
-kswapd. Then the pages allocated for migrate_pages() are still on node 1, 
-and the regions that are expected to be promoted to node 0 are only moved
- to different physical pages on node 1.
-
-As a result, the NUMA node placement does not change, but the following
-command still observes successful migrations:
-
-  sudo bpftrace -e '
-  tracepoint:migrate:mm_migrate_pages /args->reason == 9/
-  {
-      @succeeded_pages = sum(args->succeeded);
-  }
-  interval:s:1
-  {
-      time("%H:%M:%S ");
-      print(@succeeded_pages);
-      clear(@succeeded_pages);
-  }'
-
-I've also checked other page migration paths, such as alloc_demote_folio(),
- alloc_misplaced_dst_folio() and do_move_pages_to_node(), all of which set
-the __GFP_THISNODE flag.
-
-I am not sure whether the original design intended to provide only
-best-effort semantics, but I found this behavior very confusing in my
-experiment.
-
-> We as the kernel community disallow [1] anonymous patch submissions.  Is zjh
-> your preferred identity?  Also, it is not a strict rule, but we as the mm
-> community prefer using a formal name if that's ok.
-
-Sorry I did not notice this.  If you think the GFP flag should be added, I will
-send a v2 of the patch and correct the Signed-off-by issue.
-
-Thanks,
-Jiahui Zhang
-
-
+>
+> [...snip...]
+>
