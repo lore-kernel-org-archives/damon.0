@@ -1,44 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2B7331EC4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576C8331221;
 	Thu,  9 Jul 2026 14:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783605965; cv=none; b=J7lyIO0ORW4mmsZxB5FitpAf9woiKivAmdwLCyJ8dVMiRWmW3UC6aWXTMg8qFHe9zISrhT8sKkilixGPfyuZtf+0pgcbaurN7V4Bxnu6jOqyJS4ErCfLtNxKm6h45tJOxp+YmSpt5d6LxnVGiwesIDP2KPfv4kuJ7YNGYqTAHMs=
+	t=1783605965; cv=none; b=PoFlZYIccu0gL0uoSr1EFj0wdB6gBj2XuQAyuRpjmfb2yeNyjKusOaWZu55NSbgHVZK5Sk2Dqog6nd6cZg+cH12uhEgq4p51ZORXjZbcNQ/B/d+GU72YDNenqqgLu5R5BIWeQC0PhEYTpCA7eSqer9ix0lDECeDYw1W1+Ht/AJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783605965; c=relaxed/simple;
-	bh=tviKD854KaVkPYcfxMm1HzZmaZZ3K9VMpjeBsPs7jf4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHoFqEmSHPgv+lUCIMyp3ra2Na6OGxCr9wJOB2NNabKkUNjPD9sbAxx9/tJ3A21Kgq/Ya3LGwlfvdcWgw8VybMAOPsLvhEN/SRgLU3oI6NCTZjlOsVYUkWgMuG0I1/H0l2lfgo8r33oAh8/k+Yg4kEr1ZsOPS+jHomgQCHkdPlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M2sUUfq0; arc=none smtp.client-ip=100.103.45.18
+	bh=yA92zh8qfSz1eNSHPK2ZkSEIq28vK8+gJkwaOk1zySc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YCF4Fz8lLcZ93N2sEfY0pR3RTWjqr9AKTPd16Hk+OZrnnTexHyrWgoy9IWNW1GdfPvB8NHY41EAlgrXf/lO+XGw53zSAdxSfgog610OGhB4tIn8ydRVcxY9AxydSulZTRmNhOxhrfeEH1FsHbhcrEqzIru9t+1082Xxe2YG1lEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ln+yDJs/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M2sUUfq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6241F00ACA;
-	Thu,  9 Jul 2026 14:06:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ln+yDJs/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752CA1F000E9;
+	Thu,  9 Jul 2026 14:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783605964;
-	bh=YmfZTk/ZQOqnVMZqrheWjYkpxjXzlgMLoos2A38U/W4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2sUUfq0G7lu48A89v/C5h4pW3ee3Phxf40ZnZ2L4mSF1bR9j5witgW4MHnbMTlME
-	 8XwGfeZHD88nz6OFMtrnTLbFC/BMfpOziO11doGr+FLSt0+Il9v5newdhiiSpR+jfH
-	 DOzRqW2OVt8hNQK+ZbyvbccaPMMjIqBnvvgJSiroNWORk58GG57sVb54Agu88kXamb
-	 LlC/qUuTiBuvvFXpdcpfuABBx1loprpGY1hDiqiNRiIXOUx1/iRXw4IrQ26htunVD3
-	 1k6uYjkOljbUzBWYfK/icxxebvbNr1wlLrQ1NSJwV47P0WeyFqQ1rJsyLmZwffyvsl
-	 eaqwwSNXsG5bg==
+	bh=hpe5DHcXIn7XMPxMYZNsGherbEeK00YxEiKRfcPprcg=;
+	h=From:To:Cc:Subject:Date;
+	b=ln+yDJs/zTAH5HIxlMgibRWlBmu6w26Wi0m31cxulkCdm9V3f03wEb6toVcse3YJD
+	 Yhe0itWEans+Td52DdkAZz98LLf8fksnW6Wd2bCu82IeDaCdTc6Kafr0Sv2suMgjbv
+	 TnPuS0L7YzO6uppAY8KzoErnWZizMtuqvD0SzghCISnu30ZPw23Fi+FeaODkuC9HCJ
+	 pcF5jUivZaqL9WYzQN7wgY0aX3jRV9ZLxzn+6ugVgL4yGSdR0ZEnqL1M3KqZo3fyrL
+	 goUBwQkzHNCHhbRPiJasWj459AcAqbWSuXF0fwkWq9Gi3pGMN9g+VA92R9ajJwlDEY
+	 fSNblfWAgoHZQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 01/19] mm/damon/core: introduce damon_probe->weight
-Date: Thu,  9 Jul 2026 07:05:39 -0700
-Message-ID: <20260709140600.90950-2-sj@kernel.org>
+Subject: [RFC PATCH v1.2 00/19] mm/damon: introduce data attributes only monitoring
+Date: Thu,  9 Jul 2026 07:05:38 -0700
+Message-ID: <20260709140600.90950-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260709140600.90950-1-sj@kernel.org>
-References: <20260709140600.90950-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,60 +54,208 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a new field, weight to damon_probe struct.  The field is used to
-specify the degree of the API caller's interest to the data attribute
-of the probe.
+TL;DR: Introduce a way to get DAMON's best effort accuracy monitoring of
+user-demanding non-access data attributes.
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- include/linux/damon.h | 2 ++
- mm/damon/core.c       | 3 +++
- 2 files changed, 5 insertions(+)
+Background
+==========
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 63f596957c1f1..d8251c83e6e55 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -760,10 +760,12 @@ struct damon_filter {
- /**
-  * struct damon_probe - Data region attribute probe.
-  *
-+ * @weight:	Relative priority of the attribute for this probe.
-  * @filters:	Filters for assessing if a given region is for this probe.
-  * @list:	Siblings list.
-  */
- struct damon_probe {
-+	unsigned int weight;
- 	struct list_head filters;
- 	struct list_head list;
- };
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 11473aa1f70f4..327398fa4ee56 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -166,6 +166,7 @@ struct damon_probe *damon_new_probe(void)
- 	p = kmalloc_obj(*p);
- 	if (!p)
- 		return NULL;
-+	p->weight = 0;
- 	INIT_LIST_HEAD(&p->filters);
- 	INIT_LIST_HEAD(&p->list);
- 	return p;
-@@ -1658,6 +1659,7 @@ static int damon_commit_probes(struct damon_ctx *dst, struct damon_ctx *src)
- 	damon_for_each_probe_safe(dst_probe, next, dst) {
- 		src_probe = damon_nth_probe(i++, src);
- 		if (src_probe) {
-+			dst_probe->weight = src_probe->weight;
- 			err = damon_commit_filters(dst_probe, src_probe);
- 			if (err)
- 				return err;
-@@ -1674,6 +1676,7 @@ static int damon_commit_probes(struct damon_ctx *dst, struct damon_ctx *src)
- 		if (!new_probe)
- 			return -ENOMEM;
- 		damon_add_probe(dst, new_probe);
-+		new_probe->weight = src_probe->weight;
- 		err = damon_commit_filters(new_probe, src_probe);
- 		if (err)
- 			return err;
+DAMON was initially designed for only access monitoring.  It turned out
+users want to get the information together with more data attributes.
+For example, some users want to know how much of a hot memory region
+belongs to huge pages or specific cgroups.  Page level properties based
+monitoring was introduced with commit 626ffabe67c2 ("mm/damon: clarify
+trying vs applying on damos_stat kernel-doc comment") to fill the gap.
+Because it works only at snapshot level and snapshot capturing in the
+mode can induce high overhead, commit 45c49d9fd608 ("mm/damon/core:
+introduce struct damon_probe") introduced data attributes monitoring.
+
+Data attributes monitoring treats the attributes as only additional and
+subordinate information.  Data access monitoring is always turned on,
+and regions are adjusted for best accuracy of the access information. In
+some cases, users may be primarily interested in the attributes more
+than the access.  They might even not care about the access information
+at all.  Because DAMON treats data accesses as the only primary
+information, such users cannot get high quality attributes information.
+
+Design and Implementation
+=========================
+
+Introduce another way for treating data attributes as the primary
+information.  Add 'weight' property to each data attribute probe.  When
+any of the weights are set, the mode is enabled.  Data access monitoring
+is completely turned off in the mode.  For region  adjustment, the
+weighted sum of probe hit counters is used instead of the nr_accesses.
+
+Using the weights, users can specify to what attributes they are
+interested in to what degree.  DAMON will adjust the regions and provide
+the best-effort quality monitoring that is optimized for the user
+demands.
+
+Extend damon_operations for efficient use of probe hits.  Update regions
+merge and kdamond main logic to support the new mode.  Add a new struct
+field and a sysfs file for API callers and ABI users, respectively.
+
+Test
+====
+
+On ~7 GiB memory idle system, run a simple AI-assisted program.  The
+program allocates and faults 2 GiB anonymous pages.  Then, it does
+nothing but wait until the user terminates it.  Hence, the system ~2 GiB
+of anonymous pages with no active accesses.
+
+Monitor the distribution of the anonymous pages using DAMON attributes
+monitoring mode, using DAMON user-space tool, damo [1].
+
+    $ sudo ./damo start --probe_filter allow anon
+    $ sudo ./damo report access --dont_merge_regions
+    heatmap: 00000000000000000000000000000000000000000000000399999995111111146666666666666666
+    # min/max temperatures: -2,470,000,000, -1,620,000,000, column size: 99.800 MiB
+    intervals: sample 5 ms aggr 100 ms (max access hz 200)
+    #   <start>      <size>       <freq> <age>         <probe hits>
+    0   4.000 KiB    79.840 MiB   0 hz   24.700 s      2
+    1   79.844 MiB   718.562 MiB  0 hz   24.700 s      8
+    2   798.406 MiB  793.148 MiB  0 hz   24.700 s      7
+    3   1.554 GiB    797.828 MiB  0 hz   24.700 s      7
+    4   2.333 GiB    794.668 MiB  0 hz   24.600 s      8
+    5   3.109 GiB    791.117 MiB  0 hz   24.500 s      0
+    6   3.882 GiB    785.312 MiB  0 hz   24 s          2
+    7   4.649 GiB    787.867 MiB  0 hz   16.200 s      6
+    8   5.418 GiB    784.477 MiB  0 hz   23.300 s      6
+    9   6.184 GiB    783.820 MiB  0 hz   18.200 s      9
+    10  6.950 GiB    797.730 MiB  0 hz   18.900 s      7
+    11  7.729 GiB    69.625 MiB   0 hz   18.900 s      0
+    memory bw estimate: 0 B per second
+    total size: 7.797 GiB
+    record DAMON intervals: sample 5 ms, aggr 100 ms
+
+Note that the line after the line starting with "intervals:" is not
+provided by the current version of 'damo'.  I manually added the legends
+line for easier understanding of these results.
+
+Each of the 12 lines after the legend line shows the DAMON-found
+regions.  Each line shows 1) index of the region, 2) start address of
+the region, 3) size of the region, 4) access frequency of the region, 5)
+age (how long the access frequency on the region was kept) of the
+region, and finally 6) the probe hit count.
+
+Because data access is the primary information that adjusts region for,
+and there is only nearly zero access on the system, regions are naively
+adjusted with the same size.  Still <probe hits> show different
+distribution of the anonymous pages, but it is obviously very rough
+information.
+
+Switch to the attributes only mode and show how it changes the picture:
+
+    $ sudo ./damo tune --probe_filter allow anon --probe_weight 100
+    $ sudo ./damo report access --dont_merge_regions
+    heatmap: 88888888888888888889888999999889999999000004888888888888889999988888898888888888
+    # min/max temperatures: -4,430,000,000, 0, column size: 99.800 MiB
+    intervals: sample 5 ms aggr 100 ms (max access hz 200)
+    #   <start>      <size>       <freq> <age>         <probe hits>
+    0   4.000 KiB    60.445 MiB   0 hz   700 ms        0
+    1   60.449 MiB   1.363 MiB    0 hz   600 ms        18
+    2   61.812 MiB   144.000 KiB  0 hz   0 ns          1
+    3   61.953 MiB   1.922 MiB    0 hz   2.400 s       19
+    4   63.875 MiB   12.133 MiB   0 hz   200 ms        0
+    [...]
+    500 5.132 GiB    8.000 KiB    0 hz   2 m 15.800 s  20
+    501 5.132 GiB    8.000 KiB    0 hz   2 m 16.200 s  0
+    502 5.132 GiB    16.000 KiB   0 hz   2 m 16.900 s  20
+    503 5.132 GiB    24.000 KiB   0 hz   2 m 14.200 s  0
+    504 5.132 GiB    8.000 KiB    0 hz   2 m 14.900 s  20
+    [...]
+    923 7.534 GiB    126.637 MiB  0 hz   0 ns          6
+    924 7.658 GiB    252.000 KiB  0 hz   54.800 s      20
+    925 7.658 GiB    142.242 MiB  0 hz   300 ms        0
+    memory bw estimate: 0 B per second
+    total size: 7.797 GiB
+    record DAMON intervals: sample 5 ms, aggr 100 ms
+
+As expected, regions are adjusted to provide the best accurate picture
+for the anonymous pages distribution (<probe hits>).  The region 0
+(60.445 MiB memory from the address 4.000 KiB) has nearly zero anonymous
+pages.  The region 1 (1.363 MiB memory from the address 60.449 MiB) is
+nearly full with anonymous pages.  Region 500 (8 KiB memory from the
+address 5.132 GiB) is certainly two anonymous pages.
+
+Future Work
+===========
+
+Attributes only monitoring disables access monitoring.  We will enable
+that in future, by extending the supported attributes to include data
+accesses.  This patch series, and the future work are parts of the
+ongoing project [2] for extending DAMON.  The project aims to extend
+DAMON with primitives other than page table accessed bits such as AMD
+IBS, Intel PEBS, and Arm SPE, to provide more powerful and detailed
+information like per-CPUs/threads/reads/writes monitoring.
+
+Patches Sequence
+================
+
+Patch 1 introduces damon_probe->weight for specifying the weights of
+each attribute.  Patches 2-6 extends apply_probe() damon_ops callback to
+efficiently support the new mode.  Patch 7 fixes wrong use of abs() in
+the regions merge code.  Patch 8 extends regions merge function to work
+with probe hits in the mode.  Patch 8 also introduces the function for
+detecting the mode enablement but always returns false, for safe and
+incremental changes.  Patches 9 and 10 adds user parameters validation
+to prevent theoretical overflow of probe hits and the weighted sum.
+Patches 11-14 incrementally update kdamond_fn() to support the mode.
+Patch 15 completes the mode detection function implementation, so that
+the new mode really works.  Patch 16 introduces a new sysfs file for ABI
+users.  Finally, patches 17-19 respectively updates design, usage and
+ABI documents for the new feature and interfaces.
+
+[1] https://github.com/damonitor/damo
+[2] https://lore.kernel.org/20260525225208.1179-1-sj@kernel.org/
+
+Changelog
+=========
+
+Changes from RFC v1.1
+- RFC v1.1: https://lore.kernel.org/20260706141912.88445-1-sj@kernel.org
+- Fix typos in comments.
+- Fix wrong use of abs() with abs_diff().
+- Prevent probe hits and its weighted sum overflow.
+Changes from RFC
+- RFC: https://lore.kernel.org/20260705205743.98656-1-sj@kernel.org
+- Add kernel-doc comment for damon_probe->weight.
+- Fix typos in kernel-doc, design and usage documents.
+
+SJ Park (19):
+  mm/damon/core: introduce damon_probe->weight
+  mm/damon/core: ask apply_probes() ops callback to set sampling address
+  mm/damon/paddr: set samples in apply_probes() if requested
+  mm/damon/core: ask apply_probe() to return max probe hits weighted sum
+  mm/damon/core: implement damon_probe_hits_wsum()
+  mm/damon/paddr: respect return_max_wsum
+  mm/damon/core: use abs_diff() instead of abs()
+  mm/damon/core: extend merge function to work with probe hits
+  mm/damon/core: disallow probe_hits overflow on attrs only monitoring
+  mm/damon/core: validate params for probe hits weighted sum overflow
+  mm/damon/core: disable access monitoring when probe weights are set
+  mm/damon/core: set samples in apply_probes() if probe weights are set
+  mm/damon/core: s/max_nr_accesses/max_merge_score/ in kdamond_fn()
+  mm/damon/core: get merge threshold from probe hits when weights are
+    set
+  mm/damon/core: implement damon_has_probe_weight()
+  mm/damon/sysfs: implement probe/weight file
+  Docs/mm/damon/design: document attrs-only monitoring
+  Docs/admin-guide/mm/damon/usage: document weight sysfs file
+  Docs/ABI/damon: document probe weight file
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |   6 +
+ Documentation/admin-guide/mm/damon/usage.rst  |  11 +-
+ Documentation/mm/damon/design.rst             |  25 ++++
+ include/linux/damon.h                         |  12 +-
+ mm/damon/core.c                               | 139 +++++++++++++++---
+ mm/damon/paddr.c                              |  11 +-
+ mm/damon/sysfs.c                              |  25 ++++
+ mm/damon/tests/core-kunit.h                   |  13 +-
+ 8 files changed, 217 insertions(+), 25 deletions(-)
+
+
+base-commit: a66302e2d7c338da29ec97fd90065d1251af8c31
 -- 
 2.47.3
