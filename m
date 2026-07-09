@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32E3420E8A;
-	Thu,  9 Jul 2026 14:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A47423A72;
+	Thu,  9 Jul 2026 14:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783605969; cv=none; b=lMqu3HgcjhuXWgnLJHn5pF4IlWzMqS0Sd1AqwbXj6NnWr2sltJumiB3PkrApy+ExYfHU3IZQizyAFxCbyPAaVLsVBJIX3LDbucRKVatB+Cko2nGY+0QHcoUaZRbGNUIv6r6RilWa6M3vvc4kXnohU4WSkcWmE12i2iZgq9M65bE=
+	t=1783605969; cv=none; b=EODUDSW08Ueq1VRGE1lsC7DUS2mRBrZhlqqHkDQBqPWMbBBa66T3VPucNQhQcJ9nU36+0p0jAuIYk5uGYRO6/X+eH7v9nZd3mUlTmXoTAHt14vWPvg2Hgirn1z3MWvcvJvXO/p7beTealOpsWUR2LB7it6hqKu+kKtgixjARM0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783605969; c=relaxed/simple;
-	bh=m097nX+o3GUQ1us51vIEofHr/BQDydOSq4G5qjcxZJ8=;
+	bh=Iln9bY/XA3a6mW/Elrn3MCcKN2nyTuaiR5WxDRlyVWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CL/+15mwO1RI4qeDLM9pvDMR6vfW1v2RkgSeYiujpxm7ITkBmGFRLRdLvEjRQNsM7TzXMeKFNSdtc+f7VRsd+7aoBnPODRc/dO/XIoKvrfAQV56J6CfLg9X9B+CmfWi72Sg9jLo4CkEQ1s+SHr0MIMwPFC3EfzFTjyhfs9bvsJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a6W1hRdy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E/xuiOsroUSnDyGaFZ2lLPZYDX156JHUxruNnrFn7mEetZZVaFGQ7ohRYO7qPV2p609MFnFhoNiCQ91iRO+9tkaPWBaFQjZ5y1MqU07leBtbUNJUbePbc2lHtNvzJ32EZr7hz0wd3J8g/Lne5fTjt15XWMZ7tuIejOWHVC/IKzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksvBOlhX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a6W1hRdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32401F00A3F;
-	Thu,  9 Jul 2026 14:06:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksvBOlhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43061F00A3D;
+	Thu,  9 Jul 2026 14:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783605966;
-	bh=J7ZtSpW2RnXSKPujLfG/ONrU6HhGNSKvAXYdnpd8R5s=;
+	s=k20260515; t=1783605967;
+	bh=cwl2cglmpuAFjTMSYGCoVfFN6ks32ggZ1ukBCbftSNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a6W1hRdyqWBuDMlJyNXHSFZ+nwUAdFWZUd8a6SVHWFk5dAvmXelrl0K/7J3L4Uroi
-	 aZFvvcmjamabfjrofUoq6Y/tF1TuH6TRbaxuQnt+QtSrh5n5+frsNqhW8M7ng7Gshw
-	 RZLyoUHCqdmrcnUwDhwbneAXwOtaJYx5TrarEYkBvYWmMbFL9SKlvT/NUw6L5pbjD+
-	 46YRdelNH5WVUz6z4qQ3WcwvKhgSj4LO/zE0VFNm1ianeNXAJ5AlAczM6C+QwHHLLT
-	 zoR31M5bKPh7CBXJj1vmtznhSgx479gpRDZQ2sV+E5OiWHyYRxYK1WPkADzz10kaK1
-	 7ZlHTq/V9hTsQ==
+	b=ksvBOlhXZuYe6PcvDfA7Nh2i2MrRnI9YRQHYZScgbU9jprbbnerU3CogTOghKADMA
+	 AqWVuMMkmttEV3P5neGz/VeCsLEvQJoYI34mCiMB4Q8Kb1o/zmTFExXyc+iGBRK6Eq
+	 /7BUvKPgH1VNDMs88H3wSwyzUGYYiUG0itGUopGTpfAAiFVPhSr3BGAI7UbNGsOEXj
+	 xpD4ApvNI2vHxW1DRwYIlMd5aUXhXsO1WxaflUDULuPmMVGtFlepDC1tigck6LiehO
+	 Ro6T1BH2JL1DXbqNfsnV/5p1DWSJzn9f6RyFeH5GeqTHScw9EgdwN2kFQtBjfhYuNE
+	 AUDnv7+9IeTbg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 09/19] mm/damon/core: disallow probe_hits overflow on attrs only monitoring
-Date: Thu,  9 Jul 2026 07:05:47 -0700
-Message-ID: <20260709140600.90950-10-sj@kernel.org>
+Subject: [RFC PATCH v1.2 12/19] mm/damon/core: set samples in apply_probes() if probe weights are set
+Date: Thu,  9 Jul 2026 07:05:50 -0700
+Message-ID: <20260709140600.90950-13-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260709140600.90950-1-sj@kernel.org>
 References: <20260709140600.90950-1-sj@kernel.org>
@@ -47,55 +47,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When any damon_probe->weight is set, DAMON will do only probe
-monitoring.  probe_hits is 'unsigned char'.  It could overflow when the
-aggregation interval is larger than the sampling interval times 256.
-damon_as_probe_weights() always return false, so such overflow cannot
-happen.  Even if it happens, it only degrades the monitoring results.
-
-That said, the overflow is not intentional.  It is better to be
-prevented as long as the cost is not expensive.  Disallow the overflow
-by adding a validation logic on the core layer parameters validation
-function.
+When probe weights are set, the prepare_access_checks() ops callback is
+not invoked, so sampling addresses of regions are unset.  Ask
+apply_probes() to set those together in the case.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ mm/damon/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 7d49420ea26c4..4f1425e56950b 100644
+index e250b7080708d..f1be748e9a674 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -1332,6 +1332,19 @@ static void damos_set_filters_default_reject(struct damos *s)
- 		damos_filters_default_reject(&s->ops_filters);
- }
+@@ -3777,7 +3777,8 @@ static int kdamond_fn(void *data)
+ 		if (!access_check_disabled && ctx->ops.check_accesses)
+ 			max_nr_accesses = ctx->ops.check_accesses(ctx);
+ 		if (ctx->ops.apply_probes)
+-			ctx->ops.apply_probes(ctx, false, false);
++			ctx->ops.apply_probes(ctx, access_check_disabled,
++					false);
  
-+static bool damon_valid_probe_params(struct damon_ctx *ctx)
-+{
-+	unsigned long sample_interval;
-+
-+	if (!damon_has_probe_weights(ctx))
-+		return true;
-+
-+	sample_interval = ctx->attrs.sample_interval ? : 1;
-+	if (ctx->attrs.aggr_interval / sample_interval > U8_MAX)
-+		return false;
-+	return true;
-+}
-+
- /*
-  * damos_commit_dests() - Copy migration destinations from @src to @dst.
-  * @dst:	Destination structure to update.
-@@ -1736,6 +1749,9 @@ static int __damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
- 		}
- 	}
- 
-+	if (!damon_valid_probe_params(src))
-+		return -EINVAL;
-+
- 	err = damon_commit_schemes(dst, src);
- 	if (err)
- 		return err;
+ 		if (time_after_eq(ctx->passed_sample_intervals,
+ 					next_aggregation_sis)) {
 -- 
 2.47.3
