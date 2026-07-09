@@ -1,122 +1,193 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A8E2DB78B
-	for <damon@lists.linux.dev>; Thu,  9 Jul 2026 15:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DF836728B
+	for <damon@lists.linux.dev>; Thu,  9 Jul 2026 15:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783609425; cv=none; b=Xe6kzcDcmfalqtM95u+mi7F8tREona62eHIdbF7wYVp4ZjqpZFxwFaIepd5uA0cpyaK4ADgAhFGDyKt0teyffVFs8UQhfn3+S6x/hQWWsXn2tvimeue9PmpC31vCbo+qpDyDCk5EfDFo6OSZR0LsyKffJNFA/9N5Y8CAtj2JBDg=
+	t=1783610331; cv=none; b=Ikmft4SgC3mH4U0Q243IbeRrusslNBOvqpHaoKKoboMxOJjevewSYbE4e9MGpTjADQJ4vzOr50RsBWLsSB2oHlyBqy0oerSI6kmJbFPzhTeeAnnLfUxROv1KE0Y1VGjmk7P1Z1Jt4BRFiT7HFnN52mex9p9V8HaHw6m3r9CQsZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783609425; c=relaxed/simple;
-	bh=8399ATeaGVaF1KoMVqbyzCVQv5c3Gs4IJXUsk0Mep+M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dAm2fOAKXzc6PhBb5MRRXjp2zlflQvWxE1lXjOoboy2g2UJKtxF/dQIle1NYACjnL7zT3naR0v/PuedNcASSy0/bjjWKVAlptGSw65mTchIJ6C6IE2R/2kG1PzZglEMUk8B70KZuwwWMf4tAqR0QmlLwFMQBy3JtXHb8owps2O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eu64psNP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783610331; c=relaxed/simple;
+	bh=EmhDmZEzfDqtz+/wM5OYtSnBNKhNR5z6WmgKAnKqYZg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b6IRr/hWaJZww+koLV4wsba0EcYhIoGXliS7LHHfdt2Xql6/VHGqPxC2ZkQ6Xq3xQRIxNjCi0ngb1fCcMB08phLiXfTrJ/2Qt8f59T19jRSyjXvMbTkrzdBPxuZxKdj2gS8mbg/yO9Tvpm+ogZeOxyelSslOo1XO4YJDp+711Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=uSvqpOMo; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eu64psNP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FD71F000E9;
-	Thu,  9 Jul 2026 15:03:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783609424;
-	bh=4kOQAI9BzMR4dG2o4NKVuRI/580PFDJWCsdkV8kZT48=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eu64psNPwRXUufFJMbl2GDJKiM+tQBKOvrS8rzq1mISEiYQ/9iAdXExRYKBURPBtd
-	 XxDaSvUB+NC10yHIdBH0RRDftGeKmkv4hw9Kcaz7DkdDp+ajsYSqnypbdAxwWKzBf8
-	 HW55QZfH2HYQfvyY0Xp6u5ZUJBQ/+9L1wgZwEgvDRwBgyDHV5yIvh27HfDYCUJ8eeM
-	 hB9Gykj1JR6bnWbwZjDltjtw/lp2/un6YlcpJyubIjPR4fFlKYmKH9wWVHuOJwYc6r
-	 uwsmS77fhMe52IWw3/6ToCwP6RboneNc/dvDuu0903oh37NYo1wUQiqUOXoQIfaRq6
-	 eXjNbq4tQK4mw==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.2 15/19] mm/damon/core: implement damon_has_probe_weight()
-Date: Thu,  9 Jul 2026 08:03:34 -0700
-Message-ID: <20260709150335.97180-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260709145652.BD7CC1F000E9@smtp.kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="uSvqpOMo"
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-51c01089e8aso12004331cf.2
+        for <damon@lists.linux.dev>; Thu, 09 Jul 2026 08:18:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1783610327; x=1784215127; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=D66HPeIJnm5ZDnK+VorUOpyiniaZPeUCt2fPIKMnyb4=;
+        b=uSvqpOMofbgdRq/a0RhxSezI+9d0hrh4xRP1dXAY+GmKUHW0yjdQild8x4YHHJBm1k
+         jVVzNtkz7/htkn6SXgtS/QkgGn/Qny3KsRrx9vdGdiR7MJiEM2E01bnSMwlQ4B6g2HNa
+         0YQHPLKgfZ4laBnFG1aZur/Nu6GQL1umPB5E6UoDWXnOFeWx9hH2TU5F+Zp2HsBFikHX
+         pePgu9Ggy8eGxN+LWBUAmIb9W7yMR6C9s6YbnTO7Nx+NZg1cg7S/kYolClSngAu3l56E
+         +wXxjOdk/K/GJXDLz7VzBMfnZO+d5FmxbN2Biu6UV9SPpEyv5TgIeiZ96Nrbao/ySFM4
+         P+zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783610327; x=1784215127;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=D66HPeIJnm5ZDnK+VorUOpyiniaZPeUCt2fPIKMnyb4=;
+        b=CsmOGKYL45XPii47B1aADqAWc2wXgrI0L6XrbwypOtSeaJ44PPc8rTgg64szdJyqq+
+         MxxnTVHIQxI55hDagCTx0mS76bgwdbnOGjCddMc16cXoER8JJTkBgR6nDyft+n2UkT3w
+         HTH/zq9TQjxxaHSbMRnJ4udrkm/EGmbDKCpoU7F2KXI7jNvJxIje/VaJbLoISfPbdhS4
+         RV68jvKwwKdCJ86QD6dUGorYNDFSmxnGUbl3qRUjgaHyar7QgAfJ8rhfHITvHNzrTXtN
+         tClf3pP99WWVRE8IZqIK11wIujou6pYUbV9iLrT5PhVVM4uYJJDZU7PgFS43/ZLT4Glj
+         lT2g==
+X-Forwarded-Encrypted: i=1; AHgh+RqT7oGKDfevEyC/SINDXinXAKX/wCqR9vYACpLa6/1FhG4YKPBj0FvRRJu+/NDS5vQhx8DxmA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw9b37iTE59vYafuAJT2Kf/idDhZ0CFbBFssQoIxZEVE8Znua+r
+	esFxpaJa7a6jGK6tY2qlKdBqKfmw+SOpnZ9yjnA4O2xma+2TkWbfts+Qwj8cofkPUms=
+X-Gm-Gg: AfdE7cmWF9PBFSMinuKxyrtd/+iEl96t1QCujFBizsVFtSrQBw8xorEt7VPnSrNnCHU
+	7/O0jWGwN3+jdzuJkTt1jx9NbSM4Eymko9qvP0Ru1X0OuGm3qwRd2arh8jYbHcTqdKi9x54s0Kz
+	Fiomm7Q6Des6pshMd6O8o4UcIDDFafYXIb5gwMx8OFw4ZxOtNSyllDzS3XPbJpiLLGvR2yD04Ws
+	ZLHPo4Oatke6TxyR9QEr9iWHAsV4TRgVjZQjxkssW9lq/ksf+jSazYd/7COuDzN9+qc0YO/dIgf
+	+dF14YDbXUva2VmigTN1s7H9+KUvw9jD4q+oYtcDJsTlGkabDiwF/Qu07D+/5vzD1f40et0avmI
+	bGz4G6H79roUEyATnZe4lfs2ZiPZlE+n+dGreRF4Nz7lY7ewOJzLUrx/BdxzoSRsQbZYnqwk8ul
+	ZM7XCkVWwF4h47Xes6YL2dsTVBUv/zS8p1a9SLhRbD2sn5xtYE40sIy0+akfnXc9Tgwo4WUr4LU
+	GIMAp4=
+X-Received: by 2002:ac8:5cd4:0:b0:51c:1c2c:a8c9 with SMTP id d75a77b69052e-51c8b3e2e32mr79753441cf.43.1783610327278;
+        Thu, 09 Jul 2026 08:18:47 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51c41db4fb5sm158006781cf.25.2026.07.09.08.18.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jul 2026 08:18:45 -0700 (PDT)
+Date: Thu, 9 Jul 2026 11:18:40 -0400
+From: Gregory Price <gourry@gourry.net>
+To: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	Simon Schuster <schuster.simon@siemens-energy.com>,
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
+	Helge Deller <deller@gmx.de>, Jarkko Sakkinen <jarkko@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	Ian Abbott <abbotti@mev.co.uk>,
+	H Hartley Sweeten <hsweeten@visionengravers.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Christian Koenig <christian.koenig@amd.com>,
+	Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Dan Williams <djbw@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Liam R . Howlett" <liam@infradead.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>, Hugh Dickins <hughd@google.com>,
+	Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org,
+	linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+	kvm@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+	nvdimm@lists.linux.dev, linux-mm@kvack.org, iommu@lists.linux.dev,
+	linux-perf-users@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com,
+	damon@lists.linux.dev, Pedro Falcato <pfalcato@suse.de>,
+	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 13/30] mm/vma: refactor vmg_adjust_set_range() for clarity
+Message-ID: <ak-70CHGujkI5jJI@gourry-fedora-PF4VCD3F>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
 
-On Thu, 09 Jul 2026 14:56:52 +0000 sashiko-bot@kernel.org wrote:
+On Mon, Jun 29, 2026 at 01:23:24PM +0100, Lorenzo Stoakes wrote:
+> Add comments with ASCII diagrams to describe what we're doing, avoid
+> dubious use of PHYS_PFN(), and use vma_start_pgoff().
+> 
+> The most complicated scenario represented here is vmg->__adjust_next_start
+> - when this is set, vmg->[start, end] actually indicate the range to be
+> retained, so take special care to describe this accurately.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Enabling probe weights for DAMON operations that do not implement `apply_probes` (e.g., VADDR and FVADDR) silently disables memory monitoring and region aggregation.
-> --
-> 
-> --- Patch [15]: [RFC PATCH v1.2 15/19] mm/damon/core: implement damon_has_probe_weight() ---
-> commit 13bb6c9724d49615512e0e4f353c5d02210d2c11
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: implement damon_has_probe_weight()
-> 
-> This commit completes the implementation of damon_has_probe_weights()
-> to return true if any probe has a non-zero weight. This allows DAMON
-> to detect probe weights and use them for monitoring.
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 12c66edecd783..6661d4bfab5b9 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -211,6 +211,12 @@ static struct damon_probe *damon_nth_probe(int n, struct damon_ctx *ctx)
-> >  
-> >  static bool damon_has_probe_weights(struct damon_ctx *c)
-> >  {
-> > +	struct damon_probe *p;
-> > +
-> > +	damon_for_each_probe(p, c) {
-> > +		if (p->weight)
-> > +			return true;
-> > +	}
-> 
-> [Severity: High]
-> Does this silently break monitoring for operation sets that do not implement
-> apply_probes?
-> 
-> When this function returns true, access_check_disabled evaluates to true in
-> kdamond_fn():
-> 
-> mm/damon/core.c:kdamond_fn() {
->     ...
->     bool access_check_disabled = damon_has_probe_weights(ctx);
->     ...
->     if (!access_check_disabled && ctx->ops.prepare_access_checks)
->         ctx->ops.prepare_access_checks(ctx);
->     ...
->     if (!access_check_disabled && ctx->ops.check_accesses)
->         max_merge_score = ctx->ops.check_accesses(ctx);
-> 
->     if (ctx->ops.apply_probes) {
->         ...
->     }
->     ...
-> }
-> 
-> If a user configures probe weights for operation sets that lack apply_probes,
-> all access checks are skipped. Since apply_probes is NULL, no memory access
-> information is gathered at all. This causes regions to endlessly report 0
-> accesses and incorrectly merge up to the maximum limit.
-> 
-> Should __damon_commit_ctx() or damon_valid_probe_params() validate that
-> ctx->ops.apply_probes is non-NULL when probe weights are used, returning
-> -EINVAL to prevent this failure?
+Reviewed-by: Gregory Price <gourry@gourry.net>
 
-This is an intentional design.  Users should correctly set DAMON.
+> +		/*
+> +		 * vmg->start    vmg->end
+> +		 * |             |
+> +		 * v    merge    v
+> +		 * <------------->
+> +		 *         delta
+> +		 *        <------>
+> +		 * |------|----------------|
+> +		 * | prev |    middle      |
+> +		 * |------|----------------|
+> +		 *        ^
+> +		 *        |
+> +		 *        middle->vm_start
+> +		 */
 
-> 
-> >  	return false;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260709140600.90950-1-sj@kernel.org?part=15
+Even with these diagrams, it's a bit difficult to understand what the
+actual intent/result of this chunk is (but that may be a limitation of
+me not spending enough time reading the surrounding code, not a comment
+of your work here).
 
+~Gregory
 
-Thanks,
-SJ
+> +		/*
+> +		 *                Originally:
+> +		 *
+> +		 *            vmg->start   vmg->end
+> +		 *            |            |
+> +		 *            v    merge   v
+> +		 *            <------------>
+> +		 *            .            .
+> +		 * merge_existing_range() updates to:
+> +		 *            .            .
+> +		 * vmg->start vmg->end     .
+> +		 * |          |            .
+> +		 * v  retain  v            .
+> +		 * <---------->            .
+> +		 *             delta       .
+> +		 *            <----->      .
+> +		 * |----------------|------|
+> +		 * |    middle      | next |
+> +		 * |----------------|------|
+> +		 *                  ^
+> +		 *                  |
+> +		 *                  next->vm_start
+> +		 */
