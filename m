@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DA533A9DA
-	for <damon@lists.linux.dev>; Thu,  9 Jul 2026 14:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B826336AB53
+	for <damon@lists.linux.dev>; Thu,  9 Jul 2026 14:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783607537; cv=none; b=Q/1WqEj/+IEs8ngKZgswwYik9sPpXyaKDQ9UpLmlFwIRWtCCiTZqe8KQ4p9kJGb1a4GSeLyOPqTqkS3XGATD0Ah75hgdcJlUT2LSD+V/JtaEs5BJv2+OnOoTE7VmKrt7GTzECHGObHzFDD+bgap9MnR2lOmW8EjNMPYA0cplLl0=
+	t=1783607813; cv=none; b=oUBjdhgziSmXPkbjpZv97mxIIsktfakxV1k/Vl/PW5F6tIBiNSxQIigOQVY96Zb9T+zvWqSu/eZ8Nt4SOyvoKdKNFvSZC4lIKPdFXUlaXNfVw991Qlnix/84D2AqMPvxWEJFzV2J6rDqOZGPrRFfnc1f6+SFi5yIrPpRV97xHo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783607537; c=relaxed/simple;
-	bh=ttOf38l381BqEYbYmoetoiq9QcxQYKozxSaU7fOoRQM=;
+	s=arc-20240116; t=1783607813; c=relaxed/simple;
+	bh=I2L87LtKBCV9Cs9t8QCaWB9nvzcwsH0ARu57bykfBps=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=tio00pk/EvFMyRzZctn8atAiwEfhVugpBxAdXAsuUNKjnTt7BBhj7th7HSzAySa7FFfQ5R76bgnkhS09YFeu2z4fAbTns/NLHmiSNMNpSc6OTL4IxSG6sCeiKynFpl8/jI9RcCYLD31bClMWxKng5W8jChwKD6ApdftwlMGg8lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NBVNt4QX; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=lG5HLURcCzZy80inH8ruHeQ07qstQ5U2wetqCR2bOBZxUOlRRMRDhU0GKINgme7mpjHiEGxS62iKjdhMUlWB5JaQ/l0feXn1cpkOpCpx0gOOZ2t7F3Xy4374r5wCH1wItOfcQeFvTX982oBfMxdK98FuSrBt9+QHX83WzJ7LaBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=luJzDDIw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NBVNt4QX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DF61F000E9;
-	Thu,  9 Jul 2026 14:32:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="luJzDDIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8E61F00A3A;
+	Thu,  9 Jul 2026 14:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783607536;
-	bh=bvV69kJ6/MvZKjLMig0Z0UiRD7JmXn+pF1TRpr1LNEY=;
+	s=k20260515; t=1783607812;
+	bh=c5y5smXTlh7uS+Ox6T4ERI4eek1d9/DNT5CLdyt3ahE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=NBVNt4QXSOVMn1AiUbeybfErmVSI7kZ0tFhL5ZP+8m/thNQrBtTCbrFK9stfzj3Uy
-	 q8kdufuZACkHjVfd+qMmC1NiaQMXIG53UVTSoq/hu1S7GqSjXAOa8v8hkrP9pdTFck
-	 Hsirsh6Fzjcvg0uOjSGL5DPXLkwIq4/gk7vlKAx2rxnvQKzsBhqqNpo1PMYxWyUCBT
-	 imUncpTGgakndbrVgHtjmpT8mc6PeFAckM2DzioygbLT/n5D1XAetwu9N57KHpgYUT
-	 2yKl0YWzRpY1QZ//t0rL2RZfsmrlmxlkziQtQLERZmH355tvgYee+VCqQb7ptfLdAJ
-	 LXzzD2X9F44xA==
+	b=luJzDDIwdKMXJ26hiubgxHX9KMmoU1LhvdtFnteKY4u9IgvcKDvHVYvlidNsdB/bp
+	 4cKkGskblL6dQFhPD89Z0be8HMwSwdPXPXrMJqxhGzBHcwkvjybZCQlzh6WNSTJvUL
+	 M2lwHU3VnYxv91wMI9kxyLoD8aYfnC/QYPRtN9PQU5CecE1coJXFAgScuSE4ef/oqu
+	 VYmybTlqcLRe05KJiHCDsWyhc5Rwv4tmLnZ2Gv7D4icLpTpNC5Lu2ZAaqeeC6H87Cj
+	 94U5PkJ6nKAgmfcij1MrchSxUk4O0GToHnETOTkK9TKXZ08++ZXXUQlruZBOuO/TuD
+	 ubxhWJ4u6A2qQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.2 08/19] mm/damon/core: extend merge function to
- work with probe hits
+Subject: Re: [RFC PATCH v1.2 10/19] mm/damon/core: validate params for probe
+ hits weighted sum overflow
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260709140600.90950-9-sj@kernel.org>
+In-Reply-To: <20260709140600.90950-11-sj@kernel.org>
 References: <20260709140600.90950-1-sj@kernel.org>
- <20260709140600.90950-9-sj@kernel.org>
+ <20260709140600.90950-11-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 09 Jul 2026 14:32:15 +0000
-Message-Id: <20260709143216.39DF61F000E9@smtp.kernel.org>
+Date: Thu, 09 Jul 2026 14:36:51 +0000
+Message-Id: <20260709143652.6A8E61F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,103 +47,50 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] Region `age` is incorrectly updated multiple times per aggregation=
- interval and evaluated against a stale `last_score` when the `kdamond_merg=
-e_regions` retry loop is triggered.
+- [Low] Spelling mistake in comment.
 --
 
---- Patch [8]: [RFC PATCH v1.2 08/19] mm/damon/core: extend merge function =
-to work with probe hits ---
-commit 938ea22fc6c1fec3c909339503398aa70ea047c8
+--- Patch [10]: [RFC PATCH v1.2 10/19] mm/damon/core: validate params for p=
+robe hits weighted sum overflow ---
+commit 3e76c3dde55500288f3eccb730acd26964bfdad2
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: extend merge function to work with probe hits
+mm/damon/core: validate params for probe hits weighted sum overflow
 
-When probe weights are set, users may want DAMON monitoring results to
-be optimized for the weights.  For that, regions adjustment should work
-for the weighted sum of probe hits.  Extend damon_merge_regions_of() to
-detect if the weights are set, and work with probe hits in the case.
+This commit adds parameter validation to prevent probe hits weighted sum
+overflow. It ensures that the combination of probe weights and aggregation
+intervals does not exceed the maximum allowed values.
 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 4f1425e56950b..b585e4bf035f1 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-
 [ ... ]
-
-> @@ -3256,24 +3271,38 @@ static void damon_merge_regions_of(struct damon_t=
-arget *t, unsigned int thres,
-> -				   unsigned long sz_limit)
-> +		unsigned long sz_limit, struct damon_ctx *ctx)
->  {
->  	struct damon_region *r, *prev =3D NULL, *next;
-> +	bool use_probe_hits =3D damon_has_probe_weights(ctx);
-> =20
->  	damon_for_each_region_safe(r, next, t) {
-> -		if (abs_diff(r->nr_accesses, r->last_nr_accesses) > thres)
-> +		unsigned int score, last_score, diff;
+> @@ -1342,6 +1345,18 @@ static bool damon_valid_probe_params(struct damon_=
+ctx *ctx)
+>  	sample_interval =3D ctx->attrs.sample_interval ? : 1;
+>  	if (ctx->attrs.aggr_interval / sample_interval > U8_MAX)
+>  		return false;
 > +
-> +		score =3D damon_merge_score(r, false, ctx, use_probe_hits);
-> +		last_score =3D damon_merge_score(r, true, ctx, use_probe_hits);
-> +
-> +		if (abs_diff(score, last_score) > thres)
->  			r->age =3D 0;
-> -		else if ((r->nr_accesses =3D=3D 0) !=3D (r->last_nr_accesses =3D=3D 0))
-> +		else if ((score =3D=3D 0) !=3D (last_score =3D=3D 0))
->  			r->age =3D 0;
->  		else
->  			r->age++;
+> +	/* invlaid if probe hits weighted sum can overflow */
 
-[Severity: High]
-This is a pre-existing issue, but does this logic in damon_merge_regions_of=
-()
-incorrectly increment or reset r->age multiple times per aggregation interv=
-al?
+[Severity: Low]
+This isn't a bug, but there is a typo in this comment ("invlaid" instead of
+"invalid").
 
-When the number of regions exceeds max_nr_regions, kdamond_merge_regions()=
-=20
-repeatedly calls damon_merge_regions_of() with doubled thresholds. During=20
-these retries, r->age is incremented multiple times within a single=20
-aggregation interval.
-
-Furthermore, because damon_merge_two_regions() updates the current=20
-nr_accesses and probe_hits but fails to merge their historical counterparts=
-=20
-(last_nr_accesses and last_probe_hits), these values become stale.
-
-On subsequent iterations of the retry loop, damon_merge_score() computes=20
-last_score using these stale unmerged values. This can cause=20
-abs_diff(score, last_score) to spuriously exceed the threshold, resetting=20
-r->age to 0 inappropriately.
-
-Could this cause DAMOS age-based schemes to trigger prematurely or fail to=
-=20
-trigger entirely?
-
-> -		if (prev && prev->ar.end =3D=3D r->ar.start &&
-> -		    abs_diff(prev->nr_accesses, r->nr_accesses) <=3D thres &&
-> -		    damon_sz_region(prev) + damon_sz_region(r) <=3D sz_limit)
-> -			damon_merge_two_regions(t, prev, r);
-> -		else
-> -			prev =3D r;
-> +		if (!prev)
-> +			goto set_prev_continue;
-> +		if (prev->ar.end !=3D r->ar.start)
-> +			goto set_prev_continue;
-> +		diff =3D abs_diff(score, damon_merge_score(prev, false, ctx,
-> +					use_probe_hits));
-> +		if (diff > thres)
-> +			goto set_prev_continue;
-> +		if (damon_sz_region(prev) + damon_sz_region(r) > sz_limit)
-> +			goto set_prev_continue;
-> +		damon_merge_two_regions(t, prev, r);
-> +		continue;
-> +set_prev_continue:
-> +		prev =3D r;
->  	}
+> +	max_probe_hits =3D damon_nr_samples_per_aggr(&ctx->attrs);
+> +	wsum =3D 0;
+> +	damon_for_each_probe(probe, ctx) {
+> +		if (probe->weight > UINT_MAX / max_probe_hits)
+> +			return false;
+> +		wsum_to_add =3D probe->weight * max_probe_hits;
+> +		if (UINT_MAX - wsum < wsum_to_add)
+> +			return false;
+> +		wsum +=3D wsum_to_add;
+> +	}
+>  	return true;
 >  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260709140600.9095=
-0-1-sj@kernel.org?part=3D8
+0-1-sj@kernel.org?part=3D10
