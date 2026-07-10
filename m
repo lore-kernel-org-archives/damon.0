@@ -1,19 +1,20 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA561A6838
-	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 04:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D9229994B
+	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 04:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783658883; cv=none; b=kyLeEKbcxvYPztJJxPqiqKzjt0EQytWQWFCCp+8ptr1LyJkZ55MZTxWvLDZ9jMoRWZd8XSr9OfZKTD5trKESx8qYDULCkvvds1hEfZYYw/LEfc1cqH3zeRuPczvJIvESuqZBCgHkTUH4QLAuCE9lgOgwn8iSH6bah46P8a8Ttuk=
+	t=1783658885; cv=none; b=Ltee2HxaPCO8faCP0Hv426ncdrY6EtLe4S81RdDD6RcvFS5Ak4UbruD0eIfora/PZcfKKE4pY8+UU2caFbH3AZgQlXnblqSheoJ38Oqpixv6iE2oql+8Tz1NjoXAeN/XfCuLA0UG6MQk0C3iL1P+9l3YyjpVM3DJRgstxQ7DiAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783658883; c=relaxed/simple;
-	bh=QaVP8fD+r9R0zJ3idyzroeT11942kGUM4HCEnXYbD3Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ecT3du0nh5thUxQ24Suya9Rmi6u3sf/l04wLItMfdRUAUdmsCVXfXUxhW73ZHFli7Kz6FHuzH7fw8vmgok8F61fpv69QiIQsNlH81tFAzl5DWtuAFUcXRJDMUez2cbGUyZtz7vxotdi9QkxTtR+BrVq3uvecCy5f+NGHGmb8RfM=
+	s=arc-20240116; t=1783658885; c=relaxed/simple;
+	bh=5C5GTG7c+Uy05ZHxhziOxWTUA/qRLmUnU8IWy7/whu0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=riXkLOMJIvS1P005rrOothmCMxSZ+piap3EwNTQbNArEjmH7AHt+42wvDPq6wbv7F6t4fTh/YXu3SPa4be4mYeiGXBsho6d5aoFELOpGXVMP/60Wlz0wiaEFgUC29pi1S7sGi20sX8knWzTlnzNSnrgSPo6MoTQC8qXoQICZAPY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 821619247c1a11f1aa26b74ffac11d73-20260710
+X-UUID: 845d487e7c1a11f1aa26b74ffac11d73-20260710
 X-CTIC-Tags:
 	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
 	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
@@ -24,38 +25,41 @@ X-CTIC-Tags:
 	CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU
 	AMN_GOOD, ABX_MISS_RDNS
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:98e98a50-95fb-4d0e-9d68-570f4c1ef2ef,IP:20,
-	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:45
-X-CID-INFO: VERSION:1.3.12,REQID:98e98a50-95fb-4d0e-9d68-570f4c1ef2ef,IP:20,UR
-	L:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:45
-X-CID-META: VersionHash:e7bac3a,CLOUDID:261bab691877bae7105c0796ae33e56f,BulkI
-	D:260710124754QEEL9PD6,BulkQuantity:0,Recheck:0,SF:17|19|66|78|102|127|136
-	|865|898,TC:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil
-	,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:
-	0,ARC:0
+X-CID-O-INFO: VERSION:1.3.12,REQID:9e76af51-41de-4cfc-aed2-34454bb41822,IP:20,
+	URL:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACT
+	ION:release,TS:20
+X-CID-INFO: VERSION:1.3.12,REQID:9e76af51-41de-4cfc-aed2-34454bb41822,IP:20,UR
+	L:0,TC:0,Content:-25,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:20
+X-CID-META: VersionHash:e7bac3a,CLOUDID:819c28c2fb3c78a1d9ad3cdf9a1536f3,BulkI
+	D:260710124757WD3NRJHV,BulkQuantity:0,Recheck:0,SF:17|19|66|78|81|82|102|1
+	27|865|898,TC:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:n
+	il,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BR
+	E:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 821619247c1a11f1aa26b74ffac11d73-20260710
+X-UUID: 845d487e7c1a11f1aa26b74ffac11d73-20260710
 X-User: husong@kylinos.cn
 Received: from ctao-book.. [(223.70.159.239)] by mailgw.kylinos.cn
 	(envelope-from <husong@kylinos.cn>)
 	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1294044832; Fri, 10 Jul 2026 12:47:51 +0800
+	with ESMTP id 1617764414; Fri, 10 Jul 2026 12:47:55 +0800
 From: Song Hu <husong@kylinos.cn>
 To: sj@kernel.org
 Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org,
-	Song Hu <husong@kylinos.cn>
-Subject: [PATCH 0/4] Docs/ABI/damon: sysfs ABI document fixes and additions
-Date: Fri, 10 Jul 2026 12:47:33 +0800
-Message-ID: <20260710044737.561102-1-husong@kylinos.cn>
+	Song Hu <husong@kylinos.cn>,
+	stable@vger.kernel.org
+Subject: [PATCH 1/4] Docs/ABI/damon: fix typo in intervals_goal sysfs path
+Date: Fri, 10 Jul 2026 12:47:34 +0800
+Message-ID: <20260710044737.561102-2-husong@kylinos.cn>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260710044737.561102-1-husong@kylinos.cn>
+References: <20260710044737.561102-1-husong@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -64,29 +68,57 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series fixes typos and fills in missing entries in the DAMON
-sysfs ABI document (Documentation/ABI/testing/sysfs-kernel-mm-damon).
+The ABI document spells the DAMON sysfs directory as "intrvals_goal"
+(missing 'e') in four What: entries, but the kernel creates it as
+"intervals_goal" (mm/damon/sysfs.c).  Following the documented path
+therefore yields a non-existent directory.
 
-Patch 1 fixes a path typo, "intrvals_goal" -> "intervals_goal", in
-four What: entries; the documented path points to a non-existent
-directory, so it is Cc'ed to stable.
+Fixes: e2b23dc62369 ("Docs/ABI/damon: document intervals auto-tuning ABI")
+Cc: stable@vger.kernel.org
+Signed-off-by: Song Hu <husong@kylinos.cn>
+---
+ Documentation/ABI/testing/sysfs-kernel-mm-damon | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Patch 2 fixes two further typos ("WDate:", "manimum").
-
-Patches 3 and 4 add ABI entries that exist in the kernel and are
-already described in usage.rst but are missing from the canonical ABI
-document: the 'update_tuned_intervals' state command (patch 3) and the
-'tried_regions/<R>/probes/<P>/hits' file (patch 4).
-
-Song Hu (4):
-  Docs/ABI/damon: fix typo in intervals_goal sysfs path
-  Docs/ABI/damon: fix typos
-  Docs/ABI/damon: document update_tuned_intervals state command
-  Docs/ABI/damon: document tried_regions probe hits
-
- .../ABI/testing/sysfs-kernel-mm-damon         | 29 ++++++++++++++-----
- 1 file changed, 22 insertions(+), 7 deletions(-)
-
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index dd6b5bd76e11..885409a26786 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -112,7 +112,7 @@ Description:	Writing a value to this file sets the update interval of the
+ 		DAMON context in microseconds as the value.  Reading this file
+ 		returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/access_bp
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/access_bp
+ Date:		Feb 2025
+ Contact:	SJ Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the monitoring intervals
+@@ -120,7 +120,7 @@ Description:	Writing a value to this file sets the monitoring intervals
+ 		the given time interval (aggrs in same directory), in bp
+ 		(1/10,000).  Reading this file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/aggrs
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/aggrs
+ Date:		Feb 2025
+ Contact:	SJ Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the time interval to achieve
+@@ -128,14 +128,14 @@ Description:	Writing a value to this file sets the time interval to achieve
+ 		access events ratio (access_bp in same directory) within.
+ 		Reading this file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/min_sample_us
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/min_sample_us
+ Date:		Feb 2025
+ Contact:	SJ Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the minimum value of
+ 		auto-tuned sampling interval in microseconds.  Reading this
+ 		file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/max_sample_us
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/max_sample_us
+ Date:		Feb 2025
+ Contact:	SJ Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the maximum value of
 -- 
 2.43.0
 
