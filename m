@@ -1,103 +1,132 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09933749E5
-	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 04:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B6D377544;
+	Fri, 10 Jul 2026 13:39:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783658889; cv=none; b=f9i3pipDMTlR8Ex8Zy2ddBOpGHj3ECPku2hFwIlhGcpMDprJW0vSlIJd19haNJwjVjfa3qOTV34L/0n7dP2aRyC1oEAQZnIAxMVs1k4zc8JvdgeNgNF16OGkuP7wnpOX2STlslPP1GJhYP5NfD1rI2QF1guna/MtzdjbUFBPexo=
+	t=1783690767; cv=none; b=q4Sd47eeuC/Pr9rX0DQfdHOq+ljWD1gAYy3StiL2oSaEOSaYd1STgDJohmyWs/BC6rUIYJA3XBkKEl+ntCDuB0bn8l90aJL9lK+xnmAdAoLxCIlCIiHJtdpXhe0Ow1IziWtxrtfTn+kBY6j2Zl4ytPkhl/UxE3GXduUcUb7YU4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783658889; c=relaxed/simple;
-	bh=3UdBQkwUn1pkptl/X3w9sM6Chvgd3Qtzq2HIHXHh4Bg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRQXQmoUCg0BIDNgCrhTC0cV8IOvYB2ZB9QgiMZlz6WQUEdHa054WXxucdHC35uWdx4P2BzFiqwlBhxTzW6V7D9Nv/Ys0/rE9cX0R8CgTtH3BTiMP30l7CGiXOHOgape8l9Ks32bVyynvf8GPQXxd/RmnhyP2EGyvxIX/jq9h+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 888efaa07c1a11f1aa26b74ffac11d73-20260710
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
-	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
-	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
-	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
-	HR_TO_NO_NAME, IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_EXISTED
-	SN_UNTRUSTED, SN_UNFAMILIAR, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS
-	CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU
-	AMN_GOOD, ABX_MISS_RDNS
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:df2420dc-be79-4755-81c6-07fe9a878936,IP:20,
-	URL:0,TC:0,Content:-5,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:40
-X-CID-INFO: VERSION:1.3.12,REQID:df2420dc-be79-4755-81c6-07fe9a878936,IP:20,UR
-	L:0,TC:0,Content:-5,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:40
-X-CID-META: VersionHash:e7bac3a,CLOUDID:6ab51f0f0179adbd7711d247bca93c74,BulkI
-	D:260710124803J08ENMYM,BulkQuantity:0,Recheck:0,SF:17|19|66|78|81|82|102|1
-	27|136|865|898,TC:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bu
-	lk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:
-	0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 888efaa07c1a11f1aa26b74ffac11d73-20260710
-X-User: husong@kylinos.cn
-Received: from ctao-book.. [(223.70.159.239)] by mailgw.kylinos.cn
-	(envelope-from <husong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 2000734830; Fri, 10 Jul 2026 12:48:02 +0800
-From: Song Hu <husong@kylinos.cn>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	Song Hu <husong@kylinos.cn>
-Subject: [PATCH 4/4] Docs/ABI/damon: document tried_regions probe hits
-Date: Fri, 10 Jul 2026 12:47:37 +0800
-Message-ID: <20260710044737.561102-5-husong@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260710044737.561102-1-husong@kylinos.cn>
-References: <20260710044737.561102-1-husong@kylinos.cn>
+	s=arc-20240116; t=1783690767; c=relaxed/simple;
+	bh=1zOgBPuUrXPvOJucK7GyHI1L3i2YRBy6YlCIQgSIRNM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uCCCam7JJ+bGLls+yV+6sAzqo+QGyEBBt5ltXIDLZCPAIXGa6TP+wguwbhEQ3fsZq8/319Hgp5pkBF/opR2ou+foI1Mph94u6D91xhLpeOoynPWrdTozYYh2E5C/BZaB7Nwu1YgTZ7JgPh5BOsFiDJ43Zc8XAsGXumIWeXU2nWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fydQPaDx; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fydQPaDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F051F000E9;
+	Fri, 10 Jul 2026 13:39:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783690762;
+	bh=hWe5y0XfVr4QQQGo0kaEF8UGbBWB4HZz8UbrXKM7Z28=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fydQPaDxS/hHGLVdvf977qUXBNSF6t19lqQW/RqVTS+Xk5pgKo0deA+cWIFhyYRvv
+	 IeSezmg4COMZrohE1QJ6gnvclo/bOnA8j2IrdEmxinGMPa0Cv9pB6NQzVtyWt96x//
+	 6dNWU5GX7waS+2jwE8BVZ3WNZw/wsfy0C0SSKxIKb3QlnIRCNzHVm3c5Ps0q8mrTgW
+	 zsWArKYrCmnfDcrebwcipzmYNQ0mhqZJQQZSGHykLDKtejNlCDmPcno/dc/3rjzGeu
+	 kuxVdLjqHCE3kyZgIMxt9Re36Qo0mzOOVMmO0ZdfPfAx62l26oANlEaaJo1XHJjjzR
+	 MdqLjT6QyxJDg==
+Date: Fri, 10 Jul 2026 14:38:58 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	Suren Baghdasaryan <surenb@google.com>, "Liam R . Howlett" <liam@infradead.org>, 
+	Matthew Wilcox <willy@infradead.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Arnaldo Carvalho de Melo <acme@kernel.org>, 
+	Namhyung Kim <namhyung@kernel.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Oleg Nesterov <oleg@redhat.com>, Steven Rostedt <rostedt@goodmis.org>, 
+	SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Pedro Falcato <pfalcato@suse.de>, Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, 
+	Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 02/30] mm: add kdoc comments for vma_start/last_pgoff()
+Message-ID: <alD1h7kHZdX_0I-0@lucifer>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <8c618dfd7de419e3b797b8bd1cd921d4c5b8878b.1782735110.git.ljs@kernel.org>
+ <03762de9-c695-4cdd-8c25-4fc31335ea15@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <03762de9-c695-4cdd-8c25-4fc31335ea15@kernel.org>
 
-The 'tried_regions/<R>/probes/<P>/hits' file, added in commit
-5b0de1bc3325 ("mm/damon/sysfs-schemes: implement probe/hits file"),
-is described in usage.rst but missing from the canonical ABI document.
+On Tue, Jul 07, 2026 at 04:46:13PM +0200, David Hildenbrand (Arm) wrote:
+> On 6/29/26 14:23, Lorenzo Stoakes wrote:
+> > Describe what vma_start_pgoff() and vma_last_pgoff() actually provide in
+> > detail.
+> >
+> > This is in order that we can differentiate this between functions that will
+> > be added in a subsequent patch which provide a different page offset.
+> >
+> > No functional change intended.
+> >
+> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> > ---
+> >  include/linux/mm.h | 26 ++++++++++++++++++++++++++
+> >  1 file changed, 26 insertions(+)
+> >
+> > diff --git a/include/linux/mm.h b/include/linux/mm.h
+> > index 059144435729..2f00c75e66bd 100644
+> > --- a/include/linux/mm.h
+> > +++ b/include/linux/mm.h
+> > @@ -4278,11 +4278,37 @@ static inline unsigned long vma_pages(const struct vm_area_struct *vma)
+> >  	return (vma->vm_end - vma->vm_start) >> PAGE_SHIFT;
+> >  }
+> >
+> > +/**
+> > + * vma_start_pgoff() - Get the page offset of the start of @vma
+> > + * @vma: The VMA whose page offset is required.
+> > + *
+> > + * If the VMA is file-backed, this is the page offset into the file.
+> > + *
+> > + * If the VMA is anonymous, this is the virtual page offset of the start of the
+> > + * VMA - if unfaulted, then vma->vm_start >> PAGE_SHIFT, if faulted then the
+> > + * virtual page offset at the time of first fault.
+> > + *
+> > + * Note that if @vma is a MAP_PRIVATE file-backed mapping, then this returns the
+> > + * file offset.
+>
+> There is the ugly case of @vma being a MAP_PRIVATE PFNMAP mapping, where it
+> returns something different.
 
-Document the 'probes/' directory and the 'probes/<P>/hits' file.
+Yup, the pfn  I will update doc to mention this abomination too.
 
-Signed-off-by: Song Hu <husong@kylinos.cn>
----
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+The virt pgoff stuff in the RFC fixes this also.
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 7e8192527191..e8645f987fc3 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -644,3 +644,15 @@ Contact:	SJ Park <sj@kernel.org>
- Description:	Reading this file returns the size of the memory in the region
- 		that passed DAMON operations layer-handled filters of the
- 		scheme in bytes.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/<R>/probes/
-+Date:		May 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Directory for DAMON data-attribute monitoring probes of the
-+		region.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/<R>/probes/<P>/hits
-+Date:		May 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Reading this file returns the number of data-attribute
-+		monitoring probe-hit positive samples of the region.
--- 
-2.43.0
+>
+> (remap_pfn_range_prepare_vma() -> vma->vm_pgoff set to PFN)
+>
+> --
+> Cheers,
+>
+> David
 
+Cheers, Lorenzo
