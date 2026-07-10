@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F792C2EA
-	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 01:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E8E6FC3
+	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 01:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783645298; cv=none; b=Ee78FvRf39HGpaZ56ElfGt3a2KtoTr0X/TgnTSsRtvwwirths2pSjbA83kbvyDGVOWm9jOHz0aPXMkC0arnhFaDKypy8tvNxCONjKQ+4knKdpEtx9JasbyepOnIAiVUOvranr2hQid6lQJi3mOTRK2CjGZB1vqd1rI0N64d6xqU=
+	t=1783645372; cv=none; b=ar9rHqum7e4VQeYLYLoUJxPmbrXUVb12Cck5mYHBQTq3OVS7jXdHG7G/cWYtDA+KXD5E3nhUrjZ98xfW662CC6f6xl/wKEpCGSpi9DT3lHNpJFraUxqKkEYp8TmJ12H0Tv7qmTs7pA5yM1+NYYX9d1wB2Wjc5G4EWm4Vomuv5UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783645298; c=relaxed/simple;
-	bh=aRWQNRCzrbuvnrZB+pbBRqeE0Du67jgbbvxR/5jvaRQ=;
+	s=arc-20240116; t=1783645372; c=relaxed/simple;
+	bh=RU4VDBjC2aLUn+fHKsjhW2sLkAYybz9YtaJsN6jF3Hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MrpnrXLIB/XPx4t5jge+Jg13fskjPvB2BgE2kj/0NLJoB8aFnJiX3QIoO3xvdU2MY4OzwMBXQM5KZ/oriHQKEa/MDYQADk9mj4pecM8PXFALmW9+12nDkgaKe0qPMfoQi0/c80jr5ps3BgxxKdCVnhGhO8w+0TLczUP9KXgd1wI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kr+H7wkX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hVxhoeUFb3AV+xc/4oFan6vi1lno9kJz5dUmnVVnwrh3eBXvA7+WTQjzHY0KzdMqTsbX2IttYR6W/DrJ+7vqfTz51z122cVinim9J/B6NZUMI7e9eTXbp/6+te+MLXNBXY5kRFYmDIM2ZPiRrYWZb6KNOgvDnuz6SVenW8rmqG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q2ZvmJo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kr+H7wkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06DD1F000E9;
-	Fri, 10 Jul 2026 01:01:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q2ZvmJo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AAC1F000E9;
+	Fri, 10 Jul 2026 01:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783645297;
-	bh=kMBywnre75w713QUtP90+zygurw0d2d7jl2XzuKs2rM=;
+	s=k20260515; t=1783645371;
+	bh=Bd9fK0mUCPAnSfJwbbeTuq2eaGz6dy3jAjapAQydy8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kr+H7wkXG1OCWDPaHA/yfNxtP2r4pxdIZSpP6V245u2fAqC4M8Sp/W6PiyEFT2Ysw
-	 fm1b5tHW6/PcMlnuloESunVPpVV58W3k9S6EbaGI77LJmZxoQV/Y5BtLwyMf8du1/C
-	 bOquG2+5PfFydehdA/nDHbkTco8maWjycSQecfIBJQkflqFrp6yT9uXisKKGfsnLjF
-	 Vz9BYolvj6hpqwk8qwv+RCvk6e8KwqhZfpT20NGkffNq8F9Vk5aUZQcw4WfDXaRyYE
-	 HWej6abug+zu3qb+GKjTKIWbs4vQ3cjFJPHhz71Sd8Yonapo91yIkzqB4N6EgsWd3Q
-	 BNIpgUlhOo16Q==
+	b=Q2ZvmJo+vc/DeohAjldqxBJ63zPEchKzOsOTe+JvFUeie5tZkVT+7luMC2YWvczbX
+	 5zqCbPR/23MwxhzSxgff0z8+CIjWqpbm5uDb4dxfxh5Ia0Uwr3Xicsp4sdB3ID9Nfi
+	 UwoFBTSj3yqpBrOF99dT6Af+KOMv2l+zOOoOImTqJ6p/3koFdd+Ss9VgWpUPdYxLzI
+	 Vcnnzqa+FeCXR6Waj5ChIkBu3xLQLe6ZFP+YO1lr25FQa9bkgOWJVUiEGTzcPRbI4S
+	 laonvNPUaMeeSlK+z2zXbGadNiNwJXF4YNRbTGiMWJ53nCgHLVIjsNwlT6oefdsRVG
+	 NptbZ1cMIoxeA==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.3 02/19] mm/damon/core: ask apply_probes() ops callback to set sampling address
-Date: Thu,  9 Jul 2026 18:01:28 -0700
-Message-ID: <20260710010129.112598-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.3 09/19] mm/damon/core: disallow probe_hits overflow on attrs only monitoring
+Date: Thu,  9 Jul 2026 18:02:43 -0700
+Message-ID: <20260710010244.112723-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260710003328.23B831F00A3A@smtp.kernel.org>
+In-Reply-To: <20260710004235.D59DC1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,73 +45,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 10 Jul 2026 00:33:27 +0000 sashiko-bot@kernel.org wrote:
+On Fri, 10 Jul 2026 00:42:35 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The `set_samples` parameter in `damon_pa_apply_probes()` is ignored, failing to set `r->sampling_addr` when requested.
+> - [Medium] Missing validation in `damon_valid_probe_params()` fails to prevent a 32-bit integer overflow of the weighted sum of probe hits.
 > --
 > 
-> --- Patch [2]: [RFC PATCH v1.3 02/19] mm/damon/core: ask apply_probes() ops callback to set sampling address ---
-> commit 5855b0123b327412c4065a90363e8586c4bafda9
+> --- Patch [9]: [RFC PATCH v1.3 09/19] mm/damon/core: disallow probe_hits overflow on attrs only monitoring ---
+> commit c184df8a3c8632af7a06675128fa4e375050fa8c
 > Author: SJ Park <sj@kernel.org>
+> Subject: mm/damon/core: disallow probe_hits overflow on attrs only monitoring
 > 
-> mm/damon/core: ask apply_probes() ops callback to set sampling address
+> This commit adds validation logic to prevent an 8-bit overflow of
+> probe_hits when the aggregation interval is much larger than the
+> sampling interval. It checks the parameters in a new function,
+> damon_valid_probe_params().
 > 
-> This commit updates the protocol for the DAMON apply_probes callback to
-> accept a boolean set_samples argument. It updates the callback signatures
-> so it can handle sampling address setup in the future to minimize region
-> iteration.
-> 
-> > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > index d8251c83e6e55..aee28b05acc6c 100644
-> > --- a/include/linux/damon.h
-> > +++ b/include/linux/damon.h
-> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 7d49420ea26c4..4f1425e56950b 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
 > [ ... ]
-> 
-> > @@ -647,7 +647,8 @@ enum damon_ops_id {
-> >   * It should also return max number of observed accesses that made as a result
-> >   * of its update.  The value will be used for regions adjustment threshold.
-> >   * @apply_probes should apply the data attribute probes to each region and
-> > - * accordingly update the probe hits counter of the region.
-> > + * accordingly update the probe hits counter of the region.  It should also
-> > + * set &damon_region->sampling_addr of each region if ``set_samples`` is true.
-> >   * @get_scheme_score should return the priority score of a region for a scheme
-> 
-> [ ... ]
-> 
-> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> > index 6172464981730..b13bf7c6eade3 100644
-> > --- a/mm/damon/paddr.c
-> > +++ b/mm/damon/paddr.c
-> > @@ -166,7 +166,7 @@ static bool damon_pa_filter_pass(phys_addr_t pa, struct folio *folio,
-> >  	return pass;
+> > @@ -1332,6 +1332,19 @@ static void damos_set_filters_default_reject(struct damos *s)
+> >  		damos_filters_default_reject(&s->ops_filters);
 > >  }
 > >  
-> > -static void damon_pa_apply_probes(struct damon_ctx *ctx)
-> > +static void damon_pa_apply_probes(struct damon_ctx *ctx, bool set_samples)
-> >  {
-> >  	struct damon_target *t;
-> >  	struct damon_region *r;
+> > +static bool damon_valid_probe_params(struct damon_ctx *ctx)
+> > +{
+> > +	unsigned long sample_interval;
+> > +
+> > +	if (!damon_has_probe_weights(ctx))
+> > +		return true;
+> > +
+> > +	sample_interval = ctx->attrs.sample_interval ? : 1;
+> > +	if (ctx->attrs.aggr_interval / sample_interval > U8_MAX)
+> > +		return false;
+> > +	return true;
+> > +}
 > 
 > [Severity: Medium]
-> Does this implementation actually use the new set_samples parameter?
+> Since we are adding validation for the 8-bit probe_hits overflow here,
+> should we also validate that the 32-bit weighted sum of probe hits doesn't
+> overflow?
 > 
-> The updated documentation in include/linux/damon.h states that apply_probes
-> should set the region's sampling_addr when set_samples is true, but it
-> appears this parameter is ignored in damon_pa_apply_probes() in
-> mm/damon/paddr.c.
+> If a DAMON context is configured with probes where probe->weight is large
+> enough, probe->weight * max_probe_hits (up to 255) could exceed UINT_MAX, or
+> their cumulative sum could overflow. This would result in an incorrect score
+> being returned by damon_probe_hits_wsum(), causing improper region merges in
+> damon_merge_regions_of() and degrading monitoring accuracy.
 > 
-> While it is currently called with false from kdamond_fn(), if future code
-> passes true as the docstring suggests is possible, could this result in
-> using a stale or uninitialized address because the API contract is not
-> fulfilled here?
+> While damon_has_probe_weights() currently returns false making this path
+> unreachable, would it be safer to add the weighted sum overflow check now to
+> prevent issues when probe weights are fully implemented?
 
-Intentional.  The later patch of this series implement that.
+That's exactly what the next patch of this series is doing.
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260710002349.111414-1-sj@kernel.org?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260710002349.111414-1-sj@kernel.org?part=9
 
 
 Thanks,
