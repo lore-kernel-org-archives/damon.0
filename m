@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711701FC110;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC14821ADC7;
 	Fri, 10 Jul 2026 00:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783643043; cv=none; b=CSlSS+RChdTF2ZZoE32GrA/PPj8as5ukFFYJ+QzSS0KNz8HEIYLqHlgqbV6KXZsL8rmW9Rgk2KM+ZUhzRZLDXVFPImyKduh7ES5xwxuEwJUoaCnhAwHw7F09ktGJHCzwPOVMZ/Oyfvj6+lI2n9NXXy8N0Sc0gIH1DsLRwCHBbr8=
+	t=1783643043; cv=none; b=dB2iDO10o7IRP+PtgtP6OOPyocTveUZN+qruXSwuFUoXGSPgd9gpPIyrMkMDoYny5YbUISvSQICgHwspajrsxNQT8WafifgEDqQq0hmuk0WPlE9eTAyEcirGstzLd/nqTEUO9zeM4gseYewmbcAChrDoeA1iMCmmO4jZbvNsVYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783643043; c=relaxed/simple;
-	bh=V7Wm8cvBC8lESuZWW2qGFHiwjBepSAz+Y4B0+x2OUOg=;
+	bh=m097nX+o3GUQ1us51vIEofHr/BQDydOSq4G5qjcxZJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eRP1z5spDgC8ov7KUQpkT/rUO5A26J4anMI8nPOjccEJAnWNuGul1uJbXqQPKQAyknXAur4XCh+o290MkzZlXB/rqD+oIEpZQ8vjt9OwPc8oJSQDicuYqRxX9rv/sxScBwAxLiso/Be7sa3pU0ZhYmSf4ilfLS6A3X5FRrXRxBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iKL+7zeL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BzuDzLP7wL7ndZa6zXUidB0suUJc1HiXPPM2lxunVnXHTU2uBA8fAQ+SU74X1IgSruskrqNagvn4kOmv/A2NMyhDTd8st2OBT/h4iLyDCq83sPhlZ1f59FeVMQDEJrYBAF9ExAdqAaLATnL5TGH7+bRtw1DQ8A4iw9VKLGSCDec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eHhIGjxQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iKL+7zeL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F47E1F00A3E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eHhIGjxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CFE1F00AC4;
 	Fri, 10 Jul 2026 00:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783643041;
-	bh=7ywtTSlgg2gQ8bR9Osnueml1K534EMkMwLNfCemx+LA=;
+	bh=J7ZtSpW2RnXSKPujLfG/ONrU6HhGNSKvAXYdnpd8R5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKL+7zeL8+ZL+GjUzfwQqm3Ct7BGBlRgX4ZKsDixFpponI4Tok+9YZzpNFHP3Mk+f
-	 aXSRxRNLkABQHOM1rw7VYwt+PJQvWuk69He9ZU+ckmNGJTzdWawTy1xMi0ooQFomOd
-	 qx+7C7tpAyrqb7OkfTfkOvAIjXZhShImnG26Md8SHsalxrNzTzMaBUww5vtoLZkmfh
-	 bp/nZ3TOFN99T/Sp+uXJSfTbgQyM2VLyIo6U5kBqRo1mzoARm8uVmNjRe8HhRSyO+q
-	 RaMZj8UTZooroWJq04ITWaEfucF8co4B9gyL/Ba6AClWueU9jbG+2tmYXmHOaEL1uy
-	 yPpmVLEByYzfQ==
+	b=eHhIGjxQ/SBTQe5GOFzJmg5SSu76kqF82hukxoUyNj9heJzJYpOp83k5Vv9QdBxP7
+	 Pmk+0dNKugklMrqYnicNpAOgZbLlkiaXSHtuIFDrt7C69Uf5TYT/QjTF5aWxAdTZL/
+	 rzSoc036QhS9VedxsWAzsy0sZkpFwmagwUl0TPEDxGfILG6J391E8nC+AuWUweYb28
+	 T3Mt1uIRzWMgqlg3zI7TAp6k4tz+fewkGxnIXsN+FoYUFM8Ff5HYj6K5bmtYC0L048
+	 9GlBQ6rebhzaVzP2N/PXD+PVkdLhpBbuGP1tanG4g9XxaMjHHbp5pvp7oZvwDlPhic
+	 JEI3igjw8YT1g==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.3 08/19] mm/damon/core: extend merge function to work with probe hits
-Date: Thu,  9 Jul 2026 17:23:34 -0700
-Message-ID: <20260710002349.111414-9-sj@kernel.org>
+Subject: [RFC PATCH v1.3 09/19] mm/damon/core: disallow probe_hits overflow on attrs only monitoring
+Date: Thu,  9 Jul 2026 17:23:35 -0700
+Message-ID: <20260710002349.111414-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260710002349.111414-1-sj@kernel.org>
 References: <20260710002349.111414-1-sj@kernel.org>
@@ -47,162 +47,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When probe weights are set, users may want DAMON monitoring results to
-be optimized for the weights.  For that, regions adjustment should work
-for the weighted sum of probe hits.  Extend damon_merge_regions_of() to
-detect if the weights are set, and work with probe hits in the case.
+When any damon_probe->weight is set, DAMON will do only probe
+monitoring.  probe_hits is 'unsigned char'.  It could overflow when the
+aggregation interval is larger than the sampling interval times 256.
+damon_as_probe_weights() always return false, so such overflow cannot
+happen.  Even if it happens, it only degrades the monitoring results.
 
-The weights setup detection function is incomplete.  It always returns
-false.  It is intentional, so that more changes to completely support
-weights can be made in an incremental but safe way.  Until the function
-is completed, all changes depend on it is no-op, so DAMON works in the
-current mode.
+That said, the overflow is not intentional.  It is better to be
+prevented as long as the cost is not expensive.  Disallow the overflow
+by adding a validation logic on the core layer parameters validation
+function.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c             | 49 +++++++++++++++++++++++++++++--------
- mm/damon/tests/core-kunit.h | 13 ++++++++--
- 2 files changed, 50 insertions(+), 12 deletions(-)
+ mm/damon/core.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 4c7e8a12a9b67..7d49420ea26c4 100644
+index 7d49420ea26c4..4f1425e56950b 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -209,6 +209,11 @@ static struct damon_probe *damon_nth_probe(int n, struct damon_ctx *ctx)
- 	return NULL;
+@@ -1332,6 +1332,19 @@ static void damos_set_filters_default_reject(struct damos *s)
+ 		damos_filters_default_reject(&s->ops_filters);
  }
  
-+static bool damon_has_probe_weights(struct damon_ctx *c)
++static bool damon_valid_probe_params(struct damon_ctx *ctx)
 +{
-+	return false;
++	unsigned long sample_interval;
++
++	if (!damon_has_probe_weights(ctx))
++		return true;
++
++	sample_interval = ctx->attrs.sample_interval ? : 1;
++	if (ctx->attrs.aggr_interval / sample_interval > U8_MAX)
++		return false;
++	return true;
 +}
 +
  /*
-  * damon_mvsum() - Returns pseudo moving sum value for a time window.
-  * @current_nr:		The value of the current aggregation window.
-@@ -3248,6 +3253,16 @@ static void damon_merge_two_regions(struct damon_target *t,
- 	damon_destroy_region(r, t);
- }
- 
-+static unsigned int damon_merge_score(struct damon_region *r, bool last,
-+		struct damon_ctx *ctx, bool use_probe_hits)
-+{
-+	if (use_probe_hits)
-+		return damon_probe_hits_wsum(r, last, ctx);
-+	if (last)
-+		return r->last_nr_accesses;
-+	return r->nr_accesses;
-+}
-+
- /*
-  * Merge adjacent regions having similar access frequencies
-  *
-@@ -3256,24 +3271,38 @@ static void damon_merge_two_regions(struct damon_target *t,
-  * sz_limit	size upper limit of each region
-  */
- static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
--				   unsigned long sz_limit)
-+		unsigned long sz_limit, struct damon_ctx *ctx)
- {
- 	struct damon_region *r, *prev = NULL, *next;
-+	bool use_probe_hits = damon_has_probe_weights(ctx);
- 
- 	damon_for_each_region_safe(r, next, t) {
--		if (abs_diff(r->nr_accesses, r->last_nr_accesses) > thres)
-+		unsigned int score, last_score, diff;
-+
-+		score = damon_merge_score(r, false, ctx, use_probe_hits);
-+		last_score = damon_merge_score(r, true, ctx, use_probe_hits);
-+
-+		if (abs_diff(score, last_score) > thres)
- 			r->age = 0;
--		else if ((r->nr_accesses == 0) != (r->last_nr_accesses == 0))
-+		else if ((score == 0) != (last_score == 0))
- 			r->age = 0;
- 		else
- 			r->age++;
- 
--		if (prev && prev->ar.end == r->ar.start &&
--		    abs_diff(prev->nr_accesses, r->nr_accesses) <= thres &&
--		    damon_sz_region(prev) + damon_sz_region(r) <= sz_limit)
--			damon_merge_two_regions(t, prev, r);
--		else
--			prev = r;
-+		if (!prev)
-+			goto set_prev_continue;
-+		if (prev->ar.end != r->ar.start)
-+			goto set_prev_continue;
-+		diff = abs_diff(score, damon_merge_score(prev, false, ctx,
-+					use_probe_hits));
-+		if (diff > thres)
-+			goto set_prev_continue;
-+		if (damon_sz_region(prev) + damon_sz_region(r) > sz_limit)
-+			goto set_prev_continue;
-+		damon_merge_two_regions(t, prev, r);
-+		continue;
-+set_prev_continue:
-+		prev = r;
- 	}
- }
- 
-@@ -3306,7 +3335,7 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
- 	do {
- 		nr_regions = 0;
- 		damon_for_each_target(t, c) {
--			damon_merge_regions_of(t, threshold, sz_limit);
-+			damon_merge_regions_of(t, threshold, sz_limit, c);
- 			nr_regions += damon_nr_regions(t);
+  * damos_commit_dests() - Copy migration destinations from @src to @dst.
+  * @dst:	Destination structure to update.
+@@ -1736,6 +1749,9 @@ static int __damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
  		}
- 		threshold = max(1, threshold * 2);
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index d97280270c27b..6ad73559dd8ea 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -226,6 +226,7 @@ static struct damon_region *__nth_region_of(struct damon_target *t, int idx)
+ 	}
  
- static void damon_test_merge_regions_of(struct kunit *test)
- {
-+	struct damon_ctx *ctx;
- 	struct damon_target *t;
- 	struct damon_region *r;
- 	unsigned long sa[] = {0, 100, 114, 122, 130, 156, 170, 184, 230};
-@@ -236,20 +237,27 @@ static void damon_test_merge_regions_of(struct kunit *test)
- 	unsigned long eaddrs[] = {112, 130, 156, 170, 230, 10170};
- 	int i;
- 
-+	ctx = damon_new_ctx();
-+	if (!ctx)
-+		kunit_skip(test, "ctx alloc fail");
++	if (!damon_valid_probe_params(src))
++		return -EINVAL;
 +
- 	t = damon_new_target();
--	if (!t)
-+	if (!t) {
-+		damon_destroy_ctx(ctx);
- 		kunit_skip(test, "target alloc fail");
-+	}
- 	for (i = 0; i < ARRAY_SIZE(sa); i++) {
- 		r = damon_new_region(sa[i], ea[i]);
- 		if (!r) {
- 			damon_free_target(t);
-+			damon_destroy_ctx(ctx);
- 			kunit_skip(test, "region alloc fail");
- 		}
- 		r->nr_accesses = nrs[i];
- 		damon_add_region(r, t);
- 	}
- 
--	damon_merge_regions_of(t, 9, 9999);
-+	damon_merge_regions_of(t, 9, 9999, ctx);
- 	/* 0-112, 114-130, 130-156, 156-170, 170-230, 230-10170 */
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 6u);
- 	for (i = 0; i < 6; i++) {
-@@ -258,6 +266,7 @@ static void damon_test_merge_regions_of(struct kunit *test)
- 		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
- 	}
- 	damon_free_target(t);
-+	damon_destroy_ctx(ctx);
- }
- 
- static void damon_test_split_regions_of(struct kunit *test)
+ 	err = damon_commit_schemes(dst, src);
+ 	if (err)
+ 		return err;
 -- 
 2.47.3
