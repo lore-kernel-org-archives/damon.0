@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DAD253B58;
-	Fri, 10 Jul 2026 13:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E6625B0B8;
+	Fri, 10 Jul 2026 13:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783691224; cv=none; b=LvdYuu1oPbUzscUlnFIwaeJx/H/2pC2uekNk0yNwWwVkP6/B8ZO2L09wWSk7X47OklqjF4JAbQZshbT4FqERpXenHJM6P5OaGBQSXQjorg2Qqyq71qSPXYhVfIkP5atRAq5kgur0ahf4vzfdABu+1bD/lM9BE2uUe4sC6nVeYm8=
+	t=1783691225; cv=none; b=YHtamcAkX79vk7T17lLDFA+AZNZK6+ihT/m7YgJBNApjT0/+OpDYN9gqxq1Z7OvIEIIdyreAPtXC8G+UvY5G/6yl7YdMPocBfEQhW+vwHKCa2wVffmqyYv6Cp71RTltelGrEOSKByuL820cEpJJj6Tf0qFWRjxiXycjS7aexFSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783691224; c=relaxed/simple;
-	bh=nEsmjY06Hyev02Kgci90eG1ifza3IYtKh9jBRs/isCc=;
+	s=arc-20240116; t=1783691225; c=relaxed/simple;
+	bh=m097nX+o3GUQ1us51vIEofHr/BQDydOSq4G5qjcxZJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEz+QaUw27QnfDUJl0hBXG8WBdHC0EYtNKjTJCVVbzlVgiwksONEgg57UkgzZnk9miq9AEHTwRVx1UFQ41r+X6hGcYuEdwluCMA/Rx17G5kGaekWfd4hYs8ZXPX4WaHWNQxqsXR1j+0xxpcsFQujJk70qwfvFy82VysMLOcm9UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yr8PFReo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iW1Nux24e7tfxKztNrszHTTKRwgs0FL11lcFtq6L5KqEJyZGUuNte/PYhNprgmBWSL4y9XRUIsNc0tCoE/n03iX2Rmal38hr6xBR7224iYITHfLXkb5jk2DtJ3Dtv7WrRSRa/vmjMkgbBVVuW/AEhWnhq8Ekbz4hsHofxlMcWbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksQpn3Xo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yr8PFReo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80DC11F00A3A;
-	Fri, 10 Jul 2026 13:47:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksQpn3Xo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298361F000E9;
+	Fri, 10 Jul 2026 13:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783691222;
-	bh=Afvkxg7JDGHDzuDLSPibRSpczK7Yb0J9zCK+iiS9Hlc=;
+	s=k20260515; t=1783691223;
+	bh=J7ZtSpW2RnXSKPujLfG/ONrU6HhGNSKvAXYdnpd8R5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yr8PFReoBPl3zYLmz2T93VhX5MJC7W+HZSn7HB/qd5lNm5UaPeDz+/2+DycWuKFBv
-	 uFXxG/L2UvfnwJV04i7R8fZ6n/ydO7HuK5eGKNUNKDxSZBbkq/ac5Vk3XOmeDheP76
-	 +hG9OHWUT5Y/L5kU2OdkqiZKDjVTMloOe6osgqdDRg3KRG7Bu0xEXDsgy3h5YrOzv7
-	 q90P/u4K6MsKdYFxdwRf8NAihKC4osM4k9m4uqvW2ozZ23rmR1gpQR/KwFGsanRRNn
-	 rbl046o7zGWhST9gGFlyFTXzBxY14fmDKrxLE7/blWzc4MlknZOVQ9ExhtBAn4unu/
-	 4d+LZNz4r1YDA==
+	b=ksQpn3XooyXtgVbh2itwhbSkyiYuLCCD2mosdPFGFU4SXeO0ieOfNZnvXiMVZjwbd
+	 rhNRpgRuGwmc5qujiaBFyfqHttPfRubESbDw103op4z9jLEnxrnlImlMPk53V2re4H
+	 N0ma6EvUOAkBjwRffgVYHOtANFWXjfgEA1bqbJEeNnOg1V0wIaWeBNByAllWdFHExB
+	 PZQaxqLT/JOTACQ5LBldy8ATRdVBWPW2lDJA04fNU63xTcOGCJJeb8orWw5+e+1Pd4
+	 aO/GDkryjXIver/KSmdaQDWAIq42YAvOPxwr4Gp1KS/Dq7KZdhewVboCTAwCTrLR8p
+	 nRP5f5rS+Rp4A==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 07/19] mm/damon/core: use abs_diff() instead of abs()
-Date: Fri, 10 Jul 2026 06:46:36 -0700
-Message-ID: <20260710134651.18084-8-sj@kernel.org>
+Subject: [PATCH 09/19] mm/damon/core: disallow probe_hits overflow on attrs only monitoring
+Date: Fri, 10 Jul 2026 06:46:38 -0700
+Message-ID: <20260710134651.18084-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260710134651.18084-1-sj@kernel.org>
 References: <20260710134651.18084-1-sj@kernel.org>
@@ -46,43 +46,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use of abs() in damon_merge_regions_of() could cause a silent integer
-overflow since the macro casts unsigned int to signed int.  It is
-unlikely to have such a large value for nr_accesses.  Even though it
-happens, the user impact is just degraded monitoring results.  Users
-showing bad monitoring results for weird setup is quite trivial.  But
-the code is obviously wrong.  Use abs_diff() instead.
+When any damon_probe->weight is set, DAMON will do only probe
+monitoring.  probe_hits is 'unsigned char'.  It could overflow when the
+aggregation interval is larger than the sampling interval times 256.
+damon_as_probe_weights() always return false, so such overflow cannot
+happen.  Even if it happens, it only degrades the monitoring results.
 
-The issue was discovered [1] by Sashiko.
-
-[1] https://lore.kernel.org/20260705213817.100841-1-sj@kernel.org/
+That said, the overflow is not intentional.  It is better to be
+prevented as long as the cost is not expensive.  Disallow the overflow
+by adding a validation logic on the core layer parameters validation
+function.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/damon/core.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index fea97399b5754..4c7e8a12a9b67 100644
+index 7d49420ea26c4..4f1425e56950b 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -3261,7 +3261,7 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
- 	struct damon_region *r, *prev = NULL, *next;
+@@ -1332,6 +1332,19 @@ static void damos_set_filters_default_reject(struct damos *s)
+ 		damos_filters_default_reject(&s->ops_filters);
+ }
  
- 	damon_for_each_region_safe(r, next, t) {
--		if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
-+		if (abs_diff(r->nr_accesses, r->last_nr_accesses) > thres)
- 			r->age = 0;
- 		else if ((r->nr_accesses == 0) != (r->last_nr_accesses == 0))
- 			r->age = 0;
-@@ -3269,7 +3269,7 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
- 			r->age++;
++static bool damon_valid_probe_params(struct damon_ctx *ctx)
++{
++	unsigned long sample_interval;
++
++	if (!damon_has_probe_weights(ctx))
++		return true;
++
++	sample_interval = ctx->attrs.sample_interval ? : 1;
++	if (ctx->attrs.aggr_interval / sample_interval > U8_MAX)
++		return false;
++	return true;
++}
++
+ /*
+  * damos_commit_dests() - Copy migration destinations from @src to @dst.
+  * @dst:	Destination structure to update.
+@@ -1736,6 +1749,9 @@ static int __damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src)
+ 		}
+ 	}
  
- 		if (prev && prev->ar.end == r->ar.start &&
--		    abs(prev->nr_accesses - r->nr_accesses) <= thres &&
-+		    abs_diff(prev->nr_accesses, r->nr_accesses) <= thres &&
- 		    damon_sz_region(prev) + damon_sz_region(r) <= sz_limit)
- 			damon_merge_two_regions(t, prev, r);
- 		else
++	if (!damon_valid_probe_params(src))
++		return -EINVAL;
++
+ 	err = damon_commit_schemes(dst, src);
+ 	if (err)
+ 		return err;
 -- 
 2.47.3
