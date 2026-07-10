@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F5013B58C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBE618FDBD;
 	Fri, 10 Jul 2026 00:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783643040; cv=none; b=ayzb2EKmlM2UUOoWseg5LJ+cdAAw4FLIq+26aaz4FysP0vznGMsXgY/ryCkUsSgX9izCDUmv/G0A/y5UUqZm1Z2uJL3YpZ9NDnzakF44Kt2q252aUPyW6zPRYX6GMh3RDpAEFAEdYxBo+kDEWToX0EbiOycAX/mgNsaDyw1u99Y=
+	t=1783643040; cv=none; b=Z0KJNfMxVIz8He+j3OEP4oc9454Qi8x4EIuKconJ8l7HMLsWvURooo/sqaJoCN1zCaZDPT1ijm838HhCDFucPorIRVNzwPob8NlvohBFuyCSDsxQ1pw5VzXzGKlW4QNvscgNh81qvSyrSWOKh9oCx6MaK/iGN4/8g0hQlldL0jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1783643040; c=relaxed/simple;
-	bh=UKo1R/EKs9cTuGDz1STLEQT1oD/C139mx0UO/5pr1As=;
+	bh=RQ2rlxFHdwSG/upgmjkGZQ1xYTrL37W/RTg+2FEFktw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwe5neMPCdYED561EK58MxpcRPJ0iYLOnMLAD/aFB3K4XZJQ94xjwtRBs4Ms/3MhFt5WLmm/wB9PenQ7m171z9fo/8Lpf0S0DeAgQ50NaPquwnFJroxcOUzxzo7o4VIKrYvFlRACwZ2n3Jc+N3qFAbn0COIknQ9DTJlS1BWAz7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e8yqmZjT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nE7/vIcpSLsKPX7cN9UGbAVSV5KyU64JunrU8K99+UDk/aOGrbgHjlTv/h1L/BLaGjTs12WGumUW4afHPfReFhQwJ0huly/ian+dSgBoPzBQWqA/qnY8BDjoYrfHW7dyFhigKhUERvwK8oZ3N827UbWOmICjRurAuiOrzx1ntDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g6uQQOD2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e8yqmZjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D574D1F00A3A;
-	Fri, 10 Jul 2026 00:23:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g6uQQOD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4F71F00A3E;
+	Fri, 10 Jul 2026 00:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783643039;
-	bh=xQG5oz4wU5m7lLv6nGv8jRYxqbEgbwiFogSXia05QXQ=;
+	bh=kxd4/9TvByhr/rgk5a0bpEO5crurTcFohmlFktpxcC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8yqmZjTc50JUEQg8thjVPpN+oNdUpYfsEzoLhQSc5tmlvCGwJlHDexGc7QhVCxhF
-	 Xx7Zc40GV12X1bzDBVqPf6HuF2BF5M3hPYxTp04xuyvtR1FIZrktVgbtV9MmX/ozai
-	 ERZdpSUqZbgYVAZ5SwNBHGtY65gjgIsQN8WLKSOfJXbfJPgfzAZ5pIJt9jH8LfliIM
-	 OIW6l1CrkN1BhG/wKSDv9bWWrTqkrRUQXP+zM7nLcqh8YtlmIFjrC7LD/mOVvJx/JC
-	 RfRaKUOT8qQqM6Y+WBaVv69t6vaJ99GT2M9Zaojxma+/ThXHxEs6gHuslrXcKL/9Or
-	 RJjmvPGGFqmfg==
+	b=g6uQQOD2abNdpVUmW4Q//rXdEFonp+j3IZcE3TB5fO8ayGwXXurfopmhSyOgBNBBk
+	 C6JzjYvS6WKLgYB0jh3MY8ouVimSz2x5kktY81Eiu5Njdm9jh7EKHVVEJWi1VVh3Xf
+	 LN2pL77fjVgj6l1zOb4DCSE9UlCae/NGW7udXKbzzSZCHUxCBsi3/qDJztXHHrjB50
+	 ZmJXsNWO547J0jHYn9lVyD+1dQr5j0McfcUH52Zj8+aygnhWa6zscFFiFM1/Hg9Nii
+	 +mqIYvaRYw6+lxcZtVll+yCUspxlpxoaqzolYZ3gC2snoE5r1wXprb4Goz4PjvVi/O
+	 RaDpl16libW9Q==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.3 02/19] mm/damon/core: ask apply_probes() ops callback to set sampling address
-Date: Thu,  9 Jul 2026 17:23:28 -0700
-Message-ID: <20260710002349.111414-3-sj@kernel.org>
+Subject: [RFC PATCH v1.3 03/19] mm/damon/paddr: set samples in apply_probes() if requested
+Date: Thu,  9 Jul 2026 17:23:29 -0700
+Message-ID: <20260710002349.111414-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260710002349.111414-1-sj@kernel.org>
 References: <20260710002349.111414-1-sj@kernel.org>
@@ -47,67 +47,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-prepare_access_checks() DAMON ops callback sets the monitoring sampling
-address per region.  In future, DAMON will be able to call only
-apply_probes().  In this case, applyy_probes() may need to do the
-sampling address setup, to minimize unnecessary regions iteration.
-Update the protocol for the request.
+apply_probe() callback implementation in DAMON_PADDR is ignoring
+set_samples parameter.  Respect it.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h | 5 +++--
- mm/damon/core.c       | 2 +-
- mm/damon/paddr.c      | 2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ mm/damon/paddr.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index d8251c83e6e55..aee28b05acc6c 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -647,7 +647,8 @@ enum damon_ops_id {
-  * It should also return max number of observed accesses that made as a result
-  * of its update.  The value will be used for regions adjustment threshold.
-  * @apply_probes should apply the data attribute probes to each region and
-- * accordingly update the probe hits counter of the region.
-+ * accordingly update the probe hits counter of the region.  It should also
-+ * set &damon_region->sampling_addr of each region if ``set_samples`` is true.
-  * @get_scheme_score should return the priority score of a region for a scheme
-  * as an integer in [0, &DAMOS_MAX_SCORE].
-  * @apply_scheme is called from @kdamond when a region for user provided
-@@ -665,7 +666,7 @@ struct damon_operations {
- 	void (*update)(struct damon_ctx *context);
- 	void (*prepare_access_checks)(struct damon_ctx *context);
- 	unsigned int (*check_accesses)(struct damon_ctx *context);
--	void (*apply_probes)(struct damon_ctx *context);
-+	void (*apply_probes)(struct damon_ctx *context, bool set_samples);
- 	int (*get_scheme_score)(struct damon_ctx *context,
- 			struct damon_region *r, struct damos *scheme);
- 	unsigned long (*apply_scheme)(struct damon_ctx *context,
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 327398fa4ee56..9fbea6204520b 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3692,7 +3692,7 @@ static int kdamond_fn(void *data)
- 		if (ctx->ops.check_accesses)
- 			max_nr_accesses = ctx->ops.check_accesses(ctx);
- 		if (ctx->ops.apply_probes)
--			ctx->ops.apply_probes(ctx);
-+			ctx->ops.apply_probes(ctx, false);
- 
- 		if (time_after_eq(ctx->passed_sample_intervals,
- 					next_aggregation_sis)) {
 diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 6172464981730..b13bf7c6eade3 100644
+index b13bf7c6eade3..ff4fcca949660 100644
 --- a/mm/damon/paddr.c
 +++ b/mm/damon/paddr.c
-@@ -166,7 +166,7 @@ static bool damon_pa_filter_pass(phys_addr_t pa, struct folio *folio,
- 	return pass;
- }
+@@ -178,6 +178,10 @@ static void damon_pa_apply_probes(struct damon_ctx *ctx, bool set_samples)
+ 			phys_addr_t pa;
+ 			struct folio *folio;
  
--static void damon_pa_apply_probes(struct damon_ctx *ctx)
-+static void damon_pa_apply_probes(struct damon_ctx *ctx, bool set_samples)
- {
- 	struct damon_target *t;
- 	struct damon_region *r;
++			if (set_samples)
++				r->sampling_addr = damon_rand(ctx, r->ar.start,
++						r->ar.end);
++
+ 			pa = damon_pa_phys_addr(r->sampling_addr,
+ 					ctx->addr_unit);
+ 			folio = damon_get_folio(PHYS_PFN(pa));
 -- 
 2.47.3
