@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F16A214812
-	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 14:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4771B223DE7
+	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 14:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783695272; cv=none; b=XAGK9dkI85ihA3SVgMPueOSYLNd9d3hIWlj1PxlhpGGOyJpBCXJMhsj05P7tuUv8ooyFyPkv0kUTcFRPV8+xO4O/3egfwTYiVc3BGF1pCxXatxf7AspR+SDuMczMxlkUMcTEvlGm5vF9qVCkK/WaEyHFft68y5Nfe4DU9BGRxyE=
+	t=1783695335; cv=none; b=SbV46CpCY0o3cSWop1VNg1LH8IeO6t54W9k9A6Y7O7J0D8VIkkhuAczUTBkOAQzjTlolh348vljrpzQZ2ERv0iP9gkmLBUeTE3JU3rCM0YdFTy+HEL9DWtHjLajUWlK3E72NOEaHX7pLrwnIs6pRJOfBJhyW4y5qlBVs+bxkHfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783695272; c=relaxed/simple;
-	bh=FZFxUGlHMSogKwgqFAbCRC1ao+vhE7DnEPAJl/NqmfY=;
+	s=arc-20240116; t=1783695335; c=relaxed/simple;
+	bh=UK9h95HBt1KeJL97rnC61hBZm08uJkO6pgXw3+sVbv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qNZmniA+CgnBe8y3TKGMui1ZQzL6wrBucWg4A0ao0nYgs5KmAixqHFyB69w+sD7ads40NTHTjsJSYJXDL2T3wAIRaPqNIAvuvSxk1a5xPK8VOKqosg+IHLVuTaH7l7RJQY9fmnUgsPqnMUvKnK2clMchJ+g4Tdw5a2lW7y/Ev3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MotiWNZ/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UK+kjGiCwfPOvGrYambi8vsH/LoJBXgAzuNXfPuj2nqYt/ujtMaJn8oYj1sMWjNSa46FZjQ2dQrWBynsTUSoG39bqyaVgF0bxgUMb23qNKrCkzp+amBYesRtC5yZuNk/9fIzv49mjN6EA12qkiZ+qKGepjSWFjf2qnb69a51zOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eEHt/RCw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MotiWNZ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179001F000E9;
-	Fri, 10 Jul 2026 14:54:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eEHt/RCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75871F000E9;
+	Fri, 10 Jul 2026 14:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783695271;
-	bh=DyIa52n1ErzNsZNaXiX/yTcEC5bE8XCwtelht1VZ93A=;
+	s=k20260515; t=1783695333;
+	bh=Y5BeGqv8lOD+D8MAS/Tw7RCeUilkSfQtu4S1gga17TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MotiWNZ/pl6dQqXP7ZQCAGoZK+fjVG/5THZ+DDC2D74p1bKVqyVhp1j5XZ8VyEgWH
-	 /QtEFYspYSIhB2JRONNVS0kwl6D/91VQjt0sxbcDCECqsosOc65ir3uysiAaOUQimN
-	 tKmbGWKhPgbQQq6k4/spk+HlpR1QerwPOvoQSOe/zbn7fttLE9kjF44m8C+t4b+5BZ
-	 Aw1xkIYWlkgJNz6gp+BE2QE7zmfsvDyT/CPIR2V6Ew6fpJGmdTj0pP+AkkQly02eUD
-	 +ZrHe7QIZNX6E/Ue4a26ZX6cJZ/ogs/PxdeAVbNkenJNdrIviXcyyZEwoezFKtL7vF
-	 52GU/Wxmgu5Vg==
+	b=eEHt/RCw8DiEpWAoLKNQy9A9vsfPi0hjFsa5iTow/FLXa3osFpP8u2ZozB7jwEUlu
+	 Z6elUo8OXX2EZMLJWhFn0IqVf/IVLLrTb0cOzdM5LmXpQmlzOOAawFcJpfuVew2a3I
+	 OtcoWLE0G1FtpnhQiLUzCC3fad2kEHgVWu0kMfVgHc+suD93XgJeDRtKeGtJod13Ge
+	 7YGzaCjr5jLV0+y5mW9ZUyHE19PK6/F25Ht8mWaAAl3aZjcA5csOjU3W0n0lhTnh8K
+	 J+SCDuS60dYjatl/Ejen9UgtUC/xmL7756yoQf2UHeLrnLM3CMqwZtyP+rOD6ORxCB
+	 mWI+vkiFaAWDw==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH 14/19] mm/damon/core: get merge threshold from probe hits when weights are set
-Date: Fri, 10 Jul 2026 07:54:23 -0700
-Message-ID: <20260710145424.27394-1-sj@kernel.org>
+Subject: Re: [PATCH 15/19] mm/damon/core: implement damon_has_probe_weight()
+Date: Fri, 10 Jul 2026 07:55:29 -0700
+Message-ID: <20260710145530.27524-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260710140511.666D91F00A3A@smtp.kernel.org>
+In-Reply-To: <20260710141100.AADA91F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,105 +45,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 10 Jul 2026 14:05:10 +0000 sashiko-bot@kernel.org wrote:
+On Fri, 10 Jul 2026 14:11:00 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] Silent monitoring failure when probe weights are set on operations lacking apply_probes.
-> - [Medium] kdamond_merge_regions loop termination condition still uses unweighted access frequency as max_thres.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Setting probe weights unconditionally disables access checks without validating if the active operation set supports data attribute probes (`apply_probes`), silently breaking monitoring.
 > --
 > 
-> --- Patch [14]: [PATCH 14/19] mm/damon/core: get merge threshold from probe hits when weights are set ---
-> commit 0b09a73e4b353610f5bc3d4f305131a2f9d7fea8
+> --- Patch [15]: [PATCH 15/19] mm/damon/core: implement damon_has_probe_weight() ---
+> commit 7b3dfd9b2d27b35cdf18598b48bc4927675cb47a
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: get merge threshold from probe hits when weights are set
->     
-> When probe weights are set, DAMON merges regions based on their probe
-> hits weighted sum.  But the merge threshold is calculated based on the
-> access frequency.  Update it to retrieve the maximum probe hits weighted
-> sum in the snapshot from apply_probes() ops callback, and generate the
-> threshold based on it.
+> mm/damon/core: implement damon_has_probe_weight()
+> 
+> This commit updates damon_has_probe_weights() to properly iterate over the
+> probes and return true if any probe has a weight configured. This enables the
+> data attribute monitoring mode that previously returned false intentionally
+> during incremental development.
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index f7782c69037da..91964336ce31e 100644
+> > index 91964336ce31e..806a67d02a6e9 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> > @@ -3776,9 +3777,18 @@ static int kdamond_fn(void *data)
+> > @@ -211,6 +211,12 @@ static struct damon_probe *damon_nth_probe(int n, struct damon_ctx *ctx)
 > >  
-> >  		if (!access_check_disabled && ctx->ops.check_accesses)
-> >  			max_merge_score = ctx->ops.check_accesses(ctx);
-> > -		if (ctx->ops.apply_probes)
-> > -			ctx->ops.apply_probes(ctx, access_check_disabled,
-> > -					false);
-> > +		if (ctx->ops.apply_probes) {
+> >  static bool damon_has_probe_weights(struct damon_ctx *c)
+> >  {
+> > +	struct damon_probe *p;
+> > +
+> > +	damon_for_each_probe(p, c) {
+> > +		if (p->weight)
+> > +			return true;
+> > +	}
 > 
-> [Severity: Medium]
-> If a user configures a DAMON context with ops that lack apply_probes
-> (such as vaddr), adds a probe with a weight, and starts monitoring,
-> could this result in a silent monitoring failure?
+> [Severity: High]
+> If a user configures a DAMON context with an operation set that does not
+> implement apply_probes (e.g. vaddr operations) and adds a probe with a
+> non-zero weight, will this silently break monitoring?
 > 
-> Since damon_valid_probe_params() allows this configuration:
-> 
-> mm/damon/core.c:damon_valid_probe_params() {
-> ...
-> 	return true;
-> }
-> 
-> access_check_disabled will be true, causing check_accesses() to be
-> skipped. With ctx->ops.apply_probes being NULL, no monitoring data
-> would be collected and max_merge_score would remain 0.
-
-Intentional behavior.  No issue.
-
-> 
-> > +			if (time_after_eq(ctx->passed_sample_intervals,
-> > +						next_aggregation_sis) &&
-> > +					access_check_disabled)
-> > +				get_max_wsum = true;
-> > +			else
-> > +				get_max_wsum = false;
-> > +			max_wsum = ctx->ops.apply_probes(ctx,
-> > +					access_check_disabled, get_max_wsum);
-> > +			if (get_max_wsum)
-> > +				max_merge_score = max_wsum;
-> > +		}
-> >  
-> >  		if (time_after_eq(ctx->passed_sample_intervals,
-> >  					next_aggregation_sis)) {
-> 
-> [Severity: Medium]
-> When kdamond_merge_regions() is called with this new max_merge_score based
-> on weighted probe hits, could the fallback loop terminate prematurely?
+> With this change, damon_has_probe_weights() returning true will skip
+> standard access monitoring in kdamond_fn():
 > 
 > mm/damon/core.c:kdamond_fn() {
 > ...
-> 			kdamond_merge_regions(ctx,
-> 					max_merge_score / 10,
-> 					sz_limit);
+> 	bool access_check_disabled = damon_has_probe_weights(ctx);
+> 	unsigned int max_merge_score = 0;
+> ...
+> 	if (!access_check_disabled && ctx->ops.check_accesses)
+> 		max_merge_score = ctx->ops.check_accesses(ctx);
+> 
+> 	if (ctx->ops.apply_probes) {
+> 		/* bypassed if apply_probes is not implemented */
+> 		...
+> 	}
+> ...
+> 	/* max_merge_score remains 0 */
+> 	if (time_after_eq(ctx->passed_sample_intervals,
+> 				next_aggregation_sis)) {
+> 		kdamond_merge_regions(ctx, max_merge_score / 10, sz_limit);
 > ...
 > }
 > 
-> Looking at kdamond_merge_regions(), max_thres is hardcoded to the
-> unweighted maximum access frequency:
-> 
-> mm/damon/core.c:kdamond_merge_regions() {
-> 	max_thres = c->attrs.aggr_interval /
-> 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
-> 	do {
-> ...
-> 	} while (nr_regions > c->attrs.max_nr_regions &&
-> 			threshold / 2 < max_thres);
-> }
-> 
-> If a user sets a probe weight such that max_merge_score / 10 > max_thres * 2,
-> the loop condition threshold / 2 < max_thres will evaluate to false immediately,
-> failing to enforce the max_nr_regions limit during region merging.
+> Should damon_valid_probe_params() or damon_has_probe_weights() also verify
+> that ctx->ops.apply_probes is implemented before allowing this mode, to
+> prevent kdamond_merge_regions() from unconditionally merging regions with
+> a threshold of 0?
 
-Known issue.  I'm separately working on it.
+No issue.  This is an intentional behavior.
 
+> 
+> >  	return false;
+> >  }
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260710134651.18084-1-sj@kernel.org?part=14
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260710134651.18084-1-sj@kernel.org?part=15
 
 
 Thanks,
