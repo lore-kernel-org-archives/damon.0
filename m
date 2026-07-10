@@ -1,121 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F14E2D738A
-	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 14:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C0B3403E4;
+	Fri, 10 Jul 2026 14:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783692662; cv=none; b=Nmu0BviwmRF4hePsipYYj6vD/ilbSZ1Ml881UP52cVnJmfo4r6Mt87/WvDvL6EulRwZ1tBY42uT6r+ykoGVJ/dQ4Cacajy3yrojiwXOuRUIp7iomiTwUu2Zrsd67Q+Uf9VTU2rn9/W+jexv6NSLI0uTBDiT9AMtDAOTDR8AMggE=
+	t=1783692999; cv=none; b=km86ysj88mNlgRmqj+np6twMKkZeM5TKTjKhtWsSFlfOqxuFqM3yZL/Eucg1MePih39Awy45Qxr7r3Pul7+12Dn8vE8xNhHrNriYskymH6gIVivCaSVr09OkggRDZcqQ+gWqvF/K2TZljUr19PAWaDlkqUQTdMddlVO4qxgCM3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783692662; c=relaxed/simple;
-	bh=WfWE9E11M53PeSpMtjISaaV16TpN68RG90Ry4CPKGv0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Tb4VXSNrQc9VUb/oAPJDBIG5Imo8gb9/9LbJqILjm5s/LFDIRswnw42BaNSgqDGQpV8ne0DpJasmIT9UVegEaspmfm0sSA6ZqFz06oIy3TSppatrQyIb123dxBUDfJ8hXDULpimHhEeZdreL7yA1VSJiTieqg5JBkER6HdZoVdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VmrDo2ND; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783692999; c=relaxed/simple;
+	bh=ZdMIB1Jlm15iHZeVbTSHD+qNSv1SzX1FTEraIbk3b98=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sG4+YVYcbH/M7W9hLwMcVAwPTWNrVVhf9n9lFdymvSAmIXo1/vaYTjOVLIxh/TQ1PPYavuj6MNi/+7c8lY9Wp5BwO4KPMiGDDCKiRmB1mj5KtX/r6R0Pp2vzagYHHf/5qTAZqzAXivTRniuAk3pZGKcHOkvmK3Lk4FpO0pb8WZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KahqDGrV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VmrDo2ND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADA91F000E9;
-	Fri, 10 Jul 2026 14:11:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KahqDGrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4A81F00A3A;
+	Fri, 10 Jul 2026 14:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783692660;
-	bh=uLKa7UEecLAUt1XYO531YS4kSpdpW7JF1yzeiHakkSc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VmrDo2ND9OTIQsiM+h5TXDwQp49Hr7OGRxRarGtDW/3gT53hG+imeqJ7kL5mNTj1T
-	 KPL4kgjdNTcEkMNGRkq8/erFORua7qLXx7qjkIyA3sCHQSKYnnfOXjE5K23ZtPy4IC
-	 Zj8xExs8GLni02VBrQt6PRp7SIU+70SHN6BGpDAPnjck3/5Ep2asLEJHAAyZ7J5C9d
-	 yhPhYmUOi8aKAZ8qCpPGoMov4B5to1aWXfeqazf0K7NYR4oWrCi459wtCtKHVsZShj
-	 pJ5IaalpUfBp5tRAI09bjjsxnMj/Mr5iGkme03aFMCJd+andhPkF+gHnIYFqQx5K/n
-	 XvAeauOtHvTWg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 15/19] mm/damon/core: implement damon_has_probe_weight()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260710134651.18084-16-sj@kernel.org>
-References: <20260710134651.18084-1-sj@kernel.org>
- <20260710134651.18084-16-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Jul 2026 14:11:00 +0000
-Message-Id: <20260710141100.AADA91F000E9@smtp.kernel.org>
+	s=k20260515; t=1783692998;
+	bh=QaIclYB8bbvFhsCZS8P52iBbwbOGPeVuy63rBC+62Yw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=KahqDGrVB23ELbwXbfrA0bkp0js04Cm/Sd3I7TGV92lsdkdd7qyEbPwROUSAJSohT
+	 NrueGXCoe7BiMBfiWG863Nt3bEJVBDn+o1o1baPQvxomFbSf9YoCp7N+OUBb2HxXK5
+	 8dGhBMdmTWJAcsGjQK/7J/XN+8DJqg3e8Uot9jW9QZYxV+cntA9WGWqYgD416KLFSo
+	 XSqHrta9v1gh1aCHEc5i/aHtnC//JoPtvqbfrI4bVlD1+X0MCOFR0axUKCHh8y73HL
+	 u061aLt5n0t9FxLsZye2mR40+u8n4kgE7x50T/kNEP4WgdCzwielOjqAVRIbXi4Pj5
+	 jd9IXI/6kzibQ==
+From: SJ Park <sj@kernel.org>
+To: Song Hu <husong@kylinos.cn>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>
+Subject: Re: [PATCH 0/4] Docs/ABI/damon: sysfs ABI document fixes and additions
+Date: Fri, 10 Jul 2026 07:16:30 -0700
+Message-ID: <20260710141631.24657-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260710044737.561102-1-husong@kylinos.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] Setting probe weights unconditionally disables access checks witho=
-ut validating if the active operation set supports data attribute probes (`=
-apply_probes`), silently breaking monitoring.
---
+'hkml patch check' [1] says you forgot Cc-ing below people who are recommended
+by get_maintainer.pl.  I Cc-ed them.  Please Cc all recipients who
+get_maitnainer.pl is recommending, from the next time.  'hkml patch format' [2]
+could also help you doing so.
 
---- Patch [15]: [PATCH 15/19] mm/damon/core: implement damon_has_probe_weig=
-ht() ---
-commit 7b3dfd9b2d27b35cdf18598b48bc4927675cb47a
-Author: SJ Park <sj@kernel.org>
+- Andrew Morton <akpm@linux-foundation.org>
+- David Hildenbrand <david@kernel.org>
+- Lorenzo Stoakes <ljs@kernel.org>
+- "Liam R. Howlett" <liam@infradead.org>
+- Vlastimil Babka <vbabka@kernel.org>
+- Mike Rapoport <rppt@kernel.org>
+- Suren Baghdasaryan <surenb@google.com>
+- Michal Hocko <mhocko@suse.com>
 
-mm/damon/core: implement damon_has_probe_weight()
+On Fri, 10 Jul 2026 12:47:33 +0800 Song Hu <husong@kylinos.cn> wrote:
 
-This commit updates damon_has_probe_weights() to properly iterate over the
-probes and return true if any probe has a weight configured. This enables t=
-he
-data attribute monitoring mode that previously returned false intentionally
-during incremental development.
+> This series fixes typos and fills in missing entries in the DAMON
+> sysfs ABI document (Documentation/ABI/testing/sysfs-kernel-mm-damon).
+> 
+> Patch 1 fixes a path typo, "intrvals_goal" -> "intervals_goal", in
+> four What: entries; the documented path points to a non-existent
+> directory, so it is Cc'ed to stable.
+> 
+> Patch 2 fixes two further typos ("WDate:", "manimum").
+> 
+> Patches 3 and 4 add ABI entries that exist in the kernel and are
+> already described in usage.rst but are missing from the canonical ABI
+> document: the 'update_tuned_intervals' state command (patch 3) and the
+> 'tried_regions/<R>/probes/<P>/hits' file (patch 4).
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 91964336ce31e..806a67d02a6e9 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -211,6 +211,12 @@ static struct damon_probe *damon_nth_probe(int n, st=
-ruct damon_ctx *ctx)
-> =20
->  static bool damon_has_probe_weights(struct damon_ctx *c)
->  {
-> +	struct damon_probe *p;
-> +
-> +	damon_for_each_probe(p, c) {
-> +		if (p->weight)
-> +			return true;
-> +	}
+Looks good overall.  Patch 3 looks unnecessary, though.  Let me add comments to
+each patch.
 
-[Severity: High]
-If a user configures a DAMON context with an operation set that does not
-implement apply_probes (e.g. vaddr operations) and adds a probe with a
-non-zero weight, will this silently break monitoring?
+> 
+> Song Hu (4):
+>   Docs/ABI/damon: fix typo in intervals_goal sysfs path
+>   Docs/ABI/damon: fix typos
+>   Docs/ABI/damon: document update_tuned_intervals state command
+>   Docs/ABI/damon: document tried_regions probe hits
+> 
+>  .../ABI/testing/sysfs-kernel-mm-damon         | 29 ++++++++++++++-----
+>  1 file changed, 22 insertions(+), 7 deletions(-)
+> 
+> -- 
+> 2.43.0
 
-With this change, damon_has_probe_weights() returning true will skip
-standard access monitoring in kdamond_fn():
+[1] https://github.com/sjp38/hackermail/blob/master/USAGE.md#checking-patches
+[2] https://github.com/sjp38/hackermail/blob/master/USAGE.md#formatting-patches
 
-mm/damon/core.c:kdamond_fn() {
-...
-	bool access_check_disabled =3D damon_has_probe_weights(ctx);
-	unsigned int max_merge_score =3D 0;
-...
-	if (!access_check_disabled && ctx->ops.check_accesses)
-		max_merge_score =3D ctx->ops.check_accesses(ctx);
 
-	if (ctx->ops.apply_probes) {
-		/* bypassed if apply_probes is not implemented */
-		...
-	}
-...
-	/* max_merge_score remains 0 */
-	if (time_after_eq(ctx->passed_sample_intervals,
-				next_aggregation_sis)) {
-		kdamond_merge_regions(ctx, max_merge_score / 10, sz_limit);
-...
-}
-
-Should damon_valid_probe_params() or damon_has_probe_weights() also verify
-that ctx->ops.apply_probes is implemented before allowing this mode, to
-prevent kdamond_merge_regions() from unconditionally merging regions with
-a threshold of 0?
-
->  	return false;
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710134651.1808=
-4-1-sj@kernel.org?part=3D15
+Thanks,
+SJ
