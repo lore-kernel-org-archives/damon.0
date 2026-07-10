@@ -1,145 +1,220 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088FD2BDC28
-	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 14:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCB32E1C4E
+	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 14:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783692313; cv=none; b=j9Uo1qmHmxauxk9la/E4l+5mUzbt01D9F76BjQKmNW9eCpTdd8aLPCJpq91xIgG9n0n+3yW4S+61nYnFsyauk6cPbQ5dFXagpiPG2ofUg0DyQ1snOi4TRT82EL6w202oA8onjHhmMcTc7JdqTBN1mb6AmgOVPQTmiJPFQunrwtM=
+	t=1783692333; cv=none; b=XDCHxvDYYUsNCqClAjI47Ut8CD4hKFweM5aQcanlLAQOAKmIBm8DqglrQXhCP0S4Nrv/DQ8tYxaoFFrkq3NsBRH/FQK+NiP+VyCW7AJFU+G2HYPcNT/uq9OOsqF3wAw1N9GstqumjzhwAMKk3h+C6hrUaIsjTQRpkDWGDlDz2Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783692313; c=relaxed/simple;
-	bh=BhcPc8Dv8Eg5lRZCU4aTx3MMW7Qgd7tNcV+I0f3cEoA=;
+	s=arc-20240116; t=1783692333; c=relaxed/simple;
+	bh=eQdmWN1XVRpjJfp+nHVBkDXGhEvK+OrGysE4us3gw5c=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=LAcvCCaxGaryuxBzHrcBg2gBM2rU2Zu5ruFHv8Iio+2K4RVEVXMesJVFBM1zfmV0X4U48BpInyF5aGobCi6nBvgb7BgLHAri2YARu5NpmcneR/oCbZGFJRj6S24DdVsdyWrOz/mrPTT9GMNHGkLcWFniqZ6lxyttVhp4I7ab0rE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZagLeFBf; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=MhK9AiYCpwaF4G0mxZgpenEF5/RRL+6XI478j7JMF2Qa2AQQdpYgEtHthW0GutD6EzIneachO0T9M5NbXCyJlOHEirzLVia5NGFxfKUwkDlzraxoom/7G42DPz0L8mSe2Fd4q6CbIqGZbIsNQMJy1ZJvYvDeLmzNJXA2UGU5YWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pb21Bklf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZagLeFBf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666D91F00A3A;
-	Fri, 10 Jul 2026 14:05:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pb21Bklf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A38F1F000E9;
+	Fri, 10 Jul 2026 14:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783692311;
-	bh=OMQ8+fsMXpavWYkSuGU73Y6tlTPnmsLi0AilmYHRkjI=;
+	s=k20260515; t=1783692332;
+	bh=xDJTux7MzSJHsnyEQ7dQvUi5CnPG/ecryLbx2CQKV08=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZagLeFBfgZcDU3vOPTTK8y4TB372HMbMGkStYh9b7VZHgQFCtmO3jVdrHoLfNpOx/
-	 j0kRoMSqUReCOL6DKNxz9IAXxBVv+JnTc/jrUCemNyTKyG2YcN3OUMIrxPxl88zY+a
-	 zMrnmDzK4846ykCOYce7ydxHB5BQF0M4F4BtMUhGTx9sEuWgCjyokqtlFAP1gbrgH4
-	 svQy1U14jYtX85B4lsGLd59Ac0nb2lzDktdnRwSFhO3uL1zmQKXyPPD0wE0aMkie4T
-	 M6CA++8epailmB3CY9eBXDfWSvaYvFrl/SqFt8+VPlN4+h0V0rM66S6sZfSmQltMGw
-	 Lb0ZlOgYDh9lQ==
+	b=Pb21Bklf80wZgZkOdt1EHQPCbIkAhV7EoLRSl024DGuhQxOSfolQXP3Vv0DDQKGvy
+	 na+UNPdIFZuIa5DpNOxgIaMc4wKNKwyi6p9Ilxxfn3mnXcC3MQ4BHQdkVBX+/1vfLW
+	 g2aj806F2cB3OcFqJJBzsZvrO7A63xs/9G4QSyX03PremxEY5O3/IRI7Kr0ZaKkkj+
+	 7gprCqmVLpiTDOZxD+EgU5miqAEYDJd0mfeRNWpquS+dgMHsSk5FeHXQYQsmQXxgqe
+	 w8jiyaCyiLhiDkwT6O8EzEGiWfqW0nCDZn5tjnyk82l0sEKGqgLEO42TwEyUHpYH9y
+	 VylQ4XekGG2lg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 14/19] mm/damon/core: get merge threshold from probe
- hits when weights are set
+Subject: Re: [PATCH 08/19] mm/damon/core: extend merge function to work with
+ probe hits
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260710134651.18084-15-sj@kernel.org>
+In-Reply-To: <20260710134651.18084-9-sj@kernel.org>
 References: <20260710134651.18084-1-sj@kernel.org>
- <20260710134651.18084-15-sj@kernel.org>
+ <20260710134651.18084-9-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Jul 2026 14:05:10 +0000
-Message-Id: <20260710140511.666D91F00A3A@smtp.kernel.org>
+Date: Fri, 10 Jul 2026 14:05:31 +0000
+Message-Id: <20260710140532.2A38F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 5 potential issue(=
 s) to consider:
-- [Medium] Silent monitoring failure when probe weights are set on operatio=
-ns lacking apply_probes.
-- [Medium] kdamond_merge_regions loop termination condition still uses unwe=
-ighted access frequency as max_thres.
+
+New issues:
+- [Medium] Unscaled merge threshold breaks region merging when using weight=
+ed probe hits.
+- [Medium] Potential 32-bit integer overflow in `damon_probe_hits_wsum()` w=
+hen accumulating weighted sums.
+
+Pre-existing issues:
+- [High] Region ages are evaluated and mutated inside a retry loop, leading=
+ to age corruption.
+- [High] Calculations for merged regions' weighted averages overflow on 32-=
+bit architectures.
+- [Medium] Test NULL pointer dereference in `damon_test_merge_regions_of`.
 --
 
---- Patch [14]: [PATCH 14/19] mm/damon/core: get merge threshold from probe=
- hits when weights are set ---
-commit 0b09a73e4b353610f5bc3d4f305131a2f9d7fea8
+--- Patch [8]: [PATCH 08/19] mm/damon/core: extend merge function to work w=
+ith probe hits ---
+commit 5e9a094bb8d36feea59f27615cb45bcbce00e4c3
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: get merge threshold from probe hits when weights are set
-   =20
-When probe weights are set, DAMON merges regions based on their probe
-hits weighted sum.  But the merge threshold is calculated based on the
-access frequency.  Update it to retrieve the maximum probe hits weighted
-sum in the snapshot from apply_probes() ops callback, and generate the
-threshold based on it.
+mm/damon/core: extend merge function to work with probe hits
+
+When probe weights are set, users may want DAMON monitoring results to
+be optimized for the weights.  For that, regions adjustment should work
+for the weighted sum of probe hits.  Extend damon_merge_regions_of() to
+detect if the weights are set, and work with probe hits in the case.
 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index f7782c69037da..91964336ce31e 100644
+> index 4c7e8a12a9b67..7d49420ea26c4 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-> @@ -3776,9 +3777,18 @@ static int kdamond_fn(void *data)
+[ ... ]
+> @@ -3248,6 +3253,16 @@ static void damon_merge_two_regions(struct damon_t=
+arget *t,
+[Severity: High]
+This is a pre-existing issue, but can the calculations for merged regions'
+weighted averages overflow on 32-bit architectures?
+
+mm/damon/core.c:damon_merge_two_regions() {
+    unsigned long sz_l =3D damon_sz_region(l), sz_r =3D damon_sz_region(r);
+    ...
+    l->nr_accesses =3D (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
+                     (sz_l + sz_r);
+    l->age =3D (l->age * sz_l + r->age * sz_r) / (sz_l + sz_r);
+    ...
+}
+
+Since sz_l and sz_r are unsigned long (32 bits on 32-bit architectures),
+multiplying them by a 32-bit unsigned int produces a 32-bit intermediate
+product. For large region sizes, this might wrap around UINT_MAX prior to
+division, leading to incorrect page reclaim decisions.
+
+>  	damon_destroy_region(r, t);
+>  }
 > =20
->  		if (!access_check_disabled && ctx->ops.check_accesses)
->  			max_merge_score =3D ctx->ops.check_accesses(ctx);
-> -		if (ctx->ops.apply_probes)
-> -			ctx->ops.apply_probes(ctx, access_check_disabled,
-> -					false);
-> +		if (ctx->ops.apply_probes) {
-
+> +static unsigned int damon_merge_score(struct damon_region *r, bool last,
+> +		struct damon_ctx *ctx, bool use_probe_hits)
+> +{
+> +	if (use_probe_hits)
+> +		return damon_probe_hits_wsum(r, last, ctx);
 [Severity: Medium]
-If a user configures a DAMON context with ops that lack apply_probes
-(such as vaddr), adds a probe with a weight, and starts monitoring,
-could this result in a silent monitoring failure?
+Can accumulating the weighted sums in damon_probe_hits_wsum() overflow a
+32-bit integer?
 
-Since damon_valid_probe_params() allows this configuration:
-
-mm/damon/core.c:damon_valid_probe_params() {
-...
-	return true;
+mm/damon/core.c:damon_probe_hits_wsum() {
+    ...
+    unsigned int sum =3D 0;
+    ...
+        if (last)
+            sum +=3D r->last_probe_hits[i++] * probe->weight;
+        else
+            sum +=3D r->probe_hits[i++] * probe->weight;
+    ...
 }
 
-access_check_disabled will be true, causing check_accesses() to be
-skipped. With ctx->ops.apply_probes being NULL, no monitoring data
-would be collected and max_merge_score would remain 0.
+If user space configures a large weight, multiplying it by the probe hits
+across multiple probes might easily exceed UINT_MAX, causing silent
+overflow. This wrapped around value would then corrupt the region merging
+heuristic.
 
-> +			if (time_after_eq(ctx->passed_sample_intervals,
-> +						next_aggregation_sis) &&
-> +					access_check_disabled)
-> +				get_max_wsum =3D true;
-> +			else
-> +				get_max_wsum =3D false;
-> +			max_wsum =3D ctx->ops.apply_probes(ctx,
-> +					access_check_disabled, get_max_wsum);
-> +			if (get_max_wsum)
-> +				max_merge_score =3D max_wsum;
-> +		}
+> +	if (last)
+> +		return r->last_nr_accesses;
+> +	return r->nr_accesses;
+> +}
+> +
+>  /*
+>   * Merge adjacent regions having similar access frequencies
+>   *
+> @@ -3256,24 +3271,38 @@ static void damon_merge_two_regions(struct damon_=
+target *t,
+>   * sz_limit	size upper limit of each region
+>   */
+>  static void damon_merge_regions_of(struct damon_target *t, unsigned int =
+thres,
+> -				   unsigned long sz_limit)
+> +		unsigned long sz_limit, struct damon_ctx *ctx)
+>  {
+>  	struct damon_region *r, *prev =3D NULL, *next;
+> +	bool use_probe_hits =3D damon_has_probe_weights(ctx);
 > =20
->  		if (time_after_eq(ctx->passed_sample_intervals,
->  					next_aggregation_sis)) {
-
+>  	damon_for_each_region_safe(r, next, t) {
+> -		if (abs_diff(r->nr_accesses, r->last_nr_accesses) > thres)
+> +		unsigned int score, last_score, diff;
+> +
+> +		score =3D damon_merge_score(r, false, ctx, use_probe_hits);
+> +		last_score =3D damon_merge_score(r, true, ctx, use_probe_hits);
+> +
+> +		if (abs_diff(score, last_score) > thres)
 [Severity: Medium]
-When kdamond_merge_regions() is called with this new max_merge_score based
-on weighted probe hits, could the fallback loop terminate prematurely?
+When probe weights are enabled and use_probe_hits is true, score and
+last_score are scaled by probe->weight via damon_probe_hits_wsum().
+However, kdamond_merge_regions() calculates the initial threshold using
+unweighted access metrics. Will comparing this unscaled threshold against
+the newly scaled weighted scores prevent region merges and force the retry
+loop to inappropriately scale the threshold?
 
-mm/damon/core.c:kdamond_fn() {
-...
-			kdamond_merge_regions(ctx,
-					max_merge_score / 10,
-					sz_limit);
-...
+>  			r->age =3D 0;
+> -		else if ((r->nr_accesses =3D=3D 0) !=3D (r->last_nr_accesses =3D=3D 0))
+> +		else if ((score =3D=3D 0) !=3D (last_score =3D=3D 0))
+>  			r->age =3D 0;
+>  		else
+>  			r->age++;
+[Severity: High]
+This is a pre-existing issue, but does mutating the region age inside this
+retry loop corrupt the age metric?
+
+In kdamond_merge_regions(), damon_merge_regions_of() is called inside a
+do-while loop that repeats if nr_regions > max_nr_regions. Every time
+damon_merge_regions_of() executes, it unconditionally mutates r->age for
+every region based on the current threshold. Because the outer loop
+doubles the threshold and retries, r->age might be artificially inflated or
+repeatedly reset to 0 multiple times per aggregation interval.
+
+[ ... ]
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index d97280270c27b..6ad73559dd8ea 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
+[ ... ]
+> @@ -258,6 +266,7 @@ static void damon_test_merge_regions_of(struct kunit =
+*test)
+>  		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
+>  	}
+[Severity: Medium]
+This is a pre-existing issue, but could this test cause a NULL pointer
+dereference and leak test resources?
+
+If the internal damon_merge_regions_of logic unexpectedly merges too many
+regions, damon_nr_regions(t) might fall below 6. The KUNIT_EXPECT_EQ check
+logs a failure but does not halt the test.
+
+The subsequent loop executes 6 times regardless:
+
+mm/damon/tests/core-kunit.h:damon_test_merge_regions_of() {
+    ...
+    for (i =3D 0; i < 6; i++) {
+        r =3D __nth_region_of(t, i);
+        KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+    ...
 }
 
-Looking at kdamond_merge_regions(), max_thres is hardcoded to the
-unweighted maximum access frequency:
+This would cause __nth_region_of() to return NULL, which is immediately
+dereferenced in the KUNIT_EXPECT_EQ macro without validation.
 
-mm/damon/core.c:kdamond_merge_regions() {
-	max_thres =3D c->attrs.aggr_interval /
-		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
-	do {
-...
-	} while (nr_regions > c->attrs.max_nr_regions &&
-			threshold / 2 < max_thres);
-}
-
-If a user sets a probe weight such that max_merge_score / 10 > max_thres * =
-2,
-the loop condition threshold / 2 < max_thres will evaluate to false immedia=
-tely,
-failing to enforce the max_nr_regions limit during region merging.
+>  	damon_free_target(t);
+> +	damon_destroy_ctx(ctx);
+>  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710134651.1808=
-4-1-sj@kernel.org?part=3D14
+4-1-sj@kernel.org?part=3D8
