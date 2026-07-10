@@ -1,132 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1DE2C0260;
-	Fri, 10 Jul 2026 14:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1A1348C5A;
+	Fri, 10 Jul 2026 14:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783695419; cv=none; b=cjNRF0182bCTEmoztWbG3qZqT5TgYuqmUuMo4aoDUNu5e4VW2Znry3PgcXpf2Vx81jFI9XM12SBRVqPZ4xUDRPuesxeSG+P65aAxHwfTEULjB2grDJnPlSEy23epNdFAtUXoPDUvFvxDoJPHIE33AkPT10poToF1xuCyOHyTMM0=
+	t=1783695554; cv=none; b=S/Kzb/Agp+s4xe4D0zjAlUg92XQnZpxc+S6gH6ujlawxqazsIrWC2qpj6t801LV+QtN+q6sMsg/V2I4oCbfZ3otu4zUSf1mvbzDFAvhGDjYshOhLUNPQlW5c5Y0VRLCFOO5qRb88fbFrIYu6+QNvooglarkpZjT/iFaUSKgHbjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783695419; c=relaxed/simple;
-	bh=LzoYk1KepVo8R3d2Zk5mKEeqBKboEq2v+ykvtAzeAzc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R+PTYWMxRBLfUvkAJMoBNVqr1t2thOe6yAYCqBp2BbqtHs8goPy6oM+ec+fSJrs+mi7TpjLTiRbO6AePHh0F95M4X5yM8/WbwGI9nWwraEABo20/nBWcbiJ4rEVShqV5vxXZNoetwiyL1IysLyzltymd80pPDB3wpc98Rfd5B78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/Asc/zn; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783695554; c=relaxed/simple;
+	bh=NXNQCLIrV+WdLw14BokOG34itnagsGEUs0NxFAH0G4k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=lk7ejLttb5mJpprKPU+wK9i6CtBaq1hYgK8c4JW8jEM2ZjbH6TSa+oTBt4pVEqkCbF+Eoy8l2YRS18QIGBFBU0M9aoPIigPMBhY0pDJLpfzg7CnYfsWcq17EGn78KLXbKBaQedklluyYvZOU48YjT8I+Y3+Yt8IQ6cbdB/o5REo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UAET3Lve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I/Asc/zn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88B01F000E9;
-	Fri, 10 Jul 2026 14:56:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UAET3Lve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5381F000E9;
+	Fri, 10 Jul 2026 14:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783695417;
-	bh=LzEYD7QM/y9ve2znyck6ty1wQQ+sVrAjeiBdSV3oSsY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=I/Asc/znkA4zkIG/CtKbirdLbixdlI7zHONQqtAnqomgCl94CK7klg8Aopt3EfGU+
-	 dMEeXtqj0XTqIWyq318sb/fU7GEP1IWZMgBdlOECFGroHSrMpdIDe5bE1xpdJWXtnQ
-	 IAH7HMIzD67eDd/PrzAukc1+PgjQyOnCGrKGn0ugKUhlMpDSJDrjb/szPVAOqQ752j
-	 371AZKbsCU/eRQjnnemCH0AkcDXRb7rMEYNNODfJKBNQsio3stx+mPxn5lC/NFt07t
-	 E5qncsXTbt2O5NPYJzsolU12GWt/V388X8DsBSsxeuJTsRtDoEASS8ysPDuiAjQ4h1
-	 ugJldN6Kxi5Mw==
-Date: Fri, 10 Jul 2026 15:56:33 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Gregory Price <gourry@gourry.net>
-Cc: Pedro Falcato <pfalcato@suse.de>, 
-	Andrew Morton <akpm@linux-foundation.org>, Russell King <linux@armlinux.org.uk>, 
-	Dinh Nguyen <dinguyen@kernel.org>, Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 17/30] mm: prefer vma_[start,end]_pgoff() to
- vma->vm_pgoff in kernel/
-Message-ID: <alEHy1raICek7imv@lucifer>
-References: <cover.1782735110.git.ljs@kernel.org>
- <ea87349d63205bf4c26ea79854f179a9bf8cfb0b.1782735110.git.ljs@kernel.org>
- <akZCg73F-oGzDp1a@pedro-suse.lan>
- <akZGqclqQ6gS12Vv@lucifer>
- <ak_C_o2ehS17Q5HV@gourry-fedora-PF4VCD3F>
+	s=k20260515; t=1783695553;
+	bh=kaHO7iM2fkBkcPXX7E/p4gh+FXOCsDoSAMVqpwRtKPM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=UAET3LveLjWX8B68X5OoBzwl8nLMnCMESO6AiBDf0f6br2bu+FSY99ro2+vJfAz64
+	 DeRRmqxYubZ+aPo2o4mlrNDX9FsHGuEmWy2qhG53I9Rek1zIkK66Cq+mOMEOuYpHQp
+	 dD8THo33ClgqdfHTq1T38PApc4m22RB+YxRdwdWwIALG5HPuP643Rw8eActmjWHK7v
+	 kNNkfbzUpIfTOfTCHUeRWYnmxvsqN9tcLnlTLjMuZ2GFJ1TfdA3cDiBjpxdxjoclTR
+	 qviEB7Y2/BMljyFgi75PuxISbyXnh9ZD2+cM/qv+VTd90REkj5HFX5D+bOys/r6NB1
+	 sZ+wBLUtR32Lw==
+From: SJ Park <sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 00/19] mm/damon: introduce data attributes only monitoring
+Date: Fri, 10 Jul 2026 07:59:04 -0700
+Message-ID: <20260710145905.27704-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260710134651.18084-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ak_C_o2ehS17Q5HV@gourry-fedora-PF4VCD3F>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 09, 2026 at 11:49:18AM -0400, Gregory Price wrote:
-> On Thu, Jul 02, 2026 at 12:30:59PM +0100, Lorenzo Stoakes wrote:
-> >
-> ...
-> > static inline unsigned long vma_offset(const struct vm_area_struct *vma,
-> > 				       const unsigned long address)
-> > {
-> > 	/* Retains page offset and tags. */
-> > 	return address - vma->vm_start;
-> > }
-> >
-> ...
-> > And I'm not sure it's really all that useful. Perhaps retaining vma_offset()
-> > would be though.
-> >
->
-> Silly question:
+On Fri, 10 Jul 2026 06:46:29 -0700 SJ Park <sj@kernel.org> wrote:
 
-There's no such thing :)
+> TL;DR: Introduce a way to get DAMON's best effort accuracy monitoring of
+> user-demanding non-access data attributes.
 
->
->    What's the purpose of retaining tags in a non-address value?
+Sashiko found no blocker for this series.  Sashiko sent findings to damon@
+mailing list [1], and I replied to all the comments.  Please read those for
+details.
 
-Well if you want to reconstitute an address from it later then that'd be the
-intent, but I'm being hand wavey here for sure.
+[1] https://lore.kernel.org/damon/
 
-Main thing is to retain stuff under the page mask
 
->
-> That sounds like there's fragility just waiting to be broken.
->
-> (I presume you are talking about things like ARM MTE and such, right?)
->
-> > This is one that I think makes more sense.
-> >
-> > But in general, I'd rather hold off from yet more churn here.
-> >
-> > I'm making these changes to establish a basis for virtual page offsets
-> > introduced in [0], rather than just cleaning up in general.
-> >
->
-> I agree with this.  If the refactors here suddenly have to think about
-> corner cases on things like tags, that's better resolved separately.
+Thanks,
+SJ
 
-Yeah this series is huge enough as it is :P
-
->
-> ~Gregory
-
-Cheers, Lorenzo
+[...]
