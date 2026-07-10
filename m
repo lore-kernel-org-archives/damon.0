@@ -1,158 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D232AD3F
-	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 00:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F792C2EA
+	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 01:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783644412; cv=none; b=HBCuNHB66CJDQRE068UlCN4WCwOw/FQ6JjmYs4ofO/7Ss34NDC4aAiA/UokMdXLQK+JTYtALvIi1G6X3sbp5ZWXbxYWCJFp52BWf2qWdf6l6QjuoYJKAEBt0RAPcbAp8HOARImF5coKDenRixfwq19ax2VPjL5NaeIELMEK0unU=
+	t=1783645298; cv=none; b=Ee78FvRf39HGpaZ56ElfGt3a2KtoTr0X/TgnTSsRtvwwirths2pSjbA83kbvyDGVOWm9jOHz0aPXMkC0arnhFaDKypy8tvNxCONjKQ+4knKdpEtx9JasbyepOnIAiVUOvranr2hQid6lQJi3mOTRK2CjGZB1vqd1rI0N64d6xqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783644412; c=relaxed/simple;
-	bh=lQdbcHGB8GfPBhHbWhvdvBaRt5f1BDZ41kMtztMCtdQ=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Krqu9mBr/5hpW30eoXEABsDq1DP+nDH+5JzQIdP2WUdb9Ogvq6B5WGx7E4M+taCbf4R1oa55XR3sr6HjRtZ22G/0HBH9HEzSTMM3AccthCP6VliQ1PYEPO/q/m0GO3eBHbuT3BAx62o5tcLozKwHe5YGKaNczhyeBhK+toh3Zkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nJDO10N7; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783645298; c=relaxed/simple;
+	bh=aRWQNRCzrbuvnrZB+pbBRqeE0Du67jgbbvxR/5jvaRQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MrpnrXLIB/XPx4t5jge+Jg13fskjPvB2BgE2kj/0NLJoB8aFnJiX3QIoO3xvdU2MY4OzwMBXQM5KZ/oriHQKEa/MDYQADk9mj4pecM8PXFALmW9+12nDkgaKe0qPMfoQi0/c80jr5ps3BgxxKdCVnhGhO8w+0TLczUP9KXgd1wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kr+H7wkX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nJDO10N7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09281F000E9;
-	Fri, 10 Jul 2026 00:46:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kr+H7wkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06DD1F000E9;
+	Fri, 10 Jul 2026 01:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783644410;
-	bh=FzCCDSrgX6Rf4tCtStAz+YSmGisjVHdj44jSpxHou+Y=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=nJDO10N7ach0LHnu07BPg2yDxaYKoJEhIBCcvdTOeYpcTssIpAcxWnfuGMY4OsG5g
-	 Mnyej63QKqeNdOnRCOkMDwKvaiaw6yu9CHV8VY/FvFwOkXe80N5GQvlyrsaKb+k+/c
-	 bfZJZAgB7nn92xXKI9Cb6TuQ5zoQaQTGlc7rRnt1XnQdOTpOqNUZXa9QDaxvR2BlOf
-	 VrvVCs6Gis3Ftd0GxqABcao+IZvVd1j/WacUuEbGkUT5LjfyEbKqtoyuOpqLyvR9L0
-	 8+sroaRVoHHwnHG+9uycPRzYg3WZI5Y4e/53I9YKvqPL6lYAhwXR1AnHo4cL0POKjO
-	 CLvrs2mAaKkIA==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.3 15/19] mm/damon/core: implement
- damon_has_probe_weight()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260710002349.111414-16-sj@kernel.org>
-References: <20260710002349.111414-1-sj@kernel.org>
- <20260710002349.111414-16-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 10 Jul 2026 00:46:50 +0000
-Message-Id: <20260710004650.B09281F000E9@smtp.kernel.org>
+	s=k20260515; t=1783645297;
+	bh=kMBywnre75w713QUtP90+zygurw0d2d7jl2XzuKs2rM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Kr+H7wkXG1OCWDPaHA/yfNxtP2r4pxdIZSpP6V245u2fAqC4M8Sp/W6PiyEFT2Ysw
+	 fm1b5tHW6/PcMlnuloESunVPpVV58W3k9S6EbaGI77LJmZxoQV/Y5BtLwyMf8du1/C
+	 bOquG2+5PfFydehdA/nDHbkTco8maWjycSQecfIBJQkflqFrp6yT9uXisKKGfsnLjF
+	 Vz9BYolvj6hpqwk8qwv+RCvk6e8KwqhZfpT20NGkffNq8F9Vk5aUZQcw4WfDXaRyYE
+	 HWej6abug+zu3qb+GKjTKIWbs4vQ3cjFJPHhz71Sd8Yonapo91yIkzqB4N6EgsWd3Q
+	 BNIpgUlhOo16Q==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH v1.3 02/19] mm/damon/core: ask apply_probes() ops callback to set sampling address
+Date: Thu,  9 Jul 2026 18:01:28 -0700
+Message-ID: <20260710010129.112598-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260710003328.23B831F00A3A@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
+On Fri, 10 Jul 2026 00:33:27 +0000 sashiko-bot@kernel.org wrote:
 
-New issues:
-- [High] When probe weights are enabled, `damos_apply_target()` aggressivel=
-y merges adjacent regions regardless of their `probe_hits`, permanently los=
-ing monitoring data.
-- [High] Setting probe weights on unsupported operations backends (like DAM=
-ON_OPS_VADDR) silently disables all memory monitoring, breaking the DAMON c=
-ore logic.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The `set_samples` parameter in `damon_pa_apply_probes()` is ignored, failing to set `r->sampling_addr` when requested.
+> --
+> 
+> --- Patch [2]: [RFC PATCH v1.3 02/19] mm/damon/core: ask apply_probes() ops callback to set sampling address ---
+> commit 5855b0123b327412c4065a90363e8586c4bafda9
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/core: ask apply_probes() ops callback to set sampling address
+> 
+> This commit updates the protocol for the DAMON apply_probes callback to
+> accept a boolean set_samples argument. It updates the callback signatures
+> so it can handle sampling address setup in the future to minimize region
+> iteration.
+> 
+> > diff --git a/include/linux/damon.h b/include/linux/damon.h
+> > index d8251c83e6e55..aee28b05acc6c 100644
+> > --- a/include/linux/damon.h
+> > +++ b/include/linux/damon.h
+> 
+> [ ... ]
+> 
+> > @@ -647,7 +647,8 @@ enum damon_ops_id {
+> >   * It should also return max number of observed accesses that made as a result
+> >   * of its update.  The value will be used for regions adjustment threshold.
+> >   * @apply_probes should apply the data attribute probes to each region and
+> > - * accordingly update the probe hits counter of the region.
+> > + * accordingly update the probe hits counter of the region.  It should also
+> > + * set &damon_region->sampling_addr of each region if ``set_samples`` is true.
+> >   * @get_scheme_score should return the priority score of a region for a scheme
+> 
+> [ ... ]
+> 
+> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> > index 6172464981730..b13bf7c6eade3 100644
+> > --- a/mm/damon/paddr.c
+> > +++ b/mm/damon/paddr.c
+> > @@ -166,7 +166,7 @@ static bool damon_pa_filter_pass(phys_addr_t pa, struct folio *folio,
+> >  	return pass;
+> >  }
+> >  
+> > -static void damon_pa_apply_probes(struct damon_ctx *ctx)
+> > +static void damon_pa_apply_probes(struct damon_ctx *ctx, bool set_samples)
+> >  {
+> >  	struct damon_target *t;
+> >  	struct damon_region *r;
+> 
+> [Severity: Medium]
+> Does this implementation actually use the new set_samples parameter?
+> 
+> The updated documentation in include/linux/damon.h states that apply_probes
+> should set the region's sampling_addr when set_samples is true, but it
+> appears this parameter is ignored in damon_pa_apply_probes() in
+> mm/damon/paddr.c.
+> 
+> While it is currently called with false from kdamond_fn(), if future code
+> passes true as the docstring suggests is possible, could this result in
+> using a stale or uninitialized address because the API contract is not
+> fulfilled here?
 
-Pre-existing issues:
-- [High] Calling `damon_call()` on an inactive DAMON context leads to an in=
-definite hang in `wait_for_completion()`, allowing a local DoS via sysfs.
---
+Intentional.  The later patch of this series implement that.
 
---- Patch [15]: [RFC PATCH v1.3 15/19] mm/damon/core: implement damon_has_p=
-robe_weight() ---
-commit 55c8b58c370f614fee60cf04b8ed7e90eb167302
-Author: SJ Park <sj@kernel.org>
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260710002349.111414-1-sj@kernel.org?part=2
 
-mm/damon/core: implement damon_has_probe_weight()
 
-damon monitors only data attributes when probe weights are set.
-However, the function for detecting it is intentionally returning false
-always. Complete the mode detection function so that the mode can really
-start working.
-
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 91964336ce31e..806a67d02a6e9 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -211,6 +211,12 @@ static struct damon_probe *damon_nth_probe(int n, st=
-ruct damon_ctx *ctx)
-> =20
->  static bool damon_has_probe_weights(struct damon_ctx *c)
->  {
-> +	struct damon_probe *p;
-> +
-> +	damon_for_each_probe(p, c) {
-> +		if (p->weight)
-> +			return true;
-
-[Severity: High]
-Does returning true here cause adjacent regions to be aggressively merged in
-damos_apply_target(), resulting in the loss of monitoring data?
-
-When access_check_disabled becomes true, nr_accesses remains 0. In
-damos_apply_target(), regions with identical nr_accesses and age are merged
-to repair quota-induced splits:
-
-mm/damon/core.c:damos_apply_target() {
-    ...
-    prev_r->ar.end =3D r->ar.end;
-    damon_destroy_region(r, t);
-    ...
-}
-
-Since damos_apply_target() unconditionally merges these regions without
-combining the probe_hits arrays, does this permanently destroy the
-fine-grained probe_hits data?
-
-[Severity: High]
-Can returning true here also silently disable memory monitoring if the
-operations backend does not support probes?
-
-If a backend like vaddr or fvaddr is used, damon_valid_probe_params() does
-not verify if ctx->ops.apply_probes is implemented before allowing probe
-weights.
-
-When this function returns true, standard access checks are bypassed:
-
-mm/damon/core.c:kdamond_fn() {
-    bool access_check_disabled =3D damon_has_probe_weights(ctx);
-    ...
-    if (!access_check_disabled && ctx->ops.prepare_access_checks)
-        ctx->ops.prepare_access_checks(ctx);
-}
-
-Because ctx->ops.apply_probes is null, neither standard accesses nor probe
-accesses are evaluated. Will the kdamond worker thread spin without
-recording any memory activity?
-
-> +	}
->  	return false;
->  }
-
-[Severity: High]
-This is a pre-existing issue, but is there a risk of an indefinite hang when
-calling damon_call() from sysfs?
-
-Looking at the sysfs store functions for reclaim and lru_sort, they invoke
-damon_call() without verifying if the kdamond thread is actively running:
-
-mm/damon/reclaim.c:damon_reclaim_commit_inputs_store() {
-    ...
-    if (!ctx)
-        return -EINVAL;
-
-    err =3D damon_call(ctx, &control);
-    ...
-}
-
-If commit_inputs is written to while the module is disabled, damon_call()
-will enqueue the request and block indefinitely on wait_for_completion()
-because there is no kdamond thread to process the queue. Could we check
-damon_is_running() before calling damon_call()?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260710002349.1114=
-14-1-sj@kernel.org?part=3D15
+Thanks,
+SJ
