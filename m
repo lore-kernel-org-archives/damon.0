@@ -1,148 +1,157 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE363191BA;
-	Fri, 10 Jul 2026 14:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC7E3191BA
+	for <damon@lists.linux.dev>; Fri, 10 Jul 2026 14:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783695073; cv=none; b=RMaVUAQHdBWKp8KL4IbEN6rl9kxd8jydu6p4ABIKgq0hn9j+aLW4FwhEkGJFSj2fin2hUTK8gdp6xeKuGmwgwwjFJ1R6cMVKT2PcoqsDicsf39y2HhYoKIcIjp+l0DAOkuPh1yJIS0yFVWxURvTPfbZoOBQpbUOkbDtH/MfOqEU=
+	t=1783695097; cv=none; b=nN7XoxCRPAW+ojP0ljU85xXyWRycGVqXBeid50fyqt4u1cVpJgPhVCm/5uoMiTuRnJ7/Nta8I//CP/ibamm0kCxSk+mqYHAdM837Y/kCL1tbdNig78cF3Ya3wTdsFP1Ca6pxmjkf8NLt0mU0Wws/09JflOYirKsQl0zbh0uclOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783695073; c=relaxed/simple;
-	bh=HVCHZJFQAGlkuskJ7SayMhosIqfStBiyOTKFtFT5fdk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JdowGOYA6kcqCoWBOaON0YBx4rGBqhH6UgACOr9zrM43N9YtsQsTqBcgukxWI1OuPkZNj2rsL6I33CQG4qT8CxfgoxZv9bvsXmZ+p/VDk3HnNFlv+2182xYfwpFaEfKqNx9YqsYlwjJkidiqa9tySqhuNk7/6YuDFQaRVSoOk3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GV0G1PCd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783695097; c=relaxed/simple;
+	bh=YbNt5dVz9rcs1qKE1Fws8s36lQPZnfT82wO5VvU0+LQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rOi6XIFlMWxiZgHn23zTkiLnLPYfYLUzJSGTA0G6D0E4SFKoP8aVNmGAm1hbu2tY+jbhGrKrG8HCFz6/lPuDkMCKZfZ+Oc242T1WVot7CMBKYVlcH8qpO3LQA7yAQDzEhaA1O6OG7JPdWNVWnM5isya/Dm2knQiN2naZYefMuPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q4U/cKRW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GV0G1PCd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13DE1F00A3A;
-	Fri, 10 Jul 2026 14:50:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q4U/cKRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0471F000E9;
+	Fri, 10 Jul 2026 14:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783695069;
-	bh=/adl28F1RG11+xFCTzjhiMT3/quSA/55SrYHe5Xl+as=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=GV0G1PCdVWL/17cPDVZfz86GmBO0VpAcpElRSgqzkFaZnFKsDK6rIw+lxzMvM7oyM
-	 gOb7BmlLZV+r7XfvVToV0An5vS3DWoiRNZEtakP1kgKdd/pwAzK/AhJrUnpZlFH/ma
-	 IDgVC6vlNuOfwFAEke1UlfCP3mMcmRNqv1rAQF1Ta5n8CDc7P/kP23VMlYUdFRkbMx
-	 btXD63gJA5fhI4bndbOxrinkAQhHaNvBor7RN1UECzz5h5BotHDkxdGHR0ZdFn1Wle
-	 sxRRlN3kLf8W7g8Lmmkim9s7ySe4W1NlivrC5VU8viOWzvoYYPKNt7/4lb6lTsMCz8
-	 i1PWPp9WBYC/w==
-Date: Fri, 10 Jul 2026 15:50:44 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Gregory Price <gourry@gourry.net>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
-	Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
-	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
-	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
-	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
-	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
-	Pedro Falcato <pfalcato@suse.de>, Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, 
-	Jann Horn <jannh@google.com>
-Subject: Re: [PATCH 13/30] mm/vma: refactor vmg_adjust_set_range() for clarity
-Message-ID: <alEGqHY5GPhT30Ty@lucifer>
-References: <cover.1782735110.git.ljs@kernel.org>
- <ada7972f49ea7f1ff1df6d11e4651f270444f8fd.1782735110.git.ljs@kernel.org>
- <ak-70CHGujkI5jJI@gourry-fedora-PF4VCD3F>
+	s=k20260515; t=1783695094;
+	bh=JrZKDUKAufruqBmR8eCRlyYp6vvQIW+2MKEJz43JlKQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Q4U/cKRWguWwUYVhUIHoL7rpkC6IJ4AhlpG9QdMQIaHpJml/BFk50vVDipkWP7bhR
+	 BNttusrcEQAc7IE7wmzCstB4PRaKEUWKKot7iNGI7LJ/rfwgujuMWuwT69dEaNjnvp
+	 AYrjHkQC5Vsc7qv+VjPlxPG+2JTpiKIXEEATT3hNhJAdA91AvExo7OpTZ3hsmWcePF
+	 ppPUsCVBl7zx9jkoulHm43i3vAZWCBiQMfWtRMd7AAuqoDHUidpbGwrfgzeLtlIgAl
+	 BOHEPGbW/adSz3qChxxOri44kHU4RCR2kfU63fZHcHp3arqKKpD6W2LPh9hpqDEjqP
+	 wYiMlvDNKjaNA==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 10/19] mm/damon/core: validate params for probe hits weighted sum overflow
+Date: Fri, 10 Jul 2026 07:51:26 -0700
+Message-ID: <20260710145127.27137-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260710140743.A469F1F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ak-70CHGujkI5jJI@gourry-fedora-PF4VCD3F>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 09, 2026 at 11:18:40AM -0400, Gregory Price wrote:
-> On Mon, Jun 29, 2026 at 01:23:24PM +0100, Lorenzo Stoakes wrote:
-> > Add comments with ASCII diagrams to describe what we're doing, avoid
-> > dubious use of PHYS_PFN(), and use vma_start_pgoff().
-> >
-> > The most complicated scenario represented here is vmg->__adjust_next_start
-> > - when this is set, vmg->[start, end] actually indicate the range to be
-> > retained, so take special care to describe this accurately.
-> >
-> > No functional change intended.
-> >
-> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
->
-> Reviewed-by: Gregory Price <gourry@gourry.net>
->
-> > +		/*
-> > +		 * vmg->start    vmg->end
-> > +		 * |             |
-> > +		 * v    merge    v
-> > +		 * <------------->
-> > +		 *         delta
-> > +		 *        <------>
-> > +		 * |------|----------------|
-> > +		 * | prev |    middle      |
-> > +		 * |------|----------------|
-> > +		 *        ^
-> > +		 *        |
-> > +		 *        middle->vm_start
-> > +		 */
->
-> Even with these diagrams, it's a bit difficult to understand what the
-> actual intent/result of this chunk is (but that may be a limitation of
-> me not spending enough time reading the surrounding code, not a comment
-> of your work here).
+On Fri, 10 Jul 2026 14:07:43 +0000 sashiko-bot@kernel.org wrote:
 
-Yeah I know, I do hope to refactor all this at some point to make it simpler,
-but for the time being tried to make the confusing thing at least _slightly_
-less confusing :)
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> Pre-existing issues:
+> - [High] Pre-existing integer overflow in `damon_merge_two_regions()` during weighted average calculations.
+> - [High] Pre-existing integer overflows in `damon_sample_bp_to_count()` and `damon_sample_count_to_bp()`.
+> --
+> 
+> --- Patch [10]: [PATCH 10/19] mm/damon/core: validate params for probe hits weighted sum overflow ---
+> commit 74455514643a15cd1b70c8a9afa3237ba4226d34
+> Author: SJ Park <sj@kernel.org>
+> Date:   Fri Jul 10 13:46:39 2026 +0000
+> 
+>     mm/damon/core: validate params for probe hits weighted sum overflow
+> 
+> This commit adds parameter validation to prevent integer overflows in probe
+> hits weighted sum calculations. It ensures that user-configured probe weights
+> do not cause the weighted sum of probe hits to exceed the maximum possible
+> value during monitoring.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 4f1425e56950b..a0e6a5129fbf3 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -1335,6 +1335,9 @@ static void damos_set_filters_default_reject(struct damos *s)
+> >  static bool damon_valid_probe_params(struct damon_ctx *ctx)
+> >  {
+> >  	unsigned long sample_interval;
+> > +	unsigned char max_probe_hits;
+> > +	struct damon_probe *probe;
+> > +	unsigned int wsum, wsum_to_add;
+> >  
+> >  	if (!damon_has_probe_weights(ctx))
+> >  		return true;
+> > @@ -1342,6 +1345,18 @@ static bool damon_valid_probe_params(struct damon_ctx *ctx)
+> >  	sample_interval = ctx->attrs.sample_interval ? : 1;
+> >  	if (ctx->attrs.aggr_interval / sample_interval > U8_MAX)
+> >  		return false;
+> > +
+> > +	/* invalid if probe hits weighted sum can overflow */
+> > +	max_probe_hits = damon_nr_samples_per_aggr(&ctx->attrs);
+> > +	wsum = 0;
+> > +	damon_for_each_probe(probe, ctx) {
+> > +		if (probe->weight > UINT_MAX / max_probe_hits)
+> > +			return false;
+> > +		wsum_to_add = probe->weight * max_probe_hits;
+> > +		if (UINT_MAX - wsum < wsum_to_add)
+> > +			return false;
+> > +		wsum += wsum_to_add;
+> > +	}
+> >  	return true;
+> >  }
+> >  
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does damon_merge_two_regions() suffer from an
+> unsigned long overflow during average calculations?
+> 
+> mm/damon/core.c:damon_merge_two_regions() {
+> 	...
+> 	l->nr_accesses = (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
+> 			(sz_l + sz_r);
+> 	l->age = (l->age * sz_l + r->age * sz_r) / (sz_l + sz_r);
+> 	...
+> }
+> 
+> During the calculation of the merged region metrics, if a region size reaches
+> 1GB and nr_accesses is just 4, their product is 4,294,967,296. On 32-bit
+> architectures where unsigned long is 32 bits, this will instantly overflow.
+> 
+> Additionally, on 64-bit architectures, the age variable could grow indefinitely
+> and overflow if a region becomes very large over a long uptime. Can this lead
+> to corrupted statistics and misfiring of memory management actions?
 
->
-> ~Gregory
+Known low priority issue.
 
-Cheers, Lorenzo
+> 
+> 
+> [Severity: High]
+> This is a pre-existing issue, but I noticed a potential integer overflow in
+> damon_sample_bp_to_count() and damon_sample_count_to_bp():
+> 
+> mm/damon/core.c:damon_sample_bp_to_count() {
+> 	return bp * damon_nr_samples_per_aggr(attrs) / 10000;
+> }
+> 
+> mm/damon/core.c:damon_sample_count_to_bp() {
+> 	return mult_frac(count, 10000, damon_nr_samples_per_aggr(attrs));
+> }
+> 
+> Can these calculations overflow? The functions perform 32-bit multiplication of
+> bp (or the remainder in mult_frac) and the max samples using unsigned int
+> arithmetic.
+> 
+> If max_samples (aggr_interval / sample_interval) exceeds 429,496, which is
+> possible with a high aggregation interval compared to the sampling interval
+> (e.g., 5s aggregation and 10us sample intervals), the result could exceed
+> UINT_MAX (4,294,967,295) and silently overflow. Could this corrupt monitoring
+> region access counts during dynamic DAMON attribute updates?
 
->
-> > +		/*
-> > +		 *                Originally:
-> > +		 *
-> > +		 *            vmg->start   vmg->end
-> > +		 *            |            |
-> > +		 *            v    merge   v
-> > +		 *            <------------>
-> > +		 *            .            .
-> > +		 * merge_existing_range() updates to:
-> > +		 *            .            .
-> > +		 * vmg->start vmg->end     .
-> > +		 * |          |            .
-> > +		 * v  retain  v            .
-> > +		 * <---------->            .
-> > +		 *             delta       .
-> > +		 *            <----->      .
-> > +		 * |----------------|------|
-> > +		 * |    middle      | next |
-> > +		 * |----------------|------|
-> > +		 *                  ^
-> > +		 *                  |
-> > +		 *                  next->vm_start
-> > +		 */
+Known low priority issue.
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260710134651.18084-1-sj@kernel.org?part=10
+
+
+Thanks,
+SJ
