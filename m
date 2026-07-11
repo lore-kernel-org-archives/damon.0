@@ -1,131 +1,143 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFA330E0E5;
-	Sat, 11 Jul 2026 06:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403693CAE76;
+	Sat, 11 Jul 2026 17:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783751422; cv=none; b=R85vb3luLdMrIJ1fEgQ8t+lxr/viRULpWT6P/aCsfo8JyfBS1cQur5yUeBHkVKffbQYlXBA20JKF8ewH0J/M6b1Vle5Cv17oiCvmJLDRbOqkKi1pO8BMXtBQpUlTO22qADnT9Q9B/iOLja9pBj4bBkH3TBMRZScgkq6DTuuB+bM=
+	t=1783790146; cv=none; b=O3wvpmm5KZx6WRxdsOb7/K0v59BAsIADxwATDMIQBLiYWxfLJEOaM7xHodKvrhxWRe+ahcnXfD1kjW74/DSewkaA1WtJhHB2DzXBoOQZpFdahc/WXCWulNcPU08GJBDTXUJ1aH5NkYKstkzCA5qEGB0iF1oPFZ2WSiO/3CAd0s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783751422; c=relaxed/simple;
-	bh=IYPENVq4uCEuy3XnkCeiJi3IEtILJHHxBqNO5Tq6cTA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fofhrHhVWFNTJbZIIBJ3lpq96FD6lET1ihufVbrn0hyCV5kzg1OgkpGmeEn/TF/Dm7rbG/HMTtmnSWiccsTsHli3eKQ1svSUAEgyodMovY17fCct2F47IKNfGIUqsuaeYITixJ2jUir8NwdzgP2FRhgrJ7sZUWnMO3uxo1lyn7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CA/Q9Pm+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783790146; c=relaxed/simple;
+	bh=HNEMbUM8Dc7MXv36hC9p06seebB9ZnD89UdgnIiyTTE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AkHef4D8JG3xsfL6p8sUqkwf6NoCUQbVNa+JOubqgTacSoZjAsOEeuUuScpnlt5CDPkXp1o2iRN9xnnEv8TPHMAzQve/oh1v0iySsb30Hea+JClSux6Pd8Ou8YT3ygOXkFGaiLMwJiOlVI8xTMaJV4pdTtg52UlGSi9cr7RO6Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VdAxMIiQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CA/Q9Pm+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945361F000E9;
-	Sat, 11 Jul 2026 06:29:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VdAxMIiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE50D1F000E9;
+	Sat, 11 Jul 2026 17:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783751421;
-	bh=9eVIbMKITUevCMOU40dgSnSieoLsS9WKVsiAM/rS2zc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=CA/Q9Pm+cFj2kk4xdwe69i1AbSxfCXCM2cXfUZUmah7hj/Ubo4XRMpolw0xadPgzS
-	 gJKPFPNOiaxsBuYMret/fjJqncO1ktz8USS2e9mcsvOvn/mYZdxbB0Tj4MwDAR99I8
-	 XjJAHanxpe5kn3UjNk2QvoY7Z9SySLEvrabgtKT72ChDC0P35M1kixnqGh//znv2Eo
-	 zs46Q03pLQrCwnmFv2evmTv6jRhyAeUF/oUtnSZ8CgIx3vH1zVbTxPW+gFEiOkzrIz
-	 3gFjFIh/y6o02djVfVIAtyQQXW8ufebAz3kNAQo/UlS+sQecIJEsnzo0CVUPuoIX6/
-	 1foRf4eXLXDwg==
-Date: Sat, 11 Jul 2026 07:29:47 +0100
-From: Lorenzo Stoakes <ljs@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: David Hildenbrand <david@kernel.org>, 
-	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	Michal Hocko <mhocko@suse.com>, Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, 
-	Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
-	Pedro Falcato <pfalcato@suse.de>, Russell King <linux@armlinux.org.uk>, 
-	Dinh Nguyen <dinguyen@kernel.org>, Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
-	Dan Williams <djbw@kernel.org>, Matthew Wilcox <willy@infradead.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
-	Adrian Hunter <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, Zi Yan <ziy@nvidia.com>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <npache@redhat.com>, 
-	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
-	Miaohe Lin <linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>, 
-	Xu Xin <xu.xin16@zte.com.cn>, Chengming Zhou <chengming.zhou@linux.dev>, 
-	SJ Park <sj@kernel.org>, Matthew Brost <matthew.brost@intel.com>, 
-	Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>, 
-	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Alistair Popple <apopple@nvidia.com>, Hugh Dickins <hughd@google.com>, Peter Xu <peterx@redhat.com>, 
-	Kees Cook <kees@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Robin Murphy <robin.murphy@arm.com>, Andrey Konovalov <andreyknvl@gmail.com>, 
-	Alexander Potapenko <glider@google.com>, Dmitry Vyukov <dvyukov@google.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Thomas Gleixner <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>, x86@kernel.org, 
-	"H. Peter Anvin" <hpa@zytor.com>, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	Christian Gmeiner <christian.gmeiner@gmail.com>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
-	Thierry Reding <thierry.reding@kernel.org>, Mikko Perttunen <mperttunen@nvidia.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Christian Koenig <christian.koenig@amd.com>, 
-	Huang Rui <ray.huang@amd.com>, Matthew Auld <matthew.auld@intel.com>, 
-	Jason Gunthorpe <jgg@ziepe.ca>, Yishai Hadas <yishaih@nvidia.com>, 
-	Shameer Kolothum <skolothumtho@nvidia.com>, Kevin Tian <kevin.tian@intel.com>, 
-	Ankit Agrawal <ankita@nvidia.com>, Alex Williamson <alex@shazbot.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, Shakeel Butt <shakeel.butt@linux.dev>, 
-	Usama Arif <usama.arif@linux.dev>, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	nvdimm@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev, iommu@lists.linux.dev, 
-	kasan-dev@googlegroups.com, linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org, 
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	Russell King <linux+etnaviv@armlinux.org.uk>, Ackerley Tng <ackerleytng@google.com>, 
-	Kai Huang <kai.huang@intel.com>
-Subject: Re: [PATCH v2 00/33] mm: make VMA page offset handling more
- consistent
-Message-ID: <alHiUW6p5dpyoU-L@lucifer>
-References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
- <20260710154521.435f67cc7b03ed3a9ccd423a@linux-foundation.org>
+	s=k20260515; t=1783790145;
+	bh=ck7cKutqom8FXqW9f3tKNdDyqqXs5y+HSAyjbPEnNkM=;
+	h=From:To:Cc:Subject:Date;
+	b=VdAxMIiQOsU2Hag44ILU7hjjfQ/8/fT+1he5wGJSsqu6mApw3IemgvlhZPh06Egvi
+	 xAVedD9/dEQb4C3CvgYyKK7LUWpmuvkogJdLdvBaWj9Dqlwx/NBFGGSqNBq1rpQrKr
+	 euT4vsm2acyDmEUWCzst8NFaICV4+tmHZpkSG6ifrUlzHLbtsWd/ziBUhTnjfqHL3w
+	 Lp/fW1qvv3zoTJd+qPyZ0af/3pLG4Tqv3jHdwXUxcGbJEuEMRBHsbCgVmi+Ux1ZedX
+	 BfmX0VAtS/4wooMN1S5JGjGgL1fZ+cW8doop88oopGgCq64zbD9o9HkC81Mo6pMjDl
+	 Gx6PjTtR5PrHQ==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	"# 6 . 10" <stable@vger.kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH] mm/damon/core: skip aging from repeated aggressive merging
+Date: Sat, 11 Jul 2026 10:15:35 -0700
+Message-ID: <20260711171537.75278-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260710154521.435f67cc7b03ed3a9ccd423a@linux-foundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jul 10, 2026 at 03:45:21PM -0700, Andrew Morton wrote:
-> On Fri, 10 Jul 2026 21:16:41 +0100 Lorenzo Stoakes <ljs@kernel.org> wrote:
->
-> > This series performs a series of cleanups and improvements around how the
-> > vma->vm_pgoff field is used.
->
-> Thanks, I'll add this to mm-new.
->
-> Sashiko wasn't able to apply it :(
->
-> There were some minor collisions in ksm.c, thanks to
-> https://lore.kernel.org/20260703162510242nxmjbcLy5ccp1dbZSK3EU@zte.com.cn.
+The number of DAMON regions could temporarily exceed the user-defined
+maximum number of regions limit for corner cases.  For example, users
+could lower the limit via runtime parameters update.  For such a case,
+kdamond_merge_regions() repeats merging regions in the case doubling the
+merge threshold.  The repeated merge operation could update the age of
+regions multiple times.  This corrupts the monitoring results.  Fix the
+issue by asking the merge operation to skip aging for the corner case.
 
-Ah yeah, another series on my infinite review todo list :)
+The user impact is degradation of the monitoring quality.  The impact
+should be mild, since the degradation is only temporal, and it is not
+common to happen in realistic setups.
 
-Thanks for fixing up!
+The issue was discovered [1,2] by Sashiko.
 
->
-> (You'd think His Royal AIness could figure out how to resolve a few
-> dopey patch rejects.  Oh well.)
+[1] https://lore.kernel.org/20260621203548.10718-1-sj@kernel.org
+[2] https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org
 
-Yeah it did this last time too :(
+Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
+Cc: <stable@vger.kernel.org> # 6.10
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c             | 21 +++++++++++++--------
+ mm/damon/tests/core-kunit.h |  2 +-
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-I will try to get a local sashiko on it, FWIW I had claude/review-prompts go
-over the whole series several times (and as a result fixed a bunch of stuff),
-but Chris Mason's prompts are more conservative and sashiko often picks up stuff
-it doesn't as a result, so let's see how easy it is to set up locally... :)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 806a67d02a6e9..6c4215cc809ec 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3308,7 +3308,7 @@ static unsigned int damon_merge_score(struct damon_region *r, bool last,
+  * sz_limit	size upper limit of each region
+  */
+ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
+-		unsigned long sz_limit, struct damon_ctx *ctx)
++		unsigned long sz_limit, struct damon_ctx *ctx, bool count_age)
+ {
+ 	struct damon_region *r, *prev = NULL, *next;
+ 	bool use_probe_hits = damon_has_probe_weights(ctx);
+@@ -3319,12 +3319,14 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
+ 		score = damon_merge_score(r, false, ctx, use_probe_hits);
+ 		last_score = damon_merge_score(r, true, ctx, use_probe_hits);
+ 
+-		if (abs_diff(score, last_score) > thres)
+-			r->age = 0;
+-		else if ((score == 0) != (last_score == 0))
+-			r->age = 0;
+-		else
+-			r->age++;
++		if (count_age) {
++			if (abs_diff(score, last_score) > thres)
++				r->age = 0;
++			else if ((score == 0) != (last_score == 0))
++				r->age = 0;
++			else
++				r->age++;
++		}
+ 
+ 		if (!prev)
+ 			goto set_prev_continue;
+@@ -3366,15 +3368,18 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+ 	struct damon_target *t;
+ 	unsigned int nr_regions;
+ 	unsigned int max_thres;
++	bool count_age = true;
+ 
+ 	max_thres = c->attrs.aggr_interval /
+ 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
+ 	do {
+ 		nr_regions = 0;
+ 		damon_for_each_target(t, c) {
+-			damon_merge_regions_of(t, threshold, sz_limit, c);
++			damon_merge_regions_of(t, threshold, sz_limit, c,
++					count_age);
+ 			nr_regions += damon_nr_regions(t);
+ 		}
++		count_age = false;
+ 		threshold = max(1, threshold * 2);
+ 	} while (nr_regions > c->attrs.max_nr_regions &&
+ 			threshold / 2 < max_thres);
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 6ad73559dd8ea..68d30648c612e 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -257,7 +257,7 @@ static void damon_test_merge_regions_of(struct kunit *test)
+ 		damon_add_region(r, t);
+ 	}
+ 
+-	damon_merge_regions_of(t, 9, 9999, ctx);
++	damon_merge_regions_of(t, 9, 9999, ctx, true);
+ 	/* 0-112, 114-130, 130-156, 156-170, 170-230, 230-10170 */
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 6u);
+ 	for (i = 0; i < 6; i++) {
 
-Cheers, Lorenzo
+base-commit: 3700e40ed9161bcf1b76601fa50b2b0ff8972eb8
+-- 
+2.47.3
