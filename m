@@ -1,154 +1,101 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7384086A
-	for <damon@lists.linux.dev>; Sat, 11 Jul 2026 05:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B301BEEC0;
+	Sat, 11 Jul 2026 06:22:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783746720; cv=none; b=IqUOpA0WNt2azwRTsGj/DuGBlndLLGDIEV7ACfuKrVPYkpCDMQYIzSEQ4ogriFSetnLoagGNkAE1ax2XC30hFmvU/hlVhRO2TqU9e8B5qyhtKoFw4ah9FNP6R0d9OYncpcbly6TxWfiW3E/3RPt+Qry3vmCPI7z1sPJ7IxgQwA4=
+	t=1783750929; cv=none; b=DtNKPFWpqxCdYqmVqMfK6OLWlrqUcjlI8O+4aqEyt7K1EvIdqgICLw5WcPrkO5uNxMpogGmxEALRC7aXKVYuMcv9/t2+zM3yS/2DfJxxjwPQzb8BWKRitoIAg+qowIfZ24VfX8PEb86/eLwad1xGXddJY8qSXv1yoRbkNB3dbco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783746720; c=relaxed/simple;
-	bh=kU/z17lCDV8MaBIA0KgfNL7L7Xi6hXB8fGla5gr40Gw=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=gxoV3/J80EjhgEQg2ktQ/rwDMwORPzj/26vQP1mPNMA5kDE8asvpMAScNFk5OJzNI42ViNY1M+rksuiFRI2DNOFqqSDm+OxWr41skhSGHIGq5ytSzhUpZfXxyReZ8Pk3jw3GDN7u//Jm6uostAjVGfAQg/hRdcZTo0oWnipjNv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 048ab6cc7ce711f1aa26b74ffac11d73-20260711
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NO_NAME, HR_CTE_QP, HR_CTT_TXT
-	HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME, HR_MAILER_MTBG
-	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
-	HR_SJ_PHRASE_LEN, HR_SJ_PRE_RE, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
-	HR_TO_NAME, IP_UNTRUSTED, SRC_UNTRUSTED, IP_UNFAMILIAR, SRC_UNFAMILIAR
-	DN_TRUSTED, SRC_TRUSTED, SA_EXISTED, SN_UNTRUSTED, SN_UNFAMILIAR
-	SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, UD_TRUSTED, CIE_GOOD_SPF
-	CIE_UNKNOWN, GTI_FG_BS, GTI_C_CI, GTI_FG_IT, GTI_RG_INFO
-	GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:c4f4e401-dc88-4d47-9040-54b3aed482a8,IP:10,
-	URL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:5
-X-CID-INFO: VERSION:1.3.12,REQID:c4f4e401-dc88-4d47-9040-54b3aed482a8,IP:10,UR
-	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:5
-X-CID-META: VersionHash:e7bac3a,CLOUDID:a6d662c7724aa7a570282950bd995e40,BulkI
-	D:260710220255YPJJGYNN,BulkQuantity:1,Recheck:0,SF:17|19|64|66|78|80|81|82
-	|83|102|127|841|865|898,TC:nil,Content:0|15|52,EDM:-3,IP:-2,URL:99|1,File:
-	nil,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:
-	0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_ULS
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 048ab6cc7ce711f1aa26b74ffac11d73-20260711
-X-User: husong@kylinos.cn
-Received: from ehlo.thunderbird.net [(223.160.130.75)] by mailgw.kylinos.cn
-	(envelope-from <husong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 1057582826; Sat, 11 Jul 2026 13:11:48 +0800
-Date: Sat, 11 Jul 2026 13:11:42 +0800
-From: Song Hu <husong@kylinos.cn>
-To: SJ Park <sj@kernel.org>
-CC: akpm@linux-foundation.org, shu17az@gmail.com, jiayuan.chen@shopee.com,
- damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/tests/core-kunit: test damon_nr_accesses_mvsum()
-User-Agent: Thunderbird for Android
-In-Reply-To: <20260710140238.24103-1-sj@kernel.org>
-References:  <20260710140238.24103-1-sj@kernel.org>
-Message-ID: <B4B6791A-5400-4342-B43D-FA9C7895E7BF@kylinos.cn>
+	s=arc-20240116; t=1783750929; c=relaxed/simple;
+	bh=WbIgITf+aHGNMFdZM2hnYV5tmAqGANAREaGRZ4MOOuY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iZP3YoTGP7NrVFDSlaGYgCGFgprRK90nxnmdfmiANs3wTe0zh4nDZ3igLEn7sbhIdPnT2PM7j/eFb3x2iswzCzso6ta+gjVBxkh2SBQhXbPxFwvbnqhnSTzmXTdeBentzKPmyFAleJmvfHDKxeMi5lLgrf58i+Yr9l5gOQdOfXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=coo0niBU; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="coo0niBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88FC1F00A3A;
+	Sat, 11 Jul 2026 06:21:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1783750928;
+	bh=WbIgITf+aHGNMFdZM2hnYV5tmAqGANAREaGRZ4MOOuY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=coo0niBUkp/gUkbRSatT5EJ6NfiQ7ezfzQNFFEka9gd//4UjxtBzc7RBi4OLd8CJp
+	 zhITxjhwTqPhMy21VbSNO5jlWP62czybhR05pJZTJTb3iv0IdJ+TlpfkpIyIm/4CeK
+	 +n6PGnXcW/v4qnadjp5ztDaRzxkkltVfID9+KdWba4BSS6I4vpCR+8z1NGu7pVTOYK
+	 3SWYJRt3520w13mZ0szu/3x63YnNWVCUI7AtJTClfOv5gpw/pdE0wkv/FwletvuCgz
+	 VSb31m3ojblPokIyzlMhDyaw755+CWsZBp7wZoYS2xjQCz/QLSkvrDwTE0v7OEpi+A
+	 fef8MnSSiqRUg==
+Date: Sat, 11 Jul 2026 07:21:43 +0100
+From: Lorenzo Stoakes <ljs@kernel.org>
+To: Gregory Price <gourry@gourry.net>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Russell King <linux@armlinux.org.uk>, Dinh Nguyen <dinguyen@kernel.org>, 
+	Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Thomas Gleixner <tglx@kernel.org>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Thierry Reding <thierry.reding@kernel.org>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Christian Koenig <christian.koenig@amd.com>, Huang Rui <ray.huang@amd.com>, Ankit Agrawal <ankita@nvidia.com>, 
+	Alex Williamson <alex@shazbot.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Christian Brauner <brauner@kernel.org>, Dan Williams <djbw@kernel.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	David Hildenbrand <david@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	"Liam R . Howlett" <liam@infradead.org>, Matthew Wilcox <willy@infradead.org>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, SeongJae Park <sj@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
+	Hugh Dickins <hughd@google.com>, Mike Rapoport <rppt@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-sgx@vger.kernel.org, 
+	etnaviv@lists.freedesktop.org, dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, nvdimm@lists.linux.dev, linux-mm@kvack.org, 
+	iommu@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, kasan-dev@googlegroups.com, damon@lists.linux.dev, 
+	Pedro Falcato <pfalcato@suse.de>, Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, 
+	Jann Horn <jannh@google.com>
+Subject: Re: [PATCH 27/30] mm/vma: correct incorrect vma.h inclusion
+Message-ID: <alHgvYH3F9FkObri@lucifer>
+References: <cover.1782735110.git.ljs@kernel.org>
+ <22d0f4e3fe11f6fd1312734e242d008267ad142c.1782735110.git.ljs@kernel.org>
+ <alFHR3fg8K1-SITK@gourry-fedora-PF4VCD3F>
+ <alFJUfaGHVnKd-Nb@lucifer>
+ <alFePgFUR52GgBS7@gourry-fedora-PF4VCD3F>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alFePgFUR52GgBS7@gourry-fedora-PF4VCD3F>
 
+On Fri, Jul 10, 2026 at 05:03:58PM -0400, Gregory Price wrote:
+> On Fri, Jul 10, 2026 at 08:35:43PM +0100, Lorenzo Stoakes wrote:
+> > >
+> > > Do you actually need 3 copies of this comment or just one copy in
+> > > vma_internal.h?
+> >
+> > I'd rather have it at a glance, it's a bit silly but C headers are silly :P
+> >
+> > BTW you're kinda racing against time here as I'm on the verge of sending v2
+> > :P
+>
+> :[ i don't refresh my inbox when i get hyperfocused and now i am sad
 
+Oh no! But that hyperfocus sounds familiar ;)
 
-=E4=BA=8E 2026=E5=B9=B47=E6=9C=8810=E6=97=A5 GMT+08:00 22:02:37=EF=BC=8CSJ=
- Park <sj@kernel=2Eorg> =E5=86=99=E9=81=93=EF=BC=9A
->On Fri, 10 Jul 2026 12:15:30 +0800 Song Hu <husong@kylinos=2Ecn> wrote:
->
->> damon_nr_accesses_mvsum() wraps damon_mvsum() with the monitoring
->> intervals of the context to compute the pseudo moving sum of a region's
->> access frequency, with a special case for when the whole aggregation
->> window remains=2E damon_mvsum() itself is already covered by
->> damon_test_mvsum(), but the wrapper is not=2E
->>=20
->> Add a table-driven KUnit test that exercises the full-window-remaining
->> boundary (with both reset and not-yet-reset nr_accesses), partially
->> elapsed windows, and the no-window-remaining case=2E
->
->Nice!  Thank you!
->
->>=20
->> Signed-off-by: Song Hu <husong@kylinos=2Ecn>
->> ---
->>  mm/damon/tests/core-kunit=2Eh | 49 +++++++++++++++++++++++++++++++++++=
-++
->>  1 file changed, 49 insertions(+)
->>=20
->> diff --git a/mm/damon/tests/core-kunit=2Eh b/mm/damon/tests/core-kunit=
-=2Eh
->> index 0124f83b39b8=2E=2E8c030282a638 100644
->> --- a/mm/damon/tests/core-kunit=2Eh
->> +++ b/mm/damon/tests/core-kunit=2Eh
->> @@ -683,6 +683,54 @@ static void damon_test_mvsum(struct kunit *test)
->>  	}
->>  }
->> =20
->> +/*
->> + * Test damon_nr_accesses_mvsum(), which wraps damon_mvsum() with the =
-monitoring
->
->Please wrap lines [1] for 80 columns limit=2E
+Apologies for that, I did hold off some hours. But you can at least see that I
+did all you asked in v1 :)
 
-Hi SJ,
-
-Thanks for your review=2E This was my mistake, and I will resolve it in th=
-e next patch version=2E
-
->
->> + * intervals of the context=2E  With a sample interval of 1 and an agg=
-regation
->> + * interval of 10, an aggregation window is 10 sample intervals long=
-=2E  Each row
->> + * below specifies the passed sample intervals, the next aggregation t=
-ime in
->> + * sample intervals, the current and last nr_accesses of a region, and=
- the
->> + * expected return value=2E
->> + */
->> +static void damon_test_nr_accesses_mvsum(struct kunit *test)
->> +{
->> +	unsigned long input_expects[] =3D {
->> +		/* passed, next_aggr, nr_accesses, last_nr_accesses, expect */
->> +		0, 10, 5, 3, 3,		/* bp=3D10000: unreset nr_accesses ignored */
->
->I was bit confused what 'bp' means=2E  Can we just drop 'bp=3D=2E=2E=2E:'=
- part from the
->comment?
->
-
-This explanation is just my personal guess=2E I will delete all uncertain =
-content in the revised patch=2E
-
-Thanks,
-Song
-
->Also, let's keep the 80 columns limit=2E
->
->[=2E=2E=2E]
->
->Other than those, looks good to me!
->
->[1] https://docs=2Ekernel=2Eorg/process/coding-style=2Ehtml#breaking-long=
--lines-and-strings
->
->
->Thanks,
->SJ
+Cheers, Lorenzo
