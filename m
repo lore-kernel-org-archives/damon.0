@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEC83CF210;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE663CF96B;
 	Sat, 11 Jul 2026 18:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783793062; cv=none; b=PmGSHd4lcCSWXukQDLxZDokPB2/5O6xPf6XUENyCZstl89zs/vj8zajV8F3iwgYnze7qVzSMKdbQ+y/xQT2Gy1UFVBkk8huJn3+qovvb8uEUbKI27YErTk/tqlbfzg0SmaiuIuGAOwrSkKTfdMo4fgBJRhdYQlRinAB8qpJrg54=
+	t=1783793063; cv=none; b=P1Vj7zWBAHqOnvmPh2UV8X7nvL52yofGjZWrbIZj9S44PO+AHnw34yDJVVyw4Qsx5ieoW91XoVACYE62n/uzZb8L9Y6drAfBitzfoWVtp5A/FqLIoo16oDj7FiFIojY7/2m2litYW1F40olLkeiWNx2rpiR0IEk0LFCfl5TRElI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783793062; c=relaxed/simple;
-	bh=5ScejZ7WR20mP7M32rQjyj8bSoc3hvLkckL0qcqy7ww=;
+	s=arc-20240116; t=1783793063; c=relaxed/simple;
+	bh=nt1m4yOHpUkfhmuPI5sfQNBML1ejUt2LDcM7VHyWuzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQTIpp2ZqMqdgOq2JD/6Y5VjyWzj4LpHC5MTmX434b78olBVf4DTR7K2rfdnAfLmSfORxWfWsy2PjZ4WINkFeoX0UzXa/cIs7ANkKA0nmaIR4CjYi/FAc+R3S1LbE3gT2TktF6Wt7DWGT0nUWqh7FBZxxxDDpn5aZJ2teSfWNS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MulPV6Al; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LK9dJtV2sBa4SB8IFdEy4P/US8IFZVXx1ip5Mtzn5G7Sh7Y1SPf5pJzpSlI1X5KOzshSd6fza2f5xcL0uncusPmM4EwaW3Gl7gFmqvUJXup6iVtTMCEkc4Uc+z4uDipEbOGD/OAXG9I/FMgCsFvZq1Ll2/JYYRvig8Mf7/d9ors=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eq8LOAv3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MulPV6Al"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E7F1F00A3F;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eq8LOAv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999F91F00A3A;
 	Sat, 11 Jul 2026 18:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1783793061;
-	bh=MTFa+hpzXfcfyF1zP3rvNz2Fhu2Cffg36gE6sioOaYQ=;
+	bh=hhmDCI+ot7IL3VsT3pLzYBJmbk4njLZd345nGTc/fNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MulPV6Al7PdRkuMvExn0i9dIE8w1T9TdjXcHiU7mSLmr/ml12UAOwG/CZB/qATXyf
-	 md+aw7JdFjco/wyrSPmUgbVnYVIWdagWPMgaEfYZH7g00f7zpaGKkeqC0yN5cBsRPy
-	 gyiux1YnfWFwgb27qLWugO7JiIiU1fafzNMWASxfjhqEibw1QHZ0Y852PNflQhjisA
-	 SizWI8fULFQ71nSX7XRNxjg5h6laM3HKdaG9E/i4esoKomDjNXO8/7KP2qAutjSFZx
-	 64lvCUtBI4imnyFEDZUkaGEGvdN+oPYnCL3wVMgmxqeiRhPXxWmFw8SilDe3O2WfBn
-	 eKOttvdn0SAOQ==
+	b=eq8LOAv38/JT//HvNVNFuX9mQYVns/QjBaRg4lFD6H13iiyHwdAqqGAHzowFBfpYp
+	 TQ845vSB2U/vzHnithCWeTxZHU2L4LlQ+w4ohRPsP+z26/uQkgXKJqxWwF7prLpa7F
+	 v8OfWijkA7lDe0BKpuxMaLmjq7HPpxf92RN3DuqjlxcCn3NT+Gu63ScjWp2C/hdYEC
+	 BJjrA9WqF1RvbnR5DP1QYEhLqbnKaftOrbc1Bb/x/+npMXPDZCH0OFnE1Yr2GL2PBB
+	 Dz3LKLleFAI+dUaGDHW7S0oF1Y/p+03h9hzlCS7svr+6fURFqcY4prI2uxh8l5Thdc
+	 Ihs5v09i67MxA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	"# 5 . 16 . x" <stable@vger.kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 4/5] mm/damon/paddr: drop last same folio access check reuse optimization
-Date: Sat, 11 Jul 2026 11:04:07 -0700
-Message-ID: <20260711180409.82093-5-sj@kernel.org>
+Subject: [RFC PATCH 5/5] mm/damon/sysfs: read ops_id only once
+Date: Sat, 11 Jul 2026 11:04:08 -0700
+Message-ID: <20260711180409.82093-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260711180409.82093-1-sj@kernel.org>
 References: <20260711180409.82093-1-sj@kernel.org>
@@ -48,74 +47,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It can race when multiple kdamonds are being used.  The problem from the
-race is doubtful, but the gain from the optimization is also doubtful.
-Simply drop the optimization in favor of code simplicity.
+damon_sysfs_apply_inputs() reads ops_id twice.  It could race with
+ops_id_store().  As a result, the min_region_sz could wrongly be set up.
+Read it once.
 
-The user impact is doubtfully trivial.  After all, this kind of
-interference can happen only by intentional user setup.  Even if it
-happens, it will be rare, and the consequence is degradation of the
-best-effort monitoring results.  No critical consequences like kernel
-panic or memory corruption happen.
+The user impact is trivial.  Sane users ain't update the parameter in
+parallel.  Even if it happens, only monitoring itself runs differently
+than expected.  No critical consequences like kernel panic or memory
+corruption happen.
 
-The race was discovered [1] by Sashiko.
+The issue was discovered [1] by Sashiko.
 
-[1] https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org
+[1] https://lore.kernel.org/20260703172417.95426-1-sj@kernel.org
 
-Fixes: a28397beb55b ("mm/damon: implement primitives for physical address space monitoring")
-Cc: <stable@vger.kernel.org> # 5.16.x
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ mm/damon/sysfs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index b85f88a7a38f4..e4f98d67461f5 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -65,7 +65,7 @@ static void damon_pa_prepare_access_checks(struct damon_ctx *ctx)
- 	}
- }
- 
--static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
-+static bool damon_pa_young(phys_addr_t paddr)
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index b5fe036f78015..60a1a9e4ada34 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2094,14 +2094,16 @@ static inline bool damon_sysfs_kdamond_running(
+ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
+ 		struct damon_sysfs_context *sys_ctx)
  {
- 	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
- 	bool accessed;
-@@ -74,7 +74,6 @@ static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
- 		return false;
++	enum damon_ops_id ops_id;
+ 	int err;
  
- 	accessed = damon_folio_young(folio);
--	*folio_sz = folio_size(folio);
- 	folio_put(folio);
- 	return accessed;
- }
-@@ -82,23 +81,12 @@ static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
- static void __damon_pa_check_access(struct damon_region *r,
- 		unsigned long addr_unit)
- {
--	static phys_addr_t last_addr;
--	static unsigned long last_folio_sz = PAGE_SIZE;
--	static bool last_accessed;
-+	bool accessed;
- 	phys_addr_t sampling_addr = damon_pa_phys_addr(
- 			r->sampling_addr, addr_unit);
- 
--	/* If the region is in the last checked page, reuse the result */
--	if (ALIGN_DOWN(last_addr, last_folio_sz) ==
--				ALIGN_DOWN(sampling_addr, last_folio_sz)) {
--		damon_update_region_access_rate(r, last_accessed);
--		return;
--	}
--
--	last_accessed = damon_pa_young(sampling_addr, &last_folio_sz);
--	damon_update_region_access_rate(r, last_accessed);
--
--	last_addr = sampling_addr;
-+	accessed = damon_pa_young(sampling_addr);
-+	damon_update_region_access_rate(r, accessed);
- }
- 
- static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
+-	err = damon_select_ops(ctx, sys_ctx->ops_id);
++	ops_id = READ_ONCE(sys_ctx->ops_id);
++	err = damon_select_ops(ctx, ops_id);
+ 	if (err)
+ 		return err;
+ 	ctx->addr_unit = sys_ctx->addr_unit;
+ 	/* addr_unit is respected by only DAMON_OPS_PADDR */
+-	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
++	if (ops_id == DAMON_OPS_PADDR)
+ 		ctx->min_region_sz = max(
+ 				DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
+ 	ctx->pause = sys_ctx->pause;
 -- 
 2.47.3
