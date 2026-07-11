@@ -1,62 +1,62 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C74B1D9A66
-	for <damon@lists.linux.dev>; Sat, 11 Jul 2026 05:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7384086A
+	for <damon@lists.linux.dev>; Sat, 11 Jul 2026 05:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783746269; cv=none; b=O3QLd3jlH1y2mCHXlQBTw2EgqlxaQbOr764NwsOE+cDTl00nsY+bvlUTpdRhvU1CvxOJcxLLr49Q8V7RgiB5FnBBHRol9J2Mys19GlJOO+8nLsyo6RPX7Dd3X4EWOjU3oE/4kHjbssIIBx2WZXEQ2aKrtdy3YAjEh/2viNEObEU=
+	t=1783746720; cv=none; b=IqUOpA0WNt2azwRTsGj/DuGBlndLLGDIEV7ACfuKrVPYkpCDMQYIzSEQ4ogriFSetnLoagGNkAE1ax2XC30hFmvU/hlVhRO2TqU9e8B5qyhtKoFw4ah9FNP6R0d9OYncpcbly6TxWfiW3E/3RPt+Qry3vmCPI7z1sPJ7IxgQwA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783746269; c=relaxed/simple;
-	bh=sMujRkzP+0svfJnmRczxcQ7AePeemebynXdWZ0h9VGE=;
+	s=arc-20240116; t=1783746720; c=relaxed/simple;
+	bh=kU/z17lCDV8MaBIA0KgfNL7L7Xi6hXB8fGla5gr40Gw=;
 	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=JltxghdvB4KaKngyyC+qZXFK34a0W4J4eJu5X1yT5Y7xOgBPk/FWYiHccbgcQsLSRp48aOEPokQbwpmdx3TTR35o+3J7tV6cPB3M6DxZHBlA7RSvXW2D9bYqq6Dggqnbm9z9UsHaMjQkf8eHkwrnj3fSLMtCBdyNDsrpCSqqrCA=
+	 MIME-Version:Content-Type; b=gxoV3/J80EjhgEQg2ktQ/rwDMwORPzj/26vQP1mPNMA5kDE8asvpMAScNFk5OJzNI42ViNY1M+rksuiFRI2DNOFqqSDm+OxWr41skhSGHIGq5ytSzhUpZfXxyReZ8Pk3jw3GDN7u//Jm6uostAjVGfAQg/hRdcZTo0oWnipjNv8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: f88789647ce511f1aa26b74ffac11d73-20260711
+X-UUID: 048ab6cc7ce711f1aa26b74ffac11d73-20260711
 X-CTIC-Tags:
 	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NO_NAME, HR_CTE_QP, HR_CTT_TXT
 	HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME, HR_MAILER_MTBG
-	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
-	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_PRE_RE, HR_SJ_WS, HR_TO_COUNT
-	HR_TO_DOMAIN_COUNT, HR_TO_NAME, IP_UNTRUSTED, SRC_UNTRUSTED, IP_UNFAMILIAR
-	SRC_UNFAMILIAR, DN_TRUSTED, SRC_TRUSTED, SA_EXISTED, SN_UNTRUSTED
-	SN_UNFAMILIAR, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_GOOD_SPF
-	CIE_UNKNOWN, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD
-	ABX_MISS_RDNS
+	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
+	HR_SJ_PHRASE_LEN, HR_SJ_PRE_RE, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
+	HR_TO_NAME, IP_UNTRUSTED, SRC_UNTRUSTED, IP_UNFAMILIAR, SRC_UNFAMILIAR
+	DN_TRUSTED, SRC_TRUSTED, SA_EXISTED, SN_UNTRUSTED, SN_UNFAMILIAR
+	SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, UD_TRUSTED, CIE_GOOD_SPF
+	CIE_UNKNOWN, GTI_FG_BS, GTI_C_CI, GTI_FG_IT, GTI_RG_INFO
+	GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:1281cd33-2b67-4854-bbd9-17ee00ce8ccf,IP:10,
+X-CID-O-INFO: VERSION:1.3.12,REQID:c4f4e401-dc88-4d47-9040-54b3aed482a8,IP:10,
 	URL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
 	N:release,TS:5
-X-CID-INFO: VERSION:1.3.12,REQID:1281cd33-2b67-4854-bbd9-17ee00ce8ccf,IP:10,UR
+X-CID-INFO: VERSION:1.3.12,REQID:c4f4e401-dc88-4d47-9040-54b3aed482a8,IP:10,UR
 	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
 	release,TS:5
-X-CID-META: VersionHash:e7bac3a,CLOUDID:2c71dac5849ae06242c1f1c11ef34077,BulkI
-	D:260710221752NO56G64A,BulkQuantity:4,Recheck:0,SF:17|19|64|66|78|80|81|82
-	|83|102|127|841|865|898,TC:nil,Content:0|15|52,EDM:-3,IP:-2,URL:0,File:nil
-	,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,D
-	KP:0,BRR:0,BRE:0,ARC:0
+X-CID-META: VersionHash:e7bac3a,CLOUDID:a6d662c7724aa7a570282950bd995e40,BulkI
+	D:260710220255YPJJGYNN,BulkQuantity:1,Recheck:0,SF:17|19|64|66|78|80|81|82
+	|83|102|127|841|865|898,TC:nil,Content:0|15|52,EDM:-3,IP:-2,URL:99|1,File:
+	nil,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:
+	0,DKP:0,BRR:0,BRE:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_ULS
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: f88789647ce511f1aa26b74ffac11d73-20260711
+X-UUID: 048ab6cc7ce711f1aa26b74ffac11d73-20260711
 X-User: husong@kylinos.cn
 Received: from ehlo.thunderbird.net [(223.160.130.75)] by mailgw.kylinos.cn
 	(envelope-from <husong@kylinos.cn>)
 	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 1252713203; Sat, 11 Jul 2026 13:04:18 +0800
-Date: Sat, 11 Jul 2026 13:04:12 +0800
+	with ESMTP id 1057582826; Sat, 11 Jul 2026 13:11:48 +0800
+Date: Sat, 11 Jul 2026 13:11:42 +0800
 From: Song Hu <husong@kylinos.cn>
 To: SJ Park <sj@kernel.org>
-CC: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/4] Docs/ABI/damon: fix typo in intervals_goal sysfs path
+CC: akpm@linux-foundation.org, shu17az@gmail.com, jiayuan.chen@shopee.com,
+ damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/tests/core-kunit: test damon_nr_accesses_mvsum()
 User-Agent: Thunderbird for Android
-In-Reply-To: <20260711002127.32005-1-sj@kernel.org>
-References:  <20260711002127.32005-1-sj@kernel.org>
-Message-ID: <C8C472D0-9818-4569-87EC-1B95BE9667F2@kylinos.cn>
+In-Reply-To: <20260710140238.24103-1-sj@kernel.org>
+References:  <20260710140238.24103-1-sj@kernel.org>
+Message-ID: <B4B6791A-5400-4342-B43D-FA9C7895E7BF@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -69,52 +69,86 @@ Content-Transfer-Encoding: quoted-printable
 
 
 
-=E4=BA=8E 2026=E5=B9=B47=E6=9C=8811=E6=97=A5 GMT+08:00 08:21:25=EF=BC=8CSJ=
+=E4=BA=8E 2026=E5=B9=B47=E6=9C=8810=E6=97=A5 GMT+08:00 22:02:37=EF=BC=8CSJ=
  Park <sj@kernel=2Eorg> =E5=86=99=E9=81=93=EF=BC=9A
->On Fri, 10 Jul 2026 07:17:37 -0700 SJ Park <sj@kernel=2Eorg> wrote:
+>On Fri, 10 Jul 2026 12:15:30 +0800 Song Hu <husong@kylinos=2Ecn> wrote:
 >
->> On Fri, 10 Jul 2026 12:47:34 +0800 Song Hu <husong@kylinos=2Ecn> wrote:
+>> damon_nr_accesses_mvsum() wraps damon_mvsum() with the monitoring
+>> intervals of the context to compute the pseudo moving sum of a region's
+>> access frequency, with a special case for when the whole aggregation
+>> window remains=2E damon_mvsum() itself is already covered by
+>> damon_test_mvsum(), but the wrapper is not=2E
 >>=20
->> > The ABI document spells the DAMON sysfs directory as "intrvals_goal"
->> > (missing 'e') in four What: entries, but the kernel creates it as
->> > "intervals_goal" (mm/damon/sysfs=2Ec)=2E  Following the documented pa=
-th
->> > therefore yields a non-existent directory=2E
->>=20
->> Nice catch!
->>=20
->> >=20
->> > Fixes: e2b23dc62369 ("Docs/ABI/damon: document intervals auto-tuning =
-ABI")
->> > Cc: stable@vger=2Ekernel=2Eorg
+>> Add a table-driven KUnit test that exercises the full-window-remaining
+>> boundary (with both reset and not-yet-reset nr_accesses), partially
+>> elapsed windows, and the no-window-remaining case=2E
 >
+>Nice!  Thank you!
+>
+>>=20
+>> Signed-off-by: Song Hu <husong@kylinos=2Ecn>
+>> ---
+>>  mm/damon/tests/core-kunit=2Eh | 49 +++++++++++++++++++++++++++++++++++=
+++
+>>  1 file changed, 49 insertions(+)
+>>=20
+>> diff --git a/mm/damon/tests/core-kunit=2Eh b/mm/damon/tests/core-kunit=
+=2Eh
+>> index 0124f83b39b8=2E=2E8c030282a638 100644
+>> --- a/mm/damon/tests/core-kunit=2Eh
+>> +++ b/mm/damon/tests/core-kunit=2Eh
+>> @@ -683,6 +683,54 @@ static void damon_test_mvsum(struct kunit *test)
+>>  	}
+>>  }
+>> =20
+>> +/*
+>> + * Test damon_nr_accesses_mvsum(), which wraps damon_mvsum() with the =
+monitoring
+>
+>Please wrap lines [1] for 80 columns limit=2E
+
 Hi SJ,
 
-Thanks a lot for your thorough reviews and ongoing support=2E
+Thanks for your review=2E This was my mistake, and I will resolve it in th=
+e next patch version=2E
 
-I will strictly check the complete recipient list generated by =C2=A0get_m=
-aintainer=2Epl=C2=A0 for all future patch submissions=2E
+>
+>> + * intervals of the context=2E  With a sample interval of 1 and an agg=
+regation
+>> + * interval of 10, an aggregation window is 10 sample intervals long=
+=2E  Each row
+>> + * below specifies the passed sample intervals, the next aggregation t=
+ime in
+>> + * sample intervals, the current and last nr_accesses of a region, and=
+ the
+>> + * expected return value=2E
+>> + */
+>> +static void damon_test_nr_accesses_mvsum(struct kunit *test)
+>> +{
+>> +	unsigned long input_expects[] =3D {
+>> +		/* passed, next_aggr, nr_accesses, last_nr_accesses, expect */
+>> +		0, 10, 5, 3, 3,		/* bp=3D10000: unreset nr_accesses ignored */
+>
+>I was bit confused what 'bp' means=2E  Can we just drop 'bp=3D=2E=2E=2E:'=
+ part from the
+>comment?
+>
 
->By the way, hotfixes and non-hotfixes usually take different trains to th=
-e
->mainline=2E  Having those in single series therefore makes maintainer wor=
-ks
->difficult=2E  I understand this is not a hotfix but just somewhat worthy =
-to
->eventually be backported to stable kernels=2E  So no problem for this=2E
->
->But, from the next time, please clarify or use different series for Cc: s=
-table@
->patches=2E
->
-As I=E2=80=99m still figuring out the correct timing for =C2=A0Cc: stable@=
-=C2=A0, I will consult with you prior to adding this tag next time and sepa=
-rate stable-bound patches into an independent series=2E
+This explanation is just my personal guess=2E I will delete all uncertain =
+content in the revised patch=2E
 
 Thanks,
 Song
+
+>Also, let's keep the 80 columns limit=2E
+>
+>[=2E=2E=2E]
+>
+>Other than those, looks good to me!
+>
+>[1] https://docs=2Ekernel=2Eorg/process/coding-style=2Ehtml#breaking-long=
+-lines-and-strings
+>
 >
 >Thanks,
 >SJ
->
->[=2E=2E=2E]
