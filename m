@@ -1,75 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191F1282F0C;
-	Sat, 11 Jul 2026 03:44:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C74B1D9A66
+	for <damon@lists.linux.dev>; Sat, 11 Jul 2026 05:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783741490; cv=none; b=C0jtiOtJdncwmk0Y6NXGZbHSPOueBZx/tnAv8kl0CJ+rLuFNZH4zXzu5ItLm2LAXemdr5j1QdakfirxgAf5VIOYm5T0InEvsLbJVXeX52tT9Xjj3RoZaCNoKbuQaQ1GwySrLBP9N5ON0OQefr+08+2k0Jx4wB/DU4EBhHC21bVY=
+	t=1783746269; cv=none; b=O3QLd3jlH1y2mCHXlQBTw2EgqlxaQbOr764NwsOE+cDTl00nsY+bvlUTpdRhvU1CvxOJcxLLr49Q8V7RgiB5FnBBHRol9J2Mys19GlJOO+8nLsyo6RPX7Dd3X4EWOjU3oE/4kHjbssIIBx2WZXEQ2aKrtdy3YAjEh/2viNEObEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783741490; c=relaxed/simple;
-	bh=lowi9IqD1dJQZbR21/xALdGC3zgG8No6AfNlnW8BU8U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhmvU1ClCBoG4uXrjKIjIjwcSwrNY2aLezqJ2YB5oLuXMEfugIr3qLaPHXTrc3sn0KZZBHBFQG47WFZ7PPMFuAeG0hAsqeAbvk6zNKrCENsCeqBSLQwOR0vWGHMe/fZtoE7rZUGO11nubkMy267sVGnKLfQl27WJqhsj0VVZsS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N2i9TPF9; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N2i9TPF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9981F00A3A;
-	Sat, 11 Jul 2026 03:44:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783741489;
-	bh=BTaZPCJkshbVC0cjDuIaqPS/hoZ0+n2t+cgmTXTNVGQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N2i9TPF94kk+zeAntmEO9cTW7EMqqfAQNGx/e+WlWkZTiNISt/Dqcurhpc2DgUdCy
-	 6IoSMXrv5ZMjIhUtsVT07M0c4VtflQdKoeopWzXxO+XG0ntjaXaC4Az65v+ol4vYsJ
-	 t3woP6eh7XnUkJ495yD+ic4JAN5CWyyXsf+HZvwp03Nqo9/Y6mkwm9lZGSpB/iqdfi
-	 un6hQwGPn5b1S+VnZm5DQsPRiRATUVkRmWYm/eGHQ1XQLFhensKGdgVrgQSI6g6lCi
-	 eA/C2HW6tnXoDyIszoAuhLMhXR9aP8UUzTAxjKVGZIH1Ll+6f8Rqqt3WOa77/bQ6QA
-	 3rnofq7sxLs4Q==
-From: SJ Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
-Cc: SJ Park <sj@kernel.org>,
-	oe-kbuild-all@lists.linux.dev,
-	damon@lists.linux.dev
-Subject: Re: [sj:damon/next 151/151] mm/damon/vaddr.c:196:13: warning: variable 'tidx' set but not used
-Date: Fri, 10 Jul 2026 20:43:37 -0700
-Message-ID: <20260711034339.63677-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <202607111055.NqcvApT6-lkp@intel.com>
-References: 
+	s=arc-20240116; t=1783746269; c=relaxed/simple;
+	bh=sMujRkzP+0svfJnmRczxcQ7AePeemebynXdWZ0h9VGE=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=JltxghdvB4KaKngyyC+qZXFK34a0W4J4eJu5X1yT5Y7xOgBPk/FWYiHccbgcQsLSRp48aOEPokQbwpmdx3TTR35o+3J7tV6cPB3M6DxZHBlA7RSvXW2D9bYqq6Dggqnbm9z9UsHaMjQkf8eHkwrnj3fSLMtCBdyNDsrpCSqqrCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: f88789647ce511f1aa26b74ffac11d73-20260711
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NO_NAME, HR_CTE_QP, HR_CTT_TXT
+	HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME, HR_MAILER_MTBG
+	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
+	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_PRE_RE, HR_SJ_WS, HR_TO_COUNT
+	HR_TO_DOMAIN_COUNT, HR_TO_NAME, IP_UNTRUSTED, SRC_UNTRUSTED, IP_UNFAMILIAR
+	SRC_UNFAMILIAR, DN_TRUSTED, SRC_TRUSTED, SA_EXISTED, SN_UNTRUSTED
+	SN_UNFAMILIAR, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_GOOD_SPF
+	CIE_UNKNOWN, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD
+	ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:1281cd33-2b67-4854-bbd9-17ee00ce8ccf,IP:10,
+	URL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:5
+X-CID-INFO: VERSION:1.3.12,REQID:1281cd33-2b67-4854-bbd9-17ee00ce8ccf,IP:10,UR
+	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:5
+X-CID-META: VersionHash:e7bac3a,CLOUDID:2c71dac5849ae06242c1f1c11ef34077,BulkI
+	D:260710221752NO56G64A,BulkQuantity:4,Recheck:0,SF:17|19|64|66|78|80|81|82
+	|83|102|127|841|865|898,TC:nil,Content:0|15|52,EDM:-3,IP:-2,URL:0,File:nil
+	,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,D
+	KP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: f88789647ce511f1aa26b74ffac11d73-20260711
+X-User: husong@kylinos.cn
+Received: from ehlo.thunderbird.net [(223.160.130.75)] by mailgw.kylinos.cn
+	(envelope-from <husong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 1252713203; Sat, 11 Jul 2026 13:04:18 +0800
+Date: Sat, 11 Jul 2026 13:04:12 +0800
+From: Song Hu <husong@kylinos.cn>
+To: SJ Park <sj@kernel.org>
+CC: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/4] Docs/ABI/damon: fix typo in intervals_goal sysfs path
+User-Agent: Thunderbird for Android
+In-Reply-To: <20260711002127.32005-1-sj@kernel.org>
+References:  <20260711002127.32005-1-sj@kernel.org>
+Message-ID: <C8C472D0-9818-4569-87EC-1B95BE9667F2@kylinos.cn>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 11 Jul 2026 10:36:45 +0800 kernel test robot <lkp@intel.com> wrote:
 
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   b617f1f8428697a2583fb6882864224d59a91bf2
-> commit: b617f1f8428697a2583fb6882864224d59a91bf2 [151/151] mm/damon/vaddr: remove debug message
-> config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20260711/202607111055.NqcvApT6-lkp@intel.com/config)
-> compiler: m68k-linux-gcc (GCC) 16.1.0
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260711/202607111055.NqcvApT6-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202607111055.NqcvApT6-lkp@intel.com/
-> 
-> All warnings (new ones prefixed by >>):
-> 
->    mm/damon/vaddr.c: In function '__damon_va_init_regions':
-> >> mm/damon/vaddr.c:196:13: warning: variable 'tidx' set but not used [-Wunused-but-set-variable=]
->      196 |         int tidx = 0;
->          |             ^~~~
 
-Thank you for this report.  I just pushed a fix to damon/next.
+=E4=BA=8E 2026=E5=B9=B47=E6=9C=8811=E6=97=A5 GMT+08:00 08:21:25=EF=BC=8CSJ=
+ Park <sj@kernel=2Eorg> =E5=86=99=E9=81=93=EF=BC=9A
+>On Fri, 10 Jul 2026 07:17:37 -0700 SJ Park <sj@kernel=2Eorg> wrote:
+>
+>> On Fri, 10 Jul 2026 12:47:34 +0800 Song Hu <husong@kylinos=2Ecn> wrote:
+>>=20
+>> > The ABI document spells the DAMON sysfs directory as "intrvals_goal"
+>> > (missing 'e') in four What: entries, but the kernel creates it as
+>> > "intervals_goal" (mm/damon/sysfs=2Ec)=2E  Following the documented pa=
+th
+>> > therefore yields a non-existent directory=2E
+>>=20
+>> Nice catch!
+>>=20
+>> >=20
+>> > Fixes: e2b23dc62369 ("Docs/ABI/damon: document intervals auto-tuning =
+ABI")
+>> > Cc: stable@vger=2Ekernel=2Eorg
+>
+Hi SJ,
 
+Thanks a lot for your thorough reviews and ongoing support=2E
+
+I will strictly check the complete recipient list generated by =C2=A0get_m=
+aintainer=2Epl=C2=A0 for all future patch submissions=2E
+
+>By the way, hotfixes and non-hotfixes usually take different trains to th=
+e
+>mainline=2E  Having those in single series therefore makes maintainer wor=
+ks
+>difficult=2E  I understand this is not a hotfix but just somewhat worthy =
+to
+>eventually be backported to stable kernels=2E  So no problem for this=2E
+>
+>But, from the next time, please clarify or use different series for Cc: s=
+table@
+>patches=2E
+>
+As I=E2=80=99m still figuring out the correct timing for =C2=A0Cc: stable@=
+=C2=A0, I will consult with you prior to adding this tag next time and sepa=
+rate stable-bound patches into an independent series=2E
 
 Thanks,
-SJ
-
-[...]
+Song
+>
+>Thanks,
+>SJ
+>
+>[=2E=2E=2E]
