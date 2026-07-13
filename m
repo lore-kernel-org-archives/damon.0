@@ -1,92 +1,140 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1EB431E5F;
-	Mon, 13 Jul 2026 13:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884DE23AB88
+	for <damon@lists.linux.dev>; Mon, 13 Jul 2026 14:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783951129; cv=none; b=KhyznhK7UxDEch8eISFZEjFqGwGRxNRk1qKntwzco13w92FBTYCLvj+kOTgQBH3VUnPNmJSfbMKguFKLzgGhE8Uv8NTJdR7O7mfBO4i2DVX0RW3g1UXnsBbJmYkAJzudSJJ/3SqEpvuWqGRAEKoK/tDOTs2266/lCbuHYLiDN1o=
+	t=1783951616; cv=none; b=H3+oo/dQnlxabld7AszmwFlwOGHp5e1pF2+hgZnRE4T9j4wb6x64N71dvIPzOJoqKOJBR1b5KRnEK29+Egq8j9mL3m0Y9CmCuetmLnvEGIq28KPfvL4oJ1tHQJgvTan7tl3nnAzvuOMTsOHtRRue4FnypjRMu3htzj2iH+uCBoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783951129; c=relaxed/simple;
-	bh=nt1m4yOHpUkfhmuPI5sfQNBML1ejUt2LDcM7VHyWuzk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WISEKQAFmxbI1oJiX4jTDQ1fwLkmWcZOw1uD0PiaLut1dMZWRjCdif4RvXC2IEpztZcEVKpcdCwHtqCEQwO2alp2JKyyU1nXIr6Vqqlf5Yc6PdOAiUHUNIP2nkPu0s8K5ZxdbifU5CuLbGozMe9uOHyQfiZwu7URIVw+9yBeMqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=euZHtD/a; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783951616; c=relaxed/simple;
+	bh=Rcbpx/F4TSSbY/aPo6eRbkUDD0H8AAKcAZCIVg2rwGg=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Gw5ZU4I8Yarwg4F4VEc9idjaJf7ib1Oy+Pt4T+Vw34lJrtjPYOhxvN8O+XOwqT3SH1wKftPrqUsfngsQEmM6ikN1HvUTVArLlAWrnDanAHkxIvumT4ALdd78PFt+CpNJPSQByTRCAREgUm8Nd89hHydZBbZRl/jYyEakZqjY89M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=njwjc9FT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="euZHtD/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A566E1F00AC4;
-	Mon, 13 Jul 2026 13:58:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="njwjc9FT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81971F000E9;
+	Mon, 13 Jul 2026 14:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783951127;
-	bh=hhmDCI+ot7IL3VsT3pLzYBJmbk4njLZd345nGTc/fNs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=euZHtD/aDvIZBDQjpyKLp0lEEVw3YHagyScpG6RM09WNsMcQ/ypT/C9GcVouODud+
-	 8p5nPr2a84cQB1FrIzkdjnfj1SNgF6FfBFCRN/6/DUUCJcZqg06eeKx0pgLwhVFsAr
-	 dXkjFMa3AYDXtLwtk0Ryh6Dvfw1KtBQcIzXUiEedRoAInwPVDYv+U+bsyRJUbX2rzc
-	 t4aIw4thGprKvXHV/Wz+NL9338m7P/vHz7Q9nFG2eVUctNjPMVqjMkKvAbsp8aPn1a
-	 93oyYPQkCN2QrwjSBR6/heoQ+mS1s0LprpOUeKW4L/tqjCvl731WSr0tEXZHCww9ju
-	 METmJcFrUwk5g==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 5/5] mm/damon/sysfs: read ops_id only once
-Date: Mon, 13 Jul 2026 06:58:36 -0700
-Message-ID: <20260713135838.32730-6-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260713135838.32730-1-sj@kernel.org>
+	s=k20260515; t=1783951614;
+	bh=Pk8cigop19FcF9jWmvU1gB9qS+mKvIwC9x2Mp3vksXo=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=njwjc9FTML8y3ZTMz+brxswoUuvU1A0Roqx7SGngDoGe3UT6Hq5DH3Ad/YcWhMuJe
+	 qwnLv90m9eJ7ldNCJfLYerFUcutfVLerj4/ACsSN1ldfbwzkUWuh079qjOI9iGf10J
+	 HjO85UGYoKtujPQP3R3+OIAoTnb4MyZYTjVzpFI2ZoL9tKp4bTNhoXG7C9LzDE1Dqi
+	 TuI3Uzg4N1L4+ukJWYnvcbw4dMki7/Vp9V+gw3XZn/a8rW1eHYMt9JqaqL08uy46Dw
+	 tMZX4hEERnGiZZtWwrL+UNmA45tFMo5ZYw7UxQpzzFdhZnd0EbfsWwkNzYF9KVT0Zz
+	 57SdKqljTRj9A==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v1.2 3/5] mm/damon/vaddr: drop last same folio
+ access check optimization
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260713135838.32730-4-sj@kernel.org>
 References: <20260713135838.32730-1-sj@kernel.org>
+ <20260713135838.32730-4-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 13 Jul 2026 14:06:53 +0000
+Message-Id: <20260713140653.E81971F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-damon_sysfs_apply_inputs() reads ops_id twice.  It could race with
-ops_id_store().  As a result, the min_region_sz could wrongly be set up.
-Read it once.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-The user impact is trivial.  Sane users ain't update the parameter in
-parallel.  Even if it happens, only monitoring itself runs differently
-than expected.  No critical consequences like kernel panic or memory
-corruption happen.
+Pre-existing issues:
+- [High] Incomplete fix: identical data race in `mm/damon/paddr.c` causes a=
+ccess statistics corruption
+--
 
-The issue was discovered [1] by Sashiko.
+--- Patch [3]: [RFC PATCH v1.2 3/5] mm/damon/vaddr: drop last same folio ac=
+cess check optimization ---
+commit d42bea4a157d94e45112b2190d4aba2a5eeffaa2
+Author: SJ Park <sj@kernel.org>
 
-[1] https://lore.kernel.org/20260703172417.95426-1-sj@kernel.org
+mm/damon/vaddr: drop last same folio access check optimization
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/sysfs.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+This patch removes the "last same folio access check" optimization in
+vaddr.c to fix a data race when multiple kdamonds are running.
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index b5fe036f78015..60a1a9e4ada34 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -2094,14 +2094,16 @@ static inline bool damon_sysfs_kdamond_running(
- static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
- 		struct damon_sysfs_context *sys_ctx)
- {
-+	enum damon_ops_id ops_id;
- 	int err;
- 
--	err = damon_select_ops(ctx, sys_ctx->ops_id);
-+	ops_id = READ_ONCE(sys_ctx->ops_id);
-+	err = damon_select_ops(ctx, ops_id);
- 	if (err)
- 		return err;
- 	ctx->addr_unit = sys_ctx->addr_unit;
- 	/* addr_unit is respected by only DAMON_OPS_PADDR */
--	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
-+	if (ops_id == DAMON_OPS_PADDR)
- 		ctx->min_region_sz = max(
- 				DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
- 	ctx->pause = sys_ctx->pause;
--- 
-2.47.3
+Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org
+
+> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> index d10b8042adb5b..d487b7a4a1042 100644
+> --- a/mm/damon/vaddr.c
+> +++ b/mm/damon/vaddr.c
+
+[ ... ]
+
+> @@ -494,28 +487,17 @@ static bool damon_va_young(struct mm_struct *mm, un=
+signed long addr,
+>   * r	the region to be checked
+>   */
+>  static void __damon_va_check_access(struct mm_struct *mm,
+> -				struct damon_region *r, bool same_target)
+> +				struct damon_region *r)
+>  {
+> -	static unsigned long last_addr;
+> -	static unsigned long last_folio_sz =3D PAGE_SIZE;
+> -	static bool last_accessed;
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does the same data race still
+exist in mm/damon/paddr.c?
+
+Looking at __damon_pa_check_access() in mm/damon/paddr.c, it seems to have =
+the
+exact same caching optimization using static variables:
+
+	static phys_addr_t last_addr;
+	static unsigned long last_folio_sz =3D PAGE_SIZE;
+	static bool last_accessed;
+
+Since these static variables aren't protected by any locks, could concurrent
+kdamond threads using DAMON_OPS_PADDR clobber each other's state in the exa=
+ct
+same way?
+
+For example, if Thread A processes a 2MB huge page and updates last_folio_sz
+to 2MB, could Thread B evaluate its next sampling_addr using Thread A's 2MB
+last_folio_sz?
+
+This would cause ALIGN_DOWN(last_addr, 2MB) =3D=3D ALIGN_DOWN(sampling_addr=
+, 2MB)
+to incorrectly evaluate to true for up to 512 consecutive 4KB pages, assign=
+ing
+them all the last_accessed value without actually checking them. Should this
+identical optimization be removed from paddr.c as well to completely resolve
+the data race?
+
+> +	bool accessed;
+> =20
+>  	if (!mm) {
+>  		damon_update_region_access_rate(r, false);
+>  		return;
+>  	}
+> =20
+> -	/* If the region is in the last checked page, reuse the result */
+> -	if (same_target && (ALIGN_DOWN(last_addr, last_folio_sz) =3D=3D
+> -				ALIGN_DOWN(r->sampling_addr, last_folio_sz))) {
+> -		damon_update_region_access_rate(r, last_accessed);
+> -		return;
+> -	}
+> -
+> -	last_accessed =3D damon_va_young(mm, r->sampling_addr, &last_folio_sz);
+> -	damon_update_region_access_rate(r, last_accessed);
+> -
+> -	last_addr =3D r->sampling_addr;
+> +	accessed =3D damon_va_young(mm, r->sampling_addr);
+> +	damon_update_region_access_rate(r, accessed);
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260713135838.3273=
+0-1-sj@kernel.org?part=3D3
