@@ -1,41 +1,63 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421E81E5B64
-	for <damon@lists.linux.dev>; Sun, 12 Jul 2026 17:24:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F193E44EC
+	for <damon@lists.linux.dev>; Mon, 13 Jul 2026 09:47:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783877099; cv=none; b=f6e6NrCVWCkFG3yNO8l+P5xB8pFQ1kR6H7h7oI+TT9xNvMtgNIx1Alv2iyQhH+g2C00TKT8fQxyBfTdlI4yZjiEsJdCQa7Yjjqt1lIvDvcd0XprFZl2tGsnGHG6JcWMWaUR5P0/ZtmqPkrt4vfyM0/F6lFmrh/pCGBplkUAKy8w=
+	t=1783936031; cv=none; b=KKKJCViJxn40Yw9Al8lRJrq+wV8pq/9XY1YgMniYtAV0zYVOHtS3OegBhRiWzvedfqqm2oTwiNdzpgm3pziTN74/IDbLj5/4rUUep9Z5BIqoDZcbpb6aFXVOWRFqBAIerGvnlxe7O8p+kDQ1BkmIOFND9c+hhfbAr2fprq1M3JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783877099; c=relaxed/simple;
-	bh=bdwty3YnUzhLmlWDN0Xg7wqOiq6/AIwU10iUoew+gXE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CdnE1tlt+iZmrMakH+fW5mYtaYyewZuBhwpOvbuDWyZ3AyjJ66QVN6FNgB40XP9NNqIUMmFPXOegkSK4XvqENwZ6wyIXyJdgJklAMKML43bW3K4joXtJcsu0sgm9P9lP4v1pO3KjS9DteEdoVj0/BjaJb20C2B8KtpUodkBn4TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PY4ItlAp; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PY4ItlAp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F2A1F000E9;
-	Sun, 12 Jul 2026 17:24:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783877097;
-	bh=QInUzzE2CMN1adJ60e3qHUqEr+a40KUphBj8NhvY1OQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PY4ItlAp6YoYkK//Gf/Ao0U86clzrZwPnz/GrSDjbwuDuKLfViCLWX7/FbgzdOzEt
-	 rwaZWs4L5hAQr6LOhc+D/4QFAavXZ+J6tdZ+/gtNVW6VDguQO0bpPb+7ZqKUkflw2m
-	 RROEhCUfE71oWOqq7oH1Sh5rFROx/CzA9VkTilNfWaItF4yEQYXxXgKBzi5R/rXpie
-	 hkdUeCtZjC4CTPY8cOVRX52nf7aJ/5WteO5g1uXZOZSV6RmQibylHvwISVQt+K1fuE
-	 QV2Pvh3qoaGyjek9XOBZ3Us46YZ7ZXx/q1snNOEQEeLUzYcH3P2zUJxMGW1qa6Le++
-	 fwYIkncIJf5Mw==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 3/5] mm/damon/vaddr: drop last same folio access check optimization
-Date: Sun, 12 Jul 2026 10:24:52 -0700
-Message-ID: <20260712172452.92595-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260712171009.F295E1F000E9@smtp.kernel.org>
-References: 
+	s=arc-20240116; t=1783936031; c=relaxed/simple;
+	bh=C/npH9ZhRNApD0vepMNxQMejBIy/AAS1fKhAEM08SEE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DrfOktqMTQSWOA77udopZfnpGUvNxcEhzAUML9oa/It4LT1i7UiU25GLIPMCcr+s6M5N28dRCvTX3d+1M/ppvABFuCCstBjP6Rmqi4MkuCi+sW1xLLvrpxuVl+cF1TK1qXQX0WOTznEj4KIL+SC93j0Hhjj/fXSS3H7JnwyXT30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: cc00c1f67e9f11f1aa26b74ffac11d73-20260713
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
+	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
+	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
+	HR_TO_NO_NAME, IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_EXISTED
+	SN_UNTRUSTED, SN_LOWREP, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
+	DMARC_NOPASS, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO
+	GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:707452e3-6bdc-42b7-a307-f99e573fba5c,IP:10,
+	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:35
+X-CID-INFO: VERSION:1.3.12,REQID:707452e3-6bdc-42b7-a307-f99e573fba5c,IP:10,UR
+	L:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:35
+X-CID-META: VersionHash:e7bac3a,CLOUDID:45f03bc318b5c2a89ee2ca66b1a07fef,BulkI
+	D:260713174704KM5LZ185,BulkQuantity:0,Recheck:0,SF:17|19|66|78|102|127|865
+	|898,TC:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS:
+	nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,AR
+	C:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: cc00c1f67e9f11f1aa26b74ffac11d73-20260713
+X-User: husong@kylinos.cn
+Received: from ctao-book.. [(223.70.159.239)] by mailgw.kylinos.cn
+	(envelope-from <husong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 85431330; Mon, 13 Jul 2026 17:47:01 +0800
+From: Song Hu <husong@kylinos.cn>
+To: sj@kernel.org
+Cc: akpm@linux-foundation.org,
+	shu17az@gmail.com,
+	jiayuan.chen@shopee.com,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Song Hu <husong@kylinos.cn>
+Subject: [PATCH v2] mm/damon/tests/core-kunit: test damon_nr_accesses_mvsum()
+Date: Mon, 13 Jul 2026 17:46:48 +0800
+Message-ID: <20260713094648.897239-1-husong@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,60 +66,92 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 12 Jul 2026 17:10:09 +0000 sashiko-bot@kernel.org wrote:
+damon_nr_accesses_mvsum() wraps damon_mvsum() with the monitoring
+intervals of the context to compute the pseudo moving sum of a region's
+access frequency, with a special case for when the whole aggregation
+window remains. damon_mvsum() itself is already covered by
+damon_test_mvsum(), but the wrapper is not.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] Unused parameter and dead code tracking logic left behind after removing optimization.
-> --
-> 
-> --- Patch [3]: [RFC PATCH v1.1 3/5] mm/damon/vaddr: drop last same folio access check optimization ---
-> commit 40e12defdea3b013644cc026283aa34cdd3ae2fb
-> Author: SJ Park <sj@kernel.org>
-> mm/damon/vaddr: drop last same folio access check optimization
-> 
-> This commit removes the last same folio access check optimization from DAMON's
-> virtual address space primitives. The optimization was found to cause race
-> conditions when multiple kdamonds are running.
-> 
-> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> > index d10b8042adb5b..16fe210d2042a 100644
-> > --- a/mm/damon/vaddr.c
-> > +++ b/mm/damon/vaddr.c
-> 
-> [ ... ]
-> 
-> > @@ -496,26 +489,15 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
-> >  static void __damon_va_check_access(struct mm_struct *mm,
-> >  				struct damon_region *r, bool same_target)
-> >  {
-> 
-> [Severity: Low]
-> Does this code still need the same_target parameter?
-> 
-> With the optimization removed below, the parameter is no longer used in
-> __damon_va_check_access().
-> 
-> The caller, damon_va_check_accesses(), also still computes and tracks the local
-> same_target variable on every iteration just to pass it here:
-> 
-> 	damon_for_each_target(t, ctx) {
-> 		mm = damon_get_mm(t);
-> 		same_target = false;
-> 		damon_for_each_region(r, t) {
-> 			__damon_va_check_access(mm, r, same_target);
-> 			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
-> 			same_target = true;
-> 		}
-> 		if (mm)
-> 			mmput(mm);
-> 	}
-> 
-> Could we remove the parameter and the dead tracking code in the caller as well?
+Add a table-driven KUnit test that exercises the full-window-remaining
+boundary (with both reset and not-yet-reset nr_accesses), partially
+elapsed windows, and the no-window-remaining case.
 
-Good finding.  I will drop that in the next revision.
+Signed-off-by: Song Hu <husong@kylinos.cn>
+---
+Changes in v2:
+- Drop the confusing 'bp=...:' annotation from each test-case comment.
+- Wrap the function documentation comment to the 80-column limit.
+---
+ mm/damon/tests/core-kunit.h | 49 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 0124f83b39b8..d085c90484d3 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -683,6 +683,54 @@ static void damon_test_mvsum(struct kunit *test)
+ 	}
+ }
+ 
++/*
++ * Test damon_nr_accesses_mvsum(), which wraps damon_mvsum() with the
++ * monitoring intervals of the context.  With a sample interval of 1 and an
++ * aggregation interval of 10, an aggregation window is 10 sample intervals
++ * long.  Each row below specifies the passed sample intervals, the next
++ * aggregation time in sample intervals, the current and last nr_accesses of a
++ * region, and the expected return value.
++ */
++static void damon_test_nr_accesses_mvsum(struct kunit *test)
++{
++	unsigned long input_expects[] = {
++		/* passed, next_aggr, nr_accesses, last_nr_accesses, expect */
++		0, 10, 5, 3, 3,		/* full window left, unreset */
++		0, 10, 0, 7, 7,		/* full window left, reset */
++		5, 10, 3, 10, 8,	/* half window left */
++		8, 10, 3, 10, 5,	/* 20% window left */
++		10, 10, 42, 49, 42,	/* no window left */
++	};
++	struct damon_ctx *c = damon_new_ctx();
++	struct damon_region *r;
++	int i;
++
++	if (!c)
++		kunit_skip(test, "ctx alloc fail");
++
++	r = damon_new_region(0, 4096);
++	if (!r) {
++		damon_destroy_ctx(c);
++		kunit_skip(test, "region alloc fail");
++	}
++
++	c->attrs.sample_interval = 1;
++	c->attrs.aggr_interval = 10;
++
++	for (i = 0; i < ARRAY_SIZE(input_expects); i += 5) {
++		c->passed_sample_intervals = input_expects[i];
++		c->next_aggregation_sis = input_expects[i + 1];
++		r->nr_accesses = input_expects[i + 2];
++		r->last_nr_accesses = input_expects[i + 3];
++
++		KUNIT_EXPECT_EQ(test, (unsigned int)input_expects[i + 4],
++				damon_nr_accesses_mvsum(r, c));
++	}
++
++	damon_free_region(r);
++	damon_destroy_ctx(c);
++}
++
+ static void damos_test_new_filter(struct kunit *test)
+ {
+ 	struct damos_filter *filter;
+@@ -1576,6 +1624,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_update_monitoring_result),
+ 	KUNIT_CASE(damon_test_set_attrs),
+ 	KUNIT_CASE(damon_test_mvsum),
++	KUNIT_CASE(damon_test_nr_accesses_mvsum),
+ 	KUNIT_CASE(damos_test_new_filter),
+ 	KUNIT_CASE(damos_test_commit_quota_goal),
+ 	KUNIT_CASE(damos_test_commit_quota_goals),
+-- 
+2.43.0
 
-Thanks,
-SJ
-
-[...]
