@@ -1,147 +1,95 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180F221FF25
-	for <damon@lists.linux.dev>; Mon, 13 Jul 2026 14:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709763EBF1A;
+	Mon, 13 Jul 2026 14:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783951688; cv=none; b=fo5pRprNPNu9Z8by5KKYwSr24wYjI7SXT++xI17eCsPumEX99s/oHeT9SDB6u78h9wpZvPRezP9c7Wl089pl7xR80RcHJeM8VW3eu6dHVLD1IQ0fBwzv1hbP2UE21K+c5WZJmd2837oOZI8IeWfwfLUKhH7gATZOmmStlf6DVQk=
+	t=1783952499; cv=none; b=XY2iRU06HuZjdD4NNHRsOe+hbStGLsD6i+gXPgmxId57M7gADOKEFJ3O70xeXiaX9kAVQ5xdX3K6bvesLSTqgMjGspz4n3c9lE4hQFw0M94EPFEYyiSEf89AVAf+kJhrK0ZQd6fFv4KxeCGOQZgcwvfywRsZ+4TSDIV/X+EIEXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783951688; c=relaxed/simple;
-	bh=03w5HOB/yBIYt9eRqMsqg6lyTPo7hzCyNG3bLgYHiIU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=qTrN/+ewEKAHDkZucZrLrmIsNLxrGtKpbEkloAP7oPKudkO6QheIDrXf91e3jGOi2623TXnCD+pjh8u6IQiiMYUioU9m+dhTQA0kIbmI0ejXYuGhXHoF9agQO/dmHwQ2OB/60qxHpyp4bhrlOk2uWf5nuz6V2/4Y2M/452yfSNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qv9bmx5M; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1783952499; c=relaxed/simple;
+	bh=3xtgHzz+a53+/tvipqzssNO+pj5BJGn7LzhwmRL8luM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=B+UQzmZ9l3MZsQHb3eq0KOHknhqjJRjTJOoRHMg9VkX3ElSZZ2PiwAX6aFiKkZMYyeSc1B1S1IrTFj7meU1HqW4SGPk/ZWMLMu54DBi1u0ytu7TdTmfYq96bJWZwAfRpDJsO1Rg8Feqt2A+DF/bzKOhueqSzlNI+SioB3tjEbDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O+PA3qvN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qv9bmx5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CC61F00A3A;
-	Mon, 13 Jul 2026 14:08:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O+PA3qvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD49C1F000E9;
+	Mon, 13 Jul 2026 14:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1783951687;
-	bh=5bGw+Kff0oToHh/FSZHxIX2QxqOFg/254+vvg6uE3mM=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Qv9bmx5M/bryEJy9Co/xkvW7wA3WrBNzCeZqN9QI4teE8d3JucJFx6fnIE+HohWHK
-	 2ihxQgMVYr19BdXtKTV+0c3TuCGPMHx9/CNyaH63OZ040P46OCLD2WNm9GuKC8pvCo
-	 f/cHeJg39LU/mGLcX6AvOSQX12I5gcmJpZFsBOy6/LymYjWCS4grEC3VshyJ6SHe1o
-	 RyIBHDWol16zDdTIEKKzph2p4kmuiXUQ/0bPmvYQib2GFflek58rhHOoy8eGms8uWg
-	 9qGU/04SY3oA3iCKF2kHxoDcN1jK00n2piVEXcbbQfo2F/pvcc66mhMThYPZOD8bWX
-	 Sf3hUKb5Xy71A==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.2 2/5] mm/damon/tests/core-kunit: catch test
- failure in test_merge_regions_of()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260713135838.32730-3-sj@kernel.org>
-References: <20260713135838.32730-1-sj@kernel.org>
- <20260713135838.32730-3-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 13 Jul 2026 14:08:06 +0000
-Message-Id: <20260713140806.D0CC61F00A3A@smtp.kernel.org>
+	s=k20260515; t=1783952498;
+	bh=T13fF6DuKXjoRWGoSA1rsBfe5/M0+RntPAmfNLiYYjE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=O+PA3qvNHakXfHOABuJr4wlRpP0q8Ad+tOu5kGf1se+V8EQdOP5DbAj9iqp/A4P7L
+	 glX4aGZTfqC5fbuI4Vv68b7sEZU6iJvKc0GaL+SqJbyzttOab6sQaD/ueWsu0NxAjA
+	 gZ+RT5CXpBCNSBDuXRIhgxnr1BNKpA6QtkAAeEF+9SjMCZIbNQOUbhLD8zTAfnraAI
+	 rKQ/+y7xGXULbf7xm2asQpHLGl8KxQvziUUT16Ut2+V0NXqkEbtnWS5YB+FDJtG+DM
+	 wP498bFgGxFoameYkK0Wb3tD/JycHD+VD9nyq8L57NUN4Oq6vpv6wiGtqr1dCeDBs5
+	 BdDMk7LNBQa1A==
+From: SJ Park <sj@kernel.org>
+To: Song Hu <husong@kylinos.cn>
+Cc: SJ Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	shu17az@gmail.com,
+	jiayuan.chen@shopee.com,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] mm/damon/tests/core-kunit: test damon_nr_accesses_mvsum()
+Date: Mon, 13 Jul 2026 07:21:30 -0700
+Message-ID: <20260713142131.38616-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260713094648.897239-1-husong@kylinos.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+On Mon, 13 Jul 2026 17:46:48 +0800 Song Hu <husong@kylinos.cn> wrote:
 
-Pre-existing issues:
-- [High] This problem wasn't introduced by this patch, but the fix is incom=
-plete. The exact same vulnerability (NULL dereferences or out-of-bounds arr=
-ay accesses upon test expectation failure) exists in several other DAMON KU=
-nit test functions. The patch correctly notes that `KUNIT_EXPECT_EQ()` does=
- not abort execution, leading to NULL dereferences if subsequent code assum=
-es the expectation was met. However, identical brittle patterns exist in `d=
-amon_do_test_apply_three_regions()` (which dereferences the result of `__nt=
-h_region_of()` without checking for NULL), `damos_test_commit_dests_for()` =
-(which loops over `dst.nr_dests` and can dereference a `NULL` `src_node_id_=
-arr`), and `damos_test_commit_quota_goals_for()` / `damon_test_commit_targe=
-t_regions_for()` (which iterate based on the destination's size and can rea=
-d out of bounds from the source arrays).
---
+> damon_nr_accesses_mvsum() wraps damon_mvsum() with the monitoring
+> intervals of the context to compute the pseudo moving sum of a region's
+> access frequency, with a special case for when the whole aggregation
+> window remains. damon_mvsum() itself is already covered by
+> damon_test_mvsum(), but the wrapper is not.
+> 
+> Add a table-driven KUnit test that exercises the full-window-remaining
+> boundary (with both reset and not-yet-reset nr_accesses), partially
+> elapsed windows, and the no-window-remaining case.
 
---- Patch [2]: [RFC PATCH v1.2 2/5] mm/damon/tests/core-kunit: catch test f=
-ailure in test_merge_regions_of() ---
-commit 5b98cb20c5802f828e4e3cf09a813b6c47d58774
-Author: SJ Park <sj@kernel.org>
+Thank you for this patch!
 
-mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
+> 
+> Signed-off-by: Song Hu <husong@kylinos.cn>
 
-KUNIT_EXPECT_EQ() does not abort the execution of test code when the
-expectation is not met.  But damon_test_merge_regions_of() code after
-its initial KUNIT_EXPECT_EQ() call assumes the expectation is met.
+Reviewed-by: SJ Park <sj@kernel.org>
 
-Link: https://lore.kernel.org/20260710144937.26981-1-sj@kernel.org
+> ---
+> Changes in v2:
+> - Drop the confusing 'bp=...:' annotation from each test-case comment.
+> - Wrap the function documentation comment to the 80-column limit.
 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 6ad73559dd8ea..a99363720e677 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-> @@ -260,11 +260,14 @@ static void damon_test_merge_regions_of(struct kuni=
-t *test)
->  	damon_merge_regions_of(t, 9, 9999, ctx);
->  	/* 0-112, 114-130, 130-156, 156-170, 170-230, 230-10170 */
->  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 6u);
-> +	if (damon_nr_regions(t) !=3D 6)
-> +		goto out;
+And the v1 is available [1] at mailing list.
 
-[Severity: High]
-This isn't a bug introduced by this patch, but does this fix need to be
-applied to several other DAMON test functions that follow the same pattern?
+Thank you for adding this changelog.  Please add links [2] to the previous
+revisions too, from next time.  For other readers, v1 
 
-If a test expectation fails, these functions also assume the expectation
-was met, which can lead to NULL pointer dereferences or stack out-of-bounds
-reads.
+This patch is applied to damon/next [3] tree.  If this patch is not added to
+mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
+to pick this.  So, no action from your side is needed for now.  If it seems I
+also forgot doing that or you cannot wait for my action, please feel free to
+directly ask that to Andrew.
 
-In mm/damon/tests/vaddr-kunit.h:damon_do_test_apply_three_regions():
+[1] https://lore.kernel.org/20260710041530.557455-1-husong@kylinos.cn
+[2] https://docs.kernel.org/process/submitting-patches.html#commentary
+[3] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
-    for (i =3D 0; i < nr_expected / 2; i++) {
-        r =3D __nth_region_of(t, i);
-        KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
 
-If damon_set_regions() leaves fewer regions than expected,
-__nth_region_of() returns NULL and r->ar.start dereferences it.
+Thanks,
+SJ
 
-In mm/damon/tests/core-kunit.h:damos_test_commit_dests_for():
-
-    for (i =3D 0; i < dst.nr_dests; i++) {
-        KUNIT_EXPECT_EQ(test, dst.node_id_arr[i], src_node_id_arr[i]);
-
-If dst.nr_dests is greater than src_nr_dests, it can access
-src_node_id_arr[i] out of bounds (which can also be NULL).
-
-In mm/damon/tests/core-kunit.h:damos_test_commit_quota_goals_for():
-
-    damos_for_each_quota_goal(goal, (&dst)) {
-        KUNIT_EXPECT_EQ(test, goal->metric, src_goals[i].metric);
-
-This iterates over dst's goals without verifying against nr_src_goals,
-potentially accessing the src_goals stack array out of bounds.
-
-In mm/damon/tests/core-kunit.h:damon_test_commit_target_regions_for():
-
-    damon_for_each_region(r, dst_target) {
-        KUNIT_EXPECT_EQ(test, r->ar.start, expect_start_end[i][0]);
-
-This blindly loops over dst_target's regions, leading to potential
-out-of-bounds reads on expect_start_end if it exceeds nr_expect_regions.
-
-Could these functions be updated as well to prevent the test suite
-from oopsing on expectation failures?
-
->  	for (i =3D 0; i < 6; i++) {
->  		r =3D __nth_region_of(t, i);
->  		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
->  		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
->  	}
-> +out:
->  	damon_free_target(t);
->  	damon_destroy_ctx(ctx);
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260713135838.3273=
-0-1-sj@kernel.org?part=3D2
+[...]
