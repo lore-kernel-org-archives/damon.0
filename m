@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D681E7C18;
-	Tue, 14 Jul 2026 14:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA5C2F7F1E;
+	Tue, 14 Jul 2026 14:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784038299; cv=none; b=k01n9SA3MRM8w/pyqbL6TG3+o3dM2C2x1nDmlrMZveioX4CPinhimQZpr4ur7d1hTqfsE1VhBD4W6/woJfUpJ/dI/sSqyYWZqcmt4ouv/EdnRC///uefKKMlhgHqav0AjOK9jE3d5s2L9vlT7Q2TBFRRfIdUSQRA3bLKedq7BYc=
+	t=1784038777; cv=none; b=gj+gKPuiGp6DsHm5+tXZPidXWdP/slWqf4r7sA67Icm+vFbyvPFzeAye9uWxZzxPe6Mz12U+OcPJaFoGo2WXB94UCWgjTE07RrDA8mwCvj0XZ20dESWmhR5zGYEGfQzOTo3Zd9mC4JWKXf+XNxkypdGyGJnIxzInkH1hl8yCPRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784038299; c=relaxed/simple;
-	bh=B/zmmBNm8lQqUn2+NBE0/Oy8aOKR1x4reKQwpotHxvw=;
+	s=arc-20240116; t=1784038777; c=relaxed/simple;
+	bh=WGDJ84QFQpszpv2H8HctrIprisO0Y+K12vX4KiXOXuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/USQQxPD6Wj9mpcfJkyQlFykQeWp2QpoM3i2KKOn8B10GLTz1oSrmSgaWyAakIVed/HzCmR+JWPVAl8Bkrz5VDFsqnpqFcANF40/iDos19XF19WCeD3MI/Bp4/c5gE+dZHtTJxN2RxmY+HvEoN3UdXnbFwlp3cY7b6vaqgyc8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PytcVd8B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hQjvKmKN5IAFn7I7B2X+lASBtcejogcb7IXNF6wLgwRwjVhLFWh5EUrsb7IahrJTBJkYRBuVCm/SFrfKmJ8tnHHjTIswZhjkusn0vanxFayB6VzQEVnEQDIMw9YuYcROR9kw4KI1V4mFPXoksBM8g42er0nwFol5MjBvpivEmEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xro6Eb+r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PytcVd8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592CD1F000E9;
-	Tue, 14 Jul 2026 14:11:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xro6Eb+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997CD1F000E9;
+	Tue, 14 Jul 2026 14:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784038298;
-	bh=B6UDn/zB13GY2rQ9/2v1cLrwdrHaWMbAjwv9EdpOgA8=;
+	s=k20260515; t=1784038775;
+	bh=LOlbLc2qaG2QBOOhEn3n4/8lPPbfM5YgeFxaZ9vpRVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PytcVd8BQgI/38oDRG2qlhYVQChh7MTMHM2uHfiV55lxVh25JhDX58hRVcmGZdaQ9
-	 ZF5qI1aOuiwO1j6IoftP1UaIhfZ7WIhHztUvP7Ozm4R6H6noWdZBWTj9zoG/5JZWao
-	 Ti+s7PkLFiwAiF9dJR5dm0BWXB9saA63zVcU7O42DmM2MpW6RwUubX0AIV3TaA6lY2
-	 meIfQFGHbn8KN//6bmEJioh2Jrv6PFi361ZAxrm4OhJwUTDKS/QBG+/ZEfWT1BkeKG
-	 X242vnAKZmjr2HCGBL6IOFhWqXTxtQo/NOHU224G+3IV3nJGAuNkLD+uMkHZVhtapW
-	 8A5XeIAPCr2AQ==
+	b=Xro6Eb+rUE86RnbMJWxBwPCOXOCMH7r4XuDwCdsV1tSubc3JLvla0Aph2hDvOG2XV
+	 M16+614h4x+Rn93ddAavC52RQAbBuiruOpohnIw0hBH//qTpW896P6JOsbKETHNn4O
+	 xhwGZDPoS4n+kJdTT3m4P43Jj3SVT6u7xxyczirbqGY4CqjURmAuUBwTb7VabhPR9f
+	 xjHxXlmc9c93vyEbj5LYWhCubJRoMePbGaqsO2ZNmkmXAptpzxBLw/dhznTFRivcxN
+	 kDEqlZksN/p0gkc8mgeFCKeekhTd/owc8JmoiQQFH4rQmnmGymKTBe1fhyrwEYDUZc
+	 nCMjFuz/H3WIg==
 From: SJ Park <sj@kernel.org>
-To: Xuewen Wang <wangxuewen@kylinos.cn>
+To: Jiahui Zhang <jiahuitry@outlook.com>
 Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] mm/damon: remove trailing semicolons after function definitions
-Date: Tue, 14 Jul 2026 07:11:27 -0700
-Message-ID: <20260714141129.96609-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Honggyu Kim <honggyu.kim@sk.com>
+Subject: Re: [PATCH v2] mm/damon/ops-common: prevent migration fallback to non-target nodes
+Date: Tue, 14 Jul 2026 07:19:26 -0700
+Message-ID: <20260714141927.100207-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260714075358.1592393-1-wangxuewen@kylinos.cn>
+In-Reply-To:  <MN2PR02MB665479119535A1235D69F125B5F92@MN2PR02MB6654.namprd02.prod.outlook.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,25 +48,23 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 14 Jul 2026 15:53:58 +0800 Xuewen Wang <wangxuewen@kylinos.cn> wrote:
+On Tue, 14 Jul 2026 03:38:17 -0700 Jiahui Zhang <jiahuitry@outlook.com> wrote:
 
-> Three function definitions terminate with '};' instead of '}',
-> which is unnecessary and inconsistent with kernel coding style:
-> 
-> - damon_pa_initcall() in paddr.c
-> - damon_va_initcall() in vaddr.c
-> - damos_get_some_mem_psi_total() in core.c
-> 
-> No functional change intended.
+> DAMOS_MIGRATE_{HOT,COLD} passes a target NUMA node to migrate_pages().
+> But alloc_migration_target() only treats mtc->nid as a preferred node
+> unless __GFP_THISNODE is set.  Hence target allocation can fall back
+> to another node, and migrate_pages() can report success without placing
+> the folio on the requested target node.
+[...]
 
-Nice catch!  Thank you for this patch!
+All make sense to me.  Thank you for kindly revisioning with the clarification
+of the motivation, Jiahui!
 
-> 
-> Signed-off-by: Xuewen Wang <wangxuewen@kylinos.cn>
+> Signed-off-by: Jiahui Zhang <jiahuitry@outlook.com>
 
 Reviewed-by: SJ Park <sj@kernel.org>
 
-This series is applied to damon/next [1] tree.  If this series is not added to
+This patch is applied to damon/next [1] tree.  If this patch is not added to
 mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
 to pick this.  So, no action from your side is needed for now.  If it seems I
 also forgot doing that or you cannot wait for my action, please feel free to
