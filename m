@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9356D371873;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E070A370D65;
 	Tue, 14 Jul 2026 14:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784039756; cv=none; b=f6pos+ghQDnebUpWZEl6+U5mMTWWcD2TGzu1WdTriOsYZ9KY48BizRzPO1cVULkrcTU8DaclDjb73mIDcz/EFdQvp0gWmPNcjTBzW1iQTAOrSqrdT99Bi7TWAv87k2vb7g4gROAU+S0nGLWSr5MVjZrKvul4pYNpdo4ag3Y92z0=
+	t=1784039757; cv=none; b=LFjBHqJnMlQWhHj9Hb6a8dhTmeWQQO7KqBFSSEsIEVxtoiuY2bRM8YyoVxdgyQJrA9qTo1A9LJ9HYI92HkzxwMInzJEyYDzTf8zJfm5cjr+KeAvm9CacpCrMCPuEv3er1PxZMtmFQJjPf1BnsGfvHabJQdNdkKnga/5kl2T3oFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784039756; c=relaxed/simple;
-	bh=28KQrfeI2zvjHjr6PuDX7oyWWH3SuTV6OXLAVtISIPA=;
+	s=arc-20240116; t=1784039757; c=relaxed/simple;
+	bh=3PoFXRZE5p8gFw6SuUdvsbrJKOuvciCgPsJD1haajhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mTPEuTOkovBpZWqHuWIRDp6uymNPgEj08H416H2vd5a/tj4Il7WgMu2qWGBKvUMJTpTUI1kJEJNQCreikFljzqbRr97DjK21RTzfsGZt9U0RuB+di1/zB3d6VIBgS16Y/3MFnHgQLYy0RHQuPJgWSBjbOBwl2OHYZvbjSGxs9sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vj/BABRE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FSmJVZT/D6EaaueZyQhMuRN9CJRRXwJ5zhc1L1JM9wApE/wyxg+3GQ7mKxYMXmXcYI+U5IpydU3yG1VvoE8nr6y7VdZD/zhvEbU7idq4Hjn7Oox2OS1jFPQvZbaKAvy7Wr27vngLdcqbBHbGlGQJfY2qC/okPFFtKwjrY55+o+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l5Rf4pxg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vj/BABRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BED1F00A3D;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l5Rf4pxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE371F00A3A;
 	Tue, 14 Jul 2026 14:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1784039755;
-	bh=O1GFuFV6Qv2wWJnuvFbk/HsH8hWm9YYqEFf3m4C5iW0=;
+	bh=3wUP+A3V/Raa3GTzyt1oBi5Pi6+PUzbHoN/8enGeFJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vj/BABREgxJ45Eq0THUdsbJ+Y7Nr2s7nVxZfZ0/tGYE5O3c3SFkc13S+4+AXyGOXA
-	 F6c526SxtCDgkpMIEzF4+HaJjj0BcKk9uTdvv8KHyyj0MuQrRxdXYMoyaZqSdjdJz4
-	 CLyaH/cFiv3Xzrhystp9gfOWOws/xKcwTdFhpU81euVo8ngs8He4oWgVG+YT7m1/Y+
-	 3bzdDfMcIDCiYBLRWVvISdgI2bfyA/YNBGqGixvP4HFrGvbXTHQR9J2rV9E9K9aw4N
-	 ZHvI1kBF8tq1Y+WccD0ToAXESh3XkODL0RyDgDM6k9/AU4KWRg6icJNjQXOEgp9joK
-	 oZ9aQGRo3masw==
+	b=l5Rf4pxgD2IqkG6wezOZ27v3qi0J9YlVZMPXvUIKQStRrG5i7Ol79FfGQs0PXllkX
+	 /U99kUO56V7z4iF+6RPR2hIpPnyweTw83kEMrmiSLpt7sB5S+eqdP2nd+304yU0q+o
+	 OitdBloS4IHWRFIADoI5NOjjy7Pw673U6KdrrBEdw57NbyU/aUxpGCIUuid9A0qQcL
+	 kjlUbWkJMLuS1Nfp+t5gl4JWk7ii301Bq7ALbhPhKiA8aFswJC59sodNe1q4ocBXym
+	 G++xPcuYIA/7bm4aAe17CIv9tofBE0RqnzPu7hzss9VKis0N36mM99aM7pfTVwmHMR
+	 Zk3Hfz1nz2bkA==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 01/10] mm/damon/core: hide private damon_region fields
-Date: Tue, 14 Jul 2026 07:35:34 -0700
-Message-ID: <20260714143544.101305-2-sj@kernel.org>
+Subject: [PATCH 02/10] mm/damon/core: hide private damon_target fields
+Date: Tue, 14 Jul 2026 07:35:35 -0700
+Message-ID: <20260714143544.101305-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260714143544.101305-1-sj@kernel.org>
 References: <20260714143544.101305-1-sj@kernel.org>
@@ -46,40 +46,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_region->list is intended to be used by only the DAMON core layer.
-But it is mistakenly not marked as private.  Hide it from the callers by
-marking it private.
+'nr_regions', 'regions_list' and 'list' fields of damon_target are
+intended to be used by only the DAMON core layer.  Those are mistakenly
+not marked as private.  Mark as private.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/linux/damon.h | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/damon.h b/include/linux/damon.h
-index f69442a9d4312..d32377e7e535e 100644
+index d32377e7e535e..6e160557a0014 100644
 --- a/include/linux/damon.h
 +++ b/include/linux/damon.h
-@@ -46,7 +46,6 @@ struct damon_size_range {
-  * @sampling_addr:	Address of the sample for the next access check.
-  * @nr_accesses:	Access frequency of this region.
-  * @probe_hits:		Number of probe-positive region samples.
+@@ -79,9 +79,6 @@ struct damon_region {
+ /**
+  * struct damon_target - Represents a monitoring target.
+  * @pid:		The PID of the virtual address space to monitor.
+- * @nr_regions:		Number of monitoring target regions of this target.
+- * @regions_list:	Head of the monitoring target regions of this target.
 - * @list:		List head for siblings.
-  * @age:		Age of this region.
+  * @obsolete:		Whether the commit destination target is obsolete.
   *
-  * For any use case, @ar should be non-zero positive size.  damon_set_regions()
-@@ -68,9 +67,11 @@ struct damon_region {
- 	unsigned long sampling_addr;
- 	unsigned int nr_accesses;
- 	unsigned char probe_hits[DAMON_MAX_PROBES];
--	struct list_head list;
- 	unsigned int age;
--/* private: Internal value for age calculation. */
-+/* private: internal use only. */
+  * Each monitoring context could have multiple targets.  For example, a context
+@@ -95,10 +92,14 @@ struct damon_region {
+  */
+ struct damon_target {
+ 	struct pid *pid;
++	bool obsolete;
++/* private: */
++	/* Number of monitoring target regions of this target. */
+ 	unsigned int nr_regions;
++	/* Head of the monitoring target regions of this target. */
+ 	struct list_head regions_list;
 +	/* List head for siblings. */
-+	struct list_head list;
-+	/* for age calculation. */
- 	unsigned int last_nr_accesses;
- 	unsigned char last_probe_hits[DAMON_MAX_PROBES];
+ 	struct list_head list;
+-	bool obsolete;
  };
+ 
+ /**
 -- 
 2.47.3
