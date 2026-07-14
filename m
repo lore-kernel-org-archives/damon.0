@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C60E47AF5F;
-	Tue, 14 Jul 2026 13:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1293F44CAFC;
+	Tue, 14 Jul 2026 14:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784037163; cv=none; b=eig9MHfTYsIipRmOND07OlG7zy8LY+EJikI7OeWdueAmqN7WXtEeLbbXQ5EOa7w/nbaf+BJ8V2RQuyolUGI4d0f38lR6rA6Eg+g9F4Sb2OTq2QT7p1jnf6inq3ci3EhzU/t5D5a7znCLbWd9LwBmrbaKCAduDqW64+5iu8IeFUA=
+	t=1784037688; cv=none; b=cKEWNJtLjwBYm5WPbfvG7qOaUZecfUCNYWv55UH23lmIDV9jakcMTWorq7ZICVLCDCYdQwjKNJgHCosnvUNROnL77y1D0VDb0uy5YBMLIn0qVT5X8efNtoRarCNfH0QAWddBHneQ6XFF5nX8Hq0EhxH2OA2Tqx8458w+sma3sBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784037163; c=relaxed/simple;
-	bh=5ScejZ7WR20mP7M32rQjyj8bSoc3hvLkckL0qcqy7ww=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ao+/C/hIFdwL82R38WuMhLWedhJoNlVBiRG4fIf9WRLP1YXZnB+362Wx22VHtg1kB8snRVuKStfE6XLkyc76u6PFV2PeuKTXW2GvBTL+0yspVpE2yLHkmr4SCBRuj3sj85Md9DTh3Bpx30abWLRgD1AkJM1OmwXuhoTejIx+/yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TXSHgfay; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784037688; c=relaxed/simple;
+	bh=d0V2rb/osngXT8gHWvu1/UCcS5rQAWXYd/aLH1oV/Gk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=crs+phpSuateI9kS/1R5abWBkM/xsYTLkQDlrhG1tQNqabVZiM7t6h+IRJofKome9i88x8Xw8XUz73KCFloyFLdd2D80pv1eoGT3iyaXnpdBgc2abfx8fX9+GtRZypqtc9TSg6UsZOtXA2f4bFzfNB52s90MfbLPDmuPOd07i9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M+JcNMVV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TXSHgfay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B211F000E9;
-	Tue, 14 Jul 2026 13:52:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M+JcNMVV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272E41F000E9;
+	Tue, 14 Jul 2026 14:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784037162;
-	bh=MTFa+hpzXfcfyF1zP3rvNz2Fhu2Cffg36gE6sioOaYQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TXSHgfayZDyKOjxmFxTfQTlWYACYLOF1UShP6zz/S0vV6siNuJJPHalozH+s0r8YB
-	 gwGVBU9sm99r4zVvNBWuJM1x8YMeYOjk52ctqyyS/FKv4mZVpB9grooZW1flRLiEvy
-	 mZ462KChCsmiktOfOujR+u2hYkPpRwQrtBUN6GnKJ7PnCC6pzIJdQ4ATSo/4G82BVL
-	 dhQehNgCxHx7kY4C9tgNQ7ADb73tY2p9BPVlwJWlzJh0yUwccX4uaq4PkveFw5beMy
-	 cR0YFSEFjgDehYed2pJ1V7dCiy3CLqHNr/aldqnn1cGafOo/FkG2vJWlG/P1US5xCR
-	 bXuLRqUFzMaJw==
+	s=k20260515; t=1784037686;
+	bh=QRQ/R6IhyCOalIrS8ASQJa7G5ZabRey9LTdrVciopCs=;
+	h=From:To:Cc:Subject:Date;
+	b=M+JcNMVV9CDgT0gPBIPVPQSA27IJL/gRBnZAOPTX1WydwcRhmGm7WHkJ+0D2Da0Kb
+	 VsFEwHsYZBFvPHqSiZwuu5jB3yxU3xf0i88j8ksfrRuxJJcdSEQ2YnqNfLZGEYwsli
+	 wxb6yIDiox1plPbqZwCpcUmzzxSksbVCCQfRkG83JP0ME+ys8v5Lqxy4si2ws1L+sF
+	 rDpjKU3XhM5bR5kp+XGi8OQNWTsNdMoRzvrXKVo4dGgPKqp+hX97+wl3G2ZcMYM1lb
+	 0u8cVMT42gYYMQHLstUqNdW4T61VCoZ+Jr8BJvRSJmB1paB7OdGnxqbV1KVe4ekiFK
+	 xGhcU/6ZOQVMg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
+	"Liam R. Howlett" <liam@infradead.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 4/5] mm/damon/paddr: drop last same folio access check reuse optimization
-Date: Tue, 14 Jul 2026 06:52:32 -0700
-Message-ID: <20260714135236.92699-5-sj@kernel.org>
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: [PATCH v2 0/4] Docs/ABI/damon: sysfs ABI document fixes and additions
+Date: Tue, 14 Jul 2026 07:01:12 -0700
+Message-ID: <20260714140117.94147-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260714135236.92699-1-sj@kernel.org>
-References: <20260714135236.92699-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,74 +51,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It can race when multiple kdamonds are being used.  The problem from the
-race is doubtful, but the gain from the optimization is also doubtful.
-Simply drop the optimization in favor of code simplicity.
+This series fixes typos and fills in missing entries in the DAMON
+sysfs ABI document (Documentation/ABI/testing/sysfs-kernel-mm-damon).
 
-The user impact is doubtfully trivial.  After all, this kind of
-interference can happen only by intentional user setup.  Even if it
-happens, it will be rare, and the consequence is degradation of the
-best-effort monitoring results.  No critical consequences like kernel
-panic or memory corruption happen.
+Patch 1 fixes a path typo, "intrvals_goal" -> "intervals_goal", in
+four What: entries; the documented path points to a non-existent
+directory, so it is Cc'ed to stable.
 
-The race was discovered [1] by Sashiko.
+Patch 2 fixes two further typos ("WDate:", "manimum").
 
-[1] https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org
+Patches 3 and 4 add ABI entries that exist in the kernel and are
+already described in usage.rst but are missing from the canonical ABI
+document: the 'update_tuned_intervals' state command (patch 3) and the
+'tried_regions/<R>/probes/<P>/hits' file (patch 4).
 
-Fixes: a28397beb55b ("mm/damon: implement primitives for physical address space monitoring")
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/paddr.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+Changes from v1
+- v1: https://lore.kernel.org/20260710044737.561102-1-husong@kylinos.cn
+- Rebase to latest mm-new.
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index b85f88a7a38f4..e4f98d67461f5 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -65,7 +65,7 @@ static void damon_pa_prepare_access_checks(struct damon_ctx *ctx)
- 	}
- }
- 
--static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
-+static bool damon_pa_young(phys_addr_t paddr)
- {
- 	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
- 	bool accessed;
-@@ -74,7 +74,6 @@ static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
- 		return false;
- 
- 	accessed = damon_folio_young(folio);
--	*folio_sz = folio_size(folio);
- 	folio_put(folio);
- 	return accessed;
- }
-@@ -82,23 +81,12 @@ static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
- static void __damon_pa_check_access(struct damon_region *r,
- 		unsigned long addr_unit)
- {
--	static phys_addr_t last_addr;
--	static unsigned long last_folio_sz = PAGE_SIZE;
--	static bool last_accessed;
-+	bool accessed;
- 	phys_addr_t sampling_addr = damon_pa_phys_addr(
- 			r->sampling_addr, addr_unit);
- 
--	/* If the region is in the last checked page, reuse the result */
--	if (ALIGN_DOWN(last_addr, last_folio_sz) ==
--				ALIGN_DOWN(sampling_addr, last_folio_sz)) {
--		damon_update_region_access_rate(r, last_accessed);
--		return;
--	}
--
--	last_accessed = damon_pa_young(sampling_addr, &last_folio_sz);
--	damon_update_region_access_rate(r, last_accessed);
--
--	last_addr = sampling_addr;
-+	accessed = damon_pa_young(sampling_addr);
-+	damon_update_region_access_rate(r, accessed);
- }
- 
- static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
+Song Hu (4):
+  Docs/ABI/damon: fix typo in intervals_goal sysfs path
+  Docs/ABI/damon: fix typos
+  Docs/ABI/damon: document update_tuned_intervals state command
+  Docs/ABI/damon: document tried_regions probe hits
+
+ .../ABI/testing/sysfs-kernel-mm-damon         | 29 ++++++++++++++-----
+ 1 file changed, 22 insertions(+), 7 deletions(-)
+
+
+base-commit: 4c3e511167ba60f3934a530fa5675143a09eb909
 -- 
 2.47.3
