@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34802737F8;
-	Tue, 14 Jul 2026 04:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582042C1586;
+	Tue, 14 Jul 2026 04:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784003684; cv=none; b=IZwyoNtotW0IzFT13Z8KD1p8JUB8S8e1GHrB87V3G+gdVVo/wVAq1zWuWbE2iv3qnEayB0eS74VCgjfAVpeyY5VX2KlYZzIpRIvqtpf7H27ZW5fVBpTXm0CQ15TM9OZTvoO/6uqad3Zu/QZQDmMbSMVFS5Y8xMUGCkGyqsHzKO4=
+	t=1784003685; cv=none; b=gBVChYLF9UhdfK3hfa3co8IWi+4TijKT5GwVBpNxNqFVDS8Hy9MVuRKI7NEEN2XkA5MQgf8KNIpG8+E6pYEEiCU4s9X5xLLQ4kpk4HG+NERfbVV9pD4EYrLmB081/hn5jYhAbpXQoDaTJld+mWdE3x6P9lOsSZtdFLsPKCmSvkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784003684; c=relaxed/simple;
-	bh=auZweVBylLMjI8FT8RIyh3Wuk64AJNNXS7HdDEMxPKM=;
+	s=arc-20240116; t=1784003685; c=relaxed/simple;
+	bh=/YooC0Og/qESa3EjUx8EinIYLgt3NHWfzDOzYxdEP/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rs1m03MXt+DouUJpLt2ZKD9TWzGJ6xdu1oOiS7f71bRHWfDujA/jpQzPaFZX5XWEcOUrVULsrZ07HHqTNBPATGE8RSi3MJJtBBzHJXs6jmpUQGGoIBHG2mgN9A1gbY1ERkrtrWTV56WvJ+UugnQQXr3uryLj6FTFF6sgp+I9KD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YUYkN1dy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aipLe4MVO7i8yTvjMlxh2fxFt+tbSsw/Kzz+oFOGn9TGKhtaiUOrqs2Ee+lweqdHzYT6nASQtozdv9JgKicdZvd+eu6Q2uKskNrAvVPBJn7viom/IX30onv8REhFJI0YCML+EWY/xPqQW/Czqpw6xarQpL/41029tIcZ9wkSXRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lFw4SMDE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YUYkN1dy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D2E1F00A3F;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lFw4SMDE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D5E1F00ACA;
 	Tue, 14 Jul 2026 04:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784003683;
-	bh=0BZxDJkFvulRjFQmRcUYV8xQhtaa1R3auddZnH6jsbQ=;
+	s=k20260515; t=1784003684;
+	bh=K9M+/498pDyKMm1s0mlHFjJL8e/IqqSwdiOP+0fBImU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YUYkN1dyAZZVX7GlyawUhpPuUYcxjJtD7mNDEzExlsgDd4Lzuh00cSJ+ITsVT/eQB
-	 6jPW6zrcsJ4xnAnhUlxGkI7jSZDm2eJNk6T8EGMom1fxQMpKMfjFUlbThFWHc+yC2k
-	 ybl+0eRpOf/YZhEAcqPsXgjhXqYP1Yk65xjc3ThZElPr1qw8ZoJod2ngN2laAtKNWe
-	 GaiX450u37uI+T8dCKsgQjKQ4G1oZAjlFQygK57rOODlYtwlPSTJeOuhVYrDpeViab
-	 QsqEzegoO8dlsrEVtXuTO4jsBiDMCdpoh9IZvZImOzpVEe7wrrylv5e83j5BEkHayz
-	 VYoy9D59OoWHg==
+	b=lFw4SMDEogKyEWuA6QtbGBzeT6n0wFQfRE1ayLXO6ZGS0GMl3ZTITnpyo1+Qy+a02
+	 AxjZi/yZA4CjXGPHBWyqDOFzJQswXUOnaRub7RrW1o2AwaZwQ2AnChiqfr7pQLSa08
+	 DujXVyHhErK/TEZZUkKNAAipDRe/IPBMX3y1gE1z006FfEPJjrzX++vv+gYFyKQdwU
+	 +ZLAyxoZQcGxMTnCxdtrVwaM0zkTjUH6S9M9q3iiJ7BHZk+sfmjpCEG0CmmzVPoxTW
+	 BqMFY9+w/OmDRLaEMuUQ8nl5PyYsiyWiI+hsl9ouORR4N9dzM+BhyKed1xGyHZVs+Y
+	 EoHGhHPbS5WTg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 03/10] mm/damon/core: hide private damos_quota_goal fields
-Date: Mon, 13 Jul 2026 21:34:29 -0700
-Message-ID: <20260714043437.95811-4-sj@kernel.org>
+Subject: [RFC PATCH 05/10] mm/damon/core: hide private damos_filter fields
+Date: Mon, 13 Jul 2026 21:34:31 -0700
+Message-ID: <20260714043437.95811-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260714043437.95811-1-sj@kernel.org>
 References: <20260714043437.95811-1-sj@kernel.org>
@@ -46,43 +46,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-'last_psi_total' and 'list' of damos_quota_goal are intended to be used
-by only the DAMON core layer.  Those are mistakenly not marked as
-private, though.  Mark as private.
+damos_filter->list is intended to be used by only the DAMON core layer.
+However, it is mistakenly not marked as private.  Mark as private.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/linux/damon.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 6e160557a0014..d838cc27ee72a 100644
+index bd024b89adfa3..15517be3e4960 100644
 --- a/include/linux/damon.h
 +++ b/include/linux/damon.h
-@@ -175,10 +175,8 @@ enum damos_quota_goal_metric {
-  * @metric:		Metric to be used for representing the goal.
-  * @target_value:	Target value of @metric to achieve with the tuning.
-  * @current_value:	Current value of @metric.
-- * @last_psi_total:	Last measured total PSI
-  * @nid:		Node id.
-  * @memcg_id:		Memcg id.
-- * @list:		List head for siblings.
+@@ -432,7 +432,6 @@ enum damos_filter_type {
+  *		&damon_ctx->adaptive_targets if @type is
+  *		DAMOS_FILTER_TYPE_TARGET.
+  * @sz_range:	Size range if @type is DAMOS_FILTER_TYPE_HUGEPAGE_SIZE.
+- * @list:	List head for siblings.
   *
-  * Data structure for getting the current score of the quota tuning goal.  The
-  * score is calculated by how close @current_value and @target_value are.  Then
-@@ -201,12 +199,17 @@ struct damos_quota_goal {
- 	unsigned long current_value;
- 	/* metric-dependent fields */
- 	union {
--		u64 last_psi_total;
- 		struct {
- 			int nid;
- 			u64 memcg_id;
- 		};
-+/* private: */
-+		/* Last measured total PSI */
-+		u64 last_psi_total;
-+
+  * Before applying the &damos->action to a memory region, DAMOS checks if each
+  * byte of the region matches to this given condition and avoid applying the
+@@ -450,6 +449,8 @@ struct damos_filter {
+ 		int target_idx;
+ 		struct damon_size_range sz_range;
  	};
 +/* private: */
 +	/* List head for siblings. */
