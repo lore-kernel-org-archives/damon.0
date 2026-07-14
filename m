@@ -1,93 +1,141 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A04B47CC9C;
-	Tue, 14 Jul 2026 14:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A882843F8C1
+	for <damon@lists.linux.dev>; Tue, 14 Jul 2026 14:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784037690; cv=none; b=akJ3obOCTS/wUbxys80ovmoBbqPSZOjYFkoiQzQAa3uKbYuiI2KDir95+U5nayQIyPHNIAMu7k1T71BPKhMD3kyDPt0Igb5zRd5j3hE/akjO8N10V/+cU2CrmDmKDJTWwHkV4sicVdY2leLODZ6XerQr9kP7GirmUXgLEbd7JMA=
+	t=1784037707; cv=none; b=e0gKtKgbHPlxQwDiqNhwVLutSfz58AWGjp8nHOwqnIu73Rug0VKFJscjvKuncCi8xMCRUDX0WetHPwOInZ1oKHahT6wqBwtIw2GPu9xzwG0/7cOKbnPOgglHeAiLMRgaSWEuuSIxig3lhTCwjvn2A5JZOq90fXD06nDKwnXAJDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784037690; c=relaxed/simple;
-	bh=F2ctYjbOXJA6k3tpwq1NORArTe96BERc4xXnwMefw/o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usf0piioljAP0KOJCS5wNOrYDkk/k2RYIXj0McfeeYhRpwN7ae+O1yl3S//z+Bnd1pICoNJVjmIYSv9wzHPW1y/bZqpx2rL/efbHI2P6w+x6w46BDeTgpVlytBggmpdOr8PmeETrtsRrAH301JIwmMgYAhuefstYa+Lwo8rN2oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=opJbIRfx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784037707; c=relaxed/simple;
+	bh=1MjTXC318u3nJVNVp7LHyyWTdo2Ed57FjJ3W0V0vxtQ=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=jaCB5NzLFR29XeTyYuOtqEGEeNpu6xEgZdTRx7UVFNnmH5A1Jh6SPcsXRK+mvK0/rxeBfod6oip4domUUDb16TbNDuOS4S5ubCas0/txvyNxIPhhbnu7x3JPLosWRBWUA+Dt5xWApQ1sIKgl9aO3dSvra/2pD9W43WPQBQF3DLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FjIypGB1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="opJbIRfx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DC41F000E9;
-	Tue, 14 Jul 2026 14:01:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FjIypGB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A77C1F000E9;
+	Tue, 14 Jul 2026 14:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784037689;
-	bh=1xev+RArxStO4Y/fnuMkgg5H8N0EqMUfi6KCHf6ihSI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=opJbIRfxqGTV9/18goXySzxETF/pZnh0raFiuig78hrgEJkiIUC6Qx2izzC1MXb5d
-	 VE5R6g9rINCV8X/9J1q1/kXRxyzE2ULnNeJpw8a6/lqtqRKzLBeXSaqy7dRbb1k3bU
-	 rdY57GxrUYI7yRG8IYR8tMj7xmdTrC/V1jyjQB1BahjxvMHxWDZJpVpIG5clHr2/ii
-	 yw/bqRNlvRKcz6vvyPuryJpzCuWF+A2aiBK2I2vpqF0+gnsi8Nx/lUOGIUOuPmYTUi
-	 TbEFbLoPE/LP9UepXvgB181bZsyKxePo9AcHmuzK5uGqogU0Fk0LXeX9MhoWm3AcRG
-	 eZ5n9ZxU9xVaQ==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Song Hu <husong@kylinos.cn>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH v2 4/4] Docs/ABI/damon: document tried_regions probe hits
-Date: Tue, 14 Jul 2026 07:01:16 -0700
-Message-ID: <20260714140117.94147-5-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260714140117.94147-1-sj@kernel.org>
-References: <20260714140117.94147-1-sj@kernel.org>
+	s=k20260515; t=1784037706;
+	bh=MsiFIzf3FPoujVQesSWSPNpbSdgWZnQ/3tSxFitXXss=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=FjIypGB1GUYd8pkyyzhdhvmp6ZxeTp056lcFWtT02OPnty5fKP5vRcPaG7w8oOtwN
+	 oZSlbmAHLpkGVuEk1fEiUzEs8XoJclbc3XIkUtmizWaNftnjEdzhTgezMfz3iQeShm
+	 UVNHJ9N82ayj+YY8yX4AbhwlcjAEaRe3pREPNBuo5RKY2JP2E6E/d3WQT/8VKXO5KJ
+	 g1G6guTspR4Xjg9G8CLW/57NcjYUIFcfsycnfN6oV1jWMmMm7PG5U2DBmDrkewnhWS
+	 5ttINpQFLfmgaMhH8c7s3Ssazq/FzWPUCE+U8f9v/jNYNs4926Kzfyl8IgcR/eJC13
+	 Re3Cfl42wUduQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 2/5] mm/damon/tests/core-kunit: catch test failure in
+ test_merge_regions_of()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260714135236.92699-3-sj@kernel.org>
+References: <20260714135236.92699-1-sj@kernel.org>
+ <20260714135236.92699-3-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 14 Jul 2026 14:01:45 +0000
+Message-Id: <20260714140146.1A77C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Song Hu <husong@kylinos.cn>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-The 'tried_regions/<R>/probes/<P>/hits' file, added in commit
-5b0de1bc3325 ("mm/damon/sysfs-schemes: implement probe/hits file"),
-is described in usage.rst but missing from the canonical ABI document.
+Pre-existing issues:
+- [High] This problem wasn't introduced by this patch, but the patch attemp=
+ts to fix a crash where unit tests continue execution despite a failed KUNI=
+T_EXPECT_EQ() condition and misses several identical vulnerable patterns in=
+ the same file. In multiple other test functions, if a tested function fail=
+s and the KUNIT expectation is not met, the tests will continue and perform=
+ out-of-bounds array accesses or invalid list traversals leading to slab co=
+rruption.
+--
 
-Document the 'probes/' directory and the 'probes/<P>/hits' file.
+--- Patch [2]: [PATCH 2/5] mm/damon/tests/core-kunit: catch test failure in=
+ test_merge_regions_of() ---
+commit 951f8b5681b80f05d0ef2d36767a3d72e546ac33
+Author: SJ Park <sj@kernel.org>
 
-Signed-off-by: Song Hu <husong@kylinos.cn>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 1507e63ab1711..e675a57145e36 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -650,3 +650,15 @@ Contact:	SJ Park <sj@kernel.org>
- Description:	Reading this file returns the size of the memory in the region
- 		that passed DAMON operations layer-handled filters of the
- 		scheme in bytes.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/<R>/probes/
-+Date:		May 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Directory for DAMON data-attribute monitoring probes of the
-+		region.
-+
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/<R>/probes/<P>/hits
-+Date:		May 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Reading this file returns the number of data-attribute
-+		monitoring probe-hit positive samples of the region.
--- 
-2.47.3
+This commit addresses a panic in damon_test_merge_regions_of(). If the init=
+ial
+KUNIT_EXPECT_EQ() expectation is not met, the code previously continued exe=
+cuting
+a per-region test assuming the incorrect hard-coded number of regions, lead=
+ing
+to a NULL pointer dereference. The fix catches the expectation failure and
+skips the per-region tests.
+
+Link: https://lore.kernel.org/20260710144937.26981-1-sj@kernel.org
+
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index 485472ddebd19..eba643762132f 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
+> @@ -260,11 +260,14 @@ static void damon_test_merge_regions_of(struct kuni=
+t *test)
+>  	damon_merge_regions_of(t, 9, 9999, ctx, true);
+>  	/* 0-112, 114-130, 130-156, 156-170, 170-230, 230-10170 */
+>  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 6u);
+> +	if (damon_nr_regions(t) !=3D 6)
+> +		goto out;
+
+[Severity: High]
+This isn't a bug introduced by this patch, but while addressing the crash
+here, could we also fix identical pre-existing regressions in the rest of t=
+his
+file?
+
+In several other test functions, if a tested function fails and the
+KUNIT_EXPECT_EQ() condition is not met, execution continues and causes
+out-of-bounds array accesses or invalid pointer dereferences.
+
+For example, in damos_test_commit_dests_for():
+
+	KUNIT_EXPECT_EQ(test, dst.nr_dests, src_nr_dests);
+	for (i =3D 0; i < dst.nr_dests; i++) {
+		KUNIT_EXPECT_EQ(test, dst.node_id_arr[i], src_node_id_arr[i]);
+
+If dst.nr_dests is larger than src_nr_dests, doesn't this loop read out
+of bounds on src_node_id_arr[]?
+
+Similarly, in damon_test_split_at() and damos_test_filter_out():
+
+	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
+	r2 =3D damon_next_region(r);
+	KUNIT_EXPECT_EQ(test, r2->ar.start, 2);
+	KUNIT_EXPECT_EQ(test, r2->ar.end, 4);
+	damon_destroy_region(r2, t);
+
+If the split fails and there is only 1 region, does damon_next_region() ret=
+urn
+an invalid pointer for the list head? If so, passing it to
+damon_destroy_region() could lead to slab corruption.
+
+A similar pattern also exists in damon_test_commit_target_regions_for() and
+damos_test_commit_quota_goals_for(). Should similar expectation checks and
+early exits be applied to these functions to prevent kernel panics during t=
+est
+failures?
+
+>  	for (i =3D 0; i < 6; i++) {
+>  		r =3D __nth_region_of(t, i);
+>  		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+>  		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
+>  	}
+> +out:
+>  	damon_free_target(t);
+>  	damon_destroy_ctx(ctx);
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714135236.9269=
+9-1-sj@kernel.org?part=3D2
