@@ -1,208 +1,196 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazolkn19010020.outbound.protection.outlook.com [52.103.20.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3EA3644CF;
-	Tue, 14 Jul 2026 10:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784024268; cv=none; b=KoARJtzUTnXChmf2Ufmh6BWVO6FMgt/WqrkkainQ9/6YkXo72jB14UASOGPznSGKiNKf08VcP09hEZCQXvPVuTF5gZQKaIYMWMn0Fd2fmP63+SPTkE+54Rg5bmIWrpKrjKMLQTR5FfOtdrPgVhhJkLvWSOpUIxWQMiM/y2seVFc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784024268; c=relaxed/simple;
-	bh=4DH5a6ve/auP/7V1bjyB0V4QG2dck0UzPWpYqC6/K2k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gLcLeuk+BDUCgI/Utnn9318eE4ks4juatKBtAsY3GwsxdDJJIB9hXvBcw29WAMPdf0cMeZ/V9I45Joos8rwZ9/pQiT2fRKXgox9poFtuzrL+1YB0g85Pt/QWBmivN9agjPbS8XPa+vaIaW6HuPUPUfJgVdQaKE/EsD0EEfaOEmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fy6x3ScG; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D1E3655F6
+	for <damon@lists.linux.dev>; Tue, 14 Jul 2026 10:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.20.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1784025516; cv=fail; b=p+CDsbOepYvVVYO91uQYcr2DG/MTCVWbjpIfwBrWENmVEQmfm8UG2BRmkaYFMRxUsNgHXeyYZ8N6Hmjq5zQ6NVVZPmplGJUcG1o9/aiY9Exh1kRGUR75KN5KAV1lYC/0+/B+iwm2RfdIedCKX+ED5E/lM5B1LV6tIgJ12S6jo30=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1784025516; c=relaxed/simple;
+	bh=KppsS1/vASPIYol5L+ZxF71QzgM89c4pASWCdpbRsLg=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ol3Jjnphju6OD6w44lBYRvBsFCvmfxdSnVBrPmLCcele1DZqKsfd4T6ATS0w1lMioPtug9wWSXWIvHt3BmhV7joTb28jI2kBauPGgGliyxA3womXOkUpeaZvVv7fZSgsOxzx6GhJ4kejwK/6svDP7UvTXHrIfC+A8/s7NiAyA6Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=UlJ1ynfF; arc=fail smtp.client-ip=52.103.20.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fy6x3ScG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4FE1F00A3A;
-	Tue, 14 Jul 2026 10:17:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784024267;
-	bh=m1KwIxFOjH59vMqkPqvNJy2V0MLfN207LfncRH5TxDo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Fy6x3ScGp4SvjcLCb2EYasEF7Bg+N3JfXA1S2rYhDdGa8fr4+6eT9Z5sUIb80sT2r
-	 12V6KN+91XeSPeyZyRfBCNnMtsE0Z3zX1AfM0d9+BaPvnE/m8+pkUwQTaWwez7DEAX
-	 40QuoDzKqfzY1GCwuoG58CjBJE29XwBLRxM4TLNdmwQj8Blhck0AkxR92okiojzvMx
-	 WvMiVcF3zrA3KFpoksv9rfWx4gssKNluZWhtd5duC3QeTgeKUloBSHGktJzF0RJITM
-	 VrXH2ihLGQi0Xivwew6+5RuBX85r1ZYghiUkt5mTAu6e5JRNfb657XTWVfzpRGcHfX
-	 762G6nWtq/nvw==
-Date: Tue, 14 Jul 2026 11:17:11 +0100
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-To: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	David Hildenbrand <david@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	Michal Hocko <mhocko@suse.com>, Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>, 
-	Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
-	Pedro Falcato <pfalcato@suse.de>, Russell King <linux@armlinux.org.uk>, 
-	Dinh Nguyen <dinguyen@kernel.org>, Simon Schuster <schuster.simon@siemens-energy.com>, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
-	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
-	Dan Williams <djbw@kernel.org>, Matthew Wilcox <willy@infradead.org>, 
-	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
-	Adrian Hunter <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, Zi Yan <ziy@nvidia.com>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <npache@redhat.com>, 
-	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
-	Miaohe Lin <linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>, 
-	Xu Xin <xu.xin16@zte.com.cn>, Chengming Zhou <chengming.zhou@linux.dev>, 
-	SJ Park <sj@kernel.org>, Matthew Brost <matthew.brost@intel.com>, 
-	Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>, 
-	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Alistair Popple <apopple@nvidia.com>, Hugh Dickins <hughd@google.com>, Peter Xu <peterx@redhat.com>, 
-	Kees Cook <kees@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Robin Murphy <robin.murphy@arm.com>, Andrey Konovalov <andreyknvl@gmail.com>, 
-	Alexander Potapenko <glider@google.com>, Dmitry Vyukov <dvyukov@google.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
-	Jarkko Sakkinen <jarkko@kernel.org>, Dave Hansen <dave.hansen@linux.intel.com>, 
-	Thomas Gleixner <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>, x86@kernel.org, 
-	"H. Peter Anvin" <hpa@zytor.com>, Ian Abbott <abbotti@mev.co.uk>, 
-	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	Christian Gmeiner <christian.gmeiner@gmail.com>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
-	Thierry Reding <thierry.reding@kernel.org>, Mikko Perttunen <mperttunen@nvidia.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Christian Koenig <christian.koenig@amd.com>, 
-	Huang Rui <ray.huang@amd.com>, Matthew Auld <matthew.auld@intel.com>, 
-	Jason Gunthorpe <jgg@ziepe.ca>, Yishai Hadas <yishaih@nvidia.com>, 
-	Shameer Kolothum <skolothumtho@nvidia.com>, Kevin Tian <kevin.tian@intel.com>, 
-	Ankit Agrawal <ankita@nvidia.com>, Alex Williamson <alex@shazbot.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, Shakeel Butt <shakeel.butt@linux.dev>, 
-	Usama Arif <usama.arif@linux.dev>, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	nvdimm@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev, iommu@lists.linux.dev, 
-	kasan-dev@googlegroups.com, linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org, 
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	Russell King <linux+etnaviv@armlinux.org.uk>
-Subject: Re: [PATCH v2 13/33] mm/vma: introduce and use vmg_pages(),
- vmg_[start, end]_pgoff()
-Message-ID: <alYMZkJKJABhPsa6@lucifer>
-References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
- <20260710-b4-pre-scalable-cow-v2-13-2a5aa403d977@kernel.org>
- <508301c5-5460-40e8-bc34-6410be5be40a@kernel.org>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="UlJ1ynfF"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pd5ebEufunjxOUKGwP2xfucVIc2kXTmY4E8yhrY0/NX8bMaKB9mVAwqM3kBf4B1+n5zlBLPF8u0oWqP3RQOfnGJF67dlb2wqEgeJ/tKWROZaFnYhNfZ7rIzaZ+DFgxA5NNAhorGLZcpZ6f1RNTyJX1PbXz4onVbhBgehVuNOjHOf9sr4ClbV116Zkq94T/TtzT7gVWjVc4gMbpvNSl0P1TlAwEtLjEkZAGRrIwUjmQr5IoqIbB/DEYG6cmW93Hivu6PvyqKg8pb27RpvZ5oe1F+4R/qlRFl6o6zBYE9Xk02BKFTDqyXPJK787eUHWBlYxQVkSI1vg5y+1Pysx2k+CQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZecRdooQoYjT0RHRxZcXf8wdDg/u9kOsgNcQQ/EQofk=;
+ b=JlQN8o2wioYh8amO78fzMoOZbis5Rd/KXaCabxRNrJMMP6RTufuudyzhqcmtgO9UNjjFJOyxtCBt/hFjtJSkMXmN5e3G3UCAo+ojsgGEYIHzzzNaUATfn4cPWF1cjLssBTSYdLx9ND4iAwCEqdKotVJ5USvgfeHXW6mIb/lzycsvk1Oz8wHcTzvfbnDeh5IiC1EYEXqhmGY1TU+fUUq14GPTmTM374cvUoBSTjf/FCjZKFwQS4BRZgD+yK+Lwqf8b4S2hGp7jUZaH4M/UGVrNeSSaeubry4x6eZVXTzvWhJozldbSjKvSDDz4IOfdDxBqYBICeGDu+vXCtZdRh4KVw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZecRdooQoYjT0RHRxZcXf8wdDg/u9kOsgNcQQ/EQofk=;
+ b=UlJ1ynfFVhHMntR/MvjR7vS2x5DNdxMjzrWq/d7vZEiK/sQmD357va/Asi34G6oNnsNmSsuYhjMOOBBsFseDMjdLagRBIUT+PPTKlzTH/zzLP+G0OpqE9/VxjTs/F28ZFUUwQwxYI4rmtRYxnCao377SSdkOWBj4Gns9iSXJ/O3t2RUdo29rrOc8sTo2yUIB2sRLOPMdbIrux22TFPzYKyXkkkrNIht6CTSEsFdN+aO2ux93TU2I7TYkMjzxHKQZCeGWM3xaIgt4/EmBkn7JCs03mP44v5hrHthAU+FLIuZW4b31weGlRM1mIN5YBvn7fGTJCuDeterLBh02PlpjJA==
+Received: from MN2PR02MB6654.namprd02.prod.outlook.com (2603:10b6:208:1de::19)
+ by DM6PR02MB6812.namprd02.prod.outlook.com (2603:10b6:5:213::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.223.9; Tue, 14 Jul
+ 2026 10:38:32 +0000
+Received: from MN2PR02MB6654.namprd02.prod.outlook.com
+ ([fe80::a150:49b2:4042:3050]) by MN2PR02MB6654.namprd02.prod.outlook.com
+ ([fe80::a150:49b2:4042:3050%6]) with mapi id 15.21.0202.018; Tue, 14 Jul 2026
+ 10:38:32 +0000
+From: Jiahui Zhang <jiahuitry@outlook.com>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Jiahui Zhang <jiahuitry@outlook.com>
+Subject: [PATCH v2] mm/damon/ops-common: prevent migration fallback to non-target nodes
+Date: Tue, 14 Jul 2026 03:38:17 -0700
+Message-ID:
+ <MN2PR02MB665479119535A1235D69F125B5F92@MN2PR02MB6654.namprd02.prod.outlook.com>
+X-Mailer: git-send-email 2.53.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: KUZPR02CA0019.apcprd02.prod.outlook.com
+ (2603:1096:d10:31::11) To MN2PR02MB6654.namprd02.prod.outlook.com
+ (2603:10b6:208:1de::19)
+X-Microsoft-Original-Message-ID:
+ <20260714103817.68080-1-jiahuitry@outlook.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <508301c5-5460-40e8-bc34-6410be5be40a@kernel.org>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR02MB6654:EE_|DM6PR02MB6812:EE_
+X-MS-Office365-Filtering-Correlation-Id: 213820b4-e7fc-4b2c-9515-08dee1940cab
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|25010399006|23021999003|24021099003|5072599009|51005399006|8060799015|19110799012|5062599005|15080799012|18061999006|12091999003|4302099013|3412199025|440099028|10035399007|40105399003|1602099012|1710799026;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?DQCrsa7fjP9BfoOO9/kDeiMx4MEid7fpEkymdBA93UMQMNLYeGtSpyOEVGIa?=
+ =?us-ascii?Q?W4NeucdkJ0QHnIa8WHLeJ89FDf10LDUwLHCl46vddftfXBIXX/LDhjjzaD1V?=
+ =?us-ascii?Q?MU+b4xjicc3SAoG5xEDfUemYq29t05XE3LIRV2f55zpzih2NEQ2Ww9JPFuhP?=
+ =?us-ascii?Q?DVVxtveBtgjgf4XiSbXltf7Ji1uOOjpA4PGU0CPrg2iuVMtqy1EnpSn/20qB?=
+ =?us-ascii?Q?IROQCyzs/7EkxYBaKVGCBP227bFDsNhY1S/jQYRip0oFl/pxPfkJbo33mx8q?=
+ =?us-ascii?Q?F2795grCGMV4PM2Cmx89spDpYjBkencPbP5oBsilzdG2vuHiCnKVl/DnmuM9?=
+ =?us-ascii?Q?NYEffvp82s+mUiRm3I/N/B2lr92hkueNFcE0qfLy/WPtmvlCRJ87FC2vACRS?=
+ =?us-ascii?Q?Dgk5J3cAlMa1QHOrT/9ndhCF0y137v9Ypw3lw0KQjfuE+FqsuN4phlZoE5P4?=
+ =?us-ascii?Q?kzI0zlnRFslPjTXPyZoo2t10fBsO+ugDSD7XqYTzj2SL2z6E9cc+7SH1XQwY?=
+ =?us-ascii?Q?LbsS5Uv5Yt5NoCkJzKuT2svWWIrnjMlTtBJPCBtmQRRJ3MRGmujC8Gtm+Gmy?=
+ =?us-ascii?Q?4da8MmzxDM0aR+kasGp4MEFRfHJkhveWEbngaBkA1gO+rd+JMS0eSZfUDVSM?=
+ =?us-ascii?Q?BNpZvTaKztVdvL2xJ/bCok34gzbU9CpsOgUcv9j45Cdta5VPVu47RfkO2B+/?=
+ =?us-ascii?Q?c+/Wsopqa4ExbOovOSVPREBj6Vgj4PtvD+0cev7Iqg+yGtATgq2JTB+B4myO?=
+ =?us-ascii?Q?0XYFlOI+QpjK4BJZnf4IwByOBzQ/EpIAAQnKLmdnEABTje6xs7xPcElt3BfX?=
+ =?us-ascii?Q?THrA4/IwxkhIEuftRgyYDqvcV5JFfhN2U9MoSsqLKar0Fpu5ov+2D6fr96fw?=
+ =?us-ascii?Q?8aGGUK8k0MxdayjYEaIhqx2xGGtq8ZM5mBXqhHDEWjUPr++zJlWxdqMhIKjv?=
+ =?us-ascii?Q?9NLubycAVX756EDsAgfFVWYhQq76hFUHxpcb0KP9Gev1dhr+6+cd7J9l0T/u?=
+ =?us-ascii?Q?RNX5ngoKcPTcy5xxfdy737pcz0rvo1KedGNL9vd3b09ACjPATMaS7S8Os3rr?=
+ =?us-ascii?Q?dSiRe6dg+uiaQBtZ3Qbs8OL6+pVmY0wePefFcYOS9Jov5i6kKqU=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?z0c+v1BNJpSUBoBNrDoivXQz8A2yzyPDPsJBnuz2fsSXUMwLEHdPwJ560+dc?=
+ =?us-ascii?Q?e+NGxBhhwC9dOrGtvBv+3Pxb+JOcWla8dRk5Wy8ksI4KLMFA0foGggfSg4M8?=
+ =?us-ascii?Q?t+c54cPmyxJBqE2f5ZQKdwBeFLXRPzdjQwQDrQn6X0niXPmxw0825hbri8QW?=
+ =?us-ascii?Q?UMVCLAHbjEjncRih6AExrFQ5cJjxAsd36cNmxzyOMSSLClat2QGrrz09t6UT?=
+ =?us-ascii?Q?LOvg0JLT1TgnEhcRMXj7euhWTjbv07SdAd+XMKwk3kC8ufoK9SStTp8FfzWH?=
+ =?us-ascii?Q?hXUFWYTNQ5BvRp2fCfj/GiZjKC/L/a9I+kfPK3X2GyrEOWBYWrjJKanwd98P?=
+ =?us-ascii?Q?2bLo5wTcPlKDKptTBeo32k5VHtA/3nj+IFEM2Yt6qaa/mc90jcQ6vKDAPu3H?=
+ =?us-ascii?Q?6V1heQcY0ph5Snw6hOGjClRyC7Hbk3jYKFJkuruZ4D1HUJvyaRtSsBPFi9zW?=
+ =?us-ascii?Q?bAmIVG6w2WPJoP8IZxCNBdq81XBQazj/lcKjFokm4631utzP5NnoRVRsYYK8?=
+ =?us-ascii?Q?+iLJJLmHQltqGk1fhoBARes09Qk1Dzq5kosxixgO2SieLRO0Wwywxv/MFiiK?=
+ =?us-ascii?Q?K7rqD6g+/8lKDmj9LwtvjlUpo/UVfCUD75wz7ZsAz//PCMj2QeA4vFw4dCJp?=
+ =?us-ascii?Q?kODnvFV/7ZX7+t+DgDuqvD8GMML3Hw+ImRfU/GgnMNI5eb6Q5mQBfqDO/QQz?=
+ =?us-ascii?Q?jl/Z6yMY3TKz+fnCw19tdKO/GhTdnP0oRKAGaEaESpgDstX5p5dkey481AwG?=
+ =?us-ascii?Q?54+fKKr9YbIpLtMjr7TEOOLHOY6kv/shI6BtJBnpaaJ7beEyt+f2Th1zT3Y/?=
+ =?us-ascii?Q?AsV8nbxFSqYGu1eiSQZ2dJuMgZIDC+v8PSMvvuwhVtleGtMmgB6nRXYfpscI?=
+ =?us-ascii?Q?353e59rrtw/M3ZwQbhnDnCEqA36J//qunjUr8R3J30XMr2EEg3t1urkw2FsH?=
+ =?us-ascii?Q?UlLUqMiPN/AiyEUqlwBGQrWU4Ng9cTKIHYmt92EliCRKpiiQHGZ1AxtZdbhg?=
+ =?us-ascii?Q?oKbQkWknaKV2/tSZbEwrQ10dpmah/GdifKwGYLSXO2pIMrAchTl1HH0vAKdZ?=
+ =?us-ascii?Q?cfpTRtyoyaQ/EkNKCfWGDJrghlIFrCRuhgENkDS7mps8enfdMxlRjSrnPclP?=
+ =?us-ascii?Q?NV37nVmfqkjSASyKiSzqVzJTtxL0DxJGNKvBtq5rgDblWN9cy94ra+nz1fwt?=
+ =?us-ascii?Q?rxzHXPT/8CfwX1PtrIJVzDBgDLCsFRaUa02116giXxJLuR/CrLzgn88BR/NJ?=
+ =?us-ascii?Q?DEriHqHXaJiTKAW+ZhbOYJApt9stcm0/MIJUTihwlzV1Ngyld38+frGUH1aE?=
+ =?us-ascii?Q?OnSYEHti+NaBT4w2z/yl+IsNe3vJUARjwqCkSBoULYhq8E6cT240w4nMN7my?=
+ =?us-ascii?Q?5UMk5QsDf4itc8MdpEEDjmIvlN6U?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 213820b4-e7fc-4b2c-9515-08dee1940cab
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR02MB6654.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2026 10:38:32.8281
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6812
 
-On Mon, Jul 13, 2026 at 08:12:24PM +0200, Vlastimil Babka (SUSE) wrote:
-> On 7/10/26 22:16, Lorenzo Stoakes wrote:
-> > In the VMA logic we often need to determine the number of pages in the
-> > specified merge range, as well as the start and end page offsets of that
-> > range.
-> >
-> > Introduce and use helpers for these purposes.
-> >
-> > No functional change intended.
-> >
-> > Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-> > Reviewed-by: Gregory Price <gourry@gourry.net>
-> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
->
-> Uh, the PHYS_PFN() usage here was quite an abuse. Good riddance.
+DAMOS_MIGRATE_{HOT,COLD} passes a target NUMA node to migrate_pages().
+But alloc_migration_target() only treats mtc->nid as a preferred node
+unless __GFP_THISNODE is set.  Hence target allocation can fall back
+to another node, and migrate_pages() can report success without placing
+the folio on the requested target node.
 
-Yeah and mine :)) but absolutely agree it was wrong and glad to fix my own
-mistake in using that ;)
+Consider a two-node tiered system where node 0 is a fast tier and node 1
+is a CPU-less slow tier such as CXL memory, and the user wants to promote
+hot regions from node 1 to node 0 with a command like:
 
-> Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+  sudo damo start --ops vaddr --target_pid ${workload_pid} \
+      --damos_action migrate_hot 0 \
+      --damos_access_rate 70% max
 
-Thanks!
+Without the __GFP_THISNODE flag, when the memory allocator finds that
+node 0 is nearly full, it can fall back to node 1 without waking up
+kswapd.  Then the pages allocated for migrate_pages() are still on node 1,
+and the regions that are expected to be promoted to node 0 are only moved
+to different physical pages on node 1.
 
->
-> > ---
-> >  mm/vma.c | 11 ++++-------
-> >  mm/vma.h | 17 +++++++++++++++++
-> >  2 files changed, 21 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/mm/vma.c b/mm/vma.c
-> > index 35ba3475128f..995de8198fbb 100644
-> > --- a/mm/vma.c
-> > +++ b/mm/vma.c
-> > @@ -197,11 +197,9 @@ static void init_multi_vma_prep(struct vma_prepare *vp,
-> >   */
-> >  static bool can_vma_merge_before(struct vma_merge_struct *vmg)
-> >  {
-> > -	pgoff_t pglen = PHYS_PFN(vmg->end - vmg->start);
-> > -
-> >  	if (is_mergeable_vma(vmg, /* merge_next = */ true) &&
-> >  	    is_mergeable_anon_vma(vmg, /* merge_next = */ true)) {
-> > -		if (vmg->next->vm_pgoff == vmg->pgoff + pglen)
-> > +		if (vmg_end_pgoff(vmg) == vma_start_pgoff(vmg->next))
-> >  			return true;
-> >  	}
-> >
-> > @@ -221,7 +219,7 @@ static bool can_vma_merge_after(struct vma_merge_struct *vmg)
-> >  {
-> >  	if (is_mergeable_vma(vmg, /* merge_next = */ false) &&
-> >  	    is_mergeable_anon_vma(vmg, /* merge_next = */ false)) {
-> > -		if (vmg->prev->vm_pgoff + vma_pages(vmg->prev) == vmg->pgoff)
-> > +		if (vma_end_pgoff(vmg->prev) == vmg_start_pgoff(vmg))
-> >  			return true;
-> >  	}
-> >  	return false;
-> > @@ -759,7 +757,7 @@ static int commit_merge(struct vma_merge_struct *vmg)
-> >  	 */
-> >  	vma_adjust_trans_huge(vma, vmg->start, vmg->end,
-> >  			      vmg->__adjust_middle_start ? vmg->middle : NULL);
-> > -	vma_set_range(vma, vmg->start, vmg->end, vmg->pgoff);
-> > +	vma_set_range(vma, vmg->start, vmg->end, vmg_start_pgoff(vmg));
-> >  	vmg_adjust_set_range(vmg);
-> >  	vma_iter_store_overwrite(vmg->vmi, vmg->target);
-> >
-> > @@ -962,8 +960,7 @@ static __must_check struct vm_area_struct *vma_merge_existing_range(
-> >  		 *    middle     next
-> >  		 * shrink/delete extend
-> >  		 */
-> > -
-> > -		pgoff_t pglen = PHYS_PFN(vmg->end - vmg->start);
-> > +		const pgoff_t pglen = vmg_pages(vmg);
-> >
-> >  		VM_WARN_ON_VMG(!merge_right, vmg);
-> >  		/* If we are offset into a VMA, then prev must be middle. */
-> > diff --git a/mm/vma.h b/mm/vma.h
-> > index 8e4b61a7304c..527716c8739d 100644
-> > --- a/mm/vma.h
-> > +++ b/mm/vma.h
-> > @@ -230,6 +230,23 @@ static inline bool vmg_nomem(struct vma_merge_struct *vmg)
-> >  	return vmg->state == VMA_MERGE_ERROR_NOMEM;
-> >  }
-> >
-> > +static inline pgoff_t vmg_start_pgoff(const struct vma_merge_struct *vmg)
-> > +{
-> > +	return vmg->pgoff;
-> > +}
-> > +
-> > +static inline pgoff_t vmg_pages(const struct vma_merge_struct *vmg)
-> > +{
-> > +	const unsigned long size = vmg->end - vmg->start;
-> > +
-> > +	return size >> PAGE_SHIFT;
-> > +}
-> > +
-> > +static inline pgoff_t vmg_end_pgoff(const struct vma_merge_struct *vmg)
-> > +{
-> > +	return vmg_start_pgoff(vmg) + vmg_pages(vmg);
-> > +}
-> > +
-> >  /* Assumes addr >= vma->vm_start. */
-> >  static inline pgoff_t vma_pgoff_offset(struct vm_area_struct *vma,
-> >  				       unsigned long addr)
-> >
->
+Meanwhile, both the mm_migrate_pages tracepoint and DAMOS's own
+sz_applied statistics (reported via the damos_stat_after_apply_interval
+tracepoint) show the migrations as successful, which makes the failure
+practically invisible and hard to investigate.
 
-Cheers, Lorenzo
+Running a demotion-purpose DAMOS scheme alongside the promotion scheme
+does not fully avoid this either. If demotion cannot keep up with the
+promotion rate, allocation can still fall back to node 1 during
+promotion, and the same misleading statistics show up.
+
+Make DAMON's migration target allocation strict by setting
+__GFP_THISNODE, so that a failed allocation on the target node is
+reported as a failure instead of silently landing on a different node.
+This is consistent with alloc_misplaced_dst_folio(), alloc_demote_folio(),
+and with do_move_pages_to_node(), which all use __GFP_THISNODE for
+migrations to an explicit destination node.
+
+Signed-off-by: Jiahui Zhang <jiahuitry@outlook.com>
+---
+Changes since v1:
+- Use the mm/damon/ops-common subject prefix.
+- Describe the observed misleading migration accounting and how strict
+  target-node allocation resolves it.
+- Use the formal author name.
+- No functional/code change from v1
+- Link to v1: https://lore.kernel.org/damon/BY5PR02MB6642F4D1A8BA92BFF3A034B4B5FF2@BY5PR02MB6642.namprd02.prod.outlook.com/
+
+ mm/damon/ops-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 6bdd1cfd3863..d21b106b81ca 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -311,7 +311,7 @@ static unsigned int __damon_migrate_folio_list(
+ 		 * instead of migrated.
+ 		 */
+ 		.gfp_mask = (GFP_HIGHUSER_MOVABLE & ~__GFP_RECLAIM) |
+-			__GFP_NOMEMALLOC | GFP_NOWAIT,
++			__GFP_NOMEMALLOC | GFP_NOWAIT | __GFP_THISNODE,
+ 		.nid = target_nid,
+ 	};
+ 
+-- 
+2.53.0
+
