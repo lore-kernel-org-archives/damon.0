@@ -1,40 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2DC47D929
-	for <damon@lists.linux.dev>; Tue, 14 Jul 2026 14:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4F5363087;
+	Tue, 14 Jul 2026 14:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784039399; cv=none; b=fSlakj/a/cu+VKYvtmVs+NPTMlgF0yc7lw6PBPoPzApaj02CLE8lZ80SCk4qBpKaZ3H9oy2XKkjNyGtYR7Z3QmoEsfUN2wX4Nr+u/btoFc/rPGKBb6ZDcHJEquxUNeHZWZZJduzzRIHVZYQhVLQA7O8swaLZY0LbdeJIuYztn/M=
+	t=1784039568; cv=none; b=Xz9uaoybDYEDv9thYjati/ds/e9unl50N56Rw/1xgzcXyIaZ4o19IBUZJlFdAh7YFaUSzVmQSHCz6oi7buedBevFS5GHmOwonZTGfkcrQTXdbVfxDbZZrBU76hu1619AIbnji37kuUcuya7FPrDY5oDh/HpWVAXjD56IMqv7/xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784039399; c=relaxed/simple;
-	bh=o4auc4LZsy2gEeJuxjRRtOvvJgLdltqocs8fL3dX5nM=;
+	s=arc-20240116; t=1784039568; c=relaxed/simple;
+	bh=cnThNbpOT7mEOezExLgH4EzRvvlsWUdaGxDU1BdYgMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ULZuz325BdyhjBUQBtx34qzxOdEgmyOT3/BI3mRpLq0WMSZIm5ex5ckC1vqkDV0v91MUZyPjz0rZfTOmGxYTlKFgCxImken52KwRG+jL2sasiaru2xcj1R3+kmCyyq3vaR+wcf17YGr1HOz82bYJwpwXV3iLWxVfSMyR+8wz/pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mi1sgPnc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XKDLlMrmxfoTzAsdaF6Tt7+2yLBxINtzq/C/7hJgUEE8MU8HufwAA+ZCP+dZeCErDKPKIXLmeYvj2N7/+iWNQyFvzSCyJRlmOFNtwHTr9m0StOkToRbiIa43GeLhTqsIQoWGa+46JgMswUL9/q4BZ9Xe99cJIaAwU3E2SyhnRic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZZ4dqq/N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mi1sgPnc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626DF1F00A3A;
-	Tue, 14 Jul 2026 14:29:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZZ4dqq/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689B91F000E9;
+	Tue, 14 Jul 2026 14:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784039397;
-	bh=Ot4GAL5KS43MR2L0hHzoFKE8ZaNV/fkWK9D+wFP1xWs=;
+	s=k20260515; t=1784039562;
+	bh=5/zj5P3kBIK7G1tNe4Uj26Vul5lA6c8YvgqeoVqk8Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mi1sgPncXVKqzu8ivZFP+OywNuZaqgyxoIxrldYkJ4ZL42My4ZlVgm+Kxe7RBg6Q/
-	 SYn3Y1AE6+a4njWijYX6JaRrc1DPyW6O4fpKofY/gxMtr3HDuThZ2JmpAg0jrWZqC4
-	 T48zU7LaLi2pp0fmMUudG0pbuVbrrEBJBu+UwdxltWRdqH+Ml1ljZlCXTt1UtIhS1B
-	 PmB22YQSn+1StudRZqUOuIHZxvrT/RlgjffLmOLRB8rF6X8YmMGw7Aiv9bvlcHAZmt
-	 Cq4mi/QC6ovt7y/Yp0OiMQF2r9pd5x0PNNvW7HQastGPfgZyrW7WIf2S00fVBuN4AW
-	 D2wP28PKjv2/Q==
+	b=ZZ4dqq/NLYqzSBAfNqEuQPntKdDEgDfavpxCNEIReUT2xcPV9tGz8TIGmXkdJmtmm
+	 nyaIZjSVagD1HUrgFxm/UBjbTlNEYIgP3rIl7n0meCQ2szIcUNjZ05f8aKXcZ86S0D
+	 7ag9fFiulW78YngOCtCIvNf7WTvqyLFRunseiNJS4CYzTKUeigxoHPJAVrZOVK1Bhy
+	 fSu+hxitS/iMtDtvBRaZTd8QJs+aKxwSODjhTa7lxZPi3Z6CdeZoT5d0BH7jEywOa0
+	 +Cs5jPEytY5O5UGJ7R28senYzRux/PPPxGzWAJ8i/mDGmX5hcgK4/im3g5oGEeqdAF
+	 66QJGXNFmnKxA==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 5/5] mm/damon/sysfs: read ops_id only once
-Date: Tue, 14 Jul 2026 07:29:49 -0700
-Message-ID: <20260714142950.100711-1-sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	stable@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Fernand Sieber <sieberf@amazon.com>,
+	Leonard Foerster <foersleo@amazon.de>,
+	SeongJae Park <sjpark@amazon.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 0/5] mm/damon: unurgent fixes for infinite loop, NULL de-ref and races
+Date: Tue, 14 Jul 2026 07:32:34 -0700
+Message-ID: <20260714143235.100843-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260714142509.010D91F000E9@smtp.kernel.org>
+In-Reply-To: <20260714135236.92699-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,63 +53,25 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Tue, 14 Jul 2026 14:25:08 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 14 Jul 2026 06:52:28 -0700 SJ Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The patch implements an incomplete fix for a TOCTOU data race. It correctly uses READ_ONCE() for `ops_id` to prevent `min_region_sz` corruption, but leaves an identical unresolved race condition for `addr_unit` immediately below it.
-> --
-> 
-> --- Patch [5]: [PATCH 5/5] mm/damon/sysfs: read ops_id only once ---
-> commit f0f9d921acb64429b2f4e2895a8088cc3b5477d5
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/sysfs: read ops_id only once
-> 
-> This commit addresses a time-of-check to time-of-use race condition in
-> damon_sysfs_apply_inputs() by reading ops_id only once. This prevents a
-> concurrent sysfs write from causing min_region_sz to be incorrectly
-> configured.
-> 
-> Link: https://lore.kernel.org/20260703172417.95426-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> > index b5fe036f78015..60a1a9e4ada34 100644
-> > --- a/mm/damon/sysfs.c
-> > +++ b/mm/damon/sysfs.c
-> > @@ -2094,14 +2094,16 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
-> 
-> [ ... ]
-> 
-> >  	ctx->addr_unit = sys_ctx->addr_unit;
-> >  	/* addr_unit is respected by only DAMON_OPS_PADDR */
-> > -	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
-> > +	if (ops_id == DAMON_OPS_PADDR)
-> >  		ctx->min_region_sz = max(
-> >  				DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
-> 
-> [Severity: Medium]
-> Is there a similar race condition remaining for sys_ctx->addr_unit?
-> 
-> While this patch successfully fixes the race for ops_id, sys_ctx->addr_unit
-> is read twice sequentially in this same block of code without protection.
-> 
-> A concurrent sysfs write to addr_unit between the assignment to
-> ctx->addr_unit and the division in the max() calculation could cause DAMON
-> to inconsistently calculate min_region_sz, degrading monitoring precision.
-> 
-> Should addr_unit also be read only once using READ_ONCE() here to fully
-> prevent the race?
+> Sashiko found a few issues in DAMON that could cause infinite loop, NULL
+> dereference and monitoring results degradation.  The first two sounds
+> scary but the infinite loop happens only under unreasonable user setup.
+> The NULL dereference is only in a unit test.  Monitoring results
+> degradation is trivial since it is only best-effort, and those happens
+> from only unlikely races.  Still those are bugs that better to fix if
+> possible. Fix those.
 
-Good catch.  I also found I forgot adding Fixes: tag.  I'll fix this in the
-next revision.
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260714135236.92699-1-sj@kernel.org?part=5
+Sashiko found one more bug that may better to be fixed together with this
+series.  Also patch 5 mistakenly lacks its Fixes: tag.  I will post a new
+version of this series with the fixes.  Please don't pick this series into
+mm-new for now.
 
 
 Thanks,
 SJ
+
+[...]
