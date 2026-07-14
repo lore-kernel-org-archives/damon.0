@@ -1,52 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4F5363087;
-	Tue, 14 Jul 2026 14:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA3935E1AE;
+	Tue, 14 Jul 2026 14:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784039568; cv=none; b=Xz9uaoybDYEDv9thYjati/ds/e9unl50N56Rw/1xgzcXyIaZ4o19IBUZJlFdAh7YFaUSzVmQSHCz6oi7buedBevFS5GHmOwonZTGfkcrQTXdbVfxDbZZrBU76hu1619AIbnji37kuUcuya7FPrDY5oDh/HpWVAXjD56IMqv7/xc=
+	t=1784039756; cv=none; b=QKZkWsW6udgp54XRllZB9+2FkmRA7lMK/rxymzWNUqo+lZZKPDAnK2Wqe3dil6Rcmv6NYbl8COPO25CSzY3dRLTcgd8MmgOMAnuqLBgnax1WkjmoAiDcG/fDGxpmn9SG+/5Q9mBgkhE5GNdXXEaLY/OHpcrfg10Yi8WnJJaec/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784039568; c=relaxed/simple;
-	bh=cnThNbpOT7mEOezExLgH4EzRvvlsWUdaGxDU1BdYgMI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKDLlMrmxfoTzAsdaF6Tt7+2yLBxINtzq/C/7hJgUEE8MU8HufwAA+ZCP+dZeCErDKPKIXLmeYvj2N7/+iWNQyFvzSCyJRlmOFNtwHTr9m0StOkToRbiIa43GeLhTqsIQoWGa+46JgMswUL9/q4BZ9Xe99cJIaAwU3E2SyhnRic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZZ4dqq/N; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784039756; c=relaxed/simple;
+	bh=fu4rX0sucrNYxb0wQo+OGMJNku3uz4oeRu7UN4CO5Qc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=b0fuUuIHNLEhjdR4sZbqlYImdxW/Rs8UUeUj3PlPGFwu8SwWASlxKred5q4mOPLlSW2yNn/5FvkaeTZ/eDSDUwvUPAYyHb4TdbqTlK3E4IFTuZ4n+1gGrY8n7KgUDB8YmSHRJWG8eKS2ZIkpoaWDNuFxWCZaADUq52tEYl85dRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eE6LKRDT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZZ4dqq/N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689B91F000E9;
-	Tue, 14 Jul 2026 14:32:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eE6LKRDT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DF31F000E9;
+	Tue, 14 Jul 2026 14:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784039562;
-	bh=5/zj5P3kBIK7G1tNe4Uj26Vul5lA6c8YvgqeoVqk8Lk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZZ4dqq/NLYqzSBAfNqEuQPntKdDEgDfavpxCNEIReUT2xcPV9tGz8TIGmXkdJmtmm
-	 nyaIZjSVagD1HUrgFxm/UBjbTlNEYIgP3rIl7n0meCQ2szIcUNjZ05f8aKXcZ86S0D
-	 7ag9fFiulW78YngOCtCIvNf7WTvqyLFRunseiNJS4CYzTKUeigxoHPJAVrZOVK1Bhy
-	 fSu+hxitS/iMtDtvBRaZTd8QJs+aKxwSODjhTa7lxZPi3Z6CdeZoT5d0BH7jEywOa0
-	 +Cs5jPEytY5O5UGJ7R28senYzRux/PPPxGzWAJ8i/mDGmX5hcgK4/im3g5oGEeqdAF
-	 66QJGXNFmnKxA==
+	s=k20260515; t=1784039755;
+	bh=BL9Gxm8Mv/zd9x7MZsEklN154y2t4/YkAY5BKQKrvgM=;
+	h=From:To:Cc:Subject:Date;
+	b=eE6LKRDTtiHq1wR48G6wWZe/4+45GdqWe+7vNBA7shEax/GB77NATk2vFuS9iQsQS
+	 rR6fqCtv0inb9K7uuL92T2QrFqBOlY85AjGERbZfLEbPYACw90/4jlV7bVIBIBTFW+
+	 iYmksHeTst3/IWysTwFmOGSeKIa8aR1TY+Tn8K3P9zo66GhaYgys6osSF8x+DWs5IR
+	 4LiHCIUeEV2LzhY+997Ii+bmz+TgUKkvjzWuCFMmPWfTOL9CMM96SPChhGA4taTPbt
+	 mb+T6ehY1zr40/5hv4FLHaBLlpuhMq4cZlbQlRQ/T1H8rJEwk3HUCzOLgvFQ5ngtOo
+	 TnDjtR3+Bh/Dw==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	stable@vger.kernel.org,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Fernand Sieber <sieberf@amazon.com>,
-	Leonard Foerster <foersleo@amazon.de>,
-	SeongJae Park <sjpark@amazon.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH 0/5] mm/damon: unurgent fixes for infinite loop, NULL de-ref and races
-Date: Tue, 14 Jul 2026 07:32:34 -0700
-Message-ID: <20260714143235.100843-1-sj@kernel.org>
+Subject: [PATCH 00/10] mm/damon/core: hide core-private struct fields
+Date: Tue, 14 Jul 2026 07:35:33 -0700
+Message-ID: <20260714143544.101305-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260714135236.92699-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -55,23 +43,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 14 Jul 2026 06:52:28 -0700 SJ Park <sj@kernel.org> wrote:
+DAMON core structs hide core-private fields using 'private:' comment
+tags.  It is incomplete and inconsistent.  The linked list heads in a
+few structs, for example, are intended to be hidden, and always be used
+using the wrapper macros like damon_for_each_region().  But those were
+mistakenly marked as non-private.  A few core layer-only fields were
+also mistakenly added as non-private.
 
-> Sashiko found a few issues in DAMON that could cause infinite loop, NULL
-> dereference and monitoring results degradation.  The first two sounds
-> scary but the infinite loop happens only under unreasonable user setup.
-> The NULL dereference is only in a unit test.  Monitoring results
-> degradation is trivial since it is only best-effort, and those happens
-> from only unlikely races.  Still those are bugs that better to fix if
-> possible. Fix those.
+This only encourages callers to directly use the private fields.  It is
+easy to make mistakes, and difficult to control.  Mark all such DAMON
+core struct fields as private.
 
-Sashiko found one more bug that may better to be fixed together with this
-series.  Also patch 5 mistakenly lacks its Fixes: tag.  I will post a new
-version of this series with the fixes.  Please don't pick this series into
-mm-new for now.
+Patches 1-8 mark the private fields for damon_region, damon_target,
+damos_quota_goal, damos_quota, damos_filter, damos, damon_filter and
+damon_probe, respectively.  Patch 9 removes DAMON_SYSFS's direct access
+to core-private field, damon_ctx->ops.  Finally patch 10 mark the
+private fields for damon_ctx.
+
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260714043437.95811-1-sj@kernel.org
+- Drop RFC tag.
+
+SJ Park (10):
+  mm/damon/core: hide private damon_region fields
+  mm/damon/core: hide private damon_target fields
+  mm/damon/core: hide private damos_quota_goal fields
+  mm/damon/core: hide private damos_quota fields
+  mm/damon/core: hide private damos_filter fields
+  mm/damon/core: hide private damos fields
+  mm/damon/core: hide private damon_filter fields
+  mm/damon/core: hide private damon_probe fields
+  mm/damon/sysfs: do not directly access damon_ctx->ops
+  mm/damon/core: hide core-private damon_ctx fields
+
+ include/linux/damon.h | 110 +++++++++++++++++++++++-------------------
+ mm/damon/sysfs.c      |   2 +-
+ 2 files changed, 62 insertions(+), 50 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 4c0f8c26ecc149f268b6c488e6cbde2a4e58160a
+-- 
+2.47.3
