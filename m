@@ -1,60 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB173B8BBB;
-	Wed, 15 Jul 2026 03:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C275188596;
+	Wed, 15 Jul 2026 04:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784086444; cv=none; b=Uv0eGasU3NiZ9EMuUBI/eVhmui9Du71bstJzIehuUVxM9hYVjuFwn7cAwLkUr8w13XM5goNk9hYfRyxuI1zwVXqti5OOcfkWh1voR7hayHcng18jelkIjyMpXjp/NtNOvtvtlsWKK0ImckOKJvOB2SvbzcrD99Hs2gWKLlVApwo=
+	t=1784090766; cv=none; b=HXVId/nvYSwSWGGpV/+o3uGoESD/C27MNNxdfkuqY6ws6yhfseEq8ZhN/zx/DiGQnux+qYwVcKu8EJz5Fxj261XWtSqiiQ2qrHyXRP29vMHdY88HKnRysfOhVDKisDp9oj+Ypo1620LHBEip5SqeW4TDEsrFK1ZrU2YGKT1rhB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784086444; c=relaxed/simple;
-	bh=SAqGjEWltCWntTr9lFfdexQCFMJTv7uS02KBC6KA8EU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmPv0dWFT3u237SGFIegxOvxLewseS9eSao4sRYMGOxbvOJKhPTbY/pDgXDMGfy5EjnD9a0pFtiZArPwK6Sm8VVXTNQN6VBjRHCda8iPW47hrxPc/e2ygCasOvHZDy5NIxn+ZPb2ReLna45roghVpfb+J84QcQN3MyVYgVXJ1tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeIXtBkE; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784090766; c=relaxed/simple;
+	bh=EQs7O/KsN/wK8A+H5ZylPYHQYmQjSimXgQsiXtNU6b4=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=D4HdSRmT4+uQIg4gZI9jlolevr0P0aUDkHAL4tnl1yrq1TSIvA3mYBzabCsQ934t7BgqPmS21B7pWCOZQDo26Ya5dT1586YSEYH+hc1Pd8FVnT3o0S1WmjPQgc6UTXyCPEMS9GNbzT+gLhMtFv0Y28K9Rr/YXI217Eiss6+X/zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=q4O8mCN2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeIXtBkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E4C1F000E9;
-	Wed, 15 Jul 2026 03:33:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784086409;
-	bh=EyyAlf2/bvw8+peozXRWIsuWIdLEd+I4yooKGgPuwrY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oeIXtBkE3A5Lq2mlir6pP/PdAqoOEAqfMo/wK0x4C107XHmtPGKlJfJvbPlDeAVht
-	 uGvfAw2E8GxgcDo9kqBuuX9oYCaCXgRRImmxDlO8dFYQB86C0Uf9wYVS1NOgSowfF5
-	 m5nLi5oOg+2vAjRUz/8y4wsB0zRcoK0VPpcfjGidXzZHhgw8X48oCZRJ1NngtIJoJh
-	 tp7RvK5lLTtHDgueVMw0pcGve4dP1ZcaBW6wOUiBBSCWSuTDSpLVGQtqVP9M0Q1OhL
-	 h9A4K+yzPxth537CM9GHWQ32wlZpx/JlSrtTSkzYwjViyAjYssik1I3v2jzGaiRcNh
-	 1dcGOPXXqx9xg==
-From: SJ Park <sj@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="q4O8mCN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0311F000E9;
+	Wed, 15 Jul 2026 04:46:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux-foundation.org; s=korg; t=1784090765;
+	bh=yPSXgtZyZUjPzhY0+tGPbfG3fWnFA8alzR4dcKz8MY4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=q4O8mCN2Wldnjn2dROG4NkiHVkge2rzmi9u30M/YOygz85Hzobi2j0PY1EBOS2f75
+	 vi70A6NF+w51j7g7FpFqmM30I7/b33bWqJk8/OxKpLUoeJsckqqCxZDh9FyRENit/G
+	 2LV3lx5ZSMX8q/wLIeXQU3jBZd3EuN/KTX5kh49I=
+Date: Tue, 14 Jul 2026 21:46:04 -0700
+From: Andrew Morton <akpm@linux-foundation.org>
 To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	stable@vger.kernel.org,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Fernand Sieber <sieberf@amazon.com>,
-	Leonard Foerster <foersleo@amazon.de>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	SeongJae Park <sjpark@amazon.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH v1.1 0/6] mm/damon: unurgent fixes for infinite loop, NULL de-ref and races
-Date: Tue, 14 Jul 2026 20:33:25 -0700
-Message-ID: <20260715033325.109466-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+Cc: stable@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>,
+ David Gow <davidgow@davidgow.net>, Fernand Sieber <sieberf@amazon.com>,
+ Leonard Foerster <foersleo@amazon.de>, Quanmin Yan
+ <yanquanmin1@huawei.com>, SeongJae Park <sjpark@amazon.de>, Shakeel Butt
+ <shakeel.butt@linux.dev>, damon@lists.linux.dev,
+ kunit-dev@googlegroups.com, linux-kernel@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, linux-mm@kvack.org
+Subject: Re: [PATCH v1.1 0/6] mm/damon: unurgent fixes for infinite loop,
+ NULL de-ref and races
+Message-Id: <20260714214604.10fc4c786277eaed523d0724@linux-foundation.org>
 In-Reply-To: <20260715031002.108504-1-sj@kernel.org>
-References: 
+References: <20260715031002.108504-1-sj@kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
 On Tue, 14 Jul 2026 20:09:55 -0700 SJ Park <sj@kernel.org> wrote:
 
@@ -66,14 +58,6 @@ On Tue, 14 Jul 2026 20:09:55 -0700 SJ Park <sj@kernel.org> wrote:
 > from only unlikely races.  Still those are bugs that better to fix if
 > possible. Fix those.
 
-Sashiko found no blocker for this series.  Sashiko sent findings to damon@
-mailing list [1], and I replied to all the comments.  Please read those for
-details.
+> Subject: [PATCH v1.1 0/6] ...
 
-[1] https://lore.kernel.org/damon/
-
-
-Thanks,
-SJ
-
-[...]
+So... what is the significance of "1.1" here?
