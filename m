@@ -1,48 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF2942BC50;
-	Wed, 15 Jul 2026 00:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6920B757EA;
+	Wed, 15 Jul 2026 03:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784074722; cv=none; b=Rko8oUuiva9hV4c28hpBMdf2NWrqxzdxogZ2wRu8viHW9T82tE/nmU26dx4nw1ElXrXaCeaPUO/3Yakle4BHzMRiwv4zaVIzIFRm5tRXSTJaSOcaiAQzT3jOwYC/w/OM1pfnlnCBwUaHtlMN7Jo1ULGauAhf4B5/niFVjDkbm4c=
+	t=1784085013; cv=none; b=AYmLwX3VtLlfrVdsQjVabNlJ62A/cr+FocuBJPuAOFOgQLSsxT1lUvrV8xDSJE6AwqklCVsDjCnvcdX1gdTR6U5H1LyrB57c7p01/BUL6o7VMVkT7twf3VrE/BPmolopTnnwzidAEYAgSihg2hMt1iVRgCiSOCyVlcBHfn4t8D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784074722; c=relaxed/simple;
-	bh=q+k2DByBVDKCSqgUAGAdIdGAI1INqoJWMv4/0jbgsRc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQcWBkJbiGGUMA/NmtZz1SHkdbTkjmyQEBaP+6Z8yxwb56xe6o49cQ1nBhURa/vhUhCWB6ENKS6AswFRsM94ZkrbSWsoE+tarx39qyySKYeC0Pfvp1zsn0JztPsd1rEqVAp49MnYcnTyET7+Mg8ggF85hQkorduEffF6xYWN/Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFPo7Yva; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784085013; c=relaxed/simple;
+	bh=8FLrvyXbypcB7/NYujxfjOGZbZPVW048/ercppBGBe4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EU5VsiulFhJgowwqMsEBStX7mZKnBgxDWfO29N/ibzL5ArHC+RMVVOwFTxq2WNVxE6I5lLC2VO3tQw2jt2Edfh//QgbM4LlRJ6NGGMDpy68ZQkJkEivHeVX4vdIOVYX+t8pCIDWvrpdPmpc2/HoROHA4QIpK/u189uaEnjiXNAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N74Od/Ek; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFPo7Yva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485D31F000E9;
-	Wed, 15 Jul 2026 00:18:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N74Od/Ek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2FC1F000E9;
+	Wed, 15 Jul 2026 03:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784074720;
-	bh=o3HZR7bEntVs/K50pnsd0JT6YW8Jt0IbF3Prw+PD4Wc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dFPo7YvamTYKlHjwOtyNaUSjis67MXYZWdKFSkGSx6G4bObncfvdmjEsa5FWh/OPY
-	 Trt2dtUHJuvE5gmZRgxhooyhUEB5Zat/ZY79a4BAZcYMQ1Uqw1cZNhmxr6PTeN4ovI
-	 G30gsVPCdgBoLy3Kt1h45sUaQuSCc9eAy95MrjUG5CtTfZ+2TiIxwVISb0jkrwBz0r
-	 wW1SvgaLHIQsBc/9CYB72kUls6ZRPDWnO3wuFxpI3+jXMnAoGVRVo2mvlZKhSlMUDY
-	 EnCImW0pkEP0pz07eCRqFr5nbSapBGAVCNnV0U24UkvSMRJJXw1sHnY9hO8ilNYphP
-	 NJQko7jkqNwHw==
+	s=k20260515; t=1784085012;
+	bh=zX5F+4lmbeae1CeGb/wxT1HGr47P+pAaJ2W/OiCCHm8=;
+	h=From:To:Cc:Subject:Date;
+	b=N74Od/EkYRy+y+m8B+GCPqq9csaIQ4tdN+b70jJHtcQ6Ip5IN6BCNhhd8eM9oGIYR
+	 2z7A7HDv7NksiEeb6yv5knT0aVbUNdvOJ4NusC7po080ymGjZRsNZ7Gd5baBh6F6nV
+	 V1e6zzjHjGlhki4F8gLUEWX9NgbwNQjgKHRBmyuRJ5ajc7qjHdBhtJQg6y33Lw+2pJ
+	 iWq0bIsk2Qu21W40SJX579OPlGhA8UfhYjaC10DcD6HOhGRgDBG2Zp+mpVR9aM3gb5
+	 PZQIxBLd3cSMaXJauJC/xj6HWwS5jG9/oz/3UYd69n+/zlOIx7sIQVQ8JAINn6Qfos
+	 OsjEzZF2G0xIQ==
 From: SJ Park <sj@kernel.org>
-To: gutierrez.asier@huawei-partners.com
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	zuoze1@huawei.com,
+	stable@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Fernand Sieber <sieberf@amazon.com>,
+	Leonard Foerster <foersleo@amazon.de>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	SeongJae Park <sjpark@amazon.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RESEND PATCH v2 0/3] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
-Date: Tue, 14 Jul 2026 17:18:32 -0700
-Message-ID: <20260715001832.106007-1-sj@kernel.org>
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v1.1 0/6] mm/damon: unurgent fixes for infinite loop, NULL de-ref and races
+Date: Tue, 14 Jul 2026 20:09:55 -0700
+Message-ID: <20260715031002.108504-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260714150116.382521-1-gutierrez.asier@huawei-partners.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -51,59 +53,47 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Asier,
+Sashiko found a few issues in DAMON that could cause infinite loop, NULL
+dereference and monitoring results degradation.  The first two sounds
+scary but the infinite loop happens only under unreasonable user setup.
+The NULL dereference is only in a unit test.  Monitoring results
+degradation is trivial since it is only best-effort, and those happens
+from only unlikely races.  Still those are bugs that better to fix if
+possible. Fix those.
 
-On Tue, 14 Jul 2026 15:01:13 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+Changes from v1
+- v1: https://lore.kernel.org/20260714135236.92699-1-sj@kernel.org
+- Add addr_unit race fix.
+- Add Fixes: tags to the race fixes.
+- Wordsmith subjects.
+Changes from RFC v1.2
+- RFC v1.2: https://lore.kernel.org/20260713135838.32730-1-sj@kernel.org
+- Drop RFC tag.
+- Rebase to latest mm-new.
+Changes from RFC v1.1
+- RFC v1.1: https://lore.kernel.org/20260712170328.91144-1-sj@kernel.org
+- Remove same_target param from __damon_va_check_access().
+Changes from RFC
+- RFC: https://lore.kernel.org/20260711180409.82093-1-sj@kernel.org
+- Rebase to mm-new.
 
-> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-> 
-> Overview
-> ========
-> 
-> This patch set introduces a new autotuning which allows to collapse
-> hot regions into hugepages.
+SJ Park (6):
+  mm/damon/core: avoid infinite kdamond_merge_regions() internal loop
+  mm/damon/tests/core-kunit: catch test failure in
+    test_merge_regions_of()
+  mm/damon/vaddr: drop last same folio access check optimization
+  mm/damon/paddr: drop last same folio access check reuse optimization
+  mm/damon/sysfs: read addr_unit only once in damon_sysfs_apply_inputs()
+  mm/damon/sysfs: read ops_id only once in damon_sysfs_apply_inputs()
 
-I sincerely appreciate your continued work on this.  But, I have to say I'm
-holding review of this series for below reason...
-
-> 
-> Motivation
-> ==========
-> 
-> Since TLB is a bottleneck for many systems[1], a way to optimize TLB
-> misses (or hits) is to use huge pages. Unfortunately, using "always"
-> in THP leads to memory fragmentation and memory waste. For this reason,
-> most application guides and system administrators suggest to disable THP.
-> 
-> Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
-> However, there is no way to tune the settings. It will collapse all the
-> hot regions that meet the access pattern. If the server is a bare metal
-> database or big data server, this will also lead to eventual fragmentation.
-> 
-> Additionally, currently THP is set globally. Ideally, there should be a
-> way to control which tasks can use huge pages.
-
-You told me [1] you will rephrase the above.  But I show no change from the
-previous version.
-
-Asier, this is a repeated pattern that makes me reviewing this series very
-difficult and tiresome.  I don't really want to waste our time on repeating
-same words.  I know you did this great job so far and you can make it well
-completed.  Could you please thoroughly and carefully review "all" previous
-discussions, address all the comments and resend the new version?
-
-Particularly, please note that I also asked [2] you a question about Sashiko
-review, and I'm still waiting for your answer.  If you don't have a very good
-and confident answer, I'd recommend simply adding the zero-case check.
-
-To avoid wasting our time repeating same words, I skip reviewing the remainder
-of this version of the series.  I will review the next version.
-
-[1] https://lore.kernel.org/b786294f-0ba5-4b05-b956-d902c358dd88@huawei-partners.com
-[2] https://lore.kernel.org/20260617041515.98906-1-sj@kernel.org
+ mm/damon/core.c             | 13 +++++++++----
+ mm/damon/paddr.c            | 20 ++++----------------
+ mm/damon/sysfs.c            | 10 ++++++----
+ mm/damon/tests/core-kunit.h |  3 +++
+ mm/damon/vaddr.c            | 33 ++++++---------------------------
+ 5 files changed, 28 insertions(+), 51 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 52d335d2c1de60b6184b9de5ecec634892a3e136
+-- 
+2.47.3
