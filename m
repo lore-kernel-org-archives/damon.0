@@ -1,59 +1,53 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787363F9F50
-	for <damon@lists.linux.dev>; Wed, 15 Jul 2026 09:27:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09693C584A;
+	Wed, 15 Jul 2026 13:26:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784107629; cv=none; b=aGXIxSJoJZxGTRimPSRpnXNae6aCkHic+txkRJyoY5QFE/xOS6Wn55N3LuZp7n8gcYptyuVldZgPNkYp0tdmZvamL7aPtemy0UYLsr0+3/lzNiaL6RTVcn+qEepAnGWYO0suc7UAzYI4asdXbjWtIZuLMs4IqhycxlADWhX/mH0=
+	t=1784122002; cv=none; b=mCa878/SmC9n7lCjNzeXCq4lgqiJFf4tRgrXmuphX62swi2c2U+yDTdUC/7JXIFwxPKRt3VBS4xNelnJrgIZAWhIyh/ehaFoFDrBGslax5swytQgKIU1pIfW8ukh8SwzcAEIRztPcMZJDW2MrUYFGSDVpTlJrxoGeiwY1rdDO6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784107629; c=relaxed/simple;
-	bh=l33jC3EdCqDNqIxyeHfLuxLKm14arJFL/BXEel8tYS8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VSE4OsBdPzZY4xRUnRkYHRjoUOlvYHHDHoaJDUlyIiJ9nQXlYVX3//3n7du5T+IWeXircwNGVeXNgs2oEav1QKeYAONBeWe9Q1gELIpTGJOBt4oCw/B7bq5UXkBpYbx67aJ0zHwnz1JPGMgk97MnuvET9e9L3I3YkHGF7afRKG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 536265b0802f11f1aa26b74ffac11d73-20260715
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
-	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
-	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
-	HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NAME
-	IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_EXISTED, SN_EXISTED
-	SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_GOOD, CIE_GOOD_SPF
-	GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:0244c0a7-664b-49e0-9c8d-8b15c88ea586,IP:10,
-	URL:0,TC:0,Content:0,EDM:-25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTI
-	ON:release,TS:-15
-X-CID-INFO: VERSION:1.3.12,REQID:0244c0a7-664b-49e0-9c8d-8b15c88ea586,IP:10,UR
-	L:0,TC:0,Content:0,EDM:-25,RT:0,SF:0,FILE:0,BULK:0,RULE:NOTI_GNA5D1EA,ACTI
-	ON:release,TS:-15
-X-CID-META: VersionHash:e7bac3a,CLOUDID:202a7087583be5d5c56ce914c9e11c12,BulkI
-	D:2607151727009LO51T1T,BulkQuantity:0,Recheck:0,SF:17|19|66|78|102|127|136
-	|865|898,TC:nil,Content:0|15|50,EDM:2,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil
-	,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:
-	0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 536265b0802f11f1aa26b74ffac11d73-20260715
-X-User: husong@kylinos.cn
-Received: from ctao-book.. [(223.70.159.239)] by mailgw.kylinos.cn
-	(envelope-from <husong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 938891429; Wed, 15 Jul 2026 17:26:57 +0800
-From: Song Hu <husong@kylinos.cn>
-To: SJ Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
+	s=arc-20240116; t=1784122002; c=relaxed/simple;
+	bh=553leeckiutKczcmPf0IbB7xPYgBFvVEfa1gh+zkrlM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gpScv+8sb6TbDgLKCRl+tvYTzRcAO+JxkUb6S/JmXKT6AUuDIysxkdaDbm7tG7XqB/4cxay1l1036O5u7vy2Y1xcz6Rkcfd3bTsAKogYFfpKRALdA0KhYLp+AJWUF8i+O14BM34SnB/LAvz6G+Pthvqhu4oozjPvDUY9tDANN/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UL1oh0Eq; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UL1oh0Eq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A5C1F000E9;
+	Wed, 15 Jul 2026 13:26:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784122001;
+	bh=tmYHqq0/128SCrxfsjngrNQmfX+jHP8UqCkkUU5HEDY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=UL1oh0EqJ+8kpvTbuQ0OyYXKDMTRlMW2BhHcEKRAqhLn/A30MdpJca7awDnQtdJKm
+	 eH7liGconcDiy6RyMcLyDvW9uoU86VTA2lZOsh1yEasDWDPpD7N8s3qYskStzdwLqD
+	 4SWXiIBW0RMjK2EnIHBV364zBTEvVSSvVDp12vH/56QywovkyRBj0wc9xzFjOn4bsn
+	 gLxSQajgj+bG9/w2IHFK9L63NrNB0KOl6gyVsI/tlg8KrgubxQRQYSv+TjSJ0d12si
+	 Zfay2rGl7MbF5EDY1jWwOX/+VV1iqTzk48M7rplC8Y1hyZKJNar+jpd8OqULiM6ZY5
+	 qpRpobpRFnoCA==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Fernand Sieber <sieberf@amazon.com>,
+	Leonard Foerster <foersleo@amazon.de>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	SeongJae Park <sjpark@amazon.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	Song Hu <husong@kylinos.cn>
-Subject: [PATCH] damon: update outdated comment about DAMOS filter handling
-Date: Wed, 15 Jul 2026 17:26:34 +0800
-Message-ID: <20260715092634.1450702-1-husong@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH v1.1 0/6] mm/damon: unurgent fixes for infinite loop, NULL de-ref and races
+Date: Wed, 15 Jul 2026 06:26:32 -0700
+Message-ID: <20260715132633.32217-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260714214604.10fc4c786277eaed523d0724@linux-foundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,51 +56,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The kernel-doc comment above enum damos_filter_type states that only the
-anon and memcg type filters are handled by damon_operations (and therefore
-accounted as 'tried'), and that DAMON_OPS_VADDR and DAMON_OPS_FVADDR do
-not support those two filter types.
+On Tue, 14 Jul 2026 21:46:04 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
 
-Neither is accurate anymore.  damos_filter_for_ops() routes every filter
-type except ADDR and TARGET to the operations layer, and the VADDR and
-FVADDR operations (the latter being a copy of the former) handle all of
-those types through damos_folio_filter_match() / damos_va_filter_out().
-Update the comment to match the code.
+> On Tue, 14 Jul 2026 20:09:55 -0700 SJ Park <sj@kernel.org> wrote:
+> 
+> > Sashiko found a few issues in DAMON that could cause infinite loop, NULL
+> > dereference and monitoring results degradation.  The first two sounds
+> > scary but the infinite loop happens only under unreasonable user setup.
+> > The NULL dereference is only in a unit test.  Monitoring results
+> > degradation is trivial since it is only best-effort, and those happens
+> > from only unlikely races.  Still those are bugs that better to fix if
+> > possible. Fix those.
+> 
+> > Subject: [PATCH v1.1 0/6] ...
+> 
+> So... what is the significance of "1.1" here?
 
-Signed-off-by: Song Hu <husong@kylinos.cn>
----
- include/linux/damon.h | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+As the changelog says, one more unurgent fix (patch 5 of this sereis) has added
+on top of the v1.
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index f69442a9d431..d1bb3490792a 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -392,16 +392,15 @@ struct damos_stat {
-  * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
-  * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
-  *
-- * The anon pages type and memcg type filters are handled by underlying
-- * &struct damon_operations as a part of scheme action trying, and therefore
-- * accounted as 'tried'.  In contrast, other types are handled by core layer
-- * before trying of the action and therefore not accounted as 'tried'.
-+ * All types except &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET
-+ * are handled by the underlying &struct damon_operations as a part of scheme
-+ * action trying, and therefore accounted as 'tried'.  In contrast,
-+ * &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET filters are handled
-+ * by the core layer before trying of the action, and therefore not accounted
-+ * as 'tried'.
-  *
-- * The support of the filters that handled by &struct damon_operations depend
-- * on the running &struct damon_operations.
-- * &enum DAMON_OPS_PADDR supports both anon pages type and memcg type filters,
-- * while &enum DAMON_OPS_VADDR and &enum DAMON_OPS_FVADDR don't support any of
-- * the two types.
-+ * Support for the operations-handled filters depends on the running
-+ * &struct damon_operations.
-  */
- enum damos_filter_type {
- 	DAMOS_FILTER_TYPE_ANON,
--- 
-2.43.0
+Maybe my versioning scheme is confusing you.  I increase minor version when it
+is purely for findings from Sashiko and if the change seems not really big.  I
+do so because I realized it is easy to get version number large in short term
+when I respect Sashiko, and it may look confusing for some people.  Maybe a
+better approach is running Sashiko in my local, but I don't have AI setup in my
+development environment...  Let me know if this only confuses and bothers you
+and you have a suggestion.
 
+
+Thanks,
+SJ
