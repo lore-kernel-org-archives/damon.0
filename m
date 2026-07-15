@@ -1,175 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF31434CFCF
-	for <damon@lists.linux.dev>; Tue, 14 Jul 2026 15:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF2942BC50;
+	Wed, 15 Jul 2026 00:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784042286; cv=none; b=Bi940Eu2wv25IGhw5DukjKkzUpsb5xCEsHPxzoFTs6r7GT89lnPWmmSptwzw213YUm95AAFGvAphLUzAsd1cE1tF5DxnjkIc9C0DTPRd65mEa43p5OeQIJQaFXDq66182E3Ag51+x+fGysSU2Mc1HQnH3QjOtv9ns6jjssi+nbE=
+	t=1784074722; cv=none; b=Rko8oUuiva9hV4c28hpBMdf2NWrqxzdxogZ2wRu8viHW9T82tE/nmU26dx4nw1ElXrXaCeaPUO/3Yakle4BHzMRiwv4zaVIzIFRm5tRXSTJaSOcaiAQzT3jOwYC/w/OM1pfnlnCBwUaHtlMN7Jo1ULGauAhf4B5/niFVjDkbm4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784042286; c=relaxed/simple;
-	bh=TJng5mxW7x4uoKCMl3pS8vpRDCcXe8N9X0+fszp4pj0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=qTd3+JzTF1Om0riVZPJR22kRTys7BCcCwl4Ubk3EiLvMjPeqDYJQjJY985pvnS5iVIjWLeULzkQ0Fco0b5rGoM+GO/2FV8LJLBJvVZroMGHIz3cHGg2J+x3OMbJP4wtl+3IA6v1YlwanZn59q2ZXvdy2tJpzvDJEbqgyMlopvEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HH8pWqdc; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784074722; c=relaxed/simple;
+	bh=q+k2DByBVDKCSqgUAGAdIdGAI1INqoJWMv4/0jbgsRc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XQcWBkJbiGGUMA/NmtZz1SHkdbTkjmyQEBaP+6Z8yxwb56xe6o49cQ1nBhURa/vhUhCWB6ENKS6AswFRsM94ZkrbSWsoE+tarx39qyySKYeC0Pfvp1zsn0JztPsd1rEqVAp49MnYcnTyET7+Mg8ggF85hQkorduEffF6xYWN/Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFPo7Yva; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HH8pWqdc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7D71F000E9;
-	Tue, 14 Jul 2026 15:18:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFPo7Yva"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485D31F000E9;
+	Wed, 15 Jul 2026 00:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784042284;
-	bh=B0tQD2jZvpvORmYo23CsYPsX5jqHE6uqk8Wou79QNp0=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=HH8pWqdceZfKR89242HjJVnCa3vLcGSvlehMyT619CeBqnpS3CXwPLhReMfWkiU+A
-	 7vxIiJ27sDQUcJsAWGwx96oq2H32CfXmvmgetSIQtheh9Y58//ssRhcYP0zsV1Oe+2
-	 VtyJiYPLLFeGlislBGaUbg9kuO0NPiV63onYv6rj9Kfl6c3/aRq9sbOuSu6R3rg4CI
-	 BeIYAYH1t4jCz3BLNoGcgUuqIZ3gzysHiFM3/RKpIy49Fgu9QWh4bRoyHlMwzDO2DB
-	 t/iJjNd37WOFv4KRrXPvclu4Wuz7tEXdktWDWSMLJwkn+j9kDsLstlUYwSW4YAUjlN
-	 V3DgotNgN5/Sg==
-From: sashiko-bot@kernel.org
-Subject: Re: [RESEND PATCH v2 3/3] Docs/mm/damon/design: Document
- hugepage_mem_bp target metric
-Reply-To: sashiko-reviews@lists.linux.dev
+	s=k20260515; t=1784074720;
+	bh=o3HZR7bEntVs/K50pnsd0JT6YW8Jt0IbF3Prw+PD4Wc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=dFPo7YvamTYKlHjwOtyNaUSjis67MXYZWdKFSkGSx6G4bObncfvdmjEsa5FWh/OPY
+	 Trt2dtUHJuvE5gmZRgxhooyhUEB5Zat/ZY79a4BAZcYMQ1Uqw1cZNhmxr6PTeN4ovI
+	 G30gsVPCdgBoLy3Kt1h45sUaQuSCc9eAy95MrjUG5CtTfZ+2TiIxwVISb0jkrwBz0r
+	 wW1SvgaLHIQsBc/9CYB72kUls6ZRPDWnO3wuFxpI3+jXMnAoGVRVo2mvlZKhSlMUDY
+	 EnCImW0pkEP0pz07eCRqFr5nbSapBGAVCNnV0U24UkvSMRJJXw1sHnY9hO8ilNYphP
+	 NJQko7jkqNwHw==
+From: SJ Park <sj@kernel.org>
 To: gutierrez.asier@huawei-partners.com
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260714150116.382521-4-gutierrez.asier@huawei-partners.com>
-References: <20260714150116.382521-1-gutierrez.asier@huawei-partners.com>
- <20260714150116.382521-4-gutierrez.asier@huawei-partners.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 14 Jul 2026 15:18:04 +0000
-Message-Id: <20260714151804.8C7D71F000E9@smtp.kernel.org>
+Cc: SJ Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	zuoze1@huawei.com,
+	damon@lists.linux.dev,
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RESEND PATCH v2 0/3] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Tue, 14 Jul 2026 17:18:32 -0700
+Message-ID: <20260715001832.106007-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260714150116.382521-1-gutierrez.asier@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
+Hello Asier,
 
-New issues:
-- [High] Potential division by zero in `damos_hugepage_mem_bp()` when compu=
-ting the hugepage memory ratio due to an unvalidated denominator.
-- [Low] Inaccurate metric name in the commit message.
+On Tue, 14 Jul 2026 15:01:13 +0000 <gutierrez.asier@huawei-partners.com> wrote:
 
-Pre-existing issues:
-- [High] Potential division by zero in `damos_get_in_active_mem_bp()` when =
-calculating the active/inactive memory ratio.
-- [High] Potential division by zero in `damos_get_node_mem_bp()` and `damos=
-_get_node_memcg_used_bp()` when a NUMA node's managed pages evaluate to 0.
---
+> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> 
+> Overview
+> ========
+> 
+> This patch set introduces a new autotuning which allows to collapse
+> hot regions into hugepages.
 
---- Patch [3]: [RESEND PATCH v2 3/3] Docs/mm/damon/design: Document hugepag=
-e_mem_bp target metric ---
-commit d0083321a3dc33547522a0679c37d9ea234b4e37
-Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+I sincerely appreciate your continued work on this.  But, I have to say I'm
+holding review of this series for below reason...
 
-Docs/mm/damon/design: Document hugepage_mem_bp target metric
+> 
+> Motivation
+> ==========
+> 
+> Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+> misses (or hits) is to use huge pages. Unfortunately, using "always"
+> in THP leads to memory fragmentation and memory waste. For this reason,
+> most application guides and system administrators suggest to disable THP.
+> 
+> Currently DAMON has DAMOS_HUGEPAGE, DAMOS_NONHUGEPAGE and DAMOS_COLLAPSE.
+> However, there is no way to tune the settings. It will collapse all the
+> hot regions that meet the access pattern. If the server is a bare metal
+> database or big data server, this will also lead to eventual fragmentation.
+> 
+> Additionally, currently THP is set globally. Ideally, there should be a
+> way to control which tasks can use huge pages.
 
-This commit documents the hugepage_mem_bp metric exposed by sysfs for
-DAMON quota goals. It updates the design documentation to include the new
-ratio of huge pages to total used memory.
+You told me [1] you will rephrase the above.  But I show no change from the
+previous version.
 
-> Docs/mm/damon/design: Document hugepage_mem_bp target metric
->=20
-> Document huge_mem_bp metric exposed by sysfs.
+Asier, this is a repeated pattern that makes me reviewing this series very
+difficult and tiresome.  I don't really want to waste our time on repeating
+same words.  I know you did this great job so far and you can make it well
+completed.  Could you please thoroughly and carefully review "all" previous
+discussions, address all the comments and resend the new version?
 
-[Severity: Low]
-This isn't a bug, but is the metric name in the commit message accurate?
-The code and the subject line refer to hugepage_mem_bp, but the commit
-description refers to huge_mem_bp.
+Particularly, please note that I also asked [2] you a question about Sashiko
+review, and I'm still waiting for your answer.  If you don't have a very good
+and confident answer, I'd recommend simply adding the zero-case check.
 
-[ ... ]
+To avoid wasting our time repeating same words, I skip reviewing the remainder
+of this version of the series.  I will review the next version.
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 7e4b9affc5b06..b001f80681b12 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2795,6 +2795,17 @@ static unsigned int damos_get_in_active_mem_bp(boo=
-l active_ratio)
->  	return mult_frac(inactive, 10000, total);
+[1] https://lore.kernel.org/b786294f-0ba5-4b05-b956-d902c358dd88@huawei-partners.com
+[2] https://lore.kernel.org/20260617041515.98906-1-sj@kernel.org
 
-[Severity: High]
-This is a pre-existing issue, but can this divide by zero?
 
-If the sum of active and inactive LRU pages is zero (e.g., in highly
-constrained environments or due to negative per-CPU counter drift), total
-evaluates to 0.
+Thanks,
+SJ
 
-mm/damon/core.c:damos_get_in_active_mem_bp() {
-    ...
-    total =3D active + inactive;
-    if (active_ratio)
-        return mult_frac(active, 10000, total);
-    return mult_frac(inactive, 10000, total);
-}
-
-Passing total to mult_frac() without validating if it is non-zero
-can crash the kernel via a division by zero.
-
->  }
-> =20
-> +static unsigned int damos_hugepage_mem_bp(void)
-> +{
-> +	unsigned long thp, total;
-> +
-> +	thp =3D global_node_page_state(NR_ANON_THPS) +
-> +				global_node_page_state(NR_SHMEM_THPS) +
-> +				global_node_page_state(NR_FILE_THPS);
-> +	total =3D totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
-> +	return mult_frac(thp, 10000, total);
-
-[Severity: High]
-Does this code risk a division by zero panic?
-
-The calculation unconditionally passes total as the denominator to
-mult_frac() without validating it.=20
-
-Because global_zone_page_state() reads from atomic per-CPU counters without
-strict synchronization, it can temporarily drift. If this per-CPU drift cau=
-ses
-NR_FREE_PAGES to equal totalram_pages(), total will evaluate exactly to 0,
-crashing the kernel when the quota goal is evaluated.
-
-> +}
-
-[ ... ]
-
-While reviewing the DAMON quota calculations in mm/damon/core.c, I noticed
-some pre-existing regressions in related functions:
-
-[Severity: High]
-This isn't a bug introduced by this patch, but are damos_get_node_mem_bp()
-and damos_get_node_memcg_used_bp() susceptible to a division by zero?
-
-In both functions, if a NUMA node has N_MEMORY set while all its memory is
-reserved (meaning zone_managed_pages is 0), si_meminfo_node() sets i.totalr=
-am
-to 0.
-
-mm/damon/core.c:damos_get_node_mem_bp() {
-    ...
-    si_meminfo_node(&i, goal->nid);
-    if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEM_USED_BP)
-        numerator =3D i.totalram - i.freeram;
-    else
-        numerator =3D i.freeram;
-    return mult_frac(numerator, 10000, i.totalram);
-}
-
-mm/damon/core.c:damos_get_node_memcg_used_bp() {
-    ...
-    si_meminfo_node(&i, goal->nid);
-    ...
-    return mult_frac(numerator, 10000, i.totalram);
-}
-
-Passing i.totalram as the denominator to mult_frac() without checking if it
-is zero will trigger a division by zero panic. Users configuring DAMOS with
-node-specific metrics on a node with zero managed pages can reliably trigger
-this.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260714150116.3825=
-21-1-gutierrez.asier@huawei-partners.com?part=3D3
+[...]
