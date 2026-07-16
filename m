@@ -1,70 +1,72 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3B6423A78;
-	Thu, 16 Jul 2026 13:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2889F2F28FF
+	for <damon@lists.linux.dev>; Thu, 16 Jul 2026 13:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784208720; cv=none; b=oq59Brra/sRh9JSj8giGUe9BxUiyiDe4CvziNwDV1cWqfZiDXU7+VgBlMYp6eheD+n1X0+hwWaiNMKu8g//DsB6FeOPl6BSp4qXikdIPH2eobzAlJpeBVknrmYoIU23L+wj0GCXbkcsOOQusf2aYFPr7XGFl8E3/xOtc+gUs5jM=
+	t=1784210082; cv=none; b=EyqFGjIrPjqecHOQM/kwurOXZjcSyNH+0yHvKaTOkXXQL1TCYo+ZxHbFBaG+/cCbUNhu+09fdgsBI1tpr3mcPhjGiRgJ1zMY8aWIzf5GLUvTOGRlUhD/o4osYSgZKleP/W0IoK+lr6oF6/n+iR9gzQZ+iv/TBX3f/lRBkBIytOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784208720; c=relaxed/simple;
-	bh=yS9bNunJIYcGp7pM+GGsfoUYEDKOWl8+J/XHzg82dRU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pi+eLeUI5uuW5U0o/EPM0/o3U7bbmMR1vSZhYN3GwBwqeGI1vmPeTKNphyib1QOULiH25chR27bz18765w5JcDeSNn/MJPbm5C2aqzXFEFlolSBt+fqP+nKGs9SwgtFBBTR6qMkOqK2DPrcWhmCxDhHcoA8Y3jOqqSgA4e3P2RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KbqUptLj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784210082; c=relaxed/simple;
+	bh=xbXWt+RTHsLPEvugFnq9+Bno9nBggWeeaPmAY8riu4w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Y27sP9LdwecxU1ZpOP5LHGI2q3NNRugO8tF92a2vscoxRIbkRvAf0eKvDnRTxF7VoipaJeK06ljl83I2XgiAyzEA1sMYUzn7374qp9djM7D4vTlZKu36jHvpiqoGzkgk4YRRwj6LTamDkLMYojZsoN9LE61PHhBA4R1DSdUvse8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ROn1OsP4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KbqUptLj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905941F000E9;
-	Thu, 16 Jul 2026 13:31:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ROn1OsP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2101F000E9;
+	Thu, 16 Jul 2026 13:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784208719;
-	bh=yS9bNunJIYcGp7pM+GGsfoUYEDKOWl8+J/XHzg82dRU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=KbqUptLjSwHbPDnl6EODLgtr0+4G+Vr/GtLsN8uL1R0gJIbcJrT9INA5Bsp48xFc7
-	 uBGW/ISebTiRPnsimApzUl9NclYX2xh1l1X4NXZZjnAeSSSFNYTRMypcY/rUhyl+X1
-	 /7F6szx0dZdEkzpjdZXEZE5GDp4nGDRMG6wLJU1JgK7vImT0swvx9wF8O4ht7g3joe
-	 kDDXkZm0rqfhR/CQny+02fMgaTBpKdu49C8Yx2xuJ87zFpVlntVhAzq2XjsDAJ5/eD
-	 MgCdvius755vFAuRCD11n+E/RU74UcgR42ez7mpfqR5l5mHGTHiYGsp1W8i6LKucW6
-	 B2mW+krILaKHg==
-Date: Thu, 16 Jul 2026 14:31:43 +0100
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-To: Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>
-Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	nvdimm@lists.linux.dev, linux-perf-users@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev, iommu@lists.linux.dev, 
-	kasan-dev@googlegroups.com, linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org, 
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
-	Russell King <linux+etnaviv@armlinux.org.uk>, Ackerley Tng <ackerleytng@google.com>, 
-	Kai Huang <kai.huang@intel.com>
-Subject: Re: [PATCH v2 00/33] mm: make VMA page offset handling more
- consistent
-Message-ID: <aljdJD9TNWYCQ3HL@lucifer>
-References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
- <c2fd5114-74d0-4996-8035-311ba976b3eb@amd.com>
+	s=k20260515; t=1784210080;
+	bh=+Irz95G1lM/HF+OWbwi2S82U6C5Yrl98ngENc7Q/VU8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=ROn1OsP4Gw9erYrgPy++5eJ1IYm8t7d3aTrjX2+NrMsKNM2z2KOYgSwkoo8R/x9kf
+	 WhQYLNDc7mZlrkE6sh7TsWs+aE1qVLh1takK9dX5xRxyXm1sxFNh4mZnXxvSdQ/5Vz
+	 IIGN/zPhhdy7Gz/FP+Vahl02yMtT1FNm7vR8CYHBINkmrI9k7Lh1uFXib9HyqGpfdW
+	 ckuegMf4+HWU4fCgGT4Ivf7oJktdtGVSdBnQ9EneXi/kecNczmQK8VfGDReeCDdUuo
+	 5iLiHP5t0WEBp7o0m+hWknT+PJiOKHpkdGI38fnjGCS2uGwW4DkJk/VWF83tPrGNNm
+	 2LeyqtzS46Hvw==
+From: SJ Park <sj@kernel.org>
+To: Enze Li <lienze@kylinos.cn>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	enze.li@gmx.com
+Subject: Re: [PATCH] samples/damon/prcl: add module parameter description for target_pid
+Date: Thu, 16 Jul 2026 06:54:37 -0700
+Message-ID: <20260716135438.101815-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260716091444.284702-1-lienze@kylinos.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c2fd5114-74d0-4996-8035-311ba976b3eb@amd.com>
 
-On Thu, Jul 16, 2026 at 12:03:41PM +0200, Christian König wrote:
->
-> I only skimmed over the set but should there be any changes required to DMA-buf, amdgpu or radeon driver feel free to add
->
-> Acked-by: Christian König <christian.koenig@amd.com>
->
-> and merge upstream through any branch you feel fit.
->
-> Regards,
-> Christian.
+Hello Enze,
 
-Thanks :)
 
-Cheers, Lorenzo
+Thank you for this patch!
+
+On Thu, 16 Jul 2026 17:14:44 +0800 Enze Li <lienze@kylinos.cn> wrote:
+
+> Document 'target_pid' via MODULE_PARM_DESC so its meaning is visible
+> through kernel command line usage and sysfs interface.
+
+But...  It is a static module.  Is there a way to read this documentation from
+the user space?  If there is no such a way, I don't really think this change is
+needed.  If we want to document this, we could use comments.
+
+I show 'enabled' parameter has MODULE_PARM_DESC().  If the inconsistency is a
+problem, I think it might be better to consistently remove MODULE_PARM_DESC().
+It may also be beneficial to comment why we don't have MODULE_PARM_DESC()s on
+the module.  What do you think?
+
+
+Thanks,
+SJ
+
+[...]
