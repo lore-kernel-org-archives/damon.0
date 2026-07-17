@@ -1,90 +1,89 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A53833688D
-	for <damon@lists.linux.dev>; Fri, 17 Jul 2026 08:46:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A62429034
+	for <damon@lists.linux.dev>; Fri, 17 Jul 2026 14:23:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784278002; cv=none; b=sgvduqIe6PS/TJA1m57N+vP6Q9mZViAAtdandZWqEGf5hJi5MBZz2zh/WyHKDwVV1gPyyv1bXbTm4WP4s7XNK/i/pddsGPyDkFaEVUa3gRketOxRlGHJZqOE+DhU9tnaD54HzsUeLnHYJw7fkmqUvFi/QGgnlZqhoheRYaAi3bY=
+	t=1784298232; cv=none; b=oC2zW4RwLcLuu59nP8cW8QN2LIqR43Go+C0I8IKXc3swxguVRlGPKIub7yaFDjn7GtIixWsGOyE+m3xEbF6kK82DFu/zQLZE58IwYNbU1+I9eM/BO9M8/PSmZXw97jqzxYQEJVkw/93vor2G4M4ZeAMT+8OH6b2NZqo4l+ARUiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784278002; c=relaxed/simple;
-	bh=UqcxRs/3llcGhtVeN5y4CTBUamZ1fjpw1dFGJVDDzOc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NwQTwwCG0RKeukKTJi8xv8m0NhwlkUkX01ioTBAslQjVXUvAEs/YykH72Z/C/2xUJMN9i0aY+wBhbytJUagHERvDeW0vc3xdWLuO2ItDFJJIoNh8tUa0r0IhCafEclAOUOWfP3s/3wTQFdtcDzur8plTqOQfLj3BCSzj1iWc5qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 036adba881bc11f1aa26b74ffac11d73-20260717
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:3fb38247-c943-4f74-9cf0-1ea30deec863,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:10
-X-CID-INFO: VERSION:1.3.12,REQID:3fb38247-c943-4f74-9cf0-1ea30deec863,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
-	elease,TS:10
-X-CID-META: VersionHash:e7bac3a,CLOUDID:4c451bc509afd43d951a03b62fcafa9c,BulkI
-	D:260716215446VE8XWLNT,BulkQuantity:1,Recheck:0,SF:17|19|64|66|78|80|81|82
-	|83|102|127|841|850|865|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File
-	:nil,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR
-	:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_FSD,TF_CID_SPAM_SNR,TF_CID_SPAM_FAS
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 036adba881bc11f1aa26b74ffac11d73-20260717
-X-User: lienze@kylinos.cn
-Received: from localhost.localdomain [(223.70.159.239)] by mailgw.kylinos.cn
-	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1226684243; Fri, 17 Jul 2026 16:46:33 +0800
-From: Enze Li <lienze@kylinos.cn>
-To: SJ Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,  linux-mm@kvack.org,  enze.li@gmx.com
-Subject: Re: [PATCH] samples/damon/prcl: add module parameter description
- for target_pid
-In-Reply-To: <20260716135438.101815-1-sj@kernel.org>
-References: <20260716135438.101815-1-sj@kernel.org>
-Date: Fri, 17 Jul 2026 16:46:26 +0800
-Message-ID: <875x2ej95p.fsf@kylinos.cn>
+	s=arc-20240116; t=1784298232; c=relaxed/simple;
+	bh=bya4GkcNusUpu1+WeBTQK++Un50HiB16dkNNDxcg1rQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ouknr5NP+Q0Dt7KUCSfwoih5cTJBAgvVWVaX22uhU58YGOnt0v9pZW3fYw/XPVBTze/XDEIq+KG3na104Z8oG76zlIJBdo8/q6m43Z8XGAY2dDDZzdz7aZv1cDCL50MwhMhoLZz/V5mXz55Vgz+YitaCIDMhyADVpmYGmEF3b34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gMS4b0B6; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gMS4b0B6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1011F000E9;
+	Fri, 17 Jul 2026 14:23:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784298231;
+	bh=xcdtPjM1bbPwPM506mATotSv4YstCKTDfUkEdecfsbI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=gMS4b0B6qIQdlCdkrH81R10Sr9oN6Zo/1NYWWGrB75fggNBQRGXQnu08IWmsYgJOW
+	 JcjMRJMfmbS902Jysdfd/4QbY4Zbfp9Bvk4lwMgXODxokJwPjdHFIMqOZhwTbD0QAd
+	 PHVj9Vba+dzTHV4jWEVFpOK/ULCrKmpre7tK+oN3n96fdSnonv+Yyqqq8a0CCyb4G7
+	 3tGY0ezK1fMb2Cb0XUrZXio5F0KLuDokd0qAideQhEqgVlhc26WPncLqqo3ZrQK7s6
+	 e9LDBBufypTdKj71hUxYqOViK2XQriR0zD7pKELMujHgehhjXwRMVvh45N42DX0c6R
+	 fpUTmqsqaW1QA==
+From: SJ Park <sj@kernel.org>
+To: Enze Li <lienze@kylinos.cn>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	enze.li@gmx.com
+Subject: Re: [PATCH] samples/damon/prcl: add module parameter description for target_pid
+Date: Fri, 17 Jul 2026 07:23:47 -0700
+Message-ID: <20260717142348.27427-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <875x2ej95p.fsf@kylinos.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+On Fri, 17 Jul 2026 16:46:26 +0800 Enze Li <lienze@kylinos.cn> wrote:
+
+> 
+> Hi SJ,
+> 
+> Thank you for your review.
+> 
+> On Thu, Jul 16 2026 at 06:54:37 AM -0700, SJ Park wrote:
+> > Hello Enze,
+> >
+> >
+> > Thank you for this patch!
+> >
+> > On Thu, 16 Jul 2026 17:14:44 +0800 Enze Li <lienze@kylinos.cn> wrote:
+> >
+> >> Document 'target_pid' via MODULE_PARM_DESC so its meaning is visible
+> >> through kernel command line usage and sysfs interface.
+> >
+> > But...  It is a static module.  Is there a way to read this documentation from
+> > the user space?  If there is no such a way, I don't really think this change is
+> > needed.  If we want to document this, we could use comments.
+> 
+> AFAIK, MODULE_PARM_DESC() is for loadable modules.  For builtins, it’s
+> effectively just a comment.
+
+Thank you for clarifying, Enze.
+
+> That said, if DAMON gains loadable module
+> support later, having these descriptors in place means we won’t need to
+> touch the code. WDYT？
+
+I think it is not too late to add MODULE_PARM_DESC() when we add loadable
+modules support.  As of now, no clear needs for loadable module support have
+reported, though.
 
 
-Hi SJ,
+Thank,
+SJ
 
-Thank you for your review.
-
-On Thu, Jul 16 2026 at 06:54:37 AM -0700, SJ Park wrote:
-> Hello Enze,
->
->
-> Thank you for this patch!
->
-> On Thu, 16 Jul 2026 17:14:44 +0800 Enze Li <lienze@kylinos.cn> wrote:
->
->> Document 'target_pid' via MODULE_PARM_DESC so its meaning is visible
->> through kernel command line usage and sysfs interface.
->
-> But...  It is a static module.  Is there a way to read this documentation=
- from
-> the user space?  If there is no such a way, I don't really think this cha=
-nge is
-> needed.  If we want to document this, we could use comments.
-
-AFAIK, MODULE_PARM_DESC() is for loadable modules.  For builtins, it=E2=80=
-=99s
-effectively just a comment.  That said, if DAMON gains loadable module
-support later, having these descriptors in place means we won=E2=80=99t nee=
-d to
-touch the code. WDYT=EF=BC=9F
-
-Thanks,
-Enze
-
-<...>
+[...]
