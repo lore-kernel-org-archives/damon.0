@@ -1,142 +1,171 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227E163B9
-	for <damon@lists.linux.dev>; Fri, 17 Jul 2026 00:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE7B23392A
+	for <damon@lists.linux.dev>; Fri, 17 Jul 2026 00:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784249167; cv=none; b=WMQYuhD5e4/UdE90y8JEV8cmr7wOX/6D0FdiMvaYIB8Dlz5T9kAaPFPnt87K/i8q3ruILL8kfu1Fo2AIzVQGB3mtX/pSyA2ZYE9tweXHK4sFLK6Bat/JP81FYRHWeQrG02PFJoAEDrC6f8D/KYBUd2z8giFfGi4oLmIALTHWk3A=
+	t=1784249541; cv=none; b=f1QwnSmxTYRFXNEPyiYEw4BL4jJD0MstUb9QXVKYvaGsFWypICpgAflldx1aXPpjDpxvo7W+wuAgkSExu0CxxBTLseR8u06xwUDgKkFGX+karTA9n8rH9ssqST91Quvgaddq7PflCoW0oun8HXemUnPSv2yman94HfFLiQYeB9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784249167; c=relaxed/simple;
-	bh=0jorlJhm6JpO62dIBcDN5AbcRoa7m3VcCUcAHlqeKr4=;
+	s=arc-20240116; t=1784249541; c=relaxed/simple;
+	bh=FbJBuz/SgzjoS8UBYRy0mDVKsqqckqif0oUjCFzKMtI=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=uzm7+tuOawyTTyvVTLSSSsJe4erikL7ofllg2ZP45z/1CRihDMLB1effVF0x5y55CcJ3RM9BOzq/oKfDR+Ol6X9/mLTPfyP1NULfGkFlMTr6HITnrQ95LcDbRLNVrAlMVEFN2sr36dz4iKwuHVLL13yEMj4JCrN2I5/TAJZVIao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mTmzpqnm; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=uLwPCClY8saFt8wOel6gCGNJt4S5MLRRGOzL8+LeHrisWGMkl+NXyx8DS22Pm7GTXyvG6eR+NVRMj9AU1SO5QvpRIxL0CnSNzq6B0mpxr9FDBwyAhFPfzjwAuBThhBEAxk08e8WtrSl4pJAh+vx/eFNFX1UfdtidC2tcD8+xxhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LsibzDlH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mTmzpqnm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8881F000E9;
-	Fri, 17 Jul 2026 00:46:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LsibzDlH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB001F000E9;
+	Fri, 17 Jul 2026 00:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784249165;
-	bh=1gCq8K2fH3gngOpvNv5a4QiQdAsD71Swe7klmlCxw6w=;
+	s=k20260515; t=1784249540;
+	bh=6hy3sgNdwWz1uFNbF3itEyJ5w643l7yev/2gyqhZSqg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mTmzpqnmfx+fdxa6lc5tKltF+V21E/YBVXX5wuDUR6xG9DrJCzCOwi6KRCpNbvngv
-	 1W14HzJA6Ikr2K0CHC6wCdZAWBSPWfP9H+lJimr3skH2o0b2Dot3b2uhxiuO2jFzlK
-	 57fMErc7SkeQ2hYuvdvPG6ke4NPsfnimpIQSVpycew9q0Z0ScNm3E4tNRhjL+OGpXB
-	 SvGoU5GYaV5jQsJwgnH3oOxGv9HUcUcNbdnG0sjpabrYBqfhC0IxrEAl0/nndmm+aE
-	 B807PHQ2SP/22ZJCbIQYVy+qLpNuBAMrVv1NPBhPoQjGr7065ESMaZGmsQC7YZAttn
-	 sOhmCxobyQ2FQ==
+	b=LsibzDlH/SSQK45PwHKm2sf2N1cj6bNWx1lSZaeGAXGuwh8mxBFhTc5amk1gVXa7B
+	 BCCoAoiSRjc2iFLYCPKbBPf0y3bzcWnJmiAI3N2q3ovducjtnYV0qpZWGCBXMRvlFO
+	 GHVAlqmhpWNA+wjJ2TUFH71u+qtL8n2yYjiXCGtpzHYsD7/TCq8lGMtsu+HYryk6y+
+	 cwQAuNKP2dUmnksqol00XpyWwnYy0hk+q+nLsXE1FbqQe66IQCIxga4p4BQMwr9uzw
+	 c8OoMpjFDdyYsnsdhwoPeq25iP4+f+mNq30s+Fke0h8Y2h2pJTpvAD5Q/B8tHW7LQl
+	 f3S2kXrzgpfkg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 4/7] mm/damon/core-kunit: handle region split failure in
- filter_out()
+Subject: Re: [PATCH 1/7] mm/damon/core: initialize damos->last_applied
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260717003022.119437-5-sj@kernel.org>
+In-Reply-To: <20260717003022.119437-2-sj@kernel.org>
 References: <20260717003022.119437-1-sj@kernel.org>
- <20260717003022.119437-5-sj@kernel.org>
+ <20260717003022.119437-2-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 17 Jul 2026 00:46:05 +0000
-Message-Id: <20260717004605.9D8881F000E9@smtp.kernel.org>
+Date: Fri, 17 Jul 2026 00:52:19 +0000
+Message-Id: <20260717005220.7CB001F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] The patch adds an early exit check `if (damon_nr_regions(t) !=3D 2=
-) goto out;` to prevent an invalid pointer dereference when the first regio=
-n split test fails, but misses the exact same vulnerability in the second r=
-egion split test directly below it.
-- [High] In `damon_apply_min_nr_regions`, if `damon_split_region_at` fails =
-to allocate memory, the inner loop advances to the next list entry without =
-inserting a new region, leading to an out-of-bounds read and write when it =
-reaches the list head.
+- [High] Incorrect PTE advancement for large folios in vaddr stat scanning =
+and migration.
+- [High] Commit of DAMON parameters corrupts the active scheme's quota stat=
+e by zeroing dynamic fields in-place.
+- [High] Failure in `damos_commit_dests` leaves the active scheme in an inc=
+onsistent state, leading to a NULL pointer dereference.
 --
 
---- Patch [4]: [PATCH 4/7] mm/damon/core-kunit: handle region split failure=
- in filter_out() ---
-commit 705cf12a4e8501ec816031495df35460614c42c2
+--- Patch [1]: [PATCH 1/7] mm/damon/core: initialize damos->last_applied ---
+commit 90344a381581ba5ad7a7c87826b18bf948659516
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core-kunit: handle region split failure in filter_out()
-   =20
-damos_test_filter_out() checks if damos_filter_match() of an address
-filter splits the region as expected. But the test continued regardless of
-whether the split succeeded, which could lead to dereferencing invalid
-pointers or corrupting memory. This adds an early exit check on the first
-test block to prevent continuing on failure.
+mm/damon/core: initialize damos->last_applied
 
-Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org
+This commit fixes an issue where the damos->last_applied field was being us=
+ed
+without initialization, leading to DAMON unexpectedly skipping the applicat=
+ion
+of DAMOS actions for a folio the first time per scheme. It addresses this by
+initializing the field in damon_new_scheme().
 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 322a295ac2cec..bd3bbd421392f 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-> @@ -1365,6 +1365,8 @@ static void damos_test_filter_out(struct kunit *tes=
-t)
->  	KUNIT_EXPECT_EQ(test, r->ar.start, 1);
->  	KUNIT_EXPECT_EQ(test, r->ar.end, 2);
->  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-> +	if (damon_nr_regions(t) !=3D 2)
-> +		goto out;
->  	r2 =3D damon_next_region(r);
->  	KUNIT_EXPECT_EQ(test, r2->ar.start, 2);
->  	KUNIT_EXPECT_EQ(test, r2->ar.end, 4);
-> @@ -1384,6 +1386,7 @@ static void damos_test_filter_out(struct kunit *tes=
-t)
->  	KUNIT_EXPECT_EQ(test, r2->ar.end, 8);
->  	damon_destroy_region(r2, t);
+Link: https://lore.kernel.org/20260714055436.120034-1-sj@kernel.org
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 603b102ff80f9..20d267c615faf 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -705,6 +705,7 @@ struct damos *damon_new_scheme(struct damos_access_pa=
+ttern *pattern,
+>  	INIT_LIST_HEAD(&scheme->ops_filters);
+>  	scheme->stat =3D (struct damos_stat){};
+>  	scheme->max_nr_snapshots =3D 0;
+> +	scheme->last_applied =3D NULL;
+>  	INIT_LIST_HEAD(&scheme->list);
 > =20
+>  	scheme->quota =3D *(damos_quota_init(quota));
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
 
 [Severity: High]
-This isn't a bug introduced by this patch, but does this second region split
-test have the same vulnerability as the one fixed above?
+This isn't a bug introduced by this patch, but does this in-place zeroing
+corrupt the active scheme's quota state?
 
-If damos_filter_match() fails to split the region in this second test block
-(e.g. due to memory allocation failure), damon_nr_regions(t) would remain 1.
-r2 would be assigned damon_next_region(r), which could incorrectly resolve
-to the damon_target list head.
+Looking at damon_new_scheme(), it passes the provided quota pointer to
+damos_quota_init(), which zeros out dynamic fields directly:
 
-Calling damon_destroy_region(r2, t) would then call kmem_cache_free() on
-this out-of-bounds pointer, potentially corrupting memory. Should another
-early exit check be added here as well?
+mm/damon/core.c:damos_quota_init() {
+    ...
+    quota->esz =3D 0;
+    quota->total_charged_sz =3D 0;
+    ...
+}
 
-> +out:
->  	damon_free_target(t);
->  	damos_free_filter(f);
->  }
+When damon_commit_ctx() applies new parameters to an active context, it cop=
+ies
+schemes by calling damon_new_scheme() with a pointer to the running context=
+'s
+scheme quota.
+
+Could this wipe out the current quota charge window progress and reset the
+goal tuner's feedback loop (esz_bp) on every parameter commit, causing
+inconsistent tuning pressure?
+
 
 [Severity: High]
-This is a pre-existing issue, but while looking at region splits, could a
-similar unchecked failure cause memory corruption in mm/damon/core.c?
+This is a pre-existing issue, but can the failure path in damos_commit_dest=
+s()
+lead to a NULL pointer dereference?
 
-In damon_apply_min_nr_regions():
+In mm/damon/core.c:damos_commit_dests(), if memory allocation fails for
+dst->node_id_arr or dst->weight_arr, the function returns -ENOMEM:
 
-			while (damon_sz_region(r) > max_region_sz) {
-				damon_split_region_at(t, r, max_region_sz);
-				r =3D damon_next_region(r);
-			}
+mm/damon/core.c:damos_commit_dests() {
+    ...
+    dst->node_id_arr =3D kmalloc_array(src->nr_dests,
+        sizeof(*dst->node_id_arr), GFP_KERNEL);
+    if (!dst->node_id_arr) {
+        dst->weight_arr =3D NULL;
+        return -ENOMEM;
+    }
+    ...
+}
 
-If damon_split_region_at() fails due to memory pressure, it does not split
-the region. The call to damon_next_region(r) then erroneously advances r to
-the next element.
+However, dst->nr_dests is updated later. If the allocation fails while
+updating an active context during __damon_commit_ctx(), could the active
+scheme be left with weight_arr =3D=3D NULL but a non-zero nr_dests?
 
-If r was the last region, it becomes the list head (&t->regions_list). The
-loop condition then evaluates damon_sz_region(r) on the list head, which
-reads memory 32 bytes before the damon_target struct allocation. If this
-difference exceeds max_region_sz, damon_split_region_at() could be called
-on the list head, which might subsequently write to r->ar.end, corrupting
-SLUB metadata or preceding objects.
+If so, would this cause a kernel panic when kdamond resumes and calls
+damos_va_migrate_dests_add(), which iterates up to dests->nr_dests and
+unconditionally dereferences dests->weight_arr[i]?
 
-Should damon_split_region_at() return an error code so callers can verify
-if the split actually succeeded?
+
+[Severity: High]
+This is a pre-existing issue, but does the PTE iteration in
+damos_va_stat_pmd_entry() and damos_va_migrate_pmd_entry() overshoot large
+folios?
+
+In both functions, when a valid folio is found, the loop increment is set to
+the total number of pages in the folio:
+
+mm/damon/vaddr.c:damos_va_stat_pmd_entry() {
+    ...
+    if (!damos_va_filter_out(s, folio, vma, addr, pte, NULL))
+        *sz_filter_passed +=3D folio_size(folio);
+    nr =3D folio_nr_pages(folio);
+    s->last_applied =3D folio;
+    ...
+}
+
+If the current PTE maps a tail page of a large folio (for example, if the V=
+MA
+starts in the middle of a large folio), wouldn't advancing pte +=3D nr and
+addr +=3D nr * PAGE_SIZE overshoot the end of the large folio?
+
+Could this cause DAMON to skip subsequent PTEs in the mapped page table that
+might belong to entirely different folios, missing stats and migration acti=
+ons
+for them?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260717003022.1194=
-37-1-sj@kernel.org?part=3D4
+37-1-sj@kernel.org?part=3D1
