@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436FE3033E3
-	for <damon@lists.linux.dev>; Fri, 17 Jul 2026 14:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDFE3B14DE
+	for <damon@lists.linux.dev>; Fri, 17 Jul 2026 14:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784300160; cv=none; b=iSNQDvFHh1kUIWiXq7DucqLjykuFv0SzbJM6YBAB/tC69Xt8a1THZTL0etYoUuFi05BTcKQw9PveB8o/an/6jxJ1gQbZi+R5JF5kRQvo4FY43PoHd+rkUteqj0wKIozOz6a+FMlrjUg+/KXKfD73g+1G3NuAd3VZ7oTf9Gz40pA=
+	t=1784300211; cv=none; b=O8kEyIHEJvYOHNJOk8wiSfOF+sgJZi7fSXGCgCiCYvYF5nBPFUc3uc4MnQJNDi7AT0Kr81qXVFDuGJONkHVXzOLxctWGawo/ip1DkMYnMLyGuFoyc/2ZDyl/BECyUyTDkho3FNKdAAt9ViRjZQmQQc67WU9IMjlKnjbIa2LX+G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784300160; c=relaxed/simple;
-	bh=xLvnQFAR/Uzn5ZdmiPCigeS3pBrbKB9xnysCFUov0QU=;
+	s=arc-20240116; t=1784300211; c=relaxed/simple;
+	bh=K4Q3PzJl2fwzFkTiZzFJROEBo3YLJsbzZRdwIG06zzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PxepvY/N7E9FLI1KVf7l3BPYtCpnOgxDUIPtsh1fbfDPFjEGlmGOEYpUXLyQfHTO4DkrHRPLBf2b+izyXMKmQiVanp47Ckkd4HGftbTFNabyQhINgClBPjN/b5GPxe/8mGYDgTwNxUUKaVHhKMLyDupPnLSQhpJLm1ZcTOD24BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M/mqCXt/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sfR2ZdxtxRPE82UfkvHTBVK0RXntrNY4ywKUY4diMwL+9rLXZrDt7uIgCd5LGXY/xb8E/GH9QFYUNf9BOAgepQ6aEtENFQhkVgaZeZJMqoP4D/gcem6vtS1jrKyygWOoWueLF0zbN+nhY2AuPhbXgCSAhVZSmOop1Bef2aV7xOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OVNIqttZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M/mqCXt/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D251C1F00A3A;
-	Fri, 17 Jul 2026 14:55:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OVNIqttZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468071F000E9;
+	Fri, 17 Jul 2026 14:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784300157;
-	bh=lx2OWW9xi5t88z/iouK2QZwEdQwgue7mQFDRl+wdwZk=;
+	s=k20260515; t=1784300203;
+	bh=hpoDbkpWPWe5oeENVsNvxgXftp2iBTgOru9aO7k8B5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M/mqCXt/NfjX4GOcYJ/vvRRJBmk99lh+N59Xpvlbt+rkQ3CBh+5Cr4CVgy6uz0VAq
-	 Wnmgey45AnJceMlFlVIkPZxmVjqEPJWiArbd/J0EULY9kIgBw4dSzL3SY7kIQaPwhO
-	 AsmhBMcjec2uVfRR1itGkiIjptzwhM5zQXpOog/wW7FQS2WFJvPFcg6MD2HlyDTZu2
-	 46kUqmytL4vrU0aE0Txg0Gxbc+Ux0R994GhBqm2oYCYfxYCqbDEvLK5Jju23zJdx7w
-	 LTf8AQRsaFBWP0cRJ5B31CUuAJP76XhSFKjW/R9CRpZUPCoN7JhrsxksD6eoVj/9hT
-	 vCt3g1c3ueGvw==
+	b=OVNIqttZqPYy0d2zl/6EVyYRX6jt/1fPxQ4layx6t9kirCHi65XLuQd7qr8S7zw8R
+	 c184fJRCIWBo1HIcmb0mZlGSjGZ1rLD13Upf2muRoWYm0XpDusnzIDyz9EjRKB8RN6
+	 +EapPjx2DaFMtJGLd3++wfV3lmkGWWb1gpSXaYzpBJdVFRCJeKKiBa9oFWJtj3xI7m
+	 dLAykRS5G1jZqn4lxfJoJK+use0t6/Fz/tpLQWaoQ4ILCmqgSRTBL40bo5i/6s0WLR
+	 hkkaQjiS/qUgRn97IATRHZei7UxoAcC/8w2rWsnvkJv4urCFDb/oyQQSTp1QLEeTKp
+	 Z2J1DTH9opC5w==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 3/7] mm/damon/vaddr-kunit: check region count in three_regions test
-Date: Fri, 17 Jul 2026 07:55:49 -0700
-Message-ID: <20260717145551.92109-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.1 4/7] mm/damon/core-kunit: handle region split failure in filter_out()
+Date: Fri, 17 Jul 2026 07:56:34 -0700
+Message-ID: <20260717145635.92237-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260717145050.1D6331F000E9@smtp.kernel.org>
+In-Reply-To: <20260717144904.836FC1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,85 +45,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 17 Jul 2026 14:50:49 +0000 sashiko-bot@kernel.org wrote:
+On Fri, 17 Jul 2026 14:49:04 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Out-of-bounds array read in KUnit test helpers due to missing array bounds check and ignored return values
+> - [High] This problem wasn't introduced by this patch, but it shares the exact same logic flaw fixed here. In `damon_apply_min_nr_regions()`, if `damon_split_region_at()` fails to allocate a new region (e.g., due to memory pressure), it leaves `r` unmodified. However, the inner `while` loop unconditionally executes `r = damon_next_region(r);`. If `r` was the last region in the list, `damon_next_region(r)` will return a pointer derived from the list head (`&t->regions_list`), resulting in a fake `damon_region` pointer pointing into the middle of the `damon_target` struct or preceding memory. The loop then evaluates `damon_sz_region(r)` on this fake region, reading garbage memory. If the garbage evaluates to a size greater than `max_region_sz`, it will invoke `damon_split_region_at()` on the fake region, causing an out-of-bounds write and list corruption (overwriting `r_fake->ar.end` and `t->regions_list`), or an infinite loop lockup if allocations keep failing.
 > --
 > 
-> --- Patch [3]: [RFC PATCH v1.1 3/7] mm/damon/vaddr-kunit: check region count in three_regions test ---
-> commit b2d38d564a3004fa6df02a9f1d54af3423302437
+> --- Patch [4]: [RFC PATCH v1.1 4/7] mm/damon/core-kunit: handle region split failure in filter_out() ---
+> commit 571c1400b8cb843c3acdb1ded0915fd9807f302f
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/vaddr-kunit: check region count in three_regions test
+> mm/damon/core-kunit: handle region split failure in filter_out()
 > 
-> This commit adds a check in damon_do_test_apply_three_regions() to ensure
-> damon_set_regions() succeeded in setting the expected number of regions.
-> This prevents a potential NULL pointer dereference during test iteration.
+> This commit fixes a bug in the DAMON kunit tests where test execution
+> continued even if a region failed to split as expected. By exiting early
+> when the number of regions does not match expectations, it prevents
+> dereferencing invalid pointers and potential memory corruption.
 > 
-> Link: https://lore.kernel.org/20260713144757.39740-1-sj@kernel.org
+> Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org
 > 
-> > diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-> > index 61f844336ffb5..6a95441d193ae 100644
-> > --- a/mm/damon/tests/vaddr-kunit.h
-> > +++ b/mm/damon/tests/vaddr-kunit.h
-> 
-> [ ... ]
+> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> > index 322a295ac2cec..eddf3a0484583 100644
+> > --- a/mm/damon/tests/core-kunit.h
+> > +++ b/mm/damon/tests/core-kunit.h
+> > @@ -1365,6 +1365,8 @@ static void damos_test_filter_out(struct kunit *test)
+> >  	KUNIT_EXPECT_EQ(test, r->ar.start, 1);
+> >  	KUNIT_EXPECT_EQ(test, r->ar.end, 2);
+> >  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
+> > +	if (damon_nr_regions(t) != 2)
+> > +		goto out;
 > 
 > [Severity: High]
-> This is a pre-existing issue, but while reviewing this test fix, I noticed
-> similar missing bounds checks and unhandled return values in
-> mm/damon/tests/core-kunit.h that can cause out-of-bounds array reads.
+> This isn't a bug introduced by this patch, but it shares the exact same logic
+> flaw fixed here.
 > 
-> In damon_test_commit_target_regions_for():
+> In mm/damon/core.c:damon_apply_min_nr_regions():
 > 
-> 	damon_commit_target_regions(dst_target, src_target, 1);
-> 	i = 0;
-> 	damon_for_each_region(r, dst_target) {
-> 		KUNIT_EXPECT_EQ(test, r->ar.start, expect_start_end[i][0]);
-> 		KUNIT_EXPECT_EQ(test, r->ar.end, expect_start_end[i][1]);
-> 		i++;
-> 	}
+> 		damon_for_each_region_safe(r, next, t) {
+> 			while (damon_sz_region(r) > max_region_sz) {
+> 				damon_split_region_at(t, r, max_region_sz);
+> 				r = damon_next_region(r);
+> 			}
+> 		}
 > 
-> If memory allocation fails inside damon_commit_target_regions(), it returns
-> an error without modifying dst_target. Because the return value is ignored
-> here, could this iterate over the original regions of dst_target and read
-> past the end of the expect_start_end stack array?
+> If damon_split_region_at() fails to allocate a new region (e.g., due to memory
+> pressure), it leaves r unmodified. However, the inner while loop
+> unconditionally executes r = damon_next_region(r).
 > 
-> A similar pattern appears in damos_test_commit_quota_goals_for():
+> If r was the last region in the list, damon_next_region(r) will return a
+> pointer derived from the list head (&t->regions_list), resulting in a fake
+> damon_region pointer. The loop then evaluates damon_sz_region(r) on this fake
+> region, reading garbage memory.
 > 
-> 	damos_commit_quota_goals(&dst, &src);
+> If the garbage evaluates to a size greater than max_region_sz, it will invoke
+> damon_split_region_at() on the fake region.
 > 
-> 	i = 0;
-> 	damos_for_each_quota_goal(goal, (&dst)) {
-> 		KUNIT_EXPECT_EQ(test, goal->metric, src_goals[i].metric);
-> 		KUNIT_EXPECT_EQ(test, goal->target_value,
-> 				src_goals[i++].target_value);
-> 	}
-> 
-> Does ignoring the return value of damos_commit_quota_goals() risk an
-> out-of-bounds read on src_goals[] if the destination goals are not updated
-> and retain more items than expected?
-> 
-> Finally, in damos_test_commit_dests_for():
-> 
-> 	KUNIT_EXPECT_EQ(test, dst.nr_dests, src_nr_dests);
-> 	for (i = 0; i < dst.nr_dests; i++) {
-> 		KUNIT_EXPECT_EQ(test, dst.node_id_arr[i], src_node_id_arr[i]);
-> 		KUNIT_EXPECT_EQ(test, dst.weight_arr[i], src_weight_arr[i]);
-> 	}
-> 
-> Since KUNIT_EXPECT_EQ does not abort test execution on failure, could an
-> out-of-bounds read occur on src_node_id_arr[] and src_weight_arr[] if
-> dst.nr_dests ends up larger than src_nr_dests?
+> Can this lead to an out-of-bounds write and list corruption, or an infinite
+> loop lockup if allocations keep failing?
 
-These issues are fixed by other patches in this series.
+This is a known issue that I'm separately working on.
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260717143445.91207-1-sj@kernel.org?part=3
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260717143445.91207-1-sj@kernel.org?part=4
 
 
 Thanks,
