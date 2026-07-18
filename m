@@ -1,139 +1,148 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82FC18C008
-	for <damon@lists.linux.dev>; Sat, 18 Jul 2026 00:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D2C1A683B
+	for <damon@lists.linux.dev>; Sat, 18 Jul 2026 00:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784334345; cv=none; b=g6iKawzJeznG9y89M5DnaZw5C+viEhHOxokFyQxGmq1q+k1VnIdK+pfdJmBs2P+jhoN33BlTZr04DD1rInbeXmsoeGrrjadxg6q5dLtePoQqM4ZzoF4qdtEucxz7c3746rbz1+onJFKwKqqmJ9uDf/iPUpQzGoWLacRLQoSP0xo=
+	t=1784334552; cv=none; b=PgK0+XBL2Oov1CxAMh0y29qjkUiOguyIW7lOlpMPFQ0kb3Riyl9tSOA8+obsGpKJfKs2aUbdq6dpntF25/nCmjGZvyGucakiPS9eLJgEFSeNKi+05/Ud/Qt4niWJpkXK8dsawPA82vROnqgRS7sk4iaOwihDjRHQgHZeDjlMa+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784334345; c=relaxed/simple;
-	bh=tn+F6qNkdEqULempuekOYFupZpRuE/mSN7JoHra5Zvs=;
+	s=arc-20240116; t=1784334552; c=relaxed/simple;
+	bh=727G38gNT4qcEkEH1rMARaEqqrpQJmH2/II/MwbQxpU=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=L2izcqgmRsnzbxvB+lPHWF5nUNYY9U0vwuXsqvBBndk5/ye95mNz5fBD4nuhQuvVKCk9gn0kR/rvZukOkMKp922XMkoi6ITZd+x6/iScRflUFw83sFMgytypDyMpmDC4/SP/kcu5xg3hGoJcptAjChe4hBPuC13l+blgTUGvYj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bOfYC21g; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Zjckqxb0U07wracw/aYeDw8kVYkTyfn5F9wateU4NreE6WBCdkxW5ifPbGavj1RqHQEpr5gO4BMQ622apZtq/fvM8BBFyrP4uv7NYMAEbrU758a27bWCardx9jhlNtSMVCqAQ5wadJVQVvH+qPLgp0Hab0KsL+RuylQjhjXJTDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C4+D6vbI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bOfYC21g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7741F000E9;
-	Sat, 18 Jul 2026 00:25:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C4+D6vbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611AE1F000E9;
+	Sat, 18 Jul 2026 00:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784334344;
-	bh=eRB1Kgv2wj7LO6/b/SPs5Ek9yD6vttkWRkrItkb7hV0=;
+	s=k20260515; t=1784334550;
+	bh=uT9O9v2hyEN7yKT2bklX5iOv1ylMymqVVkx0DK4bOgM=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=bOfYC21gnz+puZeBzpMVEwhV4vbVp7/nV9XZFyqeib0TZ6RNcrGWA6nLInIWOUT4R
-	 SQIIZ3BRKBW+sQ5Nz+ARRk+ryjABcsnOn2pKaL3jwl+BmxA74McxLRMjn85xJ/CMGu
-	 xLUmjbNlNUF2jSYYCjScuLHRIxkoXKHhNGhvJoiM2SF9uFFEzqASSAAGbsBoue26s5
-	 /hL5xRwPaHUqufyktXVqxucr1F0ZPfRp13oCz85605PZPR4OKb9uoNServBuLZyDaD
-	 aA75gr9oMWztGLvyBvjfBT6p5IajoIEUnSNCVqEWMuRkMbOz+cC4y001xG3lAfABaK
-	 Cx2l43av3wKOQ==
+	b=C4+D6vbIJZxNjzCLpns4cfDKMUPWz9oZoKaLymUwKNJUU7/9sQ3X5eXHu+D3qWvV3
+	 pMmPUx/nGI50A+KNqMSVCi9/Sk/Bupe105DN7vYrpEmeTkJPjo+XuX9xTmMwYcuBPO
+	 9NCW53+ivwpeEqPcrDq/sjQN842+nRima5/4AzxPdkeIePXBkhwFMM/CfykxMpg/3u
+	 M/FbhnCJXUo1ZkDsMG32KyJH+5Z2pbn52czFdt5/DfmSj3Kn9XywNj8fbwKdGnqW6Y
+	 06YNeO03BltoAB6K+8vQ5ei25mmLD2iTVFOITV8pO/Ewd3OrAtYp4BR56vA+/sc22/
+	 bdQ6M87yNZpOg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 5/7] mm/damon/core-kunit: skip wrong dest walk in
- commit_dests_for()
+Subject: Re: [PATCH 4/7] mm/damon/core-kunit: handle region split failure in
+ filter_out()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260718001442.87129-6-sj@kernel.org>
+In-Reply-To: <20260718001442.87129-5-sj@kernel.org>
 References: <20260718001442.87129-1-sj@kernel.org>
- <20260718001442.87129-6-sj@kernel.org>
+ <20260718001442.87129-5-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 18 Jul 2026 00:25:43 +0000
-Message-Id: <20260718002544.2C7741F000E9@smtp.kernel.org>
+Date: Sat, 18 Jul 2026 00:29:09 +0000
+Message-Id: <20260718002910.611AE1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] If `damos_commit_dests()` fails to allocate the `weight_arr` array=
-, it returns `-ENOMEM` but leaves the `dst` context partially modified with=
- a NULL `weight_arr` and an incorrect `nr_dests`, leading to a NULL pointer=
- dereference during DAMOS scheme execution.
-- [Medium] Missing out-of-bounds array bounds checks in the test functions =
-`damos_test_commit_quota_goals_for()` and `damon_test_commit_target_regions=
-_for()` when iterating over tested items.
+- [High] In `damon_apply_min_nr_regions()`, `damon_split_regions_of()`, and=
+ `kdamond_split_regions()`, if `damon_split_region_at()` fails to allocate =
+memory for a new region, the loop variable `r` is still unconditionally adv=
+anced to the next region. This leads to iterating past the end of the regio=
+n list, reading from out-of-bounds memory, and potentially causing memory c=
+orruption.
 --
 
---- Patch [5]: [PATCH 5/7] mm/damon/core-kunit: skip wrong dest walk in com=
-mit_dests_for() ---
-commit 937f902e215bffeba8d97bcc0725b5bfbb643c41
+--- Patch [4]: [PATCH 4/7] mm/damon/core-kunit: handle region split failure=
+ in filter_out() ---
+commit 8274c3713b297d606d32992612a8cbd24ac04759
 Author: SJ Park <sj@kernel.org>
-Subject: mm/damon/core-kunit: skip wrong dest walk in commit_dests_for()
 
-This patch fixes a potential out-of-bounds access in the KUnit tests for
-damos_commit_dests(). It exits early in damos_test_commit_dests_for()
-if the expected number of destinations does not match the actual number.
+mm/damon/core-kunit: handle region split failure in filter_out()
 
-Link: https://lore.kernel.org/20260713144757.39740-1-sj@kernel.org
+This commit modifies the kunit test damos_test_filter_out() to add early
+exit checks when damon_nr_regions() does not return the expected value. This
+prevents the test from dereferencing invalid pointers if
+damon_split_region_at() fails. It fixes memory corruption that could occur
+during test runs.
+
+Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org
 
 > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index eddf3a0484583..9b8c20a50ad53 100644
+> index 322a295ac2cec..eddf3a0484583 100644
 > --- a/mm/damon/tests/core-kunit.h
 > +++ b/mm/damon/tests/core-kunit.h
-> @@ -1008,6 +1008,8 @@ static void damos_test_commit_dests_for(struct kuni=
-t *test,
->  	skip =3D false;
-> =20
->  	KUNIT_EXPECT_EQ(test, dst.nr_dests, src_nr_dests);
-> +	if (dst.nr_dests !=3D src_nr_dests)
+> @@ -1365,6 +1365,8 @@ static void damos_test_filter_out(struct kunit *tes=
+t)
+>  	KUNIT_EXPECT_EQ(test, r->ar.start, 1);
+>  	KUNIT_EXPECT_EQ(test, r->ar.end, 2);
+>  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
+> +	if (damon_nr_regions(t) !=3D 2)
 > +		goto out;
+>  	r2 =3D damon_next_region(r);
+
+[ ... ]
 
 [Severity: High]
-This isn't a bug introduced by this patch, but looking at the function being
-tested, could damos_commit_dests() leave the destination context in a
-corrupted state on allocation failure?
+This is a pre-existing issue, but I noticed a similar pattern in mm/damon/c=
+ore.c
+where damon_split_region_at() failures might not be handled safely.
 
-If kmalloc_array() fails to allocate weight_arr, it returns -ENOMEM but
-leaves dst->weight_arr as NULL without resetting dst->nr_dests:
+In damon_apply_min_nr_regions():
 
-mm/damon/core.c:damos_commit_dests() {
-	...
-		dst->weight_arr =3D kmalloc_array(src->nr_dests,
-			sizeof(*dst->weight_arr), GFP_KERNEL);
-		if (!dst->weight_arr) {
-			/* ->node_id_arr will be freed by scheme destruction */
-			return -ENOMEM;
-		}
-	}
-	...
+mm/damon/core.c:damon_apply_min_nr_regions() {
+    ...
+			while (damon_sz_region(r) > max_region_sz) {
+				damon_split_region_at(t, r, max_region_sz);
+				r =3D damon_next_region(r);
+			}
+    ...
 }
 
-Would a subsequent execution in damos_va_migrate_dests_add() dereference th=
-is
-NULL array when iterating over dst->nr_dests, leading to a system crash?
+If damon_split_region_at() fails to allocate memory due to memory pressure =
+and
+silently returns, does the unconditional call to damon_next_region(r) advan=
+ce
+past the end of the list?
 
-[Severity: Medium]
-This is a pre-existing issue, but does the same out-of-bounds array access
-vulnerability exist in other test functions in this file?
+If `r` was the last region in the target's list, could `r` become the list =
+head
+and point to memory before the struct damon_target?
 
-Similar to the fix applied here, the loops in
-damos_test_commit_quota_goals_for() and
-damon_test_commit_target_regions_for() iterate over items without bounds
-checking, only verifying the length after the loop completes.
+If so, the condition while (damon_sz_region(r) > max_region_sz) could read
+from out-of-bounds memory.
 
-For example, in damos_test_commit_quota_goals_for():
+If the resulting garbage size exceeds max_region_sz, it might call
+damon_split_region_at() on the invalid pointer, which could then corrupt the
+heap by writing to r->ar.end.
 
-mm/damon/tests/core-kunit.h:damos_test_commit_quota_goals_for() {
-	...
-	damos_for_each_quota_goal(goal, &dst->quota) {
-		KUNIT_EXPECT_EQ(test, goal->metric, src_goals[i].metric);
-		...
-	}
-	...
+The same pattern appears in damon_split_regions_of():
+
+mm/damon/core.c:damon_split_regions_of() {
+    ...
+			damon_split_region_at(t, r, sz_sub);
+			sz_region =3D sz_region - sz_sub;
+			r =3D damon_next_region(r);
+    ...
 }
 
-Could these loops exceed the bounds of arrays like src_goals[] or
-expect_start_end[] if the tested function produces more elements than
-expected?
+And also in kdamond_split_regions():
 
->  	for (i =3D 0; i < dst.nr_dests; i++) {
->  		KUNIT_EXPECT_EQ(test, dst.node_id_arr[i], src_node_id_arr[i]);
->  		KUNIT_EXPECT_EQ(test, dst.weight_arr[i], src_weight_arr[i]);
+mm/damon/core.c:kdamond_split_regions() {
+    ...
+				damon_split_region_at(t, r, sz_sub);
+				sz_region =3D sz_region - sz_sub;
+				r =3D damon_next_region(r);
+    ...
+}
+
+Can these paths also wrap around the list and cause out-of-bounds accesses
+during memory pressure in the kdamond thread?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260718001442.8712=
-9-1-sj@kernel.org?part=3D5
+9-1-sj@kernel.org?part=3D4
