@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DFE25B0A8;
-	Sat, 18 Jul 2026 17:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE8819ADA4;
+	Sat, 18 Jul 2026 18:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784395318; cv=none; b=JZcUbTtq64fRx2ldn4nhix5aFlPkU1wF/OKavrYKzm4wn5q0btmkapg9jMu71KkyU2h0IORyoXy19FzT2cARcuvElQYRpV6XZQ0tFCcIkfXHIGRlO8bc+pemWj7AiF7Fi2jxZSlFQHFzqHCdr8bE4kZG5Fux3YeXIsK924UAmKk=
+	t=1784397702; cv=none; b=izd5rncBbjJ1jD6PfL01S818Ip/nqVN4TgTbY5sXDbh7/jDIIBh2tBDskROkISY8yUGn/5W5IQlkN++JtYkl5G2+gfr8NRwrl7QnSaOND298x+cEYoB3m5f3Ef66mVYdYcqsOlFXVIjTlvaekwtKs9od9PcA1Wy7CiMsxP6QYFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784395318; c=relaxed/simple;
-	bh=Km1lPqO0Ly61jpdeaD8stG06jwJUC39qa5KK1N3Mczg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U94z2pfELpomD76Bee3PL6YNEeSBa0NGQKnEweJ72IHPlEF5A6qj6UUgMamIQknUAsQHKp8XLg4B6HiqcAEsrb8+7wspPWV8NTeSBTgqr2p+z0rETpVdfI89BYKmPPssOUfrX5iccnmlKrM42VnjB04tjohHWLm+4XwQuHe3vxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UGNL6kXo; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784397702; c=relaxed/simple;
+	bh=Ok33Usa3YcK/7WZlRkN6patYalKWmFolfO3OufD4kSU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jXe9zYUmn+mb2g5JrpPSJVUwo1qyxWyna0i8kKqW35mZ5mrmpfC2qbHNVqz5aqAHt5UPUn4sxax7WUEffMzxx81pkDNdoL499eOCwbaeBzrCiEyHOb9RnmCCcqBvMZJ7P1TogRsf+S+hnQfiLlfrT/1CSSOu5Sw4fToaH3ppNZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QiceMZQP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UGNL6kXo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82401F000E9;
-	Sat, 18 Jul 2026 17:21:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QiceMZQP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B84B1F000E9;
+	Sat, 18 Jul 2026 18:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784395317;
-	bh=u3zF7fQwUKoNE5eqD36Ay9nz96+mxu218W1M+/Y5HIk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UGNL6kXoOYwOpibJRxflDNDon+6aCUMlKuw6KGRZ7VHYzBolgaq9QxuQ/bNnbq0dQ
-	 /E/B8tzEMLtRj7NHuubbsnxi0UUrtuJAeFR8KIexOyCNAgkq9c4FvXhMbzF5qD0yvL
-	 u+tj1PyaXx0LjslbANxnJa51SMbUwqWdGTaML4QO5gVoVHG5FwOAPW2GMZalSUoMn8
-	 bMyhqq6+LoqxDSPNPBNdDlLR1T642dLY5efynodVIfD9oearsBEoGOdsIEE3XhAxWG
-	 cOo/dJjpFV3yiAzlQAoTAiny58zIWqvHcclSxaf1zMApW7vvCHQ6bVH2AZdRfnlBA6
-	 CmZZ5HJm96KwQ==
+	s=k20260515; t=1784397700;
+	bh=2IbAUH8vvEqTVq3Kv7LkPD2EJ8inp4L5kOOT6/GvUrE=;
+	h=From:To:Cc:Subject:Date;
+	b=QiceMZQPi9XoLF95Aj9MzE0I9PycT+95RnRuaYLQzb+nVf9k9Xy/MJ8iZjJ4mUuA+
+	 5LDAo3/7kkrubpepXObYOlvKOgRGZ6Uq/RIuNDm3p4q+s6A7sABfqYzIIOp557Ggsu
+	 UZKKDRVM7KwNz5J228ffT8BToaEng4gvbgmtyMEJExXGHfwKsnuAGbgNGDIIXsEtZC
+	 BeoSzHmCdISCvrDaueuGc+Ntiq2TtN4GlC668ez/hu1tYkfZf9F+kTDVz5ypIia85q
+	 1vV3Dn2XqiFdqz6gGJzW+YuoQtPX53t+pTzb8wfTUPRkCCFf4ZUoFic+5Jyoqt8fWD
+	 3OmPHdRfUSTpg==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
+To: 
+Cc: SJ Park <sj@kernel.org>,
 	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH] mm/damon/core: handle region split failure in apply_min_nr_regions()
-Date: Sat, 18 Jul 2026 10:21:46 -0700
-Message-ID: <20260718172147.87900-1-sj@kernel.org>
+Subject: [RFC PATCH] mm/damon/ops-common: use nr_accesses moving sum for quota score
+Date: Sat, 18 Jul 2026 11:01:18 -0700
+Message-ID: <20260718180121.94759-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260718163708.84113-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,23 +45,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 18 Jul 2026 09:37:06 -0700 SJ Park <sj@kernel.org> wrote:
+Since commit 42f994b71404 ("mm/damon/core: implement scheme-specific
+apply interval"), DAMOS scheme can be applied at any time.  At that
+time, nr_accesses may not be fully aggregated.  But the quota
+prioritization score is calculated using the not fully aggregated count.
+As a result, the performance of DAMOS could be degraded.  Fix by using
+damon_nr_accesses_mvsum() instead.
 
-> damon_apply_min_nr_regions() repeatedly split each region until its size
-> becomes small enough to meet the user-defined low limit of the number of
-> regions.  The loop assumes the split operation (damon_split_region_at())
-> will always succeed and create the new region.  But the operation could
-> silently fail for memory allocation failures, for example.  If such
-> failure happens and the region was the last region, the linked
-> list-based next region fetching returns invalid pointer.  As a result,
-> invalid memory dereference and corruption could happen.  Fix by breaking
-> the loop in the corner case.
+The user impact is suboptimum DAMOS performance under certain setups.
+The issue was there from the beginning of the setup availability.  Hence
+it was the baseline for the setup.  Probably that's why people didn't
+notice the suboptimality so far.
 
-Sashiko found a room to improve in this patch.  I will post a new revision with
-the improvement.  Please don't add this to mm-new.
+Fixes: 42f994b71404 ("mm/damon/core: implement scheme-specific apply interval")
+Cc: <stable@vger.kernel.org> # 6.7.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Given the user impact, this is not an urgent hotfix in my opinion.  This
+is rather a good improvement that is better to eventually be merged into
+stable kernels, though.
 
+ mm/damon/ops-common.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-Thanks,
-SJ
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index de9a104e88321..e59f77eca83b2 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -111,8 +111,9 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 	unsigned int age_weight = s->quota.weight_age;
+ 	int hotness;
+ 
+-	freq_subscore = r->nr_accesses * DAMON_MAX_SUBSCORE /
+-		damon_nr_samples_per_aggr(&c->attrs);
++	freq_subscore = mult_frac(damon_nr_accesses_mvsum(r, c),
++			DAMON_MAX_SUBSCORE,
++			damon_nr_samples_per_aggr(&c->attrs));
+ 
+ 	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
+ 	if (age_in_sec)
 
-[...]
+base-commit: 6f1af14da2daf85f73375ffcabcf82255970e2b5
+-- 
+2.47.3
