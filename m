@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB818175A6A;
-	Sat, 18 Jul 2026 01:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4702248A8;
+	Sat, 18 Jul 2026 01:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784336821; cv=none; b=UNZYcdFh+u4tq815Xa0JEzix+HaE/myUzjFjJU8wvIAo9qAss4FDJQCqf+yh6DFIGQpcrLYBNfs2Uh4wVOfATGsCyPxSseWPo5sOS9ltbE9UUq8prwxV8hCYeAzdoEXfep8aN1NGnbXUs5VYrFQPIYfi5OL/uBrAtloslL4iQyE=
+	t=1784337215; cv=none; b=mdnRzskzTrTV1OquPwmPk2+G6A0/IOyhQoJ0inrOsTEzNjvaESV3UuwlaVaRmUPWuXNVluFzKnvWj2lwBoDt1JwBk/gIpUFejsr7t23KSasVVbz5mp7Megj/QMMjRlsz8X8fugRxCtKANNo/2xGMwcGM3gmVJMLYCADnKFocUbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784336821; c=relaxed/simple;
-	bh=YG0mdfG0BXh7KKFtEcFpLLkklS2Mwv5JgqWR6Uh6oVY=;
+	s=arc-20240116; t=1784337215; c=relaxed/simple;
+	bh=+vwaWL7bPjCxBrHbdLu5xU9nM3IH1cl77O60hwzNOFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FfdT5mOp2rmNSkkuRn+9tO6qdVHzTfB0BG82nW+PXNl1O42AyJD7Y4hCmGXlnIZrcMbS99/GlSgP6DllaHBKWYSGVXjkYDA5r42NwXntPXAgZUVouFiszye9Tx0tQZ9ZpWpPzj30AlEPNRYs01QvAy6KbRuN9pvxA5Jj1CoFSpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Izo+5/qw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WwruN7Tn4RWU63PEN7pfaptrPvykk7wldbxJGQ30rUtHz7ItBOXluvGHM9CCOneA8I79pdOC5zvUS47UCUk4PZXq8PN0xGs92jJGUp+a3g+i1CfII1Pdc/EeYCDdELT6WgD2IpLInl6GznFm4bpTKtevckEOh6QAe5+a7Nlx9XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EZgRX3p3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Izo+5/qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB611F000E9;
-	Sat, 18 Jul 2026 01:07:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EZgRX3p3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B6E1F00A3A;
+	Sat, 18 Jul 2026 01:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784336820;
-	bh=vk91zqmkPVUe7yFQkVR0enbUPDMSCZSzWC7GhPFYNJk=;
+	s=k20260515; t=1784337214;
+	bh=/W/YiWHxrSOQzbisnMj63FpwIA6fnyz9f+4A5f0FVFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Izo+5/qwMP0EU+kHudTvtcAvadEZX9z64+UjS6Fe3fAJfIZJumtZyi6troLLmGJr1
-	 /T5Vut5/Q5L0T3j9lKhtHoAY6E8KDAEyezaMSp4gtLxrdjGBGZKhxr+UhdoR0DXhAn
-	 UXFyymyuJmr4M8tlUi5TVS8Na5LfyYbLvx0F2AZ4R/nOb/3xdI7mIydmU+0nZXhY4C
-	 ZxGNCKMU5KXMXQL4XMldQ5HRpswHQNWhZ3Fh0WGXfzkG5g2FndcRv/Vrtc8SN6cct1
-	 wFJRYDefvfJ9HPvqX5AiZIydZJLQ42iH9fd8/zwHonnCRqutZJeywVfylNMgg7tHh9
-	 zlZ+0X7ha0w/w==
+	b=EZgRX3p3twD8Mf53Na7gn9w5HhL4x1Z9CEaA8WplCyEeU5KYw7hex7LTowSQ9cUvt
+	 I639bn0Mh9rBvMpcwTibzThaEgL6XoVi4jxLxcHZzeP0uTEVgDfuMbpm4ELTvhUr+C
+	 nKmV8sbuLohlH5vN80ktKBJT9dhdraPVICLZBElzhfc6q53hfFpJUYBKLgHnhNWvDR
+	 wTseY/yRDWxTCHlgEPaA3pLVsBcwvX+CoSVyPs/+/uFNhe0RrlchwrQaBSVI+ivqXk
+	 UrLevpeIybVMOAZoj2nnjSbM3hvyl/RgU0Lbn6SsDKv4YExF7Pfo5s1zcLtbL59VL1
+	 HI23ziv/BSnww==
 From: SJ Park <sj@kernel.org>
-To: Enze Li <lienze@kylinos.cn>
-Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	stable@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	SeongJae Park <sjpark@amazon.de>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	enze.li@gmx.com,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/ops-common: remove redundant local variable in damon_migrate_folio_list()
-Date: Fri, 17 Jul 2026 18:06:52 -0700
-Message-ID: <20260718010652.92773-1-sj@kernel.org>
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 0/7] mm/damon: fix uninitialized DAMOS field and kunit exec expectation bugs
+Date: Fri, 17 Jul 2026 18:13:21 -0700
+Message-ID: <20260718011322.94001-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260718002125.637104-1-lienze@kylinos.cn>
+In-Reply-To: <20260718001442.87129-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,34 +52,17 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Enze,
+On Fri, 17 Jul 2026 17:14:34 -0700 SJ Park <sj@kernel.org> wrote:
 
-get_maintainer.pl suggests to Cc linux-kernel@vger.kernel.org too.  Adding it
-to Cc list.
+> Fix a few Sashiko-found unurgent bugs.  Patch 1 fixes use of
+> uninitialized damos->last_applied field.  Patches 2-7 fix DAMON kunit
+> tests that do invalid memory access under test failures.
 
-On Sat, 18 Jul 2026 08:21:25 +0800 Enze Li <lienze@kylinos.cn> wrote:
+Sashiko found no blocker for this series.  Sashiko sent findings to damon@
+mailing list [1], and I replied to all the comments.  Please read those for
+details.
 
-> In damon_migrate_folio_list(), we're redeclaring folio inside the first
-> while loop, but it just shadows the outer one.  Since the second loop
-> uses the outer folio anyway, the inner declaration is pointless.
-> 
-> Remove it to consistently reuse the same variable throughout the
-> function and improve readability.
-
-Nice catch!
-
-> 
-> Signed-off-by: Enze Li <lienze@kylinos.cn>
-
-Reviewed-by: SJ Park <sj@kernel.org>
-
-This patch is applied to damon/next [1] tree.  If this patch is not added to
-mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
-to pick this.  So, no action from your side is needed for now.  If it seems I
-also forgot doing that or you cannot wait for my action, please feel free to
-directly ask that to Andrew.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+[1] https://lore.kernel.org/damon/
 
 
 Thanks,
