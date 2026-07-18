@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7AE4C92
-	for <damon@lists.linux.dev>; Sat, 18 Jul 2026 00:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E84B8462
+	for <damon@lists.linux.dev>; Sat, 18 Jul 2026 00:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784334628; cv=none; b=MV6Cr5/sZlwAA8uyGxL+CXFZyP7oD2JS/1HR/CaltGAul+dT5LX2wUiD364EqKFKkzd/EwqVPinhr7Dd+qq7Z0iKw4jui84eJTENVhEN83StBmD/zT7P+ikqoDlKfhjZbBm0+PbV7N805RYo6Rs38T1ZQgsgS8Q4W7ZlphYm/A4=
+	t=1784334742; cv=none; b=mOZ9MhmpMy8cdvtvaDBJdS0YcTmPjf6Nhsl8p5NBvy1dxYhwmiKdF+4lOnpb3RnqiDFnmNF4bG/elDqc/WehGlRGHhdYS4mx5MzClSjssLurI0KO60XvYccET3P4qBL67d9Icv6W9NsaIyTtTUFTV6jXlchJAaxMwiT/e5RAmdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784334628; c=relaxed/simple;
-	bh=aThXhkk2zwPTe22+KQY4M6lYx3kmP74i09AOJZwSeHs=;
+	s=arc-20240116; t=1784334742; c=relaxed/simple;
+	bh=trMWglSLcgt4Ht2R4Swy5bxos2KJbnzY85WKKiq2CXA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ja+FZurWL05u7ROAoB69X+bjPR/GyQeEZGIYVvHKLY67ZbN3aRr+PhzXnCqTmhmedo8ZEcEQBOMt+u1pIjDsWe2/aBfQrrmhk8Ac9igumBMp2p4T5mb5o3efqQ63kI0+5Ja7boIBlrN333EZoXtNKbk0SyGqpm4BhG0b2RlnQKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W36/K9cY; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=D4E17HVoWCa1imunl3dhqctf6TtLfsuiYYAAxeCKMIKZ33qjg/FIinIfeukAxail/TvzRfQ6H3UyWnfhu6xJmXp2Ssd/rP5h1XJ52vE0RJerLtot7u02cwETy2EdWzBRCqK7QvVfERuuzbXhrCg39MHmGZTdAEYjI/IZXu/2rDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gQJGAZ9X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W36/K9cY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0315D1F000E9;
-	Sat, 18 Jul 2026 00:30:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gQJGAZ9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDC31F000E9;
+	Sat, 18 Jul 2026 00:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784334627;
-	bh=9MgAWlzdOSoyvbybQ3Fawofe8SLPmORA6XNtoVYYBMk=;
+	s=k20260515; t=1784334741;
+	bh=/sYJhmfYc/M40rbuhbVI6S6lZfSC/4mID+Lp/77pYrA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=W36/K9cYbHYg9zKIRJABUnLvA855Fywzjbm+7FEz5X+y3Fvn9+mz4lpWd4mz+3/AA
-	 N7ymauxU6UvTKzVtZzeX2s+31iwwBeDFu1vRoX9JvUds4l+wmYaLTlLT9MfoTEkz2H
-	 v/AKB0yYLX6zFhGy+6y2RUYmxKyjQCuuny7v5/I13HjkfmttlXA1zu5orLFbye/y7o
-	 nm/nrEBYThA1yHNQj8y/qOBvKz1G7JYHKeS97eC4qD86cmbltagN+H2vcMMaCc2Sjh
-	 tSn4DWou8y9OwXiZPov/z0+OomwovCf/mB4k1NXbyr8v5LKukPj8pUr3radsacvI0d
-	 K8rhkYmZRDziw==
+	b=gQJGAZ9XKFrUolQCFbUwtHHg/2XE/CV/ME14Z/tXsKIK20NYuO1Nx+A3dxTnZLgWo
+	 Yr6wsZbuswttlHteBIanuvSW6sj/5mS5UBOZp2MkYoVsYuvDEHncgfX77cXdhbXQxi
+	 LleRD1ymJrW4hL9eiGrWQovH1Bc+vdQTRr4wXB4ewPSOxpGbPqZtRRF+hOgbp+CeXH
+	 Om3vB+ufgB3mtoLuklrAwWSkyWlbSFdEFF0G9pkaispa7N9CxK/r+ufObc/vXP6fVK
+	 MebbaBH9kGaVh8nolxgF81gZS3CqCLACwvyGfgoKY0jIa/2JCpK5/0KaVt1K7fvL9z
+	 cYrgeCjbz7ZlA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/7] mm/damon/core-kunit: check region count before
- testing in split_at()
+Subject: Re: [PATCH 1/7] mm/damon/core: initialize damos->last_applied
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260718001442.87129-3-sj@kernel.org>
+In-Reply-To: <20260718001442.87129-2-sj@kernel.org>
 References: <20260718001442.87129-1-sj@kernel.org>
- <20260718001442.87129-3-sj@kernel.org>
+ <20260718001442.87129-2-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 18 Jul 2026 00:30:26 +0000
-Message-Id: <20260718003027.0315D1F000E9@smtp.kernel.org>
+Date: Sat, 18 Jul 2026 00:32:20 +0000
+Message-Id: <20260718003220.DEDC31F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,108 +48,106 @@ Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] Silent allocation failure inside `damon_split_region_at()` causes =
-an improper pointer traversal into the list head in `damon_apply_min_nr_reg=
-ions()`, resulting in a potential infinite loop and out-of-bounds memory co=
-rruption.
-- [Medium] The patch fixes an invalid pointer dereference upon split alloca=
-tion failure in `damon_test_split_at()`, but misses an identical vulnerabil=
-ity in `damos_test_filter_out()`.
+- [High] Uninitialized memory use in DAMOS quota goals allocation (last_psi=
+_total and nid).
+- [High] damos_quota_init() modifies the passed quota struct, unintentional=
+ly resetting runtime quota statistics of actively running schemes.
 --
 
---- Patch [2]: [PATCH 2/7] mm/damon/core-kunit: check region count before t=
-esting in split_at() ---
-commit 97ba538eacadf2d58d517d9d0f86ecaac4b3851f
+--- Patch [1]: [PATCH 1/7] mm/damon/core: initialize damos->last_applied ---
+commit 316d27ac2ea17607b5c9df656020658fa1b425df
 Author: SJ Park <sj@kernel.org>
-Subject: mm/damon/core-kunit: check region count before testing in split_at=
-()
 
-This commit fixes an issue in the KUnit tests where damon_test_split_at()
-could dereference invalid pointers if a region split fails to allocate
-memory. The fix tests if the number of regions was changed as expected
-and exits early upon failure.
+mm/damon/core: initialize damos->last_applied
 
-Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org
+This commit initializes the last_applied field of the damos scheme struct to
+NULL in damon_new_scheme(). This prevents an uninitialized value from causi=
+ng
+a DAMON scheme to unexpectedly skip applying an action to a folio the very
+first time.
 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index eba643762132f..322a295ac2cec 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-> @@ -155,6 +155,10 @@ static void damon_test_split_at(struct kunit *test)
->  	r->age =3D 10;
->  	damon_add_region(r, t);
->  	damon_split_region_at(t, r, 25);
-> +	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-> +	if (damon_nr_regions(t) !=3D 2)
-> +		goto out;
-> +
->  	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
->  	KUNIT_EXPECT_EQ(test, r->ar.end, 25ul);
+Link: https://lore.kernel.org/20260714055436.120034-1-sj@kernel.org
 
-[Severity: Medium]
-This isn't a bug introduced by this patch, but this exact same vulnerability
-seems to exist later in this file in damos_test_filter_out().
-
-If damos_filter_match() internally fails to allocate memory during a region
-split, the test continues and damon_next_region(r) returns the list head.
-
-mm/damon/tests/core-kunit.h:damos_test_filter_out() {
-...
-	/* region started before the range */
-	r->ar.start =3D 1;
-	r->ar.end =3D 4;
-	KUNIT_EXPECT_FALSE(test, damos_filter_match(NULL, t, r, f, 1));
-	/* filter should have split the region */
-	KUNIT_EXPECT_EQ(test, r->ar.start, 1);
-	KUNIT_EXPECT_EQ(test, r->ar.end, 2);
-	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-	r2 =3D damon_next_region(r);
-	KUNIT_EXPECT_EQ(test, r2->ar.start, 2);
-	KUNIT_EXPECT_EQ(test, r2->ar.end, 4);
-	damon_destroy_region(r2, t);
-...
-}
-
-Should the test also be checking the region count and returning early here,
-before we pass an invalid pointer to damon_destroy_region() and corrupt the
-slab?
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 603b102ff80f9..20d267c615faf 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -705,6 +705,7 @@ struct damos *damon_new_scheme(struct damos_access_pa=
+ttern *pattern,
+>  	INIT_LIST_HEAD(&scheme->ops_filters);
+>  	scheme->stat =3D (struct damos_stat){};
+>  	scheme->max_nr_snapshots =3D 0;
+> +	scheme->last_applied =3D NULL;
+>  	INIT_LIST_HEAD(&scheme->list);
+> =20
+>  	scheme->quota =3D *(damos_quota_init(quota));
 
 [Severity: High]
-This is a pre-existing issue, but I'm also concerned about silent allocation
-failures from damon_split_region_at() in core kernel paths.
+This is a pre-existing issue, but does damos_quota_init() unintentionally r=
+eset=20
+the runtime statistics of actively running schemes?
 
-Looking at damon_apply_min_nr_regions():
+When updating a DAMON context via sysfs, damon_commit_ctx() calls=20
+damon_new_test_ctx() which iterates over running schemes and calls=20
+damon_new_scheme(), passing the active &src_scheme->quota pointer.
 
-mm/damon/core.c:damon_apply_min_nr_regions() {
-...
-	damon_for_each_target(t, ctx) {
-		damon_for_each_region_safe(r, next, t) {
-			while (damon_sz_region(r) > max_region_sz) {
-				damon_split_region_at(t, r, max_region_sz);
-				r =3D damon_next_region(r);
-			}
-		}
-	}
-...
+Inside damon_new_scheme(), it executes:
+scheme->quota =3D *(damos_quota_init(quota));
+
+If damos_quota_init() directly modifies the passed pointer:
+
+mm/damon/core.c:damos_quota_init() {
+    quota->esz =3D 0;
+    quota->total_charged_sz =3D 0;
+    quota->total_charged_ns =3D 0;
+    quota->charged_sz =3D 0;
+    ...
 }
 
-If damon_split_region_at() silently fails to allocate memory, it returns
-without splitting the region. The while loop then incorrectly advances r
-to the next region.
+It appears this silently clears the tracking variables of the actively runn=
+ing=20
+scheme, potentially breaking the ability to track memory usage limits.
 
-If this allocation failure occurs on the last region in the list,
-damon_next_region(r) will return the list head.
+[Severity: High]
+This isn't a bug introduced by this patch, but while reviewing initializati=
+on,
+I noticed a potential issue with quota goals. Are the metric-specific field=
+s in
+damos_new_quota_goal() left uninitialized?
 
-The loop condition damon_sz_region(r) > max_region_sz will evaluate memory
-located before the damon_target struct.
+When allocating a new goal via sysfs or damon_commit_ctx():
 
-If those garbage values evaluate to true, could this result in an out-of-bo=
-unds
-access loop or corrupt memory? Should damon_split_region_at() return an
-error code that callers can check?
+mm/damon/core.c:damos_new_quota_goal() {
+    ...
+    goal =3D kmalloc_obj(*goal);
+    ...
+}
 
-[ ... ]
+It seems fields like last_psi_total and nid are not zero-initialized.
+
+Later, damos_commit_quota_goal_union() misses the switch case for=20
+DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP, leaving dst->nid uninitialized.
+
+This can result in using garbage values when calculating current_value:
+
+mm/damon/core.c:damos_set_quota_goal_current_value() {
+    ...
+    goal->current_value =3D damos_get_node_eligible_mem_bp(c, s, goal->nid);
+    ...
+}
+
+And for PSI goals:
+
+mm/damon/core.c:damos_set_quota_goal_current_value() {
+    ...
+    goal->current_value =3D now_psi_total - goal->last_psi_total;
+    goal->last_psi_total =3D now_psi_total;
+    ...
+}
+
+Could subtracting an uninitialized last_psi_total underflow and cause the=20
+quota tuner to aggressively zero out the quota?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260718001442.8712=
-9-1-sj@kernel.org?part=3D2
+9-1-sj@kernel.org?part=3D1
