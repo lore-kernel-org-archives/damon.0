@@ -1,123 +1,137 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8199B1386C9
-	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 09:35:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581AF2E8B64
+	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 09:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784540138; cv=none; b=N3BEbI58McKcY2HfyHC91U/W7vojHLKzvukii2i7e2n/vns7B1LkEMpWQQbvsEzPQfx0j5pVJeSCGOwp7tIOqampSoze/GyiZl2JGtZdFAZPVXLG1BynIdReWhtbcdLgAEaR0t9q6VOiFx2dLro8gAjFrZrFui2Vkh5WMWdE/vA=
+	t=1784540631; cv=none; b=pPutAMpVo7Ftkq8DydLceLmfhImVJ6XJ/x/smIBDsw/pWzWEz2qhp+PFPm2XiXpwiXNJ0oVeD1bR+jUplCR2gGAVz75a/U0WV3aZq/av0WaNl5l4nrC5YYIIJO/fdHTK1rnnmhM+qazOZzhjZpDSI5wd0DbuVVM75eLumNi/wXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784540138; c=relaxed/simple;
-	bh=XYwPWd6qG4lDlxkN2aqA+qSmvhraj9XgE9f8pdzMGUU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=FnmPoIqfglYDmR82XEISNT0r88jlBwElkCvVtVe4YkZQV8Z3bC6heXpIrkRjVkX/0S4qTDKioeWL0y8xhRfQOfOdAlK8btxkgTeMZ1vcVbKyi+/dm0Bh6Fs97HvmxOvggzaV3puO8xGEhHL4cUHcITqsmML8V9N+CsWTrsBcz2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EH4bxPc5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784540631; c=relaxed/simple;
+	bh=j1ZETi3/x4sDxuf8Hs5LtAyEh/7dlbEqRaEfZJkmiaY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Sqm03kMyyNz1570/kW4wA7CWKxPaZJKQOBPXyR6qzX32nC4MhRge1A/R8CNxzwfvOh/ZnBmQLml8MDD3R9SeRw5XMRflgopOwmvUvVWyO124imsZWoJw7JTvqKFk2nOqSOg/xrJLP8Dp/TWYbXsqZXO6QEHxhunLjGozvnOVsfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jeA2sVJR; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EH4bxPc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22941F000E9;
-	Mon, 20 Jul 2026 09:35:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784540137;
-	bh=Tu608lEXWmYmBp3KmZY1cP6W1o8Bqu7T8S3vJEZ4lIY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=EH4bxPc5hpmJLk9bVPJFYxKVeS2GOP4rIt1k1p2I5veb2L7XlxLYkjNEWSEWRg8ti
-	 bKMMVvB27sT9w8SeOm18XMqpuvHKTIZHsZH1a9VDGkQ6avuUxU6MjoXDPMMb9oybi8
-	 ZAvx2mvwHJuk5iWV+rZg3FIkVusoWoKn/sB6GZFLcU266A0UrQpfZ5pqM98IfxDu3s
-	 7FQvuSLKV82EAhJwcT2wRGadV3rNPmIyaCK5qx8V8ZLTch7lohvs4jLGdlnCLlkmvd
-	 UBCy4061Ddm+XH9cVKQ1lgq2fDs2XC2FSWzX45Qw6RLonG2ds1ZAmHiuroCKiGUtra
-	 Gi/CY09BAf/Dw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] samples/damon/mtier: use damon_addr_range consistently
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Enze Li" <lienze@kylinos.cn>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260720092355.237599-1-lienze@kylinos.cn>
-References: <20260720092355.237599-1-lienze@kylinos.cn>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 20 Jul 2026 09:35:36 +0000
-Message-Id: <20260720093536.E22941F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jeA2sVJR"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-84a2dcec51cso8903365b3a.3
+        for <damon@lists.linux.dev>; Mon, 20 Jul 2026 02:43:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784540630; x=1785145430; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=kAmuH3TrSH/JKaELSX3UxD4gJHLMVKkSvtSAo6OO6Tg=;
+        b=jeA2sVJRmVbUUGlEJ0GIYZtaTkS6U6sucw21WlAaSxftbTS8fa2Yk51q3gail7x5yv
+         R7492quriSK7C1+Nc4V6UcMzaN/Le0vRHS/sZS8iA8bAScqobTlSZSeQVM+DEphf2fPf
+         WAdvGy93b2OBxzTFnI0eQ3FukmeKVw9JWsJwLHv5nIlVzE9oUK+0PcCfy8CxoOzV6zfq
+         g+L10JtWNLG02YQQdey4OcYWa4aGZYsBOnGfrhh7PcG2QUKHOMpDnBWL+hrHbN9eyMGx
+         0euslU0q7gMK5ZTsSmAvRyjJW6qjIgQ5CrN7bP+jxFqb030wOwmlV0LrCRAlMv1AGiOF
+         Imiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784540630; x=1785145430;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=kAmuH3TrSH/JKaELSX3UxD4gJHLMVKkSvtSAo6OO6Tg=;
+        b=DzinhopDjVqBSFzM8mla+Qf/KWlVldcjyIoX7P6L2bLrxAHOTgwzG4s1uUvOjNWdiz
+         NuaUQ7bdCcKm+yNAKxEc7g+deLkIKOmFoPLu1fUJFE3LLVix1FwDSGNJ42B4yOSvPVat
+         ISdzXV/LbI29xW6BR3r1l7Cmu9VnIWWbVaePnmH+zOC9sJA+EuoDKtjUWmBRhkEbNZ4E
+         lqC9PBrlPKrWflNskwoAwdYMrC18mRTtJPPLGtT6kou4GcxwXt8z+LWKFxzC24zQhQLi
+         rjFFoVT+zhM6SLVMbh1SKjSUn3CKgEDh8bs/k5rp+VWZKAaWFy8tATZa7RbAydQs9fml
+         LIoA==
+X-Gm-Message-State: AOJu0Yy399LIFLVmsAWX/otvG1Ch+WC2moRnEl1ksDGXgsd/QJYPwdxg
+	lUqBWO0lKAsUVe4HFvpyXOWWVtYHT/h3nEB1J4YB7AWtJsckcSw14ly9
+X-Gm-Gg: AfdE7cmWdFledQugJzxtUhyjMvpLKLes98+lJT3a4ya6MemwzCJF8bV3nhe68nppn9o
+	OP1BvX5v0sK4xdnBaxUGC1f2EUppNtxgG56YTJDQFhOAsx1IsmI6DZ9IlYaExrnvLnq+1E7Gq3w
+	S6UUTVmD3JofFbo+nGMVXB17nUXkhiPo0GRf9ZhqRsn/APMDGX5H7F5gZXlVtAD93KuHw0uDwjm
+	cTqZLviSwHon5CafRYTcS4rWFKgqgpI4CSm0868oRdu2QGoHfa9/9J/dPVW6U5JehOt7VgLcNX/
+	MdyGQRrep01auGpfp/sbwVbXH4f4FVfloSmwhfPS9KVs9SIohJRHqNfk66/RMQ4jqEjsMdCFatg
+	zPEoy2ugI307D7ZyeDFqIiahjyUkmRaYOklApduAEOcDaO8bDk/TPXDXyT2E6PS+4rMB6a9Plo/
+	tg9SQOjedWeBTbDzkQQyL9fcED0Lg=
+X-Received: by 2002:a05:6a00:2ea4:b0:848:5010:ad39 with SMTP id d2e1a72fcca58-84c2948a214mr13304609b3a.46.1784540629544;
+        Mon, 20 Jul 2026 02:43:49 -0700 (PDT)
+Received: from localhost.localdomain ([112.65.87.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84c2ad89d0csm5369285b3a.6.2026.07.20.02.43.43
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 20 Jul 2026 02:43:49 -0700 (PDT)
+From: Lian Wang <lianux.mm@gmail.com>
+To: gutierrez.asier@huawei-partners.com
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	sj@kernel.org,
+	akpm@linux-foundation.org,
+	linux-kernel@vger.kernel.org,
+	david@kernel.org,
+	ljs@kernel.org,
+	liam@infradead.org,
+	vbabka@kernel.org,
+	rppt@kernel.org,
+	surenb@google.com,
+	mhocko@suse.com,
+	npache@redhat.com,
+	ziy@nvidia.com,
+	baolin.wang@linux.alibaba.com,
+	ryan.roberts@arm.com,
+	daichaobing@sangfor.com.cn,
+	wangkefeng.wang@huawei.com,
+	zengheng4@huawei.com,
+	kasong@tencent.com,
+	corbet@lwn.net,
+	skhan@linuxfoundation.org,
+	linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	lianux.mm@gmail.com,
+	lianux.wang@processmission.com,
+	kunwu.chan@linux.dev
+Subject: Re: [RFC PATCH v3 0/3] mm/damon: introduce DAMOS_SPLIT action
+Date: Mon, 20 Jul 2026 17:43:40 +0800
+Message-ID: <20260720094340.31733-1-lianux.mm@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <a168a9f2-953b-4ecb-98ee-ec6b27f4d963@huawei-partners.com>
+References: <a168a9f2-953b-4ecb-98ee-ec6b27f4d963@huawei-partners.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Medium] The commit message incorrectly claims `struct damon_addr_range` =
-has an identical layout to `struct region_range`, masking a physical addres=
-s truncation issue on 32-bit PAE architectures.
-- [Low] The refactoring removes a custom struct but leaves a redundant loca=
-l variable `range` and unnecessary field-by-field copy operations.
---
+Hi Asier,
 
---- Patch [1]: [PATCH] samples/damon/mtier: use damon_addr_range consistent=
-ly ---
-commit 71c06f0196fa4997fb5e79c1b3b9f9f2e74eb370
-Author: Enze Li <lienze@kylinos.cn>
+Thanks for the quick feedback.
 
-samples/damon/mtier: use damon_addr_range consistently
+On 7/20/2026 12:28 PM, Gutierrez Asier wrote:
+> You should mention why page split is be needed. The fact that page
+> collapsing exist doesn't necessarily mean that split should exist.
 
-This commit removes the local struct region_range and uses struct
-damon_addr_range for unified address range management.
+Fair point.  The underlying problem I'm trying to address is that
+DAMON's vaddr monitoring loses accuracy under PMD-mapped THP:
+multiple sampled addresses share a single Accessed bit, so the
+observed hot set is coarser than the true working set.  Split is one
+way to restore fine-grain monitoring -- by dismantling the PMD
+mapping, each base page gets its own PTE Accessed bit and DAMON can
+see the real access distribution again.
 
-> The DAMON provides struct damon_addr_range for unified address range
-> management.  However, the mtier sample still defines a local struct
-> region_range with an identical layout (start and end as phys_addr_t) and
-> mixes its usage with struct damon_addr_range in
+Split is not the only possible approach, and it is certainly not
+intended to be "the opposite of collapse".  It is just one concrete
+proposal to start the discussion.  What I really care about is
+whether the community agrees that this monitoring granularity problem
+is worth solving.  If there are better ways to address it, I'm very
+open to that direction.
 
-[Severity: Medium]
-Is this description of struct damon_addr_range accurate?
+The RFC is as much about the problem as it is about the mechanism.
+Feedback on real workloads that suffer from this coarsening, and on
+alternative approaches, is exactly what I'm hoping for.
 
-Looking at include/linux/damon.h, struct damon_addr_range is defined with
-unsigned long fields, not phys_addr_t:
+> Could you add v1 as well?
 
-struct damon_addr_range {
-	unsigned long start;
-	unsigned long end;
-};
+Good catch, will add in the next revision.
 
-On 32-bit architectures with PAE, phys_addr_t is 64-bit while unsigned long
-is 32-bit, meaning assignments of physical addresses via PFN_PHYS() will
-silently truncate.
+[1] https://lore.kernel.org/20260620203915.82947-1-sj@kernel.org/
 
-Could the commit message be updated to avoid stating they have identical
-layouts?
-
-> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-> index ac9c24b92ead8..67f20b52dc7bb 100644
-> --- a/samples/damon/mtier.c
-> +++ b/samples/damon/mtier.c
-[ ... ]
-> @@ -78,8 +73,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(b=
-ool promote)
->  	struct damos *scheme;
->  	struct damos_quota_goal *quota_goal;
->  	struct damos_filter *filter;
-> -	struct region_range addr;
-> -	struct damon_addr_range range;
-> +	struct damon_addr_range range, addr;
-
-[Severity: Low]
-Since addr and range are now exactly the same type, is it still necessary to
-keep the separate range variable?
-
-Further down in damon_sample_mtier_build_ctx(), there is a field-by-field
-copy that is now redundant:
-
-	range.start =3D addr.start;
-	range.end =3D addr.end;
-
-	ret =3D damon_set_regions(target, &range, 1, DAMON_MIN_REGION_SZ);
-
-Could we remove the range variable entirely and just pass &addr directly to
-damon_set_regions() instead?
-
->  	int ret;
-> =20
->  	ctx =3D damon_new_ctx();
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260720092355.2375=
-99-1-lienze@kylinos.cn?part=3D1
+Thanks,
+Lian Wang
