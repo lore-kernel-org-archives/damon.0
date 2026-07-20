@@ -1,64 +1,64 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BDE49551D
-	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 19:35:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294E849690C
+	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 19:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784576141; cv=none; b=JoHsIP0gA+d8XeW/IRDV6ibDOBNcG7c2a5hAo/XMk688WO4/XHKZbV3rTbePJpx+qWrZdsYMrKTY6QHbtrle+8S6IT4m5n9O+qFlzax879P1STfNBGY6EMwDJb26k0r1+RKThhqD4Q7wJhdIB2RzwjDVo4kFJ2jL1HTUAOCeZMU=
+	t=1784576144; cv=none; b=tH41o/wHdFL5x8cJJs01drrWrYTrxLmzmg013ibyN+NeBQDTP04h1otU0gVZH4zNdLRkfYW/ClKD+5p6gNNl+b+CecPSfkNzPoKR4IH64mo98HKixx5aEwrPEZyWQOuQpSXla/3lLUx0xiIo61WigeH4cO3fy/c1j7va/0RKW50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784576141; c=relaxed/simple;
-	bh=BtKBWdkjS9o77enkZUBMvcNJnN5s5RzN+oUPM2oERqs=;
+	s=arc-20240116; t=1784576144; c=relaxed/simple;
+	bh=4zcS+WScYQPwZyM+xiHJlRsISzjdbehehXpn4Ix1F20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toPQvSX2S0A0vjhkR95pCpF+faveKITWneLHaBCqqlDfGN6ry9XH82NFNuTz0X/Wo1/6LmHHCubWkXyQifmHEgrOZGCf1J7AeOzCHzWW5KRC7B75YJl1TzT/JDaRuSMJJ03/Pj0qsS8ICC/3PJbZ3vcLcbTG+0zuIe02uiwPknk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=e7VyspRj; arc=none smtp.client-ip=209.85.222.176
+	 MIME-Version; b=A32pjjWy5mwitYUUsGFXMUUkMSIBcXVtvMRwmpJYVC2AK9Ca+NvgI9WNHUk0n8KqorEOxWH9rW5k7qWIUXBqms2Ditef/x9ISevRnsvPeIFrubCgp/Zb7LAY14M4+Gsvzw/3AO4imAcuB/7GRQg/pgF+wVKiWSKXTJW0wsXyfiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=TrSzvT8S; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="e7VyspRj"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-92e50a650a0so622255385a.1
-        for <damon@lists.linux.dev>; Mon, 20 Jul 2026 12:35:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="TrSzvT8S"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-92e85499ffbso577762985a.0
+        for <damon@lists.linux.dev>; Mon, 20 Jul 2026 12:35:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1784576136; x=1785180936; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1784576138; x=1785180938; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Td0ObD4Hgwpwfgrx3CumklQ3nHYCwgNqQNeFJP8dHtU=;
-        b=e7VyspRjSvD7XdvtbRbsWcH/slN+4YStmzn4Vq0jIPKGYa+U+x/QY6+4MtXSKGwkIA
-         IDtydH/hIBH6iJVAR9ZjncKm3wi7EIESOrVoiRTM3SEEYDyChYRGm60F116A+aoihiXP
-         81KfS3Zd0oxp86VjyN7LbgzYr8HEXX1TaoqcTCyLqE1kVwS2f/3jHg6cE8aBslqxEWSe
-         LzfORcnIet8m7ekpG6F8PbW6E/NB5hu2xoXXwqpu3m0+V5875E450+MIIBuCIjLDx5St
-         Zz44t132w6ED/hJTZUNnzVE7JciFkcLGGPfvfTONI6xV5ya3AN0PgyPZJqpYMwc22PGI
-         QT+w==
+        bh=KyXKxKoPetSKUj/EMCvw6yCRblDu/3mrIttJowkuK3Y=;
+        b=TrSzvT8SVZzgySC6IwCqhANLEb+hPVsxumSy1/WMaS6+xkET86eE0NaRVkVtAR6SX8
+         nkMKqYZtyec4Ushj87U6TkmM0Cv/G0IXxo3ow8GPlloNyTGPoyOSUJeicJ97DC8YfR95
+         U/Bk0xpn9IERUeUj5hQjo0OGO7UqUOL17m7kvwyzVGC60hfG2qtLGSC9RiuPeboO1kVu
+         xc6FdGVEPq/Yfrh++c5DqZV6Gs2V0AOhySbdNvNgWbkxMLU0ucrNktEz9sH1aGgEZCsJ
+         FEkpNMsebzLzQERH3tn2Qb1ihIjVtAlkzBy9mEnOuu5pNDpn5IeX/SJ1CHAzEhg/Dh9r
+         A0UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784576136; x=1785180936;
+        d=1e100.net; s=20251104; t=1784576138; x=1785180938;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Td0ObD4Hgwpwfgrx3CumklQ3nHYCwgNqQNeFJP8dHtU=;
-        b=VV9cLb/BJywJvNP7NH6OR8JzLE6LKpCkMeMdRJ/7YFSTgBtVsAyScelfaKTwUymNs2
-         HlByIy3vWvJ3qLJww1CY9g4BCWcrXTKgmxtU845Hkhs5w39Ve0XooPcWhNwdIclDaoCz
-         qnC/yVqR2yD2nmpBu5DCuNwL0AH1Bi0bV6CXDEoaOgWEA0JbbR6fPLDw0IQGH6U6c2mE
-         TL6G/GyiukPdUfnJkrDv8Jn1EitZNOMiYTn0vDkM8avwGQBtnyyfqOAZdh9EQ44LTQnr
-         O54tkYi6MZJZeOcFJyEHyE8k7K3nAaQtO9rWk69OBN/1IfGqeQ3CQ5tluHZGuRuH6/9t
-         Eqyw==
-X-Forwarded-Encrypted: i=1; AHgh+RrWbU9/NsF46/gi6nPCBOA9dgKj/3MYGFepMH2AnGEgHyWtO1df8EvHa72/4tbryjEJpLXC3g==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxag5L3jvn7kRQDkOD3Uh2XA74JvnQkS7eGa/d3HeV+OJUkmTcx
-	pBg8bwuvmQFSu/lkoG+ERMIxPwfMX1RvfmmHOB6u4V2w2K9BalPIsEQCplx9J4bYM5U=
-X-Gm-Gg: AfdE7cntb5gdH91QvZ/3fwlOKYf+99ZN7RJ3sKC7QMllsvxVM397EQvkepS8cXFlTZr
-	d8AVzSa29DHSQ+j8JyX7x3phj3eqy5Ule7ICSkxofyQSgBmwqj5V+yMw0uSZiTjgU5GDDteZ5aB
-	HkoB6oq26ZC0gAbxtVV5hLYK9TAStL6rhw9q+kBj2rONWH74qvujV/uoqukhHTyefWUKKSRa2Ph
-	JZm7EJUHTm2rtkxn/8ihF+WwV15NbN3cxOOBo4pgvSN/sNZbAkLMmhKX1khrYwSiH5mt6qecD3i
-	1Ap5soRhdDeaUH4nD6zc8UXsds2crk6ntmx35fc2uMFhsa2PHlqpHcKd7+cIcFEustTbVQ+HGDj
-	9dulYt/J6fC+BbPB9WvnV1XSgjQT2/Wky/4EaMsOYOTxrUviO4HFO62dWYetkRQ8qHMMQakEhXe
-	HTGi1EpdwfGaK05R0zg4552YuSTxftNwujr4BtJJaOmUiKLl/qR9QYgoh5gg9gyXpPMfXkH/vsL
-	Q==
-X-Received: by 2002:a05:620a:890c:b0:92e:c117:5ed6 with SMTP id af79cd13be357-930b4350ebdmr1533259585a.86.1784576135604;
-        Mon, 20 Jul 2026 12:35:35 -0700 (PDT)
+        bh=KyXKxKoPetSKUj/EMCvw6yCRblDu/3mrIttJowkuK3Y=;
+        b=EWYOWEf0bXYgLWP7IXu0kEocYlQC7CW4dNBaUD4/ALlqe+Tjd59+GPR+89va0Qa3C7
+         XFg2we4/lGuNMwWpOvig3MfSnnIdz17HL6VmgyUsh6Tzy5g2mw2Igf3g+5lT+2aAc9JI
+         RpCx+STPNpNZhINMVor2P3fciHo4Cdy8iwJOhVBd01VY1MxbMREeOKzEuUzOTkQjdcQI
+         AEPyaPBrMNbXnlADBtXYYSVxU5DJGatLmCirVZDvmsM2vgEHxJjdg56+YNFWlMil3Coi
+         cxiuLpfp/mIsCsIc5iBc8kJkQzkMtmZgCJugeHt6bY/GouRIYEYiok5iF40RBUpMBYlc
+         WDag==
+X-Forwarded-Encrypted: i=1; AHgh+RqUQZ4MkTfIAN2SFoWV1Xa5FChzWzeE3udUMDS2CmOarkLDtPe3zA2Q+6M5Ss4LgVX6AlunVA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz3gAlCtpe8ZwU67mp242/IgeXUreixYkgWxGAdO6+d8tXL9+P3
+	VJqrsY+8BXV05phxV7zwKlroh+D6V5aGPWYnITWDa2kmn6B1tr6vO8V17XAgqRkFOro=
+X-Gm-Gg: AfdE7ck/DpL0kn4iK/f06rkKMh86vl5IMsmzItMmcEbOY+BunBU40QMqnIXUBq8pslM
+	11c1nL4Md+OmGsak1Bs0MfJVj07YxOnCfPfytlMBGYfGghV0+pSrmgLYqBuLydzkzOZIeGUqfsF
+	sNLxn8oDhwrDTWmqeipM51AKCAsXSmawOasF+3Mdy2JWehw019kwfLxSo0ztBTQRVFJPl1erQmZ
+	XZRqe/3a53NvV4Re/FfLJ5B/XxYhjbcHzNmh2+2gkPPmqW9TKrtKSYtngc3U+XiA5/pofMqStyr
+	ohflTDRxz0FhurVFjt0rxRrX+rd9RPEfyqNUcaMz1M3CDqhci0dUKYJRM0lfiFBgliys2vmf7i1
+	maso1oFARoDh04Wdm5ZoJS7GZ6p0U2c8B9nFszzPU+JRKdU6YFQsMrvS3i4DiWyigQTgxwUZRvh
+	UpQfY4ZiOCuFSz/xXmkpFc6CY/GJRYkOZ2kQFKhByYaDQDyfRre9yXz4zaRF/7trWLsY60LwDqz
+	w==
+X-Received: by 2002:a05:620a:44c2:b0:930:a963:da73 with SMTP id af79cd13be357-930b419edc2mr1559559685a.50.1784576138219;
+        Mon, 20 Jul 2026 12:35:38 -0700 (PDT)
 Received: from gourry-fedora-PF4VCD3F.lan (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b545e47bsm957792285a.35.2026.07.20.12.35.33
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b545e47bsm957792285a.35.2026.07.20.12.35.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 12:35:35 -0700 (PDT)
+        Mon, 20 Jul 2026 12:35:37 -0700 (PDT)
 From: Gregory Price <gourry@gourry.net>
 To: linux-mm@kvack.org
 Cc: Zhigang.Luo@amd.com,
@@ -138,9 +138,9 @@ Cc: Zhigang.Luo@amd.com,
 	damon@lists.linux.dev,
 	linux-kselftest@vger.kernel.org,
 	kernel-team@meta.com
-Subject: [PATCH v5 22/36] mm/mempolicy: add MPOL_F_PRIVATE and zonelist selection
-Date: Mon, 20 Jul 2026 15:34:16 -0400
-Message-ID: <20260720193431.3841992-23-gourry@gourry.net>
+Subject: [PATCH v5 23/36] mm/mempolicy: apply policy at the kernel zone for private-node binds
+Date: Mon, 20 Jul 2026 15:34:17 -0400
+Message-ID: <20260720193431.3841992-24-gourry@gourry.net>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260720193431.3841992-1-gourry@gourry.net>
 References: <20260720193431.3841992-1-gourry@gourry.net>
@@ -152,275 +152,105 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add MPOL_F_PRIVATE, the internal flag noting that a policy contains
-a nodemask with a private node, and making private node memory
-reachable via standard mempolicies.
+apply_policy_zone() raises dynamic_policy_zone to ZONE_MOVABLE when none
+of a policy's nodes have non-movable memory, so a bind to movable-only
+node does not force kernel-zone allocations onto a zone that cannot
+satisfy them - resulting retries forever (livelock).
 
-Plumb zonelist selection into the mpol allocator interfaces via the
-allocator's alloc_flags, using the alloc_flags-carrying page_alloc
-interfaces.
+The current code uses N_HIGH_MEMORY to denote eligibility, but private
+nodes are deliberately not in N_HIGH_MEMORY nor N_NORMAL_MEMORY. This
+means a private node onlined into ZONE_NORMAL is judged as movable-only.
 
-mpol_alloc_flags() maps MPOL_F_PRIVATE to the alloc_flags an
-allocation uses:
-    ALLOC_DEFAULT            -  normal allocation
-    ALLOC_ZONELIST_PRIVATE   -  private node allocation
+This means a policy set with set_mempolicy() binding a private node with
+ZONE_NORMAL memory will shunt otherwise eligible allocations (like the
+task's page tables) back to N_MEMORY nodes.
 
-With this, a VMA with (mpol->flags & MPOL_F_PRIVATE) can successfully
-services faults like any other mbind() from the private node:
+This also becomes relevant for in-kernel users that want non-movable
+memory (such as KVM placing pinned VM memory solely on a private node).
 
-   buf = mmap(..., MAP_ANON);
-   mbind(buf, ..., {private_node});
-   buf[0] = 0xdeadbeef;  // Page faulted from private node memory
+Add policy_private_has_kernel_zone() to consult the actual zones of
+the policy's private nodes and keep the policy applied at lower zones
+when a kernel-zoned private node can satisfy the allocation.
 
-Like any other bind, the nodemask relaxes if it is unsatisfiable.
+Only a mempolicy binding a private node pays the zone scan, all other
+mempolicies preserve fast-path performance.
 
-For example: apply_policy_zone() allows an unmovable allocation
-targeting the VMA to fallback to a viable node instead of failing.
-
-cpuset rebinding does not affect private nodes - the nodes in the
-original mask are preserved, and we enforce two remap rules:
-
-  1) never allow N_MEMORY nodes to remap to N_MEMORY_PRIVATE
-  2) never remap N_MEMORY_PRIVATE nodes at all (they stay in place)
-
-In the case of an empty nodemask as a result of rebind, revert to
-cpuset - which never includes N_MEMORY_PRIVATE and always guarantees
-at least one N_MEMORY node.
-
-As of this patch, nothing can actually sets MPOL_F_PRIVATE, so this
-is a no-op that simply adds the plumbing throughout mempolicy.
+Additionally: update the comments in apply_policy_zone for clarity,
+because this particular policy mechanism is very confusing.
 
 Signed-off-by: Gregory Price <gourry@gourry.net>
 ---
- include/uapi/linux/mempolicy.h |  1 +
- mm/mempolicy.c                 | 79 +++++++++++++++++++++++-----------
- 2 files changed, 55 insertions(+), 25 deletions(-)
+ mm/mempolicy.c | 48 ++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 42 insertions(+), 6 deletions(-)
 
-diff --git a/include/uapi/linux/mempolicy.h b/include/uapi/linux/mempolicy.h
-index 7f6fc9599693b..87af18c84b947 100644
---- a/include/uapi/linux/mempolicy.h
-+++ b/include/uapi/linux/mempolicy.h
-@@ -67,6 +67,7 @@ enum mempolicy_mode {
- #define MPOL_F_SHARED  (1 << 0)	/* identify shared policies */
- #define MPOL_F_MOF	(1 << 3) /* this policy wants migrate on fault */
- #define MPOL_F_MORON	(1 << 4) /* Migrate On protnone Reference On Node */
-+#define MPOL_F_PRIVATE	(1 << 5) /* nodemask contains private nodes */
- 
- /*
-  * Enabling zone reclaim means the page allocator will attempt to fulfill
 diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 2b76c57a460c9..90110e9761122 100644
+index 90110e9761122..e83c2c7a94c1d 100644
 --- a/mm/mempolicy.c
 +++ b/mm/mempolicy.c
-@@ -432,6 +432,10 @@ static int mpol_set_nodemask(struct mempolicy *pol,
- 	else
- 		pol->w.cpuset_mems_allowed = cpuset_current_mems_allowed;
- 
-+	/* If any private nodes left in the nodemask - add the private flag */
-+	if (nodes_intersects(nsc->mask2, node_states[N_MEMORY_PRIVATE]))
-+		pol->flags |= MPOL_F_PRIVATE;
-+
- 	ret = mpol_ops[pol->mode].create(pol, &nsc->mask2);
- 	return ret;
- }
-@@ -505,22 +509,33 @@ static void mpol_rebind_default(struct mempolicy *pol, const nodemask_t *nodes)
- 
- static void mpol_rebind_nodemask(struct mempolicy *pol, const nodemask_t *nodes)
- {
--	nodemask_t tmp;
-+	nodemask_t tmp, priv;
-+
-+	/* preserve online private nodes to re-add later */
-+	nodes_and(priv, pol->nodes, node_states[N_MEMORY_PRIVATE]);
- 
- 	if (pol->flags & MPOL_F_STATIC_NODES)
- 		nodes_and(tmp, pol->w.user_nodemask, *nodes);
--	else if (pol->flags & MPOL_F_RELATIVE_NODES)
--		mpol_relative_nodemask(&tmp, &pol->w.user_nodemask, nodes);
--	else {
-+	else if (pol->flags & MPOL_F_RELATIVE_NODES) {
-+		/* fold only the public part: a private node must not take a slot */
-+		nodes_and(tmp, pol->w.user_nodemask, node_states[N_MEMORY]);
-+		mpol_relative_nodemask(&tmp, &tmp, nodes);
-+	} else {
- 		nodes_remap(tmp, pol->nodes, pol->w.cpuset_mems_allowed,
- 								*nodes);
- 		pol->w.cpuset_mems_allowed = *nodes;
- 	}
- 
--	if (nodes_empty(tmp))
-+	/* private nodes are identity-mapped during remap, drop them here */
-+	nodes_and(tmp, tmp, node_states[N_MEMORY]);
-+	if (nodes_empty(tmp) && nodes_empty(priv))
- 		tmp = *nodes;
- 
--	pol->nodes = tmp;
-+	/* If any online private nodes remain, add them back */
-+	nodes_or(pol->nodes, tmp, priv);
-+	/* If no online private nodes remain, strip the private flag */
-+	if (nodes_empty(priv))
-+		pol->flags &= ~MPOL_F_PRIVATE;
+@@ -2091,6 +2091,34 @@ bool vma_policy_mof(struct vm_area_struct *vma)
+ 	return mof;
  }
  
- static void mpol_rebind_preferred(struct mempolicy *pol,
-@@ -2411,7 +2426,8 @@ bool mempolicy_in_oom_domain(struct task_struct *tsk,
- }
- 
- static struct page *alloc_pages_preferred_many(gfp_t gfp, unsigned int order,
--						int nid, nodemask_t *nodemask)
-+						int nid, nodemask_t *nodemask,
-+						unsigned int aflags)
- {
- 	struct page *page;
- 	gfp_t preferred_gfp;
-@@ -2425,14 +2441,21 @@ static struct page *alloc_pages_preferred_many(gfp_t gfp, unsigned int order,
- 	preferred_gfp = gfp | __GFP_NOWARN;
- 	preferred_gfp &= ~(__GFP_DIRECT_RECLAIM | __GFP_NOFAIL);
- 	page = __alloc_frozen_pages_noprof(preferred_gfp, order, nid, nodemask,
--					   ALLOC_DEFAULT);
-+					     aflags);
- 	if (!page)
- 		page = __alloc_frozen_pages_noprof(gfp, order, nid, NULL,
--						   ALLOC_DEFAULT);
-+						     aflags);
- 
- 	return page;
- }
- 
-+/* A private policy allocates from the private zonelist. */
-+static inline unsigned int mpol_alloc_flags(struct mempolicy *pol)
++/*
++ * true if any policy *private* node can satisfy a !__GFP_MOVABLE allocation.
++ * Policies without private nodes (~MPOL_F_PRIVATE) always return false.
++ *
++ * This provides a way for otherwise-bound kernel allocations to make their
++ * way onto private nodes with ZONE_NORMAL memory without having to audit
++ * every caller.  The cost is a zone scan for private nodes in the mask.
++ */
++static bool policy_private_has_kernel_zone(const struct mempolicy *pol)
 +{
-+	return (pol->flags & MPOL_F_PRIVATE) ? ALLOC_ZONELIST_PRIVATE :
-+					       ALLOC_DEFAULT;
++	int nid;
++
++	if (!(pol->flags & MPOL_F_PRIVATE))
++		return false;
++
++	for_each_node_mask(nid, pol->nodes) {
++		pg_data_t *pgdat = NODE_DATA(nid);
++		enum zone_type zt;
++
++		if (!node_is_private(nid))
++			continue;
++		for (zt = ZONE_NORMAL; zt < ZONE_MOVABLE; zt++)
++			if (managed_zone(&pgdat->node_zones[zt]))
++				return true;
++	}
++	return false;
 +}
 +
- /**
-  * alloc_pages_mpol - Allocate pages according to NUMA mempolicy.
-  * @gfp: GFP flags.
-@@ -2448,11 +2471,13 @@ static struct page *alloc_pages_mpol(gfp_t gfp, unsigned int order,
+ bool apply_policy_zone(struct mempolicy *policy, enum zone_type zone)
  {
- 	nodemask_t *nodemask;
- 	struct page *page;
-+	unsigned int aflags = mpol_alloc_flags(pol);
+ 	enum zone_type dynamic_policy_zone = policy_zone;
+@@ -2098,14 +2126,22 @@ bool apply_policy_zone(struct mempolicy *policy, enum zone_type zone)
+ 	BUG_ON(dynamic_policy_zone == ZONE_MOVABLE);
  
- 	nodemask = policy_nodemask(gfp, pol, ilx, &nid);
+ 	/*
+-	 * if policy->nodes has movable memory only,
+-	 * we apply policy when gfp_zone(gfp) = ZONE_MOVABLE only.
++	 * dynamic_policy_zone is the lowest zone this policy is enforced for,
++	 * allocations below it ignore the nodemask and fall back freely.
++	 *
++	 * If all policy-nodes are movable-only (all ZONE_MOVABLE), raise the
++	 * dynamic_policy_zone to ZONE_MOVABLE so that only movable allocations
++	 * stay bound - otherwise this would force kernel-zone allocations
++	 * (e.g. page tables) onto a zone that cannot satisfy them.  This
++	 * results in allocation failure and retry loop (livelock).
+ 	 *
+-	 * policy->nodes is intersect with node_states[N_MEMORY].
+-	 * so if the following test fails, it implies
+-	 * policy->nodes has movable memory only.
++	 * N_HIGH_MEMORY tells us "has a non-movable zone" for ordinary nodes.
++	 * Private nodes are deliberately excluded from N_HIGH_MEMORY, so we
++	 * need to check their actual zones - a kernel-zoned private node can
++	 * hold the allocation and must keep the policy applied.
+ 	 */
+-	if (!nodes_intersects(policy->nodes, node_states[N_HIGH_MEMORY]))
++	if (!nodes_intersects(policy->nodes, node_states[N_HIGH_MEMORY]) &&
++	    !policy_private_has_kernel_zone(policy))
+ 		dynamic_policy_zone = ZONE_MOVABLE;
  
- 	if (pol->mode == MPOL_PREFERRED_MANY)
--		return alloc_pages_preferred_many(gfp, order, nid, nodemask);
-+		return alloc_pages_preferred_many(gfp, order, nid, nodemask,
-+						  aflags);
- 
- 	if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) &&
- 	    /* filter "hugepage" allocation, unless from alloc_pages() */
-@@ -2476,7 +2501,7 @@ static struct page *alloc_pages_mpol(gfp_t gfp, unsigned int order,
- 			 */
- 			page = __alloc_frozen_pages_noprof(
- 				gfp | __GFP_THISNODE | __GFP_NORETRY, order,
--				nid, NULL, ALLOC_DEFAULT);
-+				nid, NULL, aflags);
- 			if (page || !(gfp & __GFP_DIRECT_RECLAIM))
- 				return page;
- 			/*
-@@ -2488,7 +2513,7 @@ static struct page *alloc_pages_mpol(gfp_t gfp, unsigned int order,
- 		}
- 	}
- 
--	page = __alloc_frozen_pages_noprof(gfp, order, nid, nodemask, ALLOC_DEFAULT);
-+	page = __alloc_frozen_pages_noprof(gfp, order, nid, nodemask, aflags);
- 
- 	if (unlikely(pol->mode == MPOL_INTERLEAVE ||
- 		     pol->mode == MPOL_WEIGHTED_INTERLEAVE) && page) {
-@@ -2597,6 +2622,7 @@ static unsigned long alloc_pages_bulk_interleave(gfp_t gfp,
- 		struct mempolicy *pol, unsigned long nr_pages,
- 		struct page **page_array)
- {
-+	unsigned int aflags = mpol_alloc_flags(pol);
- 	int nodes;
- 	unsigned long nr_pages_per_node;
- 	int delta;
-@@ -2610,14 +2636,14 @@ static unsigned long alloc_pages_bulk_interleave(gfp_t gfp,
- 
- 	for (i = 0; i < nodes; i++) {
- 		if (delta) {
--			nr_allocated = alloc_pages_bulk_noprof(gfp,
--					interleave_nodes(pol), NULL,
-+			nr_allocated = __alloc_pages_bulk_noprof(gfp,
-+					aflags, interleave_nodes(pol), NULL,
- 					nr_pages_per_node + 1,
- 					page_array);
- 			delta--;
- 		} else {
--			nr_allocated = alloc_pages_bulk_noprof(gfp,
--					interleave_nodes(pol), NULL,
-+			nr_allocated = __alloc_pages_bulk_noprof(gfp,
-+					aflags, interleave_nodes(pol), NULL,
- 					nr_pages_per_node, page_array);
- 		}
- 
-@@ -2632,6 +2658,7 @@ static unsigned long alloc_pages_bulk_weighted_interleave(gfp_t gfp,
- 		struct mempolicy *pol, unsigned long nr_pages,
- 		struct page **page_array)
- {
-+	unsigned int aflags = mpol_alloc_flags(pol);
- 	struct weighted_interleave_state *state;
- 	struct task_struct *me = current;
- 	unsigned int cpuset_mems_cookie;
-@@ -2667,8 +2694,8 @@ static unsigned long alloc_pages_bulk_weighted_interleave(gfp_t gfp,
- 	weight = me->il_weight;
- 	if (weight && node_isset(node, nodes)) {
- 		node_pages = min(rem_pages, weight);
--		nr_allocated = __alloc_pages_bulk(gfp, node, NULL, node_pages,
--						  page_array);
-+		nr_allocated = __alloc_pages_bulk_noprof(gfp, aflags, node,
-+						  NULL, node_pages, page_array);
- 		page_array += nr_allocated;
- 		total_allocated += nr_allocated;
- 		/* if that's all the pages, no need to interleave */
-@@ -2732,8 +2759,8 @@ static unsigned long alloc_pages_bulk_weighted_interleave(gfp_t gfp,
- 		/* node_pages can be 0 if an allocation fails and rounds == 0 */
- 		if (!node_pages)
- 			break;
--		nr_allocated = __alloc_pages_bulk(gfp, node, NULL, node_pages,
--						  page_array);
-+		nr_allocated = __alloc_pages_bulk_noprof(gfp, aflags, node,
-+						  NULL, node_pages, page_array);
- 		page_array += nr_allocated;
- 		total_allocated += nr_allocated;
- 		if (total_allocated == nr_pages)
-@@ -2750,17 +2777,19 @@ static unsigned long alloc_pages_bulk_preferred_many(gfp_t gfp, int nid,
- 		struct mempolicy *pol, unsigned long nr_pages,
- 		struct page **page_array)
- {
-+	unsigned int aflags = mpol_alloc_flags(pol);
- 	gfp_t preferred_gfp;
- 	unsigned long nr_allocated = 0;
- 
- 	preferred_gfp = gfp | __GFP_NOWARN;
- 	preferred_gfp &= ~(__GFP_DIRECT_RECLAIM | __GFP_NOFAIL);
- 
--	nr_allocated  = alloc_pages_bulk_noprof(preferred_gfp, nid, &pol->nodes,
--					   nr_pages, page_array);
-+	nr_allocated  = __alloc_pages_bulk_noprof(preferred_gfp, aflags,
-+					   nid, &pol->nodes, nr_pages, page_array);
- 
- 	if (nr_allocated < nr_pages)
--		nr_allocated += alloc_pages_bulk_noprof(gfp, numa_node_id(), NULL,
-+		nr_allocated += __alloc_pages_bulk_noprof(gfp, aflags,
-+				numa_node_id(), NULL,
- 				nr_pages - nr_allocated,
- 				page_array + nr_allocated);
- 	return nr_allocated;
-@@ -2796,8 +2825,8 @@ unsigned long alloc_pages_bulk_mempolicy_noprof(gfp_t gfp,
- 
- 	nid = numa_node_id();
- 	nodemask = policy_nodemask(gfp, pol, NO_INTERLEAVE_INDEX, &nid);
--	return alloc_pages_bulk_noprof(gfp, nid, nodemask,
--				       nr_pages, page_array);
-+	return __alloc_pages_bulk_noprof(gfp, mpol_alloc_flags(pol), nid,
-+						nodemask, nr_pages, page_array);
- }
- 
- int vma_dup_policy(struct vm_area_struct *src, struct vm_area_struct *dst)
+ 	return zone >= dynamic_policy_zone;
 -- 
 2.53.0-Meta
 
