@@ -1,146 +1,132 @@
 Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050F73D88E5;
-	Mon, 20 Jul 2026 12:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DF84218B6
+	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 13:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784551196; cv=none; b=X7bdHCJLwPT8ou3zoa8s9D+sqIb9BA2luLdEllxtEcWrdEmgus63hBJy7/1+/YCLKjZmi3DOAOf/h98aXHTCsKo3+NA0sLhcqlVKgTll1IX2uCYN+MS9YW1XFWwvSQjMMCgwrt3vqGCfwicSxj6qiQ/EEmCiT1+I7zahK/cQ8yI=
+	t=1784552832; cv=none; b=DBmXPobw8nFEeEz7qDaA9A2sm6C7GYFUPiYxeHH4FQi4Fdtl1FJoPTK+so5W89JVyychLX/qauElWxHA20cAPbi/5TCxcbG7nGrhJ+Kam6M1kwhDJz2WXz8NfqA94LEx5sJ8Gekj0U6iExfQuMPGwVtGSko8tWn0h4H2T3YJrR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784551196; c=relaxed/simple;
-	bh=OuYgJoqfN2tXwSz9Zj360tBdhGj2u2duQ6eha1TEkuQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DdiSPFQ+z1ZDEh7yehM8HmeaYuD+wrjsNSKIIs9+1HRXJpCRUse01AsPY3U8O0arEEKABDJhGsgicM4fA6CNKMNKwhq8o9SrHY8f/KIYu93RsUP75xZk7rK7L+/mtT+Qg9Pvxp3zfNInjr16YQ8UwpTJor71aAN8Eb5WnSQc+Jo=
+	s=arc-20240116; t=1784552832; c=relaxed/simple;
+	bh=Fuki6j+/YAJQSF9QIAUdpX79seRq4EZ2DaLy91jrQhU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mXLnWp79pK5vWi/JSPugqVkotJQRtkFD0YazGlqPjGy2Zy2g6SP7CyRuboQCB9yaMdDnUGbOYH4yph8TgeNYOYYwt9XkSgf+0HZ5knh7IT7Ko4ZGl49E+k3fBVfBiIAL0GSyzTHFGWZE8C/jNth2ZEZmHsuQp+jbZiwnGs8mwE8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 1542c4d4843811f1aa26b74ffac11d73-20260720
-X-CID-O-RULE: Release_Ham
-X-CID-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:98fe691b-2941-42c6-908c-9b8520f2b40a,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:10
-X-CID-INFO: VERSION:1.3.12,REQID:98fe691b-2941-42c6-908c-9b8520f2b40a,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
-	elease,TS:10
-X-CID-META: VersionHash:e7bac3a,CLOUDID:765c68286b450e9ea7e2b2e4253f738f,BulkI
-	D:260720173546778U6DTU,BulkQuantity:1,Recheck:0,SF:17|19|64|66|78|80|81|82
-	|83|102|127|841|865|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil
-	,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,D
-	KP:0,BRR:0,BRE:0,ARC:0
+X-UUID: e4737b38843b11f1aa26b74ffac11d73-20260720
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
+	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
+	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
+	HR_TO_NO_NAME, IP_UNTRUSTED, SRC_UNTRUSTED, IP_LOWREP, SRC_LOWREP
+	DN_TRUSTED, SRC_TRUSTED, SA_TRUSTED, SA_EXISTED, SN_TRUSTED
+	SN_EXISTED, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_GOOD
+	CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD
+	ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:a7d9821b-5224-4c18-86eb-e17116515eae,IP:10,
+	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:35
+X-CID-INFO: VERSION:1.3.12,REQID:a7d9821b-5224-4c18-86eb-e17116515eae,IP:10,UR
+	L:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:35
+X-CID-META: VersionHash:e7bac3a,CLOUDID:2100e216361bce3249ee41bc74c42a17,BulkI
+	D:260720205347EDB9HWME,BulkQuantity:1,Recheck:0,SF:17|19|66|78|102|127|865
+	|898,TC:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:40,QS:n
+	il,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC
+	:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 1542c4d4843811f1aa26b74ffac11d73-20260720
+X-UUID: e4737b38843b11f1aa26b74ffac11d73-20260720
 X-User: lienze@kylinos.cn
-Received: from [192.168.3.106] [(61.48.211.50)] by mailgw.kylinos.cn
+Received: from ubuntu.. [(61.48.211.50)] by mailgw.kylinos.cn
 	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 1879139922; Mon, 20 Jul 2026 20:39:43 +0800
-Message-ID: <a55c6a62-4d27-4676-90b5-0db87f795b0a@kylinos.cn>
-Date: Mon, 20 Jul 2026 20:39:40 +0800
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1692005296; Mon, 20 Jul 2026 21:06:59 +0800
+From: Enze Li <lienze@kylinos.cn>
+To: sj@kernel.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	enze.li@gmx.com,
+	Enze Li <lienze@kylinos.cn>
+Subject: [PATCH v2] samples/damon/mtier: use damon_addr_range consistently
+Date: Mon, 20 Jul 2026 21:06:42 +0800
+Message-ID: <20260720130642.508355-1-lienze@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] samples/damon/mtier: use damon_addr_range consistently
-To: sashiko-reviews@lists.linux.dev
-Cc: damon@lists.linux.dev
-References: <20260720092355.237599-1-lienze@kylinos.cn>
- <20260720093536.E22941F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Enze Li <lienze@kylinos.cn>
-In-Reply-To: <20260720093536.E22941F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Sashiko AI,
+The DAMON provides struct damon_addr_range for unified address range
+management.  However, the mtier sample still defines a local struct
+region_range and mixes its usage with struct damon_addr_range in
+damon_sample_mtier_build_ctx().
 
-On 2026/7/20 17:35, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] The commit message incorrectly claims `struct damon_addr_range` has an identical layout to `struct region_range`, masking a physical address truncation issue on 32-bit PAE architectures.
-> - [Low] The refactoring removes a custom struct but leaves a redundant local variable `range` and unnecessary field-by-field copy operations.
-> --
-> 
-> --- Patch [1]: [PATCH] samples/damon/mtier: use damon_addr_range consistently ---
-> commit 71c06f0196fa4997fb5e79c1b3b9f9f2e74eb370
-> Author: Enze Li <lienze@kylinos.cn>
-> 
-> samples/damon/mtier: use damon_addr_range consistently
-> 
-> This commit removes the local struct region_range and uses struct
-> damon_addr_range for unified address range management.
-> 
->> The DAMON provides struct damon_addr_range for unified address range
->> management.  However, the mtier sample still defines a local struct
->> region_range with an identical layout (start and end as phys_addr_t) and
->> mixes its usage with struct damon_addr_range in
-> 
-> [Severity: Medium]
-> Is this description of struct damon_addr_range accurate?
-> 
-> Looking at include/linux/damon.h, struct damon_addr_range is defined with
-> unsigned long fields, not phys_addr_t:
-> 
-> struct damon_addr_range {
-> 	unsigned long start;
-> 	unsigned long end;
-> };
-> 
-> On 32-bit architectures with PAE, phys_addr_t is 64-bit while unsigned long
-> is 32-bit, meaning assignments of physical addresses via PFN_PHYS() will
-> silently truncate.
-> 
-> Could the commit message be updated to avoid stating they have identical
-> layouts?
+This patch removes the local struct region_range and changes the
+parameter type of nid_to_phys() to struct damon_addr_range.  It also
+gets rid of the now-redundant local variable and pass the address range
+directly to damon_set_regions().
 
-Thanks for catching this.  The commit message is inaccurate when
-describing the two structs as having "identical layout".
+Signed-off-by: Enze Li <lienze@kylinos.cn>
+---
+v2:
+- Fix inaccurate "identical layout" claim in commit message
+- Remove redundant range variable and pass &addr directly to
+  damon_set_regions()
 
-I'll update the commit message in v2 to remove the "identical layout"
-claim and instead describe the change as replacing the local struct
-with struct damon_addr_range for consistency with the DAMON API.
+ samples/damon/mtier.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-> 
->> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
->> index ac9c24b92ead8..67f20b52dc7bb 100644
->> --- a/samples/damon/mtier.c
->> +++ b/samples/damon/mtier.c
-> [ ... ]
->> @@ -78,8 +73,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
->>  	struct damos *scheme;
->>  	struct damos_quota_goal *quota_goal;
->>  	struct damos_filter *filter;
->> -	struct region_range addr;
->> -	struct damon_addr_range range;
->> +	struct damon_addr_range range, addr;
-> 
-> [Severity: Low]
-> Since addr and range are now exactly the same type, is it still necessary to
-> keep the separate range variable?
-> 
-> Further down in damon_sample_mtier_build_ctx(), there is a field-by-field
-> copy that is now redundant:
-> 
-> 	range.start = addr.start;
-> 	range.end = addr.end;
-> 
-> 	ret = damon_set_regions(target, &range, 1, DAMON_MIN_REGION_SZ);
-> 
-> Could we remove the range variable entirely and just pass &addr directly to
-> damon_set_regions() instead?
+diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+index ac9c24b92ead..3712287f009c 100644
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -52,12 +52,7 @@ module_param(detect_node_addresses, bool, 0600);
+ 
+ static struct damon_ctx *ctxs[2];
+ 
+-struct region_range {
+-	phys_addr_t start;
+-	phys_addr_t end;
+-};
+-
+-static int nid_to_phys(int target_node, struct region_range *range)
++static int nid_to_phys(int target_node, struct damon_addr_range *range)
+ {
+ 	if (!node_online(target_node)) {
+ 		pr_err("NUMA node %d is not online\n", target_node);
+@@ -78,8 +73,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+ 	struct damos *scheme;
+ 	struct damos_quota_goal *quota_goal;
+ 	struct damos_filter *filter;
+-	struct region_range addr;
+-	struct damon_addr_range range;
++	struct damon_addr_range addr;
+ 	int ret;
+ 
+ 	ctx = damon_new_ctx();
+@@ -123,10 +117,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+ 	if (addr.start >= addr.end)
+ 		goto free_out;
+ 
+-	range.start = addr.start;
+-	range.end = addr.end;
+-
+-	ret = damon_set_regions(target, &range, 1, DAMON_MIN_REGION_SZ);
++	ret = damon_set_regions(target, &addr, 1, DAMON_MIN_REGION_SZ);
+ 	if (ret)
+ 		goto free_out;
+ 
 
-Nice catch!  Now that both variables are struct damon_addr_range, the
-separate range variable and the field-by-field copy are redundant.
-damon_set_regions() only reads from the ranges array and doesn't modify
-it, so passing &addr directly is safe.  I'll fold this into v2.
-
-Thanks,
-Enze
-
-<...>
+base-commit: c872b70f5d6c742ad34b8e838c92af81c8920b3e
+-- 
+2.43.0
 
