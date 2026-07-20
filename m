@@ -1,113 +1,171 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA8D225775
-	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 09:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E543D6CAA
+	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 09:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784539473; cv=none; b=qy/lez/8OFzO3MlaGyvKZBMrXR2wj1pNreS7rcvjLvNAVrVWP4Y4vrvDN+sZ5kL4p6Ogpry+Urk6b/EdCgaoCXlr5SFBS5LbjPKHqUd3XU3lw3g9QNfyKpQNQVB56o7/2H2JmKtOzdDebNmASxaQ03O58nxUu84iRfsyXb8SBeg=
+	t=1784539735; cv=none; b=lZUGz/kouRA9aCU7pNZAfvXySn8oSec92sIi0FEVUbh2tnxpneSZqZ6ccf+Vgwx22qkabgJvDtvIsYmenpYHqkyHFh9OFiOZ3x4G7WaQCyKQ0PYf5kcl796jSDIj3iud5H+mewjoddUTLNANDK2+BMSjOW6lizE8Ft8Qxv/f+20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784539473; c=relaxed/simple;
-	bh=t3ZdQspZtRqOR7VVmNFXwmgw6qF69lv2mBUsuCzj1pA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lc9EBpqKbrmwAu58y5PiQSxC/4QiTR+1rXjMbm1ws0RCwZh6v8WgFSjuN/+qZdh7hVkuy/eDTP9Oe7BkLUE8feuMbAe5CGsAllKmX3FEUygjeOg/S8N93K2gwCnqmZneqA4RL5qVeApOnzhsPo5yX7+aqFkefY40EMWuDppJHQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: c762971e841c11f1aa26b74ffac11d73-20260720
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
-	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
-	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
-	HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME
-	DN_TRUSTED, SRC_TRUSTED, SA_TRUSTED, SA_EXISTED, SN_TRUSTED
-	SN_EXISTED, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_BAD
-	CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD
-	ABX_MISS_RDNS
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:067bea3c-795b-47d9-b4ee-297a79d01cc8,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:10
-X-CID-INFO: VERSION:1.3.12,REQID:067bea3c-795b-47d9-b4ee-297a79d01cc8,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
-	elease,TS:10
-X-CID-META: VersionHash:e7bac3a,CLOUDID:be2d59487f0c83131b6ccef6496139c7,BulkI
-	D:260720172146CJUOA45I,BulkQuantity:1,Recheck:0,SF:17|19|66|78|102|127|850
-	|865|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:40
-	,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:
-	0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: c762971e841c11f1aa26b74ffac11d73-20260720
-X-User: lienze@kylinos.cn
-Received: from localhost.localdomain [(39.156.73.11)] by mailgw.kylinos.cn
-	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1126628943; Mon, 20 Jul 2026 17:24:16 +0800
-From: Enze Li <lienze@kylinos.cn>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	enze.li@gmx.com,
-	Enze Li <lienze@kylinos.cn>
-Subject: [PATCH] samples/damon/mtier: use damon_addr_range consistently
-Date: Mon, 20 Jul 2026 17:23:55 +0800
-Message-ID: <20260720092355.237599-1-lienze@kylinos.cn>
-X-Mailer: git-send-email 2.47.3
+	s=arc-20240116; t=1784539735; c=relaxed/simple;
+	bh=N+H5FUd+DJ1KPc1+uGEeoXAi0iso0vSoevuGkotyq5A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VcAjevpSKmTE7sG+ibIFtXp/F3LMP3uW5vDo/OOmrRh156m0mLfZD7dIHy5XL1izbZ5KZed+RbbjuUUQwUvVmSImWHW8yFuIHdBV5KEPiMQ0toW/MW0NP08rzXCtEjghSZ1mztiGO7mfWqc5+0OIGpUUWllBW9maIN3aW98/tlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=lhrVe85S; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="lhrVe85S"
+dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=XUHwliFvt2Gn1hvyINNY2v9lEgIqckSiVz0mxRwlukg=;
+	b=lhrVe85So4F1nplZW+dS/HTMHu+U35OXYXBpcPmRehHDm2a6Xzp3Cfh7CM2JvmaKbds49NOZW
+	vxw/Tk4YSp+PzrC17MFdk3bHk2bwiptUEupYUTPHhWhmhWMptG7I5GrhnWqhju5sCKWuvc2O8gu
+	Qg0b4pF8stRNZ0xNioPPvyU=
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4h3Zv71bMmzHnH55;
+	Mon, 20 Jul 2026 17:28:19 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 2AF654058D;
+	Mon, 20 Jul 2026 17:28:41 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 20 Jul 2026 12:28:40 +0300
+Message-ID: <a168a9f2-953b-4ecb-98ee-ec6b27f4d963@huawei-partners.com>
+Date: Mon, 20 Jul 2026 12:28:40 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 0/3] mm/damon: introduce DAMOS_SPLIT action
+To: Lian Wang <lianux.mm@gmail.com>, <damon@lists.linux.dev>,
+	<linux-mm@kvack.org>
+CC: <sj@kernel.org>, <akpm@linux-foundation.org>,
+	<linux-kernel@vger.kernel.org>, <david@kernel.org>, <ljs@kernel.org>,
+	<liam@infradead.org>, <vbabka@kernel.org>, <rppt@kernel.org>,
+	<surenb@google.com>, <mhocko@suse.com>, <npache@redhat.com>,
+	<ziy@nvidia.com>, <baolin.wang@linux.alibaba.com>, <ryan.roberts@arm.com>,
+	<daichaobing@sangfor.com.cn>, <wangkefeng.wang@huawei.com>,
+	<zengheng4@huawei.com>, <kasong@tencent.com>, <corbet@lwn.net>,
+	<skhan@linuxfoundation.org>, <linux-doc@vger.kernel.org>,
+	<linux-kselftest@vger.kernel.org>, <lianux.wang@processmission.com>,
+	<kunwu.chan@linux.dev>
+References: <20260720030327.80153-1-lianux.mm@gmail.com>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260720030327.80153-1-lianux.mm@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-The DAMON provides struct damon_addr_range for unified address range
-management.  However, the mtier sample still defines a local struct
-region_range with an identical layout (start and end as phys_addr_t) and
-mixes its usage with struct damon_addr_range in
-damon_sample_mtier_build_ctx().
+Hi Lian,
 
-This patch removes the local struct region_range and changes the
-parameter type of nid_to_phys() to struct damon_addr_range.
+On 7/20/2026 6:03 AM, Lian Wang wrote:
+> DAMOS_SPLIT splits large folios in a target region down to a
+> configured target order, using the existing split_folio_to_order().
+> No new core-mm code or exported symbols are introduced.
+> 
+> Based on mm-unstable at 61cccb8363fc ("mm/swap, PM: hibernate:
+> atomically replace hibernation pin").
+> 
+> Different addresses within a PMD-mapped folio resolve to the same
+> PMD Accessed bit.  Accesses to a small part of the folio can
+> therefore coarsen DAMON's observed hot set relative to the actual
+> working set.
+> 
+> DAMOS already provides promotion actions (HUGEPAGE, COLLAPSE) but
+> has no corresponding demotion action.  DAMOS_SPLIT fills this gap.
+> It is a mechanism, not a policy -- it does not decide which folios
+> to split.  Selection is left to DAMON's existing access patterns,
+> filters, and future probe/PMU signals.
+You should mention why page split is be needed. The fact that page
+collapsing exist doesn't necessarily mean that split should exist.
 
-Signed-off-by: Enze Li <lienze@kylinos.cn>
----
- samples/damon/mtier.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+I agree that it is a nice feature, but it should be backed in the
+cover letter.
+> target_order selects the split target: 0 for order-0 base pages,
+> or a supported smaller mTHP order.  Both anonymous and file-backed
+> folios are supported.  The locking follows split_huge_pages_in_pid()
+> in mm/huge_memory.c.
+> 
+> Tests
+> =====
+> 
+> damos_split.py (VM + Kunpeng 920):
+>   anon THP -> order-0 split: PASS
+> 
+> sangfor_exp.py (Kunpeng 920, tmpfs, 4096 MiB):
+> 
+>   - Created a 4 GiB PMD-mapped tmpfs workload.
+>   - Applied DAMOS_SPLIT with target_order=0.
+>   - ShmemPmdMapped dropped from 4194304 KiB to 0 in every round.
+>   - Repeated for five rounds without functional failures.
+> 
+> The functional selftest (damos_split.py) is included in this series.
+> Additional experiment scripts and raw results are available on
+> request.  Performance characterization using masim [1] and KMB [2]
+> is in progress.
+> 
+> [1] https://github.com/sjp38/masim
+> [2] https://gitee.com/OpenCloudOS/kernel-multi-bench
+> 
+> Open questions
+> ==============
+> 
+> - Selection policy: this series keeps folio selection outside the
+>   action and relies on DAMOS access patterns, filters, and quotas.
+>   Is this the appropriate layering for future probe-based signals?
+> 
+> - Hysteresis: khugepaged may re-collapse a just-split folio.
+>   Should cooldown live in DAMON policy or khugepaged?
+> 
+> - File-backed folios: adjust target_order upward to filesystem
+>   minimum, or keep current "fail and skip"?
+> 
+> Beyond the action API itself, feedback on real workloads that need
+> proactive large-folio demotion is particularly welcome.  Follow-up
+> work will evaluate candidate selection signals, including DAMON
+> probes and hardware-assisted sampling, as well as target-order
+> selection and split/collapse hysteresis.  Those policies are
+> intentionally kept outside this series.
+> Changes since v2 [3]
+> ====================
+> 
+> - Split-only series (collapse deferred).
+> - Dropped SPE feedback (mechanism/policy separation).
+> - DAMOS_MTHP_SPLIT -> DAMOS_SPLIT.
+> - order field in existing union (no struct size increase).
+> - Added functional selftest (damos_split.py).
+> - checkpatch: 0 errors, 0 warnings.
+> 
+> [3] https://lore.kernel.org/20260701123000.00000-1-lianux.mm@gmail.com/
+Could you add v1 as well?
+> 
+> Lian Wang (Processmission) (3):
+>   mm/damon: introduce DAMOS_SPLIT action
+>   mm/damon/vaddr: implement DAMOS_SPLIT handler
+>   selftests/damon: add functional test for DAMOS_SPLIT
+> 
+>  .../ABI/testing/sysfs-kernel-mm-damon         |  7 ++
+>  Documentation/mm/damon/design.rst             |  5 +
+>  include/linux/damon.h                         | 15 ++-
+>  mm/damon/core.c                               |  2 +
+>  mm/damon/sysfs-schemes.c                      | 48 +++++++
+>  mm/damon/vaddr.c                              | 90 +++++++++++++
+>  tools/testing/selftests/damon/Makefile        |  1 +
+>  tools/testing/selftests/damon/_damon_sysfs.py |  9 +-
+>  tools/testing/selftests/damon/damos_split.py  | 99 +++++++++++++++
+>  tools/testing/selftests/damon/sysfs.py        | 11 +-
+>  10 files changed, 279 insertions(+), 8 deletions(-)
+> 
 
-diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-index ac9c24b92ead..67f20b52dc7b 100644
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -52,12 +52,7 @@ module_param(detect_node_addresses, bool, 0600);
- 
- static struct damon_ctx *ctxs[2];
- 
--struct region_range {
--	phys_addr_t start;
--	phys_addr_t end;
--};
--
--static int nid_to_phys(int target_node, struct region_range *range)
-+static int nid_to_phys(int target_node, struct damon_addr_range *range)
- {
- 	if (!node_online(target_node)) {
- 		pr_err("NUMA node %d is not online\n", target_node);
-@@ -78,8 +73,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- 	struct damos *scheme;
- 	struct damos_quota_goal *quota_goal;
- 	struct damos_filter *filter;
--	struct region_range addr;
--	struct damon_addr_range range;
-+	struct damon_addr_range range, addr;
- 	int ret;
- 
- 	ctx = damon_new_ctx();
-
-base-commit: c872b70f5d6c742ad34b8e838c92af81c8920b3e
 -- 
-2.47.3
+Asier Gutierrez
+Huawei
 
