@@ -1,62 +1,62 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E155385D72
-	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 03:03:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D0D388E43
+	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 03:04:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784516636; cv=none; b=Ge7DWA50CpkqmBafwsMMvh1BJmIJYrClQUL6p/hGXPZYqWbS3ANWPiKUn1nnv0DWz9ZWSGkobMK7GDPiNvFHDwIXSeW2Q+NM/UfuznGzo2tGNsEPyYiksy29bkNeEyVKnbs0IezpCjC7wm/Vl/7Wf7vsLtW4+y6t3UxjrT66Sj0=
+	t=1784516643; cv=none; b=J/+h/e6b5e8UUXMU61EYTe4Qoa5KrfG4+WyETib5Y8gYU2CnorglPA7sfGUHMc3mmvV9tnafDWNxIhqkxAh40ML8b/GbTn72+JeaBevedAMHLYgKER23gnF2KncNEYccfUxLTT4wXASev+drCJUtH8bdkepGdSw6aFr+11EkxHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784516636; c=relaxed/simple;
-	bh=nS+ihT8yiDs312RlqRcd39KPDyY9S4PRM4guYmebc9g=;
+	s=arc-20240116; t=1784516643; c=relaxed/simple;
+	bh=YLKc+POCNITKfz5Zq68JdFxIzpDDqljeDs2WwwuKzhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcCnxUkv7DOJRy5CWOA3iz657Qqqbj0ucus79NaQcopzIflhQ+9p41IGEnwKcSyF0HmWGL4eB7z4DV2ziqjRclqLxIYvu6nVAkGJUCmmEsKYV3EtmfpOP+w4aF7H2REpijVIwksI29XAestZLUVWbaP3e/dH9kXhlbrn/o/senQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sj5I8Xkp; arc=none smtp.client-ip=209.85.214.170
+	 MIME-Version; b=oqR09iR05CY43XC169xN2jkY5LSczDXw2nwxfYHj9oTDu3h/Lv9ZqcYypyNGgwJ9ztyCO7c5vTg2N6nW+ZhO/ZI2bTRgPcofqvc38g0j14e/G86HzKkiXiIaecAfBwhoR74HgVaI+D2IVk0N5UY58Dnw+Afy7IwQ1nNeOKYrQvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VrgrXUe/; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sj5I8Xkp"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2cc891373e0so117080195ad.2
-        for <damon@lists.linux.dev>; Sun, 19 Jul 2026 20:03:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VrgrXUe/"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2cea3004256so111243505ad.0
+        for <damon@lists.linux.dev>; Sun, 19 Jul 2026 20:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784516634; x=1785121434; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1784516641; x=1785121441; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=X+CN3F8GNJ49+wMCUtm6B3zkpBPb78+r1IbCrOzeLVY=;
-        b=sj5I8XkpU0CpcXCXQP3cNsAZQPl2E1Kas+Nn9DB7MnUmC9bVUFeQUar3h1gJaCYchu
-         Py7xdh0+DGhI+SUgQCOQM3WY0JBZ5PWC3n7Zj7bbjo16KP8Q5K+anAkSNTcsqQpLHNtW
-         xSPqorQfZSp2K4pMaSFpT3cwYSCZZg1VUxlanjI3RHvEyQwwKKPK70Uo7ITRhpFbbVQ0
-         D8JOlrSWDdp8CJZWGeQ+CE5oK2Gw+NQXhWA75erYHVPD3ex9XMO8YcLFsUsn0WCeibht
-         FLLXU9w66jUH4hBPcY2PEJpqNPZKnuSK39UIz+l3dzmuWyg8BSkCdMQkxm94B7EB0hte
-         oRlg==
+        bh=Zbv8c6XPjklVCkXRSa81M3HIzY/Ff3msBnn5ibeFm/4=;
+        b=VrgrXUe/VhW8oemmXphS3h6dbJS6O0W9Fdhc05xz1DadW4tSoTltzQaKzLactLorr/
+         ifliMc2RYlG0N4wViRy73NaNU7EpA3Ngp4VdjdGUpnwjeSWu4nW4VjB86JZcDw3viJGg
+         QiCPDhMDwzNrMsNrsVlI90fEsKV2plXdaCM7PdPoLhoU5oPqbl3F6NMBygTOkrsmAU4z
+         EgvcxK8Nv9c5deBvt3I5TIf+Cx2cjsP7td1r7k8dB7mgsxxGpepecebCmUK6xR0kNDtI
+         sRWjyHl+abN9icNpnYlVYFUr/Ep9BraM3lgjosLZGAcfCYXAckErSqklkLcAD0KY4kbQ
+         YzlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784516634; x=1785121434;
+        d=1e100.net; s=20251104; t=1784516641; x=1785121441;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=X+CN3F8GNJ49+wMCUtm6B3zkpBPb78+r1IbCrOzeLVY=;
-        b=TLaTYVj6+J17wRxms2p9xgFZYa4k18+QIrtyoRbEmdCkjyzTOrWNJvTNsq8+tWlAd4
-         QORtUZmYGAyHnEy9vVZ0/UTB7EtpC3j2CHSn1AoWHfDhl0o/4NfnSzUQ+vdWxsw5fA0/
-         A9kGvyvJNADXgGLGufJ0rOsnVNwTkFkMqmklS/hQCv218Y3xGN54lURC/T5vio3Fqh4R
-         daiaf93dUHrIcamyR83zPWVJFH13OXeyXG5U8EXxtYG3+dIUS3LhN9LMDPIt1AJ/oobQ
-         4Lu7JS43M8Stj0XlNIkujhG7Q+IB3yCC5ffg5bJoNqDiPq0ausRJzmx563Zf2wjpMdJ5
-         5oEQ==
-X-Gm-Message-State: AOJu0Yzb0WsJ1WIyM4cPp/l2tViPaVvRD4pAW9yqAse6pxMhcqdgldcV
-	ArXtqk2VuDkmSE1lMmt86w7IARKtFVsrqrGfZ9t2l8fEnFqsjTQuTKDeJSIcI00J
-X-Gm-Gg: AfdE7ckI+zxO7flQK2XHQ4O6R86/xtc9VAKEuTGIccMYspjksVpPhwf+orhS/K8GLpK
-	wHUh9QNyZOXjzTwVsJmVRHxJcE/jlMxHoHINO8jsu5TCCO+Z4fZvBMdW7lGE9OokLRhGZEvvuzl
-	QOdN2qRv62k14TLry9PKDAof7g8AfkOKJj/vkZm9aKUp162zxymQKwDRzVIxM0nQOQFkMhGbxah
-	mPbBcFAzmzg6CsBNmjWzzXj95G9vfJE2l3xm8tE/4Yofmg0plCIp89NDG4Oa0mvC4MdSCaUi4OP
-	6XnXLHfubIpjs1uOm9QCg7BCeLQaaJzBxLn/Xmx+1fYA3WJXj/ZqWCEwc/FQGGIwmqCbOqdUKdU
-	KZZCh/TVwXX/m0shVhTuAG5d5koFxNV48SYxpkxewvi7p60xAhvJOfiBZcDF1F4E0Iz025OcGE2
-	yt64MMYbzAqoutoaVAhBPX3LxuZp4=
-X-Received: by 2002:a17:902:e54b:b0:2c9:b48c:fdec with SMTP id d9443c01a7336-2cf348547d0mr141397945ad.12.1784516633659;
-        Sun, 19 Jul 2026 20:03:53 -0700 (PDT)
+        bh=Zbv8c6XPjklVCkXRSa81M3HIzY/Ff3msBnn5ibeFm/4=;
+        b=Mqw7S9SWH89wisGo0gLUrq7djQVHkTSTvLBdk9/sTYwKHlekDsHE5AML99SiEEbId9
+         JqA2hkZ6WK1qtG/TQN2Q8pwMv6GYEpfb0acQBFd0rFfAFkcAcBV4vTZjZYCKq/TFQXKj
+         4wrbakRYCs51//E+/OIkqXwOXP+yTb9pdgqL0ktOQRST5cBjQL0SEfPJ0kVvmHLkPtBU
+         Y4PkSzuc3sqFiz1e9O/niAVZt/DdC/Px9/153GHDNb/uE4+vanwKUkYdOOkKbG2NnKsg
+         kZi9dT6iCfwrf4TRrWuFE89/cjaLx+K7hMEnCMkkKVyj35W7r4ALabTPCsE8Vl6cs2Tv
+         KEjQ==
+X-Gm-Message-State: AOJu0Yy4bFd84b6RLxcUx3FlKzSB6YxiUkhqYgY/E0gkxkjmTMEEzGJ/
+	AW6h+jakW5NXMyu4svrYbIdl2W3dilkiANV/alk1ZjTR8cXZCb/ulliQt6aRhvUH
+X-Gm-Gg: AfdE7ckHTQGapX6BxuXLPCnx5zDoem/0nFWQBjmkGHmraSr2u1oIc9s4vrHePXgT9Ia
+	F1XIkrH6+hZ82E0koTrzqxESDAXjjwSDoI4Y6vsPKjuG/HQMlFtSA4hCjK2cc1nngTRAIqIjeQ6
+	UlBT+b2/phsm0npTssH0x+oi+wi2p0YuM4tirCZd4DPezCk2DSFvmWbgwBOGN1htr+M4pg08n/E
+	/6EoqQ444tik0PI3cgCJyXN+VLQ6iktDoEhMI6sMBvTlpRg2S0plqjP0uXuQ6Jc3yFnc+IGt7hX
+	y2jvtX3LCUR1vzDBYNO2PatBtWI7NsrPhg0tnS1FMn49t/95qbpPgbH6YO3bgpObYGQv9cL0aTL
+	kGjk+sfsuJbibBrUtITLbaEkZdatLOHo7VZtdu1qlqaXGpXvl2L331hqJEv0yKEdNY37NAwnRen
+	Lsc4GtocVBoxfsfhVroQsbXdc15Xs=
+X-Received: by 2002:a17:902:d4cc:b0:2c9:e9db:8167 with SMTP id d9443c01a7336-2cf348193f5mr133308615ad.7.1784516641437;
+        Sun, 19 Jul 2026 20:04:01 -0700 (PDT)
 Received: from localhost.localdomain ([112.65.87.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf344d80e6sm47783065ad.29.2026.07.19.20.03.46
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf344d80e6sm47783065ad.29.2026.07.19.20.03.54
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 19 Jul 2026 20:03:53 -0700 (PDT)
+        Sun, 19 Jul 2026 20:04:01 -0700 (PDT)
 From: Lian Wang <lianux.mm@gmail.com>
 To: damon@lists.linux.dev,
 	linux-mm@kvack.org
@@ -86,9 +86,9 @@ Cc: sj@kernel.org,
 	lianux.mm@gmail.com,
 	lianux.wang@processmission.com,
 	kunwu.chan@linux.dev
-Subject: [RFC PATCH v3 2/3] mm/damon/vaddr: implement DAMOS_SPLIT handler
-Date: Mon, 20 Jul 2026 11:03:26 +0800
-Message-ID: <20260720030327.80153-3-lianux.mm@gmail.com>
+Subject: [RFC PATCH v3 3/3] selftests/damon: add functional test for DAMOS_SPLIT
+Date: Mon, 20 Jul 2026 11:03:27 +0800
+Message-ID: <20260720030327.80153-4-lianux.mm@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260720030327.80153-1-lianux.mm@gmail.com>
 References: <20260720030327.80153-1-lianux.mm@gmail.com>
@@ -100,18 +100,13 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement DAMOS_SPLIT for the vaddr and fvaddr operations sets.  For
-each large folio in the target region whose order exceeds the scheme's
-order, split it down using split_folio_to_order() -- the same helper
-used by truncation, migration, ksm and shmem.  No new core-mm code or
-exported symbols are introduced.
+Add damos_split.py, which allocates a MADV_HUGEPAGE-backed region in a
+child process and runs a DAMON/DAMOS scheme with action 'split' and
+target_order 0 against it, then verifies the huge pages are split into
+base pages (the child's AnonHugePages drops).
 
-split_folio_to_order() must not run under the page table lock, so the
-folio is pinned (folio_trylock + folio_get), the walk is ended to drop
-the page table lock, and the split runs while holding only mmap_read_lock.
-
-The scheme's operations-layer filters are honoured, and the amount of
-memory that passed those filters is reported via sz_filter_passed.
+Extend the _damon_sysfs.py Damos helper with the target_order parameter
+so a scheme's split target can be expressed.
 
 
 
@@ -119,139 +114,193 @@ Co-developed-by: Kunwu Chan <kunwu.chan@linux.dev>
 Signed-off-by: Kunwu Chan <kunwu.chan@linux.dev>
 Signed-off-by: Lian Wang (Processmission) <lianux.mm@gmail.com>
 ---
- mm/damon/vaddr.c | 108 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 108 insertions(+)
+ tools/testing/selftests/damon/Makefile        |   1 +
+ tools/testing/selftests/damon/_damon_sysfs.py |   9 +-
+ tools/testing/selftests/damon/damos_split.py  | 125 ++++++++++++++++++
+ 3 files changed, 134 insertions(+), 1 deletion(-)
+ create mode 100644 tools/testing/selftests/damon/damos_split.py
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index d10b8042adb5..a8607448584d 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -6,6 +6,7 @@
- #define pr_fmt(fmt) "damon-va: " fmt
+diff --git a/tools/testing/selftests/damon/Makefile b/tools/testing/selftests/damon/Makefile
+index ece244e5c5b9..a623c271355f 100644
+--- a/tools/testing/selftests/damon/Makefile
++++ b/tools/testing/selftests/damon/Makefile
+@@ -12,6 +12,7 @@ TEST_PROGS += sysfs.sh
+ TEST_PROGS += sysfs.py
+ TEST_PROGS += sysfs_update_schemes_tried_regions_wss_estimation.py
+ TEST_PROGS += damos_quota.py damos_quota_goal.py damos_apply_interval.py
++TEST_PROGS += damos_split.py
+ TEST_PROGS += damos_tried_regions.py damon_nr_regions.py
+ TEST_PROGS += sysfs_refresh.py
+ TEST_PROGS += reclaim.sh lru_sort.sh
+diff --git a/tools/testing/selftests/damon/_damon_sysfs.py b/tools/testing/selftests/damon/_damon_sysfs.py
+index e6a2265d721e..5a01f31ad9f2 100644
+--- a/tools/testing/selftests/damon/_damon_sysfs.py
++++ b/tools/testing/selftests/damon/_damon_sysfs.py
+@@ -419,6 +419,7 @@ class Damos:
+     filters = None
+     apply_interval_us = None
+     target_nid = None
++    target_order = None
+     dests = None
+     idx = None
+     context = None
+@@ -429,7 +430,7 @@ class Damos:
+     def __init__(self, action='stat', access_pattern=DamosAccessPattern(),
+                  quota=DamosQuota(), watermarks=DamosWatermarks(),
+                  core_filters=[], ops_filters=[], filters=[], target_nid=0,
+-                 dests=DamosDests(), apply_interval_us=0):
++                 target_order=0, dests=DamosDests(), apply_interval_us=0):
+         self.action = action
+         self.access_pattern = access_pattern
+         self.access_pattern.scheme = self
+@@ -448,6 +449,7 @@ class Damos:
+         self.filters.scheme = self
  
- #include <linux/highmem.h>
-+#include <linux/huge_mm.h>
- #include <linux/hugetlb.h>
- #include <linux/mman.h>
- #include <linux/mmu_notifier.h>
-@@ -896,6 +897,111 @@ static unsigned long damos_va_stat(struct damon_target *target,
- 	return 0;
- }
+         self.target_nid = target_nid
++        self.target_order = target_order
+         self.dests = dests
+         self.dests.scheme = self
  
-+/*
-+ * damos_va_split() - Split large folios in a region down to @target_order
-+ * using the existing split_folio_to_order().
-+ *
-+ * Locking: folio_walk_start() returns the folio with the page table lock
-+ * held.  split_folio_to_order() must not run under the page table lock,
-+ * so we pin the folio (reference + lock), end the walk to drop the page
-+ * table lock, and split while holding only mmap_read_lock.
-+ * split_folio_to_order() returns -EBUSY for a raced or pinned folio;
-+ * we skip such folios.
-+ */
-+static unsigned long damos_va_split(struct damon_target *target,
-+		struct damon_region *r, struct damos *s,
-+		unsigned long *sz_filter_passed)
-+{
-+	unsigned int target_order = s->order;
-+	unsigned long addr = ALIGN_DOWN(r->ar.start, PAGE_SIZE);
-+	unsigned long end = r->ar.end;
-+	unsigned long applied = 0;
-+	struct mm_struct *mm;
+@@ -492,6 +494,11 @@ class Damos:
+         if err is not None:
+             return err
+ 
++        err = write_file(os.path.join(self.sysfs_dir(), 'target_order'), '%d' %
++                         self.target_order)
++        if err is not None:
++            return err
 +
-+	mm = damon_get_mm(target);
-+	if (!mm)
-+		return 0;
+         err = self.dests.stage()
+         if err is not None:
+             return err
+diff --git a/tools/testing/selftests/damon/damos_split.py b/tools/testing/selftests/damon/damos_split.py
+new file mode 100644
+index 000000000000..089fbe0f0d4d
+--- /dev/null
++++ b/tools/testing/selftests/damon/damos_split.py
+@@ -0,0 +1,125 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: GPL-2.0
++#
++# Functional test for the DAMOS_SPLIT action.
++#
++# A child process allocates a MADV_HUGEPAGE-backed anonymous region and
++# faults it in so that it is backed by (m)THPs.  The parent then runs a
++# DAMON/DAMOS scheme with action 'split' and target_order 0 against the
++# child and checks that the huge pages are split into base pages, i.e. the
++# child's AnonHugePages (as reported by /proc/<pid>/smaps) drops.
 +
-+	while (addr < end) {
-+		struct vm_area_struct *vma;
-+		struct folio *folio;
-+		struct folio_walk fw;
-+		unsigned long folio_sz = 0;
++import ctypes
++import os
++import signal
++import sys
++import time
 +
-+		if (mmap_read_lock_killable(mm))
-+			break;
++import _damon_sysfs
 +
-+		vma = vma_lookup(mm, addr);
-+		if (!vma) {
-+			/* Skip the gap to the next VMA, if any. */
-+			vma = find_vma(mm, addr);
-+			mmap_read_unlock(mm);
-+			if (!vma || vma->vm_start >= end)
-+				break;
-+			addr = vma->vm_start;
-+			continue;
-+		}
++PMD_SIZE = 2 * 1024 * 1024
++MADV_HUGEPAGE = 14
++PROT_READ_WRITE = 0x1 | 0x2
++MAP_PRIVATE_ANON = 0x2 | 0x20
++REGION_SIZE = 32 * PMD_SIZE
 +
-+		/* Folios in these VMAs are not our business. */
-+		if (vma->vm_flags & (VM_HUGETLB | VM_MIXEDMAP)) {
-+			addr = vma->vm_end;
-+			mmap_read_unlock(mm);
-+			continue;
-+		}
++def child_workload():
++    '''Allocate a PMD-aligned, THP-backed region, fault it in, then idle.'''
++    libc = ctypes.CDLL('libc.so.6', use_errno=True)
++    libc.mmap.restype = ctypes.c_void_p
++    libc.mmap.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_int,
++                          ctypes.c_int, ctypes.c_int, ctypes.c_long]
++    libc.madvise.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_int]
 +
-+		folio = folio_walk_start(&fw, vma, addr, 0);
-+		if (!folio) {
-+			mmap_read_unlock(mm);
-+			addr += PAGE_SIZE;
-+			continue;
-+		}
++    # Over-allocate so that a PMD-aligned window is available.
++    raw = libc.mmap(None, REGION_SIZE + PMD_SIZE, PROT_READ_WRITE,
++                    MAP_PRIVATE_ANON, -1, 0)
++    if raw is None or raw == ctypes.c_void_p(-1).value:
++        os._exit(2)
++    base = (raw + PMD_SIZE - 1) & ~(PMD_SIZE - 1)
++    libc.madvise(ctypes.c_void_p(base), REGION_SIZE, MADV_HUGEPAGE)
 +
-+		folio_sz = folio_size(folio);
++    buf = (ctypes.c_char * REGION_SIZE).from_address(base)
++    for off in range(0, REGION_SIZE, 4096):
++        buf[off] = 1
 +
-+		/*
-+		 * For file-backed folios, @target_order may be below the
-+		 * filesystem's minimum folio order (mapping_min_folio_order()).
-+		 * split_folio_to_order() will simply fail in that case and
-+		 * we skip the folio.  This is a safe no-op; future work can
-+		 * adjust target_order upward like split_huge_pages_in_pid()
-+		 * does when a specific filesystem needs it.
-+		 */
++    # Ready; idle until the parent tears us down.
++    signal.pause()
 +
-+		/* Honour the scheme's operations-layer filters. */
-+		if (damos_ops_has_filter(s)) {
-+			if (damos_va_filter_out(s, folio, vma, addr,
-+					fw.level == FW_LEVEL_PTE ? fw.ptep : NULL,
-+					fw.level == FW_LEVEL_PMD ? fw.pmdp : NULL)) {
-+				folio_walk_end(&fw, vma);
-+				mmap_read_unlock(mm);
-+				goto next;
-+			}
-+			*sz_filter_passed += folio_sz;
-+		}
++def anon_huge_kb(pid):
++    total = 0
++    try:
++        with open('/proc/%d/smaps' % pid) as f:
++            for line in f:
++                if line.startswith('AnonHugePages:'):
++                    total += int(line.split()[1])
++    except FileNotFoundError:
++        return -1
++    return total
 +
-+		if (folio_order(folio) > target_order && folio_trylock(folio)) {
-+			folio_get(folio);
-+			/* Drop the page table lock before splitting. */
-+			folio_walk_end(&fw, vma);
++def main():
++    if not os.path.exists('/sys/kernel/mm/transparent_hugepage/enabled'):
++        print('SKIP: transparent hugepage is not available')
++        exit(0)
 +
-+			if (!split_folio_to_order(folio, target_order))
-+				applied += folio_sz;
++    pid = os.fork()
++    if pid == 0:
++        child_workload()
++        os._exit(0)
 +
-+			folio_unlock(folio);
-+			folio_put(folio);
-+		} else {
-+			folio_walk_end(&fw, vma);
-+		}
-+		mmap_read_unlock(mm);
-+next:
-+		addr = ALIGN_DOWN(addr, folio_sz) + folio_sz;
-+		cond_resched();
-+	}
++    try:
++        # Give the child time to fault in its huge pages.
++        time.sleep(2)
++        before = anon_huge_kb(pid)
++        if before <= 0:
++            print('SKIP: workload did not get any THP (AnonHugePages=%d)'
++                  % before)
++            os.kill(pid, signal.SIGKILL)
++            exit(0)
 +
-+	mmput(mm);
-+	return applied;
-+}
++        # Split every large folio in the target down to order-0 base pages.
++        kdamonds = _damon_sysfs.Kdamonds([_damon_sysfs.Kdamond(
++            contexts=[_damon_sysfs.DamonCtx(
++                ops='vaddr',
++                targets=[_damon_sysfs.DamonTarget(pid=pid)],
++                schemes=[_damon_sysfs.Damos(
++                    action='split',
++                    target_order=0,
++                    # match every region regardless of access/age/size, so
++                    # the ARM64 stale-TLB blind spot cannot mask the target
++                    access_pattern=_damon_sysfs.DamosAccessPattern(
++                        size=[0, 2**64 - 1],
++                        nr_accesses=[0, 2**64 - 1],
++                        age=[0, 2**64 - 1]),
++                    apply_interval_us=0)])])])
++        err = kdamonds.start()
++        if err is not None:
++            print('kdamonds start failed: %s' % err)
++            os.kill(pid, signal.SIGKILL)
++            exit(1)
 +
- static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
- 		struct damon_target *t, struct damon_region *r,
- 		struct damos *scheme, unsigned long *sz_filter_passed)
-@@ -926,6 +1032,8 @@ static unsigned long damon_va_apply_scheme(struct damon_ctx *ctx,
- 		return damos_va_migrate(t, r, scheme, sz_filter_passed);
- 	case DAMOS_STAT:
- 		return damos_va_stat(t, r, scheme, sz_filter_passed);
-+	case DAMOS_SPLIT:
-+		return damos_va_split(t, r, scheme, sz_filter_passed);
- 	default:
- 		/*
- 		 * DAMOS actions that are not yet supported by 'vaddr'.
++        # Let the scheme find and split the regions.
++        after = before
++        for _ in range(50):
++            time.sleep(0.2)
++            after = anon_huge_kb(pid)
++            if after == 0:
++                break
++
++        kdamonds.stop()
++        os.kill(pid, signal.SIGKILL)
++
++        if after >= before:
++            print('FAIL: AnonHugePages did not shrink: before=%d KiB '
++                  'after=%d KiB' % (before, after))
++            exit(1)
++        print('PASS: AnonHugePages %d KiB -> %d KiB after DAMOS_SPLIT'
++              % (before, after))
++    finally:
++        try:
++            os.kill(pid, signal.SIGKILL)
++        except ProcessLookupError:
++            pass
++
++if __name__ == '__main__':
++    main()
