@@ -1,143 +1,170 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6330A3955F2
-	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 03:35:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECC738C2DE;
+	Mon, 20 Jul 2026 07:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784518533; cv=none; b=ZH7a6H+46cMVKaQeTl8FvHEE2SgW062PBOrvqlLa0TBAVmvYYY22zd6JLPSirvj/dIPtpxfkEOAEWNXHLAswvFlJtVreswsLFZ414b8/d/0moTqMcOXt3UOFt8rcAnWpSqa1mcCaaFRMU2yRz/ggBpv+X33CVnQiyqbahnaVLcY=
+	t=1784532046; cv=none; b=NzLa9kO86PAE12Elqmpd2SqXz8QSQerOqRyqDhugtlLopyuiP+lbAzgg6MwwEhZzy8oJCTkhSw9kCfXieTs0d4U/Nrz5qasZKdrNu0Yr+t0W54y8TVcLfUF1VjYkU8YAElqUaBuAchDrgjNOjYEFNCaqRdQsnb77/2yfqs+M1uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784518533; c=relaxed/simple;
-	bh=PVwGgbaFErVBULWAHJ1uEWN6ONpo0G9W+hhiGI3F8Q8=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Yixig1B56bJOnSHSLP1+rxpzF1h/UN7TxxWnM7lotjwKsvsqQo3+3B/7eYP1sMnac+ZwtOeSOmbkZVgYW32B9LAIWAE/FpJRPqtne0Y0gf5jaynFdpqXq3rTF53OE5tNi6U1HSHmKFHkbctf5+0gMK1oA7mwiV79QNrA7J/cVP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 0bd0e53083ec11f1aa26b74ffac11d73-20260720
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NO_NAME, HR_CTE_8B, HR_CTT_TXT
-	HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME, HR_MAILER_MTBG
-	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
-	HR_SJ_PHRASE_LEN, HR_SJ_PRE_RE, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
-	HR_TO_NAME, IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_TRUSTED
-	SA_EXISTED, SN_TRUSTED, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
-	DMARC_NOPASS, CIE_GOOD, CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO
-	GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:3e8d85d7-5de1-4aac-8a39-40290ac4fc4a,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:10
-X-CID-INFO: VERSION:1.3.12,REQID:3e8d85d7-5de1-4aac-8a39-40290ac4fc4a,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
-	elease,TS:10
-X-CID-META: VersionHash:e7bac3a,CLOUDID:ccfb1a5725bedc1e76e4be0ae6454898,BulkI
-	D:260715215152RIZL4TBA,BulkQuantity:3,Recheck:0,SF:17|19|64|66|78|80|81|82
-	|83|102|127|841|865|898,TC:nil,Content:0|15|52,EDM:-3,IP:-2,URL:0,File:nil
-	,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,D
-	KP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 0bd0e53083ec11f1aa26b74ffac11d73-20260720
-X-User: husong@kylinos.cn
-Received: from [192.168.110.173] [(223.70.159.239)] by mailgw.kylinos.cn
-	(envelope-from <husong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 720719478; Mon, 20 Jul 2026 11:35:25 +0800
-Message-ID: <c4cf2558-0516-417e-affd-9a5550ff32f8@kylinos.cn>
-Date: Mon, 20 Jul 2026 11:35:06 +0800
+	s=arc-20240116; t=1784532046; c=relaxed/simple;
+	bh=wS3iOjal19hc48fA51Gyg+UKNxQ+naTpbmOlu9ZaCrs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HHDxSuwRopir4v3JHnTJLCxaZabmUPw6ZEu5/42/FWk7Ew97ur1fM5ioIJGEep+anuaSJcRBh/lEJ6ncgYVCVt5Aw3x3XaiZH74usYLOCJQs4CepesJWdz1QJmQ+uBn8fTgeEpasJ3Dd/0UqQkP/9/o4DGdReP7GepcOTP+/K48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q4SQ5H7p; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q4SQ5H7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F055C1F00A3A;
+	Mon, 20 Jul 2026 07:20:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784532040;
+	bh=gANMU5sOivOjZzaedPM5r16YKmZ48cwI33ZQeohFkKI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Q4SQ5H7pfr3jaDU2ZnnO+1hHIoXl1iFH5WSqv7jLKEoKzb1W8Q48EBE20IuNZFTUn
+	 ixKm0DVIy5OI2nLk58vf2Hjrg7we7B+X4V1GJxyPkSv0+C69K1TUoySPfe3BcFYtS/
+	 t7GufXN3+op+50lWLzds22S7AYYtVpeOlcrG/0bZfPer/n9WDDe8GhqIXCV0fWPGUD
+	 XmaJPMeyIJugU5z50bBvNZ+bv5B8MYe6yecmFyVa9TEs0150ohb7J9prH1nL+rHsFg
+	 Tpa/uQSSoq+PE+oR7BoJwZF5ntDZOzikcQrAbuelm4gJqA+MbVuFWtO9kyaJQf1xJj
+	 5Tno9QcBWPfNw==
+Date: Mon, 20 Jul 2026 08:20:01 +0100
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: Zi Yan <ziy@nvidia.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
+	Vlastimil Babka <vbabka@kernel.org>, Mike Rapoport <rppt@kernel.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, Rik van Riel <riel@surriel.com>, 
+	Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
+	Pedro Falcato <pfalcato@suse.de>, Russell King <linux@armlinux.org.uk>, 
+	Dinh Nguyen <dinguyen@kernel.org>, Simon Schuster <schuster.simon@siemens-energy.com>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, 
+	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
+	Dan Williams <djbw@kernel.org>, Matthew Wilcox <willy@infradead.org>, 
+	Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
+	Adrian Hunter <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Nico Pache <npache@redhat.com>, 
+	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
+	Miaohe Lin <linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>, 
+	Xu Xin <xu.xin16@zte.com.cn>, Chengming Zhou <chengming.zhou@linux.dev>, 
+	SJ Park <sj@kernel.org>, Matthew Brost <matthew.brost@intel.com>, 
+	Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>, 
+	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
+	Alistair Popple <apopple@nvidia.com>, Hugh Dickins <hughd@google.com>, Peter Xu <peterx@redhat.com>, 
+	Kees Cook <kees@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+	Robin Murphy <robin.murphy@arm.com>, Andrey Konovalov <andreyknvl@gmail.com>, 
+	Alexander Potapenko <glider@google.com>, Dmitry Vyukov <dvyukov@google.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
+	Jarkko Sakkinen <jarkko@kernel.org>, Dave Hansen <dave.hansen@linux.intel.com>, 
+	Thomas Gleixner <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>, x86@kernel.org, 
+	"H. Peter Anvin" <hpa@zytor.com>, Ian Abbott <abbotti@mev.co.uk>, 
+	H Hartley Sweeten <hsweeten@visionengravers.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	Christian Gmeiner <christian.gmeiner@gmail.com>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Patrik Jakobsson <patrik.r.jakobsson@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+	Thierry Reding <thierry.reding@kernel.org>, Mikko Perttunen <mperttunen@nvidia.com>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Christian Koenig <christian.koenig@amd.com>, 
+	Huang Rui <ray.huang@amd.com>, Matthew Auld <matthew.auld@intel.com>, 
+	Jason Gunthorpe <jgg@ziepe.ca>, Yishai Hadas <yishaih@nvidia.com>, 
+	Shameer Kolothum <skolothumtho@nvidia.com>, Kevin Tian <kevin.tian@intel.com>, 
+	Ankit Agrawal <ankita@nvidia.com>, Alex Williamson <alex@shazbot.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, Shakeel Butt <shakeel.butt@linux.dev>, 
+	Usama Arif <usama.arif@linux.dev>, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-parisc@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	nvdimm@lists.linux.dev, linux-perf-users@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev, iommu@lists.linux.dev, 
+	kasan-dev@googlegroups.com, linux-sgx@vger.kernel.org, etnaviv@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	linux-tegra@vger.kernel.org, kvm@vger.kernel.org, 
+	Russell King <linux+etnaviv@armlinux.org.uk>
+Subject: Re: [PATCH v2 08/33] mm/rmap: rename vma_interval_tree_*() to
+ mapping_rmap_tree_*()
+Message-ID: <al3LpROyiWEBL1wh@lucifer>
+References: <20260710-b4-pre-scalable-cow-v2-0-2a5aa403d977@kernel.org>
+ <20260710-b4-pre-scalable-cow-v2-8-2a5aa403d977@kernel.org>
+ <DK1CWBDK5J60.3VPRP45IS7L7E@nvidia.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: husong@kylinos.cn, damon@lists.linux.dev
-Subject: Re: Question on damon_sysfs_memcg_path_to_id() path resolution
-To: SJ Park <sj@kernel.org>
-References: <20260718155952.26350-1-sj@kernel.org>
-From: Song Hu <husong@kylinos.cn>
-In-Reply-To: <20260718155952.26350-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DK1CWBDK5J60.3VPRP45IS7L7E@nvidia.com>
 
-
-在 2026/7/18 23:59, SJ Park 写道:
-> On Sat, 18 Jul 2026 16:40:51 +0800 Song Hu <husong@kylinos.cn> wrote:
+On Fri, Jul 17, 2026 at 10:54:24PM -0400, Zi Yan wrote:
+> On Fri Jul 10, 2026 at 4:16 PM EDT, Lorenzo Stoakes wrote:
+> > The family of vma_interval_tree_() functions manipulate the
+> > address_space (which, of course, is generally referred to as 'mapping')
+> > reverse mapping, but are named the 'VMA' interval tree.
+> >
+> > VMAs may be mapped by an anon_vma, an address_space, or both. Therefore
+> > calling the mapping interval tree a 'VMA' interval tree is rather
+> > confusing.
+> >
+> > This is also inconsistent with the anon_vma_interval_tree_*() functions
+> > which explicitly reference the rmap object to which they pertain.
+> >
+> > Rename the vma_interval_tree_*() functions to mapping_rmap_tree_*() to
+> > correct this.
+> >
+> > We will rename the anon rmap functions similarly in a subsequent patch.
+> >
+> > No functional change intended.
+> >
+> > Reviewed-by: Gregory Price <gourry@gourry.net>
+> > Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+> > ---
+> >  arch/arm/mm/fault-armv.c          |  2 +-
+> >  arch/arm/mm/flush.c               |  2 +-
+> >  arch/nios2/mm/cacheflush.c        |  2 +-
+> >  arch/parisc/kernel/cache.c        |  2 +-
+> >  fs/dax.c                          |  2 +-
+> >  fs/hugetlbfs/inode.c              |  4 ++--
+> >  include/linux/mm.h                | 16 ++++++++--------
+> >  kernel/events/uprobes.c           |  2 +-
+> >  mm/hugetlb.c                      |  4 ++--
+> >  mm/interval_tree.c                | 22 +++++++++++-----------
+> >  mm/khugepaged.c                   |  4 ++--
+> >  mm/memory-failure.c               |  6 +++---
+> >  mm/memory.c                       |  2 +-
+> >  mm/mmap.c                         |  2 +-
+> >  mm/nommu.c                        |  8 ++++----
+> >  mm/pagewalk.c                     |  2 +-
+> >  mm/rmap.c                         |  2 +-
+> >  mm/vma.c                          | 12 ++++++------
+> >  tools/testing/vma/include/stubs.h |  4 ++--
+> >  19 files changed, 50 insertions(+), 50 deletions(-)
+> >
 >
->> Hi,
->>
->> Sorry for the late reply.
-> No worry!
+> Just curious, why not file_rmap_tree_*()?
+
+Just to avoid any confusion around address_space objects that are ostensibly
+'not files' like devices or whatnot, but moreso for consistency with the rest of
+the kernel in referring to this stuff as 'mapping'.
+
+Naming is hard IOW :)
+
 >
-> [...]
->>> I find the current behavior might be tedious if the user runs DAMON inside
->>> cgroups.  Finding the absolute cgroup path inside containers might be
->>> challenging.  If that's the case, I'm up to change or extend the behaviors.
->>>
->>> If this is only for making the code easier to maintain, I don't really feel
->>> like it deserves the behavioral changes, to be honest.
->> I looked into the container case more carefully and I'm no longer sure
->> it justifies the change.
->>
->> DAMON sysfs is root-only (state is 0600 under /sys/kernel/mm/damon), so
->> whoever configures a scheme is effectively a host-level operator.  That
->> operator can obtain the absolute cgroup path directly (e.g. from
->> /proc/<pid>/cgroup), and the usage docs already show host-absolute
->> paths.  A process able to write host DAMON sysfs from inside a non-init
->> cgroup namespace is a privileged host-admin case, not really a "DAMON
->> inside a container" user.  So I think the namespace-relative benefit is
->> marginal at best.
->>
->> Given that, and your point that maintainability alone isn't worth a
->> behavioral change, I'll leave damon_sysfs_memcg_path_to_id() as-is.
-> Makes sense.
+> One nice part of this renaming is that the length of each function does
+> not chagne. That makes the patch easy to review.
 >
->> Thanks for thinking it through with me -- and for the cgroup_get_from_path pointer.
-> You're welcome.  I liked this dicsussion.  Looking forward to the next one!
-Following up on our last chat - thanks again for the cgroup_get_from_path
-pointer, that settled it for me. One thing it got me thinking about, which
-I'd like to get your read on before I write any code.
+> Reviewed-by: Zi Yan <ziy@nvidia.com>
 
-The only in-kernel PSI consumer today is DAMON, and it reads a single
-system-wide value - psi_system.total for memory (mm/damon/core.c,
-damos_get_some_mem_psi_total). There is no reusable in-kernel helper that
-returns per-cgroup, multi-domain (cpu/mem/io x some/full) pressure as a
-value (psi_show is a seq_file printer for the /proc and cgroup files, not a
-value-returning API), and no in-kernel threshold-trigger (psi_trigger_create
-is userspace-fd only).
+Thanks!
 
-I'm writing a node-level multi-domain (cpu + memory + io) resource
-coordinator for container/Kubernetes nodes - a small C daemon using libbpf
-plus PSI trigger fds. To attribute pressure to specific cgroups and act
-across domains it needs per-cgroup, per-domain PSI, which today means
-open-coding reads of cgroup_psi(cgrp)->total[] the way DAMON does in-kernel.
-And I think DAMON's own per-memcg DAMOS quota goals would benefit from the
-same per-cgroup read if it existed.
-
-So the idea is a small helper, e.g.
-
-  /* per-cgroup, per-domain pressure; reuses update_averages() */
-  u64 psi_cgroup_total(struct cgroup *cgrp, enum psi_res res, bool some);
-  /* and/or an avg10/60/300 variant */
-
-with DAMON migrated to it as the first in-tree user.
-
-Before I do anything: does this capability gap resonate with you - is
-per-cgroup PSI consumption something you'd want DAMON to grow into, or do
-you see it staying userspace-only? And if a helper makes sense, any
-preferred shape, or concerns about exposing the averaging/locking contract?
-I'd keep the first cut to just the read helper + DAMON migration; an
-in-kernel trigger callback I'd treat as a separate, later step and only if
-there's a second consumer.
-
-Thanks,
-Song
 >
-> Thanks,
-> SJ
+> --
+> Best Regards,
+> Yan, Zi
 >
-> [...]
+
+Cheers, Lorenzo
