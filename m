@@ -1,64 +1,63 @@
 Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA334C955F
-	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 19:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAC54CA26D
+	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 19:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784576160; cv=none; b=cKbCrk49ymKMXeaOdC2qRKKTOtRdMA8TTLK1KWI+oUreLPLRyCMFqXuoVJPA2FUD3YzIeTJNYwGmmp8gF8auqJMMriNSX6VSP/r9ceHRItdo6OX7+i8OZZEy/bRr8eQ8LZXj1QM59N7swGN8AwoFF3Woj+zVWFcSArPufuLKIqc=
+	t=1784576162; cv=none; b=E5BKD0sycA2h5kGplHlTaIMinRtD7S4jXA375i/SfH+lmZvFDX1v/KtQLvM+VKL/5PWCebmFTKYcMgK6aqahY6FmAfx3nEPY1Ppaqd+ZILO9NFsI4/DAwMQd7yExtGkdVT5wAqSwBv7JpTOWpW0THUT9/O8Tf91iYs01eyjGG6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784576160; c=relaxed/simple;
-	bh=2i1wvyBksR/msTLbpyy04DkOkxRMBM4AkFK/rJ1LuiM=;
+	s=arc-20240116; t=1784576162; c=relaxed/simple;
+	bh=99pkAOPGtwB/BzPLgYWE1L+4EzvxcH4p7JFn3jZ80+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvhY0aAqxOni3c8bI+eX024aA2wCEwTSptPR9FC0TQlE5eyPrF/X64Jf4Cv9ClscQ3UknQGaU8RnWrgg6jkGfQBo6PiMYsLiSXe04RfxQG8M2qc9okuaBNT3kHLsdyNYa4Ko7zEKjYcl2K+UWyDDAgQb+9/CYr4E/XrM4gzRaNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=H1rKQ/hE; arc=none smtp.client-ip=209.85.222.176
+	 MIME-Version; b=aBHhK3uC20G0eyWSDjA/UvDBHZJTdoOfWgFYtpjpbTsbme4jH823Devyr3PiE03YpE5rufItjFJUx0IWG0y4eDe6GETLsiDt6JXquM9NQMR8Fwh2Xxb9aHW36srZDHif+1UPMx5mQob4X+9mEP3st5jHIlFmRGPR3oPoYEl423Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=TKyJtJ+B; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="H1rKQ/hE"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-92e65e18969so422878985a.1
-        for <damon@lists.linux.dev>; Mon, 20 Jul 2026 12:35:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="TKyJtJ+B"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-930c0f9c1b1so259185685a.1
+        for <damon@lists.linux.dev>; Mon, 20 Jul 2026 12:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1784576155; x=1785180955; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1784576157; x=1785180957; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=+NQTGhXcHOKD56hvRpu1GEGtUFet41BSGHJhkUlyGRA=;
-        b=H1rKQ/hEY+fAIYljWPo0cqVLXq0Qo5XC3mPrlr7wIo/NNLOd34BAp++fbY8JiFlVvc
-         fr8opFZgksGRwYkcwvniFpMTp9+dvB7HCSKkzBipAX43N17SdoNmc1M/35Fkgi54hOZt
-         6Fvtcukl12YV+RpKoYoaoxBEkssIJd4TJWtM4Cm2mPlcUQ06L8ZpRkWJaSD2J/6mYf3u
-         QwgpViVpYsXu0ZNC78zqrPnIQ/U8Y1CUCVmr0Ig6o4OMVxTDheazKoQUt1345gpU3MlG
-         /tkYEds8e0fF50h6oAZtIrR6eiY1Qc0poyZcI+iG+cX5F6MzYcV02JpcNiwCmiK3RVI6
-         h0ZA==
+        bh=yyvPve12WhVPZzxgug/++OGUAj2qo04o06OFhCcQQmk=;
+        b=TKyJtJ+Bnn1RxOaoB9E9TDSlesS0pEvSP4XWY2BVzLObm0NVJmz9cZWxpsMXtuCihB
+         eYdpviSKMHcvN77WIImGzqn7QrnHOecNgmkOoofk/MYstrAMU0JHezg9r8UqzOVewTg2
+         mRAViDx/y60YJMGm2L+92P6bVEJue8SeN0t20wX+QXUbo913y/cwAf36+gfZdsK7dkoJ
+         yf2vRrrd+CQxkWZ3Xq28OyNTpHehGZKEG2vMLg2ZvXDRe3Tc9RyzA8q8BzZkukFeGU2i
+         CA+amh5g52beYO7E402g1F00p1+y+ZGAvgvmlnqMAfo7UR86aR1O30jkCD+NEz/Sp5uf
+         JptA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784576155; x=1785180955;
+        d=1e100.net; s=20251104; t=1784576157; x=1785180957;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+NQTGhXcHOKD56hvRpu1GEGtUFet41BSGHJhkUlyGRA=;
-        b=QBHBJ4x5BXfmPj+r50f9VfoqL4MUA67eM3c45Wlgtu8asBWueA1utWI8xN0IhQ3JMj
-         Rphvu4y6YEMQk+JwORnevFcdoaWssOCgDG2LbZK7fX6yxgPNwY6GTl22Gy6fzJJ7Cup9
-         PgK/NnKACNYnzW5jI3YMjQ+FmOzERRyU2oT2TwGfK4nYVoO/v5TxdkYMBdXmRiDnbmOh
-         fp30vgw6F3viz08LgOko3pOec8RsSea8LE3kZ2xW4e9Ay5kEePo9NCKDI42+ETZQjaOX
-         Y4/7tdWCtQq+CxwX7Hix70K/Q2XBekFTJ4HR3odDmn13jD1Tqnos5yLsYMD9PPbKayZ/
-         VYYQ==
-X-Forwarded-Encrypted: i=1; AHgh+Rq99Zy3yyBNOEClxy896ArMkY/UfSNmvUtAz/zLcAvB872L6IW325hwgSHB+oNA4NyCNQswEw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy4JPuHXHdQy2AbQfP+8pi56hr2ZHzTQ0chI13j58lTQtOUcmfJ
-	w7aFg2c/X/csFQydrIKO4LYMpqGoht5OvlYq0ZEHPfAwmgn0ZXIWLRIZOSqupMmmyx0=
-X-Gm-Gg: AfdE7cn6M6kdk4VSq5/f7ZkgyVpQi862y1Z2ce9c8/R3F9yN3ZU64JzJmMAXfVswW9X
-	VnHOJYNWt742GXUdhDhAgJD57IKQ79MLm/P/2I2VvUjrIL8ygG+tb+VisHv4bwbx4K+ciqesPe4
-	1NHKq1PLS0aLLufPyeGLISpIEfrfsuH0aF6r2kwT+iZwiApkp32dKUqc+wglR9FENOXaiCGxo+A
-	chmAfIxwL0ZsBVz8A/Z7EQRzy/U3cxE4s859xuPrWr0pENykv/7xeDyu59uLtH8+eDlT89wTwkb
-	IJ9/eZpAOZ4JkiTYXFoP4mR81xB6aXdA/KD982b0ZpTkBziLfrd/XyIpoHMAFQ95r9XjBxRKZQV
-	Fh4GCIkOeRiM0giPNPLUT10PCbjz0mqjTsaFlI7h/ArEwNR8pv667JHKtNdGqQL3nYfcXstB69R
-	56NzuinFb0u4fRXXGRn3e9zNIzRDwe9mMW252MMUOVxKapjY93S76dzJ8INNF4or3F/2IKm+QrO
-	Q==
-X-Received: by 2002:a05:620a:288a:b0:915:29cd:306c with SMTP id af79cd13be357-930a5f1a98fmr1940964285a.9.1784576154411;
-        Mon, 20 Jul 2026 12:35:54 -0700 (PDT)
+        bh=yyvPve12WhVPZzxgug/++OGUAj2qo04o06OFhCcQQmk=;
+        b=YtGgwkQugEecqmA6ol/brXWDcYelg+WsK583tpzd1lJcup5x2t/tqioX1l2RDIercH
+         AtnyFSayD/E2u5OPd0baal3Vj6tyuky9fGt7MlJ2NTiMOUfR0K8ZfqcrXWX5XAvU44gi
+         ziCkb3g/CYXGv7xFTgr7cPBKtYLakSIw4uMhD1L+qfp/upq984LH4GHz+GlVf586cLn7
+         FALgbfZmKQm7t/U+fq/DJxweS9ph8KS42shRoQlOMRYpePDqxN17TkJZVVH0b1SqOmYa
+         iQhxcBQSx81QFv/vS54GLxGPWPeOQ2YqDqWMblaNl9DRXmrKFiz9yrbfhOuO9aJPtHYZ
+         Criw==
+X-Forwarded-Encrypted: i=1; AHgh+RrjNsyT1c3PzW9IkpEYYofBBID0Tk7uMoFMa7nLNx/jH/n1lGZVqRpjTF6AVoY5W5qtOfUPRw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzxUuc80RR+dQpu/knqtO46QpkNGxHUhc10K0D/A9mDgRUgBxlZ
+	9mQ31iXChkS0AEKFUylPnnzJeSbRLuhxVeizcIAB7NG1C8GcJlIBTVFIc4M9PQQgLrU=
+X-Gm-Gg: AfdE7ckDdggIXYlcrSPLMvAX3ioS8diHL1QBxn4lmy9y9Q84ZUWa4GpOCpG3U8GMawT
+	SSs182R0mk1MIUy0KU+zwJmi5mcGSjwg6IRdhJ9IaXuO3oXjmKCitm80NVMDTkpByFVEovT+xjF
+	5b4TBQaa5prhSCe7nQjZ/eyc9Db5L0YOgAuCFAwxbzcXbFZDcmHB7BAoFvLSBhA57BgM6881OrC
+	LwOjs9JvdnzESmW3U1sg5T3SJaRsXqI82/OAcxWPakny1Fs9NxUpJ0162OwFhLu+OXP05mayG8F
+	I6kmVgdFcKLcQjO87wqFAcLH2fNnt7pTewgp8hBjv55ub+xRIBZkkG7AUG8elMReQcb92znHkKP
+	cuZBfkWUqCJtPQw7Pm6Hkeuyg5th2T9i/tmcq0XPgQXbchiG8An1OIeiyF/LT6ZOXw/vreZF9QN
+	1PG7Yml9BXqgvKKJBKO3N6so14GLk/Mdb51/20HXo5/nJAf+ip7TzPj0b7XeCASo8=
+X-Received: by 2002:a05:620a:2855:b0:92e:c118:18e1 with SMTP id af79cd13be357-930b437e3afmr1539338685a.88.1784576157342;
+        Mon, 20 Jul 2026 12:35:57 -0700 (PDT)
 Received: from gourry-fedora-PF4VCD3F.lan (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b545e47bsm957792285a.35.2026.07.20.12.35.52
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-930b545e47bsm957792285a.35.2026.07.20.12.35.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jul 2026 12:35:54 -0700 (PDT)
+        Mon, 20 Jul 2026 12:35:57 -0700 (PDT)
 From: Gregory Price <gourry@gourry.net>
 To: linux-mm@kvack.org
 Cc: Zhigang.Luo@amd.com,
@@ -138,9 +137,9 @@ Cc: Zhigang.Luo@amd.com,
 	damon@lists.linux.dev,
 	linux-kselftest@vger.kernel.org,
 	kernel-team@meta.com
-Subject: [PATCH v5 29/36] mm: add NODE_PRIVATE_CAP_DEMOTION for private-node tiering demotion
-Date: Mon, 20 Jul 2026 15:34:23 -0400
-Message-ID: <20260720193431.3841992-30-gourry@gourry.net>
+Subject: [PATCH v5 30/36] mm: add NODE_PRIVATE_CAP_NUMA_BALANCING for private-node NUMA balancing
+Date: Mon, 20 Jul 2026 15:34:24 -0400
+Message-ID: <20260720193431.3841992-31-gourry@gourry.net>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260720193431.3841992-1-gourry@gourry.net>
 References: <20260720193431.3841992-1-gourry@gourry.net>
@@ -152,69 +151,50 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A private node is invisible to the tiering/demotion hierarchy by default:
-memory-tiers.c never includes it, so reclaim never demotes onto it.
+By default NUMA balancing does not scan or prot_none private-node
+folios, so the kernel never migrates them via access sampling.
 
-Add NODE_PRIVATE_CAP_DEMOTION to opt a private node into demotion.
+Add NODE_PRIVATE_CAP_NUMA_BALANCING to opt a private node in.
 
-When set, memory-tiers adds the node to the demotion set and reclaim's
-demote path may target it (allocating from the private zonelist).
+Add folio_allows_numa_balance() to gate change_prot_numa() scans on
+node eligibility. Opted-in private node participate like normal.
 
-Demotion is driven by reclaim, so CAP_DEMOTION requires CAP_RECLAIM.
-Otherwise the node can either fill up and drive odd system-wide OOM
-behavior, or demotion doesn't work (nothing can demote from the node).
+Unlike demotion, NUMA balancing is not reclaim-driven, so this
+capability stands alone and does not require CAP_RECLAIM.
 
 Signed-off-by: Gregory Price <gourry@gourry.net>
 ---
- drivers/base/node.c          |  5 +++++
- include/linux/node_private.h | 30 +++++++++++++++++++++++++++++
- mm/memory-tiers.c            | 37 +++++++++++++++++++++++++++---------
- mm/vmscan.c                  |  4 ++++
- 4 files changed, 67 insertions(+), 9 deletions(-)
+ include/linux/node_private.h | 29 +++++++++++++++++++++++++++++
+ mm/internal.h                | 13 +++++++++++++
+ mm/mempolicy.c               |  2 +-
+ 3 files changed, 43 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/node.c b/drivers/base/node.c
-index 94cd51f51b7e8..3d61ca1b805dc 100644
---- a/drivers/base/node.c
-+++ b/drivers/base/node.c
-@@ -896,6 +896,11 @@ int node_private_register(int nid, struct node_private *np)
- 	if (!np || !node_possible(nid))
- 		return -EINVAL;
- 
-+	/* Demotion is driven by reclaim, so it requires reclaim. */
-+	if ((np->caps & NODE_PRIVATE_CAP_DEMOTION) &&
-+	    !(np->caps & NODE_PRIVATE_CAP_RECLAIM))
-+		return -EINVAL;
-+
- 	mutex_lock(&node_private_lock);
- 	mem_hotplug_begin();
- 
 diff --git a/include/linux/node_private.h b/include/linux/node_private.h
-index 7b617b1fa9c28..87b03444b2c97 100644
+index 87b03444b2c97..5c3e070ed0deb 100644
 --- a/include/linux/node_private.h
 +++ b/include/linux/node_private.h
-@@ -15,6 +15,7 @@ struct page;
- #define NODE_PRIVATE_CAP_RECLAIM	(1UL << 0)	/* allow mm reclaim */
+@@ -16,6 +16,7 @@ struct page;
  #define NODE_PRIVATE_CAP_USER_NUMA	(1UL << 1)	/* allow mempolicy */
  #define NODE_PRIVATE_CAP_HOTUNPLUG	(1UL << 2)	/* allow hot-unplug */
-+#define NODE_PRIVATE_CAP_DEMOTION	(1UL << 3)	/* allow tiering demotion */
+ #define NODE_PRIVATE_CAP_DEMOTION	(1UL << 3)	/* allow tiering demotion */
++#define NODE_PRIVATE_CAP_NUMA_BALANCING	(1UL << 4)	/* allow NUMA balancing */
  
  /**
   * struct node_private - Per-node container for N_MEMORY_PRIVATE nodes
-@@ -118,6 +119,30 @@ static inline bool node_allows_hotunplug(int nid)
+@@ -143,6 +144,29 @@ static inline bool node_allows_demotion(int nid)
  	return ret;
  }
  
 +/**
-+ * node_allows_demotion - may kernel tiering demote to this node?
++ * node_allows_numa_balancing - may NUMA balancing scan/migrate this node?
 + * @nid: the node to test
 + *
-+ * Governs whether a private node participates in the demotion hierarchy.
-+ * Demotion accumulates pages on the node, so CAP_DEMOTION requires CAP_RECLAIM
-+ * (enforced at registration) as a safety valve.
++ * Access-based promotion/migration.  Unlike demotion this is not reclaim-driven,
++ * so CAP_NUMA_BALANCING stands alone (no CAP_RECLAIM dependency).
 + *
-+ * return: true for normal nodes and private nodes opted into CAP_DEMOTION.
++ * return: true for normal nodes and private nodes opted into CAP_NUMA_BALANCING.
 + */
-+static inline bool node_allows_demotion(int nid)
++static inline bool node_allows_numa_balancing(int nid)
 +{
 +	struct node_private *np;
 +	bool ret;
@@ -223,7 +203,7 @@ index 7b617b1fa9c28..87b03444b2c97 100644
 +		return true;
 +	rcu_read_lock();
 +	np = rcu_dereference(NODE_DATA(nid)->node_private);
-+	ret = np && (np->caps & NODE_PRIVATE_CAP_DEMOTION);
++	ret = np && (np->caps & NODE_PRIVATE_CAP_NUMA_BALANCING);
 +	rcu_read_unlock();
 +	return ret;
 +}
@@ -231,11 +211,11 @@ index 7b617b1fa9c28..87b03444b2c97 100644
  #else /* !CONFIG_NUMA */
  
  static inline bool folio_is_private_node(struct folio *folio)
-@@ -150,6 +175,11 @@ static inline bool node_allows_hotunplug(int nid)
+@@ -180,6 +204,11 @@ static inline bool node_allows_demotion(int nid)
  	return true;
  }
  
-+static inline bool node_allows_demotion(int nid)
++static inline bool node_allows_numa_balancing(int nid)
 +{
 +	return true;
 +}
@@ -243,141 +223,43 @@ index 7b617b1fa9c28..87b03444b2c97 100644
  #endif /* CONFIG_NUMA */
  
  #if defined(CONFIG_NUMA) && defined(CONFIG_MEMORY_HOTPLUG)
-diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-index 25e121851b586..c673080d153e4 100644
---- a/mm/memory-tiers.c
-+++ b/mm/memory-tiers.c
-@@ -7,6 +7,7 @@
- #include <linux/memory-tiers.h>
- #include <linux/notifier.h>
- #include <linux/sched/sysctl.h>
-+#include <linux/node_private.h>
- 
- #include "internal.h"
- 
-@@ -317,6 +318,21 @@ void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets)
- 	rcu_read_unlock();
+diff --git a/mm/internal.h b/mm/internal.h
+index 62e68acae08a3..01ab8b32b0bd8 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -123,6 +123,19 @@ static inline bool folio_allows_madvise(struct folio *folio)
+ 	       node_allows_reclaim(folio_nid(folio));
  }
  
-+/* Tiering set: N_MEMORY | (N_MEMORY_PRIVATE w/ CAP_DEMOTION) */
-+static nodemask_t tierable_nodes;
-+
-+static void update_tierable_nodes(void)
++/*
++ * folio_allows_numa_balance() - may NUMA balancing scan/migrate this folio?
++ *
++ * NUMA balancing is access-aware tiering migration, so it follows the tiering
++ * opt-in: false for ZONE_DEVICE and for N_MEMORY_PRIVATE nodes without
++ * CAP_NUMA_BALANCING, true for all other folios.
++ */
++static inline bool folio_allows_numa_balance(struct folio *folio)
 +{
-+	int node;
-+
-+	lockdep_assert_held_once(&memory_tier_lock);
-+
-+	tierable_nodes = node_states[N_MEMORY];
-+	for_each_node_state(node, N_MEMORY_PRIVATE)
-+		if (node_allows_demotion(node))
-+			node_set(node, tierable_nodes);
++	return !folio_is_zone_device(folio) &&
++	       node_allows_numa_balancing(folio_nid(folio));
 +}
 +
- /**
-  * next_demotion_node() - Get the next node in the demotion path
-  * @node: The starting node to lookup the next node
-@@ -330,7 +346,7 @@ void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets)
- int next_demotion_node(int node, const nodemask_t *allowed_mask)
+ /*
+  * folio_allows_longterm_pin() - may this folio be long-term GUP-pinned?
+  *
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index fe42a510590a2..4daba81fff7c7 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -874,7 +874,7 @@ bool folio_can_map_prot_numa(struct folio *folio, struct vm_area_struct *vma,
  {
- 	struct demotion_nodes *nd;
--	nodemask_t mask;
-+	nodemask_t mask, tierable;
+ 	int nid;
  
- 	if (!node_demotion)
- 		return NUMA_NO_NODE;
-@@ -370,7 +386,8 @@ int next_demotion_node(int node, const nodemask_t *allowed_mask)
- 	 * closest demotion target.
- 	 */
- 	nodes_complement(mask, *allowed_mask);
--	return find_next_best_node_in(node, &mask, &node_states[N_MEMORY]);
-+	tierable = tierable_nodes;
-+	return find_next_best_node_in(node, &mask, &tierable);
- }
+-	if (!folio || folio_is_private_managed(folio) || folio_test_ksm(folio))
++	if (!folio || !folio_allows_numa_balance(folio) || folio_test_ksm(folio))
+ 		return false;
  
- static void disable_all_demotion_targets(void)
-@@ -378,7 +395,7 @@ static void disable_all_demotion_targets(void)
- 	struct memory_tier *memtier;
- 	int node;
- 
--	for_each_node_state(node, N_MEMORY) {
-+	for_each_node_mask(node, tierable_nodes) {
- 		node_demotion[node].preferred = NODE_MASK_NONE;
- 		/*
- 		 * We are holding memory_tier_lock, it is safe
-@@ -401,7 +418,7 @@ static void dump_demotion_targets(void)
- {
- 	int node;
- 
--	for_each_node_state(node, N_MEMORY) {
-+	for_each_node_mask(node, tierable_nodes) {
- 		struct memory_tier *memtier = __node_get_memory_tier(node);
- 		nodemask_t preferred = node_demotion[node].preferred;
- 
-@@ -435,9 +452,10 @@ static void establish_demotion_targets(void)
- 	if (!node_demotion)
- 		return;
- 
-+	update_tierable_nodes();
- 	disable_all_demotion_targets();
- 
--	for_each_node_state(node, N_MEMORY) {
-+	for_each_node_mask(node, tierable_nodes) {
- 		best_distance = -1;
- 		nd = &node_demotion[node];
- 
-@@ -455,7 +473,7 @@ static void establish_demotion_targets(void)
- 		 * nodelist to skip list so that we find the best node from the
- 		 * memtier nodelist.
- 		 */
--		nodes_andnot(tier_nodes, node_states[N_MEMORY], tier_nodes);
-+		nodes_andnot(tier_nodes, tierable_nodes, tier_nodes);
- 
- 		/*
- 		 * Find all the nodes in the memory tier node list of same best distance.
-@@ -464,7 +482,7 @@ static void establish_demotion_targets(void)
- 		 */
- 		do {
- 			target = find_next_best_node_in(node, &tier_nodes,
--							&node_states[N_MEMORY]);
-+							&tierable_nodes);
- 			if (target == NUMA_NO_NODE)
- 				break;
- 
-@@ -503,7 +521,7 @@ static void establish_demotion_targets(void)
- 	 * allocation to a set of nodes that is closer the above selected
- 	 * preferred node.
- 	 */
--	lower_tier = node_states[N_MEMORY];
-+	lower_tier = tierable_nodes;
- 	list_for_each_entry(memtier, &memory_tiers, list) {
- 		/*
- 		 * Keep removing current tier from lower_tier nodes,
-@@ -550,7 +568,8 @@ static struct memory_tier *set_node_memory_tier(int node)
- 
- 	lockdep_assert_held_once(&memory_tier_lock);
- 
--	if (!node_state(node, N_MEMORY))
-+	/* Include N_MEMORY and N_MEMORY_PRIVATE with CAP_DEMOTION */
-+	if (!node_state(node, N_MEMORY) && !node_allows_demotion(node))
- 		return ERR_PTR(-EINVAL);
- 
- 	mt_calc_adistance(node, &adist);
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index f1722693ac2db..b617f7cd1e716 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -963,6 +963,10 @@ static struct folio *alloc_demote_folio(struct folio *src,
- 
- 	mtc = (struct migration_target_control *)private;
- 
-+	if (mtc->nmask &&
-+	    nodes_intersects(*mtc->nmask, node_states[N_MEMORY_PRIVATE]))
-+		mtc->alloc_flags = ALLOC_ZONELIST_PRIVATE;
-+
- 	/*
- 	 * make sure we allocate from the target node first also trying to
- 	 * demote or reclaim pages from the target node via kswapd if we are
+ 	/* Also skip shared copy-on-write folios */
 -- 
 2.53.0-Meta
 
