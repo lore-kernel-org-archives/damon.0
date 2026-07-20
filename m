@@ -1,132 +1,106 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DF84218B6
-	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 13:07:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530BC435A80
+	for <damon@lists.linux.dev>; Mon, 20 Jul 2026 15:11:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784552832; cv=none; b=DBmXPobw8nFEeEz7qDaA9A2sm6C7GYFUPiYxeHH4FQi4Fdtl1FJoPTK+so5W89JVyychLX/qauElWxHA20cAPbi/5TCxcbG7nGrhJ+Kam6M1kwhDJz2WXz8NfqA94LEx5sJ8Gekj0U6iExfQuMPGwVtGSko8tWn0h4H2T3YJrR4=
+	t=1784560313; cv=none; b=mRYSN7Dr1nAI4qYqS3GRjXn+6UosVVQ9n92s4kwkObeKc4P7gZiZt0PO/yjKo4HOZ2vRmPScAjw2q33EQbrmDu++q8bQfICzqW0c0wC2sYXu82MoxPsvg20t4J4+8b38ui4/rVJOpgvpm918FXsW5oJ/2TfCUzDFjsT3pKc0qrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784552832; c=relaxed/simple;
-	bh=Fuki6j+/YAJQSF9QIAUdpX79seRq4EZ2DaLy91jrQhU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mXLnWp79pK5vWi/JSPugqVkotJQRtkFD0YazGlqPjGy2Zy2g6SP7CyRuboQCB9yaMdDnUGbOYH4yph8TgeNYOYYwt9XkSgf+0HZ5knh7IT7Ko4ZGl49E+k3fBVfBiIAL0GSyzTHFGWZE8C/jNth2ZEZmHsuQp+jbZiwnGs8mwE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: e4737b38843b11f1aa26b74ffac11d73-20260720
-X-CTIC-Tags:
-	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
-	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
-	HR_SJ_DIGIT_LEN, HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM
-	HR_SJ_PHRASE, HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
-	HR_TO_NO_NAME, IP_UNTRUSTED, SRC_UNTRUSTED, IP_LOWREP, SRC_LOWREP
-	DN_TRUSTED, SRC_TRUSTED, SA_TRUSTED, SA_EXISTED, SN_TRUSTED
-	SN_EXISTED, SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_GOOD
-	CIE_GOOD_SPF, GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD
-	ABX_MISS_RDNS
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:a7d9821b-5224-4c18-86eb-e17116515eae,IP:10,
-	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:35
-X-CID-INFO: VERSION:1.3.12,REQID:a7d9821b-5224-4c18-86eb-e17116515eae,IP:10,UR
-	L:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:35
-X-CID-META: VersionHash:e7bac3a,CLOUDID:2100e216361bce3249ee41bc74c42a17,BulkI
-	D:260720205347EDB9HWME,BulkQuantity:1,Recheck:0,SF:17|19|66|78|102|127|865
-	|898,TC:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:40,QS:n
-	il,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC
-	:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: e4737b38843b11f1aa26b74ffac11d73-20260720
-X-User: lienze@kylinos.cn
-Received: from ubuntu.. [(61.48.211.50)] by mailgw.kylinos.cn
-	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1692005296; Mon, 20 Jul 2026 21:06:59 +0800
-From: Enze Li <lienze@kylinos.cn>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	enze.li@gmx.com,
-	Enze Li <lienze@kylinos.cn>
-Subject: [PATCH v2] samples/damon/mtier: use damon_addr_range consistently
-Date: Mon, 20 Jul 2026 21:06:42 +0800
-Message-ID: <20260720130642.508355-1-lienze@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1784560313; c=relaxed/simple;
+	bh=mFb9jdPBVrss9q06qlsHZnMz93OG/HbdUAqqHLYtSW4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=r5CqtmM98K23vviXKLGANampeiGAWaG/ZBMuXRA+SO8AiKp7sMlWW+WE9TL4307qJbzDQGMByu8s6LPgbw4qxzFznsY9MUVWGsuEKCZM3mrIBZ+BdjFz+x9WSeJdbJf/YuEANzu0ReqhzrMaj39sP1PmvZAqQXIwBkt2fsMjgwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l3kKYMYt; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l3kKYMYt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41DE1F000E9;
+	Mon, 20 Jul 2026 15:11:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784560311;
+	bh=II3ZvWti6Bi+9I3esjOsg7I4ZJWV70oA9rVblCP7QiQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=l3kKYMYtxk3aC6+5McIKXDlz8VG5ObmHDpSKFKKQeloLj2c4xVeJfTSpbGk3r+oAF
+	 3Qc4b+h4/1T5w/IB4SLvtwGr+0o0HZDUJe7lXA0oHam5sExynHH/IizgdJZRXDp+B/
+	 LNRGmuK2QYNJLWZmVJV6wKzKQNZWIMPylR5HLMsrys6ggCdkAU9UEbPyRa0V9TENNF
+	 krbdNR1kQnERnx+1Br2nKXaNAWID0cosaEw4EVJP3NKtUlkwWZSFN7VznDreE0x2WK
+	 Vyc+sbc8Ts/ZeDML4IZzV+XsrnIAb4DclZOImXbr4MLUUUnGarQOPzy6aBtVV124R9
+	 9Ku7BucqS8fww==
+From: SJ Park <sj@kernel.org>
+To: Song Hu <husong@kylinos.cn>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: Question on damon_sysfs_memcg_path_to_id() path resolution
+Date: Mon, 20 Jul 2026 08:11:42 -0700
+Message-ID: <20260720151143.83277-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <c4cf2558-0516-417e-affd-9a5550ff32f8@kylinos.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The DAMON provides struct damon_addr_range for unified address range
-management.  However, the mtier sample still defines a local struct
-region_range and mixes its usage with struct damon_addr_range in
-damon_sample_mtier_build_ctx().
+On Mon, 20 Jul 2026 11:35:06 +0800 Song Hu <husong@kylinos.cn> wrote:
 
-This patch removes the local struct region_range and changes the
-parameter type of nid_to_phys() to struct damon_addr_range.  It also
-gets rid of the now-redundant local variable and pass the address range
-directly to damon_set_regions().
+[...]
+> The only in-kernel PSI consumer today is DAMON, and it reads a single
+> system-wide value - psi_system.total for memory (mm/damon/core.c,
+> damos_get_some_mem_psi_total). There is no reusable in-kernel helper that
+> returns per-cgroup, multi-domain (cpu/mem/io x some/full) pressure as a
+> value (psi_show is a seq_file printer for the /proc and cgroup files, not a
+> value-returning API), and no in-kernel threshold-trigger (psi_trigger_create
+> is userspace-fd only).
+> 
+> I'm writing a node-level multi-domain (cpu + memory + io) resource
+> coordinator for container/Kubernetes nodes - a small C daemon using libbpf
+> plus PSI trigger fds. To attribute pressure to specific cgroups and act
+> across domains it needs per-cgroup, per-domain PSI,
 
-Signed-off-by: Enze Li <lienze@kylinos.cn>
----
-v2:
-- Fix inaccurate "identical layout" claim in commit message
-- Remove redundant range variable and pass &addr directly to
-  damon_set_regions()
+Sounds interesting!
 
- samples/damon/mtier.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+> which today means
+> open-coding reads of cgroup_psi(cgrp)->total[] the way DAMON does in-kernel.
+> And I think DAMON's own per-memcg DAMOS quota goals would benefit from the
+> same per-cgroup read if it existed.
+> 
+> So the idea is a small helper, e.g.
+> 
+>   /* per-cgroup, per-domain pressure; reuses update_averages() */
+>   u64 psi_cgroup_total(struct cgroup *cgrp, enum psi_res res, bool some);
+>   /* and/or an avg10/60/300 variant */
+> 
+> with DAMON migrated to it as the first in-tree user.
 
-diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-index ac9c24b92ead..3712287f009c 100644
---- a/samples/damon/mtier.c
-+++ b/samples/damon/mtier.c
-@@ -52,12 +52,7 @@ module_param(detect_node_addresses, bool, 0600);
- 
- static struct damon_ctx *ctxs[2];
- 
--struct region_range {
--	phys_addr_t start;
--	phys_addr_t end;
--};
--
--static int nid_to_phys(int target_node, struct region_range *range)
-+static int nid_to_phys(int target_node, struct damon_addr_range *range)
- {
- 	if (!node_online(target_node)) {
- 		pr_err("NUMA node %d is not online\n", target_node);
-@@ -78,8 +73,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- 	struct damos *scheme;
- 	struct damos_quota_goal *quota_goal;
- 	struct damos_filter *filter;
--	struct region_range addr;
--	struct damon_addr_range range;
-+	struct damon_addr_range addr;
- 	int ret;
- 
- 	ctx = damon_new_ctx();
-@@ -123,10 +117,7 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
- 	if (addr.start >= addr.end)
- 		goto free_out;
- 
--	range.start = addr.start;
--	range.end = addr.end;
--
--	ret = damon_set_regions(target, &range, 1, DAMON_MIN_REGION_SZ);
-+	ret = damon_set_regions(target, &addr, 1, DAMON_MIN_REGION_SZ);
- 	if (ret)
- 		goto free_out;
- 
+I'm sorry but I'm missing your points from here.  Could you elaborate why we
+need the helper, and why DAMON should use it?
 
-base-commit: c872b70f5d6c742ad34b8e838c92af81c8920b3e
--- 
-2.43.0
+You're implementing your system in user-space, so I don't think you will use
+that helper for your system.  DAMON has its internal implementation for reading
+PSI.  What's the benefit of the helper compared to the current one?
 
+Also that helper may be implemented inside PSI or cgroup subsystem and
+maintained by the maintainers of the subsystems.  Are they willing to have this
+and increase their maintenance burden?
+
+> 
+> Before I do anything: does this capability gap resonate with you - is
+> per-cgroup PSI consumption something you'd want DAMON to grow into, or do
+> you see it staying userspace-only? And if a helper makes sense, any
+> preferred shape, or concerns about exposing the averaging/locking contract?
+> I'd keep the first cut to just the read helper + DAMON migration; an
+> in-kernel trigger callback I'd treat as a separate, later step and only if
+> there's a second consumer.
+
+Seems you have larger picture.  I don't clearly show what is it.  Could you
+share it at a high level?  That might enlighten me.
+
+
+Thanks,
+SJ
+
+[...]
