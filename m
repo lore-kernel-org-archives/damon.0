@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCCA381E84
-	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 04:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686F63D3CE2;
+	Tue, 21 Jul 2026 04:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784609025; cv=none; b=EdHvQJMMIt/KgzWT9hW9tt8M6qc5jQZ8qR9IREgNFJLdGNzkkMYr8T/Iu12HZ/Im27ZWY/ZR/XlkGyJ+BHVulEda7hGZkb5KE8pJzHDLdEmsjNFtbxLylLlgumIgL4kdIJih5NLxZZ2IfDcOqNOQB33AF8B3z3ukD3JgYQXOLKA=
+	t=1784609912; cv=none; b=C40rtheppvgQb5p23rtTWAZqb2kRifsb9XcZRUQT8BANGCs4kq/naA7yTYbSawrMaoAGq3K5fJEdY4juY6vSP2xUh6lzuPY+SSlHbu8GY9qfYaXpMBbqhAQSzbTcujE4BP8WmXKrLSI7E8hZtoptLon0vAqqgseIbp2WM9ovSh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784609025; c=relaxed/simple;
-	bh=2K8JZZZx2kZzn5Hyw75RgI+Wiolp+n5IMxWUucZMgEs=;
+	s=arc-20240116; t=1784609912; c=relaxed/simple;
+	bh=dhRmIlMGJZePgOKLMaQI4oeLcAHXn7W04wGzlY70/nA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=my8hL2p2rCDit9qe/KUOpaFCjeGV7C3fSc3BSkwbAodQC9vV5EO2UXcgIZr7Y3IZzAfvegBHbvyckhEwBUrtxsMlqNYAPitc2HyLWKOPOAl5YQh6B3a4jI6FyIYIFl10BM5wvCPjOGudogS/wRwlUHayei7M3eNl5q31eN+VtdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fCbpj0Uu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JLt41HuWTuOMMsAHfvden817hOEcojQiUbO+UsBh3UVd5jqeHYSpdyylnOVInxI/7ikNzlnomR2G8wFwhc57wQW0iyjN6vrbxiOuFfx2h2bWO/XKKq3COwGrpY1yeKrhv8sfnG5iwCwOeWROnd2tUwjilGClLZA3gFe1rgdPvHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ocO/Dr6c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fCbpj0Uu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A643D1F000E9;
-	Tue, 21 Jul 2026 04:43:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ocO/Dr6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D003A1F000E9;
+	Tue, 21 Jul 2026 04:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784609023;
-	bh=BvZcV0I/kMXiWhNwTtJrhZJsb/X/CbPDVY247We4Rg4=;
+	s=k20260515; t=1784609911;
+	bh=J5yQEBXGQYKlXTuJWTKJ5jl/uKM937zNduRrrgh0V/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fCbpj0UuguveBDnEgfqWQ7yfn664pzgNmZqlweSjLHodflvwWkgLnCkS3YlpztKG1
-	 jpD/CSJlpwQS9l64zM0kFCMkZ/glnn4409NU4tQljI7rAtVY81h/UUhpEQaxsxc7Ve
-	 pFvSyZL7Wh61nq2Ns77HNhRcVAnTavqO2GQGbN/med3lNrxpNoIypc16ZYKsVHZVf8
-	 P8+MMB/9SDUNR1/LmhyOkMBVQwwxyGLYmq9YV6HLwv/cPCo+GrNEIHM2OFC5drMFc7
-	 qzkbsqwhNP2W3jW73hPaW57tod53smb3w3I6Y5WvJ8wuw8ru9MKKEIXGpEYb9DPb4F
-	 6jmCGe43cq1PA==
+	b=ocO/Dr6cQVX/++uEVTH2tHTKGZk/vH65Qd90HfNjM8e9kJNj+rzg8iNsx0/n2irXq
+	 m3K9OvHpvc1TLubL5tDHq8/DLAC6IhWlgrc7zoB82amCrJ+t0zqTfgqAkY1yP3wA1x
+	 u42ivEkiO7V4tcUR5cZ/iEMU+TypM6mjr15N1F9MNlMqZhNgFx7EsyeWUMJfrY7EOA
+	 rIvuGn/aP1SUbqqVnCiDkgjrKcJBADl/tVAroP0jcbfbHFoQkKhYZnW5cAfeGYmOOP
+	 rjUoiKcr9by4SEv4XZ95ZzGmIm047HpzM54HfEHqDQdVJoSBf6CH19hqYweuskEFhc
+	 hjlVyCWzuXcbg==
 From: SJ Park <sj@kernel.org>
-To: Song Hu <husong@kylinos.cn>
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: Question on damon_sysfs_memcg_path_to_id() path resolution
-Date: Mon, 20 Jul 2026 21:43:33 -0700
-Message-ID: <20260721044334.152061-1-sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1.y] mm/damon/core: make charge_addr_from aware of end-address exclusivity
+Date: Mon, 20 Jul 2026 21:58:17 -0700
+Message-ID: <20260721045818.157773-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2bde5778-532e-4970-a2fa-526a7d4de7aa@kylinos.cn>
-References: 
+In-Reply-To: <2026072059-refocus-lizard-6528@gregkh>
+References: <2026072059-refocus-lizard-6528@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,66 +45,42 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 21 Jul 2026 10:03:07 +0800 Song Hu <husong@kylinos.cn> wrote:
-[...]
-> >> I'd keep the first cut to just the read helper + DAMON migration; an
-> >> in-kernel trigger callback I'd treat as a separate, later step and only if
-> >> there's a second consumer.
-> > Seems you have larger picture.  I don't clearly show what is it.  Could you
-> > share it at a high level?  That might enlighten me.
-> >
-> The bigger picture, since you asked: I'm working on node-level multi-domain
-> (cpu + memory + io) resource coordination for container/K8S co-location -
-> online/latency-sensitive work sharing a node with offline/best-effort. PSI
-> per domain is the signal ("who is starved, on which domain"); cgroup
-> controllers are the actuators (cpu.weight/cpu.max, memory.low/reclaim,
-> io.weight/io.max). Adjust across domains to defend online SLOs while
-> keeping the node full. oomd, systemd-oomd and rubik each do one slice
-> today; nobody coordinates across domains, and that cross-domain part is
-> what I'm building.
+From: SeongJae Park <sj@kernel.org>
 
-Thank you for sharing the big picture.  Sounds very interesting!
+DAMON region end address is exclusive one, but charge_addr_from is
+assigned assuming the end address is inclusive.  As a result, DAMOS action
+to next up to min_region_sz memory can be skipped.  This is quite
+negligible user impact.  But, the bug is a bug that can be very simply
+fixed.  Fix the wrong assignment to respect the exclusiveness of the
+address.
 
-> 
-> What brought me to PSI/DAMON is the memory domain. DAMOS is already the
-> strongest memory actuator I'd want to orchestrate rather than reinvent -
-> proactive reclaim, per-memcg DAMOS goals, the PSI-aware quota - except
-> DAMOS goals today only take memory-domain signals (mem PSI, mem usage). For
-> a cross-domain coordinator the useful step is making memory-domain reclaim
-> also respond to non-memory pressure (e.g. shrink offline footprint when
-> cpu.pressure rises).
+The issue was discovered [1] by Sashiko.
 
-That's a very interesting idea.  I'm not quite sure what would be the expected
-result of doing cpu pressure based proactive memory reclamation, though.
+Link: https://lore.kernel.org/20260428042942.118230-1-sj@kernel.org
+Link: https://lore.kernel.org/20260428032324.115663-1-sj@kernel.org [1]
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 5a2d162e22bf33eb89d53e802d0fc1ec422e19b6)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> So the honest question, which I think is where this actually meets the
-> kernel: is the pattern you'd prefer that an orchestrator just adjust DAMOS
-> schemes over sysfs in response to external pressure, or have you thought
-> about DAMOS goals accepting non-memory signals (cpu/io PSI, or generic)?
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d293200d824e9..4b434ebd37c53 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -803,7 +803,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 			quota->charged_sz += sz;
+ 			if (quota->esz && quota->charged_sz >= quota->esz) {
+ 				quota->charge_target_from = t;
+-				quota->charge_addr_from = r->ar.end + 1;
++				quota->charge_addr_from = r->ar.end;
+ 			}
+ 		}
+ 		if (s->action != DAMOS_STAT)
+-- 
+2.47.3
 
-I haven't thought such things.  That's only because I was unable to imagine a
-use case that will benefit from that.  If you have some theories and/or data,
-please feel free to propose changes.
-
-FYI, DAMOS supports arbitrary 'user_input' for a quota goal.  You will be able
-to do some experiments using it.
-
-> I'm asking which side of that line you'd want it on, not pushing either.
-
-No worry.  I prefer DAMON to keep doing random evolution for providing benefits
-to the users.  If you have use cases that can benefit from some changes in
-DAMON, please don't hesitate at asking questions and proposing changes.
-
-> 
-> Thanks for asking for the picture - stating it clarified it for me too.
-
-I'm happy to help :)
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/design.html#aim-oriented-feedback-driven-auto-tuning
-
-
-Thanks,
-SJ
-
-[...]
