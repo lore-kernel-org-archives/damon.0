@@ -1,113 +1,92 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B62932D43C
-	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 12:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2643655D0;
+	Tue, 21 Jul 2026 13:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.222
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784638711; cv=none; b=h8jlaDlsSiVv6OapChQ/Mkk38TAUV76meVpzo428XLpcmM9G01WhQrWa4nRMEzDxF3EvgZk7NRkVtoVfEev90ECqVTSjXU3RsdPVW7fK0+0SJG1zppRrMZx2pjATaU2IS26zA8zDRjrni1g594rHIZwlyR6quqR/WDDJnr69VkU=
+	t=1784640386; cv=none; b=SKPo9fbczu1CkrFtsXA4RFOH0R7TfdEt9HkGb+/AloBzi84WzVvxRpLZrg8IY9peLZuMnR8u37+4akHeqb0ahFRmQS+DepVd1uFOhHbssG8hYH15OA3hn3TQkKvykxyQInK+/7YZY1zoJsfT/U4wxXs/2brGNmnFpjIsoY/yZlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784638711; c=relaxed/simple;
-	bh=LQSYa66re0iTslGYMNX6YFcOH5jtkZOUXjn4mGRa98c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NuvIpKPSEtF5KT3uN9+Gj2hy4O7LL1G4vS+VLKzY1DC8vqcNoGf+g/cxtGxqhbm/wVt+XxsegDWu3BOnGDYFVn4XfIwEAtmCmRxnW3jW0Y96u25D7rLLYghB8YHW4ZJBdZWjCSrSiEjDyl6uZTW2zAXvxHEW2giyi/TUxEfBjKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=Lu55HiYO; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+	s=arc-20240116; t=1784640386; c=relaxed/simple;
+	bh=Hc9kzoQ9rFyyW8XHyUKHR1d2Dsj44oWw597yXAQp+uc=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=GEdDjd+l4Gj33ZCwWwrJxIBzZMFI9e4j/ITV72Yg0PdryKBOEpAw0kzHvyU9ULEnsQngigOH4JsMaBOetENIGbOCBx6pZgnTLXBilTze45H6GqyqfZb0TPzW1reanA58CF1ZJR1Kzb565cLmo+EBqCsi9y6kOERkDaqFQ9IiOc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=Uj1oBLm2; arc=none smtp.client-ip=113.46.200.222
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="Lu55HiYO"
-dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="Uj1oBLm2"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
 	c=relaxed/relaxed; q=dns/txt;
 	h=From;
-	bh=WQ/bIIO+fVLNltTgziHSVBVNXf4iqiNT2wWZgC2YhaU=;
-	b=Lu55HiYOJ4+JZue4XXyulYTRzrGLbp8+ldADC/bKhsApTDw8uDXqDBgD55OdwRAPU//nJGQpf
-	ZlsVv+/gQFZywoUyx4/MtgqFBCGZxmrqnSkaitEn4AqE9KqpqovtxWyZl8gm32z8CPOTrtVMAW2
-	aC8iaLQBuyHu+i8uCxPi4zs=
-Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4h4HVQ156yzHnHSX;
-	Tue, 21 Jul 2026 20:57:50 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id 5F9724058B;
-	Tue, 21 Jul 2026 20:58:14 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+	bh=9hgq2bOlQdWO8j42MpZzQv278XodO4khDw3hgg8g+EE=;
+	b=Uj1oBLm2piRS2jcNrVUUdAj64NR7QB2AifXV29XsiXtXTCt8/PmMpEq+nwr+s8iX+TO4SVXy8
+	IusYOu5A+t3ilK/5m8l2t6qY1s1aIGuzFz4Xh3ZFK7Gj4qZgTf2WIrFuLXxQw3LkIeDfDM4c4Ja
+	qOFsHfRNHFyUbXAQwQgO+MU=
+Received: from mail.maildlp.com (unknown [172.19.163.214])
+	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4h4HwR2B42zLlX5;
+	Tue, 21 Jul 2026 21:16:55 +0800 (CST)
+Received: from whupemo200006.china.huawei.com (unknown [7.152.185.252])
+	by mail.maildlp.com (Postfix) with ESMTPS id 668704056C;
+	Tue, 21 Jul 2026 21:26:17 +0800 (CST)
+Received: from [10.174.178.219] (10.174.178.219) by
+ whupemo200006.china.huawei.com (7.152.185.252) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 21 Jul 2026 15:58:13 +0300
-Message-ID: <524b7d2c-4136-4476-9a84-a3dedcd00c5e@huawei-partners.com>
-Date: Tue, 21 Jul 2026 15:58:13 +0300
+ 15.2.1544.11; Tue, 21 Jul 2026 21:26:10 +0800
+Subject: Re: [PATCH v5 00/36] Private Memory NUMA Nodes
+To: Gregory Price <gourry@gourry.net>
+CC: <linux-mm@kvack.org>, <Zhigang.Luo@amd.com>, <arun.george@samsung.com>,
+	<balbirs@nvidia.com>, <brendan.jackman@linux.dev>, <apopple@nvidia.com>,
+	<alucerop@amd.com>, <matthew.brost@intel.com>, <akpm@linux-foundation.org>,
+	<david@kernel.org>, <ljs@kernel.org>, <liam@infradead.org>,
+	<vbabka@kernel.org>, <rppt@kernel.org>, <surenb@google.com>,
+	<mhocko@suse.com>, <corbet@lwn.net>, <skhan@linuxfoundation.org>,
+	<gregkh@linuxfoundation.org>, <rafael@kernel.org>, <dakr@kernel.org>,
+	<djbw@kernel.org>, <vishal.l.verma@intel.com>, <dave.jiang@intel.com>,
+	<alison.schofield@intel.com>, <osandov@osandov.com>, <jannh@google.com>,
+	<pfalcato@suse.de>, <jackmanb@google.com>, <hannes@cmpxchg.org>,
+	<ziy@nvidia.com>, <pbonzini@redhat.com>, <osalvador@suse.de>,
+	<joshua.hahnjy@gmail.com>, <rakie.kim@sk.com>, <byungchul@sk.com>,
+	<ying.huang@linux.alibaba.com>, <kasong@tencent.com>, <qi.zheng@linux.dev>,
+	<shakeel.butt@linux.dev>, <baohua@kernel.org>, <axelrasmussen@google.com>,
+	<yuanchu@google.com>, <weixugc@google.com>, <yury.norov@gmail.com>,
+	<linux@rasmusvillemoes.dk>, <longman@redhat.com>, <ridong.chen@linux.dev>,
+	<tj@kernel.org>, <mkoutny@suse.com>, <sj@kernel.org>, <jgg@ziepe.ca>,
+	<jhubbard@nvidia.com>, <peterx@redhat.com>, <baolin.wang@linux.alibaba.com>,
+	<npache@redhat.com>, <ryan.roberts@arm.com>, <dev.jain@arm.com>,
+	<lance.yang@linux.dev>, <usama.arif@linux.dev>, <xu.xin16@zte.com.cn>,
+	<chengming.zhou@linux.dev>, <roman.gushchin@linux.dev>,
+	<muchun.song@linux.dev>, <linux-kernel@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>, <driver-core@lists.linux.dev>,
+	<nvdimm@lists.linux.dev>, <linux-cxl@vger.kernel.org>,
+	<linux-debuggers@vger.kernel.org>, <linux-fsdevel@vger.kernel.org>,
+	<kvm@vger.kernel.org>, <cgroups@vger.kernel.org>, <damon@lists.linux.dev>,
+	<linux-kselftest@vger.kernel.org>, <kernel-team@meta.com>
+References: <20260720193431.3841992-1-gourry@gourry.net>
+From: Zenghui Yu <yuzenghui@huawei.com>
+Message-ID: <a9c52bb6-5e04-1d41-913a-685a7be3fad4@huawei.com>
+Date: Tue, 21 Jul 2026 21:26:09 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] mm/damon: Introduce a huge page collapsing
- mechanism using auto tuning
-To: SJ Park <sj@kernel.org>
-CC: <artem.kuzin@huawei.com>, <stepanov.anatoly@huawei.com>,
-	<wangkefeng.wang@huawei.com>, <yanquanmin1@huawei.com>, <zuoze1@huawei.com>,
-	<damon@lists.linux.dev>, <akpm@linux-foundation.org>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>
-References: <20260721035848.147455-1-sj@kernel.org>
+In-Reply-To: <20260720193431.3841992-1-gourry@gourry.net>
+Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260721035848.147455-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ whupemo200006.china.huawei.com (7.152.185.252)
 
-Hi SJ,
+On 2026/7/21 3:33, Gregory Price wrote:
+>   KVM: guest_memfd: bind backing memory to a NUMA node at creation
+>   KVM: selftests: add a guest_memfd FLAG_BIND_NODE test
 
-On 7/21/2026 6:58 AM, SJ Park wrote:
-> Hello Asier,
-> 
-> On Mon, 20 Jul 2026 12:01:37 +0000 <gutierrez.asier@huawei-partners.com> wrote:
-> 
->> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
->>
->> Overview
->> ========
->> This patch set introduces a new autotuning which allows to collapse
->> hot regions into hugepages.
-> 
-> Thank you for making this series well done like this!
-> 
-> [...]
->> Patches Sequence
->> ================
->> Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP and autotuning
->> Patch 2 -> sysfs support for the new quota goal
->> Patch 3 -> Document hugepage_mem_bp parameter
-> 
-> I'd prefer handling 'total' underflow and returning 10,000 instead of INT_MAX
-> from damos_hugepage_mem_bp() corner cases.  But definitely that is no blocker.
-> For the series,
-> 
-> Reviewed-by: SJ Park <sj@kernel.org>
-> 
-> This series is applied to damon/next [1] tree.  If this series is not added to
-> mm.git in short term (~3 days?), I will ask mm.git maintainer (Andrew Morton)
-> to pick this.  In the case, I will update patch 1 to do what I mentioned as
-> preferred change if you don't mind.  So, no action from your side is needed for
-> now.  If it seems I also forgot doing that or you cannot wait for my action,
-> please feel free to directly ask that to Andrew.
-> 
-> [1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+I can't find the last patch in my inbox or on the lore. Not sure what went
+wrong.
 
-Thanks a lot for your patience and help with the patch series.
-
-I will work on the suggested minor changes once the this patch set
-lands into mm-next, if you don't mind.
-
--- 
-Asier Gutierrez
-Huawei
-
+Thanks,
+Zenghui
