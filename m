@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929AB27E07E
-	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 03:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663B62DB795
+	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 03:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784605681; cv=none; b=p/7z9I60HsglAdtiJvQeIQ/BySn1fbQBRsR/FlPpNbC+3n8P8OouskghLvbpcaTpJKZ6SX4hdaFILH8bl1KI3JVFPEHL+8XQ5f7bLM/gvkGRmZhmXd1HVVfhiXBlpAYR97nT4tQUagZ1oZnM8f6JDiMxGGHnAtfcFHWRk9Hogzc=
+	t=1784605837; cv=none; b=det2HUAmnRXMI+4+PDMuUW11SAJVnltcjZqNwyFda1pH7P3JIYGetj3k5uPuGAHPR88NwH46ZI9jQsDTIhxIO5EmmIwoJ9USjckrtKpbB4Qgrj2QCi0oQWU/CDgexmP5zGMmn7qAzWEiQQORn32qe/+hbJtNIW83ilR4baI5xQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784605681; c=relaxed/simple;
-	bh=w8fkZ4m8COBMt7xKSQnlruVS1vWzws4FjgbVQXws4p4=;
+	s=arc-20240116; t=1784605837; c=relaxed/simple;
+	bh=lXlQ7MRT134VI9jTlrGBkHWhcaAsFyYefLesZXeT8vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bP1+en2lqTArvkFrzTZMOSN7bJ5q6nLMtb3z33NLwAsDpQMh3jKqL6DJfC1oQrPFufCBUbpXIr05NdKqEgbzIUsImOw3Oxv751FccFKRbRj10hAPHtOUhWexUZqAVHvKYv0PzwNtb6lOu8K/VvqZn+hN/o8uSenjrc8sK+0EhnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cLm4bVOY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hAnWEF5k+YWgPPiEPbZWit46YJoRsAOhDr5VeaezXkGM443uMbl4upI3qbNjo0oFsKAaclbq2n90PKBs7R7/xasoXkSl+BWI6oIBy8omwDwWVjSt0Jnq3tQQGkd+gCOaGRSat1dwmhMcYK1j+I8Mlkmim5JTpPFpWYrE5qUQHa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LLrakx2f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cLm4bVOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC701F000E9;
-	Tue, 21 Jul 2026 03:47:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LLrakx2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FF41F000E9;
+	Tue, 21 Jul 2026 03:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784605679;
-	bh=GFyNJy6gukeRDs7GsixC0VHnRsNXr+LNvHI3smy1tGY=;
+	s=k20260515; t=1784605836;
+	bh=VFp1orJlO3AAWZjZtJBaM8vYB3B2UiEEPEiReORNIQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cLm4bVOYaYWm2Dc+nIxFIw2J5kEMIsOQJs9Rz3yt6S/bn3h22GlmbnjlUPbxm1s+x
-	 YpEDIuR7oFd5V8ZroQaRL0hdKyN3CO1qBKyz+1/nLq7/RmoeD6pxuGq03r8h2AF2TG
-	 3jbtR02Q7rQDZHPNSaWK3DjyFPoa2sABKl0B5dcZWKMLIRlXAa/CBqji5Xo2jHsteV
-	 UyqBHdxZywYkl+2j+WmXR3iQBHmbU0MJ32q4JlCuOcla0k9KP49nrG2r5dMW+Icc57
-	 rkQUAN6LGeKsUFcxsxifQHxHn1asx3EuI7MKL1uQ1ve7tbjxqcB6c4NFQ1g8OLB5hZ
-	 YAsH6+0NMz+hQ==
+	b=LLrakx2f4tkU9KaLTKRPj1MmtCUUHHGVTe4qt35iJSZ9Rbbmflf4Zlu43dSLeuKOr
+	 EaVnsRNCSNssOjtKvOiy0yzyiMIMl2LJQ993LEfIcLUz+eqpc57A2SRrqX+M6QmOwE
+	 uKL0LoOHpukBu2iojU4DX/TN9x6LDt1ObMZ8CdLbG05fUYbS7GAfwTowW9szwsMrdF
+	 iwGQ+58KrYbO7gHtTMn2Bp8yuVGuEIHnzZ8a+g+mtHYkkEMy/r9yNzqeNSawtir9HY
+	 WDvT2RwvH5wnmaVH8Qcui8haXceh9HcWbF9lHXfbw59qP/VLXVgYQEaOYdYolKyKjj
+	 qP180AZbDlcxQ==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	gutierrez.asier@huawei-partners.com,
 	damon@lists.linux.dev
-Subject: Re: [PATCH v3 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
-Date: Mon, 20 Jul 2026 20:47:54 -0700
-Message-ID: <20260721034756.147011-1-sj@kernel.org>
+Subject: Re: [PATCH v3 2/3] mm/damon/sysfs: support hugepage_mem_bp quota goal metric
+Date: Mon, 20 Jul 2026 20:50:23 -0700
+Message-ID: <20260721035025.147141-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260720121658.0AFC01F00AC4@smtp.kernel.org>
+In-Reply-To: <20260720121538.9C1381F00ADF@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,134 +46,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 20 Jul 2026 12:16:57 +0000 sashiko-bot@kernel.org wrote:
+On Mon, 20 Jul 2026 12:15:38 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Unsigned underflow in `total` bypasses the division-by-zero guard, causing `damos_hugepage_mem_bp` to return 0 instead of the intended safeguard `INT_MAX`.
-> - [Medium] The new `DAMOS_QUOTA_HUGEPAGE_MEM_BP` metric is missing from the sysfs parser mapping array, rendering the feature completely inaccessible to userspace.
-> - [Medium] 32-bit integer overflow in `mult_frac()` yields drastically incorrect ratios when the number of huge pages exceeds ~1.7GB.
-> 
-> Pre-existing issues:
-> - [High] Preexisting division by zero in `damos_get_in_active_mem_bp` when LRU lists are empty.
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] Integer underflow when computing 'total' in `damos_hugepage_mem_bp` causes DAMON to become maximally aggressive on highly idle systems.
+> - [Medium] The new `hugepage_mem_bp` sysfs metric is missing from the DAMON sysfs selftest script.
+> - [Low] Missing documentation for the `hugepage_mem_bp` metric in the DAMON design guide.
 > --
 > 
-> --- Patch [1]: [PATCH v3 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning ---
-> commit 8d24f093924a5075fd67c8f7808eada2166af60d
+> --- Patch [2]: [PATCH v3 2/3] mm/damon/sysfs: support hugepage_mem_bp quota goal metric ---
+> commit 304fd61bee6da0356569e9c8297451d15a43e10f
 > Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 > 
-> mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+> mm/damon/sysfs: support hugepage_mem_bp quota goal metric
 > 
-> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP auto tuning and add a new DAMOS
-> quota goal metric to measure huge page consumption. Add a guard to avoid
-> division by 0 when vmstat lags.
+> This commit exposes the new DAMOS_QUOTA_HUGEPAGE_MEM_BP autotune policy
+> metric through the DAMON sysfs interface. It adds "hugepage_mem_bp" to
+> the sysfs-schemes interface.
 > 
-> Link: https://lore.kernel.org/all/20260715151615.99767-1-sj@kernel.org/
-> 
-> > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > --- a/include/linux/damon.h
-> > +++ b/include/linux/damon.h
-> [ ... ]
-> > @@ -167,6 +168,7 @@ enum damos_quota_goal_metric {
-> >  	DAMOS_QUOTA_ACTIVE_MEM_BP,
-> >  	DAMOS_QUOTA_INACTIVE_MEM_BP,
-> >  	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
-> > +	DAMOS_QUOTA_HUGEPAGE_MEM_BP,
-> 
-> [Severity: Medium]
-> Is this feature accessible from userspace?
-> 
-> If a user writes hugepage_mem_bp to the target_metric sysfs file,
-> target_metric_store() iterates over the damos_sysfs_qgoal_metric_names
-> array to find a match.
-> 
-> Because DAMOS_QUOTA_HUGEPAGE_MEM_BP is missing from that array in
-> mm/damon/sysfs-schemes.c, will the kernel always reject the user's input
-> with -EINVAL?
-
-No issue.  The next patch will make it accessible.
-
-> 
-> >  	NR_DAMOS_QUOTA_GOAL_METRICS,
+> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> > index 32f495a96b17a..d9b81d7b5910e 100644
+> > --- a/mm/damon/sysfs-schemes.c
+> > +++ b/mm/damon/sysfs-schemes.c
+> > @@ -1269,6 +1269,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_qgoal_metric_names[] = {
+> >  		.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+> >  		.name = "node_eligible_mem_bp",
+> >  	},
+> > +	{
+> > +		.metric = DAMOS_QUOTA_HUGEPAGE_MEM_BP,
+> > +		.name = "hugepage_mem_bp",
+> > +	},
 > >  };
-> >  
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -3007,6 +3007,24 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
-> >  	return mult_frac(inactive, 10000, total);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but can this divide by zero?
+> While this patch exposes the new metric, is there a potential integer
+> underflow in the underlying implementation of damos_hugepage_mem_bp() in
+> mm/damon/core.c?
 > 
-> In damos_get_in_active_mem_bp(), total is used as the divisor without a zero
-> check. If all memory is forced onto the unevictable list (e.g. via
-> mlockall()), or if the system is completely idle with only kernel allocations,
-> active + inactive can be zero.
+> Due to per-CPU vmstat counter drift, pending positive deltas from freed
+> memory can cause the global NR_FREE_PAGES count to temporarily exceed the
+> fixed totalram_pages(). In damos_hugepage_mem_bp(), total is computed as:
 > 
-> If DAMOS_QUOTA_ACTIVE_MEM_BP is used in such a state, would mult_frac()
-> trigger a hardware divide-by-zero exception and panic the system?
+>     total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
+> 
+> On a highly idle system, this could cause the unsigned subtraction to
+> underflow, resulting in a value near ULONG_MAX. The subsequent !total check
+> would fail, and mult_frac(thp, 10000, total) would evaluate to 0 due to the
+> enormous denominator.
+> 
+> Would this score of 0 lead damon_feed_loop_next_input() to perceive a maximal
+> divergence from the goal, forcing the scheme to maximize its quota
+> aggressiveness instead of minimizing it?
 
-No blocker of this patch.
+As I replied to the same report, the user impact is trivial.  No blocker.
 
-I will work on this.
-
-> 
-> >  }
-> >  
-> > +static unsigned int damos_hugepage_mem_bp(void)
-> > +{
-> > +	unsigned long thp, total;
-> > +
-> > +	thp = global_node_page_state(NR_ANON_THPS) +
-> > +				global_node_page_state(NR_SHMEM_THPS) +
-> > +				global_node_page_state(NR_FILE_THPS);
-> > +	total = totalram_pages() - global_zone_page_state(NR_FREE_PAGES);
-> > +
-> > +	/*
-> > +	 * vmstat may lag in idle systems and lead to free pages equaling to
-> > +	 * the total RAM in the system.
-> > +	 */
-> > +	if (!total)
-> > +		return INT_MAX;
-> 
-> [Severity: High]
-> Can total underflow here?
-> 
-> Because global_zone_page_state(NR_FREE_PAGES) relies on vmstat, which uses
-> per-CPU caching, the global NR_FREE_PAGES counter can temporarily exceed
-> totalram_pages() if some CPUs have flushed frees while others have pending
-> allocations.
-> 
-> If this happens, total (which is unsigned long) underflows to a value near
-> ULONG_MAX. Could this bypass the !total guard and pass a massive integer
-> to mult_frac(), which then incorrectly returns 0?
-
-Maybe better to address correctly.  But the user impact is too trivial to block
-this patch.  No blocker in my opinion.
-
-> 
-> > +	return mult_frac(thp, 10000, total);
 > 
 > [Severity: Medium]
-> Will this overflow on 32-bit architectures?
+> Should tools/testing/selftests/damon/sysfs.sh be updated to include the new
+> metric?
 > 
-> mult_frac() evaluates the intermediate multiplication using the types of its
-> arguments. Since thp is an unsigned long, evaluating thp * 10000 uses 32-bit
-> arithmetic on 32-bit systems like ARM LPAE.
+> The test_goal() function validates writes to target_metric for all existing
+> metrics:
 > 
-> If the system has more than 429,496 base pages of THP (approximately 1.7GB),
-> will this silently wrap around and yield drastically incorrect quota goal
-> ratios?
+>     ensure_write_succ "$fpath" "active_mem_bp" "valid input"
+>     ensure_write_succ "$fpath" "inactive_mem_bp" "valid input"
+>     ensure_write_succ "$fpath" "node_eligible_mem_bp" "valid input"
+> 
+> Could hugepage_mem_bp be added to this sequence to ensure the sysfs interface
+> is regression tested?
 
-No blocker.  Known low priority issue.
+Definitely better to do this.  No blocker, though.  I will do this unless
+someone steps up earlier.
 
 > 
-> > +}
+> [Severity: Low]
+> Does this new metric need to be documented in
+> Documentation/mm/damon/design.rst?
+> 
+> The documentation lists all available target_metric values, such as
+> inactive_mem_bp and node_eligible_mem_bp, but it appears hugepage_mem_bp
+> is missing.
+
+No blocker.  The next patch of this series does that.
+
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260720120140.881468-1-gutierrez.asier@huawei-partners.com?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260720120140.881468-1-gutierrez.asier@huawei-partners.com?part=2
 > 
 
 
