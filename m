@@ -1,101 +1,99 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BDF431E65
-	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 06:33:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAC43C4B93;
+	Tue, 21 Jul 2026 06:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784615613; cv=none; b=fZPq9Qg8ax+UEl1OH8Z5Yo8ltPFmYkALWOl7R1qzlyZPkGBGFK8k3gaiOYChA/PGsvFxGb5nRzS9K/RJFp7meGQrtJLcp2jo7yxa7PgaDaGDn76dAGX6cuMZ5vtCpCNrEWjQ9KUXi1tlQ/cHCE/WNy/BzrENZPOHWj0GOq8zumY=
+	t=1784616072; cv=none; b=LfHwu8+utoU9G2x4Tv1RmO8Cgp/AkBHzwl1yeGdqr97izcD99iJ1IWlfrC45CuhMRBqQdnSB5SqdzfdxOaXRgi3WaMaX2N+LtTwsYUusCvf7N2cyoCAQ/W8TSvrP3GBK7sh4quWHCW8y83j2gbsUotEipZkSOjm2ixTFtPC4bL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784615613; c=relaxed/simple;
-	bh=NsuEFUX7/nG6Du0CUR9U9H/uW0x2uppQOsxYvePVl+4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zh2nWZMLPaW6jMcKnYZCZn3SBgB+OZW1o+Kj0K12BbxYvwTxzTJnW3N1Mve+zT90/3QBGhpiVHt3HyDeUMaHg0ORQVt4LnDK6Pcn0RF86Vg8+scEhVPFBrVTH8y2/ph46jKsL3UdPqJGJe9U3XriRdUOdLuymSBynT3ddOM8D0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 147b4d3284ce11f1aa26b74ffac11d73-20260721
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:5fa9bac4-0e4a-46ce-88b0-19b306f5f5ad,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:10
-X-CID-INFO: VERSION:1.3.12,REQID:5fa9bac4-0e4a-46ce-88b0-19b306f5f5ad,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
-	elease,TS:10
-X-CID-META: VersionHash:e7bac3a,CLOUDID:c71eda32d66573de90340bbe7ea22ca4,BulkI
-	D:260721092816JFTOF5G1,BulkQuantity:1,Recheck:0,SF:17|19|64|66|78|80|81|82
-	|83|102|127|841|865|898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil
-	,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,D
-	KP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 147b4d3284ce11f1aa26b74ffac11d73-20260721
-X-User: lienze@kylinos.cn
-Received: from [192.168.111.172] [(223.70.159.239)] by mailgw.kylinos.cn
-	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 399262998; Tue, 21 Jul 2026 14:33:26 +0800
-Message-ID: <04c66a8e-a342-427d-afa5-aede30a4df2c@kylinos.cn>
-Date: Tue, 21 Jul 2026 14:33:22 +0800
+	s=arc-20240116; t=1784616072; c=relaxed/simple;
+	bh=yD1X+bOhprt9Ce0R03/zPBjujXOIt9eVNKfL+WV+CT4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cQFZLV5H5k+BFjxh0AxbnkTVQsvsCKh/Zx0BCDin6uWSnE9qxg60WuF+Po9rGW+nAdyC7IpIW+IOHk6v0DNKx03bvWMtHxbDbidF5OJ7PDOQ40C0pcyz8bTPctqVrXhoiFzUhr3EyCPOvOHNJO8LKi4V/NzwACFuF4CMD/06Y9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kTiZGmzZ; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kTiZGmzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372371F000E9;
+	Tue, 21 Jul 2026 06:41:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784616071;
+	bh=dOHrExRuWAF3V9Vp4izbIbOaYSPY1V+m+7eA9UxNOs8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=kTiZGmzZz3UketVn5wFBEYl1u3hPtLyHVEEOz4TULPcMK8jBb99DiCJjEo0c5Jcvk
+	 ybN/XDXNCuR2DLNeCcLaLqvXV7j0dJ8KPUD3hCNet8cDB2iZYHTBSmf54HtRXCs9lT
+	 l+T0nwHVrwvjECzB6Hnjts1BDzAwiNNFNstCzKCDuZRM9OseOrWsCJ+9n2+XuDQnQD
+	 wYkk3UXA8sbfsTj2fzQwDTl000B/BWPTWREbcZKEB4Pa4UUUYK9Et1PVkFpDzIpzcJ
+	 C8ZlF67xWrbQOl4ZdnFznWQF2umYIw+dHh6mRpsfaDIWy4KJXJuv9352pwX4YP8gIT
+	 yvSkkJLoaDKfQ==
+From: SJ Park <sj@kernel.org>
+To: longlong yan <yanlonglong@kylinos.cn>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	shuah@kernel.org
+Subject: Re: [PATCH v2] selftests/damon: Add missing NULL checks after malloc()
+Date: Mon, 20 Jul 2026 23:41:03 -0700
+Message-ID: <20260721064104.182094-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260721060542.326-1-yanlonglong@kylinos.cn>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] samples/damon/mtier: use damon_addr_range consistently
-To: SJ Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- enze.li@gmx.com
-References: <20260721012801.94223-1-sj@kernel.org>
-Content-Language: en-US
-From: Enze Li <lienze@kylinos.cn>
-In-Reply-To: <20260721012801.94223-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi SJ,
+Hello longlong,
 
-On 7/21/26 9:28 AM, SJ Park wrote:
-> Hello Enze,
-> 
-> On Mon, 20 Jul 2026 21:06:42 +0800 Enze Li <lienze@kylinos.cn> wrote:
-> 
->> The DAMON provides struct damon_addr_range for unified address range
->> management.  However, the mtier sample still defines a local struct
->> region_range and mixes its usage with struct damon_addr_range in
->> damon_sample_mtier_build_ctx().
-> 
-> damon_addr_range is for DAMON core layer address system that uses 'unsigned
-> long' as the address type.  Because 'mtier' is dealing directly with physical
-> address, we use a dedicated struct for that purpose.  On 32bit systems having
-> more than 4 GiB memory, this may be necessary.
-> 
-> 'mtier' doesn't really take care of the >4GiB 32bit system since it is simply
-> casting the 'phys_addr_t' addresses into 'unsigned long' addresses.  But it
-> might support it better in future, using the addr_unit parameter.
-> 
->>
->> This patch removes the local struct region_range and changes the
->> parameter type of nid_to_phys() to struct damon_addr_range.  It also
->> gets rid of the now-redundant local variable and pass the address range
->> directly to damon_set_regions().
-> 
-> So, I don't think this change is required as-is.  I don't really want to add
-> addr_unit support for >4GiB 32bit system, either, unless it turns out to be
-> really needed.  I'd like to keep sample modules as simple as possible.  If the
-> code was confusing you because it is anyway casting the types, adding a comment
-> explaining the rationale might be a better change, in my opinion.
 
-Thanks for the explanation and the feedback -- I agree that keeping
-struct region_range is the right call.  Per your suggestion, I've
-prepared a new patch that simply adds a comment to clarify the rationale.
+From the next time, when someone asked questions to your patch, please answer
+the questions and keep the discussion until the next action item becomes clear.
+Please don't post a new version without making sure such discussion is done.
 
-Best Regards,
-Enze
+Also, don't post a new version of a patch as a reply to the previous version.
+Post as a new thread from the next time.
 
-<...>
+On Tue, 21 Jul 2026 14:05:42 +0800 longlong yan <yanlonglong@kylinos.cn> wrote:
 
+> In low-memory scenarios, malloc() can fail. Without checking,
+> the test will dereference NULL and crash, causing the test harness
+> to report a failure that is unrelated to DAMON functionality.
+
+'test harness' means the DAMON selftests that internally runs the access_memory
+and access_memory_even programs, suc as damos_apply_interval.py, right?  Could
+you share more details about how the test harness report a failure in the
+situation?
+
+> This is a false negative:
+
+Shouldn't it be called false positive, as this is a context of tests?
+
+> the test should skip or report a resource error,
+> not crash and mask the actual test result.
+> 
+> Add NULL checks after each malloc() call, printing an error message
+> to stderr and returning -1 on failure.
+
+The above description reads like this patch makes the DAMON selftets skip or
+report a resource error.  But I don't show how that works.  Could you please
+elaborate?
+
+> 
+> Signed-off-by: longlong yan <yanlonglong@kylinos.cn>
+> ---
+
+Please add changelog on the commentary area [1], with links to the previous
+revisions.
+
+[1] https://docs.kernel.org/process/submitting-patches.html#commentary
+
+
+Thanks,
+SJ
+
+[...]
