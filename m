@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0073837FF4D;
-	Tue, 21 Jul 2026 14:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6CB37B028;
+	Tue, 21 Jul 2026 14:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784642420; cv=none; b=Ltn9qf55qDR8btoj1qolOtdahN99F4Wlivn8FkrbIw55XIhnPFZytouh+q2+tcavA8xiM+IEclslRG5yPdMIaCOV1Kjp1wNGnh5jXicz1YA8rRMvjwnXdBH3Z8jJ7JqgKCBaTK+Y2St42LV1zCyE81fu2mVzrkWnglsWIpohlZs=
+	t=1784642646; cv=none; b=mCvWV0Gnkk07HKyRCmrVqiAVfUUUzCYwQrg2+YR8Zwy3Qek4R0X4JriV+4gUO2p6PqHZ39r925PDKGo1W9oADe5wbKMpgJzl9ZW4pPm/ZWzuVw13Rzi20t+TnlgeTEnyXLCjnUCI5m5bBYo/zrkdADthgjz4lqoj+nmdOnNzr0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784642420; c=relaxed/simple;
-	bh=eL5R4YB4LCq1ily5WOK40fam4AzGckf3CIltPbXbFyc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Im2kUddZOQUEX6AtejW7X6f6bEYn63W+TfdqKEbB1nb/R3mA8OJ+UTPvsrDw/39lBR8PW/g/doq3w/CU3b+qs+6x+jb/FQ2vHTKf3xirroXNtegKAgJRc2EHpZNYWEV+jCGXJp6KPfq/OIORuYQcbuHh84tIvty3ixLTn0Jk4KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmnZeN6C; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784642646; c=relaxed/simple;
+	bh=Sm06Xy+vaFJg0F0XF8rEpFoME8TlyPy6vat58pdXHAE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JPwKuvN55O6/tYZHqXgnl3DB+pGWSFqbB9tfA61sSBLIMfrX/FiIkO2HaV3xEKrIjhhyw9V++7KjYKzD8OboPfX+g25htJigwUW/QSLwO1lN17aXelOCZX0r07dolpwQ20+Y6MS7p3rDvcnO+ma//3FwOBgosFUvYWQXHTJdwE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bqj6B4f1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cmnZeN6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC94C1F000E9;
-	Tue, 21 Jul 2026 14:00:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bqj6B4f1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933531F00A3E;
+	Tue, 21 Jul 2026 14:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784642418;
-	bh=5kvsTALewnJop1SQtBJM/PtaPw7n/wsahc/oz32/CFo=;
-	h=From:To:Cc:Subject:Date;
-	b=cmnZeN6CSbqRir7FX072q6EIxo4sdd8KK04/wt2lC1r8iIc5SyY5U418lfkkn9Rne
-	 m9nPJbyv/l64Zb/B1W2Dt8st6QX/AnuROpyeyQZC1YLdHeV0flX5hz7JTTrCBTGsgj
-	 5HZfTq6KChBQfOXcTg/6JwuoxX4BS3vjRYbX3pgh1o+PamGyPssK3BeYTbFCjT9W9P
-	 /WK25fmnEXFeZCMp94af628rY4Y2El7Kij0yJRS05U2oNHSAC51sMS8BmIPpU8IZdV
-	 F/DB/DC+FMVkoAClJgstTIfcb1F14XQC6EV8y0NMcIFrBZ1usbam0EPZ2hAPydowwj
-	 ohceOVmK8KVRg==
+	s=k20260515; t=1784642645;
+	bh=7qjAipW3arar2oQ1bixfWVKbsgwvHLobvM3s6CkTaig=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Bqj6B4f1oF4DqBBhsnzjrmT7J91T1r2gWW2gW8hJkAeQNwEJUZZ9A3hwxjCgTIlPq
+	 +x4Qq55bZ/fK/Ivsj33dE2ScI7Jxj68SByysk4XQqy2EzHJtEATc18Dcs/9bF8e+R6
+	 BY8H5ojUlW1XuZtTXDTsHe1gcr36+JMG1boop4cMBrjdRe9VD1Q6/EvKva1gTo7H2x
+	 QqsD/NBxbz6HjVUCHA6WuaLN/BnFwXyfJ1jqMyLAflNosdbbFqq6vsLjJTw1J95+NC
+	 3HZc/KjhpOLx5KjZbmweHPP4O5pAZN60bsiEMxz5A7dKf/9ujJTPj4KVeDCKdqlzID
+	 QaaJ5CIGn9NKw==
 From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Song Hu <husong@kylinos.cn>,
-	SJ Park <sj@kernel.org>,
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+Cc: SJ Park <sj@kernel.org>,
+	artem.kuzin@huawei.com,
+	stepanov.anatoly@huawei.com,
+	wangkefeng.wang@huawei.com,
+	yanquanmin1@huawei.com,
+	zuoze1@huawei.com,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH v2] mm/damon: update outdated comment about DAMOS filter handling
-Date: Tue, 21 Jul 2026 07:00:08 -0700
-Message-ID: <20260721140011.269802-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/3] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Tue, 21 Jul 2026 07:03:56 -0700
+Message-ID: <20260721140357.285826-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <524b7d2c-4136-4476-9a84-a3dedcd00c5e@huawei-partners.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,62 +52,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Song Hu <husong@kylinos.cn>
+On Tue, 21 Jul 2026 15:58:13 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-The kernel-doc comment above enum damos_filter_type states that only the
-anon and memcg type filters are handled by damon_operations (and therefore
-accounted as 'tried'), and that DAMON_OPS_VADDR and DAMON_OPS_FVADDR do
-not support those two filter types.
+> Hi SJ,
+> 
+> On 7/21/2026 6:58 AM, SJ Park wrote:
+> > Hello Asier,
+> > 
+> > On Mon, 20 Jul 2026 12:01:37 +0000 <gutierrez.asier@huawei-partners.com> wrote:
+> > 
+> >> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> >>
+> >> Overview
+> >> ========
+> >> This patch set introduces a new autotuning which allows to collapse
+> >> hot regions into hugepages.
+> > 
+> > Thank you for making this series well done like this!
+> > 
+> > [...]
+> >> Patches Sequence
+> >> ================
+> >> Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP and autotuning
+> >> Patch 2 -> sysfs support for the new quota goal
+> >> Patch 3 -> Document hugepage_mem_bp parameter
+> > 
+> > I'd prefer handling 'total' underflow and returning 10,000 instead of INT_MAX
+> > from damos_hugepage_mem_bp() corner cases.  But definitely that is no blocker.
+> > For the series,
+> > 
+> > Reviewed-by: SJ Park <sj@kernel.org>
+> > 
+> > This series is applied to damon/next [1] tree.  If this series is not added to
+> > mm.git in short term (~3 days?), I will ask mm.git maintainer (Andrew Morton)
+> > to pick this.  In the case, I will update patch 1 to do what I mentioned as
+> > preferred change if you don't mind.  So, no action from your side is needed for
+> > now.  If it seems I also forgot doing that or you cannot wait for my action,
+> > please feel free to directly ask that to Andrew.
+> > 
+> > [1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+> > 
+> > 
+> > Thanks,
+> > SJ
+> > 
+> > [...]
+> 
+> Thanks a lot for your patience and help with the patch series.
+> 
+> I will work on the suggested minor changes once the this patch set
+> lands into mm-next, if you don't mind.
 
-Neither is accurate anymore.  damos_filter_for_ops() routes every filter
-type except ADDR and TARGET to the operations layer, and the VADDR and
-FVADDR operations (the latter being a copy of the former) handle all of
-those types through damos_folio_filter_match() / damos_va_filter_out().
-Update the comment to match the code.
+As the change is so minor, let's do so as a followup if Andrew picks this
+as-is.  If not and if you or I do resend this series, let's do that as a part
+of the resend.
 
-Signed-off-by: Song Hu <husong@kylinos.cn>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from v1
-- v1: https://lore.kernel.org/20260715092634.1450702-1-husong@kylinos.cn
-- Collect R-b: from SJ.
-- Rebase to the latest mm-new.
-- Update subject prefix.
 
- include/linux/damon.h | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+Thanks,
+SJ
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 327f534696aa8..0c8b7ddef9abb 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -398,16 +398,15 @@ struct damos_stat {
-  * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
-  * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
-  *
-- * The anon pages type and memcg type filters are handled by underlying
-- * &struct damon_operations as a part of scheme action trying, and therefore
-- * accounted as 'tried'.  In contrast, other types are handled by core layer
-- * before trying of the action and therefore not accounted as 'tried'.
-+ * All types except &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET
-+ * are handled by the underlying &struct damon_operations as a part of scheme
-+ * action trying, and therefore accounted as 'tried'.  In contrast,
-+ * &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET filters are handled
-+ * by the core layer before trying of the action, and therefore not accounted
-+ * as 'tried'.
-  *
-- * The support of the filters that handled by &struct damon_operations depend
-- * on the running &struct damon_operations.
-- * &enum DAMON_OPS_PADDR supports both anon pages type and memcg type filters,
-- * while &enum DAMON_OPS_VADDR and &enum DAMON_OPS_FVADDR don't support any of
-- * the two types.
-+ * Support for the operations-handled filters depends on the running
-+ * &struct damon_operations.
-  */
- enum damos_filter_type {
- 	DAMOS_FILTER_TYPE_ANON,
-
-base-commit: 74f0a09e6f09bba55182c3a64bace164ecc0cc6b
--- 
-2.47.3
+[...]
