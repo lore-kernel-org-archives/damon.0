@@ -1,125 +1,151 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0B33F8886
-	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 01:34:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0EC2FE042
+	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 02:03:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784597681; cv=none; b=tCK9Eh0xNvFpIFX0DXENH2KOlIkf62c3JsTXV3R8n0klBqj7mvjzy9ViXlE6Uw+PwCUGTo1P4LI3AmwO5tGIoeNx1TP7lULGfJL9TJvJmcl2nEKmP4Y9ywZK2pzwA3wgw3dE3K9+2Ptiop0nsQFm8DVZI/c0GCx6oh7mCUNay9E=
+	t=1784599405; cv=none; b=NX0+F26gTipvwiz7KdaJrYMVj9n10IFi8w5Lq4od8VYjyD5vZGfp6jPq/SV/m07WKuzx4NT5BBm1vpplIH3xkbmlUTO3QSvTmQDuqeK+cN0eQuNg926xWYaUYOu78UMZwGhLSqxSagl/fxqb8q3v1c9nZSwKQ6G81+q0VttGz4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784597681; c=relaxed/simple;
-	bh=mJLkB0+y/24FxCNgyMJp03dtT/BJdht1U42+/E+iqig=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hpe3kT7Y7gTnFyMheO73/aw5sPtnw/j3VYEdPpiQeTa4Vn5iyUGjh8h3usxZl7spUoP45hUd+3KZn52cGbVWcT+kDJWMroepy+6EZ59hE64NiInY+rX5C8Zf2fN+nlthMVN+3df48m2zyVXdcsg8tJV9bwG35GMIcBk1PFu8k9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UusPJ5ep; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UusPJ5ep"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2cc7ef7ec27so116658245ad.1
-        for <damon@lists.linux.dev>; Mon, 20 Jul 2026 18:34:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1784597680; x=1785202480; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=C/tCUmc6Af/w9eCR04YBcQ5lmA7aoPQojmTNJw54oAM=;
-        b=UusPJ5epJNYTY7LA/QwVs47vcqry6bD7PfkW8rnjWXb4/bDWLHCQPkRAsH/La/MYg5
-         6Qa3+DDJHw6LWnTfim2D2gR5KAz4KLD8vlMFe+7EQyod4YHB0cPSrjppJMZb+cpmR4Q4
-         vW0j0OadYObdKq5tSWHyEoMcNtOjW9a8DOXB5Jze80tM7RTdjspmI23wlXxCWvMe6odv
-         ftsezN921YqLAKlEOq4b5gKpyg6vMs7XFvHYfl+9TRD0B1fjA5JWNkyHfI3Z+0e+X+WC
-         p1FJXB98TmxX+Gc6hNy2Zp8JNb7PYaq8gyOKlL6tmd5oN0APaeWfN72HzMn/kFurS6v2
-         MLGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1784597680; x=1785202480;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=C/tCUmc6Af/w9eCR04YBcQ5lmA7aoPQojmTNJw54oAM=;
-        b=bbYCWj2Qp8yV2autfTovrHbsOUOvCYM2942Kd1RCUzjipviKtRegeovUm+8gAAE27G
-         6ziCdp+Pybe7cHf3Wz2bh88ErMUMjWfnYXTWci3Or+Vn5XE3LrgQk8Wp4deFuXbLhUzq
-         FIkUHjqEY1WdlyCef5hiKB5EF+ej+B9ydx92FSqGLe1K32InNKoN7hkwXe5qAIr1zKKH
-         r9mlGckLMs7zDPPftFhK+WYZh7WDU1NsSRrmX3F9qWAQpjmuEcKF2y1EXvuxNrRMyjPW
-         fxrr8SpdoWEtCtZ9lVK5hixbTVcT9W7f1ctFPjNyeyPRNw0mNoyy8/vabVoVaFQWqMON
-         O/lA==
-X-Gm-Message-State: AOJu0YxGQ4B0Kn9ybUQmJ/yVYWRekjldQ06mtmrqc3R8jBhjEnphWLNz
-	Pebwrqc45ABdWulco9rg0MyV2jeZ3rzNXnqGrOc/Bd+NgrdA6N3e4mt2
-X-Gm-Gg: AR+sD11fbOdi/PawPl8ebvXNKkck6cu8XcO3PyOnreAig8deMojHRRVsb0JqMrKR0ND
-	eW/QCntYqj7+sl5Fs7JpkvHpMGwV2O0BATZ7fySIKRc2RbmyhVLgihc1Toj4HL0crS045bjnHlc
-	eggcVGtJSHqdJ9sKKLxc1RmnqK4EI4/kjE5IFAprAogU7doiEGmQpeF+5eKg99+V1iq3fWB+idR
-	G63hMpLl2ulTJdSuiV5BzXbhduKju0CeEoO86HbqAQiUuofXycMAvpIrpnny1cksQGM21R7Yijp
-	AUxF/q8Bs+1UW/2NP/eYzCkUKhBgJtfcWKizvqIJEPm7iE4K1KZ/EXbOJfVs5a0aBLgE729E9/w
-	+PVATogFp0s2nZfvRA428r9SSiPQ0yKXD67sugWBZoWFfguNvq625VcKvtcpIPzWg4sE0nA+XBv
-	1kUAHkU0EkGHinxp0jEm+blCDo4Ks=
-X-Received: by 2002:a17:902:da85:b0:2ce:93a3:c16c with SMTP id d9443c01a7336-2cf348665f8mr180911895ad.12.1784597679975;
-        Mon, 20 Jul 2026 18:34:39 -0700 (PDT)
-Received: from localhost.localdomain ([112.65.87.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2cf3448f91bsm65631895ad.8.2026.07.20.18.34.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 20 Jul 2026 18:34:39 -0700 (PDT)
-From: Lian Wang <lianux.mm@gmail.com>
-To: sj@kernel.org,
-	david@kernel.org,
-	ziy@nvidia.com
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	akpm@linux-foundation.org,
-	linux-kernel@vger.kernel.org,
-	ljs@kernel.org,
-	liam@infradead.org,
-	vbabka@kernel.org,
-	rppt@kernel.org,
-	surenb@google.com,
-	mhocko@suse.com,
-	npache@redhat.com,
-	baolin.wang@linux.alibaba.com,
-	ryan.roberts@arm.com,
-	daichaobing@sangfor.com.cn,
-	wangkefeng.wang@huawei.com,
-	gutierrez.asier@huawei-partners.com,
-	zengheng4@huawei.com,
-	kasong@tencent.com,
-	corbet@lwn.net,
-	skhan@linuxfoundation.org,
-	linux-doc@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	lianux.mm@gmail.com,
-	lianux.wang@processmission.com,
-	kunwu.chan@linux.dev
-Subject: Re: [RFC PATCH v3 0/3] mm/damon: introduce DAMOS_SPLIT action
-Date: Tue, 21 Jul 2026 09:34:30 +0800
-Message-ID: <20260721013430.40303-1-lianux.mm@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260721004755.93824-1-sj@kernel.org>
-References: <20260721004755.93824-1-sj@kernel.org>
+	s=arc-20240116; t=1784599405; c=relaxed/simple;
+	bh=ptwObekv69lta6ruPinm/B3emBKdwAfsmzZeYwCqmI4=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=kaGD8onVTMrDHC8EjF6lv6GdB0Tsv+YrGq+Nc4WX0xUolqbMheD7huzRIGP2/zAyQSqQPiRncvLbxNEmxvpFiQUuLN0q1M5S1dKHNHSJQvjZ7AyrHGg4pADG+yelfV7A8+ehvA6fPEQhrgfIj/7+9xRFBjdwQpubocnVJqRXWXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 52b033c284a811f1aa26b74ffac11d73-20260721
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NO_NAME, HR_CTE_8B, HR_CTT_TXT
+	HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME, HR_MAILER_MTBG
+	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
+	HR_SJ_PHRASE_LEN, HR_SJ_PRE_RE, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT
+	HR_TO_NAME, IP_TRUSTED, SRC_TRUSTED, DN_TRUSTED, SA_TRUSTED
+	SA_EXISTED, SN_TRUSTED, SN_EXISTED, SPF_NOPASS, DKIM_NOPASS
+	DMARC_NOPASS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12,REQID:c335fe39-cf64-4aeb-abe3-4702b09d22ee,IP:20,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:20
+X-CID-INFO: VERSION:1.3.12,REQID:c335fe39-cf64-4aeb-abe3-4702b09d22ee,IP:20,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:20
+X-CID-META: VersionHash:e7bac3a,CLOUDID:ec53d135517f570b41070649f85342cd,BulkI
+	D:260715215152RIZL4TBA,BulkQuantity:5,Recheck:0,SF:17|19|64|66|78|80|81|82
+	|83|102|127|841|865|898,TC:nil,Content:0|15|52,EDM:-3,IP:-2,URL:0,File:nil
+	,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,D
+	KP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 52b033c284a811f1aa26b74ffac11d73-20260721
+X-User: husong@kylinos.cn
+Received: from [192.168.110.173] [(223.70.159.239)] by mailgw.kylinos.cn
+	(envelope-from <husong@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 1515997216; Tue, 21 Jul 2026 10:03:10 +0800
+Message-ID: <2bde5778-532e-4970-a2fa-526a7d4de7aa@kylinos.cn>
+Date: Tue, 21 Jul 2026 10:03:07 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: husong@kylinos.cn, damon@lists.linux.dev
+Subject: Re: Question on damon_sysfs_memcg_path_to_id() path resolution
+To: SJ Park <sj@kernel.org>
+References: <20260720151143.83277-1-sj@kernel.org>
+From: Song Hu <husong@kylinos.cn>
+In-Reply-To: <20260720151143.83277-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi SJ,
 
-On 7/20/2026 5:47 PM, SJ Park wrote:
-> To me, it's still unclear what is the real user impact, though.
-> ...
-> Only after understanding what is the problem and how bad it is, we
-> will be able to think of different approaches and assess those.
+在 2026/7/20 23:11, SJ Park 写道:
+> On Mon, 20 Jul 2026 11:35:06 +0800 Song Hu <husong@kylinos.cn> wrote:
+>
+> [...]
+>> The only in-kernel PSI consumer today is DAMON, and it reads a single
+>> system-wide value - psi_system.total for memory (mm/damon/core.c,
+>> damos_get_some_mem_psi_total). There is no reusable in-kernel helper that
+>> returns per-cgroup, multi-domain (cpu/mem/io x some/full) pressure as a
+>> value (psi_show is a seq_file printer for the /proc and cgroup files, not a
+>> value-returning API), and no in-kernel threshold-trigger (psi_trigger_create
+>> is userspace-fd only).
+>>
+>> I'm writing a node-level multi-domain (cpu + memory + io) resource
+>> coordinator for container/Kubernetes nodes - a small C daemon using libbpf
+>> plus PSI trigger fds. To attribute pressure to specific cgroups and act
+>> across domains it needs per-cgroup, per-domain PSI,
+> Sounds interesting!
+>
+>> which today means
+>> open-coding reads of cgroup_psi(cgrp)->total[] the way DAMON does in-kernel.
+>> And I think DAMON's own per-memcg DAMOS quota goals would benefit from the
+>> same per-cgroup read if it existed.
+>>
+>> So the idea is a small helper, e.g.
+>>
+>>   /* per-cgroup, per-domain pressure; reuses update_averages() */
+>>   u64 psi_cgroup_total(struct cgroup *cgrp, enum psi_res res, bool some);
+>>   /* and/or an avg10/60/300 variant */
+>>
+>> with DAMON migrated to it as the first in-tree user.
+> I'm sorry but I'm missing your points from here.  Could you elaborate why we
+> need the helper, and why DAMON should use it?
+>
+> You're implementing your system in user-space, so I don't think you will use
+> that helper for your system.  DAMON has its internal implementation for reading
+> PSI.  What's the benefit of the helper compared to the current one?
+>
+> Also that helper may be implemented inside PSI or cgroup subsystem and
+> maintained by the maintainers of the subsystems.  Are they willing to have this
+> and increase their maintenance burden?
+On the helper: agreed - a userspace daemon reads PSI from the cgroup files
+and DAMON already has its read, so there's no in-kernel consumer for it;
+not the right place for kernel-side work. (And you're right that anything
+on the PSI API is Johannes/Tejun's call, not DAMON's.)
+>> Before I do anything: does this capability gap resonate with you - is
+>> per-cgroup PSI consumption something you'd want DAMON to grow into, or do
+>> you see it staying userspace-only? And if a helper makes sense, any
+>> preferred shape, or concerns about exposing the averaging/locking contract?
+>> I'd keep the first cut to just the read helper + DAMON migration; an
+>> in-kernel trigger callback I'd treat as a separate, later step and only if
+>> there's a second consumer.
+> Seems you have larger picture.  I don't clearly show what is it.  Could you
+> share it at a high level?  That might enlighten me.
+>
+The bigger picture, since you asked: I'm working on node-level multi-domain
+(cpu + memory + io) resource coordination for container/K8S co-location -
+online/latency-sensitive work sharing a node with offline/best-effort. PSI
+per domain is the signal ("who is starved, on which domain"); cgroup
+controllers are the actuators (cpu.weight/cpu.max, memory.low/reclaim,
+io.weight/io.max). Adjust across domains to defend online SLOs while
+keeping the node full. oomd, systemd-oomd and rubik each do one slice
+today; nobody coordinates across domains, and that cross-domain part is
+what I'm building.
 
-You are right.  I will work with Sangfor to quantify the real impact
-in their production scenario -- what DAMOS action is driven by the
-inflated hot-memory readings, and how badly the monitoring error
-affects the actual outcome.
+What brought me to PSI/DAMON is the memory domain. DAMOS is already the
+strongest memory actuator I'd want to orchestrate rather than reinvent -
+proactive reclaim, per-memcg DAMOS goals, the PSI-aware quota - except
+DAMOS goals today only take memory-domain signals (mem PSI, mem usage). For
+a cross-domain coordinator the useful step is making memory-domain reclaim
+also respond to non-memory pressure (e.g. shrink offline footprint when
+cpu.pressure rises).
 
-Thank you, David, and Zi Yan for the honest and constructive feedback.
-It made me realize I should have led with the problem, not the
-mechanism.
+So the honest question, which I think is where this actually meets the
+kernel: is the pattern you'd prefer that an orchestrator just adjust DAMOS
+schemes over sysfs in response to external pressure, or have you thought
+about DAMOS goals accepting non-memory signals (cpu/io PSI, or generic)?
+I'm asking which side of that line you'd want it on, not pushing either.
 
-Let me take a step back, gather concrete data on the problem severity,
-and come back with a clearer picture.  I will follow up in this thread
-once I have something solid to share.
+Thanks for asking for the picture - stating it clarified it for me too.
 
-Thanks,
-Lian Wang
+Song
+> Thanks,
+> SJ
+>
+> [...]
