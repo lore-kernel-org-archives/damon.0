@@ -1,121 +1,105 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D47F30F94D
-	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 06:06:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30A740860A
+	for <damon@lists.linux.dev>; Tue, 21 Jul 2026 06:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784613970; cv=none; b=MtRDLkHTlNnW/hhcEetE36+SyATeQSnOH/lPGF+smjW7qfUk9HTv1fg0sWfx5fZQLOzvVS8fJF899LPXW57QtNvmbnGKUHFGDIL66JGUocWE7F8vMCzBk1q7OlALOaTrGWOy00z8uDby14+xd+1jhkqjcO6jlk9WdYFu+Guwuq4=
+	t=1784614360; cv=none; b=O4HGN0GriPpt/4AAIbLIjED/GAOw8GlPc3d6sEsPIWMrsl5b6yKCYPdIBU8G8EqmyjYDA4ITb33mFkEzjv8kxBe+sGa4WmRZEikBcFLWSb/HDd5vkLrq4M/KMmasNExrHm1U/JbNgAR0Y/77oUviVW6ZhAca9rm8W94bRIsw6p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784613970; c=relaxed/simple;
-	bh=r7vtEtX4h2nmkEQvMc36T0KMSlz69SGUN8nK6ksmOqI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXwT63TxeBF6ykxtbxlXU699AHGyOxBtrWGBujzse/2LtrFd8gTfOSAlJG8uZofnfXseIFozJCBkHR2uwfD7vT5fokEMbQriywfa3/Ta3IbOc8a7zV3/rThQHjroW2X384WDtrbAwaJL/d52cuRIk4fKZuB6H8Jn3BsC3mhwto4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 3ed3817a84ca11f1aa26b74ffac11d73-20260721
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12,REQID:aa6d5e60-2d57-4bdd-bca3-2e51833d5e31,IP:0,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:0
-X-CID-META: VersionHash:e7bac3a,CLOUDID:6d452cceb2101199b58a732b8bb20160,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:81|82|102|850|865|898,TC:nil,Content:0|1
-	5|50,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI
-	:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 3ed3817a84ca11f1aa26b74ffac11d73-20260721
-X-User: yanlonglong@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
-	(envelope-from <yanlonglong@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
-	with ESMTP id 1980014824; Tue, 21 Jul 2026 14:05:59 +0800
-From: longlong yan <yanlonglong@kylinos.cn>
-To: sj@kernel.org
-Cc: damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org,
-	shuah@kernel.org,
-	yanlonglong@kylinos.cn
-Subject: [PATCH v2] selftests/damon: Add missing NULL checks after malloc()
-Date: Tue, 21 Jul 2026 14:05:42 +0800
-Message-ID: <20260721060542.326-1-yanlonglong@kylinos.cn>
-X-Mailer: git-send-email 2.47.1.windows.2
-In-Reply-To: <20260721043139.151887-1-sj@kernel.org>
+	s=arc-20240116; t=1784614360; c=relaxed/simple;
+	bh=vz5djLI3sjvtDo0x5pHp6joF1Gp6u0IQBkTgo9JvEUY=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=rLFIsFWTgBUwZHSlUzxVbe7mymFxy4W3x9qV4W0HCsXVBjQsC7ga0+nE/rkR7IPUc4e6P5jz1y89CopoO7yAdbvKqI2Bo6KmyJVjFwriRSe/qLjzggKd0khSxxF0GG269cgmTyNw59Nkj5mmRbJN4S3F9OhmHDsmzZsEzhwMXEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJ69hL23; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJ69hL23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44CA1F000E9;
+	Tue, 21 Jul 2026 06:12:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1784614354;
+	bh=nMCYv2aKrBivPDwKXakOcYZ4uqGo/RdRWhJKiok/cck=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=XJ69hL232nqz0JAj83VMn0oeTDI0ZVJ1VkELFQDFtm+chTS9MRebAIUwpetNWD3cX
+	 ywQDYGA0EciVjo7hkvVnpgsrNexzrib2AHempvCyNqaiZ3R4NwnP18cO6ZjY99OdwL
+	 i6MhRhaRelmqhE6WG6+w53gSAGiVD3dlhJT9syjUImnn/qLkTl/srMmmkeLk1ndAiC
+	 jJEfv2BVh8UPknBPXtnAIeQERmREUGI6n+V2O9qwrX8p2XsZNugv6AEpk9XTm7z267
+	 8poNh5kShrgldEnAm0ebE7C/Bp7q8v5KFAq69V9a4nxZvuYUxKBxEJHsV2Cue3ESZP
+	 ywOS5aGVifiQQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] selftests/damon: Add missing NULL checks after
+ malloc()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "longlong yan" <yanlonglong@kylinos.cn>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260721060542.326-1-yanlonglong@kylinos.cn>
 References: <20260721043139.151887-1-sj@kernel.org>
+ <20260721060542.326-1-yanlonglong@kylinos.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 21 Jul 2026 06:12:34 +0000
+Message-Id: <20260721061234.B44CA1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-In low-memory scenarios, malloc() can fail. Without checking,
-the test will dereference NULL and crash, causing the test harness
-to report a failure that is unrelated to DAMON functionality.
-This is a false negative: the test should skip or report a resource error,
-not crash and mask the actual test result.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] The newly introduced error path returns -1 to prevent an OOM cra=
+sh, but this does not coordinate with the Python test harnesses to actually=
+ skip the test or report a resource error. Instead, it causes tests to eith=
+er silently pass (false positive) or crash with Python exceptions.
+--
 
-Add NULL checks after each malloc() call, printing an error message
-to stderr and returning -1 on failure.
+--- Patch [1]: [PATCH v2] selftests/damon: Add missing NULL checks after ma=
+lloc() ---
+commit c48bfd12db1afa969a2ab38d496264e74f1b6b1e
+Author: longlong yan <yanlonglong@kylinos.cn>
 
-Signed-off-by: longlong yan <yanlonglong@kylinos.cn>
----
- tools/testing/selftests/damon/access_memory.c      | 11 ++++++++++-
- tools/testing/selftests/damon/access_memory_even.c | 11 ++++++++++-
- 2 files changed, 20 insertions(+), 2 deletions(-)
+selftests/damon: Add missing NULL checks after malloc()
 
-diff --git a/tools/testing/selftests/damon/access_memory.c b/tools/testing/selftests/damon/access_memory.c
-index 567793b11107..e1a8e050dcd4 100644
---- a/tools/testing/selftests/damon/access_memory.c
-+++ b/tools/testing/selftests/damon/access_memory.c
-@@ -38,8 +38,17 @@ int main(int argc, char *argv[])
- 		mode = ACCESS_MODE_REPEAT;
- 
- 	regions = malloc(sizeof(*regions) * nr_regions);
--	for (i = 0; i < nr_regions; i++)
-+	if (!regions) {
-+		fprintf(stderr, "Failed to allocate regions array\n");
-+		return -1;
-+	}
-+	for (i = 0; i < nr_regions; i++) {
- 		regions[i] = malloc(sz_region);
-+		if (!regions[i]) {
-+			fprintf(stderr, "Failed to allocate region %d\n", i);
-+			return -1;
-+		}
-+	}
- 
- 	do {
- 		for (i = 0; i < nr_regions; i++) {
-diff --git a/tools/testing/selftests/damon/access_memory_even.c b/tools/testing/selftests/damon/access_memory_even.c
-index 93f3a71bcfd4..a443835c119c 100644
---- a/tools/testing/selftests/damon/access_memory_even.c
-+++ b/tools/testing/selftests/damon/access_memory_even.c
-@@ -26,8 +26,17 @@ int main(int argc, char *argv[])
- 	sz_region = atoi(argv[2]);
- 
- 	regions = malloc(sizeof(*regions) * nr_regions);
--	for (i = 0; i < nr_regions; i++)
-+	if (!regions) {
-+		fprintf(stderr, "Failed to allocate regions array\n");
-+		return -1;
-+	}
-+	for (i = 0; i < nr_regions; i++) {
- 		regions[i] = malloc(sz_region);
-+		if (!regions[i]) {
-+			fprintf(stderr, "Failed to allocate region %d\n", i);
-+			return -1;
-+		}
-+	}
- 
- 	while (1) {
- 		for (i = 0; i < nr_regions; i++) {
--- 
-2.43.0
+This commit adds NULL checks after malloc() calls in access_memory.c and=20
+access_memory_even.c to prevent crashes during low-memory conditions.
 
+> diff --git a/tools/testing/selftests/damon/access_memory.c b/tools/testin=
+g/selftests/damon/access_memory.c
+> --- a/tools/testing/selftests/damon/access_memory.c
+> +++ b/tools/testing/selftests/damon/access_memory.c
+> @@ -38,8 +38,17 @@ int main(int argc, char *argv[])
+>  		mode =3D ACCESS_MODE_REPEAT;
+> =20
+>  	regions =3D malloc(sizeof(*regions) * nr_regions);
+> -	for (i =3D 0; i < nr_regions; i++)
+> +	if (!regions) {
+> +		fprintf(stderr, "Failed to allocate regions array\n");
+> +		return -1;
+
+[Severity: Medium]
+Will returning -1 here coordinate correctly with the Python test harnesses
+like damos_quota.py and sysfs_update_schemes_tried_regions_wss_estimation.p=
+y?
+
+If the Python scripts do not check the subprocess return code, an early exit
+might leave data arrays empty. Depending on the script, this can either lead
+to a Python IndexError (e.g., when accessing wss_collected in
+pass_wss_estimation) or a silent test pass that masks the out of memory
+condition entirely.
+
+Should this return KSFT_SKIP (4) instead to properly notify the test harnes=
+s,
+or do the Python scripts need updating to verify the return code?
+
+> +	}
+> +	for (i =3D 0; i < nr_regions; i++) {
+>  		regions[i] =3D malloc(sz_region);
+> +		if (!regions[i]) {
+> +			fprintf(stderr, "Failed to allocate region %d\n", i);
+> +			return -1;
+> +		}
+> +	}
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260721060542.326-=
+1-yanlonglong@kylinos.cn?part=3D1
