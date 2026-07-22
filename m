@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD4732B103
-	for <damon@lists.linux.dev>; Wed, 22 Jul 2026 14:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7733B355F22;
+	Wed, 22 Jul 2026 14:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784728882; cv=none; b=QYPpUtRJ/FPnYsZTe+r9fr+sfrqA6v8oiqlyjEIIBVSc3IabX60h6M+ps00PMsF1O5QH0gEH1V4uwFWgA5t+e7QeytyD0lnhIIX5bzgJGkDvBYT0+tY510kYnKlch92zCPi1mo6ijj46LSFutag6xRWbXGQ5bmbpsjwzWIUOzxQ=
+	t=1784729050; cv=none; b=a6N0IjtOPgVZcsopO5bBdlFLXDYD7SlqRlt8Qufuf4oxiQ6oPwftut4vDXECWkYw7ZmXKT6W8rdf6QL0jOAISfXv+nNeqBnxWKfmgZ0+q6VlhUgnM/fXmQ6DoWgWmyaB3xjAr02gdyJmXf1VMvvtKIPBM29xiPFS5Sp+4dBPFIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784728882; c=relaxed/simple;
-	bh=VsXq/CBIkaudGODBdXidjkP/Tz8x9B1bT4yZOBSkLuE=;
+	s=arc-20240116; t=1784729050; c=relaxed/simple;
+	bh=F3ldbtro0kkERwUMJbvZUTO/IvATWZIEECXRnXODbBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EvdUpkfhmCb/bYZyAmorTrSitAYCkumjRmThCKsR5Pl3ZCp8so28B96a9elHkLho89RutWzgjL+Mdj5N08E51IngLjpt0gozpONcwSzk1WN/id27c71ky9bSU5bFWfShKBhPSkSooiNHemK21xAQ8cNHNtOC0RZQ2D395b3fzHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cnCVqY5O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tib/SGDPPpBPmHiUKXGlV7M6lf0znHNZMOEQaPD+bV3hhBLoelSPTanvXG6hLLtWPDY+e3T7goDJ0kcHqg3gMyOViIEbKmIsuJU5CayL6aYpx2CuBDWgfZZJXlNUpRlFYUOJ/WVbOPQLly1C1CxdFCeqvdQ0+ZkZWfwOai79OcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UCVgnYM0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cnCVqY5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CA61F00A3A;
-	Wed, 22 Jul 2026 14:01:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UCVgnYM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDD31F00AC4;
+	Wed, 22 Jul 2026 14:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784728881;
-	bh=sQmQqnqMOYrUcNGVJ/3vfJ4PASaPSYi36WsJjmVd764=;
+	s=k20260515; t=1784729049;
+	bh=5kH0UiDy6iA8qhgAkS2XGaRTI2kmVSqdkfcswAJ2RR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cnCVqY5Oyk7HD6BsFhm1GB9/W7hna3ghqXTbvVP6f0IKEExaDijrSGFtOzgenptG1
-	 4wpmrJ0tOPv6JOJfxB0LuFWNwPRyVoN4LxT9nQk0V7tmfTc/A8+99TfsfVXBS6pMRR
-	 KsyloTdd/CcG0LTPMJcNsj1YOd5T+p+fQ32y5aSEpp3eZKMJgEvj6JMTjXFL5g6+6g
-	 lQy7VVe277Y3/XBMO628knfRVLwyhUrpO2WZD4Kr1NKf8szhUngN93ZMV9M3qA/DmK
-	 J0g0zn1FIpmeIa/5cyjLYwrl3VGOZgP273OrK2uEICRRXW6QXAcXogncd7vIba0Rd+
-	 5jhYZmujNZ/Vw==
+	b=UCVgnYM0nzaYUeSvhwaSiiwHHGClKZGjt3YMsoI8Pxfdi/Mw8dLNHzK9Khk6TamXC
+	 WINroK/kJx7WiB0fZivv2oi7jBx0JknQp1XAmRnX9EJhSMJ7vxTFLpAKKWxVoabIyc
+	 S0cJ4+pQRIt+yno851PG2NhXii970/xxRuUrYlrvmzNYf3IP2NGpY33sqcpk0zGx0j
+	 tE7lzO5IjbwEM4lG1jJ1DWVCzZx2nbwFBoMdKgafeNhAeZKLRAn/9K8nsSFvbjsL7i
+	 xNqcFIa1/ZliFf5IsWM+jNtfIZhkTlCGQ3sARQGQKz9l3OU4G7bm8j5C8U+kODF9t3
+	 V/GLOOqYq6tvQ==
 From: SJ Park <sj@kernel.org>
-To: dayou5941@163.com
+To: Cheng-Han Wu <hank20010209@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
-	liyouhong <liyouhong@kylinos.cn>
-Subject: Re: [PATCH] mm/damon/core: reject zero sample_interval
-Date: Wed, 22 Jul 2026 07:01:13 -0700
-Message-ID: <20260722140113.88379-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-kernel-mentees@lists.linux.dev
+Subject: Re: [PATCH 1/2] mm/damon/core: remove unused damon_targets_empty()
+Date: Wed, 22 Jul 2026 07:04:01 -0700
+Message-ID: <20260722140401.88772-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260722094304.3132750-1-dayou5941@163.com>
+In-Reply-To: <20260722113338.302603-2-hank20010209@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,40 +49,20 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello liyouhong,
+On Wed, 22 Jul 2026 19:33:37 +0800 Cheng-Han Wu <hank20010209@gmail.com> wrote:
 
-
-Thank you for sharing this patch!
-
-On Wed, 22 Jul 2026 17:43:04 +0800 dayou5941@163.com wrote:
-
-> From: liyouhong <liyouhong@kylinos.cn>
+> damon_targets_empty() has had no in-tree users since commit
+> 5ec4333b1967 ("mm/damon: remove DAMON debugfs interface") removed
+> its last caller.
 > 
-> damon_set_attrs() allows sample_interval == 0.  Sysfs likewise accepts
-> sample_us=0.  kdamond_fn() then calls kdamond_usleep(0) every loop
-> iteration, so kdamond busy-spins and can peg a CPU.
-> 
-> With a zero sampling interval the access-rate accounting also diverges:
-> nr_accesses_bp no longer matches nr_accesses * 10000, and
-> kdamond_reset_aggregated() hits:
-> 
->   WARNING: invalid nr_accesses_bp at reset: ...
+> Remove the unused declaration and definition.
 
-The warning has removed by nr_accesses_bp optimization patch series, which is
-currently queued for 7.3-rc1.  So the warning will not be triggered on near
-future mainline.
+Nice catch and cleanup, thank you!
+
 > 
-> Reject sample_interval == 0 in damon_set_attrs(), which covers sysfs
-> commit and other callers.  damon_lru_sort already refused a zero
-> sample_interval; align the core validation with that.
+> Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
 
-This is a sort of behavioral change.  I also feel this adds another corner case
-that makes my head complicated.  There are a few logic written under the
-assumption of zero intervals.  Having inconsistencies between allowed input and
-handling logic will make it difficult to maintain in long term.  Can't we keep
-supporting zero sample interval and fix the warning or the real bug instead?
-
-[1] https://lore.kernel.org/20260630040812.149729-1-sj@kernel.org
+Reviewed-by: SJ Park <sj@kernel.org>
 
 
 Thanks,
