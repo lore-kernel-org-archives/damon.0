@@ -1,38 +1,74 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6043E7172
-	for <damon@lists.linux.dev>; Wed, 22 Jul 2026 09:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83406470113
+	for <damon@lists.linux.dev>; Wed, 22 Jul 2026 11:33:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784713418; cv=none; b=cTIHTKG44/EMNSVRMgLzk5yqFA++2QZN+BAZge9Ovi0Li0B3v92RcukFhm9s6js3P/BosHb6zfe9GuH3bKvXZNGbHCLrfZDzpJjwegZOx9/EjAEmCatDEZsZl4XtAcNxQ73lhNacu6484Hlgs7v+qEnyXrtndkuZVGnHCi0O8NY=
+	t=1784720032; cv=none; b=KUGAw1gcF2ZCtIo/Nv/BVeSyM0IdHONFuBhL2rE5oizYl/ytHI98tRGIEDkX9Av76J8AH9i+qB0haf5jGocgRizFwNBlHgXj7CxblZkrsvOiGVk8flsmqkkFokVt/QTw2QWpujc7qMGI/1FTX3NNAYvc0bvCjAoG7rkSW1/s/sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784713418; c=relaxed/simple;
-	bh=pH1SMtqFwZMNga87+LMfTD9EEc3U2acz/UT6cZwTYp8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=OTEJ9HieonvObjPiBhOGEKQcAvCHrLj5vUhcsRkN0XUa2W8wXOX+Z4ZFTdIUs7TJ8lbhlMQCEsbKSq/F10dNfn7tQaGq8My+WEhs5cZD6AKQhnmT09XeKmrhZesGYce/aLhSafgNi0Gm4JA8fRjQUlqlTE0/EibsJc5sLUDABuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=SMm76vhz; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1784720032; c=relaxed/simple;
+	bh=oIxI/1XPvJPZk5zbJurUL6m4hoS7e6NIh0xspj6Nosc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CXIKmwS3L3fm4MZdD0epS9sRwoLyDLTc0Ug5sx8SEQWvLA4dPygd/qyYlHPBYJ7P1spcCXJm5VgGSztyPNnseDgW4VDkhv6jPfUSp9KcQdYiucPesRfOBJxiFUc5nTeIBspI3rMpgUlWIsAzP7OGNIKWdTGkEAVzwZVBbUiUozY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=n85PbkZm; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="SMm76vhz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=fY
-	6oWj2ZnHEJ6yWb+CYb5tAU/Q+bvJ54oh7QY2YLOxI=; b=SMm76vhzR5xkjPRjOe
-	K9MTHIhDttvtUgP2fAHVoR/qZ3HsH3iX7mNoTHLYBYIEF03hOUAZkHTdB3kqpRlY
-	NxKmeLVv7jhMvd5EK/Nzjtip7z7KqhrCd04QZzsaayX3UjO9JvxXbARlcy2O8s8e
-	lCxm5K9Wt0AE71CP0uz2i1CkI=
-Received: from localhost.localdomain (unknown [])
-	by gzsmtp4 (Coremail) with SMTP id PygvCgD3vz2pkGBqgmcQIg--.3970S2;
-	Wed, 22 Jul 2026 17:43:07 +0800 (CST)
-From: dayou5941@163.com
-To: sj@kernel.org,
-	akpm@linux-foundation.org
-Cc: damon@lists.linux.dev,
-	liyouhong <liyouhong@kylinos.cn>
-Subject: [PATCH] mm/damon/core: reject zero sample_interval
-Date: Wed, 22 Jul 2026 17:43:04 +0800
-Message-Id: <20260722094304.3132750-1-dayou5941@163.com>
-X-Mailer: git-send-email 2.25.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n85PbkZm"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-c9aea40d799so4456890a12.0
+        for <damon@lists.linux.dev>; Wed, 22 Jul 2026 04:33:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1784720031; x=1785324831; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=lxBwVWRrpNduEO0ca1Z4JijkhZ7cZaOkNn5k5o4dK5Y=;
+        b=n85PbkZmUAVWAEL7IAOefvVJDAO/+WhPmlmbreyk2PMfnvO5cNtDwKzsWUU7VnyIOG
+         A5Zcr1e73BQWszSZXVNejbZBmRFnaUdAhTRKEbM4yCsk4BtSPEB03EDcKoGvYstOcLpS
+         DOfc4rQJpTgE//LdPA41dYvyZcP5bSD0J1/V6czppYmic5n2jJHSLvKwHw7ppvqyyj5d
+         NdunQ09fX0qrcU/A/lQD0aLmBP2TwYW/v7MrNtsA7G642s2ZJ75tVnWW0lZ08pR25Qc5
+         M7TRGrMcGB0x9S4km/40EwE7MrCbkd7jEBfgdsDFzTcoff1mc2eK366gXDGWuZOyvkfW
+         s1Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784720031; x=1785324831;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lxBwVWRrpNduEO0ca1Z4JijkhZ7cZaOkNn5k5o4dK5Y=;
+        b=MoTbZ/9S3bImY/EFT4NzF7OtgLUOuLYyHKXHllfNCHA2J7W7oicXsMZHIqyzANZU6Z
+         IkakZ/+Baw62AhYn7z2pO6QckszgKtZIPdsGVb1VJPE2Z8VXGSy3AKKlSQOkwtKhMuTG
+         RHFHf43Ywpe3pF6x7QcKdKEDTkc/k/e25EVxgd2CBz3nRNXOuc7NEerq2VGLd1QBviqv
+         ozC3bmyqT4iDOm2ccfMbKTJxm7N/+KEaysFhuhWgLwyacTK3qW0xbSEtrqW/+6qFKon7
+         f3z87usKGReQ24f9rXpT5e+7lE3PILD/q2iplqvAnJTxjo8adm0p6kP1Ovg/3M4iRPwL
+         l3Ow==
+X-Forwarded-Encrypted: i=1; AHgh+Rpq6dqQbj2Rg1cczlSuTZPdM9WgyV5jboSj7kWhGgAHJjfvuBoZ1aVVYoEuU+ev9CvyBFeHdA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YySBYR1uzL5LezSm8iUgRDckFBGUiU01hjgBALZpfZ2mUof5sq0
+	mUC6nUSoE2U7xbF++CenRIEcX+txuh/Xd55EceN3c/3/xYarXkVhBMTz
+X-Gm-Gg: AR+sD107+NSVNfgZ1SHYuh7W2+7BkWqhf7DDvv4yGZLYUUlaaMEwwaiXWnYH5ps/YMb
+	oFs2BD/6VHdfpfUxrkLfmXYJ5vIf0w09Onljwmlg6v6uZnEWdpeFLGZ+DXQxaaDe2JM41ePlXAG
+	+rQDMQGi33VXmlP4CB4ay8Este08eMAchsEJL6s/s2etQUvhwE3x2izo9EEv7V8Cvg9SrOpoXf7
+	c0shFQ2dEjyodVLzangeC9K2QbSgXVgWi87XqPGG3BB+/Wls9t0bH7Xyn+7c8Xtx5hjmfrFDdp8
+	+pkWumfNCzwQ1rCOpYRlThp8+A3snuG8w2a+5RbJk3gFRdCVxuzOO2JFSEAcLLvQ7OLCoiM0wan
+	L7iUtBn6p/Tz2yOquw3OVc9SCVFl8Iinc2giygGyhGvw5V6fKEkbldMkkcQBYCflPlpQ0YWl/TC
+	ddjDo+KseT1rVtB0EnzA==
+X-Received: by 2002:a05:6a21:7008:b0:3bf:a0e5:999f with SMTP id adf61e73a8af0-3c3ad7a439fmr25423558637.22.1784720030853;
+        Wed, 22 Jul 2026 04:33:50 -0700 (PDT)
+Received: from apt.tailc82bd0.ts.net ([140.123.97.23])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cbb8f1c376esm980979a12.29.2026.07.22.04.33.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jul 2026 04:33:50 -0700 (PDT)
+From: Cheng-Han Wu <hank20010209@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-kernel-mentees@lists.linux.dev,
+	Cheng-Han Wu <hank20010209@gmail.com>
+Subject: [PATCH 0/2] mm/damon/core: remove unused helper functions
+Date: Wed, 22 Jul 2026 19:33:36 +0800
+Message-ID: <20260722113338.302603-1-hank20010209@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -40,61 +76,26 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PygvCgD3vz2pkGBqgmcQIg--.3970S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KFW7ZFW7uryrKFyrWw18uFg_yoW8Zr13pF
-	W5WryfWFW5try7uw4vya97ua4UZ343GF17urZ3tF45Cw1F93ySqr1jyFy5KF1UGryxZF43
-	ZrZFqa4UZa4UJ3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UyxRkUUUUU=
-X-CM-SenderInfo: 5gd103ivzuiqqrwthudrp/xtbC+QsBr2pgkKslGwAA3T
 
-From: liyouhong <liyouhong@kylinos.cn>
+Both damon_targets_empty() and damon_nr_running_ctxs() have had no
+in-tree users since commit 5ec4333b1967 ("mm/damon: remove DAMON
+debugfs interface") removed their remaining callers.
 
-damon_set_attrs() allows sample_interval == 0.  Sysfs likewise accepts
-sample_us=0.  kdamond_fn() then calls kdamond_usleep(0) every loop
-iteration, so kdamond busy-spins and can peg a CPU.
+Remove the unused declarations and definitions.
 
-With a zero sampling interval the access-rate accounting also diverges:
-nr_accesses_bp no longer matches nr_accesses * 10000, and
-kdamond_reset_aggregated() hits:
+Tested with:
+  make O=../linux-build-mm W=1 mm/damon
 
-  WARNING: invalid nr_accesses_bp at reset: ...
+Cheng-Han Wu (2):
+  mm/damon/core: remove unused damon_targets_empty()
+  mm/damon/core: remove unused damon_nr_running_ctxs()
 
-Reject sample_interval == 0 in damon_set_attrs(), which covers sysfs
-commit and other callers.  damon_lru_sort already refused a zero
-sample_interval; align the core validation with that.
+ include/linux/damon.h |  2 --
+ mm/damon/core.c       | 19 -------------------
+ 2 files changed, 21 deletions(-)
 
-Reproduce:
-  echo 0 > .../intervals/sample_us
-  echo on > .../kdamonds/0/state
-  # kdamond ~100% CPU; may WARN in kdamond_reset_aggregated()
 
-Fixes: 4472edf63d66 ("mm/damon/core: use number of passed access sampling as a timer")
-Assisted-by: Cursor Grok 4.5
-Signed-off-by: liyouhong <liyouhong@kylinos.cn>
----
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 7e4b9affc5b0..a6d54ec8c4be 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -911,6 +911,8 @@ int damon_set_attrs(struct damon_ctx *ctx, struct damon_attrs *attrs)
- 		return -EINVAL;
- 	if (attrs->min_nr_regions > attrs->max_nr_regions)
- 		return -EINVAL;
-+	if (!attrs->sample_interval)
-+		return -EINVAL;
- 	if (attrs->sample_interval > attrs->aggr_interval)
- 		return -EINVAL;
- 
-@@ -3770,8 +3772,9 @@ void damon_update_region_access_rate(struct damon_region *r, bool accessed,
- 	unsigned int len_window = 1;
- 
- 	/*
--	 * sample_interval can be zero, but cannot be larger than
--	 * aggr_interval, owing to validation of damon_set_attrs().
-+	 * sample_interval cannot be zero or larger than aggr_interval,
-+	 * owing to validation of damon_set_attrs().  Keep the zero check
-+	 * below as defense in depth.
- 	 */
- 	if (attrs->sample_interval)
- 		len_window = damon_max_nr_accesses(attrs);
+base-commit: 5e0603ba185af6754422ad28b646798686b6caf6
+-- 
+2.52.0
 
