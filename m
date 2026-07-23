@@ -1,129 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4AD3264D6
-	for <damon@lists.linux.dev>; Thu, 23 Jul 2026 13:51:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F52388E44
+	for <damon@lists.linux.dev>; Thu, 23 Jul 2026 16:53:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784814675; cv=none; b=C/aqCZdhC9DDURrjwOMbwy0+Ju2hMMp07gGW86YxYZS1OldqNDQaJXLwuPSWVvJ7fc6lP4MiCio+wMHcjvEq3RbimdxBWv8UG/PknvK4ksiCXNfJgb5nDGn7RWzxTimyLw1qaM7QQ7hnJc44PeRGjDNbi02YaDF/KbGERmNGCIo=
+	t=1784825596; cv=none; b=b1JBsMsrUuHsj++VdMhJ5HIbF1snFyk2AY4qZdBXcyn1bL8lUu3ARl/aLLbIsKfMA3OnFqRbZtZDbTAbLibI+jWFG9gqNReTzzKsdnhfnwQJMksHsW2G8gcltilcV6JSAW9MHOQt63XoCOQZ4gKTtfZjsZ0eMRURFNXbcvcC+qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784814675; c=relaxed/simple;
-	bh=oul2lr0dcPk7SL8sMTQsLtTx2yYdmlshBtp0+6KpqUg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pCleZPIp953ZBZyOFrJP5N0TIAHBADL1rvNLutzKTq3IBbTDWQ7LNlP7zo7VC78/Zv0BfXrxSx3E5oucaTXmaLB4x12T7L0jq8WvINJ5clG53iEDHUCv/lQPWKRb644HxjRxBYaJpDdKyEMNVF6NRueNnfrS+6pmIopGKzF4zMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nIoZ4VP1; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784825596; c=relaxed/simple;
+	bh=z+HoEvmWYKtMfBygtPBl68CeMD6wWsLW69JzvhhpR/g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nOIoKGDVTa27kxhrWotAS8RfT7YFvqFXPwVAalvL+6jZ7S4rxPW6QqGZUdQK9gNF99s8P8Fdqn/qLmqJ4GE1+OYm8VqqL080FJQKZB6URPzOsX/vqv4+9bTeSf8ONSPyyTg1T43Whjb4mFIiMO95HHNohPOJuyrPWhMD/1GlEMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=kn/Z3F54; arc=none smtp.client-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nIoZ4VP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADFD1F000E9;
-	Thu, 23 Jul 2026 13:51:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784814673;
-	bh=YiIc5BwJh3NOrvY00qOAI4WMVDc7bwVWp4LMDyn7Qk8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nIoZ4VP1/MM53rkgwz6jvmM415wGLnYN+zAkE+wqBE1jLxqL+OZQ5F40M6oSpD8EL
-	 2XV+gYNLHrup9ML3GqvlFSZfIxwpSuEA83t5azQhG7lbDusXKZ4eYxcP3EmM+7csRf
-	 83dZyVwJBDLED7VSLUvfOxPNKOmoTJY439bvgXfy5IqcSvnf3LSZulbhOM0ovDGHMU
-	 F5F0/7ooMTFgPhSWC+5m/0CRECX/fMaPMuFrvo+eSYWpSVqDP4LIDQUdEjkRNSLGGO
-	 xsYRzfuw9RPzYCxS0B3gzWTOTkxP101wAmKREZTlfT9hCeZ/3ch2PCSpa3Znon5z10
-	 XaIfTFXKgMy3g==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	dayou5941@163.com,
-	damon@lists.linux.dev
-Subject: Re: [PATCH] mm/damon/ops-common: putback folios on invalid migrate nid
-Date: Thu, 23 Jul 2026 06:50:40 -0700
-Message-ID: <20260723135042.87076-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260723062427.D719C1F000E9@smtp.kernel.org>
-References: 
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="kn/Z3F54"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-92ed19f4d60so65197985a.0
+        for <damon@lists.linux.dev>; Thu, 23 Jul 2026 09:53:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1784825593; x=1785430393; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=bqVE/c/eX9E/Cy6wFBhLLV7HBSbIhrEkmRJZ6Osn4Tc=;
+        b=kn/Z3F547ylAZcLe7JBWfcmweM6iZTuUyxLPxva4czgaq251v+oIynK8XCMufsHoCt
+         mOBLzgByyi1X3mUQYm2PI1TC92JnU8adpYjrDHOxLa6ro1vO0mXSxTlJ+a9C5ZCPqvF4
+         HuR25632kPiYUZhj4VCN4qfhyOvYyTzODpWsC+H7+1Fn9DcfkQUnSpr+sOUZkfFVEgsm
+         4eyTP3AaSLtc/+nPg9X4ukmjld3pZt9zhHrUZivXo6lcu9MIoLcPRAkw20/NjDXQLfuR
+         WMCd16rS7UNGIoAnl154Kfx5h/pubNLUqPkvsGAxs0RuG/odndB53oE6JD9+KXQRzCfB
+         j7ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1784825593; x=1785430393;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bqVE/c/eX9E/Cy6wFBhLLV7HBSbIhrEkmRJZ6Osn4Tc=;
+        b=qGHkYJ/+Kc+e9LPYGNeoAWpfX6QoCIFBiWg1tw3YQUywG3HZc2WbOfOxp1C0BBMx2N
+         z1M9iYyZ1rveNf8kTEH/xf5GEF+jW2g/6wpZoXV1vJSbZNgsxd2ROy8zuUmfRW3jIhQN
+         DDXQ5DvrCAqhh5qTspfwHNjZnHY0U363fuE1uWU5JLNFNZfFEpD76rdblBHAAmAoyzPr
+         21cxfOjNrutE/8XOVUslqpDcITF/FK4zsYCKeexpJX3HpIr7tvEWYynC55U4v/MrW0ma
+         QCDoJSNLFAIqMdgE4vv1LCbdqkDRCCeZb0dvFhJdvRiPkr3ts73bKZ2V/uaIAIXQqkL+
+         5HdQ==
+X-Forwarded-Encrypted: i=1; AHgh+RqNDG+/nsb1LgTdlNOmVL2GypeoxsI60KgDO+xxUWTIwKQKmxYS4zQZcjcIM/kzyDe3QvYqQQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwyPD7qkSd8ztJnfSr+S0Qx1R5EwH/pBLbnJcnZnqCmtYcRE51y
+	KMi2fgjPvsFi0cpIQZw3esiawoTeAl3dQSMZjQZDAWnCWC1HCZIkNjN9H4vPGhESjQk=
+X-Gm-Gg: AR+sD107hOxi7BR9HfMVLfkR2fkNSDworN5k/0NDHVdS0zkDHcSBXpSRK6FVIfVo0+L
+	g8/xIyHp3KZPwJ9zej69p1uFb+59dssiROlYBz+B+ZD7VOqb2CoTcyBoBxqwYP0pem+Kq2qK/r5
+	omQagqIZows4ZNa0GUoAxsFCBhbiYxRqpVT3g1X+g1682RaFL0vfPCfsn/Fh55S09zmpFJm0i15
+	LNfMazWViPL7xQakmsDqylxh8wKehBFOa1HOXyvnEYhG0Czk5aVOoiiGBbnJRpoJ/jWP8tIdnbJ
+	5kNnZX8y0vQnXnC4+6V3nzHXAygGoMKEppHbp8cXSv5WRhIFj1WirXaTn+IFceL7bix5zho3bsv
+	0V4x48K/TULhmMK9HVrApU8l5VQyM3LWPUnirGsXoES/UAGouYYeO1amdtGZQuXLAGKVBQPDvbs
+	JMcwRiFivtj6ch9sF++l6JO9ciW50W1FHJv7vTJ7Capz8Sdy4IzvDHZrSltw==
+X-Received: by 2002:a05:620a:1729:b0:930:9533:5e32 with SMTP id af79cd13be357-9310468af9emr366578785a.7.1784825593202;
+        Thu, 23 Jul 2026 09:53:13 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-907ba9e18d4sm48785446d6.23.2026.07.23.09.53.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jul 2026 09:53:12 -0700 (PDT)
+Date: Thu, 23 Jul 2026 12:53:06 -0400
+From: Gregory Price <gourry@gourry.net>
+To: Arun George/Arun George <arun.george@samsung.com>
+Cc: linux-mm@kvack.org, Zhigang.Luo@amd.com, balbirs@nvidia.com, 
+	brendan.jackman@linux.dev, yuzenghui@huawei.com, apopple@nvidia.com, alucerop@amd.com, 
+	matthew.brost@intel.com, akpm@linux-foundation.org, david@kernel.org, ljs@kernel.org, 
+	liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, surenb@google.com, 
+	mhocko@suse.com, corbet@lwn.net, skhan@linuxfoundation.org, 
+	gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org, djbw@kernel.org, 
+	vishal.l.verma@intel.com, dave.jiang@intel.com, alison.schofield@intel.com, 
+	osandov@osandov.com, jannh@google.com, pfalcato@suse.de, jackmanb@google.com, 
+	hannes@cmpxchg.org, ziy@nvidia.com, pbonzini@redhat.com, osalvador@suse.de, 
+	joshua.hahnjy@gmail.com, rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com, 
+	kasong@tencent.com, qi.zheng@linux.dev, shakeel.butt@linux.dev, baohua@kernel.org, 
+	axelrasmussen@google.com, yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com, 
+	linux@rasmusvillemoes.dk, longman@redhat.com, ridong.chen@linux.dev, tj@kernel.org, 
+	mkoutny@suse.com, sj@kernel.org, jgg@ziepe.ca, jhubbard@nvidia.com, 
+	peterx@redhat.com, baolin.wang@linux.alibaba.com, npache@redhat.com, 
+	ryan.roberts@arm.com, dev.jain@arm.com, lance.yang@linux.dev, usama.arif@linux.dev, 
+	xu.xin16@zte.com.cn, chengming.zhou@linux.dev, roman.gushchin@linux.dev, 
+	muchun.song@linux.dev, linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+	driver-core@lists.linux.dev, nvdimm@lists.linux.dev, linux-cxl@vger.kernel.org, 
+	linux-debuggers@vger.kernel.org, linux-fsdevel@vger.kernel.org, kvm@vger.kernel.org, 
+	cgroups@vger.kernel.org, damon@lists.linux.dev, linux-kselftest@vger.kernel.org, 
+	kernel-team@meta.com, cpgs@samsung.com
+Subject: Re: [PATCH v5 00/36] Private Memory NUMA Nodes
+Message-ID: <amJGUuBZ2857QjDB@gourry-fedora-PF4VCD3F>
+References: <CGME20260720193443epcas5p167fa7d8490edfb4d8c0aa6a259db058f@epcas5p1.samsung.com>
+ <20260720193431.3841992-1-gourry@gourry.net>
+ <963815509.21784796303385.JavaMail.epsvc@epcpadp1new>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <963815509.21784796303385.JavaMail.epsvc@epcpadp1new>
 
-On Thu, 23 Jul 2026 06:24:27 +0000 sashiko-bot@kernel.org wrote:
+On Thu, Jul 23, 2026 at 02:08:31PM +0530, Arun George/Arun George wrote:
+> On 21-07-2026 01:03 am, Gregory Price wrote:
+> > Changes Since V4
+> > ================
+> >   - dropped compressed ram example from series
+> >       - will submit separately if this moves forward
+> 
+> We intend to test this series on a compression capable CXL expander 
+> hardware. Since compressed ram example (cram) is not part of this 
+> series, how do you suggest to do that? Do you have a version of cram 
+> module compatible with this series?
+> 
+> ~Arun
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Incorrect Loop Advancement / Bounds Oversight (PFN advancement bug)
-> - [High] Missing yield in unbounded list putback loop
-> --
-> 
-> --- Patch [1]: [PATCH] mm/damon/ops-common: putback folios on invalid migrate nid ---
-> commit b4aa488aeb8640931363ab9a919f2ae6536d57ba
-> Author: liyouhong <liyouhong@kylinos.cn>
-> mm/damon/ops-common: putback folios on invalid migrate nid
-> 
-> This commit extracts the LRU putback logic into a helper function and
-> uses it to return folios to the LRU when damon_migrate_pages() is called
-> with an invalid target_nid. This prevents folios from remaining isolated
-> from the LRU permanently.
-> 
-> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> > index e59f77eca83b2..1286fe54b0d9d 100644
-> > --- a/mm/damon/ops-common.c
-> > +++ b/mm/damon/ops-common.c
-> > @@ -330,12 +330,22 @@ static unsigned int __damon_migrate_folio_list(
-> >  	return nr_succeeded;
-> >  }
-> >  
-> > +static void damon_putback_folio_list(struct list_head *folio_list)
-> > +{
-> > +	struct folio *folio;
-> > +
-> > +	while (!list_empty(folio_list)) {
-> > +		folio = lru_to_folio(folio_list);
-> > +		list_del(&folio->lru);
-> > +		folio_putback_lru(folio);
-> > +	}
-> > +}
-> 
-> [Severity: High]
-> This is a pre-existing issue, but can this tight loop cause CPU soft lockups?
-> 
-> If a DAMON scheme isolates a massive region that fails to migrate, or is
-> given an invalid migration NID, the isolated folio list could scale to
-> millions of folios. Because this loop takes the LRU lock for each folio
-> without a yield point, could it monopolize the CPU and cause severe latency
-> spikes? Should there be a cond_resched() in this loop?
+Hi Arun,
 
-Users could set the maximum size of regions with max_nr_regions parameter.  We
-could revisit this if it turns out the knob is not really useful, from the real
-world.
+I dropped it from the base series because i want to try to move forward
+with this without RFC.  The compressed service itself will be a separate
+submission after I get decent signal on whether this will be accepted.
 
-> 
-> [ ... ]
-> 
-> [Severity: High]
-> This is a pre-existing issue, but do these unconditionally sized advancements
-> elsewhere in the DAMON codebase risk skipping uninspected memory regions?
-> 
-> In mm/damon/paddr.c:damon_pa_pageout():
-> 
->     addr += folio_size(folio);
-> 
-> And similarly in mm/damon/vaddr.c:damos_va_migrate_pmd_entry() and
-> damos_va_stat_pmd_entry():
-> 
->     nr = folio_nr_pages(folio);
-> 
-> When a DAMON region starts in the middle of a large folio (a tail page), or
-> a PTE walk encounters a partially mapped large folio, advancing the pointer
-> by the total folio size or total number of pages overshoots the bounds. Does
-> this silently skip adjacent, unrelated PTEs and physical addresses?
+I plan to RFC the new setup for compressed ram this a bit later, but I
+will share my working branch with you for testing.
 
-Known issue.  I'm working on this.
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260723061246.1878435-1-dayou5941@163.com?part=1
-
-
-Thanks,
-SJ
+~Gregory
