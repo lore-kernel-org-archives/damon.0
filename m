@@ -1,84 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569B621ABD7;
-	Thu, 23 Jul 2026 00:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF333033DF
+	for <damon@lists.linux.dev>; Thu, 23 Jul 2026 01:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784766546; cv=none; b=Gf5kcdIOjLM8Qjvq8nYBGsKXqVBBw4vOJypEr4mj8a1wAWl0PVE24sP7N0UXfAl8LE130zJL+jB8fEqyJCQIg8egp+870CwfNmSZAaP6xrU+9lBOaw9IZOkHqh6dslDf1SQRfBtjDXJyrlVBsK6QAt9qJ8cu2+y6WSpsmkcOYwk=
+	t=1784770948; cv=none; b=u0AU8l/Mo0ez0b+rq1WmZSAQ2MrxjbI6Z8Dht7j9XEsMpdEh9wTzxQxm4zL7uIN+5hvO5Q+M/9cZtMjrcH5ab8nZkRkhKdUkPXTJhC+qjDz0Te9zLissjGa9tNbD0pe6i3Nkl/gE9G9AQE5/MKTcDI6js+mxDSoTtpCNNrl27Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784766546; c=relaxed/simple;
-	bh=zxESdflNfw+7qoOdnbOKN5uAhZn4yWMzUziYBQqvR3Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqugX4yRPF+6b5HOmm/y63gsNpKTv7qIHV52gHE+RmP2o5jBB6T0+OOotXlSKRAL+iPovj25jiHx1Ey/YhY0tyWqaxqt07xrF+sfSWqm+48PSjkJ4ocMcV/QnuJqailN/3fKFlu36rEnVuD3zf05wRmfVnWcwVVwz72jCBsGnxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZC8q84n8; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1784770948; c=relaxed/simple;
+	bh=9NZO5vfb3zQw2FNfkrSHu7SGXFybx4Car/nQQwH6e5g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=acfBZJDCsZ6HneLNwVykrCqTZhy4OA+4AJKpXWaB4gZ9S5STYfzfntKn8doaJW1xE8hzYQaLCj/chNUfeS8PQzKb+xx9zQYZkDlJZAUYYJsnqpjP39D15Qf07D3Rmw3OjS9oqbLnNB9U6sZysBeGeYt1vLODE7w/aDbx1bHJdmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=UWZDw2Rv; arc=none smtp.client-ip=220.197.31.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZC8q84n8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D881F000E9;
-	Thu, 23 Jul 2026 00:29:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784766544;
-	bh=1klxc6MvqPDoBZg4y3VrtQPMZwyGIj+K0awBUjVudaE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZC8q84n8D4cCcVWG3ruQNYAZ7wB4HufMgOv7fxYaxFk+zpOeHFLglfBdflUnHM4Lg
-	 WUQvodDRWuxeg7x7gM2TWHfWy7jb8HLLPIfp6L86W4p+4U+O83Fm7kdg1qfkegt6Pt
-	 4s4jQWkp2iE7hHlnK8LHyfBXP5q6kdr0VQe8jS28EflHpsfCQF75bnuaYXHN2Bqoj4
-	 nB9QlYSyMHVv3bZJwY6TqMha/WvcJEPulzKaEiXawP4xrrVYYhqQGPZ1tStNlk+omX
-	 hvsI7OOV2C6sUZwCJ0/1nZM+Q/M28/rEM7uoTsU0i8obhMw18PNZuq3ysxfUns2bic
-	 mVAmeLyzSZz0w==
-From: SJ Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-Cc: SJ Park <sj@kernel.org>,
-	artem.kuzin@huawei.com,
-	stepanov.anatoly@huawei.com,
-	wangkefeng.wang@huawei.com,
-	yanquanmin1@huawei.com,
-	zuoze1@huawei.com,
-	damon@lists.linux.dev,
-	akpm@linux-foundation.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
-Date: Wed, 22 Jul 2026 17:28:56 -0700
-Message-ID: <20260723002857.96284-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <1d91aa7f-1601-4cd9-8ef5-8599983bc42f@huawei-partners.com>
-References: 
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="UWZDw2Rv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=9NZO5vfb3zQw2FNfkrSHu7SGXFybx4Car/nQQwH6e5g=; b=U
+	WZDw2Rv5jWDft9SO4ijUypbL85nfz9nVuVs65a4vB27OpdTSgOuRQVaUPLgMrg0n
+	XzF9XV5YiP9yENkvIEvk9+glwhfNSUkUZymZYU+78KVuj/bNcB5XUXlXzlPlaGDt
+	eWPxu0QWdJS4thXyOyfFXOTcxkiLOnONPzYco2uLpQ=
+Received: from dayou5941$163.com ( [116.128.244.169] ) by
+ ajax-webmail-wmsvr-40-128 (Coremail) ; Thu, 23 Jul 2026 09:42:01 +0800
+ (CST)
+Date: Thu, 23 Jul 2026 09:42:01 +0800 (CST)
+From: =?GBK?B?wO7T07roIA==?= <dayou5941@163.com>
+To: "SJ Park" <sj@kernel.org>
+Cc: akpm@linux-foundation.org, damon@lists.linux.dev,
+	liyouhong <liyouhong@kylinos.cn>
+Subject: Re:Re: [PATCH] mm/damon/core: reject zero sample_interval
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
+ 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
+In-Reply-To: <20260722140113.88379-1-sj@kernel.org>
+References: <20260722140113.88379-1-sj@kernel.org>
+X-NTES-SC: AL_Qu2TBvucv0Ep5yibYukck0sXhOc/X8awuvgn34BRc88EgC7twQEDZGZsD0Hc79OjMDiyrzW1bDZTw8BEUYJpAxFGxtz4z4xwK9Rw4+nI1g==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Message-ID: <51c3febf.14e0.19f8ca30575.Coremail.dayou5941@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:gCgvCgD3X1RqcWFq3G4jAA--.1839W
+X-CM-SenderInfo: 5gd103ivzuiqqrwthudrp/xtbC+gppGGphcWpO-gAA3h
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-On Wed, 22 Jul 2026 16:51:22 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
-
-> Hi SJ,
-> 
-> On 7/22/2026 4:45 PM, SJ Park wrote:
-[...]
-> > We (mm community) now want to focus on making mm.git more stabilized and
-> > therefore ready for the next merge window, rather than adding more changes that
-> > are not really urgent.  I agree and want to help [1] that.  For the reason,
-> > unless Andre pick this first, I will request adding this to mm.git only after
-> > next -rc1 release.  Let me know if you think this is really urgent.
-> > 
-> > [1] https://lore.kernel.org/20260722133829.87607-1-sj@kernel.org
-> > 
-> > 
-> > Thanks,
-> > SJ
-> > 
-> > [...]
-> > 
-> 
-> No problem at all. I am fine with it.
-
-Thank you for confirming, Asier!
-
-
-Thanks,
-SJ
-
-[...]
+CgoKCgoKCgoKCgoKCgoKCgpBdCAyMDI2LTA3LTIyIDIyOjAxOjEzLCAiU0ogUGFyayIgPHNqQGtl
+cm5lbC5vcmc+IHdyb3RlOgo+SGVsbG8gbGl5b3Vob25nLAo+Cj4KPlRoYW5rIHlvdSBmb3Igc2hh
+cmluZyB0aGlzIHBhdGNoIQo+Cj5PbiBXZWQsIDIyIEp1bCAyMDI2IDE3OjQzOjA0ICswODAwIGRh
+eW91NTk0MUAxNjMuY29tIHdyb3RlOgo+Cj4+IEZyb206IGxpeW91aG9uZyA8bGl5b3Vob25nQGt5
+bGlub3MuY24+Cj4+IAo+PiBkYW1vbl9zZXRfYXR0cnMoKSBhbGxvd3Mgc2FtcGxlX2ludGVydmFs
+ID09IDAuICBTeXNmcyBsaWtld2lzZSBhY2NlcHRzCj4+IHNhbXBsZV91cz0wLiAga2RhbW9uZF9m
+bigpIHRoZW4gY2FsbHMga2RhbW9uZF91c2xlZXAoMCkgZXZlcnkgbG9vcAo+PiBpdGVyYXRpb24s
+IHNvIGtkYW1vbmQgYnVzeS1zcGlucyBhbmQgY2FuIHBlZyBhIENQVS4KPj4gCj4+IFdpdGggYSB6
+ZXJvIHNhbXBsaW5nIGludGVydmFsIHRoZSBhY2Nlc3MtcmF0ZSBhY2NvdW50aW5nIGFsc28gZGl2
+ZXJnZXM6Cj4+IG5yX2FjY2Vzc2VzX2JwIG5vIGxvbmdlciBtYXRjaGVzIG5yX2FjY2Vzc2VzICog
+MTAwMDAsIGFuZAo+PiBrZGFtb25kX3Jlc2V0X2FnZ3JlZ2F0ZWQoKSBoaXRzOgo+PiAKPj4gICBX
+QVJOSU5HOiBpbnZhbGlkIG5yX2FjY2Vzc2VzX2JwIGF0IHJlc2V0OiAuLi4KPgo+VGhlIHdhcm5p
+bmcgaGFzIHJlbW92ZWQgYnkgbnJfYWNjZXNzZXNfYnAgb3B0aW1pemF0aW9uIHBhdGNoIHNlcmll
+cywgd2hpY2ggaXMKPmN1cnJlbnRseSBxdWV1ZWQgZm9yIDcuMy1yYzEuICBTbyB0aGUgd2Fybmlu
+ZyB3aWxsIG5vdCBiZSB0cmlnZ2VyZWQgb24gbmVhcgo+ZnV0dXJlIG1haW5saW5lLgo+PiAKPj4g
+UmVqZWN0IHNhbXBsZV9pbnRlcnZhbCA9PSAwIGluIGRhbW9uX3NldF9hdHRycygpLCB3aGljaCBj
+b3ZlcnMgc3lzZnMKPj4gY29tbWl0IGFuZCBvdGhlciBjYWxsZXJzLiAgZGFtb25fbHJ1X3NvcnQg
+YWxyZWFkeSByZWZ1c2VkIGEgemVybwo+PiBzYW1wbGVfaW50ZXJ2YWw7IGFsaWduIHRoZSBjb3Jl
+IHZhbGlkYXRpb24gd2l0aCB0aGF0Lgo+Cj5UaGlzIGlzIGEgc29ydCBvZiBiZWhhdmlvcmFsIGNo
+YW5nZS4gIEkgYWxzbyBmZWVsIHRoaXMgYWRkcyBhbm90aGVyIGNvcm5lciBjYXNlCj50aGF0IG1h
+a2VzIG15IGhlYWQgY29tcGxpY2F0ZWQuICBUaGVyZSBhcmUgYSBmZXcgbG9naWMgd3JpdHRlbiB1
+bmRlciB0aGUKPmFzc3VtcHRpb24gb2YgemVybyBpbnRlcnZhbHMuICBIYXZpbmcgaW5jb25zaXN0
+ZW5jaWVzIGJldHdlZW4gYWxsb3dlZCBpbnB1dCBhbmQKPmhhbmRsaW5nIGxvZ2ljIHdpbGwgbWFr
+ZSBpdCBkaWZmaWN1bHQgdG8gbWFpbnRhaW4gaW4gbG9uZyB0ZXJtLiAgQ2FuJ3Qgd2Uga2VlcAo+
+c3VwcG9ydGluZyB6ZXJvIHNhbXBsZSBpbnRlcnZhbCBhbmQgZml4IHRoZSB3YXJuaW5nIG9yIHRo
+ZSByZWFsIGJ1ZyBpbnN0ZWFkPwo+CgoKCgpIaSBTSiwKClRoYW5rcyBmb3IgdGhlIGV4cGxhbmF0
+aW9uLiBJIGFncmVlIHJlamVjdGluZyB6ZXJvIHNhbXBsZV9pbnRlcnZhbAppcyB0aGUgd3Jvbmcg
+YXBwcm9hY2gsIGVzcGVjaWFsbHkgc2luY2UgdGhlIHdhcm5pbmcgd2lsbCBiZSBnb25lIHdpdGgK
+eW91ciBxdWV1ZWQgc2VyaWVzLgoKClRoYW5rcywKbGl5b3Vob25n
