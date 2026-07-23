@@ -1,112 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC67D4DB557;
-	Thu, 23 Jul 2026 13:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643F141D213
+	for <damon@lists.linux.dev>; Thu, 23 Jul 2026 13:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784813839; cv=none; b=n/7zlLZTHjy/ghz3QIZZH+Ipf93Oh7DLARZwSsPrvm6wK1y2A0B3zECmyTKeXVv20N4DGBO3/I0dCoVIECaJ7FfPHj7mIGgA/DjNVb8joS0vv2NzOuqSHkTPlcN0WIt5eHwq0Yy0fqohTB1F+1SyDM3rfs17FDaQJ4cqC8rs7e8=
+	t=1784814393; cv=none; b=Ltjl60+0++QWsAsBgir4QOekuZ+XvuOuevOBr8rZfHopkSmb5u42zdTMT3gxSbt6/lkEuOn0UTxdw1We3sN/47k+A41eIywlvmn8cqZAPE42oZ5bMnXIz/5P8yZJN/R3pwoHesVaIJS2y1MuBjY/PWMDKoAPx94aNk5uZbxzz7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784813839; c=relaxed/simple;
-	bh=eO9vT5YPysqOukd+jY+035D0z/zLeO1w4vN1NwNe2Qc=;
+	s=arc-20240116; t=1784814393; c=relaxed/simple;
+	bh=YNbgrUXB7WUJvlPOQgGN/MU/mCBw4Olj1E229PLFo7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYuwM562Fx4Cd0dk8jozvP6yRGrmEDu1z8Gpq3bIjg4+FkA+n4htgAwdYENx/B+vI4QJMPm/0QPDQFmjHyXvNJK0lFs4DN2l8gCAP7Nw9iEz+QfB6u86Xvkxv8Zio/0ifppV1+hpi3kVS371/yDWQ92G6ANI9249AJJ334ORHEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eXwPqfU5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LQFKfFq6Sj810nrLEZkVIJYU6WLUEiQU0T8NdFF0zWbNhpLuK/E1oUeBdahuwi7Zx09NggulJXBCPU5NLcDBf2A9eeIz4p4M53BYeGqjH+/4EgCcoqxwKC9jSy7KUmwAKnSJ84fFTqT6ZRvY99TAd9BMCDwGCzNZqQzah7Srczg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EmyNMb/e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eXwPqfU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16401F000E9;
-	Thu, 23 Jul 2026 13:37:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EmyNMb/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD17A1F000E9;
+	Thu, 23 Jul 2026 13:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784813825;
-	bh=tqvVeERBLT6ROkppBN4MEGfSa50o0lpYhxpdXTdGfSM=;
+	s=k20260515; t=1784814392;
+	bh=x7H/TJYYWWEa9V3Dq0eNNlN8nZK9tYC/VAA9ZWXag/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXwPqfU5+dyGmmARtvY9crMVwvGOsCAZ2Ru0lYpoOfgXEOQb2mMyZcg1q6u92yB0Z
-	 eZMN9cLTZ+yubZjVJ3wy4M7XG7fZikCsbl6f1040nSPNfNyH4meZZBsET+2pf6T6qH
-	 qq5izJpow7RoIotkR8UYgW6x+l2czIIn3yNVRVjPMN17oPO831Axfy1Rymb/HnXcNb
-	 XY24eVkU+jFNiKTi8CRFsGG3DyaUFKembWWsN5r8eTzYpjL4efTFMbO0xnASQRTvpI
-	 YnaQfcVtFoK4C7nDN/JU0FZvuMbAzBAbv7MBIkBFZsTw/0q7oFhQitlB8lVT412AvD
-	 YKt/asR4pMeRw==
+	b=EmyNMb/eCyZiCXMZ1nQCO5n6UcDZ2cEwOZa54Kze0f0lQhPKAuDt93cVZV6q98Swn
+	 DrxYr7v2SyG1tUG9BcOxeggBzG8yM5nOPp5HeNmQ8yijjZLWuDH127m9rWx9mpwXbL
+	 KxY8tPX/x4ft7tlMTwtUAD5R6rN9xhqvMf1Ykk0fIxx3vJ5490hkhfMjh/Vvbb5Ezt
+	 veh4Tx1UFBtn2NyHGfCYW+/GbttI1kyM222n3GMvUaQDuUN3L3J9fxnRgsedMWrJ8/
+	 j67RpjKzZHOu97xPzX771eOb8LBsIbTKqfK2ZyGCJQf0CbX1de5ZYJIqturKNnZ6Mb
+	 /BjVeshePhsbA==
 From: SJ Park <sj@kernel.org>
-To: Gregory Price <gourry@gourry.net>
+To: dayou5941@163.com
 Cc: SJ Park <sj@kernel.org>,
-	balbirs@nvidia.com,
-	brendan.jackman@linux.dev,
-	yuzenghui@huawei.com,
-	apopple@nvidia.com,
-	alucerop@amd.com,
-	matthew.brost@intel.com,
 	akpm@linux-foundation.org,
-	david@kernel.org,
-	ljs@kernel.org,
-	liam@infradead.org,
-	vbabka@kernel.org,
-	rppt@kernel.org,
-	surenb@google.com,
-	mhocko@suse.com,
-	corbet@lwn.net,
-	skhan@linuxfoundation.org,
-	gregkh@linuxfoundation.org,
-	rafael@kernel.org,
-	dakr@kernel.org,
-	djbw@kernel.org,
-	vishal.l.verma@intel.com,
-	dave.jiang@intel.com,
-	alison.schofield@intel.com,
-	osandov@osandov.com,
-	jannh@google.com,
-	pfalcato@suse.de,
-	jackmanb@google.com,
-	hannes@cmpxchg.org,
-	ziy@nvidia.com,
-	pbonzini@redhat.com,
-	osalvador@suse.de,
-	joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com,
-	byungchul@sk.com,
-	ying.huang@linux.alibaba.com,
-	kasong@tencent.com,
-	qi.zheng@linux.dev,
-	shakeel.butt@linux.dev,
-	baohua@kernel.org,
-	axelrasmussen@google.com,
-	yuanchu@google.com,
-	weixugc@google.com,
-	yury.norov@gmail.com,
-	linux@rasmusvillemoes.dk,
-	longman@redhat.com,
-	ridong.chen@linux.dev,
-	tj@kernel.org,
-	mkoutny@suse.com,
-	jgg@ziepe.ca,
-	jhubbard@nvidia.com,
-	peterx@redhat.com,
-	baolin.wang@linux.alibaba.com,
-	npache@redhat.com,
-	ryan.roberts@arm.com,
-	dev.jain@arm.com,
-	lance.yang@linux.dev,
-	usama.arif@linux.dev,
-	xu.xin16@zte.com.cn,
-	chengming.zhou@linux.dev,
-	roman.gushchin@linux.dev,
-	muchun.song@linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	driver-core@lists.linux.dev,
-	nvdimm@lists.linux.dev,
-	linux-cxl@vger.kernel.org,
-	linux-debuggers@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	kvm@vger.kernel.org,
-	cgroups@vger.kernel.org,
 	damon@lists.linux.dev,
-	linux-kselftest@vger.kernel.org,
-	kernel-team@meta.com
-Subject: Re: [PATCH v5 14/36] mm/damon: skip private node memory in DAMON migration and pageout
-Date: Thu, 23 Jul 2026 06:36:53 -0700
-Message-ID: <20260723133654.86752-1-sj@kernel.org>
+	liyouhong <liyouhong@kylinos.cn>
+Subject: Re: [PATCH] mm/damon/ops-common: putback folios on invalid migrate nid
+Date: Thu, 23 Jul 2026 06:46:22 -0700
+Message-ID: <20260723134622.86926-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <amGHuputMNCFZ9CV@gourry-fedora-PF4VCD3F>
+In-Reply-To: <20260723061246.1878435-1-dayou5941@163.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -116,86 +46,106 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 22 Jul 2026 23:25:15 -0400 Gregory Price <gourry@gourry.net> wrote:
+On Thu, 23 Jul 2026 14:12:46 +0800 dayou5941@163.com wrote:
 
-> On Wed, Jul 22, 2026 at 05:19:42PM -0700, SJ Park wrote:
-> > On Wed, 22 Jul 2026 08:16:56 -0400 Gregory Price <gourry@gourry.net> wrote:
-> > 
-> > > > "by default".  Does that mean it could be reclaimable in some situations?  If
-> > > > so, could we check if it is reclaimable?
-> > > > 
-> > > 
-> > > See the damon changes in:
-> > > 
-> > > https://lore.kernel.org/linux-mm/al-pkvmgIxGu3LzM@gourry-fedora-PF4VCD3F/T/#mfb99303c85dd9d4c3f58832dc28fc55583a7217a
-> > 
-> > Summarizing what you want to say, quoting something from the patch, or at least
-> > calling it "26th patch of this series" would have made reviewing much easier.
-> > Cc-ing damon@ for only patches that toucing DAMON source files and the cover
-> > letter of the series could also be helpful.  Please consider doing some of
-> > these for future replies.
-> > 
+> From: liyouhong <liyouhong@kylinos.cn>
 > 
-> I have been very much discouraged from this kind of trimming because it
-> removes the context of the series from the individual patches - making it
-> even more confusing.
+> damon_pa_migrate() and damos_va_migrate() isolate folios into a local list
+> and then call damon_migrate_pages().  When target_nid is invalid (including
+> the scheme default NUMA_NO_NODE / -1), damon_migrate_pages() returns early
+> without putting the folios back to the LRU.
+> 
+> Callers then discard the list head while those folios remain isolated with
+> an extra reference taken by folio_isolate_lru().  The pages stay off the
+> LRU for as long as the mapping exists (anon active+inactive counts drop
+> while RSS does not), and the leftover references can pin the pages after
+> the mapping is gone.
 
-That's fair and making sense.
+Nice catch!
+
+Sounds like this is a very bad bug.  Users can trigger it (though it is
+arguably weird or poor setup at least) and the consequence is quote bad:
+visible but silent memory exhaustion that cannot be restored without reboot.  I
+believe this deserves the hot fixes fast track.  Let me know if I'm missing
+something.
 
 > 
-> But I understand, I will try to remember to do this for you.
+> Factor the existing putback loop into damon_putback_folio_list() and use it
+> on the invalid-nid path as well, so ignored migration requests still return
+> folios to the LRU.
 
-Thank you, Gregory.  Nonetheless, I wouldn't insist selective Cc-ing.  I agree
-your point, and I expect doing that would be tedious if you don't have a script
-or tool (I use a tool).  It is just one of my suggestion to help reviewing in
-this context, insted of only lore link.  Just one among the other three
-suggestions (summarizing your thought, quoting, or simply calling it "26th
-patch of this series") should also suffice.
+As this is a hotfix, I'd prefer skipping putback loop facotring out part, for
+simplicity of backporting.
 
 > 
-> > So, I understand later patches will make it optionally reclaimable and update
-> > this restriction by the 26th patch?  That sounds fair.  But, could we drop "by
-> > default" from the above comment for reducing the confusion?
-> 
-> Yes, but you bring up a good point - I think this two-step process is
-> actually poor form and that I need to redo it.
-> 
-> Maybe this can be redone as node states (features?) such as:
-> 
->    N_MEMORY_RECLAIMABLE
->    N_MEMORY_DEMOTABLE
->    N_MEMORY_TIERABLE
-> 
-> so these damon changes will forego this confusing intermediate step of:
-> 
->    if (folio_is_private_node(folio))
-> 
-> and go straight to
-> 
->    if (node_is_reclaimable(folio_nid(folio)))
-> 
-> In the first patch - without ever having to revisit damon again.
+> Fixes: 7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
 
-Indeed that sounds better than my suggestion.
+Let's Cc: stable@.
 
+> Signed-off-by: liyouhong <liyouhong@kylinos.cn>
+> ---
+>  mm/damon/ops-common.c | 22 +++++++++++++++-------
+>  1 file changed, 15 insertions(+), 7 deletions(-)
 > 
-> > > 
-> > > Technically there is nothing in migration core to prevent migration
-> > > operations, it's done on a service basis - hotunplug, reclaim/demotion,
-> > > user numa (mbind, migrate/move_pages) etc.
-> > > 
-> > > Operations on private nodes/private node folioes are refused if the
-> > > capability bit is not set.
-> > 
-> > I haven't had a chance to read the entire series, sorry about that.  So, do you
-> > mean the above blocking is not really needed, or that will conditionally be
-> > allowed by another later patch?
-> > 
-> 
-> I will reduce this all to a single patch in v6, I see where things can
-> be improved now based on a few pieces of feedback.
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index d1842e2b00ef..9a1e8aec5444 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+> @@ -331,12 +331,22 @@ static unsigned int __damon_migrate_folio_list(
+>  	return nr_succeeded;
+>  }
+>  
+> +static void damon_putback_folio_list(struct list_head *folio_list)
+> +{
+> +	struct folio *folio;
+> +
+> +	while (!list_empty(folio_list)) {
+> +		folio = lru_to_folio(folio_list);
+> +		list_del(&folio->lru);
+> +		folio_putback_lru(folio);
+> +	}
+> +}
+> +
+>  static unsigned int damon_migrate_folio_list(struct list_head *folio_list,
+>  						struct pglist_data *pgdat,
+>  						int target_nid)
+>  {
+>  	unsigned int nr_migrated = 0;
+> -	struct folio *folio;
+>  	LIST_HEAD(ret_folios);
+>  	LIST_HEAD(migrate_folios);
+>  
+> @@ -374,11 +384,7 @@ static unsigned int damon_migrate_folio_list(struct list_head *folio_list,
+>  
+>  	list_splice(&ret_folios, folio_list);
+>  
+> -	while (!list_empty(folio_list)) {
+> -		folio = lru_to_folio(folio_list);
+> -		list_del(&folio->lru);
+> -		folio_putback_lru(folio);
+> -	}
+> +	damon_putback_folio_list(folio_list);
 
-Sounds good, thank you Gregory.  Looking forward to the next version!
+I agree this is good cleanup.  For simple porting to stable@ series, however,
+let's not touch this function.
+
+>  
+>  	return nr_migrated;
+>  }
+> @@ -394,8 +400,10 @@ unsigned long damon_migrate_pages(struct list_head *folio_list, int target_nid)
+>  		return nr_migrated;
+>  
+>  	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
+> -			!node_state(target_nid, N_MEMORY))
+> +	    !node_state(target_nid, N_MEMORY)) {
+
+Please keep the original indentation.
+
+> +		damon_putback_folio_list(folio_list);
+>  		return nr_migrated;
+> +	}
+
+Let's open-code the putback here.  We could factor out that later.
 
 
 Thanks,
