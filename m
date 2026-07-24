@@ -1,129 +1,106 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32B437107E
-	for <damon@lists.linux.dev>; Fri, 24 Jul 2026 06:00:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CDC1D4606
+	for <damon@lists.linux.dev>; Fri, 24 Jul 2026 06:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784872860; cv=none; b=nZ9cDiPlhvjLm9169WbZgOHaOcZNpGY054yciyXr5iZdVVd3TczynYvtKgP1sCPmOLBm2reyT35u81lAXENo9/nXuccq80KEjaj2+nrClHsyPDTIkGCJOFVVJEnWTRC+EK0Y9NnyIl05Cxo2jk+RTMUlbMjsU4BYza/HWWOezuE=
+	t=1784872930; cv=none; b=kvTFHOGoGMeszJ0eeA+zpFLMFE1n0KraxijHCIrBLVx0gvXWRVrvrm0dgMhilF6PD1OGyJXcNpDsH5elXrK6FT0mVJfB3/50TWCuHv2+8O/lo99CK9JGUGBvYRrTBjKTO7Ymx8RO+piAJY6MGUbSgi1O6MI3jMkpM9WdCNqk8Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784872860; c=relaxed/simple;
-	bh=d3skJ82yiCrcOyLMi+CycqJ0n3Z6Km6peJ5f+TQ6qWs=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=kLQig1dP5oLh8eMUP0vyPbZtR01sKaScvElZ9ywnoP9OJkCeU4DJJJRGFWq17xZkpiIdSwipkxpW8CzOsyRRy1NM/aB9mAu8Sj48vdX2XEtZtXuQOF7aAfeFXXjraS9Y7tSYrPszhkcsw4lMrKAN8nQSNaBcCGKozWEvgBGY9TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=X33Sr286; arc=none smtp.client-ip=220.197.31.3
+	s=arc-20240116; t=1784872930; c=relaxed/simple;
+	bh=mkWfsdASMKj7+jYWucz/GqNc6q/mA0IQHtKUdjecazU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=s2BjmsEGAsrPPzqzdyGp35QWX7HPa0NMdkDtMhKH18iVf2IeAC1kqa1OD2y4Q1k0Hr/UhONdVGWtPyp6ch+24wC8/hldftqDW0YCdqjCfkXlkKQqDGkv2gQmmsy8rcQlQYADzqFXQUR7ZmY4oRD2rRIy7qdr2tYj5xMnsJTC1Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=VSXhx7mI; arc=none smtp.client-ip=220.197.31.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="X33Sr286"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="VSXhx7mI"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=d3skJ82yiCrcOyLMi+CycqJ0n3Z6Km6peJ5f+TQ6qWs=; b=X
-	33Sr2866C/GLkOOuaXRnDGFOLdlN2WA2xCoTtgAhh+bgScaMAoGbIhsjcseWqPU0
-	GBHHkmkonPPTkfdMDwiGDPIuzNLart/CO1gggb8whCbhxRa5BxlkkB4NgI3dNhSo
-	ZNFJk39uXEysnKJPBUnky1q9jeS2sQN2UW8iyMy6Lg=
-Received: from dayou5941$163.com ( [116.128.244.169] ) by
- ajax-webmail-wmsvr-40-128 (Coremail) ; Fri, 24 Jul 2026 14:00:30 +0800
- (CST)
-Date: Fri, 24 Jul 2026 14:00:30 +0800 (CST)
-From: =?UTF-8?B?5p2O5L2R6bi/IA==?= <dayou5941@163.com>
-To: "SJ Park" <sj@kernel.org>
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev,
-	liyouhong <liyouhong@kylinos.cn>
-Subject: Re:Re: [PATCH] mm/damon/ops-common: putback folios on invalid
- migrate nid
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <20260723134622.86926-1-sj@kernel.org>
-References: <20260723134622.86926-1-sj@kernel.org>
-X-NTES-SC: AL_Qu2TBvScvUAo5iOdYekck0sXhOc/X8awuvgn34BRc88EgC7twQEDZGZsD0Hc79OjMDiyrzW1bDZTw8BEUYJpU8uUnlreRmoyEcn1Av5qrw==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=Jh
+	breerLhHAwgm7kB+iWDalJVkVusITV82om/XI/fSQ=; b=VSXhx7mIu+Qn7wLpOd
+	7kT91ddxhjTi3hTE+aVFl9U0AWi+3IkcGDagiKOcg7c+6QTb5O3JaMVYcaR3QdSH
+	cnDB2uiQVvrAv27h/1FW6Y2zLAPiGa7LG7fUnRnN9OMBm83luA7e6lxNzkxN15Iv
+	ygMXey4zkdsCBDZqwuAx0KyUs=
+Received: from localhost.localdomain (unknown [])
+	by gzsmtp5 (Coremail) with SMTP id QCgvCgCH5tPD_2Jqww8QIw--.45032S2;
+	Fri, 24 Jul 2026 14:01:39 +0800 (CST)
+From: dayou5941@163.com
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	liyouhong <liyouhong@kylinos.cn>,
+	stable@vger.kernel.org
+Subject: [PATCH v2 1/2] mm/damon/ops-common: putback folios on invalid migrate nid
+Date: Fri, 24 Jul 2026 14:01:34 +0800
+Message-Id: <20260724060135.3014676-1-dayou5941@163.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <5813d854.4007.19f92b6059a.Coremail.dayou5941@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:gCgvCgDnR0V__2Jqw3skAA--.5279W
-X-CM-SenderInfo: 5gd103ivzuiqqrwthudrp/xtbC+h9SAWpi-3+2YwAA3r
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:QCgvCgCH5tPD_2Jqww8QIw--.45032S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tF4UGF4kZryfJry3KF48Zwb_yoW8ZryUpF
+	1rKa4rC39xtryI93WfZFZYvr10yrW3Jr15GasxGFs7A3Z8X340k347t3W2vay5Jry5Gr4f
+	C3Wqyas09F47JrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jozuXUUUUU=
+X-CM-SenderInfo: 5gd103ivzuiqqrwthudrp/xtbC3QNjEmpi-8OmOwAA3G
 
-CgoKCgoKCgoKClRoYW5rcyBmb3IgdGhlIHJldmlldy4KCgpBdCAyMDI2LTA3LTIzIDIxOjQ2OjIy
-LCAiU0ogUGFyayIgPHNqQGtlcm5lbC5vcmc+IHdyb3RlOgo+T24gVGh1LCAyMyBKdWwgMjAyNiAx
-NDoxMjo0NiArMDgwMCBkYXlvdTU5NDFAMTYzLmNvbSB3cm90ZToKPgo+PiBGcm9tOiBsaXlvdWhv
-bmcgPGxpeW91aG9uZ0BreWxpbm9zLmNuPgo+PsKgCj4+IGRhbW9uX3BhX21pZ3JhdGUoKSBhbmQg
-ZGFtb3NfdmFfbWlncmF0ZSgpIGlzb2xhdGUgZm9saW9zIGludG8gYSBsb2NhbCBsaXN0Cj4+IGFu
-ZCB0aGVuIGNhbGwgZGFtb25fbWlncmF0ZV9wYWdlcygpLiAgV2hlbiB0YXJnZXRfbmlkIGlzIGlu
-dmFsaWQgKGluY2x1ZGluZwo+PiB0aGUgc2NoZW1lIGRlZmF1bHQgTlVNQV9OT19OT0RFIC8gLTEp
-LCBkYW1vbl9taWdyYXRlX3BhZ2VzKCkgcmV0dXJucyBlYXJseQo+PiB3aXRob3V0IHB1dHRpbmcg
-dGhlIGZvbGlvcyBiYWNrIHRvIHRoZSBMUlUuCj4+wqAKPj4gQ2FsbGVycyB0aGVuIGRpc2NhcmQg
-dGhlIGxpc3QgaGVhZCB3aGlsZSB0aG9zZSBmb2xpb3MgcmVtYWluIGlzb2xhdGVkIHdpdGgKPj4g
-YW4gZXh0cmEgcmVmZXJlbmNlIHRha2VuIGJ5IGZvbGlvX2lzb2xhdGVfbHJ1KCkuICBUaGUgcGFn
-ZXMgc3RheSBvZmYgdGhlCj4+IExSVSBmb3IgYXMgbG9uZyBhcyB0aGUgbWFwcGluZyBleGlzdHMg
-KGFub24gYWN0aXZlK2luYWN0aXZlIGNvdW50cyBkcm9wCj4+IHdoaWxlIFJTUyBkb2VzIG5vdCks
-IGFuZCB0aGUgbGVmdG92ZXIgcmVmZXJlbmNlcyBjYW4gcGluIHRoZSBwYWdlcyBhZnRlcgo+PiB0
-aGUgbWFwcGluZyBpcyBnb25lLgo+Cj5OaWNlIGNhdGNoIQo+Cj5Tb3VuZHMgbGlrZSB0aGlzIGlz
-IGEgdmVyeSBiYWQgYnVnLiAgVXNlcnMgY2FuIHRyaWdnZXIgaXQgKHRob3VnaCBpdCBpcwo+YXJn
-dWFibHkgd2VpcmQgb3IgcG9vciBzZXR1cCBhdCBsZWFzdCkgYW5kIHRoZSBjb25zZXF1ZW5jZSBp
-cyBxdW90ZSBiYWQ6Cj52aXNpYmxlIGJ1dCBzaWxlbnQgbWVtb3J5IGV4aGF1c3Rpb24gdGhhdCBj
-YW5ub3QgYmUgcmVzdG9yZWQgd2l0aG91dCByZWJvb3QuICBJCj5iZWxpZXZlIHRoaXMgZGVzZXJ2
-ZXMgdGhlIGhvdCBmaXhlcyBmYXN0IHRyYWNrLiAgTGV0IG1lIGtub3cgaWYgSSdtIG1pc3NpbmcK
-PnNvbWV0aGluZy4KCgo+CgoKCgoKClVzZXJzIGNhbiBoaXQgaXQgYnkgY3JlYXRpbmcgYSBtaWdy
-YXRlX3tob3QsY29sZH0gc2NoZW1lIHdpdGhvdXQgY2hhbmdpbmcKdGFyZ2V0X25pZCAodGhlIHN5
-c2ZzIGRlZmF1bHQgaXMgTlVNQV9OT19OT0RFIC8gLTEpLCBvciBieSBwb2ludGluZyBpdCBhdCBh
-Cm5vbi1tZW1vcnkgbm9kZS4gIEVhY2ggYXBwbHkgY3ljbGUgaXNvbGF0ZXMgZm9saW9zLCB0aGVu
-CmRhbW9uX21pZ3JhdGVfcGFnZXMoKSByZXR1cm5zIHdpdGhvdXQgcHV0YmFjayBhbmQgdGhlIGNh
-bGxlcnMgZGlzY2FyZCB0aGUKbGlzdCBoZWFkcy4gIFRoZSBwYWdlcyBsZWF2ZSB0aGUgTFJVIHdo
-aWxlIHRoZSBwcm9jZXNzIFJTUyBzdGF5cyB1cDsgYWZ0ZXIKdGhlIG1hcHBpbmcgaXMgZ29uZSwg
-dGhlIGxlZnRvdmVyIGlzb2xhdGUgcmVmcyBrZWVwIHRoZW0gcGlubmVkIHVudGlsCnJlYm9vdC4g
-IEkgZG8gbm90IHRoaW5rIHlvdSBhcmUgbWlzc2luZyBhbnl0aGluZy4KCgo+PsKgCj4+IEZhY3Rv
-ciB0aGUgZXhpc3RpbmcgcHV0YmFjayBsb29wIGludG8gZGFtb25fcHV0YmFja19mb2xpb19saXN0
-KCkgYW5kIHVzZSBpdAo+PiBvbiB0aGUgaW52YWxpZC1uaWQgcGF0aCBhcyB3ZWxsLCBzbyBpZ25v
-cmVkIG1pZ3JhdGlvbiByZXF1ZXN0cyBzdGlsbCByZXR1cm4KPj4gZm9saW9zIHRvIHRoZSBMUlUu
-Cj4KPkFzIHRoaXMgaXMgYSBob3RmaXgsIEknZCBwcmVmZXIgc2tpcHBpbmcgcHV0YmFjayBsb29w
-IGZhY290cmluZyBvdXQgcGFydCwgZm9yCj5zaW1wbGljaXR5IG9mIGJhY2twb3J0aW5nLgo+Cj4+
-wqAKPj4gRml4ZXM6IDdlNmMzMTMwNjkwYSAoIm1tL2RhbW9uL29wcy1jb21tb246IGlnbm9yZSBt
-aWdyYXRpb24gcmVxdWVzdCB0byBpbnZhbGlkIG5vZGVzIikKPgo+TGV0J3MgQ2M6IHN0YWJsZUAu
-Cj4KPj4gU2lnbmVkLW9mZi1ieTogbGl5b3Vob25nIDxsaXlvdWhvbmdAa3lsaW5vcy5jbj4KPj4g
-LS0tCj4+ICBtbS9kYW1vbi9vcHMtY29tbW9uLmMgfCAyMiArKysrKysrKysrKysrKystLS0tLS0t
-Cj4+ICAxIGZpbGUgY2hhbmdlZCwgMTUgaW5zZXJ0aW9ucygrKSwgNyBkZWxldGlvbnMoLSkKPj7C
-oAo+PiBkaWZmIC0tZ2l0IGEvbW0vZGFtb24vb3BzLWNvbW1vbi5jIGIvbW0vZGFtb24vb3BzLWNv
-bW1vbi5jCj4+IGluZGV4IGQxODQyZTJiMDBlZi4uOWExZThhZWM1NDQ0IDEwMDY0NAo+PiAtLS0g
-YS9tbS9kYW1vbi9vcHMtY29tbW9uLmMKPj4gKysrIGIvbW0vZGFtb24vb3BzLWNvbW1vbi5jCj4+
-IEBAIC0zMzEsMTIgKzMzMSwyMiBAQCBzdGF0aWMgdW5zaWduZWQgaW50IF9fZGFtb25fbWlncmF0
-ZV9mb2xpb19saXN0KAo+PiAgCXJldHVybiBucl9zdWNjZWVkZWQ7Cj4+ICB9Cj4+wqDCoAo+PiAr
-c3RhdGljIHZvaWQgZGFtb25fcHV0YmFja19mb2xpb19saXN0KHN0cnVjdCBsaXN0X2hlYWQgKmZv
-bGlvX2xpc3QpCj4+ICt7Cj4+ICsJc3RydWN0IGZvbGlvICpmb2xpbzsKPj4gKwo+PiArCXdoaWxl
-ICghbGlzdF9lbXB0eShmb2xpb19saXN0KSkgewo+PiArCQlmb2xpbyA9IGxydV90b19mb2xpbyhm
-b2xpb19saXN0KTsKPj4gKwkJbGlzdF9kZWwoJmZvbGlvLT5scnUpOwo+PiArCQlmb2xpb19wdXRi
-YWNrX2xydShmb2xpbyk7Cj4+ICsJfQo+PiArfQo+PiArCj4+ICBzdGF0aWMgdW5zaWduZWQgaW50
-IGRhbW9uX21pZ3JhdGVfZm9saW9fbGlzdChzdHJ1Y3QgbGlzdF9oZWFkICpmb2xpb19saXN0LAo+
-PiAgCQkJCQkJc3RydWN0IHBnbGlzdF9kYXRhICpwZ2RhdCwKPj4gIAkJCQkJCWludCB0YXJnZXRf
-bmlkKQo+PiAgewo+PiAgCXVuc2lnbmVkIGludCBucl9taWdyYXRlZCA9IDA7Cj4+IC0Jc3RydWN0
-IGZvbGlvICpmb2xpbzsKPj4gIAlMSVNUX0hFQUQocmV0X2ZvbGlvcyk7Cj4+ICAJTElTVF9IRUFE
-KG1pZ3JhdGVfZm9saW9zKTsKPj7CoMKgCj4+IEBAIC0zNzQsMTEgKzM4NCw3IEBAIHN0YXRpYyB1
-bnNpZ25lZCBpbnQgZGFtb25fbWlncmF0ZV9mb2xpb19saXN0KHN0cnVjdCBsaXN0X2hlYWQgKmZv
-bGlvX2xpc3QsCj4+wqDCoAo+PiAgCWxpc3Rfc3BsaWNlKCZyZXRfZm9saW9zLCBmb2xpb19saXN0
-KTsKPj7CoMKgCj4+IC0Jd2hpbGUgKCFsaXN0X2VtcHR5KGZvbGlvX2xpc3QpKSB7Cj4+IC0JCWZv
-bGlvID0gbHJ1X3RvX2ZvbGlvKGZvbGlvX2xpc3QpOwo+PiAtCQlsaXN0X2RlbCgmZm9saW8tPmxy
-dSk7Cj4+IC0JCWZvbGlvX3B1dGJhY2tfbHJ1KGZvbGlvKTsKPj4gLQl9Cj4+ICsJZGFtb25fcHV0
-YmFja19mb2xpb19saXN0KGZvbGlvX2xpc3QpOwo+Cj5JIGFncmVlIHRoaXMgaXMgZ29vZCBjbGVh
-bnVwLiAgRm9yIHNpbXBsZSBwb3J0aW5nIHRvIHN0YWJsZUAgc2VyaWVzLCBob3dldmVyLAo+bGV0
-J3Mgbm90IHRvdWNoIHRoaXMgZnVuY3Rpb24uCj4KPj7CoMKgCj4+ICAJcmV0dXJuIG5yX21pZ3Jh
-dGVkOwo+PiAgfQo+PiBAQCAtMzk0LDggKzQwMCwxMCBAQCB1bnNpZ25lZCBsb25nIGRhbW9uX21p
-Z3JhdGVfcGFnZXMoc3RydWN0IGxpc3RfaGVhZCAqZm9saW9fbGlzdCwgaW50IHRhcmdldF9uaWQp
-Cj4+ICAJCXJldHVybiBucl9taWdyYXRlZDsKPj7CoMKgCj4+ICAJaWYgKHRhcmdldF9uaWQgPCAw
-IHx8IHRhcmdldF9uaWQgPj0gTUFYX05VTU5PREVTIHx8Cj4+IC0JCQkhbm9kZV9zdGF0ZSh0YXJn
-ZXRfbmlkLCBOX01FTU9SWSkpCj4+ICsJICAgICFub2RlX3N0YXRlKHRhcmdldF9uaWQsIE5fTUVN
-T1JZKSkgewo+Cj5QbGVhc2Uga2VlcCB0aGUgb3JpZ2luYWwgaW5kZW50YXRpb24uCj4KPj4gKwkJ
-ZGFtb25fcHV0YmFja19mb2xpb19saXN0KGZvbGlvX2xpc3QpOwo+PiAgCQlyZXR1cm4gbnJfbWln
-cmF0ZWQ7Cj4+ICsJfQo+Cj5MZXQncyBvcGVuLWNvZGUgdGhlIHB1dGJhY2sgaGVyZS4gIFdlIGNv
-dWxkIGZhY3RvciBvdXQgdGhhdCBsYXRlci4KCgoKCgoKCgp2MiBmb2xsb3dzIHlvdXIgc3VnZ2Vz
-dGlvbnM6IGRyb3AgdGhlIHB1dGJhY2sgaGVscGVyIHNvIHRoZSBjaGFuZ2UgaXMKZWFzaWVyIHRv
-IGJhY2twb3J0LCBvcGVuLWNvZGUgdGhlIHB1dGJhY2sgb25seSBvbiB0aGUgaW52YWxpZC1uaWQg
-cGF0aCwKa2VlcCB0aGUgb3JpZ2luYWwgaW5kZW50YXRpb24sIGFuZCBDYyBzdGFibGVALgoKCgoK
-QmVzdCByZWdhcmRzLApsaXlvdWhvbmcKCg==
+From: liyouhong <liyouhong@kylinos.cn>
+
+damon_pa_migrate() and damos_va_migrate() isolate folios into a local list
+and then call damon_migrate_pages().  When target_nid is invalid (including
+the scheme default NUMA_NO_NODE / -1), damon_migrate_pages() returns early
+without putting the folios back to the LRU.
+
+Callers then discard the list head while those folios remain isolated with
+an extra reference taken by folio_isolate_lru().  The pages stay off the
+LRU for as long as the mapping exists (anon active+inactive counts drop
+while RSS does not), and the leftover references can pin the pages after
+the mapping is gone.
+
+Put the folios back on the invalid-nid path so ignored migration requests
+still return them to the LRU.
+
+Fixes: 7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
+Cc: <stable@vger.kernel.org>
+Assisted-by: Cursor:grok-4.5
+Signed-off-by: liyouhong <liyouhong@kylinos.cn>
+
+---
+v2:
+- Drop the putback helper for easier stable backport
+- Open-code putback only on the invalid-nid path
+- Keep the original indentation and Cc stable@
+- Add a separate cleanup as 2/2 (factor out damon_putback_folio_list)
+
+---
+ mm/damon/ops-common.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index d1842e2b00ef..f5ded45fabd1 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -394,8 +394,15 @@ unsigned long damon_migrate_pages(struct list_head *folio_list, int target_nid)
+ 		return nr_migrated;
+ 
+ 	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
+-			!node_state(target_nid, N_MEMORY))
++			!node_state(target_nid, N_MEMORY)) {
++		while (!list_empty(folio_list)) {
++			struct folio *folio = lru_to_folio(folio_list);
++
++			list_del(&folio->lru);
++			folio_putback_lru(folio);
++		}
+ 		return nr_migrated;
++	}
+ 
+ 	noreclaim_flag = memalloc_noreclaim_save();
+ 
+-- 
+2.25.1
+
