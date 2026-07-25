@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE20441614;
-	Fri, 24 Jul 2026 15:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C101246768;
+	Sat, 25 Jul 2026 21:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784908591; cv=none; b=Yigp/aqAsTL531bpFJVZSXZvP9AHUR9u+S+mNVL4Vscoy5vZ0Glb9t0lxpO/6dtiuKhXr1tBUY4fnttmka4DmOB0lak3CpFB5Z0gA5lwxoswNA1VT8c5NgbN5gD5p2NmRoafHG58jFADoI9+4SQyZGnH+OSOtbrdPB95aQuJ7Cg=
+	t=1785013356; cv=none; b=i8vHQ93Chk+3+PP9l+V+TJol6IrHHczojuesVS5AltVg1P6ldbvvt6lba0eeYmYZsihf0RBmvKLdxQTTinHNrjIe9PDLQCQzWaQgt7qC0eTDmTyC+8tvyniEpv8VTBMqKY96bEKcmS+ypl6R/r4cb9n7r065HVa7XOT61BWHUts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784908591; c=relaxed/simple;
-	bh=7yPQswfYrp6arMkV7kcJSF7gO5TtY1yimhDLcaR1kMA=;
+	s=arc-20240116; t=1785013356; c=relaxed/simple;
+	bh=b5kSQGCS/ZAyZmfPJm1xVu80EMtlm0HqrWMr37t/cqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PzODILuUHEivPTAsmZStt0ccTAHNiNPqEejTI6pYgCZzi+N3F80oazDpD+5K2bYmIg73hfKzbGJdclxu0vuvpAOI5TIVtUSL7UVrSHtYR+eXALj8ak067ehrxROBxDdTEBDuNSOTG+E6W11Eu28oBEfny2QaCYWwnvYoZIdb+4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YgCgo1+s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GwA9XeiFvqMe4ABLMv1YXsVeCHQpJkCUfc/yXanIScA/Q20Cn78pt3I0n2EM871Bys3jjfUduV4q+0Q+/4igC7PSCamSbr5gJfZ1I1UBr7uKEL+DJ/55DKMRuredGlb56dLi2aUtBGckKYUQ3OXhO7dYSo3CfREPX1hYYxdvIkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A0SkmNCc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YgCgo1+s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6601F000E9;
-	Fri, 24 Jul 2026 15:56:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A0SkmNCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C341F00ACF;
+	Sat, 25 Jul 2026 21:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784908590;
-	bh=j2zxJGtgfagroV+khp6LEYmzLz5B0imC6r6TA5mARIQ=;
+	s=k20260515; t=1785013354;
+	bh=GZDCgXboPWDjpqLBgpT6yf0F7vtlbLEb3w3NI8ROd0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YgCgo1+sQf/CYWlQEc72vKQJzzaMCshLdDrXo2v+qu3869/s8Q3xtkeXD0tU9OG+u
-	 RJieMRIx+LJPephtuXb9OaRRDiIxFyEgSogH3qTZj6T3IFB7+J9JqIKMF3jxjCimzr
-	 LNh696qm3ZbPmm3KCNDgNITzHgSafm1L6b8hI//jJeneGEEM5PajUufsQ3CHvaDY8L
-	 3VFsANaCSpPmqbLq8h11/g9WL8LOQ13Qo5cF0tglgdMLvMeoHzIAbQNpCC8q7PGJ8g
-	 tqjdjpXy5z5TOLFYglZwpy4R/aAZxn341bjpgdsWuOiRkpIpwDfpUqBZbU+Xm12iy0
-	 BJvxWe1GQT6kQ==
+	b=A0SkmNCcRAszddBVfeaHVKD67PkiqdMZ3a6juJ0HvdMVBb+c8TpvCPILa4l3G8I2x
+	 xS+awYaBkiZtMpjmrPR/8TQl3ysqxjn8MsG/Py1Invs8ZwHhwuOFlXsxsEHme1Jknt
+	 Q67b1KaQlKN3Oi3+TGQ+YzvK19DFe+a+dds+71zSQjLdg/WeTXLd530CuaaChSQAnG
+	 REer/H+zAoYSw4qvrZU9cYDLvVp9PIos/skkMR/9SK5b6wN7Go8ADVeEuDI30Hlf07
+	 oeOml/l39fh7IJA/fkkaRHU+rIoVNVYHu1TpekEm2YBiPMKEjsp2Bxt8oFrX4z5g9j
+	 1tG/ItmnaPGNw==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: dayou5941@163.com,
-	akpm@linux-foundation.org,
+To: 
+Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	liyouhong <liyouhong@kylinos.cn>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] mm/damon/ops-common: putback folios on invalid migrate nid
-Date: Fri, 24 Jul 2026 08:56:20 -0700
-Message-ID: <20260724155621.95333-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 01/17] mm/damon/core: introduce DAMON_FILTER_TYPE_PGIDLE_UNSET
+Date: Sat, 25 Jul 2026 14:02:05 -0700
+Message-ID: <20260725210225.129944-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260724144143.94526-1-sj@kernel.org>
-References: 
+In-Reply-To: <20260725210225.129944-1-sj@kernel.org>
+References: <20260725210225.129944-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,70 +46,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 24 Jul 2026 07:41:46 -0700 SJ Park <sj@kernel.org> wrote:
+Introduce a new DAMON filter type, pgidle_unset.  It will match pages
+that have their PG_Idle flag unset, or the page table accessed bit set.
+In other words, it says if the page is accessed.
 
-> On Fri, 24 Jul 2026 14:01:34 +0800 dayou5941@163.com wrote:
-> 
-> > From: liyouhong <liyouhong@kylinos.cn>
-> > 
-> > damon_pa_migrate() and damos_va_migrate() isolate folios into a local list
-> > and then call damon_migrate_pages().  When target_nid is invalid (including
-> > the scheme default NUMA_NO_NODE / -1), damon_migrate_pages() returns early
-> > without putting the folios back to the LRU.
-> > 
-> > Callers then discard the list head while those folios remain isolated with
-> > an extra reference taken by folio_isolate_lru().  The pages stay off the
-> > LRU for as long as the mapping exists (anon active+inactive counts drop
-> > while RSS does not), and the leftover references can pin the pages after
-> > the mapping is gone.
-> > 
-> > Put the folios back on the invalid-nid path so ignored migration requests
-> > still return them to the LRU.
-> > 
-> > Fixes: 7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
-> > Cc: <stable@vger.kernel.org>
-> > Assisted-by: Cursor:grok-4.5
-> > Signed-off-by: liyouhong <liyouhong@kylinos.cn>
-> > 
-> > ---
-> > v2:
-> > - Drop the putback helper for easier stable backport
-> > - Open-code putback only on the invalid-nid path
-> > - Keep the original indentation and Cc stable@
-> > - Add a separate cleanup as 2/2 (factor out damon_putback_folio_list)
-> > 
-> > ---
-> >  mm/damon/ops-common.c | 9 ++++++++-
-> >  1 file changed, 8 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> > index d1842e2b00ef..f5ded45fabd1 100644
-> > --- a/mm/damon/ops-common.c
-> > +++ b/mm/damon/ops-common.c
-> > @@ -394,8 +394,15 @@ unsigned long damon_migrate_pages(struct list_head *folio_list, int target_nid)
-> >  		return nr_migrated;
-> >  
-> >  	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
-> > -			!node_state(target_nid, N_MEMORY))
-> > +			!node_state(target_nid, N_MEMORY)) {
-> > +		while (!list_empty(folio_list)) {
-> > +			struct folio *folio = lru_to_folio(folio_list);
-> > +
-> > +			list_del(&folio->lru);
-> > +			folio_putback_lru(folio);
-> > +		}
-> >  		return nr_migrated;
-> > +	}
-> 
-> As I replied to the second patch, I'd suggest doing putback just before
-> returning.  Then this invalid target_nid handling can 'goto' there.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-I now think that is a bad idea.  Sorry for confusing.  That will make readers
-assume damon_migrate_folio_list() doesn't putback folios.  Please resend this
-as-is, but without the second patch.
-
-
-Thanks,
-SJ
-
-[...]
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 8ad6ef2e063de..cee4b74761081 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -744,12 +744,14 @@ struct damon_intervals_goal {
+ /**
+  * enum damon_filter_type - Type of &struct damon_filter
+  *
+- * @DAMON_FILTER_TYPE_ANON:	Anonymous pages.
+- * @DAMON_FILTER_TYPE_MEMCG:	Specific memcg's pages.
++ * @DAMON_FILTER_TYPE_ANON:		Anonymous pages.
++ * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
++ * @DAMON_FILTER_TYPE_PGIDLE_UNSET:	Pgidle is unset.
+  */
+ enum damon_filter_type {
+ 	DAMON_FILTER_TYPE_ANON,
+ 	DAMON_FILTER_TYPE_MEMCG,
++	DAMON_FILTER_TYPE_PGIDLE_UNSET,
+ };
+ 
+ /**
+-- 
+2.47.3
