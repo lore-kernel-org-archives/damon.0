@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDF636E467;
-	Sat, 25 Jul 2026 21:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A26371CE4;
+	Sat, 25 Jul 2026 21:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785013358; cv=none; b=iLHA2D2JopqLY+40GvbIur5ct5InTiZezDkmPOV3/2O16Y9gKxnpubLBLQ83I7LAWNoGTYMiTQzrpFdPcF6SDvq38RKe5REbSVexYVqWWI7PPd4mxrYGdcMj1FAO6ZhwblIdQZaywi4sxabJbZx54FmdCJOI40bQSgga7n37tVs=
+	t=1785013358; cv=none; b=qx1eBaHmCtF4lIYL4NTKNU4E0IyEHVmVkP1AH/g4l1RGsmFACcZFAcqRLUVbUr98E0ehR3ohqwHZFORn2zHXpVnWu9zZVfBXlK+LBHyjhC14nW8AREJ+aTCSFFlnVcxzNbcz8HyyYC/q4OhGCvC1EWlKk1HD/l1rC/MUN2QuF28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785013358; c=relaxed/simple;
-	bh=QROrfCzQixCQTszSavdn26Kts8/EkDr/hPWNC1d7GwM=;
+	bh=LqkH270yj6cEGx5W27ucoHgM47ijlvoVXs2hvZhey3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NqLfCV11RhJ42QjQ2O/NhYrSHDx218f442MuKT5/qMQIvjbH1MtWvDjCizOyXj7e6DYHLdtVJR/ebeHEafJxtJrfL2hLooGu5BYlvjE+wJbplhUgvlw4X1rKetf/wovu4Q5G6v9QBFVWep6sA4/eGH3lclpinH5r98HsGN1oM9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bb5caqvb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X/rYomcVQmw0OSpxU144Um+oPFVKFao+35d6kDi44Qkf2wCFFya1oc+P1j6sAj77aPv0F+QD+uhUTQRlGGmMYagjKDydyoFRMU1+WK4VVKYCm+bEdZ6kIBvJmeIbeOBg9KTBWd/lW7qKtQIgYtpi4r8Z13Rma8S8hM9UAea6lrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BX0TEy62; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bb5caqvb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F27C1F00A3D;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BX0TEy62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6B71F00A3A;
 	Sat, 25 Jul 2026 21:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785013356;
-	bh=SdtqE3eR/Bua/rulOOI8NT/gdSWbQwN4dD7fIeQTAXA=;
+	s=k20260515; t=1785013357;
+	bh=QnE06deXrI0slNd+Eqrp5ImjS8Zb6D21mxT9DSUmfyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bb5caqvbHTRWjD6+KqdsFkIoeWHz41IT88yOdjSWGzGZFaGmWnosSUw88TTQZhMN0
-	 P0zlXq9/LnKrlpLbhfrcgYQs4pYxeBp9k4btPtP3G6t598XXJYF7YGW1BsExOA0/+v
-	 dyD69RIUM/qtWHPSHLAGHSdvSU05YuK/cLwI4lCYUTtQ0CgNloZfISqr90T+8Oe6o0
-	 ryDO9xwR1XHq/kFFCWGF9BbgAR1O7E1vCB0i3Jwpwn75BbLhURgTXqSQr/+9VqaoiE
-	 L9oo1fEZhuyObTvAY3H9OF6/X8LYQJvtdTqLq0a5551o5QO+P2IE6Sz/opyaAhJQnh
-	 /9GxvqoAHIN5A==
+	b=BX0TEy62bI8Edi8K4sbFTmSYcLY18hx8RnHnVahzCCxwwMPbM7C6STlFtYLSPN7sn
+	 f5iLeDeuoMDgvh5auBFcwwPUWxzNjRc83GkBfK3aYRw+5QALIbjnSFQrOTNrX0NkFZ
+	 GhV1OakXo8K2mKr+ruXqnOCygwaS5ypnFuxvxVsrO0n7q0sXjaCXpwrpQYw88EEvo5
+	 d3OzCYQ+fVYvNKa4pbaCrXabsmD3bgNSoF2vV9k9aQ+Q32K4J2eme2pyTiS3XYWis9
+	 j3A7F9cNRqaQb8slaEubtp8tSF0582ZHO57j7rfe9P92cImmEXRRRpQuTPlAjwbC+J
+	 TN9bnhvdk6lLQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 06/17] mm/damon/core: commit preps
-Date: Sat, 25 Jul 2026 14:02:10 -0700
-Message-ID: <20260725210225.129944-7-sj@kernel.org>
+Subject: [RFC PATCH 07/17] mm/damon/core: introduce damon_operations->prep_probes()
+Date: Sat, 25 Jul 2026 14:02:11 -0700
+Message-ID: <20260725210225.129944-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260725210225.129944-1-sj@kernel.org>
 References: <20260725210225.129944-1-sj@kernel.org>
@@ -47,109 +47,95 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_commit_probes() is ignoring damon_prep.  Commit the prep actions,
-too.
+damon_prep needs to be executed by the underlying DAMON operation set.
+Extend the operation set callback list for the execution of damon_prep
+actions.  If the underlying operation set implements the callback, DAMON
+core executes it in the monitoring preparation time.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 59 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ include/linux/damon.h |  4 ++++
+ mm/damon/core.c       | 18 +++++++++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 255b20e44287f..f5b0f16305b30 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -629,6 +629,7 @@ enum damon_ops_id {
+  * @update:			Update operations-related data structures.
+  * @prepare_access_checks:	Prepare next access check of target regions.
+  * @check_accesses:		Check the accesses to target regions.
++ * @prep_probes:		Prepare applying probes for each region.
+  * @apply_probes:		Apply probes for each region.
+  * @get_scheme_score:		Get the score of a region for a scheme.
+  * @apply_scheme:		Apply a DAMON-based operation scheme.
+@@ -656,6 +657,8 @@ enum damon_ops_id {
+  * last preparation and update the number of observed accesses of each region.
+  * It should also return max number of observed accesses that made as a result
+  * of its update.  The value will be used for regions adjustment threshold.
++ * @prep_probes should execute required &struct damon_prep for next &struct
++ * damon_probe applications to each region.
+  * @apply_probes should apply the data attribute probes to each region and
+  * accordingly update the probe hits counter of the region.  It should also
+  * set &damon_region->sampling_addr of each region if ``set_samples`` is true.
+@@ -678,6 +681,7 @@ struct damon_operations {
+ 	void (*update)(struct damon_ctx *context);
+ 	void (*prepare_access_checks)(struct damon_ctx *context);
+ 	unsigned int (*check_accesses)(struct damon_ctx *context);
++	void (*prep_probes)(struct damon_ctx *context, bool set_samples);
+ 	unsigned int (*apply_probes)(struct damon_ctx *context,
+ 			bool set_samples, bool return_max_wsum);
+ 	int (*get_scheme_score)(struct damon_ctx *context,
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index bda61f9ec0266..c74dee56efee8 100644
+index c74dee56efee8..11d16b7104a7e 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -128,11 +128,34 @@ void damon_add_prep(struct damon_probe *p, struct damon_prep *prep)
- 	list_add_tail(&prep->list, &p->preps);
+@@ -156,6 +156,18 @@ static struct damon_prep *damon_nth_prep(int n, struct damon_probe *p)
+ 	return NULL;
  }
  
-+static void damon_del_prep(struct damon_prep *p)
-+{
-+	list_del(&p->list);
-+}
-+
- static void damon_free_prep(struct damon_prep *p)
- {
- 	kfree(p);
- }
- 
-+static void damon_destroy_prep(struct damon_prep *p)
-+{
-+	damon_del_prep(p);
-+	damon_free_prep(p);
-+}
-+
-+static struct damon_prep *damon_nth_prep(int n, struct damon_probe *p)
++static bool damon_has_prep(struct damon_ctx *c)
 +{
 +	struct damon_prep *prep;
-+	int i = 0;
++	struct damon_probe *probe;
 +
-+	damon_for_each_prep(prep, p) {
-+		if (i++ == n)
-+			return prep;
++	damon_for_each_probe(probe, c) {
++		damon_for_each_prep(prep, probe)
++			return true;
 +	}
-+	return NULL;
++	return false;
 +}
 +
  struct damon_filter *damon_new_filter(enum damon_filter_type type,
  		bool matching, bool allow)
  {
-@@ -1694,6 +1717,36 @@ static int damon_commit_targets(
- 	return err;
- }
+@@ -3868,6 +3880,7 @@ static int kdamond_fn(void *data)
+ 		unsigned long next_ops_update_sis = ctx->next_ops_update_sis;
+ 		unsigned long sample_interval = ctx->attrs.sample_interval;
+ 		bool access_check_disabled = damon_has_probe_weights(ctx);
++		bool has_prep = damon_has_prep(ctx);
+ 		unsigned int max_merge_score = 0, max_wsum;
+ 		bool get_max_wsum;
  
-+static void damon_commit_prep(struct damon_prep *dst, struct damon_prep *src)
-+{
-+	dst->action = src->action;
-+}
-+
-+static int damon_commit_preps(struct damon_probe *dst, struct damon_probe *src)
-+{
-+	struct damon_prep *dst_prep, *next, *src_prep, *new_prep;
-+	int i = 0, j = 0;
-+
-+	damon_for_each_prep_safe(dst_prep, next, dst) {
-+		src_prep = damon_nth_prep(i++, src);
-+		if (src_prep)
-+			damon_commit_prep(dst_prep, src_prep);
-+		else
-+			damon_destroy_prep(dst_prep);
-+	}
-+
-+	damon_for_each_prep_safe(src_prep, next, src) {
-+		if (j++ < i)
-+			continue;
-+
-+		new_prep = damon_new_prep(src_prep->action);
-+		if (!new_prep)
-+			return -ENOMEM;
-+		damon_add_prep(dst, new_prep);
-+	}
-+	return 0;
-+}
-+
- static void damon_commit_filter(struct damon_filter *dst,
- 		struct damon_filter *src)
- {
-@@ -1752,6 +1805,9 @@ static int damon_commit_probes(struct damon_ctx *dst, struct damon_ctx *src)
- 		src_probe = damon_nth_probe(i++, src);
- 		if (src_probe) {
- 			dst_probe->weight = src_probe->weight;
-+			err = damon_commit_preps(dst_probe, src_probe);
-+			if (err)
-+				return err;
- 			err = damon_commit_filters(dst_probe, src_probe);
- 			if (err)
- 				return err;
-@@ -1769,6 +1825,9 @@ static int damon_commit_probes(struct damon_ctx *dst, struct damon_ctx *src)
- 			return -ENOMEM;
- 		damon_add_probe(dst, new_probe);
- 		new_probe->weight = src_probe->weight;
-+		err = damon_commit_preps(new_probe, src_probe);
-+		if (err)
-+			return err;
- 		err = damon_commit_filters(new_probe, src_probe);
- 		if (err)
- 			return err;
+@@ -3876,6 +3889,8 @@ static int kdamond_fn(void *data)
+ 
+ 		if (!access_check_disabled && ctx->ops.prepare_access_checks)
+ 			ctx->ops.prepare_access_checks(ctx);
++		if (ctx->ops.prep_probes)
++			ctx->ops.prep_probes(ctx, has_prep);
+ 
+ 		kdamond_usleep(sample_interval);
+ 		ctx->passed_sample_intervals++;
+@@ -3890,7 +3905,8 @@ static int kdamond_fn(void *data)
+ 			else
+ 				get_max_wsum = false;
+ 			max_wsum = ctx->ops.apply_probes(ctx,
+-					access_check_disabled, get_max_wsum);
++					access_check_disabled && !has_prep,
++					get_max_wsum);
+ 			if (get_max_wsum)
+ 				max_merge_score = max_wsum;
+ 		}
 -- 
 2.47.3
