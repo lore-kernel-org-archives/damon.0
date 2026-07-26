@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE724908B8
-	for <damon@lists.linux.dev>; Sun, 26 Jul 2026 16:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DB23002A9;
+	Sun, 26 Jul 2026 16:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785084247; cv=none; b=Ynp1DuyXAIzo8bT97y7yeLf7kRhmTQPISEYXV5TWzAsvRnas3D6/aYGw9A5qhKB7aBp81i8FI1SblHQdNnciD7ebzEkeVsEsICi9yXB7PLLv97KWWTQYO3sba92G9Aw1OiODIBwAzGtR4/b3gbmg6g1Yln+Vf6iws6OhlFxV/c4=
+	t=1785084614; cv=none; b=F6Fcv3I2rkS9kgXAE3g5CEc1ZXW1ZqYk2xE/X0LsEQ3iNb13L8yfyMy5Vgqq5vDM1daLVQT5jUbcfa7klQndmrzQkgjnvqPnYKWu7RCppm1+zs8B8rOAwCavmbu011Amc0UYuf8W62rcdN03+mD7cprQpnK7bLHCJKPS+ItfQLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785084247; c=relaxed/simple;
-	bh=OhZRTiVBQWAfAJzMVI6DYSoJwn90CfgSHUtrszZJdOM=;
+	s=arc-20240116; t=1785084614; c=relaxed/simple;
+	bh=vT/5K3Ja1PiO2m6m2XNDX/iK7eMGfT7cHgZOfuxAbSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BYS+NcxM1az6eFwVWffZyGJAITIF731FefrA7n7Z2T1JHhwW3xqe8pFpFfTNEbNhg0tkqI2UXJV1ZnyYmnzVw0Q/2IzUCD+y9Cml/TC/6Sq5zVlD6lZcXOw5fgYKw05VL61je2FLcoNzfGH8eYzNdEMVzG9FkEhDvzwUm6akUio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoUrJZFD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tnpfA/C1eMRMDxokMq7AZfDdpl4hNSouLnKYuozf0sk0p3E0DWPaXUiafcb4a3SzLraGDt3zZWAGjlFBUqsR6ZfBD3Era4yU7GBrMp0ib+V9aJyzR2I8Xbt9yrVZmzWuw4EdvzmS61qGoRW9XA9HKe8FTlQuzXhPGuxpr8G/AKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VxfOEtrq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoUrJZFD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E97A1F000E9;
-	Sun, 26 Jul 2026 16:44:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VxfOEtrq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD0A1F000E9;
+	Sun, 26 Jul 2026 16:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785084246;
-	bh=vo+Ci9PJ7l7dpr6gty+wAB7/Ww6APCiE/Gc5GBXdAbs=;
+	s=k20260515; t=1785084613;
+	bh=bihQdyqP8nybmk/Z5jPpiccWyJrZK2FXr9JjFx/kKKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eoUrJZFDIgrJEuZ+DJP57DQmtsi9kZVbeKgpDn+z+534i+iWxA1gKNl6lJO3+zqKO
-	 RbCwH2wBTYsO5R01zy+c3LTc1f/d+FGIPsnqtBwWM6NZhAVzLI2UbFVWTKsN0X9JrD
-	 KgBCzwd47joJjgjShoCtNWfeSHAdrGnUuyw+0wnxxk0v/dgl2HkKTHPyJxPpBnRsxQ
-	 szFLA7GsAE/YExwWjfAlKVEd/ZZ/eQJS3OyD0wBnVtmdKafHCb6hqC/Onf3r+Kpgqu
-	 0bgYvd5UTHF9shlnocvUdllOCuRVsI+3gdFxk4GNpCu+H1gAJHxus5ZJ9woMoZ+c82
-	 FMb0+ireWI1Jg==
+	b=VxfOEtrqIoqIK5xImd1RD9szFaJb+642xnsx+4gFfvd/ngO5LzRGs6cxaJhiSR/7X
+	 Wo2YCskKacWVCI5E/RJVQJmduIxdk46iUaLiDEx5o5fX7ZeD7cS+hgwnRBWZwU9xAi
+	 U6/7XI9b0mH/1TA6xUen/ZnKcDJsthpP175NtyphpPaEBudZf8o49YRdHpS1nziqEq
+	 Phr9xdWYresJUuQRSx9LjCyphG1I+2Om4MMLVv4T0ePuk0Ppc/gFdcXAXjG6iGGXRF
+	 fTHh+zs6HjGwxDNEH6RlnmTF8ohK8LwV+O3JFniT4OgmtQk0+/pnMSP8KtB1az7JXR
+	 q0Y9ArRK2EO0Q==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: dayou5941@163.com
 Cc: SJ Park <sj@kernel.org>,
-	dayou5941@163.com,
-	damon@lists.linux.dev
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	joshua.hahnjy@gmail.com,
+	liyouhong <liyouhong@kylinos.cn>,
+	stable@vger.kernel.org
 Subject: Re: [PATCH v3] mm/damon/ops-common: putback folios on invalid migrate nid
-Date: Sun, 26 Jul 2026 09:43:54 -0700
-Message-ID: <20260726164356.87940-1-sj@kernel.org>
+Date: Sun, 26 Jul 2026 09:50:05 -0700
+Message-ID: <20260726165005.88635-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260726020034.93D041F000E9@smtp.kernel.org>
+In-Reply-To: <20260726014815.1280757-1-dayou5941@163.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -43,23 +48,11 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 26 Jul 2026 02:00:34 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 26 Jul 2026 09:48:15 +0800 dayou5941@163.com wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Invalid address and PTE advancement after page-to-folio conversion for large folios in DAMON scanning loops.
-> - [High] DAMON migration causes NR_ISOLATED_ANON and NR_ISOLATED_FILE counter underflow.
-> --
-> 
-> --- Patch [1]: [PATCH v3] mm/damon/ops-common: putback folios on invalid migrate nid ---
-> commit 1f243815b710aba6f1b966b6f98b83cb7c51edeb
-> Author: liyouhong <liyouhong@kylinos.cn>
-> 
-> mm/damon/ops-common: putback folios on invalid migrate nid
+> From: liyouhong <liyouhong@kylinos.cn>
 > 
 > damon_pa_migrate() and damos_va_migrate() isolate folios into a local list
 > and then call damon_migrate_pages().  When target_nid is invalid (including
@@ -74,99 +67,20 @@ On Sun, 26 Jul 2026 02:00:34 +0000 sashiko-bot@kernel.org wrote:
 > 
 > Put the folios back on the invalid-nid path so ignored migration requests
 > still return them to the LRU.
-> 
-> Fixes: 7e6c3130690a ("mm/damon/ops-common: ignore migration request to invalid nodes")
-> Cc: <stable@vger.kernel.org>
-> Assisted-by: Cursor:grok-4.5
-> Reviewed-by: SJ Park <sj@kernel.org>
-> Signed-off-by: liyouhong <liyouhong@kylinos.cn>
-> 
-> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> > index e59f77eca83b2..0981a5e3af172 100644
-> > --- a/mm/damon/ops-common.c
-> > +++ b/mm/damon/ops-common.c
-> [ ... ]
-> 
-> While reviewing this migration fix, I noticed a couple of pre-existing issues
-> in the DAMON migration code:
-> 
-> mm/damon/vaddr.c:damos_va_migrate_pmd_entry() {
-> [ ... ]
-> 	for (; addr < next; pte += nr, addr += nr * PAGE_SIZE) {
-> 		nr = 1;
-> 		ptent = ptep_get(pte);
-> 
-> 		if (pte_none(ptent) || !pte_present(ptent))
-> 			continue;
-> 		folio = vm_normal_folio(walk->vma, addr, ptent);
-> 		if (!folio)
-> 			continue;
-> 		if (damos_va_filter_out(s, folio, walk->vma, addr, pte, NULL))
-> 			continue;
-> 		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
-> 				migration_lists);
-> 		nr = folio_nr_pages(folio);
-> 	}
-> [ ... ]
-> }
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does this iteration overshoot
-> the end of large folios?
-> 
-> If the current PTE corresponds to a tail page (meaning we are at an offset
-> into the folio), adding the full folio_nr_pages() to both pte and addr seems
-> like it will advance past the end of the folio, skipping subsequent, unrelated
-> memory.
-> 
-> This same pattern appears in damos_va_stat_pmd_entry(), damon_pa_migrate(),
-> and damon_pa_stat().
 
-Known issue.  I'm working on it.
+Looks good to me, thank you for catching and fixing this, liyouhong!
 
-> 
-> 
-> mm/damon/vaddr.c:damos_va_migrate_dests_add() {
-> [ ... ]
-> isolate:
-> 	if (!folio_isolate_lru(folio))
-> 		return;
-> 
-> 	list_add(&folio->lru, &migration_lists[i]);
-> }
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this isolation miss incrementing the
-> isolated VM stats?
-> 
-> Folios are isolated here and added to the migration list, but I don't see
-> NR_ISOLATED_ANON or NR_ISOLATED_FILE being updated.
-> 
-> Later, when the core migrate_pages() code processes these folios via
-> damon_migrate_pages():
-> 
-> mm/migrate.c:migrate_folio_done() {
-> [ ... ]
-> 	if (likely(!page_has_movable_ops(&src->page)) && reason != MR_DEMOTION)
-> 		mod_node_page_state(folio_pgdat(src), NR_ISOLATED_ANON +
-> 				    folio_is_file_lru(src), -folio_nr_pages(src));
-> [ ... ]
-> }
-> 
-> Will this decrement cause the node page state counters to underflow?
-> 
-> Since the counters weren't incremented originally during DAMON's isolation, it
-> looks like a successful migration will drop the isolated stat and wrap it
-> around. This could hang memory reclaim since too_many_isolated() might
-> perpetually return true.
-> 
-> This also seems to apply to damon_pa_migrate().
+Andrew, I think this deserves the hotfix fast track.  The bug can cause memory
+pressure, and can be reliably reproduced by the user.  The user should already
+have a sysfs write permission, though.  Let me know if you think differently.
 
-Good catch.  Sounds correct.  No blocker for this patch.  I will work on this.
+This patch is applied to damon/next [1] tree.  If this patch is not added to
+mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
+to pick this.  So, no action from your side is needed for now.  If it seems I
+also forgot doing that or you cannot wait for my action, please feel free to
+directly ask that to Andrew.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260726014815.1280757-1-dayou5941@163.com?part=1
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
