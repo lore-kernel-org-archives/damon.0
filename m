@@ -1,134 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5733783A1
-	for <damon@lists.linux.dev>; Sun, 26 Jul 2026 19:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E498379C5F;
+	Sun, 26 Jul 2026 20:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785094938; cv=none; b=FE6QFL23Xk+oHQ42dpMjpd7MLUnjjaZr1lrdlegp44AFOcjKNOdIEIsQp/4SEj9L5q1zYMtMdzNiO8KiZUXA8telDaMZc44/Tbx+DjKr++0l8tzBRAPgXWco9oQYEMmJtlPexGG7cF9BLRoz4BA4PFXLamd6QqpHOxns1GDgMnE=
+	t=1785099361; cv=none; b=OxnlinAQN9uIKk5pJZgREkRJLbuQPbIwe2EIG7LKW7podV44MgJKK7d0/Bz7Ny1YQ7xii9Fa22sBB4Ae6sUip8pbB7mMHo0ww8flsgYuxeBtHAefBD1lphUSngJSdmLCl3DhemPp3MZLAYbebz0mEgShzdAFpC8eXVURPMHcUm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785094938; c=relaxed/simple;
-	bh=PrRzKjNKZ6E3BokBzaer+d2p+WgqMw2XdtkojDoB1H4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eZAKZYCNVwqziNv1BAMTi2NZbvg52aciOLwY2uSGXxgHqs5V4QNuoEN+k3IpNp4I03PR5CmkssjSRnzu1V+5/SJNDLpVhWll1tBniMTs++xfluxJz4K327g0BfnFK/Ibz8nOKV9f6iUz+dIMBWrD/FPDAYsHwRXoL+5q5BPVtqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kcqo3tCt; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785099361; c=relaxed/simple;
+	bh=AbdV9VjhE6LTaOq0QiOaDkZKgquyYn4aQm+lx4mTY2o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=q+OebAh/TK9p/xcWGDo69dJfOzVWjK3+hxRvsCj/2/rYweP+9Vo0QK153wPeYYADAO6sbTl/0/+1JbWmmKBaGAxdAhh9GWflN6Olc3kPkpUOe2mgpk40n+gHpyO4FPyYxlXNUJoflG5umooJ75lilXPDggltiTNWCMz0nfljP7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mcbZP66i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kcqo3tCt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBF71F000E9;
-	Sun, 26 Jul 2026 19:42:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mcbZP66i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D4C1F000E9;
+	Sun, 26 Jul 2026 20:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785094936;
-	bh=EVvW6CI8Jpdl9JSI1VOD6oWuMeAs5PASLVVcNI7Wnhk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kcqo3tCtwnpEGhNSvn5rGlRR16fbo3pf08K71VMj94bY1lhSvVLG9nbJZgqybIOd4
-	 TvTCF0Tnk8Wn4NaiaVzqeEhSiuZkcgV5kSTNqFlOOnXEeZ1jxBRkRoylkEIKeeVTql
-	 Zm1KbFTHvgfE9mOJFqjWpxcc3o+MijNkgU59ya5/1ELYIwz0qyj8y+RM452MUXyal/
-	 DksWp5wtgdQKoT/tazYsDEeRHMPqYgRLbwvrsjLrYPUaz2XCi7oXG8wE8sKVlzQvlC
-	 xie51b0NzepFAjdg2ETnkHVqfpzh2cUxrPPX5gf7pTVzhi8IQkLLgUAhiv8+/l8r+9
-	 St7cezTxiWfEw==
+	s=k20260515; t=1785099359;
+	bh=Cy1jhkVJMikuaizngOmkeHoHcCAWhI3GKKlTl+pKDaY=;
+	h=From:To:Cc:Subject:Date;
+	b=mcbZP66iHAvO7Cktqkzc9+AqeuV8RWgPJ5gtYgefh4R164h5kjvdkM3rU7tKU7cWW
+	 dPxWFDuItoovOEY4JdMDkayHK9EzSfkYbWIib/xDP/R956LgfAZMrnvTrlPzC7uOO8
+	 dnYo8kYcuFAnJeqL+Po92OFFoLcu2sdbnN1ZzXTRYanbemJGHEIwBiExnMGQ12KkP/
+	 Q9oylu9KQudphgD/Pc4+9PwbpZ4wFaBXSCej8aLZU7Qcf+ZJnkkhXnMqD4whsmiq/t
+	 FErlGOYnWiXVYU/lKnCmJqw5eNuWybGXUQTcXczHNpe0Uhq2+Btjdsdo8C8vRpuEyi
+	 k/yV4yJfl4tbw==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2 11/17] mm/damon/sysfs: implement probe prep directory
-Date: Sun, 26 Jul 2026 12:42:09 -0700
-Message-ID: <20260726194210.11175-1-sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Hyeongtak Ji <hyeongtak.ji@sk.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH] mm/damon: adjust isolated pages stat for DAMOS_MIGRATE_{HOT,COLD}
+Date: Sun, 26 Jul 2026 13:55:46 -0700
+Message-ID: <20260726205548.2287-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260726185713.2836-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 26 Jul 2026 11:57:15 -0700 SJ Park <sj@kernel.org> wrote:
+Callers of migrate_pages() should adjust NR_MIGRATED_{ANON,FILE} for
+isolations and putback of the folios.  That for migration succeeded
+folios is done by migrate_pages(), in migrate_folio_done().  That for
+MR_DEMOTION reason is an exception though.
 
-> On Sun, 26 Jul 2026 17:47:43 +0000 sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > - [Low] Missing `static` qualifier for `damon_sysfs_prep_ktype`.
-> > - [Low] The `name` field in `struct damon_sysfs_prep_action_name` is declared as a non-const `char *` but initialized with read-only string literals.
-> > --
-> > 
-> > --- Patch [11]: [RFC PATCH v2 11/17] mm/damon/sysfs: implement probe prep directory ---
-> > commit ec46e0d8618f958d1edbf7e0edacd883d4e30bde
-> > Author: SJ Park <sj@kernel.org>
-> > 
-> > mm/damon/sysfs: implement probe prep directory
-> > 
-> > This commit implements the DAMON sysfs directory and files for specifying each
-> > probe prep action. It introduces the preparatory data structures and functions,
-> > though the files are not yet created under sysfs.
-> > 
-> > > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> > > index 38affef08d0fb..a33423d997f59 100644
-> > > --- a/mm/damon/sysfs.c
-> > > +++ b/mm/damon/sysfs.c
-> > > @@ -750,6 +750,89 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
-> > 
-> > [ ... ]
-> > 
-> > > +struct damon_sysfs_prep_action_name {
-> > > +	enum damon_prep_action action;
-> > > +	char *name;
-> > 
-> > [Severity: Low]
-> > This isn't a bug, but should this field be a const char * instead of
-> > char *? The damon_sysfs_prep_action_names array initializes it with
-> > read-only string literals like "set_pgidle".
-> 
-> Good suggestion.  I will constify both fields.
-> 
-> > 
-> > > +};
-> > > +
-> > > +static const struct damon_sysfs_prep_action_name
-> > > +damon_sysfs_prep_action_names[] = {
-> > > +	{
-> > > +		.action = DAMON_PREP_SET_PGIDLE,
-> > > +		.name = "set_pgidle",
-> > > +	},
-> > > +};
-> > 
-> > [ ... ]
-> > 
-> > > +static struct attribute *damon_sysfs_prep_attrs[] = {
-> > > +	&damon_sysfs_prep_prep_action_attr.attr,
-> > > +	NULL,
-> > > +};
-> > > +ATTRIBUTE_GROUPS(damon_sysfs_prep);
-> > > +
-> > > +const struct kobj_type damon_sysfs_prep_ktype = {
-> > 
-> > [Severity: Low]
-> > This isn't a bug, but is the static qualifier missing here? Without it,
-> > damon_sysfs_prep_ktype is exported globally which might trigger build
-> > warnings like -Wmissing-prototypes when compiling with W=1.
-> 
-> It didn't warn on my setup.  Let me think more...
+DAMOS_MIGRATE_{HOT,COLD} call migrate_pages() but mistakenly not doing
+the stat adjustment.  As a result, use of DAMOS_MIGRATE_{HOT,COLD} could
+corrupt the stat.  It could confuse too_many_isolated(), make compaction
+and reclaim to behave in unexpected ways.  The stat corruption can be
+reproduced and confirmed using DAMON user-space tool [1] on NUMA
+systems, like below.
 
-I still cannot make the warning on my setup.  But the theory makes sense.  I
-will fix this by changing the patch sequence.
+    $ numactl --hardware
+    available: 2 nodes (0-1)
+    [...]
+    $ sudo ./damo start --damos_action migrate_hot 1
+    $ sudo cat /proc/sys/vm/stat_refresh
+    $ sudo dmesg
+    [...]
+    [   80.215554] vmstat_refresh: nr_isolated_anon -5578
+    [   80.216842] vmstat_refresh: nr_isolated_file -34400
 
-> 
-> > 
-> > > +	.release = damon_sysfs_prep_release,
-> > > +	.sysfs_ops = &kobj_sysfs_ops,
-> > > +	.default_groups = damon_sysfs_prep_groups,
-> > > +};
-> > 
-> > -- 
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260726173935.94046-1-sj@kernel.org?part=11
-> 
-> 
-> Thanks,
-> SJ
-> 
+This issue was discovered [2] by Sashiko.
 
+[1] https://github.com/damonitor/damo
+[2] https://lore.kernel.org/20260726164356.87940-1-sj@kernel.org
 
-Thanks,
-SJ
+Fixes: b51820ebea65 ("mm/damon/paddr: introduce DAMOS_MIGRATE_COLD action for demotion")
+Cc: <stable@vger.kernel.org> # 6.11.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/ops-common.c | 2 ++
+ mm/damon/paddr.c      | 2 ++
+ mm/damon/vaddr.c      | 3 ++-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index e59f77eca83b2..9809fa12b09a8 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -374,6 +374,8 @@ static unsigned int damon_migrate_folio_list(struct list_head *folio_list,
+ 	while (!list_empty(folio_list)) {
+ 		folio = lru_to_folio(folio_list);
+ 		list_del(&folio->lru);
++		node_stat_sub_folio(folio, NR_ISOLATED_ANON +
++				folio_is_file_lru(folio));
+ 		folio_putback_lru(folio);
+ 	}
+ 
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 5a6a78054784a..5c6c3a597fd0b 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -346,6 +346,8 @@ static unsigned long damon_pa_migrate(struct damon_region *r,
+ 
+ 		if (!folio_isolate_lru(folio))
+ 			goto put_folio;
++		node_stat_add_folio(folio, NR_ISOLATED_ANON +
++				folio_is_file_lru(folio));
+ 		list_add(&folio->lru, &folio_list);
+ put_folio:
+ 		addr += folio_size(folio);
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 4976775fe2762..0648400b2d65b 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -627,7 +627,8 @@ static void damos_va_migrate_dests_add(struct folio *folio,
+ isolate:
+ 	if (!folio_isolate_lru(folio))
+ 		return;
+-
++	node_stat_add_folio(folio, NR_ISOLATED_ANON +
++			folio_is_file_lru(folio));
+ 	list_add(&folio->lru, &migration_lists[i]);
+ }
+ 
+
+base-commit: 1e15fbef3a3c465a6a2db0f38e3980d75420bd6d
+-- 
+2.47.3
