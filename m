@@ -1,110 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6033D47D9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4773BE62A
 	for <damon@lists.linux.dev>; Sun, 26 Jul 2026 17:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785087951; cv=none; b=lnnCnCk8AJe+sLTI/toqdL95yQbYQXNoTwl4FzivWVtlDd1wJZH+EfceXREf9jag5on+Z0+0+zEF+VjUHUKGtflhRsU3p4uZ1Og9TfVSfZTVjoaCEptHLqCdokhYXyxpNK3Qr3X2B73U1akpt33RHV6GgCZ33BOq0nt5rdhSGMI=
+	t=1785087950; cv=none; b=OKuHJDcozXm3ZZH0MrIPOCqF7F21cQFC5+e6YNIAESNfhPVAw1EWaKMWc0VYGu8QR7MqcA5BasVWTOt7cvYKADI3kAEH3aM2fVtLRThrkhcbt9giFUWHd2l/Z2E/z0nC3KpWf1cirKcjcxepCqKURkVIv+g+scke7oRc+CPM01c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785087951; c=relaxed/simple;
-	bh=YpwMye2w2shrDuuwpVeNF8NHBKK99DnUXVBiOr10uZg=;
+	s=arc-20240116; t=1785087950; c=relaxed/simple;
+	bh=Rha+d1X2zWzBPYmSkDA9k+C3qWJ9e5OggLIa/OUmcGQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=IXKCR926ho55upyBY4qWXzIC+eYAgPYw6rAuy7RgpARck8vqaCiawTGorKvTSfj5mOOV9Yk24S5KYegOLHpquuN9Mt6b5xLyIxrfit9fSxQxUnVLH2ST2WIZPx+nJ8YVys3CEfFvfUuFkH8ndfMkvu8ToG1J/t1hsOS3cgNwb+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VkACDM7b; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=QiHJ/w3Y2etWrEYaJrw5XHMB1hTE3NTbqIx09yltB9tFAhn+YwVemFjIK+FebertMn/MbApVTr+65Eh5UaPlDnwcpKeArC2jMC25Qf4GOROKaEHgmxnvQyCD/OcicAXNXPL73L+PqoO6CLbizLoztT66Qns5uwX8yGxEA1uODgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kOkzCcCx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VkACDM7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAD01F00A3A;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kOkzCcCx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399DC1F000E9;
 	Sun, 26 Jul 2026 17:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785087948;
-	bh=UBF9kfFuvWPZKdEpFFNXmMxFhKBiquG/ONRgUEpx2i8=;
+	s=k20260515; t=1785087947;
+	bh=OkeE0U6/ISJSKhnQDuanVvlSSRgwz3cKKaRwmiu722k=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VkACDM7byynG+pECeHCngbHFmeJ6XVanjSsKYc4CYiOx5kKnzioLoL7JadTbJvy+F
-	 TL0c6s3Hm1W3i60L7M8V72aMN02S62PHyo39aX2FfJdNb6RAeFwsR4nRh/Je8E/wkw
-	 R7VCZ4cD/I5RXebzxSu1fqiaOOK8dAblcS5fgTOeCSHVpKv0PABmN4SUwCWqCajDqN
-	 dJyGp7njc++xr36E7cHRKSfTscurNbPZBjEubsBUqYkAcFm/VxCybQilpnCEBbqHjD
-	 isb0JZvrQf46mr5Um/NVTgcKL5WpDqEkJHZGAPKoJPvWrkRzyEErev2RSg3SXYvtiS
-	 IXVDsMox+Fvqw==
+	b=kOkzCcCxmOBC3d6A64VL49Pxgslp5tAeEvxHx8OHILFO0MrPU9qDp2tZV2e+WosOy
+	 GHENGh9RZnI1k/S02q8dZw6qzmFb8Yu0IyQ6zfRUYJzSuTKhUqIU1uLzuW3/H/4Mlu
+	 8VbVlWQI9/VgK/52OHiX/nGjX2HAuUnyd3fkUst5OpFgezBG/fZbInr0J/2NZH1JXj
+	 cO4tYIK2tidggdISTc7Y6bcr6gW5kL0NsOzImp1U4oJiLELxTJre2GnSMA8Fpnfdtt
+	 dPLU5cdLnHdAFky++tjkVSJXbZw4ziazwwSazt5sJ7Jl/0Pk9sY2RfU98jmKWn+ro1
+	 TX5t258EZ+3pw==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 16/17] Docs/admin-guide/mm/damon/usage: document
- probe preps sysfs files
+Subject: Re: [RFC PATCH v2 17/17] Docs/ABI/damon: document probe prep sysfs
+ files
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260726173935.94046-17-sj@kernel.org>
+In-Reply-To: <20260726173935.94046-18-sj@kernel.org>
 References: <20260726173935.94046-1-sj@kernel.org>
- <20260726173935.94046-17-sj@kernel.org>
+ <20260726173935.94046-18-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 26 Jul 2026 17:45:47 +0000
-Message-Id: <20260726174547.DAAD01F00A3A@smtp.kernel.org>
+Date: Sun, 26 Jul 2026 17:45:46 +0000
+Message-Id: <20260726174547.399DC1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Low] Typo in documentation: 'names' used instead of 'named'.
-- [Low] Subject-verb agreement error in updated documentation sentence.
+- [Low] The sysfs path for the `prep_action` file is documented incorrectly=
+ as `prep/<R>/prep_action` instead of `preps/<R>/prep_action`.
 --
 
---- Patch [16]: [RFC PATCH v2 16/17] Docs/admin-guide/mm/damon/usage: docum=
-ent probe preps sysfs files ---
-commit a784c34ebf2a666ab86343b9b4f5290f8391e1b3
+--- Patch [17]: [RFC PATCH v2 17/17] Docs/ABI/damon: document probe prep sy=
+sfs files ---
+commit c668115a6c46349a2601c78b7bdb1229021f721a
 Author: SJ Park <sj@kernel.org>
 
-Docs/admin-guide/mm/damon/usage: document probe preps sysfs files
+Docs/ABI/damon: document probe prep sysfs files
 
-Update DAMON usage document for the newly added DAMON probe preps sysfs fil=
-es.
+This commit updates the DAMON ABI documentation to include the newly added=
+=20
+DAMON probe prep sysfs files.
 
-> diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation=
-/admin-guide/mm/damon/usage.rst
-> index da5f9afd08aef..e4fdec3fa5059 100644
-> --- a/Documentation/admin-guide/mm/damon/usage.rst
-> +++ b/Documentation/admin-guide/mm/damon/usage.rst
-
+> diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentat=
+ion/ABI/testing/sysfs-kernel-mm-damon
+> index e675a57145e36..f913f4eee4b4d 100644
+> --- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
+> +++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
 [ ... ]
-
-> @@ -283,9 +286,18 @@ In the beginning, this directory has only one file, =
-``nr_probes``.  Writing a
->  number (``N``) to the file creates the number of child directories named=
- ``0``
->  to ``N-1``.  Each directory represents each monitoring probe.
-> =20
-> -In each probe directory, one directory, ``filters`` exists.  The directo=
-ry
-> -contains files for installing filters for the probe, that is used to det=
-ermine
-> -the data attribute for the probe.
-> +In each probe directory, two directories, ``preps`` and ``filters`` exis=
-t.  The
-> +directories contain files for installing probing preparation actions and
-> +filters for the probe, that is used to determine the data attribute for =
-the
-                              ^^^^^^^
-
-[Severity: Low]
-This isn't a bug, but since the sentence refers to plural subjects
-("preparation actions and filters" or "files"), should "that is used" be=20
-updated to "that are used"?
-
-> +probe.
+> +What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_a=
+ttrs/probes/<P>/preps/nr_preps
+> +Date:		Jun 2026
+> +Contact:	SJ Park <sj@kernel.org>
+> +Description:	Writing a number 'N' to this file creates the number of
+> +		directories for each DAMON probing preparation action named '0'
+> +		to 'N-1' under the preps/ directory.
 > +
-> +In the beginning, ``preps`` directory has only one file, ``nr_preps``.
-> +Writing a number (``N``) to the file creates the number of child directo=
-ries
-> +names ``0`` to ``N-1``.  Each directory represents each preparation acti=
-on.
-   ^^^^^
+> +What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_a=
+ttrs/probes/<P>/prep/<R>/prep_action
 
 [Severity: Low]
-This isn't a bug, but there appears to be a typo. Should "names" be "named"
-to match the intended meaning ("child directories named 0 to N-1")?
+Is this path missing an 's'?=20
+
+The description above states the directories are created under the preps/
+directory, but this sysfs path uses prep/ instead of preps/. Should this
+be documented as preps/<R>/prep_action to match the actual sysfs directory
+name?
+
+> +Date:		Jun 2026
+> +Contact:	SJ Park <sj@kernel.org>
+> +Description:	Writing to and reading from this file sets and gets the pro=
+bing
+> +		preparation action.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260726173935.9404=
-6-1-sj@kernel.org?part=3D16
+6-1-sj@kernel.org?part=3D17
