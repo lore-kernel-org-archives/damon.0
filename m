@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFD33C13F1
-	for <damon@lists.linux.dev>; Sun, 26 Jul 2026 17:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B2E3DA5D9
+	for <damon@lists.linux.dev>; Sun, 26 Jul 2026 17:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785088066; cv=none; b=Qe9LYKh2N5S4YT2G2PtRXVCS+dKQPIhLSiSeHiub4b4ega7t9uj0/pUmGDTuUvOYQYh66v+lidQWrOmQoIS4S1DfZK99XoKPLDHcVEKwYZzLIZt+dlPGSXw2sCsVnHVVH/p+S2PF3DNoDcYkifOfGE9QYZL8wbobDHKNoj7yzGk=
+	t=1785088350; cv=none; b=s/SJqJ1whqVhA5e02dDdxNZWb15/QuVWiLeLfX7OLGDDYdY2imJ7V3sXDDSAyuygPLO5ItfA85f7yMhYKPtyGv66yXMWSQJSluBsYlrzfVWm40JZhA2jQHj4bgFdw1QY7Y66YIR2zyq/rEhvc0fzEyu61zJqYLHM3zNftYzYKsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785088066; c=relaxed/simple;
-	bh=0DJyXYR28I4DPu0MsZlSt6Uu7LDmgogke1tsxDci5EE=;
+	s=arc-20240116; t=1785088350; c=relaxed/simple;
+	bh=BYO0uA7FyBkP1ofbaiKfDWf7MRU+4KsdO3PNQ+axCMI=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Lg9VRavNbFhZVLl0+JckVKY2SPe0vq0cvlWrLk72lCf8rqFv2y4k1o3vhvWXnGYGf5AAhGw684gbWwwBHKV0zyzG772X6U8Au86PRhjn4ceJ8JhPRmnpsboHm3a9USXCcs86Jvb+Rj40zGqUVkrxoZZ8NhzuTiSyxHd0tO5zBgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ceYhswLF; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=QlKl+QFmRtFVvoGi4cpwFAA9xg7tMN2jCWa9ctjm/GRnY+zcRpUdK+flblMKKF73qg/kA6OV5BLFORCmFfBgcZnUg2yIYkYUCgRMMw89/wkfZoSo0YZKZN5S0I+Y9wu/9nNsqJ1uUn/4/ABZDZBIvfKGFCr6XjyuS5Z+AZNG1mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fanqjUdx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ceYhswLF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A211F000E9;
-	Sun, 26 Jul 2026 17:47:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fanqjUdx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD7A1F000E9;
+	Sun, 26 Jul 2026 17:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785088064;
-	bh=VYX5Xz8QWuePiel4oa4KPyzFDSb7Pk2T9iBfu8aDA/g=;
+	s=k20260515; t=1785088348;
+	bh=rx/gS0Q+EwUXuVjjqd2PQfhtolE/iil6uZfMuBNCzYU=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ceYhswLF9Qzvnombzey3eQkQon1JyN2dBY68jJQOElUTUknlWANpI5oYukomdNFcT
-	 CB9kWzmUmYK0MYMR8ZVSJsoUWfe3m1D5iUM3KW/ZdKAHn5TrC9rRISzzW2MGlS8T8t
-	 fthooSDIIWlVRdHJy1xcSYhP/kxO9xWxqcH0tIYOPjiXNnyjFoW/r1mBC5uB9ZeTxo
-	 NA1MrLZ3+VY0ZHRperLr/UR1jgYILRDAlrs9o7ILF1KHmDPKRK5gNsPiNhpAyUSXq0
-	 yNGVGIgfV/F7FwbkSYbrtuz9laD263Ec9IW62n1/E6KTiDRTw2y1xN0h3l2yoWME1G
-	 Y1nrM1yI3PiRw==
+	b=fanqjUdxgmhAKKgpZ/Vg/eiWXCfAXBTI4RZ+jQ/EAvTM0ow+rIu0wFqUDj3JZ0LkA
+	 UxGZlARR42/0CArPQh5C2t1ebifQfGgjJVKBaCOyV9JeaUDnPH/6CQEr/0AB5iNjhR
+	 4CSV7Oh9uLcKZgrP28WtIdz+MVUEuS3YoNWV30kMcdoW23USD7ahc0007l2lrmm1jP
+	 qq0Yndh3C3WLyEC9D+GLQ6ik/TZTXA22VnryCwcS7NckY2RihqhMH1Svzaf/QjjI07
+	 sdaAbEIAoz4OkwMTOxNpOgzFcA1BvTRwoaUiIuEv21WBvE4n1bKiXGHdw1mziiXd5B
+	 lOpTTsALv8FTQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 11/17] mm/damon/sysfs: implement probe prep
- directory
+Subject: Re: [RFC PATCH v2 05/17] mm/damon/core: introduce damon_prep struct
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260726173935.94046-12-sj@kernel.org>
+In-Reply-To: <20260726173935.94046-6-sj@kernel.org>
 References: <20260726173935.94046-1-sj@kernel.org>
- <20260726173935.94046-12-sj@kernel.org>
+ <20260726173935.94046-6-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 26 Jul 2026 17:47:43 +0000
-Message-Id: <20260726174744.66A211F000E9@smtp.kernel.org>
+Date: Sun, 26 Jul 2026 17:52:27 +0000
+Message-Id: <20260726175228.3CD7A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,72 +46,98 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [Low] Missing `static` qualifier for `damon_sysfs_prep_ktype`.
-- [Low] The `name` field in `struct damon_sysfs_prep_action_name` is declar=
-ed as a non-const `char *` but initialized with read-only string literals.
+- [Medium] Missing synchronization of the `preps` list during DAMON context=
+ commit operations.
+- [Low] The parameter names in `damon_for_each_prep` and `damon_for_each_pr=
+ep_safe` are reversed compared to their semantic meaning.
 --
 
---- Patch [11]: [RFC PATCH v2 11/17] mm/damon/sysfs: implement probe prep d=
-irectory ---
-commit ec46e0d8618f958d1edbf7e0edacd883d4e30bde
+--- Patch [5]: [RFC PATCH v2 05/17] mm/damon/core: introduce damon_prep str=
+uct ---
+commit 9f7bafc6bbe2ee2b7391d751512d413fcf3bdf98
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/sysfs: implement probe prep directory
+mm/damon/core: introduce damon_prep struct
 
-This commit implements the DAMON sysfs directory and files for specifying e=
-ach
-probe prep action. It introduces the preparatory data structures and functi=
-ons,
-though the files are not yet created under sysfs.
+This commit introduces a new data type damon_prep to specify preparation
+actions for DAMON probes. It adds lists and iteration macros for these
+actions, as well as an initial action DAMON_PREP_SET_PGIDLE.
 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 38affef08d0fb..a33423d997f59 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -750,6 +750,89 @@ static const struct kobj_type damon_sysfs_intervals_=
-ktype =3D {
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index a8bb9ee6979e3..24b362fcf53b1 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
 
 [ ... ]
 
-> +struct damon_sysfs_prep_action_name {
-> +	enum damon_prep_action action;
-> +	char *name;
+> @@ -780,6 +801,8 @@ struct damon_filter {
+>  struct damon_probe {
+>  	unsigned int weight;
+>  /* private: */
+> +	/* Preparation actions to apply to each probing memory. */
+> +	struct list_head preps;
+>  	/* Filters for assessing if a given region is for this probe. */
+>  	struct list_head filters;
+>  	/* Siblings list. */
 
-[Severity: Low]
-This isn't a bug, but should this field be a const char * instead of
-char *? The damon_sysfs_prep_action_names array initializes it with
-read-only string literals like "set_pgidle".
+[Severity: Medium]
+Since this patch introduces the preps list to struct damon_probe, should
+damon_commit_probes() in mm/damon/core.c be updated to synchronize this new
+list?
 
-> +};
-> +
-> +static const struct damon_sysfs_prep_action_name
-> +damon_sysfs_prep_action_names[] =3D {
-> +	{
-> +		.action =3D DAMON_PREP_SET_PGIDLE,
-> +		.name =3D "set_pgidle",
-> +	},
-> +};
+Currently, damon_commit_probes() copies probe parameters and filters, but
+it appears to omit the preps list. If a context is updated via
+damon_commit_ctx(), wouldn't any configured preparation actions be silently
+dropped for new probes, and existing probes fail to update their preps list=
+s?
+
+For example:
+
+mm/damon/core.c:damon_commit_probes() {
+    ...
+    damon_for_each_probe_safe(dst_probe, next, dst) {
+        ...
+        err =3D damon_commit_filters(dst_probe, src_probe);
+        ...
+    }
+
+    damon_for_each_probe_safe(src_probe, next, src) {
+        ...
+        new_probe =3D damon_new_probe();
+        ...
+        err =3D damon_commit_filters(new_probe, src_probe);
+    }
+    return 0;
+}
 
 [ ... ]
 
-> +static struct attribute *damon_sysfs_prep_attrs[] =3D {
-> +	&damon_sysfs_prep_prep_action_attr.attr,
-> +	NULL,
-> +};
-> +ATTRIBUTE_GROUPS(damon_sysfs_prep);
+> @@ -959,6 +982,12 @@ static inline unsigned long damon_sz_region(struct d=
+amon_region *r)
+>  	return r->ar.end - r->ar.start;
+>  }
+> =20
+> +#define damon_for_each_prep(p, prep) \
+> +	list_for_each_entry(p, &(prep)->preps, list)
 > +
-> +const struct kobj_type damon_sysfs_prep_ktype =3D {
+> +#define damon_for_each_prep_safe(p, next, prep) \
+> +	list_for_each_entry_safe(p, next, &(prep)->preps, list)
+> +
 
 [Severity: Low]
-This isn't a bug, but is the static qualifier missing here? Without it,
-damon_sysfs_prep_ktype is exported globally which might trigger build
-warnings like -Wmissing-prototypes when compiling with W=3D1.
+Are the macro parameter names here reversed compared to their semantic mean=
+ing?
 
-> +	.release =3D damon_sysfs_prep_release,
-> +	.sysfs_ops =3D &kobj_sysfs_ops,
-> +	.default_groups =3D damon_sysfs_prep_groups,
-> +};
+The parameter 'p' is used as the list iterator (which represents a prep), a=
+nd
+'prep' is used as the parent structure (which represents a probe). This dif=
+fers
+from the convention used in damon_for_each_filter(f, p).=20
+
+Will this force usage like damon_for_each_prep_safe(prep, prep_next, p), wh=
+ich
+could be confusing to callers?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260726173935.9404=
-6-1-sj@kernel.org?part=3D11
+6-1-sj@kernel.org?part=3D5
