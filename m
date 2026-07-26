@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7564A3E2ADD
-	for <damon@lists.linux.dev>; Sun, 26 Jul 2026 18:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92C73D564A
+	for <damon@lists.linux.dev>; Sun, 26 Jul 2026 18:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785092073; cv=none; b=G0BY+0lR2dpbaSbxteG7rOfjuLV+4JiPdai7ywQw3qYboX0/XDf4A1g7Cjo7MWSsN/eJbWrS/Zt7Y6P6eKRl8owFjFiakoNU/OF3XVS4IpRo1/cWjeT3ZlmvHiO1FRUOXopt26lTh9ufdZHpWNAUDDAddTJE3S0qI7tadSkeHpw=
+	t=1785092236; cv=none; b=e+PiFDssN0jAA/Am17KDjqzW9SkcdtNLy//POcdnGlj4KzwjHnh8TXedOv/RavNTXcM30SbtB3vz1k86EgSXeho6Lo6TVjWzUw0zgXmk7kHp1LtNE59xR1nZGUGTVi7R17oe+ewX0V+xZ0y/K0VSAXRRjBNlLy5hkFN++IF7naY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785092073; c=relaxed/simple;
-	bh=gEct8+x01GRk4PNuXakrWf3d1kTG8ilHcq3QNHga0MM=;
+	s=arc-20240116; t=1785092236; c=relaxed/simple;
+	bh=owzObLNHwbDy9uEtfgfnccvVDuUNMvm7COT6XpO73MI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ngqBzVScvwK+pK47FN2cEzIK55aFYrrtpf0V4dQzQaslGZnMYMBmN8R7EkiVYjL74YBPBy7svFfHFLddZIClLIYqfFjoT387R/qI0/NhVpauNyyso30lSGf1OB0xmAlRHAgtNMUBEnr3WmdOIj26+595wwQkAtbPj22xf+gSOE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O1azyHgW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SD+6vKb3D+YggnsziC9CB3B+a79+yJ1DFq7WIDOx5yJ8+wGg7UEkEGhAoEvhFhGQ/bkQvlI/Rl2mBvFRjAmPXOunDMpwhqe10R2PDhQQZQ3QIeikRdpoLYQ+yvaUOnMrflkv8+IeeidYFZcRm4t4gbzsQ1tkJhFyASr3w/fDX2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/EckVHB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O1azyHgW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13ABB1F000E9;
-	Sun, 26 Jul 2026 18:54:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/EckVHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CC21F000E9;
+	Sun, 26 Jul 2026 18:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785092072;
-	bh=5u0CoAmO3JjdmFLy7/0uUAoe9e7B8js9CqsIhsKiGNk=;
+	s=k20260515; t=1785092235;
+	bh=RnJJD7FPgRBXOThj/NRC9OgJ2ryOjjaTR+Amz7U2dek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1azyHgW0GEdg20ZMS5zNYysG9+kXa6k4ODK91P09yCWM6ciTRqJXulajPlRnUlSg
-	 l9GtNl/BwpBghG6WbPcOdbuhpKTW5V8B3VeigILnnjEWeBultSHly1LA3ppWawMK1h
-	 OVXtKZud0FWCBfYyZArGkV4JZYQnRAcWHXJN9e94g/GoHaO0R8+z0El1wWoUXdb22v
-	 N8hK6c35C4D9R/0gTf4B0AF9ZTe6plAI0GNkZ31pNrIXuMo7ggNyWqkhE+9Wk/016N
-	 +S+1XKvwh64KNIuYCFYe46rBDljqGK6E31QWovA6RaK1jsP2He5HywrHQwZJZOJMgm
-	 4qelKej8y23iw==
+	b=B/EckVHBz6UQD67HtyQDxZrqypdDWWsPtelMRYXhYf0aZ0PncOTl2tGecg10kNBEc
+	 RnPtX/3+Q/qPzwUDFFx2o+GoF73CB7rcXnEeNi5J2b4YDDbW9ANtzL8azVLkGxDgpx
+	 fg+cu00w1y/LrIqtInqkBCD7txm4D/uem63djvWabv6FX3ppJ8VRljri4Vd11oiSFw
+	 eWcva7ilUBKgYHODe5T5uL4EOsitj74qd24nhEflLMXJxfWC67xRBBMz4uKlUeTqhb
+	 XTUloG9GukyoEHSrtlIw2JZCU7Qen7n9jd2qiALkB8D0SqWZacfgpepKxVNM7P5v3B
+	 PYt37j2xEg8kQ==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2 09/17] mm/damon/sysfs: implement preps directory
-Date: Sun, 26 Jul 2026 11:54:22 -0700
-Message-ID: <20260726185424.2152-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 11/17] mm/damon/sysfs: implement probe prep directory
+Date: Sun, 26 Jul 2026 11:57:11 -0700
+Message-ID: <20260726185713.2836-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260726174608.9C20E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260726174744.66A211F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,66 +45,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 26 Jul 2026 17:46:08 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 26 Jul 2026 17:47:43 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The kobj_type structure `damon_sysfs_preps_ktype` is missing the `static` keyword.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] Missing `static` qualifier for `damon_sysfs_prep_ktype`.
+> - [Low] The `name` field in `struct damon_sysfs_prep_action_name` is declared as a non-const `char *` but initialized with read-only string literals.
 > --
 > 
-> --- Patch [9]: [RFC PATCH v2 09/17] mm/damon/sysfs: implement preps directory ---
-> commit 8155aac7530c47520c4a221fb588dbd6e53e3875
+> --- Patch [11]: [RFC PATCH v2 11/17] mm/damon/sysfs: implement probe prep directory ---
+> commit ec46e0d8618f958d1edbf7e0edacd883d4e30bde
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/sysfs: implement preps directory
->     
-> This commit implements a sysfs directory and a file for setting DAMON probe
-> preps. It introduces the preparatory data structures and functions without
-> actually generating the directories yet.
+> mm/damon/sysfs: implement probe prep directory
+> 
+> This commit implements the DAMON sysfs directory and files for specifying each
+> probe prep action. It introduces the preparatory data structures and functions,
+> though the files are not yet created under sysfs.
 > 
 > > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> > index 50ff1c172d746..bf65e87fcb521 100644
+> > index 38affef08d0fb..a33423d997f59 100644
 > > --- a/mm/damon/sysfs.c
 > > +++ b/mm/damon/sysfs.c
+> > @@ -750,6 +750,89 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
 > 
 > [ ... ]
 > 
-> > @@ -750,6 +750,74 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
-> >  	.default_groups = damon_sysfs_intervals_groups,
-> >  };
-> >  
+> > +struct damon_sysfs_prep_action_name {
+> > +	enum damon_prep_action action;
+> > +	char *name;
+> 
+> [Severity: Low]
+> This isn't a bug, but should this field be a const char * instead of
+> char *? The damon_sysfs_prep_action_names array initializes it with
+> read-only string literals like "set_pgidle".
+
+Good suggestion.  I will constify both fields.
+
+> 
+> > +};
+> > +
+> > +static const struct damon_sysfs_prep_action_name
+> > +damon_sysfs_prep_action_names[] = {
+> > +	{
+> > +		.action = DAMON_PREP_SET_PGIDLE,
+> > +		.name = "set_pgidle",
+> > +	},
+> > +};
 > 
 > [ ... ]
 > 
-> > +static struct attribute *damon_sysfs_preps_attrs[] = {
-> > +	&damon_sysfs_preps_nr_attr.attr,
+> > +static struct attribute *damon_sysfs_prep_attrs[] = {
+> > +	&damon_sysfs_prep_prep_action_attr.attr,
 > > +	NULL,
 > > +};
-> > +ATTRIBUTE_GROUPS(damon_sysfs_preps);
+> > +ATTRIBUTE_GROUPS(damon_sysfs_prep);
 > > +
-> > +const struct kobj_type damon_sysfs_preps_ktype = {
+> > +const struct kobj_type damon_sysfs_prep_ktype = {
+> 
 > [Severity: Low]
-> Does this inadvertently expose damon_sysfs_preps_ktype to the global
-> namespace?
-> 
-> It looks like the static keyword is missing on the definition of
-> damon_sysfs_preps_ktype, which will cause it to be globally visible and may
-> trigger static analysis warnings.
+> This isn't a bug, but is the static qualifier missing here? Without it,
+> damon_sysfs_prep_ktype is exported globally which might trigger build
+> warnings like -Wmissing-prototypes when compiling with W=1.
 
-This is an intended thing, for not causing build warning, while splitting
-change in reviewable size.
+It didn't warn on my setup.  Let me think more...
 
 > 
-> > +	.release = damon_sysfs_preps_release,
+> > +	.release = damon_sysfs_prep_release,
 > > +	.sysfs_ops = &kobj_sysfs_ops,
-> > +	.default_groups = damon_sysfs_preps_groups,
+> > +	.default_groups = damon_sysfs_prep_groups,
 > > +};
-> > +
-> >  /*
-> >   * filter directory
-> >   */
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260726173935.94046-1-sj@kernel.org?part=9
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260726173935.94046-1-sj@kernel.org?part=11
 
 
 Thanks,
