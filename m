@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8F43D8127;
-	Sun, 26 Jul 2026 17:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE493D6479;
+	Sun, 26 Jul 2026 17:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785087589; cv=none; b=lKMweASOi6IIp9zZnku4zz3Kuimphd5/TxaHWF5NQ4vWfnlgFxwz36nhfKnhZ56Ju1gglqu8TsMhUZeRaLaF+dIUmW2sCnDELB69p8zRt+hR/KTae/qFyaZlcEt6PZ6qBC6IXLQmo/GEQYdGIDJJ81fQNwLHwiPXAy+EcG12Ygo=
+	t=1785087590; cv=none; b=W4y/TXQTtmxK8jezeHy9Dmt95d+FvpqbhUJ/APyGhYrd9F6ZrnRLSY6ySQmWaOrs+yqIV9empBEcySrUtlr9MsrIOjDK/rQSbHHte33NlAyTCf1VVVrO8OIpnqLJnW+MUKYLJtf7rY3Tw4NcAUWpJRYA2gkCk0MHMj+rL/1ds1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785087589; c=relaxed/simple;
-	bh=dUyNyGHoAjagVsViNZoWoPmtjvkwuQwduMR+IpT6o1s=;
+	s=arc-20240116; t=1785087590; c=relaxed/simple;
+	bh=70LV5BDGvfoeZHspdss1bW53IpFL2Pngp5HyNxvSbKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XEJh5KbpkGFK/HNm96o1nZU/RtlJNHZCysVjgeKyWn1NKeSzUtwfRx8uyAloPf00qfOoa+V2RNfNTyzUCD2OUsb5fd9Y2eNG+biTzeQ4VnpDvWGYiRGlAoDoXh5cne0fX/e3FwRMf/c/5pozguBcp60xRzJbwmx9/NxMIpf4LX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gGt9oWV7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gQigbL7E/xJpWH//VWdHgt09Q5W9HgH1ojv4eKCOPh4etPfyc82mPoNvbfzRkA6qgOJpQfZyqGe3GLw6tDUc/n/65VyfxikhiZpzCczsYOFFYzHkij83JVtVQtnD6vHceQR5paSth5YOL4LYi+zcg6NN8d6Xaqnz/4EI+/Asa3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JMoqbUJr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gGt9oWV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9583D1F00A3D;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JMoqbUJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28101F00ACF;
 	Sun, 26 Jul 2026 17:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785087587;
-	bh=NW04Ik3DgSNfNvyKbAbVk3ac4IvNSq5SmgWKpuJrQTw=;
+	s=k20260515; t=1785087588;
+	bh=+sG7v9QjVN/SIQic4/p3WnUFMpqViqsUPqy3peyL9No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gGt9oWV75l5KF+YsDjwm1Ffgls3T3/EXZ4bmxwXAUWJ9BwDJh+jlb02I7v9LMz2XD
-	 W8GEzq9wTQAcbDLlAkujdN6D+inoaX0+UlxaYynBBn0e/y4PfeCMSSAgmQPn6/gXI7
-	 Bdovx9r+MV3d9kSkzPZN2d+ZSI4xb4fZ7h0GkOg6zynJzeq3vieO1Nx1Lr2VLnrxtg
-	 LbAq2VcqTSbU6tMrT2PixWq0roeVphMPRfSQ4aBkb2c/6aysTOH7DOzSFy5hzt6j6g
-	 uA8aBg7giE1uizJ/sNn6FX7GZPNj94ZcAdoSJGJkfQnPQo3JbdwKIUzNK/Cs3IKZ6l
-	 QJHighYDzT4PQ==
+	b=JMoqbUJrzk2A7ET22ybfkRlQAv27xty8qK/utLpNogv4PXtneHfbWrkxHRqHp9rk7
+	 mUb/95bx6TeZyekyAgb48ZXfybK55vmLlNyPgEfw6BJamenN8PpPWtGeYKGWbFRyDH
+	 08Q9bMXLyO1a+lYqHAmnEAioLSqqwnnB4wuhLygYYIprlEzpccbCqpJOP35HkJG1vR
+	 L7uZpADib/u15jNK5eOib7CH88T+Neo0FfAAoMkajX+sT6r6ZCkrnzkP7qORwgFMfw
+	 ZiFSL2nSpVCoieHVPsx2VeJHcyKMhxJ26OZPiPioRqIzqv5DjGCvvNNAu/KG4UF5IF
+	 wbbxrsg6eizmA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 10/17] mm/damon/sysfs: create probe preps directory
-Date: Sun, 26 Jul 2026 10:39:26 -0700
-Message-ID: <20260726173935.94046-11-sj@kernel.org>
+Subject: [RFC PATCH v2 11/17] mm/damon/sysfs: implement probe prep directory
+Date: Sun, 26 Jul 2026 10:39:27 -0700
+Message-ID: <20260726173935.94046-12-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260726173935.94046-1-sj@kernel.org>
 References: <20260726173935.94046-1-sj@kernel.org>
@@ -47,107 +47,108 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Create probe preps directory when the probe directory is generated.
+Implement DAMON sysfs directory and files for specifying each probe prep
+action.  Introduce only preparatory data structure and functions.  The
+files are not really being created under the sysfs.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 50 +++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 43 insertions(+), 7 deletions(-)
+ mm/damon/sysfs.c | 83 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 83 insertions(+)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 0e4d7a50545e1..6d3ed80fb2eb1 100644
+index 6d3ed80fb2eb1..e348c1feed1ad 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -759,6 +759,16 @@ struct damon_sysfs_preps {
- 	int nr;
+@@ -750,6 +750,89 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
+ 	.default_groups = damon_sysfs_intervals_groups,
  };
  
-+static struct damon_sysfs_preps *damon_sysfs_preps_alloc(void)
++/*
++ * prep directory
++ */
++
++struct damon_sysfs_prep {
++	struct kobject kobj;
++	enum damon_prep_action action;
++};
++
++struct damon_sysfs_prep_action_name {
++	enum damon_prep_action action;
++	char *name;
++};
++
++static const struct damon_sysfs_prep_action_name
++damon_sysfs_prep_action_names[] = {
++	{
++		.action = DAMON_PREP_SET_PGIDLE,
++		.name = "set_pgidle",
++	},
++};
++
++static ssize_t prep_action_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
 +{
-+	return kzalloc_obj(struct damon_sysfs_preps);
++	struct damon_sysfs_prep *prep = container_of(kobj,
++			struct damon_sysfs_prep, kobj);
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(damon_sysfs_prep_action_names); i++) {
++		const struct damon_sysfs_prep_action_name *action_name;
++
++		action_name = &damon_sysfs_prep_action_names[i];
++		if (action_name->action == prep->action)
++			return sysfs_emit(buf, "%s\n", action_name->name);
++	}
++	return -EINVAL;
 +}
 +
-+static void damon_sysfs_preps_rm_dirs(struct damon_sysfs_preps *preps)
++static ssize_t prep_action_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
 +{
-+	preps->nr = 0;
++	struct damon_sysfs_prep *prep = container_of(kobj,
++			struct damon_sysfs_prep, kobj);
++	ssize_t ret = -EINVAL;
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(damon_sysfs_prep_action_names); i++) {
++		const struct damon_sysfs_prep_action_name *action_name;
++
++		action_name = &damon_sysfs_prep_action_names[i];
++		if (sysfs_streq(buf, action_name->name)) {
++			prep->action = action_name->action;
++			ret = count;
++			break;
++		}
++	}
++	return ret;
 +}
 +
- static int damon_sysfs_preps_add_dirs(struct damon_sysfs_preps *preps,
- 		int nr_preps)
- {
-@@ -812,7 +822,7 @@ static struct attribute *damon_sysfs_preps_attrs[] = {
- };
- ATTRIBUTE_GROUPS(damon_sysfs_preps);
- 
--const struct kobj_type damon_sysfs_preps_ktype = {
-+static const struct kobj_type damon_sysfs_preps_ktype = {
- 	.release = damon_sysfs_preps_release,
- 	.sysfs_ops = &kobj_sysfs_ops,
- 	.default_groups = damon_sysfs_preps_groups,
-@@ -1138,6 +1148,7 @@ static const struct kobj_type damon_sysfs_filters_ktype = {
- struct damon_sysfs_probe {
- 	struct kobject kobj;
- 	unsigned int weight;
-+	struct damon_sysfs_preps *preps;
- 	struct damon_sysfs_filters *filters;
- };
- 
-@@ -1148,25 +1159,50 @@ static struct damon_sysfs_probe *damon_sysfs_probe_alloc(void)
- 
- static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *probe)
- {
-+	struct damon_sysfs_preps *preps;
- 	struct damon_sysfs_filters *filters;
- 	int err;
- 
--	filters = damon_sysfs_filters_alloc();
--	if (!filters)
-+	preps = damon_sysfs_preps_alloc();
-+	if (!preps)
- 		return -ENOMEM;
-+	probe->preps = preps;
++static void damon_sysfs_prep_release(struct kobject *kobj)
++{
++	struct damon_sysfs_prep *prep = container_of(kobj,
++			struct damon_sysfs_prep, kobj);
 +
-+	err = kobject_init_and_add(&preps->kobj, &damon_sysfs_preps_ktype,
-+			&probe->kobj, "preps");
-+	if (err)
-+		goto put_preps_out;
++	kfree(prep);
++}
 +
-+	filters = damon_sysfs_filters_alloc();
-+	if (!filters) {
-+		err = -ENOMEM;
-+		goto del_preps_out;
-+	}
- 	probe->filters = filters;
- 
- 	err = kobject_init_and_add(&filters->kobj, &damon_sysfs_filters_ktype,
- 			&probe->kobj, "filters");
--	if (err) {
--		kobject_put(&filters->kobj);
--		probe->filters = NULL;
--	}
-+	if (err)
-+		goto put_filters_out;
-+	return err;
++static struct kobj_attribute damon_sysfs_prep_prep_action_attr =
++		__ATTR_RW_MODE(prep_action, 0600);
 +
-+put_filters_out:
-+	kobject_put(&filters->kobj);
-+	probe->filters = NULL;
-+del_preps_out:
-+	kobject_del(&preps->kobj);
-+put_preps_out:
-+	kobject_put(&preps->kobj);
-+	probe->preps = NULL;
- 	return err;
- }
- 
- static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *probe)
- {
-+	if (probe->preps) {
-+		damon_sysfs_preps_rm_dirs(probe->preps);
-+		kobject_put(&probe->preps->kobj);
-+	}
- 	if (probe->filters) {
- 		damon_sysfs_filters_rm_dirs(probe->filters);
- 		kobject_put(&probe->filters->kobj);
++static struct attribute *damon_sysfs_prep_attrs[] = {
++	&damon_sysfs_prep_prep_action_attr.attr,
++	NULL,
++};
++ATTRIBUTE_GROUPS(damon_sysfs_prep);
++
++const struct kobj_type damon_sysfs_prep_ktype = {
++	.release = damon_sysfs_prep_release,
++	.sysfs_ops = &kobj_sysfs_ops,
++	.default_groups = damon_sysfs_prep_groups,
++};
++
+ /*
+  * preps directory
+  */
 -- 
 2.47.3
