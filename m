@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3393E3D9050;
-	Sun, 26 Jul 2026 17:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7DA3D5C06;
+	Sun, 26 Jul 2026 17:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785087590; cv=none; b=ez1pIeO94cwbuEbj2ZOFa2lGy84P0CbKDDzNty2ehfKo2v2tOS2+3qDKxNyrJE8r7KBIZV+tHWZJVs3H4o7HA+WtfCI9CjT57fBu/SRN0R2XCZKC4LlUYiN3n8DpB35JNGPrIyzkAHPuYUMgjpXYYTDbQIeA2zPs4NLRvsT8kvk=
+	t=1785087591; cv=none; b=YYiEHNdTwVK11j2PhxUv8x9Cq7yUCr9ZRe13HY4DAOj6/HkQfgNflKlZyv9rJLh5Sbz4z/PZQL/PpeWj9FvGJgmFsSLjemKxZjFyPh44NXHESFGsapLTZ50gq87c7YSJx3JBBX6odqNXl6weWMZMXx0/wcvxDirQltTrjj7dAvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785087590; c=relaxed/simple;
-	bh=I7iSQWo3DIeCl4GG9ImX2V39xbLJgFz5OBrIHCf8Mf0=;
+	s=arc-20240116; t=1785087591; c=relaxed/simple;
+	bh=zdAg2XCzb2p7bPsFPClMEKJZ7f8fhRWAaAM4CWjSe9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NnqOFdYkhmhoDmDeBHi3nKw96JSD/C+YYRU5f0vKbB8/le4KLg7eXPeCmXA5P24II1yBXiOUCHy+lt/qIvWN2JKSW2O5cpLj3AeddnizQNL8FAlv96EG5QciCB8zLPiSwooS10zyzoHzLJxyox/6f+ve8luxZws6e+MP5BUIgfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g34Ox6rY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kdFAOi9KBqUL74CpHy/Yt/uTMYYUQcNnNanIQxNQWVgOuDzEZloLo52wEkilKoWX0r6ng4fapHMOVf3Od41+oVHLM+v/eZdnJOSL4TQ4xauFjBhg6fc0zRb86TkfFwuVlNqC42t/UMNDYRYXLh+rZmlcOAwM+JJ8yj9DBHxPkr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dp/eznQT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g34Ox6rY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8851F00A3E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dp/eznQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5621F00ACA;
 	Sun, 26 Jul 2026 17:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785087589;
-	bh=m+OX/QoubOtPs5CYX5dE9pYfjfAmb4FTinvx7UvjP30=;
+	s=k20260515; t=1785087588;
+	bh=uNousysqLsJ6fyRgDH4abbL4+a0evZY6zs4U/XKn18k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g34Ox6rYaTdtXgIillaKFACK89FYjuaLjH4TKJlXhLKprR0mcQKQOzClX2DvkNQeN
-	 qgn24jNKvu5w0pE2iDwv4G6oxMIahAf/oSmMlTu3eIGH+3FuLpE1GjUWEQaB8yG5bD
-	 ll0+YDwQj/L1wHGfBXcJNPy39n0mp7M68RlU3d3/duWML0f7gFmWzB4g9AftNjTJNe
-	 kS60v1/cyXIuqIsmmIUPY+0WFY4oQ3VP+TTxYmKuH7qAvpUy36zeqe53/ki5qGLPAr
-	 4bcKtc88AUuUgyN+78SEM3S5Eh5xqhhbdfLgnuNF/XSr7QDBOHRxlpig1WsPFiAMuj
-	 wC5DXd5YOEOeA==
+	b=Dp/eznQTbrGx4uFd+xaUjo2TbfYpwQM2fjrEwgtMB2kP7L5Y7u+wtzynAivlU4alJ
+	 a0q4sDIX4AAHPiuiqyrJ/Tjf/hvz7VGjsFkk7LefcI4B1bWaYDTYoKtmByd4Xz02PH
+	 dWkIEOXKlsD2HDHdIRfUpp4wznVDeX5aw2L9kWehx1M05NSfaiepVqxRi342mjturk
+	 C8YVj1tKvJ0KzQjRX0xBOJaufz4k/aFeWZfGYz0hCA1FdtgrX5dCBTkcWXPy+YZvS4
+	 h3UhzyqN7iBxdi+1NZCHRYPlM+hQ7IhFnBMeQhcT5qVMdg8hV/UHX09iVqNcwxtj3b
+	 /RTzG7d/4moIg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 14/17] selftests/damon/sysfs.sh: test probe prep sysfs files
-Date: Sun, 26 Jul 2026 10:39:30 -0700
-Message-ID: <20260726173935.94046-15-sj@kernel.org>
+Subject: [RFC PATCH v2 12/17] mm/damon/sysfs: create probe prep files for preps/nr file write
+Date: Sun, 26 Jul 2026 10:39:28 -0700
+Message-ID: <20260726173935.94046-13-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260726173935.94046-1-sj@kernel.org>
 References: <20260726173935.94046-1-sj@kernel.org>
@@ -48,57 +47,106 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add basic file operations test for newly introduced DAMON probe prep
-sysfs directories and files.
+Implement preps/nr file write operation to really create the probe prep
+directories and their files.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.sh | 27 ++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ mm/damon/sysfs.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 54 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-index f7fb94b84e716..ddebde6edabe4 100755
---- a/tools/testing/selftests/damon/sysfs.sh
-+++ b/tools/testing/selftests/damon/sysfs.sh
-@@ -361,6 +361,32 @@ test_intervals()
- 	test_intervals_goal "$intervals_dir/intervals_goal"
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index e348c1feed1ad..f275a6f73eee1 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -759,6 +759,17 @@ struct damon_sysfs_prep {
+ 	enum damon_prep_action action;
+ };
+ 
++static struct damon_sysfs_prep *damon_sysfs_prep_alloc(void)
++{
++	struct damon_sysfs_prep *prep;
++
++	prep = kzalloc_obj(struct damon_sysfs_prep);
++	if (!prep)
++		return prep;
++	prep->action = DAMON_PREP_SET_PGIDLE;
++	return prep;
++}
++
+ struct damon_sysfs_prep_action_name {
+ 	enum damon_prep_action action;
+ 	char *name;
+@@ -827,7 +838,7 @@ static struct attribute *damon_sysfs_prep_attrs[] = {
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_prep);
+ 
+-const struct kobj_type damon_sysfs_prep_ktype = {
++static const struct kobj_type damon_sysfs_prep_ktype = {
+ 	.release = damon_sysfs_prep_release,
+ 	.sysfs_ops = &kobj_sysfs_ops,
+ 	.default_groups = damon_sysfs_prep_groups,
+@@ -839,6 +850,7 @@ const struct kobj_type damon_sysfs_prep_ktype = {
+ 
+ struct damon_sysfs_preps {
+ 	struct kobject kobj;
++	struct damon_sysfs_prep **preps_arr;
+ 	int nr;
+ };
+ 
+@@ -849,13 +861,53 @@ static struct damon_sysfs_preps *damon_sysfs_preps_alloc(void)
+ 
+ static void damon_sysfs_preps_rm_dirs(struct damon_sysfs_preps *preps)
+ {
++	struct damon_sysfs_prep **preps_arr = preps->preps_arr;
++	int i;
++
++	for (i = 0; i < preps->nr; i++) {
++		kobject_del(&preps_arr[i]->kobj);
++		kobject_put(&preps_arr[i]->kobj);
++	}
+ 	preps->nr = 0;
++	kfree(preps_arr);
++	preps->preps_arr = NULL;
  }
  
-+test_damon_prep()
-+{
-+	damon_prep_dir=$1
-+	ensure_file "$damon_prep_dir/prep_action" "exist" "600"
-+	ensure_write_succ "$damon_prep_dir/prep_action" "set_pgidle" \
-+		"valid input"
-+	ensure_write_fail "$damon_prep_dir/prep_action" "foo" "invalid input"
-+}
-+
-+test_damon_preps()
-+{
-+	preps_dir=$1
-+	ensure_dir "$preps_dir" "exist"
-+	ensure_file "$preps_dir/nr_preps" "exist" "600"
-+	ensure_write_succ "$preps_dir/nr_preps" "1" "valid input"
-+	test_damon_prep "$preps_dir/0"
-+
-+	ensure_write_succ  "$preps_dir/nr_preps" "2" "valid input"
-+	test_damon_prep "$preps_dir/0"
-+	test_damon_prep "$preps_dir/1"
-+
-+	ensure_write_succ "$preps_dir/nr_preps" "0" "valid input"
-+	ensure_dir "$preps_dir/0" "not_exist"
-+	ensure_dir "$preps_dir/1" "not_exist"
-+}
-+
- test_damon_filter()
+ static int damon_sysfs_preps_add_dirs(struct damon_sysfs_preps *preps,
+ 		int nr_preps)
  {
- 	damon_filter_dir=$1
-@@ -392,6 +418,7 @@ test_probe()
- {
- 	probe_dir=$1
- 	ensure_dir "$probe_dir" "exist"
-+	test_damon_preps "$probe_dir/preps"
- 	test_damon_filters "$probe_dir/filters"
+-	preps->nr = nr_preps;
++	struct damon_sysfs_prep **preps_arr, *prep;
++	int err, i;
++
++	damon_sysfs_preps_rm_dirs(preps);
++	if (!nr_preps)
++		return 0;
++
++	preps_arr = kmalloc_objs(*preps_arr, nr_preps,
++				   GFP_KERNEL | __GFP_NOWARN);
++	if (!preps_arr)
++		return -ENOMEM;
++	preps->preps_arr = preps_arr;
++
++	for (i = 0; i < nr_preps; i++) {
++		prep = damon_sysfs_prep_alloc();
++		if (!prep) {
++			damon_sysfs_preps_rm_dirs(preps);
++			return -ENOMEM;
++		}
++
++		err = kobject_init_and_add(&prep->kobj,
++				&damon_sysfs_prep_ktype, &preps->kobj, "%d",
++				i);
++		if (err) {
++			kobject_put(&prep->kobj);
++			damon_sysfs_preps_rm_dirs(preps);
++			return err;
++		}
++
++		preps_arr[i] = prep;
++		preps->nr++;
++	}
+ 	return 0;
  }
  
 -- 
