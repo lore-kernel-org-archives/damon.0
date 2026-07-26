@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DB23002A9;
-	Sun, 26 Jul 2026 16:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F3A3BB67B;
+	Sun, 26 Jul 2026 17:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785084614; cv=none; b=F6Fcv3I2rkS9kgXAE3g5CEc1ZXW1ZqYk2xE/X0LsEQ3iNb13L8yfyMy5Vgqq5vDM1daLVQT5jUbcfa7klQndmrzQkgjnvqPnYKWu7RCppm1+zs8B8rOAwCavmbu011Amc0UYuf8W62rcdN03+mD7cprQpnK7bLHCJKPS+ItfQLI=
+	t=1785087585; cv=none; b=NlqIlp7SgFMHS7uGX/PBFKt3RGDLpr6pRwP1db0HNQCbPf7+6TZd0Q/dzTzGsYe8PeK1a5i29tYIHRqIPqfTg/vTMTDW6AVZrahCZoMbjMGxcPxQSkI5lFeoI8XT4zDmwQxgqykzZGoMQ8qXMA0cjvfQOYtq8v3/CqP4YqcdXQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785084614; c=relaxed/simple;
-	bh=vT/5K3Ja1PiO2m6m2XNDX/iK7eMGfT7cHgZOfuxAbSk=;
+	s=arc-20240116; t=1785087585; c=relaxed/simple;
+	bh=b5kSQGCS/ZAyZmfPJm1xVu80EMtlm0HqrWMr37t/cqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnpfA/C1eMRMDxokMq7AZfDdpl4hNSouLnKYuozf0sk0p3E0DWPaXUiafcb4a3SzLraGDt3zZWAGjlFBUqsR6ZfBD3Era4yU7GBrMp0ib+V9aJyzR2I8Xbt9yrVZmzWuw4EdvzmS61qGoRW9XA9HKe8FTlQuzXhPGuxpr8G/AKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VxfOEtrq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S0IIMvzWug6vlnt4dQ79ZIkB4gZzqtcpIbmhj/WIp0zQsGRrW5JwYtkyXPkIUxaODoSPvynF5WeOtOAFOW4+Vq7C/iI1vTyhovzHvVYsK6CUopJjRCFAm40aS7XMAyv+auW+nJx1UBAgURhErqubpTotgzOoiACyyaBILQEb1tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LWrEly58; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VxfOEtrq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD0A1F000E9;
-	Sun, 26 Jul 2026 16:50:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LWrEly58"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE541F00ACF;
+	Sun, 26 Jul 2026 17:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785084613;
-	bh=bihQdyqP8nybmk/Z5jPpiccWyJrZK2FXr9JjFx/kKKY=;
+	s=k20260515; t=1785087584;
+	bh=GZDCgXboPWDjpqLBgpT6yf0F7vtlbLEb3w3NI8ROd0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VxfOEtrqIoqIK5xImd1RD9szFaJb+642xnsx+4gFfvd/ngO5LzRGs6cxaJhiSR/7X
-	 Wo2YCskKacWVCI5E/RJVQJmduIxdk46iUaLiDEx5o5fX7ZeD7cS+hgwnRBWZwU9xAi
-	 U6/7XI9b0mH/1TA6xUen/ZnKcDJsthpP175NtyphpPaEBudZf8o49YRdHpS1nziqEq
-	 Phr9xdWYresJUuQRSx9LjCyphG1I+2Om4MMLVv4T0ePuk0Ppc/gFdcXAXjG6iGGXRF
-	 fTHh+zs6HjGwxDNEH6RlnmTF8ohK8LwV+O3JFniT4OgmtQk0+/pnMSP8KtB1az7JXR
-	 q0Y9ArRK2EO0Q==
+	b=LWrEly58rKaHpWNIwKG6oHI0iMSBdjKmcvQ7s2AO2mgAT2VPnt2aRsdPZ06XJ9ZTO
+	 dfZ9wlvzM6m161Q2rKE5nDFk/9GMRVDmRn6TA4l9H4qkrMpVmcjTfM6PGtVDBgeMFK
+	 Q7lVEVWyJG0JHFPsBak0pAnGnrG3l+ewup7lmZOWAW0nNDoxF3BsVNobl3YpX0wAkP
+	 z5blZPRWmTHaPJhZJWoJWHEyDXJTr+eQO6yZrslUUHPgoU24ts5U7sLOrX9ZTJMd/j
+	 CD/Vj3doqmcYVvBtqX1tCQGn6CH1cCn+lZG+IODny99luBvDhFiTSeHYVLuSQSbtRU
+	 ObHfM+KZwuHCA==
 From: SJ Park <sj@kernel.org>
-To: dayou5941@163.com
+To: 
 Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	joshua.hahnjy@gmail.com,
-	liyouhong <liyouhong@kylinos.cn>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v3] mm/damon/ops-common: putback folios on invalid migrate nid
-Date: Sun, 26 Jul 2026 09:50:05 -0700
-Message-ID: <20260726165005.88635-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH v2 01/17] mm/damon/core: introduce DAMON_FILTER_TYPE_PGIDLE_UNSET
+Date: Sun, 26 Jul 2026 10:39:17 -0700
+Message-ID: <20260726173935.94046-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260726014815.1280757-1-dayou5941@163.com>
-References: 
+In-Reply-To: <20260726173935.94046-1-sj@kernel.org>
+References: <20260726173935.94046-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -50,38 +46,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 26 Jul 2026 09:48:15 +0800 dayou5941@163.com wrote:
+Introduce a new DAMON filter type, pgidle_unset.  It will match pages
+that have their PG_Idle flag unset, or the page table accessed bit set.
+In other words, it says if the page is accessed.
 
-> From: liyouhong <liyouhong@kylinos.cn>
-> 
-> damon_pa_migrate() and damos_va_migrate() isolate folios into a local list
-> and then call damon_migrate_pages().  When target_nid is invalid (including
-> the scheme default NUMA_NO_NODE / -1), damon_migrate_pages() returns early
-> without putting the folios back to the LRU.
-> 
-> Callers then discard the list head while those folios remain isolated with
-> an extra reference taken by folio_isolate_lru().  The pages stay off the
-> LRU for as long as the mapping exists (anon active+inactive counts drop
-> while RSS does not), and the leftover references can pin the pages after
-> the mapping is gone.
-> 
-> Put the folios back on the invalid-nid path so ignored migration requests
-> still return them to the LRU.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Looks good to me, thank you for catching and fixing this, liyouhong!
-
-Andrew, I think this deserves the hotfix fast track.  The bug can cause memory
-pressure, and can be reliably reproduced by the user.  The user should already
-have a sysfs write permission, though.  Let me know if you think differently.
-
-This patch is applied to damon/next [1] tree.  If this patch is not added to
-mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
-to pick this.  So, no action from your side is needed for now.  If it seems I
-also forgot doing that or you cannot wait for my action, please feel free to
-directly ask that to Andrew.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-
-
-Thanks,
-SJ
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 8ad6ef2e063de..cee4b74761081 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -744,12 +744,14 @@ struct damon_intervals_goal {
+ /**
+  * enum damon_filter_type - Type of &struct damon_filter
+  *
+- * @DAMON_FILTER_TYPE_ANON:	Anonymous pages.
+- * @DAMON_FILTER_TYPE_MEMCG:	Specific memcg's pages.
++ * @DAMON_FILTER_TYPE_ANON:		Anonymous pages.
++ * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
++ * @DAMON_FILTER_TYPE_PGIDLE_UNSET:	Pgidle is unset.
+  */
+ enum damon_filter_type {
+ 	DAMON_FILTER_TYPE_ANON,
+ 	DAMON_FILTER_TYPE_MEMCG,
++	DAMON_FILTER_TYPE_PGIDLE_UNSET,
+ };
+ 
+ /**
+-- 
+2.47.3
