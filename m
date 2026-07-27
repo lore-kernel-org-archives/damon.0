@@ -1,256 +1,197 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AEF3F7867
-	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 09:55:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F2A3F787F
+	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 10:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785146110; cv=none; b=nkQzb/kEUEI+eb2KU0qhouVBMAMvLhIYkkSfPAWxEmIXLbbvAyJ4886uVqtXKMrwij9WT1sXFZNzcF+cnK2yRAbPNN/Tk/1ZdgqrUGm0DtsUcrZjQwfgT4X04dYgsBBijup236j9CVY4XUBTCSNgXypJpMsd69aQIPXamcSmqhU=
+	t=1785146853; cv=none; b=NBX7ml8EXXMV5Sno13YOicI5u3jYGVHAxroCQbTflsh5mufhRGWc+hrbrkkX8rNk7kPqVkyS4cV4NLEFBMQa0aWgLriohBh0ek+/ogkEaWdtB+2LE0M0RslhwEzu7FWk7WCD1xz1iQwcO62XxXUjk4hQSkNMOna36OVbdQwuG3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785146110; c=relaxed/simple;
-	bh=rDVLz3bWreK/4dapCvsP8ARazvVf2gy6zVnH2aMeQLI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iTD2/qXYPk7P/GNcqXVxaqmf3MiRudbJOe5zlYSTU952av+zjUSM1Nj2v7dS+e7WmXzs5mzMkk3eT99w3OYgitiCZgYNW8LtXz6Zz3vsyMA3sXYo90vKfFS/YlQTuPKLuVgymxJ3fzRCqydmvTpq5bUmtYBA+gHJROs3IaH3qzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=r8PrvI/x; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1785146853; c=relaxed/simple;
+	bh=JyOq//3XD7c5yhodVBZ2TnYZUxeGZDETKxYS09I4Jks=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Q3NT3xDJZwyw61kZ1rlxCOaPiIAXIqkSOhGXJQH3E/oMVBw/K05qCk1NyoQIHX7XQTN/FA20GkfDao/0VWsOkzpRlXhRbzxVxAd030inspJdcHRwV2J/NRQOLQE6clW2J6uaK2Hd+2TkcYSTv6ik3VczVfXmt7RaWK26eP0/fPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cVdhP086; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="r8PrvI/x"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785146102;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4S2hz6V8QOq2FoxNPi2D/VAkz7DZY9JJoq6y4/9kAtM=;
-	b=r8PrvI/xfkIOMDWzLyjbYwMOybQXPbwReqifnm5e4usOGvTfzjWTwFn+6BRKZGFs8MP7Ag
-	73gL588KcsHdk3RjF1vXvm2lRz9kGW2YAU453d9xjIz68SLSIFx1IMz1AlGfN4jT/gBp32
-	o+TmU35e1u0qUH9uzlNp9u1wXCi56A0=
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-To: damon@lists.linux.dev
-Cc: jiayuan.chen@linux.dev,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org
-Subject: [PATCH 2/2] mm/damon/sysfs-schemes: report the number of tried regions
-Date: Mon, 27 Jul 2026 17:54:23 +0800
-Message-ID: <20260727095429.143527-2-jiayuan.chen@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cVdhP086"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8B01F000E9;
+	Mon, 27 Jul 2026 10:07:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785146851;
+	bh=Z8A2f3dkAarbeSRhml+f6qi7evPdoGKQ7V+ebtj8gtI=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=cVdhP086cu3CkO1UnmgGqnpRDajo8l1gsRu4MUlJhUKOhVuw0/5iDHBYpBj5eT0Q4
+	 BxJB6wS5c0C4s6e0ekPR/EflLv6AE1ZDiVfJpvDxXK5EMbCWi6b0g7xcO8ncK43blK
+	 yJz837JMvwNcEjYUtafWZWb/FuQV0DaqGHOlVtQeWxkwPiwatXK9r3BR8cXKBz2Yfl
+	 ECVwaOIDE4VJ1pDhTjbMlnL18d7hZ4evjFIeo+TwNOKn7iOUZe7KZOkrN5FkrOdDTr
+	 4PkdG3edZFvsSNaLKKuXQeBrDtC/f9ybMzv1HaPrrW0ePKtev2M9YmWH30nSuQ2UQH
+	 jg/PGyuxL6t/A==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with
+ per-range regions
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Jiayuan Chen" <jiayuan.chen@linux.dev>
+Cc: damon@lists.linux.dev
 In-Reply-To: <20260727095429.143527-1-jiayuan.chen@linux.dev>
 References: <20260727095429.143527-1-jiayuan.chen@linux.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 27 Jul 2026 10:07:31 +0000
+Message-Id: <20260727100731.BC8B01F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] Time-of-check to time-of-use (TOCTOU) race condition in `damon_fin=
+d_system_rams()` leads to a heap out-of-bounds write during concurrent memo=
+ry hotplug.
+- [High] DAMON initialization fails with `-EINVAL` on systems with sub-page=
+ System RAM gaps due to alignment overlap in `damon_set_regions()`.
+--
 
-The 'tried_regions' directory of each DAMON sysfs scheme exposes the memory
-regions that the scheme's action has been tried to be applied to, as
-per-region subdirectories.  It also has a 'total_bytes' file that reports
-the total size of those regions without materializing the per-region
-subdirectories, so that users can cheaply retrieve the aggregated result.
+--- Patch [1]: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas w=
+ith per-range regions ---
+commit 20fb01bf6e8e4cefc6016dfc073fb77c95ca3511
+Author: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-The number of the tried regions is another useful aggregated metric.  When
-the scheme's access pattern is not restrictive, it approximates the number
-of the adaptive monitoring regions of the context, which users may want to
-watch, e.g., to see how well the monitoring is refined under a given
-max_nr_regions, or to feed fleet wide access pattern dashboards.
-Retrieving it currently requires materializing all the per-region
-subdirectories (via writing 'update_schemes_tried_regions') and counting
-them, which is unnecessarily expensive for users that only need the count.
+mm/damon/core: cover discrete System RAM areas with per-range regions
 
-Add a 'nr_regions' file to the 'tried_regions' directory.  Like
-'total_bytes', it is updated by both 'update_schemes_tried_bytes' and
-'update_schemes_tried_regions', so it can be read as a lightweight counter
-without materializing the per-region subdirectories.
+This commit changes how DAMON sets default monitoring regions for System RA=
+M.
+Instead of a single region covering all RAM (and the holes between), it now
+creates separate regions for each discrete System RAM area. This excludes
+large memory holes from being monitored.
 
-Suggested-by: SeongJae Park <sj@kernel.org>
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
----
- .../ABI/testing/sysfs-kernel-mm-damon         | 10 +++++++
- Documentation/admin-guide/mm/damon/usage.rst  | 27 ++++++++++---------
- mm/damon/sysfs-schemes.c                      | 23 +++++++++++++---
- 3 files changed, 45 insertions(+), 15 deletions(-)
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 644daf5a16560..365c43271c0c6 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 786be4537da1..a6e8f5036555 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -622,6 +622,16 @@ Description:	Writing a number to this file sets the upper limit of
- 		nr_snapshots that deactivates the scheme when the limit is
- 		reached or exceeded.
- 
-+What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/nr_regions
-+Date:		Aug 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Reading this file returns the number of regions that
-+		corresponding DAMON-based Operation Scheme's action has tried
-+		to be applied.  The number is updated together with
-+		'.../tried_regions/total_bytes' by writing 'update_schemes_tried_bytes'
-+		or 'update_schemes_tried_regions' to the relevant 'state' file, and
-+		hence can be read without materializing the per-region directories.
-+
- What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/schemes/<S>/tried_regions/total_bytes
- Date:		Jul 2023
- Contact:	SJ Park <sj@kernel.org>
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index f6048fc04263..9152ce09de9d 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -108,7 +108,7 @@ comma (",").
-     │ │ │ │ │ │ │ :ref:`dests <damon_sysfs_dests>`/nr_dests
-     │ │ │ │ │ │ │ │ 0/id,weight
-     │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds,nr_snapshots,max_nr_snapshots
--    │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
-+    │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/nr_regions,total_bytes
-     │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
-     │ │ │ │ │ │ │ │ │ probes
-     │ │ │ │ │ │ │ │ │ │ 0/hits
-@@ -671,21 +671,24 @@ relevant ``kdamonds/<N>/state`` file.  Refer to :ref:`kdamond directory
- schemes/<N>/tried_regions/
- --------------------------
- 
--This directory initially has one file, ``total_bytes``.
-+This directory initially has two files, ``nr_regions`` and ``total_bytes``.
- 
- When a special keyword, ``update_schemes_tried_regions``, is written to the
--relevant ``kdamonds/<N>/state`` file, DAMON updates the ``total_bytes`` file so
--that reading it returns the total size of the scheme tried regions, and creates
--directories named integer starting from ``0`` under this directory.  Each
--directory contains files exposing detailed information about each of the memory
--region that the corresponding scheme's ``action`` has tried to be applied under
--this directory, during next :ref:`apply interval <damon_design_damos>` of the
--corresponding scheme.  The information includes address range, ``nr_accesses``,
--and ``age`` of the region.
-+relevant ``kdamonds/<N>/state`` file, DAMON updates the ``nr_regions`` and
-+``total_bytes`` files so that reading them returns the number and the total size
-+of the scheme tried regions, respectively, and creates directories named
-+integer starting from ``0`` under this directory.  Each directory contains files
-+exposing detailed information about each of the memory region that the
-+corresponding scheme's ``action`` has tried to be applied under this directory,
-+during next :ref:`apply interval <damon_design_damos>` of the corresponding
-+scheme.  The information includes address range, ``nr_accesses``, and ``age`` of
-+the region.
- 
- Writing ``update_schemes_tried_bytes`` to the relevant ``kdamonds/<N>/state``
--file will only update the ``total_bytes`` file, and will not create the
--subdirectories.
-+file will only update the ``nr_regions`` and ``total_bytes`` files, and will not
-+create the subdirectories.  Hence ``nr_regions`` can be used as a lightweight way
-+to read the number of the scheme tried regions without materializing the
-+per-region subdirectories.
- 
- The directories will be removed when another special keyword,
- ``clear_schemes_tried_regions``, is written to the relevant
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 54ff196f8e24..b1df9f21c267 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -297,6 +297,7 @@ static const struct kobj_type damon_sysfs_scheme_region_ktype = {
- struct damon_sysfs_scheme_regions {
- 	struct kobject kobj;
- 	struct list_head regions_list;
-+	int nr_region_dirs;
- 	int nr_regions;
- 	unsigned long total_bytes;
- };
-@@ -311,11 +312,21 @@ damon_sysfs_scheme_regions_alloc(void)
- 
- 	regions->kobj = (struct kobject){};
- 	INIT_LIST_HEAD(&regions->regions_list);
-+	regions->nr_region_dirs = 0;
- 	regions->nr_regions = 0;
- 	regions->total_bytes = 0;
- 	return regions;
- }
- 
-+static ssize_t nr_regions_show(struct kobject *kobj,
-+			       struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_scheme_regions *regions = container_of(kobj,
-+			struct damon_sysfs_scheme_regions, kobj);
-+
-+	return sysfs_emit(buf, "%d\n", regions->nr_regions);
-+}
-+
- static ssize_t total_bytes_show(struct kobject *kobj,
- 		struct kobj_attribute *attr, char *buf)
- {
-@@ -335,7 +346,7 @@ static void damon_sysfs_scheme_regions_rm_dirs(
- 		list_del(&r->list);
- 		kobject_del(&r->kobj);
- 		kobject_put(&r->kobj);
--		regions->nr_regions--;
-+		regions->nr_region_dirs--;
- 	}
- }
- 
-@@ -344,10 +355,14 @@ static void damon_sysfs_scheme_regions_release(struct kobject *kobj)
- 	kfree(container_of(kobj, struct damon_sysfs_scheme_regions, kobj));
- }
- 
-+static struct kobj_attribute damon_sysfs_scheme_regions_nr_regions_attr =
-+		__ATTR_RO_MODE(nr_regions, 0400);
-+
- static struct kobj_attribute damon_sysfs_scheme_regions_total_bytes_attr =
- 		__ATTR_RO_MODE(total_bytes, 0400);
- 
- static struct attribute *damon_sysfs_scheme_regions_attrs[] = {
-+	&damon_sysfs_scheme_regions_nr_regions_attr.attr,
- 	&damon_sysfs_scheme_regions_total_bytes_attr.attr,
- 	NULL,
- };
-@@ -3133,6 +3148,7 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
- 		return;
- 
- 	sysfs_regions = sysfs_schemes->schemes_arr[schemes_idx]->tried_regions;
-+	sysfs_regions->nr_regions++;
- 	sysfs_regions->total_bytes += r->ar.end - r->ar.start;
- 	if (total_bytes_only)
- 		return;
-@@ -3144,13 +3160,13 @@ void damos_sysfs_populate_region_dir(struct damon_sysfs_schemes *sysfs_schemes,
- 	if (kobject_init_and_add(&region->kobj,
- 				&damon_sysfs_scheme_region_ktype,
- 				&sysfs_regions->kobj, "%d",
--				sysfs_regions->nr_regions))
-+				sysfs_regions->nr_region_dirs))
- 		goto out;
- 	if (damos_sysfs_region_add_dirs(region, ctx, r))
- 		goto del_out;
- 
- 	list_add_tail(&region->list, &sysfs_regions->regions_list);
--	sysfs_regions->nr_regions++;
-+	sysfs_regions->nr_region_dirs++;
- 	return;
- 
- del_out:
-@@ -3170,6 +3186,7 @@ int damon_sysfs_schemes_clear_regions(
- 		sysfs_scheme = sysfs_schemes->schemes_arr[i];
- 		damon_sysfs_scheme_regions_rm_dirs(
- 				sysfs_scheme->tried_regions);
-+		sysfs_scheme->tried_regions->nr_regions = 0;
- 		sysfs_scheme->tried_regions->total_bytes = 0;
- 	}
- 	return 0;
--- 
-2.43.0
+[ ... ]
 
+> +static int damon_find_system_rams(struct damon_addr_range **ranges_out,
+> +				  unsigned long addr_unit)
+> +{
+> +	struct damon_system_ram_range_walk_arg arg =3D { .addr_unit =3D addr_un=
+it };
+> +	struct damon_addr_range *ranges;
+> =20
+> +	/* First pass: count the coalesced ranges. */
+>  	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
+> -	if (!arg.walked)
+> -		return false;
+> -	*start =3D damon_res_to_core_addr(arg.res.start, addr_unit);
+> -	*end =3D damon_res_to_core_addr(arg.res.end + 1, addr_unit);
+> -	if (*end <=3D *start)
+> -		return false;
+> -	return true;
+> +	if (!arg.nr_ranges)
+> +		return 0;
+> +	ranges =3D kvmalloc_objs(*ranges, arg.nr_ranges, GFP_KERNEL);
+> +	if (!ranges)
+> +		return -ENOMEM;
+> +	/* Second pass: fill in the coalesced ranges. */
+> +	arg.ranges =3D ranges;
+> +	arg.nr_ranges =3D 0;
+> +	arg.has_prev =3D false;
+> +	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
+
+[Severity: High]
+Can this race with memory hotplug events and cause an out-of-bounds write?
+
+walk_system_ram_res() is called twice without holding memory hotplug locks.
+If a new System RAM region is hotplugged between or during the second pass,
+the number of visited regions could exceed the allocated buffer size.
+
+If that happens, damon_system_ram_walk_fn() would write past the end of the
+kvmalloc-allocated buffer:
+
+mm/damon/core.c:damon_system_ram_walk_fn() {
+	...
+	if (a->ranges) {
+		a->ranges[a->nr_ranges].start =3D start;
+		a->ranges[a->nr_ranges].end =3D end;
+	}
+	a->nr_ranges++;
+	...
+}
+
+> +	*ranges_out =3D ranges;
+> +	return arg.nr_ranges;
+>  }
+
+[ ... ]
+
+> @@ -3984,14 +4021,25 @@ int damon_set_region_system_rams_default(struct d=
+amon_target *t,
+>  			unsigned long addr_unit, unsigned long min_region_sz)
+>  {
+>  	struct damon_addr_range addr_range;
+> +	struct damon_addr_range *ranges;
+> +	int nr_ranges, err;
+> =20
+> -	if (!*start && !*end &&
+> -		!damon_find_system_rams_range(start, end, addr_unit))
+> -		return -EINVAL;
+> +	if (*start || *end) {
+> +		addr_range.start =3D *start;
+> +		addr_range.end =3D *end;
+> +		return damon_set_regions(t, &addr_range, 1, min_region_sz);
+> +	}
+> =20
+> -	addr_range.start =3D *start;
+> -	addr_range.end =3D *end;
+> -	return damon_set_regions(t, &addr_range, 1, min_region_sz);
+> +	nr_ranges =3D damon_find_system_rams(&ranges, addr_unit);
+> +	if (nr_ranges < 0)
+> +		return nr_ranges;
+> +	if (!nr_ranges)
+> +		return -EINVAL;
+> +	*start =3D ranges[0].start;
+> +	*end =3D ranges[nr_ranges - 1].end;
+> +	err =3D damon_set_regions(t, ranges, nr_ranges, min_region_sz);
+
+[Severity: High]
+Could this fail with -EINVAL during initialization on systems with sub-page
+memory gaps?
+
+If the system has System RAM fragmented by small non-RAM holes (like sub-pa=
+ge
+BIOS or EFI reserved regions), damon_system_ram_walk_fn() will create separ=
+ate
+discrete regions.
+
+When these regions are passed to damon_set_regions(), it aligns the boundar=
+ies
+to min_region_sz (typically PAGE_SIZE):
+
+mm/damon/core.c:damon_set_regions() {
+	for (i =3D 0; i < nr_ranges; i++) {
+		...
+		start =3D ALIGN_DOWN(ranges[i].start, min_region_sz);
+		end =3D ALIGN(ranges[i].end, min_region_sz);
+		if (start >=3D end)
+			return -EINVAL;
+		if (i > 0 && last_end > start)
+			return -EINVAL;
+		last_end =3D end;
+	}
+	...
+}
+
+If the gap between two RAM areas is smaller than PAGE_SIZE, the ALIGN of the
+first region's end will evaluate to a higher address than the ALIGN_DOWN of
+the second region's start. Does this cause the strictly-ascending overlap
+check (last_end > start) to trigger and reject valid configurations?
+
+> +	kvfree(ranges);
+> +	return err;
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727095429.1435=
+27-1-jiayuan.chen@linux.dev?part=3D1
