@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CDC38A29A;
-	Mon, 27 Jul 2026 14:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8443D3486;
+	Mon, 27 Jul 2026 14:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785163116; cv=none; b=CQK2tgUiY91vz88A6XE3GR0cst3SYxAPUnshN0OXMiibjzLAAbSIAbpxlxoF3Ho0JAvaAxkSEw1BYGxDDH6Q1J1pXVS87qQ5/C8icpgL7OO2tr6cHMtNG6yYbqmufuzRwuZyB0kceFVm4cEb0U94C87bZB71aKXCsSH+FLnGLJw=
+	t=1785163117; cv=none; b=Ff0Cp2lQv+omrjGO2C+RQiJGnTS/sMk1scxhI2Q+/4gIMYMogrQvTClG+2DT7E9HM8nq9a41CVMQhPAj5/yzrTNrPnqlqSoEYXLgdjsnkyrk5nsvutYLphaWfT1BK9Iq5uPWvnjCPtoESIVR5TDhNSfJ6sOeoGhXMt7peUTlSyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785163116; c=relaxed/simple;
-	bh=QROrfCzQixCQTszSavdn26Kts8/EkDr/hPWNC1d7GwM=;
+	s=arc-20240116; t=1785163117; c=relaxed/simple;
+	bh=RlII/+bxZALx45h8wxz+V5lWsOUPfHwlNy6XORJIOTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KjmXoJPt+YHdarDnbTSMRCkc181rIuo1HDaLfmd7yDcB3wNtyYlgvE/7Mcxp55ykcNJKiwWbAJaJWQqH2SiNHGI21cp6B+sqNrOvTPIMbPMakuwx+8lZ+E85Eqh527F/FpdMwY8H5sAbaeWHc75hGn11tM1dEYePrwiDsVyCW08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PXeqXkkT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gpC+o2Lut4d8ax68f+HvF90k4UXorZQbBqK1DK4MAQ3AhoyZC6t9zQRSlEaFlLy9FRAix1oNx0PfCvvF5QN0oVtQ5f2IPYx5ZMb0hDRZRKWeLLud/3IQEs6QOEdSYcNXE7m6RSO+9hT7pYjAQB+eaAOvfG7QtsYPAbtuwmQm8qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EplgybDG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PXeqXkkT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9050C1F00A3D;
-	Mon, 27 Jul 2026 14:38:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EplgybDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A051F00ACF;
+	Mon, 27 Jul 2026 14:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785163114;
-	bh=SdtqE3eR/Bua/rulOOI8NT/gdSWbQwN4dD7fIeQTAXA=;
+	s=k20260515; t=1785163115;
+	bh=dLFzt3EcCEm4IM9i5M5f2Ly9bLRqeWPD/3m4Jo0md2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PXeqXkkThnDbMubQzL2QbuRli5gndk1PPtauBRBlBwa4NEBLeRA/hD23pXTiIu4xy
-	 4P22t+uiOpUKYOLsY9b9hSnxJ3chgwAnpcoZKQG+1XVB+wmbXOiVPTgmsBtd5YLFst
-	 XMdlizTzpV461DxxQk5ChkHB51lJBac1KFX/nepVeUnT3wWTYB+52pKKOoyGmFwXAN
-	 R5LSXWxH1skTgsHUV2GCPjXkwgb1WkgRf8546lL9y+RMhQ3WLGgd2B8te90sPZUO5F
-	 pN41zTfsCWF/tl6dGEnZQa8y1McpBGMWrz6E3OcnbwVq45AOkhLQTFMAqDazLVPkKn
-	 +yiVcE3Cmo1/A==
+	b=EplgybDG2pjc7qULp8NAbQU4eO6g01ccQc6WIq6Wsvc3TpeY8z8eRZEHz8VAMw09L
+	 CzXyuS7nU4FT6414bVzvUqJuWb5q8XedVv7flNhuaq7VR+FHtpR52LdZkHg1+lDuJr
+	 IFZjjTnPqcJ1+DMwgNL9T3RJE45r/PRA40VWywnOxE8l8KW+oszHGih4M4kIS23zxz
+	 nWEQWwy2FhGoftMh8NfH7ia1zCK4/uTgbtJazAGHyUZOJ0cF0aoJAsF0G2Pi1Xulx/
+	 mMqo9Kq4zT4XQDXfP5zkjE2NJ69td7ShaQz0A4mCJ7kMueJBsPbMyq7Rho0siOnGLN
+	 5W6IaRYF2GnUg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 06/17] mm/damon/core: commit preps
-Date: Mon, 27 Jul 2026 07:38:15 -0700
-Message-ID: <20260727143829.86236-7-sj@kernel.org>
+Subject: [RFC PATCH v2.1 08/17] mm/damon/paddr: support damon_prep
+Date: Mon, 27 Jul 2026 07:38:17 -0700
+Message-ID: <20260727143829.86236-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260727143829.86236-1-sj@kernel.org>
 References: <20260727143829.86236-1-sj@kernel.org>
@@ -47,109 +47,69 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_commit_probes() is ignoring damon_prep.  Commit the prep actions,
-too.
+Implement damon_operations->prep_probes() callback.  Support the only
+existing prep action, DAMON_PREP_SET_PGIDLE in a way similar to what it
+was doing for the access check preparation: unset page table accessed
+bits and set PG_Idle flag.  Reuse the function for the access check
+preparation.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 59 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ mm/damon/paddr.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index bda61f9ec0266..c74dee56efee8 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -128,11 +128,34 @@ void damon_add_prep(struct damon_probe *p, struct damon_prep *prep)
- 	list_add_tail(&prep->list, &p->preps);
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 5b307dcbb2a50..8fb71183b76c0 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -105,6 +105,40 @@ static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
+ 	return max_nr_accesses;
  }
  
-+static void damon_del_prep(struct damon_prep *p)
++static void damon_pa_prep_probes_region(struct damon_region *r,
++		struct damon_probe *probe, struct damon_ctx *ctx)
 +{
-+	list_del(&p->list);
-+}
++	struct damon_prep *p;
 +
- static void damon_free_prep(struct damon_prep *p)
- {
- 	kfree(p);
- }
- 
-+static void damon_destroy_prep(struct damon_prep *p)
-+{
-+	damon_del_prep(p);
-+	damon_free_prep(p);
-+}
-+
-+static struct damon_prep *damon_nth_prep(int n, struct damon_probe *p)
-+{
-+	struct damon_prep *prep;
-+	int i = 0;
-+
-+	damon_for_each_prep(prep, p) {
-+		if (i++ == n)
-+			return prep;
++	damon_for_each_prep(p, probe) {
++		switch (p->action) {
++		case DAMON_PREP_SET_PGIDLE:
++			damon_pa_mkold(damon_pa_phys_addr(r->sampling_addr,
++						ctx->addr_unit));
++			break;
++		default:
++			break;
++		}
 +	}
-+	return NULL;
 +}
 +
- struct damon_filter *damon_new_filter(enum damon_filter_type type,
- 		bool matching, bool allow)
- {
-@@ -1694,6 +1717,36 @@ static int damon_commit_targets(
- 	return err;
- }
- 
-+static void damon_commit_prep(struct damon_prep *dst, struct damon_prep *src)
++static void damon_pa_prep_probes(struct damon_ctx *ctx, bool set_samples)
 +{
-+	dst->action = src->action;
++	struct damon_target *t;
++	struct damon_region *r;
++	struct damon_probe *p;
++
++	damon_for_each_target(t, ctx) {
++		damon_for_each_region(r, t) {
++			if (set_samples)
++				r->sampling_addr = damon_rand(ctx, r->ar.start,
++						r->ar.end);
++			damon_for_each_probe(p, ctx)
++				damon_pa_prep_probes_region(r, p, ctx);
++		}
++	}
 +}
 +
-+static int damon_commit_preps(struct damon_probe *dst, struct damon_probe *src)
-+{
-+	struct damon_prep *dst_prep, *next, *src_prep, *new_prep;
-+	int i = 0, j = 0;
-+
-+	damon_for_each_prep_safe(dst_prep, next, dst) {
-+		src_prep = damon_nth_prep(i++, src);
-+		if (src_prep)
-+			damon_commit_prep(dst_prep, src_prep);
-+		else
-+			damon_destroy_prep(dst_prep);
-+	}
-+
-+	damon_for_each_prep_safe(src_prep, next, src) {
-+		if (j++ < i)
-+			continue;
-+
-+		new_prep = damon_new_prep(src_prep->action);
-+		if (!new_prep)
-+			return -ENOMEM;
-+		damon_add_prep(dst, new_prep);
-+	}
-+	return 0;
-+}
-+
- static void damon_commit_filter(struct damon_filter *dst,
- 		struct damon_filter *src)
+ static bool damon_pa_filter_match(struct damon_filter *filter,
+ 		struct folio *folio)
  {
-@@ -1752,6 +1805,9 @@ static int damon_commit_probes(struct damon_ctx *dst, struct damon_ctx *src)
- 		src_probe = damon_nth_probe(i++, src);
- 		if (src_probe) {
- 			dst_probe->weight = src_probe->weight;
-+			err = damon_commit_preps(dst_probe, src_probe);
-+			if (err)
-+				return err;
- 			err = damon_commit_filters(dst_probe, src_probe);
- 			if (err)
- 				return err;
-@@ -1769,6 +1825,9 @@ static int damon_commit_probes(struct damon_ctx *dst, struct damon_ctx *src)
- 			return -ENOMEM;
- 		damon_add_probe(dst, new_probe);
- 		new_probe->weight = src_probe->weight;
-+		err = damon_commit_preps(new_probe, src_probe);
-+		if (err)
-+			return err;
- 		err = damon_commit_filters(new_probe, src_probe);
- 		if (err)
- 			return err;
+@@ -448,6 +482,7 @@ static int __init damon_pa_initcall(void)
+ 		.update = NULL,
+ 		.prepare_access_checks = damon_pa_prepare_access_checks,
+ 		.check_accesses = damon_pa_check_accesses,
++		.prep_probes = damon_pa_prep_probes,
+ 		.apply_probes = damon_pa_apply_probes,
+ 		.target_valid = NULL,
+ 		.apply_scheme = damon_pa_apply_scheme,
 -- 
 2.47.3
