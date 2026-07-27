@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A6C429009
-	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 14:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAA141DE0F
+	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 14:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785163468; cv=none; b=BXh41k1b7d33z2PcbB9QXmK6bTc9oFt5urEpTUPHPigVNW92iMig+cUtkHOjhGHZJSZOvUKTJr17Lfb5d4m55VHUugFJ9XUwhx2G2vX6A2cE931pi1gCHT74mROAWmc9WBXX+k0oodWObXy5IRFo72YI7wKDd46ON+uGmcn7Ie4=
+	t=1785163636; cv=none; b=YBj30HyWXTjYPOnbCK76epaCtG3WVPq8pnh3a5NdnRooxtvR4Y1rgduY8INwyqEvd44202jdKvg9mo/Lxpq3G/c3imESeiO/pS3b6mwHAxC3MQ3AfTP6laHkd4mDX9j39SG41RtEMD4TKMed8CqWaQwLsIqijO5keZPfk/nri88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785163468; c=relaxed/simple;
-	bh=sGEbx3jKN9k/+8Qm1UyA3B2JFHMNLSeUihzCp5I/pDE=;
+	s=arc-20240116; t=1785163636; c=relaxed/simple;
+	bh=szL+c/J0S09OHKwfC27xV7XyhF0nbTR4aDGN7AbcXko=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=hN7rxoAZi6q4JH2ROUM+gmc7MPVFOzw5cYqCgLErz4wv2o7GwQZBOkDn9bMcW7BVouCVaUnf2uA2sGQZ0/FOAzdpMBRNyth46AhugI1wDUxy+Um+J3CtLuC+2Vfg9vzFL5wkaycjsME3s5vTJUrIWJKJrMK1jWED7Fj3Q2fYlrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dt6ps8fS; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=FGM5BMm7Qer0FOEpcoU93bDrH1asDlIyz4bZzKsKXlGYCwaeaUiJVHZ9WD64HENMjj9TkM4IraKQ4kConV2MbDVhXedz6Ix2g9bJoCAG/YDqH3u+1GJJDNnaZQiclkdSfYa98iCRosPgD+bsKHGa87ZS6gviLoPeKTRfnnRkgIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=guhe0Gx8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dt6ps8fS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29C71F00A3D;
-	Mon, 27 Jul 2026 14:44:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="guhe0Gx8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7225F1F000E9;
+	Mon, 27 Jul 2026 14:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785163463;
-	bh=eo4qcZsAAjcfvWLctn3jEuf3Hc66jW5clgVn8JST+20=;
+	s=k20260515; t=1785163634;
+	bh=VLOr+JnA3ZJKAQxEjpRPo1OZKNhxd6ZwcvofFpHai6Q=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=dt6ps8fSi4Svd9CW9ndPtcKkl737+KVIfqguC4NfCRiMJTRBwNTvE0jV2kZTsI8Am
-	 BHr3SasD71Uahbg6CRMw1LmCKCI7yohUgcI0D1QTlWSwIagyDC3vbjhhekNih9iFQJ
-	 E9YhFMn8t5c3dVzvj0xpwspDOHe3AxKJIS+9AcdX8cHdaCPLHPd9B2sGeDnLgJGAxQ
-	 gkI1DUs/SJ41R24VoMArrvCpM0ZBv4gkxZyr99WwxNsGq0DnNPuutvuESuFWB/7jYh
-	 G14lC1SEFMARwD9U8o/Yu7IRBieQPMYoGKcVxZWIkIURC0PhR0d1G+LlJ4W38Z3VX4
-	 N6b7ZDdi0kzYw==
+	b=guhe0Gx81mb+tSj/HTnI9WmNZFqlufXZp+BKX+dAU16nOpwrrC50QA4pK5Z8PnUYC
+	 XBuZyQQRV8gQqMZdt4DOeM0/xuQsgWOf06q9OhR/dIN1hNxWCxXioTvhomdfSlxKQa
+	 FxHBLas7vtadwHw0pJGUE8obMsLzfBgj/X+trh5Zl6fd05Vds965p0aBIqAyz3xBv8
+	 jjX8y3xde4KRQ1Mqr/5OZtq9AafnYspf6szmCTR0/zcPEU1Fs5hlvqs5TwclVsJH4H
+	 3hwaN3ea9+5EZv1KGegzVGpfa0w4xBWMlh+H+PKcPJAkSc3gaFSw5/O266J+HUT3lz
+	 2kcaekmO3kZzA==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2.1 07/17] mm/damon/core: introduce
- damon_operations->prep_probes()
+Subject: Re: [RFC PATCH v2.1 01/17] mm/damon/core: introduce
+ DAMON_FILTER_TYPE_PGIDLE_UNSET
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260727143829.86236-8-sj@kernel.org>
+In-Reply-To: <20260727143829.86236-2-sj@kernel.org>
 References: <20260727143829.86236-1-sj@kernel.org>
- <20260727143829.86236-8-sj@kernel.org>
+ <20260727143829.86236-2-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jul 2026 14:44:21 +0000
-Message-Id: <20260727144422.A29C71F00A3D@smtp.kernel.org>
+Date: Mon, 27 Jul 2026 14:47:13 +0000
+Message-Id: <20260727144714.7225F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,53 +47,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Low] Suboptimal short-circuit order in `kdamond_fn` causes unnecessary l=
-ist traversals when `prep_probes` is not implemented.
+- [Medium] The patch introduces `DAMON_FILTER_TYPE_PGIDLE_UNSET` but fails =
+to implement its matching logic or expose it via sysfs.
 --
 
---- Patch [7]: [RFC PATCH v2.1 07/17] mm/damon/core: introduce damon_operat=
-ions->prep_probes() ---
-commit 6cf31e4df3b58637535e88cd2f6425680fdfa9e6
+--- Patch [1]: [RFC PATCH v2.1 01/17] mm/damon/core: introduce DAMON_FILTER=
+_TYPE_PGIDLE_UNSET ---
+commit 713d89253715d0f67d20248547ddafe132444f89
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: introduce damon_operations->prep_probes()
+mm/damon/core: introduce DAMON_FILTER_TYPE_PGIDLE_UNSET
 
-This commit introduces a new prep_probes callback to the DAMON operations
-set to execute damon_prep actions during monitoring preparation time. It
-extends the core to check for and execute this callback if provided by the
-underlying operation set.
+This commit introduces a new DAMON filter type, pgidle_unset. It is intended
+to match pages that have their PG_Idle flag unset or the page table accessed
+bit set.
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 127d3a7c27280..19ab80f50bc4b 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 0c8b7ddef9abb..a8bb9ee6979e3 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -742,12 +742,14 @@ struct damon_intervals_goal {
+>  /**
+>   * enum damon_filter_type - Type of &struct damon_filter
+>   *
+> - * @DAMON_FILTER_TYPE_ANON:		Anonymous pages.
+> - * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
+> + * @DAMON_FILTER_TYPE_ANON:		Anonymous pages.
+> + * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
+> + * @DAMON_FILTER_TYPE_PGIDLE_UNSET:	Pgidle is unset.
+>   */
+>  enum damon_filter_type {
+>  	DAMON_FILTER_TYPE_ANON,
+>  	DAMON_FILTER_TYPE_MEMCG,
+> +	DAMON_FILTER_TYPE_PGIDLE_UNSET,
 
-[ ... ]
+[Severity: Medium]
+Are the corresponding implementation details for this new filter type missi=
+ng
+from this patch?
 
-> @@ -3870,14 +3882,19 @@ static int kdamond_fn(void *data)
->  		unsigned long next_ops_update_sis =3D ctx->next_ops_update_sis;
->  		unsigned long sample_interval =3D ctx->attrs.sample_interval;
->  		bool access_check_disabled =3D damon_has_probe_weights(ctx);
-> +		bool do_prep;
->  		unsigned int max_merge_score =3D 0, max_wsum;
->  		bool get_max_wsum;
+The commit message states this will match pages that have their PG_Idle flag
+unset, but the new DAMON_FILTER_TYPE_PGIDLE_UNSET variant doesn't appear to
+be handled in the switch block evaluating filter types within
+damon_pa_filter_match() in mm/damon/paddr.c.
+
+Additionally, should this be exposed to userspace? The new filter type is
+not mapped in damon_sysfs_filter_type_names in mm/damon/sysfs.c, which would
+prevent it from being configured via sysfs.
+
+>  };
 > =20
->  		if (kdamond_wait_activation(ctx))
->  			break;
-> =20
-> +		do_prep =3D damon_has_prep(ctx) && ctx->ops.prep_probes;
-
-[Severity: Low]
-Could this short-circuit logic be reordered to check ctx->ops.prep_probes
-before damon_has_prep(ctx)?
-
-If the underlying operation set does not implement the prep_probes callback,
-evaluating damon_has_prep() first will result in unnecessary list traversals
-during every sample interval in the kdamond hot loop.
-
-While the probe lists are typically short, evaluating ctx->ops.prep_probes
-first would cleanly avoid this overhead when the callback is unused.
+>  /**
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727143829.8623=
-6-1-sj@kernel.org?part=3D7
+6-1-sj@kernel.org?part=3D1
