@@ -1,41 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6893F4847;
-	Mon, 27 Jul 2026 14:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA453FA5DD;
+	Mon, 27 Jul 2026 14:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785163118; cv=none; b=Gy77z5ie4/NR49c3t7x3AoVC2RG9/pnGckF/nI0YvM5rftBKd7QNR2BA4Jc4R5aWMIvbLe9K8yZ8MZf9LSUZxoKv0vrHnki+WJy551TI9ff7Zc8SVJXPPoV+HlWyw5+6S4raInRN6FSl2TYQQisNHIgzyz5IfzF14rr+1WmmaCs=
+	t=1785163119; cv=none; b=mFgBa/haP5XxcDJ5jHdDA7aP3I62fouBlHUAA0NUhAjsB9Y+HXCkiymIS1W3qoodZjvFA1Z97CRV4NhoM++ecu/tJ7Bv8b8F2CGwKntFypwa46xO5pe7OmcOQUCtq0h8qFC1gWJZkr6FZnwDsCOned5u6QRqa5kcqJkyJ6eGAtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785163118; c=relaxed/simple;
-	bh=UCnmZJIFWLAyA2V+BxDBrCEglrwT+PkL34Q88xrhGDE=;
+	s=arc-20240116; t=1785163119; c=relaxed/simple;
+	bh=xcWvcxTShuREolgVeaNKxOb9JPpBPwIcsH+2uXlYsDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snGGF1eimKOw4P1TeVS7wcSEMqH8ko0YT73hw94QYuCHLhc399xszBAj0g2UORIxoxL3AQcC4bSTE7Vp9MSsp6QTQiruiawxUa8BDXUPQrg76sqQ/W08m10x9Dh3l1ll6lxWeJZUFba2mpqJ87vadjfBE8hieSsQADgtRRSqMBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ASIfN2Hm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qpR3IMNeTh0DupqjHqy5esVOKB93uxfp4ezyzg9aSuwhgYN259K5Xtl8LWuTW7Hg66CCxLY1Rb439Uym3ptGKDWvyImRCJHAEP9YGjn+oPi9++9F4nWTls4Gcdxw2sOmt8RIlGrsnALyxNalXYQxuFKnehk6TqMDw+6rOwvFe64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bnSiVQ5g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ASIfN2Hm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4A81F00AC4;
-	Mon, 27 Jul 2026 14:38:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bnSiVQ5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AEA81F01558;
+	Mon, 27 Jul 2026 14:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785163117;
-	bh=3IJAHoEq/HxxwTqavkeHm1rK87WzNS/lOqxmVc4kOBQ=;
+	s=k20260515; t=1785163118;
+	bh=W5EHzuEPBttna1pHulKblhjSxz0ZvxjVFhC8U+crJAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ASIfN2HmzFDLPKauEvk+aTbeOju5g2NHdiFiUPIwsEy3Ru14mfA+g5ArrLP9D1glA
-	 Y+uZU6bkNK+KsesYculdkRdAEBJzfJ3eqkfKwEaUiEaN54hMn8LS6NwgJJfSd/Izn5
-	 vGyWbcPFGSZL2W/KTNMrS1VSLSqzs7UHQnGkMrKbOHIPEi0WTgha5gmiQrBvnv62LL
-	 4EmNnxdvNKWqqqOS0c58zsapG6MRN1WasFzTguqsx8nIStsuk6YDTDNAKozQbNwX0p
-	 5H4qnCHiTSiGbiQnypLNNVeaAe0eXJEsdEaGcaJ5CN5D7YgMKpN5h1QcVpOd2Dx2+Z
-	 YCjrVisD9D6FQ==
+	b=bnSiVQ5g/mNxfLmO3bUJMLGJjREn1gY+MeN8PYhhpiI2mpFuQA6M/2xQucHbcCaBZ
+	 pj5WiIlj4QbDagOg1AyfyDTZcewQ4p8eJJWFoh6/R7jpqYeLW77blMyLX74pTTu9pM
+	 EQpMA5CuW0sSkk0PQbN2xzHcFmGafS6RZbFa2w29Yf4LFvTyYrIY1OnJ00GVE1qJ4n
+	 XBfcGFwgDanMigiz075B7kM/ZKrpF1KTcMkQMB+ncFes45U1pLeBSgoYRYOcbRs/ZW
+	 HiYVpqh7Ta9S/GiSfwqg0l2H/UNkUuyMACg4EHCasgVuDXvZobnJOgIvJNGzeLh82K
+	 fbn57vFYpyDgg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 13/17] mm/damon/sysfs: pass preps to DAMON core
-Date: Mon, 27 Jul 2026 07:38:22 -0700
-Message-ID: <20260727143829.86236-14-sj@kernel.org>
+Subject: [RFC PATCH v2.1 15/17] Docs/mm/damon/design: document probe preps
+Date: Mon, 27 Jul 2026 07:38:24 -0700
+Message-ID: <20260727143829.86236-16-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260727143829.86236-1-sj@kernel.org>
 References: <20260727143829.86236-1-sj@kernel.org>
@@ -47,58 +57,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface provides the files for setting DAMON probe preps.
-But the underlying code is not really passing the user-set values to
-DAMON core.  Pass those.
+Update DAMON design document for the newly added DAMON probe preps
+feature.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ Documentation/mm/damon/design.rst | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 0173f37fdbf3d..3ef6b07cdb5fa 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -2174,6 +2174,23 @@ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
- 	return damon_set_attrs(ctx, &attrs);
- }
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index c4830bd09498d..7f983e0c39b80 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -309,6 +309,13 @@ Users can therefore know how much of a given DAMON region has a specific data
+ attribute by reading the per-region per-probe probe hits counter after each
+ aggregation interval.
  
-+static int damon_sysfs_set_preps(struct damon_probe *probe,
-+		struct damon_sysfs_preps *sys_preps)
-+{
-+	int i;
++Users can optionally register probing preparation actions per probe.  If such
++actions are registered, DAMON applies the actions to each region's sampling
++memory before starting the next sampling interval.  Currently only one action,
++``set_pgidle`` is supported.  The action marks the page for the probing target
++memory as access-idle.  This can be useful to be used together with
++``pgidle_unset`` probe filter.
 +
-+	for (i = 0; i < sys_preps->nr; i++) {
-+		struct damon_sysfs_prep *sys_prep = sys_preps->preps_arr[i];
-+		struct damon_prep *prep;
-+
-+		prep = damon_new_prep(sys_prep->action);
-+		if (!prep)
-+			return -ENOMEM;
-+		damon_add_prep(probe, prep);
-+	}
-+	return 0;
-+}
-+
- static int damon_sysfs_set_filters(struct damon_probe *probe,
- 		struct damon_sysfs_filters *sys_filters)
- {
-@@ -2209,7 +2226,15 @@ static int damon_sysfs_set_probe(struct damon_probe *probe,
- 		struct damon_sysfs_probe *sys_probe)
- {
- 	struct damon_sysfs_filters *sys_filters;
-+	struct damon_sysfs_preps *sys_preps;
-+	int err;
- 
-+	sys_preps = sys_probe->preps;
-+	if (sys_preps) {
-+		err = damon_sysfs_set_preps(probe, sys_preps);
-+		if (err)
-+			return err;
-+	}
- 	sys_filters = sys_probe->filters;
- 	if (!sys_filters)
- 		return 0;
+ This is a sampling based mechanism.  Hence, it is lightweight but the output
+ may include some measurement errors.  The output should be used with good
+ understanding of statistics.
 -- 
 2.47.3
