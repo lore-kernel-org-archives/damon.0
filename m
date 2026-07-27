@@ -1,51 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811FD389107;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BED38947F;
 	Mon, 27 Jul 2026 14:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785163116; cv=none; b=TWpVs5V3sl5Tr43QS9PTtgy8Z9LUEQq+YsW2XT1J4TYlaBwBwf4D58ZQBvXZmjCKpKc4SfJOrkAKCWg0Xwa4wY1Xq/aV5H9eyUcRqXAlh0LsvseCguovDiQXMzCCyWxuCrwKWmBbW8wM8W/wiX90gbsuQGHC+rqgHZ1PCbjMcBw=
+	t=1785163116; cv=none; b=pgchfkxnHRJo+cwfN1kVbsGo+U5wAflGT7Ep5ItvZ3Zk9GMSGnek6IdtRuNU/1TRC4egy4f6KAsKVyo7+u0UdlKXAE0CjZADydOQ3Xjb5ImXmMIrlHH5xjE9QCCqTy5HU6ZpzhVgCaNHk8TwufpbyoQ8hKnv+UreNA6GjHFUlFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785163116; c=relaxed/simple;
-	bh=BoQmFAANRs5ejoJBSDr2ocPVWNj8V5kOrKo+q+5Og7I=;
+	bh=vxn1xYjuwM7IiW0yAPxy7QP5iih3W4wY+JmqhQYH0ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvkWT0yuY3zOHtU60nLYGpAu0NHt6bSKDJVMtx8UoByGf8sXU2Z0h8S2oEHgCJLU7bBcDyxKXR+1C9QMtqO1sRJ4NedFtzDLq034OgSWFIZ4IIEmHhL7UZ2mZlArodxf0Ou/Zme9oeDd3vDND9B6abWzjmlgLH7l855V+4sT/RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nf+I80LA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ah1z4CoMszJkziwb28JkK25qb0a8KD9rwj1HJ9zMemQ0jcsPI0t/YeVKrzriNGiyT1HNgToUkbDQR3Fi37xHkysVVFu+qPa2+ekI176mdjIfWk0RXVOwQhruSUE5Mi4nk97ToB45e0cmiZxk5N/EOnYZHmTQXXpTjGQA961yIAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oA5to5uA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nf+I80LA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949831F00AC4;
-	Mon, 27 Jul 2026 14:38:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oA5to5uA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405FA1F000E9;
+	Mon, 27 Jul 2026 14:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1785163114;
-	bh=Qlh6y9Au18vR1Ou/T5ICe3OGlXl5Nc84fCTR2Y+rZXM=;
+	bh=xn7z1VfKK9Pqq9Y6JKkxjkK90zeUs8MzLh/EEjXoI28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nf+I80LAkKRd7P1QuxdT0ahWW1m3/tjIC5d3Lyv5qO6h7JRFrfG+e25ObO3z/tJGE
-	 qBeH5KnZXbBvcaLhWDcEw/gwbLljpG74anL+H3X2y5NglYg/6nw0oM7hCfy6DY/6ao
-	 hycb9VgwkzBpGswgxUfwZgvueAPdHtpvZFURSbTRbjmwRq84S0A9zh8fkBwFpWu0AR
-	 P2yuFiOqK6kQ8oeAyHc/7AyOIerKD7lt9iC9Ciwhr6tWSO+HrnTUun0ZuLF4BX9ops
-	 aiCbPaftTeQWTZSiuxZ+riD//La38XY6PfpLveEPmBa6gI0tyvEuj3EnqDlgEv9f59
-	 j70NqIWsQJWSw==
+	b=oA5to5uAISndVjmAMZ7lA0ihHvsdAxX4vWSJ5iTUc9hUOqVD0RKL9PRQaf+V8H0IB
+	 CQZAyndbJ7o8Yt9cs2NwaaJja2hWe2SGG5Qy5JdoT0SYH+4m1r67uIqdR1zbfPKjxD
+	 Dyg6clIzgv0LZkawSnafkNzObU8uKbnX9v2QTB8fYWs+WHlqyCkyfUpzgQyHhh8vmq
+	 8t7f8Pf5oeNOU3fZeK9icu7rOZHFbj8ybp114BqQ24yB0wTxLCPx1d2pECTHLocsk7
+	 hqxFzkR40GaOrH0HdcMGo7qnxWalQfMKyRXHMt61u1pmMYdZml9J5xUDAjYDErT/rL
+	 WGpmPBQvhaOUQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 04/17] Docs/mm/damon/design: document pgidle_unset probe filter type
-Date: Mon, 27 Jul 2026 07:38:13 -0700
-Message-ID: <20260727143829.86236-5-sj@kernel.org>
+Subject: [RFC PATCH v2.1 05/17] mm/damon/core: introduce damon_prep struct
+Date: Mon, 27 Jul 2026 07:38:14 -0700
+Message-ID: <20260727143829.86236-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260727143829.86236-1-sj@kernel.org>
 References: <20260727143829.86236-1-sj@kernel.org>
@@ -57,33 +47,141 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added pgidle_unset probe
-filter type.  Also use a list for the types, as it becomes not very easy
-to read the whole types in a simple sentence.
+Some DAMON probe filter types require preparatory actions.  For example,
+pgilde_unset probe filter can say if the page was accessed but when.  To
+answer the second question, the PG_Idle flag should be set at a specific
+time.  It can make life much easier if DAMON can do such preparatory
+actions.  Introduce a new data type called damon_prep.  It specifies
+each of the preparation actions for each probe.  DAMON will execute the
+action for each region per sampling interval, like it clears page table
+accessed bits and unsets PG_Idle flag for access monitoring.
+
+Also introduce DAMON_PREP_SET_PGIDLE as the initial prep action.  As the
+name says, it will do exactly what DAMON was doing as the preparation
+action for the access monitoring.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/linux/damon.h | 32 ++++++++++++++++++++++++++++++++
+ mm/damon/core.c       | 26 ++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index a8c163475ef2b..c4830bd09498d 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -293,8 +293,12 @@ registration is made by specifying a probe per attribute.  Each of the probe
- specifies a rule to determine if a given memory region has the related
- attribute.  The rule is constructed with multiple filters.  The filters work
- same to :ref:`DAMOS filters <damon_design_damos_filters>` except the supported
--filter types.  Currently only ``anon`` and ``memcg`` filter types are supported
--for data attributes monitoring.
-+filter types.  Currently below filter types are supported.
-+
-+- ``anon``: Same to that for DAMOS filters.
-+- ``memcg``: Same to that for DAMOS filters.
-+- ``pgidle_unset``: Matches if the page for the memory is marked as not
-+  access-idle.
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index cee4b74761081..b86744642c9d3 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -741,6 +741,27 @@ struct damon_intervals_goal {
+ 	unsigned long max_sample_us;
+ };
  
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
++/**
++ * enum damon_prep_action - DAMON probing preparation action.
++ *
++ * @DAMON_PREP_SET_PGIDLE:	Set the probing memory as idle page.
++ */
++enum damon_prep_action {
++	DAMON_PREP_SET_PGIDLE,
++};
++
++/**
++ * struct damon_prep - DAMON probing preparation request.
++ *
++ * @action:	Action to do to the probing memory for the preparation.
++ */
++struct damon_prep {
++	enum damon_prep_action action;
++/* private: */
++	/* siblings list. */
++	struct list_head list;
++};
++
+ /**
+  * enum damon_filter_type - Type of &struct damon_filter
+  *
+@@ -782,6 +803,8 @@ struct damon_filter {
+ struct damon_probe {
+ 	unsigned int weight;
+ /* private: */
++	/* Preparation actions to apply to each probing memory. */
++	struct list_head preps;
+ 	/* Filters for assessing if a given region is for this probe. */
+ 	struct list_head filters;
+ 	/* Siblings list. */
+@@ -961,6 +984,12 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
+ 	return r->ar.end - r->ar.start;
+ }
+ 
++#define damon_for_each_prep(p, probe) \
++	list_for_each_entry(p, &(probe)->preps, list)
++
++#define damon_for_each_prep_safe(p, next, probe) \
++	list_for_each_entry_safe(p, next, &(probe)->preps, list)
++
+ #define damon_for_each_filter(f, p) \
+ 	list_for_each_entry(f, &(p)->filters, list)
+ 
+@@ -1014,6 +1043,9 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
+ 
+ #ifdef CONFIG_DAMON
+ 
++struct damon_prep *damon_new_prep(enum damon_prep_action action);
++void damon_add_prep(struct damon_probe *p, struct damon_prep *prep);
++
+ struct damon_filter *damon_new_filter(enum damon_filter_type type,
+ 		bool matching, bool allow);
+ void damon_add_filter(struct damon_probe *probe, struct damon_filter *f);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 5eb0400d5ce16..bda61f9ec0266 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -111,6 +111,28 @@ int damon_select_ops(struct damon_ctx *ctx, enum damon_ops_id id)
+ 	return err;
+ }
+ 
++struct damon_prep *damon_new_prep(enum damon_prep_action action)
++{
++	struct damon_prep *prep;
++
++	prep = kmalloc_obj(*prep);
++	if (!prep)
++		return NULL;
++	prep->action = action;
++	INIT_LIST_HEAD(&prep->list);
++	return prep;
++}
++
++void damon_add_prep(struct damon_probe *p, struct damon_prep *prep)
++{
++	list_add_tail(&prep->list, &p->preps);
++}
++
++static void damon_free_prep(struct damon_prep *p)
++{
++	kfree(p);
++}
++
+ struct damon_filter *damon_new_filter(enum damon_filter_type type,
+ 		bool matching, bool allow)
+ {
+@@ -167,6 +189,7 @@ struct damon_probe *damon_new_probe(void)
+ 	if (!p)
+ 		return NULL;
+ 	p->weight = 0;
++	INIT_LIST_HEAD(&p->preps);
+ 	INIT_LIST_HEAD(&p->filters);
+ 	INIT_LIST_HEAD(&p->list);
+ 	return p;
+@@ -184,8 +207,11 @@ static void damon_del_probe(struct damon_probe *p)
+ 
+ static void damon_free_probe(struct damon_probe *p)
+ {
++	struct damon_prep *prep, *prep_next;
+ 	struct damon_filter *f, *next;
+ 
++	damon_for_each_prep_safe(prep, prep_next, p)
++		damon_free_prep(prep);
+ 	damon_for_each_filter_safe(f, next, p)
+ 		damon_free_filter(f);
+ 	kfree(p);
 -- 
 2.47.3
