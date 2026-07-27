@@ -1,31 +1,31 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E895F433E7C
-	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 16:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A79F3175A6B
+	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 16:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785170922; cv=none; b=iTY6bKVYHmvn7jgegnqejLAF6D7Migjf0WDjuZ3vJAv63nzeJYuyGG8Q/+id+Ee0FydjU/14Z5IGHHRU7TtouNbloUYdUIf8Mkq80oxxf7QnbfYWCA27oyWZpa1HQ0WS5pvk/+MO3YKy0vISaq+aXKfgzOKRgMcXW2uMqzeCIL0=
+	t=1785170932; cv=none; b=OOwv494jzq44lT7Q45WZIGFgfyMvn49xvb8W4VhHCPIEQC5QYdPQ7JUHRlecXoWEK5Yd2XVPg44qbOixatuFFUjE3W6tuqoly9FZsEiJbRhseayTAPxxeCVoisAqKJQ5SnZNfQmyvW3vsyJHvr0nw6JpMwdPY0UMRwvjO7Ck6Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785170922; c=relaxed/simple;
-	bh=JMnQ5x98rYMBvstt3t6K+WsTOGu94NI0NQakEbtgfbo=;
+	s=arc-20240116; t=1785170932; c=relaxed/simple;
+	bh=CNlHVT/CmxBUOVY6CfuxFxYbSX5ewnbm7YL5RcchowM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CoutM9ibPe8J4a2gT256m9qRTuKuGfVhg5885Fqb6ISt5uEZFaNtd4ERWTqUV+A1jah5IAnWM8D0hCBWYWrq1RvRsN5SijLoe0pt7NlVssJG2H56KvPM2yuO8YNlCRTvgqaksDVE3b8d7QAUNZNS6Xkpmlqm09n68/HdszvksNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=YyFm5Gu8; arc=none smtp.client-ip=217.140.110.172
+	 MIME-Version; b=mphLctytkLQjKTPhi3qvq0hq3smBLQC1AjzvsrWU0slg4DgotjToKzjjZQEkAvgnTJe3LMYJ+J5fZZC6crSOhEFeVtvH0NUa3FUICR0BE+xRMMg8vBhO1HxZuiM8P6y3gz+a5qUyPvhqooU7brAu48WdbPNZ+716DF+hgEb5AWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=TlXTwoRR; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="YyFm5Gu8"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="TlXTwoRR"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A6C41175D;
-	Mon, 27 Jul 2026 09:48:34 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A6CE6176C;
+	Mon, 27 Jul 2026 09:48:43 -0700 (PDT)
 Received: from e142334-100.cambridge.arm.com (e142334-100.cambridge.arm.com [10.2.198.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 1CFE53F86F;
-	Mon, 27 Jul 2026 09:48:29 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 1BF0A3F86F;
+	Mon, 27 Jul 2026 09:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1785170918; bh=JMnQ5x98rYMBvstt3t6K+WsTOGu94NI0NQakEbtgfbo=;
+	t=1785170927; bh=CNlHVT/CmxBUOVY6CfuxFxYbSX5ewnbm7YL5RcchowM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyFm5Gu8COeycq7I7LYuCSC/XjIt2u0SAKwUx1Aj+4oUv8YQBR7DVon5ehIZuZSOw
-	 HvpyitnYjapZXnfX92hDFIEoEvFM5a2NTAQD7BozddqkW8IZdE8y8E26ijdoSu/Zlj
-	 wnelz5qvccBri/v5vzsa2BD/s8NUyi27TheVyBvw=
+	b=TlXTwoRRK0Q+V8Za5J7DYjVsZ+if5g4kXVfJnfFmctfVLxFq2SX4GBaC2bi0e8NWA
+	 LRsIxqAUpqOoTQRWDck8+AFKBOsKSw/bVdMcjgbwsUa/PtG9bA/8DxKrDHKwh6kbPY
+	 j6c92y4Zs0E3dmXI/jy7qtPoQSWFIvG//eGdf5FY=
 From: Muhammad Usama Anjum <usama.anjum@arm.com>
 To: Jani Nikula <jani.nikula@linux.intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
@@ -94,9 +94,9 @@ Cc: Muhammad Usama Anjum <usama.anjum@arm.com>,
 	bpf@vger.kernel.org,
 	linux-perf-users@vger.kernel.org,
 	damon@lists.linux.dev
-Subject: [PATCH RFC 07/11] mm/mremap: use ptep_get() for the destination PTE
-Date: Mon, 27 Jul 2026 17:46:58 +0100
-Message-ID: <20260727164715.2866609-8-usama.anjum@arm.com>
+Subject: [PATCH RFC 08/11] drm/i915: use hw_pte_t for PTE range callbacks
+Date: Mon, 27 Jul 2026 17:46:59 +0100
+Message-ID: <20260727164715.2866609-9-usama.anjum@arm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260727164715.2866609-1-usama.anjum@arm.com>
 References: <20260727164715.2866609-1-usama.anjum@arm.com>
@@ -108,31 +108,62 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-move_ptes() directly dereferences new_ptep when checking that the
-destination slot is empty. new_ptep now points to hw_pte_t table storage,
-while pte_none() consumes a logical pte_t value.
+apply_to_page_range() now passes PTE table storage to its callback as
+hw_pte_t *. Update the i915 remap and selftest callbacks to match the new
+type.
 
-Read the destination entry through the standard ptep_get() accessor before
-passing the logical value to pte_none().
+Continue to use ptep_get() for logical values and set_pte_at() for updates.
 
 Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 ---
- mm/mremap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 4 ++--
+ drivers/gpu/drm/i915/i915_mm.c                     | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index d966ee8248b6b..ecb90ccee6fdd 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -264,7 +264,7 @@ static int move_ptes(struct pagetable_move_control *pmc,
+diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+index d01acfb7d93d0..056faf4a3618b 100644
+--- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
++++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+@@ -1690,7 +1690,7 @@ static int igt_mmap_gpu(void *arg)
+ 	return 0;
+ }
  
- 	for (; old_addr < old_end; old_ptep += nr_ptes, old_addr += nr_ptes * PAGE_SIZE,
- 		new_ptep += nr_ptes, new_addr += nr_ptes * PAGE_SIZE) {
--		VM_WARN_ON_ONCE(!pte_none(*new_ptep));
-+		VM_WARN_ON_ONCE(!pte_none(ptep_get(new_ptep)));
+-static int check_present_pte(pte_t *pte, unsigned long addr, void *data)
++static int check_present_pte(hw_pte_t *pte, unsigned long addr, void *data)
+ {
+ 	pte_t ptent = ptep_get(pte);
  
- 		nr_ptes = 1;
- 		max_nr_ptes = (old_end - old_addr) >> PAGE_SHIFT;
+@@ -1703,7 +1703,7 @@ static int check_present_pte(pte_t *pte, unsigned long addr, void *data)
+ 	return 0;
+ }
+ 
+-static int check_absent_pte(pte_t *pte, unsigned long addr, void *data)
++static int check_absent_pte(hw_pte_t *pte, unsigned long addr, void *data)
+ {
+ 	pte_t ptent = ptep_get(pte);
+ 
+diff --git a/drivers/gpu/drm/i915/i915_mm.c b/drivers/gpu/drm/i915/i915_mm.c
+index fd89e7c7d8d6f..aab88e8edf946 100644
+--- a/drivers/gpu/drm/i915/i915_mm.c
++++ b/drivers/gpu/drm/i915/i915_mm.c
+@@ -48,7 +48,7 @@ static inline unsigned long sgt_pfn(const struct remap_pfn *r)
+ 		return r->sgt.pfn + (r->sgt.curr >> PAGE_SHIFT);
+ }
+ 
+-static int remap_sg(pte_t *pte, unsigned long addr, void *data)
++static int remap_sg(hw_pte_t *pte, unsigned long addr, void *data)
+ {
+ 	struct remap_pfn *r = data;
+ 
+@@ -70,7 +70,7 @@ static int remap_sg(pte_t *pte, unsigned long addr, void *data)
+ #define EXPECTED_FLAGS (VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP)
+ 
+ #if IS_ENABLED(CONFIG_X86)
+-static int remap_pfn(pte_t *pte, unsigned long addr, void *data)
++static int remap_pfn(hw_pte_t *pte, unsigned long addr, void *data)
+ {
+ 	struct remap_pfn *r = data;
+ 
 -- 
 2.47.3
 
