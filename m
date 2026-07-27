@@ -1,196 +1,140 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4E63F8EA7
-	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 11:04:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6663783AC;
+	Mon, 27 Jul 2026 14:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785150292; cv=none; b=R2iF4oBsTZ8uRm+sFNdc9zzqXrbjB0h1xaDbMk2cZoK9rJOp94PD32YLIyahai+4LfWwgGWHC3EWMwCd5dIJiOU/i3Pbo1wWZIX28cx2QO/Webvd7SLCqT5UPsc8WKUYw4bcfSJcGgcVdvA/K0ca2dYsyfEUh93fxt5iHS5Df0M=
+	t=1785162374; cv=none; b=Lza4+m3aVTHLiugYednZDxmBaSs2Fdf9x1XmeaA1M8iBM1HCoMqFKZ+/VqrczBrBrQh9Z+Mw/Dw1onasltq2MQi9Pzq+al9ToqHHYPA4Fj5Zld8A3J7uBqdjE+ZWjVgfw2Qm7SPSXamdFX/6dglgVyFqJPj4zVRnx79ydAO9w4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785150292; c=relaxed/simple;
-	bh=xKTo3Nec+pj52L6yrojEcbysD2JrhxNHrJK2sZp1ssk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bD1KnyBy48F8+L6rIEJHBEABK69LDzniDZAHiRpd+yXc1C4cp29UokSfc/vAyPcMAtaqlVFC87hdNXb7psZ2DNejx/GKug7oQSVzkGt2HrRqnLATzXpUXFL7PPnVtmjIE3oA1LG+7GAleYyIL1xcwFxQ9Vc8awEobSO8+ZcWHLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Cfdt6Sfy; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1785162374; c=relaxed/simple;
+	bh=KAZVAAcL8p4XYdZPRd8PTDREFkoJpz6DDka1flBl/ws=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KEi6ZvF9ShAhEbNL9cqSZ2vbxTpcg2lnIsx+iltntOEYP+PSU8wbQH13SxYUyPbyc25SBJycmayGjDwsIJzm4vrDCvFh5zFRRkDUkVtf4Po6Deo1uJcGAGYjKEti622GS3e5/LiE8LOpoJV6h0LHtdP1ZTIB705Oya5pt0fZ6Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PCFTFoFB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Cfdt6Sfy"
-Message-ID: <ca868252-8643-48de-81db-a6f6505397a6@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1785150287;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=sU/EA2UJXc22ZXfuwye3gfRjPgT+tpcOl8bz1cl04W0=;
-	b=Cfdt6SfyqnbCYVTeFucLmXg50LS30IT5+jiTd+NSeDOp2RckJKE1LGv4pzT9LlqP2Xav8L
-	8ysoYKQwPxVBF6FSOguVrE51+o9OOZ7XeyiP2X19lmRgqoeJKGSupoSvIjj4xcIBNZSFX/
-	bYUWay5mAfjKpCH4tedaAm9950b2oM0=
-Date: Mon, 27 Jul 2026 19:04:32 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PCFTFoFB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9081F00A3A;
+	Mon, 27 Jul 2026 14:26:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785162372;
+	bh=SSYcZBFPuC4PDoWkR8v2euqsjdGGE1vamaXLhHYCmrY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=PCFTFoFBLMD9idxq2HbdTAda/SlM8MutA1Intqy1oP0WrRvrjXO3eR4WCDpv0VOb8
+	 7r1iYGpdhEstIu25vsbXS0FBiNRcpHAflnWXZAMWwbAPS75aD+eNMa9ycWuXF2drvm
+	 Rzw+SIsGelKwLS6NGckfBPV55mEf9R4LinYPOLGM1A4CwHtjGRvr1cpQMD5k/7CIyZ
+	 O2aEWUkEgGqL7nMMwvLZs/lL+Uhqan4iwYUokSOFe7in16GXHl4I5b2CItB9Y3GvoK
+	 s/r8bQgnX/UZrfxpxhrpNWkDodb4N82p9c8NEPiYKQavi7i8OPjlg2jfMvkdfDPEyK
+	 WILqzK9iMFT/g==
+From: SJ Park <sj@kernel.org>
+To: Jiayuan Chen <jiayuan.chen@linux.dev>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Subject: Re: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with per-range regions
+Date: Mon, 27 Jul 2026 07:26:03 -0700
+Message-ID: <20260727142604.85548-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260727095429.143527-1-jiayuan.chen@linux.dev>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with
- per-range regions
-To: sashiko-reviews@lists.linux.dev
-Cc: damon@lists.linux.dev
-References: <20260727095429.143527-1-jiayuan.chen@linux.dev>
- <20260727100731.BC8B01F000E9@smtp.kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
-In-Reply-To: <20260727100731.BC8B01F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
+
+Hello Jiayuan,
+
+On Mon, 27 Jul 2026 17:54:22 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+
+> From: Jiayuan Chen <jiayuan.chen@shopee.com>
+> 
+> damon_set_region_system_rams_default(), introduced by commit 70d8797c15d6
+> ("mm/damon: introduce damon_set_region_system_rams_default()"), is used by
+> DAMON_RECLAIM, DAMON_LRU_SORT and DAMON_STAT to set the default monitoring
+> target address range covering all 'System RAM' when the user does not
+> specify a range.  It walks the 'System RAM' resources but keeps only the
+> start of the first resource and the end of the last one, and then sets a
+> single monitoring region spanning that whole [first_start, last_end] range.
+> 
+> On systems whose RAM is split into discrete areas that are far apart in the
+> physical address space, that single region also covers the holes between
+> them.  For example:
+> 
+>   $ sudo cat /proc/iomem | grep RAM
+>   00001000-0009ffff : System RAM
+>   00100000-4848c017 : System RAM
+>   4848c018-48550c57 : System RAM
+>   48550c58-48551017 : System RAM
+>   48551018-48615c57 : System RAM
+>   48615c58-48616017 : System RAM
+>   48616018-486dac57 : System RAM
+>   486dac58-4e563017 : System RAM
+>   4e563018-4e627c57 : System RAM
+>   4e627c58-4ef39017 : System RAM
+>   4ef39018-4ef3f057 : System RAM
+>   4ef3f058-4efe6017 : System RAM
+>   4efe6018-4efec057 : System RAM
+>   4efec058-50247fff : System RAM
+>   50317000-56720fff : System RAM
+>   56722000-59c19fff : System RAM
+>   6bbfe000-6bbfefff : System RAM
+>   6bc00000-777fffff : System RAM
+>   100000000-1007effffff : System RAM
+>   67e80000000-77e7fffffff : System RAM
+> 
+> Here the last two areas (about 1TB starting at 4GiB, and about 1.1TB
+> starting at ~6.5TB) are separated by a ~5.5TB hole, and the single-region
+> setup makes DAMON treat that entire hole as if it were memory.
+> 
+> This is harmful in a few ways.  The monitoring target regions are limited
+> by max_nr_regions, so regions that fall into the hole waste that budget and
+> leave fewer regions for the real RAM, coarsening the adaptive regions and
+> degrading the monitoring accuracy.
+
+The hole would look like not accessed.  As a result, the whole region will be a
+few regions that very cold.  That wouldn't waste the budget that much.  Do you
+have some specific setups that this cannot help?
+
+> In addition, DAMOS actions on the paddr
+> operations set walk such a region page by page, so a region that covers the
+> hole is walked for its entire (empty) span on every application.
+
+That makes sense.
+
+> 
+> Set a separate monitoring region for each discrete System RAM area instead,
+> coalescing only truly adjacent (no gap in between) resources into one
+> range, so holes between the areas are excluded.  The reported *start and
+> *end still carry the overall first-start and last-end, so the user-visible
+> default range reported via the module parameters is unchanged.
+
+I'm concerned if this could result in having too many regions.  The gap between
+user-visible parameters and internal state is also a concern.
+
+A quick workaround would be adjusting the memory layout in BIOS, using DAMON
+sysfs interface instead, or setting the monitor_region_{start,end} to cover
+only the single area.  Have you considered such workarounds?
+
+Let's complete this high level discussion first.
 
 
-On 7/27/26 6:07 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Time-of-check to time-of-use (TOCTOU) race condition in `damon_find_system_rams()` leads to a heap out-of-bounds write during concurrent memory hotplug.
-> - [High] DAMON initialization fails with `-EINVAL` on systems with sub-page System RAM gaps due to alignment overlap in `damon_set_regions()`.
-> --
->
-> --- Patch [1]: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with per-range regions ---
-> commit 20fb01bf6e8e4cefc6016dfc073fb77c95ca3511
-> Author: Jiayuan Chen <jiayuan.chen@shopee.com>
->
-> mm/damon/core: cover discrete System RAM areas with per-range regions
->
-> This commit changes how DAMON sets default monitoring regions for System RAM.
-> Instead of a single region covering all RAM (and the holes between), it now
-> creates separate regions for each discrete System RAM area. This excludes
-> large memory holes from being monitored.
->
->> diff --git a/mm/damon/core.c b/mm/damon/core.c
->> index 644daf5a16560..365c43271c0c6 100644
->> --- a/mm/damon/core.c
->> +++ b/mm/damon/core.c
-> [ ... ]
->
->> +static int damon_find_system_rams(struct damon_addr_range **ranges_out,
->> +				  unsigned long addr_unit)
->> +{
->> +	struct damon_system_ram_range_walk_arg arg = { .addr_unit = addr_unit };
->> +	struct damon_addr_range *ranges;
->>   
->> +	/* First pass: count the coalesced ranges. */
->>   	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
->> -	if (!arg.walked)
->> -		return false;
->> -	*start = damon_res_to_core_addr(arg.res.start, addr_unit);
->> -	*end = damon_res_to_core_addr(arg.res.end + 1, addr_unit);
->> -	if (*end <= *start)
->> -		return false;
->> -	return true;
->> +	if (!arg.nr_ranges)
->> +		return 0;
->> +	ranges = kvmalloc_objs(*ranges, arg.nr_ranges, GFP_KERNEL);
->> +	if (!ranges)
->> +		return -ENOMEM;
->> +	/* Second pass: fill in the coalesced ranges. */
->> +	arg.ranges = ranges;
->> +	arg.nr_ranges = 0;
->> +	arg.has_prev = false;
->> +	walk_system_ram_res(0, -1, &arg, damon_system_ram_walk_fn);
-> [Severity: High]
-> Can this race with memory hotplug events and cause an out-of-bounds write?
->
-> walk_system_ram_res() is called twice without holding memory hotplug locks.
-> If a new System RAM region is hotplugged between or during the second pass,
-> the number of visited regions could exceed the allocated buffer size.
->
-> If that happens, damon_system_ram_walk_fn() would write past the end of the
-> kvmalloc-allocated buffer:
->
-> mm/damon/core.c:damon_system_ram_walk_fn() {
-> 	...
-> 	if (a->ranges) {
-> 		a->ranges[a->nr_ranges].start = start;
-> 		a->ranges[a->nr_ranges].end = end;
-> 	}
-> 	a->nr_ranges++;
-> 	...
-> }
+Thanks,
+SJ
 
-You're right. The two walk_system_ram_res() calls should be wrapped with
-
-get_online_mems()/put_online_mems() so the resource set cannot change
-
-between the counting and filling passes.
-
-
-
->> +	*ranges_out = ranges;
->> +	return arg.nr_ranges;
->>   }
-> [ ... ]
->
->> @@ -3984,14 +4021,25 @@ int damon_set_region_system_rams_default(struct damon_target *t,
->>   			unsigned long addr_unit, unsigned long min_region_sz)
->>   {
->>   	struct damon_addr_range addr_range;
->> +	struct damon_addr_range *ranges;
->> +	int nr_ranges, err;
->>   
->> -	if (!*start && !*end &&
->> -		!damon_find_system_rams_range(start, end, addr_unit))
->> -		return -EINVAL;
->> +	if (*start || *end) {
->> +		addr_range.start = *start;
->> +		addr_range.end = *end;
->> +		return damon_set_regions(t, &addr_range, 1, min_region_sz);
->> +	}
->>   
->> -	addr_range.start = *start;
->> -	addr_range.end = *end;
->> -	return damon_set_regions(t, &addr_range, 1, min_region_sz);
->> +	nr_ranges = damon_find_system_rams(&ranges, addr_unit);
->> +	if (nr_ranges < 0)
->> +		return nr_ranges;
->> +	if (!nr_ranges)
->> +		return -EINVAL;
->> +	*start = ranges[0].start;
->> +	*end = ranges[nr_ranges - 1].end;
->> +	err = damon_set_regions(t, ranges, nr_ranges, min_region_sz);
-> [Severity: High]
-> Could this fail with -EINVAL during initialization on systems with sub-page
-> memory gaps?
->
-> If the system has System RAM fragmented by small non-RAM holes (like sub-page
-> BIOS or EFI reserved regions), damon_system_ram_walk_fn() will create separate
-> discrete regions.
->
-> When these regions are passed to damon_set_regions(), it aligns the boundaries
-> to min_region_sz (typically PAGE_SIZE):
->
-> mm/damon/core.c:damon_set_regions() {
-> 	for (i = 0; i < nr_ranges; i++) {
-> 		...
-> 		start = ALIGN_DOWN(ranges[i].start, min_region_sz);
-> 		end = ALIGN(ranges[i].end, min_region_sz);
-> 		if (start >= end)
-> 			return -EINVAL;
-> 		if (i > 0 && last_end > start)
-> 			return -EINVAL;
-> 		last_end = end;
-> 	}
-> 	...
-> }
->
-> If the gap between two RAM areas is smaller than PAGE_SIZE, the ALIGN of the
-> first region's end will evaluate to a higher address than the ALIGN_DOWN of
-> the second region's start. Does this cause the strictly-ascending overlap
-> check (last_end > start) to trigger and reject valid configurations?
-
-
-this is a real issue. I overlooked the case where System RAM boundaries 
-are not page-size aligned
-
-
->> +	kvfree(ranges);
->> +	return err;
->>   }
+[...]
