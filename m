@@ -1,188 +1,138 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F04C443800F
-	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 16:49:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16AD3AFD0C;
+	Mon, 27 Jul 2026 16:58:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785170964; cv=none; b=DrRqSGu98aP+qs44tUUA4jhYZDDxh8mcH5OxqZSu5LVKQ+pVmDdrx/R7wN1+KcjafTHDuQLwUe6ysobBhkibXpr86idR+g5HlesuF6bYfyRUb+lKwYuSOQ1vR37oC6iH9/r+lVZnyZHsrITjYztAHs8grDy0/e36YJn78AQltAQ=
+	t=1785171497; cv=none; b=ldfoL88D7P7QCk2gPxWCO6h7qeQ5RhwBu3pnqkoprNTQWbweLSVtaXMbAB/BE2h+Htp1KpaA3Ao5AVgPHXsKpoojCkj2FjZ+9cIuXA2P9QK+kVQ+Z5Lh1eQfmYNY/1s0RHCG6yhLiYZBWMHtWmErbp5RtMhl9FAHAwSoP4AAjrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785170964; c=relaxed/simple;
-	bh=V6zt/tVCRXmaxyFDjqVyIeLB8KQS6R6ktC8ishLU3Lk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZMT2oe/FtnjLeLwE5SYd+dcj2J2kblanZJOV6dyC6yCqPiyNA53oyG/WcB0KYCXn7UTcZRfllM/gEi04TZfHV+R3Ddb5Xgy8YfNo3YfiRrWePETYii5keyPToV6vnte/bR8R+T3Ll5+tRpSe1B0JO4KiT5QgbnKnmYrUcfDboQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Lb/jyoKf; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1785171497; c=relaxed/simple;
+	bh=BaEzVh8KGJQttZSj+2xNa6zXeW4JqZBpTAF6kb6T0QE=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=OqxcFLtOQgM9AjimHt7ux4NMDWTB9B0gWi38ILwejej8J6VaBZfQt+HI7JQp46fjZe3ZWer5oNUaw/7xhHKKZ1IvppO7ejZtTlFp48+eccCTQRTWT+XXrFKzHXgAiF5XiMAbRaN3aaCeVB9TqU2Xh+Wgf/jd5ST/SXns3hD+jV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/Jm4eCp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Lb/jyoKf"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AD6F119F6;
-	Mon, 27 Jul 2026 09:49:10 -0700 (PDT)
-Received: from e142334-100.cambridge.arm.com (e142334-100.cambridge.arm.com [10.2.198.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 24B253F86F;
-	Mon, 27 Jul 2026 09:49:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1785170954; bh=V6zt/tVCRXmaxyFDjqVyIeLB8KQS6R6ktC8ishLU3Lk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lb/jyoKfMHEtn+EGInX+1ShDiDJE4SKeMR6pxvOnK3LevEvIfEqty1XGjueSJSBAs
-	 G42AaQQj06YclcwbnNEF+ZIACcOyOe2ZtG+CAXJ1O24QpZxYlP92nB7MGKzzIYNXvf
-	 GKb3saft/JW4/CWAMTUJrteRizHdBV+a50NOn1YA=
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
-To: Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Dimitri Sivanich <dimitri.sivanich@hpe.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Nick Piggin <npiggin@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	David Hildenbrand <david@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Chris Li <chrisl@kernel.org>,
-	Kairui Song <kasong@tencent.com>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Jan Kara <jack@suse.cz>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Dennis Zhou <dennis@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Christoph Lameter <cl@gentwo.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	ziy@nvidia.com,
-	pfalcato@suse.de,
-	agordeev@linux.ibm.com,
-	ryan.roberts@arm.com
-Cc: Muhammad Usama Anjum <usama.anjum@arm.com>,
-	linux-kernel@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-parisc@vger.kernel.org,
-	xen-devel@lists.xenproject.org,
-	linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-arch@vger.kernel.org,
-	kasan-dev@googlegroups.com,
-	linux-trace-kernel@vger.kernel.org,
-	bpf@vger.kernel.org,
-	linux-perf-users@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: [PATCH RFC 11/11] xen: use hw_pte_t for PTE range callbacks
-Date: Mon, 27 Jul 2026 17:47:02 +0100
-Message-ID: <20260727164715.2866609-12-usama.anjum@arm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260727164715.2866609-1-usama.anjum@arm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/Jm4eCp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9212C1F000E9;
+	Mon, 27 Jul 2026 16:58:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785171487;
+	bh=A9bjCVqW/Ej3dLMulthxoTyFz5V81faOSr+gAOE/olo=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=i/Jm4eCpGh2eE/GF0a0/6UO6EDBt38eLRhNh0wRLi5Iz79NBA0f/7WjSA9BCfQ+Iq
+	 B/3husOAhcsPhxSFyY20tKzeSkHBd6KBJa+mlmzgnNTSX8vyDo1lAWAjkd3d7FPxsx
+	 j01rtH2V63/OujMeEcrGwuNDzjBg5bl45mcVrRFIIBDagYFZYHnLyJ9mI2SWCk8gYq
+	 Zsmrong6YMMhuJrczsYYq4ADSKuX9eK4ui+UcEbKlX7x1GHOQ2F2bfG2Mhg492P1g6
+	 NT/6YYKFZfOOfZlPodzPjRaqp58pEfcu9bcBpu8mT8kt4cG/yKfIenvY1H/qwbl6v0
+	 LKqqUMbuDz9VQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH RFC 05/11] mm: convert PTE table entries in ptep_get()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Muhammad Usama Anjum" <usama.anjum@arm.com>
+Cc: dri-devel@lists.freedesktop.org, damon@lists.linux.dev, bpf@vger.kernel.org, linux-perf-users@vger.kernel.org
+In-Reply-To: <20260727164715.2866609-6-usama.anjum@arm.com>
 References: <20260727164715.2866609-1-usama.anjum@arm.com>
+ <20260727164715.2866609-6-usama.anjum@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 27 Jul 2026 16:58:06 +0000
+Message-Id: <20260727165807.9212C1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Generic PTE range and remapping helpers now pass pointers to PTE table
-storage as hw_pte_t *. Update the callbacks to match those interfaces.
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] Incorrect placement of READ_ONCE() around __pte_from_hw() in ptep_=
+get() breaks atomic PTE reads and causes compilation failures for architect=
+ures overriding the hook.
+- [Medium] ptep_get_lockless() fails to apply the __pte_from_hw() conversio=
+n hook when CONFIG_GUP_GET_PXX_LOW_HIGH is enabled.
+--
 
-Keep logical PTE values as pte_t and continue to access them through the
-existing PTE helpers.
+--- Patch [5]: [PATCH RFC 05/11] mm: convert PTE table entries in ptep_get(=
+) ---
+commit e1a429a7f2c12fbd880800f901c43b4ccbc922d7
+Author: Muhammad Usama Anjum <usama.anjum@arm.com>
 
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
----
- drivers/xen/gntdev.c               | 2 +-
- drivers/xen/privcmd.c              | 2 +-
- drivers/xen/xenbus/xenbus_client.c | 2 +-
- drivers/xen/xlate_mmu.c            | 4 ++--
- 4 files changed, 5 insertions(+), 5 deletions(-)
+mm: convert PTE table entries in ptep_get()
 
-diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
-index 1dcc4675580ed..b013bcad99b5b 100644
---- a/drivers/xen/gntdev.c
-+++ b/drivers/xen/gntdev.c
-@@ -301,7 +301,7 @@ void gntdev_put_map(struct gntdev_priv *priv, struct gntdev_grant_map *map)
- 
- /* ------------------------------------------------------------------ */
- 
--static int find_grant_ptes(pte_t *pte, unsigned long addr, void *data)
-+static int find_grant_ptes(hw_pte_t *pte, unsigned long addr, void *data)
- {
- 	struct gntdev_grant_map *map = data;
- 	unsigned int pgnr = (addr - map->pages_vm_start) >> PAGE_SHIFT;
-diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
-index 725a49a0eee72..b4a487dcc9ecb 100644
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -1658,7 +1658,7 @@ static int privcmd_mmap(struct file *file, struct vm_area_struct *vma)
-  * on a per pfn/pte basis. Mapping calls that fail with ENOENT
-  * can be then retried until success.
-  */
--static int is_mapped_fn(pte_t *pte, unsigned long addr, void *data)
-+static int is_mapped_fn(hw_pte_t *pte, unsigned long addr, void *data)
- {
- 	return pte_none(ptep_get(pte)) ? 0 : -EBUSY;
- }
-diff --git a/drivers/xen/xenbus/xenbus_client.c b/drivers/xen/xenbus/xenbus_client.c
-index 27682cb5e58ab..387f97a555594 100644
---- a/drivers/xen/xenbus/xenbus_client.c
-+++ b/drivers/xen/xenbus/xenbus_client.c
-@@ -749,7 +749,7 @@ int xenbus_unmap_ring_vfree(struct xenbus_device *dev, void *vaddr)
- EXPORT_SYMBOL_GPL(xenbus_unmap_ring_vfree);
- 
- #ifdef CONFIG_XEN_PV
--static int map_ring_apply(pte_t *pte, unsigned long addr, void *data)
-+static int map_ring_apply(hw_pte_t *pte, unsigned long addr, void *data)
- {
- 	struct map_ring_valloc *info = data;
- 
-diff --git a/drivers/xen/xlate_mmu.c b/drivers/xen/xlate_mmu.c
-index 8efd7b55223fb..d7244f9f9a545 100644
---- a/drivers/xen/xlate_mmu.c
-+++ b/drivers/xen/xlate_mmu.c
-@@ -93,7 +93,7 @@ static void setup_hparams(unsigned long gfn, void *data)
- 	info->fgfn++;
- }
- 
--static int remap_pte_fn(pte_t *ptep, unsigned long addr, void *data)
-+static int remap_pte_fn(hw_pte_t *ptep, unsigned long addr, void *data)
- {
- 	struct remap_data *info = data;
- 	struct page *page = info->pages[info->index++];
-@@ -269,7 +269,7 @@ struct remap_pfn {
- 	unsigned long i;
- };
- 
--static int remap_pfn_fn(pte_t *ptep, unsigned long addr, void *data)
-+static int remap_pfn_fn(hw_pte_t *ptep, unsigned long addr, void *data)
- {
- 	struct remap_pfn *r = data;
- 	struct page *page = r->pages[r->i];
--- 
-2.47.3
+This commit introduces a conversion hook __pte_from_hw() for ptep_get(),
+allowing the function to accept a pointer to hw_pte_t and return a logical
+pte_t value. The generic ptep_get() implementation is updated to use this
+new hook.
 
+> diff --git a/include/linux/pgtable.h b/include/linux/pgtable.h
+> index dad80d264aac2..3003ac9cd81fe 100644
+> --- a/include/linux/pgtable.h
+> +++ b/include/linux/pgtable.h
+> @@ -493,7 +493,7 @@ static inline int pudp_set_access_flags(struct vm_are=
+a_struct *vma,
+>  #ifndef ptep_get
+>  static inline pte_t ptep_get(hw_pte_t *ptep)
+>  {
+> -	return READ_ONCE(*ptep);
+> +	return READ_ONCE(__pte_from_hw(*ptep));
+
+[Severity: High]
+Does wrapping __pte_from_hw() inside READ_ONCE() break the atomic read
+semantics and build stability?
+
+READ_ONCE() requires an lvalue to perform a volatile read. If an architectu=
+re
+implements __pte_from_hw() as an inline function returning an rvalue, this
+will cause a compilation error (lvalue required as unary '&' operand).
+
+If implemented as a macro returning a compound literal, it compiles but the
+actual read of *ptep occurs outside the volatile scope during the
+initialization of the stack temporary. This allows the compiler to tear or
+reorder the memory load, potentially breaking the concurrency safety of the
+page table read.
+
+Should this be __pte_from_hw(READ_ONCE(*ptep)) instead, to ensure the memory
+is read atomically before the conversion is applied?
+
+[Severity: Medium]
+Does the lockless fallback loop in ptep_get_lockless() also need to apply
+this new __pte_from_hw() conversion hook?
+
+Looking at ptep_get_lockless() in include/linux/pgtable.h for architectures
+using CONFIG_GUP_GET_PXX_LOW_HIGH, it currently constructs and returns an
+unconverted PTE directly:
+
+	do {
+		pte.pte_low =3D ptep->pte_low;
+		smp_rmb();
+		pte.pte_high =3D ptep->pte_high;
+		smp_rmb();
+	} while (unlikely(pte.pte_low !=3D ptep->pte_low));
+
+	return pte;
+
+If an architecture using this configuration requires a custom hw_pte_t
+conversion, callers might misinterpret the logical bits of the unconverted
+hardware PTE. Is it necessary to apply __pte_from_hw() to the assembled
+PTE before returning it?
+
+>  }
+>  #endif
+> =20
+> diff --git a/include/linux/pgtable_types.h b/include/linux/pgtable_types.h
+> index ed5dba42a4f8c..61afe27307ec2 100644
+> --- a/include/linux/pgtable_types.h
+> +++ b/include/linux/pgtable_types.h
+> @@ -6,6 +6,7 @@
+> =20
+>  #ifndef __HAVE_ARCH_HW_PTE_T
+>  #define hw_pte_t pte_t
+> +#define __pte_from_hw(pte)	(pte)
+>  #endif
+> =20
+>  #endif /* _LINUX_PGTABLE_TYPES_H */
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260727164715.2866=
+609-1-usama.anjum@arm.com?part=3D5
