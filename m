@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E587841A921
-	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 14:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CEA388386
+	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 14:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785164331; cv=none; b=eFhwc6R1s0jopww54GJBbrzdB5uXgsjV9r4u9C7WfbJUhQ6Z9t8wI8saIMHB+mFk1rydGXZjN1U4GlGtqq+xP9WRmexmW1bQgEd/NH6ugMju83kKyaAurKvYw3uY/wHXtAtrZnfkG1Ou5C2+InsbOiOPnsrS1bXqLuMriIpViEI=
+	t=1785164378; cv=none; b=qENQL2RdwJ1tEy+S3XNqF7pZ0cGgUIZfEnW8Y+QfyfkQIcbizGHlxzM9LBhtF8m1BG0PrJnhBDqn5muiJugKk91xQWOPs5yl5RsI8PvyqpIG8CWnUlFCZqlraqQpC0X1Lg2LjyCyRX/YhcuATPEQdd5foNEuuYg2tstSaE5ECkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785164331; c=relaxed/simple;
-	bh=C+vOqOloj1qSn1aVyuAUQMLOGJwSUNQBE1pXriMrwr8=;
+	s=arc-20240116; t=1785164378; c=relaxed/simple;
+	bh=nwOPeSkU2YyQikyfV9JYhUzIJY+2oF4ZeUzmJLRHqng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bT98NL7dES4LENKXDFx+aMeHp0pc2Aeba6lWf6hd489NVhS2YJGaD2Di1SQMOqbl2EUUG0SRPspLmCbAXYJdiOm3q2++3WwO+/XaOptFqoCL7X/3LwwklR+Do0XRtkmyNQrDSWwQ0wMVvGMO1CfIPE0OdPV5+YHVQscE/Mq7Ouk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PWlOwOAi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oLm8K8gbe+eVfYq6LpnMn45HgKo4QyNLUkVfScXAl08Pf38dU1BipNZVBbTSXyEGlO5JM7IX0qEIe52CU1+lrceVlfTBsJMmDr805ElRoz6kY+yshhrLT02iJ8KkafkivSLSG3A1pgjvrmqmEECobxQ4SeEq5zp9AfAoi/6mPao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SWU8V/5N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PWlOwOAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF711F000E9;
-	Mon, 27 Jul 2026 14:58:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SWU8V/5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14561F000E9;
+	Mon, 27 Jul 2026 14:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785164329;
-	bh=YP/j+RTp/pdgbTdojs3OGSGPcdPpExZaFBGnIFmT+aE=;
+	s=k20260515; t=1785164376;
+	bh=e6AHofBNUU+Yj98sQoKTL0G+XCC8mfFOK1JUiut7Ugg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PWlOwOAipdY2fuJwpmt3ssCgbDjat7dRanuAwp7p0F28vTpBY1d4DFOAqZWfoYsO/
-	 3dvqx3g7iKxPcb8WIehQKOTgobKeXZDq8OwYfn7PJiRzKpFgyL0glNGwNhIYnZdjAG
-	 fgC4EtQ98KCrADJJSM5z1s4Rpvh+9xu/3nTFNZdBGvzHjwwmcAib+mYw2UwDebpq4j
-	 VDXC2s44HTmELcpOSFTYEpl+JjjTmwoafhBD0gM/9iX0FWhZ84UyLuYnPi7cX2aSnu
-	 yD0KzKRFv6/s8HRMmGUqnu5drtKDkZWWUWP7LuyE/5Qvz4sUrHvD+7B/B4FNQjarAT
-	 g6L38/1ZUyS1A==
+	b=SWU8V/5NGmnUVmH4p9/1Ewk9Je025fefyP+TBKFVXkcvk3bLHsuWwXrqKLuMuNXUQ
+	 JQoxtbY8WY8jOFuxwQG5mK8CdH17/dTvpDWfIEdzwqUqwl8j07UcLuRsvAkRAL9uZF
+	 e+2fTJHm/wsuOks8Kw/gYg0T766XUkGivK6ODP6Bonl0DXnqHdBNSJI8hu7l4a7M10
+	 eQVUlemT4VhXEeKcuBTujd7O9rUaeZTpiouWv1IKzpn7wo+DnwFC6FTCAAPPNMctD8
+	 7NoCAxAdyDkffJEMPbqYRHDcUjfa8J9bP9g3bnrKeFUJaZf9BWP1YhsLIlG0Mk2CYG
+	 ZjgR/aD82HxCg==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2.1 01/17] mm/damon/core: introduce DAMON_FILTER_TYPE_PGIDLE_UNSET
-Date: Mon, 27 Jul 2026 07:58:41 -0700
-Message-ID: <20260727145842.86989-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2.1 02/17] mm/damon/paddr: support PGIDLE_UNSET probe filter type
+Date: Mon, 27 Jul 2026 07:59:27 -0700
+Message-ID: <20260727145928.87131-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260727144714.7225F1F000E9@smtp.kernel.org>
+In-Reply-To: <20260727145243.4BD2C1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,63 +45,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 27 Jul 2026 14:47:13 +0000 sashiko-bot@kernel.org wrote:
+On Mon, 27 Jul 2026 14:52:42 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The patch introduces `DAMON_FILTER_TYPE_PGIDLE_UNSET` but fails to implement its matching logic or expose it via sysfs.
+> - [Medium] The newly added DAMON probe filter type DAMON_FILTER_TYPE_PGIDLE_UNSET is not exposed in the sysfs interface.
 > --
 > 
-> --- Patch [1]: [RFC PATCH v2.1 01/17] mm/damon/core: introduce DAMON_FILTER_TYPE_PGIDLE_UNSET ---
-> commit 713d89253715d0f67d20248547ddafe132444f89
+> --- Patch [2]: [RFC PATCH v2.1 02/17] mm/damon/paddr: support PGIDLE_UNSET probe filter type ---
+> commit 67629d6971ecadd1e1c345f911e353e76f34b34f
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: introduce DAMON_FILTER_TYPE_PGIDLE_UNSET
+> mm/damon/paddr: support PGIDLE_UNSET probe filter type
 > 
-> This commit introduces a new DAMON filter type, pgidle_unset. It is intended
-> to match pages that have their PG_Idle flag unset or the page table accessed
-> bit set.
+> This commit implements support for the DAMON_FILTER_TYPE_PGIDLE_UNSET probe
+> filter type in the physical address space DAMON operations set.
 > 
-> > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > index 0c8b7ddef9abb..a8bb9ee6979e3 100644
-> > --- a/include/linux/damon.h
-> > +++ b/include/linux/damon.h
-> > @@ -742,12 +742,14 @@ struct damon_intervals_goal {
-> >  /**
-> >   * enum damon_filter_type - Type of &struct damon_filter
-> >   *
-> > - * @DAMON_FILTER_TYPE_ANON:		Anonymous pages.
-> > - * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
-> > + * @DAMON_FILTER_TYPE_ANON:		Anonymous pages.
-> > + * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
-> > + * @DAMON_FILTER_TYPE_PGIDLE_UNSET:	Pgidle is unset.
-> >   */
-> >  enum damon_filter_type {
-> >  	DAMON_FILTER_TYPE_ANON,
-> >  	DAMON_FILTER_TYPE_MEMCG,
-> > +	DAMON_FILTER_TYPE_PGIDLE_UNSET,
+> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> > index 5a6a78054784a..199de1463fa06 100644
+> > --- a/mm/damon/paddr.c
+> > +++ b/mm/damon/paddr.c
+> > @@ -132,6 +132,12 @@ static bool damon_pa_filter_match(struct damon_filter *filter,
+> >  			matched = filter->memcg_id == mem_cgroup_id(memcg);
+> >  		rcu_read_unlock();
+> >  		break;
+> > +	case DAMON_FILTER_TYPE_PGIDLE_UNSET:
+> > +		if (!folio)
+> > +			matched = false;
+> > +		else
+> > +			matched = damon_folio_young(folio);
+> > +		break;
 > 
 > [Severity: Medium]
-> Are the corresponding implementation details for this new filter type missing
-> from this patch?
+> Should this new filter type also be exposed in the sysfs interface?
 > 
-> The commit message states this will match pages that have their PG_Idle flag
-> unset, but the new DAMON_FILTER_TYPE_PGIDLE_UNSET variant doesn't appear to
-> be handled in the switch block evaluating filter types within
-> damon_pa_filter_match() in mm/damon/paddr.c.
+> Looking at damon_sysfs_filter_type_names in mm/damon/sysfs.c, it maps sysfs
+> string inputs to DAMON probe filter types, but it doesn't seem to include
+> an entry for DAMON_FILTER_TYPE_PGIDLE_UNSET:
 > 
-> Additionally, should this be exposed to userspace? The new filter type is
-> not mapped in damon_sysfs_filter_type_names in mm/damon/sysfs.c, which would
-> prevent it from being configured via sysfs.
+> mm/damon/sysfs.c:damon_sysfs_filter_type_names[] = {
+> 	{
+> 		.type = DAMON_FILTER_TYPE_ANON,
+> 		.name = "anon",
+> 	},
+> 	{
+> 		.type = DAMON_FILTER_TYPE_MEMCG,
+> 		.name = "memcg",
+> 	},
+> };
+> 
+> Without this mapping, does this prevent userspace from accessing the newly
+> added feature, since any attempt to configure it through sysfs would be
+> rejected?
 
-Later patches of this series do those.
+A later patch of this series does that.
 
 > 
-> >  };
-> >  
-> >  /**
+> >  	default:
+> >  		break;
+> >  	}
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260727143829.86236-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260727143829.86236-1-sj@kernel.org?part=2
 
 
 Thanks,
