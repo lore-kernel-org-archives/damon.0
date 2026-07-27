@@ -1,31 +1,31 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9903342CB0D
-	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 16:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E895F433E7C
+	for <damon@lists.linux.dev>; Mon, 27 Jul 2026 16:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785170913; cv=none; b=pHDnYBNrKQGBSdCIgZJEGF22Jg9HG8WcLRjktgMGFQVrDxJ3XaZYHaf8f+2+Rnwzdp5Ir1UuQ3lNoxwUlSQ0hkDq+uki9OoASEG1j00M5jOW7ELZrgM+ohtvGY0NSdDQskDihGO3Zi7pL7HG1b40vWjkkVC+qvsxa5xRZLlsn8c=
+	t=1785170922; cv=none; b=iTY6bKVYHmvn7jgegnqejLAF6D7Migjf0WDjuZ3vJAv63nzeJYuyGG8Q/+id+Ee0FydjU/14Z5IGHHRU7TtouNbloUYdUIf8Mkq80oxxf7QnbfYWCA27oyWZpa1HQ0WS5pvk/+MO3YKy0vISaq+aXKfgzOKRgMcXW2uMqzeCIL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785170913; c=relaxed/simple;
-	bh=qlMBEgSYanOpxaG5+GObNIcpflrmglgvjw2BYgGRiAs=;
+	s=arc-20240116; t=1785170922; c=relaxed/simple;
+	bh=JMnQ5x98rYMBvstt3t6K+WsTOGu94NI0NQakEbtgfbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CAsJ0bZ1s+PJbRKvZGi4NuRyUcI18SujLCsPqpKoxf6DL/xg4po5h17axHV86PtOzDUQb4hFb6UI+wbMfW+JsPLClfM8is75vWUx93sxAR8TP6LiGdP0zKH74Lj9PlmcuI0D466tNQoxU8xMkBC5A6w1V/d671CEBT8RTnnoZt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=cGls7zQn; arc=none smtp.client-ip=217.140.110.172
+	 MIME-Version; b=CoutM9ibPe8J4a2gT256m9qRTuKuGfVhg5885Fqb6ISt5uEZFaNtd4ERWTqUV+A1jah5IAnWM8D0hCBWYWrq1RvRsN5SijLoe0pt7NlVssJG2H56KvPM2yuO8YNlCRTvgqaksDVE3b8d7QAUNZNS6Xkpmlqm09n68/HdszvksNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=YyFm5Gu8; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="cGls7zQn"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="YyFm5Gu8"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AAB971762;
-	Mon, 27 Jul 2026 09:48:25 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A6C41175D;
+	Mon, 27 Jul 2026 09:48:34 -0700 (PDT)
 Received: from e142334-100.cambridge.arm.com (e142334-100.cambridge.arm.com [10.2.198.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 1D0C13F86F;
-	Mon, 27 Jul 2026 09:48:20 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 1CFE53F86F;
+	Mon, 27 Jul 2026 09:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1785170909; bh=qlMBEgSYanOpxaG5+GObNIcpflrmglgvjw2BYgGRiAs=;
+	t=1785170918; bh=JMnQ5x98rYMBvstt3t6K+WsTOGu94NI0NQakEbtgfbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGls7zQnlsACMOdTrPwDBJKOvhD8kH8mv7YPFdOjvjhXwbN8u4sgWSL3YZNOD0Pml
-	 XyFgMqudxOPDpAUOdEAXMsBPUM1LKrruj30a0mmvs9giDguNXB6O7JxdB2zaKUWPNm
-	 8j3C5nbVhGELOQy1dslFMHRX+rphcvgUZy5T3uvw=
+	b=YyFm5Gu8COeycq7I7LYuCSC/XjIt2u0SAKwUx1Aj+4oUv8YQBR7DVon5ehIZuZSOw
+	 HvpyitnYjapZXnfX92hDFIEoEvFM5a2NTAQD7BozddqkW8IZdE8y8E26ijdoSu/Zlj
+	 wnelz5qvccBri/v5vzsa2BD/s8NUyi27TheVyBvw=
 From: Muhammad Usama Anjum <usama.anjum@arm.com>
 To: Jani Nikula <jani.nikula@linux.intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
@@ -94,9 +94,9 @@ Cc: Muhammad Usama Anjum <usama.anjum@arm.com>,
 	bpf@vger.kernel.org,
 	linux-perf-users@vger.kernel.org,
 	damon@lists.linux.dev
-Subject: [PATCH RFC 06/11] mm/kasan: use hw_pte_t for the early shadow PTE table
-Date: Mon, 27 Jul 2026 17:46:57 +0100
-Message-ID: <20260727164715.2866609-7-usama.anjum@arm.com>
+Subject: [PATCH RFC 07/11] mm/mremap: use ptep_get() for the destination PTE
+Date: Mon, 27 Jul 2026 17:46:58 +0100
+Message-ID: <20260727164715.2866609-8-usama.anjum@arm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260727164715.2866609-1-usama.anjum@arm.com>
 References: <20260727164715.2866609-1-usama.anjum@arm.com>
@@ -108,64 +108,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-kasan_early_shadow_pte is a complete PTE table rather than a
-standalone PTE value. Declare and define its elements as hw_pte_t so
-the object uses the PTE table storage type.
+move_ptes() directly dereferences new_ptep when checking that the
+destination slot is empty. new_ptep now points to hw_pte_t table storage,
+while pte_none() consumes a logical pte_t value.
 
-Read the first element through ptep_get(), which returns the logical
-pte_t value expected by note_page_pte(), instead of accessing hw_pte_t
-storage directly. This also uses the accessor selected by the
-architecture.
-
-The generic hw_pte_t remains an alias of pte_t, so the storage
-representation is unchanged.
+Read the destination entry through the standard ptep_get() accessor before
+passing the logical value to pte_none().
 
 Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 ---
- include/linux/kasan.h | 2 +-
- mm/kasan/init.c       | 2 +-
- mm/ptdump.c           | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ mm/mremap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/kasan.h b/include/linux/kasan.h
-index bf233bde68c7e..ff41949c0ac08 100644
---- a/include/linux/kasan.h
-+++ b/include/linux/kasan.h
-@@ -51,7 +51,7 @@ typedef unsigned int __bitwise kasan_vmalloc_flags_t;
- #endif
+diff --git a/mm/mremap.c b/mm/mremap.c
+index d966ee8248b6b..ecb90ccee6fdd 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -264,7 +264,7 @@ static int move_ptes(struct pagetable_move_control *pmc,
  
- extern unsigned char kasan_early_shadow_page[PAGE_SIZE];
--extern pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS];
-+extern hw_pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS];
- extern pmd_t kasan_early_shadow_pmd[MAX_PTRS_PER_PMD];
- extern pud_t kasan_early_shadow_pud[MAX_PTRS_PER_PUD];
- extern p4d_t kasan_early_shadow_p4d[MAX_PTRS_PER_P4D];
-diff --git a/mm/kasan/init.c b/mm/kasan/init.c
-index 30c5266eaf37e..9bbc2a41d23f0 100644
---- a/mm/kasan/init.c
-+++ b/mm/kasan/init.c
-@@ -64,7 +64,7 @@ static inline bool kasan_pmd_table(pud_t pud)
- 	return false;
- }
- #endif
--pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS]
-+hw_pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS]
- 	__bss_pgtbl;
+ 	for (; old_addr < old_end; old_ptep += nr_ptes, old_addr += nr_ptes * PAGE_SIZE,
+ 		new_ptep += nr_ptes, new_addr += nr_ptes * PAGE_SIZE) {
+-		VM_WARN_ON_ONCE(!pte_none(*new_ptep));
++		VM_WARN_ON_ONCE(!pte_none(ptep_get(new_ptep)));
  
- static inline bool kasan_pte_table(pmd_t pmd)
-diff --git a/mm/ptdump.c b/mm/ptdump.c
-index 376880071ca2a..8f19f20be3c44 100644
---- a/mm/ptdump.c
-+++ b/mm/ptdump.c
-@@ -19,7 +19,7 @@ static inline int note_kasan_page_table(struct mm_walk *walk,
- {
- 	struct ptdump_state *st = walk->private;
- 
--	st->note_page_pte(st, addr, kasan_early_shadow_pte[0]);
-+	st->note_page_pte(st, addr, ptep_get(kasan_early_shadow_pte));
- 
- 	walk->action = ACTION_CONTINUE;
- 
+ 		nr_ptes = 1;
+ 		max_nr_ptes = (old_end - old_addr) >> PAGE_SHIFT;
 -- 
 2.47.3
 
