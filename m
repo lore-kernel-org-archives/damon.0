@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C13832B9BB;
-	Mon, 27 Jul 2026 14:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236363DA7FF;
+	Mon, 27 Jul 2026 14:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785163117; cv=none; b=CHV7CNOk/2OsgYYOW/jXZeQNuijpgwCK2Lp02BSWCbwldrdsh/aBBxwAi68HR4wgEW5UCnEM3Q1yJrJHtrmNOcQZb2a89JpV/LEgEVCfa72F56ZJ28UywqEsW9FzVOgfgVt7DkJcJym4zXLRW4oQzOBhMAfFIpMEP2wkBfPcM4g=
+	t=1785163117; cv=none; b=EeSYiPINDVrxfp2Rud68tlWmtIKU0WxRkuZDL+cb+x/Qi1Nd1PVrsOkR5ATjGdKanX7wGjIpLAKBHSw2V97nb5GH2VFWomTee/JBnUwW1eiymN79lUGXsQ8/yBRD69ZQHZi41dAWMXRMB5whz/3FWN0W7Yxsn9G1GsBfIGRQ6Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785163117; c=relaxed/simple;
-	bh=1hNDrhiV2mEnhx9R5BDNJp7QPW2UVNThLVkONWGbrU0=;
+	bh=OM41fkrAB0SpkfdTxx4uK/ru/AlDpi3O1ALkQHqnK/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1mJ4bPUmuEMROJqFE1mznC1cEYiRqe0N82nbKV/mpSfWZItGJLBaKyzE0FpXbr65wHKI9e8Ixwpgy3savo6HH/ZhuY91DruqkaO+DxscHriLwlPdWa0dbUO36hHQypZBs9I8bnkHIcNy3fvDd8aVV19ngItQHGy9pLYbkFQ7Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqB0cPiK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aS6tqhtq3gZbmGsJEhYcydONi1Bb5NGoGGN1ht147H6GNKYnBvhDT3KXZunkbzB3FoKWD+M74Ptr6jSvNqvgFyE8GRPPckwSPr8J3VzQbPaPTpaUGurgn9n5VND9+Bvm8+ZPQXlwKOl9BC7WydTztIrzMA4wU767MyACeXrCw8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IBV8y34e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqB0cPiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4131F00A3F;
-	Mon, 27 Jul 2026 14:38:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IBV8y34e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8902F1F00A3E;
+	Mon, 27 Jul 2026 14:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1785163115;
-	bh=F2xw8bC2vVf9MaZ8O0u93KQ3u/CCkmohSX4z61KPWG0=;
+	bh=13a3CodocCqwLWlDgXNYIFBHG2zYKkhYJH1FGDvZacQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FqB0cPiKPEmEPWSVQ3CLsXgMvPtiQ1+QSen7fg3W2jM3/OfnXESVTcexHCRXHLJsX
-	 JYCNlsks43cwrNhs8TkSmyLJagqhrNOBWzQ4baNPSEMQJooCGkzFrUISsDN3rYz5u9
-	 eNp9gEmRErMeOmyB4r/qRypOevxUgElKpwnQ2jLIXiJzXRrbPcY1L4q7iVnaYvA6qg
-	 750ZHoQtiAoUMhpLC4nmKl+PeBAxXP0qm+LwHwXQWVRZnucOT5/SOTusd6PLeXjRto
-	 GMaHK6OL7ZMd5+rMbLc6TWNcVXFEBRfeJgihLUAUx9ckad+RrgFm/EXtWIZfKm3Fs8
-	 hEFqIyYHDUnMw==
+	b=IBV8y34e1SDFTcYNSUGv2W/gy5aR2qxgPVmN0IiUlAfAidFrq+qr5oASeAHKZdfwb
+	 IaI8C2oqNJPuO5DBlCwYJUPwt4ejg5nNuisqu4eDyO+RSE3HdRGBicG614qV4m+bII
+	 5IIbNFGozteg5zkljCJPPZoJnTLZk2HqhNtd1mzIF8oJXKHmHr4/myz5PaP2IUXT48
+	 5ilfIDRj7/wuoqlCBaz3hIyqUPC0VzJ9VKsVVkC4sxqcQb5+jxGFJri15reNTRm31K
+	 ISa9r0aUT+1HngwrdYk5T8uCcrBnOcuWk83Gwp5JgLTA5b+Rbeu8KZzkPiaObMUP1z
+	 n+lHpN5btcWhQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 07/17] mm/damon/core: introduce damon_operations->prep_probes()
-Date: Mon, 27 Jul 2026 07:38:16 -0700
-Message-ID: <20260727143829.86236-8-sj@kernel.org>
+Subject: [RFC PATCH v2.1 09/17] mm/damon/sysfs: implement preps directory
+Date: Mon, 27 Jul 2026 07:38:18 -0700
+Message-ID: <20260727143829.86236-10-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260727143829.86236-1-sj@kernel.org>
 References: <20260727143829.86236-1-sj@kernel.org>
@@ -47,99 +47,116 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_prep needs to be executed by the underlying DAMON operation set.
-Extend the operation set callback list for the execution of damon_prep
-actions.  If the underlying operation set implements the callback, DAMON
-core executes it in the monitoring preparation time.
+Implement a sysfs directory named 'preps' under the probe directory.  It
+will be evolved to be used for specifying probe preps.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h |  5 +++++
- mm/damon/core.c       | 20 +++++++++++++++++++-
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ mm/damon/sysfs.c | 65 +++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 59 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index b86744642c9d3..c6cbf1edf331a 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -629,6 +629,7 @@ enum damon_ops_id {
-  * @update:			Update operations-related data structures.
-  * @prepare_access_checks:	Prepare next access check of target regions.
-  * @check_accesses:		Check the accesses to target regions.
-+ * @prep_probes:		Prepare applying probes for each region.
-  * @apply_probes:		Apply probes for each region.
-  * @get_scheme_score:		Get the score of a region for a scheme.
-  * @apply_scheme:		Apply a DAMON-based operation scheme.
-@@ -656,6 +657,9 @@ enum damon_ops_id {
-  * last preparation and update the number of observed accesses of each region.
-  * It should also return max number of observed accesses that made as a result
-  * of its update.  The value will be used for regions adjustment threshold.
-+ * @prep_probes should execute required &struct damon_prep for next &struct
-+ * damon_probe applications to each region.  It should also set
-+ * &damon_region->sampling_addr of each region if ``set_samples`` is true.
-  * @apply_probes should apply the data attribute probes to each region and
-  * accordingly update the probe hits counter of the region.  It should also
-  * set &damon_region->sampling_addr of each region if ``set_samples`` is true.
-@@ -678,6 +682,7 @@ struct damon_operations {
- 	void (*update)(struct damon_ctx *context);
- 	void (*prepare_access_checks)(struct damon_ctx *context);
- 	unsigned int (*check_accesses)(struct damon_ctx *context);
-+	void (*prep_probes)(struct damon_ctx *context, bool set_samples);
- 	unsigned int (*apply_probes)(struct damon_ctx *context,
- 			bool set_samples, bool return_max_wsum);
- 	int (*get_scheme_score)(struct damon_ctx *context,
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index c74dee56efee8..bbc3f231c1616 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -156,6 +156,18 @@ static struct damon_prep *damon_nth_prep(int n, struct damon_probe *p)
- 	return NULL;
- }
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 376c6ecbd4bf3..e33070d2cbcc6 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -750,6 +750,35 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
+ 	.default_groups = damon_sysfs_intervals_groups,
+ };
  
-+static bool damon_has_prep(struct damon_ctx *c)
-+{
-+	struct damon_prep *prep;
-+	struct damon_probe *probe;
++/*
++ * preps directory
++ */
 +
-+	damon_for_each_probe(probe, c) {
-+		damon_for_each_prep(prep, probe)
-+			return true;
-+	}
-+	return false;
++struct damon_sysfs_preps {
++	struct kobject kobj;
++};
++
++static struct damon_sysfs_preps *damon_sysfs_preps_alloc(void)
++{
++	return kzalloc_obj(struct damon_sysfs_preps);
 +}
 +
- struct damon_filter *damon_new_filter(enum damon_filter_type type,
- 		bool matching, bool allow)
- {
-@@ -3868,14 +3880,19 @@ static int kdamond_fn(void *data)
- 		unsigned long next_ops_update_sis = ctx->next_ops_update_sis;
- 		unsigned long sample_interval = ctx->attrs.sample_interval;
- 		bool access_check_disabled = damon_has_probe_weights(ctx);
-+		bool do_prep;
- 		unsigned int max_merge_score = 0, max_wsum;
- 		bool get_max_wsum;
- 
- 		if (kdamond_wait_activation(ctx))
- 			break;
- 
-+		do_prep = damon_has_prep(ctx) && ctx->ops.prep_probes;
++static void damon_sysfs_preps_release(struct kobject *kobj)
++{
++	kfree(container_of(kobj, struct damon_sysfs_preps, kobj));
++}
 +
- 		if (!access_check_disabled && ctx->ops.prepare_access_checks)
- 			ctx->ops.prepare_access_checks(ctx);
-+		if (do_prep)
-+			ctx->ops.prep_probes(ctx, access_check_disabled);
++static struct attribute *damon_sysfs_preps_attrs[] = {
++	NULL,
++};
++ATTRIBUTE_GROUPS(damon_sysfs_preps);
++
++static const struct kobj_type damon_sysfs_preps_ktype = {
++	.release = damon_sysfs_preps_release,
++	.sysfs_ops = &kobj_sysfs_ops,
++	.default_groups = damon_sysfs_preps_groups,
++};
++
+ /*
+  * filter directory
+  */
+@@ -1070,6 +1099,7 @@ static const struct kobj_type damon_sysfs_filters_ktype = {
+ struct damon_sysfs_probe {
+ 	struct kobject kobj;
+ 	unsigned int weight;
++	struct damon_sysfs_preps *preps;
+ 	struct damon_sysfs_filters *filters;
+ };
  
- 		kdamond_usleep(sample_interval);
- 		ctx->passed_sample_intervals++;
-@@ -3890,7 +3907,8 @@ static int kdamond_fn(void *data)
- 			else
- 				get_max_wsum = false;
- 			max_wsum = ctx->ops.apply_probes(ctx,
--					access_check_disabled, get_max_wsum);
-+					access_check_disabled && !do_prep,
-+					get_max_wsum);
- 			if (get_max_wsum)
- 				max_merge_score = max_wsum;
- 		}
+@@ -1080,25 +1110,48 @@ static struct damon_sysfs_probe *damon_sysfs_probe_alloc(void)
+ 
+ static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *probe)
+ {
++	struct damon_sysfs_preps *preps;
+ 	struct damon_sysfs_filters *filters;
+ 	int err;
+ 
+-	filters = damon_sysfs_filters_alloc();
+-	if (!filters)
++	preps = damon_sysfs_preps_alloc();
++	if (!preps)
+ 		return -ENOMEM;
++	probe->preps = preps;
++
++	err = kobject_init_and_add(&preps->kobj, &damon_sysfs_preps_ktype,
++			&probe->kobj, "preps");
++	if (err)
++		goto put_preps_out;
++
++	filters = damon_sysfs_filters_alloc();
++	if (!filters) {
++		err = -ENOMEM;
++		goto del_preps_out;
++	}
+ 	probe->filters = filters;
+ 
+ 	err = kobject_init_and_add(&filters->kobj, &damon_sysfs_filters_ktype,
+ 			&probe->kobj, "filters");
+-	if (err) {
+-		kobject_put(&filters->kobj);
+-		probe->filters = NULL;
+-	}
++	if (err)
++		goto put_filters_out;
++	return err;
++
++put_filters_out:
++	kobject_put(&filters->kobj);
++	probe->filters = NULL;
++del_preps_out:
++	kobject_del(&preps->kobj);
++put_preps_out:
++	kobject_put(&preps->kobj);
++	probe->preps = NULL;
+ 	return err;
+ }
+ 
+ static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *probe)
+ {
++	if (probe->preps)
++		kobject_put(&probe->preps->kobj);
+ 	if (probe->filters) {
+ 		damon_sysfs_filters_rm_dirs(probe->filters);
+ 		kobject_put(&probe->filters->kobj);
 -- 
 2.47.3
