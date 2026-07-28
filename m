@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D460838D3F4;
-	Tue, 28 Jul 2026 04:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF41738837B;
+	Tue, 28 Jul 2026 04:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785211979; cv=none; b=f7ML7x5SGjj/Jp4anVBFiw3KbkmPjpExHVXx3kdyvuiEtaEweXnghLZ1ir3oAUEhs5G1dASbCN9CigenQBxvn2Fpa6QThsHL/xGV7cuckjHs5VYM/hNEOLniC11CgDWQrx+JBK+wjYzAPZq6lwA5qyNhj+3R46YDcuj4bH+jS1s=
+	t=1785211978; cv=none; b=Ma8Gx7i1upsMgmsiUJ0sX4nAmWI7RtOua2XKIAZFCA3kIgGehVRg6DpLR58cVEhYBWvltX6WBiyA4Yh06irrtc4VaZg6HCpPE1UOnvPyUH/2aDZoX9aG4g4sFqVBaTI/7dhXtuijLVpT1QNePuGWVEIIE/blMVkaJPjCnTcb9Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785211979; c=relaxed/simple;
-	bh=cEhqCkUFmoCCD/NZdQobrOcMALP0Al9OaK8bPfMwbPo=;
+	s=arc-20240116; t=1785211978; c=relaxed/simple;
+	bh=G7tjdfk9OKok1yMt6r9FmR5rKJsw4iDPkKOUlyWV7nA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GaxEX+69QhnDa8hgoXDNzdeMzjPcR9OpLpt26P++dIkVzeWAeiuUOZCxHsNjxlgtAB2EiI71JvQNyOC9qL1tRJ2Zb/+GbnubzHZDqZPygK48a6k9uRwwBYaoAFDQddGY5LfmKn7LupGVK47F2XQzYxm+OhbMLBVNiAf3zOYwQ/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KVgUePz9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kjFmNBR5NG9yMqeSTshG6lSi+JNYWLqkHmoE7ApKzTloRGMxdPvpt66n7OjrS/DfwkKU0dkJ5EHFiVYI5m8Ge1+sb057zKeBfp8YT22S4RXpAucMS7BFyL2YrZTa6qYACp6do8mIiOy+bUaajDS+HiLbMr+tI8eYdJtpkM595yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IAu2gUtM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KVgUePz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073471F00ADB;
-	Tue, 28 Jul 2026 04:12:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IAu2gUtM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45031F00AC4;
+	Tue, 28 Jul 2026 04:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785211975;
-	bh=2yJj2ZFkc+yp+KChpPtjKxUM1furNtj+IkOWlffAhxQ=;
+	s=k20260515; t=1785211973;
+	bh=JiT6YkyM91o+wfLZyKXVvhUm3iaw44e2nwGQI7u5HEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KVgUePz96y1L65EFHBLf3cfL0qHfwHwU5csEA6Pc4XEATVh5hbgDQS/+aGKXyqb/Q
-	 zdsG4p3QRL8L2pvGOL7KhRTrCJUFj3VvsYgjihI+jpymggk/UKzmTk9SXCqbWE2+OH
-	 bsJKpgocozn4wjVAF1prMWPLCYndi9V2nOh+lPk9XL9Fkhdsau+Q7fWsCNK7M8EMKK
-	 SNq4uNdtQtcsbuARTEmFkUzUoJiFilxAMvC391+47NccUmDGQ31yX0qWu6S+S6UJuJ
-	 R+HxABfoph5askdWN2r7e8suRCsj7svboTsyaL9tzE6hZsgKzWjZOJY0aZ5g31MFqA
-	 1kqmTURfYaMNQ==
+	b=IAu2gUtMxuixtVF+yqtJAvsAOKxhe/qiXOtn0Gvsc1//PS7wsTquGQycvLlJZLfkV
+	 sJFLbiI/wDG2gNea70eTR49L7Dj1Slhh0Bdnb7T+fFW5UkOGnUGahboYyiWGDjGDwl
+	 gpRorHJ+EtIhxmm1xVhNhnZmxgiY9PGF4RzJnWfIzUUtRpD4yz2iD16gJDUpSvS2cr
+	 9CX1Bwxkt7uggYITKa+9g3qAk5vsjE1FItnOUWeQFXi2DoUAWHRLCes0yOoQmdPlpX
+	 /IE0nq7bzSNk7UiTebxG4qZ1UqCIAZ/dHmxeFKeF/3OSac4pLFMYMmut/WxwobLZCp
+	 07+uxHCwV3PHw==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.2 09/17] mm/damon/sysfs: implement preps directory
-Date: Mon, 27 Jul 2026 21:12:30 -0700
-Message-ID: <20260728041242.187380-10-sj@kernel.org>
+Subject: [RFC PATCH v2.2 05/17] mm/damon/core: introduce damon_prep struct
+Date: Mon, 27 Jul 2026 21:12:26 -0700
+Message-ID: <20260728041242.187380-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260728041242.187380-1-sj@kernel.org>
 References: <20260728041242.187380-1-sj@kernel.org>
@@ -47,116 +47,141 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement a sysfs directory named 'preps' under the probe directory.  It
-will be evolved to be used for specifying probe preps.
+Some DAMON probe filter types require preparatory actions.  For example,
+pgilde_unset probe filter can say if the page was accessed but when.  To
+answer the second question, the PG_Idle flag should be set at a specific
+time.  It can make life much easier if DAMON can do such preparatory
+actions.  Introduce a new data type called damon_prep.  It specifies
+each of the preparation actions for each probe.  DAMON will execute the
+action for each region per sampling interval, like it clears page table
+accessed bits and unsets PG_Idle flag for access monitoring.
+
+Also introduce DAMON_PREP_SET_PGIDLE as the initial prep action.  As the
+name says, it will do exactly what DAMON was doing as the preparation
+action for the access monitoring.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 65 +++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 59 insertions(+), 6 deletions(-)
+ include/linux/damon.h | 32 ++++++++++++++++++++++++++++++++
+ mm/damon/core.c       | 26 ++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 50ff1c172d746..66a3e7de869a8 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -750,6 +750,35 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
- 	.default_groups = damon_sysfs_intervals_groups,
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index cee4b74761081..b86744642c9d3 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -741,6 +741,27 @@ struct damon_intervals_goal {
+ 	unsigned long max_sample_us;
  };
  
-+/*
-+ * preps directory
++/**
++ * enum damon_prep_action - DAMON probing preparation action.
++ *
++ * @DAMON_PREP_SET_PGIDLE:	Set the probing memory as idle page.
 + */
-+
-+struct damon_sysfs_preps {
-+	struct kobject kobj;
++enum damon_prep_action {
++	DAMON_PREP_SET_PGIDLE,
 +};
 +
-+static struct damon_sysfs_preps *damon_sysfs_preps_alloc(void)
-+{
-+	return kzalloc_obj(struct damon_sysfs_preps);
-+}
-+
-+static void damon_sysfs_preps_release(struct kobject *kobj)
-+{
-+	kfree(container_of(kobj, struct damon_sysfs_preps, kobj));
-+}
-+
-+static struct attribute *damon_sysfs_preps_attrs[] = {
-+	NULL,
-+};
-+ATTRIBUTE_GROUPS(damon_sysfs_preps);
-+
-+static const struct kobj_type damon_sysfs_preps_ktype = {
-+	.release = damon_sysfs_preps_release,
-+	.sysfs_ops = &kobj_sysfs_ops,
-+	.default_groups = damon_sysfs_preps_groups,
++/**
++ * struct damon_prep - DAMON probing preparation request.
++ *
++ * @action:	Action to do to the probing memory for the preparation.
++ */
++struct damon_prep {
++	enum damon_prep_action action;
++/* private: */
++	/* siblings list. */
++	struct list_head list;
 +};
 +
- /*
-  * filter directory
-  */
-@@ -1070,6 +1099,7 @@ static const struct kobj_type damon_sysfs_filters_ktype = {
- struct damon_sysfs_probe {
- 	struct kobject kobj;
+ /**
+  * enum damon_filter_type - Type of &struct damon_filter
+  *
+@@ -782,6 +803,8 @@ struct damon_filter {
+ struct damon_probe {
  	unsigned int weight;
-+	struct damon_sysfs_preps *preps;
- 	struct damon_sysfs_filters *filters;
- };
+ /* private: */
++	/* Preparation actions to apply to each probing memory. */
++	struct list_head preps;
+ 	/* Filters for assessing if a given region is for this probe. */
+ 	struct list_head filters;
+ 	/* Siblings list. */
+@@ -961,6 +984,12 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
+ 	return r->ar.end - r->ar.start;
+ }
  
-@@ -1080,25 +1110,48 @@ static struct damon_sysfs_probe *damon_sysfs_probe_alloc(void)
- 
- static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *probe)
- {
-+	struct damon_sysfs_preps *preps;
- 	struct damon_sysfs_filters *filters;
- 	int err;
- 
--	filters = damon_sysfs_filters_alloc();
--	if (!filters)
-+	preps = damon_sysfs_preps_alloc();
-+	if (!preps)
- 		return -ENOMEM;
-+	probe->preps = preps;
++#define damon_for_each_prep(p, probe) \
++	list_for_each_entry(p, &(probe)->preps, list)
 +
-+	err = kobject_init_and_add(&preps->kobj, &damon_sysfs_preps_ktype,
-+			&probe->kobj, "preps");
-+	if (err)
-+		goto put_preps_out;
++#define damon_for_each_prep_safe(p, next, probe) \
++	list_for_each_entry_safe(p, next, &(probe)->preps, list)
 +
-+	filters = damon_sysfs_filters_alloc();
-+	if (!filters) {
-+		err = -ENOMEM;
-+		goto del_preps_out;
-+	}
- 	probe->filters = filters;
+ #define damon_for_each_filter(f, p) \
+ 	list_for_each_entry(f, &(p)->filters, list)
  
- 	err = kobject_init_and_add(&filters->kobj, &damon_sysfs_filters_ktype,
- 			&probe->kobj, "filters");
--	if (err) {
--		kobject_put(&filters->kobj);
--		probe->filters = NULL;
--	}
-+	if (err)
-+		goto put_filters_out;
-+	return err;
+@@ -1014,6 +1043,9 @@ static inline unsigned long damon_sz_region(struct damon_region *r)
+ 
+ #ifdef CONFIG_DAMON
+ 
++struct damon_prep *damon_new_prep(enum damon_prep_action action);
++void damon_add_prep(struct damon_probe *p, struct damon_prep *prep);
 +
-+put_filters_out:
-+	kobject_put(&filters->kobj);
-+	probe->filters = NULL;
-+del_preps_out:
-+	kobject_del(&preps->kobj);
-+put_preps_out:
-+	kobject_put(&preps->kobj);
-+	probe->preps = NULL;
+ struct damon_filter *damon_new_filter(enum damon_filter_type type,
+ 		bool matching, bool allow);
+ void damon_add_filter(struct damon_probe *probe, struct damon_filter *f);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3632b06f1db58..e8b5e6e43f9d4 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -111,6 +111,28 @@ int damon_select_ops(struct damon_ctx *ctx, enum damon_ops_id id)
  	return err;
  }
  
- static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *probe)
++struct damon_prep *damon_new_prep(enum damon_prep_action action)
++{
++	struct damon_prep *prep;
++
++	prep = kmalloc_obj(*prep);
++	if (!prep)
++		return NULL;
++	prep->action = action;
++	INIT_LIST_HEAD(&prep->list);
++	return prep;
++}
++
++void damon_add_prep(struct damon_probe *p, struct damon_prep *prep)
++{
++	list_add_tail(&prep->list, &p->preps);
++}
++
++static void damon_free_prep(struct damon_prep *p)
++{
++	kfree(p);
++}
++
+ struct damon_filter *damon_new_filter(enum damon_filter_type type,
+ 		bool matching, bool allow)
  {
-+	if (probe->preps)
-+		kobject_put(&probe->preps->kobj);
- 	if (probe->filters) {
- 		damon_sysfs_filters_rm_dirs(probe->filters);
- 		kobject_put(&probe->filters->kobj);
+@@ -167,6 +189,7 @@ struct damon_probe *damon_new_probe(void)
+ 	if (!p)
+ 		return NULL;
+ 	p->weight = 0;
++	INIT_LIST_HEAD(&p->preps);
+ 	INIT_LIST_HEAD(&p->filters);
+ 	INIT_LIST_HEAD(&p->list);
+ 	return p;
+@@ -184,8 +207,11 @@ static void damon_del_probe(struct damon_probe *p)
+ 
+ static void damon_free_probe(struct damon_probe *p)
+ {
++	struct damon_prep *prep, *prep_next;
+ 	struct damon_filter *f, *next;
+ 
++	damon_for_each_prep_safe(prep, prep_next, p)
++		damon_free_prep(prep);
+ 	damon_for_each_filter_safe(f, next, p)
+ 		damon_free_filter(f);
+ 	kfree(p);
 -- 
 2.47.3
