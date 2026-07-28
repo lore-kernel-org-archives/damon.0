@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDF8391513
-	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 04:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA092874FB
+	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 04:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785212607; cv=none; b=fbxLncCY6PCcw/nnOsRI+YOIYFseX+qt1Sa1bs+KLThtO0P4No4SAt++AX07YeT7VaFpzF7P83sAnsouRkaHYA/SjzAEjrolfek659N4xk3LLWzFOFL1tiEUOP1RZm4ZvYHQn77hi6iMajoamzXDBbFBt/Doh1B1JqLT7ltN2gM=
+	t=1785212627; cv=none; b=txJk1jKHyMzPWTN6WNX+AE6p+zg1zO5uFasGukm1BbeRzBwinChbaWVZX+omUP5SyvApoUWu196pHSgM3Cyl1bw6dLX0a+1m/6zreXC5mRBvlbnPhhdLnggrIOOPR7Q+yeSg4I1AjJWnRCItaRIgJUXEBeR8Ks1W+N/odgrUYyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785212607; c=relaxed/simple;
-	bh=CIejQ20ddc58sfUQN+ym2SVOiAj9nsg1wGEPtl3nWdI=;
+	s=arc-20240116; t=1785212627; c=relaxed/simple;
+	bh=mmKsHyKlHltj7DPivDBG7A9m9c4oewunZsfx1mEzmGA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=KhJ9JwifjjhNjoc50/oB6bY3U5GMvvxL/pHq/h181rP9KQOvNEDVqVAHP0H/KkmQVKdDMc8CxTcQN6UfLznK7mgMg01oIh+HzOtH8XGqAB+EwzLL6sVw+xhS8tcOAOQ4iWpCow/s9TNUJmtZ2mPQ/sSuAtidkaHLOMEXD4acils=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J3F4wygn; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=nwCIRm1S7pq6SH8BVy3Oacu4bgrHzpsmbHKm9jOk5WpuaOZXqu6+Gyrw334ExphEQwWBbd8krm8mNbF4fruZ5SMbRj8RZ3KjqNtdGGxNJLWg+EXHBfxn+p4lbWBN7Y7DPxDXPh9oOSOPnhK0qF+VWXEyS67MPbVYlMOIwwjXy3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VW6rWAWv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J3F4wygn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FB51F000E9;
-	Tue, 28 Jul 2026 04:23:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VW6rWAWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3661F000E9;
+	Tue, 28 Jul 2026 04:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785212605;
-	bh=BijJcFaoFSMwmls61IKhpqbdECkEjw8APpJ+3386x7Q=;
+	s=k20260515; t=1785212626;
+	bh=DStnWAOz5hblFCKmEOu19ER06qj0LoGlYb2WNx509LA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=J3F4wygnxLX1ftC3fiBgoFtPG/NSK9mPkih5UCPSiLrlBXzZPguTAesHfhT48Z+K1
-	 77ZXpweNlttp3hmwAM6BDjj4s7HYoGXLFmdWAjCNVs6J+sWofz4wmpQ/TzZFpkzZos
-	 ZZ0TIdYQDuZ32EvgrzCu+jJTJhToOojTsBe1fVIgMAmM+ngsHhfy/T8RwMZoxdHC7C
-	 j5x43o2aTCxhjpWvGhFlSy14Do8/3n2lKX3fHI9PO8qA8BoBzezqqMeLLrPZctt68m
-	 i8FE8R5GsUnaxVhIZpz+v8hpRGACs24SbaesBV4QYxOGkoG989JPyG1qb/crhQx4BS
-	 7HNaxVutpgWFQ==
+	b=VW6rWAWvYAaboT+l085IJwRSk+fz/mLFSyTn6NLrv8CTxsa25DBUhnkDuDgYMCVm5
+	 bjkCs0YkKj2bPOoGHmH6D8K0FG/Z0w4CzmESYTcMZU9l9ihaw5myIz2pb3Wujjq18d
+	 Xfuhtkk86t8YpPWViyw8bLXH3fdsGbQXzmKekMjCkiTMOxvynDVo94rkaoxSLoEYx/
+	 MLgEW4IR5Sv9bmGmabsJnPWaAzAvfP76VVJLgnnECVl1J34pz15aeElcOLW6CdOmJG
+	 uOVR+Kb2iAId3Nq0+hIrTJuvJojYQC0vXwGtpZqDyHgpDDh7hBCFbvn+55W49ywtDZ
+	 tJLWXIXeZfsaQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2.2 01/17] mm/damon/core: introduce
- DAMON_FILTER_TYPE_PGIDLE_UNSET
+Subject: Re: [RFC PATCH v2.2 12/17] mm/damon/sysfs: implement prep_action
+ file
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260728041242.187380-2-sj@kernel.org>
+In-Reply-To: <20260728041242.187380-13-sj@kernel.org>
 References: <20260728041242.187380-1-sj@kernel.org>
- <20260728041242.187380-2-sj@kernel.org>
+ <20260728041242.187380-13-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 28 Jul 2026 04:23:24 +0000
-Message-Id: <20260728042325.68FB51F000E9@smtp.kernel.org>
+Date: Tue, 28 Jul 2026 04:23:45 +0000
+Message-Id: <20260728042346.5E3661F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,79 +47,80 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] The newly introduced DAMON_FILTER_TYPE_PGIDLE_UNSET enum is unha=
-ndled in the filter matching logic and sysfs interface, leaving the promise=
-d functionality completely missing.
+- [Medium] The `prep_action` configuration is completely ignored and never =
+applied to the DAMON core.
 --
 
---- Patch [1]: [RFC PATCH v2.2 01/17] mm/damon/core: introduce DAMON_FILTER=
-_TYPE_PGIDLE_UNSET ---
-commit 1ede3c3f87a9caeeb7ad80090cbb84d20b477505
+--- Patch [12]: [RFC PATCH v2.2 12/17] mm/damon/sysfs: implement prep_actio=
+n file ---
+commit 5572380654e6a74889b64fc57510a982daf24d8e
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: introduce DAMON_FILTER_TYPE_PGIDLE_UNSET
-   =20
-Introduce a new DAMON filter type, pgidle_unset. It will match pages
-that have their PG_Idle flag unset, or the page table accessed bit set.
+mm/damon/sysfs: implement prep_action file
 
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 0c8b7ddef9abb..a8bb9ee6979e3 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -742,12 +742,14 @@ struct damon_intervals_goal {
->  /**
->   * enum damon_filter_type - Type of &struct damon_filter
->   *
-> - * @DAMON_FILTER_TYPE_ANON:	Anonymous pages.
-> - * @DAMON_FILTER_TYPE_MEMCG:	Specific memcg's pages.
-> + * @DAMON_FILTER_TYPE_ANON:		Anonymous pages.
-> + * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
-> + * @DAMON_FILTER_TYPE_PGIDLE_UNSET:	Pgidle is unset.
->   */
->  enum damon_filter_type {
->  	DAMON_FILTER_TYPE_ANON,
->  	DAMON_FILTER_TYPE_MEMCG,
-> +	DAMON_FILTER_TYPE_PGIDLE_UNSET,
+Add a file named prep_action under the prep directory.  It represents
+the corresponding probe preparation action.
 
-[Severity: Medium]
-Is the implementation for this new filter type missing from this patch?
-
-Looking at damon_pa_filter_match() in mm/damon/paddr.c, the switch
-statement evaluating filter types does not appear to handle
-DAMON_FILTER_TYPE_PGIDLE_UNSET. This means it will fall through to the
-default case and fail to implement the promised page matching logic:
-
-mm/damon/paddr.c:damon_pa_filter_match() {
-    ...
-    switch (filter->type) {
-    case DAMON_FILTER_TYPE_ANON:
-    ...
-    }
-}
-
-Additionally, it looks like this new filter type is missing from the sysfs=
-=20
-name mapping array, damon_sysfs_filter_type_names, in mm/damon/sysfs.c:
-
-mm/damon/sysfs.c:damon_sysfs_filter_type_names {
-    {
-        .type =3D DAMON_FILTER_TYPE_ANON,
-        .name =3D "anon",
-    },
-    ...
-}
-
-Without this mapping, type_store() will fail with -EINVAL, making it=20
-impossible for userspace to configure.
-
-Will a follow-up patch add the handling logic and sysfs bindings, or should=
-=20
-they be included directly in this commit?
-
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index afd39659d6b84..c0130843223d7 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+> @@ -756,6 +756,7 @@ static const struct kobj_type damon_sysfs_intervals_k=
+type =3D {
+> =20
+>  struct damon_sysfs_prep {
+>  	struct kobject kobj;
+> +	enum damon_prep_action action;
 >  };
 > =20
->  /**
+>  static struct damon_sysfs_prep *damon_sysfs_prep_alloc(void)
+
+[ ... ]
+
+> +static ssize_t prep_action_store(struct kobject *kobj,
+> +		struct kobj_attribute *attr, const char *buf, size_t count)
+> +{
+> +	struct damon_sysfs_prep *prep =3D container_of(kobj,
+> +			struct damon_sysfs_prep, kobj);
+> +	ssize_t ret =3D -EINVAL;
+> +	int i;
+> +
+> +	for (i =3D 0; i < ARRAY_SIZE(damon_sysfs_prep_action_names); i++) {
+> +		const struct damon_sysfs_prep_action_name *action_name;
+> +
+> +		action_name =3D &damon_sysfs_prep_action_names[i];
+> +		if (sysfs_streq(buf, action_name->name)) {
+> +			prep->action =3D action_name->action;
+
+[Severity: Medium]
+Are we missing the logic to apply this configuration to the DAMON core?
+
+Looking at damon_sysfs_set_probe(), it commits sysfs configurations to a pr=
+obe
+by calling damon_sysfs_set_filters(), but it appears to skip the preps
+directory entirely:
+
+static int damon_sysfs_set_probe(struct damon_probe *probe,
+		struct damon_sysfs_probe *sys_probe)
+{
+	struct damon_sysfs_filters *sys_filters;
+
+	sys_filters =3D sys_probe->filters;
+	if (!sys_filters)
+		return 0;
+	return damon_sysfs_set_filters(probe, sys_filters);
+}
+
+Does this mean the prep_action configuration is never applied when a user
+commits the context?
+
+> +			ret =3D count;
+> +			break;
+> +		}
+> +	}
+> +	return ret;
+> +}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260728041242.1873=
-80-1-sj@kernel.org?part=3D1
+80-1-sj@kernel.org?part=3D12
