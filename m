@@ -1,230 +1,225 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010058.outbound.protection.outlook.com [52.101.84.58])
+Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736622EEE85;
-	Tue, 28 Jul 2026 14:49:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.58
-ARC-Seal:i=3; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785250185; cv=fail; b=cu2rdq6V3kTf6R023B0sV2fDPgmMJFHpeabY+sMSerqDqC81ACOvYEbWeTVsiGKtEzyMC5JHZleQENAsMWAZ6UIwSFTch2GAFVplwNjGdCc7LnRpYMW+fsqp3rD/WzzShWbZW5vKo9uM1DxP1nKA47u5Cr3SLK/TqUgBuxmbAmI=
-ARC-Message-Signature:i=3; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785250185; c=relaxed/simple;
-	bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
-	h=Message-ID:Date:Cc:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=l+MgWXmf8ahSFHutoLzSCdLzur4QoVL8Z9x85+Ho0LvbpythnRz9W/ab6Y9qHgPCPLDwoidyOZdds8CcnYNrGUP5PfBuJkHn7Koi1iv3ooa40hcA6sSxqcfDR0++bUU/Jl03888CKS/0+aJVURCNYidDfBdBNRLd5J3Gwq22WPo=
-ARC-Authentication-Results:i=3; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=muYOoUmt; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=muYOoUmt; arc=fail smtp.client-ip=52.101.84.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09ACB305692
+	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 15:17:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785251851; cv=none; b=iore4kCyeSpD7FuLpn8wPC4hBdI1fUtpdIgbFxuhLi4jzzWZRbdQAovjUMYdaiai/JEPwyRYX2UbEXykdqcEKjkkltvU7F+8mlyA66K4JbpW8krQmuilQatdgd1DqI5q04uqd0qduHcjU8cUQ0mf4FJQ0IAza7+JF9N5muscfps=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785251851; c=relaxed/simple;
+	bh=ch77C1UUUTt8g78UF9dXwXhfEinOB/Iybh9mHKW1Xs4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZC0diNsAaUyYyLSmtMTa6NnnNogMBBbyellD83WWjuAex2REWBUiyNc8KdyXC2UdZxN+POoXguKg4UomcaS6+EvQvfRxHbxs2yN99ML+mIxIQ3lFeNf2O0OyOwe9JtdUcXIeg7FM3rIuI9qc9j0ijcBMIJErO8czLpVcWG8K67Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qdxJJmMd; arc=none smtp.client-ip=95.215.58.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="muYOoUmt";
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="muYOoUmt"
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=AphV2D8541+ujH7YDX50KK1BMCErKTma1yfFy3e/rqlfI0kPTWRoruYznUOfljb4HkzdmZum7Z3Leh2exWP74SpR62vzDahWka7IhN/oUwhR+gHsmoCiP/mN+0lkwzW+zPHaUN7Tox9DGAypu4ALR31LGie9E8EYThA41gEECL7J765qayk0Qd3lQ9D4gMN6wdODHBonjaiK4kkPtFPB1PzydYbFhxlMY61e09bonGr0UTs95ndQZEe08xuPOHAcdNkREhNxpzVafoMOz9nJ1WjezQvFJ89LpN0DLHvmlu75wkrSFmop8wWwHCIXLH0S8UvNZWSZ5PFo971V90bi/Q==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
- b=GCEYn6sRVpMpu30td8Mg2fU/npcaXACiR7rr7J3odHBBk6iOvMe5ifaktNIaN3IsENG4lwafovnC0WnZBqLJKOppWpzS0T3Dbl9nEb6ijK+FlNxKBWC97U5xLucKaUGEpJtO90odnw7sd8rA+NUciSXFNyD1kvCoWeVx488W893I0f5RWtVtotfcaHpOSLW0rlHQolGz1Bqz1oPeBDPuO4Q5NCaLj5vdwqVCS25565aphcH+fUg1PZRWPASM43MbTPZyDlz+hxDAAMLaOyCpvg0qTTVNjiOAHhv0zGamSYK0eYDh9cVz8SiPyjqyAJ3GxSr3tX1C5ih610aqLL1Drg==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=arm.com;
- dmarc=pass (p=none sp=none pct=100) action=none header.from=arm.com;
- dkim=pass (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
- b=muYOoUmtwEgIEobaSZTH8bFbYPAo2jA8vFuhUiIzHa3y6WoeQ64PdFEICntkakzznWcQX9bdAUyo9KR0vbmppGV7+3eWBAKva9PqaeDcs5fa42PpdISYkhgkLC3GxidvkJvtEK1020VBFgs3GRHLLylcLfl69zbE2NpNmSjWWm8=
-Received: from DUZP191CA0030.EURP191.PROD.OUTLOOK.COM (2603:10a6:10:4f8::19)
- by AM9PR08MB5905.eurprd08.prod.outlook.com (2603:10a6:20b:282::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
- 2026 14:49:38 +0000
-Received: from DU2PEPF00028D0E.eurprd03.prod.outlook.com
- (2603:10a6:10:4f8:cafe::6e) by DUZP191CA0030.outlook.office365.com
- (2603:10a6:10:4f8::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.270.12 via Frontend Transport; Tue,
- 28 Jul 2026 14:49:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
- smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- DU2PEPF00028D0E.mail.protection.outlook.com (10.167.242.22) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.245.5
- via Frontend Transport; Tue, 28 Jul 2026 14:49:37 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WMWGh34TvTVwYCslMJ0kKm7lIWOgadltNHgsZyCQF2G7YhNfRgP2JUezzmFywZcPAViK3NNLn5CewEI7LaEMxgQ9hTa2OV9KELhPE1J/rxrb/oaogsroyQBz2kHMIQ/GoRbZzCaMW/EEySjCl/PNDM/FuiDA9cCfcyuk29BmHPNl63XWbrpbCcEW0+qhnYzqDC+YfrewjKK+abh/+G+P+3GIivE+zdOZOcODRFCKeKVX6+SqPAjmj/iQaZV37x+2TB55qV4N57hnPcpSmyfrBuzbk2HD74F48c4FLnyQilLMsub4cKrS3UChdgx4kJzdLDsPNbAqGi32ugVg1Nc4Uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
- b=Zf+4PJdWXEftXJLlDZFD9mtLh/HmRk0rkiPBKYK7D8z9ouB3r81lOQq+SAbky2SBQ6KxSrpqqfOhdVTFzDM5XhIOuxN1j8IS7PCSzSBjjUb3M7W+573jaxdz8kY7ChdL+AcU/3Ryrn5mXAbGOLebhY2SX6csoTmlxxu/FuWNxn6YlGbhdKRSoFNgp2ReJWIyrhl8hmZcyzKD0zO/7ksNz6P4dxzX+I9uu1Z8ta9Ww29Upy77J+YrSVQPUemlBlNyPblhijjVqtcQ3Uucsg1+yrMIbL/Q173yuhtyuQZqybjEyZr2qqQkqugdsva/Dreg3W/+dt5aUPJPOJNgYyd3Aw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nrwC/VIlEyb1Tisi7TcZVQOBkpnJ4/9N8b9SLmkplG8=;
- b=muYOoUmtwEgIEobaSZTH8bFbYPAo2jA8vFuhUiIzHa3y6WoeQ64PdFEICntkakzznWcQX9bdAUyo9KR0vbmppGV7+3eWBAKva9PqaeDcs5fa42PpdISYkhgkLC3GxidvkJvtEK1020VBFgs3GRHLLylcLfl69zbE2NpNmSjWWm8=
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=arm.com;
-Received: from VI1PR08MB3421.eurprd08.prod.outlook.com (2603:10a6:803:80::16)
- by AM9PR08MB5908.eurprd08.prod.outlook.com (2603:10a6:20b:283::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.245.13; Tue, 28 Jul
- 2026 14:48:35 +0000
-Received: from VI1PR08MB3421.eurprd08.prod.outlook.com
- ([fe80::e079:6bd:fbe0:89b4]) by VI1PR08MB3421.eurprd08.prod.outlook.com
- ([fe80::e079:6bd:fbe0:89b4%3]) with mapi id 15.21.0245.012; Tue, 28 Jul 2026
- 14:48:35 +0000
-Message-ID: <eb7e1543-1599-4d58-875c-ec2b2bff778f@arm.com>
-Date: Tue, 28 Jul 2026 15:48:34 +0100
-User-Agent: Mozilla Thunderbird
-Cc: usama.anjum@arm.com, linux-perf-users@vger.kernel.org,
- damon@lists.linux.dev, bpf@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH RFC 01/11] mm: introduce hw_pte_t for PTE table storage
-To: sashiko-reviews@lists.linux.dev
-References: <20260727164715.2866609-1-usama.anjum@arm.com>
- <20260727164715.2866609-2-usama.anjum@arm.com>
- <20260727165824.0377C1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
-In-Reply-To: <20260727165824.0377C1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: LO4P123CA0615.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:314::17) To VI1PR08MB3421.eurprd08.prod.outlook.com
- (2603:10a6:803:80::16)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qdxJJmMd"
+Message-ID: <1c815b59-915a-414c-9029-eaac11dcf804@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785251847;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JJOfNjImE/vhHrHHh6wGaW6sGg3JuvKUdiSVtRAfDKs=;
+	b=qdxJJmMdA2yv0M5hrtFZeB6eH1ubg2oqLU/AaY0cpynGN7ks7FUkH2orUeGww/ktQ97oJF
+	PSNEd1Bkin+HPizo6fvj4Fa1TocVW1gu2dqF46otndcbC3Q4jSppWgMaopKp0F0ZlYv3sC
+	cYMpYoAqObCI9iY1kuGpIKmxEX27FUg=
+Date: Tue, 28 Jul 2026 23:17:01 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-TrafficTypeDiagnostic:
-	VI1PR08MB3421:EE_|AM9PR08MB5908:EE_|DU2PEPF00028D0E:EE_|AM9PR08MB5905:EE_
-X-MS-Office365-Filtering-Correlation-Id: c196e69d-e428-4ba1-f1be-08deecb77298
-x-checkrecipientrouted: true
-NoDisclaimer: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|10067099003|11063799006|4143699003|6133799003|56012099006|3023799007|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info-Original:
- sV3zbvLaqjqG6dom3Gp91uoha3PwtCEthywwPY2iDwBbMVF/A58V5nGsW17bRW8kfMFUE4ROoVg90YSvX/Z+/sKcgzQNNFfULLrDt8W+eXywSC8w9yIWJF3BRpKdInDInHroC866Kbv6CVTYBw5c6W6s103C6Nt82JgnRluQsy7T97uDqSXnfd4g9keBYsT4wgFo+CP7rbPclQr6yEjb845MtWB5tJarATzAAMhXGYajzGIFzp6BI4KLaAS3vTBjF8ojVmbmEMYDKb2LKc7b+VnY8lqvGIsmnOZmK2S7nQF/R4sVGqd8HoL6Va+WDgpF1H5PnPLd0ehjWu4SQXQfd74Q8O0xpgcmaBi8mxMfx7Dwu5UJLWou7JSdYfCQvhLPp+BE7hmHdyz+Vc7JwkiBK8WtUM9VVDlUJvEWaXvisCmWTcp96IsfGGyb0u/TEVma+SVTTVjQJ/DVkqz+b7eIenHL8vRn/FlTgnQl70sToblZTV1GhKqMww+NS7DZ5vv0X6NQEv5clWUeBANLqoHLLxBoTp3eqTElA75hG+fZBnRQY5bZWlsZucDqVa7sTt+C6cfDx+id9su9eQ2nvaZCMW0P18UMg3+BKUe6MLqoh6/5357a0NwtqTHyCqm1C26BvZD7b/BaRUj+rMW6xtgpp5lgm3oCHqx2GB9m27+xcTQ=
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR08MB3421.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(10067099003)(11063799006)(4143699003)(6133799003)(56012099006)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-Exchange-RoutingPolicyChecked:
- G2QCW6D28HW5CuPmUza9hmT7FjGE/P8L2zLpAkpxKIpRYHb0QYyo0J9XS/j+JTMNxBQeXzFw/dMyr1fFVJ9ujMSCm4+NV3TVVdDB9BITHG5zh9WTjmumByNIMvu8koRt8bXmWp4/e4gZBzb2dRBKD+hUYD5hsPwMrMkgvxf1yx2hpDCenY7WPGiMStdkSGbZPN76nfb57Slv2reyGWfaGcAf0xIPQt7+r4Jl5UUIr3/4Vd7sgPx2okyKoh10G0a47MF31PZNRdj5EaE4dobQQN201fWJaxxJVdaQLEQnMiRMlefjbLEHAZwzBqQRYSXaRVahBLOHQuFC8ocwRZmV2w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR08MB5908
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- DU2PEPF00028D0E.eurprd03.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	217ee18f-0aab-4363-5fa9-08deecb74d78
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|35042699022|1800799024|14060799003|36860700016|82310400026|376014|10067099003|11063799006|4143699003|6133799003|56012099006|3023799007|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	1uoT26N9FuSGLXTYmXSjYu2xc28ja5I7hln57wwCnkd6CZWgQl50B/fBiXtTyQQMYsLkqjtjt3lnLfc3bzbhsHI1n+EpNibOCGuyQ90Oq6wpatkO78oOQPuscEWvpxmCv01nNAl1p5iYnOEXwkT9rdVET2uaw9gOqPuqZ3lDBX0AY+PiKQSlBo5unZKyGYLKkcV2SiHLc4yK9SAOis2ga8qHe7yNBjHwViIcC8/Hx/7nkVLjEtjucesLyldsL9Vrls5GRprDIUq0OfEfqRH8k1YR0tk3VXqI1VgKDNscITE9Ns5AiDVzzYUxnyaE6nVj1exNfUKvBWW44wry/glIOwaeTbor2bD9omtXRkHgkba499M8i7+mED2MDu/6O4t7GuSDpOp08wenm6dt7guB+4aW9+0FXV/PzBdP1YvHR2CZJ3+UzE/uSzkuks71bOCQLrzKFkF7mJiU04VcK9crPOz5kSvpLKyQojFIkUhWWLmq2xpXKSwLj+9NJ8scVh8imUU6K6MlF9i8SeevcZ9Br92vuctMl2UoeHLfsNIpLnHYr83ALwhu2CWM0gQOzt8bU7eK1twJRY0xkPhYbsasWaMorh3ZrXwXIlC4W3C+ehzkumuq9NRECSMs1KA9BaHG/uFWOH5PD6YTWhJTIVRKGvDLG2fQAiFp9cV+b97Wr5oTjRaY3wb411IYxgv1YS6qKJosF0WZMmI8itT/E28NlQ==
-X-Forefront-Antispam-Report:
-	CIP:4.158.2.129;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:outbound-uk1.az.dlp.m.darktrace.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(35042699022)(1800799024)(14060799003)(36860700016)(82310400026)(376014)(10067099003)(11063799006)(4143699003)(6133799003)(56012099006)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	4vg/3N5zhqH5RfRS8PyQZ00MONmlhr4NujHibeMjCXHAXZEdi49+mcriabCC7x5Lba5f/i+2IxO9vZq58N55yFUjiz1oJ2GHqyhjli9TsMdA2mnGXBuN4WAUrdoRQARmIIRNv7MMYsRZnT7Gog6nXWWugQvWaSMwv9NGq0lref+5hZUy59hq7FzUSBWt8s4SFT7UOUei1AT1sd5Tq02+8ejEYUoeK3JTGmOofG/cPy9fZ/KY83AGY1FAZBZHkZajA+QcWgD5+17tnzbHpssFmA7b/eiypnAhsejpu+04rKuAhhwzIZHzbl8Z2spyJIr/+YQCyflHLw0aY9eLQgr9XancdzN/duECI8EX3MP+vKnBiO2x1HBu6SeSC5uF3V0nozf+rVfRHuhBz7JdrE9Dq/o7mRdpe6KnZlnOKB641TDL0R/rv/UdcQLWQtB0HSjM
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jul 2026 14:49:37.7998
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c196e69d-e428-4ba1-f1be-08deecb77298
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d;Ip=[4.158.2.129];Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DU2PEPF00028D0E.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR08MB5905
+Subject: Re: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with
+ per-range regions
+To: SJ Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, Jiayuan Chen <jiayuan.chen@shopee.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
+ Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org
+References: <20260728143046.95229-1-sj@kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
+In-Reply-To: <20260728143046.95229-1-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On 27/07/2026 5:58 pm, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] The header `<linux/pgtable_types.h>` incorrectly assumes `<asm=
-/page.h>` universally defines `pte_t` and architecture opt-ins, leading to =
-missing types on x86 and a structural inclusion hazard for opting in.
-> --
+
+On 7/28/26 10:30 PM, SJ Park wrote:
+> On Tue, 28 Jul 2026 18:06:48 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
 >
-> --- Patch [1]: [PATCH RFC 01/11] mm: introduce hw_pte_t for PTE table sto=
-rage ---
-> commit de503ea03294c1c9976ce045b5e820dbc0f34eba
-> Author: Muhammad Usama Anjum <usama.anjum@arm.com>
+>> On 7/27/26 10:26 PM, SJ Park wrote:
+>>> Hello Jiayuan,
+>>>
+>>> On Mon, 27 Jul 2026 17:54:22 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+>>>
+>>>> From: Jiayuan Chen <jiayuan.chen@shopee.com>
+>>>>
+>>>> damon_set_region_system_rams_default(), introduced by commit 70d8797c15d6
+>>>> ("mm/damon: introduce damon_set_region_system_rams_default()"), is used by
+>>>> DAMON_RECLAIM, DAMON_LRU_SORT and DAMON_STAT to set the default monitoring
+>>>> target address range covering all 'System RAM' when the user does not
+>>>> specify a range.  It walks the 'System RAM' resources but keeps only the
+>>>> start of the first resource and the end of the last one, and then sets a
+>>>> single monitoring region spanning that whole [first_start, last_end] range.
+>>>>
+>>>> On systems whose RAM is split into discrete areas that are far apart in the
+>>>> physical address space, that single region also covers the holes between
+>>>> them.  For example:
+>>>>
+>>>>     $ sudo cat /proc/iomem | grep RAM
+>>>>     00001000-0009ffff : System RAM
+>>>>     00100000-4848c017 : System RAM
+>>>>     4848c018-48550c57 : System RAM
+>>>>     48550c58-48551017 : System RAM
+>>>>     48551018-48615c57 : System RAM
+>>>>     48615c58-48616017 : System RAM
+>>>>     48616018-486dac57 : System RAM
+>>>>     486dac58-4e563017 : System RAM
+>>>>     4e563018-4e627c57 : System RAM
+>>>>     4e627c58-4ef39017 : System RAM
+>>>>     4ef39018-4ef3f057 : System RAM
+>>>>     4ef3f058-4efe6017 : System RAM
+>>>>     4efe6018-4efec057 : System RAM
+>>>>     4efec058-50247fff : System RAM
+>>>>     50317000-56720fff : System RAM
+>>>>     56722000-59c19fff : System RAM
+>>>>     6bbfe000-6bbfefff : System RAM
+>>>>     6bc00000-777fffff : System RAM
+>>>>     100000000-1007effffff : System RAM
+>>>>     67e80000000-77e7fffffff : System RAM
+>>>>
+>>>> Here the last two areas (about 1TB starting at 4GiB, and about 1.1TB
+>>>> starting at ~6.5TB) are separated by a ~5.5TB hole, and the single-region
+>>>> setup makes DAMON treat that entire hole as if it were memory.
+>>>>
+>>>> This is harmful in a few ways.  The monitoring target regions are limited
+>>>> by max_nr_regions, so regions that fall into the hole waste that budget and
+>>>> leave fewer regions for the real RAM, coarsening the adaptive regions and
+>>>> degrading the monitoring accuracy.
+>>> The hole would look like not accessed.  As a result, the whole region will be a
+>>> few regions that very cold.  That wouldn't waste the budget that much.  Do you
+>>> have some specific setups that this cannot help?
+>> It's my mistake.
+>>
+>> I first saw the kdamond CPU go up, and I assumed it was the number of
+>> regions. I was wrong.
+>>
+>> I re-tested and profiled it with perf. It's not the region count — it's
+>> the page-by-page walk of the hole.
+>>
+>> On a VM with a 116GiB hole and a single [first,last] span, I enabled
+>> DAMON_LRU_SORT and ran perf on its kdamond:
+>>     30.15%  damon_get_folio
+>>     17.09%  pfn_to_online_page
+>>      2.24%  __nr_to_section
+>>      ...
+>>      0.07%  damon_split_region_at
+>>      0.06%  damon_merge_two_regions
+>>
+>> Almost all of it is the per-page folio lookup. Merge and split are ~0.1%.
+>> The cold scheme targets cold, old regions. The hole is never accessed, so
+>> it's always cold and old, and it matches. Then the action walks its whole
+>> empty span page by page, every apply. RECLAIM and LRU_SORT do this by
+>> default. It scales with the hole size, so on the real 5.5TiB machine the
+>> kdamond can't keep up.
+> Makes sense, thank you for investigating and sharing this!
 >
-> mm: introduce hw_pte_t for PTE table storage
+>>
+>>>> In addition, DAMOS actions on the paddr
+>>>> operations set walk such a region page by page, so a region that covers the
+>>>> hole is walked for its entire (empty) span on every application.
+>>> That makes sense.
+>>>
+>>>> Set a separate monitoring region for each discrete System RAM area instead,
+>>>> coalescing only truly adjacent (no gap in between) resources into one
+>>>> range, so holes between the areas are excluded.  The reported *start and
+>>>> *end still carry the overall first-start and last-end, so the user-visible
+>>>> default range reported via the module parameters is unchanged.
+>>> I'm concerned if this could result in having too many regions.  The gap between
+>> On the region count: can't we just coalesce any hole smaller than
+>> min_region_sz?
+> I'm not fully understanding your point.  min_region_sz is only 4 KiB by
+> default, and anyway DAMON cannot create regions of size smaller than
+> min_region_sz.  I cannot get how this helps.
 >
-> This commit introduces hw_pte_t as a generic name for a PTE table element=
-.
-> It defines it as an alias of pte_t by default, allowing architectures to
-> retain their existing representation until they opt in to a distinct type=
-.
+>> After that, the number of ranges is just the number of
+>> discrete
+>> System RAM areas
+> I'm still not convinced with this.  What if the number of discrete system ram
+> areas is larger than max_nr_regions?
 >
->> diff --git a/include/linux/pgtable_types.h b/include/linux/pgtable_types=
-.h
->> new file mode 100644
->> index 0000000000000..ed5dba42a4f8c
->> --- /dev/null
->> +++ b/include/linux/pgtable_types.h
->> @@ -0,0 +1,11 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
->> +#ifndef _LINUX_PGTABLE_TYPES_H
->> +#define _LINUX_PGTABLE_TYPES_H
->> +
->> +#include <asm/page.h>
->> +
->> +#ifndef __HAVE_ARCH_HW_PTE_T
->> +#define hw_pte_t pte_t
->> +#endif
+> Actually I was also thinking about this problem for in the past.  One of my
+> idea at that time was, handle only a few largest holes that practically being
+> problems.  That is, while reading the system ram layout, find the holes, sort
+> those by size, and do make holes in DAMON regions layout for the biggest N
+> (say, 2) holes.  This may handle most cases including your 5 TiB hole.
+> Actually vaddr is doing this, so we may be able to reuse some of the code.
 >
-> [Severity: Medium]
-> Is <asm/page.h> guaranteed to define pte_t on all architectures before it=
- is
-> used here?
+> If it makes sense to you, I will try to implement this.
+
+One worry with a fixed N is that it's a magic number. If a machine has more
+than N big holes (more sockets / NUMA nodes, or several CXL devices), the
+extra ones are silently not excluded and get walked again.
+
+And making N configurable just moves the per-machine tuning back to the
+user, which is exactly what I'm trying to avoid.
+
+vaddr over-includes the gaps into its regions too, but it can skip them
+cheaply: it walks the VMA tree (find_vma / maple tree), it's cheap.
+paddr has no such structure, so an included hole is walked in full.
+
+That's why a fixed N is safe for vaddr but risky for paddr.
+
+
+>>> user-visible parameters and internal state is also a concern.
+>>
+>> I think monitor_region_start/end is meant to expose the overall range, and
+>> skipping the holes inside it is an implementation detail. Even if we didn't
+>> skip them, the adaptive region count is never 1 anyway — DAMON already
+>> splits [first,last] into many regions. The holes just add a few more, so
+>> the param never matched the internal state exactly to begin with.
+> It is arguable, but I believe this also makes sense in my opinion.
 >
-> On x86, pte_t is defined in <asm/pgtable_types.h>, which is not included =
-by
-> <asm/page.h>. This means pte_t might not be defined when the default hw_p=
-te_t
-> alias is created.
-No. The commit message was imprecise here. hw_pte_t is defined as a macro a=
-lias.
-pte_t does not need to be defined when this macro is defined; it only needs=
- to
-be defined where hw_pte_t is expanded. The current x86 consumers make pte_t
-visible through <asm/pgtable_types.h> before expanding hw_pte_t.
+>>
+>>> A quick workaround would be adjusting the memory layout in BIOS, using DAMON
+>>> sysfs interface instead, or setting the monitor_region_{start,end} to cover
+>>> only the single area.  Have you considered such workarounds?
+>>>
+>>> Let's complete this high level discussion first.
+>>
+>> Right, this is doable today — the DAMON sysfs interface can set multiple
+>>
+>> regions manually. This patch is only about convenience.
+> Are you actually running DAMON_LRU_SORT or DAMON_RECLAIM in a production system
+> having 5 TiB hole?  Or, planning to do?  If the above idea makes sense to you,
+> I could prioritize implementation of it depending on this.
+
+
+I'm not actually running DAMON_LRU_SORT or DAMON_RECLAIM on such a machine.
+I ran into this while working on per-cgroup hot/cold page tracking, where I
+was comparing performance and accuracy across setups — that's where these
+numbers came from.
+
 
 >
-> Could this also create an inclusion hazard for architectures opting in?
+> Thanks,
+> SJ
 >
-> If x86 were to opt into hw_pte_t by defining __HAVE_ARCH_HW_PTE_T in
-> <asm/pgtable_types.h>, any files including <linux/pgtable_types.h> first =
-would
-> incorrectly alias hw_pte_t to pte_t. When <asm/pgtable_types.h> is
-> subsequently included, its explicit definition of hw_pte_t would macro-ex=
-pand
-> to a conflicting redefinition of pte_t, breaking the build.
-An architecture opting in must make both __HAVE_ARCH_HW_PTE_T and hw_pte_t =
-visible
-before the generic fallback is processed. Arm64 does this through asm/page.=
-h which
-includes asm/pgtable-types.h. A future x86 conversion would have to establi=
-sh the
-same ordering.
+> [...]
 
---
-Thanks,
-Usama
 
-IMPORTANT NOTICE: The contents of this email and any attachments are confid=
-ential and may also be privileged. If you are not the intended recipient, p=
-lease notify the sender immediately and do not disclose the contents to any=
- other person, use it for any purpose, or store or copy the information in =
-any medium. Thank you.
+
+And to be clear, I'm not trying to land a patch here — I just noticed this
+as a possible optimization. If you have a better idea, I'm happy to go with
+it :).
+
