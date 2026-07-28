@@ -1,51 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699B0386576;
-	Tue, 28 Jul 2026 04:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9026238838F;
+	Tue, 28 Jul 2026 04:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785211976; cv=none; b=otCpV0HDtftWP1SVM06PPSY/Sa+zxreVo62nkjPaNj+dAUL2WC5mzc2hbWEzPAZKcClgDi2Qkzuh3rlw3YJiziZoU3ytKmbX0K8NnQ9NyDn+ecvrNVktf7zo7WTndh/gToqB7Gs1LVj8MR1hvZ1ZsRlhy3+mHDKUvlKI29vHgeg=
+	t=1785211978; cv=none; b=JGPoS+a6l7aIcEOYNkXpCyePpBKe2uRGkpu3a3UB1A9WNRcQlPUTBZ9Ui9PFIMW5pJxgxe54lMi91GJ2quti6bPwYE3CdJRHyqDSoFWYNBsOPubHat4n8RvFGjfo53YTxKdzAh9rGMNuv3dA2zuBGaXNcYRE6UNHsrPpD2rT7nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785211976; c=relaxed/simple;
-	bh=BoQmFAANRs5ejoJBSDr2ocPVWNj8V5kOrKo+q+5Og7I=;
+	s=arc-20240116; t=1785211978; c=relaxed/simple;
+	bh=RlII/+bxZALx45h8wxz+V5lWsOUPfHwlNy6XORJIOTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+Z+RzUY5j4K57CbySD83/DVXIiYBgberheiVebKwhB1ShlsPV0KZYROcJzX9W25EccPsbK6Qk4/gUq6cvwxiUIdJqhvxe6mi9mAGjjzJYivOqA3chVPZ0nqVZ+C3y7aBBRli1GfJEiriW25G8cMVEu/jhW/0Kcgtxfz/DIuI/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aTgkhxAj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YTt4TIiTZ8ZqY/4WwrFXVHHBKbR7VvxiaWfifaFhsLVZ6WJFLSx9Il7FoAH0dK10mWRrUBFUHUaNCDJqdQxQrg1aIuNKALHcYZt6sLIB3QXgsUOzLiOFGfXmRQUttOEnaKKevBIe35l7F3Y9f3b30HB4su6YoK7nt7/NJhvFC9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oglScrxw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aTgkhxAj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0771F00A3F;
-	Tue, 28 Jul 2026 04:12:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oglScrxw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A365C1F00A3D;
+	Tue, 28 Jul 2026 04:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785211973;
-	bh=Qlh6y9Au18vR1Ou/T5ICe3OGlXl5Nc84fCTR2Y+rZXM=;
+	s=k20260515; t=1785211974;
+	bh=dLFzt3EcCEm4IM9i5M5f2Ly9bLRqeWPD/3m4Jo0md2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aTgkhxAjPDwEY5OdQK7osbfQu9Mzfd5JomJmpe9Ij8LREGuMPl0mkLW9WK3Gl9T1a
-	 zdpQjLUzW/ir4y7Bkrr+MZZCqL+fMzKQeplrCpf5NqzdIS3+CtYAKW7iXLIM3qNNUP
-	 jYwjlY4gQ7PkXG7YOYI/CZ11apvsASV+hcIlhqPJo8n2YytaG7QiN8WkEH7pk/LW+7
-	 9gf3FmI/x1/W1mKS3OeXDBE8szcqqyg4CSX5+V0SP3uGcUF9KXeseOeSEme77rvUbm
-	 A0Qe0oe9lSNQDDOUm05yxXZl/MjMFj9qEKbWDZJvGg5YC39UJyoDxa+FWZGttzd+Yh
-	 ELM4IsxQfTdjA==
+	b=oglScrxwVAH88y6Ax7Ax7nnGkpy9HeysXFQJDjpvqI5IlUIlekaEm1w+D89X0wbo+
+	 78qaNFDrd5Bu6wYCq2Zo6xQv0qz0BHqSjTGf5CK5q4aHDYIa3Ub766rcZbtMwCqJLD
+	 pv4RZcD2mI3Kb2snc/TrF7MDTGBchgaDC7FCgmcLQDV1YIwxnVqTJfl1JBUpYFEk2x
+	 Qyxz6tPo6aDHVfPXjC1N1QCPrWtz2fkChF8U0Ky3T0AD7b9Qv4UDAPBv4pjaZmpJR3
+	 r6JvlwMTGkah/JYwA34QKcw6KzXEYLC4ROhNuADZZ4iVBdv9FLFGdZKRoWieN2jn3l
+	 0TkHeM0TtIqUQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.2 04/17] Docs/mm/damon/design: document pgidle_unset probe filter type
-Date: Mon, 27 Jul 2026 21:12:25 -0700
-Message-ID: <20260728041242.187380-5-sj@kernel.org>
+Subject: [RFC PATCH v2.2 08/17] mm/damon/paddr: support damon_prep
+Date: Mon, 27 Jul 2026 21:12:29 -0700
+Message-ID: <20260728041242.187380-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260728041242.187380-1-sj@kernel.org>
 References: <20260728041242.187380-1-sj@kernel.org>
@@ -57,33 +47,69 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added pgidle_unset probe
-filter type.  Also use a list for the types, as it becomes not very easy
-to read the whole types in a simple sentence.
+Implement damon_operations->prep_probes() callback.  Support the only
+existing prep action, DAMON_PREP_SET_PGIDLE in a way similar to what it
+was doing for the access check preparation: unset page table accessed
+bits and set PG_Idle flag.  Reuse the function for the access check
+preparation.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ mm/damon/paddr.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index a8c163475ef2b..c4830bd09498d 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -293,8 +293,12 @@ registration is made by specifying a probe per attribute.  Each of the probe
- specifies a rule to determine if a given memory region has the related
- attribute.  The rule is constructed with multiple filters.  The filters work
- same to :ref:`DAMOS filters <damon_design_damos_filters>` except the supported
--filter types.  Currently only ``anon`` and ``memcg`` filter types are supported
--for data attributes monitoring.
-+filter types.  Currently below filter types are supported.
-+
-+- ``anon``: Same to that for DAMOS filters.
-+- ``memcg``: Same to that for DAMOS filters.
-+- ``pgidle_unset``: Matches if the page for the memory is marked as not
-+  access-idle.
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 5b307dcbb2a50..8fb71183b76c0 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -105,6 +105,40 @@ static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
+ 	return max_nr_accesses;
+ }
  
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
++static void damon_pa_prep_probes_region(struct damon_region *r,
++		struct damon_probe *probe, struct damon_ctx *ctx)
++{
++	struct damon_prep *p;
++
++	damon_for_each_prep(p, probe) {
++		switch (p->action) {
++		case DAMON_PREP_SET_PGIDLE:
++			damon_pa_mkold(damon_pa_phys_addr(r->sampling_addr,
++						ctx->addr_unit));
++			break;
++		default:
++			break;
++		}
++	}
++}
++
++static void damon_pa_prep_probes(struct damon_ctx *ctx, bool set_samples)
++{
++	struct damon_target *t;
++	struct damon_region *r;
++	struct damon_probe *p;
++
++	damon_for_each_target(t, ctx) {
++		damon_for_each_region(r, t) {
++			if (set_samples)
++				r->sampling_addr = damon_rand(ctx, r->ar.start,
++						r->ar.end);
++			damon_for_each_probe(p, ctx)
++				damon_pa_prep_probes_region(r, p, ctx);
++		}
++	}
++}
++
+ static bool damon_pa_filter_match(struct damon_filter *filter,
+ 		struct folio *folio)
+ {
+@@ -448,6 +482,7 @@ static int __init damon_pa_initcall(void)
+ 		.update = NULL,
+ 		.prepare_access_checks = damon_pa_prepare_access_checks,
+ 		.check_accesses = damon_pa_check_accesses,
++		.prep_probes = damon_pa_prep_probes,
+ 		.apply_probes = damon_pa_apply_probes,
+ 		.target_valid = NULL,
+ 		.apply_scheme = damon_pa_apply_scheme,
 -- 
 2.47.3
