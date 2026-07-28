@@ -1,111 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211FF472789
-	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 19:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A693A5E93
+	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 20:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785268776; cv=none; b=EEe1b69lDjrI0otyTYcJpEK6+86HXDn4ncdCLCtvZ4m25VioXaCtRtdSN0EeW1E1IHQMvojRJ0gf80vS+Qle5sP8nKInJTef0uh9vAVYAkq+eawpp2vxxouBKPsnO0IkDh5Dsj/IPG2dY1OjUxuVbiv0uTyMEMItTMF682wXAVQ=
+	t=1785268887; cv=none; b=jWTQe0Kvo8Bcf82744SzpMNRhbpSWPfHbqWmRy8j1zNIMaV4hMvjUvLdJwLfDteUu0gYIFC6DTW5Oyb5J97xp0sNHUDWVQUSPquzazjoq1K8V1qIwSJerGK9wTftgxKtwOdbXHnQKKE/EWju5PIC9MPowRtflmyw4/+GkgpsEtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785268776; c=relaxed/simple;
-	bh=oQbuKLdyZPMNKvDIQL5d47ec2a3yGAwGLRHTUgWGDsU=;
+	s=arc-20240116; t=1785268887; c=relaxed/simple;
+	bh=ni1Y3PXWdpJBLue4GQLXD2CMQnncyB/WpqHzv8M8NoY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Ct/lsrDh2pncsNyZGUmF4voKoUpZ4NpQcN1m9ryzR3f4OrJlV8w+NVOvZCMVCxYjJIwuEyQcI/BbzVT+eqpjcH2Bz5YMwpy/psR7pCGjqMPxJI/pIa6s0xag8kaX8c+Ym33ErYWH3eZmhzKNmi9F3U7zYKjpX/Hed10tudx2PvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=axM9+xj7; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=o9EBN0TzevTaQPCiq9rX39Sz+j73biq8HLP8JtfWum0v02TcA7BAATl7DgYFo65Vhj+Pw8vLS5nVieDZdwLGnzIa86cbeiFihPtZrkvp2c2ZkkLBVZkQX9ThWLdSbWCnDUv134XkqV3ZqRIimADUXTwUi6vgDQra+DC+r9KGiFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VNsDcPPV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="axM9+xj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61511F000E9;
-	Tue, 28 Jul 2026 19:59:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VNsDcPPV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965471F000E9;
+	Tue, 28 Jul 2026 20:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785268774;
-	bh=wOF5aTu8HYcuEbsE+9z8mQIfwunq0bjoKn0gi7juhoQ=;
+	s=k20260515; t=1785268885;
+	bh=yENKdlKcOyD/2q83o+upsXG2O4+y34ym1qBK2i9PUd0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=axM9+xj7eiARdsQ4O/MFZx96SrFy4NoVMJgKddMuiIj/JQEEFZd530ElmRDbhRKun
-	 ALLH2RWOYuE6PaamhnGyjrV+GkuBQwKZs0K5mBT1YLXnS6945ZSSRe2Q9sJ/rbYjSB
-	 NreLkfNHxBWr2YlEobKA0hLNOaz7fPOlnDPTliJTb6piM+u3yQ4OUVTL/BXVpVsMPV
-	 ejF7AKBbksr1YmIU28u+Ok8f+p6tF7411LdVBrEzrfzXCFZYKSwUSTTX/dGHQfMb4B
-	 6zd2FOpEsB5aw6mpHL8uDrAZ50pvRC1hiKmwqE6vS35MkaazUYuGTBby+oCO5qk1+F
-	 OewODgBkZtRDw==
+	b=VNsDcPPVcxg4FUpQDjPl3XKj8uNUXo19/2DzzB6mdKKkWfkY6dmgdUa1Ap3JTWxiy
+	 8sIwIBQGXpuBJ6UPybJfmvL+MH5/1yu0CqCSNsoth2R+MAr74TZmN/YUs3Tg6NOjEI
+	 Z/syuVTbiSYqMdJEQMz4dec21jyrWl27TBK/eNzz5uAAChgZjD8/GMWMQixOs5Syxq
+	 I3D6XC0bUg3aoTogpFU0OvfsGLu8XHjGf5JtsYh0Dx29GIftHctqzJkNUrNQjSfVSb
+	 4I43iGaCTzPcELEqoT55lhdMv4gRAYl0DqVRQVQDWJQTfMbXQUbSEJaHbsUTFwCRJr
+	 UK64c0SOmrSlg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 4/4] mm/mempolicy: skip zone device folios when queueing
- folios
+Subject: Re: [PATCH 2/4] mm/huge_memory: skip zone device folios in
+ madvise_free_huge_pmd()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Gregory Price" <gourry@gourry.net>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260728194714.3713735-5-gourry@gourry.net>
+In-Reply-To: <20260728194714.3713735-3-gourry@gourry.net>
 References: <20260728194714.3713735-1-gourry@gourry.net>
- <20260728194714.3713735-5-gourry@gourry.net>
+ <20260728194714.3713735-3-gourry@gourry.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 28 Jul 2026 19:59:34 +0000
-Message-Id: <20260728195934.A61511F000E9@smtp.kernel.org>
+Date: Tue, 28 Jul 2026 20:01:25 +0000
+Message-Id: <20260728200125.965471F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] queue_folios_pmd() blindly calls pmd_folio() on raw PFN PMDs, caus=
-ing a kernel panic during mbind(MPOL_MF_STRICT) on VM_PFNMAP mappings.
+- [Critical] madvise_cold_or_pageout_pte_range() fails to filter out zone d=
+evice PMDs, risking invalid operations on device memory.
+- [High] madvise_cold_or_pageout_pte_range() triggers a refcount livelock b=
+y elevating the folio refcount before acquiring the folio lock on the PMD p=
+ath.
 --
 
---- Patch [4]: [PATCH 4/4] mm/mempolicy: skip zone device folios when queue=
-ing folios ---
-commit 638b94b8502c12252205f411cec0cf58a9fd9ce2
+--- Patch [2]: [PATCH 2/4] mm/huge_memory: skip zone device folios in madvi=
+se_free_huge_pmd() ---
+commit 624f2a18069c771c887a2d3f875451eb3bd7e41d
 Author: Gregory Price <gourry@gourry.net>
+Subject: mm/huge_memory: skip zone device folios in madvise_free_huge_pmd()
 
-mm/mempolicy: skip zone device folios when queueing folios
+This commit addresses an issue in madvise_free_huge_pmd() where zone device
+folios were being marked as lazyfree without proper checks. It adds a bailo=
+ut
+condition to skip the operation if the folio is a zone device folio.
 
-This commit adds explicit zone device checks to queue_folios_pmd() and
-queue_folios_hugetlb() to mirror the behavior in queue_folios_pte_range().
-
-> diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-> index 5720f7f54d942..bd79e61a40d1a 100644
-> --- a/mm/mempolicy.c
-> +++ b/mm/mempolicy.c
-> @@ -668,6 +668,8 @@ static void queue_folios_pmd(pmd_t *pmd, struct mm_wa=
-lk *walk)
+> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+> index 73522f296cee2..0b48112574882 100644
+> --- a/mm/huge_memory.c
+> +++ b/mm/huge_memory.c
+> @@ -2338,6 +2338,10 @@ bool madvise_free_huge_pmd(struct mmu_gather *tlb,=
+ struct vm_area_struct *vma,
 >  	}
->  	if (!queue_folio_required(folio, qp))
->  		return;
+> =20
+>  	folio =3D pmd_folio(orig_pmd);
+> +
 > +	if (folio_is_zone_device(folio))
-> +		return;
+> +		goto out;
+> +
+>  	/*
+>  	 * If other processes are mapping this folio, we couldn't discard
+
+While reviewing the zone device filtering added here, I noticed a couple of
+pre-existing issues in the related PMD handling path in mm/madvise.c.
+
+mm/madvise.c:madvise_cold_or_pageout_pte_range() {
+[ ... ]
+		folio =3D pmd_folio(orig_pmd);
+
+		/* Do not interfere with other mappings of this folio */
+		if (folio_maybe_mapped_shared(folio))
+			goto huge_unlock;
+
+[Severity: Critical]
+This is a pre-existing issue, but is it possible for a zone device PMD to be
+processed here?
+
+The folio is resolved from the PMD but lacks the folio_is_zone_device(folio)
+filter (unlike the PTE path). If a DAX or device coherent THP is partially
+advised, the split path could leave the pgmap pointer uninitialized on the
+split folios, potentially causing a kernel panic when accessed. Could we ad=
+d a
+similar bailout here?
+
+
+mm/madvise.c:madvise_cold_or_pageout_pte_range() {
+[ ... ]
+		if (next - addr !=3D HPAGE_PMD_SIZE) {
+			int err;
+
+			folio_get(folio);
+			spin_unlock(ptl);
+			folio_lock(folio);
+			err =3D split_folio(folio);
 
 [Severity: High]
-This is a pre-existing issue, but can this code path trigger a kernel panic
-if it encounters a raw PFN PMD from a VM_PFNMAP mapping?
+This isn't a bug introduced by this patch, but could this locking order cre=
+ate
+a refcount livelock?
 
-Looking at queue_pages_test_walk() in mm/mempolicy.c, it allows unmigratable
-VMAs (like VM_PFNMAP) to be walked if MPOL_MF_STRICT is specified:
-
-	if (!vma_migratable(vma) &&
-	    !(flags & MPOL_MF_STRICT))
-		return 1;
-
-	if (flags & (MPOL_MF_STRICT | MPOL_MF_MOVE | MPOL_MF_MOVE_ALL))
-		return 0;
-
-During the walk, queue_folios_pmd() unconditionally calls pmd_folio(pmdval)
-on present PMDs. Since VM_PFNMAP raw PFNs lack a valid struct page,
-pmd_folio() would return a garbage pointer, leading to a crash when
-queue_folio_required() or the newly added folio_is_zone_device() dereferenc=
-es
-it.
-
-Should queue_folios_pmd() be using vm_normal_folio_pmd() or similar to filt=
-er
-out raw PFN mappings before attempting to extract the folio?
-
->  	if (!(qp->flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) ||
->  	    !vma_migratable(walk->vma) ||
->  	    !migrate_folio_add(folio, qp->pagelist, qp->flags))
-
-[ ... ]
+Calling folio_get() before blocking on folio_lock() elevates the folio's
+refcount. When split_folio() later checks the expected refcount against
+folio_ref_count(), wouldn't it fail with -EAGAIN if other tasks are also
+blocked trying to lock the folio? Should the refcount be elevated only after
+acquiring the folio lock?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260728194714.3713=
-735-1-gourry@gourry.net?part=3D4
+735-1-gourry@gourry.net?part=3D2
