@@ -1,106 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BCA3546D6
-	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 05:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4E8306744
+	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 05:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785216935; cv=none; b=sfvieSord3/mXj8Sn3YBmm/JRS8gMVTicVSDDz68ASRudZN2gvVjw5WnKcIvMQlpDK/+90K84cNpKPqa2QRdBHwAdn8cmo+mJ+0/L7Xx7rzF/49FZrN4U8JurtSdz+vDodZaDrQ026dLnH/8SuGx1VQn7Sz1v5uhPG0HVo0ogEA=
+	t=1785217159; cv=none; b=t/oRV91EWm8vNhp+hzFaE67mGhe/c0CDygFqTg9AHosBySu6DhRIPoDMkKJLWFTZo3SYUSUdDLB29jK+dVn2cpMKrY7OC5p3sll3hpCXidmuX7wVEzWdyi8KfuhTCyOgkiXrfDiSmivaF3DKah+flai16Q2r9JZ4Pa3TTxf02bU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785216935; c=relaxed/simple;
-	bh=0jyI5zCaa2Mta5FNW6NRL7vBPRjUOgN0QyeXc8MwcsU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=QyzKm2G5T186g4rlubWOCkrrDCbHb3K18ZzHRph2i7acw5NIemJPKnpMGjXpALreCX4frBnzwxIZSbjNUdCX0mvrXKmwaOg5m8clN7wuKCwK4cqsIP3FYWkUOIEzFrWfuxF4NfMtkuNodBDqlaxmG83WW9rhmO2uipLM9YIykOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ECvodRl0; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785217159; c=relaxed/simple;
+	bh=xopjflmkgHij5ijq8VuCXp9bpK62Xo45OFooi+v8oBU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=G4RHtV9nMfULycb20ghNFJ20z0gRci/XWxG0CEy8SxaQ/hd7SLDCDwWaoKyiBIKfSlmZf+P/3xDtv+3XzI3GyruP2IXINT4zam7D5zrQTho22YOW4zCVtqUTE/GQjpRXwXEfou0OtkKwqmDY86vwxsqDPmsVPE1fzYa2iWN6eFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GdhACAnZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ECvodRl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B293F1F000E9;
-	Tue, 28 Jul 2026 05:35:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GdhACAnZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98AB1F000E9;
+	Tue, 28 Jul 2026 05:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785216933;
-	bh=WO7fIns+u+vSAhwblTD3HF4tacI1UeZahYG9+/C3ABE=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ECvodRl0xy4267bIakBk8hJHDrrpSyUlN0QxUa5WZ4kHgzCbyRp/yCQHWnNNH7kBH
-	 CX3Pi43J7PQsZu15Xi4/GmiDz+T00hiWr7q+WpE+jZHsYSnHDIwPgVLpkUnfA5b1yo
-	 p+wYPnCCfCxfvxR1f3N6Wk/6tpuY5bDmU1+Co7eqh9sIwa/cefykILLw3twDhH31i6
-	 QUGbotsMfP6TEWAMoYhJrs2BZyiUTSaT62JObNkPl6o/bLJCUY0E7GRrTuA2yBoPLf
-	 y0nRXxMtBXvRrlfengb6XYdGS6CaglX91zpmBUagFOsAkNVIwMy5Vh3uI7JJ06mpVe
-	 Rb3o7rawocEPw==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 08/10] selftests/damon/sysfs.sh: test
- hugepage_mem_bp quota goal
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260728052811.192712-9-sj@kernel.org>
-References: <20260728052811.192712-1-sj@kernel.org>
- <20260728052811.192712-9-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 28 Jul 2026 05:35:33 +0000
-Message-Id: <20260728053533.B293F1F000E9@smtp.kernel.org>
+	s=k20260515; t=1785217157;
+	bh=izawyRtougwcU+UVtjcMNV5/vHPy1fTiauVafJHxoqE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=GdhACAnZwFUtbJrixLsQFbnCvugZNzdpTWfKKWXxD/bfmPYkWOXNuNZZqLw2lmBbv
+	 0qsXbjWQpN44Ek4rDdAS5gjsnVMgkzck3MOpVLKbsbDyLXhlkDTEN7iqRkrO8Slk1m
+	 GO+QrF4MKpkf5xsCUekbR1vDIRcLfQPI3Au8bY7JKBIqs99d/913IOZ25AGVi96MUO
+	 CGu1ZDL2hFaABIqkdi4AhNN1wyhZ54/jiSzWAlY8I+TCy/Fp2brDNgZeycfBqZYU+L
+	 PG+Zc0w+z92joEKjnyGK5iV68mnjjCfOXk0talZ8EUftehCHmCxmaVIfcZUa162lUm
+	 tQyqavfVKGp+Q==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH 03/10] mm/damon/vaddr: remove a debug message
+Date: Mon, 27 Jul 2026 22:39:08 -0700
+Message-ID: <20260728053909.196568-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260728053243.B66471F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] The selftest unconditionally fails because the kernel implementa=
-tion for the 'hugepage_mem_bp' quota goal target metric is missing.
---
+On Tue, 28 Jul 2026 05:32:43 +0000 sashiko-bot@kernel.org wrote:
 
---- Patch [8]: [RFC PATCH 08/10] selftests/damon/sysfs.sh: test hugepage_me=
-m_bp quota goal ---
-commit 033ea051e9d9dfb2787f833f5569853c4af61194
-Author: SJ Park <sj@kernel.org>
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The 'ctx' parameter in '__damon_va_init_regions()' is now completely unused and should be removed.
+> --
+> 
+> --- Patch [3]: [RFC PATCH 03/10] mm/damon/vaddr: remove a debug message ---
+> commit 6f7aa725872ec3ac7c5da1213c336d706d99ebb1
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/vaddr: remove a debug message
+> 
+> This commit removes an old debug message in the DAMON virtual address
+> space operation set that hasn't been used meaningfully for the last
+> few years.
+> 
+> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> > index 4976775fe2762..5ccf70dc8a30b 100644
+> > --- a/mm/damon/vaddr.c
+> > +++ b/mm/damon/vaddr.c
+> > @@ -192,19 +192,10 @@ static int damon_va_three_regions(struct damon_target *t,
+> >  static void __damon_va_init_regions(struct damon_ctx *ctx,
+> >  				     struct damon_target *t)
+> 
+> [Severity: Low]
+> Since the removal of the debug message also removes the only usage of ctx
+> in __damon_va_init_regions(), should we also remove the ctx parameter from
+> this static function's signature and update its caller to avoid unused
+> parameter warnings?
 
-selftests/damon/sysfs.sh: test hugepage_mem_bp quota goal
+Good suggestion, I will do so.
 
-DAMON sysfs quota goal target_metric file now accepts 'hugepage_mem_bp'
-input. Test it is accepted in fundamental DAMON sysfs file operation
-selftest.
+> 
+> >  {
+> > -	struct damon_target *ti;
+> >  	struct damon_addr_range regions[3];
+> > -	int tidx = 0;
+> >  
+> > -	if (damon_va_three_regions(t, regions)) {
+> > -		damon_for_each_target(ti, ctx) {
+> > -			if (ti == t)
+> > -				break;
+> > -			tidx++;
+> > -		}
+> > -		pr_debug("Failed to get three regions of %dth target\n", tidx);
+> > +	if (damon_va_three_regions(t, regions))
+> >  		return;
+> > -	}
+> >  
+> >  	damon_set_regions(t, regions, 3, DAMON_MIN_REGION_SZ);
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260728052811.192712-1-sj@kernel.org?part=3
 
-> diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selft=
-ests/damon/sysfs.sh
-> --- a/tools/testing/selftests/damon/sysfs.sh
-> +++ b/tools/testing/selftests/damon/sysfs.sh
-> @@ -210,6 +210,7 @@ test_goal()
->  	ensure_write_succ "$fpath" "active_mem_bp" "valid input"
->  	ensure_write_succ "$fpath" "inactive_mem_bp" "valid input"
->  	ensure_write_succ "$fpath" "node_eligible_mem_bp" "valid input"
-> +	ensure_write_succ "$fpath" "hugepage_mem_bp" "valid input"
 
-[Severity: Medium]
-Will this selftest fail when executed?
-
-Looking at target_metric_store() in mm/damon/sysfs-schemes.c, the kernel
-validation loop returns -EINVAL because "hugepage_mem_bp" is not present in
-the damos_sysfs_qgoal_metric_names array:
-
-mm/damon/sysfs-schemes.c:target_metric_store() {
-	...
-	for (i =3D 0; i < ARRAY_SIZE(damos_sysfs_qgoal_metric_names); i++) {
-		struct damos_sysfs_qgoal_metric_name *metric_name;
-
-		metric_name =3D &damos_sysfs_qgoal_metric_names[i];
-		if (sysfs_streq(buf, metric_name->name)) {
-			goal->metric =3D metric_name->metric;
-			return count;
-		}
-	}
-	return -EINVAL;
-}
-
-Because the test assumes the write will succeed, the missing kernel
-implementation for this quota goal target metric will cause the write to be
-rejected and trigger a selftest failure.
-
->  	ensure_write_fail "$fpath" "foo" "invalid input"
->  	ensure_file "$goal_dir/nid" "exist" "600"
->  	ensure_file "$goal_dir/path" "exist" "600"
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260728052811.1927=
-12-1-sj@kernel.org?part=3D8
+Thanks,
+SJ
