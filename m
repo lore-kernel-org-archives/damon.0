@@ -1,157 +1,155 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9F74734E7
-	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 19:47:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E179C2EEE93
+	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 19:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785268052; cv=none; b=ckW8nffESzzW0hr9iIOlvSxi4vYdlG2Z4XaMMoWeqNMDSq2MYfmawdXJ2x71ZEPD9CGukLP+4k4ETJhkrIPtNudeNyGVr9+KRA8fV6uDqA6dD2tT93p7D79lwfzoA5HiwMQ3F6UINm73u9Hwk80yyy+kWh7lk1VZ6DiTZD1WRGw=
+	t=1785268627; cv=none; b=lGMeezt0WX1g1z8S1R051nRGxd83xDMocbrlMzBGryleeh9UDdybIPVvSUeYJ7fnh18obslkHGzi+GtmUXa4veMOcstVU80UZLhiI+k6fut0xUG6M/mBQXKLTP0oX/nWgWBUyvFPdgC8MgqpDjBDgwj0LfUaNYOT0pQu9LDSPl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785268052; c=relaxed/simple;
-	bh=kIrfus/hl/pctQx7Y9xBksIrFueXRHfHKGKjTDmfFcE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9QGwmJs2rK2gAGuBEr7pEExlery8803HAliXAatQwidycMiX4rjQRRUloLorf/DRFqLjw7yofF9RmF5whgDzOqFASeyPE+j1EHrZPPRGW/WJBFlp+HKiRmWfFAmvE60hElXfireWjHlp3MMYGVjxl406u1EjCAO48FMu4J/oF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=SGb0BFkw; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1785268627; c=relaxed/simple;
+	bh=CitnH4Nqjir9L2Uiq9McDsqzkwWUKvVZkjzx+Rqrs5o=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=VMYHBL2ekmo27UlE9dfsGWqGZ1BUO2RNJKINzD3XfKXUKRxu5d5Ju4xduDwMrKvBHsJhA+TD0qWWDbbMmn21JFCKWQB883VCw8+XNbITYer9iqeAPYgzruhhHObAh6sr82E5vw9ACAXjYQiCc9vbrXnpA+R3qfIbFZVYfNMHbz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YqO+GNSZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="SGb0BFkw"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-902fc790cd5so1152686d6.1
-        for <damon@lists.linux.dev>; Tue, 28 Jul 2026 12:47:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1785268049; x=1785872849; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=lFasOBUZoPmfk9ObuRJF8YRYjBN1D6LiYKjqRhex4gk=;
-        b=SGb0BFkw36wSc+4MnQCKQs6tHiKpaCgih55oed7Pj/rx1+oXsuF2fV8ojGue4XyQvN
-         36uqP/AtzttgmTBTeMuTbCn2vcSPTBxb7cIzcMHOIQB4cW2cEh0a3x0x2J8hZ+zSm7hE
-         I4zcW5KqF1Vs2rwmBrD9PaXt/LT++AKzNAUq/blODwv4/73GOyWL4xOGmwB35TXbq3O6
-         w3yYiRb8WI0NwxqMuJ+jTgIw6c7kaP4EHFyYRolmKJh2/TeGIqLCrdip/Xy6Bxy+txS2
-         d7AkoA+upvr66G1x9m7v8L0WhwTP0tnpG5Y8B0HRrmBOGVn9HMJ+Rsc8pDjD3qHrInWD
-         Qx4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785268049; x=1785872849;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=lFasOBUZoPmfk9ObuRJF8YRYjBN1D6LiYKjqRhex4gk=;
-        b=JKfQzz8vlhMOZtT5B2jUaMVIwXtds2ibu0V6Xs8+nFubBJuB1qIfe+cpppOQtdAEAc
-         SXE002RUG+2eiZSQfYjfE96ZI1NNXljfexrAmgzU+wYYluzacyLrw4YMUqgzx7fSo3M2
-         RqkR5Ol11Geha38c/YJGXDGCXB1517+fINLW/VbZF1Mh6JzauCGDELXmNaHs4ywVyaHU
-         m2vn+5TRv1R5UKzKIXu+lbea9lhahliRBzdwLDMl10db4aPiUPOJUoP1QSANhGzxv/UL
-         jFFcr/kRTOFyIk0843nT0I6jSc5UkyZCamxZJ51xPnO1FBj6YFGWYbAwBDDWRiXemFFp
-         9T3A==
-X-Gm-Message-State: AOJu0Yz4oyE6pOFISgGR20yZOHN85mANF6YIMbfjMwvo/aY9fH4eObcU
-	sHX8ufWPH8fdVIrhbDN+zY5tQB8j7GkzJkYauAPakOQtKNOgkcoedRMz62SDOmY4y2w=
-X-Gm-Gg: AR+sD11ZrQYgcOt+RWFLtKuexSQySB9Wq+ORncGgg6sila3Len0DMxxSs5NQGKWkR1m
-	T4G/kDIMmRWwcODgo5Id4PE9LW7Lym8gKou1/qQY+rB5b/gAT+RxV+ioriIaZyJURASgibB66lG
-	cpU45EMhN+T1yTugF+6F5EwDwEHoi2So+D+UjI2yuQuVqUSEmXAc1Vdc2VtnpZD4MCgpyXEvjcn
-	no2ZPPA+Cslaw39CvHNEyV4S51pH80SjRrvCifOfqo0sGFKU97Oe+V4tXtKg/w/z2Cxq385UVPh
-	l/2Ukc61O7sdEeuMpREIPtdFmAcM9gZbpMSwohZdzj+qU2U3ekp5J3RPSKZSh8/ynr+yi05ti8E
-	/6ttWuDzkWpEo1TvWY5WDhUvJx6POvXEDkp74uY6bKvroR9KdaJSiKuZw4jZXRcw+vbk5RWy+20
-	p/B3bmZ6rnlT4RWn6HVrPOOqaO7eJvoMpl5JTnKrTXYZPB/l4U5eWXhqj+gzC0aei11BkvB9LZk
-	dT6G9tzr8aqAydcyP9MoAv+ZG7ODwxHNn6G1UODQo12gO5NkQ==
-X-Received: by 2002:a05:6214:4847:b0:908:1bd5:9c38 with SMTP id 6a1803df08f44-9081bd59cc7mr30163246d6.14.1785268047908;
-        Tue, 28 Jul 2026 12:47:27 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F.lan (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9081dd6b539sm6700176d6.41.2026.07.28.12.47.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 12:47:27 -0700 (PDT)
-From: Gregory Price <gourry@gourry.net>
-To: linux-mm@kvack.org
-Cc: damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	kernel-team@meta.com,
-	sj@kernel.org,
-	akpm@linux-foundation.org,
-	david@kernel.org,
-	ljs@kernel.org,
-	ziy@nvidia.com,
-	baolin.wang@linux.alibaba.com,
-	liam@infradead.org,
-	npache@redhat.com,
-	ryan.roberts@arm.com,
-	dev.jain@arm.com,
-	baohua@kernel.org,
-	lance.yang@linux.dev,
-	usama.arif@linux.dev,
-	vbabka@kernel.org,
-	jannh@google.com,
-	matthew.brost@intel.com,
-	joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com,
-	byungchul@sk.com,
-	gourry@gourry.net,
-	ying.huang@linux.alibaba.com,
-	apopple@nvidia.com
-Subject: [PATCH 4/4] mm/mempolicy: skip zone device folios when queueing folios
-Date: Tue, 28 Jul 2026 15:47:14 -0400
-Message-ID: <20260728194714.3713735-5-gourry@gourry.net>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260728194714.3713735-1-gourry@gourry.net>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YqO+GNSZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F851F000E9;
+	Tue, 28 Jul 2026 19:57:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785268625;
+	bh=HQPAs+/hLx9X5V2tQtCYiaH+Bh/KYsAsUhQoxyY9yA0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=YqO+GNSZAkMuaNkPLadVeseSPnbyt2dpXU+vKgAD/peyf6fwMe4dtJIRwphxsxKYZ
+	 QCfvl7eg4y+GzCqUtYQbFZkHysD8p4ZrrdRrNj3h8iFX9gG/p3qrvIkwNMhRzxQcOd
+	 2MxOJQxxlAif/VBRR9h4ekJR7Z61KY5awv5PfJYmdZExIywaQdM1udJ5UdswV/DmG7
+	 NZJsdUpeLKMz2ose6hSHFla65yJXvY7XPoyCBGQVmlDr42+2d8+vrZouG5IaHe7xa0
+	 rfWRnyWuG3/GJXtKN1qdgde4a9qzSygDxK61E64g1O12IBGv+p/2mfMXKJnA+B08jG
+	 vA0fpTnSxsrIw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/4] mm/damon: defensively skip zone device folios in
+ damon_get_folio()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Gregory Price" <gourry@gourry.net>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260728194714.3713735-2-gourry@gourry.net>
 References: <20260728194714.3713735-1-gourry@gourry.net>
+ <20260728194714.3713735-2-gourry@gourry.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 28 Jul 2026 19:57:04 +0000
+Message-Id: <20260728195705.53F851F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-queue_folios_pte_range() already pairs vm_normal_folio() with an
-explicit folio_is_zone_device() check before adding folios to the
-migration pagelist.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-vm_normal_folio() alone does not reject zone device memory (a present
-device-coherent page in a normal VMA is returned as "normal").
+New issues:
+- [Medium] The explicit `folio_is_zone_device()` check added by the patch i=
+s dead code and fails to achieve its stated intent.
 
-Mirror the explicit check in the two other walkers.
+Pre-existing issues:
+- [High] Early return in damon_ptep_mkold and damon_pmdp_mkold skips MMU no=
+tifier aging for device-exclusive swap PTEs.
+- [High] The scheme's `last_applied` pointer caches a freed folio pointer, =
+leading to a dangling pointer comparison.
+--
 
-queue_folios_pmd() uses pmd_folio() directly and can encounter a present
-zone device PMD - e.g. a device-coherent THP.
+--- Patch [1]: [PATCH 1/4] mm/damon: defensively skip zone device folios in=
+ damon_get_folio() ---
+commit 8181b2e77c1b49bcb808528f343f72fdbf9d168c
+Author: Gregory Price <gourry@gourry.net>
 
-This is not filtered by existing checks:
-  !pmd_present()   - only rejects non-present device-private and
-                     migration entries
+mm/damon: defensively skip zone device folios in damon_get_folio()
 
-  vma_migratable() - excludes DAX and VM_PFNMAP.
+All DAMON physical- and virtual-address operations obtain their folios
+through damon_get_folio(). That helper already excludes ZONE_DEVICE
+memory implicitly via pfn_to_online_page() and folio_test_lru(), but
+this is inconsistent with other callers in mm/ which test explicitly.
 
-The early return also means such a folio is no longer counted in
-qp->nr_failed under MPOL_MF_STRICT.  This is the same pattern used
-by queue_folios_pte_range() (skipping zone device without failing).
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index 0981a5e3af172..0db1383de5d01 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+> @@ -32,7 +32,8 @@ struct folio *damon_get_folio(unsigned long pfn)
+>  	folio =3D page_folio(page);
+>  	if (!folio_try_get(folio))
+>  		return NULL;
+> -	if (unlikely(page_folio(page) !=3D folio) || !folio_test_lru(folio)) {
+> +	if (unlikely(page_folio(page) !=3D folio) || !folio_test_lru(folio) ||
+> +	    folio_is_zone_device(folio)) {
 
-queue_folios_hugetlb() cannot see zone device memory - hugetlb folios
-are never ZONE_DEVICE - so the check there is purely defensive and keeps
-all three walkers consistent.
+[Severity: Medium]
+Since ZONE_DEVICE folios do not have the LRU flag set, won't the
+!folio_test_lru(folio) check always evaluate to true for them?
 
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
----
- mm/mempolicy.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Additionally, earlier in damon_get_folio(), pfn_to_online_page(pfn) is
+called, which strictly returns NULL for ZONE_DEVICE memory. Doesn't this
+mean ZONE_DEVICE memory will never reach this new folio_is_zone_device()
+check at all, making it dead code?
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 5720f7f54d94..bd79e61a40d1 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -668,6 +668,8 @@ static void queue_folios_pmd(pmd_t *pmd, struct mm_walk *walk)
- 	}
- 	if (!queue_folio_required(folio, qp))
- 		return;
-+	if (folio_is_zone_device(folio))
-+		return;
- 	if (!(qp->flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) ||
- 	    !vma_migratable(walk->vma) ||
- 	    !migrate_folio_add(folio, qp->pagelist, qp->flags))
-@@ -797,6 +799,8 @@ static int queue_folios_hugetlb(pte_t *pte, unsigned long hmask,
- 	folio = pfn_folio(pte_pfn(ptep));
- 	if (!queue_folio_required(folio, qp))
- 		goto unlock;
-+	if (folio_is_zone_device(folio))
-+		goto unlock;
- 	if (!(flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) ||
- 	    !vma_migratable(walk->vma)) {
- 		qp->nr_failed++;
--- 
-2.55.0
+>  		folio_put(folio);
+>  		folio =3D NULL;
+>  	}
 
+[Severity: High]
+This is a pre-existing issue, but I have a question about how
+damon_get_folio() returning NULL interacts with device-exclusive memory.
+
+When DAMON encounters a device-exclusive PFN swap PTE in damon_ptep_mkold()
+or damon_pmdp_mkold(), damon_get_folio() returns NULL because
+pfn_to_online_page() rejects it. Both of these callers then immediately
+early-return on !folio:
+
+mm/damon/ops-common.c:damon_ptep_mkold() {
+    ...
+    folio =3D damon_get_folio(pfn);
+    if (!folio)
+        return;
+    ...
+}
+
+Doesn't this early return silently bypass the mmu_notifier_clear_young()
+call completely, breaking DAMON's ability to monitor device accesses
+(which relies on the MMU notifier for device-exclusive PTEs)?
+
+[Severity: High]
+This isn't a bug introduced by this patch, but looking at how DAMOS
+physical address apply functions interact with folios, I noticed
+something about the last_applied pointer:
+
+In mm/damon/paddr.c:damon_pa_pageout(), a reference is dropped:
+
+mm/damon/paddr.c:damon_pa_pageout() {
+    ...
+    folio_put(folio);
+    ...
+    s->last_applied =3D folio;
+}
+
+Since folio_put() drops the reference, could this store a dangling
+pointer across DAMON region processing boundaries?
+
+If that physical memory is subsequently reallocated for a new folio,
+it will reside at the exact same address. When this pointer is later
+checked in damon_pa_invalid_damos_folio():
+
+mm/damon/paddr.c:damon_pa_invalid_damos_folio() {
+    ...
+    if (folio =3D=3D s->last_applied) {
+        folio_put(folio);
+        return true;
+    }
+    ...
+}
+
+Could this falsely match the dangling pointer and erroneously skip a
+valid, newly allocated folio from DAMOS actions?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260728194714.3713=
+735-1-gourry@gourry.net?part=3D1
