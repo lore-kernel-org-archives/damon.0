@@ -1,51 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9D23B47E0;
-	Tue, 28 Jul 2026 05:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CEE3B4EBC;
+	Tue, 28 Jul 2026 05:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785216501; cv=none; b=iHlh/R/CEwo3fPdp/cOoD8ERVRwqTQ53z9bgs2Xbf6nOCMiiyu4KufZGDEPU6trn1s6PxZ6v7mfNmANI5Vt2oJ91I9KFqV4mQvQ7+E3bNWaNlQYZQcwMZUfewTPJenmoRyPT9s4XRy70F7lopeWin2PYU4BmMRy2omzCk0TA98s=
+	t=1785216501; cv=none; b=gjBZbVeQV182IW0Rn5bXagd8ldmQOWX9XEpbNZKup1pT04bO3F3sNfPubw5MeUSimuv95W7B3UWDozel/PAGiVPlHbIrQIxOMGI2z4sib9idGqBbL9gA1LZ/degK0/xaUDf0q49iZRYCsYpJe/huIsZ3DQne4wCYO62QlQvxyWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785216501; c=relaxed/simple;
-	bh=94L9Y6jblqW5ICiSyH0suMgSyVNNc6/w7ucmr3p0soQ=;
+	bh=2xY8XmsQ169rflgljcAafurgWq/upAZgTuMMbRiXQh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P6v2W5v/NS2aFks5rKiIyg+t1Bdqlc1TKE8FsPjBf7ZnicSqFosGVYa6ek0Db3R9oEa/PzmpTkXCTi1esB8JrtE0W0pPIHp/6fcQcSZhpgIybMWTEUypXnINy8GuevbQaV/DpkmeoPj3t5AZdBtJ37OG4Vh9WhGetvWQ4qHtDeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QVt3VbG2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tYblMZhYVawq/AjjhPnQPTWPHQ4MiM9C6kUofbsrq74p5PKPbKXN8KjaHu89bLz8KKWjoiVJWNsAeMd1cVwsiLKzExCIlaIzOvyEHM2ZojgGyR+/kuGec57Z8ASeK9nNcLb3tT5/MyL3ZbAgkK/yAG3Eu1p/l25l9sv9Po8QdAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D79Wl+u+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QVt3VbG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA061F00A3E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D79Wl+u+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5931F00ACF;
 	Tue, 28 Jul 2026 05:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785216499;
-	bh=+7L5cUB5gmn/G0XCH5EnzRVEYnRmQ6289QitHVcV3Es=;
+	s=k20260515; t=1785216500;
+	bh=FTkFqCNT/LseVbtXKhwVw4AevH2QQucXk6b0DrI2IK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QVt3VbG2+UUJwhyOFGMlC4p5BB9UX9zAbrDUSY4ugI3W1kI2lxkdwDG0oAlGC0S0m
-	 7ViLVdAdd2KFukOc6mIwbE7YUG9jLqlxhooMrjKTalB3SHGjL6s1pmvg+Ru4b1ry1e
-	 XZGKX7c8B3OPzellSm3tJOmJtldea4eFv+ifNg7XSIOW5lySQKpadFokmN1ZLLx+di
-	 oCVC2HdOqPhzAHF1KfVAyvnMgusOD27Z1gcO+EuVXA/GW0qYTOsBbHpRnwf3dYknW4
-	 I4jF/VbbIJIT/AMRRV8H7V8iw+En+xxauXjO2OrmmJFw7/i2/MagjBXQxYvxlPtLw0
-	 Q5/PkpCsoNXoQ==
+	b=D79Wl+u+H5GZQ89D0Yq2/pD/Qra22nMMYXqRknbyYwIsEbcCD7WW9xAg9oxwd88An
+	 xV8DXBGQwXek7sdNI1+/P2r+TOL80aLQoH7SjT2wad84L4HKAH3XHP3dv6H0bA3Fa9
+	 FGT6iScfI62Nx3Y1Y/zfRix9/U6Ec/IJSwpyI56y0Vi9japCqQGGwqfXC0gUiuXASz
+	 WNYRNlCmVhdTrim+l9CXH8b9n2BOG9fpWHjdI92kMGywSELOcaj6TArv6jmfM4Vq4q
+	 0oeuRzl4Fy1qe88mMbEnpyJnNcq6g2sdBegU0Ds7q/99Crkz7QYJeJQQ500YldL1Gk
+	 f72SYsmBGR+Qw==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	Lorenzo Stoakes <ljs@kernel.org>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 09/10] Docs/mm/damon/maintainer-profile: update AI review for Sashiko replies
-Date: Mon, 27 Jul 2026 22:28:08 -0700
-Message-ID: <20260728052811.192712-10-sj@kernel.org>
+Subject: [RFC PATCH 10/10] Docs/ABI/damon: recommend subsystem doc instead of admin-guide
+Date: Mon, 27 Jul 2026 22:28:09 -0700
+Message-ID: <20260728052811.192712-11-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260728052811.192712-1-sj@kernel.org>
 References: <20260728052811.192712-1-sj@kernel.org>
@@ -57,53 +54,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the past, sharing Sashiko review results was tedious.  Also it was
-suggested to minimize the recipients on the sharing mails.  Hence the AI
-review section of DAMON maintainer profile document was updated to give
-guidance about available tools for making the sharing easier, and how
-the recipients list should be managed.
-
-Now DAMON is onboarded [1] to Sashiko's automatic review replies
-feature.  Sashiko directly sends its reviews as replies to the patch
-mail thread. It also reduces the recipients list to deliver the
-reporting to only the author and the mailing list.
-
-Remove the old guidance that is no more necessary but only confusing.
-
-[1] https://github.com/sashiko-dev/sashiko/commit/b554c7b6e733
+DAMON ABI doc is recommending DAMON admin-guide for people who are
+willing to know further about DAMON.  Nowadays the subsystem doc
+(Documentation/mm/damon) is a more recommended place for even beginners.
+Recommend the subsystem doc over admin-guide.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/maintainer-profile.rst | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ Documentation/ABI/testing/sysfs-kernel-mm-damon | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
-index fb2fa00cc9aa1..a7c1352339378 100644
---- a/Documentation/mm/damon/maintainer-profile.rst
-+++ b/Documentation/mm/damon/maintainer-profile.rst
-@@ -106,18 +106,9 @@ AI Review
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index f8d2601e82904..ad21f58f3c912 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -3,7 +3,7 @@ Date:		Mar 2022
+ Contact:	SJ Park <sj@kernel.org>
+ Description:	Interface for Data Access MONitoring (DAMON).  Contains files
+ 		for controlling DAMON.  For more details on DAMON itself,
+-		please refer to Documentation/admin-guide/mm/damon/index.rst.
++		please refer to Documentation/mm/damon/index.rst.
  
- For patches that are publicly posted to DAMON mailing list
- (damon@lists.linux.dev), AI reviews of the patches will be available at
--sashiko.dev.  The reviews could also be sent as mails to the author of the
--patch.
--
--Patch authors are encouraged to check the AI reviews and share their opinions.
--The sharing could be done as a reply to the mail thread.  Consider reducing the
--recipients list for such sharing, since some people are not really interested
--in AI reviews.  As a rule of thumb, drop stable@vger.kernel.org and individuals
--except DAMON maintainer.
--
--`hkml` also provides a `feature
--<https://github.com/sjp38/hackermail/blob/master/USAGE.md#forwarding-sashikodev-statuscomments-to-mailing-list>`_
--for such sharing.  Please feel free to use the feature.
-+sashiko.dev.  The reviews will also be sent as replies to the author of the
-+patch and the mailing list.
- 
--It is only an optional recommendation.  DAMON maintainer could also ask any
--question about the AI reviews, though.
-+Patch authors are encouraged to check the AI reviews and share their opinions
-+by replying on the mail thread.  It is only an optional recommendation.  DAMON
-+maintainer could also ask any question about the AI reviews, though.
+ What:		/sys/kernel/mm/damon/admin/
+ Date:		Mar 2022
 -- 
 2.47.3
