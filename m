@@ -1,139 +1,157 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D32391513
-	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 04:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161433A2E3F
+	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 04:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785212698; cv=none; b=UmXybCOuI3UeGOlr9U3RHc6p150NR7uXsr4CC23rBx4Ok8Cc3K0JoBvkZ/cWlbWmndKGW+IAQFZwJJzO/XHGwzQ+6eaxfFqYmSLBls0+Bx/bqRgqsf2kmm1iXMSAY1xQ4FCWuq1OnqcuBIddWVny5nXdZNPOrQQjf1BrL6erE6I=
+	t=1785212720; cv=none; b=ZAJ/Y1e7T6uGRJcRkZdTiEczfGmmEPTcAq5H2ZKd2iD5rr/NLD9l4GDDIU/VP1vbMpegj+QmlK5NxhGmQO42tgFCjupNPbVr2wvn8uLRWj+az0uzL30MKGUUR0YXzKoLOy21zAKNaMUpgNCdr3FAoaT6w6JylpBWLWLUVlXwLTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785212698; c=relaxed/simple;
-	bh=d46YQ03EJpoo9aBUH1Y0vuiKUm74SxELgBFiN6cjVnE=;
+	s=arc-20240116; t=1785212720; c=relaxed/simple;
+	bh=RfX0zQbZpgZJBjoNxPRGVm0Dw5SmRsYH5Of9dwZ6HVE=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=YHGcaCC0r5YTRcXGnZEnOMLY7VjIGyOlQFjgdFLdsHqIr8MyQK0SpzLEop9IicmAt91ODJMkCFljyQKUi5Fj4BVXqXeFYc4K+2fBPTf/OTkj59u92m9vL1f7BZJKdzyykPOEgK0otkEWt3NJNAvr6jbsonWQszSi763tYrXUbE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=asfTo9cS; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=f3cwWfu+PCkV56PF/l/ovrRvA2lQSyLRm/ixayB5UeBKvVUI6IOT+QMsOpKOPGgOCd9mFLuFejqC9R2JQPnGa/RfhY+54acknkYLPgJ3S+CeuAKwNyRPABY2pquOfsvMot4LGwmC1MLYZg93LQrs1WVm5eCBRaaGLg8TNQqSFSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KfT0i1Gg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="asfTo9cS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D531F000E9;
-	Tue, 28 Jul 2026 04:24:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KfT0i1Gg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899B61F000E9;
+	Tue, 28 Jul 2026 04:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785212697;
-	bh=jj1MMS0gsFx3yGhg9PytxKPAT0qv1wv2OrjodmaiHAM=;
+	s=k20260515; t=1785212718;
+	bh=i3jg/617ibT4OT4e/84y40B3MTcKUyv9FV5VbUtPkP0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=asfTo9cSCg5KLLesVUIEsTdNbLmEATfLQwCyEIF67RYebYHe+1EokFz2N/tAGSrhn
-	 zjkWO+5EKR5R/LJu1gEim+WnRVW0UJX4hqT62Zv7i2l3gLJsmwCmQdvDDNgPd8stTY
-	 rRpquCdIu/GyE2oYcyp8nlx60c+UlJSgHt+MHQR1HpjnZQ5ih/YMTWzLzlVF3ZvEGD
-	 MW2yZ5ugCU+/E3CaZp2IBmYerUTyIKelzsKCchYEis/qs1CQ6WI8uBV4UCHiaHs58T
-	 iQpY9k/ZL7/k/tu85u7X+fyQAx5MvBo2MNPHa46KksrScbHKRkshBQwIEwB3zX+oTc
-	 rQkP6GkxPIJAQ==
+	b=KfT0i1GgpTSmxk8VfmFuINtfsT/0v7agRQgGd5CSm+HJGPDIBJsILZ3Qd38Cb2MsD
+	 F1RP/aGivP/iIWQCqnmR0TISAkQGNH0P4kUOenFjMhGZ6hO3J2lrGlaKKIlRKHXRg1
+	 JT7mr4MCdlcjbOPmzCtMGXloE0ImE2soageUd4VLD8E6/xlzN7++dxjmS4Ak8aE/yA
+	 Sbb8d6xh1Ve41eZ35rj6Pu0ft18jlhVALHrXAw/44cJ2tpPWgiPMUeN8zDarlXI4yX
+	 v4fN0invBk0D12Fqlq4EQB7aaVMOEdyKYunAnCPi4ik3Mzi9oM3hWqs+dbHcWnXXLa
+	 C29N2JfuJzq0w==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2.2 08/17] mm/damon/paddr: support damon_prep
+Subject: Re: [RFC PATCH v2.2 05/17] mm/damon/core: introduce damon_prep
+ struct
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260728041242.187380-9-sj@kernel.org>
+In-Reply-To: <20260728041242.187380-6-sj@kernel.org>
 References: <20260728041242.187380-1-sj@kernel.org>
- <20260728041242.187380-9-sj@kernel.org>
+ <20260728041242.187380-6-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 28 Jul 2026 04:24:56 +0000
-Message-Id: <20260728042457.48D531F000E9@smtp.kernel.org>
+Date: Tue, 28 Jul 2026 04:25:18 +0000
+Message-Id: <20260728042518.899B61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [High] damon_pa_prep_probes() executes prep actions redundantly and ignor=
-es probe filters, causing excessive rmap walks and global LRU degradation.
+- [Medium] The newly introduced `preps` list in `struct damon_probe` is not=
+ synchronized during `damon_commit_probes()`.
+- [Medium] Missing public API to remove or destroy individual `damon_prep` =
+instances dynamically.
 --
 
---- Patch [8]: [RFC PATCH v2.2 08/17] mm/damon/paddr: support damon_prep ---
-commit 5d5b08fab7578294743c8bbbba6c3bfa16036115
+--- Patch [5]: [RFC PATCH v2.2 05/17] mm/damon/core: introduce damon_prep s=
+truct ---
+commit d7a749334ed0e3303b955b00673d30f87ca5091c
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/paddr: support damon_prep
+mm/damon/core: introduce damon_prep struct
 
-This commit implements the damon_operations->prep_probes() callback to
-support the DAMON_PREP_SET_PGIDLE action. It unsets page table accessed
-bits and sets the PG_Idle flag, similar to what is done for access check
-preparation.
+Some DAMON probe filter types require preparatory actions to operate
+effectively, such as setting the PG_Idle flag at a specific time. This
+commit introduces a new data type called damon_prep to specify these
+preparation actions for each probe. DAMON will execute the action for
+each region per sampling interval.
 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 199de1463fa06..8d8fcd1369e56 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index a8bb9ee6979e3..1a8de735f955b 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
 
 [ ... ]
 
-> @@ -105,6 +105,40 @@ static unsigned int damon_pa_check_accesses(struct d=
-amon_ctx *ctx)
->  	return max_nr_accesses;
+> @@ -780,6 +801,8 @@ struct damon_filter {
+>  struct damon_probe {
+>  	unsigned int weight;
+>  /* private: */
+> +	/* Preparation actions to apply to each probing memory. */
+> +	struct list_head preps;
+>  	/* Filters for assessing if a given region is for this probe. */
+>  	struct list_head filters;
+>  	/* Siblings list. */
+
+[Severity: Medium]
+Will this preps list be synchronized when a DAMON context is updated or
+cloned?
+
+Looking at damon_commit_probes() in mm/damon/core.c, it only seems to copy
+the weight and filters from the source probe to the destination probe:
+
+mm/damon/core.c:damon_commit_probes() {
+    ...
+    if (src_probe) {
+        dst_probe->weight =3D src_probe->weight;
+        err =3D damon_commit_filters(dst_probe, src_probe);
+        if (err)
+            return err;
+    } else {
+        damon_destroy_probe(dst_probe);
+    }
+    ...
+}
+
+It appears there is no logic to copy the new preps list. Could this leave
+the running context's preparation actions out of sync and silently discard
+configurations when damon_commit_ctx() is called?
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 644daf5a16560..0b396c2456d05 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+
+[ ... ]
+
+> @@ -111,6 +111,28 @@ int damon_select_ops(struct damon_ctx *ctx, enum dam=
+on_ops_id id)
+>  	return err;
 >  }
 > =20
-> +static void damon_pa_prep_probes_region(struct damon_region *r,
-> +		struct damon_probe *probe, struct damon_ctx *ctx)
+> +struct damon_prep *damon_new_prep(enum damon_prep_action action)
 > +{
-> +	struct damon_prep *p;
+> +	struct damon_prep *prep;
 > +
-> +	damon_for_each_prep(p, probe) {
-> +		switch (p->action) {
-> +		case DAMON_PREP_SET_PGIDLE:
-> +			damon_pa_mkold(damon_pa_phys_addr(r->sampling_addr,
-> +						ctx->addr_unit));
-> +			break;
-> +		default:
-> +			break;
-> +		}
-> +	}
+> +	prep =3D kmalloc_obj(*prep);
+> +	if (!prep)
+> +		return NULL;
+> +	prep->action =3D action;
+> +	INIT_LIST_HEAD(&prep->list);
+> +	return prep;
 > +}
 > +
-> +static void damon_pa_prep_probes(struct damon_ctx *ctx, bool set_samples)
+> +void damon_add_prep(struct damon_probe *p, struct damon_prep *prep)
 > +{
-> +	struct damon_target *t;
-> +	struct damon_region *r;
-> +	struct damon_probe *p;
-> +
-> +	damon_for_each_target(t, ctx) {
-> +		damon_for_each_region(r, t) {
-> +			if (set_samples)
-> +				r->sampling_addr =3D damon_rand(ctx, r->ar.start,
-> +						r->ar.end);
-> +			damon_for_each_probe(p, ctx)
-> +				damon_pa_prep_probes_region(r, p, ctx);
-
-[Severity: High]
-Does this code redundantly execute damon_pa_mkold() and ignore probe filter=
-s?
-
-In kdamond_fn(), if standard access checks are enabled, both
-prepare_access_checks() and prep_probes() can execute on the same tick:
-
-    if (!access_check_disabled && ctx->ops.prepare_access_checks)
-        ctx->ops.prepare_access_checks(ctx);
-    if (do_prep)
-        ctx->ops.prep_probes(ctx, access_check_disabled);
-
-Because prepare_access_checks() also calls damon_pa_mkold(), the subsequent
-iteration over all probes here unconditionally calls it again on the exact =
-same
-sampling address for every probe configured with DAMON_PREP_SET_PGIDLE. Sin=
-ce
-damon_pa_mkold() performs a costly rmap_walk, this multiplies the overhead.
-
-Additionally, this loop does not evaluate probe filters (such as MEMCG or
-ANON) before applying prep actions. Could this blindly clear the accessed b=
-it
-for all sampled pages globally, artificially aging pages that the user
-explicitly excluded and degrading system-wide memory reclaim decisions?
-
-> +		}
-> +	}
+> +	list_add_tail(&prep->list, &p->preps);
 > +}
 > +
+> +static void damon_free_prep(struct damon_prep *p)
+> +{
+> +	kfree(p);
+> +}
+
+[Severity: Medium]
+Should there be a public API to remove or destroy individual damon_prep
+instances dynamically?
+
+Since damon_add_prep() is provided to dynamically add preparation actions
+to a probe, it seems there might be a need for a corresponding
+damon_destroy_prep() or damon_del_prep(). Without exporting such functions
+and with damon_free_prep() restricted to static scope, is there a way for
+API consumers to dynamically remove or free a prep without destroying the
+entire probe?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260728041242.1873=
-80-1-sj@kernel.org?part=3D8
+80-1-sj@kernel.org?part=3D5
