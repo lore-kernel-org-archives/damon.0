@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D708B38D3F8;
-	Tue, 28 Jul 2026 04:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C8738E5E9;
+	Tue, 28 Jul 2026 04:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785211979; cv=none; b=Mt6ukmTforFBe9HyJX/PzUTqdeGVcPLF491d02YrPXmBan8Uuz+vUxYdSV2kyLLUNuiyWCkEknc2m8ElygnbNsxjbB8f0iOjh0Q2i8XAACvEQjQFsiLadDOMCoW1u0F4EP1Z1VksQB3g1esjIPW14bMqZk6MbkutQDheUuxN9OM=
+	t=1785211979; cv=none; b=d5g/VvfiIviYtLfbuvuLfrpVLMaPU6Ydq3yY4O10hxQNOfKV2mKKszNGD/YCRB53yaRRc8xoYNMQH6mbOjtx8sR/HpqgZNLC/ve5h0jIa0XIPVnIxcIDTsZzUugcqpUjUgYyp1rUJ6heQnAXJ4PKi2Pvjn5hPx4/4IpiZv/XO7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785211979; c=relaxed/simple;
-	bh=BVp9c5hdMqZK4f3puq6W6ae4o58hWsq3N5h/p4mXKxY=;
+	bh=2p2VVBvUhnG1Sa0Gz6zzt6LmGpifGCLecxKD1eCWD7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aE0AL/YDO1KoZolZFsGxYud7TsabNNrzHR6EtkoRP8DJSAiSqwFD7+j+RkDtbhOQcYpKHtUhogHi62w/iGU2NqtnFgxjZ7skFvn6Bw2ogMkAvoAsCSgDrd9o10UyTjxpYeKUvnSHK5YJ2AClken7jrCHM4NoxY1GKF4fPlrHnaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UmuTp6v4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h/19NA64aiBW1pVogXcjMpAQcirK1d+9cznC595Pzy4Qg4bnTFw+n8MaB+133d8RmE5rC0U1CWUAI4/Tg25FGjVLgEUHsWgz+RU3XB9S/w5TtI68mNLcoJ8CBK1JO48+GMqEa+GLBu68jhYCl8WyUQUsoTWkNL9T7SrUT13qT1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mcpp4QfN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UmuTp6v4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC951F00ADE;
-	Tue, 28 Jul 2026 04:12:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mcpp4QfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7D41F00ACA;
+	Tue, 28 Jul 2026 04:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785211975;
-	bh=S9iQ2CUL5Rc0Ka6RGKfOqCWa8tUB1pFEcM1janT09BA=;
+	s=k20260515; t=1785211976;
+	bh=ASGSrOhiTqeMR2TBi/rXvzMlAFD79/gguOPL/F3Ka3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UmuTp6v4hITtNNZ/2H7iOuVZknyvn6HDGNFqlPyxe+Sk39i7lAGnLEkOMq2XFHQwc
-	 dlOdghpSfQarFAowtN02qH9bLYT51RisZ0rDUEQcl7/cPzzttuR+/ny0DqokEaEHct
-	 pO6CskHRh4XOYrItT35/2HC1QnYcgbOmak1JVcN3TFXxLaN8afIgc/ZabAfZXITpxU
-	 /Dr5DrylOm80hZ7zW56r5wfcvFFeGSMwfbV9BmVazE7g5ObPul6k8UFSIthKn8DtAM
-	 fITqvPUW/5AnlitXk4T7uRbQIJS00xglF0O3TvOd4HzaM6gK4PwBzsttPNSRjr+UnI
-	 3uLps0I0Er9bw==
+	b=mcpp4QfNtxihZYAleE21Z3Ri3KIkrvTcvgY8y9aHzD0MSPySn4epb62Nx0mHkydav
+	 Xslw8Z4GhYwxQyHlAElP9bYx6/bR9Q8oc5scIwqXo+Yk7rstTqrUDtykRnCGnyld+T
+	 Elwa7AKysvWyhX4kUVdyVMnfNFnW0mk7URKm6vGCzMexSWdv1XD0JAzKmke+bdvfQU
+	 rxfNx/+BxRV7l2kBt/guaO/bG6uhESzsNEPsteMM25EFiqIa8qLBDzGVVQ1kKZREwI
+	 UWwZmyNadizHkFKUT3d0t8BT3C9aXxuRuKSCw2MbY0dyiVOeguEd26fuD60MvFGx5r
+	 UnmfTfyBly98Q==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.2 10/17] mm/damon/sysfs: implement preps/nr_preps file
-Date: Mon, 27 Jul 2026 21:12:31 -0700
-Message-ID: <20260728041242.187380-11-sj@kernel.org>
+Subject: [RFC PATCH v2.2 13/17] mm/damon/sysfs: pass preps to DAMON core
+Date: Mon, 27 Jul 2026 21:12:34 -0700
+Message-ID: <20260728041242.187380-14-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260728041242.187380-1-sj@kernel.org>
 References: <20260728041242.187380-1-sj@kernel.org>
@@ -47,99 +47,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement nr_preps file under the preps directory.  It will be evolved
-to be used for generating sub directories that will represent each probe
-preparation action.
+DAMON sysfs interface provides the files for setting DAMON probe preps.
+But the underlying code is not really passing the user-set values to
+DAMON core.  Pass those.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 52 insertions(+), 1 deletion(-)
+ mm/damon/sysfs.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 66a3e7de869a8..38affef08d0fb 100644
+index c0130843223d7..d02f5f8ceae5b 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -756,6 +756,7 @@ static const struct kobj_type damon_sysfs_intervals_ktype = {
- 
- struct damon_sysfs_preps {
- 	struct kobject kobj;
-+	int nr;
- };
- 
- static struct damon_sysfs_preps *damon_sysfs_preps_alloc(void)
-@@ -763,12 +764,60 @@ static struct damon_sysfs_preps *damon_sysfs_preps_alloc(void)
- 	return kzalloc_obj(struct damon_sysfs_preps);
+@@ -2176,6 +2176,23 @@ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
+ 	return damon_set_attrs(ctx, &attrs);
  }
  
-+static void damon_sysfs_preps_rm_dirs(struct damon_sysfs_preps *preps)
++static int damon_sysfs_set_preps(struct damon_probe *probe,
++		struct damon_sysfs_preps *sys_preps)
 +{
-+	preps->nr = 0;
-+}
++	int i;
 +
-+static int damon_sysfs_preps_add_dirs(struct damon_sysfs_preps *preps,
-+		int nr_preps)
-+{
-+	preps->nr = nr_preps;
++	for (i = 0; i < sys_preps->nr; i++) {
++		struct damon_sysfs_prep *sys_prep = sys_preps->preps_arr[i];
++		struct damon_prep *prep;
++
++		prep = damon_new_prep(sys_prep->action);
++		if (!prep)
++			return -ENOMEM;
++		damon_add_prep(probe, prep);
++	}
 +	return 0;
 +}
 +
-+static ssize_t nr_preps_show(struct kobject *kobj, struct kobj_attribute *attr,
-+		char *buf)
-+{
-+	struct damon_sysfs_preps *preps = container_of(kobj,
-+			struct damon_sysfs_preps, kobj);
-+
-+	return sysfs_emit(buf, "%d\n", preps->nr);
-+}
-+
-+static ssize_t nr_preps_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_preps *preps;
-+	int nr, err = kstrtoint(buf, 0, &nr);
-+
-+	if (err)
-+		return err;
-+	if (nr < 0)
-+		return -EINVAL;
-+
-+	preps = container_of(kobj, struct damon_sysfs_preps, kobj);
-+
-+	if (!mutex_trylock(&damon_sysfs_lock))
-+		return -EBUSY;
-+	err = damon_sysfs_preps_add_dirs(preps, nr);
-+	mutex_unlock(&damon_sysfs_lock);
-+	if (err)
-+		return err;
-+
-+	return count;
-+}
-+
- static void damon_sysfs_preps_release(struct kobject *kobj)
+ static int damon_sysfs_set_filters(struct damon_probe *probe,
+ 		struct damon_sysfs_filters *sys_filters)
  {
- 	kfree(container_of(kobj, struct damon_sysfs_preps, kobj));
- }
- 
-+static struct kobj_attribute damon_sysfs_preps_nr_attr =
-+		__ATTR_RW_MODE(nr_preps, 0600);
-+
- static struct attribute *damon_sysfs_preps_attrs[] = {
-+	&damon_sysfs_preps_nr_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_preps);
-@@ -1150,8 +1199,10 @@ static int damon_sysfs_probe_add_dirs(struct damon_sysfs_probe *probe)
- 
- static void damon_sysfs_probe_rm_dirs(struct damon_sysfs_probe *probe)
+@@ -2211,7 +2228,15 @@ static int damon_sysfs_set_probe(struct damon_probe *probe,
+ 		struct damon_sysfs_probe *sys_probe)
  {
--	if (probe->preps)
-+	if (probe->preps) {
-+		damon_sysfs_preps_rm_dirs(probe->preps);
- 		kobject_put(&probe->preps->kobj);
+ 	struct damon_sysfs_filters *sys_filters;
++	struct damon_sysfs_preps *sys_preps;
++	int err;
+ 
++	sys_preps = sys_probe->preps;
++	if (sys_preps) {
++		err = damon_sysfs_set_preps(probe, sys_preps);
++		if (err)
++			return err;
 +	}
- 	if (probe->filters) {
- 		damon_sysfs_filters_rm_dirs(probe->filters);
- 		kobject_put(&probe->filters->kobj);
+ 	sys_filters = sys_probe->filters;
+ 	if (!sys_filters)
+ 		return 0;
 -- 
 2.47.3
