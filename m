@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3965B2D8364
-	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 05:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BCA3546D6
+	for <damon@lists.linux.dev>; Tue, 28 Jul 2026 05:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785216826; cv=none; b=HDv3VmFeZEfJ2D8p4TGASPKJzdtn8b8ZkxtvC8E3eVDVJmzkpykoLB8+4ddWUsqfhGHlmoXi3MZxf+k9IPfwCzMQIp6bL1sOUN4tMMv8LbtuWRyWoKCxfu2hi3Zq2qf3gyNXkAao6r2eoI0ZniaKae0nECGoJAa4ePlZ8cRnsC8=
+	t=1785216935; cv=none; b=sfvieSord3/mXj8Sn3YBmm/JRS8gMVTicVSDDz68ASRudZN2gvVjw5WnKcIvMQlpDK/+90K84cNpKPqa2QRdBHwAdn8cmo+mJ+0/L7Xx7rzF/49FZrN4U8JurtSdz+vDodZaDrQ026dLnH/8SuGx1VQn7Sz1v5uhPG0HVo0ogEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785216826; c=relaxed/simple;
-	bh=luCat/qIFjRzl3hrD25AsQzb6uCsRvK44oyKZ5IL278=;
+	s=arc-20240116; t=1785216935; c=relaxed/simple;
+	bh=0jyI5zCaa2Mta5FNW6NRL7vBPRjUOgN0QyeXc8MwcsU=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=dbxi5v0aMWhrcHqW169LurMb85B6amW2Md1dRj8bVhfGZ9cbqwxxpL2MJdZJqzJrtuUOqmSLrHLr9kqTiy22wbg078nydgqmZF/Y/fLrz7WRUHrUExbwfIBOtLyNmKML76WkMA47owulUlrgfTyVZ3VfPDeUvqFcFbmybCzEQbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dK5b4Hsh; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=QyzKm2G5T186g4rlubWOCkrrDCbHb3K18ZzHRph2i7acw5NIemJPKnpMGjXpALreCX4frBnzwxIZSbjNUdCX0mvrXKmwaOg5m8clN7wuKCwK4cqsIP3FYWkUOIEzFrWfuxF4NfMtkuNodBDqlaxmG83WW9rhmO2uipLM9YIykOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ECvodRl0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dK5b4Hsh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42901F000E9;
-	Tue, 28 Jul 2026 05:33:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ECvodRl0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B293F1F000E9;
+	Tue, 28 Jul 2026 05:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785216824;
-	bh=buOEjON6uKdYkVmwt8Ylt76lD7+ys0DIcuQHaJoeQak=;
+	s=k20260515; t=1785216933;
+	bh=WO7fIns+u+vSAhwblTD3HF4tacI1UeZahYG9+/C3ABE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=dK5b4HshvcHbtyq5peUykPvv/Q+hvj57C2G7MQH8cfYe8oM6lf6J4zKb7aDVcqVt+
-	 UURFnvOPygZ9NhjuAg43buylcm6HpFNYf9Xd7neqE71nD0PWvCW0+TUi09sjGhLn84
-	 M+GP/UIvbG/7WcUnQ2n/2wVTe7Ttc4QPduibF+YNjH0VYqGRWOME8OEZYRp0f9UYm6
-	 0awT0R/Rpupz8pc7K7piHh72u01PgEIC+HbJxh5OS57AuddgQNfP0zzCYXPAGLWzf5
-	 Hxm1m40iw3Hu/DEtcd2qRzU60wqvIyD14vQNBF81ih7VgiMuXwrZdeoOj4vcwNTAvE
-	 wJq4IycESZEiw==
+	b=ECvodRl0xy4267bIakBk8hJHDrrpSyUlN0QxUa5WZ4kHgzCbyRp/yCQHWnNNH7kBH
+	 CX3Pi43J7PQsZu15Xi4/GmiDz+T00hiWr7q+WpE+jZHsYSnHDIwPgVLpkUnfA5b1yo
+	 p+wYPnCCfCxfvxR1f3N6Wk/6tpuY5bDmU1+Co7eqh9sIwa/cefykILLw3twDhH31i6
+	 QUGbotsMfP6TEWAMoYhJrs2BZyiUTSaT62JObNkPl6o/bLJCUY0E7GRrTuA2yBoPLf
+	 y0nRXxMtBXvRrlfengb6XYdGS6CaglX91zpmBUagFOsAkNVIwMy5Vh3uI7JJ06mpVe
+	 Rb3o7rawocEPw==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 07/10] mm/damon/tests/core-kunit: test
- damon_nr_samples_per_aggr()
+Subject: Re: [RFC PATCH 08/10] selftests/damon/sysfs.sh: test
+ hugepage_mem_bp quota goal
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260728052811.192712-8-sj@kernel.org>
+In-Reply-To: <20260728052811.192712-9-sj@kernel.org>
 References: <20260728052811.192712-1-sj@kernel.org>
- <20260728052811.192712-8-sj@kernel.org>
+ <20260728052811.192712-9-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 28 Jul 2026 05:33:44 +0000
-Message-Id: <20260728053344.A42901F000E9@smtp.kernel.org>
+Date: Tue, 28 Jul 2026 05:35:33 +0000
+Message-Id: <20260728053533.B293F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,64 +47,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Medium] The newly added `damon_test_nr_samples_per_aggr` test uses tauto=
-logical assertions that will always pass, failing to detect the regressions=
- it was intended to prevent. Additionally, the test setup overflows to zero=
- on 32-bit architectures.
+- [Medium] The selftest unconditionally fails because the kernel implementa=
+tion for the 'hugepage_mem_bp' quota goal target metric is missing.
 --
 
---- Patch [7]: [RFC PATCH 07/10] mm/damon/tests/core-kunit: test damon_nr_s=
-amples_per_aggr() ---
-commit 50a7320dda40ca169bc23924caa1421599f78314
+--- Patch [8]: [RFC PATCH 08/10] selftests/damon/sysfs.sh: test hugepage_me=
+m_bp quota goal ---
+commit 033ea051e9d9dfb2787f833f5569853c4af61194
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/tests/core-kunit: test damon_nr_samples_per_aggr()
+selftests/damon/sysfs.sh: test hugepage_mem_bp quota goal
 
-This commit adds a kunit test for damon_nr_samples_per_aggr() to ensure
-that extreme interval setups are handled properly without returning zero
-or random overflowed values.
+DAMON sysfs quota goal target_metric file now accepts 'hugepage_mem_bp'
+input. Test it is accepted in fundamental DAMON sysfs file operation
+selftest.
 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 3041b8288ec26..511f2856d343c 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-
-[ ... ]
-
-> +static void damon_test_nr_samples_per_aggr(struct kunit *test)
-> +{
-> +	struct damon_attrs attrs =3D {
-> +		.sample_interval =3D 0,
-> +		.aggr_interval =3D 0,
-> +	};
-> +
-> +	/* Zero aggregation interval doesn't cause division by zero */
-> +	KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs), 1);
-> +
-> +	/* Too large aggregation interval doesn't cause overflow */
-> +	attrs.aggr_interval =3D (unsigned long)UINT_MAX + 1;
+> diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selft=
+ests/damon/sysfs.sh
+> --- a/tools/testing/selftests/damon/sysfs.sh
+> +++ b/tools/testing/selftests/damon/sysfs.sh
+> @@ -210,6 +210,7 @@ test_goal()
+>  	ensure_write_succ "$fpath" "active_mem_bp" "valid input"
+>  	ensure_write_succ "$fpath" "inactive_mem_bp" "valid input"
+>  	ensure_write_succ "$fpath" "node_eligible_mem_bp" "valid input"
+> +	ensure_write_succ "$fpath" "hugepage_mem_bp" "valid input"
 
 [Severity: Medium]
-On 32-bit systems where unsigned long is 32-bits wide, does this assignment
-overflow to 0?
+Will this selftest fail when executed?
 
-If it overflows, the test would configure an interval of 0 instead of a val=
-ue
-larger than UINT_MAX, failing to test the large-interval scenario.
+Looking at target_metric_store() in mm/damon/sysfs-schemes.c, the kernel
+validation loop returns -EINVAL because "hugepage_mem_bp" is not present in
+the damos_sysfs_qgoal_metric_names array:
 
-> +	KUNIT_EXPECT_GE(test, damon_nr_samples_per_aggr(&attrs), 0);
-> +	KUNIT_EXPECT_LE(test, damon_nr_samples_per_aggr(&attrs), UINT_MAX);
-> +}
+mm/damon/sysfs-schemes.c:target_metric_store() {
+	...
+	for (i =3D 0; i < ARRAY_SIZE(damos_sysfs_qgoal_metric_names); i++) {
+		struct damos_sysfs_qgoal_metric_name *metric_name;
 
-[Severity: Medium]
-Since damon_nr_samples_per_aggr() returns an unsigned int, are these
-assertions tautological?
+		metric_name =3D &damos_sysfs_qgoal_metric_names[i];
+		if (sysfs_streq(buf, metric_name->name)) {
+			goal->metric =3D metric_name->metric;
+			return count;
+		}
+	}
+	return -EINVAL;
+}
 
-An unsigned int is inherently always >=3D 0 and <=3D UINT_MAX. This means t=
-he
-test will pass regardless of the function's return value, and it wouldn't
-catch if the function unexpectedly returned 0.
+Because the test assumes the write will succeed, the missing kernel
+implementation for this quota goal target metric will cause the write to be
+rejected and trigger a selftest failure.
+
+>  	ensure_write_fail "$fpath" "foo" "invalid input"
+>  	ensure_file "$goal_dir/nid" "exist" "600"
+>  	ensure_file "$goal_dir/path" "exist" "600"
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260728052811.1927=
-12-1-sj@kernel.org?part=3D7
+12-1-sj@kernel.org?part=3D8
