@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A874A2E1A;
-	Wed, 29 Jul 2026 14:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72ECB4ADD91;
+	Wed, 29 Jul 2026 14:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785333788; cv=none; b=mYm94jgP0oZHoouhmW11zrJXjSNjgiiOjqdhIvYm1yEAlXkUvoX36jHNsoZxwpkBiJyn4UOwarMxpTIuBIBLO0a4du9z32kXrRYHYV/NI4OYxc/DbCtoFwuFMmr1lnwHv/yt/2L0f0wvKG7VubXeKJtTrSo5E9ncJ8B4u9d+A1Y=
+	t=1785333788; cv=none; b=Kg1wera26fNlAbWWWX/pihdXXhNSGy6fdQL+C1coQunPGC2c1lffGg/ZiAEFolfsqHMlI6VM3jZCqmS5hAuMmRV4AhFYHNxA7OMs18W9rbR+PSk6QUEleaHaoRkrDsDoPkB9adrJ7yxWzTAzOf2xk15lkJDWf8440nEujg5JCeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785333788; c=relaxed/simple;
-	bh=LAOCZ6OX3C2XLdwJS4kLCYHcE8TRd595FwpreaVLtGE=;
+	bh=ksm+5qWtlIDNUE4ZcDY7dBLrbws8QRNf1G00ZxOqvQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I83yQj0wqoLb9NKWru5qGUhs5UJ62uiDugKnLhTY084fGCXfYPvYKbmJ5cOgWX9qc+n6xno+DIXRFuvVHE71v4QWZj9+Y+h6mh2/2UCh9OoynUVOGtBih/umpZYz7IyYBPHr/5bjfuVXKhuig0QRY/Im75Z51eBk5OlskRgztOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WkYtsegm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sD/aR2ww7cD248PXkd0PHrOmyzfv6TrPQCb+FVD6pHZLTJVV1N5J7xpRI9HK7jkih2/BZ1PANOuypBWClul1rkTmG5CGrOFwYCNuOrQQikZXdoapZzxGYQFjPowrS1RPE/uEN9FVzSPxTWuJf0zPykSfea3gmXmtabU2o9EOQFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FGotwCuT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WkYtsegm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659E61F00A3E;
-	Wed, 29 Jul 2026 14:03:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FGotwCuT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133121F00A3F;
+	Wed, 29 Jul 2026 14:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785333786;
-	bh=cKzzWsAXP/F08KNPNwIlHEjpZQDPuypTZix55EIf9Lc=;
+	s=k20260515; t=1785333785;
+	bh=Q+iR0WBRty/9e25KNHH96FJIzOaYrwS/QZZkMmGIIoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WkYtsegmv9ZOWhUIMCf8RtEhUZVp6U+ch9Vjkaayub19BUjFZL4oN9K++Hbb1ovhu
-	 +QZtZEgerhSpv1IBGr7VZGTQhka/NPzaVH+IAgJ+eG23jPy477u7cyVJMDx8jlRe6r
-	 subUunDcT/sRdjKkZhsI4WF5VJoHENe/DCWmXpm7NLwAd+hUH8ArojaXMUxKP9xiER
-	 Tqpx6pLJRrZF7VGbzkKjD9w1i0xdyGoK6HoEyhy+uQNWZ4w5lzUKyFINo4Be76MFTL
-	 NqCHk/56opL8f0qzi2eLofl41wigk+rQUF9sOZsxkR1/lywf8f0cxItE+s7FS2DTfq
-	 W0fn+hsxZrpWQ==
+	b=FGotwCuTMr/A9gzQZQk424gPaV+hmbCOQp3w+Ut6BV4Gr0HPc5yvfsvtxqxAGV0rC
+	 wRsvkdLzWnUa+uvnTw1OV7JsPI8wFi+uecx8qRT1e5PAPdZSyYq/9nhXq7txaeUNcM
+	 2sosNv8QX/ammNh/f02KhOkH54INLtB7qCSeC7dyDZmydlkwIBrKS7UTv/aQbFIwZ7
+	 7u9sZ2wHbVHjdGEPgs+KKk5+h29XNzcUmzEzfnWdUiuJlN/Dw6DwQXp865lGas5kEd
+	 Xup4bnMauPSvWrAKHo/yWQ7n9iD9snPjLHcl7eylIQQEyE9pySM7rcFbJm7JK4144f
+	 KAJgf0xu+NamA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -37,9 +37,9 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 09/12] mm/damon/tests/core-kunit: test damon_nr_samples_per_aggr()
-Date: Wed, 29 Jul 2026 07:02:49 -0700
-Message-ID: <20260729140253.87753-10-sj@kernel.org>
+Subject: [RFC PATCH v1.2 06/12] mm/damon/tests/core-kunit: extend set_regions() test for error case
+Date: Wed, 29 Jul 2026 07:02:46 -0700
+Message-ID: <20260729140253.87753-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260729140253.87753-1-sj@kernel.org>
 References: <20260729140253.87753-1-sj@kernel.org>
@@ -51,57 +51,88 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_max_nr_accesses(), which is a previous version of
-damon_nr_samples_per_aggr() before the renaming, was wrongly returning
-zero or random overflowed values for extreme intervals setup.  Commit
-35d4a3cf70a8 ("mm/damon/ops-common: handle extreme intervals in
-damon_hot_score()") updated the function to return correct or more valid
-values.  Add a kunit test to ensure it is working as expected.
+damon_test_set_regions_for() is designed to test only success-expected
+damon_set_regions() calls.  Extend it to cover error-expected calls,
+too.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/tests/core-kunit.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ mm/damon/tests/core-kunit.h | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 252d81c30d6f1..c7bda8aadef3f 100644
+index 4a536d41cdb2d..befc1196d6d60 100644
 --- a/mm/damon/tests/core-kunit.h
 +++ b/mm/damon/tests/core-kunit.h
-@@ -619,6 +619,27 @@ static void damon_test_set_regions(struct kunit *test)
- 			(struct damon_addr_range[]){}, 0, -EINVAL);
+@@ -463,11 +463,12 @@ static void damon_test_set_regions_for(struct kunit *test,
+ 		struct damon_addr_range *old_ranges, int sz_old_ranges,
+ 		struct damon_addr_range *new_ranges, int sz_new_ranges,
+ 		unsigned long min_region_sz,
+-		struct damon_addr_range *expect_ranges, int sz_expect_ranges)
++		struct damon_addr_range *expect_ranges, int sz_expect_ranges,
++		int expect_err)
+ {
+ 	struct damon_target *t;
+ 	struct damon_region *r;
+-	int i;
++	int i, err;
+ 
+ 	t = damon_new_target();
+ 	if (!t)
+@@ -481,7 +482,8 @@ static void damon_test_set_regions_for(struct kunit *test,
+ 		damon_add_region(r, t);
+ 	}
+ 
+-	damon_set_regions(t, new_ranges, sz_new_ranges, min_region_sz);
++	err = damon_set_regions(t, new_ranges, sz_new_ranges, min_region_sz);
++	KUNIT_EXPECT_EQ(test, err, expect_err);
+ 
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), sz_expect_ranges);
+ 	if (damon_nr_regions(t) != sz_expect_ranges) {
+@@ -510,7 +512,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			(struct damon_addr_range[]){
+ 			{.start = 5, .end = 15},
+ 			{.start = 15, .end = 25},
+-			}, 2);
++			}, 2, 0);
+ 	/* Un-intersecting regions should be removed. */
+ 	damon_test_set_regions_for(test,
+ 			(struct damon_addr_range[]){
+@@ -523,7 +525,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			1,
+ 			(struct damon_addr_range[]){
+ 			{.start = 18, .end = 23},
+-			}, 1);
++			}, 1, 0);
+ 	/*
+ 	 * Holes should be filled up with new regions.
+ 	 *
+@@ -544,7 +546,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			{.start = 8, .end = 16},
+ 			{.start = 16, .end = 24},
+ 			{.start = 24, .end = 28},
+-			}, 3);
++			}, 3, 0);
+ 	/*
+ 	 * New regions should be able to be appended.
+ 	 *
+@@ -566,7 +568,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			{.start = 0, .end = 4},
+ 			{.start = 4, .end = 15},
+ 			{.start = 25, .end = 40},
+-			}, 3);
++			}, 3, 0);
+ 	/*
+ 	 * New regions should be able to be inserted.
+ 	 *
+@@ -589,7 +591,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			{.start = 0, .end = 15},
+ 			{.start = 25, .end = 40},
+ 			{.start = 44, .end = 50},
+-			}, 3);
++			}, 3, 0);
  }
  
-+static void damon_test_nr_samples_per_aggr(struct kunit *test)
-+{
-+	struct damon_attrs attrs = {
-+		.sample_interval = 0,
-+		.aggr_interval = 0,
-+	};
-+
-+	/* Zero aggregation interval doesn't cause division by zero */
-+	KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs), 1);
-+
-+	/*
-+	 * Too large aggregation interval on 64 bit system doesn't cause
-+	 * overflow
-+	 */
-+	if (ULONG_MAX > UINT_MAX) {
-+		attrs.aggr_interval = (unsigned long)UINT_MAX + 1;
-+		KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs),
-+				UINT_MAX);
-+	}
-+}
-+
  static void damon_test_update_monitoring_result(struct kunit *test)
- {
- 	struct damon_attrs old_attrs = {
-@@ -1670,6 +1691,7 @@ static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_split_above_half_progresses),
- 	KUNIT_CASE(damon_test_ops_registration),
- 	KUNIT_CASE(damon_test_set_regions),
-+	KUNIT_CASE(damon_test_nr_samples_per_aggr),
- 	KUNIT_CASE(damon_test_update_monitoring_result),
- 	KUNIT_CASE(damon_test_set_attrs),
- 	KUNIT_CASE(damon_test_mvsum),
 -- 
 2.47.3
