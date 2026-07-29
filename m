@@ -1,41 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4C1213E9C
-	for <damon@lists.linux.dev>; Wed, 29 Jul 2026 00:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D92A299927;
+	Wed, 29 Jul 2026 01:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785286565; cv=none; b=Tqm7mUPlWX4VbXoYOUh7t02FnFmHNBbNLR1v2IAB/F6Mlnve+WcFzDLnnY5nZUnfUBLjH6nRSNNrDtHZyZrpq2DTjMks0HqFAhQ8a2mhZQznv87/K9dty88saD/liDJ4RARA4Itrdi5H5C6SZeGSRB/sIBAXJZUOKAVRqM10yCk=
+	t=1785288129; cv=none; b=QkqMmC7ezmYHCFLnHhX+wyWSWbCgGJwfhaAMlHZPXRVICUumHZRCKhLX34/kvCj24lHeTIiNOZ+kb1WMyMwXmDpCO/OB5seUs6oIrzWfOQgvkGHQZXwNFqycAePVQOXtDY1/OuSyIfT41gAw8KY77ov2eKjd1l+lsUiw6TrbLfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785286565; c=relaxed/simple;
-	bh=eJDlHqAsGpkRuMQCO4Mlm5NCbRz1KMFch0569SbLWno=;
+	s=arc-20240116; t=1785288129; c=relaxed/simple;
+	bh=AjYee3AvUlawK8sahONTWVst5h1KjAK167T6BS9tVmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I3W/j+XM8OdvMTy8xx3oMpVNps0TTmMmU84kfLBSNF694wK5yqn55wKQUHUxHKsYgf0DBvnKXkuXl7H52ywLRFqBNvGqPOZxwLKnks5Tb/dsaU/urIL3t0UIxy3jPUy92cyvV6fhu7H4ujpePoVRa6XJ5SJ/XGsm8AhdOm+uUwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MClBYYA8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G7pix2nRpbVLEqz3zYu91U+9AAMIQ0YF3Do2Ss8j7VjnLGdigQwK0R5qv3dgBjQR6TNk33Rf1VGDUZB6puJfoCOAVxutdRGBJaz71UIXPRREdm8fhE2+kqNEqc2k2+OcF87O+Gb0QbyB5XKBFI3o/QYfjJIdYVMhMr3R8s0lh8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ilMzXKMF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MClBYYA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287981F000E9;
-	Wed, 29 Jul 2026 00:56:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ilMzXKMF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CFA1F00A3D;
+	Wed, 29 Jul 2026 01:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785286564;
-	bh=8ngwVY06JQe79vqWTP5x+lulJKRYP5dy8+nQUGRJqCo=;
+	s=k20260515; t=1785288128;
+	bh=0t+IAasOBTAZXdXVEKb9SrgtdAFOWGHpWG5YeS1gqYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MClBYYA8+0r3/XT1BOBSwEkieTbTw5yHGyz0nsJ6D06OJGZ7RT7IwvYEtPTcQeBWO
-	 FFBRJg2Zh9MpoaVnFKV0uTsdiwjH0/mR3AJ4CSHPQGRkSXxDpie8oetS4YcRDmEFi/
-	 Oq/WOfwXJqMdEL28G9Y22FlEp3WLgUx9X6e2JOr2Kv5EJxLe2OE1uJtizij2/CqWD5
-	 YKmS9M8TCpc/XMLvfsomUNJ8CMTU04+ErB93GhQlN669vs2lQBAlLOyJwbhhe2EplB
-	 jHuodfzKWSVr+Wdb80UPLyGx8zhGXk3+xgHo09dx229y5ywEELde+KYIHYTxKseC+v
-	 0oe0L5N+2dlXQ==
+	b=ilMzXKMFyYAdxLu8llGrYeS8DZhGN0EyufAWHOK8i2Xq3AKDxcZk8W3osWsNYwHoN
+	 k/SYFoyuT0z8x+dZ/nCJ01WD/90pwIxoAbZHpnFsrQrIqQWf8lpUENXC5vtfYoCOaB
+	 6IImUXw2GWfLEpMU0jXHnGrx9MzSTZZp61qPjf8Xw5VebWu2LuaxRO88kosPZV7zXK
+	 S9O80Ao9P4zMGDpmUJp9SJbMLhfOpO6kgl3Qz/WbDP2knVHqZDq4cXC9QZHzTtz94C
+	 aXY0LY9zS+bhVh8QvLmwwjPMhbGVEL9YVrLgrSObnrMMsh2eqYtL6qD9MRsW0mK3dV
+	 0g0kqrz5Vg7HQ==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Jiayuan Chen <jiayuan.chen@linux.dev>
 Cc: SJ Park <sj@kernel.org>,
-	"Gregory Price" <gourry@gourry.net>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 1/4] mm/damon: defensively skip zone device folios in damon_get_folio()
-Date: Tue, 28 Jul 2026 17:55:55 -0700
-Message-ID: <20260729005557.98222-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Subject: Re: [PATCH 1/2] mm/damon/core: cover discrete System RAM areas with per-range regions
+Date: Tue, 28 Jul 2026 18:21:59 -0700
+Message-ID: <20260729012200.98442-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260728195705.53F851F000E9@smtp.kernel.org>
+In-Reply-To: <1c815b59-915a-414c-9029-eaac11dcf804@linux.dev>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,122 +59,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Tue, 28 Jul 2026 19:57:04 +0000 sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> 
-> New issues:
-> - [Medium] The explicit `folio_is_zone_device()` check added by the patch is dead code and fails to achieve its stated intent.
-> 
-> Pre-existing issues:
-> - [High] Early return in damon_ptep_mkold and damon_pmdp_mkold skips MMU notifier aging for device-exclusive swap PTEs.
-> - [High] The scheme's `last_applied` pointer caches a freed folio pointer, leading to a dangling pointer comparison.
-> --
-> 
-> --- Patch [1]: [PATCH 1/4] mm/damon: defensively skip zone device folios in damon_get_folio() ---
-> commit 8181b2e77c1b49bcb808528f343f72fdbf9d168c
-> Author: Gregory Price <gourry@gourry.net>
-> 
-> mm/damon: defensively skip zone device folios in damon_get_folio()
-> 
-> All DAMON physical- and virtual-address operations obtain their folios
-> through damon_get_folio(). That helper already excludes ZONE_DEVICE
-> memory implicitly via pfn_to_online_page() and folio_test_lru(), but
-> this is inconsistent with other callers in mm/ which test explicitly.
-> 
-> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> > index 0981a5e3af172..0db1383de5d01 100644
-> > --- a/mm/damon/ops-common.c
-> > +++ b/mm/damon/ops-common.c
-> > @@ -32,7 +32,8 @@ struct folio *damon_get_folio(unsigned long pfn)
-> >  	folio = page_folio(page);
-> >  	if (!folio_try_get(folio))
-> >  		return NULL;
-> > -	if (unlikely(page_folio(page) != folio) || !folio_test_lru(folio)) {
-> > +	if (unlikely(page_folio(page) != folio) || !folio_test_lru(folio) ||
-> > +	    folio_is_zone_device(folio)) {
-> 
-> [Severity: Medium]
-> Since ZONE_DEVICE folios do not have the LRU flag set, won't the
-> !folio_test_lru(folio) check always evaluate to true for them?
-> 
-> Additionally, earlier in damon_get_folio(), pfn_to_online_page(pfn) is
-> called, which strictly returns NULL for ZONE_DEVICE memory. Doesn't this
-> mean ZONE_DEVICE memory will never reach this new folio_is_zone_device()
-> check at all, making it dead code?
-
-This is what Gregory already mentioned about in the commit message.  I added a
-question about this, too, though.  Let's keep discussing in the main thread.
+On Tue, 28 Jul 2026 23:17:01 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
 
 > 
-> >  		folio_put(folio);
-> >  		folio = NULL;
-> >  	}
+> On 7/28/26 10:30 PM, SJ Park wrote:
+> > On Tue, 28 Jul 2026 18:06:48 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+> >
+> >> On 7/27/26 10:26 PM, SJ Park wrote:
+> >>> Hello Jiayuan,
+> >>>
+> >>> On Mon, 27 Jul 2026 17:54:22 +0800 Jiayuan Chen <jiayuan.chen@linux.dev> wrote:
+> >>>
+> >>>> From: Jiayuan Chen <jiayuan.chen@shopee.com>
+[...]
+> > Actually I was also thinking about this problem for in the past.  One of my
+> > idea at that time was, handle only a few largest holes that practically being
+> > problems.  That is, while reading the system ram layout, find the holes, sort
+> > those by size, and do make holes in DAMON regions layout for the biggest N
+> > (say, 2) holes.  This may handle most cases including your 5 TiB hole.
+> > Actually vaddr is doing this, so we may be able to reuse some of the code.
+> >
+> > If it makes sense to you, I will try to implement this.
 > 
-> [Severity: High]
-> This is a pre-existing issue, but I have a question about how
-> damon_get_folio() returning NULL interacts with device-exclusive memory.
+> One worry with a fixed N is that it's a magic number. If a machine has more
+> than N big holes (more sockets / NUMA nodes, or several CXL devices), the
+> extra ones are silently not excluded and get walked again.
 > 
-> When DAMON encounters a device-exclusive PFN swap PTE in damon_ptep_mkold()
-> or damon_pmdp_mkold(), damon_get_folio() returns NULL because
-> pfn_to_online_page() rejects it. Both of these callers then immediately
-> early-return on !folio:
+> And making N configurable just moves the per-machine tuning back to the
+> user, which is exactly what I'm trying to avoid.
 > 
-> mm/damon/ops-common.c:damon_ptep_mkold() {
->     ...
->     folio = damon_get_folio(pfn);
->     if (!folio)
->         return;
->     ...
-> }
+> vaddr over-includes the gaps into its regions too, but it can skip them
+> cheaply: it walks the VMA tree (find_vma / maple tree), it's cheap.
+> paddr has no such structure, so an included hole is walked in full.
 > 
-> Doesn't this early return silently bypass the mmu_notifier_clear_young()
-> call completely, breaking DAMON's ability to monitor device accesses
-> (which relies on the MMU notifier for device-exclusive PTEs)?
+> That's why a fixed N is safe for vaddr but risky for paddr.
 
-This is an intended behavior.
+I agree it has the problem of magic number.  That said, I expect common systems
+wouldn't have that many problematic large holes.  If it is not clearly wrong,
+I'd consider starting with magic number 2.  I feel magic number 2 is appealing
+probably because we could reuse vaddr's code in the case.  But it would already
+be much better than nothing in the problematic setups.  At least it will cover
+your 5 TiB hole.
 
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but looking at how DAMOS
-> physical address apply functions interact with folios, I noticed
-> something about the last_applied pointer:
-> 
-> In mm/damon/paddr.c:damon_pa_pageout(), a reference is dropped:
-> 
-> mm/damon/paddr.c:damon_pa_pageout() {
->     ...
->     folio_put(folio);
->     ...
->     s->last_applied = folio;
-> }
-> 
-> Since folio_put() drops the reference, could this store a dangling
-> pointer across DAMON region processing boundaries?
-> 
-> If that physical memory is subsequently reallocated for a new folio,
-> it will reside at the exact same address. When this pointer is later
-> checked in damon_pa_invalid_damos_folio():
-> 
-> mm/damon/paddr.c:damon_pa_invalid_damos_folio() {
->     ...
->     if (folio = s->last_applied) {
->         folio_put(folio);
->         return true;
->     }
->     ...
-> }
-> 
-> Could this falsely match the dangling pointer and erroneously skip a
-> valid, newly allocated folio from DAMOS actions?
-
-I agree it is not super ideal, but missing one access event from DAMON's
-best-effort monitoring is no problem.
+Depending on what we learn from the fields, we could change the magic number or
+add more optimizations in future.  Setting N as a fraction of max_nr_regions
+and/or handling holes based on their size (relative to real System RAMs?) are a
+few ideas off the top of my head.
 
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260728194714.3713735-1-gourry@gourry.net?part=1
 > 
+> >>> user-visible parameters and internal state is also a concern.
+> >>
+> >> I think monitor_region_start/end is meant to expose the overall range, and
+> >> skipping the holes inside it is an implementation detail. Even if we didn't
+> >> skip them, the adaptive region count is never 1 anyway — DAMON already
+> >> splits [first,last] into many regions. The holes just add a few more, so
+> >> the param never matched the internal state exactly to begin with.
+> > It is arguable, but I believe this also makes sense in my opinion.
+> >
+> >>
+> >>> A quick workaround would be adjusting the memory layout in BIOS, using DAMON
+> >>> sysfs interface instead, or setting the monitor_region_{start,end} to cover
+> >>> only the single area.  Have you considered such workarounds?
+> >>>
+> >>> Let's complete this high level discussion first.
+> >>
+> >> Right, this is doable today — the DAMON sysfs interface can set multiple
+> >>
+> >> regions manually. This patch is only about convenience.
+> > Are you actually running DAMON_LRU_SORT or DAMON_RECLAIM in a production system
+> > having 5 TiB hole?  Or, planning to do?  If the above idea makes sense to you,
+> > I could prioritize implementation of it depending on this.
+> 
+> 
+> I'm not actually running DAMON_LRU_SORT or DAMON_RECLAIM on such a machine.
+
+Thank you for clarifying!  Let's keep this brainstorm level discussion, then.
+
+> I ran into this while working on per-cgroup hot/cold page tracking, where I
+> was comparing performance and accuracy across setups — that's where these
+> numbers came from.
+
+Sounds interesting.  Btw, there are multiple ways to do per-cgroup monitoring.
+Using DAMOS_STAT with memcg DAMOS filter is one of the ways.  Data
+access-as-a-data-attribute patch series [1] will allow doing that in a much
+more lightweight and flexible way.
+
+> 
+> 
+> >
+> > Thanks,
+> > SJ
+> >
+> > [...]
+> 
+> 
+> 
+> And to be clear, I'm not trying to land a patch here — I just noticed this
+> as a possible optimization. If you have a better idea, I'm happy to go with
+> it :).
+
+No worry!  FYI, using subject tag 'RFC' could be a good way to make the
+intention more explicit, if you want.
+
+[1] https://lore.kernel.org/20260728041242.187380-1-sj@kernel.org
 
 
 Thanks,
