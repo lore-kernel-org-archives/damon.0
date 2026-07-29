@@ -1,101 +1,101 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B6C3B0583
-	for <damon@lists.linux.dev>; Wed, 29 Jul 2026 15:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DAD4968FA
+	for <damon@lists.linux.dev>; Wed, 29 Jul 2026 15:19:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785338098; cv=none; b=BMycZadmRPlLw29l3Kv4lcamr/txFvQ14qiu70M2ppx6hk3AN0n6z1mm/UqvYqM5icnXprUY3+LNc1kpjbZelj0ua7Ind18IKe3nT5LK5zuLoQAYCdy5QPCJ8qpdLkep03rvbaFzUrZ1RJXdbIqTTg9YVV3w+mEqYXkX4xZ4K2U=
+	t=1785338376; cv=none; b=AyAkkgvaa8tICPs25Ijl+YWXUUUxSquCJ9LvrfDRNNVRB+YqspNQvvHW7YQqZcakzK97G+BnxXtNJQ0g5Gy5BsGd+QI+MMDr8j+wDr6WeasTN2pKwn41C+yDhKsAj9JpFeVovJKsKVe/yPjiGc3uUDZOBB5mzFDkFagzFsUsano=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785338098; c=relaxed/simple;
-	bh=JCVcinsThvVIH6pBjhjm7FWTCthambnHPL3kOMzJnyo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P2BUlSeTCLE/EE6OCSM3cwKBRqE+VSUyxfPQ5TK8yeReMSK88w5MiFYuv8j0MggnO+7yl3Is5a3txJHkQxvlmg96pviWmqCnVrzIvVTky8BJOPzMcUGPYuZDNGdoYek8mAy5uFDJOr62CaK9MVDiuUKLdXk4smplMpQxApIWvWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=So8QOdRq; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1785338376; c=relaxed/simple;
+	bh=JBDmOW5L5D7ChdEAzujvUpxsEeFHspY3EixA3wYS4TI=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=jcV6yGlW/gIVyKxUPL0FjhAVdEXYZWZi4gy5OvVOTpZ95UcK62+xXBi1gGuhIiFa29BrClJZ0hUpt2IpWirl1PMka3Qj9kxvO44OegIfM2iG2OtK0OieOp/7vYQzwbKOAGvUwZRgGuESv1SF8k4aJbaTt6X8E/GyW+D03+fVgK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VvPqsg99; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="So8QOdRq"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-92f03daaa97so73694585a.2
-        for <damon@lists.linux.dev>; Wed, 29 Jul 2026 08:14:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1785338096; x=1785942896; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=2v6EYAF/prndNnQMY9/VeGyA6EcrPV2/qkncXAHToaM=;
-        b=So8QOdRqgKsPKY912VleHC5WbchksSDf+DtJl8VZAdaxbtbTwPA3ZVrk8ofl5PRISh
-         rs5pS7zXgN6nBopjHRlorU+OrUzMa83IkqsOWtf+0qOLtXkiOexrG0ihuKiJ6CJsvidN
-         dLsswYFk+ST++kg0GXOdit5xmmXgebgFlp9pL7oaVYl6JDi/JdrfUmpQ8QmWHgcWUrDL
-         GP+DAJ8Hc6B50L19kNd0cdjWxfN+tG5mbmkHft13VADJThtVKoqs9GuA3/+L4UM4RNw4
-         4gUbu3V/DogXZqsdlE/miw8wvdcxF6So4Ya5zy4oAbMXBhnAaWVBpncXd9kakMW+FOAQ
-         X2Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785338096; x=1785942896;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2v6EYAF/prndNnQMY9/VeGyA6EcrPV2/qkncXAHToaM=;
-        b=Y6vhYV2vGVhnHbKifLcg8TyXtZ4/7xeH2anxJkHVrrMZgJesqnFCtXHHjBV+BHjATe
-         n47h728XE5s4RIbMsxpdcfXa3AnFFgUjdIobyB73jDNr8/Kj1//s9hgBdNNUKyt7dzM2
-         l8vW0iEYOh7aKGBcbAe2YPDec6alr3PX4/KNxq1tAuCzEZN8kkxHcwdUJUo06OqZom7A
-         EvUy1pPTetnZv8IqyUMA4WiMVbP4QishOBfUZK/aFqe7JnLrpKPk6t5C/ZJ9tF6p05HS
-         yjRPr/5KVfugBsJvBTCfjy1xIoZw6YualiNU0GHceeKeYJLMHJNJChsYr5ZXO/46aEEC
-         b/xA==
-X-Forwarded-Encrypted: i=1; AHgh+Ro1/9RuOu8SbG6X6kCiYt3lQQqyQsE6Skfxkb+dBmxP0fGckT11PGvf2vjE65RbqX7p7XIcXg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxJ+1ouzgJa0ebg9kb04bSEUKN99zzG3lN1Zmvgu0QW/6X9HdCp
-	W4t+DLs8OuGFnxyJ4/02MaWleONzD8xVHJnHM2xOU3iR4QZuUwP7hmQuKmRUwiTpLa8=
-X-Gm-Gg: AR+sD11G/fJrSUHDp3J7oqoEtWyJHucKWKo5N/lXvH4vI6gE8zWQlr+J74ljyUmgoFm
-	tKjlhX4wPE90pxnt3cfezmJtOBGVFAhURNNX79xgN1KKFcgVvofYoG1nKH0B/95002d+wwMLiSt
-	wh7wwpBLQTVp60EH2ud3e3AgEUH1wWwQ2EptO89j5g0EKe+5ep3WM0FErfd8iFPwrZodEKtYB3W
-	PRRlc+ACCGowW2XdOsBrvxl5ogvs6UHo8hGYJ0tjcIqB8QRgEQGvH4Wxn1zYeSx5NZdPPoXw5sg
-	K1xEoSNduQnjPAdz4cuq0SOYu4P0dBjho8/hGEfnuKKNdoCvbG2xFDSUs9jNzc+SzZlUob0F0tQ
-	wQcBX3h7fPLVKavXu7p6B7XmBfHMxAqk4RYhUU9Ogp5v/DPWuZlyhT7igduW2pPYHM698lu8Rap
-	bfpy1ga0WyYXNSSShVA5AnfQinwKmTmIkpjb0/cT8fbCQgdxtur0gUKfGyJzqTUsnSNRR/+Y+Ul
-	99HQGccSpiZmNukQqeuOC0gS+ZZUe7fTukZKMfs/i17
-X-Received: by 2002:a05:620a:6885:b0:92e:612d:87cc with SMTP id af79cd13be357-933027745b6mr659175085a.46.1785338095672;
-        Wed, 29 Jul 2026 08:14:55 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-933d3263c35sm187961685a.16.2026.07.29.08.14.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jul 2026 08:14:55 -0700 (PDT)
-Date: Wed, 29 Jul 2026 11:14:53 -0400
-From: Gregory Price <gourry@gourry.net>
-To: SJ Park <sj@kernel.org>
-Cc: linux-mm@kvack.org, damon@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, kernel-team@meta.com, akpm@linux-foundation.org, 
-	david@kernel.org, ljs@kernel.org, ziy@nvidia.com, baolin.wang@linux.alibaba.com, 
-	liam@infradead.org, npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, 
-	baohua@kernel.org, lance.yang@linux.dev, usama.arif@linux.dev, vbabka@kernel.org, 
-	jannh@google.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com, 
-	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com, 
-	apopple@nvidia.com
-Subject: Re: [PATCH 1/4] mm/damon: defensively skip zone device folios in
- damon_get_folio()
-Message-ID: <amoXZr2vB_q5q5Wu@gourry-fedora-PF4VCD3F>
-References: <amlZ_6pnt2AC-Ppl@gourry-fedora-PF4VCD3F>
- <20260729142228.88390-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VvPqsg99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8481F000E9;
+	Wed, 29 Jul 2026 15:19:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785338374;
+	bh=pFBClgk+NMfDLUv2JKePyg2cdwqx0+fmyFuzpaEBE54=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=VvPqsg99eiunfHgHoW9v9H67pXKsIEtTV52mqYeX5UjbFM0Vm/XpZ2ABWHsuaXE38
+	 vAHap+Gs6jZ5A5PtJCk9KKqGdrKmRsIs0aKXu6tFSO7Sn/+uXIHbjOTuDj0ygL6a1V
+	 h363gTpd8LyRbA2MWVCgHxR8kt30kzDAg93wQCxmF4plKt3pYPOYITcV3Ba3GuOz/b
+	 sZLRU/jnBmcL1ZotA37w3HBOR4vA5hs0hGgSqhbt42J8zR4BFTb2/PsCQy3yf5zwK6
+	 Nc32ip57hPem/C4BcGZPKoVKv3IkY6WYD376yDr4ZJG+7o9eKMGKJgBuquJo71AClD
+	 WT8bck2K7pdTQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH 6/6] selftests/damon/sysfs.py: test damon probes
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260729144738.90895-7-sj@kernel.org>
+References: <20260729144738.90895-1-sj@kernel.org>
+ <20260729144738.90895-7-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 29 Jul 2026 15:19:33 +0000
+Message-Id: <20260729151934.3B8481F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260729142228.88390-1-sj@kernel.org>
 
-On Wed, Jul 29, 2026 at 07:22:28AM -0700, SJ Park wrote:
-> On Tue, 28 Jul 2026 22:01:01 -0400 Gregory Price <gourry@gourry.net> wrote:
-> 
-> So, what do you think about adding the check under CONFIG_DAMON_DEBUG_SANITY
-> with good comments at the moment, and later converting to folio_allows_mm_ops()
-> together?
-> 
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] DamonProbe.stage() completely ignores the error returned when wr=
+iting to the 'weight' sysfs file, masking potential write failures.
+--
 
-I think probably we can drop the commit since it'll be a little odd to
-add ifdef's and then take them out later (the latter check will be
-functional, not just a sanity check).
+--- Patch [6]: [RFC PATCH 6/6] selftests/damon/sysfs.py: test damon probes =
+---
+commit e47c18c7c1e4b19237b2738bc5c072c3c570dcc9
+Author: SJ Park <sj@kernel.org>
 
-~Gregory
+selftests/damon/sysfs.py: test damon probes
+
+This commit extends sysfs.py to test DAMON probes by committing them via
+sysfs and checking the in-kernel status using drgn.
+
+> diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selft=
+ests/damon/sysfs.py
+> index 8c2dfc5ed8e04..852b6887a75ce 100755
+> --- a/tools/testing/selftests/damon/sysfs.py
+> +++ b/tools/testing/selftests/damon/sysfs.py
+> @@ -319,7 +319,21 @@ def main():
+>                  intervals_goal=3D_damon_sysfs.IntervalsGoal(
+>                      access_bp=3D400, aggrs=3D3, min_sample_us=3D5000,
+>                      max_sample_us=3D10000000),
+> -                update_us=3D2000000),
+> +                update_us=3D2000000,
+> +                probes=3D_damon_sysfs.DamonProbes(
+> +                    probes=3D[_damon_sysfs.DamonProbe(
+> +                        weight=3D42,
+
+[Severity: Medium]
+Will this properly catch setup failures when setting the probe weight?
+
+When testing DamonProbes, DamonProbe.stage() writes the weight to sysfs
+but overwrites the returned error status without checking it:
+
+tools/testing/selftests/damon/_damon_sysfs.py:DamonProbe.stage()
+
+    def stage(self):
+        err =3D write_file(
+                os.path.join(self.sysfs_dir(), 'weight'), '%d' % self.weigh=
+t)
+        return self.filters.stage()
+
+If the sysfs write fails, such as the kernel rejecting the weight value
+or the sysfs node being absent, the error is silently ignored. Could this
+cause the test suite to proceed as if setup succeeded, leading to false
+positive passes or confusing downstream errors?
+
+[ ... ]
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729144738.9089=
+5-1-sj@kernel.org?part=3D6
