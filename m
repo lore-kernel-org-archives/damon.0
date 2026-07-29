@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784E0304BB3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBDB3502A6;
 	Wed, 29 Jul 2026 03:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785296282; cv=none; b=dK/yxBwPRD51h4ZHy8VX/fzvJA+7/rvD8SNpwdL3XgGQSvu0tvxCkpWdUu1/JhCHzG6kThLu0JXWfLk7f29p+8UibrVmd5Ol+7GAWuRUTXAnZ3vDp+oAsLebEGuRzkyqxekwsBbOjHAcFxdy042pwFO9KoRclwdo0AXYYHmgUsc=
+	t=1785296282; cv=none; b=Sei/iFUAmjRFfA7tgr0rxZ4v9g+Kp0R0h7lxMJ4OC/PLPzVRwmZbuiPcPSQXk2UVmIZIkyXB4o/4i8bNvLOYZGKB9qRSyrXqjlVKB4h+Fwux7ir/tFdgiVucujWWh6n07Lz+FUuPC1VM0SxBhHUT1Yej61UP+ZaZgwIbj4GAS0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785296282; c=relaxed/simple;
-	bh=hBXKcXG4b0K0CuDzEh4AFJo8ClqwVQvOP73HkbC3Jc8=;
+	bh=ksm+5qWtlIDNUE4ZcDY7dBLrbws8QRNf1G00ZxOqvQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xh64xGhKVqTiHOw0G316YWm6WHYs5Y195v9BiLeSR96QnnHrhxCTcF9cTY7pC8DIgby5omA7c49uFROh3/YLTS8Y/f5rdQx7kYfPwW9p3RSENd8KoPlkK3TrePjJc7reMs2fE+uozI3UeG32hPrrziFxPZmEYHKMH67FdZ5IAKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TD5nRq9B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cw7O7msM6qZDctRvKx8MR7DOoWnmLWJFT7xlduoXiWmJGm5lfU9FKohWAvZY63LoHQT6zju03lqxjPo9RL2VYjvs5UljZUzTBze9bs7B42MzfyYE3TnB2HJ2i/LF7FlLxOoMHmGH5+O3i66Lh7jCqghB9yqjSoMC/z4auBtmWW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ndhbkibA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TD5nRq9B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64C21F00A3F;
-	Wed, 29 Jul 2026 03:38:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ndhbkibA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394A31F00AC4;
+	Wed, 29 Jul 2026 03:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1785296281;
-	bh=OrmqzezRZHpLkQbXvsx8kdT8w9xKKaZj6lZcjNbOnP4=;
+	bh=Q+iR0WBRty/9e25KNHH96FJIzOaYrwS/QZZkMmGIIoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TD5nRq9BrIBNUNfBlS7ERMfjkrbTQsnW9PQaVv/TJJGgmWTHMk+Ch28JKpN6hT5vf
-	 lpEcSwBdhMu+fJqh+EyKbyfJg+LZFJZhS+JeB5dD7md/+dK9Hpkmt14xWAHaVcfR2b
-	 iGWQBKy+hDf86toKlZEWflOolW16RmoFxw9ra3sDmGFnQ5aPEvhDhdLGqHydQ+MHyd
-	 V9aqPBmpxh0b09lBd/f5JmvVoSTAZv1lz7ZvDwmWXlu3bhtY0Navh0Soq9Ug+LVPFH
-	 SApGHpoPVyPMoa6dmXIvbKV4StR1xv67nIVoRa7pZxz6AWswA6PLH3GSuJ2cIL4BEW
-	 rIBYYzIEwtitg==
+	b=ndhbkibA2/s9ur+d/cyK5k0DFTmY8D405eQEYf//yQTvR/lfepmnQU8ahFcYI2Raq
+	 NX8gie8bPbGAWyHcm9VWJdVihzcqG56lZJGNZaqtYcG4evevY4XXY5rZ79RyzaGj7g
+	 q3Bz6bhC1D97H7+7xsbNeLdsZSAWPsDIfmjQNAjUPx8nVKa/jDQ34VHYIUglTr7NjJ
+	 zPS2RjT/d5WYMaGAfa3Cd2TqCLm7fWBSm2dU2vR6ljnlWn2L77sSbjhADKNXtdajZC
+	 oVNlaeJYoMjyaYckquNu8D3K60nCRMNEHTDTlfwUgUJdAyjtLWkuhcpW3mLJ/6eLLZ
+	 0t4dwikdeI5XA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 03/10] mm/damon/vaddr: remove a debug message
-Date: Tue, 28 Jul 2026 20:37:43 -0700
-Message-ID: <20260729033751.131213-4-sj@kernel.org>
+Subject: [RFC PATCH v1.1 04/10] mm/damon/tests/core-kunit: extend set_regions() test for error case
+Date: Tue, 28 Jul 2026 20:37:44 -0700
+Message-ID: <20260729033751.131213-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260729033751.131213-1-sj@kernel.org>
 References: <20260729033751.131213-1-sj@kernel.org>
@@ -47,52 +51,88 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There is a debug message in the DAMON virtual address space operation
-set.  It has not really been used in a meaningful way for the last few
-years, though.  Remove it.
+damon_test_set_regions_for() is designed to test only success-expected
+damon_set_regions() calls.  Extend it to cover error-expected calls,
+too.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/vaddr.c | 16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ mm/damon/tests/core-kunit.h | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 0648400b2d65b..1b220f6f2632b 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -189,22 +189,12 @@ static int damon_va_three_regions(struct damon_target *t,
-  *   <BIG UNMAPPED REGION 2>
-  *   <stack>
-  */
--static void __damon_va_init_regions(struct damon_ctx *ctx,
--				     struct damon_target *t)
-+static void __damon_va_init_regions(struct damon_target *t)
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 4a536d41cdb2d..befc1196d6d60 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -463,11 +463,12 @@ static void damon_test_set_regions_for(struct kunit *test,
+ 		struct damon_addr_range *old_ranges, int sz_old_ranges,
+ 		struct damon_addr_range *new_ranges, int sz_new_ranges,
+ 		unsigned long min_region_sz,
+-		struct damon_addr_range *expect_ranges, int sz_expect_ranges)
++		struct damon_addr_range *expect_ranges, int sz_expect_ranges,
++		int expect_err)
  {
--	struct damon_target *ti;
- 	struct damon_addr_range regions[3];
--	int tidx = 0;
+ 	struct damon_target *t;
+ 	struct damon_region *r;
+-	int i;
++	int i, err;
  
--	if (damon_va_three_regions(t, regions)) {
--		damon_for_each_target(ti, ctx) {
--			if (ti == t)
--				break;
--			tidx++;
--		}
--		pr_debug("Failed to get three regions of %dth target\n", tidx);
-+	if (damon_va_three_regions(t, regions))
- 		return;
--	}
- 
- 	damon_set_regions(t, regions, 3, DAMON_MIN_REGION_SZ);
- }
-@@ -217,7 +207,7 @@ static void damon_va_init(struct damon_ctx *ctx)
- 	damon_for_each_target(t, ctx) {
- 		/* the user may set the target regions as they want */
- 		if (!damon_nr_regions(t))
--			__damon_va_init_regions(ctx, t);
-+			__damon_va_init_regions(t);
+ 	t = damon_new_target();
+ 	if (!t)
+@@ -481,7 +482,8 @@ static void damon_test_set_regions_for(struct kunit *test,
+ 		damon_add_region(r, t);
  	}
+ 
+-	damon_set_regions(t, new_ranges, sz_new_ranges, min_region_sz);
++	err = damon_set_regions(t, new_ranges, sz_new_ranges, min_region_sz);
++	KUNIT_EXPECT_EQ(test, err, expect_err);
+ 
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), sz_expect_ranges);
+ 	if (damon_nr_regions(t) != sz_expect_ranges) {
+@@ -510,7 +512,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			(struct damon_addr_range[]){
+ 			{.start = 5, .end = 15},
+ 			{.start = 15, .end = 25},
+-			}, 2);
++			}, 2, 0);
+ 	/* Un-intersecting regions should be removed. */
+ 	damon_test_set_regions_for(test,
+ 			(struct damon_addr_range[]){
+@@ -523,7 +525,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			1,
+ 			(struct damon_addr_range[]){
+ 			{.start = 18, .end = 23},
+-			}, 1);
++			}, 1, 0);
+ 	/*
+ 	 * Holes should be filled up with new regions.
+ 	 *
+@@ -544,7 +546,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			{.start = 8, .end = 16},
+ 			{.start = 16, .end = 24},
+ 			{.start = 24, .end = 28},
+-			}, 3);
++			}, 3, 0);
+ 	/*
+ 	 * New regions should be able to be appended.
+ 	 *
+@@ -566,7 +568,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			{.start = 0, .end = 4},
+ 			{.start = 4, .end = 15},
+ 			{.start = 25, .end = 40},
+-			}, 3);
++			}, 3, 0);
+ 	/*
+ 	 * New regions should be able to be inserted.
+ 	 *
+@@ -589,7 +591,7 @@ static void damon_test_set_regions(struct kunit *test)
+ 			{.start = 0, .end = 15},
+ 			{.start = 25, .end = 40},
+ 			{.start = 44, .end = 50},
+-			}, 3);
++			}, 3, 0);
  }
  
+ static void damon_test_update_monitoring_result(struct kunit *test)
 -- 
 2.47.3
