@@ -1,117 +1,135 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE88453A27
-	for <damon@lists.linux.dev>; Wed, 29 Jul 2026 14:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D1438DC71
+	for <damon@lists.linux.dev>; Wed, 29 Jul 2026 15:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785336779; cv=none; b=JiswK069jxQ6O7hswklZdJNOkLdkp6DuLfvcW7HOwUZwCku6UIEOfSPvbKWy69R2RWINbdo+WmZwvbYZwigIt1qr6wTvZivKLaQAG04gU1Sx0yl25ll5uAjX7L9NlE9ymkroR/a34rVu8BJzbt/XPElyQrvnHvX7S+ZfZ79VOKo=
+	t=1785337229; cv=none; b=ivt82GIRK29JaEiXKK2pfc6LMSqQ5MieXtSAhvikAc7WfG1bg4hvtzsn9ZYIGlETIYs/KxHzc4+nZXALVVgFBbBVU77W699by7bZQAuVdoLHWxxUb1pK14WmmwurHGwviw0/WAEsizvzDVPJ0ADc8T64sjEXt1G95HfSGCqz8ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785336779; c=relaxed/simple;
-	bh=F2MDraGFiHpiNLWAk1zMx+16qFqVD5F4m4u/D0V+TkY=;
+	s=arc-20240116; t=1785337229; c=relaxed/simple;
+	bh=doGBliFmP1wc0FDCDJVycVNkUXpaPFxntTb4SmDeuUQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=VqtgvByr53bfHL1EX64to3ZtZjW9OsvoXZHz2aBonaIUT93/R3zxrc26i5yju2OJUPVbbofVOAx3igff6uNeCi95u2HjRLpavoxebFIhC2RezQfzZFZsQThQdeth0eSGVK1mzhMHdtdT3SsvEXWQsVdTcFvtzuNCPhAy62WXjio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mkvLaoit; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=i1KUCAycMdsr0sPQOwLaMu97LRDkc2uK7Zt7ufc+eejA7UWARHWoATtcm4KO3NPUSJiNnhIHWgsC7eLm0MSjBvsNBpa7PzcwHToH+Bz9TO+POUsSC1hlRQdUPVFuD6DCiPC68BhMer+KTq5CP8OB5FS0KUkSP8rfLjGEUddWHzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UM8oa31k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mkvLaoit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFBE1F000E9;
-	Wed, 29 Jul 2026 14:52:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UM8oa31k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57B61F000E9;
+	Wed, 29 Jul 2026 15:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785336778;
-	bh=XcLcf+3uZOgqQ3IYJe7k7BRuPOG9gOmRqSTXY5oFaFw=;
+	s=k20260515; t=1785337227;
+	bh=KFn/A2IOu5mE7xIM0Bg1INXJGrZVrw9BPfNrF87rcFs=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mkvLaoitJSrqsPsb5wtnIehVpHrQeQ2VSgJwS9ku+zUQNw5NxZFYaz0FvvaIMoPgs
-	 SfwKijWDji/7mgxqC6pgPMXxgfK2kZVCGFVRNDHzNdj21gY5fm5B6W6RIniqCm/Sst
-	 L8g0aVzJcT6T02hm5O5A3mThiHwnOSZt3lM7cfryT31uM71BkDBzqp90+0U9/bSUti
-	 7T/9RnGuOJe3UAk+YldxR5fvz2+H9IkhY6bUVlVWTbWKGZLr5PybHRqa2kBBCp3zwd
-	 xPAVoW4n9fwNE52iGk9z5fH6sfJq/yse9loekLiZ6idQQ2beiKjPePHU0i+N8e5gY2
-	 hgDPf8E7yhFZA==
+	b=UM8oa31kgOjhKWmlsHMh3syd9EGs1e2jk+Su5uzYD7S6lzwq+rnDCwANy/S39EHAj
+	 mxHl9UlTRY4uMnI1F5g1Oq+P7BdHuAT5FrhYbbzYqW+duhcsgbg/cAnwyCter5K3lg
+	 dTKJTSm0kk0AigApUvKbvjzVcQ/aKz0U/pomWFPog1bsM04aGyMA4hN+wOpI7Um5vP
+	 B5j8FgA3GDvJoTRPdAcUdOvumV2FllR2MjOG3nL99wDTuccOC25z5GxjlPB6eSdP9a
+	 MKTcVcgCK4S20hCW+QIdTyPLko1xuFLtp95A5/eEE1Mj19npaMYTUW8MIaPm4GYt7c
+	 IcDZTT0AHIZEw==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 1/6] mm/damon/tests/core-kunit: test
- damon_commit_filter()
+Subject: Re: [RFC PATCH 2/6] mm/damon/tests/core-kunit: add
+ damon_commit_probes() test
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260729144738.90895-2-sj@kernel.org>
+In-Reply-To: <20260729144738.90895-3-sj@kernel.org>
 References: <20260729144738.90895-1-sj@kernel.org>
- <20260729144738.90895-2-sj@kernel.org>
+ <20260729144738.90895-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 29 Jul 2026 14:52:57 +0000
-Message-Id: <20260729145257.CCFBE1F000E9@smtp.kernel.org>
+Date: Wed, 29 Jul 2026 15:00:27 +0000
+Message-Id: <20260729150027.B57B61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [Medium] The kunit test uses the wrong enum type `DAMOS_FILTER_TYPE_MEMCG=
-` instead of `DAMON_FILTER_TYPE_MEMCG` when checking `src->type`, causing t=
-he `memcg_id` assertion to be silently skipped.
+- [Medium] Missing cleanup in the error path of `damon_test_commit_probes_f=
+or` causes a memory leak of dynamically allocated test structures.
+- [Medium] Missing bounds check in `damon_test_commit_probes_for` can lead =
+to a NULL pointer dereference when a test assertion fails.
 --
 
---- Patch [1]: [RFC PATCH 1/6] mm/damon/tests/core-kunit: test damon_commit=
-_filter() ---
-commit e16ea26a19f85858bdb608d81842e976d30c3270
+--- Patch [2]: [RFC PATCH 2/6] mm/damon/tests/core-kunit: add damon_commit_=
+probes() test ---
+commit 490c9d2d6b4090811aaa428df3f6d9ce89e2d406
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/tests/core-kunit: test damon_commit_filter()
-   =20
-Add kunit test to ensure damon_commit_filter() updates destination
-filter as expected for valid inputs.
+mm/damon/tests/core-kunit: add damon_commit_probes() test
+
+Add kunit test to ensure damon_commit_probes() updates destination DAMON
+context with source probes as expected.
 
 > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 4a536d41cdb2d..6cbe22accabfb 100644
+> index 6cbe22accabfb..6577410ace3da 100644
 > --- a/mm/damon/tests/core-kunit.h
 > +++ b/mm/damon/tests/core-kunit.h
-> @@ -1306,6 +1306,45 @@ static void damon_test_commit_target_regions(struc=
-t kunit *test)
 
 [ ... ]
 
-> +static void damon_test_commit_filter_for(struct kunit *test,
-> +		struct damon_filter *dst, struct damon_filter *src)
+> +static void damon_test_commit_probes_for(struct kunit *test,
+> +		unsigned int dst_weights[], int nr_dst_probes,
+> +		unsigned int src_weights[], int nr_src_probes)
 > +{
-> +	damon_commit_filter(dst, src);
-> +	KUNIT_EXPECT_EQ(test, dst->type, src->type);
-> +	KUNIT_EXPECT_EQ(test, dst->matching, src->matching);
-> +	KUNIT_EXPECT_EQ(test, dst->allow, src->allow);
-> +	switch (src->type) {
-> +	case DAMOS_FILTER_TYPE_MEMCG:
-> +		KUNIT_EXPECT_EQ(test, dst->memcg_id, src->memcg_id);
-> +		break;
+> +	struct damon_ctx *dst, *src;
+> +	int err;
+> +	struct damon_probe *dst_probe, *src_probe;
+> +
+> +	dst =3D damon_test_help_setup_probes(dst_weights, nr_dst_probes);
+> +	if (!dst)
+> +		kunit_skip(test, "dst alloc fail");
+> +	src =3D damon_test_help_setup_probes(src_weights, nr_src_probes);
+> +	if (!src) {
+> +		damon_destroy_ctx(dst);
+> +		kunit_skip(test, "src alloc fail");
+> +	}
+> +
+> +	err =3D damon_commit_probes(dst, src);
+> +	KUNIT_EXPECT_EQ(test, err, 0);
+> +	if (err)
+> +		return;
 
 [Severity: Medium]
-Will this case label ever be matched?
+Does this error path leak the dst and src context structures?
 
-This code checks against DAMOS_FILTER_TYPE_MEMCG, but damon_test_commit_fil=
-ter()
-below initializes the source filter with type DAMON_FILTER_TYPE_MEMCG.
+If damon_commit_probes() returns an error, the early return here skips the
+cleanup calls to damon_destroy_ctx(dst) and damon_destroy_ctx(src) at the e=
+nd
+of the function.
 
-Because of this mismatch, the switch statement falls through to the default
-case, and the test silently skips the assertion for memcg_id.
+> +	nr_dst_probes =3D 0;
+> +	damon_for_each_probe(dst_probe, dst)
+> +		nr_dst_probes++;
+> +	nr_src_probes =3D 0;
+> +	damon_for_each_probe(src_probe, src)
+> +		nr_src_probes++;
+> +	KUNIT_EXPECT_EQ(test, nr_dst_probes, nr_src_probes);
+> +	nr_dst_probes =3D 0;
+> +	damon_for_each_probe(dst_probe, dst) {
+> +		src_probe =3D damon_nth_probe(nr_dst_probes, src);
+> +		KUNIT_EXPECT_EQ(test, src_probe->weight, dst_probe->weight);
 
-> +	default:
-> +		break;
+[Severity: Medium]
+Could this result in a NULL pointer dereference if the destination context =
+ends
+up with more probes than the source context?
+
+KUNIT_EXPECT_EQ() does not abort test execution if the previous check for
+nr_dst_probes =3D=3D nr_src_probes fails. If dst has more probes, damon_nth=
+_probe()
+will return NULL, and the next line accessing src_probe->weight will crash =
+the
+test runner.
+
+> +		nr_dst_probes++;
 > +	}
-> +}
-> +
-> +static void damon_test_commit_filter(struct kunit *test)
-> +{
-
-[ ... ]
-
-> +	damon_test_commit_filter_for(test, &dst,
-> +			&(struct damon_filter){
-> +			.type =3D DAMON_FILTER_TYPE_MEMCG,
-> +			.matching =3D false,
-> +			.allow =3D false,
-> +			.memcg_id =3D 123,
-> +			});
+> +	damon_destroy_ctx(dst);
+> +	damon_destroy_ctx(src);
 > +}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260729144738.9089=
-5-1-sj@kernel.org?part=3D1
+5-1-sj@kernel.org?part=3D2
