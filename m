@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299AD4ADD86;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E584B8DC3;
 	Wed, 29 Jul 2026 14:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785333786; cv=none; b=PhdtRLUnqeckY4Oi8Oh36VxQF/+8he2m7pYzHYYPvk+qJvg8rE96EkEgUx3kYTTK3kD21PNuxYBF92j7TB+/nJp78zQYQsPqS/Fjj/MSOeXtP3vhpjXNEHNAqmcUF/RpVTpm5Jf9Qa2pXpPmVqYIZQZd4Du8GbAHnEBAlFiN9h8=
+	t=1785333787; cv=none; b=OBx9LfI83eLRZEgZJBvV1on6/d8VgOO29Kd2g/PHAxEHTzn71R/hCKJqMbQZD7uPqKKe3b2AME+2iWfcIKo1nf36FIzKFuUEa9DH6ODi93yU6enl7zciWsHRskjO908DQxpKMqJSszQEzs5ZWY/T/vtIDKCVjVrFfN2DKxda9kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785333786; c=relaxed/simple;
-	bh=YW9DG1nZbqz5zSzS0lvJDBQ6Z6KLAhpeL+KT/SDAr08=;
+	s=arc-20240116; t=1785333787; c=relaxed/simple;
+	bh=PrDKIsNzBcOI2wImwGKxiCXSpt5whZrLxV5oplnveaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6eVJJ+SnrmxCpP98wXws1JgcCDDvkZOqNuI6gFS25a2SI2WQqlXtBWKWXGmDwmmB9HMyjTjqGKpsiaMpsh11SlMea/4R9OdBuxdBwp68Prw8ZrxSXon7TunoTOxERQaNijAWmF5mx3L5ppTP4voCmwBi+tQXXfZmobjYIc5YhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HpIvLMu0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EnEqZB8cm78GCvEAXXf3onS3e1eKjb6pR+19ExBJxfvxavU9FfV62Zw5FChD7jG7dpKy5xmQl7SaRa/CtGf8iS+5ClKVpk+X+RU85PuIfRJu3cb5WMaxwDm3GHQ9ZP5h1YtTHP3j+vtSLU/pjM5s1EM/Oq/j1vMuqI9LFH7DrxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D3SJ02dr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HpIvLMu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70501F00ADB;
-	Wed, 29 Jul 2026 14:03:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D3SJ02dr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8214D1F00A3A;
+	Wed, 29 Jul 2026 14:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785333784;
-	bh=5RGW5tJfMQBefLVNsm8C6YsUWIxBGgWh+NafBLNk5T0=;
+	s=k20260515; t=1785333785;
+	bh=SOFGYop7G5CT0IvbShe/iVSTs0keWEcjAd/ooP0VIE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HpIvLMu06HaC3elJiA6elITNOECKamcFBJpfVoSh08FOPfmpxN8xc21ZD6A3Ahxu9
-	 s7LS221fZuYRTuU+Q23Wr+SqKtC75632WqH/0WeHS+kLgzlxNBoTyKv+hM3g0CGqOk
-	 f6Z0e0ubybTkVIV5NPIdVEDvhHrxXt41nuL5yA/OmzqOWYhPWUW4xfV0G4CyzXVk0U
-	 OU+LYVwOGgm99t/yxvA4xNMnm7vcyK2kF8M8TAt5eObBZDzmKN7NODoVvIRl1vJ6rn
-	 6wQkQJvqnBbyS4W6/YXDZqjOg4upSRFgCxRRdfiqUkieelrmRja9MOdjIw0GH3y7Ur
-	 MTy7MpyEGP0Dw==
+	b=D3SJ02droipthfU1VEMG1xJ84auTvUbx2K3kVN1erJ3EjWV42hpmN6ojM0ZLjJ708
+	 Y40xwMtAkHekYBB9J/MBmW8Jfw3nAuSmatvTs5eVTraWv5PkN/vaFyXu3+RhRanz81
+	 Gmfv8gMIZbSSEA1AoLENDMJqj+Hf5fFxHn0AcDuHVjOw02QRXJ5UCT4dMnFI9cKSzr
+	 vB9vVYMxfVTwi7K/rEyo2UuGwac4ps6SNXGsoZlvKEdEJC2Qyohapy1Ut6jfET+saN
+	 untQQD9KtqlRZBw9Ah4bDmKhdNZ21LcM4ZiADWA4twN30jGzMkWvnpvLguQEJhKRRJ
+	 XUZ9Ub1m9OdEg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.2 05/12] mm/damon/sysfs: remove probes number validation
-Date: Wed, 29 Jul 2026 07:02:45 -0700
-Message-ID: <20260729140253.87753-6-sj@kernel.org>
+Subject: [RFC PATCH v1.2 07/12] mm/damon/tests/core-kunit: test <=0 size damon_set_regions() inputs
+Date: Wed, 29 Jul 2026 07:02:47 -0700
+Message-ID: <20260729140253.87753-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260729140253.87753-1-sj@kernel.org>
 References: <20260729140253.87753-1-sj@kernel.org>
@@ -47,30 +51,39 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface is disallowing >DAMON_MAX_PROBES nr_probes input,
-since DAMON_MAX_PROBES is the upper limit of probes per DAMON context.
-The core layer is validating the upper limit again, though.  It is
-preferred to let DAMON API callers such as sysfs interface to set
-parameters in flexible ways, and do parameters validation in the core
-layer.  Drop the duplicated validation in the sysfs interface.
+Commit 1292c0ecb1ca ("mm/damon/core: validate ranges in
+damon_set_regions()") disallowed passing zero or negative size input
+ranges to damon_set_regions().  Add kunit test cases for those inputs.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/tests/core-kunit.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index d02f5f8ceae5b..8abda69c98dd1 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1477,7 +1477,7 @@ static ssize_t nr_probes_store(struct kobject *kobj,
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index befc1196d6d60..ac15393a7935b 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -592,6 +592,20 @@ static void damon_test_set_regions(struct kunit *test)
+ 			{.start = 25, .end = 40},
+ 			{.start = 44, .end = 50},
+ 			}, 3, 0);
++	/* Zero size regions should return -EINVAL. */
++	damon_test_set_regions_for(test,
++			(struct damon_addr_range[]){}, 0,
++			(struct damon_addr_range[]){
++			{.start = 42, .end = 42},
++			}, 1, 1,
++			(struct damon_addr_range[]){}, 0, -EINVAL);
++	/* Negative size regions should return -EINVAL. */
++	damon_test_set_regions_for(test,
++			(struct damon_addr_range[]){}, 0,
++			(struct damon_addr_range[]){
++			{.start = 42, .end = 21},
++			}, 1, 1,
++			(struct damon_addr_range[]){}, 0, -EINVAL);
+ }
  
- 	if (err)
- 		return err;
--	if (nr < 0 || nr > DAMON_MAX_PROBES)
-+	if (nr < 0)
- 		return -EINVAL;
- 
- 	probes = container_of(kobj, struct damon_sysfs_probes, kobj);
+ static void damon_test_update_monitoring_result(struct kunit *test)
 -- 
 2.47.3
