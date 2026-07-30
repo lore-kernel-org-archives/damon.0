@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C0B342CB0;
-	Thu, 30 Jul 2026 00:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DB1275870;
+	Thu, 30 Jul 2026 00:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785373009; cv=none; b=NYHTLqa3N1v/jVXyKb0AsgLvb2FAqcd+gQTWo+99/dgTRL/FSlM+Q5Ltuxhp8N2dVdWZ8hDPiJ3OAU/2Xirlfez9u/GthsDdWh+DtRmhdm4yj2VWMVwKkKO46hN+q2Jh55EIjryMdV7Yp/muyGI5yYI1FDONDJufmn+f/Bo+YnM=
+	t=1785373167; cv=none; b=gN37d/nS2xhFyLQUmzbGb/XAKyRBRWmC6No6xxVHHn4zw1BNB2BXXiQgjjuOpHxhQvj1x6Pe+UuKtB/PKsIBzKP5IoMeVXqrE4cQf4CbUVzxqUQhViuGvFKcUeyp0Nf5dfDWFoNTSMeCc82YfJRjMGoHuf1be6QptNs0bKRky3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785373009; c=relaxed/simple;
-	bh=DtkxkiD9A478HEY8qXBW9Yqy+UvCCvranmkM2sYBcAs=;
+	s=arc-20240116; t=1785373167; c=relaxed/simple;
+	bh=5+cYsASVRh2uLBQTCYu+3wxiDdOSO1Zvl+UX68Gxqo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GoyPCiphUCtV1rv68xXIzeaTzsLLao2mS2Xxg94dy+4QEBPce4S3aQb4aw5U57DyumoBZRcfyAu4QTx9jes0CnYnwJ2A/IFiFyc00WCcdvo8GBBjvAbkfCL7EVpJGdipZbySkIC8V4XaW5Yv4nnXb4RyXnpb8F5x4apxq8LXPkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AohHDmMV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rN1oNBUS9/1zJELiWC1eyb2ZQcUdO3Qqarxi3k1ueVGYk4TWEdSr2LvJJHDwY8ruvdYpL2sQ+I7+2U2SjZrQVPmgKyZAdwz0k/7zRt0aK7BXvZmv/ivD35jVNifGO/1NJwG1eoCDnLZEcEwpebFYXBROa441od2EPWSTjgLGego=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AD/B4nfw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AohHDmMV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AADD1F000E9;
-	Thu, 30 Jul 2026 00:56:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AD/B4nfw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5701F000E9;
+	Thu, 30 Jul 2026 00:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785373007;
-	bh=zt4XsvfQmoUsuB3jF9FwECnRMx4GfwPVJ6if8Bh+4z0=;
+	s=k20260515; t=1785373165;
+	bh=He/ha+AKaBGNbMo5KBtIDX7c4iKcLwK62YpnNkglYUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AohHDmMVSo8qU5+ckSCrVwDDNg+tvVhiZXMRDvyWcVXTM80+54bbS9p931iQFK2+A
-	 68Kc/DC+QapwNlrQd0aJF849XvRiXg0ybsM4lafKn3w3bb+0PDybGOrzgN3Qape5Uk
-	 AOkl0HkC8SiqoC3caTnbRbxdyc3pPgu4S6gF7qDIIAdRs2VuyBkyeskVVbvg3bhpLM
-	 lN5eAgQ2U3YDCoKcIzMPJ0VCAg2VoOzpO30EoNODHtnkVfQwlwKH/zrifSsgBGyvJj
-	 /65C9E7dQjw0hTcCXONLr49PuV2W/8ed4X56BRY6u60x+TKzz4HL3ReZUpBmICRSYP
-	 t22JHVQNHNxMw==
+	b=AD/B4nfwcgL3Itt3WHZvtuOOvZUTpkORXKeX+R9qopwgJQgBjnk+mTfS0uQecVgR1
+	 y+PPtzvn0ZztKE6KjvxFNgEyIfeP5jFnehelWt1ubkNc7XMloC3IYunIcO6MHJp0kc
+	 I4C88RP/BM8xFXy1oNwYP4QLJaPs6c6r8j/nYFK10igD8nzF8KND+Pkf9uJzs8dTcv
+	 P6FM+c82rSlPRgBEpmd3GmOESkGYyCodxox6sxkyz9uztG7iR1zD9jKRafoF15Qa0r
+	 DD0i0UBnJ5nQ3D6usAKuA1/LfDf+Gh+h3LktN65TAa3plVfwk1n4mCufZhEccav8wI
+	 dJjNx7aC8ngHw==
 From: SJ Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
 	Yang yingliang <yangyingliang@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12.y] mm/damon/core: validate ranges in damon_set_regions()
-Date: Wed, 29 Jul 2026 17:56:39 -0700
-Message-ID: <20260730005639.108842-1-sj@kernel.org>
+Subject: [PATCH 6.6.y] mm/damon/core: validate ranges in damon_set_regions()
+Date: Wed, 29 Jul 2026 17:59:17 -0700
+Message-ID: <20260730005917.112632-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026072900-emit-mortified-8331@gregkh>
-References: <2026072900-emit-mortified-8331@gregkh>
+In-Reply-To: <2026072901-unmarked-salvage-c2a5@gregkh>
+References: <2026072901-unmarked-salvage-c2a5@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -84,10 +84,10 @@ Signed-off-by: SJ Park <sj@kernel.org>
  1 file changed, 6 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 7911599c37f22..7217bb2ef51ec 100644
+index 46600265d7ffc..437a52fd6e0ee 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -214,6 +214,12 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
+@@ -212,6 +212,12 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
  	unsigned int i;
  	int err;
  
