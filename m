@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC1F39A061;
-	Thu, 30 Jul 2026 04:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E73374A02;
+	Thu, 30 Jul 2026 04:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785386398; cv=none; b=R9qDEK2jhSL9I77uwO0eXHX7QgFFcUOP9WEsN5BC+xgKXIkxuCnJov3VyIpFdQfFj1BtpqoWEghEaOVFOcHIxDMp4rU8Be3Kr0Pt+hg25V35dUhKtfXKrCtX8NjxpqGGcgxPDW2XqJ4xgHliTqWMmlgc1A5QMN/vs891sjGY4ck=
+	t=1785386399; cv=none; b=Jba49Hd05E7Ccnsj61GfXg3JRXW8NQApuVKEwad+FZFbTjgPeR+kgaXZMUm4NFWtbK3cCWo5NAwdwr67qjKHod9bPZIpUrzaJZb9gpgK581E8QBgrLC3QEK4lvP+ecOQtMPVQ/bLdgmGbGl0AjAQMNT1W5Q0hANeY87RmkV1A4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785386398; c=relaxed/simple;
-	bh=DJPYvh3BoeDGZsI6ipGISBHF/SQmPmzJIQyhoWHeFFc=;
+	s=arc-20240116; t=1785386399; c=relaxed/simple;
+	bh=cQ0vr2tOQJsXQ3PhVLbpZy60xjDpKRbWIqym6vb3ODE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jGgypjEktk2pmu5jTCx09eeuMPFcJuZi5lCCpRNi9J5U/+CtiK77YkYkYmOXz2kT+R7wdUM/8qNODyRFufAxQ/G5fzjX4FHjb3ADzRWtgPIyzQiMd7uY5zO1Jj6S8pmGCURb22DBEQD6kBIRuh6dG+sQgsaQvt7LliwUhoCppZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C15s4Gyr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mgNHojf6+3ZRsUjgn/Eep6nDDzx+Z+auxIfvVI9pJgfJWnnHsbMyRjsQeCsXaWP8V2QwgSMBca00N0N8eG9zSHDjeYVJPZRBda1wmYnXLwkWyxsAmQ+gSWeOlL+JAzkcv4uP3ZySD3gosRj1/2djKZnW93fquE3KUk1CAoZxZPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RR5EwBmI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C15s4Gyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A451F000E9;
-	Thu, 30 Jul 2026 04:39:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RR5EwBmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280931F00A3E;
+	Thu, 30 Jul 2026 04:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785386397;
-	bh=MtDpGEkDh7eFQBN1dloGGbcdOXn6qckrmCm8+BjUBow=;
+	s=k20260515; t=1785386396;
+	bh=liaC4gsoXyQOSeWbJsXi7paYTFzhMPeKXE7Q3rNWdA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C15s4GyrZLaZp5EvAou6ofPqODwYABlYCyBt7RTdsOQQC0sd0w/PZxIzr/5U0kkfa
-	 CCb0w9WozQRJq8WWT0N3v4TjSK8QyXd9D/wdJ5zapv9KQq+pI97NWzLTrNsDLTL088
-	 PEffDgnNSHONall4Zr80yuiUPyBbry4o35NlxGU9KsHRG3QFnELMkx67NgVxIjXdQc
-	 W+fJQz4nEAN6P3QoWL0twr49PQFBS4aVlXWf8KiEPjk3ZQrm3Nv19jMxo/EoNgAGEd
-	 ktJWgf/mctm4hgGzVxBpDe2F2kw/W4du1VweTELOqRq0Lvo1Uui4Qcmq5VTsRxmbz6
-	 rBdmkSLrN2cow==
+	b=RR5EwBmInBmc6wr6EdqCKxSapCPXsS9LvMd1PJuZcOZp+D6SB+pJQ9WVNnrBQOIxQ
+	 j7ltUi5IPVTA6F5wMfIE8MxBdoCp92tGku5J1a2ztyR9dwMeSKv9UXH+PAyquRwpUg
+	 nSML7ZM9CHpmx/01mVpcBKJF6sDq1gogwPtX1sdNcoKFr8epCiA6afiTcogvXQGYh+
+	 nUXc2YkzeIgaT9/EFDrm9B9P/PEhFKCwpZmevXXX7kU9SoWs2OXBAvEMxmrDcBnMHF
+	 rUTHgcaY97UfMbtsqPUgXL6Jas9vAG55HiMbxCYBYFgZYsqyoTVy60tEQTdjGA+HdE
+	 f6EO03eQeJaCw==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 4/6] selftests/damon/drgn_dump_damon_status: dump probes
-Date: Wed, 29 Jul 2026 21:39:41 -0700
-Message-ID: <20260730043944.146030-5-sj@kernel.org>
+Subject: [RFC PATCH v1.1 2/6] mm/damon/tests/core-kunit: add damon_commit_probes() test
+Date: Wed, 29 Jul 2026 21:39:39 -0700
+Message-ID: <20260730043944.146030-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260730043944.146030-1-sj@kernel.org>
 References: <20260730043944.146030-1-sj@kernel.org>
@@ -48,64 +51,115 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend drgn_dump_damon_status.py to dump damon_ctx->probes.  It will be
-used to see if in-kernel DAMON status are changed as the user sets the
-probes via sysfs.
+Add kunit test to ensure damon_commit_probes() updates destination DAMON
+context with source probes as expected.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- .../selftests/damon/drgn_dump_damon_status.py | 32 +++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ mm/damon/tests/core-kunit.h | 84 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 84 insertions(+)
 
-diff --git a/tools/testing/selftests/damon/drgn_dump_damon_status.py b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-index 09552e91bc782..4622046fd0118 100755
---- a/tools/testing/selftests/damon/drgn_dump_damon_status.py
-+++ b/tools/testing/selftests/damon/drgn_dump_damon_status.py
-@@ -48,6 +48,37 @@ def attrs_to_dict(attrs):
-         ['max_nr_regions', int],
-         ])
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 9cd2be03aeb9b..2ef0609b8d0e5 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -1393,6 +1393,89 @@ static void damon_test_commit_filter(struct kunit *test)
+ 			});
+ }
  
-+def filter_to_dict(damon_filter):
-+    filter_type_keyword = {
-+            0: 'anon',
-+            1: 'memcg',
-+            }
-+    dict_ = {
-+            'type': filter_type_keyword[int(damon_filter.type)],
-+            'matching': bool(damon_filter.matching),
-+            'allow': bool(damon_filter.allow),
-+            }
-+    type_ = dict_['type']
-+    if type_ == 'memcg':
-+        dict_['memcg_id'] = int(damon_filter.memcg_id)
-+    return dict_
++static struct damon_ctx *damon_test_help_setup_probes(unsigned int weights[],
++		int nr_weights)
++{
++	struct damon_ctx *ctx;
++	struct damon_probe *probe;
++	int i;
 +
-+def filters_to_list(filters):
-+    return [filter_to_dict(f)
-+            for f in list_for_each_entry(
-+                'struct damon_filter', filters.address_of_(), 'list')]
++	ctx = damon_new_ctx();
++	if (!ctx)
++		return NULL;
++	for (i = 0; i < nr_weights; i++) {
++		probe = damon_new_probe();
++		if (!probe) {
++			damon_destroy_ctx(ctx);
++			return NULL;
++		}
++		probe->weight = weights[i];
++		damon_add_probe(ctx, probe);
++	}
++	return ctx;
++}
 +
-+def probe_to_dict(probe):
-+    return to_dict(probe, [
-+        ['weight', int],
-+        ['filters', filters_to_list],
-+        ])
++static void damon_test_commit_probes_for(struct kunit *test,
++		unsigned int dst_weights[], int nr_dst_probes,
++		unsigned int src_weights[], int nr_src_probes)
++{
++	struct damon_ctx *dst, *src;
++	int err;
++	struct damon_probe *dst_probe, *src_probe;
 +
-+def probes_to_list(probes):
-+    return [probe_to_dict(p)
-+            for p in list_for_each_entry(
-+                'struct damon_probe', probes.address_of_(), 'list')]
++	dst = damon_test_help_setup_probes(dst_weights, nr_dst_probes);
++	if (!dst)
++		kunit_skip(test, "dst alloc fail");
++	src = damon_test_help_setup_probes(src_weights, nr_src_probes);
++	if (!src) {
++		damon_destroy_ctx(dst);
++		kunit_skip(test, "src alloc fail");
++	}
 +
- def addr_range_to_dict(addr_range):
-     return to_dict(addr_range, [
-         ['start', int],
-@@ -199,6 +230,7 @@ def damon_ctx_to_dict(ctx):
-     return to_dict(ctx, [
-         ['ops', ops_to_dict],
-         ['attrs', attrs_to_dict],
-+        ['probes', probes_to_list],
-         ['adaptive_targets', targets_to_list],
-         ['schemes', schemes_to_list],
-         ['pause', bool],
++	err = damon_commit_probes(dst, src);
++	KUNIT_EXPECT_EQ(test, err, 0);
++	if (err)
++		goto out;
++	nr_dst_probes = 0;
++	damon_for_each_probe(dst_probe, dst)
++		nr_dst_probes++;
++	nr_src_probes = 0;
++	damon_for_each_probe(src_probe, src)
++		nr_src_probes++;
++	KUNIT_EXPECT_EQ(test, nr_dst_probes, nr_src_probes);
++	if (nr_dst_probes != nr_src_probes)
++		goto out;
++	nr_dst_probes = 0;
++	damon_for_each_probe(dst_probe, dst) {
++		src_probe = damon_nth_probe(nr_dst_probes, src);
++		KUNIT_EXPECT_EQ(test, src_probe->weight, dst_probe->weight);
++		nr_dst_probes++;
++	}
++out:
++	damon_destroy_ctx(dst);
++	damon_destroy_ctx(src);
++}
++
++static void damon_test_commit_probes(struct kunit *test)
++{
++	damon_test_commit_probes_for(test,
++			(unsigned int[]){}, 0, (unsigned int[]){}, 0);
++	damon_test_commit_probes_for(test,
++			(unsigned int[]){}, 0, (unsigned int[]){1}, 1);
++	damon_test_commit_probes_for(test,
++			(unsigned int[]){}, 0, (unsigned int[]){1, 2}, 2);
++	damon_test_commit_probes_for(test,
++			(unsigned int[]){1}, 1, (unsigned int[]){2}, 1);
++	damon_test_commit_probes_for(test,
++			(unsigned int[]){1}, 1, (unsigned int[]){2, 3}, 2);
++	damon_test_commit_probes_for(test,
++			(unsigned int[]){2, 3}, 2, (unsigned int[]){1}, 1);
++	damon_test_commit_probes_for(test,
++			(unsigned int[]){2, 3}, 2, (unsigned int[]){}, 0);
++	damon_test_commit_probes_for(test,
++			(unsigned int[]){2}, 1, (unsigned int[]){}, 0);
++}
++
+ static void damon_test_commit_ctx(struct kunit *test)
+ {
+ 	struct damon_ctx *src, *dst;
+@@ -1745,6 +1828,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damos_test_commit_migrate_hot),
+ 	KUNIT_CASE(damon_test_commit_target_regions),
+ 	KUNIT_CASE(damon_test_commit_filter),
++	KUNIT_CASE(damon_test_commit_probes),
+ 	KUNIT_CASE(damon_test_commit_ctx),
+ 	KUNIT_CASE(damos_test_filter_out),
+ 	KUNIT_CASE(damon_test_feed_loop_next_input),
 -- 
 2.47.3
