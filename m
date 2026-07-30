@@ -1,78 +1,119 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416A723ABBE;
-	Wed, 29 Jul 2026 23:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846D8DF6C
+	for <damon@lists.linux.dev>; Thu, 30 Jul 2026 00:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785369528; cv=none; b=glqQ0x6hUmjTfr8fX243AEaRVyb5VQBY5NFPSOj0P6HWb7tKgGzwwO3V0WI8A4h9fFtRVrlZTIR+qRbsszrUzvDxbRVeYOVUwHJHvYfnCscxopld1aAhUaSycMn0KJ10XaioT3pm0yvfxG/Zrfd51h+0lrVi7TPQZ89AKbQX3WM=
+	t=1785369724; cv=none; b=VkeoSSUap6WFbjlpRwiGzvWLipo2VZ2fJNzJGwUjvfYwFlRn2ibWR6r8vpiRikh9IiAR+PmC43kF1UlMMhn4ZVQMkmHI/O7Ax8J+WyzE0qb87GxorfY6Xn+NZ+/GQ1oDhxFM83fXUj78seVZtD3QyN6pWmkOgGZwCfya21lQtfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785369528; c=relaxed/simple;
-	bh=wXw/dqoOvjXmB1QkyJyDOZjGD+gHFDbfcr9XvkakBt8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CITH5h0ztZmeFL/WEYxuj+584uWChdAzDTBnEXm5As7/fXVN8cmAZmW8dO7EfvKoHE0XNKmogeC/JOmbp/l6lYVQb0wKfgZra/6cAnpQeSsLpLRvboFOJstKeQVMPU+eTcvY909Axy9lkRyK5FJaHYIPQnl1oqZ3M5gMKl56RPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B48pzRbH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785369724; c=relaxed/simple;
+	bh=pNfwBq9xCga22AItmbKrk8tKxKnQu8A17FPfSllskb4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Nflg7LQoCnLo1+RqwPfd0sfm/47l4fxX6qB5c/Hbr0Ql6PtANsWF7+5+ECLZTP5iu0c6i6/JFAFlahfKv13OcZh3iho1gFjaZLmMWifyc5QLDq2EUmMCuSL7NBjGhGvIO8oQRdXpnxsyl9qPWHuhjWAsXsp4ygKg/2BDsYb9+Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F2pMYcIz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B48pzRbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015B21F000E9;
-	Wed, 29 Jul 2026 23:58:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F2pMYcIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C785F1F000E9;
+	Thu, 30 Jul 2026 00:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785369527;
-	bh=lMG9XAmDUxsCuNndcn5JjDOaQZspMJ2xjW59i1csd0Q=;
-	h=From:To:Cc:Subject:Date;
-	b=B48pzRbHUb/BDUQAljAcXJt9sU1hRGh2m+Em5JJJA847HEgPOQLaE6+Bm4+6MgqB0
-	 geqEqVD32hBbQcvpciP2W1DkhuSJOnRkEx+qdEEIFLZxrfzfhiqWdYXYF/2O6pMS0z
-	 +AuwddE3TcqJSDj8t9NVuOT2WkkKuQV9t3IP9sTaUDvxOdhS8XggquBBp3XFjGmiUd
-	 Dr2Md6jt7kb1elj9Y38eUT6ZrAC9ciLb2wU/TnHLrTwRgsaxAg3rL8P3XtIyat8Kzb
-	 fE3upX415cK8638olpgAHFuo3kqDG9E64AEulbLiXlAYm1N7opSq0uvUwKUztin1VD
-	 nPwAFfz7WFmVQ==
+	s=k20260515; t=1785369722;
+	bh=g43twrhPZJeqTVAHn/G0fOpjbomVkrIxUa3RXEtHbW8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=F2pMYcIzD8oYRA9EaueqH/7aGmR+V+lUBKfl43zwsTuyCZ30oTnNdCzZHccG7I8+r
+	 1ku8/62QDE7NKvjjbAyzJlrnrn0EbhzJUu9HVMo48xBBxKSBrlTMjKlgkrUyn/SghB
+	 D0tx+iZOns2Rd4k/v/wgqcgH5iMFo2XOEIdzo6GexHiWQGDSkAoDqR80KbgGS+mbAK
+	 fkGMEKxQM/G7GXKa/zUn3mtm6hY1WC+Qgkr2Pq2sr+j5UmbWFkPDwug2nFs07++7Qk
+	 3HEd0MO4CO2b8HiIQUvW8eUGbOd29cXVl7SCDW7VFwIkv5B9uFhJyKBfOVwBHz9tfB
+	 zGsxEZbAUgytg==
 From: SJ Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SeongJae Park <sj@kernel.org>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-08-03
-Date: Wed, 29 Jul 2026 16:58:41 -0700
-Message-ID: <20260729235842.99360-1-sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH 1/6] mm/damon/tests/core-kunit: test damon_commit_filter()
+Date: Wed, 29 Jul 2026 17:01:54 -0700
+Message-ID: <20260730000155.99604-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260729145257.CCFBE1F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: SeongJae Park <sj@kernel.org>
+On Wed, 29 Jul 2026 14:52:57 +0000 sashiko-bot@kernel.org wrote:
 
-Hello,
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The kunit test uses the wrong enum type `DAMOS_FILTER_TYPE_MEMCG` instead of `DAMON_FILTER_TYPE_MEMCG` when checking `src->type`, causing the `memcg_id` assertion to be silently skipped.
+> --
+> 
+> --- Patch [1]: [RFC PATCH 1/6] mm/damon/tests/core-kunit: test damon_commit_filter() ---
+> commit e16ea26a19f85858bdb608d81842e976d30c3270
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/tests/core-kunit: test damon_commit_filter()
+>     
+> Add kunit test to ensure damon_commit_filter() updates destination
+> filter as expected for valid inputs.
+> 
+> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> > index 4a536d41cdb2d..6cbe22accabfb 100644
+> > --- a/mm/damon/tests/core-kunit.h
+> > +++ b/mm/damon/tests/core-kunit.h
+> > @@ -1306,6 +1306,45 @@ static void damon_test_commit_target_regions(struct kunit *test)
+> 
+> [ ... ]
+> 
+> > +static void damon_test_commit_filter_for(struct kunit *test,
+> > +		struct damon_filter *dst, struct damon_filter *src)
+> > +{
+> > +	damon_commit_filter(dst, src);
+> > +	KUNIT_EXPECT_EQ(test, dst->type, src->type);
+> > +	KUNIT_EXPECT_EQ(test, dst->matching, src->matching);
+> > +	KUNIT_EXPECT_EQ(test, dst->allow, src->allow);
+> > +	switch (src->type) {
+> > +	case DAMOS_FILTER_TYPE_MEMCG:
+> > +		KUNIT_EXPECT_EQ(test, dst->memcg_id, src->memcg_id);
+> > +		break;
+> 
+> [Severity: Medium]
+> Will this case label ever be matched?
+> 
+> This code checks against DAMOS_FILTER_TYPE_MEMCG, but damon_test_commit_filter()
+> below initializes the source filter with type DAMON_FILTER_TYPE_MEMCG.
+> 
+> Because of this mismatch, the switch statement falls through to the default
+> case, and the test silently skips the assertion for memcg_id.
 
+Good catch, I will fix.
 
-This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
-(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
-for the week of 2026-08-03.
-
-As usual, we have two time slots for meetings in the week.  Next six time slots
-are as below.
-
-2026-08-03 (Mon) 18:00 PT (not yet reserved)
-2026-08-04 (Tue) 09:30 PT (not yet reserved)
-2026-08-17 (Mon) 18:00 PT (not yet reserved)
-2026-08-18 (Tue) 09:30 PT (not yet reserved)
-2026-08-31 (Mon) 18:00 PT (not yet reserved)
-2026-09-01 (Tue) 09:30 PT (not yet reserved)
-
-Please reach out to me (sj@kernel.org or whatever) to reserve the
-not-yet-reserved time slots for your topics.  The reservation is made in a
-First-Come First-Served way, and I will send a Google Meet link to
-reservation-confirmed attendees.
-
-Please note that other time slots are also available on demands.
-
-Shared Calendar
----------------
-
-You can get the schedule via this shared Google Calendar:
-https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+> 
+> > +	default:
+> > +		break;
+> > +	}
+> > +}
+> > +
+> > +static void damon_test_commit_filter(struct kunit *test)
+> > +{
+> 
+> [ ... ]
+> 
+> > +	damon_test_commit_filter_for(test, &dst,
+> > +			&(struct damon_filter){
+> > +			.type = DAMON_FILTER_TYPE_MEMCG,
+> > +			.matching = false,
+> > +			.allow = false,
+> > +			.memcg_id = 123,
+> > +			});
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260729144738.90895-1-sj@kernel.org?part=1
+> 
 
 
 Thanks,
