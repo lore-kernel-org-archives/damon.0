@@ -1,138 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F233C22576E
-	for <damon@lists.linux.dev>; Sat,  1 Aug 2026 20:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA61E3290AF;
+	Sat,  1 Aug 2026 21:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785616286; cv=none; b=aqPo7c+/pXx51K5C2INXvDY3h6HwG7I1OyhrLpBUIcYh6y+alfP39WK9g+NsEXrHsDA+ow8Nh8TT2nM/9u85Cx/eJF/2x3dL+9WfF1VPW+AP15izWJErtQHsO3guQtCxuhJRKEsxsRoqT7WE4mSYEAjMjzlS6jwwz9LmwIALy+o=
+	t=1785618804; cv=none; b=FAfP9n8OQl8Q9R8na6ssokhTHU7WKEAVFpnFAD2owbODISLiIjlcGPUaqDaS3d5+whtCSBQ1Ar0umw+MMFD0/5m3VrkQRyWgTk0F6iJDK6zqxSGK3I77U8i1mWHNy8GsVMuj2k24GEJBbtxCV/Y/V+CZyx6n+ptyDWhd6rF4uEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785616286; c=relaxed/simple;
-	bh=euiHLnhG1mKc0T4hDsWDYNpeaiGoFJcgBE20s8rrha4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V8MZ+7Wdgsw98D9prL9kKfjhggLw7iYm10XseU2DARnEnO0LCOGwCrDuTB3zu3Ka7gObsy/imTJgeoTTzJBN3HBowbYrQwLnknVp18KRotVaqxV8wrIJuYMJn7S/vRotqVixISO6ZTlVVzGFNWgljmCOdbbTILpdBxfQ9v9K7NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ASNNubEJ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785618804; c=relaxed/simple;
+	bh=DNOiz/DgEDdKA7ysxts/Yldz2JYVUrbH5dTvy9JOXOc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nxBde6G7F1o+aEiAGegF1aFnS0ljy4EIhwljVrzETtXb7ePYDIqHuLDxvft7CDVb9w8x/DgorfzmF05Eb9kmDd5Zd6J6LlGJiNcbvFXXOnT2Zpf2A/iZJtW3Gf7N6u8kjQhWVM+Gu1LIqxEJd0nrxOUCcfrwNw9SAG0TWHuOYxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N2qQ8ZkN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ASNNubEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE8D1F00AC4;
-	Sat,  1 Aug 2026 20:31:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N2qQ8ZkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBE41F00AC4;
+	Sat,  1 Aug 2026 21:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785616284;
-	bh=rXT7dddf6BDwCWvUT9BXN+PI6SMgqrrvpEqxGgCg2Wc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ASNNubEJ8pVBKG9MQoXTm8pVjbVcmbXmzeJL1eF5hwUprY04VCJ4PxiY5gvJ0UbIp
-	 jkWi4TP3E1UVy2FIc6ENle2Ole7mmJPP+Y0/OR0ve75YaUrv6tuGmf5e4GNQlN9Qo/
-	 8ngAc997FiNdBp9GmggcGfGQUNAevplq/Y2YqgJ+tHz6avcmmGMtXArzd2XO7BurZN
-	 4ZMLOhJOExhkL+rIl54neM64+kdfkbk3tZzgN0e5dsVigLrgcTNkkpOQEy7/9Kg5aQ
-	 tSR1wPRo08HHNo5zhbOKc+KBi9UT8Sx799MIJVxRkD0O1Mx43DGkFFrxwW+OmjaIXY
-	 1SK/5JRfYYOZQ==
+	s=k20260515; t=1785618803;
+	bh=Zgds1KWwyKC+2cnQi37FJX/dPPIH+eZIO9DX1EvW4BM=;
+	h=From:To:Cc:Subject:Date;
+	b=N2qQ8ZkNxXx6ISsQ8TaGZ+cCD8ZUA+9+/V6FRYXNsce37R+Ou2N1Hc4PGW6x92v3g
+	 f7/7wRdJGMfo2OCn1ybsZRz8kmVQFG06S/Kl5mg4lPjTqgRA5Pkd5/Z1tgy6Qiy37/
+	 2bieEOWzmlCkYJ0BqAeneOlpXHUmevhGsBIN5rb44Za0nXxaWFxS0M0LFuJGMQwcAD
+	 UW30BTR4MWsZTTtbLyU7IXRZNookNIeem5reab0R4yl9IScvMVjU/2l6SwHc8dVFY1
+	 lxqxOju361z63bWP5lTOGYZYQzuioxr505pI7a6L3YG0XVcggq2HL+EEdvQ3g9CUm+
+	 a36M0RbtXg+aw==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 1/9] mm/damon/core: skip applying scheme if region split for quota fails
-Date: Sat,  1 Aug 2026 13:31:20 -0700
-Message-ID: <20260801203121.117449-1-sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yunjeong Mun <yunjeong.mun@sk.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH] samples/damon/mtier: error out for zero quota goal target values
+Date: Sat,  1 Aug 2026 14:13:14 -0700
+Message-ID: <20260801211315.2456-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260801200200.114003-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 01 Aug 2026 13:02:08 -0700 SJ Park <sj@kernel.org> wrote:
+damos_quota_score() can trigger division by zero if the target_value is
+zero.  DAMON_SAMPLE_MTIER lets users set the target_value via
+node0_mem_{used,free}_bp parameters.  It doesn't guard zero value case,
+though.  As a result, users can trigger division by zero.  Fix the issue
+by returning an error when the user tries to start DAMON with zero
+node0_mem_{used,free}_bp parameter values.
 
-> On Sat, 01 Aug 2026 17:53:34 +0000 sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] Unhandled failure of damon_split_region_at() in damos_filter_match() leads to bypassing or incorrectly applying address filters.
-> > --
-> > 
-> > --- Patch [1]: [RFC PATCH 1/9] mm/damon/core: skip applying scheme if region split for quota fails ---
-> > commit 812934b542c69c596afadb66403f8c9c11c5bf91
-> > Author: SJ Park <sj@kernel.org>
-> > 
-> > mm/damon/core: skip applying scheme if region split for quota fails
-> > 
-> > damos_apply_scheme() splits a region and apply the action to the
-> > subregion if it is needed for not violating the quota.  The split
-> > operation (damon_split_region_at()) could fail for allocation failure.
-> > In the case, the quota could be violated.  From the user's perspective,
-> > DAMOS becomes more aggressive than expected under the extreme situation.
-> > Handle the failure.
-> > 
-> > Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org
-> > 
-> > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > index 644daf5a16560..e2900d0c984c9 100644
-> > > --- a/mm/damon/core.c
-> > > +++ b/mm/damon/core.c
-> > > @@ -2613,7 +2613,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
-> > >  					c->min_region_sz);
-> > >  			if (!sz)
-> > >  				goto update_stat;
-> > > -			damon_split_region_at(t, r, sz);
-> > > +			if (damon_split_region_at(t, r, sz))
-> > > +				goto update_stat;
-> > 
-> > [Severity: High]
-> > This is a pre-existing issue, but since we are handling the failure of
-> > damon_split_region_at() here, should we also handle it in
-> > damos_filter_match()?
-> > 
-> > If a memory region partially overlaps a filter range and the split
-> > allocation fails in damos_filter_match(), the return value is ignored:
-> > 
-> > mm/damon/core.c:damos_filter_match() {
-> >     ...
-> > 		/* start before the range and overlap */
-> > 		if (r->ar.start < start) {
-> > 			damon_split_region_at(t, r, start - r->ar.start);
-> > 			matched = false;
-> > 			break;
-> > 		}
-> > 		/* start inside the range */
-> > 		damon_split_region_at(t, r, end - r->ar.start);
-> > 		matched = true;
-> > 		break;
-> >     ...
-> > }
-> > 
-> > If the split fails, the intact region spanning both outside and inside the
-> > filter range is unconditionally evaluated as 'matched = false' or
-> > 'matched = true', incorrectly bypassing the filter or applying it to unrelated
-> > memory outside the intended range.
-> > 
-> > Could this lead to destructive actions (e.g., PAGEOUT) being applied to
-> > explicitly protected memory?
-> 
-> Nice catch.  I will fix this together.
+DAMON_SAMPLE_MTIER is just a sample module, but the consequence is quite
+bad.  Also the zero node0_mem_free_bp parameter might look like a
+reasonable setup to some users.  Hence, the issue might really happen in
+the real world.
 
-But, it is unclear what to do in this case.  Maybe it is better to just back
-off and cancel the DAMOS action.  And that would be no small change.  I will
-work on it separately.
+One reliable way to reproduce the issue is like below:
 
-> 
-> > 
-> > >  		}
-> > >  		if (damos_core_filter_out(c, t, r, s))
-> > >  			return;
-> > 
-> > -- 
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260801173554.94710-1-sj@kernel.org?part=1
-> 
-> 
-> Thanks,
-> SJ
-> 
+    # cd /sys/module/damon_sample_mtier/parameters
+    # echo 4096 > node0_start_addr
+    # echo 8192 > node0_end_addr
+    # echo 8192 > node1_start_addr
+    # echo 81920 > node1_end_addr
+    # echo 0 > node0_mem_free_bp
+    # echo Y > enabled
+    # dmesg -w
+    [...]
+    [18792.235916] Oops: divide error: 0000 [#1] SMP NOPTI
+    [...]
+    [18792.242787] RIP: 0010:damos_quota_score+0x6f/0x480
+    [...]
 
+This issue was discovered [1] by Sashiko.
 
-Thanks,
-SJ
+[1] https://lore.kernel.org/20260801202657.117135-1-sj@kernel.org
+
+Fixes: c5e67d40a102 ("samples/damon/mtier: add parameters for node0 memory usage")
+Cc: <stable@vger.kernel.org> # 6.17.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ samples/damon/mtier.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+index ac9c24b92ead8..d1123ebbfab90 100644
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -156,6 +156,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+ 	if (!scheme)
+ 		goto free_out;
+ 	damon_set_schemes(ctx, &scheme, 1);
++	/* zero target value causes division by zero in damos_quota_store() */
++	if (!node0_mem_used_bp || !node0_mem_free_bp)
++		goto free_out;
+ 	quota_goal = damos_new_quota_goal(
+ 			promote ? DAMOS_QUOTA_NODE_MEM_USED_BP :
+ 			DAMOS_QUOTA_NODE_MEM_FREE_BP,
+
+base-commit: 51b0df5cb9a4175af0e3c9e471cd70e91ff8eb4b
+-- 
+2.47.3
