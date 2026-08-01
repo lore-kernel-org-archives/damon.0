@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CEC3A254D
-	for <damon@lists.linux.dev>; Sat,  1 Aug 2026 20:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DC23876B0
+	for <damon@lists.linux.dev>; Sat,  1 Aug 2026 20:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785614530; cv=none; b=umFf5ZoyNk9PvMXW7EhQsQ04dwaYvGLcIw8WlQwpQIZNEZp+Zjsw1d5hTL3FnlOd1Q9MhgNcc63JDa+RPTtw9vDyXtORdaCwMc33Af2gnNiPOuzTBanSx5oYXCf6ElYJzWe8UwJQv1hXNMNcdYzce9pOuN52mGX1A06atapqH7s=
+	t=1785614841; cv=none; b=CvNjAzjb878xiGgB6zhcGnn7mNvNwqqKksv/Yq2N9oIFqDeU+UJE9VrG9Fo1uDiWgh5mqTHhDf2uXTjGypJuQEbaLAgjfyyXDsogjA4Ds7TOsICV876vuvrqbGM/oj5Iikqml4v9Df0blcvbgrTk27ehrWdpWuJCJFNCDI6ylkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785614530; c=relaxed/simple;
-	bh=QaF5Sc0USMk9CkzkzO9aa5GQ6rByT36Y1qng+sOq+cU=;
+	s=arc-20240116; t=1785614841; c=relaxed/simple;
+	bh=4ypZq9om4u3cT5V6ezkzN10h4qeBYt8dqcqi8UMl9B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G+Ff0hAY0+w4A7wI7hlLri2qjFW1TZNMS3VIXoUXAABm5tjiGZcv+R/0xFPfgQv8ulQzrnzwm57+DjLXEwT28KZLz90xL9Y0V3UtJDq0QAl7GoZDgTVqIiRL/9Jk/KIuHi1hStuIg1OthFUhCrr/UENQ0KYblg7dbnjFlF8epOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ntoHYsyG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=p0LzCQIF2UBVlx/wZsKNYo8bykytT6Kn875/5d8IYhwhYVmNo0xgIQycxx2FilsahJ1ouERyvGE21dXEQr8agVqHab6Xp5FIxT2ph2cI8+vcoAGv2Caa13hu4ZNzTfGYhFQoPS6rRDITU1YjW03YR93+6yHVVigTuaE9Cv83gIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cCyHlG+/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ntoHYsyG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8915A1F00AC4;
-	Sat,  1 Aug 2026 20:02:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cCyHlG+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7E81F00AC4;
+	Sat,  1 Aug 2026 20:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785614528;
-	bh=iH179kg7ONDwIFSBaMgekfikAlg2RvRr7jkm6ciUK18=;
+	s=k20260515; t=1785614839;
+	bh=keJw0yJm5+Ml4YDiN9/wpOHdgDNbvL1u+DpWQRw3JYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ntoHYsyGvd0cTVFRViD5RCRTRfep1gNd6T8OS5qfPrp8tm7dPJlKIpS1giO8HEZxo
-	 KW8yhRGxxbmW+W6roPHm20O7sGIypg4G2sNhCaxcbHHaJ65hid2/lBQfZ1wXn6BhKW
-	 H/BMERlwA0JHA//P5H1gzlPxmbAhcVcw50GfibvICuANMqeZaOS33h60PfeK+7gnAr
-	 Hkz8OFEVrosWUwRp7O7qDRv6ZaNZJbbmO2UnvqrWc4yD5UlwhDXpZsi2kabR6evGn4
-	 Y0Yo4exx4AhoKzpxPfiMxmGCJwxWuA8Ue6+VM3ODTSpexU01XYC/2VkK37+PghTU7k
-	 ZQKF13XwhGqHg==
+	b=cCyHlG+/j1KtZOhey8U7HPBtwf/TymneeUeK09Jq/39j2rKoecTGwfqvMuMPYTFbF
+	 ut/CRbM7ommz/+yi1zARUxioZ0WNJ4jv3EMSQichfv9eN954y2zBzpeHBcJ7nP2ujf
+	 vOsXH1Sd0PJGvYyuBZAExi7LzbEODUIQlSg7KLwh3YSD+8yG+d0+pWo30KTJ5y79cA
+	 sJsuIZmN4FVVDzFhAy/zQvyhztdzv/YS0wWs1Tnue8O8dgl7clCkReZlFVvKOgcgkr
+	 RLzZX7a3lFIy8GlyARK1HMHH1KGN4zDdqNr9TAVunFlnJr5k5CKUwO73qEjEvxqxtA
+	 3H3SR66uAV8aw==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 1/9] mm/damon/core: skip applying scheme if region split for quota fails
-Date: Sat,  1 Aug 2026 13:01:59 -0700
-Message-ID: <20260801200200.114003-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 3/9] mm/damon/paddr: respect folio end for DAMOS_STAT
+Date: Sat,  1 Aug 2026 13:07:11 -0700
+Message-ID: <20260801200712.114178-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260801175335.2D7E21F00AC4@smtp.kernel.org>
+In-Reply-To: <20260801182102.70BB91F00AC4@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,81 +45,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 01 Aug 2026 17:53:34 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 01 Aug 2026 18:21:01 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Unhandled failure of damon_split_region_at() in damos_filter_match() leads to bypassing or incorrectly applying address filters.
+> - [High] Incomplete fix for large folio address iteration boundary bug.
 > --
 > 
-> --- Patch [1]: [RFC PATCH 1/9] mm/damon/core: skip applying scheme if region split for quota fails ---
-> commit 812934b542c69c596afadb66403f8c9c11c5bf91
+> --- Patch [3]: [RFC PATCH 3/9] mm/damon/paddr: respect folio end for DAMOS_STAT ---
+> commit b98d6f7836f4a90b6724f683127a934a339f77d5
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: skip applying scheme if region split for quota fails
+> mm/damon/paddr: respect folio end for DAMOS_STAT
 > 
-> damos_apply_scheme() splits a region and apply the action to the
-> subregion if it is needed for not violating the quota.  The split
-> operation (damon_split_region_at()) could fail for allocation failure.
-> In the case, the quota could be violated.  From the user's perspective,
-> DAMOS becomes more aggressive than expected under the extreme situation.
-> Handle the failure.
+> This commit fixes an issue in damon_pa_stat() where advancing the address
+> by folio_size(folio) could skip subsequent folios if the start address
+> is unaligned within a large folio. It corrects this by advancing the
+> address to exactly the start address of the next folio.
 > 
-> Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 644daf5a16560..e2900d0c984c9 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -2613,7 +2613,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
-> >  					c->min_region_sz);
-> >  			if (!sz)
-> >  				goto update_stat;
-> > -			damon_split_region_at(t, r, sz);
-> > +			if (damon_split_region_at(t, r, sz))
-> > +				goto update_stat;
+> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> > index 5c6c3a597fd0b..2ab7b3842701e 100644
+> > --- a/mm/damon/paddr.c
+> > +++ b/mm/damon/paddr.c
+> > @@ -379,7 +379,7 @@ static unsigned long damon_pa_stat(struct damon_region *r,
+> >  
+> >  		if (!damos_pa_filter_out(s, folio))
+> >  			*sz_filter_passed += folio_size(folio) / addr_unit;
+> > -		addr += folio_size(folio);
+> > +		addr = PFN_PHYS(folio_pfn(folio)) + folio_size(folio);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but since we are handling the failure of
-> damon_split_region_at() here, should we also handle it in
-> damos_filter_match()?
+> This is a pre-existing issue, but does this same bug exist in other DAMON
+> operations that iterate over folios?
 > 
-> If a memory region partially overlaps a filter range and the split
-> allocation fails in damos_filter_match(), the return value is ignored:
+> For example, looking at damon_pa_pageout():
 > 
-> mm/damon/core.c:damos_filter_match() {
+> mm/damon/paddr.c:damon_pa_pageout() {
 >     ...
-> 		/* start before the range and overlap */
-> 		if (r->ar.start < start) {
-> 			damon_split_region_at(t, r, start - r->ar.start);
-> 			matched = false;
-> 			break;
-> 		}
-> 		/* start inside the range */
-> 		damon_split_region_at(t, r, end - r->ar.start);
-> 		matched = true;
-> 		break;
+> 		else
+> 			list_add(&folio->lru, &folio_list);
+> put_folio:
+> 		addr += folio_size(folio);
+> 		folio_put(folio);
+> 	}
 >     ...
 > }
 > 
-> If the split fails, the intact region spanning both outside and inside the
-> filter range is unconditionally evaluated as 'matched = false' or
-> 'matched = true', incorrectly bypassing the filter or applying it to unrelated
-> memory outside the intended range.
+> It appears damon_pa_pageout(), damon_pa_de_activate(), and damon_pa_migrate()
+> all still advance the address by folio_size(folio) instead of calculating the
+> exact folio end.
 > 
-> Could this lead to destructive actions (e.g., PAGEOUT) being applied to
-> explicitly protected memory?
+> Could these operations also overshoot subsequent memory and skip valid memory
+> folios if the region starts unaligned inside a large folio?
 
-Nice catch.  I will fix this together.
+A later patch of this series is fixinfg the bug.
 
 > 
-> >  		}
-> >  		if (damos_core_filter_out(c, t, r, s))
-> >  			return;
+> >  		folio_put(folio);
+> >  	}
+> >  	s->last_applied = folio;
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260801173554.94710-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260801173554.94710-1-sj@kernel.org?part=3
 
 
 Thanks,
