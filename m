@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C7C175A81
-	for <damon@lists.linux.dev>; Sat,  1 Aug 2026 20:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D6336B931
+	for <damon@lists.linux.dev>; Sat,  1 Aug 2026 20:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785615152; cv=none; b=CbUNkwxVQWw+pgNu/sSs24a2sx7ci8JNdbCoE5Cz952wwK2kSGsxZetDl6wMzuAivz5QI2SiS8Kv/u6yE6DXnk24si3n04rWYNA/SQzASoWBomSWrYRot8LFv5rYjLJg3hfnwuNp/tmoqgeygKg8E0bUjAoVtuOzYGvzyiW49f8=
+	t=1785615532; cv=none; b=FARgPRTKowdZMXcSFTpkELU+vkG4/gi+ZXHQ8IjXwYaw0ktu6rK/SRp/Y+lPgc/ZFRHf6rMggCVJfs6qZR3CQxEKXQ3eavpHL0TyFNyc/YZsTIwZjEEIwztII1a1ZeejeciVs5Ir5Ma7JFvyITAI9HZbq5Tr8BUU9kSebqZU19Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785615152; c=relaxed/simple;
-	bh=9n9REaGYgVz2c6Dy2efIB33ubXQjcxf4y40140W1siM=;
+	s=arc-20240116; t=1785615532; c=relaxed/simple;
+	bh=2FPe1KOXgdZ/rW764ykM2JOoyfzzLgL4yP9ae/bMkuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kGw9a5k1WXaA5NFwoIgKuzlRZ9Pv8+gGxYhl6cdQZd5A5J3xf7D0ZVPVvWyifPfboY+/P4rRIRbA9dxju99rt+bCa4EH8gxWfhmccHn14quDxPnTw3uKnG7i5oh24FmInao/SA7ucN5H5EkMBGftiB5DR0GCs/rB9R1VwB3CUhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XdkJH+pl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kLH8UiXE87pCxUB+cgrr53pYJgpty1xHBNLUIYTA85DPMTAurRvmtCtecC5OpmkEdhYe4t1WW8AY7+EhWtdMAA72rungtNsYEmlWK5StJdvkflefiBtGOEDFo2SrS29LFSHKluwwX7iZ/zFLYmGhlbvUGGBtVmbqMcCsrkbUq/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KolzjpEe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XdkJH+pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BF31F00AC4;
-	Sat,  1 Aug 2026 20:12:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KolzjpEe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489FE1F00AC4;
+	Sat,  1 Aug 2026 20:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785615151;
-	bh=xBZAwdgI5oS4BCWABWbFDBrTYe5VIXZPnP3jRylXV+o=;
+	s=k20260515; t=1785615530;
+	bh=Hi1bDhCgpWcC+5p6SoeZC3iIfSLX7qU90sgV6JAyZSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XdkJH+plNStqEqjWaXzTDtXH9PK1Yi7gJqxJcnlv61IBhzlNdeNvze12Q9XeMwKlD
-	 dKIlBHbgxKn/MlXbxJt27Rb9qcZA8TRqRXgM+mCRwUnm0CQavBadUaW/13Q41myv8M
-	 NiEvHju9gKbgvcSU+USBTvB/kooaKfnYRCJxIJaApulz2jTYuonFSMcFqoO1R+Xqs6
-	 Qe1NX3Z1vAzNnpqfdvEluiknJqXRzfB+3lBnVQeiSgxlqff7NUyiRObRbcVsqp7nxb
-	 ltcO23E+WiEFoVWBEvxI6KsiVAqkOmjpSgPqpKtCygvBpHyj9Ym/N4x0o95HiFmNFF
-	 oivkJAJutaZbQ==
+	b=KolzjpEe9c8TD7gO2P7Ab8gIlVkULvsTqJHtBL1029zHVh0tfpcGxoMCd5R1LhnTG
+	 9TOQDbqJp8DUMWTfcSiVhR2bevMiDyPuh0UTT73Ev7BDervGMNU4/dYP0XoTrobAHC
+	 brolYC5KdaBUgLbpPGaAuPJwfDqW4QBC4qxgTlizaldshTnPQXKZ+1b2QnIzkb6Mih
+	 mH+ynU5hxFIMBKn3ZSSsFktrwNDJV79q3SCGdhQmM/9mHwM4yWXA/Sc1Vau1usuB1Z
+	 Bam6irM3aLpuJ8+XMCZMYea7zjKwPbbu7S+bF9LkwsX9ZLjHJ+pzi9j13NNrBahf45
+	 PknO+Rr2Zj9jQ==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 5/9] mm/damon/vaddr: respect folio end for DAMOS_STAT
-Date: Sat,  1 Aug 2026 13:12:22 -0700
-Message-ID: <20260801201224.114332-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 7/9] mm/damon/core: handle extreme memory state in damon_get_node_mem_bp()
+Date: Sat,  1 Aug 2026 13:18:40 -0700
+Message-ID: <20260801201842.116790-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260801185013.8E4481F00AC4@smtp.kernel.org>
+In-Reply-To: <20260801191130.D56091F00AC4@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,121 +45,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 01 Aug 2026 18:50:13 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 01 Aug 2026 19:11:30 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
 > 
 > New issues:
-> - [Medium] Direct dereference of PTE pointer `*pte` instead of using the local safely fetched `ptent`.
+> - [Medium] Falsely reporting 100% memory utilization for an empty node due to a flawed division-by-zero fix.
 > 
 > Pre-existing issues:
-> - [High] Batched PTE advancement blindly skips interleaved folios and PTE-level Accessed/Young bits within a large folio's virtual footprint.
-> - [High] The exact page iteration bug fixed in `damos_va_stat_pmd_entry()` is also present in `damos_va_migrate_pmd_entry()` but was missed by this patch.
+> - [High] Potential integer underflow when evaluating `i.totalram - i.freeram` due to lockless vmstat reads.
+> - [High] The patch fixes a potential divide-by-zero in `damos_get_node_mem_bp()`, but fails to apply the same fix to `damos_get_node_memcg_used_bp()`.
+> - [High] Multiplication overflow in basis-point calculation on 32-bit architectures.
+> - [High] Potential divide by zero in `damos_get_in_active_mem_bp()` if the system has no active or inactive LRU pages.
 > --
 > 
-> --- Patch [5]: [RFC PATCH 5/9] mm/damon/vaddr: respect folio end for DAMOS_STAT ---
-> commit 20f53909d4e28dc2c1b2dd4ce52890349fc6c85d
+> --- Patch [7]: [RFC PATCH 7/9] mm/damon/core: handle extreme memory state in damon_get_node_mem_bp() ---
+> commit 0e2bb1b3ade5000769644aa674efbcfec5b43152
 > Author: SJ Park <sj@kernel.org>
+> Subject: mm/damon/core: handle extreme memory state in damon_get_node_mem_bp()
 > 
-> mm/damon/vaddr: respect folio end for DAMOS_STAT
+> In an extreme and unlikely situation, si_meminfo_node() might let the caller
+> show zero total ram. That could cause a divide by zero in
+> damon_get_node_mem_bp(). Fix it by setting the totalram one byte in the case.
 > 
-> For applying DAMOS_STAT action to a region, DAMON virtual address space
-> operation set (vaddr) calls walk_page_range[_vma]() for the region.  The
-> pmd walk entry function, namely damon_va_stat_pmd_entry(), applies DAMOS
-> filters to folios of addresses of the region in the pmd.  It starts from
-> the walking address and advances the address by the size of the folio of
-> the address until it goes out of the pmd or the region.
+> Link: https://lore.kernel.org/20260328133216.9697-1-sj@kernel.org
 > 
-> Link: https://lore.kernel.org/20260514015053.149396-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> > index 0648400b2d65b..035cd509f6b58 100644
-> > --- a/mm/damon/vaddr.c
-> > +++ b/mm/damon/vaddr.c
-> > @@ -831,6 +831,8 @@ static int damos_va_stat_pmd_entry(pmd_t *pmd, unsigned long addr,
-> >  		return 0;
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -2816,6 +2816,8 @@ static __kernel_ulong_t damos_get_node_mem_bp(
+> >  	}
 > >  
-> >  	for (; addr < next; pte += nr, addr += nr * PAGE_SIZE) {
-> > +		unsigned long page_idx;
-> > +
-> >  		nr = 1;
-> >  		ptent = ptep_get(pte);
-> >  
-> > @@ -844,7 +846,8 @@ static int damos_va_stat_pmd_entry(pmd_t *pmd, unsigned long addr,
-> >  
-> >  		if (!damos_va_filter_out(s, folio, vma, addr, pte, NULL))
-> >  			*sz_filter_passed += folio_size(folio);
-> > -		nr = folio_nr_pages(folio);
-> > +		page_idx = folio_page_idx(folio, pte_page(*pte));
+> >  	si_meminfo_node(&i, goal->nid);
+> > +	if (!i.totalram)
+> > +		i.totalram = 1;
+> > +	if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
+> > +		numerator = i.totalram - i.freeram;
 > 
 > [Severity: Medium]
-> Is it safe to directly dereference *pte here instead of using the local
-> safely fetched ptent?
+> Does setting totalram to 1 artificially inflate the utilization for an empty
+> node?
 > 
-> Reading a PTE directly on 32-bit architectures (like x86 PAE) can result in
-> a torn read if the hardware concurrently updates the Accessed/Dirty bits,
-> potentially leading to an incorrect PFN and subsequent wild pointer
-> arithmetic.
-> 
-> The local snapshot ptent was already obtained via ptep_get(pte) and should
-> likely be used here.
+> If si_meminfo_node() returns 0 for both totalram and freeram, numerator
+> becomes 1 - 0 = 1. This would result in 100 percent used memory (10000 basis
+> points), which contradicts the fallback logic that reports 0 percent for an
+> empty node. Will this trigger DAMOS quota actions erroneously?
 
-Good catch, I will fix this in the next version.
+I think this is fine.  Just different perspectives, and no real problem in real
+life.  We can later revisit for consistent interpretation of this extreme
+situations.
 
-> 
-> > +		nr = folio_nr_pages(folio) - page_idx;
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does this batched PTE advancement blindly
-> skip interleaved folios and PTE-level Accessed/Young bits within a large
-> folio's virtual footprint?
+> This is a pre-existing issue, but can this subtraction underflow?
 > 
-> For PTE-mapped large folios, hardware tracks the Accessed bit independently
-> per 4K PTE. By checking only the first PTE and blindly skipping the rest,
-> DAMON ignores accesses to subsequent pages of the folio, potentially
-> classifying hot memory as cold.
+> Because si_meminfo_node() computes freeram via lockless zone stats, per-CPU
+> stat lag can temporarily cause freeram to exceed totalram. If freeram >
+> totalram, the unsigned long numerator will underflow to a massive value.
 > 
-> Furthermore, if userspace partially unmaps or interleaves different mappings,
-> the blind pte += nr skips those unrelated folios completely without
-> verifying they map the same folio.
+> If we force totalram to 1 here and freeram is greater than 0, doesn't it
+> guarantee this underflow will occur?
 
-Good points that can further improved.  But seems handling these will make it
-too complicated, compared to the gain from the improvements.  I will keep this
-as is unless others raise different opinions.
+Good point, I will fix in the next version.
 
 > 
-> >  		s->last_applied = folio;
-> >  	}
-> >  	pte_unmap_unlock(start_pte, ptl);
+> > +	else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
 > 
-> While reviewing this patch, I noticed the exact page iteration bug fixed in
-> damos_va_stat_pmd_entry() is also present in damos_va_migrate_pmd_entry()
-> but was missed by this patch.
+> [ ... ]
 > 
 > [Severity: High]
-> This is a pre-existing issue, but does the DAMOS migrate action also advance
-> the PTE pointer unconditionally by the full size of the large folio?
+> This is a pre-existing issue, but does the same divide-by-zero happen in the
+> adjacent damos_get_node_memcg_used_bp() function?
 > 
-> mm/damon/vaddr.c:damos_va_migrate_pmd_entry() {
-> 	...
-> 	for (; addr < next; pte += nr, addr += nr * PAGE_SIZE) {
-> 		...
-> 		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
-> 				migration_lists);
-> 		nr = folio_nr_pages(folio);
-> 	}
-> 	...
+> mm/damon/core.c:damos_get_node_memcg_used_bp() {
+>         ...
+>         si_meminfo_node(&i, goal->nid);
+>         ...
+>         return mult_frac(numerator, 10000, i.totalram);
 > }
 > 
-> If the scanning starts in the middle of a large folio, it will advance past
-> the end of the large folio and skip unrelated folios that follow it, failing
-> to migrate them.
+> Since si_meminfo_node() can return 0 for totalram, wouldn't this also cause
+> a divide-by-zero here if i.totalram isn't validated?
 
-Yes, a later patch in this series will fix it.
+A later patch in this series will fix it.
+
+> 
+> [Severity: High]
+> This is a pre-existing issue, but can the basis-point calculation overflow
+> on 32-bit architectures?
+> 
+> mm/damon/core.c:damos_get_node_mem_bp() {
+>         ...
+>         return mult_frac(numerator, 10000, i.totalram);
+> }
+> 
+> Since mult_frac(numerator, 10000, denom) computes the remainder times 10000,
+> if the remainder exceeds roughly 429,496, won't this overflow a 32-bit
+> unsigned long and produce an incorrect result?
+
+Known low priority issue.
+
+> 
+> [Severity: High]
+> This is a pre-existing issue, but is there a potential divide-by-zero here
+> if the system has no active or inactive LRU pages?
+> 
+> mm/damon/core.c:damos_get_in_active_mem_bp() {
+>         ...
+>         total = active + inactive;
+>         if (active_ratio)
+>                 return mult_frac(active, 10000, total);
+>         return mult_frac(inactive, 10000, total);
+> }
+> 
+> If all memory is mlocked or purely kernel-allocated, both active and
+> inactive could be 0, making total 0. Will mult_frac() panic when dividing
+> by total?
+
+A later patch in this series will fix it.
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260801173554.94710-1-sj@kernel.org?part=5
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260801173554.94710-1-sj@kernel.org?part=7
 
 
 Thanks,
