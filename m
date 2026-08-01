@@ -1,115 +1,82 @@
-Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F1842A168
-	for <damon@lists.linux.dev>; Fri, 31 Jul 2026 13:37:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37DF2DF68;
+	Sat,  1 Aug 2026 17:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785505079; cv=none; b=Q2KIBddi7aJ+OO4cQy78+9o6z38d0+Mgi9kdn6Lo8dlYnO5ynNw0245vJ7+5mUz0Vh/TvOpdQAl0WBsvkQzC6qo/9w2yx9ECz2aOaXn2loMZDrIR/negc93/TO9a4i2SVNgyHTojhmUwirFVJ4b1Qt/oFa40v1bQ3c36dvSsbvc=
+	t=1785605765; cv=none; b=hQgPkdQZgVZj2KH2Iwyg1dWzt+DlJibeJULfDRw10SwZrZqB4V13jJT8vmqbCJzgE7yjjNagR3/AAeIT0r+VupScg99qPqm34XqHJQl7pOfF8xsR7vU+riBTj+V6wjsrrrHU5uRu1bMfyJIZoGyVwDqtFO5tlDfRTu94Hvd9aQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785505079; c=relaxed/simple;
-	bh=oi6aO5YdOOjB5Yvtjg8wrDX+VBEC3DBUvOL+gFJ43PE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tzGAKPnePP+JwL+5zZFhBwgfixZP23JyI20JLkulh7ryN/b9TvNNt/1tt+knke+mEC+sgBFXKqBsLRWqiusI/B9k0+ERUZpbQDxpKrK5IDaNOOq+zWuwMQXYv1+MHCWeNDpFs5/wZ0PXo7NACliyRU4uZdR7YKtMIOfdlnis5cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf12.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay05.hostedemail.com (Postfix) with ESMTP id EF5564042A;
-	Fri, 31 Jul 2026 13:28:09 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf12.hostedemail.com (Postfix) with ESMTPA id E384117;
-	Fri, 31 Jul 2026 13:27:45 +0000 (UTC)
-Date: Fri, 31 Jul 2026 09:28:25 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Muhammad Usama Anjum <usama.anjum@arm.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>, =?UTF-8?B?SsO8cmdlbiBH?=
- =?UTF-8?B?cm/Dnw==?= <jgross@suse.com>, Jani Nikula
- <jani.nikula@linux.intel.com>, Joonas Lahtinen
- <joonas.lahtinen@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Dimitri Sivanich
- <dimitri.sivanich@hpe.com>, Arnd Bergmann <arnd@arndb.de>, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>, "James E.J. Bottomley"
- <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>,
- Stefano Stabellini <sstabellini@kernel.org>, Muchun Song
- <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>, Andrew Morton
- <akpm@linux-foundation.org>, "Liam R. Howlett" <liam@infradead.org>,
- Lorenzo Stoakes <ljs@kernel.org>, Will Deacon <will@kernel.org>, "Aneesh
- Kumar K.V" <aneesh.kumar@kernel.org>, Nick Piggin <npiggin@gmail.com>,
- Peter Zijlstra <peterz@infradead.org>, Andrey Ryabinin
- <ryabinin.a.a@gmail.com>, David Hildenbrand <david@kernel.org>, Pasha
- Tatashin <pasha.tatashin@soleen.com>, Chris Li <chrisl@kernel.org>, Kairui
- Song <kasong@tencent.com>, Uladzislau Rezki <urezki@gmail.com>, Masami
- Hiramatsu <mhiramat@kernel.org>, Alexei Starovoitov <ast@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko
- <andrii@kernel.org>, Eduard Zingerman <eddyz87@gmail.com>, Kumar Kartikeya
- Dwivedi <memxor@gmail.com>, Ingo Molnar <mingo@redhat.com>, Arnaldo
- Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, SJ
- Park <sj@kernel.org>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan
- Kara <jack@suse.cz>, Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky
- <leon@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, Dennis Zhou
- <dennis@kernel.org>, Tejun Heo <tj@kernel.org>, Christoph Lameter
- <cl@gentwo.org>, Mike Rapoport <rppt@kernel.org>, Johannes Weiner
- <hannes@cmpxchg.org>, ziy@nvidia.com, pfalcato@suse.de,
- agordeev@linux.ibm.com, ryan.roberts@arm.com, linux-kernel@vger.kernel.org,
- intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-parisc@vger.kernel.org, xen-devel@lists.xenproject.org,
- linux-mm@kvack.org, linux-fsdevel@vger.kernel.org,
- linux-arch@vger.kernel.org, kasan-dev@googlegroups.com,
- linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org,
- linux-perf-users@vger.kernel.org, damon@lists.linux.dev
-Subject: Re: [PATCH RFC 01/11] mm: introduce hw_pte_t for PTE table storage
-Message-ID: <20260731092825.36992dc9@gandalf.local.home>
-In-Reply-To: <9ac33752-b587-4901-b5f2-473e573d7ede@arm.com>
-References: <20260727164715.2866609-1-usama.anjum@arm.com>
-	<20260727164715.2866609-2-usama.anjum@arm.com>
-	<6xah74eadjmo2bozyr62wcxo4hhpsiufx2mshh7tztyy2dzzps@63m327m7pl5u>
-	<9ac33752-b587-4901-b5f2-473e573d7ede@arm.com>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1785605765; c=relaxed/simple;
+	bh=Cgc540+p4FXI1tY2TNVOMXDdsREZ7GZdUX6iTqwsY5c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WyMWXm9de4Ig41DFz04b5s1NVMG84L6RPOvvqD0uiJYwzFoHCu30ZRfzcMIslgAtJkQwDzYn3JZOGBDwHnz39FGjPq/Ej+/FJ6XPq7n+LSwhWfbO5RSh1zUadCkQInd8N4qFJ9e1S9iBFP6Q83MdenTJW2p69izozlHhs8Lo43E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b7g2jA9x; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b7g2jA9x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014F31F00AC4;
+	Sat,  1 Aug 2026 17:36:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785605764;
+	bh=DgoWkAGslNq32y7wpqOrv1OO4q/c8+5GUJCCC3yQcNs=;
+	h=From:To:Cc:Subject:Date;
+	b=b7g2jA9xQ7iYK3VMelhLVoJeebvUY96cXG/MeGKOq/UQPEnD+NxHxwaks8lW8S2L5
+	 D1pCq9LBVzmVWbPK6yaG38mkb8sC0nwLwPo/NPcB4Ep1Bm7cT50zESoWO8eAdZlPlG
+	 QuyP56W0C9huQxfwO+t2XMLOSTtZyZQGQfHUTz4bDz3+mc+9OHDV9nZDKmxAXSA/ub
+	 7w6VIZNttEIL3coUj9bMzlxrVjghVEfQ35ms9aNF2gpznNW0iVKoCU7l2r78v4MaBp
+	 RMZwlTWxf5GHK8RqgUuZFFa9qslkg0qDhC+iJzRlN3I9lrXuaAC8llrqP0xmdNYSFL
+	 sYKblaRZiNGBA==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Yueyang Pan <pyyjason@gmail.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/9] mm/damon: fix DAMOS bugs in core, paddr and vaddr
+Date: Sat,  1 Aug 2026 10:35:43 -0700
+Message-ID: <20260801173554.94710-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Stat-Signature: bk4wphtnyr8oskxq6ok6poi7ogrp6zg4
-X-Rspamd-Server: rspamout04
-X-Rspamd-Queue-Id: E384117
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX188VTzKisaRifdK5JzAhtUj+tNTYkibFXo=
-X-HE-Tag: 1785504465-704596
-X-HE-Meta: U2FsdGVkX1+okbaURBZ2Qkn+l9IgiK40Gqe8ZThpseNdxUoxO6+yJtshZ3puroffdGsnNQX9lyVqqMfMDNqtsaiMVrZRSqd7CxcOf+tlTFcxBWBx10qhJ57MkLj8ndzBOYoA/OODEfAwWEkK0Ynym/vN8RHly0+jRGqqJSDy6cHg7VOGub/UmsJX6TfoBSOwr0+39CvO+c3eZRPTPuO9wuZjY0AitKZFKa26poYwhlLhVPb0FYC1FMbtcEIPwcv0BUAY4FqESIdzLvKNozpw1fVotcfhrX1NJojLWeahTii05xgjJv7utljWLfUJzJrqYVN7s4pCcDgRjK7TriyixEP+/JmhkJIq3qIe3n8mNyiV8HHld6EP1z7IlvkGJKR3
+Content-Transfer-Encoding: 8bit
 
-On Fri, 31 Jul 2026 11:19:32 +0100
-Muhammad Usama Anjum <usama.anjum@arm.com> wrote:
+Fix misc bugs of DAMOS.  Patch 1 make DAMOS less stress memory allocator
+under extreme situation.  Patch 2 fixes wrong DAMOS quota auto-tuning
+feedback loop start point for PSI goal.  Patches 3 and 4 fix wrong
+folios walking in DAMON_PADDR.  Patches 5 and 6 fix wrong folios walking
+in DAMON_VADDR.  Patches 7-9 handle extreme and unlikely memory
+situations that can cause divide by zero and underflow.
 
-> On 31/07/2026 6:49 am, Anshuman Khandual wrote:
-> > On Mon, Jul 27, 2026 at 05:46:52PM +0100, Muhammad Usama Anjum wrote:  
-> >> pte_t is used both for logical PTE values and for entries stored in a PTE
-> >> table, so pte_t * does not distinguish a pointer to a copied value from a
-> >> pointer to table storage.  
-> > 
-> > Should we rather call them as "Linux PTE" and "HW PTE" instead ?
-> > 
-> > Some like "Logical PTE" does not really sound very clear on what it represents.  
-> Yeah, I should make distinction more visible in the cover letter.
+All bugs are discovered by Sashiko.
 
-Just as an outside observer, so take this with a grain of salt and feel
-free to totally ignore it, the term "Logical" and "Physical" to me would be
-that the Logical one is created by software and is not mapped to hardware,
-whereas the "Physical" one would be backed by hardware.
+The bugs are not very critical, but better to be merged sooner than
+later.  Since mm.git is closed for urgent changes, I aim for 7.3-rcX.  I
+will drop the RFC tag after 7.3-rc1.
 
-Just using the terminology from LVM where there are Logical volumes and
-Physical volumes.
+SJ Park (9):
+  mm/damon/core: skip applying scheme if region split for quota fails
+  mm/damon/core: initialize damos_quota_goal->last_psi_total
+  mm/damon/paddr: respect folio end for DAMOS_STAT
+  mm/damon/paddr: respect folio end for DAMOS actions except STAT
+  mm/damon/vaddr: respect folio end for DAMOS_STAT
+  mm/damon/vaddr: respect folio end for DAMOS_MIGRATE_{HOT,COLD}
+  mm/damon/core: handle extreme memory state in damon_get_node_mem_bp()
+  mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
+  mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
 
-But if that doesn't represent what you are trying to accomplish here, then
-it is indeed not the appropriate terminology.
+ mm/damon/core.c  | 29 +++++++++++++++++++++++++----
+ mm/damon/paddr.c |  8 ++++----
+ mm/damon/vaddr.c | 10 ++++++++--
+ 3 files changed, 37 insertions(+), 10 deletions(-)
 
-Again, feel free to ignore this comment, but I just wanted to give an
-outside perspective of the terminology that I see.
 
-Cheers,
-
--- Steve
+base-commit: 70802c13e2c9a0ab52605035e2d63b964afe6add
+-- 
+2.47.3
