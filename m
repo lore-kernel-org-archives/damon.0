@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00222BF3D7
-	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 16:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F65269B1C
+	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 17:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785689577; cv=none; b=OiAhDXU3VRZqd9l/fi+p2guyct5WzNWq68sGkyi9HOZN5DLLH0R8edkfNgYyn/w9Kz9rBS1ZnioFYkrxjYXJh9476cmMPP5jqC4RkvNmnoorvxeGZJ9mco73dTEQSjEpOVALseCGEMGxDPgNdGXhOLU8wBj2YHwl5egmvxRr+no=
+	t=1785691831; cv=none; b=XvpaRarKutAAN0PToOML4K3GMDoy7FUE9GlwPsAvxrkeFJYIPbmrHvYYfu092l8sIOrcopDz2FfovLKJw9FoDnT+JaRSFZJB/5l5nn1Sh5JUbdFy3QkBnfOW9ZZjTcHpRAywiEo+sKzGoKFugyrZ6aJkcN6Xj+4KwThEYeFZh/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785689577; c=relaxed/simple;
-	bh=7uQIUAxEb62LxxerfG1DHRSXZiIR7P0y8rxxedD6IB8=;
+	s=arc-20240116; t=1785691831; c=relaxed/simple;
+	bh=3bBAcpkjJw8dHoLx7WneKNwn245i2usK9svggA420WM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PWr0AnFnZ8t4NlbzT9qv5Rm3/yZ56XozvwhMovJcqWAxFd1V1G/EAuASJylCsHWpIMWxrKW2R2e/IyOWwwAl+kGGrm7vFaXe2fQsL9bePdSjzGdnV8W1pkxiGBUF7MzFvpaN2IuXHp13DUCgIpjn3lvP/+01OZUaTKWoQ+bbgts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CuSxO4nr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=b1zWxph+WJbJhnK8sZErGCIPwr0VliEBAJpKmB/anFN+Gx5SRxqid0MMoxFWeM/a0etHqI0sliHqhGuJC7RNpUYzC7S5C+pBcqb+SzDG6wuPnIC0EmfE6mE0jG5eDpRck7HFaphT7K3i5yEMo5jZmHo6r5zE+cp35LzoIm0T6pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=biEQRwzU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CuSxO4nr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773571F000E9;
-	Sun,  2 Aug 2026 16:52:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="biEQRwzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC4F1F000E9;
+	Sun,  2 Aug 2026 17:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785689576;
-	bh=NJfAohqgDKr2A/x0BvqYLjQqZFikqrz2kDoFoMgFKsY=;
+	s=k20260515; t=1785691830;
+	bh=PxVmMGIT1lm8rsq4juy+1lq2veF9qRul6pZzS/zReGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CuSxO4nrSzVgJCUy1Sfl4MyXBHsZHE7ZCe6bWTdA8GPcVaZbyf+an6RsqrVO1lzmX
-	 lohA++WuchICYddLrn5AxUybBoambWXK6qAiQRYtHpcVGvwD/9yT64VZvrxckMO36i
-	 StKTjLuDW9/63GEvl6a8ArwfQvmLa8UK74PU+E9fIGOVbzhiVIlyhhh3SVGU4+DMVM
-	 za7l/N9+dYdK+T/iAHXISwNKWYlWhp+PEYm1CFj5eABWRNjitULqxm7eircG34OBBS
-	 qgqUSHtLOmHRLc+fwulRRenIGJsl8ZdZNs5zyiw5Loozzhu1tKrMKVbAbqIQCE4dZM
-	 PKdCE+YUI6wFw==
+	b=biEQRwzUx1gokSwa1MHyOQaoVjqF8/06vbRCvrhE76iTrW0JfcYa1Ek7wHGo+5gwj
+	 LJyfwcNjY38hR/p5np339it6G8lLA6kcJGcuxW94fu1oiTCZ7tk13c4dE8o0Iddq8U
+	 Ep1NqpzbcsdebtyM6hfEIhmOIR2OgDrgovYkdr86I08Bddx1npJppV9Y0m62vxBfpf
+	 zUG1NQjX9AJcWU7GcImZ4c1SDuqvmRiuN6M0cvkErtztSIbfcljyG6a3vzjGkcz4XW
+	 5m+IQV6dhcQ3Bno+K2/yI52sBHsRyY2ssZmgLEj7K8K2SYg5hfqgkF9oBedj9bBLX4
+	 AGR3PdRtj3eWA==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2 1/2] samples/damon/mtier: error out for zero quota goal target values
-Date: Sun,  2 Aug 2026 09:52:47 -0700
-Message-ID: <20260802165248.91066-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 2/2] mm/damon/lru_sort: error out for >10000 active_mem_bp
+Date: Sun,  2 Aug 2026 10:30:18 -0700
+Message-ID: <20260802173021.762-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260802163239.A7FFA1F000E9@smtp.kernel.org>
+In-Reply-To: <20260802163652.4C5DF1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,79 +45,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 02 Aug 2026 16:32:38 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 02 Aug 2026 16:36:51 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 > 
 > New issues:
-> - [Low] The newly added comment incorrectly refers to `damos_quota_store()` instead of `damos_quota_score()`.
+> - [High] The newly added validation check for `active_mem_bp` can be bypassed via a Time-Of-Check to Time-Of-Use (TOCTOU) race condition, resulting in division by zero.
 > 
 > Pre-existing issues:
-> - [High] This problem wasn't introduced by this patch, but the division-by-zero vulnerability is only patched at the module boundary in `mtier.c`. The unvalidated core API (`damos_new_quota_goal` and `damos_quota_score`) remains vulnerable and is still exploitable via other DAMON components. For instance, in `mm/damon/lru_sort.c`, an unchecked `active_mem_bp` module parameter can be set via sysfs such that it evaluates to 0, causing a kernel panic.
+> - [High] The function `damos_get_in_active_mem_bp()` triggers a division by zero if the system tracks no active or inactive LRU pages.
+> - [High] Writing to the `commit_inputs` module parameter while DAMON is initialized but not running indefinitely suspends the writing process.
 > --
 > 
-> --- Patch [1]: [RFC PATCH v2 1/2] samples/damon/mtier: error out for zero quota goal target values ---
-> commit a29006e1d33ea981b557928c622fb8487e53dbc8
+> --- Patch [2]: [RFC PATCH v2 2/2] mm/damon/lru_sort: error out for >10000 active_mem_bp ---
+> commit e683bbcbac1ca0611d9909a3bb95074271d3aa04
 > Author: SJ Park <sj@kernel.org>
-> samples/damon/mtier: error out for zero quota goal target values
 > 
-> This commit prevents a division-by-zero exception in damos_quota_score() by
-> returning an error when users try to start DAMON with zero values for the
-> node0_mem_used_bp or node0_mem_free_bp parameters.
+> mm/damon/lru_sort: error out for >10000 active_mem_bp
 > 
-> Link: https://lore.kernel.org/20260801202657.117135-1-sj@kernel.org
+> damos_quota_score() can trigger division by zero if the target value is
+> zero.  DAMON_LRU_SORT lets users set the target value for the hot memory
+> scheme via active_mem_bp parameter.  It avoids setting it as the target
+> value if the parameter value is zero.  However, it also sets the cold
+> memory scheme with a target value that is calculated as '10000 -
+> active_mem_bp + 2'.  Hence, if a user sets active_mem_bp 10002, the cold
+> memory scheme's quota goal target value can be zero.  As a result,
+> division by zero can be triggered.  Fix by returning an error when the
+> user tries to start DAMON with >10000 active_mem_bp parameter value.
 > 
-> > diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
-> > index ac9c24b92ead8..d1123ebbfab90 100644
-> > --- a/samples/damon/mtier.c
-> > +++ b/samples/damon/mtier.c
-> > @@ -156,6 +156,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
-> >  	if (!scheme)
-> >  		goto free_out;
-> >  	damon_set_schemes(ctx, &scheme, 1);
-> > +	/* zero target value causes division by zero in damos_quota_store() */
+> Link: https://lore.kernel.org/20260801213028.5127-1-sj@kernel.org
 > 
-> [Severity: Low]
-> This isn't a bug, but should this refer to damos_quota_score() instead of
-> damos_quota_store()?
-
-Good catch, it is a typo.  I will fix.
-
-> 
-> > +	if (!node0_mem_used_bp || !node0_mem_free_bp)
-> > +		goto free_out;
-> >  	quota_goal = damos_new_quota_goal(
+> > diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
+> > index 7e077084cb03a..3920d5042f109 100644
+> > --- a/mm/damon/lru_sort.c
+> > +++ b/mm/damon/lru_sort.c
+> > @@ -233,6 +233,8 @@ static int damon_lru_sort_add_quota_goals(struct damos *hot_scheme,
+> >  
+> >  	if (!active_mem_bp)
+> >  		return 0;
+> > +	if (10000 < active_mem_bp)
+> > +		return -EINVAL;
+> >  	goal = damos_new_quota_goal(DAMOS_QUOTA_ACTIVE_MEM_BP, active_mem_bp);
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but while this change handles the
-> zero target value at the module boundary in mtier.c, does the unvalidated
-> core API leave other DAMON components vulnerable?
+> Since active_mem_bp is a global module parameter, can its value change between
+> the bounds check and the call to damos_new_quota_goal()?
 > 
-> For example, looking at damon_lru_sort_add_quota_goals() in
-> mm/damon/lru_sort.c:
+> If a concurrent write updates active_mem_bp to 10002 immediately after the
+> check completes, the cold memory scheme's quota goal target value could still
+> end up being zero, resulting in the division by zero this patch aims to
+> prevent.
 > 
->     goal = damos_new_quota_goal(DAMOS_QUOTA_INACTIVE_MEM_BP,
->                                 10000 - active_mem_bp + 2);
-> 
-> If active_mem_bp is set to 10002 via sysfs, this evaluates to 0.
-> 
-> Because damos_new_quota_goal() in mm/damon/core.c accepts the target_value
-> without validation, this zero value propagates to damos_quota_score() where
-> mult_frac() performs a division by goal->target_value.
-> 
-> Could this cause a division by zero exception leading to a kernel panic?
-> Would it be safer to add validation directly inside damos_new_quota_goal()
-> or damos_quota_score() to protect all consumers?
+> Would caching the value locally with READ_ONCE() avoid this race?
 
-The next patch of this series is fixing the lru_sort bug.
+Such race cannot happen to my understanding, thanks to the param_lock.
 
 > 
-> >  			promote ? DAMOS_QUOTA_NODE_MEM_USED_BP :
-> >  			DAMOS_QUOTA_NODE_MEM_FREE_BP,
-> >  			promote ? node0_mem_used_bp : node0_mem_free_bp);
+> >  	if (!goal)
+> >  		return -ENOMEM;
+> 
+> While reviewing this code, I also noticed a couple of pre-existing issues.
+> 
+> This isn't a bug introduced by this patch, but in mm/damon/core.c:
+> 
+> mm/damon/core.c:damos_get_in_active_mem_bp() {
+>     ...
+> 	active = global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_ANON) +
+> 		global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_FILE);
+> 	inactive = global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_ANON) +
+> 		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
+> 	total = active + inactive;
+> 	if (active_ratio)
+> 		return mult_frac(active, 10000, total);
+> 	return mult_frac(inactive, 10000, total);
+> }
+> 
+> [Severity: High]
+> Can mult_frac() trigger a division by zero if total is 0?
+> 
+> If the system tracks no active or inactive LRU pages, or if per-CPU counter
+> drifts clamp the global state to 0, total will evaluate to 0 and be used as
+> the denominator.
+
+Known issue.  I'm working on it.
+
+> 
+> 
+> This is also a pre-existing issue, but in mm/damon/lru_sort.c:
+> 
+> mm/damon/lru_sort.c:damon_lru_sort_commit_inputs_store() {
+>     ...
+> 	/*
+> 	 * Skip damon_call() if ctx is not initialized to avoid
+> 	 * NULL pointer dereference.
+> 	 */
+> 	if (!ctx)
+> 		return -EINVAL;
+> 
+> 	err = damon_call(ctx, &control);
+>     ...
+> }
+> 
+> [Severity: High]
+> Does damon_call() require the kdamond thread to be actively running?
+> 
+> If the module is initialized but DAMON has not been enabled, it appears
+> damon_call() will queue the request and wait indefinitely on a completion
+> that will never be signaled by the stopped thread, causing the writing
+> process to hang in an uninterruptible sleep state.
+> 
+> Could we check damon_is_running(ctx) before calling damon_call()?
+
+Nice finding.  I will separately work on this.
+
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260802162050.89477-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260802162050.89477-1-sj@kernel.org?part=2
 
 
 Thanks,
