@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B99E3ACA71
-	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 16:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FAA3B47D2
+	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 16:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785688715; cv=none; b=ckgKY0Qkh+vFTcwy4CdxozaToY8uFxzhYJ/tBj+o+UdUHgADVuk77Buajn14A/PupQ4tyKi4/jRFHL7/MDQt47aiNUyQlQ7Wuw7cpEStvif6D3cKPCiAo39H0NYOewv03ZVF/u/xIF9gexKLSvakB3ZTVihtWpW9+xuccGWCZGk=
+	t=1785688996; cv=none; b=MTr0sVByJWcPGYGuE/G6IceEInxJB11oePV1jXwpeRS+toLjgUnVWKdbw0eDpoc42Gzi7h+i/0zS2IQWVEpL9Ipjrbt7OhTeuEjqlKjsVthp/tiXEduSq0Y5iig5FEiA2tic9ouP6QOTvQEodsjVCfjJAPEYNAqR/iCa4Sh9ilw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785688715; c=relaxed/simple;
-	bh=xjQLMmf1z14zTSQEDuq2G0VzAuiZJdsBpzzZf8YwDBQ=;
+	s=arc-20240116; t=1785688996; c=relaxed/simple;
+	bh=XErA0izaehxRYKEQnUAyb/U11YugNJp6FTafLkqGrCw=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=gGCDkI1rPGBuqSEllvKRHAPTr2Kr6a3ksqBb5xgrFXfbY/tmyHVGp9S9m6BdbrRQfWmefhph0dnovPDjIfhEiO9y+MVvF2wu5N9cGTtjMrxLM3/SynUmuM+/qb5/035+XZIVhMdJVCSi/Z3oDzmjJ2YH247bLkl6nvgcbgqccoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IDVlG+ZA; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Zi1rt4L3gHuBa1EzbnhNCcneAgbBVJ0YUYexTYYZATzG7dINT/PEHjHRIq/1j4ZXH8zK/A+hchxaey00BJRP++VOij/gYqGhpSUzNd6WcvOTr16uvT6EyVmBehLV8DSlMZfkG99x0fMnlmwbFE2kWDbbMTJNEwfo4U4GI0IQfV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mzzIFEwM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IDVlG+ZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C72B1F000E9;
-	Sun,  2 Aug 2026 16:38:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mzzIFEwM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A571F000E9;
+	Sun,  2 Aug 2026 16:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785688714;
-	bh=JWEU+AzqGHxd0wTl/ZBo8zvvQj1cjejpdkV4u6hXq7Y=;
+	s=k20260515; t=1785688994;
+	bh=+uHObLo5Z1VKMDHSgFQbVmPMFmbIBuooawNq64UnVbA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IDVlG+ZA4vp84k35ohfR4vaLVbPpzRxlPMbgTvI0B38mAn6bO5UgnlDo7e/EcqqMU
-	 5XXOT07T9ram3e2fRMd4cFbYxcMay3VSiNFtu9/Iq7JOy+soWSVCLrRcQIkQI9qS3/
-	 +3r/GzIWQ9Zon/m76kn3N8a/7CI0r/zRPdzsc8Lq5i0IrJvwQ1RFIlb8Lpb6b3uvs6
-	 oEP5FxnSkih7rrZEgIPR66SuXWucGKZRlDsd4IU0dk1/QGyzgG6b28FoBjnkm0TQM2
-	 mMU3KJHX58NI69WS7X9teZqmMTRRhEMmWXl6dCCAvnS/x5eccAEQxJdarrs3iQl3Zk
-	 Z53pEZ+2nnpRg==
+	b=mzzIFEwMSufu4IBaj0E2PI938LYsetn7k7vie4lk3S1UfpXByo/hE3L3QPjBCqPPm
+	 +ygZDM5TCg/lzesVgJVEFfuT4KvC2ZLoUvDIpiOgpVBC6/NebfH8g/uQwP4f2kqzEF
+	 HGn0IVQ/d2SOWG60eDjRYxk6ICYzsly94KHD3iO6okvE57NHTL6Cpr/XLbidluSFXM
+	 qtyP//oPomIX6xuQ+V1ILRWeEj7tYzIbPaBvWxaJWhow7gzPCL1CV1ZVb8/cW0Or0m
+	 gORVq0wNu93JgMyVKTLDP85TEO62xXoi3/QHYCkgPVzW17ptAqjSkYlCOb3Cg/xe0C
+	 hGstzfogReXSQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.1 8/9] mm/damon/core: handle extreme memory state
- in get_node_memcg_used_bp()
+Subject: Re: [RFC PATCH v1.1 2/9] mm/damon/core: initialize
+ damos_quota_goal->last_psi_total
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260802162631.90304-9-sj@kernel.org>
+In-Reply-To: <20260802162631.90304-3-sj@kernel.org>
 References: <20260802162631.90304-1-sj@kernel.org>
- <20260802162631.90304-9-sj@kernel.org>
+ <20260802162631.90304-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 02 Aug 2026 16:38:33 +0000
-Message-Id: <20260802163834.2C72B1F000E9@smtp.kernel.org>
+Date: Sun, 02 Aug 2026 16:43:14 +0000
+Message-Id: <20260802164314.73A571F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,81 +49,82 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] This problem wasn't introduced by this patch, but damos_get_node_m=
-em_bp() contains a severe logic bug and underflow when free memory exceeds =
-total memory (i.totalram < i.freeram).
+- [Medium] The patch incompletely fixes the uninitialized `last_psi_total` =
+variable usage. While it initializes `last_psi_total` when the `kdamond` th=
+read starts, it fails to initialize it for schemes or quota goals added dyn=
+amically at runtime via sysfs.
 --
 
---- Patch [8]: [RFC PATCH v1.1 8/9] mm/damon/core: handle extreme memory st=
-ate in get_node_memcg_used_bp() ---
-commit 0fb31bc202c766c30f5d776d57b867135fba4aa6
+--- Patch [2]: [RFC PATCH v1.1 2/9] mm/damon/core: initialize damos_quota_g=
+oal->last_psi_total ---
+commit ca3c4694fe111f676d0de56148cf986c02532428
 Author: SJ Park <sj@kernel.org>
-mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
 
-This commit addresses division by zero and underflow issues in
-damos_get_node_memcg_used_bp() by handling cases where total memory is zero=
- or
-used memory exceeds total memory. It returns 100% and 0% for these respecti=
-ve
-edge cases to prevent anomalous behavior.
+mm/damon/core: initialize damos_quota_goal->last_psi_total
 
-Link: https://lore.kernel.org/20260329154813.47382-1-sj@kernel.org
+When DAMOS_QUOTA_SOME_MEM_PSI_US metric damos quota goal is set, the PSI
+delta for the feedback loop is calculated using
+damos_quota_goal->last_psi_total. It is not initialized at the beginning.
+This commit initializes the value at the beginning of kdamond.
+
+Link: https://lore.kernel.org/20260718005316.89585-1-sj@kernel.org
 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index e3f3ee75a3d33..67ad1f07c29a4 100644
+> index e2900d0c984c9..3bdbf4fbf7147 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-> @@ -2862,10 +2862,16 @@ static unsigned long damos_get_node_memcg_used_bp(
->  	mem_cgroup_put(memcg);
-> =20
->  	si_meminfo_node(&i, goal->nid);
-> -	if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEMCG_USED_BP)
-> +	if (!i.totalram)
-> +		return 10000;
-> +	if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEMCG_USED_BP) {
->  		numerator =3D used_pages;
-> -	else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
-> +	} else {
-> +		/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
-> +		if (i.totalram < used_pages)
-> +			return 0;
 
-[Severity: High]
-This isn't a bug introduced by this patch, but does the adjacent
-damos_get_node_mem_bp() function contain a logic bug when free memory excee=
-ds
-total memory?
+[ ... ]
 
-If i.totalram < i.freeram, it appears that for DAMOS_QUOTA_NODE_MEM_USED_BP,
-i.totalram - i.freeram will unconditionally underflow, falsely throttling or
-activating schemes. For DAMOS_QUOTA_NODE_MEM_FREE_BP, returning 0 means it
-reports 0% free memory when the node is actually >100% free, which could ca=
-use
-schemes waiting for low free memory to trigger aggressively.
+> @@ -3744,6 +3755,7 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
+>  	damon_for_each_scheme(scheme, ctx) {
+>  		damos_set_next_apply_sis(scheme, ctx);
+>  		damos_set_filters_default_reject(scheme);
+> +		damos_init_quota_goal_last_psi(scheme);
 
-mm/damon/core.c:damos_get_node_mem_bp() {
-	...
-	if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEM_USED_BP) {
-		numerator =3D i.totalram - i.freeram;
-	} else {
-		/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
-		if (i.totalram < i.freeram)
-			return 0;
-		numerator =3D i.freeram;
-	}
-	...
+[Severity: Medium]
+This is a pre-existing issue, but does this completely fix the uninitialized
+variable usage?
+
+While this initializes last_psi_total when the kdamond thread starts, it
+appears goals added dynamically at runtime via sysfs will still be
+uninitialized.
+
+When a goal is parsed from sysfs, memory is allocated without zeroing the
+structure, leaving last_psi_total filled with slab garbage:
+
+mm/damon/sysfs-schemes.c:damos_sysfs_add_quota_score() {
+    ...
+    goal =3D damos_new_quota_goal(sysfs_goal->metric,
+            sysfs_goal->target_value);
+    ...
 }
 
-Should this pre-existing issue in damos_get_node_mem_bp() be addressed as w=
-ell,
-perhaps by returning 0 for USED_BP and 10000 for FREE_BP when
-i.totalram < i.freeram?
+During the context commit phase, the goal is dynamically allocated but
+last_psi_total is intentionally bypassed:
 
->  		numerator =3D i.totalram - used_pages;
-> +	}
->  	return mult_frac(numerator, 10000, i.totalram);
+mm/damon/core.c:damos_commit_quota_goals() {
+    ...
+    new_goal =3D damos_new_quota_goal(
+            src_goal->metric, src_goal->target_value);
+    ...
+}
+
+When the feedback loop executes, this uninitialized memory is consumed:
+
+mm/damon/core.c:damos_set_quota_goal_current_value() {
+    ...
+    goal->current_value =3D now_psi_total - goal->last_psi_total;
+    ...
+}
+
+Will this cause a random, extremely large or small initial quota adjustment
+when a user adds a new DAMON scheme or quota goal with the
+DAMOS_QUOTA_SOME_MEM_PSI_US metric to a running context via sysfs?
+
+>  	}
 >  }
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260802162631.9030=
-4-1-sj@kernel.org?part=3D8
+4-1-sj@kernel.org?part=3D2
