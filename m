@@ -1,106 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA293242BA;
-	Sun,  2 Aug 2026 18:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1AB324B33
+	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 19:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785696881; cv=none; b=aEJ1WOgI9Li/H+uHbqUHEdvAdyjwVFXWRcVETDlETK0Uh1nMdkkPg8U331tREH2/zvbduZNv4XAdyLgsp9G+t3fP2U7TQxpclerxlhOjNK/rL9I1GtTlR7uaVypRqplnMnkpQNuTG8yErGxZSRMU/xvF/YXfiZ3Qf0veIV4Fslw=
+	t=1785697472; cv=none; b=AgSarjKANdizN8K5l8wAqqcRHaV18146ND6614TtGa+1lqSw0UD4PxrQ1JwsniG8IdPXD7V0zc94v2YwAgQGh3NDTdgKOaFR4+tKgfRjT18FVsYAGU7SOTFfHQn2hqKpvsCt+wE00GJ47nRaW0WvZPny6Togg5gVhcp7aX+neUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785696881; c=relaxed/simple;
-	bh=SLHaCN6oJ5b09JUDm/ZSjN2yWNvqHhSuGLffrFq5yZQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqIyqACEwqrtOb8MpKF8RhnFJwfDmoGXifZzoiGekkg+xdaNvhfu44kplOfNzZZSI5e1lNVCpK2J4GbkUkhI6SKG3X5yrLNmBOxe/T02HomgWIwyet4zCkD7tVnLy8Bf/atffIttznRStp3RKtK5Ze5O2seAnpe+kTD8OIEZG7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lTae5JiF; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785697472; c=relaxed/simple;
+	bh=t0s56fIwAVfw11BvbrsMXpJ+QMxOjhXDXSvE/gFPobk=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=kqjbxYabndBlRutOCYD7AAk2kISph420GROWqqQBNiRS62F53m9P1rulX06aqafu8Tjn7jt972mepUQfOV1k31Las5+OpsUqJWTz9fO5ZJm0IB7vSTDiB+s73Js4Y0vyMhC0jpBg7w0ZAx4oQkkUMtRIHW32ZJNxu3gnZdwKqBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AEtHloaP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lTae5JiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8FA1F00A3E;
-	Sun,  2 Aug 2026 18:54:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AEtHloaP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080611F000E9;
+	Sun,  2 Aug 2026 19:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785696880;
-	bh=KZNY1MD6P0OCjtAb6cuHefbevIrlOVJqJGEJAaJiWKI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lTae5JiFy4IZpvv98o7309NigTJWUP3B1irg7TQpYpWaa231tj7JUYYeSSw9q+ny8
-	 GeI6Rbk2q0AoNG0KZwsjC+lcLnAY06RZTrIWwhsz2O6rne4i38shQxPuUSs6HTwAuB
-	 c8/Bg99D3iClUIceuOzkzP8kZvRxlx0cu+b2fggviRXp+fx1jYW6JwzVjM75mkaXvZ
-	 ePjNoZJo+gY77RmBLBbAdqIzvrXwKaAbxuKsFl0kCR8cD3vEkcN5Qxe3cFaFVRDUQN
-	 jWpHQp2d6qv9pHdVB9qNJ6KzXB4pYza2Ms0G+D97LkYLda89P1glVzujA5nDgrtkI4
-	 7fS766uf+sLyg==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 2/2] mm/damon/lru_sort: skip damon_call() if ctx has not started
-Date: Sun,  2 Aug 2026 11:54:28 -0700
-Message-ID: <20260802185430.9940-3-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260802185430.9940-1-sj@kernel.org>
+	s=k20260515; t=1785697471;
+	bh=1VBbj4+sd0yb84vuZ/y/0Webgoio/781+TZoRGQ/VZw=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=AEtHloaPkPlRGhpRBmlg1BytZ41I5LGORrGQ73LWsU1PqEAmoP8mOnH4Rr1+xiJOR
+	 XIneckP80PM+ypoUmszV0+feIwNEbYOOt9Ki508DDDu1m/GdEM5m6mtjlI1Zvr/gLy
+	 7Poiu4NI0ZlfwbtM9CF52l50bkNshrd8dWuofSHS0fMUKLcqDqey5EEomQGQh72GyJ
+	 WOzmNGeFV0ze6FL5wj/po2DzQXgFmPLKlWhRQ56/Una9SAU95GbAozOz2uiUND2R5/
+	 d6HgD3ggQbBLpx6NJIYAKAKpVdy6ArezuQnLoNP4DLKCfu40+/+DYYNeYXZ/zjKSzv
+	 A4zadapPC4toQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH 1/2] mm/damon/reclaim: skip damon_call() if ctx has
+ not started
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260802185430.9940-2-sj@kernel.org>
 References: <20260802185430.9940-1-sj@kernel.org>
+ <20260802185430.9940-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 02 Aug 2026 19:04:30 +0000
+Message-Id: <20260802190431.080611F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-DAMON_LRU_SORT calls damon_call() for commit_inputs parameter user input
-if the DAMON context is initialized.  The context could be initialized,
-but not yet successfully started.  In the case, damon_call() could
-indefinitely hang.  Read the comment on damon_call() for more detail.
-Fix the problem by memorizing if the DAMON context has ever successfully
-started, and skip damon_call() if it has not.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-This issue can easily be reproduced by writing Y to the commit_inputs
-parameter file on a system that DAMON_LRU_SORT has not turned on before.
+Pre-existing issues:
+- [High] This problem wasn't introduced by this patch, but the patch fixes =
+an indefinite hang in `mm/damon/reclaim.c` when writing to `commit_inputs` =
+before the DAMON context starts, while failing to apply the identical fix t=
+o `mm/damon/lru_sort.c`. This leaves `damon_lru_sort` vulnerable to the exa=
+ct same bug.
+--
 
-Fixes: de3c60e1c831 ("mm/damon: add synchronous commit for commit_inputs")
+--- Patch [1]: [RFC PATCH 1/2] mm/damon/reclaim: skip damon_call() if ctx h=
+as not started ---
+commit 86e90c966d8636445486cfde6487a797b433cb75
+Author: SJ Park <sj@kernel.org>
+
+mm/damon/reclaim: skip damon_call() if ctx has not started
+
+This commit addresses an indefinite hang in DAMON reclaim when writing to
+commit_inputs before the context has fully started. It introduces a tracking
+flag to determine whether the DAMON context has successfully started in ord=
+er
+to safely skip damon_call().
+
 Cc: <stable@vger.kernel.org> # 7.2.x
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/lru_sort.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index 3920d5042f109..bd847829a9907 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -346,6 +346,8 @@ static int damon_lru_sort_commit_inputs_fn(void *arg)
- 	return damon_lru_sort_apply_parameters();
- }
- 
-+static bool damon_lru_sort_damon_has_started;
-+
- static int damon_lru_sort_commit_inputs_store(const char *val,
- 					      const struct kernel_param *kp)
- {
-@@ -366,11 +368,8 @@ static int damon_lru_sort_commit_inputs_store(const char *val,
- 	if (!commit_inputs_request)
- 		return 0;
- 
--	/*
--	 * Skip damon_call() if ctx is not initialized to avoid
--	 * NULL pointer dereference.
--	 */
--	if (!ctx)
-+	/* Skip damon_call() if ctx has not successfully started. */
-+	if (!damon_lru_sort_damon_has_started)
- 		return -EINVAL;
- 
- 	err = damon_call(ctx, &control);
-@@ -423,6 +422,8 @@ static int damon_lru_sort_turn(bool on)
- 	err = damon_start(&ctx, 1, true);
- 	if (err)
- 		return err;
-+	if (!damon_lru_sort_damon_has_started)
-+		damon_lru_sort_damon_has_started = true;
- 	return damon_call(ctx, &call_control);
- }
- 
--- 
-2.47.3
+> diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> index 09e941d75f67d..45d5557cc575a 100644
+> --- a/mm/damon/reclaim.c
+> +++ b/mm/damon/reclaim.c
+[ ... ]
+> @@ -291,11 +293,8 @@ static int damon_reclaim_commit_inputs_store(const c=
+har *val,
+>  	if (!commit_inputs_request)
+>  		return 0;
+> =20
+> -	/*
+> -	 * Skip damon_call() if ctx is not initialized to avoid
+> -	 * NULL pointer dereference.
+> -	 */
+> -	if (!ctx)
+> +	/* Skip damon_call() if ctx has not successfully started. */
+> +	if (!damon_reclaim_damon_has_started)
+>  		return -EINVAL;
+> =20
+>  	err =3D damon_call(ctx, &control);
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does the same vulnerability
+exist in mm/damon/lru_sort.c?
+
+It looks like damon_lru_sort_commit_inputs_store() uses the exact same
+logic that was fixed here in reclaim.c:
+
+mm/damon/lru_sort.c:damon_lru_sort_commit_inputs_store() {
+    ...
+    /*
+     * Skip damon_call() if ctx is not initialized to avoid
+     * NULL pointer dereference.
+     */
+    if (!ctx)
+        return -EINVAL;
+
+    err =3D damon_call(ctx, &control);
+    ...
+}
+
+If a user writes to commit_inputs for damon_lru_sort before the thread has
+started, could damon_call() blindly invoke wait_for_completion() and hang
+indefinitely without a running thread to signal it?
+
+Should a similar fix be applied to mm/damon/lru_sort.c to prevent a task
+from hanging in an uninterruptible sleep state?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260802185430.9940=
+-1-sj@kernel.org?part=3D1
