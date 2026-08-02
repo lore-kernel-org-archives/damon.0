@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8B22931E2
-	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 17:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B1D23393C
+	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 17:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785693001; cv=none; b=NnLxqzQGSs1qzpsGF6W2f+OCLuFWZqrpslvT8ECbVqSKm4AAUDhHu8G3MbnuC7jhpGcM+UTjaCx8KYzdvEzrTpneyOLr+5b5k3SzjyBVKPoQB20cfu/uelw/hm7q3WF4iRfGfXkbaAv8DvSh0Hpl1ULKlfwXXanW2miy/rOR3DA=
+	t=1785693070; cv=none; b=PLG1aR3iA3n3HEU6hy8qPkjBSQiHyrw0TxoWqrIHpdt6FcCON/NHPadcQnbNAUkJdD9gxQdqUqA5wC4ENX6RXne1izIrr1tPX5BUHTUa03vvjeHRddUDwKsGgKZCKuWcopifKC1aw2M4hDq04mmZH/pNpb1iVzWkRbpvy94lq/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785693001; c=relaxed/simple;
-	bh=fLwIyH3NXukzQIlAspjVF1uwMZr0+TReYpG4CzHQRw8=;
+	s=arc-20240116; t=1785693070; c=relaxed/simple;
+	bh=lFY5aSHyALxMTyErkOD0dd0xblnT/4yyf69LS7VSIwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JCvJIu/rwX9BTrQG8CnxgzxROG9pM5gYME50l5jt2ouwL0PjOtyUFLfITwVh4gKF+VWBnCU1PUlMy0FC1aJrtI1Xs2G8n8je9N6XMshCltnjPaWuhHSGgTRbL/cYGVRlpHTN9lUjIQObl50vuNKvjE5Ra7LEITqYGCZiQGtORFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EGIeQKgM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cbW8YAau4PkF2lqB1nSVxJ4JunnTX0YzjZmiZSlM91A4twut0trWjPl9FfJKUipOzzEad16cWkVE07ryvDUI98Kohy+J6A9OdwpBGtpzsbuGglp/Ev7xZwrJrvhtwmLbORq6/gcUo0YTVMyl2PLFfMZt97Cv8mH5YdHmZ57ijGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hobh7c3T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EGIeQKgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6901F000E9;
-	Sun,  2 Aug 2026 17:49:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hobh7c3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E681F000E9;
+	Sun,  2 Aug 2026 17:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785692999;
-	bh=HFC1ZfZVQgA1k64Or0Q2cVLjt0oIoWc8r5/i4oOGR2g=;
+	s=k20260515; t=1785693069;
+	bh=m7nZ9pVspMDApR//PKwy3Zu/cYVBRBfvrmwNNDAHNlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EGIeQKgMMSaKgOhrTuX7yy7rh0f5r25nrAZT4eZ8MuXKUSVoBUvZNrOyzx+loTJM5
-	 RvC2+RBBEwlQ3HOHEQejXwqei3eNVWA7ALkEWcszLHKfMPob3+wmh4HhbOWVj5se/N
-	 LB8E8zVCDbnd15RwotnEQDd3CqCOopF7OK1QbH/UK6edv8U1fQ/mFraBE4nQO2yUqu
-	 Of+Choiv6neJieIMYw/cRAQRVv2Lbby18Pv0WPd63cKG9aRVPvek9+NftakuRDd8ag
-	 jtahwiJfKvRrA6Qkzl2MnnjSQPOJgYokd9uGBY94TJCTmGYa+CkHNt1ucIxKEaTmoc
-	 pQHr3SY1bJsjw==
+	b=hobh7c3T6Sy5SgJxCg+As7puwEZNHBAinjSDXLVN4Djl0eaMFGzs664BAobIzjxqt
+	 Qmz5b+DuBQ49OkJp8MU7yAl2cX1nZFcNzGqmi+QS1wFtGic0qADvhBDGypJZ2rTdds
+	 wOjOeYKMB/kQ+l0CxV520+6HiXf/lHZzvJNhtFQ1B5OtK0KRz4vQEi/8nGjIPQ2Iqo
+	 JjFw/j9pDH/HDMwL76l60Xe21Tfecnnr20goG3d63JU0hrnmGRBUFfjyv3DA7FS0j9
+	 rP9IKcnxbCJRLDcZf58hLLFl6+w/RqLU1I/VIxxXlKSkvN6hvDHkOfElUiooD0+m/I
+	 jLqvlDyegWI1w==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 7/9] mm/damon/core: handle extreme memory state in damon_get_node_mem_bp()
-Date: Sun,  2 Aug 2026 10:49:50 -0700
-Message-ID: <20260802174951.1878-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.1 8/9] mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
+Date: Sun,  2 Aug 2026 10:51:05 -0700
+Message-ID: <20260802175106.2012-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260802163545.31CC11F000E9@smtp.kernel.org>
+In-Reply-To: <20260802163834.2C72B1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,153 +45,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 02 Aug 2026 16:35:44 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 02 Aug 2026 16:38:33 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> 
-> New issues:
-> - [High] Returning 0 for DAMOS_QUOTA_NODE_MEM_FREE_BP when freeram > totalram incorrectly forces maximum scheme aggressiveness instead of reporting 100% free memory.
-> - [Medium] The commit message contradicts the implementation, and the unconditional return of 10000 for zero totalram breaks metric semantics.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Unhandled integer underflow in MEM_USED_BP and MEMCG_FREE_BP calculations when counters drift.
-> - [High] The patch fixes a potential divide-by-zero in damos_get_node_mem_bp() but misses identical unvalidated divisions in related functions.
+> - [High] This problem wasn't introduced by this patch, but damos_get_node_mem_bp() contains a severe logic bug and underflow when free memory exceeds total memory (i.totalram < i.freeram).
 > --
 > 
-> --- Patch [7]: [RFC PATCH v1.1 7/9] mm/damon/core: handle extreme memory state in damon_get_node_mem_bp() ---
-> commit 05d27d4d51952669ff23ec9285ccb83a273556ad
+> --- Patch [8]: [RFC PATCH v1.1 8/9] mm/damon/core: handle extreme memory state in get_node_memcg_used_bp() ---
+> commit 0fb31bc202c766c30f5d776d57b867135fba4aa6
 > Author: SJ Park <sj@kernel.org>
+> mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
 > 
-> mm/damon/core: handle extreme memory state in damon_get_node_mem_bp()
+> This commit addresses division by zero and underflow issues in
+> damos_get_node_memcg_used_bp() by handling cases where total memory is zero or
+> used memory exceeds total memory. It returns 100% and 0% for these respective
+> edge cases to prevent anomalous behavior.
 > 
-> In an extreme and unlikely situation, si_meminfo_node() might let the
-> caller show zero total ram. That could cause a divide by zero in
-> damon_get_node_mem_bp(). Fix it by setting the totalram one byte in the
-> case.
-> 
-> Link: https://lore.kernel.org/20260328133216.9697-1-sj@kernel.org
-> 
-> > In an extreme and unlikely situation, si_meminfo_node() might let the
-> > caller show zero total ram.  That could cause a divide by zero in
-> > damon_get_node_mem_bp().  Fix it by setting the totalram one byte in the
-> > case.
-> 
-> [Severity: Medium]
-> The commit message states "Fix it by setting the totalram one byte in the
-> case."
-> 
-> However, the implementation actually bypasses the metric type check and returns
-> 10000. 
-> 
-> Does this unconditional return contradict the intent documented in the commit
-> message?
-
-Good catch, I will update the commit message.
-
+> Link: https://lore.kernel.org/20260329154813.47382-1-sj@kernel.org
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 3bdbf4fbf7147..e3f3ee75a3d33 100644
+> > index e3f3ee75a3d33..67ad1f07c29a4 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> > @@ -2816,10 +2816,16 @@ static __kernel_ulong_t damos_get_node_mem_bp(
-> >  	}
+> > @@ -2862,10 +2862,16 @@ static unsigned long damos_get_node_memcg_used_bp(
+> >  	mem_cgroup_put(memcg);
 > >  
 > >  	si_meminfo_node(&i, goal->nid);
-> > -	if (goal->metric = DAMOS_QUOTA_NODE_MEM_USED_BP)
+> > -	if (goal->metric = DAMOS_QUOTA_NODE_MEMCG_USED_BP)
 > > +	if (!i.totalram)
 > > +		return 10000;
-> 
-> [Severity: Medium]
-> If the metric is DAMOS_QUOTA_NODE_MEM_FREE_BP, shouldn't it report 0% free
-> rather than 100% free if the memory is absent (which is what totalram=1,
-> freeram=0 would yield)?
-> 
-> Does returning 10000 here break the semantic constraint that used + free = 100%?
-
-I made mistakes at revisioning.  I will fix this.
-
-> 
-> > +	if (goal->metric = DAMOS_QUOTA_NODE_MEM_USED_BP) {
-> >  		numerator = i.totalram - i.freeram;
-> 
-> [Severity: High]
-> This is a pre-existing issue, but if counter drift results in
-> freeram > totalram, does this subtraction silently underflow, producing a
-> massive unsigned value?
-> 
-> If this is passed to mult_frac(), could it generate a huge metric value,
-> leading the auto-tuner to mistakenly act as if the memory is massively
-> overused?
-> 
-> An identical unhandled underflow also appears to exist in
-> damos_get_node_memcg_used_bp() when evaluating DAMOS_QUOTA_NODE_MEMCG_FREE_BP
-> if used_pages exceeds totalram:
-> 
-> mm/damon/core.c:damos_get_node_memcg_used_bp() {
->     ...
->     numerator = i.totalram - used_pages;
->     ...
-> }
-
-The intention of this revision was handling this, but I made a complete
-mistake.  I will fix.
-
-> 
-> > -	else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+> > +	if (goal->metric = DAMOS_QUOTA_NODE_MEMCG_USED_BP) {
+> >  		numerator = used_pages;
+> > -	else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
 > > +	} else {
-> > +		/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
-> > +		if (i.totalram < i.freeram)
+> > +		/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
+> > +		if (i.totalram < used_pages)
 > > +			return 0;
 > 
 > [Severity: High]
-> When counter drift causes freeram > totalram, the node effectively has
-> ~100% free memory. 
+> This isn't a bug introduced by this patch, but does the adjacent
+> damos_get_node_mem_bp() function contain a logic bug when free memory exceeds
+> total memory?
 > 
-> By returning 0 (0% free memory) in this scenario, doesn't the DAMON quota
-> auto-tuning feedback loop interpret this as severely under-achieving the free
-> memory goal, causing it to wastefully and drastically increase the reclamation
-> budget (e.g., pageout/demotion) on a node that is already completely free?
+> If i.totalram < i.freeram, it appears that for DAMOS_QUOTA_NODE_MEM_USED_BP,
+> i.totalram - i.freeram will unconditionally underflow, falsely throttling or
+> activating schemes. For DAMOS_QUOTA_NODE_MEM_FREE_BP, returning 0 means it
+> reports 0% free memory when the node is actually >100% free, which could cause
+> schemes waiting for low free memory to trigger aggressively.
 > 
-> Should this return 10000 (100% free) instead?
+> mm/damon/core.c:damos_get_node_mem_bp() {
+> 	...
+> 	if (goal->metric = DAMOS_QUOTA_NODE_MEM_USED_BP) {
+> 		numerator = i.totalram - i.freeram;
+> 	} else {
+> 		/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+> 		if (i.totalram < i.freeram)
+> 			return 0;
+> 		numerator = i.freeram;
+> 	}
+> 	...
+> }
+> 
+> Should this pre-existing issue in damos_get_node_mem_bp() be addressed as well,
+> perhaps by returning 0 for USED_BP and 10000 for FREE_BP when
+> i.totalram < i.freeram?
 
-That depends on the perspective.  I think 0% makes sense.
+The previous patch was completely broken by my mistake.  I will fix.
 
 > 
-> >  		numerator = i.freeram;
+> >  		numerator = i.totalram - used_pages;
 > > +	}
 > >  	return mult_frac(numerator, 10000, i.totalram);
 > >  }
 > 
-> [Severity: High]
-> This is a pre-existing issue, but while this patch addresses a potential
-> divide-by-zero when si_meminfo_node() reports totalram = 0, does the same
-> unvalidated division exist in related functions?
-> 
-> For example, damos_get_node_memcg_used_bp() divides by i.totalram without a
-> zero-check:
-> 
-> mm/damon/core.c:damos_get_node_memcg_used_bp() {
->     ...
->     si_meminfo_node(&i, goal->nid);
->     ...
->     return mult_frac(numerator, 10000, i.totalram);
-> }
-> 
-> Similarly, damos_get_in_active_mem_bp() divides by total (active + inactive)
-> via mult_frac() without checking if total is zero:
-> 
-> mm/damon/core.c:damos_get_in_active_mem_bp() {
->     ...
->     if (goal->metric = DAMOS_QUOTA_SOME_MEM_USED_BP)
->         return mult_frac(active, 10000, total);
->     return mult_frac(inactive, 10000, total);
-> }
-
-Later patches in this series fix those.
-
-> 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260802162631.90304-1-sj@kernel.org?part=7
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260802162631.90304-1-sj@kernel.org?part=8
 > 
 
 
