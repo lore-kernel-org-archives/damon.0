@@ -1,106 +1,123 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBCB3C3F48;
-	Sun,  2 Aug 2026 16:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438B23AE18A
+	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 16:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785688005; cv=none; b=WySPo7A/0JzMUDYARICBFywBmcMXsBII6Ks+w1ZnfGyPO8hBuN5QHHXPoEkuNQOWAJ5AqTneb5QvQqCC46dinKbfQNYVzVnHTFRvX0k9kfCuk7R2rzHYo/yx1x6LUHAfhsWcyOqoukaegncw/ZkV9/68fQBrPT6WJi6KPcw/4ZA=
+	t=1785688367; cv=none; b=M8AZyfJu/zBpyhdUamyry0wbaTb4lBTVeHJymOsV7ly+rIWbD57lJdnX+Qkw+K3Qtgp8vVn5qpMmXPI2gclhKQeuigJN/EhHOw+wdOQSN5AonkXgatZpPYcYBu5XdIJcyocVxU3FDsEpf18+EIQvFVPof/GrtbGafrqA4/8x4j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785688005; c=relaxed/simple;
-	bh=5AGJ58CxaHUHnA7OwFTsM+2rMQoeaY6UpbD7qoJcoXk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+zE8vHMOCBQ8GzJ9aTZHntzYBC8xfZ4ApJ+l58KBP4SmKylvBGLZ5Q9uEUeBNSdBQ3sGwCCGNGsjax9mlXvL37yZPjQAc3NDAf72Iv9nsNUnYMHtoXBJhhlrjudNmXAOK/Ko4BdvmvA2EO7pt8lA+RGAtzI4gkyhSaoeuBfbLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VPP1daxk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785688367; c=relaxed/simple;
+	bh=H5VeJ20oKyS7E/uMh+Ol05joAWN+MbR/Ob9Rq8dLlhY=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=eQEl4aGtyjvTfOdTA/8Sr/O6hCAnQVNAEKDkSQsQKxlf+KatM2PWz/7pDILhmbfg7DwYzxkDkCegc55D8Hz1FXxWg1Byb59Mz2FPZhssF4EcH1ATq4fsqyY1jKEdaq8wLEkzKA20V6YbL7dseHfd5F5C+3POYLU1k3fQ1/oDkxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yk8gSXue; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VPP1daxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13D41F00A3D;
-	Sun,  2 Aug 2026 16:26:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yk8gSXue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7FFA1F000E9;
+	Sun,  2 Aug 2026 16:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785688002;
-	bh=nSTjwnDV8A+NiGPVQu+FC6bukzN4Edj/bjp5VqLzRxU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VPP1daxkJXKjw19NUc7Z6RGkRDyWKUmVdKkYofrxQZWt8lBLVZTvam9kiHMe1LwSf
-	 eHKwTdEIgn9wBVNn0qj+sXBU3eCkzVzzI4eWILMp/iF9v9VRe/r2AOw+Tif9jBWPgm
-	 GvaHlqsVooEvjw2hbbfg19RwBT1P2TBs3IyrYe5MN76ybOdaVecZEAkdhdPQuu8lUS
-	 7bVvIDnhF35q+yG8YusWGJuMq6ffaSU9/ekxHOrwNU4mzSsJYqEoUtu19TjkmNx0Lu
-	 5FavlCCTIB8ptfqY4M8NhWR/IWyFIQPJQvUiZJW0MyDlEX+8JPjjRK0fTincYLI1CE
-	 FlSURFfAZcCCw==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Yueyang Pan <pyyjason@gmail.com>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 5/9] mm/damon/vaddr: respect folio end for DAMOS_STAT
-Date: Sun,  2 Aug 2026 09:26:26 -0700
-Message-ID: <20260802162631.90304-6-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260802162631.90304-1-sj@kernel.org>
-References: <20260802162631.90304-1-sj@kernel.org>
+	s=k20260515; t=1785688359;
+	bh=OFUXOUZUwm+xOYqKcVuP8kFDnDLSwgOld3IEO/q7Km8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Yk8gSXueGccgkUMcoYs9wpo55BBW5PusG9o/l9rghheJzvbcd4lw9YIaEWhwy1Y/v
+	 mlGySGebZlw64VEz+gcoaUuIwaQYCN2RUxSy+vne5v8XoOOP3g9vnYX0MrKKtx+7Ow
+	 Xj6t6xhbOg4q+pglHNKK9WJHFEJ5XEMG6tJnDdnUEHPc9vhrLy2f/nB3PseT3LgY3r
+	 er20zMrRPnPmyk7TCtQJ5fnZJ9F9J5ZEZ2grkrW3aVGBVkVaOsHwPHnefj5AOfAb0P
+	 NaQIDBw9UtyTGcdsUO0ScVpsyJJbFm/Cg9ViZk0HnJwACKEP8L5EJfh1FB88Z61xhB
+	 tFu/I2zqldonQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v2 1/2] samples/damon/mtier: error out for zero
+ quota goal target values
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260802162050.89477-2-sj@kernel.org>
+References: <20260802162050.89477-1-sj@kernel.org>
+ <20260802162050.89477-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 02 Aug 2026 16:32:38 +0000
+Message-Id: <20260802163239.A7FFA1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-For applying DAMOS_STAT action to a region, DAMON virtual address space
-operation set (vaddr) calls walk_page_range[_vma]() for the region.  The
-pmd walk entry function, namely damon_va_stat_pmd_entry(), applies DAMOS
-filters to folios of addresses of the region in the pmd.  It starts from
-the walking address and advances the address by the size of the folio of
-the address until it goes out of the pmd or the region.
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
 
-Let's suppose it is for the first pmd of the region, and the region
-start address is in the middle of a large folio.  Also, the next folios
-are small.  Then, some of the next folios could be skipped.  Fix the
-issue by advancing the address to exactly the start address of the next
-folio.
+New issues:
+- [Low] The newly added comment incorrectly refers to `damos_quota_store()`=
+ instead of `damos_quota_score()`.
 
-The user impact is that the DAMOS_STAT-based page level monitoring
-results become inaccurate.  Since the page level monitoring is supposed
-to provide relatively high precision, this is definitely a problem.  It
-is arguably not critical since it is only monitoring quality
-degradation.
+Pre-existing issues:
+- [High] This problem wasn't introduced by this patch, but the division-by-=
+zero vulnerability is only patched at the module boundary in `mtier.c`. The=
+ unvalidated core API (`damos_new_quota_goal` and `damos_quota_score`) rema=
+ins vulnerable and is still exploitable via other DAMON components. For ins=
+tance, in `mm/damon/lru_sort.c`, an unchecked `active_mem_bp` module parame=
+ter can be set via sysfs such that it evaluates to 0, causing a kernel pani=
+c.
+--
 
-The issue was discovered [1] by Sashiko.
+--- Patch [1]: [RFC PATCH v2 1/2] samples/damon/mtier: error out for zero q=
+uota goal target values ---
+commit a29006e1d33ea981b557928c622fb8487e53dbc8
+Author: SJ Park <sj@kernel.org>
+samples/damon/mtier: error out for zero quota goal target values
 
-[1] https://lore.kernel.org/20260514015053.149396-1-sj@kernel.org
+This commit prevents a division-by-zero exception in damos_quota_score() by
+returning an error when users try to start DAMON with zero values for the
+node0_mem_used_bp or node0_mem_free_bp parameters.
 
-Fixes: 63f39737d1e3 ("mm/damon/vaddr: support stat-purpose DAMOS filters")
-Cc: <stable@vger.kernel.org> # 6.18.x
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/vaddr.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Link: https://lore.kernel.org/20260801202657.117135-1-sj@kernel.org
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 0648400b2d65b..4b0b5edf67952 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -831,6 +831,8 @@ static int damos_va_stat_pmd_entry(pmd_t *pmd, unsigned long addr,
- 		return 0;
- 
- 	for (; addr < next; pte += nr, addr += nr * PAGE_SIZE) {
-+		unsigned long page_idx;
-+
- 		nr = 1;
- 		ptent = ptep_get(pte);
- 
-@@ -844,7 +846,8 @@ static int damos_va_stat_pmd_entry(pmd_t *pmd, unsigned long addr,
- 
- 		if (!damos_va_filter_out(s, folio, vma, addr, pte, NULL))
- 			*sz_filter_passed += folio_size(folio);
--		nr = folio_nr_pages(folio);
-+		page_idx = folio_page_idx(folio, pte_page(ptent));
-+		nr = folio_nr_pages(folio) - page_idx;
- 		s->last_applied = folio;
- 	}
- 	pte_unmap_unlock(start_pte, ptl);
--- 
-2.47.3
+> diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+> index ac9c24b92ead8..d1123ebbfab90 100644
+> --- a/samples/damon/mtier.c
+> +++ b/samples/damon/mtier.c
+> @@ -156,6 +156,9 @@ static struct damon_ctx *damon_sample_mtier_build_ctx=
+(bool promote)
+>  	if (!scheme)
+>  		goto free_out;
+>  	damon_set_schemes(ctx, &scheme, 1);
+> +	/* zero target value causes division by zero in damos_quota_store() */
+
+[Severity: Low]
+This isn't a bug, but should this refer to damos_quota_score() instead of
+damos_quota_store()?
+
+> +	if (!node0_mem_used_bp || !node0_mem_free_bp)
+> +		goto free_out;
+>  	quota_goal =3D damos_new_quota_goal(
+
+[Severity: High]
+This isn't a bug introduced by this patch, but while this change handles the
+zero target value at the module boundary in mtier.c, does the unvalidated
+core API leave other DAMON components vulnerable?
+
+For example, looking at damon_lru_sort_add_quota_goals() in
+mm/damon/lru_sort.c:
+
+    goal =3D damos_new_quota_goal(DAMOS_QUOTA_INACTIVE_MEM_BP,
+                                10000 - active_mem_bp + 2);
+
+If active_mem_bp is set to 10002 via sysfs, this evaluates to 0.
+
+Because damos_new_quota_goal() in mm/damon/core.c accepts the target_value
+without validation, this zero value propagates to damos_quota_score() where
+mult_frac() performs a division by goal->target_value.
+
+Could this cause a division by zero exception leading to a kernel panic?
+Would it be safer to add validation directly inside damos_new_quota_goal()
+or damos_quota_score() to protect all consumers?
+
+>  			promote ? DAMOS_QUOTA_NODE_MEM_USED_BP :
+>  			DAMOS_QUOTA_NODE_MEM_FREE_BP,
+>  			promote ? node0_mem_used_bp : node0_mem_free_bp);
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260802162050.8947=
+7-1-sj@kernel.org?part=3D1
