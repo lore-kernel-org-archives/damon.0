@@ -1,162 +1,129 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29B73B47D2
-	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 16:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B99E3ACA71
+	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 16:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785688614; cv=none; b=FHTadQKDCqYYjkYJe5dYRDZYEcJ/U1xwp2ucvQ4TwJwWrmn0aztUGfiG0uXIEPI3lPgcMMchFtXSUxpSnbgLNfKQ5DORlZGoQKxVh/4S06vjn+K+xH2O2aQckSVWViTKT8VoICOzdf5lVjipcfYxlTFk3yZW/VruGA9YWZ0V3pM=
+	t=1785688715; cv=none; b=ckgKY0Qkh+vFTcwy4CdxozaToY8uFxzhYJ/tBj+o+UdUHgADVuk77Buajn14A/PupQ4tyKi4/jRFHL7/MDQt47aiNUyQlQ7Wuw7cpEStvif6D3cKPCiAo39H0NYOewv03ZVF/u/xIF9gexKLSvakB3ZTVihtWpW9+xuccGWCZGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785688614; c=relaxed/simple;
-	bh=s/JF850rjsg1oB+Xzc84ZnSyUPB3mQTLsf00ltE/RDw=;
+	s=arc-20240116; t=1785688715; c=relaxed/simple;
+	bh=xjQLMmf1z14zTSQEDuq2G0VzAuiZJdsBpzzZf8YwDBQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Cu81k1ZOPArETdiGheFvynGS8t8A+0/xNTD/tbu2IPsE6xFxM4PnxMkmMOKYDm5eL2SZDgC6mjcpWuw+8C1L5U9rd09d2ZbOxoCmnNlEAkeYOfehZmS/a/QFVg2Qp0X13BG98vrQpSnSMQPSSYOignCMkqWTesYXmRYI/57u7tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b/kjsreL; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=gGCDkI1rPGBuqSEllvKRHAPTr2Kr6a3ksqBb5xgrFXfbY/tmyHVGp9S9m6BdbrRQfWmefhph0dnovPDjIfhEiO9y+MVvF2wu5N9cGTtjMrxLM3/SynUmuM+/qb5/035+XZIVhMdJVCSi/Z3oDzmjJ2YH247bLkl6nvgcbgqccoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IDVlG+ZA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b/kjsreL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5DF1F000E9;
-	Sun,  2 Aug 2026 16:36:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IDVlG+ZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C72B1F000E9;
+	Sun,  2 Aug 2026 16:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785688612;
-	bh=HWKbLs56QUYZkFQWLwUwUmv9VS27U0jNGii/I8JWtDE=;
+	s=k20260515; t=1785688714;
+	bh=JWEU+AzqGHxd0wTl/ZBo8zvvQj1cjejpdkV4u6hXq7Y=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=b/kjsreLckYp5yLUJKwTO9lmURPdB4XqHgsHFvgSDFlhRmTgy8/U2emBOnzpio/da
-	 hesDS+En+usbQT9YjeVkkRYp4z9C1SJsLBafRYm38/CMvY0oVHbIRPIAyaLSxDuGDM
-	 jqfG4cPG6h5F/Yh42m6rYbh0q5XOzZ1d6qe6jjsKyM1AnmHwF7SzzygBP3vv/4wZ1K
-	 YEC9i3TCbJmd9HboiQIo2+kAtgwSujEVVzWKDUnBUQ98YMuNbsoiUdkonz1KHTSjMm
-	 BYZQrCxRT9zhXPRgcTLw5z8/PIv4AXZVFt/vnS7CbFJrGqsgjZyfiVTHOVosNCTHC0
-	 ykUHpkpflVUmw==
+	b=IDVlG+ZA4vp84k35ohfR4vaLVbPpzRxlPMbgTvI0B38mAn6bO5UgnlDo7e/EcqqMU
+	 5XXOT07T9ram3e2fRMd4cFbYxcMay3VSiNFtu9/Iq7JOy+soWSVCLrRcQIkQI9qS3/
+	 +3r/GzIWQ9Zon/m76kn3N8a/7CI0r/zRPdzsc8Lq5i0IrJvwQ1RFIlb8Lpb6b3uvs6
+	 oEP5FxnSkih7rrZEgIPR66SuXWucGKZRlDsd4IU0dk1/QGyzgG6b28FoBjnkm0TQM2
+	 mMU3KJHX58NI69WS7X9teZqmMTRRhEMmWXl6dCCAvnS/x5eccAEQxJdarrs3iQl3Zk
+	 Z53pEZ+2nnpRg==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 2/2] mm/damon/lru_sort: error out for >10000
- active_mem_bp
+Subject: Re: [RFC PATCH v1.1 8/9] mm/damon/core: handle extreme memory state
+ in get_node_memcg_used_bp()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260802162050.89477-3-sj@kernel.org>
-References: <20260802162050.89477-1-sj@kernel.org>
- <20260802162050.89477-3-sj@kernel.org>
+In-Reply-To: <20260802162631.90304-9-sj@kernel.org>
+References: <20260802162631.90304-1-sj@kernel.org>
+ <20260802162631.90304-9-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 02 Aug 2026 16:36:51 +0000
-Message-Id: <20260802163652.4C5DF1F000E9@smtp.kernel.org>
+Date: Sun, 02 Aug 2026 16:38:33 +0000
+Message-Id: <20260802163834.2C72B1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
-New issues:
-- [High] The newly added validation check for `active_mem_bp` can be bypass=
-ed via a Time-Of-Check to Time-Of-Use (TOCTOU) race condition, resulting in=
- division by zero.
-
 Pre-existing issues:
-- [High] The function `damos_get_in_active_mem_bp()` triggers a division by=
- zero if the system tracks no active or inactive LRU pages.
-- [High] Writing to the `commit_inputs` module parameter while DAMON is ini=
-tialized but not running indefinitely suspends the writing process.
+- [High] This problem wasn't introduced by this patch, but damos_get_node_m=
+em_bp() contains a severe logic bug and underflow when free memory exceeds =
+total memory (i.totalram < i.freeram).
 --
 
---- Patch [2]: [RFC PATCH v2 2/2] mm/damon/lru_sort: error out for >10000 a=
-ctive_mem_bp ---
-commit e683bbcbac1ca0611d9909a3bb95074271d3aa04
+--- Patch [8]: [RFC PATCH v1.1 8/9] mm/damon/core: handle extreme memory st=
+ate in get_node_memcg_used_bp() ---
+commit 0fb31bc202c766c30f5d776d57b867135fba4aa6
 Author: SJ Park <sj@kernel.org>
+mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
 
-mm/damon/lru_sort: error out for >10000 active_mem_bp
+This commit addresses division by zero and underflow issues in
+damos_get_node_memcg_used_bp() by handling cases where total memory is zero=
+ or
+used memory exceeds total memory. It returns 100% and 0% for these respecti=
+ve
+edge cases to prevent anomalous behavior.
 
-damos_quota_score() can trigger division by zero if the target value is
-zero.  DAMON_LRU_SORT lets users set the target value for the hot memory
-scheme via active_mem_bp parameter.  It avoids setting it as the target
-value if the parameter value is zero.  However, it also sets the cold
-memory scheme with a target value that is calculated as '10000 -
-active_mem_bp + 2'.  Hence, if a user sets active_mem_bp 10002, the cold
-memory scheme's quota goal target value can be zero.  As a result,
-division by zero can be triggered.  Fix by returning an error when the
-user tries to start DAMON with >10000 active_mem_bp parameter value.
+Link: https://lore.kernel.org/20260329154813.47382-1-sj@kernel.org
 
-Link: https://lore.kernel.org/20260801213028.5127-1-sj@kernel.org
-
-> diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-> index 7e077084cb03a..3920d5042f109 100644
-> --- a/mm/damon/lru_sort.c
-> +++ b/mm/damon/lru_sort.c
-> @@ -233,6 +233,8 @@ static int damon_lru_sort_add_quota_goals(struct damo=
-s *hot_scheme,
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index e3f3ee75a3d33..67ad1f07c29a4 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2862,10 +2862,16 @@ static unsigned long damos_get_node_memcg_used_bp(
+>  	mem_cgroup_put(memcg);
 > =20
->  	if (!active_mem_bp)
->  		return 0;
-> +	if (10000 < active_mem_bp)
-> +		return -EINVAL;
->  	goal =3D damos_new_quota_goal(DAMOS_QUOTA_ACTIVE_MEM_BP, active_mem_bp);
+>  	si_meminfo_node(&i, goal->nid);
+> -	if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEMCG_USED_BP)
+> +	if (!i.totalram)
+> +		return 10000;
+> +	if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEMCG_USED_BP) {
+>  		numerator =3D used_pages;
+> -	else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
+> +	} else {
+> +		/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
+> +		if (i.totalram < used_pages)
+> +			return 0;
 
 [Severity: High]
-Since active_mem_bp is a global module parameter, can its value change betw=
-een
-the bounds check and the call to damos_new_quota_goal()?
+This isn't a bug introduced by this patch, but does the adjacent
+damos_get_node_mem_bp() function contain a logic bug when free memory excee=
+ds
+total memory?
 
-If a concurrent write updates active_mem_bp to 10002 immediately after the
-check completes, the cold memory scheme's quota goal target value could sti=
-ll
-end up being zero, resulting in the division by zero this patch aims to
-prevent.
+If i.totalram < i.freeram, it appears that for DAMOS_QUOTA_NODE_MEM_USED_BP,
+i.totalram - i.freeram will unconditionally underflow, falsely throttling or
+activating schemes. For DAMOS_QUOTA_NODE_MEM_FREE_BP, returning 0 means it
+reports 0% free memory when the node is actually >100% free, which could ca=
+use
+schemes waiting for low free memory to trigger aggressively.
 
-Would caching the value locally with READ_ONCE() avoid this race?
-
->  	if (!goal)
->  		return -ENOMEM;
-
-While reviewing this code, I also noticed a couple of pre-existing issues.
-
-This isn't a bug introduced by this patch, but in mm/damon/core.c:
-
-mm/damon/core.c:damos_get_in_active_mem_bp() {
-    ...
-	active =3D global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_ANON) +
-		global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_FILE);
-	inactive =3D global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_ANON) +
-		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
-	total =3D active + inactive;
-	if (active_ratio)
-		return mult_frac(active, 10000, total);
-	return mult_frac(inactive, 10000, total);
+mm/damon/core.c:damos_get_node_mem_bp() {
+	...
+	if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEM_USED_BP) {
+		numerator =3D i.totalram - i.freeram;
+	} else {
+		/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+		if (i.totalram < i.freeram)
+			return 0;
+		numerator =3D i.freeram;
+	}
+	...
 }
 
-[Severity: High]
-Can mult_frac() trigger a division by zero if total is 0?
+Should this pre-existing issue in damos_get_node_mem_bp() be addressed as w=
+ell,
+perhaps by returning 0 for USED_BP and 10000 for FREE_BP when
+i.totalram < i.freeram?
 
-If the system tracks no active or inactive LRU pages, or if per-CPU counter
-drifts clamp the global state to 0, total will evaluate to 0 and be used as
-the denominator.
-
-
-This is also a pre-existing issue, but in mm/damon/lru_sort.c:
-
-mm/damon/lru_sort.c:damon_lru_sort_commit_inputs_store() {
-    ...
-	/*
-	 * Skip damon_call() if ctx is not initialized to avoid
-	 * NULL pointer dereference.
-	 */
-	if (!ctx)
-		return -EINVAL;
-
-	err =3D damon_call(ctx, &control);
-    ...
-}
-
-[Severity: High]
-Does damon_call() require the kdamond thread to be actively running?
-
-If the module is initialized but DAMON has not been enabled, it appears
-damon_call() will queue the request and wait indefinitely on a completion
-that will never be signaled by the stopped thread, causing the writing
-process to hang in an uninterruptible sleep state.
-
-Could we check damon_is_running(ctx) before calling damon_call()?
+>  		numerator =3D i.totalram - used_pages;
+> +	}
+>  	return mult_frac(numerator, 10000, i.totalram);
+>  }
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260802162050.8947=
-7-1-sj@kernel.org?part=3D2
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260802162631.9030=
+4-1-sj@kernel.org?part=3D8
