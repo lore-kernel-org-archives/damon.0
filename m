@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7393B17B50F
-	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 17:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02C31CD1E4
+	for <damon@lists.linux.dev>; Sun,  2 Aug 2026 17:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785692628; cv=none; b=LMcrcPtza/LEKfT/IjZ8r1GZC3nbsprPtvJRxanqrb7aQzkqygtU3AcqcKqlxgzPoY/IAcvfrCH2EGIfAkjEKGw7dDxNMRQpFB2uGsDHKX0PBVirwfHnygksAl69ydFie6/qxJzO7U7sw9iFZZXSQ8A4/1ifMRDiJZzwHFEoaeM=
+	t=1785692727; cv=none; b=pF4miSrtFqzoEL2QpfBU1DqMuwr5oiB6hDYBi+3YUD2w/a3dPOeOreWdM7XrjWB6ua2mYmmCCnHt725KlzvVXlS4IXKPCOeyH4O9PA7YAvCaCQiBnmownErF9QmxD/GlIvvOQAyzDN7+//8NK8XdXKZTcDOYIouNIgLndf+Rs1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785692628; c=relaxed/simple;
-	bh=8+yAwdzukgflMLFWvUICLDj2qcstw6b9qY15GVu0Dhc=;
+	s=arc-20240116; t=1785692727; c=relaxed/simple;
+	bh=SdR4en3/oYVbtT6UNkTl4rgnKtSBreTPHMwQZM2Qny4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qzq4630Vszi7eILXEyWVQVCm5x46WjaC8edABIKtw93ltklhzRL+3fOjjOgfIGOX5XENyxZ1b+LX224LooG2YOHKQo4WLd9V6K0ynPjfemRu1k9mw7GPbt2JV/xQfUICa1IkOwLTEf/tICy1rRnNwkaE3YLSryn35gl+GxFHnvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MMtbz2+5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qg/4oYreQJpH4Uo8YTI3LnIkw6FvkM0wOzUcjGTj9w0b3M8adJssc6gU/Llyus3eD2aPBcSM5OkgjzjR8zaqSbThVZ5/4XCnNstWphyVU1rIOtB4Pj2T3ASpSwo2bql8oXeZRn32XncBEFB/YDsg3Bde5oMEwXfnS+0wRSjc38U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C4ux3a4M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MMtbz2+5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3851F000E9;
-	Sun,  2 Aug 2026 17:43:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C4ux3a4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFCB1F000E9;
+	Sun,  2 Aug 2026 17:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785692627;
-	bh=BND7gpURSdtJwUMnrpxZi/Jmg7bEHuuQh3k0/pMXf8Q=;
+	s=k20260515; t=1785692726;
+	bh=0wLQNO9tcRfijjmnZM3MFyTS6LwfbefvpyJwL05qWjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MMtbz2+5/wCipNyFtT2g0FHQP74fDf2i/clOxC8gYPEuHNI0j4rB7UyaOkYQ03kR6
-	 PTRZG3PNnIi/t5wEceSIexJiYmLeGg1p8a8WxDy5NHTNOeqLG9CM3R+EodoLthidHO
-	 X2iUVk7C93B6AlWf0+6ZR/0BAWPrD67NugZcmO7dsv6r3B5oURJJF56pdMiviwdyL7
-	 QtLTbjYc3yNBrGiA/am+c++TUc1zsX+P779LTH/zQRpxGFP/R5EKxr6hJjlPTyB3/J
-	 Ns86+8Xq2GhFlOF84xeYxrflBbQLtjV+kmKbBfLkodqgEkSwoSzlMZHPSc/eAAHM0r
-	 8HO2+Cs7DpLdA==
+	b=C4ux3a4MQ6M7PwUMoTu9/W876sXMbzSsi08lsCvJyVQq89z3n5ujSdeu2LPYMS67W
+	 vkw7oGQN/VB0HAMMD+7VUKUaH8PKF4qMJ/Uv+w2j1Lx9B5ex6Djc3BA24FtcnHsAPT
+	 Z0IrjZfwm0h6tujCcbKVBRe85RvOM7cCc/sSo28yLo8pBEMgk1Z4pxlh2tQOJA2E0L
+	 Gsxs5LhPd7hO3QmS7kG8nKo4qtNSJfafweku0c7QjOBYyh6qegAJBuWwxogNPEdGe0
+	 JGDHDqXQ1hjv01U5OKs+FtQu31qdAekX+5RpLBaLuEPSZhUaCF3JREppcZJX9kQQ10
+	 hHgkTO9WRq0XA==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.1 3/9] mm/damon/paddr: respect folio end for DAMOS_STAT
-Date: Sun,  2 Aug 2026 10:43:38 -0700
-Message-ID: <20260802174340.1587-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.1 5/9] mm/damon/vaddr: respect folio end for DAMOS_STAT
+Date: Sun,  2 Aug 2026 10:45:18 -0700
+Message-ID: <20260802174519.1724-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260802163458.108881F000E9@smtp.kernel.org>
+In-Reply-To: <20260802163631.33F561F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,60 +45,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 02 Aug 2026 16:34:57 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 02 Aug 2026 16:36:30 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] This problem wasn't introduced by this patch, but the patch provides an incomplete fix for an address advancement logic bug. While it corrects the `addr += folio_size(folio)` issue in `damon_pa_stat()` to correctly align the next address to the end of the large folio, it fails to apply the exact same fix to `damon_pa_pageout()`, `damon_pa_de_activate()`, and `damon_pa_migrate()`.
+> - [High] Unsafe blind PTE batching skips intermediate mappings and misses per-PTE Accessed/Young bits for large folios.
 > --
 > 
-> --- Patch [3]: [RFC PATCH v1.1 3/9] mm/damon/paddr: respect folio end for DAMOS_STAT ---
-> commit 99e0c032eda9c903df8d327aa77b989129d9b193
+> --- Patch [5]: [RFC PATCH v1.1 5/9] mm/damon/vaddr: respect folio end for DAMOS_STAT ---
+> commit d6ffeea9e85e0fc3aa2c2575b8113904f9da4123
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/paddr: respect folio end for DAMOS_STAT
+> mm/damon/vaddr: respect folio end for DAMOS_STAT
 > 
-> This commit fixes the address advancement in damon_pa_stat(). When a region
-> starts in the middle of a large folio, it now properly aligns to the start of
-> the next folio instead of simply adding the folio size and overshooting.
+> This commit fixes an issue in DAMOS_STAT page-level monitoring where the
+> address advancement could incorrectly skip folios if a region starts in the
+> middle of a large folio. It ensures the address is advanced exactly to the
+> start of the next folio by calculating the correct page index.
 > 
-> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> > --- a/mm/damon/paddr.c
-> > +++ b/mm/damon/paddr.c
-> > @@ -379,7 +379,7 @@ static unsigned long damon_pa_stat(struct damon_region *r,
+> [1] https://lore.kernel.org/20260514015053.149396-1-sj@kernel.org
+> 
+> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> > index 0648400b2d65b..4b0b5edf67952 100644
+> > --- a/mm/damon/vaddr.c
+> > +++ b/mm/damon/vaddr.c
+> [ ... ]
+> > @@ -844,7 +846,8 @@ static int damos_va_stat_pmd_entry(pmd_t *pmd, unsigned long addr,
 > >  
-> >  		if (!damos_pa_filter_out(s, folio))
-> >  			*sz_filter_passed += folio_size(folio) / addr_unit;
-> > -		addr += folio_size(folio);
-> > +		addr = PFN_PHYS(folio_pfn(folio)) + folio_size(folio);
+> >  		if (!damos_va_filter_out(s, folio, vma, addr, pte, NULL))
+> >  			*sz_filter_passed += folio_size(folio);
+> > -		nr = folio_nr_pages(folio);
+> > +		page_idx = folio_page_idx(folio, pte_page(ptent));
+> > +		nr = folio_nr_pages(folio) - page_idx;
 > 
 > [Severity: High]
-> This isn't a bug introduced by this patch, but does the same address
-> advancement logic regression still exist in other DAMON actions?
+> This is a pre-existing issue, but does this blind PTE batching skip
+> intermediate mappings and miss per-PTE Accessed/Young bits for large folios?
 > 
-> While you fixed the overshoot behavior here in damon_pa_stat(), it looks like
-> damon_pa_pageout(), damon_pa_de_activate(), and damon_pa_migrate() in
-> mm/damon/paddr.c might still be using the flawed logic.
+> When damos_va_filter_out() tests the young filter, it only checks the
+> accessed bit of the first pte. By unconditionally advancing pte += nr without
+> aggregating the accessed bits of the remaining subpages, could this miss
+> hardware accesses on PTE-mapped large folios (like mTHP) and cause DAMON to
+> falsely classify actively used memory as cold?
 > 
-> For example, in damon_pa_pageout():
-> 
->     put_folio:
-> 		addr += folio_size(folio);
-> 		folio_put(folio);
-> 
-> Could this cause DAMON actions to silently skip sections of valid memory
-> if a region starts in the middle of a large folio?
+> Additionally, if userspace partially unmaps or remaps portions of this large
+> folio (for example, via MADV_DONTNEED or mmap), the page table might contain
+> different folios or empty entries in the skipped range. By blindly advancing
+> the PTE walker based purely on the first folio's size, does this ignore those
+> mixed mappings and fail to monitor the substituted folios?
 
-A later patch of this series fix that.
+Handling all the cases would be too complicated for backporting.  I will
+revisit this later.
 
 > 
-> >  		folio_put(folio);
+> >  		s->last_applied = folio;
 > >  	}
-> >  	s->last_applied = folio;
+> >  	pte_unmap_unlock(start_pte, ptl);
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260802162631.90304-1-sj@kernel.org?part=3
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260802162631.90304-1-sj@kernel.org?part=5
 > 
 
 
