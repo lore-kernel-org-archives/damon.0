@@ -1,481 +1,243 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4E546AF00
-	for <damon@lists.linux.dev>; Tue,  4 Aug 2026 10:07:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987E74582E3
+	for <damon@lists.linux.dev>; Tue,  4 Aug 2026 10:23:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785838035; cv=none; b=kN3PJXD2APIvQq7zK9vF9YrB0mSEN+yrHshgAN2GkkX69kOcp4oV1UEEX/y0TMGXzah+qWL1j0IhbwF0nHu/tnNgJP0YE0AbPixgObJswaqzlDqcVXRgeOWlQeRf1G4KsyHr7pN6dX8Q/liJU2fH4uJ609CMbyFsJ62oAnojXHc=
+	t=1785838994; cv=none; b=XidRjzCHF06kPO+Cr5R9dOc18TDTa3/4tQnHux2cwxfVDHGfQUoLoc4jt+Fp0bBhUM4nGyzi5gn39sDgpd3bYM84H9v16Hp0BTiT60VWFpQgeMm1fwUsYzdFnuWETPQmx33wFuB6NCBIogmqgWCCb1SuBTK2ms8iszgr0r6MuyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785838035; c=relaxed/simple;
-	bh=lw7792hVIVV1hxAlcIrYHTSifdDtcusGkElxgR5cZcI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XE64vjxl/sfMHXdPgYxmCbwZW8cBxic1puaRKQoJXdyF4IGigvBda4zyQhOpieYhgasKYTcAzhGPMzb3/DjShy5lCxlKYsR/3qjURLvty6LpJj2eEwK/mmkNQkhQuxq7a0nKj9U3sagFaxO7zxgdZyOkEJsDpacVhvintkP6I3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d2LFWs+X; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785838994; c=relaxed/simple;
+	bh=QlbiH0IUMtUn4xX6JqYnQBqBRVNbkjQQUmStKDUE49s=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=nOJgUHQ8hHpU4Dcvp+sk5lHuQU00KKfsWhbBy5XY+10V15viuM4JT7D3TgKPFsGGCyBrZ2tB8tHm/beD7761TPizoI6kJdDSLWcG83MgbZ8v20yx5P/sK77+gqQB+zy5pOvzT04ZxN7ML8hybXJgaD/G0K2L576biDIVCCaMaBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X4fhkblR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d2LFWs+X"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2cfbbdfa60bso33938965ad.3
-        for <damon@lists.linux.dev>; Tue, 04 Aug 2026 03:07:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785838032; x=1786442832; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2t9K3rCy8mMBuyLN8Fc4dcYNWuaEGqN0qq6fEe+cxoo=;
-        b=d2LFWs+XAnbFAekY3RnWTslEbHt0Rmeon9+UCBQubKjhJV+C5D/MaF4FetgTHZBCxr
-         iQOo+YvPEpq4fQqnnLXsRkKc6TFofmROO+sQCxpB7pJhcBZnmvXNuVIqKgScsS88Ckk4
-         PoJoTwoUiCyaF80/kCtuD5OKUkWrwefuBrgATBhXobgyf3dp8b1b5QFpOSz5mrlzBRo1
-         h8djptdmNunXGE64wFL0FgxeWGbwNAdBqVwaNKTOC2OAcXz8nNMru3Kdb0NadOmnZEr6
-         H+Z5KS4USIBT4qXqHlIggpXl+vE1ZtAcRowm5Mhkha3S1mKuplR5ZM8VUxdfbSrXnRr2
-         6L1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785838032; x=1786442832;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=2t9K3rCy8mMBuyLN8Fc4dcYNWuaEGqN0qq6fEe+cxoo=;
-        b=kdXSjjhs3X0D02EZ4Ql4n/NRucJHD43K9JAOB2ZHIDnkDI2zFwR53moyBBT4iKn3QU
-         Q+OpWtcCgmEP0m3d8xYNnXYYBwRZ/5wj0j3qdPM9uHv1ck+f/xKV4VovPrmmezZZIU8j
-         +3ccTG4nIcjDvZOpZTaoW1JGhnQ22KL4+JsTTlsbcuK54WbQuHjfnGmC7KDRjhtglRQ8
-         JaVDk7ktTcvIdU+DLEUz428i2GvJmPJLSTmqwJmskPor97upI0UhmDP3utvXyCJpRLpU
-         g54NujD/lGi/OidLnttr9S7U80FBk5SCkfd3lmnHmeIjhLlltJz4thYo3ED+sdz+F4TB
-         EiEw==
-X-Gm-Message-State: AOJu0Yz11gAr8osoWinsPZmK4/xWO06tYrBvKb5pbeLNbFKTT/mZ5mZv
-	f2PLEuS7KN8IossPcg2zMA1kzO2gDz2nZHS/Vx7kDo1iibZQdbm8trOUNfW8Vg==
-X-Gm-Gg: AR+sD11ru+uNoVatxVYuxQL7r4r+uGWNGwxjs2GX4tchU0ElHiedKgnlJHZRswwtNTH
-	VGpQYm/Ow0yP9cHJKYgRKY99yoXRosh51oqCn+57PkMkL63xf4GBOzJeUJZGmSkpZfwkAF2w+FL
-	BwDVo3mZWUDTwbDrrEMvl5ZwtUdiveOvacPULdk7aKRfV+a+hBcCAPPrIVKTF1ZGKaxdK9jvHZy
-	0P6CVBQarv8pmsdWQum+qwFZoGcN5Ou3p5wOedGEerDalL+KT5kNhL8uVPjjpQQUWlL51SyNhot
-	QXTuddwT+QoouKHtNALj3CjYwTtHTFwieByRAvsxMr9xVz4olNszGTttR7HV91o6sg/uHI2hECF
-	KlcBTZY2LTcJX+A9wuUv5n4xLl5226arDuH5AhmFDS0Fkfw/XdzTCHatXbqEgbd49wBOUczmZfI
-	vIOvE4jXFxCSrmpjqfKn/zacItqHUWgq8JNaRw9jh9OI7J8YMczv9Vqy7z7B6oNYOvKVauKM7Y3
-	Rub
-X-Received: by 2002:a17:902:ef4d:b0:2cf:ca89:499d with SMTP id d9443c01a7336-2d052188ccdmr135810865ad.7.1785838032295;
-        Tue, 04 Aug 2026 03:07:12 -0700 (PDT)
-Received: from celestia ([2402:1980:935:f4a7:6f5c:e816:9aba:2090])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d0aa4bda53sm3891205ad.63.2026.08.04.03.07.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Aug 2026 03:07:11 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: SJ Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Liew Rui Yan <aethernet65535@gmail.com>
-Subject: [RFC PATCH] mm/damon: introduce damos_sort_type for re-ordering regions list
-Date: Tue,  4 Aug 2026 18:07:19 +0800
-Message-ID: <20260804100719.116538-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X4fhkblR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F8F1F000E9;
+	Tue,  4 Aug 2026 10:23:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785838993;
+	bh=fGsGAH1x5oKpiEfmZCgi/Ec438O2cDIvI4dQxf7VD9A=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=X4fhkblR5u4rE41YC5rcjiZ3S5w9bEu7LCVcl49iC8xRCjO1mCqIs1MoryONTOBQl
+	 M0URRVN4sjVss3b6M2+YwXTPZW0gYIDNwLlI2RslFA2OuvccgMZ3co95cAUUhHSn4O
+	 owZTxky9hAaDGdASv6WGTSz6LkhL0814dHlBnPqr1xKZTkkpxMCNrXgQRD/DxaZzPs
+	 ZWlxeaOEQrgIU7VbRFgJjmsFisATosWExxZ+GHYebMR2prqO0BUeWSrlv0TAVAn081
+	 F/qK6yawZyxNwcdAHGp1IdttAq32oYvKj3jJYVewrDOn3aJB9a3bdMojuObk7ubv/T
+	 nxRtgGNwlqjbg==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH] mm/damon: introduce damos_sort_type for re-ordering
+ regions list
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Liew Rui Yan" <aethernet65535@gmail.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260804100719.116538-1-aethernet65535@gmail.com>
+References: <20260804100719.116538-1-aethernet65535@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 04 Aug 2026 10:23:11 +0000
+Message-Id: <20260804102312.E8F8F1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Problem
-=======
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
+- [High] Broken `stat.nr_snapshots` tracking in `damos_apply_sorted_scheme(=
+)` bypasses `max_nr_snapshots` limit enforcement.
+- [High] Sorted schemes are evaluated out of order, violating DAMON's stric=
+t scheme priority semantics.
+- [Medium] Silent disabling of schemes when `get_scheme_score` is not suppo=
+rted by the underlying operation set.
+--
 
-A DAMOS scheme filters its target regions using an access pattern, which
-is constructed with the size, the access frequency (nr_accesses), and
-the age of the regions. The age here means how long the current access
-pattern of a region has been maintained.
+--- Patch [1]: [RFC PATCH] mm/damon: introduce damos_sort_type for re-order=
+ing regions list ---
+commit 2f127c3d13c04b9a2b95946211fee29deac96c0d
+Author: Liew Rui Yan <aethernet65535@gmail.com>
+Subject: mm/damon: introduce damos_sort_type for re-ordering regions list
 
-For the pageout action, the age.min of the access pattern effectively
-acts as the minimum amount of time that the target regions must have been
-unused.
+This patch adds a per-scheme sysfs attribute schemes/<N>/sort_type to allow=
+ a
+scheme to apply actions to target regions in descending order of their
+ops.get_scheme_score() values.
 
-The definition of cold memory highly depends on the devices and
-workloads, and thus setting a proper default age.min (e.g., min_age of
-DAMON_RECLAIM) is both important and nearly impossible to make suitable
-for all devices and workloads.
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 644daf5a16560..b0c52c9eabe82 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
 
-Solution
-========
+[ ... ]
 
-Add a per-scheme sysfs attribute, schemes/<N>/sort_type, whose default
-value is 'none'. A scheme can set it to 'score_desc', which makes the
-scheme to collect the target regions and apply its action in descending
-order of the regions' scores, as calculated by the ops.get_scheme_score()
-callback, during the application. For a pageout scheme, the callback
-returns the coldness score of each region.
+> @@ -2673,6 +2684,107 @@ static void damon_do_apply_schemes(struct damon_c=
+tx *c,
+>  	}
+>  }
+> =20
+> +struct damos_sort_priv {
+> +	struct damon_ctx *c;
+> +	struct damos *s;
+> +};
+> +
+> +static int damos_sort_score_desc_cmp(const void *a, const void *b,
+> +		const void *priv)
+> +{
 
-Instead of modifying the region list, DAMON copies the target valid
-regions into a temporary array, sorts the array in descending order of
-the regions' scores, and applies the action in the sorted order.
+[ ... ]
 
-With this, the scheme gives absolute priority to the highest-scored
-region. For example, a pageout scheme with 'score_desc' reclaims the
-coldest region of the target first. Users can thus keep the age.min
-relatively small and let the score ordering do the precise
-prioritization.
+> +}
+> +
+> +static void damos_apply_sorted_scheme(struct damon_ctx *c,
+> +		struct damon_target *t, struct damos *s)
+> +{
+> +	struct damon_region **arr;
+> +	struct damon_region *r;
+> +	struct damos_quota *quota =3D &s->quota;
+> +	struct damos_sort_priv priv =3D { .c =3D c, .s =3D s };
+> +	unsigned long nr =3D 0, i =3D 0;
+> +
+> +	if (!c->ops.get_scheme_score)
+> +		return;
 
-Note that regions are applied in the score order, not the address order.
-Therefore, the address-based quota charge resume mechanism is not
-available for such schemes. Instead, the quota is spent on the
-highest-scored regions of each charge window. Applying an action
-resets the age of the applied regions (except for 'stat' action), so
-those regions are naturally excluded from the next window if the scheme
-has a non-zero age.min. Also, when a region is split for the quota, the
-age of the split-out part is preserved, and thus the highest-scored
-region is continuously applied until it is fully reclaimed, even when it
-is larger than the remaining quota of a single window.
+[Severity: Medium]
+When the operations set does not implement get_scheme_score, does this early
+return silently disable the scheme and prevent stat.nr_snapshots from ever
+incrementing?
 
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
----
-I am currently running the corresponding benchmarks to ensure that this
-does not introduce too much performance overhead, at least not on my
-device.
+The unsorted path gracefully handles a missing score callback by falling ba=
+ck
+to basic filtering without the score.
 
-The purpose of sending this patch is to make sure this is a right
-direction.
+> +	/* Avoid unnecessary kvmalloc_array() */
+> +	if (damos_quota_is_full(quota, c->min_region_sz))
+> +		return;
+> +
+> +	damon_for_each_region(r, t) {
+> +		if (__damos_valid_target(r, s, c))
+> +			nr++;
+> +	}
+> +	if (nr =3D=3D 0)
+> +		return;
 
-About my device/VM
-==================
+[Severity: High]
+If there are no valid regions (nr =3D=3D 0), this returns early without
+incrementing s->stat.nr_snapshots. Does this prevent the scheme from ever
+reaching max_nr_snapshots and automatically deactivating?
 
-CPU: AMD Ryzen 5 5600H (12 Cores)
-RAM: 8GiB in VM (4GiB + 4GiB ZRAM)
+> +	if (nr =3D=3D 1)
+> +		goto single_valid_region;
+> +
+> +	arr =3D kvmalloc_array(nr, sizeof(*arr), GFP_KERNEL);
+> +
+> +	if (!arr)
+> +		return;
+> +
+> +	damon_for_each_region(r, t) {
+> +		if (__damos_valid_target(r, s, c))
+> +			arr[i++] =3D r;
+> +	}
+> +
+> +	sort_r_nonatomic(arr, nr, sizeof(*arr), damos_sort_score_desc_cmp, NULL=
+, &priv);
+> +
+> +	for (i =3D 0; i < nr; i++) {
+> +		r =3D arr[i];
+> +
+> +		/* Check the quota */
+> +		if (damos_quota_is_full(quota, c->min_region_sz))
+> +			break;
+> +
+> +		if (s->max_nr_snapshots &&
+> +				s->max_nr_snapshots <=3D s->stat.nr_snapshots)
+> +			continue;
+> +
+> +		if (damos_valid_target(c, r, s)) {
+> +			damos_apply_scheme(c, t, r, s);
+> +		} else {
+> +			/*
+> +			 * There is no need to continue because the score is
+> +			 * already lower than quota.min_score.
+> +			 */
+> +			break;
 
-I currently foresee two potential issues with thiss patch, though I
-have not obtained the test results yet, so these are just guesses.
+[Severity: High]
+If a region fails damos_valid_target() due to low quota scores, this breaks
+out of the loop and skips the (i =3D=3D nr - 1) check below. Does this omit
+tracking the snapshot and prevent the scheme from deactivating?
 
-1. Excessive memory allocations and deallocations 
+> +		}
+> +
+> +		if (i =3D=3D nr - 1)
+> +			s->stat.nr_snapshots++;
+> +	}
+> +
+> +	kvfree(arr);
+> +	return;
+> +
+> +single_valid_region:
+> +	damon_for_each_region(r, t) {
+> +		if (__damos_valid_target(r, s, c))
+> +			break;
+> +	}
+> +
+> +	/* Check the quota */
+> +	if (damos_quota_is_full(quota, c->min_region_sz))
+> +		return;
 
-    The default aggr_interval is 100ms. Executing at least one
-    allocation and deallocation every 100ms is very likely to cause
-    unnecessary performance overhead.
+[Severity: High]
+If the quota is full in this single_valid_region fast-path, it returns earl=
+y.
+Does this also bypass incrementing s->stat.nr_snapshots?
 
-    I think this issue could be resolved by having the scheme maintain
-    its own buffer.
+> +
+> +	if (s->max_nr_snapshots &&
+> +			s->max_nr_snapshots <=3D s->stat.nr_snapshots)
+> +		return;
+> +
+> +	if (damos_valid_target(c, r, s))
+> +		damos_apply_scheme(c, t, r, s);
+> +
+> +	s->stat.nr_snapshots++;
+> +}
+> +
+>  /*
+>   * damos_apply_target() - Apply DAMOS schemes to a given target.
+>   * @c:			monitoring context to apply its DAMOS schemes to..
+> @@ -2695,6 +2807,17 @@ static void damos_apply_target(struct damon_ctx *c=
+, struct damon_target *t,
+>  		unsigned long max_region_sz)
+>  {
+>  	struct damon_region *r;
+> +	struct damos *s;
+> +
+> +	damon_for_each_scheme(s, c) {
+> +		if (s->sort_type =3D=3D DAMOS_SORT_NONE)
+> +			continue;
+> +		if (!s->wmarks.activated)
+> +			continue;
+> +		if (time_before(c->passed_sample_intervals, s->next_apply_sis))
+> +			continue;
+> +		damos_apply_sorted_scheme(c, t, s);
+> +	}
+> =20
+>  	damon_for_each_region(r, t) {
+>  		struct damon_region *prev_r;
+> =20
+>  		damon_do_apply_schemes(c, t, r);
 
-2. Performance overhead of re-ordering
+[Severity: High]
+By iterating and applying all sorted schemes first, and then iterating to
+apply unsorted schemes via damon_do_apply_schemes(), are we executing sorted
+schemes out of order?
 
-    Although on my device the number of regions is not very large, and
-    DAMON's default limit of 1,000 regions also helps avoid performance
-    overhead, I suspect that large servers might not stick to just 1,000
-    regions.
+DAMON evaluates schemes in the order they are defined. If a user defines an
+unsorted scheme before a sorted scheme, this two-pass execution will cause
+the sorted scheme to evaluate the regions first, breaking the execution
+order priority.
 
-    A solution I can think of is using a Top K Min Heap, though that
-    might significantly increase code complexity and reduce readability.
-
-As a reminder, these are just my __guesses__ and do not necessarily
-reflect what will happen in practice. I will send another email after
-completing the benchmarks and micro-performance testing.
-
- include/linux/damon.h    |   6 ++
- mm/damon/core.c          | 125 ++++++++++++++++++++++++++++++++++++++-
- mm/damon/sysfs-schemes.c |  57 ++++++++++++++++++
- 3 files changed, 187 insertions(+), 1 deletion(-)
-
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 0c8b7ddef9ab..88a3f9f4a4ca 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -140,6 +140,11 @@ enum damos_action {
- 	NR_DAMOS_ACTIONS,
- };
- 
-+enum damos_sort_type {
-+	DAMOS_SORT_NONE,
-+	DAMOS_SORT_SCORE_DESC,
-+};
-+
- /**
-  * enum damos_quota_goal_metric - Represents the metric to be used as the goal
-  *
-@@ -565,6 +570,7 @@ struct damos {
- 	};
- 	struct damos_stat stat;
- 	unsigned long max_nr_snapshots;
-+	enum damos_sort_type sort_type;
- /* private: internal use only */
- 	/*
- 	 * number of sample intervals that should be passed before applying
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 644daf5a1656..b0c52c9eabe8 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -15,6 +15,7 @@
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <linux/string_choices.h>
-+#include <linux/sort.h>
- 
- /* for damon_get_folio() used by node eligible memory metrics */
- #include "ops-common.h"
-@@ -705,6 +706,7 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 	INIT_LIST_HEAD(&scheme->ops_filters);
- 	scheme->stat = (struct damos_stat){};
- 	scheme->max_nr_snapshots = 0;
-+	scheme->sort_type = DAMOS_SORT_NONE;
- 	scheme->last_applied = NULL;
- 	INIT_LIST_HEAD(&scheme->list);
- 
-@@ -1465,6 +1467,7 @@ static int damos_commit(struct damos *dst, struct damos *src)
- 		return err;
- 
- 	dst->max_nr_snapshots = src->max_nr_snapshots;
-+	dst->sort_type = src->sort_type;
- 	return 0;
- }
- 
-@@ -2627,7 +2630,12 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		quota->total_charged_ns += timespec64_to_ns(&end) -
- 			timespec64_to_ns(&begin);
- 		damos_charge_quota(quota, sz, sz_applied);
--		if (damos_quota_is_full(quota, c->min_region_sz)) {
-+		/*
-+		 * Since it can no longer be guaranteed that the re-ordered
-+		 * Region List is sorted by address. So, no record.
-+		 */
-+		if (s->sort_type == DAMOS_SORT_NONE &&
-+			damos_quota_is_full(quota, c->min_region_sz)) {
- 			quota->charge_target_from = t;
- 			quota->charge_addr_from = r->ar.end;
- 		}
-@@ -2648,6 +2656,9 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 	damon_for_each_scheme(s, c) {
- 		struct damos_quota *quota = &s->quota;
- 
-+		if (s->sort_type != DAMOS_SORT_NONE)
-+			continue;
-+
- 		if (time_before(c->passed_sample_intervals, s->next_apply_sis))
- 			continue;
- 
-@@ -2673,6 +2684,107 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 	}
- }
- 
-+struct damos_sort_priv {
-+	struct damon_ctx *c;
-+	struct damos *s;
-+};
-+
-+static int damos_sort_score_desc_cmp(const void *a, const void *b,
-+		const void *priv)
-+{
-+	struct damon_region *ra = *(struct damon_region **)a;
-+	struct damon_region *rb = *(struct damon_region **)b;
-+	const struct damos_sort_priv *p = priv;
-+	int score_a = p->c->ops.get_scheme_score(p->c, ra, p->s);
-+	int score_b = p->c->ops.get_scheme_score(p->c, rb, p->s);
-+
-+	return cmp_int(score_b, score_a);
-+}
-+
-+static void damos_apply_sorted_scheme(struct damon_ctx *c,
-+		struct damon_target *t, struct damos *s)
-+{
-+	struct damon_region **arr;
-+	struct damon_region *r;
-+	struct damos_quota *quota = &s->quota;
-+	struct damos_sort_priv priv = { .c = c, .s = s };
-+	unsigned long nr = 0, i = 0;
-+
-+	if (!c->ops.get_scheme_score)
-+		return;
-+	/* Avoid unnecessary kvmalloc_array() */
-+	if (damos_quota_is_full(quota, c->min_region_sz))
-+		return;
-+
-+	damon_for_each_region(r, t) {
-+		if (__damos_valid_target(r, s, c))
-+			nr++;
-+	}
-+	if (nr == 0)
-+		return;
-+	if (nr == 1)
-+		goto single_valid_region;
-+
-+	arr = kvmalloc_array(nr, sizeof(*arr), GFP_KERNEL);
-+
-+	if (!arr)
-+		return;
-+
-+	damon_for_each_region(r, t) {
-+		if (__damos_valid_target(r, s, c))
-+			arr[i++] = r;
-+	}
-+
-+	sort_r_nonatomic(arr, nr, sizeof(*arr), damos_sort_score_desc_cmp, NULL, &priv);
-+
-+	for (i = 0; i < nr; i++) {
-+		r = arr[i];
-+
-+		/* Check the quota */
-+		if (damos_quota_is_full(quota, c->min_region_sz))
-+			break;
-+
-+		if (s->max_nr_snapshots &&
-+				s->max_nr_snapshots <= s->stat.nr_snapshots)
-+			continue;
-+
-+		if (damos_valid_target(c, r, s)) {
-+			damos_apply_scheme(c, t, r, s);
-+		} else {
-+			/*
-+			 * There is no need to continue because the score is
-+			 * already lower than quota.min_score.
-+			 */
-+			break;
-+		}
-+
-+		if (i == nr - 1)
-+			s->stat.nr_snapshots++;
-+	}
-+
-+	kvfree(arr);
-+	return;
-+
-+single_valid_region:
-+	damon_for_each_region(r, t) {
-+		if (__damos_valid_target(r, s, c))
-+			break;
-+	}
-+
-+	/* Check the quota */
-+	if (damos_quota_is_full(quota, c->min_region_sz))
-+		return;
-+
-+	if (s->max_nr_snapshots &&
-+			s->max_nr_snapshots <= s->stat.nr_snapshots)
-+		return;
-+
-+	if (damos_valid_target(c, r, s))
-+		damos_apply_scheme(c, t, r, s);
-+
-+	s->stat.nr_snapshots++;
-+}
-+
- /*
-  * damos_apply_target() - Apply DAMOS schemes to a given target.
-  * @c:			monitoring context to apply its DAMOS schemes to..
-@@ -2695,6 +2807,17 @@ static void damos_apply_target(struct damon_ctx *c, struct damon_target *t,
- 		unsigned long max_region_sz)
- {
- 	struct damon_region *r;
-+	struct damos *s;
-+
-+	damon_for_each_scheme(s, c) {
-+		if (s->sort_type == DAMOS_SORT_NONE)
-+			continue;
-+		if (!s->wmarks.activated)
-+			continue;
-+		if (time_before(c->passed_sample_intervals, s->next_apply_sis))
-+			continue;
-+		damos_apply_sorted_scheme(c, t, s);
-+	}
- 
- 	damon_for_each_region(r, t) {
- 		struct damon_region *prev_r;
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 32f495a96b17..1fcbc39b5cd6 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -2261,6 +2261,7 @@ struct damon_sysfs_scheme {
- 	struct damon_sysfs_scheme_regions *tried_regions;
- 	int target_nid;
- 	struct damos_sysfs_dests *dests;
-+	enum damos_sort_type sort_type;
- };
- 
- struct damos_sysfs_action_name {
-@@ -2315,6 +2316,20 @@ static struct damos_sysfs_action_name damos_sysfs_action_names[] = {
- 	},
- };
- 
-+static struct damos_sysfs_sort_type_name {
-+	enum damos_sort_type sort_type;
-+	char *name;
-+} damos_sysfs_sort_type_names[] = {
-+	{
-+		.sort_type = DAMOS_SORT_NONE,
-+		.name = "none",
-+	},
-+	{
-+		.sort_type = DAMOS_SORT_SCORE_DESC,
-+		.name = "score_desc",
-+	},
-+};
-+
- static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
- 		enum damos_action action, unsigned long apply_interval_us)
- {
-@@ -2326,6 +2341,7 @@ static struct damon_sysfs_scheme *damon_sysfs_scheme_alloc(
- 	scheme->action = action;
- 	scheme->apply_interval_us = apply_interval_us;
- 	scheme->target_nid = NUMA_NO_NODE;
-+	scheme->sort_type = DAMOS_SORT_NONE;
- 	return scheme;
- }
- 
-@@ -2645,6 +2661,42 @@ static ssize_t target_nid_store(struct kobject *kobj,
- 	return err ? err : count;
- }
- 
-+static ssize_t sort_type_show(struct kobject *kobj, struct kobj_attribute *attr,
-+		char *buf)
-+{
-+	struct damon_sysfs_scheme *scheme = container_of(kobj,
-+			struct damon_sysfs_scheme, kobj);
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(damos_sysfs_sort_type_names); i++) {
-+		struct damos_sysfs_sort_type_name *type_name;
-+
-+		type_name = &damos_sysfs_sort_type_names[i];
-+		if (type_name->sort_type == scheme->sort_type)
-+			return sysfs_emit(buf, "%s\n", type_name->name);
-+	}
-+	return -EINVAL;
-+}
-+
-+static ssize_t sort_type_store(struct kobject *kobj, struct kobj_attribute *attr,
-+		const char *buf, size_t count)
-+{
-+	struct damon_sysfs_scheme *scheme = container_of(kobj,
-+			struct damon_sysfs_scheme, kobj);
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(damos_sysfs_sort_type_names); i++) {
-+		struct damos_sysfs_sort_type_name *type_name;
-+
-+		type_name = &damos_sysfs_sort_type_names[i];
-+		if (sysfs_streq(buf, type_name->name)) {
-+			scheme->sort_type = type_name->sort_type;
-+			return count;
-+		}
-+	}
-+	return -EINVAL;
-+}
-+
- static void damon_sysfs_scheme_release(struct kobject *kobj)
- {
- 	kfree(container_of(kobj, struct damon_sysfs_scheme, kobj));
-@@ -2659,10 +2711,14 @@ static struct kobj_attribute damon_sysfs_scheme_apply_interval_us_attr =
- static struct kobj_attribute damon_sysfs_scheme_target_nid_attr =
- 		__ATTR_RW_MODE(target_nid, 0600);
- 
-+static struct kobj_attribute damon_sysfs_scheme_sort_type_attr =
-+		__ATTR_RW_MODE(sort_type, 0600);
-+
- static struct attribute *damon_sysfs_scheme_attrs[] = {
- 	&damon_sysfs_scheme_action_attr.attr,
- 	&damon_sysfs_scheme_apply_interval_us_attr.attr,
- 	&damon_sysfs_scheme_target_nid_attr.attr,
-+	&damon_sysfs_scheme_sort_type_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_scheme);
-@@ -3038,6 +3094,7 @@ static struct damos *damon_sysfs_mk_scheme(
- 		return NULL;
- 	}
- 	scheme->max_nr_snapshots = sysfs_scheme->stats->max_nr_snapshots;
-+	scheme->sort_type = sysfs_scheme->sort_type;
- 	return scheme;
- }
- 
--- 
-2.55.0
-
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260804100719.1165=
+38-1-aethernet65535@gmail.com?part=3D1
