@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E9D472F97
-	for <damon@lists.linux.dev>; Wed,  5 Aug 2026 13:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B548F33C188;
+	Thu,  6 Aug 2026 00:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785937896; cv=none; b=kwN3g8Uc4jAmDXDi1hprNAQl04xYKYTb9VDGAXg7nk2AnWoZDMrSgegsx2hXyNMVYQN7PMNgMpISVktLGJsoqs9rmXAt6qu8wSiEXZyq9MhXkZFjxtgNQGlaDtlS7hHcfTN/ztNE6k61zYslJYftfcEhFATHmu88+6Qst/RhcLs=
+	t=1785976449; cv=none; b=NxGfHPj5TJAhls8fvjSNrfj6EGyyVKgN2W5xw9NoTq8cz9mwaEnXKj3vcGBxuqR1WPtRbRYs90okCFYg5e/IzhCCokfmKIrpQ8oCGNjCaCh6RwldePxM+c2vzeBpV7B0bnT+miIV7kObf+SQJvLFht6M42ExVifDiIuDvaH/Yac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785937896; c=relaxed/simple;
-	bh=wyy6w5dgYvN/3Fx3u5LUNXGoizn6tguSjMvkc68DTzY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcGWn2IOuMMdbtndhrpsovOo2egL7SodulpsjP0Dgm3nfiK8mV1AEyH6+cwddOG4B9HHcW9GvluR/5S+Xh5ZoqEXIrcCheezxwB34CHp4KRwEL48oxp3xSIY1ZuUqzBsnL5azm3M9OAS31a085lrFqHb5E9YQst513L7iXWipVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TP5/G0WW; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785976449; c=relaxed/simple;
+	bh=USIXWXL4x2O3ifVRmp7wwKh/piGs5SNTLwuNb0Bofxc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JSYFcNzvdc8OHHz/lHANRxJhrpFn33sxEDk0TMc0X5Ln3N3FK6H/4UL3/Dp0RbXsQtoD462vhxamktntHLtb4xHo+vvw9WktKiZsaFrZFA1Z0oRTs/dO0m0xyMFLN26O1OfxbkH5DeDaaT5nciHtNqpppOyJ7vi5CyeD2g/csUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AA1KLCQ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TP5/G0WW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9131F000E9;
-	Wed,  5 Aug 2026 13:51:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AA1KLCQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A571F000E9;
+	Thu,  6 Aug 2026 00:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785937893;
-	bh=A55ICr5PoqB803qOLx5Egg13p9sfV6/wfqeAQSAkVsc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TP5/G0WWd+nIsJt0gJ9Gr7EqVH6u+8Cu5Lr5BdVrwMZW56gBU2KTB41AIXm/FchtO
-	 yY8133jsiqG/QqGTM9g/QOgnNl90fEA0cuRSLJbpp2wW3nnzil4eOLi9p7rgfQWPQv
-	 +MNNYtHnMMfK/2dNCAbaKGLJeBoIJx28a8ztBJNV20WMxryYJNeRqlUP5Nc29UUcm0
-	 YsO/0txrBW6HqAPutp5HccdhYsLteo6dUwY0AQruRx9MF5PaKn7/hNK8+/S4zhVGmF
-	 laHGkQ5I37wruJrH0e8kZRULW5XeUbizORisvljjwvgr5W2blbNktKpJ17kI6ZX453
-	 9dgzWNZSin0Mg==
+	s=k20260515; t=1785976447;
+	bh=vFBSpNps5ahNANzjK00DJStkD9Rlq2k2GdWcPT+1zyc=;
+	h=From:To:Cc:Subject:Date;
+	b=AA1KLCQ23cCUYOU9WN2LYr37LxbZyCKSDq06ew4AE4j+oMm2mse8DzqZvUHchvEAn
+	 2OC0RVXWEteVFYqL4CouoOroazX2SVltqppx6DsVo304CCyqmJz9yyxs0XYji2RjT/
+	 q+NTFp+vOIQR7ppt4PiemNlbpVa9/9tA7piXVLAUYcAzjfLJS8p4CBIeH3W/9hWudH
+	 wLTZwq6mR4Y/g0P/qSGpfgs96KoHjJObraFiX0DNiq6DYg6sbIvNm7AJOiER1mJtlM
+	 4YnTlHZZsxRZd3JPbQHLUQgiaTZ5/RLBSo1f18C63iuZpvIeCHF9Hs1UW1laKOoCLX
+	 5tdQI8AdjqSSA==
 From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: damon@lists.linux.dev
 Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon: introduce damos_sort_type for re-ordering regions list
-Date: Wed,  5 Aug 2026 06:51:23 -0700
-Message-ID: <20260805135124.88619-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: [CFP] DAMON Nanoconference (aka BoF) at LPC'26
+Date: Wed,  5 Aug 2026 17:33:57 -0700
+Message-ID: <20260806003357.92659-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260805081246.39417-1-aethernet65535@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,63 +42,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed,  5 Aug 2026 16:12:46 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+Hello community,
 
-> Hi SJ,
-> 
-> First of all, I apologize for the noise, and I will drop this patch.
-> Secondly, thank you for pointing this out, it made me realize that I was
-> fixing a non-existent problem.
 
-No worry, it was good to discuss the idea together!
+We will have a DAMON BoF session [1] at LPC'26.  Because it is a BoF, I want to
+make it as casual as possible with many voices.  Hence inviting you.  You could
+think this as yet another version of our bi-weekly Beer/Coffee/Tea chat meeting
+series [2], or the first Nano-sized DAMON conference.
 
-> 
-> On Tue,  4 Aug 2026 06:58:33 -0700 SJ Park <sj@kernel.org> wrote:
-> 
-> > The recommended way is setting the min_age naive, and auto-tune it using DAMOS
-> > quota or aim-oriented quota auto-tuning.  Have you considered using that?
-> 
-> > This sounds like very similar to DAMOS quota's regions prioritizing mechanism.
-> > Have you considered using DAMOS quota?  If so, could you please add why
-> > proposing this new mechanism, with some comparisons?
-> 
-> Yes, I have. And you are right; the existing mechanism is better. I
-> wrote this patch because I misunderstood quota.min_score and did not
-> even check the implementation of damos_adjust_quota().
+If you have any topics about DAMON that you want to present and discuss in the
+session, please send an email to me.
 
-Thank you for transparently clarifying these details, Liew.  This is very
-helpful at conversations.
+Example of topics include but not limited to:
 
-> 
-> Whether when implementing dama [1] or this damos_sort_type, I failed to
-> realize that min_age might not be such an important parameter on a
-> long-running system, and there is really no need to introduce
-> auto-tuning or a new mechanism for it.
-> 
-> > I to be honest feel this is too much for "just guess" based patch.  I'd like to
-> > get clear reasoning of the change and/or test results before reviewing the
-> > code.  So I'm holding the code review until the high level discussion is done.
-> 
-> Moving forward, I will ensure I am not "reinventing the wheel" or
-> "fixing non-existent problem".
+- Your DAMON work that is recently landed, in progress/plan
+- Your DAMON usage and success/failure stories
 
-I appreciate that.  That will be super helpful.  But I understand we are human
-that cannot "ensure" everything always.  Please try not to spend too much time
-on unnecessary thing.  But don't be scared at making some mistakes, because we
-learn from mistakes.
+Depending on the topic and number of proposals, I will try to give each topic
+5-15 minutes.
 
-> 
-> Thank you again for pointing this out. In the future contributions, I
-> will try my best to avoid spending time fixing problems that do not
-> actually exist.
 
-Sounds nice.  And feel free to ask questions or help.
-
-> 
-> [1] https://lore.kernel.org/damon/20260628085155.20828-1-aethernet65535@gmail.com
+[1] https://lpc.events/event/20/contributions/2453/
+[2] https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
 
 Thanks,
 SJ
-
-[...]
