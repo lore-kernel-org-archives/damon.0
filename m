@@ -1,81 +1,81 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3D83955FE
-	for <damon@lists.linux.dev>; Thu,  6 Aug 2026 17:05:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F60C3955FE
+	for <damon@lists.linux.dev>; Thu,  6 Aug 2026 17:07:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786035906; cv=none; b=Uqlqm79P0s6pWzn3kGtKKnjkpPD54Q9ZoaPWVJpkrHJQg0yZ1spu4mw+sWPP6/w8q1J2hBZExZi976LpIkPbpHmeK6TpX92yBLhhDetxob0bEk7G2g9K9UUEkbDsd2SvQ3TsAlwTx9SMWcliejxFUnl8oKQCUGpdgbNmFrlMitA=
+	t=1786036069; cv=none; b=btVuA0FcYthcb/LghvvPk3doSBMvTnHwOzf+cgGlY0oU/Gn1lICC7ZJXsiMVpaPP8eAZzjklyEEgjp0LCqAtas6P1PgKn3u5hFFatIolOJPBbZwFBbinSbYphrFKJhxg921PY1zzbjn3iydr80v01PS4YHZZtfwZZ0v6qRVN0r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786035906; c=relaxed/simple;
-	bh=Wdzpk95fdOcY+VI0+hEgyFYrIlHomqFb8WojEF8+Va8=;
+	s=arc-20240116; t=1786036069; c=relaxed/simple;
+	bh=y60AIT58W+34jGWPxcsZ4lEyQiqot5BOv+PwxbdR1fQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d4CMHPQKEY3bfMfbXAUI8yInMCJ2KRGAnk51ZU0zQekZqNn5a5CXiIlsQ0dMszApeVauLZ157qGWkC+9wDU4v3RwsdL2/M0HMD9WbUGlw8MnubHUO39hxEHcBQIgVBNHoJHBj+i8CQWu6G9itnNvk48tqvb1nWIXE3bI0OZ7ET0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=j6IIrrR2; arc=none smtp.client-ip=209.85.216.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=d3pRbR0czsL21Fio66BMLPN4Ah/sfF98QpZVNe6ObB+Iz3EJ+gGx3Rh30GgI5tDB131VuVefa6PJCX6RMru7g09gIWHE7tY5M0bbRRbsgxiaAcwa2sPSu0Yf/8475aoIzw+g8W5eI5vNPLy0Nn49v2v3dcjgFIIkAmHGS17tJSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=T10YVPU7; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="j6IIrrR2"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-38e3efab7e0so1144725a91.0
-        for <damon@lists.linux.dev>; Thu, 06 Aug 2026 10:05:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="T10YVPU7"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-cbb85186d43so1366732a12.3
+        for <damon@lists.linux.dev>; Thu, 06 Aug 2026 10:07:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1786035905; x=1786640705; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1786036067; x=1786640867; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=QCUoY6bnepNP4266+8oc2addLFvwX3SEU5YCqHIwv2I=;
-        b=j6IIrrR2ctJfKNL2HxPF9iWSO/ZAjjLoWAhoKjhmtK9Al/l49/jv6IoXSESzSDbJ+f
-         V7yVkkh+QkeBmtuibzGElIE3ALtWpUYKT7vrUOEID/nV2tzbgq2J5HQDuNgmqkIaitZ1
-         wYKoswC6wYeSPFn5ulru8Gn2we46BckyYX5iFTWx9LS0JFYw0sl34rEL37+xl6vVUp5A
-         koZh11mzeU5ERul+NnOgJdNerJrnSFnIxfL9HJe2yB83vW/jS1XYsCFH7SVz8/ChEAQk
-         NbXWXToVdjstqQ8mfVJX5Rb4MxgCZIRcNOWozQ0D5Ovs7LXWXovEX8XJWd3orm8rlIdB
-         MRrg==
+        bh=CpqTarvM3plb3e18QvLpdCn5d0SiQvgtNYeE1iMGePU=;
+        b=T10YVPU7ft5hjRJwekHU0rkIpqTHttr9QwXJF1AQqAWDkxrcg5DBW7+UBwvfbeKyxN
+         Bz/2chgCaNEDF0kxXGVLYMUYX28GdyZPy4LXskgL/mTcBH7FHZPfI2JhLkJZcX0szuEc
+         KPcKWnWrJVCbwFhqB9o5QHxYn5tTksisiljjH0irTsBTSqwcPnnjtdwRjHvTHkxodZ9c
+         Lzx0vIUvWpqkKF3bpKJOghQMMePRgsIGEUvy34k8xlippOvMZ1HjtQFnytcs/2QqYDOd
+         +EahWl0gwnK27lQGR12aJaRYQT2UD5wwbz1fPjlt7rtK02guz8phwtGtRu2oMKNQ0yLR
+         l8EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786035905; x=1786640705;
+        d=1e100.net; s=20251104; t=1786036067; x=1786640867;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=QCUoY6bnepNP4266+8oc2addLFvwX3SEU5YCqHIwv2I=;
-        b=VURieCJF7KT9VMyEW4mj0hnd28P3/+/HVS9VErkKqbDVdw0uhHN88FYOrbi2SIjnrO
-         tMCesygqaixt8dZWqEWIKIpLxsz8NuXDtMhqCbFtNPMV/r+WiMwN6oycP44+z4aR+1al
-         H0iIXKKDXdfIT0NeWB+WtZau7vOhEOvNUpQYBFS2h8Us9QNoqy/haOLRFw6KPpz26FQi
-         XrX1/y5yT3OO8EJnhVy3LjKiy234ia/HC8en3IUZy7K//xANRFM9dgNYvjJzpk/J2vG2
-         EdbvE9oCSluW5hQ26tvQK8bNovNXwijTh1i9ygykBLiqN+WhZJgCxVcZYa8kZ1O+Lshp
-         W3pw==
-X-Forwarded-Encrypted: i=1; AHgh+Rr1pOIko9H2Ip+zKY4ME2/WdqoYTcNiRpe1bZiF0aPa/Wm02+wcQNnsMkBefF/CJn+6PM54NA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzzNXeMiKyjANYDSDMOZNOYLSkNK7ubv8rDqR2d8fjXfRHEevsw
-	hi9fhemCBrw2WaUZ4zapc4ubjE1q6RVgvAs7XcmFvVT6zPZCt93d9S2n8oAEMcuS6NQ=
-X-Gm-Gg: AR+sD10ZUTVpTZ+DT+Vfl8YQ2g2TmNWfQOUe7mwGSrIDYgMlpU9ARHXsECcSoK5w7uY
-	1IEZK+P5el+igh8XFOknYV171B47J0P1+IkJAZD+3Hl6pMPLj8Nc1zolAzGEn78VfyIFj/z+15A
-	QtriDO9pMlrQxt+rBCZDLCD1UVnJP3+f2Avpr15n6+5EvNjQu3xWw34jdBWbjgnTLrzVwiea16G
-	lunGuQWGOaNMZu4XxRTeOzA6PGQCGnLE/vYMABbUmUT/3/ypQ2Kf+GJaaMfjWZ//wNkq6m7pkwB
-	ZG2ZsXu6wqdicyMiAGymWTynpzIXafgh9s5m/f9XOausoJ/WvpilApIseqLmZDtwgwFL5a3aXR7
-	5LeeVP55gBqznKwETkaDcchDYepKLGDvJ6LVMfHng4fb64d0eUjIop4mHet0Ui4pcpmwAyJg3DW
-	OMZacSxpqw9SbbtIFrp3qDevjfroujp6F5hwGjb61uXkUAen8AB2M7a35zglGQ1ZVK
-X-Received: by 2002:a17:90b:224c:b0:38d:eaed:4adb with SMTP id 98e67ed59e1d1-39083b4ef8amr4108525a91.20.1786035904633;
-        Thu, 06 Aug 2026 10:05:04 -0700 (PDT)
+        bh=CpqTarvM3plb3e18QvLpdCn5d0SiQvgtNYeE1iMGePU=;
+        b=SEv/YeegiuvWy1jo4s00Q6qrmzx8muyRtSd/Bbu+JotU4qfkC2TOUmWR8nQLb58n8m
+         3oGH5FVu17PZyDjedvdxCtKExU+HsTsOsHVqC14vGm86hrglBsDuLRlqQ0IkQ9+9jjX7
+         pErcDmpuhrTRTFaQYk9aTVD3q/A80xr8g+964rjT0Jfadno+hLvX+aziWbUp5Py+P4SR
+         Y4Q5axDQhl5wRTtxY895S22VfgGeFwSPSC83IhJof+iU9TuItztXCnITlilul+eKr61T
+         cc91xybbUpf2lqd+gihz1Gly4Yosd3rZ057Bo3CgDSDMQ5Avee4kBqNMN3BZURcEP31O
+         XgNQ==
+X-Forwarded-Encrypted: i=1; AHgh+RpmOVtiQmZ1Q0RapgVReVsGjaSzmX60qI8AiPSbjzA8h+MUexnj7ZbElOeA5TV6rBAIY1B+Uw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwqBlp9TtV5sd7zL1A8yydeWJ9QUD9//BxbObeMYI5GV9BUR5dK
+	Iy4jz6t9K8nMLaQWcWEhN+A34YXRajjwhhxylCSrJWrPhXaMMCfRqnnK0AUPk1aJfQk=
+X-Gm-Gg: AR+sD12qFBhCaPfAH3/4g7C6cN8DBa4Qqtq2DYY6cURMgIioQRISDEno7F4V4h2ruva
+	NmkBFxf9dCYeAmvqpa5oSsVnaBn7FUaGwq2C249dZ737b59000hFVQJaS7kjPYmZjWrX8R7GsQg
+	PrvmFej93Yagwidg8fYJNnI/BcA2joC+CqG1oRrwpt2/zb9AJF3r6WoSyp9ld0Yn9D23BPpVOrd
+	ZvnHeHsyxKh4bxd6oEajiebwW1/f1kSSh9bvDawrtLEs8krHzH3EJo0LkMxGPeOMnqtqXiMbEvJ
+	xmDAZQUwLj8zK6DIn79G3EEjmqWvepBfDr6cpruYAakaHTeeL6Tf5szNk+1W+KhZLqygcGQqvLX
+	lvWfX09GIsyde/mtUtv7rbFBlU1wm9Em+ysZUqwcfsgiGBcGNZgLJSM3MOU5q3uBt7bak0nVTT7
+	EqneRohd4DdF98yotL/yrYl8d/57LR+YD72VFEo0EnWG4PH/6xiRk3DbmWQO9HTCud
+X-Received: by 2002:a05:6a20:258e:b0:3c3:875d:c531 with SMTP id adf61e73a8af0-3cb85dee582mr17248845637.6.1786036067249;
+        Thu, 06 Aug 2026 10:07:47 -0700 (PDT)
 Received: from fedora ([2607:fb91:201f:cebc:3a68:390a:144e:1b87])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-13fca50acddsm27805225c88.3.2026.08.06.10.05.02
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3158678ec37sm29709378eec.23.2026.08.06.10.07.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Aug 2026 10:05:04 -0700 (PDT)
-Date: Thu, 6 Aug 2026 12:05:00 -0500
+        Thu, 06 Aug 2026 10:07:46 -0700 (PDT)
+Date: Thu, 6 Aug 2026 12:07:43 -0500
 From: Gregory Price <gourry@gourry.net>
-To: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
 Cc: linux-mm@kvack.org, damon@lists.linux.dev, linux-kernel@vger.kernel.org,
 	kernel-team@meta.com, sj@kernel.org, akpm@linux-foundation.org,
-	david@kernel.org, ziy@nvidia.com, baolin.wang@linux.alibaba.com,
+	ljs@kernel.org, ziy@nvidia.com, baolin.wang@linux.alibaba.com,
 	liam@infradead.org, npache@redhat.com, ryan.roberts@arm.com,
 	dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
 	usama.arif@linux.dev, vbabka@kernel.org, jannh@google.com,
 	matthew.brost@intel.com, joshua.hahnjy@gmail.com, rakie.kim@sk.com,
 	byungchul@sk.com, ying.huang@linux.alibaba.com, apopple@nvidia.com
-Subject: Re: [PATCH 1/4] mm/damon: defensively skip zone device folios in
- damon_get_folio()
-Message-ID: <anS-vK1MaC8sWoMK@fedora>
+Subject: Re: [PATCH 3/4] mm/madvise: skip zone device folios in cold/pageout
+ PMD range
+Message-ID: <anS_X0uQ5GHXsdwf@fedora>
 References: <20260728194714.3713735-1-gourry@gourry.net>
- <20260728194714.3713735-2-gourry@gourry.net>
- <anSOKjTerc97fCGx@lucifer>
+ <20260728194714.3713735-4-gourry@gourry.net>
+ <0b22acb2-5684-4ed7-a916-d531bd5dc410@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -84,27 +84,37 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <anSOKjTerc97fCGx@lucifer>
+In-Reply-To: <0b22acb2-5684-4ed7-a916-d531bd5dc410@kernel.org>
 
-On Thu, Aug 06, 2026 at 02:37:59PM +0100, Lorenzo Stoakes (ARM) wrote:
-> On Tue, Jul 28, 2026 at 03:47:11PM -0400, Gregory Price wrote:
-> > All DAMON physical- and virtual-address operations obtain their folios
-> > through damon_get_folio(). That helper already excludes ZONE_DEVICE
-> > memory implicitly via pfn_to_online_page() and folio_test_lru(), but
-> > this is inconsistent with other callers in mm/ which test explicitly.
-> >
-> > Add an explicit folio_is_zone_device() rejection in damon_get_folio()
-> > so the guarantee lives in one place and covers every caller uniformly,
-> > consistent with other mm walkers that reject zone device folios.
-> >
-> > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+On Thu, Aug 06, 2026 at 03:23:25PM +0200, David Hildenbrand (Arm) wrote:
+> On 7/28/26 21:47, Gregory Price wrote:
+> > madvise_cold_or_pageout_pte_range() resolves the folio backing a PMD
+> > via pmd_folio() and ages or reclaims it without checking for zone
+> > device memory.
+> > 
+> > The surrounding guards do not cover every zone device case:
+> > 
+> >   - can_madv_lru_vma() excludes VM_PFNMAP and VM_HUGETLB VMAs
+> >     (so device DAX is filtered)
+> > 
+> >   - !pmd_present() branch above rejects device-private and
+> >     migration entries, which are non-present.
+> > 
+> >   - A present zone device PMD - e.g. a device-coherent THP - is
+> >     not filtered by any of these, nor by pmd_folio() (unlike
+> >     vm_normal_page_pmd(), it performs no special/pfnmap check),
+> >     and would be aged or paged out here.
+> > 
+> > Skip ZONE_DEVICE folios explicitly during MADV_COLD/PAGEOUT.
+> > 
 > 
-> Thanks, nice to make it explicit!
+> No fixes tag for this one required?
 > 
-> Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+
+I think I convinced myself it was unreachable (PMD+Zone Device),
+but I will double check Fixes and send a v2 with 1/4 dropped.
+
+> Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 >
 
-SJ Asked me to drop it, so I most likely will, but yeah - this exact
-patch is a good example of how many footguns zone device gives us.
-
-~Gregory
+Thanks!
