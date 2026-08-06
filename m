@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E03391846;
-	Thu,  6 Aug 2026 13:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD3C376463;
+	Thu,  6 Aug 2026 13:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786022463; cv=none; b=ljsd/fp86I9JCCkoH0hB/Mz6q/RUDn5igSP/Qg+tiWqdmry29ka+YUsnZtj2I1eJ74a0hb+NlwDsSORfzFBk9TdOag3yJbEquxG3oFVgozqNo/8q4gs6QG+GABcOD/8Hk7Fy4dKyGRkgdOfMv6bBU2znR8gb5iOt47Z+YhFHKG4=
+	t=1786022619; cv=none; b=YfRexpfB8cnOuLSkq9Lfks/ECi30fVrby/0/JhYMXG5T7sUW5uNMeeUEQfjQ93sW/BzKHSRDLq/4DkpdOOZfOtM+gRSR3GWNPl4xuR7iE5CNa3P8MSY/VuS+P1rDPYjux0owiSSlbTbikM9+BCCFy/95OwggAd6uPf/fSaID0M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786022463; c=relaxed/simple;
-	bh=irH9jqie16B9536/cnyvLdNZFFUpvNYEmeCXEB41/S4=;
+	s=arc-20240116; t=1786022619; c=relaxed/simple;
+	bh=lB6v8KgIMvPxFbvLMgbASCZ9L+6XKf71RjCuZ87D1qs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CmR1U05PZ/zPap8uGLnd1NokVsarc6K82kK5K00ZgPxnBoP4yFyhUHbHFk6kOjIvWyVcXrxw7D//7kGio5m876fVHtWGkG8rR52x59HVPdZiJp4CayTwdzx3/X++TTyv2Em8x1r5hC79Jgjb7U3O9uRNaubjQvg8Fm5wdCJZw0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hAv/gKVT; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=A5443j+IVVx2O/lZ13xIpc5FcZRGMzoQkI9/xUYoic1lO6uIKBiw+DCggLbHuhDljEO9ftTCJtpadN7w7TX2GQu4GJqawtnkRAFHVjkYheCClMkLR2/DyPWHTiEkWIJ3Bj/1f1LqVKsrOTh6SKZioiqu0gH3glaQi3MYDfnJNHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E2eEx2ma; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hAv/gKVT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3E01F00A3A;
-	Thu,  6 Aug 2026 13:20:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E2eEx2ma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E9A1F000E9;
+	Thu,  6 Aug 2026 13:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786022458;
-	bh=9M22hpR37Fywe1zZz1y9yAYVc4M0MHck+1iq8vIWd3Y=;
+	s=k20260515; t=1786022614;
+	bh=L4LcJVaFqlDOl7/6fb8sSfmGw82F1oBvobaOAS4s1uk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=hAv/gKVTNnWOwNy0eCGclNrpJrUejSmX/wq5ebyMntr2wjyTpm5EUABDroL8KrD41
-	 p6/V1ny8qs3CeeMRlvgOFd5/btgg2ICqTVgg8NvHRe6cQwnMw/74Ww6uG1AxOa68XW
-	 mfw/FK5BTxZCdpeMvXONqZ3mT6ELG/HbiVhMVh5JfgLSF740EtEs0eEKdMsc90UKd+
-	 HcM5kYWuGmYeEqWBDPik6P76THWeMTlfV1MLZFaGhUTVorjPkH0fOiFdIcm9DawxVH
-	 XZlCZyRYyCZzpjwrAi6QX47WdGy5fZRaXw/P2psZK2LXBsjaIN+ww1zP3lXMFrZssq
-	 NjA4IxsryEcrw==
-Message-ID: <cb1c0af3-e0ba-45bd-b51b-b0b224e9a6eb@kernel.org>
-Date: Thu, 6 Aug 2026 15:20:48 +0200
+	b=E2eEx2maGcGkEKpDYhiHIrHt+9ZL+nhKRdvN9H0sql/6/6o6gPH5wg6p0VdCkn9QD
+	 WgD5SOSqCpdSvM9pGGTN3rm2sAUJxPF6Zra8tOKzAsnkR+a9FC/6gYrqfsIJqbepd2
+	 DcStQUuFZJopgkMta8O63YWvEbylzOyj3qZGjPsMzCc42AXrYNlrh1SozlgRfZm03G
+	 aFMlYzGKLhcRFi0a6rvVaOh6eQ/u3aD7ntZBDqzi6qjBotDJVH688MuYsczaGyn5Rc
+	 xTgkYcXnWtAjrRp9re1J1YOf62sZcZJQ0BcN2rwdEhddDH4I5kM5Ns0RiCBgB4+G7q
+	 Cn3pyXJF6Juuw==
+Message-ID: <0b22acb2-5684-4ed7-a916-d531bd5dc410@kernel.org>
+Date: Thu, 6 Aug 2026 15:23:25 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,8 +35,8 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] mm/huge_memory: skip zone device folios in
- madvise_free_huge_pmd()
+Subject: Re: [PATCH 3/4] mm/madvise: skip zone device folios in cold/pageout
+ PMD range
 To: Gregory Price <gourry@gourry.net>, linux-mm@kvack.org
 Cc: damon@lists.linux.dev, linux-kernel@vger.kernel.org,
  kernel-team@meta.com, sj@kernel.org, akpm@linux-foundation.org,
@@ -45,10 +45,9 @@ Cc: damon@lists.linux.dev, linux-kernel@vger.kernel.org,
  dev.jain@arm.com, baohua@kernel.org, lance.yang@linux.dev,
  usama.arif@linux.dev, vbabka@kernel.org, jannh@google.com,
  matthew.brost@intel.com, joshua.hahnjy@gmail.com, rakie.kim@sk.com,
- byungchul@sk.com, ying.huang@linux.alibaba.com, apopple@nvidia.com,
- stable@vger.kernel.org
+ byungchul@sk.com, ying.huang@linux.alibaba.com, apopple@nvidia.com
 References: <20260728194714.3713735-1-gourry@gourry.net>
- <20260728194714.3713735-3-gourry@gourry.net>
+ <20260728194714.3713735-4-gourry@gourry.net>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -95,29 +94,52 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260728194714.3713735-3-gourry@gourry.net>
+In-Reply-To: <20260728194714.3713735-4-gourry@gourry.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 7/28/26 21:47, Gregory Price wrote:
-> madvise_free_huge_pmd() resolves the folio backing a PMD via pmd_folio()
-> and marks it lazyfree without checking for zone device memory.
+> madvise_cold_or_pageout_pte_range() resolves the folio backing a PMD
+> via pmd_folio() and ages or reclaims it without checking for zone
+> device memory.
 > 
 > The surrounding guards do not cover every zone device case:
->  - MADV_FREE only operates on anonymous VMAs (DAX mappings are excluded)
 > 
->  - !pmd_present() branch rejects device-private and migration entries
+>   - can_madv_lru_vma() excludes VM_PFNMAP and VM_HUGETLB VMAs
+>     (so device DAX is filtered)
 > 
->  - present zone device PMD (device coherent THP) is not filtered.
->    Unlike vm_normal_page_pmd(), it performs no special/pfnmap check,
->    and would be marked lazyfree here.
+>   - !pmd_present() branch above rejects device-private and
+>     migration entries, which are non-present.
 > 
-> Bail out when the folio is a zone device folio.
+>   - A present zone device PMD - e.g. a device-coherent THP - is
+>     not filtered by any of these, nor by pmd_folio() (unlike
+>     vm_normal_page_pmd(), it performs no special/pfnmap check),
+>     and would be aged or paged out here.
 > 
-> Fixes: 368076f52ebe ("mm/huge_memory: add device-private THP support to PMD operations")
-> Cc: <stable@vger.kernel.org>
+> Skip ZONE_DEVICE folios explicitly during MADV_COLD/PAGEOUT.
+> 
+
+No fixes tag for this one required?
+
 > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 > ---
+>  mm/madvise.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/mm/madvise.c b/mm/madvise.c
+> index 07a21ca31bad..ffd6a68320a8 100644
+> --- a/mm/madvise.c
+> +++ b/mm/madvise.c
+> @@ -395,6 +395,9 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+>  
+>  		folio = pmd_folio(orig_pmd);
+>  
+> +		if (folio_is_zone_device(folio))
+> +			goto huge_unlock;
+> +
+>  		/* Do not interfere with other mappings of this folio */
+>  		if (folio_maybe_mapped_shared(folio))
+>  			goto huge_unlock;
 
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 
