@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF17C47D922
-	for <damon@lists.linux.dev>; Fri,  7 Aug 2026 13:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675FA25D215
+	for <damon@lists.linux.dev>; Fri,  7 Aug 2026 14:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786110791; cv=none; b=hFGs9LfeAnFkcdB2TVYoUra4oI3tKIJyCrmh43lqfC+FTPHxZTv/iykz6LGtL3AeEifcZAEG1UOIMQhudUmG81VpPsL4NEypZlx11qRLTVwaZnfCIfF3qktvMVNQXDCInWJ9cRLJIJ+hNu5advV6M03IjS5zAnsXGNP2C6cVn3A=
+	t=1786111668; cv=none; b=KVigJr37TmgjegTtZPWa8hCW56dPggLeC57mh6g6qSK9qihpFIG75c5TqIi70zrVAKe9m/zFN3I8f/PZ/is1vJmbYdO2A4eBbY5qSTwoVzuBnZWsaMD/2ieF0Q6wfAbSjLf2rgkf1lqP2n00J3l+vsJmK7sJkr2p88PFzCbLkq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786110791; c=relaxed/simple;
-	bh=mLBs6EROa7ZtcUd+WFiB41ioUpM2TQ7qBh0hCXwB/EI=;
+	s=arc-20240116; t=1786111668; c=relaxed/simple;
+	bh=ZZjD4aZT1Tgz8+Vs1HtkXoYSJOVk+xcnrHle9EsAaU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCbTCq+5FS5HPMrJTYEYvOv5mmcBDw1jFmYtDEUSytpqUDG0jh7CJzRuuTUsEWwTkmsI/rN0DXFzNQqkdOkWQUuJifbd09a1R6Xpk9mOaO0FClneGiO+AjPY5XlTgmx9ZjferXOysXXwiC6U9xFMgHcQxVac8K3GeNDRNts2h9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gfo2pa8w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jxissTavPNMLb0zzjWU+n9KMtEhPBV5GicFhRhdXJE+qbPG6KlWVX5ZLTsGWQKOV0l6XOzV1KiHjqiD+WQrZnEqORn69QLLdZdn0AWaZnUFmoh4dJU2sPdDOKC6ZauHAHer/WumSxdoIzu1NUqJhUwV+nLbqmQHH294veHyYLFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hmX4tl3M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gfo2pa8w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D3B1F00A3A;
-	Fri,  7 Aug 2026 13:53:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hmX4tl3M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E59A1F000E9;
+	Fri,  7 Aug 2026 14:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786110782;
-	bh=XLmyX6PhcnTmivWl7rzGTTmoWyX2vh+vVEFc0xm/UwA=;
+	s=k20260515; t=1786111667;
+	bh=DQqH9N8cRtNFukXaAbTPupUZURdwJwhrhW3sLeMpOdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gfo2pa8w60elepfN5stHdRVpJBos0YvI06jFft3nWQ3FRYfUPIf01zi5XHnm7tuTo
-	 Zkggd8O9/GqLMrLkqCGVE5ptWcyNvt9iND1i6UMl7cmkwJkzXlBCR9dBAjKpwwlequ
-	 Jyp+PPdKWaLPMZ/uCeyQNHKZianlSin6XLg9yol/feRbqS5yWlWcFVIW/SbeLFTtVk
-	 IxM6FXjKhVBzsy2dWOB+CtuAqztbmgEt7tgZaVg/IdQ1PwinLLU3bK75p2GicYjdss
-	 F8Y4QTLXb28Kr6Ht0ns6mpW8s2WCVPO7Pk2ibAFFHPgUque91WBVz2/fIKnf9R8pzR
-	 BSJ3zbMURObRg==
+	b=hmX4tl3MKGsF9m/+hq1ZYLMiEusVyRG/sxJXQhGQIfDXHZ3aKnHgAAk5mLU8U4Evk
+	 4B9xWCJIZoEU29h7oq3RtU2ZNw62xPI40xgq4r/sdkOUZqLmf4Emq3cxVuljcHYLEC
+	 O+uE+ZWL1QB2sFDY+uxCd3v9YGArQBP7yKn9cdgLHihtM6SAj/vFscY1XkfiJ/f16P
+	 U8B8w+RTVwp/G3RmKUJeFFcDB+yUlnBtWO4wNTCb/M6IpYZudbsWmq6bDMHUwefc/P
+	 nTxWREoGIlCQ8gFsZ70ACBvApQ5bV7x5+rGCHL1lYtZwb11qwuXipVSWJsVqQ4fFRp
+	 Cr98S2n6yIWUA==
 From: SJ Park <sj@kernel.org>
 To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: Re: [PATCH 1/2] mm/damon: fix nr_snapshots counting using tried_applied flag
-Date: Fri,  7 Aug 2026 06:52:59 -0700
-Message-ID: <20260807135300.90965-1-sj@kernel.org>
+Subject: Re: [PATCH 2/2] mm/damon: skip deactivated schemes in watermark checks and add fallback sleep
+Date: Fri,  7 Aug 2026 07:07:39 -0700
+Message-ID: <20260807140739.91238-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260807093526.183009-2-aethernet65535@gmail.com>
+In-Reply-To: <20260807093526.183009-3-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,17 +45,37 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri,  7 Aug 2026 17:35:25 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+Hello Liew,
 
-> Currently, nr_snapshots is only incremented when damon_is_last_region()
-> returns true. This is semantically incorrect because nr_snapshots should
-> count the number of DAMON snapshots (aggregation intervals) where the
-> scheme was tried to be applied, as documented in design.rst.
+On Fri,  7 Aug 2026 17:35:26 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-I don't think the current implementation is wrong.  Maybe the documentation is
-better to be updated to "...that the scheme has __completely__ tried".  Let me
-know if I'm missing something, or this implementaion has some practical
-problems.
+> According to DAMOS design documentation, a scheme is deactivated when
+> nr_snapshots reaches max_nr_snapshots. However, the previous
+> kdamond_wait_activation() still checked the schemes which nr_snapshots
+> reached max_nr_snapshots.
+> 
+> This caused an issue - when all schemes were deactivated due to
+> max_nr_snapshots, but their watermarks were still satisfied,
+> damos_wmark_wait_us() would return 0, causing kdamond_wait_activation()
+> to return 0 (activated). The main loop would then continue without
+> sleeping, leading to unnecessary overhead since all schemes would be
+> skipped in damon_do_apply_schemes().
+
+This is an intended implementation.
+
+When all schemes are deactivated by watermarks, DAMON stops monitoring.  It was
+implemented in the way because we didn't want DAMON consumes system resource in
+the case.  But, later it turned out DAMON's resource consumption is really
+negligible.  Rather, it is turned out that it makes DAMON runs with stale
+history when it is activated again.  Particularly, regions have 'age' and their
+start/end addresses that was emerged before the deactivation.  Those are
+meaningless and could even cause wrong DAMOS decisions.
+
+We don't want that anymore.  For a case the user really want DAMON completely
+stops, we introduced 'pause'.  For max_nr_snapshot-based deactivation, we don't
+intend to completely stop DAMON.
+
+Maybe the documentation can be updated to further clarify this.
 
 
 Thanks,
