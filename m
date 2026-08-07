@@ -1,234 +1,95 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FD8175A6B
-	for <damon@lists.linux.dev>; Fri,  7 Aug 2026 07:09:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0D43D525B
+	for <damon@lists.linux.dev>; Fri,  7 Aug 2026 09:35:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786086592; cv=none; b=UYs0cy9LDnrh5EhXcvLBpG1NvnhFt6qpTSudU+PaO7Nx7UqTwUuKrPwBfI5NLfG8QZNjJTXdd9ZfZ6ZvHYZljhzPSA/5bJrnFpz/KF4YqqHfKHAAGqYLBlglq52gJRwQ+ByPhZArPHbZnpGRPdQBaT3bX5ZFlwduR9Yn5K4fpJI=
+	t=1786095337; cv=none; b=PnvZPI8jIWZI5aFnqha0CYE1FG96CSKZ1WhcGmDU5oZLj/17na9RoBQCIMmW3d15prrXDeuy6smn0+axPs0h2oxM1nHD2kaVeiq0SQiWhdaPZFEYdSnldi2T6An9PtHOd1TXS1max62Xg3axZ1KP46b69DQJ4KhlSuhwPbMEX4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786086592; c=relaxed/simple;
-	bh=okUo/lBwawQ2ShVhicuL+c1RSgIwQ+JfXxkA9MP2fZc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tqk2RNwCDd4wyXcLZMLUKSsrDBn1wx6VPyRX26wc8r+IH/skKs5g+r3m9bONbVrVCx+uDIpjIKAzPHtTqVKPnTpgLV4mUnsrp2Dj+4Epp4CBL+0HEi3jDt3LLS2jWjd2Sz2HPP4MLvsZy/sLXUe2OOKG5a+7A+NP3CHOhrDbb/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Qh6BCzQc; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1786095337; c=relaxed/simple;
+	bh=r4VJhsY7I9dZxVLCJ1KGzt3MdiTBJnB7ZZTz6srzQRM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VDF2z6sE+DZES6IyrErwM0FugamcsTyHc0bpRz+nw1m5nR0YNHVtxMrLsOlop8bcaU2AgFk1Tfn/y/I++jZ9Ibi1GUSn6EZJ60soRh4eb4TR3CZ6nvWxDf7J0Gn6Gy7OR4w3poBgK7O0o8WArDZgbyHI8Lyz9EhQgwmZNB0SCGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dTv7X+fh; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Qh6BCzQc"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6770JZQv4064146;
-	Fri, 7 Aug 2026 07:09:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=jpeOcxycXBTAlw8xEd8qyVhgpwcjWF
-	NB4soWtck85Pw=; b=Qh6BCzQcqD/AGOqi1hTQHgQVz6HuWuBJB87Gbu8R2QRIrL
-	ftEfzBmybSkNntrd41XE524cbuEjupU7byCqaB7YxW9kBgydkUCxBhrhTSiwT6H+
-	U4OKIllzATyLLGfNArjEOqj0akgLZ0asqOkSM0XKJyYYoIst8JvDseeB2sH706u4
-	hhs9ueI6JSC+Ld/f6qPFOuLXDpab+v18Jf4LeEQIr4j5+MFCFi1kjnwg8/MvRqx/
-	KhT+u3vzeF7qrRG7dH6ram2Pu9RQGcAByOzaawNWn2aii58OGSRM1hM7xmzHRjNe
-	Si5vdvDt7lOVvC8K31hkxayAWljo7JjlQf3ZTeQg==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fvy02anmy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Aug 2026 07:09:18 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6776uIAD024920;
-	Fri, 7 Aug 2026 07:09:17 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsvmhpmkb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Aug 2026 07:09:17 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 67779F7T51315084
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 7 Aug 2026 07:09:15 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 668A020040;
-	Fri,  7 Aug 2026 07:09:15 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id EA50320043;
-	Fri,  7 Aug 2026 07:09:12 +0000 (GMT)
-Received: from li-008a6a4c-3549-11b2-a85c-c5cc2836eea2.ibm.com (unknown [9.111.55.180])
-	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri,  7 Aug 2026 07:09:12 +0000 (GMT)
-Date: Fri, 7 Aug 2026 09:09:11 +0200
-From: Alexander Gordeev <agordeev@linux.ibm.com>
-To: Muhammad Usama Anjum <usama.anjum@arm.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tursulin@ursulin.net>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Dimitri Sivanich <dimitri.sivanich@hpe.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-        Helge Deller <deller@gmx.de>, Juergen Gross <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Muchun Song <muchun.song@linux.dev>,
-        Oscar Salvador <osalvador@suse.de>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "Liam R. Howlett" <liam@infradead.org>,
-        Lorenzo Stoakes <ljs@kernel.org>, Will Deacon <will@kernel.org>,
-        "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-        Nick Piggin <npiggin@gmail.com>, Peter Zijlstra <peterz@infradead.org>,
-        Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-        David Hildenbrand <david@kernel.org>,
-        Pasha Tatashin <pasha.tatashin@soleen.com>,
-        Chris Li <chrisl@kernel.org>, Kairui Song <kasong@tencent.com>,
-        Uladzislau Rezki <urezki@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Alexei Starovoitov <ast@kernel.org>,
-        Daniel Borkmann <daniel@iogearbox.net>,
-        Andrii Nakryiko <andrii@kernel.org>,
-        Eduard Zingerman <eddyz87@gmail.com>,
-        Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Namhyung Kim <namhyung@kernel.org>, SJ Park <sj@kernel.org>,
-        "Matthew Wilcox (Oracle)" <willy@infradead.org>,
-        Jan Kara <jack@suse.cz>, Jason Gunthorpe <jgg@ziepe.ca>,
-        Leon Romanovsky <leon@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>,
-        Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>,
-        Christoph Lameter <cl@gentwo.org>, Mike Rapoport <rppt@kernel.org>,
-        Johannes Weiner <hannes@cmpxchg.org>, ziy@nvidia.com, pfalcato@suse.de,
-        ryan.roberts@arm.com, linux-kernel@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-parisc@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-mm@kvack.org, linux-fsdevel@vger.kernel.org,
-        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com,
-        linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org,
-        linux-perf-users@vger.kernel.org, damon@lists.linux.dev
-Subject: Re: [PATCH 1/9] mm: introduce hw_pte_t for PTE table storage
-Message-ID: <3db8233c-3785-444e-b2eb-3e5fc5cb2f17-agordeev@linux.ibm.com>
-References: <20260806083926.1807279-1-usama.anjum@arm.com>
- <20260806083926.1807279-2-usama.anjum@arm.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dTv7X+fh"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-38dfe910e9dso3217035a91.3
+        for <damon@lists.linux.dev>; Fri, 07 Aug 2026 02:35:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786095335; x=1786700135; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ikUEXbCxj3hayBZiXKMC/GcUDL0sztIe9+0w0hR5n7w=;
+        b=dTv7X+fhgcBxb8p8V6ixM83sQHN7Gh9rdxLzaGW4+FUH05WoWgdhvf3o7xfEiQ3KNW
+         yoYg3ut+EOn77gKlKJPFr7W5r7Qshs+7zwD6+BnkL51Jh1TvmRoW/DkN1v9MGaDG4oa8
+         /BE2v/gjSzYJvCRHODUzgR/yAYnWPxeVmVQMXtiiMrgnf9oV+0JkSSLv+DA17cs0hdk1
+         /iunR6xJW14exkVTFargc5Qp0YKhoBwpl//GRGKm7LnxN+4yeVv/eR0IyDcSBT+XG/b6
+         AE4qhqy/hQQDY5PtvOvcxwut84tyVBV5WY3+jsLKODY1G2gBkOrdJf1wWpolQ92lUHcQ
+         FP1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786095335; x=1786700135;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=ikUEXbCxj3hayBZiXKMC/GcUDL0sztIe9+0w0hR5n7w=;
+        b=IXJSgKurt5jDGt0JYX5BFA75DsJgHkuBQkzidp+FwhftsGPHow7j3GlibRuEoEdRoZ
+         +OQwbtPRbw751FUyzLk1o3BQccdL9gHiVPBgL6M9btUpHOdbhtIUElJoJqlatMsQB639
+         /w8Ram/DDB87fTV/aXJyQdcR+MxXnS5P14dyW0aH5M7C4/lZaXIc9mClhRwZp+rX+7Te
+         kB9RifrbP7yB+m85uf0jufdJV9JKbAoZMeulHA8WFcM+ef9wZINqik80FN7Ke9RDMxnR
+         wEomnj9qG6IeJAhfAmdWegoRj6Xxei6hDJjWTLovkZ3l/NzNo/1ARWwSD2Qi1E68Evdq
+         JJxA==
+X-Gm-Message-State: AOJu0Yzli4wg7cPVjMaCktga6liYu9LDY5I60wfko2Z0xDvLA9X0VTMW
+	574/fRXBvGC1ekhkrEs68wjiTr8wONTD4oZKVJtfZb4wQl5FqjB71FlP
+X-Gm-Gg: AR+sD13yznZCnkMTv8IV8FrnPjeIEg1iJHA4n3COejC3SKAfGxO/QLCTMKtGL0nOqMG
+	y1ewIr6WJ5ju99KkPnz9ROwaQVeY90EQUw4HclCTUmEcQWjTgEFlrbsACHeiHg49rYGigDVSLQs
+	vNvOGxGTPqtVB2mCYIUv9iv7ClxWWdng82lw7iSsmG+SJR0Ax/QavD1iJUAe11M+NVtY4F+BKMw
+	G+kCfoeXBteW7fpZrJVwdEFMeu1ClGnrQKT+JdKQSJLgoGuQlFvg4GbTwEeu2VlOk5XL+DUQJan
+	2yauPu+QXJSJrvOus2eMZHDPrBNxnHJairjcJ2bRtL8YayiOFz+BP9k/1+lJ7+njLGND61uqPY8
+	bSZVQiOU5J4BAKih9lYwMdYnGW0OjezbqhRos/PVaJbG/FWfcA2M9gniwxloB92TNqWiICf70n7
+	7wWw8oDx1Kmv15d0bz6WatZNpPf/6NS1Tj8bhQ/UbntNb4z3pFNbjbd3MIqXC1l+cf
+X-Received: by 2002:a17:90b:2590:b0:38f:2168:b9cb with SMTP id 98e67ed59e1d1-3903c572a05mr22075654a91.9.1786095335499;
+        Fri, 07 Aug 2026 02:35:35 -0700 (PDT)
+Received: from celestia ([2402:1980:935:f4a7:6f5c:e816:9aba:2090])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3926254ee45sm1604269a91.2.2026.08.07.02.35.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Aug 2026 02:35:35 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	Liew Rui Yan <aethernet65535@gmail.com>
+Subject: [RFC PATCH 0/2] mm/damon: fix nr_snapshots semantics and max_nr_snapshots check coverage
+Date: Fri,  7 Aug 2026 17:35:24 +0800
+Message-ID: <20260807093526.183009-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260806083926.1807279-2-usama.anjum@arm.com>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=G6ws1dk5 c=1 sm=1 tr=0 ts=6a75849e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=7CQSdrXTAAAA:8
- a=knT6YJskkHJV9nTHl7IA:9 a=CjuIK1q_8ugA:10 a=a-qgeE7W1pNrGK8U0ZQC:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA3MDA0OSBTYWx0ZWRfX0nP+lx57+9VF
- 1gmEHMdPT9FDdcpiQyi8SmdcwszvdSJS7mABzCaLeNrHd5Sn8+sTGSPk7wgKar3hoAN1E4B/pVx
- bnXvboS9h3/hfmNoqiGrVCRZoMjtdCQHGGcTi/BUQBFwhU3T8reyBMtbDszvLlwmh+wtmaSZLqp
- yvHKwixzlq6G3K0WuaMTKb0rV/vx4p/+UD+c1HQ1XyaQGUDlAtP+qGdAxuohRKj+obB6JSz4pJf
- zR2/7yIz+BcCrmWWxRtyEAkQu5yJbla8dkOuZTNT+Te2QfvIou3iP7qEQNN4GRIU2Q5uHMR6b+I
- Dj47k0jZ1vEd4+qsmknTL/rQ5DO0GSFvsjQsVYtZ2xV19zVeKyvXq+fRINOYMQUEmIHFL/MkEMn
- a61cmrTNbkwX+us4u3c+MP3DMEixACEHjWeKrnFUAYotTcrys6EiCMj8gXkAJjhYM+ZfvANLuAs
- LDq51urlTaBYjwemYPw==
-X-Proofpoint-ORIG-GUID: 24rCQEgxgE9QBP75I4HmK7CgK28n9dSJ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA3MDA0OSBTYWx0ZWRfX1i5aYO825ZYa
- TwQN6H3jwP2QZ+OLP/IGdT3C7Slc5GOjV5747KQtgAdatwi/16p60JYaM2efb4DysHgyipihWtH
- 8fPlfABrpBSxaw7p4kLOdK2+bYjkzog=
-X-Proofpoint-GUID: 24rCQEgxgE9QBP75I4HmK7CgK28n9dSJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-07_01,2026-08-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- phishscore=0 priorityscore=1501 adultscore=0 bulkscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608070049
+Content-Transfer-Encoding: 8bit
 
-On Thu, Aug 06, 2026 at 09:38:39AM +0100, Muhammad Usama Anjum wrote:
-> pte_t is used both for logical PTE values and for entries stored in a PTE
-> table, so pte_t * does not distinguish a pointer to a copied value from a
-> pointer to table storage.
-> 
-> Introduce hw_pte_t as the generic name for a PTE table element. Define it
-> as a macro alias of pte_t by default. When an architecture selects
-> ARCH_HAS_HW_PTE_T, define it as a structure containing a pte_t instead.
-> This preserves the representation while allowing converted architectures
-> to enforce the distinction at compile time.
-> 
-> Keep the C type definitions behind an __ASSEMBLY__ check because
-> architecture assembly sources can include this header indirectly. Include
-> asm/page.h so consumers such as linux/vmalloc.h retain the page definitions
-> they previously obtained from that header.
-> 
-> Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-> ---
-> Changes since RFC v1:
-> - Add the ARCH_HAS_HW_PTE_T opt-in and generic wrapper definition.
-> - Exclude the C type definitions from assembly sources.
-> - Update the description for the new opt-in model.
-> ---
->  MAINTAINERS                   |  1 +
->  include/linux/pgtable_types.h | 17 +++++++++++++++++
->  mm/Kconfig                    |  3 +++
->  3 files changed, 21 insertions(+)
->  create mode 100644 include/linux/pgtable_types.h
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index e9c8567308a75..7169bea968cf5 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -16982,6 +16982,7 @@ F:	include/linux/mmu_notifier.h
->  F:	include/linux/pagewalk.h
->  F:	include/linux/pgalloc.h
->  F:	include/linux/pgtable.h
-> +F:	include/linux/pgtable_types.h
->  F:	include/linux/ptdump.h
->  F:	include/linux/vmpressure.h
->  F:	include/linux/vmstat.h
-> diff --git a/include/linux/pgtable_types.h b/include/linux/pgtable_types.h
-> new file mode 100644
-> index 0000000000000..70c3edd00a01b
-> --- /dev/null
-> +++ b/include/linux/pgtable_types.h
-> @@ -0,0 +1,17 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +#ifndef _LINUX_PGTABLE_TYPES_H
-> +#define _LINUX_PGTABLE_TYPES_H
-> +
-> +#include <asm/page.h>
-> +
-> +#ifndef __ASSEMBLY__
-> +
-> +#ifdef CONFIG_ARCH_HAS_HW_PTE_T
-> +typedef struct { pte_t __pte; } hw_pte_t;
+Both patches address the DAMOS nr_snapshots/max_nr_snapshots
+deactivation mechanism.
 
-On s390 it fails to compile once we do typedef hw_pte_t *pgtable_t
-in asm/page.h. m68k, powerpc and sparc may also have such problem.
+- Patch 1: fixes the nr_snapshots counting semantics.
+- Patch 2: unifies deactivation checks to prevent busy-loop.
 
-The below declaration helps to resolve it using forward declaration
-and without meddling with headers, though I do not like it much:
+Note: Patch 1 should be applied before Patch 2, as damos_is_deactivated()
+relies on correct nr_snapshots counting.
 
-typedef struct __hw_pte_t { pte_t __pte; } hw_pte_t;
+Liew Rui Yan (2):
+  mm/damon: fix nr_snapshots counting using tried_applied flag
+  mm/damon: skip deactivated schemes in watermark checks and add
+    fallback sleep
 
-> +#else
-> +#define hw_pte_t pte_t
-> +#endif
-> +
-> +#endif /* !__ASSEMBLY__ */
-> +
-> +#endif /* _LINUX_PGTABLE_TYPES_H */
-> diff --git a/mm/Kconfig b/mm/Kconfig
-> index 331daf7fcfab5..31ba9ebf4aafd 100644
-> --- a/mm/Kconfig
-> +++ b/mm/Kconfig
-> @@ -1316,6 +1316,9 @@ comment "GUP_TEST needs to have DEBUG_FS enabled"
->  config GUP_GET_PXX_LOW_HIGH
->  	bool
->  
-> +config ARCH_HAS_HW_PTE_T
-> +	bool
-> +
->  config DMAPOOL_TEST
->  	tristate "Enable a module to run time tests on dma_pool"
->  	depends on HAS_DMA
-> -- 
-> 2.47.3
-> 
+ include/linux/damon.h |  2 ++
+ mm/damon/core.c       | 42 ++++++++++++++++++++++++++----------------
+ 2 files changed, 28 insertions(+), 16 deletions(-)
+
+-- 
+2.55.0
+
