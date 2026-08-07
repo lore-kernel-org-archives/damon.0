@@ -1,101 +1,67 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78C8A369D7D;
-	Fri,  7 Aug 2026 17:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1683B2AA
+	for <damon@lists.linux.dev>; Fri,  7 Aug 2026 23:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786124236; cv=none; b=OsYGT7v2VZSG44gggLSNI1R/yjwchoqFrNZ1/eXFxWoQvdTzVJWyDJ4QZ2qn14yhdNXxBXt+CR+K1j8WTzDuVTkfQ9TPYNhTTW9owge6WVGZVtz05oQer9ltIzqyMNL7RWUr5RacbBJMCf0uHdJl2t0zPeCBh9doPlf6yKEZo14=
+	t=1786147171; cv=none; b=QkaSlj5AqYSHCLhh9nc+ZKTdiH8aI+lN0E6vbbQhHepsYB4gMuPcjhaCRVBXAqM0gRZ/AjDxSt4IYgp0bZD8oh3PbFOXdGWWQG2jTAvxexcbi5mNls3Jf/OGZMIp5a/FdCroFLChXQZkqJ3BE9XPeoCZmzEHhVb8W4Gdea94QcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786124236; c=relaxed/simple;
-	bh=I/MwN7d8rcGjAynfp3Yh2FrK05ByPnLtMo82uZX3gO4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LnbOImkr34ESzP/XzF36VOvZULDOE+5WbwWN+ym8aw8JvM9oLpoAmwHNlrhxw0i8Fj+YTB3Leic9FfPwPudvAMB+8N9/L7BY4Mnc1z0zMy889r0IxAB2CJNPbNvHvtmrj5ttd5YZwvGQcHoJlyrm+KX4Bb6H1XsakI3LEoaBk4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=u1YBCUje; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1786147171; c=relaxed/simple;
+	bh=57HPz0+5HSp1vBVhvpj5kKxtreHMxn8NiH3quUusiVw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JcWR16Mm6+29Gx5znWebwd5eLhDxXD8fL3PzuUj3N7u5d1EVvveYKe1hUCjMcfK2x+jdleuF2y73AzgnZPIQfbdxP7FLqFteYxpzH31nneANiIT+5D+9slP/2THCWbptozWoOtWoUa1m+jyz8+KVoASbTknC/CE6UtBGMwblwJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d2tMhiFE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="u1YBCUje"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EF4151516;
-	Fri,  7 Aug 2026 10:37:05 -0700 (PDT)
-Received: from arm.com (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 70A853F86F;
-	Fri,  7 Aug 2026 10:37:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1786124229; bh=I/MwN7d8rcGjAynfp3Yh2FrK05ByPnLtMo82uZX3gO4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=u1YBCUjeDCzJTEobFx+MVNk1Pj6AQM5/5FIGH2K6tYWuBOhiTQQ0znASS67jRUmmo
-	 5CjbLkLy668QaGbK1Nsa39Di2KcW87JsWQZ+KZqBRQDOAg4tyJTKY2Q1Va1m1mY6yO
-	 pF0DAysKHKvSk6j7OlKxaGWU1vgslfWlOBRTRhFo=
-Date: Fri, 7 Aug 2026 18:37:06 +0100
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: SJ Park <sj@kernel.org>, kernel test robot <oliver.sang@intel.com>,
-	oe-lkp@lists.linux.dev, lkp@intel.com, linux-kernel@vger.kernel.org,
-	x86@kernel.org, K Prateek Nayak <kprateek.nayak@amd.com>,
-	Charlie Jenkins <thecharlesjenkins@gmail.com>,
-	linux-arch@vger.kernel.org, damon@lists.linux.dev
-Subject: Re: [tip:locking/core] [futex]  b78b0b6582:
- kselftests.damon.sysfs_memcg_path_leak.sh.fail
-Message-ID: <anYXwp8peHu8jm-H@arm.com>
-References: <20260807090139.GR776954@noisy.programming.kicks-ass.net>
- <20260807144928.912-1-sj@kernel.org>
- <20260807152353.GP687043@noisy.programming.kicks-ass.net>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d2tMhiFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411851F000E9;
+	Fri,  7 Aug 2026 23:59:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786147170;
+	bh=Ih4/vMKtjC0ICTAP+VeJSUaN55ExTa2E+IFm6J2Z3vE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=d2tMhiFEt/FNjGa039RVJKAL0/PjD+BSC0G4kW6g0dMN8NqJ7jfnyfC5isGM8s4l7
+	 xujO6aPCAgCH0rbiLlYjAwcpy4nWGgvDdhMMX17I/g1ocItdM4oM/6jSR4Oe2cB0Cv
+	 z+Y8reIcWlZqrYyQq+pyzLthexRqLJvMdjIgCZpA5FTPkhtOqYF9JGy0jCvC/Oy7Ft
+	 KOnppwc0P+vK6Dg95wpLiDrJjpy+z33vgxCSaSOhnJH8cegfhhXl7Tqp9hniysGeVq
+	 x+VlekkFOWW3b8ooa0pKHoGTnyE/7E2maWWeOsrP4LFeQ41VhFgZ+KXKzao9dK1ymB
+	 SjbX6P7Eil6Dw==
+From: SJ Park <sj@kernel.org>
+To: Liew Rui Yan <aethernet65535@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH 0/2] mm/damon: fix nr_snapshots semantics and max_nr_snapshots check coverage
+Date: Fri,  7 Aug 2026 16:59:25 -0700
+Message-ID: <20260807235925.1146-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260807161900.57054-1-aethernet65535@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260807152353.GP687043@noisy.programming.kicks-ass.net>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Aug 07, 2026 at 05:23:53PM +0200, Peter Zijlstra wrote:
-> On Fri, Aug 07, 2026 at 07:49:27AM -0700, SJ Park wrote:
-> > > > kernel test robot noticed "kselftests.damon.sysfs_memcg_path_leak.sh.fail" on:
-> > > > 
-> > > > commit: b78b0b65825275f58336a43611a700de174be8c3 ("futex: Use runtime constants for __futex_hash() hot path")
-> > > > https://git.kernel.org/cgit/linux/kernel/git/tip/tip.git locking/core
-> 
-> > The test does a simple DAMON operation and runs kmemleak to see if it caused a
-> > leak.  It doesn't filter out leaks caused by something other than the DAMON
-> > operation, though.  So the test can fail even if there is a leak outside of
-> > DAMON.  This failure is the case.  I confirmed manual kmemleak run without any
-> > DAMON operation reports the leak on the kernel that was built with the reported
-> > commit [1] like below.
-> 
-> > So, the commit is not breaking DAMON.  But apparently it is leaking something.
-> 
-> Well, its doing a __init allocation and never freeing it because well,
-> futexes cannot be unloaded or anything.
-> 
-> Catalin, this seems rather daft, but what do I know. Is the below the
-> right way to tell it to STFU?
-> 
-> ---
-> diff --git a/kernel/futex/core.c b/kernel/futex/core.c
-> index ad917ff83854..afdbaf754fb7 100644
-> --- a/kernel/futex/core.c
-> +++ b/kernel/futex/core.c
-> @@ -45,6 +45,7 @@
->  #include <linux/rseq.h>
->  #include <linux/slab.h>
->  #include <linux/vmalloc.h>
-> +#include <linux/kmemleak.h>
->  
->  #include <vdso/futex.h>
->  
-> @@ -2058,6 +2059,7 @@ static int __init futex_init(void)
->  	order = get_order(size);
->  
->  	__futex_queues = kcalloc(nr_node_ids, sizeof(*__futex_queues), GFP_KERNEL);
-> +	kmemleak_not_leak(__futex_queues);
->  
->  	runtime_const_init(shift, __futex_shift);
->  	runtime_const_init(mask,  __futex_mask);
+On Sat,  8 Aug 2026 00:19:00 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-This would do. Kmemleak is not that advanced to track the
-runtime_const_init() pointers.
+> Hi SJ,
+> 
+> On Fri,  7 Aug 2026 07:12:13 -0700 SJ Park <sj@kernel.org> wrote:
+> 
+> > Thank you for sharing this patch series.  However, I don't think the patches
+> > are fixing real problems.  Rather, it seems the poor documentation has confused
+> > you.  Sorry for writing the documentation in the confusing way.  I commented to
+> > each patch for details.  If you want, please feel free to send documentation
+> > update patches.  I will also try to find a time to do that if nobody does.
+> 
+> I will update those documentations! Thank you again for your detailed
+> explanations.
 
--- 
-Catalin
+Thank you, looking forward to it!
+
+
+Thanks,
+SJ
