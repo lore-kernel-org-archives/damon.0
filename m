@@ -1,226 +1,124 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932DD383323
-	for <damon@lists.linux.dev>; Wed, 12 Aug 2026 04:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F953398910
+	for <damon@lists.linux.dev>; Wed, 12 Aug 2026 06:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786507578; cv=none; b=JvQA9mgSjs+iVP3m6J49WxXBZUrJ5GlOawkzlnUaK5/hS0C16tf2UwHgYZtx20Ypw1TJLAN4Y383dyIK5UdCOhnptfJdBcfhy8P9Bu0kuhNRmEpARH8bqqDjJf7N1nir/WRhiuHPPG1vTvDIOuUSJ8Svlv6Q4dorE3bNr0BqVvc=
+	t=1786517968; cv=none; b=bAZC/s25vyPG9XgTNLLLFgppwBM1BSm8512+7xMMxykeVOrA4wpZjQ55c/yu/XJQOEEfYezPD3W/8AxUhqaxEC2FbRDJdv3/EW8dAvpXHDyUVjK+tdhGKhyt7amMg9E6c0t+3uBOpkQ9t0y0aEaOn5tVBfj4ChDYMnTdMh7dhT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786507578; c=relaxed/simple;
-	bh=IHjypAHsNKjpNGDu8aCRCeoUOQ9LFF7rYITg0sTzbDM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iMEU3qYwQ81aYugOdHHMotCOiJ8XFRIe8UwXUHNqEnuw3UT9Hg/hwu+m6WrKzyL7An4A5lppJQd03Q6RQEsLxkrxH+5WBBAUT8Xh5nxAXCpSDdKScGVKffIsUjr9LC2r9tLKZeM1f8Z4xIfbZvTaP4WXrxkhKRhH3cykj92sh9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Rg9GEe8O; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1786517968; c=relaxed/simple;
+	bh=WIAuDm5KWKeCXbUA7qblf7Ti3VLEdPQOqG/N3pB7uF4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AfuJ9K1ssAfoOqfDxmBWO4Ch8QNSB02liKphU0oyB4bpnnXPmbNbCyTTs5A6X+CbBJZlwuye4qXVHd25cykKEeGzS8z9HFIihjPiNMP6UUkqTxzuYRJLXNjSwRbhqL9+makShVZs3nTkHnj+AasyDheuH6F3DQ2WVAkP5F5DjPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eLMB778+; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Rg9GEe8O"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B399D1596;
-	Tue, 11 Aug 2026 21:06:10 -0700 (PDT)
-Received: from localhost (a085714.arm.com [10.164.19.28])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 018DD3F86F;
-	Tue, 11 Aug 2026 21:06:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1786507574; bh=IHjypAHsNKjpNGDu8aCRCeoUOQ9LFF7rYITg0sTzbDM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Rg9GEe8ORnIQSzAFzPE9Q3CsOniFeZz3B5DAx1vSbU2ayamMlqi+pdI/abA/SWthR
-	 JHd2kD7S7LWpcNIoT65928j5y1fwj3S00eMdlQR9LYSfVNqmGWvx2Jo8nRyP2/XrUC
-	 occW+1n2ku+jahULG28ttJSOr0S4qPMQj+wCR/cQ=
-Date: Wed, 12 Aug 2026 09:36:11 +0530
-From: Anshuman Khandual <anshuman.khandual@arm.com>
-To: Muhammad Usama Anjum <usama.anjum@arm.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>, 
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>, 
-	Tvrtko Ursulin <tursulin@ursulin.net>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Dimitri Sivanich <dimitri.sivanich@hpe.com>, 
-	Arnd Bergmann <arnd@arndb.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, Helge Deller <deller@gmx.de>, Juergen Gross <jgross@suse.com>, 
-	Stefano Stabellini <sstabellini@kernel.org>, Muchun Song <muchun.song@linux.dev>, 
-	Oscar Salvador <osalvador@suse.de>, Andrew Morton <akpm@linux-foundation.org>, 
-	"Liam R. Howlett" <liam@infradead.org>, Lorenzo Stoakes <ljs@kernel.org>, Will Deacon <will@kernel.org>, 
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Nick Piggin <npiggin@gmail.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Andrey Ryabinin <ryabinin.a.a@gmail.com>, 
-	David Hildenbrand <david@kernel.org>, Pasha Tatashin <pasha.tatashin@soleen.com>, 
-	Chris Li <chrisl@kernel.org>, Kairui Song <kasong@tencent.com>, 
-	Uladzislau Rezki <urezki@gmail.com>, Steven Rostedt <rostedt@goodmis.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Alexei Starovoitov <ast@kernel.org>, 
-	Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko <andrii@kernel.org>, 
-	Eduard Zingerman <eddyz87@gmail.com>, Kumar Kartikeya Dwivedi <memxor@gmail.com>, 
-	Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>, 
-	Namhyung Kim <namhyung@kernel.org>, SJ Park <sj@kernel.org>, 
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Leon Romanovsky <leon@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, 
-	Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>, 
-	Mike Rapoport <rppt@kernel.org>, Johannes Weiner <hannes@cmpxchg.org>, ziy@nvidia.com, 
-	pfalcato@suse.de, agordeev@linux.ibm.com, ryan.roberts@arm.com, 
-	linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
-	linux-parisc@vger.kernel.org, xen-devel@lists.xenproject.org, linux-mm@kvack.org, 
-	linux-fsdevel@vger.kernel.org, linux-arch@vger.kernel.org, kasan-dev@googlegroups.com, 
-	linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org, linux-perf-users@vger.kernel.org, 
-	damon@lists.linux.dev
-Subject: Re: [PATCH 3/9] mm: name pointers to copied PTE values ptentp
-Message-ID: <hwkurkpobxysltkid5523qxndufebqqmat4qjaq6zhwno2drmh@efwoegm2huo6>
-References: <20260806083926.1807279-1-usama.anjum@arm.com>
- <20260806083926.1807279-4-usama.anjum@arm.com>
- <e7osakog3yvdewhdlrk3bsp27pwt2nnhroeb7zihlfxyjotarb@rwxkcb25crh3>
- <b21c4cc9-84a3-429e-8156-0b9967b2f133@arm.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eLMB778+"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4955c545a94so127795e9.3
+        for <damon@lists.linux.dev>; Tue, 11 Aug 2026 23:59:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786517963; x=1787122763; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=jYLC+//as5WkDB9Cfqs3UoupJV7njGedAREDeXd0kB8=;
+        b=eLMB778+ogJ7K4TPyl4in8azC2Yy6RnhjzPQDmWqTgPyewvahcX9Hzhdl5nOZzsMP8
+         R7DkNZEw7cKUir9e+l8tpAK4gYKW1M/2YoLufgBPvIXcq4/R2nJSKBGMQrpdqvM3UOk7
+         e+DbtOQVPMdVWAxfZj9QXoJjh3/BBwCvktJn92778zfMTbC7AzYC7hBYC0DaZMtJJlJp
+         TKRJJaJw0SB8ojN/apKLFuurXycSjQHaoXN4B5W19UiQCOUhm/+vbJje0vU20ScU+JO7
+         h0PUMhYhHJuyPc7u3/SLspPVXii+3QbgqkE8xT8Wzg3Yn2mEWkJkdyh5MbbfXNyJoUNK
+         sotw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786517963; x=1787122763;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=jYLC+//as5WkDB9Cfqs3UoupJV7njGedAREDeXd0kB8=;
+        b=Ptxv6rCJ8K9v9fV/DKIQQ1fK/60ATUle45iWxAlVau00D4wFg2bjYFtzNsiSZICY9J
+         u1THRLlqZdUmyVom3pSEW3wFY/KD2MV24gNuTcaFWFTCkv37hUrVlc8+/leqFdIYZJF4
+         PhMocsafujUvLtMCH+0Ko6CSJ4c2TM2V7lzQzUl5IlT+/qRKlJR+cV6xukxQ4S2WgGzG
+         lmIleTROkO23dmj8XheZ2aZfW9+Og0PFH4ZBKECKuIMGy8q6zat4zpWl0uzIfGcHdPRq
+         +9A/kFGah8ZydEXoC2Sw753Cfh0FKErNHCJUai5QpIYKScGU7G5gOrqbR+7dobXvPI1F
+         k45A==
+X-Forwarded-Encrypted: i=1; AHgh+RrMDz0ZyNaBszquRNvTZt0S/UZBpOMZpnWXcPeL0Q34oK6i9a9Ly/AjSr2JSy6w0b9GA0EVSQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyHeNCH2AsAyM5OLISkgT7WIZQNleL6UcudZQ+CWiLjz7Yt4ONt
+	qJZJQVR8Ts1RhmCr4iC7hf7zdD8Y6/yUfoZpnk8Jk4c1P6uFrGimSGx8
+X-Gm-Gg: AR+sD10MukRIPyeLm4mS9kiJeNG2OW+LjDn9zUWDIw708K/ggmldknAvN3jSdspDc1Q
+	mRjhv+Z11ECas+ACNdBsVRmDdHpHZChNgQ/E9wsOOFMEjLNOWNlItdxklw+3hYsgt0Eva49sEh2
+	8kT+pc/lSep69eYHaEHVVqnGvFr0Q35QZsadnG/Kjd5YWCg2iPQA45tvOz7rTX4xk0Zx9T5C8RW
+	Wy7kvpg5MBv5N8BHErF70Vb/CDeoOXXRgzIBrUM8rsH+ClkEo2X4D7dMdpdPRn/rj1Tbr20OD8a
+	JnpZlGPa063DKGZD95LmB10b6ope+PuiEvedJz/BlEbwWgajJTKXgQyJS/J8S6YLS8G8lWGhfrM
+	QDXSUGq5pnsG+55BFexb0MZrbuglJ0ibN6vsRhHDtkO9NOL+lmh4lZe7Ccn4UfJAlx4j4VEG/bT
+	bdlGtMClr3uvmTHM6joWv7IwTmbLQ/jggFtfvDKT+MxWWehV13v48YH2TRPHNkpw51nQ24oBse4
+	6SFv4TqA/ZL5VRAxzAfLfxkKd58Jxp5TfamvQBEV/dC3bMoyNXJgqfMXRlqYCXGpUh00YSIsrGt
+	JmM+tmk9Q6K5pz9M5+9OJYz/Pm8Umh0Yu43Xbna1uq2MUA==
+X-Received: by 2002:a05:600c:1f82:b0:496:bbce:ef with SMTP id 5b1f17b1804b1-4997c15bc31mr16199015e9.3.1786517963083;
+        Tue, 11 Aug 2026 23:59:23 -0700 (PDT)
+Received: from doehyun-dev.pradel.rg.cispa.de (x06.xlate.fw.cispa.de. [195.37.157.6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4997b15b807sm73628005e9.7.2026.08.11.23.59.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Aug 2026 23:59:22 -0700 (PDT)
+From: Doehyun Baek <doehyunbaek@gmail.com>
+To: Alex Shi <alexs@kernel.org>,
+	Yanteng Si <si.yanteng@linux.dev>
+Cc: Doehyun Baek <doehyunbaek@gmail.com>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	SJ Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v7 0/7] docs/zh_CN: update DAMON documentation translation
+Date: Wed, 12 Aug 2026 06:59:04 +0000
+Message-ID: <20260812065914.3071433-1-doehyunbaek@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b21c4cc9-84a3-429e-8156-0b9967b2f133@arm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 11, 2026 at 03:09:07PM +0100, Muhammad Usama Anjum wrote:
-> On 11/08/2026 11:58 am, Anshuman Khandual wrote:
-> > Subject line is very confusing. Perhaps something like the following.
-> > 
-> > mm: Rename pointers to copied PTE values as ptentp
-> > 
-> > But even 'copied PTE values' is not very clear as well.
-> 
-> Something like:
-> 
-> mm: rename pointers to logical PTE values as ptentp
-> 
-> or
-> 
-> mm: rename pointers to software PTE values as ptentp
+Bring the Chinese DAMON documentation translations up to date.  Update the
+DAMON design and administration-guide translations, and add the DAMON_STAT
+usage translation.
 
-Yeah but we need to get these nomenclature right at the very beginning
-and also probably get it documented some where.
+Changes from v6:
+- Clarify the DAMOS quota goal descriptions for the optional ``nid`` and
+  ``path`` parameters.
+- Improve the translation of "offload" and fix the duplicated character in
+  the non-access-pattern filter description.
+- Consistently translate "tracepoint" as "跟踪点" throughout the series.
+- Consistently use "监测上下文" and "聚集间隔" for DAMON terms.
 
-> 
-> > 
-> > On Thu, Aug 06, 2026 at 09:38:41AM +0100, Muhammad Usama Anjum wrote:
-> >> The hw_pte_t conversion must retain pte_t * for pointers to standalone PTE
-> > 
-> > We need to explain what is `standalone PTE values` first.
-> > 
-> >> values. Name the value parameters ptentp in the install_pte callback,
-> >> write_protect_page(), and guard_install_set_pte() so the later mechanical
-> >> conversion can distinguish them from pointers to PTE table storage.
-> >>
-> >> Some functions already use the ptentp name, including:
-> >> - madvise_folio_pte_batch()
-> >> - folio_pte_batch_flags()
-> >> No need to convert them.
-> >>
-> >> This is a naming-only change.
-> > 
-> > Small nit - s/naming-only/rename
-> 
-> I'll fix it.
-> 
-> > 
-> > The commit message needs rewrite clearly explaining the following details
-> > 
-> > - What are standalone PTE values
-> Logical/software PTE is correct and better name here.
+The changes were suggested and clarified by Dongliang Mu.
 
-Right but we need to define these early on and then be consistent in their usage
-afterwards in the entire series.
+Doehyun Baek (7):
+  docs/zh_CN: update DAMON design translation
+  docs/zh_CN: add DAMON_STAT usage translation
+  docs/zh_CN: update DAMON index translation
+  docs/zh_CN: update DAMON start translation
+  docs/zh_CN: update DAMON usage translation
+  docs/zh_CN: update DAMON reclaim translation
+  docs/zh_CN: update DAMON LRU sort translation
 
-> 
-> > - How these are different from HW pgtable pointers
-> > - Change is just a rename for pointers into such 'standalone PTE'
-> > - These renamed 'ptentp' here would be used for skip or replaced during
-> >   upcoming mechanical change via a script
-> > - No functional changes intended
-> I'll update message in more elaborate way.
-> 
-> > 
-> >>
-> >> Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-> >> ---
-> >> Changes since RFC v1:
-> >> - Update the description for the architecture opt-in conversion.
-> >> ---
-> >>  include/linux/pagewalk.h | 2 +-
-> >>  mm/ksm.c                 | 4 ++--
-> >>  mm/madvise.c             | 4 ++--
-> >>  3 files changed, 5 insertions(+), 5 deletions(-)
-> >>
-> >> diff --git a/include/linux/pagewalk.h b/include/linux/pagewalk.h
-> >> index b41d7265c01bc..c34d826c5e4a2 100644
-> >> --- a/include/linux/pagewalk.h
-> >> +++ b/include/linux/pagewalk.h
-> >> @@ -89,7 +89,7 @@ struct mm_walk_ops {
-> >>  		       struct mm_walk *walk);
-> >>  	void (*post_vma)(struct mm_walk *walk);
-> >>  	int (*install_pte)(unsigned long addr, unsigned long next,
-> >> -			   pte_t *ptep, struct mm_walk *walk);
-> >> +			   pte_t *ptentp, struct mm_walk *walk);
-> >>  	enum page_walk_lock walk_lock;
-> >>  };
-> >>  
-> >> diff --git a/mm/ksm.c b/mm/ksm.c
-> >> index ad05d7791307e..11d50518d02e9 100644
-> >> --- a/mm/ksm.c
-> >> +++ b/mm/ksm.c
-> >> @@ -1292,7 +1292,7 @@ static u32 calc_checksum(struct page *page)
-> >>  }
-> >>  
-> >>  static int write_protect_page(struct vm_area_struct *vma, struct folio *folio,
-> >> -			      pte_t *orig_pte)
-> >> +			      pte_t *ptentp)
-> >>  {
-> >>  	struct mm_struct *mm = vma->vm_mm;
-> >>  	DEFINE_FOLIO_VMA_WALK(pvmw, folio, vma, 0, 0);
-> >> @@ -1371,7 +1371,7 @@ static int write_protect_page(struct vm_area_struct *vma, struct folio *folio,
-> >>  
-> >>  		set_pte_at(mm, pvmw.address, pvmw.pte, entry);
-> >>  	}
-> >> -	*orig_pte = entry;
-> >> +	*ptentp = entry;
-> >>  	err = 0;
-> >>  
-> >>  out_unlock:
-> >> diff --git a/mm/madvise.c b/mm/madvise.c
-> >> index 07a21ca31bad4..c324cc991f841 100644
-> >> --- a/mm/madvise.c
-> >> +++ b/mm/madvise.c
-> >> @@ -1101,12 +1101,12 @@ static int guard_install_pte_entry(pte_t *pte, unsigned long addr,
-> >>  }
-> >>  
-> >>  static int guard_install_set_pte(unsigned long addr, unsigned long next,
-> >> -				 pte_t *ptep, struct mm_walk *walk)
-> >> +				 pte_t *ptentp, struct mm_walk *walk)
-> >>  {
-> >>  	unsigned long *nr_pages = (unsigned long *)walk->private;
-> >>  
-> >>  	/* Simply install a PTE marker, this causes segfault on access. */
-> >> -	*ptep = make_pte_marker(PTE_MARKER_GUARD);
-> >> +	*ptentp = make_pte_marker(PTE_MARKER_GUARD);
-> >>  	(*nr_pages)++;
-> >>  
-> >>  	return 0;
-> >> -- 
-> >> 2.47.3
-> >>
-> > 
-> > How did we ensure that the above changes are comprehensive and nothing
-> > else got left in here ?
-> 
-> The order of patches and even the code was found out after adding hw_pte_t
-> structure. Then everything was converted, until some pte_t pointers were left
-> which didn't require conversion.
-> 
-> If something is left, we'll get build errors when we build a converted architecture.
-> So the branch mentioned in the cover letter when built, would produce build errors.
-> (Those patches would be sent separately, after finalization of this series).
-> 
-> Whenever I'm rebasing (on mm-new), I'm rerunning Coccinelle script to see if new code
-> has arrived which requires conversion or renaming.
+ .../zh_CN/admin-guide/mm/damon/index.rst      |  15 +-
+ .../zh_CN/admin-guide/mm/damon/lru_sort.rst   |  68 +-
+ .../zh_CN/admin-guide/mm/damon/reclaim.rst    |  82 ++-
+ .../zh_CN/admin-guide/mm/damon/start.rst      |  63 +-
+ .../zh_CN/admin-guide/mm/damon/stat.rst       |  94 +++
+ .../zh_CN/admin-guide/mm/damon/usage.rst      | 523 +++++++++++---
+ .../translations/zh_CN/mm/damon/design.rst    | 667 +++++++++++++++++-
+ 7 files changed, 1346 insertions(+), 166 deletions(-)
+ create mode 100644 Documentation/translations/zh_CN/admin-guide/mm/damon/stat.rst
 
-But in the early patch where the manual renaming was done for the script to
-pick up 'ptentp' patterns needs to be audited again.
 
-> 
-> -- 
-> Thanks,
-> Usama
-> 
+base-commit: db6ed2a3d31068ca5577466591b2521dee0508ca
+-- 
+2.43.0
+
