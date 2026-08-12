@@ -1,122 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54E0399375
-	for <damon@lists.linux.dev>; Wed, 12 Aug 2026 07:09:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD22B400978
+	for <damon@lists.linux.dev>; Wed, 12 Aug 2026 10:04:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786518549; cv=none; b=hxRyOSwkesbM4BzMVc0szKNY8MyphCXHtPuWVQslzEYxjdQWQPhBc65JkKtMLKoMYxCOJxfiqMONveexE8floImzBtOgXJT+PtTTD1VjZ5ladGRd2MjiLvplLBou3kO06j5PPJvckYHuFKYKrfov/87jk149YT3Ppa4ds4go9Es=
+	t=1786529084; cv=none; b=DBiZNwzJ0RBQ01esoBIAFwgE8Jm3x5a7LgWvSc+dwnmjNpdJx4uZsG36K1rhc791jpR3qhp/nVdwcB/Oi4eAbdO6Y26wcehoiouPldiBw/QIbblw2szAi9lEqpXXdXpuNCungUq1ZbOfWyZWwQkoBWgLZH5/i9mbAa+GdT57sT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786518549; c=relaxed/simple;
-	bh=Pj9oMv5G0jHFsnOf8Y+8rLr69tIwCxBNARWEfVijVd0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=fm/8DbJrCkUl9ujQMtsFGBYQbpMSg0gJwPDX3L0wGeEOQ84IJHbmnDKL6UJ4wbama1XU0H1tDHq0Zh6O5mjIuyn9PcD6qw9MkC3Xhixu3n2O3Gz3kHZeubAjia/FfJ8u2Pf5Ajw5lm7/SWac6XleB4zvpTcG5JXJ31JQ9D5Qq5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ElOSSwNr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786529084; c=relaxed/simple;
+	bh=qDTWo32iEis5B5EikwCAmCw2XSqTDoKs39jdS5gj1yc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=M/HS8K+NzQ9vbR5Ea4QMaEeoCFkWdBnCVB92R1U+PeXfxUnee7nX/5nxo26IJ++f16zVuH0LnKUIa/LfvTNsfMfYNCTrpDj1NUO0C4QK6YMg4xJqDrjSynMnBimC6xZyZZLwQMe6d7Ma9wI34NVgTluDK01PA7ye/4c19/qBCTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mLuUGe4I; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ElOSSwNr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C581F000E9;
-	Wed, 12 Aug 2026 07:09:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786518547;
-	bh=Pj9oMv5G0jHFsnOf8Y+8rLr69tIwCxBNARWEfVijVd0=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ElOSSwNr1lPfCe9F/IGgrKIzhWdYN5zfN8GYCmvPolBzQyYQFwbVv/uXaMAe4TewO
-	 zCvMff8I1+rbBUyW8QcCdLcEaVdmCNBwhWrE1LxlIed5lx2aLoVwkGT9Ef+v/MVuU9
-	 bo7iDIpbbnEjYpkDtjhVkGl9tuQLfRvE1tcCPBC8uR9lDOYEE7/ijs/tw/JQarVUrq
-	 Cxl8ZEzF39hXxTx5zxg5S5sWMzg6XK7alZ7EbGMFXpugwyRP0oYoCXDB6cY7KlJ4z9
-	 KH2CRhDbchVeqtlvRiWEhqo0D/iAcfDn4Qmd1sN9VgWCf4AU1ZExfHb/KkzDyMvbhb
-	 S7Geq8k+of0Ww==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v7 7/7] docs/zh_CN: update DAMON LRU sort translation
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Doehyun Baek" <doehyunbaek@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260812065914.3071433-8-doehyunbaek@gmail.com>
-References: <20260812065914.3071433-1-doehyunbaek@gmail.com>
- <20260812065914.3071433-8-doehyunbaek@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Date: Wed, 12 Aug 2026 07:09:06 +0000
-Message-Id: <20260812070907.43C581F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mLuUGe4I"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c9e7391839cso677195a12.0
+        for <damon@lists.linux.dev>; Wed, 12 Aug 2026 03:04:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786529082; x=1787133882; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=w1Amz75UuSYEUv3v4aAO3alBAyuVKiTqpSzrEm2VkvA=;
+        b=mLuUGe4Il0eFT/46AAER4hwjsrk+zSSH4l+fvqDF0oEWdDNKgCgrLLhg+vt+uHe8y+
+         G5Eh9ydNqm/heWYyif5jbyem8EsRI/6IzTofXoiSK5f9GXHavRrq5O1UOVaabYUDwYNJ
+         hxX765aVRnoSnms++hQaC9BJ2ZE1XS2o/txbUu61jl/WzVLqvk1LPvhe1kL9eGVRaodb
+         hkwe0G3FhkUb3ecshQ3yLB72Dj8Q9GMbhkFpFDKEiexycgZRqMWXJKIDzcY8LaNVzdqD
+         yT8r/UNFNTKW7u9xeJDAyla4SuWABuMtjisg3dTJnrKXug64gi2VO5G9esp3ROrdj3M5
+         Bb5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786529082; x=1787133882;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=w1Amz75UuSYEUv3v4aAO3alBAyuVKiTqpSzrEm2VkvA=;
+        b=EFOpEyKjkdSnmxsh8tHAwAxiRVzP8fmLr7wM1iipKPB7qBxEuglyODHVpOSKqcURXN
+         xOLVpFEWEj/p4C3JFrU2YvAjRXJkGl/DE0xSRqYItxqpIdjDqmrvm95KMIMmLf+56MZ7
+         E27ryYVxOAKfNhnXv0f4iq+lmCLDmuv66Yek/kjzgMRSEOcUX5AI9Ol/4/8GX/UI5/mi
+         HtA/ubxjep9SGMGEz0RgApQ07CQYCDX14p96yGa5tewj/2FRoMAyp/aRz8m6GGmuU2Vf
+         xUBO/uPJY/VxhMNw8eYNDsw7xZBatE786kKwbmj4BiWc69tm0xgW1WXT0NDgRE67+1f7
+         LnGA==
+X-Forwarded-Encrypted: i=1; AHgh+Rrr0tYI/9A7lgrBYDBtVwFNTvmm2cKD4VBrFSOigGDlktjsGE844cUJ+EFCHKjf7h2s8Pp7ZA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwkvOFNSsnsTwMvgJ7mpMi9Zv0NW/Ly449KuW/GBUySa15sgAUu
+	a9X9GqOX945ZDIB2NAK7xyvY48SNjkNJ7JiYP9X8ijSLymSVSyt6KXp3
+X-Gm-Gg: AR+sD11L7GWh+YwKRiBcvcj2sHff0x4org4G1mUg/j6Wt9PCadlMnHVpwhc3tJzCfY9
+	zDBhwbWMBHHY9LH1XNkGsdcKuGoeiaB7ujdX9bvlRwYnIQDpWvGKt0+KqREa9JDoux6PgUjyT18
+	txMokpe8LahLuPddcjNxk+6RxnhTWRxMI5x4rkIv07R88ngVUtdMKS97NRoF4q2qZb2WrrFewLr
+	PianZtsNGTudN7nw4WthXjcYdoqzPA+5/KYkp4cGamwtFZfThTSVX20GNhpveSubbGuDrvbMKsZ
+	llFhfNnqbVjUMJTUVYX+62glaZZz8bJSdMGIo/cjeKTj3B7cYXwKA2CvRo0dcL4TuA7q1vYLjnA
+	YO/ex/7A0nm12SsGx5+u0IFbCbieutgeRbQxqawLazFM4t2KE2d1JxjZ76tDVGGyspZfq+c3uhv
+	88BaLYLQcmVVAN17d9qV0XeuPJTf+4X788ndxe8eGbuNWeMRVH22hLMh2x3oXckvnMdKKXzCuOm
+	EkGB/qJh9gPpgZJlrR4TwjfWQ==
+X-Received: by 2002:a05:6a21:9104:b0:3c3:859b:9178 with SMTP id adf61e73a8af0-3cc3f7fecf9mr4939767637.34.1786529082230;
+        Wed, 12 Aug 2026 03:04:42 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:85a:5c46:85a5:ec7:8aa8:72be])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14124454d3csm8821247c88.2.2026.08.12.03.04.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Aug 2026 03:04:41 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R . Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Liew Rui Yan <aethernet65535@gmail.com>
+Subject: [PATCH 0/3] docs/mm/damon/design: add explanation of nr_snapshots
+Date: Wed, 12 Aug 2026 18:04:30 +0800
+Message-ID: <20260812100433.6288-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-VGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQg
-MSBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6DQotIFtNZWRpdW1dIFRoZSBDaGluZXNl
-IHRyYW5zbGF0aW9uIGludHJvZHVjZXMgZG9jdW1lbnRhdGlvbiBmb3IgbW9kdWxlIHBhcmFtZXRl
-cnMgYW5kIHdhcm5pbmdzIHRoYXQgZG8gbm90IGV4aXN0IGluIHRoZSBrZXJuZWwgc291cmNlIGNv
-ZGUgb3IgdGhlIEVuZ2xpc2ggZG9jdW1lbnRhdGlvbi4NCi0tDQoNCi0tLSBQYXRjaCBbN106IFtQ
-QVRDSCB2NyA3LzddIGRvY3MvemhfQ046IHVwZGF0ZSBEQU1PTiBMUlUgc29ydCB0cmFuc2xhdGlv
-biAtLS0NCmNvbW1pdCBhZGM3MGI1NDgzM2Q1ZTRkZGVhYWEwMmRjYjlkODE2ZGM3NGNiYTZhDQpB
-dXRob3I6IERvZWh5dW4gQmFlayA8ZG9laHl1bmJhZWtAZ21haWwuY29tPg0KDQpkb2NzL3poX0NO
-OiB1cGRhdGUgREFNT04gTFJVIHNvcnQgdHJhbnNsYXRpb24NCg0KVXBkYXRlIHRoZSBDaGluZXNl
-IHRyYW5zbGF0aW9uIG9mIC4uLi9hZG1pbi1ndWlkZS9tbS9kYW1vbi9scnVfc29ydC5yc3QuDQoN
-ClVwZGF0ZSB0aGUgdHJhbnNsYXRpb24gdGhyb3VnaCBjb21taXQgYzkzODBjZGQ5NDlkDQooIkRv
-Y3Mve2FkbWluLWd1aWRlLG1tfS9kYW1vbjogZml4IERBTU9OIGRvY3VtZW50YXRpb24gZGV0YWls
-cyIpLg0KDQo+IGRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL3RyYW5zbGF0aW9ucy96aF9DTi9h
-ZG1pbi1ndWlkZS9tbS9kYW1vbi9scnVfc29ydC5yc3QgYi9Eb2N1bWVudGF0aW9uL3RyYW5zbGF0
-aW9ucy96aF9DTi9hZG1pbi1ndWlkZS9tbS9kYW1vbi9scnVfc29ydC5yc3QNCj4gaW5kZXggMDNk
-MzNjNzEwNjA0Yy4uNmFmMGRkNTllZjVkYiAxMDA2NDQNCj4gLS0tIGEvRG9jdW1lbnRhdGlvbi90
-cmFuc2xhdGlvbnMvemhfQ04vYWRtaW4tZ3VpZGUvbW0vZGFtb24vbHJ1X3NvcnQucnN0DQo+ICsr
-KyBiL0RvY3VtZW50YXRpb24vdHJhbnNsYXRpb25zL3poX0NOL2FkbWluLWd1aWRlL21tL2RhbW9u
-L2xydV9zb3J0LnJzdA0KDQpbIC4uLiBdDQoNCj4gQEAgLTcxLDYgKzcxLDQxIEBAIGNvbW1pdF9p
-bnB1dHMNCj4gIO+8jERBTU9OX0xSVV9TT1JU5Lya5YaN5qyh6K+75Y+W6Zmk5LqGIGBgZW5hYmxl
-ZGBgIOS5i+WklueahOWPguaVsOOAguivu+WPluWujOaIkOWQju+8jOi/meS4quWPguaVsOS8muii
-qw0KPiAg6K6+572u5Li6IGBgTmBgIOOAguWmguaenOWcqOivu+WPluaXtuWPkeeOsOacieaXoOaV
-iOWPguaVsO+8jERBTU9OX0xSVV9TT1JU5Lya6KKr5YWz6Zet44CCDQo+ICANCj4gK+S4gOaXpuWQ
-keivpeWPguaVsOWGmeWFpSBgYFlgYO+8jOeUqOaIt+WcqOWGjeasoeivu+WPliBgYGNvbW1pdF9p
-bnB1dHNgYCDov5Tlm54gYGBOYGAg5LmL5YmN77yMDQo+ICvkuI3lvpflhpnlhaXku7vkvZXlj4Lm
-lbDjgILlpoLmnpznlKjmiLfov53lj43or6Xop4TliJnvvIzlhoXmoLjlj6/og73ooajnjrDlh7rm
-nKrlrprkuYnooYzkuLrjgIINCg0KW1NldmVyaXR5OiBNZWRpdW1dDQpEb2VzIHRoaXMgaW50cm9k
-dWNlIGEgd2FybmluZyBhYm91dCB1bmRlZmluZWQgYmVoYXZpb3IgdGhhdCBkb2VzIG5vdCBleGlz
-dCBpbg0KdGhlIHVwc3RyZWFtIEVuZ2xpc2ggZG9jdW1lbnRhdGlvbj8NCg0KPiArDQo+ICthY3Rp
-dmVfbWVtX2JwDQo+ICstLS0tLS0tLS0tLS0tDQoNCltTZXZlcml0eTogTWVkaXVtXQ0KSXMgYWN0
-aXZlX21lbV9icCBhIHZhbGlkIHBhcmFtZXRlciBmb3IgZGFtb25fbHJ1X3NvcnQ/IEl0IGFwcGVh
-cnMgdGhpcyBtaWdodA0KYmUgZG9jdW1lbnRpbmcgYSBwYXJhbWV0ZXIgdGhhdCBkb2VzIG5vdCBl
-eGlzdCBpbiB0aGUgbWFpbmxpbmUga2VybmVsIHNvdXJjZQ0Kb3IgdGhlIEVuZ2xpc2ggZG9jdW1l
-bnRhdGlvbi4NCg0KPiArDQo+ICvmnJ/mnJvnmoTmtLvot4PlhoXlrZjkuI5b6Z2eXea0u+i3g+WG
-heWtmOavlOeOh++8jOWNleS9jeS4uiBicO+8iDEvMTAsMDAw77yJ44CCDQo+ICsNCj4gK+WcqOS/
-neaMgeWFtuS7lumFjemineiuvue9rueahOS4iumZkOeahOWQjOaXtu+8jERBTU9OX0xSVV9TT1JU
-IOS8muiHquWKqOWinuWHj+mFjemineeahOacieaViOawtOW5s++8jA0KPiAr55uu5qCH5piv6K6p
-54OtL+WGt+WGheWtmOeahCBMUlUgW+mZjeS9jl3kvJjlhYjnuqflpITnkIbkuqfnlJ/or6XmtLvo
-t4PlhoXlrZjkuI5b6Z2eXea0u+i3g+WGheWtmOavlOeOh+OAgg0KPiAr5YC85Li66Zu26KGo56S6
-56aB55So6K+l6Ieq5Yqo6LCD5LyY5Yqf6IO944CCDQo+ICsNCj4gK+m7mOiupOemgeeUqOOAgg0K
-PiArDQo+ICthdXRvdHVuZV9tb25pdG9yaW5nX2ludGVydmFscw0KPiArLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0NCg0KW1NldmVyaXR5OiBNZWRpdW1dDQpEb2VzIHRoZSBhdXRvdHVuZV9t
-b25pdG9yaW5nX2ludGVydmFscyBwYXJhbWV0ZXIgZXhpc3QgZm9yIGRhbW9uX2xydV9zb3J0Pw0K
-DQo+ICsNCj4gK+WmguaenOivpeWPguaVsOiuvue9ruS4uiBgYFlgYO+8jERBTU9OX0xSVV9TT1JU
-IOS8muiHquWKqOiwg+S8mCBEQU1PTiDnmoTph4fmoLflkozogZrpm4bpl7TpmpTjgIINCj4gK+iH
-quWKqOiwg+S8mOeahOebruagh+aYr+WcqOavj+S4qiBEQU1PTiDlv6vnhafkuK3mjZXojrfmnInm
-hI/kuYnmlbDph4/nmoTorr/pl67kuovku7bvvIzlkIzml7blsIbph4fmoLcNCj4gK+mXtOmalOmZ
-kOWItuWcqOacgOWwjyA1IOavq+enkuOAgeacgOWkpyAxMCDnp5LjgILlsIblhbborr7nva7kuLog
-YGBOYGAg5Lya56aB55So6Ieq5Yqo6LCD5LyY44CCDQo+ICsNCj4gK+m7mOiupOemgeeUqOOAgg0K
-PiArDQo+ICtmaWx0ZXJfeW91bmdfcGFnZXMNCj4gKy0tLS0tLS0tLS0tLS0tLS0tLQ0KDQpbU2V2
-ZXJpdHk6IE1lZGl1bV0NCkxpa2UgdGhlIHBhcmFtZXRlcnMgYWJvdmUsIGRvZXMgZmlsdGVyX3lv
-dW5nX3BhZ2VzIGV4aXN0IGluIHRoZSBtYWlubGluZQ0KaW1wbGVtZW50YXRpb24gZm9yIGRhbW9u
-X2xydV9zb3J0Pw0KDQo+ICsNCj4gK+ebuOW6lOWcsOS4uiBMUlUgW+mZjeS9jl3kvJjlhYjnuqfl
-pITnkIbov4fmu6Rb6Z2eXeW5tOi9u+mhteOAgg0KPiArDQo+ICvlpoLmnpzorr7nva7or6Xlj4Lm
-lbDvvIzliJnlnKjmr4/mrKEgTFJVIFvpmY3kvY5d5LyY5YWI57qn5aSE55CG5pON5L2c5YmN5YaN
-5qyh5qOA5p+l6aG157qn6K6/6ZeuDQoNClsgLi4uIF0NCg0KPiBAQCAtMTc2LDE0ICsyMTMsMzQg
-QEAgbW9uaXRvcl9yZWdpb25fc3RhcnQNCj4gIA0KPiAg55uu5qCH5YaF5a2Y5Yy65Z+f55qE6LW3
-5aeL54mp55CG5Zyw5Z2A44CCDQo+ICANCj4gLURBTU9OX0xSVV9TT1JU6KaB5aSE55CG55qE55uu
-5qCH5YaF5a2Y5Yy65Z+f55qE6LW35aeL54mp55CG5Zyw5Z2A44CC6buY6K6k77yM5L2/55So57O7
-57uf5pyA5aSn5YaF5a2Y44CCDQo+ICtEQU1PTl9MUlVfU09SVOimgeWkhOeQhueahOebruagh+WG
-heWtmOWMuuWfn+eahOi1t+Wni+eJqeeQhuWcsOWdgOOAgum7mOiupO+8jOS9v+eUqOezu+e7n+ea
-hOaVtOS4queJqeeQhuWGheWtmOOAgg0KPiAgDQo+ICBtb25pdG9yX3JlZ2lvbl9lbmQNCj4gIC0t
-LS0tLS0tLS0tLS0tLS0tLQ0KPiAgDQo+ICDnm67moIflhoXlrZjljLrln5/nmoTnu5PmnZ/niann
-kIblnLDlnYDjgIINCj4gIA0KPiAtREFNT05fTFJVX1NPUlTopoHlpITnkIbnmoTnm67moIflhoXl
-rZjljLrln5/nmoTnu5PmnZ/niannkIblnLDlnYDjgILpu5jorqTvvIzkvb/nlKjns7vnu5/mnIDl
-pKflhoXlrZjjgIINCj4gK0RBTU9OX0xSVV9TT1JU6KaB5aSE55CG55qE55uu5qCH5YaF5a2Y5Yy6
-5Z+f55qE57uT5p2f54mp55CG5Zyw5Z2A44CC6buY6K6k77yM5L2/55So57O757uf55qE5pW05Liq
-54mp55CG5YaF5a2Y44CCDQo+ICsNCj4gK2FkZHJfdW5pdA0KPiArLS0tLS0tLS0tDQo+ICsNCj4g
-K+WGheWtmOWcsOWdgOWSjOWtl+iKguaVsOeahOe8qeaUvuWboOWtkOOAgg0KPiArDQo+ICvor6Xl
-j4LmlbDnlKjkuo7orr7nva7lkozojrflj5YgREFNT05fUkVDTEFJTSDnmoQgREFNT04g5a6e5L6L
-55qEIDpyZWY6YOWcsOWdgOWNleS9jSA8ZGFtb25fZGVzaWduX2FkZHJfdW5pdF96aF9DTj5gIOWP
-guaVsOOAgg0KDQpbU2V2ZXJpdHk6IE1lZGl1bV0NCklzIGFkZHJfdW5pdCBhIHZhbGlkIHBhcmFt
-ZXRlciBmb3IgZGFtb25fbHJ1X3NvcnQ/IEFsc28sIHNob3VsZCB0aGlzDQpyZWZlcmVuY2UgREFN
-T05fTFJVX1NPUlQgaW5zdGVhZCBvZiBEQU1PTl9SRUNMQUlNPw0KDQpbIC4uLiBdDQoNCi0tIA0K
-U2FzaGlrbyBBSSByZXZpZXcgwrcgaHR0cHM6Ly9zYXNoaWtvLmRldi8jL3BhdGNoc2V0LzIwMjYw
-ODEyMDY1OTE0LjMwNzE0MzMtMS1kb2VoeXVuYmFla0BnbWFpbC5jb20/cGFydD03
+Add an explanation of nr_snapshots to avoid misunderstandings.
+
+Changes from v1:
+- v1: https://lore.kernel.org/damon/20260811101841.804596-1-aethernet65535@gmail.com
+- Patch 1 word order adjustment: Repositioned "completely" ("tried to be
+  completely applied" -> "completely tried to be applied").
+- Patch 2: Use two spaces between sentences.
+- Patch 3: Add the "Reviewed-by:" of SJ, because he added this in v1.
+
+Liew Rui Yan (3):
+  docs/mm/damon/design: accurate semantics of nr_snapshots
+  docs/mm/damon/design: difference between watermarks and nr_snapshots
+  docs/mm/damon/design: fix typo of max_nr_snapshots
+
+ Documentation/mm/damon/design.rst | 7 ++++---
+ include/linux/damon.h             | 5 +++--
+ 2 files changed, 7 insertions(+), 5 deletions(-)
+
+-- 
+2.55.0
+
