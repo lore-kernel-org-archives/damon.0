@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F5C34214A
-	for <damon@lists.linux.dev>; Thu, 13 Aug 2026 04:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570CC2F5A0E
+	for <damon@lists.linux.dev>; Thu, 13 Aug 2026 04:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786594224; cv=none; b=HNN88jni+4C8sILL/Mg58LqiejMAq8ZxWS0TyuDk2h4TyoxAtUJRa2X6q8iW6GLI6tJjXtUt8ZWeqJpjsVw3iNahmfOMvmihOYASXGiHtKhNT4Q86PeprAwTu3kPrmpbzpNaqhKyDRT/C/JIwgWhcxDEdHaEB1hfVJOFA8FP/UM=
+	t=1786594311; cv=none; b=Dmdam6E6QuJk09o53Q1mW6qRsJq1cZzW/YH8ZXE5w9Xn4VOU+xIh8Xym0pPskinuuOK0SONDrz8bj8xVm0sJF0N6MjesISHNFGwqcpm40kl5pwMXLYGb7+EVBqEA1kO9NCNSkoqbHXStBs5sSXE/G/jdIBOp2O7WVlVmje1AKug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786594224; c=relaxed/simple;
-	bh=mwxDZNjCIUyAWJarUaUJ1iUefQRtMkUouuSmzv7JAZE=;
+	s=arc-20240116; t=1786594311; c=relaxed/simple;
+	bh=1kgwXxBhxLa22K6h6UN/o7PZ61SbjVKzZ8K2BWrp2SI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pFcp+6+Yq4IkKI2K9G2iwG3UNB2miEOZwTA1/CtGyF2bFLEi/6zJlyUaKcX9fs1e5YlZ0oR3VrdnWkeaSN+9UuSkDUKpQRDb87oCQj3V8F+9vCEN6Dd5WAGja3XE08KHWtoTp8702ApkyDd5oJyjC2KcJFagI8SCVJh7YyvE6qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IJ2wffq9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TuXJIDdGjR+1gHO46w3Kx+EmHO9ehmbIn8s1g21nJH9knlyvY2QtSnw5+bF39OWLCx1ecSfFss4zd+Ed4M4rnHY27PhxoW+Qg8iT92JxTcb7AMYGil3eLEVBesug8WZ9/26+IygnB1cmH9abA0Itmf3FPN+vPqvU48bnpF73Ckc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hnEjhcHo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IJ2wffq9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F901F000E9;
-	Thu, 13 Aug 2026 04:10:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hnEjhcHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6271F000E9;
+	Thu, 13 Aug 2026 04:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786594223;
-	bh=f43LXvgjXxKWbVz4bTUjnEvLlTfvzA5z58WNQHWBASU=;
+	s=k20260515; t=1786594309;
+	bh=xQMav8AnkZDUwteFSzoVifkt8JLjKy31rImBJ04Ggf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IJ2wffq9lE0ViWi5HbCQyee/QsIFqGLp7kVtqOwohzxIEXnw3TmN05kvfwF2Y8FkR
-	 aTNVHvK5Z1pO3mQa9XcN7h9nHa4zxxgQIOXwrmWWQO3LNnL88uYVhpO63v1vAbOcji
-	 3LLr6JU8JeEret1ZCEz3R4YOYnKfi8Z3dPtQAyctX3oXFaPqjdJcg8by9IU3bRp4Ow
-	 2sl5mqH6Cd2dfA3VFrIGoSjcG//71rIGPtb9uVBFEvhzS+E1p2bfrCkgVAjMPWHg1y
-	 tpYlxa8e95NFXjfatbafr+fA9QJIMPJ27JsRaU1dmpdwM/ajnGKYG95ohjpjbDUTWi
-	 FYzWCEhG2sz3g==
+	b=hnEjhcHobxuFnzRgGwSftO25Eto9YBnLrYcR2XTJZj+U9AmQmZX0oztxD/tguEi5W
+	 HBAFAVWqHUI+fc9vzcJKixdo1XVlpD7GUgbMPJK2A6hdlzJQ9rt+4k2PKncZ0sA8JA
+	 SdpQ3sz+js+xhqbR9lmgxupfMhDhDcBilbAyCfIaST+6WqQPA7j2euBTG99FPm/Hka
+	 5ignizikwcnjLij+KqDYvRSy6iPAgvMFb9Xg6MgR3srjqN5whHgx2tjGuf64qEEGk2
+	 7AbkdTh5HBQGWTUb0bJUKt3V3XfsTZue0j9V/taqynMudz0UqgdAaaIx3UoiI91yQX
+	 C4ZbF4GLxxWJw==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 2/4] mm/damon/core: set ctx->call_controls_obsolete in damon_new_ctx()
-Date: Wed, 12 Aug 2026 21:10:20 -0700
-Message-ID: <20260813041021.98130-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 3/4] mm/damon/reclaim: remove unnecessary damon_call() param validation
+Date: Wed, 12 Aug 2026 21:11:41 -0700
+Message-ID: <20260813041142.98270-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260813040208.A046E1F000E9@smtp.kernel.org>
+In-Reply-To: <20260813040141.2A72A1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,70 +45,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Thu, 13 Aug 2026 04:02:07 +0000 sashiko-bot@kernel.org wrote:
+On Thu, 13 Aug 2026 04:01:40 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The patch introduces an inconsistent state in the `damon_ctx` API by initializing `call_controls_obsolete` to true while leaving its identically-designed sibling field `walk_control_obsolete` as false.
+> 
+> Pre-existing issues:
+> - [High] Concurrent invocation of `damon_call()` during kthread startup leads to an infinite kernel loop.
 > --
 > 
-> --- Patch [2]: [RFC PATCH 2/4] mm/damon/core: set ctx->call_controls_obsolete in damon_new_ctx() ---
-> commit 94c12d6bfcca8f83b408960a36d0c0a8519d80c7
+> --- Patch [3]: [RFC PATCH 3/4] mm/damon/reclaim: remove unnecessary damon_call() param validation ---
+> commit 07f6c5438f6069b0b8225e26e3726d6aa4e3da09
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: set ctx->call_controls_obsolete in damon_new_ctx()
+> mm/damon/reclaim: remove unnecessary damon_call() param validation
 > 
-> This commit addresses an issue where passing an unstarted DAMON context
-> to damon_call() can cause an indefinite hang. It fixes this by initializing
-> ctx->call_controls_obsolete to true in damon_new_ctx().
+> DAMON_RECLAIM avoids passing NULL or unstarted damon_ctx to damon_call()
+> with its own validation. The validation is no longer needed, because
+> the DAMON core layer now handles the corner cases itself. Remove the
+> unnecessary check.
 > 
-> Link: https://lore.kernel.org/20260803134646.16640-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index af7b77710745d..5080cb12220d2 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -864,6 +864,7 @@ struct damon_ctx *damon_new_ctx(void)
-> >  	INIT_LIST_HEAD(&ctx->adaptive_targets);
-> >  	INIT_LIST_HEAD(&ctx->schemes);
+> > diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+> > index 45d5557cc575a..42a2c9cb13431 100644
+> > --- a/mm/damon/reclaim.c
+> > +++ b/mm/damon/reclaim.c
+> [ ... ]
+> > @@ -293,10 +291,6 @@ static int damon_reclaim_commit_inputs_store(const char *val,
+> >  	if (!commit_inputs_request)
+> >  		return 0;
 > >  
-> > +	ctx->call_controls_obsolete = true;
+> > -	/* Skip damon_call() if ctx has not successfully started. */
+> > -	if (!damon_reclaim_damon_has_started)
+> > -		return -EINVAL;
+> > -
 > 
-> [Severity: Medium]
-> Should ctx->walk_control_obsolete also be initialized to true here?
+> [Severity: High]
+> This is a pre-existing issue, but does removing this validation expose an
+> infinite loop in the DAMON core?
 > 
-> Because walk_control_obsolete is zero-initialized to false during allocation,
-> an unstarted context passed to damos_walk() will bypass the obsolete check:
+> If userspace writes to this sysfs file concurrently with damon_start(),
+> damon_call() in mm/damon/core.c can hit a race condition. The core
+> initializes ctx->call_controls_obsolete to true. If damon_call() runs
+> before the kthread fully starts, it can read call_controls_obsolete == true
+> and jump to the canceled label:
 > 
-> mm/damon/core.c:damos_walk() {
-> 	...
-> 	if (ctx->walk_control_obsolete) {
-> 		mutex_unlock(&ctx->walk_control_lock);
-> 		return -ECANCELED;
-> 	}
-> 	...
+> mm/damon/core.c:damon_call() {
+>     ...
+>     if (ctx->call_controls_obsolete) {
+>         mutex_unlock(&ctx->call_controls_lock);
+>         goto canceled;
+>     }
+>     ...
+> canceled:
+>     while (damon_is_running(ctx))
+>         schedule_timeout_idle(msecs_to_jiffies(100));
+>     return -ECANCELED;
 > }
 > 
-> This appears to leave damos_walk() vulnerable to the exact same indefinite
-> wait_for_completion() hang on unstarted contexts that this patch resolves for
-> damon_call(). 
-> 
-> Does it make sense to update walk_control_obsolete alongside
-> call_controls_obsolete to ensure the API behaves consistently?
+> If damon_start() concurrently sets ctx->kdamond to non-NULL,
+> damon_is_running(ctx) becomes true. Because the kthread has just started,
+> it runs indefinitely, and damon_call() gets trapped in the while loop
+> forever.
 
-The issue could happen in damon_call() because it has repeat mode.
-damos_walk() doesn't have the repeat mode, so I don't think the initialization
-is needed right now.  I will consider doing so in future, for consistency or a
-case that it turns out the infinite hang is really possible.
+Because of the param_lock, that race is impossible.
 
 > 
-> >  	prandom_seed_state(&ctx->rnd_state, get_random_u64());
+> >  	err = damon_call(ctx, &control);
 > >  
-> >  	return ctx;
-> 
-> [ ... ]
+> >  	return err ? err : control.return_code;
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260813035001.97364-1-sj@kernel.org?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260813035001.97364-1-sj@kernel.org?part=3
 
 
 Thanks,
