@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA4A384232;
-	Thu, 13 Aug 2026 05:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409EC403B11;
+	Thu, 13 Aug 2026 05:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786599883; cv=none; b=QcmSRQxawFqQPu5Bf2IOIRDqvvE51kkwbQpLOI1kwHxmIztiDZR3hrWMa/jtv+AShGo62Sut8pmJ1dgI6l0o73ZyN9LK70QbVFf8AQjyD9YHVftJVHUzjAo6uUTdas6+bsJoHvG45fxpUditZxBExQdSssgM0AbXsfcJ2Kqtvs4=
+	t=1786599884; cv=none; b=pH5Pg2AuoyMTWQUVetfVJdyLPaMqHTLFu4tS9BY5lbwl0PtKDlfW3rc7PJRRVjoOeAs6FIHrDzHJ95NnmlSa+Xw8prjByCSBJZVb5V8thTsvPVhM10S1MrfAKXGnpizbnvqx31O8y6rzSn+R57qGsNmbqNbCrrMOZ3ZOg597qfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786599883; c=relaxed/simple;
-	bh=axZTWAdNkaqbfw81b8HYeJVw703O5s5cDzE+KJ6R1x4=;
+	s=arc-20240116; t=1786599884; c=relaxed/simple;
+	bh=7BuePdqLsmCrpZcRRQjUY0RK2a5/39HdUmJOLbwdCNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cTbO5501/bE8xhLx32Zjl7cGEAZHjRMmXLXxjn1ZsgUZpGwlbCVBYBCxf0sIsokcsARvo9WDzdJDqIuEoQZEXmxWQhHxJ4fKGd8EiLsxZr7HHJvbmUEp4uKWpLd3LYnu6Q4ps5iBzLvJmu86c1VCn/c2ECDyLvPZU9qnPN1FST0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oTHampD9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WFkA57mNwYQRnc+12Y39RJMEJeI+TzzJrt9lEWqq9LIwtBJq+ijmsr1LOX2ueOKOM1pkTigLbpZ+1sjeDf7Wx9ErYliy+Ym39WvA8wyIj49JBz+BVROzverPnd8JnIA4nK/4jKbPOj9izsKiuXFplAFgG4tHTENe631hDoe7RSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n0wAvhD2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oTHampD9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669A81F00A3E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n0wAvhD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57AD1F00A3F;
 	Thu, 13 Aug 2026 05:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786599882;
-	bh=3ydKZfv20XDA9Yk9OoF1itUqqkZNlBOcLwEjFDoPApk=;
+	s=k20260515; t=1786599883;
+	bh=4SsJPfKsekeE5VptqHXgsGnvsq0lAUhbBGf4TqY9ku8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oTHampD9EL+aNZtVjjB2h74cZMpvrG2Rg7tpIUrpaPKwsd7n901RWDPN777SrZlpp
-	 oI8yHNzUjhoibL+KXIY8OoCtw7fLy1q4xkmOzn61cs7XR8LIvtnRw9exlUXdWzu28P
-	 0I0iYq0GaEG+7ykgJpjH5p8KgwSKh/Vq6cNjo8gF7e1fHjF8dz56x0b8QG0AlRVwol
-	 pJPVD0F9w23zE4wtoIPRzrqBnPDSDPEH5HtePBdwBYbp35i/Hc30kDk/SJy7R6O2dO
-	 TFjxV2HyNK9iaD46h9R5UVcTIyDbCkTccqQai9Xm6K9C6ovhC2WyFX6b7qhWDXos1Q
-	 CisuQqENrQ94w==
+	b=n0wAvhD2+L6konNr9qCBUej2g8rzvAzHBd+qRn+PbrtFg4Wu1TUMr4xqr1qP/mvCK
+	 mKYzllSCsR5bxeCz3Ptd2hFxfB7pxhbXVhzmXZIBpgnj6oYG1c59NeV1srNnsRP1LI
+	 7NYe8Aj0PvjgqK2NAYCKvKN6AN8nGz9Ok2uraob5AZ7/7YdVrlix0Fi5LbJMGMsiN3
+	 2ptE/rpll7lRuXJ9LCvNE2vkBAr2vTbPa0Qsg5jGxv7zbl+I8bI8XovmpSz/Ypniqr
+	 zKSGqgx9/WgXQX2CJBYpQwyH3NTH8e8+kAzeGNTqRR0qZ+7PbuegewHNdt3CL/0gm6
+	 cjddfudU9hQaA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 2/3] Revert "mm/damon/lru_sort: error out for >10000 active_mem_bp"
-Date: Wed, 12 Aug 2026 22:44:29 -0700
-Message-ID: <20260813054432.101197-3-sj@kernel.org>
+Subject: [RFC PATCH 3/3] Revert "samples/damon/mtier: error out for zero quota goal target values"
+Date: Wed, 12 Aug 2026 22:44:30 -0700
+Message-ID: <20260813054432.101197-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260813054432.101197-1-sj@kernel.org>
 References: <20260813054432.101197-1-sj@kernel.org>
@@ -47,38 +46,32 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This reverts commit 06befa61c427e74319781e6f35a364cfc32dbae8.
+This reverts commit a16fd3ad9d89b05475864da97327870464611736.
 
 The commit was made to avoid zero damos quota goal target value, because
 it can trigger division-by-zero.  Now the core layer handles the corner
 case.  It returns an error for any attempt setting the aero
-target_value.  The corner case handling in DAMON_LRU_SORT is hence no
-more needed.  Remove it.
-
-Note that this slightly changes the user behavior.  It still disallows
-active_mem_bp of 10,002.  But now it allows other >10,000 active_mem_bp
-values. Setting >10,000 active_mem_bp makes not much sense.  But it
-doesn't cause critical problems such as memory leak or crash, either.
-Arguably that doesn't deserve additional code complexity.  Just allow
-it.
+target_value.  The corner case handling in DAMON_SAMPLE_MTIER is hence
+no more needed.  Remove it.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/lru_sort.c | 2 --
- 1 file changed, 2 deletions(-)
+ samples/damon/mtier.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index f25ee7326e87c..ad8e86dd3a93e 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -233,8 +233,6 @@ static int damon_lru_sort_add_quota_goals(struct damos *hot_scheme,
- 
- 	if (!active_mem_bp)
- 		return 0;
--	if (10000 < active_mem_bp)
--		return -EINVAL;
- 	goal = damos_new_quota_goal(DAMOS_QUOTA_ACTIVE_MEM_BP, active_mem_bp);
- 	if (!goal)
- 		return -ENOMEM;
+diff --git a/samples/damon/mtier.c b/samples/damon/mtier.c
+index bea45c87cc9be..27dc88bdf7a0e 100644
+--- a/samples/damon/mtier.c
++++ b/samples/damon/mtier.c
+@@ -161,9 +161,6 @@ static struct damon_ctx *damon_sample_mtier_build_ctx(bool promote)
+ 	if (!scheme)
+ 		goto free_out;
+ 	damon_set_schemes(ctx, &scheme, 1);
+-	/* zero target value causes division by zero in damos_quota_store() */
+-	if (!node0_mem_used_bp || !node0_mem_free_bp)
+-		goto free_out;
+ 	quota_goal = damos_new_quota_goal(
+ 			promote ? DAMOS_QUOTA_NODE_MEM_USED_BP :
+ 			DAMOS_QUOTA_NODE_MEM_FREE_BP,
 -- 
 2.47.3
