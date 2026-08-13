@@ -1,99 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA04442FB3;
-	Thu, 13 Aug 2026 08:28:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6AF44780B
+	for <damon@lists.linux.dev>; Thu, 13 Aug 2026 08:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786609724; cv=none; b=NsS755BTQcLJzGEfNxQzUDydW4JCz0hjdhBgoPTlfgUCTBucmv5vSH1jiYzkqZSNX1jIjlM1xLot+8t91vCKwxPs32HqcfVDwgzGyjoYmjRnnE+FpzeashEFEq0NRam275DHqg7zWqV+ZVIaVmaoedXm+AZ/KjAfifdWbMcxB78=
+	t=1786611139; cv=none; b=QbxaqSIlySHHf7e/ed0iiOTDfmS0m5hnlohtO9/HWhq9OUl+tiCUAVUfbYwtvDxNmY7KxXU36eNp0c5Qp8WbR4Q0idYtHzMcRpWSoFdpRvwm4hO71EOjthpc9MxaQoaPsez3Ro18c/C4x4dsHDl3nsWfTxboBXRYl2UvpGtpAw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786609724; c=relaxed/simple;
-	bh=ksjfrsjrqio69wjpS7hlRyuiSuUBYHv0ukkeBype3Rw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j0vDazsfPGW/KVFOf18Or6+e80fnI5tCfmzY3XSgbr2UQ4qvqka+4NQXwOHcIBhW9hns1KwgN30lpifiNcv+upLi9NbaHq9UEPE9SXtRJwJjG+tBp0CePEXAAB6yVhp9BWNxMt/n9/Em2klgn5J9fNioLcR2uuo8paLMAkgxRPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bMs9RZNC; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786611139; c=relaxed/simple;
+	bh=KasM8M71jIcp6hmX0Olmezk4XkHHsu0bhVSuAVxaucE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kEPFUVFIRTfxSrim40GxIo5fcajImQwyWnKyUALf9ORAHY0pi/IbDhgR1fMh8stEIctuKa8VJoB/UXdEHf9P4VDuvdIzPo4ZnCXiEi0WJJHK8j6GiCOyksZDNZgJaXOaK+av5G8x2J52QpGIvprMEGtJZcNBpL1EXudoMBkpq9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=h2XNmB6e; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bMs9RZNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34981F000E9;
-	Thu, 13 Aug 2026 08:28:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786609722;
-	bh=uIuTH63rkuXcFm6et2f7wSWkhuN5eE2vt+vtDQrJL4s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bMs9RZNCuFCGpxMnuN/GlcJjkXynXrV0LclIUQD6JvPK5QrSyTBQJTqUF7+TVW6FO
-	 1K6z3hMAOA099qVd5GR6tSZjx8FS/X+8lBZ0/AKAYK7ucrziX4+PuEoE80THntxuv/
-	 TWHocyxmoUw4hOODVAZGbvUGeKk/JYZgzhdD45h8/FyxUgYRW7m/BKkgL54bPfKj6u
-	 EfPE8kCQlMS8f7unbRmZMB3/eGv1hSRzv8p2/iyQRpRNe+A6xO/ZBBBYt2GyLBO/dI
-	 GaO558pnhFY4zgrgplFktxr/jxQNTn7H5CDgLwqFJuRiUyz6PEVLR6PTunViHie0Jm
-	 KQGFkf8cvD1DA==
-Date: Thu, 13 Aug 2026 09:28:19 +0100
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-To: Gregory Price <gourry@gourry.net>
-Cc: SJ Park <sj@kernel.org>, linux-mm@kvack.org, damon@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, kernel-team@meta.com, akpm@linux-foundation.org, 
-	david@kernel.org, ziy@nvidia.com, baolin.wang@linux.alibaba.com, 
-	liam@infradead.org, npache@redhat.com, ryan.roberts@arm.com, dev.jain@arm.com, 
-	baohua@kernel.org, lance.yang@linux.dev, usama.arif@linux.dev, vbabka@kernel.org, 
-	jannh@google.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com, 
-	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com, 
-	apopple@nvidia.com
-Subject: Re: [PATCH 1/4] mm/damon: defensively skip zone device folios in
- damon_get_folio()
-Message-ID: <an2AEAE8gXAHPY19@lucifer>
-References: <anS-vK1MaC8sWoMK@fedora>
- <20260807000938.79851-1-sj@kernel.org>
- <an0rQM7ZwWnB0nVD@fedora>
+	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="h2XNmB6e"
+dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=v5SXwN8z4wJfjren0Th1ktpv7Vbq6Vy95XZXPb5aTWM=;
+	b=h2XNmB6ez+mJE4tHecLxLbI2QLj9IQVV7GxkpNC3b63p+jVJBly3ALeziIaWQLF2IiOsh8fL/
+	jFbMKJVizf+RLFVGQdqyyHIy8ltt3no8YmthIcJJ63qV6RaybjTNhSTPd3dwm6FXpatZO3GBzeg
+	JGmiMPnAPjYP0tO3XftqSzI=
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4hLJX761SlzHnGch;
+	Thu, 13 Aug 2026 16:32:55 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 434DA40575;
+	Thu, 13 Aug 2026 16:33:03 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Thu, 13 Aug 2026 11:33:02 +0300
+Message-ID: <ed32d112-2873-4e29-9d4b-d5bc72b70f52@huawei-partners.com>
+Date: Thu, 13 Aug 2026 11:33:01 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <an0rQM7ZwWnB0nVD@fedora>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/4] mm/damon/core: handle NULL ctx parameter in
+ damon_call()
+To: SJ Park <sj@kernel.org>
+CC: Andrew Morton <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>
+References: <20260813035001.97364-1-sj@kernel.org>
+ <20260813035001.97364-2-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260813035001.97364-2-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Wed, Aug 12, 2026 at 10:26:08PM -0400, Gregory Price wrote:
-> On Thu, Aug 06, 2026 at 05:09:37PM -0700, SJ Park wrote:
-> > On Thu, 6 Aug 2026 12:05:00 -0500 Gregory Price <gourry@gourry.net> wrote:
-> >
-> > > On Thu, Aug 06, 2026 at 02:37:59PM +0100, Lorenzo Stoakes (ARM) wrote:
-> > > > On Tue, Jul 28, 2026 at 03:47:11PM -0400, Gregory Price wrote:
-> > > > > All DAMON physical- and virtual-address operations obtain their folios
-> > > > > through damon_get_folio(). That helper already excludes ZONE_DEVICE
-> > > > > memory implicitly via pfn_to_online_page() and folio_test_lru(), but
-> > > > > this is inconsistent with other callers in mm/ which test explicitly.
-> > > > >
-> > > > > Add an explicit folio_is_zone_device() rejection in damon_get_folio()
-> > > > > so the guarantee lives in one place and covers every caller uniformly,
-> > > > > consistent with other mm walkers that reject zone device folios.
-> > > > >
-> > > > > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-> > > >
-> > > > Thanks, nice to make it explicit!
-> > > >
-> > > > Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-> > > >
-> > >
-> > > SJ Asked me to drop it,
-> >
-> > I didn't asked you to drop this.  I asked your thought about revisioning this
-> > for my concern.  And you replied [1] you can drop this.
-> >
->
-> Sorry I didn't mean to imply you pushed for one side or another, just
-> that the feedback you gave about not wanting dead code is reason enough
-> to drop it.
->
-> I will probably just go ahead and drop it unless Lorenzo thinks the
-> patch is worth keeping.  In my next private node iteration, it ends up
-> back in anyway - so we get a two for one without the intermediate patch.
+Hi SJ,
 
-Yeah it's damon code so if SJ isn't happy let's drop it for now and we can
-revisit later!
+On 8/13/2026 6:49 AM, SJ Park wrote:
+> When NULL damon_ctx pointer parameter is passed, damon_call() could do
+> NULL dereference.  The caller is responsible to avoid that.  It is easy
+> to forget, and there are many damon_call() callers.  Meanwhile,
+> damon_call() is never meant to be performance critical.  It uses mutex
+> and completion.  Add the NULL pointer check inside damon_call() so that
+> callers can pass the parameter without NULL checks.
+> 
+> Signed-off-by: SJ Park <sj@kernel.org>
+> ---
+>  mm/damon/core.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 92631a36d7b51..5882f9c94c47f 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2188,6 +2188,8 @@ int damon_kdamond_pid(struct damon_ctx *ctx)
+>   */
+>  int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
+>  {
+> +	if (!ctx)
+> +		return -EINVAL;
+>  	if (!control->repeat)
+>  		init_completion(&control->completion);
+>  	control->canceled = false;
 
->
-> ~Gregory
+I know that this is a minor optimization, but how about moving INIT_LIST_HEAD(&control->list)
+to right before list_add_tail?
 
---
-Cheers, Lorenzo
+It doesn't make sense to initialize the list before checking call_controls_obsolete.
+
+Maybe this suggestion should go in a different patch.
+
+-- 
+Asier Gutierrez
+Huawei
+
