@@ -1,140 +1,133 @@
-Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BAA46EC9B
-	for <damon@lists.linux.dev>; Fri, 14 Aug 2026 13:27:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4AC47A862
+	for <damon@lists.linux.dev>; Fri, 14 Aug 2026 14:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786714041; cv=none; b=t1/viexw2ik2E+xPFPi5xpMwWITlih9dOPalOuhMNRjIKJ/zaC1RK0ZrSYoDqZWK73nHOsMB87AaUIb1EdJ5eehil203ZjOB7T+A5qvZtFZN2p3n2yvRERqdLI69e2erxw2nu4jtItGG+wU7/Lkwg3/74+GNTUmZQ0XkXxondRQ=
+	t=1786719265; cv=none; b=N8bJAlC6IdsB1TmWhoUhuKIdDYT4uR+diKWxdu0cOGKbLQ3CuydfiOw0ozkWnzIu7UZdGjhHzBjGtYit6AamfDvzzTBkWxw3pC0nBfCLXFFyM/3sBTvEjxfdBJqY2Fn3pz04pqQnQxFJZuLjL9NXyKN/nhccwz/1XMUQprHDg1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786714041; c=relaxed/simple;
-	bh=CChEzwWKHqvAbDe82pqB+EpRVBOCxUp7FVLoHlKhGNU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NADRigT+W+M3LHH8DGBhtfNoEpujtdOdAp7sXRX8QwT67RNOWP30yOQTilZTzDQTAbinc9X6ltiienfR157uDWwiB1dZLLZ9p70IaHmiQLC5TCFan+88Z80yEoDlKg3VHcZfJr7TZzsauqBiy4P5gPm7/h5cuGFBHe+zozPsA7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=TMgwMIHF; arc=none smtp.client-ip=74.125.224.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1786719265; c=relaxed/simple;
+	bh=Q0NuTg++svUFuAT1lop0YRMxfDKQgG2JLoQp22DrqFc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tFsMQHJ6q34B/4PXWqoe1O5xRGfiSp4gpVZghG6eE2Yu0Ip/vtUFVpkxkFcoXfsZCixpVFZTr5CGeWDLJ1sOWqh6b8DUGuA/oQej0EBaYqEf4O6P+KZfOyuzsmYpKBrqciAdDmXaEoqwFXWEr0Rgym4zl3TvE6V5bxWspWNCX6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=icnyz1CS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="TMgwMIHF"
-Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-6689f36ae56so1690540d50.3
-        for <damon@lists.linux.dev>; Fri, 14 Aug 2026 06:27:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1786714037; x=1787318837; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=n4ArN/eG59F6/a+Z1l3n9inh5iDgTQHyg71JvETU2wM=;
-        b=TMgwMIHFZXCEdaJqXJK4jWPfOjZunc2y8gBLbLZBaloKWm3e8EKmgPPd5g/N34z7P8
-         njn2fp89mmxYIcPnoIt+H7hNBCIFzO8B03QEwbP+FZH7F6qBm/hTBkNJGqDFfH6TxiFe
-         n7ZJgHbFQGLITr0lNKyp1t/uddDQPJTN3X5zDexoWBjD3CzKsI6lO9KyRPyyKUyG+OHA
-         DRxdkNti8kws6iandVxfbj0xN2Efug1q8QO8hbySj4kuMLSo6XDJGFmp/PGNuhzbkct5
-         leOoGlovEoLBjhWfXG//rGjeQfNtKOLo7Y0a8GyY8krE01/KD48zMxp5zikOTln9Vbc0
-         Aqtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786714037; x=1787318837;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=n4ArN/eG59F6/a+Z1l3n9inh5iDgTQHyg71JvETU2wM=;
-        b=Igm6GD6WMbxpNSnqSHvSw99++3SMG38fzH6hQlxPqu4ciKF6/ddNOoH+8gzZ5NOlLR
-         heG04TpoSD8Sl2/1oy/JqQ+bVcFa/Lqc8yhvyDTCh88q7MODQE9Vd3NTVtAFu5zv5GYF
-         5j2iduDI7rT3FcpaEE86NzwR6XAOe3XaO+Bgm60rfSgn7j6q+N9aeRXurffy15ifb8h3
-         yrHru7M8hsEq141Y05nUEqep/4B4RZJJ2yBoscJ+OTxcFa18pALq0JIFF4fn19TEmkz7
-         x4MVv5z5vfUJORziNAS+FASiIomuahS5vEMrcg6OH2V+C9gDoBFrAWTrLRohR/3ToQX0
-         GMxw==
-X-Forwarded-Encrypted: i=1; AHgh+Ro//midZh7rGlKC7PotyT4IyeBbkuUGI0AjKiKz+ntnwDaQWSHYAEVhQ/j1d75LsGHWGnbj6A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzvAvI1aZB0sCvU8AiYcVl2TqSh7pzH3ExqHcFNyhluqxzF/w5O
-	IuDZVAlEjhqXEWyzUQg/eatRdPNAw9FHbALXrA/oJH2AVfqNzHStpsmZKcPwovbOIPg=
-X-Gm-Gg: AR+sD12+kIgaZ3DC1YYtgpf7KktXuYVsPl7v30ijZ2hSABDN1COKU7HQ8l7TBeoN4AQ
-	4ahuDOyQAJdg+U7QAxV3CRs6xidCvOJ8aaKtBIR0p4oMDKRrIA+YBSojVLDq2WxSv5SNyjF6yNW
-	R1usYixox+tMAB4hgOAyK9bgL0RWvugVVTv467tLTYfNNd16S5T0TldzafDqnNrFBMp3E4NnuqM
-	6RjrMcQR8ztZC7WbayBWebxrPGVTJBb+3UuznBr5DaaZrzLMQOfJk8CZFQ5siu5ghz3rpvhvVkM
-	WPsd9YQORgFjGDMPSl9LxIulo1+MI48SMkdBJ83tg0oe0mhDOEbyQwWqzNnkxcLmYKh2CFIeg3D
-	UTuc9scMqtgQOp9mWgPxaN2pc5H2WM+3Qs9H340W2VhTKluaTUKqMl7swffMb8t11ZpOI6b+ozU
-	NaEYyndXi9SHtqZBlt/lTTI3t7otYq60GbYZo=
-X-Received: by 2002:a53:c584:0:b0:66a:3662:409f with SMTP id 956f58d0204a3-66c72ba0d10mr1917799d50.10.1786714036424;
-        Fri, 14 Aug 2026 06:27:16 -0700 (PDT)
-Received: from fedora ([2601:19e:8500:d3c0::28fe])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66c75c9d90bsm1010793d50.8.2026.08.14.06.27.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Aug 2026 06:27:15 -0700 (PDT)
-Date: Fri, 14 Aug 2026 09:27:09 -0400
-From: Gregory Price <gourry@gourry.net>
-To: Pankaj Gupta <pankaj.gupta.linux@gmail.com>
-Cc: linux-mm@kvack.org, Zhigang.Luo@amd.com, arun.george@samsung.com,
-	balbirs@nvidia.com, brendan.jackman@linux.dev, yuzenghui@huawei.com,
-	apopple@nvidia.com, alucerop@amd.com, matthew.brost@intel.com,
-	akpm@linux-foundation.org, david@kernel.org, ljs@kernel.org,
-	liam@infradead.org, vbabka@kernel.org, rppt@kernel.org,
-	surenb@google.com, mhocko@suse.com, corbet@lwn.net,
-	skhan@linuxfoundation.org, gregkh@linuxfoundation.org,
-	rafael@kernel.org, dakr@kernel.org, djbw@kernel.org,
-	"Gupta, Pankaj" <pankaj.gupta@amd.com>, vishal.l.verma@intel.com,
-	dave.jiang@intel.com, alison.schofield@intel.com,
-	osandov@osandov.com, jannh@google.com, pfalcato@suse.de,
-	jackmanb@google.com, hannes@cmpxchg.org, ziy@nvidia.com,
-	pbonzini@redhat.com, osalvador@suse.de, joshua.hahnjy@gmail.com,
-	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
-	kasong@tencent.com, qi.zheng@linux.dev, shakeel.butt@linux.dev,
-	baohua@kernel.org, axelrasmussen@google.com, yuanchu@google.com,
-	weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
-	longman@redhat.com, ridong.chen@linux.dev, tj@kernel.org,
-	mkoutny@suse.com, sj@kernel.org, jgg@ziepe.ca, jhubbard@nvidia.com,
-	peterx@redhat.com, baolin.wang@linux.alibaba.com, npache@redhat.com,
-	ryan.roberts@arm.com, dev.jain@arm.com, lance.yang@linux.dev,
-	usama.arif@linux.dev, xu.xin16@zte.com.cn, chengming.zhou@linux.dev,
-	roman.gushchin@linux.dev, muchun.song@linux.dev,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	driver-core@lists.linux.dev, nvdimm@lists.linux.dev,
-	linux-cxl@vger.kernel.org, linux-debuggers@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, kvm@vger.kernel.org,
-	cgroups@vger.kernel.org, damon@lists.linux.dev,
-	linux-kselftest@vger.kernel.org, kernel-team@meta.com
-Subject: Re: [PATCH v5 00/36] Private Memory NUMA Nodes
-Message-ID: <an8Xrb5Phmvs0xE4@fedora>
-References: <20260720193431.3841992-1-gourry@gourry.net>
- <CAM9Jb+jpJ-Ui4qDHxsp2WiERiv8gmrQfKQ8Z0BmabefeQ6pg4A@mail.gmail.com>
- <an0cAMh_m8ZhGIm2@fedora>
- <CAM9Jb+jmxPdL-CdWQHYMT5G=qmjB6z2WFg+4K8Fod5n=2N6YCQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="icnyz1CS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CA51F000E9;
+	Fri, 14 Aug 2026 14:54:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786719262;
+	bh=qVwa9W3wNvZdvVfG8ALjTSZQ2WF5kVRRrPid54ltR2M=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=icnyz1CSGLfhVWu8Q6+5lvLd76s2TnGEWUy2rjdTTlAmTSseWAQu/6DUgc2s6aljb
+	 qY0aiVTtkZV0OKyzUrTA6L+BQgZkEO8TXh7ahZ4MDteEKiPPgLdguI09XzuiZ6zjRD
+	 4uHOxM5S6gC7WljO315Gg79Ku0rHeyyh6LWh9e+WLhgJJfst0ZC0CKZXP65n/F238C
+	 5LhYOARCXDROeM4cI07mtuw0qy8QOedMM3EPcm2XfI+4wKsD3xSJXwNI59QOt8Flxl
+	 aUTlO86JmGUdFrOdHJDh8DJn/kNbks+1jC4A0gAB4yGqqZ++gApp7Kr+mfsVmnbXUR
+	 j8Jgv8C/zt/Bw==
+From: SJ Park <sj@kernel.org>
+To: Liew Rui Yan <aethernet65535@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Gutierrez Asier <gutierrez.asier@huawei-partners.com>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: Re: [RFC/Discussion] mm/damon: Helping with alternative for watermarks
+Date: Fri, 14 Aug 2026 07:54:13 -0700
+Message-ID: <20260814145414.91204-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260814084710.39955-1-aethernet65535@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAM9Jb+jmxPdL-CdWQHYMT5G=qmjB6z2WFg+4K8Fod5n=2N6YCQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Aug 13, 2026 at 10:55:13AM +0200, Pankaj Gupta wrote:
-> >
-> > A device driver could very well just call memory-hotplug directly,
-> > or its memory could be brought up as a private node via a boot
-> > paremeter (which I have sculpted for v7).  The former is preferred,
-> > but there's a bit of a chicken/egg scenario for bootstrapping.
+Hi Liew,
+
+On Fri, 14 Aug 2026 16:47:10 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+
+> Hi SJ,
 > 
-> I find this interesting as this appears to be evolving towards a vendor
-> agnostic framework for hotplugging memory directly to private nodes.
+> Regarding the alternative superior feature to replace watermarks [1], I
+> am very interested in helping you design and/or implement it.
+
+Thank you for starting this discussion.
+
 > 
+> To share my context: I am primarily using DAMON_RECLAIM on my personal
+> laptop.  During my usage, I found that using the free memory rate
+> (MemFree) as the default watermark metric is highly problematic for
+> modern Linux environments, because the kernel aggressively uses free
+> memory for page cache.
 
-Agnostic would depend on a common standard for such devices.  Otherwise,
-there is still a need for per-device drivers - but hopefully the
-interaction itself can be generalized.
+Thank you for sharing your use case!
 
-> How you see this working? In particular, How would the kernel know which
-> memory ranges correspond to HBM or other device memory?
+> Therefore, I compiled a custom kernel that
+> supports monitoring the available memory rate (MemAvailable).  Since I
+> understand that the current watermark mechanism is not planned for
+> long-term extension, I refrained from proposing improvements to it, and
+> instead focused on understanding why that direction is limited.
 > 
+> I am very interested in understanding the design constraints behind
+> deprecating watermarks.  From my current perspective, watermarks have
+> these drawbacks as a run/stop mechanism:
+> 
+> - Mismatch between local monitoring and global triggers: When monitoring
+>   a specific target (e.g., via VADDR), the scheme's run/stop decision is
+>   currently tied to global system watermarks.  It is impossible to
+>   determine whether to run/stop the scheme based solely on that specific
+>   target's memory usage.  Therefore, the new mechanism might need to
+>   allow user-space to pause/resume schemes based on custom, target-aware
+>   metrics.
+> 
+> - Lack of diverse metrics: Watermarks currently lack support for metrics
+>   like PSI or inactive/active memory ratio, even though such metrics
+>   might be better suited for DAMOS auto-tuning goals.
+> 
+> However, I realize these features could probably be achieved by simply
+> improving the current watermarks.  Most of the drawbacks I can think of
+> are basically about "not enough metrics/customizability".
+> 
+> I assume there is a deeper architectural reason why you consider this
+> direction unsuitable for long-term evolution.  If you could share a bit
+> about those constraints, I would be able to think about the new
+> mechanism in the right direction, rather than approaching it from my own
+> assumptions.
+> 
+> My need for a more accurate trigger metric (like MemAvailable) and
+> always-on monitoring is exactly why I want to help build the new
+> mechanism.  I prefer to invest my time in the future architecture rather
+> than adding features to a mechanism that is about to be deprecated.
+> 
+> If you are open to this, I would be happy to start by reviewing the
+> design direction you have in mind, and then help with implementation or
+> testing where it is feasible for me to contribute meaningfully.
 
-Device marks the region reserved at boot, driver hotplugs.
+I think watermarks is bettert to be deprecated due to following reasons.  First
+of all, it stops monitoring.  It means the converged region age and addresses
+information is lost.  This is the biggest problem.  Secondly, we already have
+similar and better features including DAMOS quotas.  For your DAMON_RECLAIM use
+case, I'd suggest using it without watermarks but quota_mem_pressure_us.
 
-or
+Hence I want to deprecate watermarks rather than improving it.  If we need a
+better watermarks, I think we should improve/extend alternatives like DAMOS
+quotas, or implement a new one.  But, we should first understand why we need a
+better watermarks.  You mentioned you want to use DAMOS watermarks with
+DAMON_RECLAIM on your laptop.  Could you further share why you want to use
+watermarks, and what was the problem?  You mentioned it was problematic due to
+page cache, and you implemented memAvailable based watermarks.  Why you use
+wateramrks?  How exactly the page cache usage becomes a problem for you?  Has
+the memAvaialble based one solved your problem? 
 
-Device marks the region normal, but boot param sets the node private.
+> 
+> [1] https://lore.kernel.org/damon/20260808000739.1308-1-sj@kernel.org
 
-> Please also CC me when you post v7: pankaj.gupta@amd.com
->
 
-Sure
+Thanks,
+SJ
 
-~Gregory
+[...]
