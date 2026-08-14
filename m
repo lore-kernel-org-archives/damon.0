@@ -1,43 +1,61 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4AC47A862
-	for <damon@lists.linux.dev>; Fri, 14 Aug 2026 14:54:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647A947D932
+	for <damon@lists.linux.dev>; Fri, 14 Aug 2026 14:54:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786719265; cv=none; b=N8bJAlC6IdsB1TmWhoUhuKIdDYT4uR+diKWxdu0cOGKbLQ3CuydfiOw0ozkWnzIu7UZdGjhHzBjGtYit6AamfDvzzTBkWxw3pC0nBfCLXFFyM/3sBTvEjxfdBJqY2Fn3pz04pqQnQxFJZuLjL9NXyKN/nhccwz/1XMUQprHDg1w=
+	t=1786719288; cv=none; b=dYBRjJJe0Zw9AEYZVj+c9BScIIwg1lbZMUEZLXzqmRmt60jhjweQtaUrvg05HpnMPJ7DHK8eXuYRqJUq3nuvd58XgSVgD9fvSnMSy0U7kN1NZBi/VLgB8UmguG4IoOYJ27mlS4OhFlvdpOc+WUusiFyjKvH2jw+8Emapt1o6ZgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786719265; c=relaxed/simple;
-	bh=Q0NuTg++svUFuAT1lop0YRMxfDKQgG2JLoQp22DrqFc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFsMQHJ6q34B/4PXWqoe1O5xRGfiSp4gpVZghG6eE2Yu0Ip/vtUFVpkxkFcoXfsZCixpVFZTr5CGeWDLJ1sOWqh6b8DUGuA/oQej0EBaYqEf4O6P+KZfOyuzsmYpKBrqciAdDmXaEoqwFXWEr0Rgym4zl3TvE6V5bxWspWNCX6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=icnyz1CS; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="icnyz1CS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CA51F000E9;
-	Fri, 14 Aug 2026 14:54:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786719262;
-	bh=qVwa9W3wNvZdvVfG8ALjTSZQ2WF5kVRRrPid54ltR2M=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=icnyz1CSGLfhVWu8Q6+5lvLd76s2TnGEWUy2rjdTTlAmTSseWAQu/6DUgc2s6aljb
-	 qY0aiVTtkZV0OKyzUrTA6L+BQgZkEO8TXh7ahZ4MDteEKiPPgLdguI09XzuiZ6zjRD
-	 4uHOxM5S6gC7WljO315Gg79Ku0rHeyyh6LWh9e+WLhgJJfst0ZC0CKZXP65n/F238C
-	 5LhYOARCXDROeM4cI07mtuw0qy8QOedMM3EPcm2XfI+4wKsD3xSJXwNI59QOt8Flxl
-	 aUTlO86JmGUdFrOdHJDh8DJn/kNbks+1jC4A0gAB4yGqqZ++gApp7Kr+mfsVmnbXUR
-	 j8Jgv8C/zt/Bw==
-From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	Gutierrez Asier <gutierrez.asier@huawei-partners.com>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC/Discussion] mm/damon: Helping with alternative for watermarks
-Date: Fri, 14 Aug 2026 07:54:13 -0700
-Message-ID: <20260814145414.91204-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260814084710.39955-1-aethernet65535@gmail.com>
-References: 
+	s=arc-20240116; t=1786719288; c=relaxed/simple;
+	bh=4W3+BCFF4CNPqHrdkzDCE6XGlQnQVhoBC3aQWIeW2l4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JmG4K0+rvIQSTsM+jsy75FhJtfxD81USY/1Cp4z4RPCWwqirY+NK1VmeCT6BK/RjRlJc3y5mGawccbjlIwKniRcoCYN0PW9RRgq6BNeWT0ZmnMobhHWH06hO+FOqUb1kN9MhaVMp4VAKeJBiVv48fdvbGNHshW1nQiACbef9/oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 0ede099897f011f19a56ed5b684f684d-20260814
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
+	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
+	HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME
+	IP_UNTRUSTED, SRC_UNTRUSTED, IP_UNFAMILIAR, SRC_UNFAMILIAR, DN_TRUSTED
+	SRC_TRUSTED, SA_TRUSTED, SA_EXISTED, SN_TRUSTED, SN_EXISTED
+	SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_GOOD_SPF, CIE_UNKNOWN
+	GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:d1a1be2e-dc37-4716-8c96-0f12715df988,IP:10,
+	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:35
+X-CID-INFO: VERSION:1.3.19,REQID:d1a1be2e-dc37-4716-8c96-0f12715df988,IP:10,UR
+	L:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:35
+X-CID-META: VersionHash:7db8b62,CLOUDID:85d6637386c9f1a391c82b250b9c79f5,BulkI
+	D:260814225207IKVV92P0,BulkQuantity:1,SF:17|19|38|66|78|102|127|865|898,TC
+	:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:40,QS:nil,BEC:
+	nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 0ede099897f011f19a56ed5b684f684d-20260814
+X-User: lienze@kylinos.cn
+Received: from ubuntu.. [(61.48.210.10)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 2099589790; Fri, 14 Aug 2026 22:54:32 +0800
+From: Enze Li <lienze@kylinos.cn>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	enze.li@gmx.com,
+	Enze Li <lienze@kylinos.cn>
+Subject: [PATCH] mm/damon/stat: avoid iterating targets in damon_stat_sort_regions()
+Date: Fri, 14 Aug 2026 22:54:09 +0800
+Message-ID: <20260814145409.553724-1-lienze@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,88 +64,51 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Liew,
+damon/stat module creates only one target in damon_stat_build_ctx(), and
+the comment in damon_stat_sort_regions() already says so.  But the code
+still iterates adaptive_targets with damon_for_each_target(), which is
+needlessly verbose and adds an extra indentation level.
 
-On Fri, 14 Aug 2026 16:47:10 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+Just use list_first_entry() to grab the single target, with a
+list_empty() check to be safe.
 
-> Hi SJ,
-> 
-> Regarding the alternative superior feature to replace watermarks [1], I
-> am very interested in helping you design and/or implement it.
+Signed-off-by: Enze Li <lienze@kylinos.cn>
+---
+ mm/damon/stat.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-Thank you for starting this discussion.
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index b05b68f73e10..c8b1e909bbac 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -91,16 +91,15 @@ static int damon_stat_sort_regions(struct damon_ctx *c,
+ 	unsigned int nr_regions = 0;
+ 	unsigned long total_sz = 0;
+ 
+-	damon_for_each_target(t, c) {
+-		/* there is only one target */
+-		region_pointers = kmalloc_objs(*region_pointers,
+-					       damon_nr_regions(t));
+-		if (!region_pointers)
+-			return -ENOMEM;
+-		damon_for_each_region(r, t) {
+-			region_pointers[nr_regions++] = r;
+-			total_sz += r->ar.end - r->ar.start;
+-		}
++	if (list_empty(&c->adaptive_targets))
++		return -EINVAL;
++	t = list_first_entry(&c->adaptive_targets, struct damon_target, list);
++	region_pointers = kmalloc_objs(*region_pointers, damon_nr_regions(t));
++	if (!region_pointers)
++		return -ENOMEM;
++	damon_for_each_region(r, t) {
++		region_pointers[nr_regions++] = r;
++		total_sz += r->ar.end - r->ar.start;
+ 	}
+ 	sort(region_pointers, nr_regions, sizeof(*region_pointers),
+ 			damon_stat_cmp_regions, NULL);
 
-> 
-> To share my context: I am primarily using DAMON_RECLAIM on my personal
-> laptop.  During my usage, I found that using the free memory rate
-> (MemFree) as the default watermark metric is highly problematic for
-> modern Linux environments, because the kernel aggressively uses free
-> memory for page cache.
+base-commit: 6c2cdf00fe5205942b5f29e16905603a1717b931
+-- 
+2.43.0
 
-Thank you for sharing your use case!
-
-> Therefore, I compiled a custom kernel that
-> supports monitoring the available memory rate (MemAvailable).  Since I
-> understand that the current watermark mechanism is not planned for
-> long-term extension, I refrained from proposing improvements to it, and
-> instead focused on understanding why that direction is limited.
-> 
-> I am very interested in understanding the design constraints behind
-> deprecating watermarks.  From my current perspective, watermarks have
-> these drawbacks as a run/stop mechanism:
-> 
-> - Mismatch between local monitoring and global triggers: When monitoring
->   a specific target (e.g., via VADDR), the scheme's run/stop decision is
->   currently tied to global system watermarks.  It is impossible to
->   determine whether to run/stop the scheme based solely on that specific
->   target's memory usage.  Therefore, the new mechanism might need to
->   allow user-space to pause/resume schemes based on custom, target-aware
->   metrics.
-> 
-> - Lack of diverse metrics: Watermarks currently lack support for metrics
->   like PSI or inactive/active memory ratio, even though such metrics
->   might be better suited for DAMOS auto-tuning goals.
-> 
-> However, I realize these features could probably be achieved by simply
-> improving the current watermarks.  Most of the drawbacks I can think of
-> are basically about "not enough metrics/customizability".
-> 
-> I assume there is a deeper architectural reason why you consider this
-> direction unsuitable for long-term evolution.  If you could share a bit
-> about those constraints, I would be able to think about the new
-> mechanism in the right direction, rather than approaching it from my own
-> assumptions.
-> 
-> My need for a more accurate trigger metric (like MemAvailable) and
-> always-on monitoring is exactly why I want to help build the new
-> mechanism.  I prefer to invest my time in the future architecture rather
-> than adding features to a mechanism that is about to be deprecated.
-> 
-> If you are open to this, I would be happy to start by reviewing the
-> design direction you have in mind, and then help with implementation or
-> testing where it is feasible for me to contribute meaningfully.
-
-I think watermarks is bettert to be deprecated due to following reasons.  First
-of all, it stops monitoring.  It means the converged region age and addresses
-information is lost.  This is the biggest problem.  Secondly, we already have
-similar and better features including DAMOS quotas.  For your DAMON_RECLAIM use
-case, I'd suggest using it without watermarks but quota_mem_pressure_us.
-
-Hence I want to deprecate watermarks rather than improving it.  If we need a
-better watermarks, I think we should improve/extend alternatives like DAMOS
-quotas, or implement a new one.  But, we should first understand why we need a
-better watermarks.  You mentioned you want to use DAMOS watermarks with
-DAMON_RECLAIM on your laptop.  Could you further share why you want to use
-watermarks, and what was the problem?  You mentioned it was problematic due to
-page cache, and you implemented memAvailable based watermarks.  Why you use
-wateramrks?  How exactly the page cache usage becomes a problem for you?  Has
-the memAvaialble based one solved your problem? 
-
-> 
-> [1] https://lore.kernel.org/damon/20260808000739.1308-1-sj@kernel.org
-
-
-Thanks,
-SJ
-
-[...]
