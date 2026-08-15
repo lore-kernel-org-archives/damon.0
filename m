@@ -1,62 +1,72 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E683D1CB5
-	for <damon@lists.linux.dev>; Fri, 14 Aug 2026 15:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8E41632E7;
+	Sat, 15 Aug 2026 00:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786719654; cv=none; b=E3gJ/r07S/DStPPi3nmcucZ8gcAz0yN9PtQKTtOVIE2amMe689afyYWvDNpGUCHuu1NJ57j0wED+pYee3g0Gs2wyRGU9J53sVnj6Ab93nyBKdx8PuAIhDJm9FISe3y0gL2e5GRRAkOWRG0UnbHbuY16FPezlcTWVjXeIqNzq3Mg=
+	t=1786754861; cv=none; b=AcULUi3aIpSeI07DwkcNdz+fTRQV1B2dRgV6quRXKxKCPcouQzLD0G81rjM5aOkUF87FQQi73hhbjc3RiI9LQKCSUcLtQWGu6SU3sunyXHl+/3slNKxzy8GnuDSniljjCFNSFvgAu8iQP7gI472Cx1wU+/r8ttzqht1PPZizU/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786719654; c=relaxed/simple;
-	bh=V0gYhT23fetOGcT1HjqFr2q4WCf1l+hBnMHW6JpiAao=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=NubaL1WZ2wKPIt4WCWpNpEdDcEGiaFnKuYpOISvvOflFj1G/6a2QbS6P0w9nhqnIStC6Os5qnQQcW4L96k2TFYGhr+poXJWSJKkpy7+HJAF0dAsZa6b2qRpAnvz42Nl/pPfMdF98uWjjN+oCgcP/oVyKiY2bdaOj51iuv+u7ojE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPTeKpTu; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786754861; c=relaxed/simple;
+	bh=/HbWI4R69rzbaZ95FdbUeJtbE5yFJiR2I28JqwRnsHI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UjLkMTiH9iaQxxlL41NSAKg4aPn9h4wX4WdznGjFDgEG2lsjB1CgLGf8ek303i8P3ux/b7feQqU9Q78okp/bz9U0SD1wsKJZpN2Pw3mtd5VMYuzd6Dl58aAUnOPwHX8xJcBi88hOihbmkapAGd+LlbsfeGB8tBjDp+pR3ukltU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RouPeZYP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPTeKpTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A561F000E9;
-	Fri, 14 Aug 2026 15:00:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RouPeZYP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE1B1F000E9;
+	Sat, 15 Aug 2026 00:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786719649;
-	bh=m1IuQ99Rl8MrDRmGCFK0aCQFmypbtvAkeZoUufmRgXM=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=cPTeKpTuPa6lgDog7Ude4Ps3XatDNADlK6EO1haAUfXHwvDK4HoyI3cMPTQpeAQKG
-	 S/QQU7L1RUONwBfn9WliRU3pUBr6GPIWfjTPuJ1RZIRg3Tr2bYcTAJfS2LBzCVOvqh
-	 joDlsAuM6MK8rtWysHHbxlw6Cx91tq7VD6UH6Ma1kfV8lIVCTorcFg3V+WiwPdSis8
-	 V1LrBebyHA2hPeOgHOgb1ABJAbawit8TdRP0z8Bf9uH/Adow8YmlHRqyUwyfzTS90q
-	 x5daEQZq5D8jWNemnwKt81eZAaK/hOe7SoFMttA1YkuOwr5iHnSulu7SWIIGvjNwe3
-	 +9wrth9Lqyd7g==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] mm/damon/stat: avoid iterating targets in
- damon_stat_sort_regions()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Enze Li" <lienze@kylinos.cn>
-Cc: damon@lists.linux.dev
+	s=k20260515; t=1786754859;
+	bh=EXjSPj2g8X11uO/ReLFrgauWbcYOxscwU3FcqHFGgS8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=RouPeZYPBKyWMOzE44JhhpIppAimjKV75i45nR0uE78muv32i3ucJxp6KhPuGoxZO
+	 Bc7ldcOkpEGUjQ4/YJeYs+PxlFTUGQTNvcTvnrm0g91G7bWKdPGPBrek9DTP1T9FCU
+	 L4iZOK+Qa0WdyFH6pXV7t9ZFEJJHqMcFhPVQRc4wW8V8UDDU0Bxax2W3VXGr469PPw
+	 QLtZsCGLQ7m1rDkCl42sj5ch5mCbPERQqoy0hmBegk3lqIBYxEoyvJpx7RHHppAYd3
+	 IeDeW+yQIrxKoxjN1ezeXHqT2ggr2UYwIw8YnlmYbZqBbQpfO3wl/beRaPTVvYoq53
+	 RHErsXlZugmmA==
+From: SJ Park <sj@kernel.org>
+To: Enze Li <lienze@kylinos.cn>
+Cc: SJ Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	enze.li@gmx.com
+Subject: Re: [PATCH] mm/damon/stat: avoid iterating targets in damon_stat_sort_regions()
+Date: Fri, 14 Aug 2026 17:47:26 -0700
+Message-ID: <20260815004727.83755-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260814145409.553724-1-lienze@kylinos.cn>
-References: <20260814145409.553724-1-lienze@kylinos.cn>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 14 Aug 2026 15:00:48 +0000
-Message-Id: <20260814150049.31A561F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+On Fri, 14 Aug 2026 22:54:09 +0800 Enze Li <lienze@kylinos.cn> wrote:
 
 > damon/stat module creates only one target in damon_stat_build_ctx(), and
 > the comment in damon_stat_sort_regions() already says so.  But the code
 > still iterates adaptive_targets with damon_for_each_target(), which is
 > needlessly verbose and adds an extra indentation level.
->=20
+> 
 > Just use list_first_entry() to grab the single target, with a
 > list_empty() check to be safe.
->=20
-> Signed-off-by: Enze Li <lienze@kylinos.cn>
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+damon_ctx->adaptive_targetes is a private field.  DAMON API callers should
+access the field using only public API that exposed on damon.h.  Let's not do
+this.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260814145409.5537=
-24-1-lienze@kylinos.cn?part=3D1
+If the verboseness and the indentation are problems, let's split out the code
+to a function.
 
+
+Thanks,
+SJ
+
+[...]
