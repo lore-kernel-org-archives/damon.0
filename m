@@ -1,106 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9A832B989
-	for <damon@lists.linux.dev>; Mon, 17 Aug 2026 06:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881EF3B6C05;
+	Mon, 17 Aug 2026 07:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786948878; cv=none; b=rIUeo41tslN00JOQAy+QciEDHaw/hGmkTTrvBLpyxEtnlgWQ2/+04wpqKLHWKT7yx8nVO0LvnSzQsizohTTQqxcMe0PRJI4VghzTfD0QOV/08ZMVsPUSw7plABUM7L/qAOjGeiyeLLUoPBHRkcULOABAgQqvpj9o6GjJtkPL4aE=
+	t=1786950888; cv=none; b=PJNeNbCPCH3DTNLOWzEIcII+6I4cfilFItiLH5+HO20H8ZvqHxafIyQMQrafh6KkwhuG38+XjZtWiGOtbXc5t9h0B8EDKURMZ0XfjSwJc6hA0B3NbAz82NEji9nHClBPm+TDq4X20RmVXhqGxXAhj0uJtM9dZnr6H9GGeJNh4aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786948878; c=relaxed/simple;
-	bh=9+QGpIiM/bqc+qOn22GKy+iHO0ZRG3eOAwuAeuzditA=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=i5Pz8RzO4VekP6Ug1M0rzO2IREi5d2mzfCj3jmwAnu3pbfjiWHT6ejNQEs+j6e17SblnRar8FZhJFGITqgIrwgxDuqCQ4s4Ly2DsHbczQA/pCJYpaoUO0wBwXVO2KBYiTIPrXPmKaRms8axi1niz6zriaMQRpeTnQP+H3eyvXgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dLCTzEPN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786950888; c=relaxed/simple;
+	bh=91Osd8E23Nus8TqrgBZlQiC06ik09lSC83CImD8x0qs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=ZygEqB2gp2aUlSO9CQH3xvSYhak7TQ792PjJHjJcDKGBN9caxWrdcuWKz2Y7f+94+wnY+PLTayKJ/MzRFdrZz1lk8iBv03TrKGiX5/C9dAfk4aDpLFFxYOg7iBEyNYU2jBCmKEHaftFWMWXvtvfdC4jucvNhe38KtMS5W9id2mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=m1T7JscZ; arc=none smtp.client-ip=117.135.210.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dLCTzEPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3581D1F000E9;
-	Mon, 17 Aug 2026 06:41:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786948877;
-	bh=YEL9T2YaWdU+bIoPoU2FRvfoFZQrxaDcXtS/QDkQ8zY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=dLCTzEPNDC4SrajtqOioQIaer1qxxLZ4oQTwY0kBmeDrh/IINAaGN/NqoFJ4e0O1u
-	 7+hkcmqt6dAaB5GqOglWtScgCk0C4bh7zvDXisPCJwYheKSJOcIt7TCGeR2gy0a7VN
-	 PzrIzgJfjXrerHf6dhocC/qP5NQM1zie9S6Y/2ae5ipiLieuQoqoiohSnpfGHcKQ3M
-	 k7XGvDPSFZfSLUPsEEIJHlj3kOwiH2Ne36qDfV6ItEGbx2DXqumNF+AqqXn9tX0XXB
-	 XScALcIks9RBFeyaT+tv2NnOKXqKbQf0YAJoJK/kO7AAA+mQHEsM/UdDgssdxK1nph
-	 x6KFLWs6MImWA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] mm/damon/ops-common: factor out
- damon_putback_folio_list()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: dayou5941@163.com
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="m1T7JscZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=91Osd8E23Nus8TqrgBZlQiC06ik09lSC83CImD8x0qs=; b=m
+	1T7JscZ1nUNtbZKwQOO/g/booNKtFku0jclk5Yfb174YWwLc6c9JrPgCNt2sukBS
+	3Nd89dKKdStPCgDH5RQGSWAFU4FyD4Qj58t1Fm1NbDk3Lh/Vz6gFt9UDTWaX/0JR
+	1BAzX1CnqrDuKyDkmNTHKhYRlIXpGa0zy67I1XDBCU=
+Received: from dayou5941$163.com ( [116.128.244.169] ) by
+ ajax-webmail-wmsvr-40-148 (Coremail) ; Mon, 17 Aug 2026 15:14:36 +0800
+ (CST)
+Date: Mon, 17 Aug 2026 15:14:36 +0800 (CST)
+From: =?UTF-8?B?5p2O5L2R6bi/IA==?= <dayou5941@163.com>
+To: sashiko-reviews@lists.linux.dev
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260817063458.351063-1-dayou5941@163.com>
+Subject: Re:Re: [PATCH] mm/damon/ops-common: factor out
+ damon_putback_folio_list()
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
+ 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
+In-Reply-To: <20260817064117.3581D1F000E9@smtp.kernel.org>
 References: <20260817063458.351063-1-dayou5941@163.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 17 Aug 2026 06:41:16 +0000
-Message-Id: <20260817064117.3581D1F000E9@smtp.kernel.org>
+ <20260817064117.3581D1F000E9@smtp.kernel.org>
+X-NTES-SC: AL_Qu2TBPWev0As4CieYukckk4Wjug8Wcexufwj34NTc+AGmxjP0T8gZ3VSBGf2wtm0LQGNlRqJQD5e0NZhZJVguY2OE3JIE1Jstd4uIYbeuQ==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Message-ID: <7f87a4e0.54d4.1a00e927ecd.Coremail.dayou5941@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:lCgvCgD3D9fdtIJqFCMzAA--.2273W
+X-CM-SenderInfo: 5gd103ivzuiqqrwthudrp/xtbC3R2fTmqCtN2saAAA3U
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] Removal of `struct folio *folio;` declaration causes a compilation =
-failure in `damon_migrate_folio_list()`.
---
+CgoKCgoKCgoKCgoKCgoKCgpBdCAyMDI2LTA4LTE3IDE0OjQxOjE2LCBzYXNoaWtvLWJvdEBrZXJu
+ZWwub3JnIHdyb3RlOgo+VGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBB
+SSByZXZpZXcgZm91bmQgMSBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6Cj4tIFtMb3dd
+IFJlbW92YWwgb2YgYHN0cnVjdCBmb2xpbyAqZm9saW87YCBkZWNsYXJhdGlvbiBjYXVzZXMgYSBj
+b21waWxhdGlvbiBmYWlsdXJlIGluIGBkYW1vbl9taWdyYXRlX2ZvbGlvX2xpc3QoKWAuCj4tLQo+
+Cj4tLS0gUGF0Y2ggWzFdOiBbUEFUQ0hdIG1tL2RhbW9uL29wcy1jb21tb246IGZhY3RvciBvdXQg
+ZGFtb25fcHV0YmFja19mb2xpb19saXN0KCkgLS0tCj5jb21taXQgYjk1YjIxZmE0ZDBkODk5MGQ0
+NzYwOTQ3NGY4Y2VlMmFhN2Q2NDBlMQo+QXV0aG9yOiBMaSBZb3Vob25nIDxsaXlvdWhvbmdAa3ls
+aW5vcy5jbj4KPgo+bW0vZGFtb24vb3BzLWNvbW1vbjogZmFjdG9yIG91dCBkYW1vbl9wdXRiYWNr
+X2ZvbGlvX2xpc3QoKQo+Cj5UaGlzIGNvbW1pdCBmYWN0b3JzIG91dCB0aGUgZHVwbGljYXRlZCBw
+dXRiYWNrIGxvb3AgaW4KPmRhbW9uX21pZ3JhdGVfZm9saW9fbGlzdCgpIGFuZCBkYW1vbl9taWdy
+YXRlX3BhZ2VzKCkgaW50byBhIG5ldwo+ZGFtb25fcHV0YmFja19mb2xpb19saXN0KCkgaGVscGVy
+LiBUaGUgY29tbWl0IG5vdGVzIHN0YXRlIHRoaXMgcmVtb3Zlcwo+dGhlIG5lZWQgZm9yIHRoZSBs
+b2NhbCBmb2xpbyB2YXJpYWJsZS4KPgo+TGluazogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxs
+LzIwMjYwNzI0MDYwNzA3LkNFMUY4MUYwMDBFOUBzbXRwLmtlcm5lbC5vcmcvCj4KPj4gZGlmZiAt
+LWdpdCBhL21tL2RhbW9uL29wcy1jb21tb24uYyBiL21tL2RhbW9uL29wcy1jb21tb24uYwo+PiBp
+bmRleCBmYmRhNzBkOGVhNGQwLi5mOWNmZDM1YmVlNzIyIDEwMDY0NAo+PiAtLS0gYS9tbS9kYW1v
+bi9vcHMtY29tbW9uLmMKPj4gKysrIGIvbW0vZGFtb24vb3BzLWNvbW1vbi5jCj5bIC4uLiBdCj4+
+ICBzdGF0aWMgdW5zaWduZWQgaW50IGRhbW9uX21pZ3JhdGVfZm9saW9fbGlzdChzdHJ1Y3QgbGlz
+dF9oZWFkICpmb2xpb19saXN0LAo+PiAgCQkJCQkJc3RydWN0IHBnbGlzdF9kYXRhICpwZ2RhdCwK
+Pj4gIAkJCQkJCWludCB0YXJnZXRfbmlkKQo+PiAgewo+PiAgCXVuc2lnbmVkIGludCBucl9taWdy
+YXRlZCA9IDA7Cj4+IC0Jc3RydWN0IGZvbGlvICpmb2xpbzsKPj4gIAlMSVNUX0hFQUQocmV0X2Zv
+bGlvcyk7Cj4+ICAJTElTVF9IRUFEKG1pZ3JhdGVfZm9saW9zKTsKPgo+W1NldmVyaXR5OiBMb3dd
+Cj5UaGUgY29tbWl0IG1lc3NhZ2Ugbm90ZXMgdGhhdCByZW1vdmluZyB0aGUgZm9saW8gdmFyaWFi
+bGUgaGVyZSB3b24ndCBjYXVzZQo+YSBidWlsZCBmYWlsdXJlLiBIb3dldmVyLCBkb2VzIGRhbW9u
+X21pZ3JhdGVfZm9saW9fbGlzdCgpIHN0aWxsIHVzZSB0aGUKPmZvbGlvIHZhcmlhYmxlIGluIGl0
+cyBmaXJzdCB3aGlsZS1sb29wPwoKPgoKVGhhbmtzIGZvciB0aGUgcmV2aWV3LgpSZW1vdmluZyB0
+aGUgbG9jYWwgdmFyaWFibGUgInN0cnVjdCBmb2xpbyAqZm9saW8iIGluIGRhbW9uX21pZ3JhdGVf
+Zm9saW9fbGlzdCgpIHdpbGwKbm90IGNhdXNlIGJ1aWxkIGZhaWx1cmVzLCBzaW5jZSB0aGlzIHZh
+cmlhYmxlIGlzIG9ubHkgdXNlZCBpbnNpZGUgdGhlIHdoaWxl4oCRbG9vcC4KCkBAIC0zNzIsMTMg
+KzM4NCw3IEBAIHN0YXRpYyB1bnNpZ25lZCBpbnQgZGFtb25fbWlncmF0ZV9mb2xpb19saXN0KHN0
+cnVjdCBsaXN0X2hlYWQgKmZvbGlvX2xpc3QsCiAKIAlsaXN0X3NwbGljZSgmcmV0X2ZvbGlvcywg
+Zm9saW9fbGlzdCk7CiAKLQl3aGlsZSAoIWxpc3RfZW1wdHkoZm9saW9fbGlzdCkpIHsKLQkJZm9s
+aW8gPSBscnVfdG9fZm9saW8oZm9saW9fbGlzdCk7ICAvL1RoaXMgdmFyaWFibGUgaXMgb25seSB1
+c2VkIGhlcmUuCi0JCWxpc3RfZGVsKCZmb2xpby0+bHJ1KTsKLQkJbm9kZV9zdGF0X3N1Yl9mb2xp
+byhmb2xpbywgTlJfSVNPTEFURURfQU5PTiArCi0JCQkJZm9saW9faXNfZmlsZV9scnUoZm9saW8p
+KTsKLQkJZm9saW9fcHV0YmFja19scnUoZm9saW8pOwotCX0KKwlkYW1vbl9wdXRiYWNrX2ZvbGlv
+X2xpc3QoZm9saW9fbGlzdCk7Cgo+TG9va2luZyBhdCB0aGUgcmVtYWluaW5nIGNvZGUgaW4gZGFt
+b25fbWlncmF0ZV9mb2xpb19saXN0KCk6Cj4KPgl3aGlsZSAoIWxpc3RfZW1wdHkoZm9saW9fbGlz
+dCkpIHsKPgkJY29uZF9yZXNjaGVkKCk7Cj4KPgkJZm9saW8gPSBscnVfdG9fZm9saW8oZm9saW9f
+bGlzdCk7Cj4JCWxpc3RfZGVsKCZmb2xpby0+bHJ1KTsKPgo+CQlpZiAoIWZvbGlvX3RyeWxvY2so
+Zm9saW8pKQo+CQkJZ290byBrZWVwOwo+Cj5XaWxsIHRoaXMgY2F1c2UgYW4gdW5kZWNsYXJlZCBp
+ZGVudGlmaWVyIGNvbXBpbGF0aW9uIGVycm9yIHNpbmNlIHRoZSB2YXJpYWJsZQo+d2FzIHJlbW92
+ZWQgZnJvbSB0aGUgZnVuY3Rpb24gc2NvcGUgYnV0IG5vdCByZS1kZWNsYXJlZCBsb2NhbGx5IGlu
+c2lkZSB0aGlzCj5sb29wIGJsb2NrPwo+ClRoZSBsYXRlc3QgY29kZSBpcyBhcyBzaG93biBiZWxv
+dzsgZm9saW8gaXMgYWxyZWFkeSBkZWNsYXJlZCBsb2NhbGx5LgoKCXdoaWxlICghbGlzdF9lbXB0
+eShmb2xpb19saXN0KSkgewoJCXN0cnVjdCBmb2xpbyAqZm9saW87CgoJCWNvbmRfcmVzY2hlZCgp
+OwoKCQlmb2xpbyA9IGxydV90b19mb2xpbyhmb2xpb19saXN0KTsKCQlsaXN0X2RlbCgmZm9saW8t
+PmxydSk7CgoJCWlmICghZm9saW9fdHJ5bG9jayhmb2xpbykpCgkJCWdvdG8ga2VlcDsKCmxpbms6
+IGh0dHBzOi8vZ2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L3RvcnZhbGRz
+L2xpbnV4LmdpdC90cmVlL21tL2RhbW9uL29wcy1jb21tb24uYz9pZD12Ny4yCgpUaGFua3MsCllv
+dWhvbmcKCj4tLSAKPlNhc2hpa28gQUkgcmV2aWV3IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9w
+YXRjaHNldC8yMDI2MDgxNzA2MzQ1OC4zNTEwNjMtMS1kYXlvdTU5NDFAMTYzLmNvbT9wYXJ0PTEK
 
---- Patch [1]: [PATCH] mm/damon/ops-common: factor out damon_putback_folio_=
-list() ---
-commit b95b21fa4d0d8990d47609474f8cee2aa7d640e1
-Author: Li Youhong <liyouhong@kylinos.cn>
-
-mm/damon/ops-common: factor out damon_putback_folio_list()
-
-This commit factors out the duplicated putback loop in
-damon_migrate_folio_list() and damon_migrate_pages() into a new
-damon_putback_folio_list() helper. The commit notes state this removes
-the need for the local folio variable.
-
-Link: https://lore.kernel.org/all/20260724060707.CE1F81F000E9@smtp.kernel.o=
-rg/
-
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index fbda70d8ea4d0..f9cfd35bee722 100644
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
-[ ... ]
->  static unsigned int damon_migrate_folio_list(struct list_head *folio_lis=
-t,
->  						struct pglist_data *pgdat,
->  						int target_nid)
->  {
->  	unsigned int nr_migrated =3D 0;
-> -	struct folio *folio;
->  	LIST_HEAD(ret_folios);
->  	LIST_HEAD(migrate_folios);
-
-[Severity: Low]
-The commit message notes that removing the folio variable here won't cause
-a build failure. However, does damon_migrate_folio_list() still use the
-folio variable in its first while-loop?
-
-Looking at the remaining code in damon_migrate_folio_list():
-
-	while (!list_empty(folio_list)) {
-		cond_resched();
-
-		folio =3D lru_to_folio(folio_list);
-		list_del(&folio->lru);
-
-		if (!folio_trylock(folio))
-			goto keep;
-
-Will this cause an undeclared identifier compilation error since the variab=
-le
-was removed from the function scope but not re-declared locally inside this
-loop block?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817063458.3510=
-63-1-dayou5941@163.com?part=3D1
