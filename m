@@ -1,100 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1D02AF00;
-	Sun, 16 Aug 2026 16:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71951EFFB7
+	for <damon@lists.linux.dev>; Mon, 17 Aug 2026 00:49:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786899400; cv=none; b=FlWIPb3v1DQ17S6rAcz7dOw7VecBJXb+zdagpo0goUuDMwT+83tLZ/bWHxjVc9IlBO5vGvA/nVxUjcCUD1yCV7sASmOtyb4852e5/M5/UZV6bIGf77gvYXKlV90XhLBTY9c8IkjJwACVyQMG9LA08s0kjdckY2kjQs+Vi4pEHvs=
+	t=1786927771; cv=none; b=Xj8yaTvdb/vrhHvOLiH8/+tcXG24d/9ZmNNz+7Ev/0adC1Oi6ZBCEKYg0N6oUbFSCJ729KTXvKDptLN+dV8sV+tbFKWoYXeXcQzAswhx8gcOPlI4aprIWkV/wiwMNdBIWJKXGPFytJNcUzyIuXH4e6J2A3PQjMi8DBojb99qpbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786899400; c=relaxed/simple;
-	bh=HlDOxnHuMMVHohuVwHAfqMLOmi81A8VTk4PlceL9JLU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lk5HrQTc0KKvnuNpngiH5YIOKbW8G0iPsbhyH59IzkpXm65F3L6E+u3d/y3075dtZJNu6x8jL+6pZx49HeBgi8rqA2kGgVoaVVAat41LfpRyrnqte1nuT1F+LsIIQLNjUm9MEJG7fDfsyaIVchW46a3hgBdsbHGN8bU8SzwfHu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MoTWVWmF; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786927771; c=relaxed/simple;
+	bh=Q2AJHfOQlhxmo4d6xkSdfftND9W8OwOWU4sIuscydGg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FzylUBLN2TVoXFt6colx0ZfRro7zm7y8vVACSqtXSiprl6JSkrvHwLkEImPKxcxyfp9QZEp5ySRL5l/KvgF1COWYkvUo+IxKyclfAkzsz5jsQhYn6EPyKR5R8cfFK6YcLab81TJod/tXxZngJKge0LOS3eNM79PBeano5Udjb64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=K+25e0Rp; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MoTWVWmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2391F000E9;
-	Sun, 16 Aug 2026 16:56:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786899399;
-	bh=E22bAb27mfMqnbRiG04AZdJeCfsHv2IcYh0cVnbi8Vk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MoTWVWmF1j3YIqeKXe6Zcl3S0IhuZuEXW4jICpFS155i0lG9Qduxj7ysRpwX9Rgoa
-	 ED7J//lF0Bnks4pHOgZHXMMwA5nvtc2VY5nxlyHyT3QklK20SQAQTJuLmaZZaFsNBr
-	 aFrIdXvX/J8uhi3M6tdpTAqhNH4D+J5vLvfng/llZ69dSBB5V6OdohPrhwnc8jYF3i
-	 g4Zt4UEY3jah8KoVVRCUFF7NFE8BxjyNyHDgpodZcBjbgORLHg1iutERtC9A6sElQr
-	 AACpNqLU/y15qDx76bzdFvhg8CMvrYlKKZuTj0LsSE274QrxQzlEKKIyWufwrXs62J
-	 zoUQ/yrdU7xTg==
-From: SJ Park <sj@kernel.org>
-To: Kunwu Chan <kunwu.chan@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	will@kernel.org,
-	mark.rutland@arm.com,
-	akpm@linux-foundation.org,
-	shuah@kernel.org,
-	kunwu.chan@linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-perf-users@vger.kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org
-Subject: Re: [RFC PATCH 0/4] mm/damon/perf: add ARM SPE AUX backend
-Date: Sun, 16 Aug 2026 09:56:30 -0700
-Message-ID: <20260816165630.84808-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260816142222.689624-1-kunwu.chan@linux.dev>
-References: 
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="K+25e0Rp"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-51c2a76536bso28094631cf.1
+        for <damon@lists.linux.dev>; Sun, 16 Aug 2026 17:49:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1786927768; x=1787532568; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=FcQdr0dRPL3xWk5ZJ+WEqnlvhAK6C+Y9UAGkoGf2Ky8=;
+        b=K+25e0RpJENzYFwingcae5ISwe+TKSd0MxJ2OfxVFBtlR5h73BlKGHLobbqYf5fAKw
+         oHWg4RcsTl6bJhE33ZrmLJjvJ4dKK/0CXNX1gDfQ4EL5/5aoRD13S85GxNq1JFgQw5s8
+         3OuaOTcAcd64C7DosZuFX4Iajj+egSDifIwHvz3KstGPbMWWwj71p/3Uk/H9INY0tB06
+         FJMVrAX4JAJ3qpstkLm/lKreHDlF1PGAK4oTol7Q4qcnTtma5b2xcqiRFoV+JOFR2xyG
+         cMdn6O/nzGxACjL9olXGKpgIcJGRL9qLnFyMLLRLus3G485jTJ601/HC/mWk3YmLRkRW
+         XbkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786927768; x=1787532568;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FcQdr0dRPL3xWk5ZJ+WEqnlvhAK6C+Y9UAGkoGf2Ky8=;
+        b=hxpKoaAUe+rF/Ho75U3yLFGrc/zBHdYG4xRU2dmnd8SDNxnjdkKvybXa1TWjZXZoGT
+         llIJ2HFeK8jWj7azy/nP7VOC5RK33jjoMWkOku8eMBTWhfgwfaMaXYZk5M1qzXiQRXqy
+         R922L7YQx5Y4cjNESrlVECZL07cWYy48MIf5eRIrQodK5A0ij0oR91+NZv2DLCWapB9B
+         Pq6LgF7CtgfAXErqvrw5sTqA/bwVf4GhOXbn+haAKciXBj4y55dXhsI7ONIBzVGDSlyS
+         t90pVZDqs7MVMtUEO6pgWh2TGPQU+xqjH2Fq4IUE4ZMEMMQDvIcprlh+6P3alGZB1X5q
+         wwKw==
+X-Forwarded-Encrypted: i=1; AHgh+Rr9Efw/kg/q/OmkLHyNTqV0vJHClP11HdeZbX28HKhXW+a7rZAWNRzauCIe43Ajq25FCgzECA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YybY2V/o4CzgJMG6A2aRfEUBpgvAt37E0o6a03/CKEdTaZl7TAL
+	rgwDACF4jg45JodCYfWvmntjeulpN8f62k3cIhOQQSE5b15IpJS4XNXdM6MfjaolED0=
+X-Gm-Gg: AR+sD10gn1eZXliNq0bgIzadQz1sfJUZsDAmZRolBxc1x7Ix91fczhtVfuJngHLp9M3
+	xzpSu4GZQdlHkZTbz88sUG7CHkxnWWxJwEA0HqJRDxJOYTA6CYi+r8Ieahqzj1u6++M/GJgaqx7
+	EWN0vo7XXcb9V2Mvo69PTVqedjAnCE5aEyclEu7a56ktpNP58Jkryl0GB0XXaOukSUlAcBUK14p
+	re82h10nO8/LnWixKpefgXvKORpHgkSHkDlGeZbozk+4xTi18WTq3+dhqTUUOle0CFkhC+/EucU
+	OiqoChZQuqxEB6wuUYiYIeDCIaMeJtIrd2wxcE0TyIfjl42095HGGQIfLnypUZb1LDLf2nD96Ar
+	50X1pMo/EhaaNADdHVV5YtFMiTM1eQRrvPoFdSqj4yojrm9tE/sbsgbGwq0efB0xMKyrHgX2gRS
+	OltyEoLqWLknCzTVVRfx9+/Cs0XET6ehVEl+K+/tiCsQduJlKBjx5r/59S2gel1ccU/BZmJFXna
+	9EEucTIjg2pRiybxUMvR5wZMskbFdfeniEFnG0QuMCG
+X-Received: by 2002:a05:622a:2b4b:b0:52d:a151:10f5 with SMTP id d75a77b69052e-52da15111admr97787241cf.22.1786927767788;
+        Sun, 16 Aug 2026 17:49:27 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-52db62764f2sm1152051cf.30.2026.08.16.17.49.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Aug 2026 17:49:27 -0700 (PDT)
+Date: Sun, 16 Aug 2026 20:49:24 -0400
+From: Gregory Price <gourry@gourry.net>
+To: Qiqi Li <liqiqi23@huawei.com>
+Cc: linux-mm@kvack.org, Zhigang.Luo@amd.com, arun.george@samsung.com, 
+	balbirs@nvidia.com, brendan.jackman@linux.dev, yuzenghui@huawei.com, 
+	apopple@nvidia.com, alucerop@amd.com, matthew.brost@intel.com, 
+	akpm@linux-foundation.org, david@kernel.org, ljs@kernel.org, liam@infradead.org, 
+	vbabka@kernel.org, rppt@kernel.org, surenb@google.com, mhocko@suse.com, 
+	corbet@lwn.net, skhan@linuxfoundation.org, gregkh@linuxfoundation.org, 
+	rafael@kernel.org, dakr@kernel.org, djbw@kernel.org, vishal.l.verma@intel.com, 
+	dave.jiang@intel.com, alison.schofield@intel.com, osandov@osandov.com, 
+	jannh@google.com, pfalcato@suse.de, jackmanb@google.com, hannes@cmpxchg.org, 
+	ziy@nvidia.com, pbonzini@redhat.com, osalvador@suse.de, joshua.hahnjy@gmail.com, 
+	rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com, 
+	kasong@tencent.com, qi.zheng@linux.dev, shakeel.butt@linux.dev, baohua@kernel.org, 
+	axelrasmussen@google.com, yuanchu@google.com, weixugc@google.com, yury.norov@gmail.com, 
+	linux@rasmusvillemoes.dk, longman@redhat.com, ridong.chen@linux.dev, tj@kernel.org, 
+	mkoutny@suse.com, sj@kernel.org, jgg@ziepe.ca, jhubbard@nvidia.com, 
+	peterx@redhat.com, baolin.wang@linux.alibaba.com, npache@redhat.com, 
+	ryan.roberts@arm.com, dev.jain@arm.com, lance.yang@linux.dev, usama.arif@linux.dev, 
+	xu.xin16@zte.com.cn, chengming.zhou@linux.dev, roman.gushchin@linux.dev, 
+	muchun.song@linux.dev, linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+	driver-core@lists.linux.dev, nvdimm@lists.linux.dev, linux-cxl@vger.kernel.org, 
+	linux-debuggers@vger.kernel.org, linux-fsdevel@vger.kernel.org, kvm@vger.kernel.org, 
+	cgroups@vger.kernel.org, damon@lists.linux.dev, linux-kselftest@vger.kernel.org, 
+	kernel-team@meta.com
+Subject: Re: [PATCH v5 25/36] mm/memory_hotplug: support N_MEMORY_PRIVATE
+ node hotplug
+Message-ID: <aoJaaYp30LnKLj1w@gourry-fedora-PF4VCD3F>
+References: <20260720193431.3841992-1-gourry@gourry.net>
+ <20260720193431.3841992-26-gourry@gourry.net>
+ <6840c720-8cb7-46bb-a652-040c130a4427@huawei.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6840c720-8cb7-46bb-a652-040c130a4427@huawei.com>
 
-Hello Kunwu,
-
-On Sun, 16 Aug 2026 22:22:17 +0800 Kunwu Chan <kunwu.chan@gmail.com> wrote:
-
-> From: Kunwu Chan <kunwu.chan@gmail.com>
+On Thu, Aug 06, 2026 at 11:30:08AM +0800, Qiqi Li wrote:
+> Hi Gregory,
 > 
-> This series adds an AUX trace-buffer backend to the DAMON perf
-> observability framework, enabling ARM SPE (Statistical Profiling
-> Extension) to deliver hardware-sampled access reports into DAMON's
-> existing SPSC report ring.
-
-Awesome.  Thank you for making this.  This will make DAMON be more useful on
-ARM machines.
-
+> On 7/21/2026 3:34 AM, Gregory Price wrote:
 > 
-> Patch 2 touches drivers/perf/arm_spe_pmu.c to expose the PMU matcher.
-> This change is tightly coupled with the DAMON AUX backend.  ARM SPE
-> PMU driver maintainers only need to review patch 2.
+> > Add add_private_memory_driver_managed() to let modules hotplug
+> > memory onto an N_MEMORY_PRIVATE node they control.
 > 
-> This series is based on the Ravi's hardware-sampled access reports 
-> branch [1], and depends on the perf AUX kernel-consumer RFC series [2].
-> The dependencies is not upstream yet, so this series remains RFC.
+> I am trying to understand how the nid passed to
+> add_private_memory_driver_managed() is expected to be provisioned.
+> 
+> From what I can see, both node_private_register() and
+> __add_memory_resource() require the nid to already be present in
+> node_possible_map. My understanding is therefore that this patch
+> supports hotplugging private memory onto an existing possible node,
+> rather than creating a new possible node ID at runtime.
+> 
+> For example, in the use case I am looking at, the device's private
+> node is not described by firmware. Would its nid need to be reserved
+> during early NUMA initialization, or is there another mechanism that
+> I may have missed?
+> 
 
-Unfortunately I haven't had a time to thoroughly read the dependent patches.  I
-believe the basic idea of this patch series is aligned with the ongoing DAMON
-extension roadmap [1], though.  That is, this series is supposed to be a part
-of the milestone 3.  We are currently at the near end of milestone 1, and aim
-to complete milestone 2 by the time around next year's LSFMMBPF.
+It would need to be reserved, and you could use numa emulation but
+that's clunky.  I have an RFC for exactly this issue - though i haven't
+pushed it further yet.
 
-I will hold review of this series for now, and take more time on making
-milestones 1 and 2 for thier planned delivery timeline.  Sorry for being a
-bottleneck of your work, and thanks in advance for your patience.
+https://lore.kernel.org/all/20260610014517.253609-1-gourry@gourry.net/
 
-Please feel free to let me know if you have specific parts that need my review
-right now, though.  Otherwise, please make sure this is aligned with the
-roadmap until we finish the milestone 2.  I do want ARM SPE support of DAMON.
-
-[1] https://lore.kernel.org/all/20260525225208.1179-1-sj@kernel.org/
-
-
-Thanks,
-SJ
-
-[...]
+> Also, could you please Cc me on future revisions of this series?
+> I would appreciate it and would be happy to follow the work:)
+> 
+> Thanks,
+> Qiqi
