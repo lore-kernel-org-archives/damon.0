@@ -1,108 +1,136 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881EF3B6C05;
-	Mon, 17 Aug 2026 07:14:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3E63C2BB9
+	for <damon@lists.linux.dev>; Mon, 17 Aug 2026 08:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786950888; cv=none; b=PJNeNbCPCH3DTNLOWzEIcII+6I4cfilFItiLH5+HO20H8ZvqHxafIyQMQrafh6KkwhuG38+XjZtWiGOtbXc5t9h0B8EDKURMZ0XfjSwJc6hA0B3NbAz82NEji9nHClBPm+TDq4X20RmVXhqGxXAhj0uJtM9dZnr6H9GGeJNh4aY=
+	t=1786955956; cv=none; b=CbBxrnWYHqAMkPYAbn6XRvx8VEGrzmv+nc6MV2ZTfJz8Tco0AYmIRqfFYRIMKXxXUf+FYaKIkS2rLKeMfdCeDDBJChbdvHNA/+9TeiBU0pYp6Uw48tAwHRG6xEEYOwxsyUzHCQMCMD0WXYNRKvi//xYcpiRjXO+Qp4lqFt6mye4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786950888; c=relaxed/simple;
-	bh=91Osd8E23Nus8TqrgBZlQiC06ik09lSC83CImD8x0qs=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=ZygEqB2gp2aUlSO9CQH3xvSYhak7TQ792PjJHjJcDKGBN9caxWrdcuWKz2Y7f+94+wnY+PLTayKJ/MzRFdrZz1lk8iBv03TrKGiX5/C9dAfk4aDpLFFxYOg7iBEyNYU2jBCmKEHaftFWMWXvtvfdC4jucvNhe38KtMS5W9id2mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=m1T7JscZ; arc=none smtp.client-ip=117.135.210.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1786955956; c=relaxed/simple;
+	bh=eZlYPGQcU/+PTM+9+YI1JAoJFOp06njFaS8UfoF3gDU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=U5FvPWLhxbcUrw0BBJgbR7otDFo030DE8WYz5J0mXBXaO8wU9g+j6uU7d0zt82pSkL23N/ZvWhEZiN8XE1BF+QN5bCvbjKNHLw9eloF+tdQAa4E3p+KCXZivWevu/SzWH/J2YpKkRJNp4cr+cMK3sdayztMg82mGXzth46qia6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S5IpAV6Q; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="m1T7JscZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:To:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=91Osd8E23Nus8TqrgBZlQiC06ik09lSC83CImD8x0qs=; b=m
-	1T7JscZ1nUNtbZKwQOO/g/booNKtFku0jclk5Yfb174YWwLc6c9JrPgCNt2sukBS
-	3Nd89dKKdStPCgDH5RQGSWAFU4FyD4Qj58t1Fm1NbDk3Lh/Vz6gFt9UDTWaX/0JR
-	1BAzX1CnqrDuKyDkmNTHKhYRlIXpGa0zy67I1XDBCU=
-Received: from dayou5941$163.com ( [116.128.244.169] ) by
- ajax-webmail-wmsvr-40-148 (Coremail) ; Mon, 17 Aug 2026 15:14:36 +0800
- (CST)
-Date: Mon, 17 Aug 2026 15:14:36 +0800 (CST)
-From: =?UTF-8?B?5p2O5L2R6bi/IA==?= <dayou5941@163.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: damon@lists.linux.dev
-Subject: Re:Re: [PATCH] mm/damon/ops-common: factor out
- damon_putback_folio_list()
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2023.4-cmXT build
- 20260511(2e539873) Copyright (c) 2002-2026 www.mailtech.cn 163com
-In-Reply-To: <20260817064117.3581D1F000E9@smtp.kernel.org>
-References: <20260817063458.351063-1-dayou5941@163.com>
- <20260817064117.3581D1F000E9@smtp.kernel.org>
-X-NTES-SC: AL_Qu2TBPWev0As4CieYukckk4Wjug8Wcexufwj34NTc+AGmxjP0T8gZ3VSBGf2wtm0LQGNlRqJQD5e0NZhZJVguY2OE3JIE1Jstd4uIYbeuQ==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S5IpAV6Q"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38dc69c74b8so3229205a91.0
+        for <damon@lists.linux.dev>; Mon, 17 Aug 2026 01:39:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1786955954; x=1787560754; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=BEZ0rkuHQPQIomuCaD3mvVzCje7AyhhS8fXashblHp8=;
+        b=S5IpAV6QjGxCoC0TO2OETT2vXmkkooj9LgGzFNwMXwHIqBFNcUxSJCSpfd7ZV9q2yc
+         C9Epbo1KeVx/2nftYYBRhglEwebQevqfKvgo3s4pT443Hmkpr+fBNtNivcki3ky0CtEC
+         h1xuQESJ+lul/oo2j85vrf/uIub5Y84VPJE75ZOoVuvtHB3wpZInKlUD3bZ2MFD4rDDF
+         k9xW/ecuEqU8j3hONdd65ai8jH8ifd9doFBf842ejQMlvJxojZHdvHDDzAXf5mjKGDKz
+         lB3SxduKK0+cLPnFUsvkQZq5rb1GmLC78snXfTHAk8bNQSXg+EPcHYqen3iORdHQ+lFQ
+         BH1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786955954; x=1787560754;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=BEZ0rkuHQPQIomuCaD3mvVzCje7AyhhS8fXashblHp8=;
+        b=d5Yp70+XHUkraRHqa9gdocw9QyoIb+pIeEM92cJx4MNUmXnourtNmEjZBmSmyoKf9u
+         SynJz9wqA5ay0X24dswz6XDVjkH5RAxCbIW75vFqUsVHl9lonhH9DaqulPIbwWmdembv
+         R5C6qc0zKgUZLbZTiyFfNpJ9Z9qOyg0m9jz68DSrM+ACwNvICt/uwsMBafp4olBWAt3F
+         QtOcY5cco7LXz0aTbGZlzyC4kcM9CwNun0XKiNOEl5k8kEyLpKLxR+6xyPsKv0cLqjjZ
+         /ml9VPbgEJlIfw9QNBskqlYXs8aFo7Z0gfD7LVv8qjA7BMlZcW8AxuG92pYvfX+g8nFo
+         rpvg==
+X-Forwarded-Encrypted: i=1; AHgh+RrOwymGJPzIFHjAIhChCQZhr0LLzOxx2Ux0x9+2vM7NhWqeGQQPqcc/Eu8HV6BwVk9iX3V8Uw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxjE/96rHPtqbFmZwmLBwFF3C4XivZIKvuHIDyPisoEWm+vb7xE
+	c0dMMecztafBRyyd3K047QMVDOS5L3osO4R4mF1WR2KToKBPxb1DeRec
+X-Gm-Gg: AR+sD12Dvrbb/b2cmIKsFBmBxLpbfM90w1TcoEhj2JrlZDtS+54xFdAFzyk/9ALhHV4
+	ODOOjdQaKvW6bga7u2+g9bAAmEKd4WbjndRwr2Wcgf1aEoTuh2ZlD9+4z5ZBNCZGjKVCAPfe4lf
+	kErsEzPRMs4EwOkxuO78rwLKVrNJ1D76jIgyBCnvHK8LVu9Sr+hB8le/xr29QuSEARf/JTcwnbk
+	Wegzhyl9yRwBVQa9LfvLnfDCHZZ3ADlZftBpiQBUYA473jCfQSzdlpx4rIUVf/rGWWeAisN8msb
+	8IPDUpGQHO3RBHzNocT7hf8kjAaaF5bLLUADMNLMA2fNcl/wDx872p+WI6x8AgKZFBohak4t8M9
+	Uyintyce1b+Uvi1bZM5Zmv4XwiMIPsLD32jUrBqWQ4571jFoKQbAEnkdrqUtSLOhHr00WohVNn5
+	tpbx7rdWYI3D6wnlKsjkCqZYq47kTccYuPStPv1CPoCTJQfuRvshLt4zGl6p9sti5o8ThzQPgC/
+	FAcmUSGvQ6HjKMIzg==
+X-Received: by 2002:a17:90b:3b42:b0:393:19a3:4e5 with SMTP id 98e67ed59e1d1-3933e638862mr21181094a91.16.1786955953953;
+        Mon, 17 Aug 2026 01:39:13 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:89b:69e5:1f8d:8b25:88b8:b9fa])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39531e8904dsm4086253a91.8.2026.08.17.01.39.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Aug 2026 01:39:13 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: sj@kernel.org
+Cc: aethernet65535@gmail.com,
+	damon@lists.linux.dev,
+	gutierrez.asier@huawei-partners.com,
+	linux-mm@kvack.org
+Subject: Re: [RFC/Discussion] mm/damon: Helping with alternative for watermarks
+Date: Mon, 17 Aug 2026 16:39:23 +0800
+Message-ID: <20260817083923.4374-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260814145414.91204-1-sj@kernel.org>
+References: <20260814145414.91204-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <7f87a4e0.54d4.1a00e927ecd.Coremail.dayou5941@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:lCgvCgD3D9fdtIJqFCMzAA--.2273W
-X-CM-SenderInfo: 5gd103ivzuiqqrwthudrp/xtbC3R2fTmqCtN2saAAA3U
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Transfer-Encoding: 8bit
 
-CgoKCgoKCgoKCgoKCgoKCgpBdCAyMDI2LTA4LTE3IDE0OjQxOjE2LCBzYXNoaWtvLWJvdEBrZXJu
-ZWwub3JnIHdyb3RlOgo+VGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBB
-SSByZXZpZXcgZm91bmQgMSBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6Cj4tIFtMb3dd
-IFJlbW92YWwgb2YgYHN0cnVjdCBmb2xpbyAqZm9saW87YCBkZWNsYXJhdGlvbiBjYXVzZXMgYSBj
-b21waWxhdGlvbiBmYWlsdXJlIGluIGBkYW1vbl9taWdyYXRlX2ZvbGlvX2xpc3QoKWAuCj4tLQo+
-Cj4tLS0gUGF0Y2ggWzFdOiBbUEFUQ0hdIG1tL2RhbW9uL29wcy1jb21tb246IGZhY3RvciBvdXQg
-ZGFtb25fcHV0YmFja19mb2xpb19saXN0KCkgLS0tCj5jb21taXQgYjk1YjIxZmE0ZDBkODk5MGQ0
-NzYwOTQ3NGY4Y2VlMmFhN2Q2NDBlMQo+QXV0aG9yOiBMaSBZb3Vob25nIDxsaXlvdWhvbmdAa3ls
-aW5vcy5jbj4KPgo+bW0vZGFtb24vb3BzLWNvbW1vbjogZmFjdG9yIG91dCBkYW1vbl9wdXRiYWNr
-X2ZvbGlvX2xpc3QoKQo+Cj5UaGlzIGNvbW1pdCBmYWN0b3JzIG91dCB0aGUgZHVwbGljYXRlZCBw
-dXRiYWNrIGxvb3AgaW4KPmRhbW9uX21pZ3JhdGVfZm9saW9fbGlzdCgpIGFuZCBkYW1vbl9taWdy
-YXRlX3BhZ2VzKCkgaW50byBhIG5ldwo+ZGFtb25fcHV0YmFja19mb2xpb19saXN0KCkgaGVscGVy
-LiBUaGUgY29tbWl0IG5vdGVzIHN0YXRlIHRoaXMgcmVtb3Zlcwo+dGhlIG5lZWQgZm9yIHRoZSBs
-b2NhbCBmb2xpbyB2YXJpYWJsZS4KPgo+TGluazogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxs
-LzIwMjYwNzI0MDYwNzA3LkNFMUY4MUYwMDBFOUBzbXRwLmtlcm5lbC5vcmcvCj4KPj4gZGlmZiAt
-LWdpdCBhL21tL2RhbW9uL29wcy1jb21tb24uYyBiL21tL2RhbW9uL29wcy1jb21tb24uYwo+PiBp
-bmRleCBmYmRhNzBkOGVhNGQwLi5mOWNmZDM1YmVlNzIyIDEwMDY0NAo+PiAtLS0gYS9tbS9kYW1v
-bi9vcHMtY29tbW9uLmMKPj4gKysrIGIvbW0vZGFtb24vb3BzLWNvbW1vbi5jCj5bIC4uLiBdCj4+
-ICBzdGF0aWMgdW5zaWduZWQgaW50IGRhbW9uX21pZ3JhdGVfZm9saW9fbGlzdChzdHJ1Y3QgbGlz
-dF9oZWFkICpmb2xpb19saXN0LAo+PiAgCQkJCQkJc3RydWN0IHBnbGlzdF9kYXRhICpwZ2RhdCwK
-Pj4gIAkJCQkJCWludCB0YXJnZXRfbmlkKQo+PiAgewo+PiAgCXVuc2lnbmVkIGludCBucl9taWdy
-YXRlZCA9IDA7Cj4+IC0Jc3RydWN0IGZvbGlvICpmb2xpbzsKPj4gIAlMSVNUX0hFQUQocmV0X2Zv
-bGlvcyk7Cj4+ICAJTElTVF9IRUFEKG1pZ3JhdGVfZm9saW9zKTsKPgo+W1NldmVyaXR5OiBMb3dd
-Cj5UaGUgY29tbWl0IG1lc3NhZ2Ugbm90ZXMgdGhhdCByZW1vdmluZyB0aGUgZm9saW8gdmFyaWFi
-bGUgaGVyZSB3b24ndCBjYXVzZQo+YSBidWlsZCBmYWlsdXJlLiBIb3dldmVyLCBkb2VzIGRhbW9u
-X21pZ3JhdGVfZm9saW9fbGlzdCgpIHN0aWxsIHVzZSB0aGUKPmZvbGlvIHZhcmlhYmxlIGluIGl0
-cyBmaXJzdCB3aGlsZS1sb29wPwoKPgoKVGhhbmtzIGZvciB0aGUgcmV2aWV3LgpSZW1vdmluZyB0
-aGUgbG9jYWwgdmFyaWFibGUgInN0cnVjdCBmb2xpbyAqZm9saW8iIGluIGRhbW9uX21pZ3JhdGVf
-Zm9saW9fbGlzdCgpIHdpbGwKbm90IGNhdXNlIGJ1aWxkIGZhaWx1cmVzLCBzaW5jZSB0aGlzIHZh
-cmlhYmxlIGlzIG9ubHkgdXNlZCBpbnNpZGUgdGhlIHdoaWxl4oCRbG9vcC4KCkBAIC0zNzIsMTMg
-KzM4NCw3IEBAIHN0YXRpYyB1bnNpZ25lZCBpbnQgZGFtb25fbWlncmF0ZV9mb2xpb19saXN0KHN0
-cnVjdCBsaXN0X2hlYWQgKmZvbGlvX2xpc3QsCiAKIAlsaXN0X3NwbGljZSgmcmV0X2ZvbGlvcywg
-Zm9saW9fbGlzdCk7CiAKLQl3aGlsZSAoIWxpc3RfZW1wdHkoZm9saW9fbGlzdCkpIHsKLQkJZm9s
-aW8gPSBscnVfdG9fZm9saW8oZm9saW9fbGlzdCk7ICAvL1RoaXMgdmFyaWFibGUgaXMgb25seSB1
-c2VkIGhlcmUuCi0JCWxpc3RfZGVsKCZmb2xpby0+bHJ1KTsKLQkJbm9kZV9zdGF0X3N1Yl9mb2xp
-byhmb2xpbywgTlJfSVNPTEFURURfQU5PTiArCi0JCQkJZm9saW9faXNfZmlsZV9scnUoZm9saW8p
-KTsKLQkJZm9saW9fcHV0YmFja19scnUoZm9saW8pOwotCX0KKwlkYW1vbl9wdXRiYWNrX2ZvbGlv
-X2xpc3QoZm9saW9fbGlzdCk7Cgo+TG9va2luZyBhdCB0aGUgcmVtYWluaW5nIGNvZGUgaW4gZGFt
-b25fbWlncmF0ZV9mb2xpb19saXN0KCk6Cj4KPgl3aGlsZSAoIWxpc3RfZW1wdHkoZm9saW9fbGlz
-dCkpIHsKPgkJY29uZF9yZXNjaGVkKCk7Cj4KPgkJZm9saW8gPSBscnVfdG9fZm9saW8oZm9saW9f
-bGlzdCk7Cj4JCWxpc3RfZGVsKCZmb2xpby0+bHJ1KTsKPgo+CQlpZiAoIWZvbGlvX3RyeWxvY2so
-Zm9saW8pKQo+CQkJZ290byBrZWVwOwo+Cj5XaWxsIHRoaXMgY2F1c2UgYW4gdW5kZWNsYXJlZCBp
-ZGVudGlmaWVyIGNvbXBpbGF0aW9uIGVycm9yIHNpbmNlIHRoZSB2YXJpYWJsZQo+d2FzIHJlbW92
-ZWQgZnJvbSB0aGUgZnVuY3Rpb24gc2NvcGUgYnV0IG5vdCByZS1kZWNsYXJlZCBsb2NhbGx5IGlu
-c2lkZSB0aGlzCj5sb29wIGJsb2NrPwo+ClRoZSBsYXRlc3QgY29kZSBpcyBhcyBzaG93biBiZWxv
-dzsgZm9saW8gaXMgYWxyZWFkeSBkZWNsYXJlZCBsb2NhbGx5LgoKCXdoaWxlICghbGlzdF9lbXB0
-eShmb2xpb19saXN0KSkgewoJCXN0cnVjdCBmb2xpbyAqZm9saW87CgoJCWNvbmRfcmVzY2hlZCgp
-OwoKCQlmb2xpbyA9IGxydV90b19mb2xpbyhmb2xpb19saXN0KTsKCQlsaXN0X2RlbCgmZm9saW8t
-PmxydSk7CgoJCWlmICghZm9saW9fdHJ5bG9jayhmb2xpbykpCgkJCWdvdG8ga2VlcDsKCmxpbms6
-IGh0dHBzOi8vZ2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L3RvcnZhbGRz
-L2xpbnV4LmdpdC90cmVlL21tL2RhbW9uL29wcy1jb21tb24uYz9pZD12Ny4yCgpUaGFua3MsCllv
-dWhvbmcKCj4tLSAKPlNhc2hpa28gQUkgcmV2aWV3IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9w
-YXRjaHNldC8yMDI2MDgxNzA2MzQ1OC4zNTEwNjMtMS1kYXlvdTU5NDFAMTYzLmNvbT9wYXJ0PTEK
+On Fri, 14 Aug 2026 07:54:13 -0700 SJ Park <sj@kernel.org> wrote:
 
+> I think watermarks is bettert to be deprecated due to following reasons.  First
+> of all, it stops monitoring.  It means the converged region age and addresses
+> information is lost.  This is the biggest problem.  Secondly, we already have
+> similar and better features including DAMOS quotas.  For your DAMON_RECLAIM use
+> case, I'd suggest using it without watermarks but quota_mem_pressure_us.
+
+While quota_mem_pressure_us may not be suitable for my use case, I
+realize that DAMOS Quota does meet my needs - only proactively reclaims
+memory when 'MemAvaialble <= 30%'.  I used it on my machine by
+implementing DAMOS_QUOTA_AVAILABLE_MEM_BP, which can also be achieved
+through the user_input of DAMOS Quota.
+
+I think DAMOS Quota is indeed similar to and better than Watermarks.
+The main drawback of DAMOS Quota at present is probably the lack of
+wmarks.low like Watermarks, but this can be solved by adding a parameter,
+which might be called fallback_value or some other better name.
+
+Therefore, I agree that we should improve DAMOS Quota instead of
+Watermarks, as it is indeed much better than Watermarks.
+
+> 
+> Hence I want to deprecate watermarks rather than improving it.  If we need a
+> better watermarks, I think we should improve/extend alternatives like DAMOS
+> quotas, or implement a new one.  But, we should first understand why we need a
+> better watermarks.  You mentioned you want to use DAMOS watermarks with
+> DAMON_RECLAIM on your laptop.  Could you further share why you want to use
+> watermarks, and what was the problem?  You mentioned it was problematic due to
+> page cache, and you implemented memAvailable based watermarks.  Why you use
+> wateramrks?  How exactly the page cache usage becomes a problem for you?  Has
+> the memAvaialble based one solved your problem? 
+
+1. Why use Watermarks? And what was the problem?
+
+I now understand why we do not need better Watermarks, so my answer is
+based on my previous thought.
+
+I used Watermarks primarily because it is the only mechanism I know for
+stopping/running a Scheme.  The problem is it can only monitor MemFree.
+
+2. How exactly the page cache becomes a problem for you?
+
+After prolonged computer use, the page cache can become full.
+DAMON_RECLAIM might then mistakenly assume there is slight memory
+pressure and reclaim those cached pages.  Unnecessary page cache
+reclamation can incur unnecessary overhead.
+
+3. Has the MemAvailable based one solved your problem?
+
+Yes, using MemAvailable as a watermarks/DAMOS Quota metric can avoid a
+lot of unnecessary memory reclamation.
+
+Best regards,
+Rui Yan
