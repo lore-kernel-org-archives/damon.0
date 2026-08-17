@@ -1,76 +1,61 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3E63C2BB9
-	for <damon@lists.linux.dev>; Mon, 17 Aug 2026 08:39:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20A9418344
+	for <damon@lists.linux.dev>; Mon, 17 Aug 2026 12:53:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786955956; cv=none; b=CbBxrnWYHqAMkPYAbn6XRvx8VEGrzmv+nc6MV2ZTfJz8Tco0AYmIRqfFYRIMKXxXUf+FYaKIkS2rLKeMfdCeDDBJChbdvHNA/+9TeiBU0pYp6Uw48tAwHRG6xEEYOwxsyUzHCQMCMD0WXYNRKvi//xYcpiRjXO+Qp4lqFt6mye4=
+	t=1786971230; cv=none; b=oVqBbS6jQJL6lwhchpSjb/CIecVDvPxo2u1+BfxxGPquBoHgvEze4U38k+EOEaLEjag1loMbiVhg0zbXl6DGY5gfNZxzb3Hb6IjZPqE34A9fidu/X7tZ+FXzVwir1+RtyOcGIzNY0XmtE6gcPPjghx0dcMNU72SyEef1wiEBR14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786955956; c=relaxed/simple;
-	bh=eZlYPGQcU/+PTM+9+YI1JAoJFOp06njFaS8UfoF3gDU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5FvPWLhxbcUrw0BBJgbR7otDFo030DE8WYz5J0mXBXaO8wU9g+j6uU7d0zt82pSkL23N/ZvWhEZiN8XE1BF+QN5bCvbjKNHLw9eloF+tdQAa4E3p+KCXZivWevu/SzWH/J2YpKkRJNp4cr+cMK3sdayztMg82mGXzth46qia6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S5IpAV6Q; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S5IpAV6Q"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-38dc69c74b8so3229205a91.0
-        for <damon@lists.linux.dev>; Mon, 17 Aug 2026 01:39:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1786955954; x=1787560754; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=BEZ0rkuHQPQIomuCaD3mvVzCje7AyhhS8fXashblHp8=;
-        b=S5IpAV6QjGxCoC0TO2OETT2vXmkkooj9LgGzFNwMXwHIqBFNcUxSJCSpfd7ZV9q2yc
-         C9Epbo1KeVx/2nftYYBRhglEwebQevqfKvgo3s4pT443Hmkpr+fBNtNivcki3ky0CtEC
-         h1xuQESJ+lul/oo2j85vrf/uIub5Y84VPJE75ZOoVuvtHB3wpZInKlUD3bZ2MFD4rDDF
-         k9xW/ecuEqU8j3hONdd65ai8jH8ifd9doFBf842ejQMlvJxojZHdvHDDzAXf5mjKGDKz
-         lB3SxduKK0+cLPnFUsvkQZq5rb1GmLC78snXfTHAk8bNQSXg+EPcHYqen3iORdHQ+lFQ
-         BH1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786955954; x=1787560754;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=BEZ0rkuHQPQIomuCaD3mvVzCje7AyhhS8fXashblHp8=;
-        b=d5Yp70+XHUkraRHqa9gdocw9QyoIb+pIeEM92cJx4MNUmXnourtNmEjZBmSmyoKf9u
-         SynJz9wqA5ay0X24dswz6XDVjkH5RAxCbIW75vFqUsVHl9lonhH9DaqulPIbwWmdembv
-         R5C6qc0zKgUZLbZTiyFfNpJ9Z9qOyg0m9jz68DSrM+ACwNvICt/uwsMBafp4olBWAt3F
-         QtOcY5cco7LXz0aTbGZlzyC4kcM9CwNun0XKiNOEl5k8kEyLpKLxR+6xyPsKv0cLqjjZ
-         /ml9VPbgEJlIfw9QNBskqlYXs8aFo7Z0gfD7LVv8qjA7BMlZcW8AxuG92pYvfX+g8nFo
-         rpvg==
-X-Forwarded-Encrypted: i=1; AHgh+RrOwymGJPzIFHjAIhChCQZhr0LLzOxx2Ux0x9+2vM7NhWqeGQQPqcc/Eu8HV6BwVk9iX3V8Uw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxjE/96rHPtqbFmZwmLBwFF3C4XivZIKvuHIDyPisoEWm+vb7xE
-	c0dMMecztafBRyyd3K047QMVDOS5L3osO4R4mF1WR2KToKBPxb1DeRec
-X-Gm-Gg: AR+sD12Dvrbb/b2cmIKsFBmBxLpbfM90w1TcoEhj2JrlZDtS+54xFdAFzyk/9ALhHV4
-	ODOOjdQaKvW6bga7u2+g9bAAmEKd4WbjndRwr2Wcgf1aEoTuh2ZlD9+4z5ZBNCZGjKVCAPfe4lf
-	kErsEzPRMs4EwOkxuO78rwLKVrNJ1D76jIgyBCnvHK8LVu9Sr+hB8le/xr29QuSEARf/JTcwnbk
-	Wegzhyl9yRwBVQa9LfvLnfDCHZZ3ADlZftBpiQBUYA473jCfQSzdlpx4rIUVf/rGWWeAisN8msb
-	8IPDUpGQHO3RBHzNocT7hf8kjAaaF5bLLUADMNLMA2fNcl/wDx872p+WI6x8AgKZFBohak4t8M9
-	Uyintyce1b+Uvi1bZM5Zmv4XwiMIPsLD32jUrBqWQ4571jFoKQbAEnkdrqUtSLOhHr00WohVNn5
-	tpbx7rdWYI3D6wnlKsjkCqZYq47kTccYuPStPv1CPoCTJQfuRvshLt4zGl6p9sti5o8ThzQPgC/
-	FAcmUSGvQ6HjKMIzg==
-X-Received: by 2002:a17:90b:3b42:b0:393:19a3:4e5 with SMTP id 98e67ed59e1d1-3933e638862mr21181094a91.16.1786955953953;
-        Mon, 17 Aug 2026 01:39:13 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:89b:69e5:1f8d:8b25:88b8:b9fa])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39531e8904dsm4086253a91.8.2026.08.17.01.39.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2026 01:39:13 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: aethernet65535@gmail.com,
-	damon@lists.linux.dev,
-	gutierrez.asier@huawei-partners.com,
-	linux-mm@kvack.org
-Subject: Re: [RFC/Discussion] mm/damon: Helping with alternative for watermarks
-Date: Mon, 17 Aug 2026 16:39:23 +0800
-Message-ID: <20260817083923.4374-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260814145414.91204-1-sj@kernel.org>
-References: <20260814145414.91204-1-sj@kernel.org>
+	s=arc-20240116; t=1786971230; c=relaxed/simple;
+	bh=zIci3W0ePBzOZ8EKy/gXzjuYTssAdhdLaZvbkzVxUds=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KzF0dOqnoiR/t/iwqMXdz6ake//oU47ZzfcyfSaE0TAm/nHmAqNUHGejsyNAxUfoDiq4Hz2/5GUqEEZ6lzrtnxTir1XQ/AduTT/DQAexvZ9wdYxmRp7AnBPYK1h/cGrLJQ2IalToMWv7dXVLvCNUrON11nfl5sD35takYh39w3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: a87ee1169a3a11f19a56ed5b684f684d-20260817
+X-CTIC-Tags:
+	HR_CC_COUNT, HR_CC_DOMAIN_COUNT, HR_CC_NAME, HR_CC_NO_NAME, HR_CTE_8B
+	HR_CTT_MISS, HR_DATE_H, HR_DATE_WKD, HR_DATE_ZONE, HR_FROM_NAME
+	HR_SJ_LANG, HR_SJ_LEN, HR_SJ_LETTER, HR_SJ_NOR_SYM, HR_SJ_PHRASE
+	HR_SJ_PHRASE_LEN, HR_SJ_WS, HR_TO_COUNT, HR_TO_DOMAIN_COUNT, HR_TO_NO_NAME
+	IP_UNTRUSTED, SRC_UNTRUSTED, IP_LOWREP, SRC_LOWREP, DN_TRUSTED
+	SRC_TRUSTED, SA_TRUSTED, SA_EXISTED, SN_TRUSTED, SN_EXISTED
+	SPF_NOPASS, DKIM_NOPASS, DMARC_NOPASS, CIE_GOOD, CIE_GOOD_SPF
+	GTI_FG_BS, GTI_RG_INFO, GTI_C_BU, AMN_GOOD, ABX_MISS_RDNS
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:9d81e917-8b7e-4b49-bcdd-4cb416522e83,IP:10,
+	URL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
+	N:release,TS:35
+X-CID-INFO: VERSION:1.3.19,REQID:9d81e917-8b7e-4b49-bcdd-4cb416522e83,IP:10,UR
+	L:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:35
+X-CID-META: VersionHash:7db8b62,CLOUDID:725b431d360468d5390744ffeb8ec87f,BulkI
+	D:2608172052115L9JT3TD,BulkQuantity:1,SF:17|19|38|66|78|102|127|865|898,TC
+	:nil,Content:0|15|50,EDM:5,IP:-2,URL:0,File:nil,RT:nil,Bulk:40,QS:nil,BEC:
+	nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: a87ee1169a3a11f19a56ed5b684f684d-20260817
+X-User: lienze@kylinos.cn
+Received: from ubuntu.. [(61.48.210.10)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1187589918; Mon, 17 Aug 2026 20:53:35 +0800
+From: Enze Li <lienze@kylinos.cn>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	enze.li@gmx.com,
+	Enze Li <lienze@kylinos.cn>
+Subject: [PATCH] mm/damon/core: introduce damon_set_target_pid()
+Date: Mon, 17 Aug 2026 20:53:19 +0800
+Message-ID: <20260817125319.888994-1-lienze@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -79,58 +64,140 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 14 Aug 2026 07:54:13 -0700 SJ Park <sj@kernel.org> wrote:
+The logic that finds the struct pid for a given pid number and assigns
+it to a damon_target is duplicated in multiple places.  Including
+damon_sysfs_add_target() of mm/damon/sysfs.c and the start functions
+of the two sample modules, samples/damon/wsse.c and
+samples/damon/prcl.c.  Add a function that does the work, and replace
+the duplicated code in the places with calls to the function.
 
-> I think watermarks is bettert to be deprecated due to following reasons.  First
-> of all, it stops monitoring.  It means the converged region age and addresses
-> information is lost.  This is the biggest problem.  Secondly, we already have
-> similar and better features including DAMOS quotas.  For your DAMON_RECLAIM use
-> case, I'd suggest using it without watermarks but quota_mem_pressure_us.
+Signed-off-by: Enze Li <lienze@kylinos.cn>
+---
+ include/linux/damon.h |  1 +
+ mm/damon/core.c       | 12 ++++++++++++
+ mm/damon/sysfs.c      |  6 ++----
+ samples/damon/prcl.c  |  5 +----
+ samples/damon/wsse.c  |  5 +----
+ 5 files changed, 17 insertions(+), 12 deletions(-)
 
-While quota_mem_pressure_us may not be suitable for my use case, I
-realize that DAMOS Quota does meet my needs - only proactively reclaims
-memory when 'MemAvaialble <= 30%'.  I used it on my machine by
-implementing DAMOS_QUOTA_AVAILABLE_MEM_BP, which can also be achieved
-through the user_input of DAMOS Quota.
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 0c8b7ddef9ab..a937aa55170b 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -1054,6 +1054,7 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src);
+ 
+ struct damon_target *damon_new_target(void);
+ void damon_add_target(struct damon_ctx *ctx, struct damon_target *t);
++int damon_set_target_pid(struct damon_target *t, int pid);
+ bool damon_targets_empty(struct damon_ctx *ctx);
+ void damon_free_target(struct damon_target *t);
+ void damon_destroy_target(struct damon_target *t, struct damon_ctx *ctx);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 644daf5a1656..82b196407ae8 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -10,6 +10,7 @@
+ #include <linux/kthread.h>
+ #include <linux/memcontrol.h>
+ #include <linux/mm.h>
++#include <linux/pid.h>
+ #include <linux/psi.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+@@ -795,6 +796,17 @@ void damon_add_target(struct damon_ctx *ctx, struct damon_target *t)
+ 	list_add_tail(&t->list, &ctx->adaptive_targets);
+ }
+ 
++/*
++ * Assign the struct pid of the given pid number to the given target.
++ */
++int damon_set_target_pid(struct damon_target *t, int pid)
++{
++	t->pid = find_get_pid(pid);
++	if (!t->pid)
++		return -EINVAL;
++	return 0;
++}
++
+ bool damon_targets_empty(struct damon_ctx *ctx)
+ {
+ 	return list_empty(&ctx->adaptive_targets);
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index e3858ffab4b2..3c81b4c91ac0 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -3,7 +3,6 @@
+  * DAMON sysfs Interface
+  */
+ 
+-#include <linux/pid.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ 
+@@ -2035,9 +2034,8 @@ static int damon_sysfs_add_target(struct damon_sysfs_target *sys_target,
+ 		return -ENOMEM;
+ 	damon_add_target(ctx, t);
+ 	if (damon_target_has_pid(ctx)) {
+-		t->pid = find_get_pid(sys_target->pid);
+-		if (!t->pid)
+-			/* caller will destroy targets */
++		/* caller will destroy targets */
++		if (damon_set_target_pid(t, sys_target->pid))
+ 			return -EINVAL;
+ 	}
+ 	t->obsolete = sys_target->obsolete;
+diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
+index 842099bd6228..83ddf12811d5 100644
+--- a/samples/damon/prcl.c
++++ b/samples/damon/prcl.c
+@@ -32,7 +32,6 @@ module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
+ MODULE_PARM_DESC(enabled, "Enable or disable DAMON_SAMPLE_PRCL");
+ 
+ static struct damon_ctx *ctx;
+-static struct pid *target_pidp;
+ 
+ static int damon_sample_prcl_repeat_call_fn(void *data)
+ {
+@@ -79,12 +78,10 @@ static int damon_sample_prcl_start(void)
+ 		return -ENOMEM;
+ 	}
+ 	damon_add_target(ctx, target);
+-	target_pidp = find_get_pid(target_pid);
+-	if (!target_pidp) {
++	if (damon_set_target_pid(target, target_pid)) {
+ 		damon_destroy_ctx(ctx);
+ 		return -EINVAL;
+ 	}
+-	target->pid = target_pidp;
+ 
+ 	scheme = damon_new_scheme(
+ 			&(struct damos_access_pattern) {
+diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
+index 37fd5da20158..53944aea8428 100644
+--- a/samples/damon/wsse.c
++++ b/samples/damon/wsse.c
+@@ -33,7 +33,6 @@ module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
+ MODULE_PARM_DESC(enabled, "Enable or disable DAMON_SAMPLE_WSSE");
+ 
+ static struct damon_ctx *ctx;
+-static struct pid *target_pidp;
+ 
+ static int damon_sample_wsse_repeat_call_fn(void *data)
+ {
+@@ -79,12 +78,10 @@ static int damon_sample_wsse_start(void)
+ 		return -ENOMEM;
+ 	}
+ 	damon_add_target(ctx, target);
+-	target_pidp = find_get_pid(target_pid);
+-	if (!target_pidp) {
++	if (damon_set_target_pid(target, target_pid)) {
+ 		damon_destroy_ctx(ctx);
+ 		return -EINVAL;
+ 	}
+-	target->pid = target_pidp;
+ 
+ 	err = damon_start(&ctx, 1, true);
+ 	if (err) {
+-- 
+2.43.0
 
-I think DAMOS Quota is indeed similar to and better than Watermarks.
-The main drawback of DAMOS Quota at present is probably the lack of
-wmarks.low like Watermarks, but this can be solved by adding a parameter,
-which might be called fallback_value or some other better name.
-
-Therefore, I agree that we should improve DAMOS Quota instead of
-Watermarks, as it is indeed much better than Watermarks.
-
-> 
-> Hence I want to deprecate watermarks rather than improving it.  If we need a
-> better watermarks, I think we should improve/extend alternatives like DAMOS
-> quotas, or implement a new one.  But, we should first understand why we need a
-> better watermarks.  You mentioned you want to use DAMOS watermarks with
-> DAMON_RECLAIM on your laptop.  Could you further share why you want to use
-> watermarks, and what was the problem?  You mentioned it was problematic due to
-> page cache, and you implemented memAvailable based watermarks.  Why you use
-> wateramrks?  How exactly the page cache usage becomes a problem for you?  Has
-> the memAvaialble based one solved your problem? 
-
-1. Why use Watermarks? And what was the problem?
-
-I now understand why we do not need better Watermarks, so my answer is
-based on my previous thought.
-
-I used Watermarks primarily because it is the only mechanism I know for
-stopping/running a Scheme.  The problem is it can only monitor MemFree.
-
-2. How exactly the page cache becomes a problem for you?
-
-After prolonged computer use, the page cache can become full.
-DAMON_RECLAIM might then mistakenly assume there is slight memory
-pressure and reclaim those cached pages.  Unnecessary page cache
-reclamation can incur unnecessary overhead.
-
-3. Has the MemAvailable based one solved your problem?
-
-Yes, using MemAvailable as a watermarks/DAMOS Quota metric can avoid a
-lot of unnecessary memory reclamation.
-
-Best regards,
-Rui Yan
