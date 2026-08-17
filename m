@@ -1,131 +1,202 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3ACA436342;
-	Mon, 17 Aug 2026 13:42:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0ED440A1A
+	for <damon@lists.linux.dev>; Mon, 17 Aug 2026 13:49:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974131; cv=none; b=ZwPdCfGRReQ5gZzxTDkKqr8CMOvEjQ3QOjgzb71x9wwaNueEuiVj0YPJhgokavKEshUgp6MiXTbG5WACbh9BHiq3RU/viso1LObHvY5NdLH2xvVgkeiUz3IkgWLorfcq3XsQ91k7hFUKkshOPfd0i0EbKknrD5S2cP8GGaEKsL4=
+	t=1786974605; cv=none; b=LDTFtgvCI+3T+Q8j7yt/0rxFc84eeSODhNkM/q6gj9L5LNoqiPAk0VDkgs2c87WhsD3zIbGBYFdusJtG9lERNkHBv0SkTgNWzrk1e25tWA5j4yCMluy3UAg0EwbCbj7tW1JVgilR6ODCl0oDrtSLZ+cPSuSV36xZGjTRw7l6Wuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974131; c=relaxed/simple;
-	bh=VmUolJpkPhJhAlyNerUL4btJ5oSMz22hfjB1pT7W1Bg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G570DBDMo8R9rFZV5sItz+F/PU5X8TzBKCs+iE6RArX83KfIHbdm/IHsCdOfkUavXwqbEbodSCcMViqSGG4nVxU1PDRF3oBbGaO3i4cdOWJ7S9gFQZ/hqG4/2tkwXSredk0mdjoTsErQzFnvsYq4bAcP1I64NH1HwhUk9w5JUw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kUgKhK7A; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786974605; c=relaxed/simple;
+	bh=B0co/0rScDaRr0gBu18BkztdeCpkaTGcypUvZSgpMCw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JQM6t8HZmEb0HYCfx4JgeEYjyi+t61iWGvU2MjjYBxpJLl4+GnLfe0MtTbRvySZ4aZ2X+OqD9ES/dfi/zzyTaCrC8jc+nEAN8sXeC0IyjpXjiSYQl5xf/c5svT0Lszmbk1MMh2igi3UMTZHT3jZWxcRaK5DCAtGCiWzRrj1YSag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=ad5DWPZN; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kUgKhK7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2777C1F00A3A;
-	Mon, 17 Aug 2026 13:42:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786974129;
-	bh=THX0Z/8utD7j+IXnwYTDcoLP5zSf7naxjyTV86BLgDQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUgKhK7AoUwKAqnbkbeYM5ehgQFaN+R6d+cdrlJ8KaoIb724DCtdhNNOBc66wwJEv
-	 s5bP4WMHROjY9Im4Ure/mxamJRMC7nFf0tE5QJBZTNyH6pMogVxuNNuI1o8nTuj1Gx
-	 UYGH+JsT6fsECYGb1mkTufCVdjmS5KIoXGg0c3c/dIKXKNtxzAbS13yDzmA2Hz9pYL
-	 jCx2GZ577NJ0JSH2K/VNuzLCqvNhX3IsGZ7XDSYrnhwsP0MOT6+8OZyOx7D7hkO0sG
-	 UZnoP8n3+xFN304mgxB2QgGsUjPSNNfcRUtS4BzQVBk6X82MqZQ0SnN5WlZCk8X3j9
-	 ohfonFOSaP52A==
-From: SJ Park <sj@kernel.org>
-To: dayou5941@163.com
-Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	Li Youhong <liyouhong@kylinos.cn>,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/ops-common: factor out damon_putback_folio_list()
-Date: Mon, 17 Aug 2026 06:42:00 -0700
-Message-ID: <20260817134202.75525-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260817063458.351063-1-dayou5941@163.com>
-References: 
+	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="ad5DWPZN"
+dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=b/Sge/HEaRHrAnq6gNY9Urt58pOU9P34p0y2R0WVaEE=;
+	b=ad5DWPZN3XAbiYxp7mTiS9vw22QA2QbQ/CsFhV52wvnlImJKGoN7CzDhWbtFj0LJJis75hoLt
+	H9DvtZ9d4jEsbmjFmeny8iTNN0bZhyFws0odThksdMKabfPRuUnB/xIK4M1eiDJqCNtaTwDrg9T
+	mDDLsS5EZaLKv0rv8XalUQg=
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4hNvMn1ngmzJ46F6;
+	Mon, 17 Aug 2026 21:49:41 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 146BB40575;
+	Mon, 17 Aug 2026 21:49:46 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Mon, 17 Aug 2026 16:49:45 +0300
+Message-ID: <dc075f92-2291-49f0-8f89-01b2ffb7fd82@huawei-partners.com>
+Date: Mon, 17 Aug 2026 16:49:45 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/damon/core: introduce damon_set_target_pid()
+To: Enze Li <lienze@kylinos.cn>, <sj@kernel.org>, <akpm@linux-foundation.org>
+CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>, <enze.li@gmx.com>
+References: <20260817125319.888994-1-lienze@kylinos.cn>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260817125319.888994-1-lienze@kylinos.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-Hello Li,
+Hi Enze,
 
-'get_maintainer.pl --nogit --nogit-fallback' suggests adding below recipients.
-I added them.  Please consier using get_maintainer.pl from the next time.
-
-- linux-mm@kvack.org
-- linux-kernel@vger.kernel.org
-
-On Mon, 17 Aug 2026 14:34:58 +0800 dayou5941@163.com wrote:
-
-> From: Li Youhong <liyouhong@kylinos.cn>
+On 8/17/2026 3:53 PM, Enze Li wrote:
+> The logic that finds the struct pid for a given pid number and assigns
+> it to a damon_target is duplicated in multiple places.  Including
+> damon_sysfs_add_target() of mm/damon/sysfs.c and the start functions
+> of the two sample modules, samples/damon/wsse.c and
+> samples/damon/prcl.c.  Add a function that does the work, and replace
+> the duplicated code in the places with calls to the function.
 > 
-> The putback loop is duplicated in damon_migrate_folio_list() and on the
-> invalid-nid path of damon_migrate_pages().  Factor it into a small helper
-> for readability.  No functional change.
-
-Thank you for this patch.
-
-> 
-> Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
-> 
+> Signed-off-by: Enze Li <lienze@kylinos.cn>
 > ---
-> Note:
-> As previously pointed out by the AI regarding whether removing the local
-> variable struct folio *folio in the damon_migrate_folio_list()function
-> would introduce build-time issues: no build failure will actually occur.
-> This is because struct folio *folio is only used inside the while-loop.
-> link: https://lore.kernel.org/all/20260724060707.CE1F81F000E9@smtp.kernel.org/
-
-But, a build on my setup actually fails like below:
-
-    $ make O=../linux.out mm/damon/
-    [...]
-      CC      mm/damon/ops-common.o
-    mm/damon/ops-common.c: In function ‘damon_migrate_folio_list’:
-    mm/damon/ops-common.c:357:17: error: ‘folio’ undeclared (first use in this function)
-      357 |                 folio = lru_to_folio(folio_list);
-          |                 ^~~~~
-
+>  include/linux/damon.h |  1 +
+>  mm/damon/core.c       | 12 ++++++++++++
+>  mm/damon/sysfs.c      |  6 ++----
+>  samples/damon/prcl.c  |  5 +----
+>  samples/damon/wsse.c  |  5 +----
+>  5 files changed, 17 insertions(+), 12 deletions(-)
 > 
-> ---
->  mm/damon/ops-common.c | 31 +++++++++++++++----------------
->  1 file changed, 15 insertions(+), 16 deletions(-)
-> 
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index 0bcad6b1e5b9..5c0c941b7f75 100644
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
-> @@ -329,12 +329,24 @@ static unsigned int __damon_migrate_folio_list(
->  	return nr_succeeded;
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 0c8b7ddef9ab..a937aa55170b 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -1054,6 +1054,7 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src);
+>  
+>  struct damon_target *damon_new_target(void);
+>  void damon_add_target(struct damon_ctx *ctx, struct damon_target *t);
+> +int damon_set_target_pid(struct damon_target *t, int pid);
+>  bool damon_targets_empty(struct damon_ctx *ctx);
+>  void damon_free_target(struct damon_target *t);
+>  void damon_destroy_target(struct damon_target *t, struct damon_ctx *ctx);
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 644daf5a1656..82b196407ae8 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -10,6 +10,7 @@
+>  #include <linux/kthread.h>
+>  #include <linux/memcontrol.h>
+>  #include <linux/mm.h>
+> +#include <linux/pid.h>
+>  #include <linux/psi.h>
+>  #include <linux/sched.h>
+>  #include <linux/slab.h>
+> @@ -795,6 +796,17 @@ void damon_add_target(struct damon_ctx *ctx, struct damon_target *t)
+>  	list_add_tail(&t->list, &ctx->adaptive_targets);
 >  }
 >  
-> +static void damon_putback_folio_list(struct list_head *folio_list)
+> +/*
+> + * Assign the struct pid of the given pid number to the given target.
+> + */
+This method is simple enough. Do we really need a comment?
+> +int damon_set_target_pid(struct damon_target *t, int pid)
 > +{
-> +	struct folio *folio;
-> +
-> +	while (!list_empty(folio_list)) {
-> +		folio = lru_to_folio(folio_list);
-> +		list_del(&folio->lru);
-> +		node_stat_sub_folio(folio, NR_ISOLATED_ANON +
-> +				folio_is_file_lru(folio));
-> +		folio_putback_lru(folio);
-> +	}
+> +	t->pid = find_get_pid(pid);
+> +	if (!t->pid)
+> +		return -EINVAL;
+> +	return 0;
 > +}
 > +
->  static unsigned int damon_migrate_folio_list(struct list_head *folio_list,
->  						struct pglist_data *pgdat,
->  						int target_nid)
+>  bool damon_targets_empty(struct damon_ctx *ctx)
 >  {
->  	unsigned int nr_migrated = 0;
-> -	struct folio *folio;
+>  	return list_empty(&ctx->adaptive_targets);
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index e3858ffab4b2..3c81b4c91ac0 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+> @@ -3,7 +3,6 @@
+>   * DAMON sysfs Interface
+>   */
+>  
+> -#include <linux/pid.h>
+>  #include <linux/sched.h>
+>  #include <linux/slab.h>
+>  
+> @@ -2035,9 +2034,8 @@ static int damon_sysfs_add_target(struct damon_sysfs_target *sys_target,
+>  		return -ENOMEM;
+>  	damon_add_target(ctx, t);
+>  	if (damon_target_has_pid(ctx)) {
+> -		t->pid = find_get_pid(sys_target->pid);
+> -		if (!t->pid)
+> -			/* caller will destroy targets */
+> +		/* caller will destroy targets */
+> +		if (damon_set_target_pid(t, sys_target->pid))
+>  			return -EINVAL;
+>  	}
+>  	t->obsolete = sys_target->obsolete;
+> diff --git a/samples/damon/prcl.c b/samples/damon/prcl.c
+> index 842099bd6228..83ddf12811d5 100644
+> --- a/samples/damon/prcl.c
+> +++ b/samples/damon/prcl.c
+> @@ -32,7 +32,6 @@ module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
+>  MODULE_PARM_DESC(enabled, "Enable or disable DAMON_SAMPLE_PRCL");
+>  
+>  static struct damon_ctx *ctx;
+> -static struct pid *target_pidp;
+>  
+>  static int damon_sample_prcl_repeat_call_fn(void *data)
+>  {
+> @@ -79,12 +78,10 @@ static int damon_sample_prcl_start(void)
+>  		return -ENOMEM;
+>  	}
+>  	damon_add_target(ctx, target);
+> -	target_pidp = find_get_pid(target_pid);
+> -	if (!target_pidp) {
+> +	if (damon_set_target_pid(target, target_pid)) {
+>  		damon_destroy_ctx(ctx);
+>  		return -EINVAL;
+>  	}
+> -	target->pid = target_pidp;
+>  
+>  	scheme = damon_new_scheme(
+>  			&(struct damos_access_pattern) {
+> diff --git a/samples/damon/wsse.c b/samples/damon/wsse.c
+> index 37fd5da20158..53944aea8428 100644
+> --- a/samples/damon/wsse.c
+> +++ b/samples/damon/wsse.c
+> @@ -33,7 +33,6 @@ module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
+>  MODULE_PARM_DESC(enabled, "Enable or disable DAMON_SAMPLE_WSSE");
+>  
+>  static struct damon_ctx *ctx;
+> -static struct pid *target_pidp;
+>  
+>  static int damon_sample_wsse_repeat_call_fn(void *data)
+>  {
+> @@ -79,12 +78,10 @@ static int damon_sample_wsse_start(void)
+>  		return -ENOMEM;
+>  	}
+>  	damon_add_target(ctx, target);
+> -	target_pidp = find_get_pid(target_pid);
+> -	if (!target_pidp) {
+> +	if (damon_set_target_pid(target, target_pid)) {
+>  		damon_destroy_ctx(ctx);
+>  		return -EINVAL;
+>  	}
+> -	target->pid = target_pidp;
+>  
+>  	err = damon_start(&ctx, 1, true);
+>  	if (err) {
 
-Above declaration removal is causing the build failure.  Let's keep the
-declaration.
+Otherwise, it looks like a nice patch.
 
+-- 
+Asier Gutierrez
+Huawei
 
-Thanks,
-SJ
-
-[...]
