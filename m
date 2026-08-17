@@ -1,133 +1,106 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D295918DB1F
-	for <damon@lists.linux.dev>; Mon, 17 Aug 2026 06:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9A832B989
+	for <damon@lists.linux.dev>; Mon, 17 Aug 2026 06:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786948532; cv=none; b=sHMe9HM3kQJpJtAGgY1US+0reI1+E+Y9OhIk9zZ1zzQELID/xMVD9fe3/9OZsDRCNnKA2962Ezltqbtuz/hwKa6faPnk9Nz0ZtUHix8c4PG64mP9G4e/gV1QIbUXSDhPsQWNP+TfRTFDM4B09IuSda541e+U0mTk6r9Vf0Y4YBA=
+	t=1786948878; cv=none; b=rIUeo41tslN00JOQAy+QciEDHaw/hGmkTTrvBLpyxEtnlgWQ2/+04wpqKLHWKT7yx8nVO0LvnSzQsizohTTQqxcMe0PRJI4VghzTfD0QOV/08ZMVsPUSw7plABUM7L/qAOjGeiyeLLUoPBHRkcULOABAgQqvpj9o6GjJtkPL4aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786948532; c=relaxed/simple;
-	bh=v0sLb/3UMZYBOrv0Oj8Vg8y5bik4sqgkWPA7DYKqooU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VHizphzRgedouFOn21xb86+aZQO2BNhuFf2p3ImazMz0VQAPp9N2O5WaIJwYyaIV7zx3LbXHEUf+vWMqLx8cWbReoeErCfvosv47SiqVPGxav9in8Iqe9f5ps/LS9Ht7VbiPiXCOysoiRygwWUv6dK0oeI1twwApMbuf7WO47i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=VDVBVLwe; arc=none smtp.client-ip=117.135.210.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1786948878; c=relaxed/simple;
+	bh=9+QGpIiM/bqc+qOn22GKy+iHO0ZRG3eOAwuAeuzditA=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=i5Pz8RzO4VekP6Ug1M0rzO2IREi5d2mzfCj3jmwAnu3pbfjiWHT6ejNQEs+j6e17SblnRar8FZhJFGITqgIrwgxDuqCQ4s4Ly2DsHbczQA/pCJYpaoUO0wBwXVO2KBYiTIPrXPmKaRms8axi1niz6zriaMQRpeTnQP+H3eyvXgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dLCTzEPN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="VDVBVLwe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=qe
-	zoCS2ziGjtWkqM8pbHJLsnHGsxauHDbElYinBqGZo=; b=VDVBVLweoGeVPKnK/D
-	3FA+4FjN4gPb5ocX72mBVCbPcPoqsHapuV8EkKZ4sNT7Pk/BU/sI23HFAehXjrwl
-	OSZTShDza+ohL1GWDVOIpe26VRaDKt3rf3A4DWxxE3Z5Aa/0bT5iVHmx3Jc+GCAf
-	fjTTe5gOwunj/Ktz3aSY5YLYc=
-Received: from localhost.localdomain (unknown [])
-	by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id _____wCn4qCTq4Jqh_v+QA--.26911S2;
-	Mon, 17 Aug 2026 14:35:01 +0800 (CST)
-From: dayou5941@163.com
-To: sj@kernel.org,
-	akpm@linux-foundation.org
-Cc: damon@lists.linux.dev,
-	Li Youhong <liyouhong@kylinos.cn>
-Subject: [PATCH] mm/damon/ops-common: factor out damon_putback_folio_list()
-Date: Mon, 17 Aug 2026 14:34:58 +0800
-Message-Id: <20260817063458.351063-1-dayou5941@163.com>
-X-Mailer: git-send-email 2.25.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dLCTzEPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3581D1F000E9;
+	Mon, 17 Aug 2026 06:41:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1786948877;
+	bh=YEL9T2YaWdU+bIoPoU2FRvfoFZQrxaDcXtS/QDkQ8zY=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=dLCTzEPNDC4SrajtqOioQIaer1qxxLZ4oQTwY0kBmeDrh/IINAaGN/NqoFJ4e0O1u
+	 7+hkcmqt6dAaB5GqOglWtScgCk0C4bh7zvDXisPCJwYheKSJOcIt7TCGeR2gy0a7VN
+	 PzrIzgJfjXrerHf6dhocC/qP5NQM1zie9S6Y/2ae5ipiLieuQoqoiohSnpfGHcKQ3M
+	 k7XGvDPSFZfSLUPsEEIJHlj3kOwiH2Ne36qDfV6ItEGbx2DXqumNF+AqqXn9tX0XXB
+	 XScALcIks9RBFeyaT+tv2NnOKXqKbQf0YAJoJK/kO7AAA+mQHEsM/UdDgssdxK1nph
+	 x6KFLWs6MImWA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] mm/damon/ops-common: factor out
+ damon_putback_folio_list()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: dayou5941@163.com
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260817063458.351063-1-dayou5941@163.com>
+References: <20260817063458.351063-1-dayou5941@163.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 17 Aug 2026 06:41:16 +0000
+Message-Id: <20260817064117.3581D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wCn4qCTq4Jqh_v+QA--.26911S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxCr1xWF1kXF4UZw48GF43Awb_yoW5GFWUpF
-	4rK398XrWUJr17ur13ZFZ5Zr1FyrW3Xr17uFy3GrZ3JFn0qw409FyxJa40qayrJryUJF10
-	vF18Aa45uF47XFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07Uy6wtUUUUU=
-X-CM-SenderInfo: 5gd103ivzuiqqrwthudrp/xtbC+hZL+WqCq5YUjAAA3T
 
-From: Li Youhong <liyouhong@kylinos.cn>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] Removal of `struct folio *folio;` declaration causes a compilation =
+failure in `damon_migrate_folio_list()`.
+--
 
-The putback loop is duplicated in damon_migrate_folio_list() and on the
-invalid-nid path of damon_migrate_pages().  Factor it into a small helper
-for readability.  No functional change.
+--- Patch [1]: [PATCH] mm/damon/ops-common: factor out damon_putback_folio_=
+list() ---
+commit b95b21fa4d0d8990d47609474f8cee2aa7d640e1
+Author: Li Youhong <liyouhong@kylinos.cn>
 
-Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
+mm/damon/ops-common: factor out damon_putback_folio_list()
 
----
-Note:
-As previously pointed out by the AI regarding whether removing the local
-variable struct folio *folio in the damon_migrate_folio_list()function
-would introduce build-time issues: no build failure will actually occur.
-This is because struct folio *folio is only used inside the while-loop.
-link: https://lore.kernel.org/all/20260724060707.CE1F81F000E9@smtp.kernel.org/
+This commit factors out the duplicated putback loop in
+damon_migrate_folio_list() and damon_migrate_pages() into a new
+damon_putback_folio_list() helper. The commit notes state this removes
+the need for the local folio variable.
 
----
- mm/damon/ops-common.c | 31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+Link: https://lore.kernel.org/all/20260724060707.CE1F81F000E9@smtp.kernel.o=
+rg/
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index 0bcad6b1e5b9..5c0c941b7f75 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -329,12 +329,24 @@ static unsigned int __damon_migrate_folio_list(
- 	return nr_succeeded;
- }
- 
-+static void damon_putback_folio_list(struct list_head *folio_list)
-+{
-+	struct folio *folio;
-+
-+	while (!list_empty(folio_list)) {
-+		folio = lru_to_folio(folio_list);
-+		list_del(&folio->lru);
-+		node_stat_sub_folio(folio, NR_ISOLATED_ANON +
-+				folio_is_file_lru(folio));
-+		folio_putback_lru(folio);
-+	}
-+}
-+
- static unsigned int damon_migrate_folio_list(struct list_head *folio_list,
- 						struct pglist_data *pgdat,
- 						int target_nid)
- {
- 	unsigned int nr_migrated = 0;
--	struct folio *folio;
- 	LIST_HEAD(ret_folios);
- 	LIST_HEAD(migrate_folios);
- 
-@@ -372,13 +384,7 @@ static unsigned int damon_migrate_folio_list(struct list_head *folio_list,
- 
- 	list_splice(&ret_folios, folio_list);
- 
--	while (!list_empty(folio_list)) {
--		folio = lru_to_folio(folio_list);
--		list_del(&folio->lru);
--		node_stat_sub_folio(folio, NR_ISOLATED_ANON +
--				folio_is_file_lru(folio));
--		folio_putback_lru(folio);
--	}
-+	damon_putback_folio_list(folio_list);
- 
- 	return nr_migrated;
- }
-@@ -395,14 +401,7 @@ unsigned long damon_migrate_pages(struct list_head *folio_list, int target_nid)
- 
- 	if (target_nid < 0 || target_nid >= MAX_NUMNODES ||
- 			!node_state(target_nid, N_MEMORY)) {
--		while (!list_empty(folio_list)) {
--			struct folio *folio = lru_to_folio(folio_list);
--
--			list_del(&folio->lru);
--			node_stat_sub_folio(folio, NR_ISOLATED_ANON +
--					folio_is_file_lru(folio));
--			folio_putback_lru(folio);
--		}
-+		damon_putback_folio_list(folio_list);
- 		return nr_migrated;
- 	}
- 
--- 
-2.25.1
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index fbda70d8ea4d0..f9cfd35bee722 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+[ ... ]
+>  static unsigned int damon_migrate_folio_list(struct list_head *folio_lis=
+t,
+>  						struct pglist_data *pgdat,
+>  						int target_nid)
+>  {
+>  	unsigned int nr_migrated =3D 0;
+> -	struct folio *folio;
+>  	LIST_HEAD(ret_folios);
+>  	LIST_HEAD(migrate_folios);
 
+[Severity: Low]
+The commit message notes that removing the folio variable here won't cause
+a build failure. However, does damon_migrate_folio_list() still use the
+folio variable in its first while-loop?
+
+Looking at the remaining code in damon_migrate_folio_list():
+
+	while (!list_empty(folio_list)) {
+		cond_resched();
+
+		folio =3D lru_to_folio(folio_list);
+		list_del(&folio->lru);
+
+		if (!folio_trylock(folio))
+			goto keep;
+
+Will this cause an undeclared identifier compilation error since the variab=
+le
+was removed from the function scope but not re-declared locally inside this
+loop block?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260817063458.3510=
+63-1-dayou5941@163.com?part=3D1
