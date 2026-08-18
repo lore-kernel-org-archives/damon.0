@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4FF3D0C07
-	for <damon@lists.linux.dev>; Tue, 18 Aug 2026 04:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EAA3A9002;
+	Tue, 18 Aug 2026 04:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787028407; cv=none; b=l/xBmLR93Pfz0DhiQQmSlhH+4dn3SWzYYN6Y6QRYyvXhQAll9D/LjHQU5LcX+Bxl1GWokBkWP+KdRnVuUWMD9HFAf1UINOBEnByOjz4OWHtekzvTXXFoa+yw5pM2yRQCJp/Y5h07kCdBzWjoH5t9ZLW68zx3HuFsOjgn5aEd2Bw=
+	t=1787028613; cv=none; b=WLnzDVoTXt66hrEFTESaWyK9e5M2WTUzIDGS1+xP6JtRT79y2Tw4h4D89P97TWAjj54/IvZ8l9NoazGxSo9XbI804Oxtl27JSiJowM5pu5x/GmmzDL1Rk188xXNSuG7S6p44LVNuMLROugGguR6PdGAitfot3R9xed8ci1as8t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787028407; c=relaxed/simple;
-	bh=hPrafa4pk9GQ1eCaoGrKuKIwPG/ckYOkaKN3f5ru1kY=;
+	s=arc-20240116; t=1787028613; c=relaxed/simple;
+	bh=DXL2QfjEO30rnlTZtiKz0oDX/nlL5myyhlpYFSWo7Mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OciiSZfi/v+nNiudJ56P4zP2zu2TVu+OQmcfmUufNkLJL8f34yLZS+c++Um31unH9VLqlluse3Q+u4y3BRqSeKCe/+bfpFMyXhDglMEMzQRW9xpV6fAjI3QLJkXZqFw/A8lAaIa1Ecp4fsWrIpZalKvhrcYEZjDkvvcF95AXusY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oYmIWSK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GMKQpzWa8gor/ZKLFjAtaaEVaGvIcu7frfS9lyRZygpesfjPMBmQKxVmDTADVs4Qc7/VuD8Flz1uU5t/Xaa3Zha6Y8QO+rJ9tIMBIdq6qEJpUH7ENWQ41S5EAboSAN7P4BQIdy8slL3avxtzGaivunKvlgxMboxmJHw+03D6r/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C7skpJ8C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oYmIWSK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652A11F000E9;
-	Tue, 18 Aug 2026 04:46:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C7skpJ8C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DA01F000E9;
+	Tue, 18 Aug 2026 04:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787028405;
-	bh=svhgWbW3oRYGlFmiUlsYK4d2XAgplj4VGWiCMiCjDJc=;
+	s=k20260515; t=1787028610;
+	bh=mtX13R1ypyiRL9Ftkla+zVGEDE/fgvp5SvpwPGOAv0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYmIWSK085P1ipoAdPlrNJkZfLFxd+epHStDO/xi3/zC3byBHUtm6z61ZI8P+Q7rx
-	 uNvcJnq+HDpsGqw8KHdJxZT1xC25u09aWB1n8jWb3vzhFpF1cFFLr8jSDnoVvafVrW
-	 t8MSlEhNPtyefIf3QNDWBrnB+jwviPH1QmK9TIwjfUChYo7zx4gS5q1OyQcK44BwFL
-	 skOboUiUOz06QkIBDAH2mzUpeuGm73f4Xc+LWnnc2Q4So5p+ryTFjkyZfRY0WLrRD4
-	 WReOV0PV00LnGYUT09VlBae8RmPchfeRlEFCm/XHRf2oNQnjKf1imrejVnv9hgYtTS
-	 n658+YpYyF9pg==
+	b=C7skpJ8CRdoWeL9Xpft+bSu1GIg7/8RxNkaxcxxIRGu2Kf62eO7InNqx07MbqjFR9
+	 5KAKBLTvVJEG03u9nLWu29S2c60OvWmHrJibO7LtuKc8jr4W188jhsds8ho7n0Eg4G
+	 ZH4zKHwzgMdCulh/BOUGUoCSOD6eYw8SaXJ/DBsfZ3NNE2M9/2vdCCNwHQMi0m9LcN
+	 puHO42CT/syK5qF1qqfCGyY2mLdysSkLUSKHFbxpOCY369NspJe2Mek05XdKfe0YFv
+	 l1zfucMx1Ry0u+6coch5pi9FBIGVns3t7tMxcT2RsEhxczIZJUv1tOMZqe3ut9bFow
+	 LHXRsXN0a4M+A==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Jason Angelov <jasonangelov@ucla.edu>
 Cc: SJ Park <sj@kernel.org>,
-	"Jason Angelov" <jasonangelov@ucla.edu>,
-	damon@lists.linux.dev
+	akpm@linux-foundation.org,
+	shu17az@gmail.com,
+	jiayuan.chen@shopee.com,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH 1/2] mm/damon/core-kunit: test probe_hits handling at region split and merge
-Date: Mon, 17 Aug 2026 21:46:36 -0700
-Message-ID: <20260818044637.96914-1-sj@kernel.org>
+Date: Mon, 17 Aug 2026 21:50:02 -0700
+Message-ID: <20260818045002.97073-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260818035742.F0E5A1F00A3E@smtp.kernel.org>
+In-Reply-To: <20260818034552.11975-2-jasonangelov@ucla.edu>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -43,69 +47,27 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Tue, 18 Aug 2026 03:57:42 +0000 sashiko-bot@kernel.org wrote:
+On Tue, 18 Aug 2026 03:45:51 +0000 Jason Angelov <jasonangelov@ucla.edu> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> damon_split_region_at() copies probe_hits[] and last_probe_hits[] to
+> the new split region.
+> damon_merge_two_regions() sets probe_hits[] to the size-weighted
+> average of the merged regions.
 > 
-> Pre-existing issues:
-> - [High] This problem wasn't introduced by this patch, but there is an integer overflow in damon_merge_two_regions() when calculating size-weighted averages on 32-bit architectures.
-> --
-> 
-> --- Patch [1]: [PATCH 1/2] mm/damon/core-kunit: test probe_hits handling at region split and merge ---
-> commit f275f8ec2d833d0e2eacc7a18ba7c56b04b7e599
-> Author: Jason Angelov <jasonangelov@ucla.edu>
-> 
-> mm/damon/core-kunit: test probe_hits handling at region split and merge
-> 
-> Extend damon_test_split_at() and damon_test_merge_two() tests to cover
-> handling of probe_hits and last_probe_hits arrays.
-> 
-> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> > index 4a536d41cdb2d..2db94d49c9bae 100644
-> > --- a/mm/damon/tests/core-kunit.h
-> > +++ b/mm/damon/tests/core-kunit.h
-> [ ... ]
-> > @@ -204,6 +210,7 @@ static void damon_test_merge_two(struct kunit *test)
-> >  	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
-> >  	KUNIT_EXPECT_EQ(test, r->ar.end, 300ul);
-> >  	KUNIT_EXPECT_EQ(test, r->nr_accesses, 16u);
-> > +	KUNIT_EXPECT_EQ(test, r->probe_hits[0], 11);
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does the size-weighted average logic
-> tested here overflow on 32-bit architectures?
-> 
-> Looking at mm/damon/core.c:damon_merge_two_regions(), the calculations
-> multiply values like nr_accesses and probe_hits by the region size in bytes:
-> 
-> mm/damon/core.c:damon_merge_two_regions() {
-> 	...
-> 	l->nr_accesses = (l->nr_accesses * sz_l + r->nr_accesses * sz_r) /
-> 			(sz_l + sz_r);
-> 	...
-> 	for (i = 0; i < DAMON_MAX_PROBES; i++)
-> 		l->probe_hits[i] = (l->probe_hits[i] * sz_l + r->probe_hits[i]
-> 				* sz_r) / (sz_l + sz_r);
-> 	...
-> }
-> 
-> On a 32-bit architecture, unsigned long is 32 bits (max ~4.29GB). If a
-> region is just 17MB and probe_hits is 255, the multiplication 
-> 255 * 17,000,000 evaluates to ~4.33GB, which would silently truncate.
-> 
-> Could this wrap-around cause merged regions to inherit drastically incorrect
-> statistics, potentially misidentifying hot memory as cold and triggering
-> aggressive paging out of actively used pages?
+> Extend damon_test_split_at() and damon_test_merge_two() tests to
+> cover those fields.
 
-Known low priority issue.  Users could use addr_unit to workaround this.
+Thank you for adding these tests!
 
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260818034552.11975-1-jasonangelov@ucla.edu?part=1
+> Signed-off-by: Jason Angelov <jasonangelov@ucla.edu>
+
+Reviewed-by: SJ Park <sj@kernel.org>
 
 
 Thanks,
 SJ
+
+[...]
