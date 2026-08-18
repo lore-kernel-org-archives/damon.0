@@ -1,64 +1,64 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA4D3E764F
-	for <damon@lists.linux.dev>; Tue, 18 Aug 2026 06:10:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EB43E5585
+	for <damon@lists.linux.dev>; Tue, 18 Aug 2026 06:11:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787033461; cv=none; b=gUVKayGPJjgbXMSdDMId76QQqLkhF0DEnqnVWaqp4gzJuFjqKkcUDnxTBWjMLZv4YIJPSA4PI+vfIwXkSIEKXs3eGKuehM42lQ0D+pnjQP8ucbo5EMKhmEDrpnVoRZH881XrgRBbf7Ien8G1Mid0c597eC61q5zoTXDZi9fVQqU=
+	t=1787033467; cv=none; b=PnXq6qAUleeDDDfg1KW+lxsalKWrp1Hpws72zPanCm6A2hcXK/nEd0Pz53s6A0IOaWzLzh7zJkubaF6a2+0LHEl+LTXdZrPG5WahdXJjKk8xzlUbWWqWHoSMPKdNwU8oW7tOPMl1DidGZukITqbLh3B/0xmm5sYx0eqQRTxc+3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787033461; c=relaxed/simple;
-	bh=6pTbLyujulLWUYG01436SvB+x/PQR2vhTC8I2dX7k/g=;
+	s=arc-20240116; t=1787033467; c=relaxed/simple;
+	bh=mZKFwQauANDJ1gHu+gg8RedjLenlA7e9YJ8y+FF2WoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HjetR1xpRVH1+6HHSnhgqmDfPpg3acwz9fn4hHkB7XpkPrhsg9IKvBvNvQKq4gye8zEXZQZjY+pC1ZLNbvx1Kk7HVjKGd5Z1XlI7jjVyVxHGzIjmDekUrUuKctK63pcgI49qV4fUjvDBGMIAb7EzxNHHk9ludty6UYIPrQ0YCok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i5lyHbU+; arc=none smtp.client-ip=209.85.216.54
+	 MIME-Version:Content-Type; b=ZHRGv6zY5weoX+am7vXNjbMoApCt4R+4Xif79W/mNLNxvVKhYoYlC1ENdPZvqF8pevacsxHzUy7JNMzTadNaU6lGjQ9SeL7MCBdJQjkDbA2bX7MKEYn1/A9p9nNDM4dh4g1HTWEzSQSc2lkdZP088YvNp49JPeo5dBFQelaX0Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BjZ0OcxV; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i5lyHbU+"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-38d489b6b71so4314297a91.0
-        for <damon@lists.linux.dev>; Mon, 17 Aug 2026 23:10:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BjZ0OcxV"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-381b831d535so5845732a91.0
+        for <damon@lists.linux.dev>; Mon, 17 Aug 2026 23:11:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787033458; x=1787638258; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1787033465; x=1787638265; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=DOBdbjG7wg0kpAdHn038dSyaMR4LfRYkZkjGzLFsJjk=;
-        b=i5lyHbU+/6AtothtINP8l5xaBFB9R2ni3X2rAIgcmqgYRQkffMoX/xtoJyaZV+CQ8b
-         xwkDk0xb9sF2edCO4Sf3cD/MBXEML64cs5ghab3+kHvr9rQFBSItcLP0j6OftmAuPMdB
-         oorQBeoW+4P/NK4XyUXDLNzhw/4LQ1pp3EH9tY+ZWR8JlZj9QFZZmJhSKqdeNO94z4l/
-         UTMe9R/T5vzwpMuqGTz5sILskpzfxcSSJJIrxRy2jWICuhh8RnY6nIDFvuv0nBjmq7BL
-         iWX1OXwZtQjQ1me6tezx7iEsOjOoi/qDytI0rxU9XG/j127nttRM377BeEORXEadDmfz
-         tZwA==
+        bh=PFTkBKzl9DDztkv9Ak+eApuO538I5zXX6YMBdyPiC24=;
+        b=BjZ0OcxVuUpfp3Bs5f0QYEfELXXUUkK1Gd5uQI3gRQIL3DHbYTMQgCY8p4UnTkRgRy
+         5rfrlIE/u0r7PWYZXaBsnyM0TQ0Bqe78sALSva6SMmOcDd9PZhFFUDown1NdOjfx0OKi
+         eu4Vz4gsf8gEjR6Af67kfMagYbmL04zOucFo/v2vbP/qz9M+IDVV0fMcjltZ9NjqXzZP
+         h2mlOIu/ekAww+Qj+OlLmy/Pc0L1f51Dxvfpqu7OFGF+NBxfInL752eDi3Sp+MzG5+Ah
+         pFWyuojP3JKay+Mdg/ELxrJwCMvHP7bDguJLklN9XFGK0dH6SJIIqI+iHdFCvtaElDm8
+         aMsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787033458; x=1787638258;
+        d=1e100.net; s=20251104; t=1787033465; x=1787638265;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=DOBdbjG7wg0kpAdHn038dSyaMR4LfRYkZkjGzLFsJjk=;
-        b=Y1HZmtD7ocZlIqAMDWJ3Jf+iTuEbkeLVOz0iwnWJraXFbEm0ApPtwZjilgpL3LzmEk
-         L4y2H3i8FUHXG8HnZkGxrftGMvFmCB9TRi9XLpMEHDrFKT3AH1nAI1oNM7NjJqDUZLpH
-         aw3J/Q9dwVH9WtShpw3M/QBjs3y3x5UF5p1kGJIpZwOAUnOKwEzdWKzlDAa2HfJnZxV9
-         MHttIC9JVvqS6dIURhUsEg95TGVyk8JzDMEn+tGMiN/RTFH+C5uzlmWHS6QjaFzatmPj
-         zi2zGqDxsFbLtafef4di0OUf0judK8QKQq3BrHFTPd6BXVDibo/vfPLlQf/lcTxR8oNF
-         9B0A==
-X-Gm-Message-State: AOJu0YxZwv5w7ST/Lh6f53v3UFQ4d36z2cXZu2URVc3o9UpCYhu+17LB
-	T5YfzBX3yui78o4tbW/E1FIIKjQX7iSk2SJs5IWCVZflGq85JqhjnNZ1
-X-Gm-Gg: AR+sD130Uj1bgBZ+xWVlaQAiMPqGwFNF1A5IzA1t3IuBcjX+k8Y39LmKPiQoOP+dZoV
-	m74S2U9MnvgBzh/K9HrUimR1JU8TQfgYvYDAwcFO6V6cCay3y7Bm/y88FH2rf9DIIyTRJswp/PZ
-	3ltzEFJ6SPmmk8/I/6EEVgfEZ/ho35XOIsndJMpxKLzor+GnGTWOaabTwXr3cQWBfFnTXstDGt/
-	PHnYtmxo5xcXlTHeSgo1wrW2ReeNt42Al95geHmKg2f3Vzhuk9TbOJT1nlwyYXWFhx/iyvpBgS2
-	vHMdX6pDLjxgFYXO7plS/zwKK3m45MeBamU9vq3hUM6GBcFJ1+m+pALM6T7umWcspCxxsuhX2B/
-	kOSVdcg/t/2pUpsULUDylmNFvhI/oDbUoY0XVZaf1IoE3yFLa7mAlPetMV5yC90Z8XeAAWjRdlq
-	+go1/rXg1y+F8kRIuQyP+JQ7lgd6F081Sf7AEq4cXLJieMlfjujjxrQRFEcswWcuo022+GVQ0AF
-	YKDsQ4=
-X-Received: by 2002:a17:90b:5685:b0:38e:4cb:51f with SMTP id 98e67ed59e1d1-3955a799fcdmr8128358a91.11.1787033458228;
-        Mon, 17 Aug 2026 23:10:58 -0700 (PDT)
+        bh=PFTkBKzl9DDztkv9Ak+eApuO538I5zXX6YMBdyPiC24=;
+        b=m/JKR1ewe8iwVaKIi9p9MAA8G5eYDWlyhclEZhxx2TdzPMlx0HxTKTY/ovzYy2AT2C
+         BRzGkdaK4ROEaexi6OOaBdVwZT0RLHLwJmSAhZ4gAq5hWKqZaaqq4MBE7bh67XvafQHL
+         qMvFxlGrTlLvXR9ymCKCiWerAIBp0ZIT4IJl85BX2Wx711bP26tz2wJu5zvPO/AobPaS
+         vDhDCV0aT0YycteZA1saztyPCCUzEYc2akgca97oUCKjRB5dMBP1/9KylOBEQeY4azxa
+         C9TtXy2aUtMwZA3LE38eR6dszrVf6P2XRH8vp8X/dOSTkkswksgy771jdc+p4HbCHnU0
+         0q/Q==
+X-Gm-Message-State: AOJu0Yxo3KkjsIW15+6nihwBlF21YYj/h6Kx6PlFBNuOy7777mwQY3QL
+	1AVE99ZPDCMHn7HtGJBSquSMjKEgHK44KE0/3z3wBGcD7y1L99Pd79CO
+X-Gm-Gg: AR+sD12N7RzJqaAvzVs4nYBERm3e5q/lNZxgqwc/OtCREZnxT5txn13yo2pJ7FsjCOS
+	L3CNG9klUOZEHAqVrE1rcHT1+3VxelcMPM6gDw1gzoIGjVxTVtuH7UR2k8ZnICaWguxaXNzjKei
+	QRiWq6RJdSJcNZfyeIuGkj0UAX/vl0g01WahSYSHybSKn9Mu0DQcIF83vA3n8Amy63/VCmFidl7
+	X/+Gw4YNXvOJ3pSfYMssiGrRytu/bcrAugtCfZ5BvPQ6JXhl50nR9LsmtfC95E+BYUQdSI7lZr1
+	48ss6s9BlvP26r6/SlPlL2l8En7LMrEeZSpVOuochRrNwWVTI9yZWv54JsIfpgob4lLcvcSD9uS
+	3GWceyUeIM5jDGeEgTQf+FyKH+KnvFazj9EWMUS9/NkQGYf1RBWBONQvJZSDqh9nytPg1P2Uuu+
+	dw9dzjWu1xc/RMnSFGQ5IFtIqpmF+ITh9wU5phcBEMGEWSLg7if9oje/JSYnqIU39ajiAmR9t55
+	z0Eziw=
+X-Received: by 2002:a17:90a:ec83:b0:381:e74f:8a6a with SMTP id 98e67ed59e1d1-3933b8c1041mr33609337a91.16.1787033464444;
+        Mon, 17 Aug 2026 23:11:04 -0700 (PDT)
 Received: from kernel.tail6741c6.ts.net ([116.128.244.169])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3954d38bf94sm4633942a91.9.2026.08.17.23.10.51
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3954d38bf94sm4633942a91.9.2026.08.17.23.10.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Aug 2026 23:10:57 -0700 (PDT)
+        Mon, 17 Aug 2026 23:11:04 -0700 (PDT)
 From: Kunwu Chan <kunwu.chan@gmail.com>
 X-Google-Original-From: Kunwu Chan <kunwu.chan@linux.dev>
 To: sj@kernel.org,
@@ -74,9 +74,9 @@ Cc: damon@lists.linux.dev,
 	shuah@kernel.org,
 	lianux.mm@gmail.com,
 	Kunwu Chan <kunwu.chan@gmail.com>
-Subject: [RFC PATCH 2/7] mm/damon/perf: implement observe API and per-CPU statistics engine
-Date: Tue, 18 Aug 2026 14:10:26 +0800
-Message-ID: <20260818061031.827057-3-kunwu.chan@linux.dev>
+Subject: [RFC PATCH 3/7] mm/damon/perf: add debugfs statistics interface
+Date: Tue, 18 Aug 2026 14:10:27 +0800
+Message-ID: <20260818061031.827057-4-kunwu.chan@linux.dev>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818061031.827057-1-kunwu.chan@linux.dev>
 References: <20260818061031.827057-1-kunwu.chan@linux.dev>
@@ -89,339 +89,191 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kunwu Chan <kunwu.chan@gmail.com>
+From: Lian Wang <lianux.mm@gmail.com>
 
-Implement the observe_*() core: per-CPU monotonic counters, the
-event-lifecycle hooks with lazily-allocated per-event per-CPU state
-alongside the global per-CPU stage, NMI-safe sample classification,
-ring enqueue/dequeue/peak, match/miss/update, and framework init.  The
-global per-CPU stage advances monotonically so a late create/bind/
-enable cannot regress a CPU that is already RUNNING.
+Expose the aggregated per-CPU counters and the global event-stage in a
+debug-only debugfs perf_stats file.  The format is explicitly unstable;
+tracepoints are the stable diagnostic interface.
 
-damon_perf_observe_sample() records the execution context
-(process/softirq/hardirq/NMI) so overflow callbacks can be verified to
-fire in the expected context.
-
-Co-developed-by: Lian Wang <lianux.mm@gmail.com>
-Signed-off-by: Lian Wang <lianux.mm@gmail.com>
+Co-developed-by: Kunwu Chan <kunwu.chan@gmail.com>
 Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
+Signed-off-by: Lian Wang <lianux.mm@gmail.com>
 ---
- mm/damon/perf/Makefile |   2 +
- mm/damon/perf/stats.c  | 295 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 297 insertions(+)
- create mode 100644 mm/damon/perf/stats.c
+ mm/damon/perf/Makefile  |   2 +-
+ mm/damon/perf/debugfs.c | 142 ++++++++++++++++++++++++++++++++++++++++
+ mm/damon/perf/stats.c   |   2 +-
+ 3 files changed, 144 insertions(+), 2 deletions(-)
+ create mode 100644 mm/damon/perf/debugfs.c
 
 diff --git a/mm/damon/perf/Makefile b/mm/damon/perf/Makefile
-index cc0d4f1d1d28..5c46d3da7ef8 100644
+index 5c46d3da7ef8..150cbaa875fa 100644
 --- a/mm/damon/perf/Makefile
 +++ b/mm/damon/perf/Makefile
-@@ -1,3 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
+@@ -2,4 +2,4 @@
  
  # Observability: per-CPU counters, tracepoints, debugfs perf_stats
-+obj-$(CONFIG_DAMON_PERF_OBSERVE)	+= damon-perf.o
-+damon-perf-objs			:= stats.o
-diff --git a/mm/damon/perf/stats.c b/mm/damon/perf/stats.c
+ obj-$(CONFIG_DAMON_PERF_OBSERVE)	+= damon-perf.o
+-damon-perf-objs			:= stats.o
++damon-perf-objs			:= stats.o debugfs.o
+diff --git a/mm/damon/perf/debugfs.c b/mm/damon/perf/debugfs.c
 new file mode 100644
-index 000000000000..a869f115bb26
+index 000000000000..c54dd7644ac3
 --- /dev/null
-+++ b/mm/damon/perf/stats.c
-@@ -0,0 +1,295 @@
++++ b/mm/damon/perf/debugfs.c
+@@ -0,0 +1,142 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
-+ * DAMON Perf Observability — Per-CPU Statistics & Observe API
++ * DAMON Perf Observability — debugfs Interface
 + *
-+ * All hardware-sampling backends funnel through the observe functions
-+ * defined here.  Counters always increment when
-+ * CONFIG_DAMON_PERF_OBSERVE=y; tracepoints are guarded by
-+ * trace_*_enabled() for zero overhead when ftrace is not attached.
++ * Exposes one file under /sys/kernel/debug/damon/:
 + *
-+ * Per-CPU counters are best-effort: individual u64 writes are atomic
-+ * on 64-bit platforms, but no cross-field consistency is guaranteed.
-+ * Snapshot reads may race with concurrent writers.  This is debug data
-+ * — do not build policy on it.
++ *   perf_stats — per-CPU pipeline statistics in tabular form
++ *
++ * DEBUG ONLY — format may change without notice; do not parse in
++ * scripts.  For stable diagnostics, use the tracepoints under
++ *   /sys/kernel/debug/tracing/events/damon/
 + */
 +
 +#include <linux/cpu.h>
-+#include <linux/percpu.h>
-+
-+#include <trace/events/damon.h>
++#include <linux/cpumask.h>
++#include <linux/debugfs.h>
++#include <linux/seq_file.h>
 +
 +#include "perf.h"
 +
-+/*
-+ * Per-CPU statistics
-+ */
-+static DEFINE_PER_CPU(struct damon_perf_stats, damon_perf_stats);
++static struct dentry *damon_debugfs_dir;
 +
 +/*
-+ * Per-CPU event state for the state machine — the maximum lifecycle
-+ * stage ever reached on each CPU (any event).  Set by the NMI
-+ * observe_sample() (ENABLED→RUNNING) and by lifecycle functions as a
-+ * monotonic "best CPU so far".  Never reset to UNINIT — destroying one
-+ * event must not hide that another event is still running on the same
-+ * CPU.  Per-event per-CPU state (event->cpu_state) tracks individual
-+ * event lifecycle for correctness when multiple events exist.
-+ */
-+static DEFINE_PER_CPU(int, damon_perf_cpu_state);
-+
-+/*
-+ * Event lifecycle — process context (kdamond / cpuhp callbacks).
-+ *
-+ * Each event tracks its own per-CPU lifecycle state via
-+ * event->cpu_state (allocated on first CREATED, freed on DESTROYED).
-+ * The global damon_perf_cpu_state is also advanced (monotonic) so that
-+ * debugfs perf_stats shows the "best" stage any event reached on each
-+ * CPU.  Diagnostics are emitted via tracepoints, not dmesg.
++ * perf_stats
 + */
 +
-+/*
-+ * Advance the global per-CPU lifecycle state monotonically.  The global
-+ * reflects the best stage any event ever reached on this CPU; a late
-+ * create/bind/enable must not regress a CPU that is already RUNNING.
-+ */
-+static void damon_perf_cpu_state_advance(int cpu, int state)
++static const char *state_name(int s)
 +{
-+	int cur = READ_ONCE(per_cpu(damon_perf_cpu_state, cpu));
-+
-+	if (state > cur)
-+		WRITE_ONCE(per_cpu(damon_perf_cpu_state, cpu), state);
-+}
-+
-+void damon_perf_observe_event_created(struct damon_perf_event *event, int cpu)
-+{
-+	if (!event->cpu_state) {
-+		event->cpu_state = alloc_percpu(int);
-+		if (!event->cpu_state)
-+			return;
-+	}
-+	*per_cpu_ptr(event->cpu_state, cpu) = DAMON_PERF_STATE_CREATED;
-+	damon_perf_cpu_state_advance(cpu, DAMON_PERF_STATE_CREATED);
-+}
-+
-+void damon_perf_observe_event_bound(struct damon_perf_event *event,
-+		int cpu, struct perf_event *perf_event)
-+{
-+	if (event->cpu_state)
-+		*per_cpu_ptr(event->cpu_state, cpu) = DAMON_PERF_STATE_BOUND;
-+	damon_perf_cpu_state_advance(cpu, DAMON_PERF_STATE_BOUND);
-+}
-+
-+void damon_perf_observe_event_enabled(struct damon_perf_event *event,
-+		int cpu, int state, int oncpu)
-+{
-+	if (event->cpu_state)
-+		*per_cpu_ptr(event->cpu_state, cpu) = DAMON_PERF_STATE_ENABLED;
-+	damon_perf_cpu_state_advance(cpu, DAMON_PERF_STATE_ENABLED);
-+}
-+
-+void damon_perf_observe_event_disabled(struct damon_perf_event *event,
-+		int cpu, int state)
-+{
-+	/* State unchanged: the event may be re-enabled later. */
-+}
-+
-+void damon_perf_observe_event_destroyed(struct damon_perf_event *event, int cpu)
-+{
-+	/*
-+	 * Reset only this CPU's slot.  The per-CPU array is owned by the
-+	 * event as a whole and must NOT be freed here: destroyed() is
-+	 * invoked from the per-CPU CPU-offline callback, so freeing the
-+	 * whole array on the first offline CPU would leave every other
-+	 * still-online CPU with a dangling pointer.  The array is freed
-+	 * once by damon_perf_observe_event_free() at event teardown.
-+	 */
-+	if (event->cpu_state)
-+		*per_cpu_ptr(event->cpu_state, cpu) = DAMON_PERF_STATE_UNINIT;
-+}
-+
-+void damon_perf_observe_event_free(struct damon_perf_event *event)
-+{
-+	if (event->cpu_state) {
-+		free_percpu(event->cpu_state);
-+		event->cpu_state = NULL;
++	switch (s) {
++	case DAMON_PERF_STATE_UNINIT:	return "UNINIT";
++	case DAMON_PERF_STATE_CREATED:	return "CREATED";
++	case DAMON_PERF_STATE_BOUND:	return "BOUND";
++	case DAMON_PERF_STATE_ENABLED:	return "ENABLED";
++	case DAMON_PERF_STATE_RUNNING:	return "RUNNING";
++	case DAMON_PERF_STATE_ERROR:	return "ERROR";
++	default:			return "?";
 +	}
 +}
 +
-+/*
-+ * Sample observed — NMI-safe.
-+ *
-+ * The @cpu argument is the CPU the sample fired on; it is passed
-+ * through to the tracepoint but stats are always written on the
-+ * current CPU via this_cpu_ptr().
-+ */
-+
-+void damon_perf_observe_sample(unsigned long addr, u64 data_src,
-+		u64 period, int cpu, u8 reason,
-+		u64 sample_flags, u64 sample_type)
++static int perf_stats_show(struct seq_file *m, void *v)
 +{
-+	this_cpu_inc(damon_perf_stats.callback);
-+
-+	switch (reason) {
-+	case 0:
-+		this_cpu_inc(damon_perf_stats.sample_valid);
-+		break;
-+	case 1:
-+		this_cpu_inc(damon_perf_stats.sample_null);
-+		break;
-+	case 2:
-+		this_cpu_inc(damon_perf_stats.sample_addr_zero);
-+		break;
-+	case 3:
-+		this_cpu_inc(damon_perf_stats.sample_kernel);
-+		break;
-+	case 4:
-+		this_cpu_inc(damon_perf_stats.sample_invalid_phys);
-+		break;
-+	}
-+
-+	/* First callback advances state to RUNNING */
-+	if (this_cpu_read(damon_perf_cpu_state) == DAMON_PERF_STATE_ENABLED)
-+		this_cpu_write(damon_perf_cpu_state, DAMON_PERF_STATE_RUNNING);
-+
-+	/*
-+	 * Record the execution context so callers can verify whether
-+	 * overflow callbacks actually fire in the expected context
-+	 * (e.g. NMI for IBS, process for SPE AUX drain).
-+	 *
-+	 * 0 = process, 1 = softirq, 2 = hardirq, 3 = NMI
-+	 */
-+	if (trace_damon_perf_sample_enabled())
-+		trace_damon_perf_sample(addr, data_src, period, cpu, reason,
-+				sample_flags, sample_type,
-+				in_nmi() ? 3 : in_hardirq() ? 2 :
-+				in_serving_softirq() ? 1 : 0);
-+}
-+
-+/*
-+ * Ring operations — enqueue / overflow are NMI-safe
-+ */
-+
-+void damon_perf_observe_ring_enqueue(void)
-+{
-+	this_cpu_inc(damon_perf_stats.enqueue);
-+}
-+
-+void damon_perf_observe_ring_overflow(int cpu)
-+{
-+	this_cpu_inc(damon_perf_stats.overflow);
-+	if (trace_damon_perf_ring_overflow_enabled())
-+		trace_damon_perf_ring_overflow(cpu);
-+}
-+
-+void damon_perf_observe_ring_dequeue(int cpu)
-+{
-+	per_cpu_ptr(&damon_perf_stats, cpu)->dequeue++;
-+}
-+
-+void damon_perf_observe_ring_peak(unsigned int occupancy)
-+{
-+	struct damon_perf_stats *st = this_cpu_ptr(&damon_perf_stats);
-+
-+	if (occupancy > READ_ONCE(st->ring_peak))
-+		WRITE_ONCE(st->ring_peak, occupancy);
-+}
-+
-+/*
-+ * Matching — process context (kdamond drain loop)
-+ */
-+
-+void damon_perf_observe_match(unsigned long addr, int cpu)
-+{
-+	per_cpu_ptr(&damon_perf_stats, cpu)->match++;
-+}
-+
-+void damon_perf_observe_miss(unsigned long addr, int cpu, int reason)
-+{
-+	struct damon_perf_stats *st = per_cpu_ptr(&damon_perf_stats, cpu);
-+
-+	switch (reason) {
-+	case DAMON_REPORT_MISS_TGID:
-+		st->miss_tgid++;
-+		break;
-+	case DAMON_REPORT_MISS_NOREGION:
-+		st->miss_region++;
-+		break;
-+	case DAMON_REPORT_MISS_BOUNDARY:
-+		st->miss_boundary++;
-+		break;
-+	}
-+
-+	if (trace_damon_perf_report_missed_enabled())
-+		trace_damon_perf_report_missed(addr, cpu, reason);
-+}
-+
-+void damon_perf_observe_update(int cpu)
-+{
-+	per_cpu_ptr(&damon_perf_stats, cpu)->update++;
-+}
-+
-+void damon_perf_observe_drain(unsigned int total, unsigned int matched)
-+{
-+	if (trace_damon_perf_drain_enabled())
-+		trace_damon_perf_drain(total, matched);
-+}
-+
-+/*
-+ * Stats accessors (for debugfs)
-+ */
-+
-+/*
-+ * Best-effort per-CPU snapshot.  Individual u64 writes are atomic on
-+ * 64-bit platforms; no cross-field consistency is guaranteed.  This is
-+ * debug data only — do not build policy on it.
-+ */
-+void damon_perf_stats_snapshot(int cpu, struct damon_perf_stats *dst)
-+{
-+	struct damon_perf_stats *st = per_cpu_ptr(&damon_perf_stats, cpu);
-+
-+	*dst = *st;
-+	dst->cpu_state = per_cpu(damon_perf_cpu_state, cpu);
-+}
-+
-+void damon_perf_stats_aggregate(struct damon_perf_stats *dst)
-+{
++	struct damon_perf_stats agg, st;
 +	int cpu;
++	bool first = true;
 +
-+	memset(dst, 0, sizeof(*dst));
-+	dst->cpu_state = DAMON_PERF_STATE_RUNNING; /* start optimistic, take min */
++	damon_perf_stats_aggregate(&agg);
++
++	seq_puts(m, "    --------------  ----------\n");
++	seq_puts(m, "    Counter          Value\n");
++	seq_puts(m, "    --------------  ----------\n");
++
++#define STAT_ROW(label, field) \
++	seq_printf(m, "    %-12s   %8llu\n", label, agg.field)
++
++	STAT_ROW("callback",    callback);
++	STAT_ROW("valid",       sample_valid);
++	STAT_ROW("null",        sample_null);
++	STAT_ROW("addr_zero",   sample_addr_zero);
++	STAT_ROW("kernel",      sample_kernel);
++	STAT_ROW("inv_phys",    sample_invalid_phys);
++	STAT_ROW("enqueue",     enqueue);
++	STAT_ROW("dequeue",     dequeue);
++	STAT_ROW("overflow",    overflow);
++	STAT_ROW("ring_peak",   ring_peak);
++	STAT_ROW("match",       match);
++	STAT_ROW("miss_tgid",   miss_tgid);
++	STAT_ROW("miss_region", miss_region);
++	STAT_ROW("miss_bound",  miss_boundary);
++	STAT_ROW("update",      update);
++
++#undef STAT_ROW
++
++	seq_puts(m, "    --------------  ----------\n\n");
++
++	/* Per-CPU breakdown */
 +	cpus_read_lock();
 +	for_each_online_cpu(cpu) {
-+		struct damon_perf_stats *st = per_cpu_ptr(&damon_perf_stats, cpu);
++		damon_perf_stats_snapshot(cpu, &st);
 +
-+		dst->callback		+= st->callback;
-+		dst->sample_valid	+= st->sample_valid;
-+		dst->sample_null	+= st->sample_null;
-+		dst->sample_addr_zero	+= st->sample_addr_zero;
-+		dst->sample_kernel	+= st->sample_kernel;
-+		dst->sample_invalid_phys += st->sample_invalid_phys;
-+		dst->enqueue		+= st->enqueue;
-+		dst->dequeue		+= st->dequeue;
-+		dst->overflow		+= st->overflow;
-+		dst->ring_peak		= max(dst->ring_peak, st->ring_peak);
-+		dst->match		+= st->match;
-+		dst->miss_tgid		+= st->miss_tgid;
-+		dst->miss_region	+= st->miss_region;
-+		dst->miss_boundary	+= st->miss_boundary;
-+		dst->update		+= st->update;
-+		/*
-+		 * Aggregate per-CPU state: the pipeline hasn't passed a
-+		 * stage until ALL CPUs have passed it, so take the min.
-+		 */
-+		dst->cpu_state = min_t(int, dst->cpu_state,
-+				per_cpu(damon_perf_cpu_state, cpu));
++		/* Skip truly idle CPUs */
++		if (st.cpu_state == DAMON_PERF_STATE_UNINIT &&
++		    !st.callback && !st.enqueue && !st.dequeue)
++			continue;
++
++		if (first) {
++			seq_puts(m, "  Per-CPU (non-zero / non-UNINIT):\n");
++			first = false;
++		}
++
++		seq_printf(m, "  CPU%02d: st=%-7s cb=%llu enq=%llu deq=%llu ovf=%llu match=%llu tgid=%llu noreg=%llu bound=%llu upd=%llu\n",
++			cpu, state_name(st.cpu_state),
++			st.callback, st.enqueue, st.dequeue,
++			st.overflow, st.match,
++			st.miss_tgid, st.miss_region, st.miss_boundary,
++			st.update);
 +	}
 +	cpus_read_unlock();
-+}
 +
-+/*
-+ * Subsystem init
-+ */
-+
-+int damon_perf_framework_init(void)
-+{
 +	return 0;
 +}
++
++static int perf_stats_open(struct inode *inode, struct file *file)
++{
++	return single_open(file, perf_stats_show, NULL);
++}
++
++static const struct file_operations perf_stats_fops = {
++	.open		= perf_stats_open,
++	.read		= seq_read,
++	.llseek		= seq_lseek,
++	.release	= single_release,
++};
++
++/*
++ * Init / teardown
++ */
++
++int damon_perf_debugfs_init(void)
++{
++	if (!debugfs_initialized())
++		return -ENODEV;
++
++	/*
++	 * Create the "damon" directory first.  debugfs_create_dir() mounts
++	 * debugfs via simple_pin_fs() before touching debugfs_mount, so it
++	 * is safe to call during initcall time -- unlike debugfs_lookup(),
++	 * which dereferences debugfs_mount unconditionally and crashes with
++	 * a NULL mount.  If the directory already exists (created by another
++	 * DAMON interface) debugfs_create_dir() returns -EEXIST; fall back
++	 * to debugfs_lookup(), which is now safe because the mount exists.
++	 */
++	damon_debugfs_dir = debugfs_create_dir("damon", NULL);
++	if (damon_debugfs_dir == ERR_PTR(-EEXIST))
++		damon_debugfs_dir = debugfs_lookup("damon", NULL);
++	if (IS_ERR(damon_debugfs_dir))
++		return PTR_ERR(damon_debugfs_dir);
++
++	debugfs_create_file("perf_stats", 0400, damon_debugfs_dir,
++			NULL, &perf_stats_fops);
++
++	return 0;
++}
+diff --git a/mm/damon/perf/stats.c b/mm/damon/perf/stats.c
+index a869f115bb26..ae5b0037a31d 100644
+--- a/mm/damon/perf/stats.c
++++ b/mm/damon/perf/stats.c
+@@ -291,5 +291,5 @@ void damon_perf_stats_aggregate(struct damon_perf_stats *dst)
+ 
+ int damon_perf_framework_init(void)
+ {
+-	return 0;
++	return damon_perf_debugfs_init();
+ }
 -- 
 2.43.0
 
