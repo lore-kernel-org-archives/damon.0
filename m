@@ -1,45 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C5736655C;
-	Tue, 18 Aug 2026 03:21:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BAE345EA2
+	for <damon@lists.linux.dev>; Tue, 18 Aug 2026 03:46:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787023287; cv=none; b=lUIdpKUBTj1BrOyZMRjFAuXZoDll625i1JfK3hKkqGnyBKhZuAD0eEi5sjNCJNhe8EaX4WwUwrFHgWiPLeViX7k1ZBKxuhEMqhzzHU8zQCFho7TU8VcsbY/NWa23wj4VLLJmMSLkBswHlHgR9DZ00ZMOGiZcbAgis0fbwuAizYI=
+	t=1787024776; cv=none; b=Y8wAKs5/8gUwhyLggAwuRWsrPm+b2MdaBGjGJlDqqITNbZKa6/EZbVMeOiEHIwWmOv0wLlOABQrHLIf8xCJR45sFIVHBByQfQKYhIqDSXepBOgLDsbrJBXNTE+AmI7av1xK2d5TdUP9oFy3jgjONYh+1KhA/Ypog1qS7zBGGBS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787023287; c=relaxed/simple;
-	bh=XaEnS7wyGc2OVstJ9A/5iLwHHBFm0Mii7L/ZzZnzcfI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dHUCmuu8/gSTwSEHpbPQuS8hS/VuHrkBVJiNtN5vc0i9CHGLFKlcSGzwMtIELljW8YNS4RkLd1bj00fNapig6smukTMv73jNIK+BcdodYm137nauQna5JlItqYQL04zkGOXMKqNQ3HWfz+CshmDpPcUY3b3RQRfDd9/PsMvBwMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y9Sot6Uh; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787024776; c=relaxed/simple;
+	bh=7ZwgqFUNETnK+eZE15fyxl3BEsjCo+V/zaHorlicCdA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OtZej652kUIpMEpHaSSxKInDbHJg0dp6xAufVeHNy7pPPW2b4KUCHN1GyqUUeYbFQ9GxDEF0ZeBsiZeWZYiCLwuBMGrmJypf50yXwI1YR8R6qNrPTfQxuqEkC1seHRLfAHxFv+45UpCyDCTDGQnY+xN0UhC357NxFp+82ZmKsFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucla.edu; spf=pass smtp.mailfrom=g.ucla.edu; dkim=pass (2048-bit key) header.d=g-ucla-edu.20251104.gappssmtp.com header.i=@g-ucla-edu.20251104.gappssmtp.com header.b=JZ3FyVnZ; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucla.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=g.ucla.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y9Sot6Uh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0341F000E9;
-	Tue, 18 Aug 2026 03:21:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787023283;
-	bh=r8ycGWTUx2Z6i4TYl2DorBvyB4i7PAtWRsvpykEZrpo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y9Sot6UhFW31l4tekFskkY/DZIvzGQa68alZJQG6Xim+nEmdHpvBdCHgXd00Vd0/j
-	 qTpZKWeOfXYZTJRmNCaxjIpmzvsU4GEliO8wBg3GRxmcGY3VrE/8ClxrwV4pZC+D4h
-	 c74GxNA77tVI3zgGWUnL/k+gmugOn6FQplXxg68yJ2W0m2m+hbdx0kvDGzLa3eRQvV
-	 hOXYZOQjdiIzAvi8yBuWIMSk3aPSQCFIHTcxn5VmM+zkmMvnbJlWra/fsyGVdb04xa
-	 zIaQasnLSlPLDYshIw95JxXIVJZTaDP0BYtAFY1myXkaP4WMe+cADKUOpJk40T6GpV
-	 to0fZwPUYYLsg==
-From: SJ Park <sj@kernel.org>
-To: dayou5941@163.com
-Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	dkim=pass (2048-bit key) header.d=g-ucla-edu.20251104.gappssmtp.com header.i=@g-ucla-edu.20251104.gappssmtp.com header.b="JZ3FyVnZ"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-84862b0d5aeso3443045b3a.2
+        for <damon@lists.linux.dev>; Mon, 17 Aug 2026 20:46:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=g-ucla-edu.20251104.gappssmtp.com; s=20251104; t=1787024774; x=1787629574; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=gvzXK3W/uIG2TnGSiCAj0G4qvHFz9goxNEqSwA5mwyo=;
+        b=JZ3FyVnZ5zhy+4vCCXGVfoER15TGPJU+sS8JdRvYpgbDX2bAXc8azwT2zzADASHa9e
+         q44qzHgetVCmscF72QxVuAfRu41l2m+s/N+k4Sfzrq41Kus3C+TRMPmv8rlfFXmNfpWv
+         bcsCg+LIQDBd3ip75caBHFxp6TEdoEkLvICIkxzZiggSc7VqwALe6A6veybLyqOFDi/b
+         gVEGk3YjThc6siyiNoQAfKEMjmOKI3JRntoJsi7vZzMTFpBayuMEY0DEHk/TA6YYwCSk
+         dB7yFZHd/9v6X/8yXxf92zuEOTU46xGp9G4v2akFwG0K+/r7BYsdYzg8ib3QPOnV/c3W
+         0J0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787024774; x=1787629574;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gvzXK3W/uIG2TnGSiCAj0G4qvHFz9goxNEqSwA5mwyo=;
+        b=ZbaYs2dyi3SP3/WzowsRsHQN2/EAC5L1bj5oI1i/njqlEQPH3hxK6eaj5gNbQSk3jA
+         261lqdmFA4i1lPh7/SnFfS43sE3z70CIttimrTBiTZ9DAa2dui8Qmz8NNrPU/pQtUqSM
+         lmYM6dVIR8uDptX6cXHn0C8ZX1R7yQM2QXDnBm07rwCFG0u8De5mqTThug3gg8ZP2sMl
+         H4Lz+TvnO2bZajvYPXeSA1JsH6tOdNMAuzQQRpKcSAfxwihoH2ERNT1nrTDhVxRKwM19
+         Ff+ydD+gsFQWVBCCBLfYZLvzDvMqjIKrA8ZudenU1GdybzItV73krwhbF9otuN2nw9O/
+         WGdA==
+X-Forwarded-Encrypted: i=1; AHgh+RqgPYY6uLjgQ3T09vkt0HK40MkzQSX2XkdYjByKXQyEof7QX5Mkc3QBAnE327xfW0+Q39oTWQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxF49+pBccOM2xfhbL+kxCi+oNKheukW4mhN/BGbxPiMFpsG3Tl
+	/zemfgeCNTBaybGGiuqiN/rw7MQhQrEMU6LesQ5ObyJQtxk8eInu8tm53HI5d2FqFo0=
+X-Gm-Gg: AR+sD10lr5mU3GrQBIJ0LQigbV7WDi+uH82jPChHJDuQMTPuvKewDsFivK6gU6JQ6cD
+	tNTeZ8chJT2sXweUCytN93LKdGkMoAwwES8OU/h6XyY5AzzsHfjGAOwWZC1J4xq4pK3HQyW6/qX
+	SDdRQ7Hs+i5fDAf24sukmVGEFBvpsZU2WBGMPyojODeIre7MfEscgxjiUb7muMzizJa6wfawEfp
+	Fc6pg7A/Kf97OkRJCz5gABDzpyUlm6j5FDk8L5kdNH8wF4yS7kMTyfGHw1PKs4JgZxZeRun+HnU
+	zHAdAAeECzSZ2HhtLkHZE6i40ST3lClgglBBW8YK6g7cytp7XnlHd+o8BSkXJPBGlS5C3CipY6n
+	D+NMhiScpzBkZAtND1r8grxJ3M/hsc00+J+TtyJZpa41yIEFVyu8kG/EVaal2RM6Li+WGpRI+H4
+	LOATqsjudBJfBs8g8zXpLj+tAxjNiFJm6gXAN/hvWEsEHEItqsiXh9kNqV6kqsixNAiLsIdO/EY
+	Pi86bRHHB+vrDt7
+X-Received: by 2002:a05:6a20:6a1f:b0:3c0:b943:f984 with SMTP id adf61e73a8af0-3ccda405866mr5334939637.3.1787024774083;
+        Mon, 17 Aug 2026 20:46:14 -0700 (PDT)
+Received: from damon-kunit-dev.tailb106f5.ts.net ([73.93.135.51])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3267be8e35bsm11453293eec.14.2026.08.17.20.46.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Aug 2026 20:46:13 -0700 (PDT)
+From: Jason Angelov <jasonangelov@ucla.edu>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: shu17az@gmail.com,
+	jiayuan.chen@shopee.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	Li Youhong <liyouhong@kylinos.cn>
-Subject: Re: [PATCH v2] mm/damon/ops-common: factor out damon_putback_folio_list()
-Date: Mon, 17 Aug 2026 20:21:20 -0700
-Message-ID: <20260818032121.89231-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260818020650.2844354-1-dayou5941@163.com>
-References: 
+	Jason Angelov <jasonangelov@ucla.edu>
+Subject: [PATCH 0/2] mm/damon: add kunit tests for probe_hits handling and probe params validation
+Date: Tue, 18 Aug 2026 03:45:50 +0000
+Message-ID: <20260818034552.11975-1-jasonangelov@ucla.edu>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,33 +78,20 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 18 Aug 2026 10:06:50 +0800 dayou5941@163.com wrote:
+DAMON recently introduced probes and probe weights. Add kunit tests
+for the propagation of probe_hits at region split and merge, and the
+rejection of invalid probe parameters by damon_valid_probe_params().
 
-> From: Li Youhong <liyouhong@kylinos.cn>
-> 
-> The putback loop is duplicated in damon_migrate_folio_list() and on the
-> invalid-nid path of damon_migrate_pages().  Factor it into a small helper
-> for readability.  No functional change.
+Jason Angelov (2):
+  mm/damon/core-kunit: test probe_hits handling at region split and
+    merge
+  mm/damon/core-kunit: test damon_valid_probe_params()
 
-Thank you for this nice cleanup.
-
-> 
-> Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
-
-Reviewed-by: SJ Park <sj@kernel.org>
-
-This patch is applied to damon/next [1] tree.  If this patch is not added to
-mm.git in short term, I will ask mm.git maintainer (Andrew Morton) to pick
-this.  So, no action from your side is needed for now.  Note that we are in the
-middle of the merge window.  Andrew might not pick this until the end of the
-merge window.  I will make the action only after the merge window is closed.
-If it seems I also forgot doing that or you cannot wait for my action, please
-feel free to directly ask that to Andrew.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+ mm/damon/tests/core-kunit.h | 64 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
 
-Thanks,
-SJ
+base-commit: 4b65683fd25fe596b5b5947d934bb176413d077b
+-- 
+2.43.0
 
-[...]
