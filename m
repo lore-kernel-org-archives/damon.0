@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0DB282F24;
-	Mon, 17 Aug 2026 14:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C6A241C8C;
+	Tue, 18 Aug 2026 00:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975664; cv=none; b=nu+gW0NhhOGpLyfNHl7uXArPYWPHKBqLUQejZaXiMmX65+rlyHCPG4bdQz6Jyauh3wgxARwBfaZ/cSzrBX0BQ4GPqnobb1/f3ZHKHDJ9w4hgck5B7dbAQhCnqqOswc/bdVpJ2yGsJ98XBBRT7SLFaOJHRYrRIuKmuaAXky788y0=
+	t=1787014474; cv=none; b=QVb4yNeF0tTDTVPv50akV+VjiMNc0lF/5XZM9O9XCvVJKkNbysOHJSgu28dIAmQ5F0OPkEn6G5+BfwQ2wwGhSVJF2PO0N/CtvO1IgV8y9JkNXJQcHFHcBFQB1uMMC4lt6FfCe0KHLcELHENTy3cVffvNtEqoehaq5rIKPhS6lBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975664; c=relaxed/simple;
-	bh=tPg9dr4pDhhAoqCjkmGklRbFhdHoJcRocHKnY4dx1jQ=;
+	s=arc-20240116; t=1787014474; c=relaxed/simple;
+	bh=67v/HK3kSRSzxBDVcXSLCY0ywsqg4H9mKELAM9QfgZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXMvfeFRVNPGZp4K81Hbq7D9ypzOrogMkizETA6MytFpr5cybsRd5N3uesrWUSD+3wA7ZuqawME7lTcML0zcQBrZvt3k7hi+aSuQ8SrFn7CVPvnc9Yfh3MZNGiSyWN7DLKWmHThsYRXCnBCBDxlAWIniPebzNE+GvcF1M7oDItw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oLOvm30R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvEsGHwiD4Bjp5jTtvWewoWWdBhUDoDPLIFHxr9dtYN7RUAxUABh1klnKPS/dHmsI3qnzWcHXkwsSS7GAmm2CXFlCfuhHmZB0XR9/w4nXzbxiMbhiEsCDjdovySLWUCr+IMJsGXPGvxF1a5ldhPJ0e9XrccBQSH/WsZlHeLyGuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RdH71YcY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oLOvm30R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42471F00A3A;
-	Mon, 17 Aug 2026 14:07:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RdH71YcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71391F000E9;
+	Tue, 18 Aug 2026 00:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786975662;
-	bh=BPV0snyvdnGubekf6I4pL7WA2SUpgj+H9hK78RZnmSU=;
+	s=k20260515; t=1787014472;
+	bh=kYxkamxtO++QzU30BmbUy5M+CCOHMm+4XKO25ln20BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLOvm30R9NwwazdLONwpTMCWBNqGUNUz8swvK7TmqtEVQGGFgzfnZaGl4uIxdWGKD
-	 msxm/a/ZLLuzPqGGBFRrG2tprOsW7BqwGO/Xq5DrHPBqkV7dg4CHehvTnxNomSSwPk
-	 iU9uC09K121NbhHFFb2XRsSzEzyR+cQQhFcBtqE92Y1Vu0081dh6MvvatBXbro/ERa
-	 NHf153tjwpJAMfKB+FH4TEt557UyO4qksP8rvIKl1jozYXM8Y/8peT7wqpe74j8o5h
-	 OcC9hhnwVXVpy/mbjev0rX3iw3wYiqeA9jA5EAtKb6REEJo5e3pKlwORmZLvKl+LNk
-	 4JEHHyh0SUVVg==
+	b=RdH71YcYgdqd9Sw7OT7AXDe5CrF3JW1Z5XkAA3ojRPCD0tk3ZbeXp5KwLbf7Z/FR+
+	 fj2PeYU3EZprURD/X87BBxyDP2eNov6CUazX2UqyTSZVDgTZErEjUExEvJCB5zKH7D
+	 EQPswksBr0e04vuokPNXb3NP3H06juZXu1equnq7p5t9PD9CC65KsrojulnHpypwWr
+	 tsbBF3iSwqE3olfyLBdE3huLtlmRloZwc1iXmWzl7V7T2ayZ/xzHegZEe38w6u4zLA
+	 7vug4Xg9FTSFCVwzS8VZf9jZ/FYSzYcQps+KO+mPjtBhQW1tvwydwPTcz7QpL4Gkee
+	 HghZ44N0OyrUA==
 From: SJ Park <sj@kernel.org>
-To: Enze Li <lienze@kylinos.cn>
-Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
+To: SJ Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	enze.li@gmx.com
-Subject: Re: [PATCH] mm/damon/core: introduce damon_set_target_pid()
-Date: Mon, 17 Aug 2026 07:07:40 -0700
-Message-ID: <20260817140740.78251-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: DAMON (nano) Conference Schedule (was: "Re: [CFP] DAMON Nanoconference (aka BoF) at LPC'26")
+Date: Mon, 17 Aug 2026 17:54:24 -0700
+Message-ID: <20260818005425.88087-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260817125319.888994-1-lienze@kylinos.cn>
+In-Reply-To: <20260808162724.92408-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,30 +45,66 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 17 Aug 2026 20:53:19 +0800 Enze Li <lienze@kylinos.cn> wrote:
+On Sat,  8 Aug 2026 09:27:24 -0700 SJ Park <sj@kernel.org> wrote:
 
-> The logic that finds the struct pid for a given pid number and assigns
-> it to a damon_target is duplicated in multiple places.  Including
-> damon_sysfs_add_target() of mm/damon/sysfs.c and the start functions
-> of the two sample modules, samples/damon/wsse.c and
-> samples/damon/prcl.c.  Add a function that does the work, and replace
-> the duplicated code in the places with calls to the function.
-
-Looks good to me, thank you!
-
+> On Wed,  5 Aug 2026 17:33:57 -0700 SJ Park <sj@kernel.org> wrote:
 > 
-> Signed-off-by: Enze Li <lienze@kylinos.cn>
+> > Hello community,
+> > 
+> > 
+> > We will have a DAMON BoF session [1] at LPC'26.  Because it is a BoF, I want to
+> > make it as casual as possible with many voices.  Hence inviting you.  You could
+> > think this as yet another version of our bi-weekly Beer/Coffee/Tea chat meeting
+> > series [2], or the first Nano-sized DAMON conference.
+> > 
+> > If you have any topics about DAMON that you want to present and discuss in the
+> > session, please send an email to me.
+> > 
+> > Example of topics include but not limited to:
+> > 
+> > - Your DAMON work that is recently landed, in progress/plan
+> > - Your DAMON usage and success/failure stories
+> > 
+> > Depending on the topic and number of proposals, I will try to give each topic
+> > 5-15 minutes.
+> 
+> We already got plenty number of proposals.  I'm closing the CFP.  Sorry for not
+> announcing an official proposal deadline in advance.  Please feel free to send
+> any DAMON topic, though.  We could extend the session to hallway track, evening
+> event or a later DAMON Beer/Coffee/Tea chat.  Also that will be helpful for
+> planning the next DAMON Conference.
 
-Reviewed-by: SJ Park <sj@kernel.org>
+Now the complete schedule of the nano conference is avaialble [1] at the web
+site.  Let me copy-paste it here for your convenience.
 
-This patch is applied to damon/next [1] tree.  If this patch is not added to
-mm.git in short term, I will ask mm.git maintainer (Andrew Morton) to pick
-this.  Note that we are in the middle of the merge window.  The action would be
-made only after the end of the window.  So, no action from your side is needed
-for now.  If it seems I also forgot doing that or you cannot wait for my
-action, please feel free to directly ask that to Andrew.
+17:45-17:48
+Opening
 
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+17:48-17:55
+Breaking through Accessed Bit Limits of DAMON - SJ Park, Ravi Jonnalagadda,
+Akinobu Mita
+
+17:55-18:05
+Beyond Weighted Interleaving: Bandwidth-Driven Memory Tiering with DAMON
+- Ravi Jonnalagadda
+
+18:05-18:15
+DAMON for Huge Pages
+
+Guiding THP Decisions with DAMON Memory Monitoring - Asier Gutierrez
+
+Host-side DAMON Hotness under KVM/THP: Granularity Gaps and Evidence for
+Demotion - Lian Wang, Kunwu Chan
+
+18:15-18:25
+DAMON in the AI Cloud: Monitoring Real-World GPU Workloads - Krishna Iyer
+
+18:25-18:30
+Joint QnA and Closing
+
+Looking forward to meet you all at the first DAMON (nano) Conference in Prague!
+
+[1] https://lpc.events/event/20/contributions/2453/
 
 
 Thanks,
