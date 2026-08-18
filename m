@@ -1,66 +1,66 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1F6388E43
-	for <damon@lists.linux.dev>; Tue, 18 Aug 2026 07:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B759B342CB0
+	for <damon@lists.linux.dev>; Tue, 18 Aug 2026 07:05:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787036715; cv=none; b=ENZFD29sRmiJmzlvpVL3qPAmepYQ4p7aV7OUEMeX9dWPPZIlnepiy43JHicIXLftCizLhl6QsRV50GjBk/VoTnryGmvaoEiImbpJRrLGBSG/wq83u7WS42Dzuw9AVt82rTrO7SsXbfgka7ue5jssx4OD3vvUsmt8zyORZWwfM6Y=
+	t=1787036719; cv=none; b=a5WlSbKjlCB+UOVRHV0vI/YgMAhYtgYHdszQlMiCcxN3fLeHor0S0uvdFdSPsVvDMdN+gI76ypKG1GGEeWd/SC1tH25cCzwzwEj5/V3MHBypSa+I0XQBiFXhOOSB8IFP2iKMspri7/c4jIirVlyUb8r0TIWUgmh9J7NiHwwMApU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787036715; c=relaxed/simple;
-	bh=9HIgd/suvnqugdJZxiojG8df5YQ2DpWRG1gL4GMZaHE=;
+	s=arc-20240116; t=1787036719; c=relaxed/simple;
+	bh=IBIsXPsiyG0M3VuvrMK9bIS+RRh0mxA2w8MD+MPV0kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iXWnHaPw8cj8ZuejaqJUntCD9JhfOZKbzV0FZOGCLNIxI5dtNg1ECPxKGStEOyMbEKjzTDseYL9NuoTS03HQi5Xaj294AWabCX5oIpZ6QHyB+me9Zk6G/Dd3G25mmUyPvPSVJc47TY2yOkOFOcdYUGnqrFL94YbIaYhbtENBP8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CXf4owDp; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version:Content-Type; b=mA/ekGQwYfJ2QfwJnfe2aeAy2glcoB77w4b8hkSSb9W+FeR7VFMle1Maea4oEyIhCJ221iM3TuL05NPU+kX4tGVYKn3z54khh/M5YNSiTpeCSeq4izEQjFqxtusN1ObhfUDi8pz1Nt1dZ3sf30xUXbY5E/ntPEKXvwWOxSMzZQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=amfC1KFA; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CXf4owDp"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-49987367394so2721195e9.0
-        for <damon@lists.linux.dev>; Tue, 18 Aug 2026 00:05:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="amfC1KFA"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4994d41ceb9so5741555e9.2
+        for <damon@lists.linux.dev>; Tue, 18 Aug 2026 00:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787036710; x=1787641510; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1787036713; x=1787641513; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=jCozUlpgp0dXtm0FXnemR31LLTWCBlc2ogyMjG7W414=;
-        b=CXf4owDpshsUWglm9DSU/hgSzoc8Ka1o9kCRuRNXqoxgFTr8CoYSIgh+dg0maSbbZ4
-         8vEcFkHZzquU/0Zd9MNwkv/8e128eDzzgKCrKcr9H3JKOGXvOYwzEIJh260nVQ4Pe6y3
-         JeFmqB4aRDJHwVyDrhpRadRTZlSyRhG6w2XfOZjj7n+rydUu2C6cj2XUZUKsooTiOJrZ
-         QQExEFiO+nBHmDZ7dTIqG8/rJzH+9xQJMyKvPm6FMGMTbWSspjdHxVlN0/isa760N1hX
-         UBOejki/kyXf5T4ZkYUkBzJXQs9wBC7epaoMTOXgC8FXoZTpjhDVqRmRVKdbZAHsF3fo
-         0xMg==
+        bh=gzGp4RSK/VKV73d1qH4iqIoZ1Boa7bH9bYUYJjvkcf8=;
+        b=amfC1KFAkpaBu49H/HzDn9aZMgrNS2vK7ZVSYmHTIbe0wsXnbL2rlZ9QBwtruKthoV
+         nv7Wpu+vPVKmTtS2RhUf5ovBgwS6ms7eRBQGJ4mMV3J8UMq+Hy5pgWvkZUZFyookbE6L
+         bCWoz5POKfDnkUr3/yUGdx8ZwF2IClrbyNbygK003ztNEbBDO1Oasmaxf+fXHTz0I6Oh
+         8E2OssuLg7AGhcNgPop8nXBgyQzV7U6c0KK49G6yZ2gnhnYgfJN6SFw8s+vl+NsztEIn
+         Iy19pVZ2skgK42DjEgYv/GPFeG1WhgnbGZfh2iXW8HTSoijQmF54A5gIuaRZbhoAxuoU
+         4HfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787036710; x=1787641510;
+        d=1e100.net; s=20251104; t=1787036713; x=1787641513;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=jCozUlpgp0dXtm0FXnemR31LLTWCBlc2ogyMjG7W414=;
-        b=JCrXKpZV+pu8S2qxnLfRdZ3PeA8wNwZfpftLYHfzSZrkVCNcz+S72xy5r+c9Vibbcc
-         zYAJL7bF9upK2XWmYJzE87M/cviHA25LAyf909uJ5wPErTmSlru2+n1di/5TFQb7XdWG
-         ar9lltSWydtJIo/vk2ovVPudC0RCI/Ya+3BdMk+AdbBDr5xftO9VEvnuKhdcSOWD6FgK
-         oPc6P/K/vwnzLwk2QJa4hn9XgFow9WFgvTxRxnFh8RhwFkAe2JNlNWeDz/E7+ol0RTyi
-         Qpyu1fbAh6vDr0V83FFF4g1SurdcsEvVZnr0KgeFkHP8b51H53m2eAwW3GMQ4MF9c4Eb
-         s8Zg==
-X-Forwarded-Encrypted: i=1; AHgh+RoRLl2uec85saZcORdDeDGIlhhIYYyDXYO6zSTZxgOd4DnG1Oc8wi5t+yQNJqJHF9PT1ZJ23A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxHEz6mOBzOiMsfPPVltfMpn+B9Xq0mwDTGeRAiHOh0o5GUi76s
-	L3eLmpq3rk4pGPwyrvNYzNswk0c77sgcPLUTev2ENgK7ly1jbynj514f
-X-Gm-Gg: AR+sD10FYhAP3OpPtyaifrgZSVkB8d4cUdgwlvdGh72FCqQ4/psfiSlXrtN8ZaVosvX
-	EjKK6wGSEip9l/xuiyXLct6DK3FyFYLM19lEXXJCyaV/tabt74FS3n7T/+p5m6tKkMaQZHyf+Z1
-	EMdnSB4gsqu2nT1Xm31E4cc16rKnXjHzuzerRHvzWPCT88ckwV1QlXBvE81vFqnXpv4YLzQ6/hh
-	t0AI6rgO/ynHTExeCL/f0ydY+Y3v0n1ZCh0lg3tx2jPZhmoEDwEuSG2NU760Hy6xYgl8aR0mdA4
-	lDUaOp/Ozc+SU2h5UHd5iMp2Vm5pteJqwtPtRqadhW8NPYeSc/tfXuCiv8N1MC3t99uTMnHcvt4
-	Gr9ntHkQ15WVykn/+Urceo805AhVwPZUXK6PZ6REjt6D0o3wB03EEMn/Fl/ZRIqJiYScleZ6W09
-	bGSqkYiS0k9A7LIDGuSWnUNkZJGMSHD4u1gqjnlaOAH9D//Lo3rbK56S9z8UY6VjbRNPsFf6Wsy
-	2TMQbaC7f+ZJKx1kX6IpqzMvwL8eRjgAA2MxOWTKvp8chvbxyVAnkNKYA3gEDpmbDBGYGlFCF5X
-	r//MHNjkgKgj54TGLsWYzD0NeLc29USK16NVf1dKMK7Zj4tCZ5xUpC6S
-X-Received: by 2002:a05:600c:4f8b:b0:499:5b0f:72b with SMTP id 5b1f17b1804b1-49987944318mr228818095e9.1.1787036710203;
-        Tue, 18 Aug 2026 00:05:10 -0700 (PDT)
+        bh=gzGp4RSK/VKV73d1qH4iqIoZ1Boa7bH9bYUYJjvkcf8=;
+        b=NpY1i3HbmNVNrSAER/sMC3FPqs/zR/ij0kMgHtw3bghLtrz9HckfKFVdvjNQlvTiR2
+         PpVn3WcVY4HR7Mk90JTAf6hhCuBcA9X84MKFPI0BLY2wdkk4AVOOMRyuJ+WeLfTleBeH
+         uksmD/pOlWngZPuZ39vTGMK6oNB4Mjv5/4uofKfni+UDR2hdrLyq/qPOaRRdVf2UPOhG
+         fJU+nqpA/cZK91JsUl9AeoI8WXcuv1kqIkgretYmPtYPNaBAWBaZ+YPDoEvktuNNbtNh
+         8A6iz7YYIcRB5heabM0Y4T0ucuIzqvKmNEts0PCdhyY/WsItjSpYgcoSYsN2LFj+9gFN
+         +zZA==
+X-Forwarded-Encrypted: i=1; AHgh+Rog97vhrm9V/OYnmHxjcKk+VnD4Ib2xg2BPL/np7qgOiJ0D1uomeNT7Qe/WXvviPsALySLzeg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxY3g0bj8oTJR1jQhI3L6jr6WWCLWi/GPPDYSh7zgaRKBZjEtHF
+	RxhYJ/yQF/XamUmHuvwp9hcIvvQDZPmbLLIPnFUrOXupRoClS1UVGpYj
+X-Gm-Gg: AR+sD13LJRXLqcuB+RfsC+nRR1a92eJAV+V8K+hdZmDCQMu3HUebEXSAB3K0REA10Zj
+	zd8svMAAtArTyLadkMZeJDrLZUV0u2BXBU5lFOoXKKxwOknifIO1BGrE2y2By6f/30LvKPm+KP0
+	KY3+BqH6Mw2XeHOyQB2c7Gp6HScHa6UCtIxr8ZpMMGveuuUSlFntplr9AIxobvJybI77OEw3CAf
+	KdwniDaloJCM7phpf64qhpSzZZEExMa1Nk0PHojyN+RMpb6sZsiRWCz+myg4ltT+sbFJ5SbVmKW
+	gDWsDo/UNGAALVNv3U5MEaKCTYIHXtd/nZI7NMmSErYxtS3MxXIOLsBe3HJyGaWjHo7VWp2jUbD
+	48moNZuxsKuUysAQlxzBKuQ5IXaOCgheo0WOkYmOE6Oep1hqYnoDo7zfqLTdQgU8KOuoeo/OxJM
+	laPQDgf49c4sog6/ludcsY1hG0C+/iltRjnMamnDrWn0802NqJWPc4KBbs9B7X8bSMFmjtqbJC3
+	FrwQ6euL8PV3QwxtjSLkizR4+t61+qjOEu0VRccL42aUHkjb3pbmuI6Z9pNhP10U8VvvdfYA5fU
+	yEI0uMb2/lpMK3FOtfYvIAaBGXzQFBecSvRnWS+40XUPZA==
+X-Received: by 2002:a05:600c:8b57:b0:499:8411:9e8d with SMTP id 5b1f17b1804b1-499878cb099mr229920075e9.0.1787036713178;
+        Tue, 18 Aug 2026 00:05:13 -0700 (PDT)
 Received: from doehyun-dev.pradel.rg.cispa.de (x06.xlate.fw.cispa.de. [195.37.157.6])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49996188217sm495557495e9.13.2026.08.18.00.05.09
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49996188217sm495557495e9.13.2026.08.18.00.05.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Aug 2026 00:05:09 -0700 (PDT)
+        Tue, 18 Aug 2026 00:05:12 -0700 (PDT)
 From: Doehyun Baek <doehyunbaek@gmail.com>
 To: Alex Shi <alexs@kernel.org>,
 	Yanteng Si <si.yanteng@linux.dev>
@@ -73,9 +73,9 @@ Cc: Doehyun Baek <doehyunbaek@gmail.com>,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v8 4/7] docs/zh_CN: update DAMON start translation
-Date: Tue, 18 Aug 2026 07:03:46 +0000
-Message-ID: <20260818070358.455768-5-doehyunbaek@gmail.com>
+Subject: [PATCH v8 6/7] docs/zh_CN: update DAMON reclaim translation
+Date: Tue, 18 Aug 2026 07:03:48 +0000
+Message-ID: <20260818070358.455768-7-doehyunbaek@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818070358.455768-1-doehyunbaek@gmail.com>
 References: <20260818070358.455768-1-doehyunbaek@gmail.com>
@@ -88,110 +88,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update the Chinese translation of .../admin-guide/mm/damon/start.rst.
+Update the Chinese translation of .../admin-guide/mm/damon/reclaim.rst.
 
 Update the translation through commit c9380cdd949d
 ("Docs/{admin-guide,mm}/damon: fix DAMON documentation details").
 
 Signed-off-by: Doehyun Baek <doehyunbaek@gmail.com>
 ---
- .../zh_CN/admin-guide/mm/damon/start.rst      | 63 ++++++++++++++++---
- 1 file changed, 54 insertions(+), 9 deletions(-)
+ .../zh_CN/admin-guide/mm/damon/reclaim.rst    | 82 ++++++++++++++++++-
+ 1 file changed, 80 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/translations/zh_CN/admin-guide/mm/damon/start.rst b/Documentation/translations/zh_CN/admin-guide/mm/damon/start.rst
-index cff7b6f98c59..1a7f3382dd15 100644
---- a/Documentation/translations/zh_CN/admin-guide/mm/damon/start.rst
-+++ b/Documentation/translations/zh_CN/admin-guide/mm/damon/start.rst
-@@ -35,18 +35,63 @@ https://github.com/damonitor/damo找到。下面的例子假设DAMO在你的$PAT
- 这并不是强制性的。
+diff --git a/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst b/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
+index d14ba32f7788..1e9375947295 100644
+--- a/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/translations/zh_CN/admin-guide/mm/damon/reclaim.rst
+@@ -58,6 +58,19 @@ enabled
+ DAMON_RECLAIM。注意，由于基于水位的激活条件，DAMON_RECLAIM不能进行真正的监测和回收。
+ 这一点请参考下面关于水位参数的描述。
  
- 因为DAMO使用了DAMON的sysfs接口（详情请参考:doc:`usage`），你应该确保
--:doc:`sysfs </filesystems/sysfs>` 被挂载。
-+``sysfs`` 被挂载。
++commit_inputs
++-------------
 +
++让 DAMON_RECLAIM 再次读取除 ``enabled`` 外的输入参数。
 +
-+拍摄数据访问模式快照
-+====================
++DAMON_RECLAIM 运行期间更新的输入参数默认不会应用。一旦该参数被设置为
++``Y``，DAMON_RECLAIM 会再次读取除 ``enabled`` 外的参数值。重新读取完成后，
++该参数会被设置为 ``N``。如果重新读取时发现无效参数，DAMON_RECLAIM 会被
++禁用。
 +
-+下面的命令展示程序在执行时刻的内存访问模式。::
++一旦向该参数写入 ``Y``，用户在再次读取 ``commit_inputs`` 返回 ``N`` 之前，
++不得写入任何参数。如果用户违反该规则，内核可能表现出未定义行为。
 +
-+    $ git clone https://github.com/sjp38/masim; cd masim; make
-+    $ sudo damo start "./masim ./configs/stairs.cfg --quiet"
-+    $ sudo damo report access
-+    heatmap: 641111111000000000000000000000000000000000000000000000[...]33333333333333335557984444[...]7
-+    # min/max temperatures: -1,840,000,000, 370,010,000, column size: 3.925 MiB
-+    0   addr 86.182 TiB   size 8.000 KiB   access 0 %   age 14.900 s
-+    1   addr 86.182 TiB   size 8.000 KiB   access 60 %  age 0 ns
-+    2   addr 86.182 TiB   size 3.422 MiB   access 0 %   age 4.100 s
-+    3   addr 86.182 TiB   size 2.004 MiB   access 95 %  age 2.200 s
-+    4   addr 86.182 TiB   size 29.688 MiB  access 0 %   age 14.100 s
-+    5   addr 86.182 TiB   size 29.516 MiB  access 0 %   age 16.700 s
-+    6   addr 86.182 TiB   size 29.633 MiB  access 0 %   age 17.900 s
-+    7   addr 86.182 TiB   size 117.652 MiB access 0 %   age 18.400 s
-+    8   addr 126.990 TiB  size 62.332 MiB  access 0 %   age 9.500 s
-+    9   addr 126.990 TiB  size 13.980 MiB  access 0 %   age 5.200 s
-+    10  addr 126.990 TiB  size 9.539 MiB   access 100 % age 3.700 s
-+    11  addr 126.990 TiB  size 16.098 MiB  access 0 %   age 6.400 s
-+    12  addr 127.987 TiB  size 132.000 KiB access 0 %   age 2.900 s
-+    total size: 314.008 MiB
-+    $ sudo damo stop
+ min_age
+ -------
+ 
+@@ -68,6 +81,15 @@ min_age
+ 
+ 默认为120秒。
+ 
++autotune_monitoring_intervals
++-----------------------------
 +
-+上面示例的第一条命令下载并构建一个名为 ``masim`` 的人工内存访问
-+生成程序。第二条命令要求 DAMO 用给定命令启动该程序，并让 DAMON
-+监测新启动的进程。第三条命令从 DAMON 取回该进程当前被监测访问
-+模式的快照，并以人类可读的格式显示该模式。
++如果该参数设置为 ``Y``，DAMON_RECLAIM 会自动调优 DAMON 的采样和聚集间隔。
++自动调优的目标是在每个 DAMON 快照中捕获有意义数量的访问事件，同时将采样
++间隔限制在最小 5 毫秒、最大 10 秒。将其设置为 ``N`` 会禁用自动调优。
 +
-+输出的第一行以单行热图格式显示各区域的相对访问温度（热度）。热图
-+中的每一列表示被监测虚拟地址空间上大小相同的区域。列在该行中的
-+位置和列上的数字表示该区域的相对位置和访问温度。``[...]`` 表示
-+虚拟地址空间中未映射的巨大区域。第二行显示帮助理解热图的附加信息。
++默认禁用。
 +
-+从第三行开始，输出的每一行显示进程的哪个虚拟地址范围
-+（``addr XX size XX``）被访问得有多频繁（``access XX %``），以及
-+持续了多长时间（``age XX``）。例如，大小约为 9.5 MiB 的第十一个
-+区域在最近 3.7 秒内被访问得最频繁。最后，第四条命令停止 DAMON。
+ quota_ms
+ --------
+ 
+@@ -98,6 +120,29 @@ quota_reset_interval_ms
+ 
+ 默认为1秒。
+ 
++quota_mem_pressure_us
++---------------------
 +
-+请注意，DAMON 不仅能监测虚拟地址空间，还能监测包括物理地址空间在内
-+的多种地址空间。
++期望的内存压力停滞时间水平，单位为微秒。
++
++在保持其他配额设置的上限的同时，DAMON_RECLAIM 会自动增减配额的有效水平，
++目标是产生该水平的内存压力。系统范围的 ``some`` 内存 PSI 会按每个配额重置
++间隔（``quota_reset_interval_ms``）以微秒为单位收集，并与该值比较，以判断
++目标是否满足。值为零表示禁用该自动调优功能。
++
++默认禁用。
++
++quota_autotune_feedback
++-----------------------
++
++用户可指定的有效配额自动调优反馈。
++
++在保持其他配额设置的上限的同时，DAMON_RECLAIM 会自动增减配额的有效水平，
++目标是从用户接收到值为 ``10,000`` 的反馈。DAMON_RECLAIM 假定反馈值和配额
++成正比。值为零表示禁用该自动调优功能。
++
++默认禁用。
++
+ wmarks_interval
+ ---------------
+ 
+@@ -149,6 +194,8 @@ min_nr_regions
+ DAMON用于冷内存监测的最小监测区域数。这可以用来设置监测质量的下限。但是，设
+ 置的太高可能会导致监测开销的增加。更多细节请参考DAMON文档 (:doc:`usage`) 。
+ 
++请注意，该值必须为 3 或更高。该下限的理由请参考设计文档的 :ref:`监测 <damon_design_monitoring_zh_CN>` 章节。
++
+ max_nr_regions
+ --------------
+ 
+@@ -163,7 +210,7 @@ monitor_region_start
+ 目标内存区域的物理地址起点。
+ 
+ DAMON_RECLAIM将对其进行工作的内存区域的起始物理地址。也就是说，DAMON_RECLAIM
+-将在这个区域中找到冷的内存区域并进行回收。默认情况下，该区域使用最大系统内存区。
++将在这个区域中找到冷的内存区域并进行回收。默认情况下，该区域使用系统的整个物理内存。
+ 
+ monitor_region_end
+ ------------------
+@@ -171,7 +218,35 @@ monitor_region_end
+ 目标内存区域的结束物理地址。
+ 
+ DAMON_RECLAIM将对其进行工作的内存区域的末端物理地址。也就是说，DAMON_RECLAIM将
+-在这个区域内找到冷的内存区域并进行回收。默认情况下，该区域使用最大系统内存区。
++在这个区域内找到冷的内存区域并进行回收。默认情况下，该区域使用系统的整个物理内存。
++
++addr_unit
++---------
++
++内存地址和字节数的缩放因子。
++
++该参数用于设置和获取 DAMON_RECLAIM 的 DAMON 实例的 :ref:`地址单位 <damon_design_addr_unit_zh_CN>` 参数。
++
++``monitor_region_start`` 和 ``monitor_region_end`` 应以该单位提供。例如，
++假设 ``addr_unit``、``monitor_region_start`` 和 ``monitor_region_end``
++分别设置为 ``1024``、``0`` 和 ``10``。那么 DAMON_RECLAIM 将处理从地址零
++开始、长度为 10 KiB 的物理地址范围（以字节表示为
++``[0 * 1024, 10 * 1024)``）。
++
++``bytes_reclaim_tried_regions`` 和 ``bytes_reclaimed_regions`` 也使用该单位。
++例如，假设 ``addr_unit``、``bytes_reclaim_tried_regions`` 和
++``bytes_reclaimed_regions`` 的值分别为 ``1024``、``42`` 和 ``32``。那么这
++表示 DAMON_RECLAIM 总共尝试回收 42 KiB 内存，并成功回收了 32 KiB 内存。
++
++如果不确定，只使用默认值（``1``）并忘记这个参数即可。
++
++skip_anon
++---------
++
++跳过匿名页回收。
++
++如果该参数设置为 ``Y``，DAMON_RECLAIM 不会回收匿名页。默认值为 ``N``。
 +
  
- 记录数据访问模式
- ================
+ kdamond_pid
+ -----------
+@@ -223,6 +298,9 @@ DAMON_RECLAIM再次什么都不做，这样我们就可以退回到基于LRU列
+     # echo 200 > wmarks_low
+     # echo Y > enabled
  
- 下面的命令记录了一个程序的内存访问模式，并将监测结果保存到文件中。 ::
- 
--    $ git clone https://github.com/sjp38/masim
--    $ cd masim; make; ./masim ./configs/zigzag.cfg &
-+    $ ./masim ./configs/zigzag.cfg &
-     $ sudo damo record -o damon.data $(pidof masim)
- 
--命令的前两行下载了一个人工内存访问生成器程序并在后台运行。生成器将重复地逐一访问两个
-+第一行命令再次运行该人工内存访问生成器程序。生成器将重复地逐一访问两个
- 100 MiB大小的内存区域。你可以用你的真实工作负载来代替它。最后一行要求 ``damo`` 将
- 访问模式记录在 ``damon.data`` 文件中。
- 
-@@ -57,7 +102,7 @@ https://github.com/damonitor/damo找到。下面的例子假设DAMO在你的$PAT
- 你可以在heatmap中直观地看到这种模式，显示哪个内存区域（X轴）何时被访问（Y轴）以及访
- 问的频率（数字）。::
- 
--    $ sudo damo report heats --heatmap stdout
-+    $ sudo damo report heatmap
-     22222222222222222222222222222222222222211111111111111111111111111111111111111100
-     44444444444444444444444444444444444444434444444444444444444444444444444444443200
-     44444444444444444444444444444444444444433444444444444444444444444444444444444200
-@@ -117,8 +162,8 @@ https://github.com/damonitor/damo找到。下面的例子假设DAMO在你的$PAT
- 数据访问模式感知的内存管理
- ==========================
- 
--以下三个命令使每一个大小>=4K的内存区域在你的工作负载中没有被访问>=60秒，就会被换掉。 ::
-+以下命令使每一个大小>=4K的内存区域在你的工作负载中没有被访问>=60秒，就会被换掉。 ::
- 
--    $ echo "#min-size max-size min-acc max-acc min-age max-age action" > test_scheme
--    $ echo "4K        max      0       0       60s     max     pageout" >> test_scheme
--    $ damo schemes -c test_scheme <pid of your workload>
-+    $ sudo damo start --damos_access_rate 0 0 --damos_sz_region 4K max \
-+                      --damos_age 60s max --damos_action pageout \
-+                      --target_pid <pid of your workload>
++请注意，该模块（damon_reclaim）不能与其他基于 DAMON 的专用模块同时运行。
++更多细节请参考 :ref:`DAMON 设计文档的专用模块互斥性 <damon_design_special_purpose_modules_exclusivity_zh_CN>`。
++
+ .. [1] https://research.google/pubs/pub48551/
+ .. [2] https://lwn.net/Articles/787611/
+ .. [3] https://www.kernel.org/doc/html/latest/mm/free_page_reporting.html
 -- 
 2.43.0
 
