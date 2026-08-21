@@ -1,152 +1,147 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8B1471420
-	for <damon@lists.linux.dev>; Fri, 21 Aug 2026 09:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787306138; cv=pass; b=Y4A3GxPHBJLGCJ+YqcKgMDp0lkz4RtzW3GggkWcXfyIp/PwoCd8OWtutHUGnAx0UHdWpDumE7f/5BIyAWiVWYg1et3yjFGmIGAeX7PTj75d1Dd9g8ysWxQPW2uljed9tCR1astN3O3TGLMN2ZRXynmA2toog8REsIUjIiMyW+qY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787306138; c=relaxed/simple;
-	bh=XyIuSqWOzg847lGxsHuF4rkjnY+0QJdXhS5NihM+L/U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fNb5a/uVCQ8tfkA6HJQh9th2OYnUpJtotxui9xmW3cGc8JyOv8WV9YrvLhqmbjL4rC4H8gxyhKbR35M1pxFEe4mQVNEIPEic2irWOM53W2cwVPYCSjtT6CNIn+TeVx67imvX9BpHOVADiEC12gEzi4tUs8N1U7HTyYJcFV0A6bM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ca8PNiUC; arc=pass smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0C92931D3
+	for <damon@lists.linux.dev>; Fri, 21 Aug 2026 14:16:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787321808; cv=none; b=aeBnLETgDMbCS15W3A3E1gpl8dDIDP03FTWCaRnEvY4Gd6hbKVxfKhr5A27qBNtNF9dQN9nHjqDZGhf0Y5XEh+rA/PAOiD29NEVPqb3TmQqil6fxZAeWnXEJEP4BKd/6AZ5k+im80seKu3lcX6C6k718NZyzPfFYq8hCf+jjzLM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787321808; c=relaxed/simple;
+	bh=1Kj0rO4K20+RXgoXmNRMaK+bp8FPRYGwsiz0upjN+AE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Y67XyZeLfxRDIICvY10BUhVCyob2KsSrZUY4Q3BOuppPm0JGRfSWl4MLtzW3ytzR7KaRNnYu6Lq20fw3iypzG9vAXXfhxb8Un/LeCGHLExX77NAWTxc/U7do/7MiGsnyfn/DjW6tTpz1sVMZRSrrYgefTCTn4dF1q2Ouic+n2DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=r6A5ZQT5; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ca8PNiUC"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-499b57cf2f3so4567315e9.0
-        for <damon@lists.linux.dev>; Fri, 21 Aug 2026 02:55:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787306125; cv=none;
-        d=google.com; s=arc-20260327;
-        b=GDyJ+4TCDz7HdAQC8bA3+S8F/WhXr5aX7mSe+xsKHdzIXMlSBeF7CIp/oE9DOqAPIZ
-         V0jqXNliejqAvLVlzGgndReTY04xdRswLb2NpfaMT+php2Fkkw8+IffyJWrwR4gS79i4
-         IeMvXMHaOVLN9re/pe4mbiryO5FZRXygbz4jUJ7K0WlvY3X+WzSOQ4cRHZ9iizvtzZ3d
-         sWJdHMib7Ee8hm33cfNs8Zhk3VP6uy0tENdF3UosiNfc1gKe7tESSiaBkgv6e5ScK3Vc
-         xFiWGTe1svNJ8+Am5tZn/XtGvJXkipqYSR7gO6KmD+cRHg5daHXTpfhpA9BGSOlBZ4M1
-         RGfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BebempJ9dvkwz+WZ53hR+1ZE+ffzaH6TRYMnpDAc13M=;
-        fh=i1vB4ZJoJBEIIPjMAxJVa7C8XX0r4aITks1MKJcdr1k=;
-        b=R4nH7WERxLDYQumShG0jvGWHeWbZN8YxCGXa9825CGx4G2QJYIilCHHL22WsBjWNb8
-         192IQXj43jlsZk61J3n1VFHhBAYP9ppbDQvmosJDzW8QgLAAduUlaE9zXeVktWek2zFb
-         6utmhSBUF/to0pjLkbgqcA54A3VUkd3rjtIvDvNyyJXgMBwy1ovE9MPna1Rn/CkWOsXp
-         QKRc65u3XNQOjG05AcdxEqOAH7+xJFHPHSkX3uAeeoB5aDdF+s14oi50KG/ZT1JXcYdF
-         xbaFBEUO+XcbO+DaLKUb2Q9w0hYFMKBAx7lIFtCl6U313hZ4rJn12xj0UOQRyDdLf9/M
-         rN/g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r6A5ZQT5"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2cc7e86e7aeso12898365ad.2
+        for <damon@lists.linux.dev>; Fri, 21 Aug 2026 07:16:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787306125; x=1787910925; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BebempJ9dvkwz+WZ53hR+1ZE+ffzaH6TRYMnpDAc13M=;
-        b=ca8PNiUCaxeLe2/t6XiDZFVsqEEAnFVuaBvpNQulh8LF1EJ3kCaZyBgAfjl80+2Jq2
-         w+q+iUArIpZ83haPuPj25je6eCLWcCjFaX+hzCGMjhzAOj2RD5PI0XnMJaFdPmD6cSL+
-         +628frpI4H36iBjF5hhGknipVKvXjabCx1Mj2rNmqOt5KIQJz0cWQJTzZlPa5uu6vDa6
-         ej+I3GXO0sS7sfMg3NkxR/WVH4fH9cy8AkECIGp5OUEQrODJfZj9+pH1YjXLgrU8deiC
-         tKmv+9DzvcJCsvZomtvdySz1Eb58t2p/Tx1t41/K3+6UIKsIZua6d/1AMTP/6lF5mE97
-         QhQg==
+        d=gmail.com; s=20251104; t=1787321807; x=1787926607; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gkFIWdQrIG5uSLpHBwsVSrnZ/Bh83b4gEGjaE+vppUY=;
+        b=r6A5ZQT5np7CWoZteTTLGaxtGjbOIaVMgpE1waAnQAHrAqToEtt/kcTUnlFrUEJd5V
+         Z2QHhtTm9cuMNdJ7RPmRWphmkxS24acmpJbMHZKOij8lYO2MhG6MYAH4chIHtoCZnrnU
+         rZ95WAbcfI9pSum0oJlgGdXfYwnZd1FiQGrQqnjsAFsk1n+it2n2SD4RO8KOp3Ye3dmr
+         qYzuOGeR65mkpzLJBlv3TieXwf21jWUrTAZ1i/NK4Q9JA88POz+JN3FEeeiAQ3CFWHcg
+         N7/zQPDwV2BRazl3oqpGMXs+TvQT0wzZjfz3GRtQvlD/5ybJP9mpBbn8vBA/xVJqsJwn
+         iuyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787306125; x=1787910925;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BebempJ9dvkwz+WZ53hR+1ZE+ffzaH6TRYMnpDAc13M=;
-        b=C+AntlPR6qrHLid+FQiPxAnjQSUp0SjT/KYV6bp3pBI3/HGoVyvVg09TVHyVa7FlyC
-         oO5efHSd8h+moYzacOnxPW0vJMqozJbWtuLsCYgis/2ozIkL88QRqE2PAE26QmoENy+H
-         clEazj65lMfNv+4aOOlKnsksH1Q6ptoKTcM7PA8Y0v0CbpGEbrXI6x4kdCVh/iPQOCja
-         86liTffAldXawezN+5X5lujPIyMxtcx8P5LGjtkAsQ/trRonzZ3YlMnQwK3Vc/9j9r0f
-         klGKuesnRfPw0BnhDioF9xhKTZ9IVIZrV354NvFSENN+hWkDhddcwDQhyeL3O3wo6jMP
-         JaJw==
-X-Forwarded-Encrypted: i=1; AHgh+RpiJHVvnEj5YCiNuL5Xkq4BozXBDusM3clKrEeVskYuypzqAsFH8O91SGSuLKNT7OQ8EwuTxw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyioIZNflXxMJuem1fWpV4DqC6DRD7Y4GOyL8qnu/9Qpq4sAmvw
-	BPgV3RMkRNeUEjbj3zJgjvETLYynBUGbKZdtORfAX3Y5u5jvyhhriwmezw3+Y1eX4UGXyjmDj9N
-	XwzNy7eQ1l3pv8zsrdq8itsPs5kaYSmA=
-X-Gm-Gg: AR+sD11ALHU9a35wFCJYAnhjgSl42LtpjLTu4T0ErD8sBlB8bxjDLkI9VVtbHaCqjCZ
-	sf/2BsjyrHxDmG4s27c5E94xXcUVvDEs7YigLIpetFSt+g4ADJBVwLOxTfmLvfe837V1SCl1CrI
-	4zQthWGg3WGQdyaTLMhvHe/kvvV/cpslb8QT42bWwa08Wg64gJwEYvuMi/M7Tal9qd48x6fmCJr
-	udNKkUT6xCL/ABJ5rdpUFxegYPV2HlO3QBfwryW6eMhAGxH3ax9rasAuKHka08pdhu+lHHUwPfj
-	MGh/lGM4iFhba/y9NOFv0IviQZeeCMSJvowR3ieQhjle231O19asLWyqXBOEITzAXos5OV2XV8M
-	qaQ==
-X-Received: by 2002:a05:600c:4688:b0:499:5f80:83ac with SMTP id
- 5b1f17b1804b1-499b91ad940mr38916495e9.7.1787306124204; Fri, 21 Aug 2026
- 02:55:24 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1787321807; x=1787926607;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=gkFIWdQrIG5uSLpHBwsVSrnZ/Bh83b4gEGjaE+vppUY=;
+        b=I4yvUvADWFJ7+8rbLu9LIKW2SogOUQK7ps+5xZ3Io6FZPWkbr9sKLEUBtorEJtUsFs
+         kNw791EOTmdTzKOpxuORkTIIJzN3/+KMxev5BZHKtjSNEQeN2RRKhs0dx4O8uoyu+qx6
+         Xnu6JgPdya9+pcLI22JB2NYmcLdfdV45HEIMg66IPnsHucXMgwz1GMF7W2muy4jlWWs7
+         98EiSZH8EjkoHsv37BJTgxWHgCPvcSYiVQyeaUOAU208Mm5N1mUQuCQtoy1DmokUZ+Ji
+         b1a4w8Y/lzkwtdasrs7YInmWJNqShZnvfjPdeU7nWwrv2tTcFhh61CSAKLEQpMUHxfs1
+         qf3A==
+X-Forwarded-Encrypted: i=1; AHgh+RpvAPN/Wj5tHeJhGSXk61OnFQKTNX/xUjaz6ry1TUfTo47p/FDvRcUrkOpySIMl44CcCdNNdA==@lists.linux.dev
+X-Gm-Message-State: AFuF++ln1/z43+qq3go5qYdHdrAurjs941+YcLFVxOsuGkPdmfuYvhoz
+	1g1rvosHUrsBasvGrNVPpcw4mSOAuJbKDuGW1beV6+3GFlO53pkCP7+d
+X-Gm-Gg: AR+sD10uOcCpxzFevxcWIpV5vtUT5JgP/MHFcSzD8tKLSFcV8szT+v2CzaluPeZm2zb
+	0DfmdaCrEWgM4M3vQmpZHPr+Q5ktq4lfBi7BL8uyiQnAGjqHA745gCy+ELLNXbdoNJsz8kSrhK3
+	38k4VLG0MB2uNKMXt/W2+CbkoiA7MhhZ+e7Vbh/DYgerxe8bTSe+6dfvvT1JAd54mZA3tQ3vE3M
+	iBPFSnNbUOh6fkYzcarFrrnNPuKs/LaB5LHRAHQ0Rhtytr1fkr4WKJdxxwE28AJZUUCEjuzgbuX
+	uzzYgFg0HaQlZ5KzYc0BS1BBwoVBW9MqxPbwipKbPebERpgW2x+ueiYaSBfZFXeVDa4sZpOZw4T
+	mRaGUsdpgXZj/w4OJ8KsLRvlPskDK29Vg2IAM5YPjv8EQY2qrJVuiLsO4rdg0/tdiW9FwoFs4ql
+	bDw7UE6fUbfx8v3t8/f6WD5Z3YBlcRhiEjoo2Sj5vKrsHwD1Dvkzle5cAcwVAIBPoxfg==
+X-Received: by 2002:a17:902:ebc2:b0:2c0:b6c7:227e with SMTP id d9443c01a7336-2d64adea473mr133703485ad.5.1787321806882;
+        Fri, 21 Aug 2026 07:16:46 -0700 (PDT)
+Received: from celestia ([2402:1980:8916:4049:ca73:3818:84b0:e2c4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d62ec88ebfsm19455455ad.84.2026.08.21.07.16.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Aug 2026 07:16:46 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: sj@kernel.org
+Cc: aethernet65535@gmail.com,
+	damon@lists.linux.dev,
+	gutierrez.asier@huawei-partners.com,
+	linux-mm@kvack.org
+Subject: Re: [RFC/Discussion] mm/damon: Helping with alternative for watermarks
+Date: Fri, 21 Aug 2026 22:16:54 +0800
+Message-ID: <20260821141654.203418-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260817135742.75706-1-sj@kernel.org>
+References: <20260817135742.75706-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260529165640.820-1-ravis.opensrc@gmail.com> <20260818073546.832476-1-kunwu.chan@linux.dev>
- <CALa+Y16xODsaFZDfh7ZeP3gWbycK92gvP5N8_NFpOvW=R2BWbg@mail.gmail.com>
-In-Reply-To: <CALa+Y16xODsaFZDfh7ZeP3gWbycK92gvP5N8_NFpOvW=R2BWbg@mail.gmail.com>
-From: KunWu Chan <kunwu.chan@gmail.com>
-Date: Fri, 21 Aug 2026 17:55:12 +0800
-X-Gm-Features: AcwNN1XF81EEMAI-2sCN9DpjO0D8fvVc3wuFNPsACQIR2_DkOmL8KEG1jq8ABI0
-Message-ID: <CAN_Opa_h2W1hRimy2YXPC4EgueCi2UNwnZ5gSYV=cr8M7yfCmA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/6] mm/damon: hardware-sampled access reports
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Cc: Kunwu Chan <kunwu.chan@linux.dev>, sj@kernel.org, akinobu.mita@gmail.com, 
-	damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
-	linux-doc@vger.kernel.org, akpm@linux-foundation.org, corbet@lwn.net, 
-	bijan311@gmail.com, ajayjoshi@micron.com, honggyu.kim@sk.com, 
-	yunjeong.mun@sk.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Ravi,
+On Mon, 17 Aug 2026 06:57:42 -0700 SJ Park <sj@kernel.org> wrote:
 
-Thanks for the detailed reply.  The fan-in diagnosis makes perfect sense.
+> On Mon, 17 Aug 2026 16:39:23 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> Your series is based on the v1 substrate, and the way an event is
-> configured is the part that moves most.
->
-> [...]
+> > 1. Why use Watermarks? And what was the problem?
+> > 
+> > I now understand why we do not need better Watermarks, so my answer is
+> > based on my previous thought.
+> > 
+> > I used Watermarks primarily because it is the only mechanism I know for
+> > stopping/running a Scheme.  The problem is it can only monitor MemFree.
+> 
+> Thank you for clarifying.  I'd like to go one step further.  What is the
+> initial problem?  Why you need the automatic proactive reclamation?  Do you
+> have some data showing the problem?
 
-Glad to hear v2 is on the way.  The probe-based model is actually
-something I encountered while building the AUX backend. When multiple
-sources can feed the same region (e.g. PTE scanning + SPE/IBS), the
-question of how to combine their reports becomes interesting.
+To be honest, I have not encountered any problems, and I do not have any
+rigorous data.  I simply using DAMON to try proactive reclamation, and
+see if it would cause any serious issues.  So far, it has not; it has
+almost no noticeable negative impact on daily use.
 
-For example, CXL tiering may care about physical-address locality, while
-per-process monitoring may need virtual-address attribution.  How do you
-see probe weights being determined =E2=80=94 is that expected to be
-scenario-specific, or is there a more general principle behind the
-weighting?
+> 
+> > 
+> > 2. How exactly the page cache becomes a problem for you?
+> > 
+> > After prolonged computer use, the page cache can become full.
+> > DAMON_RECLAIM might then mistakenly assume there is slight memory
+> > pressure and reclaim those cached pages.  Unnecessary page cache
+> > reclamation can incur unnecessary overhead.
+> 
+> Thank you for sharing this.  I can theoretically understand the issue.  Maybe
+> you are concerned if page cache is too aggressively reclaimed and therefore if
+> file io becomes slow.  But I'm not really sure if it is only theoretical or
+> real.  Since the proactive reclamation reclaims coldest page first, and because
+> it works for not only page cache, the performance impact might not that big in
+> real.  Do you have some data showing the problem?
 
-> 2. The 67.9% drop rate is fan-in, not sizing
->
-> ---
->
-> [...]
+This is currently only theoretical.  I also think that the performance
+impact will likely be minimal.  I think adding a MemAvailable option
+provides certainty, if users know for sure that their devices will not
+lag when MemFree is low, but will when MemAvailable is low, then they
+can choose the option that best suits their device based on their own
+situation.
 
-I completely missed this.  The observability framework showed the
-symptom (67.9% drop) but got the root cause wrong =E2=80=94 it's not a ring
-sizing issue, it's a fan-in problem.  With a single kdamond thread
-draining the per-CPU sources, the samples effectively get funneled
-into a single ring, which explains the numbers.
+However, since DAMOS Quota already supports checking current_value from
+user input, and I cannot yet prove whether this option can bring
+improvement in any workload, I think we can disregard whether to add
+this new option for now.
 
-The per-CPU drain approach using `system_percpu_wq` and `queue_work_on()`
-looks like the right fix.  Our AUX backend already carries a CPU argument
-through the ops, so adapting it should be straightforward.  I'll take a
-look at your v2 branch and re-test with the per-CPU drain.
+> 
+> > 
+> > 3. Has the MemAvailable based one solved your problem?
+> > 
+> > Yes, using MemAvailable as a watermarks/DAMOS Quota metric can avoid a
+> > lot of unnecessary memory reclamation.
+> 
+> Great to hear that.  I'm curious if you have some data showing the improvement.
 
-Two questions:
-1. Is `damon/perf-rfc-v2-08-20-26` ready for me to rebase the
-   AUX backend and observability framework on top of it?  I'd like to
-   validate the per-CPU drain fix with real SPE hardware.
+While I do not have rigorous data to demonstrate any improvement yet, I
+appreciate your guidance on this.
 
-2. For the probe-based configuration, does the `prep_action =3D "perf_event=
-"`
-   model preserve the same event lifecycle?  Our AUX path needs to create
-   and bind the event during apply, keep it disabled initially, and enable
-   it when kdamond starts.
+I will continue exploring DAMON on my end, and I might send out some
+patches later regarding a few logical issues I noticed in the code.
+Thank you again for your time and answers.
 
-Thanks,
-KunWu
+Best regards,
+Rui Yan
