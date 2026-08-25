@@ -1,143 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B3044605C
-	for <damon@lists.linux.dev>; Tue, 25 Aug 2026 12:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AA948165B;
+	Tue, 25 Aug 2026 13:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787662719; cv=none; b=ka/HGQlVET/an2joscXy0SEdRT1YyWgN/3w2jONlLbfmq3Ij7tFQENpMJjy7wtiMruI6PfcDaWm20auUcWUO5SYP87hFzKN2HVfQXMeVa2u3U8PTDYqCR7gSloAphrKLdzBtjcHhE3DOCpVClY+vMtIlNu0UKSpi3WhrxVrX7VU=
+	t=1787666111; cv=none; b=hoRzSSMwnqVtWoXFHfYVRBgP+f+hjI+H6DvBJuRR+Hdf+xqAvIkHGC+HZ4yrvjvuR3j9PsCrgTxMQKmDqL30pcf0ll/S/TEiJN3hfpUmm1SGhIPVWF93ugJ7P/cxaB9LVXA3WZwpJbcG3FQk/BGn6buepgSsOHmHBWuLE1LEsug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787662719; c=relaxed/simple;
-	bh=s4DRubQFy4lqj450xsOu6dxUyIWLPavEY39gLO5EsaA=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=DWXOyyVAoM/Yceq4leQJRyRTprFd+4DJV3/3ok7UIG1DIwoTpcO7ur+Aaet594Cb3Da3EMsWJDb3rOfiDslidXVkb+MJoCOX8eT6IXU6FWpkkyBEmgnf8MwBTUjisHaVcgCWe3OL2ShKkXrzwisVTGwM1/QStiWGCNlDNU+EHwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N9qTcdvy; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787666111; c=relaxed/simple;
+	bh=t2IRTvTuple+OqZFxZWJoAiZJX65xumf4KJBFv72phQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SQtMITj+ienzmBoU44tppYv/S9JsejEBOrZGq7d+6JC6sHfSTOyCei1fhLSRfHc3MurhxB94PqtFXhaTlbjbfpIqpxJ/mNd8fQHOKZBUjbgVLjglHYz8MKmwRm0v5RKFDkyHwo/ag1n8Dh3yv96Db2k2S6SvQvyYbEayX2UvENU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OM1HjBnq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N9qTcdvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5001F000E9;
-	Tue, 25 Aug 2026 12:58:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OM1HjBnq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DE61F00A3E;
+	Tue, 25 Aug 2026 13:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787662717;
-	bh=EQQg5UJ2WhyReEv1q0ozru3uz1QscvCQJIOUxCzS9n0=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=N9qTcdvyAH7PeazwJv6rBVBUFpe6yq44LGTpZvLSeivS0QLWrcPy0F6o4jp6J3ctX
-	 8herA2vtjn4cZC/XY8Kfq7ZUE9f5AKKJ3N20K/RvU3tESE93Fgg0YhOgy+YlFG3KjY
-	 JywMhQS7McRZ9UWkyK2w96t98y6HoR7wX93S4iqQuWq8obY4dlexp5+pDbnASfGEV7
-	 9woHlHYdWBUy0tXYaPLfNauZzMA9rHUJ3aHuqnzNesZHB1SCnCsWhCMHWsl5XPyyLu
-	 Sh5yiGDuzzlpWn5D8z2nnyVyMC31YVbdgK/iXvidfW3AHB3Y02hujK530sLCqxCGfk
-	 m0o2N45DnSL5g==
-From: sashiko-bot@kernel.org
+	s=k20260515; t=1787666110;
+	bh=ohIDpKKSWuY/nOCEckXndoguryNSiTf+Hx10lCL4gv4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=OM1HjBnqp7yKkwww+cpXJ8aqdqp+eUcy4iK49H3GIU08V8TgUyd3oRxOpmO3O8oRC
+	 6wjnYLsI9Bx6LVFZHPgKn0zz0G0GFG26iWp8pf7ILhz9XDFM0gr8OX2t1VQqAP9Mc0
+	 YbavpHRreMLlvyYH8HU/R1uKDGbUh8C+cy4Alhbl6HIeVk+Tpolt59aOCJWQfQDuKO
+	 HGB+hR0X1pCBR+fJpYGaKn8Ou/MCmw8biSTLsxawn/wBTQwFAlM1c0af4IxzPydOs4
+	 yEK/dQGCVm8PJvMcbW2j3cugiY2bVZasgeei1bg3c3hJQd8aMj9+Bb9cJXWj3BZflD
+	 XLvMfUvGBHefQ==
+From: SJ Park <sj@kernel.org>
+To: Liew Rui Yan <aethernet65535@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
 Subject: Re: [RFC PATCH] mm/damon: fix damos quota walk-position tracking
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Liew Rui Yan" <aethernet65535@gmail.com>
-Cc: damon@lists.linux.dev
+Date: Tue, 25 Aug 2026 06:54:57 -0700
+Message-ID: <20260825135458.64555-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260825124616.5129-1-aethernet65535@gmail.com>
-References: <20260825124616.5129-1-aethernet65535@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 25 Aug 2026 12:58:36 +0000
-Message-Id: <20260825125837.2F5001F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] The DAMOS rotating walk cursor (`walk_target_from`) becomes perman=
-ently stuck if it points to a target with zero regions, silently disabling =
-the scheme entirely.
---
+On Tue, 25 Aug 2026 20:46:16 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
---- Patch [1]: [RFC PATCH] mm/damon: fix damos quota walk-position tracking=
- ---
-commit f919352b7b1f727f53877f4c9877e9c62ea1cfad
-Author: Liew Rui Yan <aethernet65535@gmail.com>
+> DAMOS uses charge_target_from/charge_addr_from to remember how far a
+> quota-limited walk has progressed.  The current implementation has two
+> problems:
+> 
+> 1. Once set, the cursor unconditionally skips and resets at the last
+>    region of the tracked target, so the last region can be skipped even
+>    when it has not been processed.
 
-mm/damon: fix damos quota walk-position tracking
+I don't fully understand this.  Could you please clarify more?  Maybe adding a
+realistic example scenario would be helpful.
 
-DAMOS uses charge_target_from/charge_addr_from to remember how far a
-quota-limited walk has progressed. This commit treats the fields as a
-rotating walk cursor to resolve issues where regions could be skipped or
-remain stuck.
+> 
+> 2. The cursor only advances when the quota becomes full.  Regions that
+>    are filtered out do not move the cursor, and the scheme can remain
+>    stuck on the same regions.
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 644daf5a16560..bbdb530513a18 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-[ ... ]
-> @@ -404,6 +404,52 @@ static bool damon_is_last_region(struct damon_region=
- *r,
->  	return list_is_last(&r->list, &t->regions_list);
->  }
-> =20
-> +static bool damos_completely_walked(struct damos *s, struct damon_target=
- *t)
-> +{
-> +	/*
-> +	 * '>=3D' instead of '=3D=3D', because the region set of @t could have =
-been
-> +	 * shrunken by damon_set_regions() after the cursor was saved.
-> +	 */
-> +	return s->quota.walk_target_from =3D=3D t &&
-> +		s->quota.walk_addr_from >=3D damon_last_region(t)->ar.end;
-> +}
-[ ... ]
-> @@ -2658,18 +2701,31 @@ static void damon_do_apply_schemes(struct damon_c=
-tx *c,
->  		if (damos_quota_is_full(quota, c->min_region_sz))
->  			continue;
-> =20
-> -		if (damos_skip_charged_region(t, r, s, c->min_region_sz))
-> -			continue;
-> -
->  		if (s->max_nr_snapshots &&
->  				s->max_nr_snapshots <=3D s->stat.nr_snapshots)
->  			continue;
-> =20
-> +		/*
-> +		 * Skip regions before the cursor.  If the skip makes the cursor
-> +		 * reach the end of this target, rotate to the next valid target
-> +		 * before continuing with the next region/scheme.
-> +		 */
-> +		if (damos_skip_walked_region(t, r, s, c->min_region_sz)) {
-> +			damos_walk_maybe_rotate(c, t, s);
+I don't fully understand this, either.  Could you pleae clarify more?
 
-[Severity: High]
-Does this code permanently skip all regions if walk_target_from points to a
-target with zero regions?
+> 
+> Fix this by treating the fields as a rotating walk cursor:
+> 
+> - Advance the cursor for every region walked while a quota is set,
+>   regardless of whether the region is applied or filtered out.
+> - Remove the unconditional last-region reset.
+> - Skip regions before the cursor, and rotate to the next valid target
+>   only after the current target has been fully walked.
+> - Rename charge_{target,addr}_from to walk_{target,addr}_from and
+>   damos_skip_charged_region() to damos_skip_walked_region().
 
-Because cursor rotation only happens here inside damon_do_apply_schemes()
-which is called during region iteration, if walk_target_from is a target
-without any regions, this code never runs for that target.
+Because I don't understand the problem, I can't understand benefit of this
+change.  Again, more clarification would be helpful.
 
-When other targets are evaluated, damos_skip_walked_region() will continual=
-ly
-return true since walk_target_from !=3D t. However, damos_walk_maybe_rotate=
-()
-won't advance the cursor because damos_completely_walked() requires
-walk_target_from =3D=3D t.
+> 
+> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+> ---
+>  include/linux/damon.h |   6 +-
+>  mm/damon/core.c       | 156 +++++++++++++++++++++++++++++-------------
+>  2 files changed, 111 insertions(+), 51 deletions(-)
 
-Can we ensure the cursor properly advances past empty targets?
+Quite amount of change.  I will review the code after the high level
+understanding is done.
 
-> +			continue;
-> +		}
-> +
->  		if (damos_valid_target(c, r, s))
->  			damos_apply_scheme(c, t, r, s);
-> =20
->  		if (damon_is_last_region(r, t))
->  			s->stat.nr_snapshots++;
-> +
-> +		if (damos_quota_is_set(quota)) {
-> +			quota->walk_target_from =3D t;
-> +			quota->walk_addr_from =3D r->ar.end;
-> +			damos_walk_maybe_rotate(c, t, s);
-> +		}
->  	}
->  }
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260825124616.5129=
--1-aethernet65535@gmail.com?part=3D1
+Thanks,
+SJ
+
+[...]
