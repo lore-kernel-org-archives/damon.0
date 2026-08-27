@@ -1,77 +1,60 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com [35.162.73.231])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570D6490C1D
-	for <damon@lists.linux.dev>; Thu, 27 Aug 2026 18:08:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACAB43CEEC
+	for <damon@lists.linux.dev>; Thu, 27 Aug 2026 19:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.162.73.231
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787854099; cv=none; b=dcuRaEiHBLNRfr7Y2FPif6ZiqK+1Z0rVojRop6PfCJwC71QTsQR5HuoquHQTJm0IL7MpuDrYfu+hcIfWUmCmCOnyGDmZYMSimwECyVbKL3Ukxp4LWoYudj3sScRXrvCJrdKbqm5wz7kLCzrHwaT6Grrg/3SsBBShlRdb+qcJQ+k=
+	t=1787859520; cv=none; b=LlakZfGXvrMmYltFZ3nmTg8ua2kmYmiqfdNVJMtZenpYH0TT9Cw48CHO+a9AkgJ9ezAfWUABnNWo+fD/nydZTqUuZXKWMEZSzchbJa7cgAqGFc8G7Jx78eXy/ZVnj1fVAgn0Nw0H1dbrCb7c9gNFNnVcwe/Ht7+xkUiKJPwCw3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787854099; c=relaxed/simple;
-	bh=ArT4A9LnLuUwhgr/cxAD+B5AibwuMzq9queyu1Qs/hw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D0hLY1DL5uLSEEvpxLRxXLFbNazeI/q1RRbsTziAEhhtHmXtYrm1v9EUUdcwNA2mCFr33FTaaNwV4sl/aQj4DCrqvWZlPO3qAcQTzoGumIx1+G0YTPi4eoKd0A81Qs7GsYWQUvf+fX0jpYvlJ21jSC3CRdjSGidr/KOtaSSZr+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qvs92ic8; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1787859520; c=relaxed/simple;
+	bh=eP/hk2DNSiSupAaKn6szi62QjYKLXlDV8zQagv49aiQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OrukahlYovVVDHXZ3WVJjfvQNveeF3JRIiT7/LChtYRlEvm0/Vo2af+LWBDAG+CZlhYB3h+p8OyFRH3FOFbqDUJrBak3k3N/lADctI/OXDoy1kVVUf9h5atIxYtO97iGzdZjkH1djWzok5sYRhE2zLw2yFD4zonpWY2ZimRKAxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=qKBwYd22; arc=none smtp.client-ip=35.162.73.231
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qvs92ic8"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3965d3d9ab8so265317a91.3
-        for <damon@lists.linux.dev>; Thu, 27 Aug 2026 11:08:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="qKBwYd22"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787854093; x=1788458893; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=plMv1alWLSmRUs996GTzyKVxl/InS+Hvvr87SnLX3mc=;
-        b=qvs92ic86uLFSkxYDTQNVw1fGkF/48yO2yDAi0JiHk8qdCj9Sz2bSSOVR7rSXaPdOY
-         uRotmVCUZ8pJ/u2zlQhHp5JRqeAqw5KsfCiwF4hl0tooCH24Hd++bWm97xUoxolWoEKP
-         eISyrb5gHOSplBM8txuGEZhx+f8pks1l/8/tdL3PJ15tFdcvqBG+20VPXvxmBZsM7dcX
-         e5sTsE1d6VC/tFeNSc7fPO5rpL4RBDDXPq+Mji6YeL+6mu6dgsZWRJQM1b2I6TbSqV/b
-         RDuFc1RRt77S0hlZxxqNl+4weJlfQbrI9ATOMav0zN03KB7ofrMpuAiUddQ2OeKGjaeF
-         cB3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787854093; x=1788458893;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=plMv1alWLSmRUs996GTzyKVxl/InS+Hvvr87SnLX3mc=;
-        b=jFRPPBDTd5IALVWIDHKNQHSHsbtonuf4RhIS79CTTHnCuqsoP6/xLuG8psHCTNGuGu
-         WbvoLrjiaL2kwpI0Vsz+yAdKeJFXtAoDEs1XmpRQjfBGq0tROsJN9smTtkgaV0vjoQh2
-         jNAp34d920L6qJQ3KV7OJZ++yfTQ8BA0M+E73vUolUUW5MyxI08hF4R1Yy4jxoNxY9JD
-         hoExgjmooxrQ2lF08Me2q74SVms9YqYgAQSx97K59OgoAeIET6fhmcWIu1wRKeb1XyYk
-         By6NzQ0vHDUmJ3leQAWWTpXfToF7urcSstcXc6OFq815paFupRmewchGgYiz8ZhUK6Oc
-         OZKw==
-X-Forwarded-Encrypted: i=1; AHgh+Rq0M/UqJS5H1ptMDKcKwJdLOWoCsoC1oshN7J1oYcKx/A2bwqoZ5lf8lvL0ItPBmGLptvpBhw==@lists.linux.dev
-X-Gm-Message-State: AFuF++nxooK447I50SzChuP5Pe+zoaKGG4aDFIEox+DTd0GNm5mQ4j5w
-	WsN+edYQIcBE5vtTvM8eIOtDtI9uLh1umpgNIG6jAIDmQK5gK7jrf+Y1ffF9Mg==
-X-Gm-Gg: AR+sD107UWsiLFIfG28X87k33IsT23HUhUree7gAES0B+W6dSkTeG5/0+GHi0gtIcJi
-	QJ1iKvMMd4sg7cQLnwygu8UGuyD7S0EaByjal9J3CW/OlhVibUol4PNMCMm4VLjghtVOpoqzbNJ
-	oed9Li+paEpk/bgpy8UDUQH3dFR6JKQt5UZzhiYl1gMbjbk7vha+Rp9s4aYoJJqvUjSNhXKHarV
-	BisBv04kVwGqqZ9T60RZlfwtFbU1RiBIdpl5IrMUTKjUVlyDkeENz3zxlVp4god+T3yL6zoBPW5
-	4k3S8bSmZFkCqBM4stfqN5vFHAnwP7gyEm0AXcl2VRTvGPv922oG914awPHI8MwZOpwxSIj425r
-	yVlljxZnKJP7RgEYBdSDbrZCdMzguk22PeQac6UjhTOqkuOAPktB0mlR24wjHJE7y4gufzy4Bi7
-	nDcBGps9w+idbK3g4Ad6pEr4xxImmGSg5WIChvBAiS1QJtf/dlrQ1MmxtMup+n8tMhJXyz3rXQK
-	TRVlxJBav5NRamebes=
-X-Received: by 2002:a17:90b:440d:b0:38f:bbc:6a0f with SMTP id 98e67ed59e1d1-396d0e5f35fmr1346864a91.1.1787854092659;
-        Thu, 27 Aug 2026 11:08:12 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:88cd:27c4:5897:46d2:587d:19e7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-396b0d80008sm3682194a91.6.2026.08.27.11.08.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Aug 2026 11:08:11 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: aethernet65535@gmail.com,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon: fix damos quota walk-position tracking
-Date: Fri, 28 Aug 2026 02:08:22 +0800
-Message-ID: <20260827180822.4037-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260827004438.82746-1-sj@kernel.org>
-References: <20260827004438.82746-1-sj@kernel.org>
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1787859519; x=1819395519;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=oLAeOmZrtq36A1IcHxniw47pbRoh1qR6Um5nSXbPo1A=;
+  b=qKBwYd22K1Ojz4OmfLVoLdQbkdN8XXtvzM9CgqsnFoJYs+hpRCEpDbCH
+   Tc8bURvnevO8oOp3jn+iRccmRG9qDh3BLEQjqi1EnmirsCmn8YW8dsFhP
+   BP9EKkqNuI7LKUaDmBy3qjYrJVBDWLMPkiQU0nSQJQWw9HKNPAi9/ShjH
+   OguRXBDFISYhPpa9+g/u7pR/QboiMn4KQA+uOsHMKwRNA7kIhazJ3mA00
+   pLctVM9unzLVX/h/cQMt2X7mcOGXayQLAf4xsROm4QDHsruN0GFsbgtfC
+   oC0yuNSBOZf2BhgHucMleuYQL1SMTecM97Xd9oqpkk0jT6kPoVjybwth1
+   w==;
+X-CSE-ConnectionGUID: ZMdiy7luSDy5KUaN1uRScw==
+X-CSE-MsgGUID: LWv9H5gNTwqEPlTS5WdLNQ==
+X-IronPort-AV: E=Sophos;i="6.25,247,1779148800"; 
+   d="scan'208";a="26951848"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+  by internal-pdx-out-012.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2026 19:38:39 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [205.251.233.51:24810]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.33.27:2525] with esmtp (Farcaster)
+ id 2c62c1b5-ce79-4e1b-b168-d99646deb830; Thu, 27 Aug 2026 19:38:39 +0000 (UTC)
+X-Farcaster-Flow-ID: 2c62c1b5-ce79-4e1b-b168-d99646deb830
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.45;
+ Thu, 27 Aug 2026 19:38:38 +0000
+Received: from 6c7e67c92ceb.amazon.com (10.187.170.26) by
+ EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.46;
+ Thu, 27 Aug 2026 19:38:38 +0000
+From: Nathan Gao <zcgao@amazon.com>
+To: <sj@kernel.org>, <akpm@linux-foundation.org>
+CC: <damon@lists.linux.dev>, <linux-mm@kvack.org>,
+	<linux-kernel@vger.kernel.org>, <baolin.wang@linux.alibaba.com>, Nathan Gao
+	<zcgao@amazon.com>, <stable@vger.kernel.org>
+Subject: [PATCH] mm/damon: use a page-aligned sampling address
+Date: Thu, 27 Aug 2026 12:38:21 -0700
+Message-ID: <20260827193821.46115-1-zcgao@amazon.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -79,188 +62,74 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: EX19D032UWB002.ant.amazon.com (10.13.139.190) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
 
-On Wed, 26 Aug 2026 17:44:38 -0700 SJ Park <sj@kernel.org> wrote:
+__damon_va_prepare_access_check() picks a random byte address within the
+region and stores it in r->sampling_addr. There are two users of
+r->sampling_addr in vaddr.c that pass it into a page table walk, and
+both use it as the address of a page.
 
-> On Wed, 26 Aug 2026 07:05:08 -0700 SJ Park <sj@kernel.org> wrote:
-> 
-> > On Wed, 26 Aug 2026 18:24:13 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> > 
-> > > On Tue, 25 Aug 2026 06:54:57 -0700 SJ Park <sj@kernel.org> wrote:
-> > > 
-> > > > On Tue, 25 Aug 2026 20:46:16 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> > > > 
-> > > > > DAMOS uses charge_target_from/charge_addr_from to remember how far a
-> > > > > quota-limited walk has progressed.  The current implementation has two
-> > > > > problems:
-> > > > > 
-> > > > > 1. Once set, the cursor unconditionally skips and resets at the last
-> > > > >    region of the tracked target, so the last region can be skipped even
-> > > > >    when it has not been processed.
-> > > > 
-> > > > I don't fully understand this.  Could you please clarify more?  Maybe adding a
-> > > > realistic example scenario would be helpful.
-> > > > 
-> > > 
-> > > Problem: Unconditional skip of the last region
-> > > 
-> > > In the current damos_skip_charged_region(), there is this logic:
-> > > 
-> > >     if (r == damon_last_region(t)) {
-> > >         quota->charge_target_from = NULL;
-> > >         quota->charge_addr_from = 0;
-> > >         return true; /* Skip */
-> > >     }
-> > > 
-> > > Scenario:
-> > > 1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
-> > > 
-> > > 2. Quota is configured to process only 50 bytes per window.
-> > > 
-> > > 3. Window 1: Processes R1 (0-50).  Quota is full.  Cursor is saved at
-> > >    (Target, 50).
-> > > 
-> > > 4. Window 2: Skips R1 (0-50).  Processes R1 (50-100).  Quota is full.
-> > >    Cursor is saved at (Target, 100), which is exactly the start of R2.
-> > > 
-> > > 5. Window 3: The loop reaches R2.  Because R2 is damon_last_region(t),
-> > >    the old code unconditionally returns true, skipping R2 entirely and
-> > >    resetting the cursor.
-> > > 
-> > > Result: R2 is permanently skipped even though it has never been
-> > > processed.
-> > 
-> > Ok, makes sense.  The user impact should be not that big, though.
-> > 
-> > > 
-> > > To fix this, the patch advances the cursor every time a region is
-> > > walked, regardless of whether it is applied or filtered out.  This
-> > > allows DAMON to accurately track whether the last region has already
-> > > been visited, eliminating the need for the unconditional reset.
-> > 
-> > Sounds like a big change compared to the problem.  Why we cannot modify the
-> > last region case?  Have you also considered other possible simpler approaches?
-> 
-> For example,
-> 
-> '''
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2686,14 +2686,15 @@ static bool damos_skip_charged_region(struct damon_target *t,
->         if (quota->charge_target_from) {
->                 if (t != quota->charge_target_from)
->                         return true;
-> -               if (r == damon_last_region(t)) {
-> -                       quota->charge_target_from = NULL;
-> -                       quota->charge_addr_from = 0;
-> -                       return true;
-> -               }
->                 if (quota->charge_addr_from &&
-> -                               r->ar.end <= quota->charge_addr_from)
-> +                               r->ar.end <= quota->charge_addr_from) {
-> +                       if (r->ar.end == quota->charge_addr_from ||
-> +                                       r == damon_last_region(t)) {
-> +                               quota->charge_target_from = NULL;
-> +                               quota->charge_addr_from = 0;
-> +                       }
->                         return true;
-> +               }
-> 
->                 if (quota->charge_addr_from && r->ar.start <
->                                 quota->charge_addr_from) {
-> '''
-> 
+  damon_va_mkold(mm, r->sampling_addr)
+    damon_va_walk_page_range(mm, addr, addr + 1)
+      damon_mkold_pmd_entry()
+        damon_ptep_mkold(pte, vma, addr)
+          ptep_test_and_clear_young(vma, addr, pte)
+          mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE)
 
-Thank you for the example!
+  damon_va_young(mm, r->sampling_addr, &folio_sz)
+    damon_va_walk_page_range(mm, addr, addr + 1)
+      damon_young_pmd_entry()
+        ptep_get(pte)
+        mmu_notifier_test_young(walk->mm, addr)
 
-While your approach works, I am curious, why should the cursor be reset
-every time the function returns false (does not skip)?
+test_and_clear_young_ptes(), which backs ptep_test_and_clear_young() on
+arm64, documents @addr as "Address the first page is mapped at".
 
-In my opinion, a cleaner and more deterministic approach is to reset the
-cursor only after the target has been fully iterated through.  This
-separates "skip" logic from the "state reset" logic, making the flow
-easier to reason about.
+For arm64, before commit 6f0e1142173a ("arm64: mm: support batch
+clearing of the young flag for large folios"), the contpte helper walked
+exactly CONT_PTES entries from the aligned-down page table pointer and
+used @addr only to pass down to each entry, so an unaligned value was
+harmless:
 
-Here is my proposed minimal change:
+        ptep = contpte_align_down(ptep);
+        addr = ALIGN_DOWN(addr, CONT_PTE_SIZE);
+        for (i = 0; i < CONT_PTES; i++, ptep++, addr += PAGE_SIZE)
 
-'''
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2347,11 +2347,6 @@ static bool damos_skip_charged_region(struct damon_target *t,
-        if (quota->charge_target_from) {
-                if (t != quota->charge_target_from)
-                        return true;
--               if (r == damon_last_region(t)) {
--                       quota->charge_target_from = NULL;
--                       quota->charge_addr_from = 0;
--                       return true;
--               }
-                if (quota->charge_addr_from &&
-                                r->ar.end <= quota->charge_addr_from)
-                        return true;
-@@ -2368,8 +2363,6 @@ static bool damos_skip_charged_region(struct damon_target *t,
-                        damon_split_region_at(t, r, sz_to_skip);
-                        return true;
-                }
--               quota->charge_target_from = NULL;
--               quota->charge_addr_from = 0;
-        }
-        return false;
+Now the range to walk is derived from @addr instead: end = addr +
+nr * PAGE_SIZE, rounded up to CONT_PTE_SIZE. For a sample in the last
+page of a contpte block, the sub-page offset puts end just past the
+block boundary, so the round-up lands a whole block further and the
+walk clears PTE_AF in CONT_PTES entries beyond the sampled block. Seen
+on an arm64 guest running the DAMON selftests as random slab and page
+table corruption.
+
+Align the sampled address down to a page boundary. It is the address of
+the page to sample, so this matches its intended meaning and fixes both
+users in vaddr.c.
+
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nathan Gao <zcgao@amazon.com>
+---
+ mm/damon/vaddr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 2c1c1952c008d..e26e426a56af2 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -360,7 +360,8 @@ static void __damon_va_prepare_access_check(struct mm_struct *mm,
+ 					struct damon_region *r,
+ 					struct damon_ctx *ctx)
+ {
+-	r->sampling_addr = damon_rand(ctx, r->ar.start, r->ar.end);
++	r->sampling_addr = PAGE_ALIGN_DOWN(damon_rand(ctx, r->ar.start,
++						      r->ar.end));
+ 
+ 	damon_va_mkold(mm, r->sampling_addr);
  }
-@@ -2658,18 +2651,26 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
-                if (damos_quota_is_full(quota, c->min_region_sz))
-                        continue;
- 
--               if (damos_skip_charged_region(t, r, s, c->min_region_sz))
--                       continue;
--
-                if (s->max_nr_snapshots &&
-                                s->max_nr_snapshots <= s->stat.nr_snapshots)
-                        continue;
- 
-+               if (damos_skip_charged_region(t, r, s, c->min_region_sz)) {
-+                       if (damon_is_last_region(r, t)) {
-+                               quota->charge_target_from = NULL;
-+                               quota->charge_addr_from = 0;
-+                       }
-+                       continue;
-+               }
-+
-                if (damos_valid_target(c, r, s))
-                        damos_apply_scheme(c, t, r, s);
- 
--               if (damon_is_last_region(r, t))
-+               if (damon_is_last_region(r, t)) {
-                        s->stat.nr_snapshots++;
-+                       quota->charge_target_from = NULL;
-+                       quota->charge_addr_from = 0;
-+               }
-        }
- }
-'''
+-- 
+2.50.1
 
-> > > This patch ensures that every target is traversed sequentially and
-> > > deterministically, even when the quota is set very low.  I omitted this
-> > > benefit in the initial problem description.  If you think it is okay, I
-> > > will add it in the next revision.
-> > 
-> > What's the problem and benefit?  I still don't get it.  More clarification
-> > would be nice.
-
-My original idea was to ensure that every target would be checked
-sequentially, which seemed like a fairer approach.  However, upon
-further reflection, I realize this might not offer tangible benefits and
-could introduce unnecessary complexity.
-
-Since the DAMOS Quota min_score mechanism already ensures that regions
-truly needing action are prioritized, the current behavior (eventually
-resetting at the last region and moving on) is functionally sufficient
-for typical workloads.  Therefore, I do not see a strong justification
-for this change at this stage.
-
-Thank you for pointing this out and pushing me to clarify.  In the next
-revision, I will drop this changes and focus on the minimal fix for
-Problem 1.
-
-Best regards,
-Rui Yan
