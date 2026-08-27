@@ -1,77 +1,45 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A08349CD2
-	for <damon@lists.linux.dev>; Thu, 27 Aug 2026 06:02:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE97347140B;
+	Thu, 27 Aug 2026 13:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787810573; cv=none; b=lY7qM+3J5xWeNKPAbvxLImhBFD+G39DiL8Irx5+qEn6XXBuhznOhVTfwD7WM0WTaQrgyAwIM4FQCPqLlJL+sz4sRLZ9Ynh15W5rFalh+q1meo9itASxdNc3evXCidbtI7RthglCjPtzvPpiYzbin1YEB3MbWjZK+Ire0ZW7Ppqw=
+	t=1787838282; cv=none; b=vGUzGm9o8+szSbCDA6zurDGxRw5Giy5b8sGSKS11KdQ7DUMKvz62PWZ3SKLSLCJU3NkSsJtL8JcYW3uDMfli4VFi3oKDSSEOEDbRSkuu6RscdAMphrWWKOJIripV8s9SbhG9QOwcLSLrup7ktrtRQnzNakKj4lQaa/AQepyijSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787810573; c=relaxed/simple;
-	bh=v0DkDeSeO0CyaXOKZU81dJii6FE+xouGX6RiJ0zgFDE=;
+	s=arc-20240116; t=1787838282; c=relaxed/simple;
+	bh=fVFLkhzANZFV+pW0lm+qtfKNlza7qQdqLZv1gNZFGIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgxuD1szdHB3vWn4N8ZUIEN9cA2qiNjSFthPa+7VYOdIWrTTp6uPxJP91iVUeSUfVR+vdJNeDcNpfyPesfjpUNiCrddZpD07ESP4V+TIMvSz2PiITu1jh8SDSu7dQU5waCDPosPP/Xz6XlMNimJ66nPdQHQatdqFNvZFJjvm6bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F2NmfeGi; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version; b=bxzCQWEKzIykvlf3jTEbW24vxjqTdKLaX2wkxcdlzUjG3x1MkkrL0zJOcWNYBTKRJPozewPNVv6aPjw3hjEjZVMOrwE5SGTTz8APIkmwfTrxF8cKhATqQ2i5ZvNatGX4poUpBr/9hBzsrT+GMPuMXcl/6XHCAjccg0Qbl1Mxivo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jX5woQMX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F2NmfeGi"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-854f8068301so323540b3a.0
-        for <damon@lists.linux.dev>; Wed, 26 Aug 2026 23:02:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787810567; x=1788415367; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=OIuQzA83NVqtXzGO6/EiDWZtsLFaTyo/lSlonpMYRbk=;
-        b=F2NmfeGiOzmyxSq2DGSVU63ZDjlORbJnlUt7TU2GQWGw9JEzDVCmc2qPvtGxFcFyNc
-         1YOhwVXJJXM//mcqmXGsTJTs1xlAuGNiFAlZX1LlgXalu+dhfhamoRKKPjtacNAA/RaD
-         Cr2m9UtOU5OHPBW4LRnBZE4Fn5q+7tC/6oDj2u+ZPirUeUoxF0Rv1P9TTHIpf8d8SBA2
-         0YWbYHc2TLXmEV3pDnsUib0vJUxnIr/ipcsLexP5Xqe9s3KkTXVoS7n1PSU3xR1Qyazk
-         BsRXE6OyxjZha09GXfwGluh3RNQz1OPgCrqKm7JCahdeON20hxuUY73UvM6ZZkm2PX1n
-         mJEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787810567; x=1788415367;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=OIuQzA83NVqtXzGO6/EiDWZtsLFaTyo/lSlonpMYRbk=;
-        b=YpkZbG/DX03BGLu4MJqf/q6IWMPohKt5L6/g0xsRL3S7eidiaOISv/vra7ux4fDlkH
-         vMtOlTZ6jmEjjWhAGYpt0bn+hr/7exymfR5VfB3/hW2Fr9ZwdO/xDiUFmAOkjjwymax6
-         IdbyXZCByVmfMh5dnyD7yp0qVH8I/KoLIsVnxDWadbQ0qLxzoRtGIuTwSKvhfqs2DXQZ
-         VbyH4NyBgx2RLv2MKBhV5wNvO4NT6LJbq+LqoSIB7c9xcvhhJpP+giqhOfxb2wfU48HX
-         qcKVYFwg4nfTwge27LpiA+FQUM1UlU2bihxA4JJRfSh/xe1XmH+6om0GqdcxCn8GXwqL
-         4gMg==
-X-Forwarded-Encrypted: i=1; AHgh+RqHH4dO0BX8tS9rdDg52mi287Ltcksal3Yx/v/aYIc3sm7TVhzSi1AjW0ygSVEemvD8rZeNWw==@lists.linux.dev
-X-Gm-Message-State: AFuF++k10oSOaZR/nlnxmtmzA9ntBnJV8Ttn6oO5ikIQnnIdnCnLFZaG
-	hhnaWwEMIhzGdal4/k/f9HZF+1N5s25kapekhxedhcitw6GopP7gNCxc
-X-Gm-Gg: AR+sD13oZ0/E5/rylHICX4eTB278Juib2t1zGsq0BNpO9Ds7gJMId3zCjnk+5/9TbP9
-	G/w7DIVzQSodcMIjFhFu6KF6NlhHBUh/Z3093Ne6+4fYj1+VylKs+0V9cCQvXiXStvZmSakLSin
-	oiPtHckLJm1dZEfRFGJyrsBftaAYzuNynOJRwXgDLfenUB24igiXeIM50j5mhZa+VOxhnq/RL6w
-	pPZt46ni9wuOnUTQJZmQiLHUiL3qI6aL0OMSCt3GJE7vjNBif+rOtO/cDYcjUXw2culLqdQqNrg
-	9GZ4xc1jtvGsJEDa36qOzPRi+1oW9bmHRToNyqZ5hC74eiCXvAj7+hKWjQ4ytvM2CPg7P3uGQ0g
-	Vuc4PEMZy8QyxnSH8G+y+PEPPae7X9wM50u0IS7yW27XtMHennYj7r9GuyD7IqvAtkyYUbGn2Ri
-	g8qZQlWU0YdHFmBcGNrMwSeW6HID21TCc0aNm/tOswKpio23PxZSHjITQRGSlAqogJ7A+D/014q
-	OEn
-X-Received: by 2002:a05:6a00:8c5:b0:847:93f3:a4b6 with SMTP id d2e1a72fcca58-85375ca6acbmr21643818b3a.17.1787810566706;
-        Wed, 26 Aug 2026 23:02:46 -0700 (PDT)
-Received: from celestia ([2402:1980:88cd:27c4:5897:46d2:587d:19e7])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-85359cd71e2sm1648618b3a.12.2026.08.26.23.02.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Aug 2026 23:02:46 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: aethernet65535@gmail.com
-Cc: akpm@linux-foundation.org,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jX5woQMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC931F00A3E;
+	Thu, 27 Aug 2026 13:44:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787838277;
+	bh=R6N7NhpJ1BNkiL5rB15BJSeHfYTylJVAOauFDB7Ic14=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=jX5woQMXyglCLMJmWu7VohkJQfCZyylp4B4oKtWyfmvnMhZ6bdPickxD8wmutLsre
+	 QpdS/6ucicxyye6iCqYjDlSQVu4RBu1TAWf2ecxjESh8wgB/a8BDKAuq447Xu4qcK2
+	 H6GFY6ohRj05L4fFRM0tSVhqd4n5TTg3aDowOOuflhA+6vKUdf3Pjlo3B26z/gepbJ
+	 71dUFx4rjnY3CiF2X44WQWz0OoU4ucAS3GmLDhT4sgzLEh5PB8ZOaBuRQL5xMOVQJk
+	 Rjgg4DdLufmlKIx31ul+MKsQapuKPAgcMRhGujDiVK4kwiGwiBw4FIhytkCxvDyvbQ
+	 6Wd/JTQ9B+pWA==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	sj@kernel.org
-Subject: Re: [RFC PATCH] mm/damon: fix damos quota walk-position tracking
-Date: Thu, 27 Aug 2026 14:02:55 +0800
-Message-ID: <20260827060255.18114-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260827055426.16874-1-aethernet65535@gmail.com>
-References: <20260827055426.16874-1-aethernet65535@gmail.com>
+	linux-mm@kvack.org
+Subject: [RFC PATCH v1.1 1/3] mm/damon/core: initialize damos_quota_goal->last_psi_total
+Date: Thu, 27 Aug 2026 06:44:26 -0700
+Message-ID: <20260827134429.123023-2-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260827134429.123023-1-sj@kernel.org>
+References: <20260827134429.123023-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -80,12 +48,88 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi SJ,
+When DAMOS_QUOTA_SOME_MEM_PSI_US metric damos quota goal is set, the PSI
+delta for the feedback loop is calculated using
+damos_quota_goal->last_psi_total.  However, it is initialized only after
+the first feedback loop.  The first iteration of the loop uses the
+uninitialized value.  As a result, the feedback loop can change the
+effective quota in an unexpected way at the first iteration.
 
-Apologies for the noise.  I accidentally started a new thread due to
-missing --in-reply-to flag in my git send-email command.
+The user impact of the issue is not big, because the issue impacts only
+the first iteration of the feedback loop.  The feedback loop also has an
+internal cap of the quota adjustment.  The wrong adjustment will soon be
+corrected over a few iterations.  For this reason, doing no
+initialization at commit time was intentional.  It is also explicitly
+commented.  That said, nobody likes behaviors that are unexpected or
+difficult to be expected.  Fixing it is also simple and not expensive.
 
-Original thread: 20260827004438.82746-1-sj@kernel.org
+Initialize the field at the beginning of kdamond and each commit of
+SOME_MEM_PSI_US type quota goals.
 
-Best regards,
-Rui Yan
+The issue was discovered [1] by Sashiko.
+
+[1] https://lore.kernel.org/20260718005316.89585-1-sj@kernel.org
+
+Fixes: 2dbb60f789cb ("mm/damon/core: implement PSI metric DAMOS quota goal")
+Cc: <stable@vger.kernel.org> # 6.9.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index f8dddbff74a77..e5b6b1c6bb7b2 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1118,10 +1118,15 @@ static struct damos_quota_goal *damos_nth_quota_goal(
+ 	return NULL;
+ }
+ 
++static u64 damos_get_some_mem_psi_total(void);
++
+ static void damos_commit_quota_goal_union(
+ 		struct damos_quota_goal *dst, struct damos_quota_goal *src)
+ {
+ 	switch (dst->metric) {
++	case DAMOS_QUOTA_SOME_MEM_PSI_US:
++		dst->last_psi_total = damos_get_some_mem_psi_total();
++		break;
+ 	case DAMOS_QUOTA_NODE_MEM_USED_BP:
+ 	case DAMOS_QUOTA_NODE_MEM_FREE_BP:
+ 		dst->nid = src->nid;
+@@ -1143,7 +1148,6 @@ static void damos_commit_quota_goal(
+ 	dst->target_value = src->target_value;
+ 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
+ 		dst->current_value = src->current_value;
+-	/* keep last_psi_total as is, since it will be updated in next cycle */
+ 	damos_commit_quota_goal_union(dst, src);
+ }
+ 
+@@ -3741,6 +3745,17 @@ static int kdamond_wait_activation(struct damon_ctx *ctx)
+ 	return -EBUSY;
+ }
+ 
++static void damos_init_quota_goal_last_psi(struct damos *s)
++{
++	struct damos_quota_goal *goal;
++
++	damos_for_each_quota_goal(goal, &s->quota) {
++		if (goal->metric != DAMOS_QUOTA_SOME_MEM_PSI_US)
++			continue;
++		goal->last_psi_total = damos_get_some_mem_psi_total();
++	}
++}
++
+ static void kdamond_init_ctx(struct damon_ctx *ctx)
+ {
+ 	unsigned long sample_interval = ctx->attrs.sample_interval ?
+@@ -3757,6 +3772,7 @@ static void kdamond_init_ctx(struct damon_ctx *ctx)
+ 	damon_for_each_scheme(scheme, ctx) {
+ 		damos_set_next_apply_sis(scheme, ctx);
+ 		damos_set_filters_default_reject(scheme);
++		damos_init_quota_goal_last_psi(scheme);
+ 	}
+ }
+ 
+-- 
+2.47.3
