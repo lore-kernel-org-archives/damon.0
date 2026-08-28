@@ -1,156 +1,144 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A35338D017;
-	Fri, 28 Aug 2026 05:34:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E1D3D5C38
+	for <damon@lists.linux.dev>; Fri, 28 Aug 2026 08:47:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787895259; cv=none; b=hZlVvtRfD2gM6Z1xfIwbHOr8RZlRGPPN478s7oMBozL8a7bNcOM+lIlaJFhcU3qHv+a0ptYE4wxVSz97yJMTvxpNi8qY4h4tlYRJ8NAL/t/4T06M1R+z31CLqXTxraA/SKnmd+q1tr3zzdDM3rNs/eZ4SA43YW+K5Uov3/L2hc8=
+	t=1787906854; cv=none; b=k17bvD+hNsF8fY+kGqbgJnQk0RqGRoygH5kulbIjlPYUTsIMMFeW5PcHHpJe/xp1U73q9XkrUjOkapE4murnR3fx4RFvI4MT4GYBOZUyXPR/Zn53o/UY//mIMuQh5TbqOg46ieiL8lWVsh9QH5twoXVoVdDBnFEg/a/tCYLutXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787895259; c=relaxed/simple;
-	bh=L12kByngmxm0+XcLwhdT9GBJpdEOxar0JOOmR9A9qck=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bhnjDG5NWNebcuQEuutH/7wLU1/EDj3VvHtLkFCOGOKbmOaW9CjqCDA9DPUi1vkjWuI/VYuyDwvOQ5ZYlIUdkBbHzwL6Rav7iRYynMHE8IvQ9OtHRuLVFv1GqZjGxEKBG/ZBAY5bmUfxzHmIAYWwtg8Ky0FsqSAB+fim5kC+cXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ndEh+g7B; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1787906854; c=relaxed/simple;
+	bh=7YC0d3Lq199IvXL7FoCsyY5HhEMvPtTx5vxAZ5uu1NI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Vn6dsON+H/8agGwoe5FP75S6BdJOLF4MSQOBxM0+BymtFfehqDKGS1luYHRRR21jdLuNNXBxduhiMHfAEDtyNKsU2Q3E1pw2nhJhqGD8KGbmn8Dwc19XuB9Yolv0xyXN4dXIk+UAvM33l8MMB8Uovl8G9d0J6NhvGlJKwQcIA0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V2buQ8Ue; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ndEh+g7B"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1787895256; x=1819431256;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=L12kByngmxm0+XcLwhdT9GBJpdEOxar0JOOmR9A9qck=;
-  b=ndEh+g7BVnxojUxkDSNYguU68wszQlITOMOQrT3h/SksQNjLPfbX1P3N
-   gpuYjNGbnx6/ZhuxSnKzhaTIo0RerTOf1Pmn7OKamR0AqLJU7/48gW/r+
-   U5W9vJYoXBPoXPQ8gfUjIfka6ofpKh2gj3YZa1WI0TD6fWfbG4TQV+muW
-   bYE6U2FCTkDra5Gj/v/HGj0Usp3VkqQqyAujTf1EtImbg+eYNazh/FEBe
-   NPpzl6N9Z7/0frQNppY+9f11xzyOOwYm+j0tTQtduN4PcDG3CKHLf2kpA
-   L2ZHfpo+i4RdhP8KwrQ7I/drA0yMvraGmOh9Qj2ypCOpy9W6ZBL61ExPE
-   Q==;
-X-CSE-ConnectionGUID: 5JMFRCwIS+2mbDUJuX5iVA==
-X-CSE-MsgGUID: +JTz/Zk5S96Uc/16WbhFyw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11888"; a="88525465"
-X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
-   d="scan'208";a="88525465"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2026 22:34:16 -0700
-X-CSE-ConnectionGUID: 2JOw/X5sR7qW4b71mX5Ntg==
-X-CSE-MsgGUID: mIi6lFz/Rs6jYJK3+8P47g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
-   d="scan'208";a="270025508"
-Received: from lkp-server01.sh.intel.com (HELO 3532383e6126) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 27 Aug 2026 22:34:14 -0700
-Received: from kbuild by 3532383e6126 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1wzpEB-00000000AST-1pk6;
-	Fri, 28 Aug 2026 05:34:11 +0000
-Date: Fri, 28 Aug 2026 13:33:29 +0800
-From: kernel test robot <lkp@intel.com>
-To: Zenghui Yu <zenghui.yu@linux.dev>, damon@lists.linux.dev,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, sj@kernel.org, akpm@linux-foundation.org,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
-Subject: Re: [PATCH] mm/damon/core: remove declaration of kdamond_fn()
-Message-ID: <202608281351.Hv386MvO-lkp@intel.com>
-References: <20260827163953.83520-1-zenghui.yu@linux.dev>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V2buQ8Ue"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-cbedd5aece4so1515743a12.0
+        for <damon@lists.linux.dev>; Fri, 28 Aug 2026 01:47:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787906852; x=1788511652; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=RXLz3Xl6C6oGFGDAhFniglml06HtyDSEVADuwjc8Bss=;
+        b=V2buQ8Ue4OObsa08IMvyuMH08NRmDMjWqmNbJ/GjDvDNiEBPAU3B+hT7oO1HgmBYCg
+         pB14mnjSQsRFLJ4d955nDBrSKZG0ugEyICeIiqpbGV377nz+OGwaby1sIUxFm5LL3kS2
+         Fb1wYmdF4x/GflS3W7fp64Y7n/Z/MFmPJbFikBD751uf0fwT65MbxrSUcx3OJCFluR78
+         o5yk11dVVbEa4WgzqJTtcXFt+TRbYsZmJcsQI3dxqFklpC59FhZKZvgJmMSJ7lyQbZiP
+         UiRs4NiTpOc5VvHOwAnE8eboMDbu8lmoUsqCIx64rAs0opYZM57J9T8cGjpdBCxeCezt
+         d7fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787906852; x=1788511652;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=RXLz3Xl6C6oGFGDAhFniglml06HtyDSEVADuwjc8Bss=;
+        b=hWjEtbDo6dIiPfF7B3WQpKCgrs6J/2PWgtntl3igEFh7vTDNQSOs3LIDCHbFco/TSO
+         gYPfUzsfT1Ozlj/sqjz2v4WDMUfQXeyEWXI0cxhUq5eYtas4EJn/4WF/0P62/yytUom/
+         QOuKwKMwJsVcippJw8Zg7f2Qj2ml6tt9x+egRAhh6nv1iDzAxQOeR2p4tQDrt73MxXI+
+         NApTEosQguaFiH/6B3RJ5h6hWqT3iJiq6/aZK9A0Xflbg4uVqx8zuvReYJB5mp9750ha
+         yVkwoGPGqgPACkvM0A1OabuB9xej+Qkck9DcX+z0j6bUEOPManEHHcHNoVjJMioNvcME
+         5GWg==
+X-Forwarded-Encrypted: i=1; AHgh+RpbELbf2v0OQGYQ7mR/dsVpeqhi5bLs1Z0ZUpj0B3YkFFndz2J5klpb7pCxZ+dzQiIQxiZNXw==@lists.linux.dev
+X-Gm-Message-State: AFuF++mX0TtHw4kWVq7/ngkpleFU9P19KjhCZbejcmCv4m4aClAvl2y5
+	m3qXn6O7qC5SZUcnkrQmIj7v718c8qML/mJdExuBCFJ0CN2h2pMJ60tJ
+X-Gm-Gg: AR+sD10vGQsJPG135eSGGWGx7OOYI8c4guKt4A1hRmvUONq6/9ZT6ClEjqSBLuB+pX0
+	0HUfedYylxzIsPgQs1iVMfnLdJM8MRs2Q0mfjGKdKf75vcSzFvaurYR3+2N+qMFBcE9lzHV0pAp
+	s+OL5CS1U2Yb8rmr8QvNtOr8cW/4jEg59+g+v8FqZ6fUq1npvpwWThx7XCBCaHqCyTljq0ll8OV
+	oF1lTlmLBW8kXf3xUD/MVrTlnhn9nD9fRvUY0PMjlXSKEeFZ+TbPPIcRCqyOGFkzJf3sLzlvaxW
+	gTPqxDD6vCThGCtFFD7BwwzaYOyXKZBXTpqdf2vH1dumM5eYBqcltDi2OOURJc0efRQQw6nze7m
+	uvN5klsT6aFtiJzDeFAH5c9ZrVCbKlr9WZnT6BAiL/dAYl6ZVv0Att4QYv/eITxthIEVTxnTcLq
+	OSqqOC5s2kKNj7zKsUFi3LIHWpLYYk8KP8Il1RDFclKVpFRAYqsN2WoMHJCd/ZZGGnQg==
+X-Received: by 2002:a17:90b:1a92:b0:384:927f:3db9 with SMTP id 98e67ed59e1d1-396d0d35e02mr5577342a91.1.1787906852389;
+        Fri, 28 Aug 2026 01:47:32 -0700 (PDT)
+Received: from celestia ([2402:1980:88cd:27c4:5897:46d2:587d:19e7])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-396b1992e05sm6292591a91.15.2026.08.28.01.47.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Aug 2026 01:47:31 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	stable@vger.kernel.org
+Subject: [PATCH] mm/damon: fix unconditionally skip last region
+Date: Fri, 28 Aug 2026 16:47:37 +0800
+Message-ID: <20260828084737.290024-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260827163953.83520-1-zenghui.yu@linux.dev>
+Content-Transfer-Encoding: 8bit
 
-Hi Zenghui,
+Once quota set, the charge_{target,addr}_from unconditionally skips and
+resets at the last region of the tracked target, so the last region can
+be skipped even when it has not been processed.
 
-kernel test robot noticed the following build errors:
+Example:
 
-[auto build test ERROR on akpm-mm/mm-everything]
+    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
+    2. Quota is configured to process only 50 bytes per window.
+    3. Window 1: Processes R1 (0-50).  Quota is full.  Cursor is saved
+       at (Target, 50).
+    4. Window 2: Skips R1 (0-50).  Processes R1 (50-100).  Quota is
+       full. Cursor is saved at (Target, 100), which is exactly the
+       start of R2.
+    5. Window 3: The loop reaches R2.  Because R2 is
+       damon_last_region(t), the old code unconditionally returns true,
+       skipping R2 entirely and resetting the cursor.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Zenghui-Yu/mm-damon-core-remove-declaration-of-kdamond_fn/20260828-003953
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
-patch link:    https://lore.kernel.org/r/20260827163953.83520-1-zenghui.yu%40linux.dev
-patch subject: [PATCH] mm/damon/core: remove declaration of kdamond_fn()
-config: xtensa-randconfig-r073-20260828 (https://download.01.org/0day-ci/archive/20260828/202608281351.Hv386MvO-lkp@intel.com/config)
-compiler: xtensa-linux-gcc (GCC) 16.1.0
-smatch: v0.5.0-9187-g5189e3fb
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260828/202608281351.Hv386MvO-lkp@intel.com/reproduce)
+    Result: R2 is permanently skipped even though it has never been
+    processed.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202608281351.Hv386MvO-lkp@intel.com/
+Fix this by only skipping the last region after it has been applied.
 
-All error/warnings (new ones prefixed by >>):
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Cc: <stable@vger.kernel.org> # v5.16.x
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
 
-   In file included from include/linux/psi_types.h:5,
-                    from include/linux/cgroup-defs.h:24,
-                    from include/linux/cgroup.h:29,
-                    from include/linux/memcontrol.h:13,
-                    from include/linux/damon.h:10,
-                    from mm/damon/core.c:8:
-   mm/damon/core.c: In function '__damon_start':
->> mm/damon/core.c:1941:44: error: 'kdamond_fn' undeclared (first use in this function)
-    1941 |                 ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
-         |                                            ^~~~~~~~~~
-   include/linux/kthread.h:46:32: note: in definition of macro 'kthread_create'
-      46 |         kthread_create_on_node(threadfn, data, NUMA_NO_NODE, namefmt, ##arg)
-         |                                ^~~~~~~~
-   mm/damon/core.c:1941:32: note: in expansion of macro 'kthread_run'
-    1941 |                 ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
-         |                                ^~~~~~~~~~~
-   mm/damon/core.c:1941:44: note: each undeclared identifier is reported only once for each function it appears in
-   include/linux/kthread.h:46:32: note: in definition of macro 'kthread_create'
-      46 |         kthread_create_on_node(threadfn, data, NUMA_NO_NODE, namefmt, ##arg)
-         |                                ^~~~~~~~
-   mm/damon/core.c:1941:32: note: in expansion of macro 'kthread_run'
-    1941 |                 ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
-         |                                ^~~~~~~~~~~
-   mm/damon/core.c: At top level:
->> mm/damon/core.c:3750:12: warning: 'kdamond_fn' defined but not used [-Wunused-function]
-    3750 | static int kdamond_fn(void *data)
-         |            ^~~~~~~~~~
+Changes from RFC v1:
+- Minimal fix, only fixes the issue where the last-region is skipped.
+- Add an example to the commit message to demonstrate that this error
+  occurs very rarely.
+- RFC v1: https://lore.kernel.org/damon/20260825124616.5129-1-aethernet65535@gmail.com
 
+---
+ mm/damon/core.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-vim +/kdamond_fn +1941 mm/damon/core.c
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 644daf5a1656..21dc6b086c42 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2347,14 +2347,15 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 	if (quota->charge_target_from) {
+ 		if (t != quota->charge_target_from)
+ 			return true;
+-		if (r == damon_last_region(t)) {
+-			quota->charge_target_from = NULL;
+-			quota->charge_addr_from = 0;
+-			return true;
+-		}
+ 		if (quota->charge_addr_from &&
+-				r->ar.end <= quota->charge_addr_from)
++				r->ar.end <= quota->charge_addr_from) {
++			if (r->ar.end == quota->charge_addr_from ||
++					damon_is_last_region(r, t)) {
++				quota->charge_target_from = NULL;
++				quota->charge_addr_from = 0;
++			}
+ 			return true;
++		}
+ 
+ 		if (quota->charge_addr_from && r->ar.start <
+ 				quota->charge_addr_from) {
+-- 
+2.55.0
 
-b1029f29eb1d5fb SJ Park        2026-02-28  1924  
-2224d8485492e49 SeongJae Park  2021-09-07  1925  /*
-2224d8485492e49 SeongJae Park  2021-09-07  1926   * __damon_start() - Starts monitoring with given context.
-2224d8485492e49 SeongJae Park  2021-09-07  1927   * @ctx:	monitoring context
-2224d8485492e49 SeongJae Park  2021-09-07  1928   *
-2224d8485492e49 SeongJae Park  2021-09-07  1929   * This function should be called while damon_lock is hold.
-2224d8485492e49 SeongJae Park  2021-09-07  1930   *
-2224d8485492e49 SeongJae Park  2021-09-07  1931   * Return: 0 on success, negative error code otherwise.
-2224d8485492e49 SeongJae Park  2021-09-07  1932   */
-2224d8485492e49 SeongJae Park  2021-09-07  1933  static int __damon_start(struct damon_ctx *ctx)
-2224d8485492e49 SeongJae Park  2021-09-07  1934  {
-2224d8485492e49 SeongJae Park  2021-09-07  1935  	int err = -EBUSY;
-2224d8485492e49 SeongJae Park  2021-09-07  1936  
-2224d8485492e49 SeongJae Park  2021-09-07  1937  	mutex_lock(&ctx->kdamond_lock);
-2224d8485492e49 SeongJae Park  2021-09-07  1938  	if (!ctx->kdamond) {
-2224d8485492e49 SeongJae Park  2021-09-07  1939  		err = 0;
-6376a824595607e SJ Park        2023-12-08  1940  		reinit_completion(&ctx->kdamond_started);
-2224d8485492e49 SeongJae Park  2021-09-07 @1941  		ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
-2224d8485492e49 SeongJae Park  2021-09-07  1942  				nr_running_ctxs);
-2224d8485492e49 SeongJae Park  2021-09-07  1943  		if (IS_ERR(ctx->kdamond)) {
-2224d8485492e49 SeongJae Park  2021-09-07  1944  			err = PTR_ERR(ctx->kdamond);
-7ec1992b891e59d Colin Ian King 2021-11-05  1945  			ctx->kdamond = NULL;
-6376a824595607e SJ Park        2023-12-08  1946  		} else {
-6376a824595607e SJ Park        2023-12-08  1947  			wait_for_completion(&ctx->kdamond_started);
-2224d8485492e49 SeongJae Park  2021-09-07  1948  		}
-2224d8485492e49 SeongJae Park  2021-09-07  1949  	}
-2224d8485492e49 SeongJae Park  2021-09-07  1950  	mutex_unlock(&ctx->kdamond_lock);
-2224d8485492e49 SeongJae Park  2021-09-07  1951  
-2224d8485492e49 SeongJae Park  2021-09-07  1952  	return err;
-2224d8485492e49 SeongJae Park  2021-09-07  1953  }
-2224d8485492e49 SeongJae Park  2021-09-07  1954  
-
---
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
