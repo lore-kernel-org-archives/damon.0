@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-87.mta1.migadu.com [95.215.58.87])
+Received: from mta0.migadu.com (out-145.mta0.migadu.com [91.218.175.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7F73AE713
-	for <damon@lists.linux.dev>; Fri, 28 Aug 2026 04:00:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3810639E177
+	for <damon@lists.linux.dev>; Fri, 28 Aug 2026 04:13:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787889608; cv=none; b=q4+oPhJj6Z83MyhJ8xubViAJBmPpaGJ7lzlUipGqr07xdobP9BbAKrlbezHab5DAUYPw///48hICn5I8FMJg24pfiQM8Gawe5PwT2d5RiMvYaZOGLpb6sxxQp5whA6UTEPkws0k4nc/vtpJefyucSfay6uQaIVUBZHuQdgJAvu8=
+	t=1787890426; cv=none; b=UhhiopqFSsE/xuK47JbT93IgBIusH37Ld9yrllQ43c0XWUwE84ct1fV5ZXm5v5QIalSFlaal9ce+QdNPvUinivqDkqqgihGxllSQfY8hlhlvQdt39MlPKUMYbZS5zruDT7UUfOXh1T+3g3iU9f2AVeqnleasdNaOsC5j555U/KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787889608; c=relaxed/simple;
-	bh=Zn+AIrmF0AVNoZFHPA81gQXKhbPcNqU7a3t2IJTk6d8=;
+	s=arc-20240116; t=1787890426; c=relaxed/simple;
+	bh=/UeMi+JaZA3u+VpJfUjNutnV4evOAW5IF6lj0AjVMqs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uBSgBywNBiT8KZMtvrCs4EkQuROiyO/CrGDqq77h03ViPiJBx7l6aGe797/7y6q2KtIKcupUADS4Csox8jlTuX3xiXQDUJbYpYifNqvcGJocZipGbUiMPOgcY8Sndkjn0sUUQU6n3CIQ0AtNI89wwnQJkM5Vcmo99AoeeAx86M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=J0mcbCvY; arc=none smtp.client-ip=95.215.58.87
+	 In-Reply-To:Content-Type; b=dPpe9QxLtvUpVJKwxkIvaGTYOeEue0Zxr8qxiWnl6Ut0RWQyHaBZsfEd/dpNCBRGeM++NJJ4Sg6qxLy4jNWGtkbEaFlMCxlN7bsyvER5qjQHJz2X4qj8r3LPwHmAx4VhdFGd2PVbEuuiqw3We2KxvZGIn+A4hpF+rwfT5oH60CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AD5kw1eX; arc=none smtp.client-ip=91.218.175.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="J0mcbCvY"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AD5kw1eX"
 X-Envelope-To: damon@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Zn+AIrmF0AVNoZFHPA81gQXKhbPcNqU7a3t2IJTk6d8=;
+DKIM-Signature: a=rsa-sha256; bh=/UeMi+JaZA3u+VpJfUjNutnV4evOAW5IF6lj0AjVMqs=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787889604; v=1; x=1788494404;
- b=J0mcbCvYD4VM8SleU+j2QybbNKtChjqZvc27Ti9ifUxxLr6oW5fNcjuvsBesWGc3mQiJkjit
- 5NgMyPd56OExI4vzdTisEbj7ZNghoMmbIg+m3qGP2iVVrAIVT87g0+g32JLx7/YSJ5mCTTWSkIg
- s4JF3TUUdk+faxRsid299/wY=
+ t=1787890422; v=1; x=1788495222;
+ b=AD5kw1eXxJl8neo2OF9VN1B7HPwm/QbvdLYuIsNsJdUTXgJ+QrdjYYoijRykkZG/SFyHMl7v
+ pzcetuM8TIN2g8YFhL7hh06uSla700DLGK2Fsc6qdEdyKUcCkHFzKcjagEN/4rWOlE2/uS3lE12
+ pWphzs3/eOMiaZN3qvCo8Z+M=
 X-Envelope-To: damon@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 293d25efb3c88b71;
-	Fri, 28 Aug 2026 04:00:02 +0000
-X-Mizu-Trace-ID: 293d25efb3c88b71
+Received: by smtp.migadu.com with ESMTPS id 8e322e2d7171c530;
+	Fri, 28 Aug 2026 04:13:42 +0000
+X-Mizu-Trace-ID: 8e322e2d7171c530
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <3cb41363-76e8-434b-add3-3cb4b83a6d9e@linux.dev>
-Date: Fri, 28 Aug 2026 11:59:47 +0800
+Message-ID: <88698ac7-3a60-45b7-908a-7f1521c021aa@linux.dev>
+Date: Fri, 28 Aug 2026 12:13:20 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -38,56 +38,87 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 22/37] mm/damon/sysfs: implement cpumask file under
- sample filter dir
+Subject: Re: [RFC PATCH v3 25/37] Docs/admin-guide/mm/damon/usage: document
+ sample filters dir
 To: SeongJae Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, Michal Hocko
+ <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>, Vlastimil Babka <vbabka@suse.cz>,
+ damon@lists.linux.dev, linux-doc@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-mm@kvack.org
 References: <20251208062943.68824-1-sj@kernel.org>
- <20251208062943.68824-23-sj@kernel.org>
+ <20251208062943.68824-26-sj@kernel.org>
 Content-Language: en-US
 From: Zenghui Yu <zenghui.yu@linux.dev>
-In-Reply-To: <20251208062943.68824-23-sj@kernel.org>
+In-Reply-To: <20251208062943.68824-26-sj@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 On 12/8/25 2:29 PM, SeongJae Park wrote:
-> The DAON sample filter directory has files for only common properties.
-
-DAMON
-
-> Add a file to further specify the CPUs to filter in or out.
+> Update DAMON usage document for the added DAMON sysfs files for
+> installing and setting the access sample results filtering.
 > 
 > Signed-off-by: SeongJae Park <sj@kernel.org>
 > ---
->  mm/damon/sysfs.c | 41 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
+>  Documentation/admin-guide/mm/damon/usage.rst | 25 +++++++++++++++++++-
+>  1 file changed, 24 insertions(+), 1 deletion(-)
 > 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index 74594e6e461c..d6b0b6513fd1 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -758,6 +758,7 @@ struct damon_sysfs_sample_filter {
->  	enum damon_sample_filter_type type;
->  	bool matching;
->  	bool allow;
-> +	cpumask_t cpumask;
->  };
+> diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+> index 897a89950351..365a4548a5ba 100644
+> --- a/Documentation/admin-guide/mm/damon/usage.rst
+> +++ b/Documentation/admin-guide/mm/damon/usage.rst
+> @@ -66,6 +66,8 @@ comma (",").
+>      │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
+>      │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
+>      │ │ │ │ │ │ sample/primitives/page_table,page_faults
+> +    │ │ │ │ │ │ sample/filters/nr_filters
+> +    │ │ │ │ │ │ │ 0/type,matching,allow,cpumask
+>      │ │ │ │ │ │ nr_regions/min,max
+>      │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
+>      │ │ │ │ │ │ :ref:`0 <sysfs_target>`/pid_target,obsolete_target
+> @@ -233,7 +235,8 @@ writing to and rading from the files.
+>  For more details about the intervals and monitoring regions range, please refer
+>  to the Design document (:doc:`/mm/damon/design`).
 >  
->  static struct damon_sysfs_sample_filter *damon_sysfs_sample_filter_alloc(void)
-> @@ -765,6 +766,19 @@ static struct damon_sysfs_sample_filter *damon_sysfs_sample_filter_alloc(void)
->  	return kzalloc(sizeof(struct damon_sysfs_sample_filter), GFP_KERNEL);
->  }
+> -Under ``sample`` directory, a directory, ``primitives`` exists.
+> +Under ``sample`` directory, two directories, ``primitives`` and ``filters``
+> +exist.
 >  
-> +struct damon_sysfs_sample_filter_type_name {
-> +	enum damon_sample_filter_type type;
-> +	char *name;
-> +};
+>  contexts/<N>/monitoring_attrs/sample/primitives/
+>  ------------------------------------------------
+> @@ -245,6 +248,26 @@ to these files, users can select whether to use the :ref:`page table accessed
+>  bit <damon_design_pte_accessed_bit_access_check>` and :ref:`page fault events
+>  <damon_design_page_fault_access_check>`, respectively.
+>  
+> +contexts/<N>/monitoring_attrs/sample/filters/
+> +---------------------------------------------
 > +
-> +static const struct damon_sysfs_sample_filter_type_name
-> +damon_sysfs_sample_filter_type_names[] = {
+> +This directory is for control of the :ref:`access sampling results filters
+> +<damon_design_sampling_results_filters>`.  At the beginning, this directory has
+> +only one file, ``nr_filters``.  Writing a positive integer ``<n>`` to the file
+> +generates directories of the number, named ``0`` to ``<n - 1>``.  The generated
+> +directories represent the sampling result filters to install to the DAMON
+> +context, in the order of the directory names.  Writing ``0`` to ``nr_filters``
+> +removes the directories.
+> +
+> +Under the individual filter directory, five files, ``type``, ``matching``,
 
-Looks like this should be defined in patch #21.
+nitpick: "four files" in this patch and "five files" in patch #32.
+
+> +``allow``, and ``cpumask`` exist.  The first three files are same to the
+> +properties of the filter specified on the :ref:`design doc
+> +<damon_design_sampling_results_filters>`.
+> +
+> +Users can specify the cpumask of the filter by writing it to ``cpumask``.  The
+> +format for ``cpumask`` input is same to that for other cpumask inputs like that
+> +for cgroup cpusets.
+> +
+>  .. _damon_usage_sysfs_monitoring_intervals_goal:
+>  
+>  contexts/<N>/monitoring_attrs/intervals/intervals_goal/
 
 Thanks,
 Zenghui
