@@ -1,122 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB4786341;
-	Fri, 28 Aug 2026 18:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A119F3BB13A;
+	Fri, 28 Aug 2026 18:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787942068; cv=none; b=ktwUBKe+udCw992lQMc6zJuXa394ZI1V8rd4c00HovdteJsk+l/I3aqtO9ouhJrz3AvoISqNZMJys/hHuuOQrcPqiLzWJRwOWjbDdUAOys07ZPqqqpGaUgaShfoZla15qB74ux94CBCGomb2YEclO3L0DWk9XEekGYlX9MxC0YY=
+	t=1787942219; cv=none; b=b2Tyn+8QHecsUBmxlibuHl+K5AMdzTrQhNmfDoh6cLj3011DZkN7GEPiZmnsZNi4Jq6ql55v0oG8m1POIPXCyq6s5I8sHWtclvd20PbzniOYjh/2qfm955aRtho78GsktWMIs1g/yx2Xr4oO+r/Wga2arnm21E0ZjGhL+6uCh5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787942068; c=relaxed/simple;
-	bh=KdfzTLVYQW6tHjMYF12HWIyiWUSMgrVtYrY5MCUObm8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ev6SXk4c41o6deDT9MNcJv8ZIAzD3DgmB1DxOxVv42zZUt8MRCVpBl74z9ZMGNCMsCe7XECN02CZVEmEokMvluHWyxEDVYg/79xR14PscezlrxpPDPLb5OzBTcdkLSA1RFz+t0AZAodT7mteVA0h/xuWL8kQ1xVw4RVLxS6Qbns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lRrIQfmm; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787942219; c=relaxed/simple;
+	bh=azib5qmdquNd2rYQczqBEfZ5DW/32eNxHM8irj0UL7Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hdL33eFKg5+f/ZRIS5Cd+65Rxgs5xLxPz9hkz4wBDtg6wrqwrh2THjkf8FX+SMyzzkvj041rwUTV7T9BqIjJYk9PuGZPo7+oIoUXhsi7r1ES0HQr/RoR5EkkFgpn2mVE8swsUvpXPPy/hnqYA7DEWTDWasDJ6zWUK3kZ0Hr28V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ak/3Q/dG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lRrIQfmm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285DA1F000E9;
-	Fri, 28 Aug 2026 18:34:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ak/3Q/dG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49D81F000E9;
+	Fri, 28 Aug 2026 18:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787942066;
-	bh=86nATO2Tu0jZBpxgXv1REoJRi08xat/kpDwIpazzsWU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lRrIQfmmFNi3qSzFzLyCewXV9zO6hUZ9/OOOVsBgv/mM6fuYWRhmreKto9IJrmla5
-	 72ggZXs9XywE0ibXRwVDhsDD6zZZN3w7VXfHYuUKH1AYexz52ME5S/RLiYxIWeldiP
-	 teUGn++zmZeGJjfqpoIXBtA5AOYgY9nPlsz5mzphQ66nMlYhNVZvnBX+vRlvtMRq1y
-	 len7ZKmo9YL1V8WsZJfdsinMXp1p3iN3UCZiWZ652pCkr92cpNkLkLpb22zSCpOeHr
-	 PIKQqXM67MeO05YnS3o9LU2yNJ1rEma5pJZihnu4rVke8dXXkCped0no/iKf5p9mKy
-	 hqUfhguEvf2/w==
+	s=k20260515; t=1787942218;
+	bh=wZbtF0IHVGj7VJcq8IonnL74GjdUD1ZBdNt3Ged28Xw=;
+	h=From:To:Cc:Subject:Date;
+	b=ak/3Q/dGAKBDmSkWap5l35SOzKFLEL7ad8KlNOV8/qus+ORbN0o3Eaw794B3/ZXA4
+	 9uxzrXajXpH/gcawEQ9zXo4uSa6VjDstLLamoq5Xjmp7rDpYkbWmq5hBouwJPPjrlQ
+	 wMedPyS0sMLTn1Rct6RBb1thKvxCXtRosu08txyl6bZLuAzCoHv7m6sVf1yPFCgXXW
+	 nqD2xXgfD6By09eH4rpsEgWH2YC8o+EwRHoYiHi2xeiMo4WfPR5P8y08FuhoJeuyu/
+	 yuM8N3Sd99qM4pXHSykE9B61Og3/16vd3a7iCJ+/On2ruBHffA2O3hlkRnMtCZck+r
+	 cMLJng3C+UxuQ==
 From: SJ Park <sj@kernel.org>
-To: Zenghui Yu <zenghui.yu@linux.dev>
+To: 
 Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	stable@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v3 25/37] Docs/admin-guide/mm/damon/usage: document sample filters dir
-Date: Fri, 28 Aug 2026 11:34:17 -0700
-Message-ID: <20260828183419.70652-1-sj@kernel.org>
+Subject: [RFC PATCH v1.3 0/4] mm/damon: fix misc bugs in kunit, quota goals and sysfs refresh_ms
+Date: Fri, 28 Aug 2026 11:36:44 -0700
+Message-ID: <20260828183649.71192-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <88698ac7-3a60-45b7-908a-7f1521c021aa@linux.dev>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 28 Aug 2026 12:13:20 +0800 Zenghui Yu <zenghui.yu@linux.dev> wrote:
+DAMOS quota goals commit unit test is mistakenly not testing a test case
+that was designed to test.  DAMOS quota goals and DAMON sysfs refresh_ms
+file have bugs that can produce non critical but still unexpected
+behaviors.  Fix the bugs.
 
-> On 12/8/25 2:29 PM, SeongJae Park wrote:
-> > Update DAMON usage document for the added DAMON sysfs files for
-> > installing and setting the access sample results filtering.
-> > 
-> > Signed-off-by: SeongJae Park <sj@kernel.org>
-> > ---
-> >  Documentation/admin-guide/mm/damon/usage.rst | 25 +++++++++++++++++++-
-> >  1 file changed, 24 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-> > index 897a89950351..365a4548a5ba 100644
-> > --- a/Documentation/admin-guide/mm/damon/usage.rst
-> > +++ b/Documentation/admin-guide/mm/damon/usage.rst
-> > @@ -66,6 +66,8 @@ comma (",").
-> >      │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
-> >      │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
-> >      │ │ │ │ │ │ sample/primitives/page_table,page_faults
-> > +    │ │ │ │ │ │ sample/filters/nr_filters
-> > +    │ │ │ │ │ │ │ 0/type,matching,allow,cpumask
-> >      │ │ │ │ │ │ nr_regions/min,max
-> >      │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
-> >      │ │ │ │ │ │ :ref:`0 <sysfs_target>`/pid_target,obsolete_target
-> > @@ -233,7 +235,8 @@ writing to and rading from the files.
-> >  For more details about the intervals and monitoring regions range, please refer
-> >  to the Design document (:doc:`/mm/damon/design`).
-> >  
-> > -Under ``sample`` directory, a directory, ``primitives`` exists.
-> > +Under ``sample`` directory, two directories, ``primitives`` and ``filters``
-> > +exist.
-> >  
-> >  contexts/<N>/monitoring_attrs/sample/primitives/
-> >  ------------------------------------------------
-> > @@ -245,6 +248,26 @@ to these files, users can select whether to use the :ref:`page table accessed
-> >  bit <damon_design_pte_accessed_bit_access_check>` and :ref:`page fault events
-> >  <damon_design_page_fault_access_check>`, respectively.
-> >  
-> > +contexts/<N>/monitoring_attrs/sample/filters/
-> > +---------------------------------------------
-> > +
-> > +This directory is for control of the :ref:`access sampling results filters
-> > +<damon_design_sampling_results_filters>`.  At the beginning, this directory has
-> > +only one file, ``nr_filters``.  Writing a positive integer ``<n>`` to the file
-> > +generates directories of the number, named ``0`` to ``<n - 1>``.  The generated
-> > +directories represent the sampling result filters to install to the DAMON
-> > +context, in the order of the directory names.  Writing ``0`` to ``nr_filters``
-> > +removes the directories.
-> > +
-> > +Under the individual filter directory, five files, ``type``, ``matching``,
-> 
-> nitpick: "four files" in this patch and "five files" in patch #32.
+Patch 1 fixes the DAMOS quota goals commit unit test to cover a
+mistakenly uncovered case.  Patches 2 and 3 fix the bugs in DAMOS PSI
+goal initialization and eligible_mem_bp online commit, respectively.
+Patch 4 fixes the bug in DAMON sysfs refresh_ms file handling.
 
-Thank you for reviewing, Zenghui!  I will keep this in my mind when I write a
-successor [1] of this.
+Changes from RFC v1.2
+- RFC v1.2: https://lore.kernel.org/20260828014659.121058-1-sj@kernel.org
+- Fix last_psi_total underflow.
+Changes from RFC v1.1
+- RFC v1.1: https://lore.kernel.org/20260827134429.123023-1-sj@kernel.org
+- Fix quota goals commit unit test that was mistakenly missing a test case.
+- Initialize last_psi_total as uninitialized at the beginning.
+- Correct kunit test for changed last_psi_total initialization behavior.
+Changes from RFC
+- RFC: https://lore.kernel.org/20260827042920.93580-1-sj@kernel.org
+  (Mistakenly missed RFC tag)
+- Fix build error.
+- Add eligible_mem_bp nid commit fix.
 
-[1] https://lore.kernel.org/all/20260525225208.1179-1-sj@kernel.org/
+SJ Park (4):
+  mm/damon/tests/core-kunit: test committing psi goal to psi goal
+  mm/damon/core: handle uninitialized damos_quota_goal->last_psi_total
+  mm/damon/core: copy nid for eligible_mem_bp damos quota goal commit
+  mm/damon/sysfs: set next refresh jiffies per sysfs context
+
+ mm/damon/core.c             | 16 ++++++++++++++--
+ mm/damon/sysfs.c            | 11 +++++------
+ mm/damon/tests/core-kunit.h | 16 ++++++++++------
+ 3 files changed, 29 insertions(+), 14 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: f508ed0a3bc67ac2a17ba4eaa7f219a95f6b3954
+-- 
+2.47.3
