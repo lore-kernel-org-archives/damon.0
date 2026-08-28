@@ -1,124 +1,156 @@
-Received: from mta0.migadu.com (out-145.mta0.migadu.com [91.218.175.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3810639E177
-	for <damon@lists.linux.dev>; Fri, 28 Aug 2026 04:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A35338D017;
+	Fri, 28 Aug 2026 05:34:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787890426; cv=none; b=UhhiopqFSsE/xuK47JbT93IgBIusH37Ld9yrllQ43c0XWUwE84ct1fV5ZXm5v5QIalSFlaal9ce+QdNPvUinivqDkqqgihGxllSQfY8hlhlvQdt39MlPKUMYbZS5zruDT7UUfOXh1T+3g3iU9f2AVeqnleasdNaOsC5j555U/KI=
+	t=1787895259; cv=none; b=hZlVvtRfD2gM6Z1xfIwbHOr8RZlRGPPN478s7oMBozL8a7bNcOM+lIlaJFhcU3qHv+a0ptYE4wxVSz97yJMTvxpNi8qY4h4tlYRJ8NAL/t/4T06M1R+z31CLqXTxraA/SKnmd+q1tr3zzdDM3rNs/eZ4SA43YW+K5Uov3/L2hc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787890426; c=relaxed/simple;
-	bh=/UeMi+JaZA3u+VpJfUjNutnV4evOAW5IF6lj0AjVMqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dPpe9QxLtvUpVJKwxkIvaGTYOeEue0Zxr8qxiWnl6Ut0RWQyHaBZsfEd/dpNCBRGeM++NJJ4Sg6qxLy4jNWGtkbEaFlMCxlN7bsyvER5qjQHJz2X4qj8r3LPwHmAx4VhdFGd2PVbEuuiqw3We2KxvZGIn+A4hpF+rwfT5oH60CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AD5kw1eX; arc=none smtp.client-ip=91.218.175.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1787895259; c=relaxed/simple;
+	bh=L12kByngmxm0+XcLwhdT9GBJpdEOxar0JOOmR9A9qck=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bhnjDG5NWNebcuQEuutH/7wLU1/EDj3VvHtLkFCOGOKbmOaW9CjqCDA9DPUi1vkjWuI/VYuyDwvOQ5ZYlIUdkBbHzwL6Rav7iRYynMHE8IvQ9OtHRuLVFv1GqZjGxEKBG/ZBAY5bmUfxzHmIAYWwtg8Ky0FsqSAB+fim5kC+cXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ndEh+g7B; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AD5kw1eX"
-X-Envelope-To: damon@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=/UeMi+JaZA3u+VpJfUjNutnV4evOAW5IF6lj0AjVMqs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1787890422; v=1; x=1788495222;
- b=AD5kw1eXxJl8neo2OF9VN1B7HPwm/QbvdLYuIsNsJdUTXgJ+QrdjYYoijRykkZG/SFyHMl7v
- pzcetuM8TIN2g8YFhL7hh06uSla700DLGK2Fsc6qdEdyKUcCkHFzKcjagEN/4rWOlE2/uS3lE12
- pWphzs3/eOMiaZN3qvCo8Z+M=
-X-Envelope-To: damon@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 8e322e2d7171c530;
-	Fri, 28 Aug 2026 04:13:42 +0000
-X-Mizu-Trace-ID: 8e322e2d7171c530
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <88698ac7-3a60-45b7-908a-7f1521c021aa@linux.dev>
-Date: Fri, 28 Aug 2026 12:13:20 +0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ndEh+g7B"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1787895256; x=1819431256;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=L12kByngmxm0+XcLwhdT9GBJpdEOxar0JOOmR9A9qck=;
+  b=ndEh+g7BVnxojUxkDSNYguU68wszQlITOMOQrT3h/SksQNjLPfbX1P3N
+   gpuYjNGbnx6/ZhuxSnKzhaTIo0RerTOf1Pmn7OKamR0AqLJU7/48gW/r+
+   U5W9vJYoXBPoXPQ8gfUjIfka6ofpKh2gj3YZa1WI0TD6fWfbG4TQV+muW
+   bYE6U2FCTkDra5Gj/v/HGj0Usp3VkqQqyAujTf1EtImbg+eYNazh/FEBe
+   NPpzl6N9Z7/0frQNppY+9f11xzyOOwYm+j0tTQtduN4PcDG3CKHLf2kpA
+   L2ZHfpo+i4RdhP8KwrQ7I/drA0yMvraGmOh9Qj2ypCOpy9W6ZBL61ExPE
+   Q==;
+X-CSE-ConnectionGUID: 5JMFRCwIS+2mbDUJuX5iVA==
+X-CSE-MsgGUID: +JTz/Zk5S96Uc/16WbhFyw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11888"; a="88525465"
+X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
+   d="scan'208";a="88525465"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2026 22:34:16 -0700
+X-CSE-ConnectionGUID: 2JOw/X5sR7qW4b71mX5Ntg==
+X-CSE-MsgGUID: mIi6lFz/Rs6jYJK3+8P47g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,248,1779174000"; 
+   d="scan'208";a="270025508"
+Received: from lkp-server01.sh.intel.com (HELO 3532383e6126) ([10.239.97.150])
+  by fmviesa004.fm.intel.com with ESMTP; 27 Aug 2026 22:34:14 -0700
+Received: from kbuild by 3532383e6126 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1wzpEB-00000000AST-1pk6;
+	Fri, 28 Aug 2026 05:34:11 +0000
+Date: Fri, 28 Aug 2026 13:33:29 +0800
+From: kernel test robot <lkp@intel.com>
+To: Zenghui Yu <zenghui.yu@linux.dev>, damon@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, sj@kernel.org, akpm@linux-foundation.org,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
+Subject: Re: [PATCH] mm/damon/core: remove declaration of kdamond_fn()
+Message-ID: <202608281351.Hv386MvO-lkp@intel.com>
+References: <20260827163953.83520-1-zenghui.yu@linux.dev>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 25/37] Docs/admin-guide/mm/damon/usage: document
- sample filters dir
-To: SeongJae Park <sj@kernel.org>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, Michal Hocko
- <mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>, Vlastimil Babka <vbabka@suse.cz>,
- damon@lists.linux.dev, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org
-References: <20251208062943.68824-1-sj@kernel.org>
- <20251208062943.68824-26-sj@kernel.org>
-Content-Language: en-US
-From: Zenghui Yu <zenghui.yu@linux.dev>
-In-Reply-To: <20251208062943.68824-26-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260827163953.83520-1-zenghui.yu@linux.dev>
 
-On 12/8/25 2:29 PM, SeongJae Park wrote:
-> Update DAMON usage document for the added DAMON sysfs files for
-> installing and setting the access sample results filtering.
-> 
-> Signed-off-by: SeongJae Park <sj@kernel.org>
-> ---
->  Documentation/admin-guide/mm/damon/usage.rst | 25 +++++++++++++++++++-
->  1 file changed, 24 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-> index 897a89950351..365a4548a5ba 100644
-> --- a/Documentation/admin-guide/mm/damon/usage.rst
-> +++ b/Documentation/admin-guide/mm/damon/usage.rst
-> @@ -66,6 +66,8 @@ comma (",").
->      │ │ │ │ │ │ intervals/sample_us,aggr_us,update_us
->      │ │ │ │ │ │ │ intervals_goal/access_bp,aggrs,min_sample_us,max_sample_us
->      │ │ │ │ │ │ sample/primitives/page_table,page_faults
-> +    │ │ │ │ │ │ sample/filters/nr_filters
-> +    │ │ │ │ │ │ │ 0/type,matching,allow,cpumask
->      │ │ │ │ │ │ nr_regions/min,max
->      │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
->      │ │ │ │ │ │ :ref:`0 <sysfs_target>`/pid_target,obsolete_target
-> @@ -233,7 +235,8 @@ writing to and rading from the files.
->  For more details about the intervals and monitoring regions range, please refer
->  to the Design document (:doc:`/mm/damon/design`).
->  
-> -Under ``sample`` directory, a directory, ``primitives`` exists.
-> +Under ``sample`` directory, two directories, ``primitives`` and ``filters``
-> +exist.
->  
->  contexts/<N>/monitoring_attrs/sample/primitives/
->  ------------------------------------------------
-> @@ -245,6 +248,26 @@ to these files, users can select whether to use the :ref:`page table accessed
->  bit <damon_design_pte_accessed_bit_access_check>` and :ref:`page fault events
->  <damon_design_page_fault_access_check>`, respectively.
->  
-> +contexts/<N>/monitoring_attrs/sample/filters/
-> +---------------------------------------------
-> +
-> +This directory is for control of the :ref:`access sampling results filters
-> +<damon_design_sampling_results_filters>`.  At the beginning, this directory has
-> +only one file, ``nr_filters``.  Writing a positive integer ``<n>`` to the file
-> +generates directories of the number, named ``0`` to ``<n - 1>``.  The generated
-> +directories represent the sampling result filters to install to the DAMON
-> +context, in the order of the directory names.  Writing ``0`` to ``nr_filters``
-> +removes the directories.
-> +
-> +Under the individual filter directory, five files, ``type``, ``matching``,
+Hi Zenghui,
 
-nitpick: "four files" in this patch and "five files" in patch #32.
+kernel test robot noticed the following build errors:
 
-> +``allow``, and ``cpumask`` exist.  The first three files are same to the
-> +properties of the filter specified on the :ref:`design doc
-> +<damon_design_sampling_results_filters>`.
-> +
-> +Users can specify the cpumask of the filter by writing it to ``cpumask``.  The
-> +format for ``cpumask`` input is same to that for other cpumask inputs like that
-> +for cgroup cpusets.
-> +
->  .. _damon_usage_sysfs_monitoring_intervals_goal:
->  
->  contexts/<N>/monitoring_attrs/intervals/intervals_goal/
+[auto build test ERROR on akpm-mm/mm-everything]
 
-Thanks,
-Zenghui
+url:    https://github.com/intel-lab-lkp/linux/commits/Zenghui-Yu/mm-damon-core-remove-declaration-of-kdamond_fn/20260828-003953
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
+patch link:    https://lore.kernel.org/r/20260827163953.83520-1-zenghui.yu%40linux.dev
+patch subject: [PATCH] mm/damon/core: remove declaration of kdamond_fn()
+config: xtensa-randconfig-r073-20260828 (https://download.01.org/0day-ci/archive/20260828/202608281351.Hv386MvO-lkp@intel.com/config)
+compiler: xtensa-linux-gcc (GCC) 16.1.0
+smatch: v0.5.0-9187-g5189e3fb
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260828/202608281351.Hv386MvO-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202608281351.Hv386MvO-lkp@intel.com/
+
+All error/warnings (new ones prefixed by >>):
+
+   In file included from include/linux/psi_types.h:5,
+                    from include/linux/cgroup-defs.h:24,
+                    from include/linux/cgroup.h:29,
+                    from include/linux/memcontrol.h:13,
+                    from include/linux/damon.h:10,
+                    from mm/damon/core.c:8:
+   mm/damon/core.c: In function '__damon_start':
+>> mm/damon/core.c:1941:44: error: 'kdamond_fn' undeclared (first use in this function)
+    1941 |                 ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
+         |                                            ^~~~~~~~~~
+   include/linux/kthread.h:46:32: note: in definition of macro 'kthread_create'
+      46 |         kthread_create_on_node(threadfn, data, NUMA_NO_NODE, namefmt, ##arg)
+         |                                ^~~~~~~~
+   mm/damon/core.c:1941:32: note: in expansion of macro 'kthread_run'
+    1941 |                 ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
+         |                                ^~~~~~~~~~~
+   mm/damon/core.c:1941:44: note: each undeclared identifier is reported only once for each function it appears in
+   include/linux/kthread.h:46:32: note: in definition of macro 'kthread_create'
+      46 |         kthread_create_on_node(threadfn, data, NUMA_NO_NODE, namefmt, ##arg)
+         |                                ^~~~~~~~
+   mm/damon/core.c:1941:32: note: in expansion of macro 'kthread_run'
+    1941 |                 ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
+         |                                ^~~~~~~~~~~
+   mm/damon/core.c: At top level:
+>> mm/damon/core.c:3750:12: warning: 'kdamond_fn' defined but not used [-Wunused-function]
+    3750 | static int kdamond_fn(void *data)
+         |            ^~~~~~~~~~
+
+
+vim +/kdamond_fn +1941 mm/damon/core.c
+
+b1029f29eb1d5fb SJ Park        2026-02-28  1924  
+2224d8485492e49 SeongJae Park  2021-09-07  1925  /*
+2224d8485492e49 SeongJae Park  2021-09-07  1926   * __damon_start() - Starts monitoring with given context.
+2224d8485492e49 SeongJae Park  2021-09-07  1927   * @ctx:	monitoring context
+2224d8485492e49 SeongJae Park  2021-09-07  1928   *
+2224d8485492e49 SeongJae Park  2021-09-07  1929   * This function should be called while damon_lock is hold.
+2224d8485492e49 SeongJae Park  2021-09-07  1930   *
+2224d8485492e49 SeongJae Park  2021-09-07  1931   * Return: 0 on success, negative error code otherwise.
+2224d8485492e49 SeongJae Park  2021-09-07  1932   */
+2224d8485492e49 SeongJae Park  2021-09-07  1933  static int __damon_start(struct damon_ctx *ctx)
+2224d8485492e49 SeongJae Park  2021-09-07  1934  {
+2224d8485492e49 SeongJae Park  2021-09-07  1935  	int err = -EBUSY;
+2224d8485492e49 SeongJae Park  2021-09-07  1936  
+2224d8485492e49 SeongJae Park  2021-09-07  1937  	mutex_lock(&ctx->kdamond_lock);
+2224d8485492e49 SeongJae Park  2021-09-07  1938  	if (!ctx->kdamond) {
+2224d8485492e49 SeongJae Park  2021-09-07  1939  		err = 0;
+6376a824595607e SJ Park        2023-12-08  1940  		reinit_completion(&ctx->kdamond_started);
+2224d8485492e49 SeongJae Park  2021-09-07 @1941  		ctx->kdamond = kthread_run(kdamond_fn, ctx, "kdamond.%d",
+2224d8485492e49 SeongJae Park  2021-09-07  1942  				nr_running_ctxs);
+2224d8485492e49 SeongJae Park  2021-09-07  1943  		if (IS_ERR(ctx->kdamond)) {
+2224d8485492e49 SeongJae Park  2021-09-07  1944  			err = PTR_ERR(ctx->kdamond);
+7ec1992b891e59d Colin Ian King 2021-11-05  1945  			ctx->kdamond = NULL;
+6376a824595607e SJ Park        2023-12-08  1946  		} else {
+6376a824595607e SJ Park        2023-12-08  1947  			wait_for_completion(&ctx->kdamond_started);
+2224d8485492e49 SeongJae Park  2021-09-07  1948  		}
+2224d8485492e49 SeongJae Park  2021-09-07  1949  	}
+2224d8485492e49 SeongJae Park  2021-09-07  1950  	mutex_unlock(&ctx->kdamond_lock);
+2224d8485492e49 SeongJae Park  2021-09-07  1951  
+2224d8485492e49 SeongJae Park  2021-09-07  1952  	return err;
+2224d8485492e49 SeongJae Park  2021-09-07  1953  }
+2224d8485492e49 SeongJae Park  2021-09-07  1954  
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
