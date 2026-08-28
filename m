@@ -1,111 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-87.mta1.migadu.com [95.215.58.87])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF2622A4E1;
-	Fri, 28 Aug 2026 02:31:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7F73AE713
+	for <damon@lists.linux.dev>; Fri, 28 Aug 2026 04:00:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.87
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787884280; cv=none; b=ZW4JQimpmrdTEGXTCx5OY8D8oOoj+j/jVfbzaqhdw9FgKa5T3Hrkp58fkzz61WfBJy9F9spkvvCIV7SV8cly0gMbbnZ4vCDsS5NRHf34/qrrO0fbZIw5MQ9ud0tryTfuejHSGB7+T83FZ44zIcn+YUcFtT7N9al8JL8N6upXam4=
+	t=1787889608; cv=none; b=q4+oPhJj6Z83MyhJ8xubViAJBmPpaGJ7lzlUipGqr07xdobP9BbAKrlbezHab5DAUYPw///48hICn5I8FMJg24pfiQM8Gawe5PwT2d5RiMvYaZOGLpb6sxxQp5whA6UTEPkws0k4nc/vtpJefyucSfay6uQaIVUBZHuQdgJAvu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787884280; c=relaxed/simple;
-	bh=xlOQdrBprBokycbVMKf803rz99E/fbIO9EHgKbCcaso=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gntib1Yi9oBbyhjgKYK0MWY2Kh4fUGEF1invr2EAdtYclRDBAKOUVpyWuP9cA6MsbBSDhfbzHWonhRKBG8QH9lyI6BniFOgnFVM3F9UHIlwqPXq5Z6HtXbe60naZ6azEz/Bu31Toj3Wtwgn/bLZ8wUOWXnIbqdbZoCtZYqdElZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JMyJlcCZ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1787889608; c=relaxed/simple;
+	bh=Zn+AIrmF0AVNoZFHPA81gQXKhbPcNqU7a3t2IJTk6d8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uBSgBywNBiT8KZMtvrCs4EkQuROiyO/CrGDqq77h03ViPiJBx7l6aGe797/7y6q2KtIKcupUADS4Csox8jlTuX3xiXQDUJbYpYifNqvcGJocZipGbUiMPOgcY8Sndkjn0sUUQU6n3CIQ0AtNI89wwnQJkM5Vcmo99AoeeAx86M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=J0mcbCvY; arc=none smtp.client-ip=95.215.58.87
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JMyJlcCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276BA1F000E9;
-	Fri, 28 Aug 2026 02:31:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787884279;
-	bh=uY6X52+CE/BlmGNPEenqX1diWJOnne8XyrPMIYHRTJw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMyJlcCZZCadNT68arE+NuHVNLfJoljWjgnNaTYHnUoH/ikEspa/3sSgkQ51iPMMW
-	 juqRr12rV/tPIlwcIV/DwlC4d8RCzEDCpf5HXShxfHbHKRtcYVmQkF8lSUR+HReclr
-	 Xf5Tp6mkQgk74UOlJ7RzdGge0V/pPx/fZ8Xz6+7n5sXW4nI36uSnKDIVsGKu9P/gr7
-	 Nqw8qEyf9FqFBblT4Fgkiy9M4B+wqR5aoKYZTZ3IAgmlWJXB20x07cR4TuhgmswU3N
-	 95skI+PX7BMU/kZj/YkBPeweAEoArbpFVJF/UlmTsA1ytt/N59Am5s/1Uv1u8GvRpL
-	 apDqc7BZ6L4Fg==
-From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon: fix damos quota walk-position tracking
-Date: Thu, 27 Aug 2026 19:31:11 -0700
-Message-ID: <20260828023112.122652-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260828015429.131338-1-aethernet65535@gmail.com>
-References: 
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="J0mcbCvY"
+X-Envelope-To: damon@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=Zn+AIrmF0AVNoZFHPA81gQXKhbPcNqU7a3t2IJTk6d8=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1787889604; v=1; x=1788494404;
+ b=J0mcbCvYD4VM8SleU+j2QybbNKtChjqZvc27Ti9ifUxxLr6oW5fNcjuvsBesWGc3mQiJkjit
+ 5NgMyPd56OExI4vzdTisEbj7ZNghoMmbIg+m3qGP2iVVrAIVT87g0+g32JLx7/YSJ5mCTTWSkIg
+ s4JF3TUUdk+faxRsid299/wY=
+X-Envelope-To: damon@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 293d25efb3c88b71;
+	Fri, 28 Aug 2026 04:00:02 +0000
+X-Mizu-Trace-ID: 293d25efb3c88b71
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <3cb41363-76e8-434b-add3-3cb4b83a6d9e@linux.dev>
+Date: Fri, 28 Aug 2026 11:59:47 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 22/37] mm/damon/sysfs: implement cpumask file under
+ sample filter dir
+To: SeongJae Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org
+References: <20251208062943.68824-1-sj@kernel.org>
+ <20251208062943.68824-23-sj@kernel.org>
+Content-Language: en-US
+From: Zenghui Yu <zenghui.yu@linux.dev>
+In-Reply-To: <20251208062943.68824-23-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, 28 Aug 2026 09:54:29 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+On 12/8/25 2:29 PM, SeongJae Park wrote:
+> The DAON sample filter directory has files for only common properties.
 
-> On Thu, 27 Aug 2026 17:40:48 -0700 SJ Park <sj@kernel.org> wrote:
+DAMON
+
+> Add a file to further specify the CPUs to filter in or out.
 > 
-> > On Fri, 28 Aug 2026 02:08:22 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-[...]
-> > > While your approach works, I am curious, why should the cursor be reset
-> > > every time the function returns false (does not skip)?
-> > 
-> > It doesn't.  It resets charge_{target,addr}_from only once after the regions to
-> > skip are all skipped.  Am I missing something?
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> ---
+>  mm/damon/sysfs.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
 > 
-> You are right.
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index 74594e6e461c..d6b0b6513fd1 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+> @@ -758,6 +758,7 @@ struct damon_sysfs_sample_filter {
+>  	enum damon_sample_filter_type type;
+>  	bool matching;
+>  	bool allow;
+> +	cpumask_t cpumask;
+>  };
+>  
+>  static struct damon_sysfs_sample_filter *damon_sysfs_sample_filter_alloc(void)
+> @@ -765,6 +766,19 @@ static struct damon_sysfs_sample_filter *damon_sysfs_sample_filter_alloc(void)
+>  	return kzalloc(sizeof(struct damon_sysfs_sample_filter), GFP_KERNEL);
+>  }
+>  
+> +struct damon_sysfs_sample_filter_type_name {
+> +	enum damon_sample_filter_type type;
+> +	char *name;
+> +};
+> +
+> +static const struct damon_sysfs_sample_filter_type_name
+> +damon_sysfs_sample_filter_type_names[] = {
 
-Thank you for confirming.
-
-> 
-> My concern was that the current
-> 'return false == reset charge_{target, addr}_from' might be a bit hard
-> to understand.  However, I realize that my change was quite significant.
-> 
-> To make the existing logic clearer for future readers, I think adding a
-> brief comment would be helpful.
-
-Makes sense to me.
-
-> For example:
-> 
-> '''
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2368,6 +2368,15 @@ static bool damos_skip_charged_region(struct damon_target *t,
->                         damon_split_region_at(t, r, sz_to_skip);
->                         return true;
->                 }
-> +               /*
-> +                * Reset the charge_{target,addr}_from so that the remaining
-> +                * regions in this/next target can be processed normally.  If
-> +                * the quota becomes full later during the walk,
-> +                * damos_apply_scheme() will update the
-> +                * charge_{target,addr}_from to the correct position.
-> +                * Otherwise, it implies that all applicable regions in this
-> +                * target have been processed.
-> +                */
->                 quota->charge_target_from = NULL;
->                 quota->charge_addr_from = 0;
->         }
-> '''
-> 
-> If this is not necessary or redundant, I am perfectly fine with dropping
-> it and just applying your minimal fix for the last-region issue in the
-> next revision.
-
-I'd suggest to separate the minimal fix and readability improvement.  Could you
-please post the minimal fix first, with Cc: stable@?  After it is done, we
-could revisit this readability improvement.
-
+Looks like this should be defined in patch #21.
 
 Thanks,
-SJ
-
-[...]
+Zenghui
