@@ -1,46 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289D21643B;
-	Sat, 29 Aug 2026 01:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0663033D6
+	for <damon@lists.linux.dev>; Sat, 29 Aug 2026 08:37:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787968520; cv=none; b=X/vsK9/IpSYLApYwBrPxbpAHC78+RvModS0SG+RIho86qvQzGaQf3T4cm1/+lMZQRK7KtY4aPaY8/8f/VsZ5WETXOUz4+PJ99sfvaPKxeuZYp3LYwK3sLya2Rt8VKg9CSYzovjw97qOu7EeWNRnm0w7tcgfgVC6csCHjH4PcqrU=
+	t=1787992658; cv=none; b=M8NsQY4Zz6kilNitsldLyJL4E4FVSxZgNl0jF5VMVx12LbqY/IMzvb86x6fPOs3JFW14FUeroSdgAF16Xt/zKQUSEKhmDq4btAnYCNXH2xoeQTANyeka6jNznLaOXVJNEWvPWSowRdXpdv/icUgCFJodz7SwVUZ8yIbHEEw7x2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787968520; c=relaxed/simple;
-	bh=Tx6peCwq6LWddKFCzINod9VezXpbPUn4luF4f3Yzd7w=;
+	s=arc-20240116; t=1787992658; c=relaxed/simple;
+	bh=0W57UE75lT0JWXkqYkhmkWBGe2aIvBBA8agCtfF8vLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QLOXevf+AsYJ+lb8jiemZk0y6Imm1VphJKnS+nwQI2R1oIT7abF5h/45agVrjYHDtPdCuJeZxX0OYKz1SqjXNNEBNK54V2UbAV/i4FbcO1h3ArdO9bJuVTMFHQOipU8ByNS8EPlWTsTIKDZSBOAgxLL3ZmdpserdkUN9u3kN1g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PZGB1bkQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jdmBpEIRVPzo1nKG241PWHa4wz13IvLi5EV7qFqeWKk9jewSvdc7uXdjNDlduqxYlhTSaM30pt+2RHzkj21wDzqEnu2fEzpMTv8bg79UtLC6J2DtEnamdMYSMrpxjvAaPGJmXRSabf7GRAxM1TrqR0kKHF7gLFu6NkdQfdJ9pMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AszJXH5k; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PZGB1bkQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681B81F000E9;
-	Sat, 29 Aug 2026 01:55:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1787968518;
-	bh=bqsrIgE1vMZSFVutAeptIWgwiGFQSyUVPvdWjryJwx0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PZGB1bkQAPezLN4UngIrermFUA4t75K1Hc/7NB6Lwhne5lHDBNfm+pH5K3af4KccM
-	 +KYUewu/UttfS5UY5I6E5fttCivXAMb7FtQRzfU0Ao9rMn274VuC9gu32Ob255Tlez
-	 noEj3NKap7EgNwqR+iNLoZVhwBDsxsPhtgolQr/ApvnLl/O1U/H16nPAf43WwOjTE8
-	 ymVzs3dIDX83CIlUO7Kvzo44tBFK1pvsqPvrPWN+SByW7tEwBVkHvsEeCjQOKZaYZ9
-	 KKLQ3y3OWsi7Pw1k9HDgyfwb1l8tEvg8HtYnY7fRgGxF4PIiYJ+C8K/PXCnMfvx2a0
-	 qTHCTCc1pTIAg==
-From: SJ Park <sj@kernel.org>
-To: Nathan Gao <zcgao@amazon.com>
-Cc: SJ Park <sj@kernel.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AszJXH5k"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2ce7d2adef4so27764485ad.3
+        for <damon@lists.linux.dev>; Sat, 29 Aug 2026 01:37:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1787992657; x=1788597457; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=A4IwbgMrRyJTDKTZ/KQuUur9K0X+mbmrk/E1Z34LTpY=;
+        b=AszJXH5krJQXgug4CgWXUMXowTdRHB210S6yUyjvzwK4usdLDNF5mO7aw5p3woOmOw
+         zjeja9qhpG8vYh1VvZO8G/7yEmqHs8F3vJRt3s0KVJ1fFwtH8S0MxyoXElUmEm2Zjgpu
+         p9NrsPWz9DBzbwrxn7SPwvh6YGcu3IgTYWXGescf5UnY4RQpLUigte/sd8Ah88okyxzj
+         TlDLJz+Bx2OLbbDrV3SB3twBokw22GON+XeZLXPo3PmEyVCpUJaW8NYmEixTxn6CzToS
+         2F+N19za2FLruFiXzG+AdWBqWbv0vMnB+S6BZsIewcs13f4B22rHZcGkDMNplnQ6C3GJ
+         dHOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787992657; x=1788597457;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=A4IwbgMrRyJTDKTZ/KQuUur9K0X+mbmrk/E1Z34LTpY=;
+        b=VrTh4vU3HPsyMwu7Z7uDk0zg6aK7FIQQ/DhrKq4JSuuppuVbbHeLcVfbOMvEdRsEOy
+         ha4ny3EBkS75jmGu89rvImFAFIZTLCYBbYIabCaGBC28aKnFaKjRRGr3VcMeHUgb8E1Z
+         MlRlnwA4wxA2BlAlJxa8fdjmWBKc4Sam7aFCLybqQV4zggu9hXTynwQqB3lZlh2afHO2
+         2AlgOnrRD+z/TRAceUHvX0sf2HgGS39+pWKZifQPKPsOheKVdlYw42LbzVM9ptKQ9Hii
+         vujhB9nl6Q/QCH3UtZamoG3l8NN8vpoK/0Cjfz7608ShoPrAegT6Sqyli3V3dIShpsh0
+         9A8Q==
+X-Forwarded-Encrypted: i=1; AKwUvBz1ID3DvqcAv44oT7QRgduyOR1B0PRjBW0zM1ixRWmrtRofiszNd6ZOsP1cR/zxLJFq1VI/Ug==@lists.linux.dev
+X-Gm-Message-State: AFuF++mQGlYBO9WMouHNuw7x/D5vdGAP75IvK3UUfOjUh0Qx23xUOx3w
+	4hz7CVb2qyUUCB9kS4XMgaxc9EU/nTm2eQ85Xt1RuXPlxY2U04Le2dJU
+X-Gm-Gg: AR+sD11IcMZstWVuyOdVYylFheYSe/bIx5NlwbC8boqOjZfQfm3Q3jeiDRxa8x2cqch
+	4zkxZ10hFOnrTBOdp5fsR+QNPwVN/V1fejN9y4V7GRBSqKkQCpXmyvXxlshBc9aAd11MTnQIMY9
+	iI8dK4MrR3nXRuM/g0t73MEg8nw7TC26xHOqIKjxcAELfsJ0nC4Tg3txwXtaYkuS+B8i5kGiW4Q
+	nyj89+epoWJHiTmbGUV5sePZEIa1fjXIDUuNGMJEPO2dmil+JIdFB2p1JsF/m2ONAjpQpMf1K+s
+	d/OAMgZPDtFeBu1Yg555ZipkBnEYnBSbDZearG4SAGb51Zg8himtLVXHWZerRfHyJOEu0Avy2yg
+	frQvkam1tG0kVbXTT0DmuZpugXP97IoNlNkbYxFJCYpg1y08OyNzFfNTgp3dwEicMErSzcmU37q
+	yxIdqP0QCd1jLIsHqrSBjAHCMao6toMp+J0gMU/qZAMymMaE7xmSn3WrudewZhBJ+SE3A8q8mC/
+	O6Ys8vIcCy6NDSazlcjD3U/WDfy
+X-Received: by 2002:a17:902:ffce:b0:2d8:d4d2:dc9a with SMTP id d9443c01a7336-2d8d4d2dfadmr79579325ad.22.1787992656523;
+        Sat, 29 Aug 2026 01:37:36 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:88cd:27c4:5897:46d2:587d:19e7])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d7594ffc94sm12819105ad.5.2026.08.29.01.37.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 29 Aug 2026 01:37:35 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: sj@kernel.org
+Cc: aethernet65535@gmail.com,
 	akpm@linux-foundation.org,
-	baolin.wang@linux.alibaba.com,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
 	stable@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: use a page-aligned sampling address
-Date: Fri, 28 Aug 2026 18:55:11 -0700
-Message-ID: <20260829015511.74221-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260829010455.28607-1-zcgao@amazon.com>
-References: 
+Subject: Re: [PATCH] mm/damon: fix unconditionally skip last region
+Date: Sat, 29 Aug 2026 16:34:26 +0800
+Message-ID: <20260829083744.73299-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260828182910.70304-1-sj@kernel.org>
+References: <20260828182910.70304-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,180 +81,344 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 28 Aug 2026 18:04:55 -0700 Nathan Gao <zcgao@amazon.com> wrote:
+On Fri, 28 Aug 2026 11:29:09 -0700 SJ Park <sj@kernel.org> wrote:
 
-> Hi SJ,
+> On Fri, 28 Aug 2026 16:47:37 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 > 
-> Thanks for your review!
+> > Once quota set, the charge_{target,addr}_from unconditionally skips and
+> > resets at the last region of the tracked target, so the last region can
+> > be skipped even when it has not been processed.
+> > 
+> > Example:
+> > 
+> >     1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
+> >     2. Quota is configured to process only 50 bytes per window.
+> >     3. Window 1: Processes R1 (0-50).  Quota is full.  Cursor is saved
+> >        at (Target, 50).
 > 
-> On Thu, 27 Aug 2026 17:22:11 -0700 SJ Park <sj@kernel.org> wrote:
-> 
-> > Hello Nathan,
-> > 
-> > On Thu, 27 Aug 2026 12:38:21 -0700 Nathan Gao <zcgao@amazon.com> wrote:
-> > 
-> > > __damon_va_prepare_access_check() picks a random byte address within the
-> > > region and stores it in r->sampling_addr. There are two users of
-> > > r->sampling_addr in vaddr.c that pass it into a page table walk, and
-> > > both use it as the address of a page.
-> > > 
-> > >   damon_va_mkold(mm, r->sampling_addr)
-> > >     damon_va_walk_page_range(mm, addr, addr + 1)
-> > >       damon_mkold_pmd_entry()
-> > >         damon_ptep_mkold(pte, vma, addr)
-> > >           ptep_test_and_clear_young(vma, addr, pte)
-> > >           mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE)
-> > > 
-> > >   damon_va_young(mm, r->sampling_addr, &folio_sz)
-> > >     damon_va_walk_page_range(mm, addr, addr + 1)
-> > >       damon_young_pmd_entry()
-> > >         ptep_get(pte)
-> > >         mmu_notifier_test_young(walk->mm, addr)
-> > > 
-> > > test_and_clear_young_ptes(), which backs ptep_test_and_clear_young() on
-> > > arm64, documents @addr as "Address the first page is mapped at".
-> > > 
-> > > For arm64, before commit 6f0e1142173a ("arm64: mm: support batch
-> > > clearing of the young flag for large folios"),
-> > 
-> > The @addr documentation is also introduced by this commit.  This commit is
-> > authored at 2026-02-09.
+> Cursor means charge_{target,addr}_from, right?  Let's explain that, or just
+> keep using the terms (charge_{target,addr}_from).
 
-I was wrong.  The documentation was introduced by commit 6d7237dda44f ("mm: add
-a batched helper to clear the young flag for large folios"), which was authored
-by Baolin on 2026-03-06.
-
-> > 
-> > > the contpte helper walked
-> > > exactly CONT_PTES entries from the aligned-down page table pointer and
-> > > used @addr only to pass down to each entry, so an unaligned value was
-> > > harmless:
-> > > 
-> > >         ptep = contpte_align_down(ptep);
-> > >         addr = ALIGN_DOWN(addr, CONT_PTE_SIZE);
-> > >         for (i = 0; i < CONT_PTES; i++, ptep++, addr += PAGE_SIZE)
-> > 
-> > So, there was no issue before the commit.
-> > 
-> 
-> Right. Before 6f0e1142173a, unaligned addresses were tolerated but I don't
-> think this is guaranteed.
-> 
-> > > 
-> > > Align the sampled address down to a page boundary. It is the address of
-> > > the page to sample, so this matches its intended meaning and fixes both
-> > > users in vaddr.c.
-> > 
-> > This indeed sounds like can fix the issue to me.  However, was it a clear rule
-> > that we should pass only contepte-aligned addrss to
-> > ptep_test_and_clear_young()?  And is DAMON the only ptep_test_and_clear_young()
-> > caller that is mistakenly passing the unaligned address?
-> > 
-> 
-> It is not spelled out as an explicit rule, but the documented "Address
-> the first page is mapped at" implies it,
-
-You mean the comment on test_and_clear_young_ptes(), right?  But as I mentioned
-above, the comment was introduced by Baolin's patch that was authored on
-2026-03-06.  I'd still appreciate Baolin's opinion.
-
-> and these callers are using
-> aligned addresses:
-> 
->  mm/page_idle.c: page_idle_clear_pte_refs_one()
->  fs/proc/task_mmu.c: clear_refs_pte_range()
-> 
-> > If not, it might make sense to make contpte_test_and_clear_young_ptes() support
-> > unaligned adress again in my opinion.  May I ask your opinion, Baolin?
-> > 
-> > > 
-> > > Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-> > 
-> > I think 6f0e1142173a ("arm64: mm: support batch clearing of the young flag for
-> > large folios") would be mroe correct 'Fixes:', if there was no issue before the
-> > commit.
-> > 
-> 
-> Will use that in v2.
-> 
-> > > -	r->sampling_addr = damon_rand(ctx, r->ar.start, r->ar.end);
-> > > +	r->sampling_addr = PAGE_ALIGN_DOWN(damon_rand(ctx, r->ar.start,
-> > > +						      r->ar.end));
-> > 
-> > If we need to have the fix in DAMON, this kind of change would be needed.
-> > 
-> > However, what happens if the address is backed by large folios?
-> > 
-> > Before the commit 6f0e1142173a, also, it was aligning to CONT_PTE_SIZE.  Should
-> > we do same?
-> 
-> Passing a page-aligned address restores the pre-6f0e1142173a behavior.
-> Before the change, the helper aligned ptep down to the block start and
-> walked a fixed CONT_PTES entries, regardless of addr.  After the
-> change, the walk covers [ALIGN_DOWN(addr, CONT_PTE_SIZE),
-> ALIGN(addr + nr * PAGE_SIZE, CONT_PTE_SIZE)).  With a sub-page offset,
-> addr + PAGE_SIZE lands just past the block boundary, so the round-up
-> extends the walk a whole block further.  With a page-aligned addr,
-> addr + PAGE_SIZE is at most the block end, so the round-up lands
-> exactly on the block end and the walk covers the same CONT_PTES
-> entries as before the commit.
-> 
-> We also can't align to CONT_PTE_SIZE in DAMON since it's defined only under
-> arch/arm64/:
-> 
->   #define CONT_PTES		(1 << (CONT_PTE_SHIFT - PAGE_SHIFT))
->   #define CONT_PTE_SIZE		(CONT_PTES * PAGE_SIZE)
-
-DAMON cares only exactly the byte of the address, so I agree this would work
-for DAMON and be safe.  But, still the behavior is not exactly same to
-pre-6f0e1142173a, isn't it?  I'm not really sure if this is really the correct
-use of the function.  Again, I'd appreciate Baolin's comment.
+Yes, thank you for pointing that out!  I changed cursor to
+charge_{target,addr}_from now.
 
 > 
+> >     4. Window 2: Skips R1 (0-50).  Processes R1 (50-100).  Quota is
+> >        full. Cursor is saved at (Target, 100), which is exactly the
+> >        start of R2.
+> >     5. Window 3: The loop reaches R2.  Because R2 is
+> >        damon_last_region(t), the old code unconditionally returns true,
+> >        skipping R2 entirely and resetting the cursor.
+> > 
+> >     Result: R2 is permanently skipped even though it has never been
+> >     processed.
 > 
-> > Also, I think we should pass aligned address to only the functions that
-> > require alignement.  Making the alignment to the sampling address in general
-> > sounds too much to me.  Particularly, we are working on supporting new page
-> > access check primitives other than PTE Accessed bit, like AMd IBS.  In the
-> > case, we might support <PAGE_SIZE granularity monitoring.  Aligning sampling
-> > address in general will make it more complicated.
-> 
-> Makes sense. I will keep sampling_addr as is and align inside damon_va_mkold()
-> and damon_va_young() in v2.
+> Let's make example simpler by setting R1 (0-50 bytes) and R2 (50-100 bytes) or
+> quota size 100 bytes per window.
 
-Regardless of Baolin's comment, let's fix this issue.  So the v2 would be
-appreciated.  In the v2, could you also add more details about how the issue
-can be reproduced, and the user impact?  You mentioned you found memory
-corruption from DAMON selftets.  It would be nice if you could make it more
-detailed, such as what selftest reproduces the issue and what symptoms it
-showed you.
-
-Nevertheless I'm also wondering if supporting unaligned address again, like
-below also works.
+This is the updated example:
 
 '''
---- a/arch/arm64/mm/contpte.c
-+++ b/arch/arm64/mm/contpte.c
-@@ -519,9 +519,12 @@ bool contpte_test_and_clear_young_ptes(struct vm_area_struct *vma,
-         * of the same large folio in a single VMA and a single page table.
-         */
+Example:
 
--       unsigned long end = addr + nr * PAGE_SIZE;
-+       unsigned long end;
-        bool young = false;
+    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
+    2. Quota is configured to process only 100 bytes per window.
+    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
+        addr}_from is saved at (Target, 100).
+    4. Window 2: The loop reaches R2.  Because R2 is
+        damon_last_region(t), the old code unconditionally returns true,
+        skipping R2 entirely and resetting the charge_{target,addr}_from.
 
-+       ptep = contpte_align_down(ptep);
-+       addr = ALIGN_DOWN(addr, CONT_PTE_SIZE);
-+       end = addr + nr * PAGE_SIZE;
-        ptep = contpte_align_addr_ptep(&addr, &end, ptep, nr);
-        for (; addr != end; ptep++, addr += PAGE_SIZE)
-                young |= __ptep_test_and_clear_young(vma, addr, ptep);
+    Result: R2 is permanently skipped even though it has never been
+    processed.
 '''
 
-Nathan, what do you think?  If it makes sense to you, could you also test this?
+> 
+> Also, it continues being skipped only in a corner case that the region
+> addresses and the access patterns are kept.  So the user impact is mild.  Let's
+> clarify that to not make users unnecessarily afraid.
 
+I will add this clarification in the next revision:
 
-Thanks,
-SJ
+'''
+However, it is important to note that this is a very minor issue.  This
+is because it is triggered only when the previous window saved/kept
+charge_{target,addr}_from, and in the next window, all regions except
+the last region were skipped by damos_skip_charged_region().
+'''
 
-[...]
+> 
+> > 
+> > Fix this by only skipping the last region after it has been applied.
+> > 
+> > Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+> > Cc: <stable@vger.kernel.org> # v5.16.x
+> > Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+> > ---
+> > 
+> > Changes from RFC v1:
+> > - Minimal fix, only fixes the issue where the last-region is skipped.
+> > - Add an example to the commit message to demonstrate that this error
+> >   occurs very rarely.
+> > - RFC v1: https://lore.kernel.org/damon/20260825124616.5129-1-aethernet65535@gmail.com
+> > 
+> > ---
+> >  mm/damon/core.c | 13 +++++++------
+> >  1 file changed, 7 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 644daf5a1656..21dc6b086c42 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -2347,14 +2347,15 @@ static bool damos_skip_charged_region(struct damon_target *t,
+> >  	if (quota->charge_target_from) {
+> >  		if (t != quota->charge_target_from)
+> >  			return true;
+> > -		if (r == damon_last_region(t)) {
+> > -			quota->charge_target_from = NULL;
+> > -			quota->charge_addr_from = 0;
+> > -			return true;
+> > -		}
+> >  		if (quota->charge_addr_from &&
+> > -				r->ar.end <= quota->charge_addr_from)
+> > +				r->ar.end <= quota->charge_addr_from) {
+> > +			if (r->ar.end == quota->charge_addr_from ||
+> > +					damon_is_last_region(r, t)) {
+> > +				quota->charge_target_from = NULL;
+> > +				quota->charge_addr_from = 0;
+> > +			}
+> >  			return true;
+> > +		}
+> >  
+> >  		if (quota->charge_addr_from && r->ar.start <
+> >  				quota->charge_addr_from) {
+> 
+> As Sashiko pointed out, this doesn't work if the the last region's start
+> address is smaller than charge_addr_from and the end address is larger than
+> charge_addr_from, but the size to skip (charge_addr_from - r->ar.start) is
+> smaller than min_region_sz.
+> 
+> As you replied to Sashiko, let's do the last region handling in every case.
+> While doing that, let's do the charge_{target,addr}_from reset in only one
+> place, like below.
+> 
+> '''
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2688,36 +2688,40 @@ static bool damos_skip_charged_region(struct damon_target *t,
+>  {
+>         struct damos_quota *quota = &s->quota;
+>         unsigned long sz_to_skip;
+> +       bool skip = false;
+> 
+>         /* Skip previously charged regions */
+>         if (quota->charge_target_from) {
+>                 if (t != quota->charge_target_from)
+>                         return true;
+> -               if (r == damon_last_region(t)) {
+> -                       quota->charge_target_from = NULL;
+> -                       quota->charge_addr_from = 0;
+> -                       return true;
+> -               }
+>                 if (quota->charge_addr_from &&
+> -                               r->ar.end <= quota->charge_addr_from)
+> -                       return true;
+> +                               r->ar.end <= quota->charge_addr_from) {
+> +                       skip = true;
+> +                       goto out;
+> +               }
+> 
+>                 if (quota->charge_addr_from && r->ar.start <
+>                                 quota->charge_addr_from) {
+>                         sz_to_skip = ALIGN_DOWN(quota->charge_addr_from -
+>                                         r->ar.start, min_region_sz);
+>                         if (!sz_to_skip) {
+> -                               if (damon_sz_region(r) <= min_region_sz)
+> -                                       return true;
+> +                               if (damon_sz_region(r) <= min_region_sz) {
+> +                                       skip = true;
+> +                                       goto out;
+> +                               }
+>                                 sz_to_skip = min_region_sz;
+>                         }
+>                         damon_split_region_at(t, r, sz_to_skip);
+> -                       return true;
+> +                       skip = true;
+>                 }
+> +       }
+> +out:
+> +       if (r == damon_last_region(t)) {
+>                 quota->charge_target_from = NULL;
+>                 quota->charge_addr_from = 0;
+> +               return true;
+>         }
+> -       return false;
+> +       return skip;
+>  }
+> 
+>  static void damos_update_stat(struct damos *s,
+> '''
+
+I noticed a potential subtle issue in the suggested fix above:
+
+'''
++out:
++       if (r == damon_last_region(t)) {
+                quota->charge_target_from = NULL;
+                quota->charge_addr_from = 0;
++               return true;
+        }
+'''
+
+If 'skip' is false (region should be processed), but it happens to be
+the last region, the condition 'if (r == damon_last_region(t))' would
+still be met.  This would cause it to reset the state and 'return true'
+(skip it), which inadvertently re-introduces the original bug we are
+trying to fix.
+
+To ensure the reset logic is centralized and correct, I refined the fix
+as follows.  The comment is intended to help you and other reviewers
+quickly understand the rationale behind the compound condition.  I will
+remove this comment in the next revision.
+
+'''
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 644daf5a1656..82c5aed8a417 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2342,36 +2342,48 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ {
+        struct damos_quota *quota = &s->quota;
+        unsigned long sz_to_skip;
++       bool skip = false;
+ 
+        /* Skip previously charged regions */
+        if (quota->charge_target_from) {
+                if (t != quota->charge_target_from)
+                        return true;
+-               if (r == damon_last_region(t)) {
+-                       quota->charge_target_from = NULL;
+-                       quota->charge_addr_from = 0;
+-                       return true;
+-               }
+                if (quota->charge_addr_from &&
+-                               r->ar.end <= quota->charge_addr_from)
+-                       return true;
++                               r->ar.end <= quota->charge_addr_from) {
++                       skip = true;
++                       goto out;
++               }
+ 
+                if (quota->charge_addr_from && r->ar.start <
+                                quota->charge_addr_from) {
+                        sz_to_skip = ALIGN_DOWN(quota->charge_addr_from -
+                                        r->ar.start, min_region_sz);
+                        if (!sz_to_skip) {
+-                               if (damon_sz_region(r) <= min_region_sz)
+-                                       return true;
++                               if (damon_sz_region(r) <= min_region_sz) {
++                                       skip = true;
++                                       goto out;
++                               }
+                                sz_to_skip = min_region_sz;
+                        }
+                        damon_split_region_at(t, r, sz_to_skip);
+-                       return true;
++                       skip = true;
+                }
++       }
++out:
++       /*
++        * The last region may remain unapplied for extended period due to
++        * various regions (e.g., it is invalid or has been filtered out),
++        * preventing other regions from being applied (those preceding the last
++        * region and all regions with different targets).  Therefore, when
++        * encountering a region that needs to be processed, reset
++        * charge_{target,addr}_from.  If necessary, this parameters will be set
++        * to the correct value in damos_do_apply() due to quota is full.
++        */
++       if ((r == damon_last_region(t) && skip) || !skip) {
+                quota->charge_target_from = NULL;
+                quota->charge_addr_from = 0;
+        }
+-       return false;
++       return skip;
+ }
+ 
+ static void damos_update_stat(struct damos *s,
+'''
+
+> 
+> Btw, I think damos_skip_charged_region() may deserve a kunit test.
+
+I agree that a kunit test would be valuable.  While I am still getting
+familiar with the kunit and it might take me a little time, I plan to
+work on it.
+
+Should the tests include these scenarios?  Note that I use 1-based index
+in here since it is easier to understand.
+
+1. Baseline test:
+
+    - Parameters: charge_target_from = NULL, charge_addr_from = 0,
+      nr_target = 1, nr_region = 3.
+
+    - Expected: Returns false three times in a row.
+      charge_{target,addr}_from remains (NULL, 0).
+
+2. Skip test:
+
+    - Parameters: charge_target_from = target[1], charge_addr_from =
+      region[2]->ar.end, nr_target = 1, nr_region = 3.
+
+    - Expected: Returns true, true (for region[1] and region[2]), then
+      false (for region[3]).  charge_{target,addr}_from is reset to
+      (NULL, 0) after region[1].
+
+3. Split test:
+
+    - Parameters: charge_target_from = target[1], charge_addr_from =
+      midpoint of region[2], nr_target = 1, nr_region = 3.
+
+    - Other: Ensure region[2] is large enough for the split to succeed.
+
+    - Expected: Returns true (region[1]), true (region[2] first half),
+      false (region[3] second half), false (region[4]).  Total nr_region
+      becomes 4.  charge_{target,addr}_from is reset to (NULL, 0) after
+      region[0].
+
+4. Sashiko's edge case (Split failure on last region):
+
+    - Parameters: charge_target_from = target[1], charge_addr_from =
+      midpoint of region[3], nr_target = 1, nr_region = 3.
+
+    - Other: Ensure region[3] is small enough so that the split is
+      guaranteed to fail (sz_to_skip < min_region_sz).
+
+    - Expected: Returns true three times in a row.  Crucially,
+      charge_{target,addr}_from is reset to (NULL, 0) on the third call,
+      preventing permanent state leakage.
+
+5. Last region processing test:
+
+   - Parameters: charge_target_from = target[1], charge_addr_from =
+     region[2]->ar.end, nr_target = 1, nr_region = 3.
+
+    - Expected:
+
+        - Round 1: Returns true (region[1]), true (region[2]), false
+          (region[3], resets charge_{target,addr}_from because !skip).
+
+        - Round 2: Since the charge_{target,addr}_from is now (NULL, 0),
+          it should return false three times in a row, proving that
+          subsequent regions are not incorrectly blocked.
+
+If there are any issues or missing edge cases in these scenarios, please
+let me know!
+
+> 
+> [1] https://lore.kernel.org/20260828090410.40AEA1F000E9@smtp.kernel.org
+> [2] https://lore.kernel.org/20260828115047.332978-1-aethernet65535@gmail.com
+
+Best regards,
+Rui Yan
