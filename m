@@ -1,64 +1,64 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704F22EEE6E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311022DE709
 	for <damon@lists.linux.dev>; Sun, 30 Aug 2026 05:14:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788066858; cv=none; b=JgZgs7Zo2/YEFVfRN+n2F+9C5j8oSg0i6HOZps5wwfnJ9aKTOzNggzF79DBpLQWBccLrwR/akSeX/F7C1dSFIGUIa7vRudko4IPw88oXNMfMXRHDyQDHsEk+MAkrX0XLoVrSF8oL9IQXxIbtxv56qifGcZg4P9zT3GAE63/HN0o=
+	t=1788066865; cv=none; b=hx5xkETQ2++5qsvDo11arsDPifhFXTgCEY05rsrAglQB79+My1Lb1P1WBsYhSCvz7XLP42DNamBCW5eSkbtyyep4dk3L+DrON/th3qgakX4anXmAhYOVBHa4jcOeveSy3I4F50LGxhawYapLKfpNEn+aXcaJ7/fMgCbFXGsdlo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788066858; c=relaxed/simple;
-	bh=1IoYOQdQXFvwKzLHxgB+uq3xpg0ikIIhqsw4J/nkMyc=;
+	s=arc-20240116; t=1788066865; c=relaxed/simple;
+	bh=r0ftD7HCIBo2WTmrRLgxokYhFEMjbae70/mAgw1rVsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dk6Fy0MPfzVCVWcdyx18Fpi/s1zC9ufUztjgdN3jsdlE68XIht5/oSD1CUdBk5VZ1PsO3kl4soNqr+89/I22wE+UD8udbyUr7RnlURXzW2SCYcyoK9X+wjik2Js702rlxiiuKzMlMAVM7dnmyDuyIfTfGp2I9b1m6wtRc32e1qA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=crusoe.ai; spf=pass smtp.mailfrom=crusoe.ai; dkim=pass (2048-bit key) header.d=crusoe.ai header.i=@crusoe.ai header.b=VaoCfi7N; arc=none smtp.client-ip=209.85.216.43
+	 MIME-Version; b=Bh5cxVUlUElmoafWnwhDrmuUmOjQ9lV6QkRrP0uLnTtwUkFO0vrCByt5dlDl9d20IX17smGa+iZJrKPYvJ75Yz8wgfFr+18Ak4TZS8FTM4Tnn3AeswKyV76unuoQ+lclpmdM6TkDHLSq7jlL98X0oo80HWdrklTbMvS3awnxn2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=crusoe.ai; spf=pass smtp.mailfrom=crusoe.ai; dkim=pass (2048-bit key) header.d=crusoe.ai header.i=@crusoe.ai header.b=ZpG+tBVH; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=crusoe.ai
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crusoe.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=crusoe.ai header.i=@crusoe.ai header.b="VaoCfi7N"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-395cf2535acso2318396a91.1
+	dkim=pass (2048-bit key) header.d=crusoe.ai header.i=@crusoe.ai header.b="ZpG+tBVH"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-39682983a0fso2932383a91.3
         for <damon@lists.linux.dev>; Sat, 29 Aug 2026 22:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=crusoe.ai; s=google; t=1788066854; x=1788671654; darn=lists.linux.dev;
+        d=crusoe.ai; s=google; t=1788066855; x=1788671655; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=nDQFaZkSZClgPI6vQ9uvEW8golFAoyljS7GedCtCSvM=;
-        b=VaoCfi7NUM8bJQqLusuQTTWn3yFbDxA8yQOd1aLNM+fjEHN3kazUAU/sS/M29fQNAK
-         1ChGmiLDxMvw2klWXyEgH8AmFVN1ucxVE1SKjwOFYT4kkalE6yTn2eh5VsrdPZfNnDP5
-         titf2WBGEq7sTjj2Q4z6wasfEnbPz85kQXSkCstt1nhyGrzSvp29E0MGlqB5+KethRXF
-         F6SXnIC5juYm/g0vAWBygA6ZIWbox1HoNantQNF3nGZHsc1k4VZhCDxjshubApJ+CzC2
-         RJgE/rxokrvFf5iMTvem5s5fMZQKUpJc9GXgGMq4XZOiiAme+YDYJ6ZPfm04KuCAp3W4
-         WD6g==
+        bh=4psP7AFDz+Kluf5IGgOzZSSfstXE1tXapxgbnPUwWEA=;
+        b=ZpG+tBVHBSAfmM91wkNB4owRWPAgA4JdipMHOJ3RwGm4p7KlaNXVWXk6F1wRJxFV8q
+         BtVNuyr8WYKYGqBg6iEZgH6JEutYHYbP23pXms+lm+NKTViEUa9/ycOjkuF2uqi4viow
+         kDy5savOYLQoA7feLSY4fbxkGWPFEak075jZ3pdTpgoLovK6hn7oNEiUlHEdVsz/QwSi
+         Hzu8wnOjcxzC/yvPlj8RlFgpRyZowk5hAFAk/S/kS0mjcxRaVEhKa/MomBXCRrAHUSyV
+         5lq3W6dmE03RnufmzQ4wgCPY0kkZCsv2jOIGf55IHSxZHce0ZLa+vTs3t+WBO2Fdq/n+
+         JhNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788066854; x=1788671654;
+        d=1e100.net; s=20251104; t=1788066855; x=1788671655;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=nDQFaZkSZClgPI6vQ9uvEW8golFAoyljS7GedCtCSvM=;
-        b=pGXUUB4ZypHWbQTddfPJNpluw5de+Nnf1XqoKIp+uz59+x1fDTy6keTR9g01BxsVKJ
-         YOGTWW6j6hg9tquRwLCfZM2klWWVJCVSE2UIn678kEYrKq+RNXy+U4SLm56Mo/LorY8+
-         Zyq3tgJsQLEB9q2o/sFdTx0Yw+xwL8cpg3gLI6cHvl7TVHY/CmgO2JMn4q4ygOmdhdrk
-         meg0pUGmsB2Wn7mLqSoCaC/aX9JsnB2SZnRomecG9C+Lkov6nLLWxw+R+0blKbPrR8rv
-         +eU0tmfka7OTWw9vyqlS2GS4+uHXyGkGlwvAfuk1jI1OFAc+dXwnbDTDT0r3Gg1xxjfA
-         RZkg==
-X-Forwarded-Encrypted: i=1; AKwUvBxQiwZTQ769IpknycME8x1hK3tJGI9BOK3DupaBHSC8Zy0BjcxfeVIc0Rf70gV95J8L/wI1Ig==@lists.linux.dev
-X-Gm-Message-State: AFuF++lKf4qngoFXb8BHC5HTMcQmM75CmkTAienCqZG7O67v0szhBDBq
-	0ZG6VMitnwIEknrM3+PTxc6MDWkIoA93FH8aTBAB/jBzpuqpcZ+MkZF4C1JR5uULg+E=
-X-Gm-Gg: AYBFou2AT/rxBGId0W2XdttuHCk+Ws2Qk8TVZ0vEeRx+UX7QHPspDWRCZU9hANUwag3
-	j/BzVXIo237gdwAuMrAAOL1CMwvQFl4mAD61P3tr1z6KNFiOIIuHS62Ki4o4S4At1YPYDIHXzWH
-	0wGvTfWU6SfhIUSQ/AFauN9ORMew76CHdGO5ejKz1KmtvN+DyvuFKqUunY08Zs5W2HH5p/RDc7S
-	lVi/KLMu9PQUhzhrIT/W4symG/YheRsuX+KhDqVkpfT3bqMknhdO6HgyXkaH7SL3B24M9wUyRpB
-	T7PVw/JreEw1PUdIVPRq2Kd0uFgR4oVMhp3GBuPdttXkU7ca57jgcLf21EZLZbqB53iEqZPmxot
-	7w3bBTRrJwHLRWn1eCfIPOjXeCU2cqSQqscq1/JsSgEboGXHcW4FUOb33YSIjqhM/a163nhLETw
-	F6umQm6Bu8GF7lbUlbCrTIsihC1JJ25A9IYtBNaMp8M0wrcJci30FteMWL47fS24+B9jsA48HGp
-	0yGlnIiuvBuvmmsZyX47Wq/IpMEShjYf+k=
-X-Received: by 2002:a17:90b:53ce:b0:398:c0a2:8f8e with SMTP id 98e67ed59e1d1-398da8b6e92mr295447a91.26.1788066854435;
-        Sat, 29 Aug 2026 22:14:14 -0700 (PDT)
+        bh=4psP7AFDz+Kluf5IGgOzZSSfstXE1tXapxgbnPUwWEA=;
+        b=Ru8e8bCv8/SWubmJoJEBdPr/WfJ4+yNQU8sV1DyE/TJ/yUBJ2qi8B7A71UYpwfZrLR
+         wJofs/XaAJtOeAMtNHY2BOfGxaFRwHDiY1QEHEj4Wtft49W2mjWyW1BeRZqficjcvfx4
+         LVk8fbNyB7t3XdFYOHUlGGHUAVHMUgUyiEMLeQjlha+TknlkKDKPmWtiZ6pidDTQo31g
+         AUJfvyLMlb9bs6agnZnlc0iXqeT63D8WLXmu/+wxBmfxV1vbNkG4zZghLA/hWtWh5TR5
+         diJQkNFJkvBz6YmfI1/HATbBrKxO8vPaVzrKQOZ3qkyvFobJEzV6mOxuuKVex46Y1R2C
+         sOkA==
+X-Forwarded-Encrypted: i=1; AKwUvBwRsAXoUyS7O4ElUlclUUsS54peMPlZ//jStKSk0ZtShv3jCS1lUZYurueSPCwDKVH6WN9whQ==@lists.linux.dev
+X-Gm-Message-State: AFuF++lwtoSRhVTUlnqi7ojUxSClV/J+S9zOVJe83qila+tUTXl/PZ2o
+	9QOG5L3gOlJMVSpktMwdKHVsuUc2grI6YWqyLim1Vbsl+HZji1v4Xdb8kbwmJrciatY=
+X-Gm-Gg: AYBFou29ZHJsHs+Npgze9aKHI+1ZK2xqAD9jBKyJcn/fgx8MhMFdjAkZvPOtmU3HkMs
+	Tj18dUcUCPgBgYPK1hIozcpklzosUyGfblYF8Z5K7exptqkvAmRF63Tt25q0qs6DgnL9g5GKw/w
+	fYY5Xdwo8B8xzJ2ajAGlg+di4HJiEGvIoLU4tGX+3w8GWic5krH7AjP/gOZYxQOuLWx+424682L
+	TAWLjukig7uourCkPpOx96vbSwPoJisBXDrtqGXA675soIa1Me4kFvYHGa+44MOOoWkYjQcKDwC
+	t3aBWxjYGvOTYqXVpzjwd+nZczuCdNKgg1P86Txs80r50Imkk8+gV/g6yHJGV3toRQd2rofWJRR
+	UU2kgNsXhnob763Je6TXFqxJfo3eJM6MeNbTPqVdmKTBLgxlswBO1ExE1SA4U+U6n7t6RjKPFPc
+	LlAfTg6xAJFWAkdAiQ9r5YnXOmWXIiO2aVSIImMcK0jMquBTIPo6i2FgUVpueqpl8Z3BdFaaAuH
+	SUoi0gRW5pt7bK9SyLd19wzXQt/A0liv3Hh
+X-Received: by 2002:a17:90b:2e4f:b0:398:9bd5:490e with SMTP id 98e67ed59e1d1-3989bd54c43mr16185087a91.21.1788066855436;
+        Sat, 29 Aug 2026 22:14:15 -0700 (PDT)
 Received: from MBP-Krishna-Iyer.civet-hops.ts.net ([2601:645:c68a:b830:d101:1d:112c:715e])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3286fa37fa5sm22595810eec.29.2026.08.29.22.14.13
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3286fa37fa5sm22595810eec.29.2026.08.29.22.14.14
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 29 Aug 2026 22:14:14 -0700 (PDT)
+        Sat, 29 Aug 2026 22:14:15 -0700 (PDT)
 From: Krishna Iyer <kiyer@crusoe.ai>
 To: SeongJae Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -66,9 +66,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	Krishna Iyer <kiyer@crusoe.ai>
-Subject: [PATCH 5/6] mm/damon/sysfs: support aging_flush
-Date: Sat, 29 Aug 2026 22:14:06 -0700
-Message-ID: <20260830051407.50008-6-kiyer@crusoe.ai>
+Subject: [PATCH 6/6] mm/damon/stat: support aging_flush
+Date: Sat, 29 Aug 2026 22:14:07 -0700
+Message-ID: <20260830051407.50008-7-kiyer@crusoe.ai>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260830051407.50008-1-kiyer@crusoe.ai>
 References: <20260830051407.50008-1-kiyer@crusoe.ai>
@@ -80,82 +80,47 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Expose the aging_flush monitoring context option via a DAMON sysfs
-context file of the same name, next to addr_unit.  Accepts boolean
-strings (kstrtobool); defaults to N (current behavior).
+Let DAMON_STAT users opt in to flush-assisted access bit clearing via a
+module parameter of the same name as the monitoring context option.
+The parameter is applied when the monitoring context is built, i.e., at
+enable time.  Defaults to off (current behavior).
+
+Intended for virtualization hosts backing guest memory with hugetlb
+pages, where non-flushing aging pins the observed access rate to the
+TLB-refill rate (see the aging_flush core patch for details).  Such
+deployments can set damon_stat.aging_flush=1 on the kernel command
+line.
 
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Krishna Iyer <kiyer@crusoe.ai>
 ---
- mm/damon/sysfs.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ mm/damon/stat.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index e3858ffab4b2..c8bc9cfbe4cf 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1403,6 +1403,7 @@ struct damon_sysfs_context {
- 	struct kobject kobj;
- 	enum damon_ops_id ops_id;
- 	unsigned long addr_unit;
-+	bool aging_flush;
- 	struct damon_sysfs_attrs *attrs;
- 	struct damon_sysfs_targets *targets;
- 	struct damon_sysfs_schemes *schemes;
-@@ -1618,6 +1619,29 @@ static ssize_t pause_store(struct kobject *kobj, struct kobj_attribute *attr,
- 	return count;
- }
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index b05b68f73e10..e093383ba406 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -47,6 +47,11 @@ module_param(aggr_interval_us, ulong, 0400);
+ MODULE_PARM_DESC(aggr_interval_us,
+ 		"Current tuned aggregation interval in microseconds");
  
-+static ssize_t aging_flush_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_context *context = container_of(kobj,
-+			struct damon_sysfs_context, kobj);
++static bool aging_flush __read_mostly;
++module_param(aging_flush, bool, 0600);
++MODULE_PARM_DESC(aging_flush,
++		"Flush TLBs when clearing access bits (applied at enable time)");
 +
-+	return sysfs_emit(buf, "%c\n", context->aging_flush ? 'Y' : 'N');
-+}
-+
-+static ssize_t aging_flush_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_context *context = container_of(kobj,
-+			struct damon_sysfs_context, kobj);
-+	bool input_aging_flush;
-+	int err = kstrtobool(buf, &input_aging_flush);
-+
-+	if (err)
-+		return err;
-+
-+	context->aging_flush = input_aging_flush;
-+	return count;
-+}
+ static struct damon_ctx *damon_stat_context;
  
- static void damon_sysfs_context_release(struct kobject *kobj)
- {
-@@ -1636,11 +1660,15 @@ static struct kobj_attribute damon_sysfs_context_addr_unit_attr =
- static struct kobj_attribute damon_sysfs_context_pause_attr =
- 		__ATTR_RW_MODE(pause, 0600);
+ static unsigned long damon_stat_last_refresh_jiffies;
+@@ -178,6 +183,7 @@ static struct damon_ctx *damon_stat_build_ctx(void)
  
-+static struct kobj_attribute damon_sysfs_context_aging_flush_attr =
-+		__ATTR_RW_MODE(aging_flush, 0600);
-+
- static struct attribute *damon_sysfs_context_attrs[] = {
- 	&damon_sysfs_context_avail_operations_attr.attr,
- 	&damon_sysfs_context_operations_attr.attr,
- 	&damon_sysfs_context_addr_unit_attr.attr,
- 	&damon_sysfs_context_pause_attr.attr,
-+	&damon_sysfs_context_aging_flush_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_context);
-@@ -2102,6 +2130,7 @@ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
- 	if (err)
- 		return err;
- 	ctx->addr_unit = READ_ONCE(sys_ctx->addr_unit);
-+	ctx->aging_flush = READ_ONCE(sys_ctx->aging_flush);
- 	/* addr_unit is respected by only DAMON_OPS_PADDR */
- 	if (ops_id == DAMON_OPS_PADDR)
- 		ctx->min_region_sz = max(
+ 	if (damon_select_ops(ctx, DAMON_OPS_PADDR))
+ 		goto free_out;
++	ctx->aging_flush = aging_flush;
+ 
+ 	target = damon_new_target();
+ 	if (!target)
 -- 
 2.54.0
 
