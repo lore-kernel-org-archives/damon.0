@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95F81A9FBC;
-	Sun, 30 Aug 2026 18:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6879A222580;
+	Sun, 30 Aug 2026 23:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788115141; cv=none; b=JdbKNM1QT0+i0E3vvCgQKohQClJ61MOhBxLDn3tG9CbbnWw7QPzGdQYnRFyZoRaPvyjBSjPmE1DN7vNRWJVDj+l0YG9nWDulcU8AiJ/qYY3r9hALtRCc8bLuaCT9mEv56OUdaNvX5Ed6to6/qhxDMoA1BrS2YYD9EiZWQRUGBxE=
+	t=1788133824; cv=none; b=elfg3CNLnY68gNah2SuumA22MmaHNCjpQBnGDvhNcZhfTndbsM/TDu550Ayogf1Afg7r4Tq5SnbYvYPhk4z0HnALF9xG90r8CJem3xNHAQqfvMt91/azc4tzIlJCYOzARunI+aD3/ATpjl//HsLl7Ro/EKFtgf7sQdgL7iNF/vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788115141; c=relaxed/simple;
-	bh=5+kMpCgaKPSF3S5rboa5bIFVDlKw122brlojSY68E6I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqhzvNR62NgQju3vaEkuU9WdgMYgk5oeMcAhfQEHM5i7WCmAdtt7MHygDgnSiwz8Bo7o7XClrp908CPlz+c2EwLbjpyU6rlcPZItlvq85k1IyoMMLCT87F1THof/67UVUgc2al2BYa1n5A7fF9P++wThTR2wWGCckgFhD9an5r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D6hjMYwd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788133824; c=relaxed/simple;
+	bh=AXbRSg4KqFY98P1RsKPqC7UNPh24HY7QscljV6abne4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XC0q5IorwGmigLV3Est/CtuoIKpu7BxcO7ZZQZidJ54QrnouqW46dGHwy1UplAprJq//GQL/1BJHUzFEoj0uoTxYg9rbsPo2miq4f6QeJPfNUw2xJtuAHJAPJR2MfALBRE4Mj6feL4SIbmcJ6UUb0btP1ojdksmLdWujP2OlFQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XG/UkaDZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D6hjMYwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BDF1F000E9;
-	Sun, 30 Aug 2026 18:38:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XG/UkaDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E121F000E9;
+	Sun, 30 Aug 2026 23:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788115139;
-	bh=E3bBZzmOMZCA2M4AQFe7Y+81H39aGr1Oh/9zopZqbiE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D6hjMYwd+oKzSBJk9n9d9WYX3Z4VDuegnX5OreStuxUQo+U93MFlQv/+YlVVx2Hjr
-	 dRZzw9DTJ7wHm2mzWWOdz/v0uSfs2IncYsmVev7rR9OhJnLGG4WwFYGIEowSEJnSLR
-	 0IBV9ZMfXVelcYX96A/M2qerjIO5KtbJ28G7jbylMl5jBTHnZcuamLV/Lh32c7Frkz
-	 mP2VWIUm4PJrXA5e8FM00eovwmcRL2Gv8vwmwl4sndpDiVbpwG4fU0JcxQQyGQJgbi
-	 XIOyOgEily8i3nRajpj4D2M2ncDZPvH+O744kAmsjNjc/ukhqwNb101vHpcR/uJ4hx
-	 KPNcrzM5ckQEQ==
+	s=k20260515; t=1788133822;
+	bh=nk53B6mnC9ONZ1g/6QwuuQHCnqJzmlXt3JqTbZUgnCI=;
+	h=From:To:Cc:Subject:Date;
+	b=XG/UkaDZQPkduayD+DgkEP6WGK4n9FBOxeDCEY1VkZL1L9hsOEpr6KBq7oFmAlNQt
+	 s+OJ3zF/FQ3pFqmC16/KEbAiTewpqsjffw+GVe8f5HaNiOx2j80mzn9iIqZqdTh7kS
+	 wQuQCfeOF2T8N54osUOiBfDOEWpIE3sMW9DrYG/fM1B6jceJIZzj9AZ4k9o/BwVRYV
+	 /8ojm9c+wjeKqY5k4CNRViSn2Gk3fJ3N+ylME7NFys/qn3SWptzQBtyAzsbFFVGxOB
+	 B/EevLuQ+sFi+h4HbArqSitB1Jthq7ZHYOrz4DtNTbLqqxr98uOhu1+StD/Nlbrxoi
+	 OuKwCtfgDlAoA==
 From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: damon@lists.linux.dev
 Cc: SJ Park <sj@kernel.org>,
-	sashiko-bot@kernel.org,
-	damon@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2] mm/damon/core: fix unconditionally skip last region
-Date: Sun, 30 Aug 2026 11:38:51 -0700
-Message-ID: <20260830183851.106396-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Release Newsletter for v7.3-rc1
+Date: Sun, 30 Aug 2026 16:50:13 -0700
+Message-ID: <20260830235014.64406-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260830082948.18940-1-aethernet65535@gmail.com>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,192 +42,346 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 30 Aug 2026 16:29:46 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+Hello community,
 
-> On Sun, 30 Aug 2026 06:47:07 +0000 sashiko-bot@kernel.org wrote:
-> 
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > 
-> > Pre-existing issues:
-> > - [High] A preexisting bug causes DAMOS scheme application to permanently stall for all subsequent targets if `quota->charge_target_from` points to a target that becomes invalid or loses all its regions.
-> > --
-> > 
-> > commit 630d73d512e66245612cbdfe5c49647aa6ed2874
-> > Author: Liew Rui Yan <aethernet65535@gmail.com>
-> > 
-> > mm/damon/core: fix unconditionally skip last region
-> > 
-> > This patch fixes an issue where the last region of a tracked target could
-> > be unconditionally skipped and reset without being processed when a scheme
-> > quota is exhausted. By modifying the reset logic, it ensures the last region
-> > is appropriately handled rather than always skipped.
-> > 
-> > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > > index 644daf5a16560..fb76b530bbc68 100644
-> > > --- a/mm/damon/core.c
-> > > +++ b/mm/damon/core.c
-> > > @@ -2342,36 +2342,39 @@ static bool damos_skip_charged_region(struct damon_target *t,
-> > >  {
-> > >  	struct damos_quota *quota = &s->quota;
-> > >  	unsigned long sz_to_skip;
-> > > +	bool skip = false;
-> > >  
-> > >  	/* Skip previously charged regions */
-> > >  	if (quota->charge_target_from) {
-> > >  		if (t != quota->charge_target_from)
-> > >  			return true;
-> > 
-> > [Severity: High]
-> > This isn't a bug introduced by this patch, but does this logic cause all
-> > subsequent targets to permanently stall if the target currently stored in
-> > quota->charge_target_from becomes invalid?
-> > 
-> > If the monitored process dies before the next window, kdamond_apply_schemes()
-> > appears to bypass it without clearing the saved target:
-> > 
-> > mm/damon/core.c:kdamond_apply_schemes() {
-> >     ...
-> > 		if (c->ops.target_valid && c->ops.target_valid(t) == false)
-> > 			continue;
-> > 		damos_apply_target(c, t, max_region_sz);
-> >     ...
-> > }
-> > 
-> > Because the target is skipped entirely, we never call damos_apply_target()
-> > and never reach the clearing mechanism inside damos_skip_charged_region().
-> > 
-> > When this happens, wouldn't all other valid targets continue to evaluate
-> > (t != quota->charge_target_from) as true here, permanently skipping scheme
-> > applications?
-> > 
-> > It appears a local user could reliably trigger this by setting a restrictive
-> > quota on a memory-intensive process they own, waiting for the quota to
-> > exhaust, and then terminating the process.
-> 
-> Thank you for pointing this out!  Yes, this can happens.
-> 
-> I just wrote a simple fix, this fix introduces damon_target->'bool
-> has_charged', which was added to prevent entering the
-> damon_target_remove_ref() (new function introduces by this fix) loop
-> every time an invalid target is encountered.  However, adding this field
-> may be unnecessary, or it might better to use something like 'unsigned
-> int charged_ref_count' instead.
-> 
-> '''
-> diff --git a/include/linux/damon.h b/include/linux/damon.h
-> index 0c8b7ddef9ab..19d46d792858 100644
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -93,6 +93,7 @@ struct damon_region {
->  struct damon_target {
->  	struct pid *pid;
->  	bool obsolete;
-> +	bool has_charged;
 
-I'd prefer not introducing new field.
+This newsletter covers DAMON features that landed on or queued for the
+mainline, development statistics and misc events that were noteworthy in my
+opinion, that were happened from v7.1-rc1 (2026-06-28) to v7.2-rc1 (2026-08-30)
+time period.
 
->  /* private: */
->  	/* Number of monitoring target regions of this target. */
->  	unsigned int nr_regions;
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 644daf5a1656..6c14b2d4e9cd 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2630,6 +2630,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
->  		if (damos_quota_is_full(quota, c->min_region_sz)) {
->  			quota->charge_target_from = t;
->  			quota->charge_addr_from = r->ar.end;
-> +			t->has_charged = true;
->  		}
->  	}
->  	if (s->action != DAMOS_STAT)
-> @@ -3216,6 +3217,26 @@ static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
->  	trace_call__damos_stat_after_apply_interval(cidx, sidx, &s->stat);
->  }
->  
-> +static void damon_target_remove_ref(struct damon_ctx *c,
-> +					 struct damon_target *t)
-> +{
-> +	struct damos *s;
-> +
-> +	damon_for_each_scheme(s, c) {
-> +		struct damos_quota *quota = &s->quota;
-> +
-> +		if (!quota->charge_target_from)
-> +			continue;
-> +
-> +		if (quota->charge_target_from == t) {
-> +			quota->charge_target_from = NULL;
-> +			quota->charge_addr_from = 0;
-> +		}
-> +	}
-> +
-> +	t->has_charged = false;
-> +}
-> +
->  static void kdamond_apply_schemes(struct damon_ctx *c)
->  {
->  	struct damon_target *t;
-> @@ -3241,8 +3262,11 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
->  	max_region_sz = damon_region_sz_limit(c);
->  	mutex_lock(&c->walk_control_lock);
->  	damon_for_each_target(t, c) {
-> -		if (c->ops.target_valid && c->ops.target_valid(t) == false)
-> +		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
-> +			if (t->has_charged)
-> +				damon_target_remove_ref(c, t);
->  			continue;
-> +		}
->  		damos_apply_target(c, t, max_region_sz);
->  	}
+The newsletter covering the previous release cycle (v7.1-rc1..v7.2-rc1) is
+also available [1].
 
-I think damos_adjust_quota() is a better place to do this.  For example,
+TL; DR
+======
 
-'''
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3530,6 +3530,22 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
-        trace_damos_esz(cidx, sidx, quota->esz);
- }
+Just after breaking the record of DAMON history in the last cycle, this cycle
+again broke the record.  It was the busiest cycle of DAMON history.  20 authors
+made 161 commits and 2283 lines of changes for DAMON on the Linux mainline.  A
+new data attributes monitoring feature, a few optimizations for DAMON users,
+and quite a lot of refactoring are delivered.  New DAMON usages and development
+projects are shared.  The first DAMON (nano) Conference is scheduled.
 
-+static void damos_reset_invalid_charge_target_from(struct damos_quota *quota,
-+               struct damon_ctx *c)
-+{
-+       struct damon_target *t;
-+
-+       t = quota->charge_target_from;
-+       if (!t)
-+               return;
-+       if (!c->ops.target_valid)
-+               return;
-+       if (c->ops.target_valid(t))
-+               return;
-+       quota->charge_target_from = NULL;
-+       quota->charge_addr_from = 0;
-+}
-+
- static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- {
-        struct damos_quota *quota = &s->quota;
-@@ -3570,6 +3586,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
-                        damos_trace_esz(c, s, quota);
-        }
 
-+       damos_reset_invalid_charge_target_from(quota, c);
-+
-        if (!c->ops.get_scheme_score)
-                return;
-'''
+Changes Landed on 7.2
+=====================
 
-> '''
-> 
-> SJ, when should this bug be fixed?  Along with this patch, or before
-> this patch?
+All 95 commits that were landed on v7.2-rc1 have successfully landed on v7.2.
+In addition to those, 15 additional hotfixes have merged into 7.2.
 
-Whenever the fix is ready.  If you don't mind, I will take this.
+Those from 7.2-rc1 include a few user-visible and impactful features.  To pick
+only two among those, new DAMOS auto-tuning goal for tiered memory system
+(node_eligible_mem_bp, commit 9138e27a3bc38) and data attributes monitoring
+(commit 45c49d9fd6089) are introduced.  Read the previous newsletter [1] for
+more details.
+
+
+Chanegs Landed for 7.3
+======================
+
+During the 7.3-rc1 merge window, 146 DAMON patches have landed via the MM pull
+requests [2,3].  Introducing a few of changes that could introduce non-trivial
+impacts.
+
+New Features
+------------
+
+In this merge window, the below user-visible feature is added.
+
+1. Commit 37aae41c1056: Patch series "mm/damon: introduce data attributes only
+   monitoring".
+
+This feature makes DAMON useful for monitoring not only the data access
+pattern, but also general data attributes.  This is an important feature for
+extending DAMON for not only access monitoring but general data attributes
+monitoring.  It is also the foundation part of ongoing project [4] for multiple
+access check primitives support.   As a followup, we are working on extending
+data attributes to include access events.  Once it is done, access monitoring
+will be just a part of flexible attributes monitoring.
+
+Optimizations
+-------------
+
+This merge window also introduces below DAMON internal behavior optimizations.
+
+1. Commit 1a582e6e0174: Patch series "mm/damon/core: detect internal variation
+   above max_nr_regions/2", v3.
+2. Commit aa497a270f68: Patch series "mm/damon: provide pseudo moving sum
+   probe_hits".
+3. Commit 6c25083f7ae7: mm/damon/ops-common: use nr_accesses moving sum for
+   quota score
+
+The first optimization is contributed by Jiayuan from Shopee.  With it, DAMON
+makes more efforts on the monitoring accuracy.  The second optimization makes
+snapshot-based data attributes monitoring (update_schemes_tried_regions) just
+works.  Without it, DAMON tracepoints were the only reliable way to get
+attributes monitoring results.  The third optimization improves DAMOS quality
+in setups that separately and differently have schemes apply interval and
+monitoring aggregation interval.
+
+Refactoring
+-----------
+
+This merge window also introduced many cleanups and refactoring.  Below three
+changes among those may be noteworthy.
+
+1. Commit b90408ef1163: Patch series "mm/damon: validate all parameters in the
+   core".
+2. Commit 5bf9c1f3a97e: Patch series "mm/damon: refactor
+   damon_{start,stop,commit}() for simple error handling".
+3. Commit e0ea9467dbef: Patch series "mm/damon/core: hide core-private struct
+   fields".
+
+These are mostly motivated from recently found classes of bugs.  Hopefully
+these refactoring will reduce future bugs of same classes.
+
+Changes Cooking for >7.3
+========================
+
+A number of patches are queued and being developed for future mainline landing.
+My personal tree for those (damon/next) contains 214 downstream patches as of
+this writing.  Not all the patches are ready to be merged.  Some will be
+squashed or broken down.  Anyway, the number was 231 for the last release
+cycle.  This cycle might be less busier than the last cycle, but still expected
+to be non-idle.
+
+Statistics
+==========
+
+Putting simple statistics for the last release period.  Tools other than git
+that are used here for getting the numbers are available [4,5] at GitHub.
+
+In short, this cycle was the busiest cycle of DAMON development history.
+
+Number Hotfixes and Non-hotfixes
+--------------------------------
+
+15 DAMON hotfixes have landed on 7.2.
+
+    git -C ./ log v7.2-rc1..v7.2 --oneline --no-merges -- \
+            Documentation/ABI/testing/sysfs-kernel-mm-damon \
+            Documentation/admin-guide/mm/damon/ Documentation/mm/damon/ \
+            Documentation/vm/damon/ include/linux/damon.h \
+            include/trace/events/damon.h mm/damon/ samples/damon/ \
+            tools/testing/selftests/damon  | wc -l
+    15
+
+146 six DAMON changes have landed on 7.3-rc1 during the merge
+window.
+
+    git -C ./ log v7.2..linus/master --oneline --no-merges -- \
+            Documentation/ABI/testing/sysfs-kernel-mm-damon \
+            Documentation/admin-guide/mm/damon/ Documentation/mm/damon/ \
+            Documentation/vm/damon/ include/linux/damon.h \
+            include/trace/events/damon.h mm/damon/ samples/damon/ \
+            tools/testing/selftests/damon  | wc -l
+    146
+
+The numbers for the last ten release cycles are like below:
+
+    7.2   fixes:  15  7.3   changes: 146
+    7.1   fixes:  11  7.2   changes:  95
+    7.0   fixes:  9   7.1   changes:  64
+    6.19  fixes:  7   7.0   changes:  68
+    6.18  fixes:  7   6.19  changes:  78
+    6.17  fixes:  15  6.18  changes:  41
+    6.16  fixes:  8   6.17  changes:  93
+    6.15  fixes:  0   6.16  changes:  22
+    6.14  fixes:  6   6.15  changes:  62
+    6.13  fixes:  4   6.14  changes:  57
+
+The 6.17 development cycle was the busiest DAMON development cycle in history
+(~6 years since 5.15) before the 7.2 cycle.  The 7.2 cycle broke the record.
+And right after that, this cycle for 7.3 broke the record again.
+
+Authors, Commits and Changed Lines
+----------------------------------
+
+In this cycle, 20 people made gratful 161 commits and 2283 lines of changes
+for DAMON on the Linux mainline.
+
+    $ # stat for number of commits
+    $ ./lazybox/version_control/authors.py ./linux/ \
+            --since v7.2-rc1 --until v7.3-rc1 \
+            --skip_merge_commits --linux_subsystems DAMON
+    1. SJ Park <sj@kernel.org>: 130 commits
+    2. Song Hu <husong@kylinos.cn>: 6 commits
+    3. Kunwu Chan <chentao@kylinos.cn>: 3 commits
+    4. SeongJae Park <sj@kernel.org>: 3 commits
+    5. Jiayuan Chen <jiayuan.chen@shopee.com>: 2 commits
+    6. Ruslan Valiyev <linuxoid@gmail.com>: 2 commits
+    7. Cheng Nie <niecheng1@uniontech.com>: 2 commits
+    8. Xuewen Wang <wangxuewen@kylinos.cn>: 1 commits
+    9. Jiahui Zhang <jiahuitry@outlook.com>: 1 commits
+    10. Enze Li <lienze@kylinos.cn>: 1 commits
+    11. liyouhong <liyouhong@kylinos.cn>: 1 commits
+    12. Lorenzo Stoakes <ljs@kernel.org>: 1 commits
+    13. wang wei <a929244872@163.com>: 1 commits
+    14. Sailesh Nandanavanam <saileshnandanavanam@gmail.com>: 1 commits
+    15. Asier Gutierrez <gutierrez.asier@huawei-partners.com>: 1 commits
+    16. Doehyun Baek <doehyunbaek@gmail.com>: 1 commits
+    17. Philippe Laferriere <plafer@proton.me>: 1 commits
+    18. Akinobu Mita <akinobu.mita@gmail.com>: 1 commits
+    19. Arnd Bergmann <arnd@arndb.de>: 1 commits
+    20. Zenghui Yu <yuzenghui@huawei.com>: 1 commits
+    # 20 authors, 161 commits in total
+
+    $ # stat for number of lines
+    $ ./lazybox/version_control/authors.py ./worktree.linux/ \
+            --since v7.2-rc1 --until v7.3-rc1 --skip_merge_commits \
+            --linux_subsystems DAMON --sortby lines
+    1. SJ Park <sj@kernel.org>: 1810 lines
+    2. Jiayuan Chen <jiayuan.chen@shopee.com>: 113 lines
+    3. Song Hu <husong@kylinos.cn>: 95 lines
+    4. Ruslan Valiyev <linuxoid@gmail.com>: 85 lines
+    5. Kunwu Chan <chentao@kylinos.cn>: 34 lines
+    6. Cheng Nie <niecheng1@uniontech.com>: 33 lines
+    7. Sailesh Nandanavanam <saileshnandanavanam@gmail.com>: 28 lines
+    8. SeongJae Park <sj@kernel.org>: 26 lines
+    9. Doehyun Baek <doehyunbaek@gmail.com>: 20 lines
+    10. liyouhong <liyouhong@kylinos.cn>: 9 lines
+    11. Xuewen Wang <wangxuewen@kylinos.cn>: 6 lines
+    12. Lorenzo Stoakes <ljs@kernel.org>: 5 lines
+    13. Akinobu Mita <akinobu.mita@gmail.com>: 4 lines
+    14. Zenghui Yu <yuzenghui@huawei.com>: 3 lines
+    15. Jiahui Zhang <jiahuitry@outlook.com>: 2 lines
+    16. Enze Li <lienze@kylinos.cn>: 2 lines
+    17. wang wei <a929244872@163.com>: 2 lines
+    18. Asier Gutierrez <gutierrez.asier@huawei-partners.com>: 2 lines
+    19. Philippe Laferriere <plafer@proton.me>: 2 lines
+    20. Arnd Bergmann <arnd@arndb.de>: 2 lines
+    # 20 authors, 2283 lines in total
+
+Snapshots of the number of authors, commits and changed lines for the last ten
+cycles are below.  The snapshots for the entire DAMON history is also available
+[7] at the DAMON project blog.
+
+    <version>  <nr_authors>  <nr_commits>  <nr_lines>
+    v7.3-rc1   21            162           2283
+    v7.2-rc1   14            109           3311
+    v7.1-rc1   9             77            1070
+    v7.0-rc1   12            75            1279
+    v6.19-rc1  10            85            1640
+    v6.18-rc1  13            59            864
+    v6.17-rc1  8             104           3785
+    v6.16-rc1  5             22            564
+    v6.15-rc1  7             68            1479
+    v6.14-rc1  8             61            4008
+
+In terms of number of contributors and number of commits, this was the busiest
+cycle in DAMON's development history.
+
+DAMON user-space tool (damo) also got a significant amount of changes.
+
+    ./lazybox/version_control/authors.py ./damo \
+            --since 2026-06-28T12:01:31-07:00 \
+            --until 2026-08-30T13:34:40-07:00 \
+            --skip_merge_commits
+    1. SJ Park <sj@kernel.org>: 257 commits
+    2. Michel Lind <salimma@fedoraproject.org>: 1 commits
+    3. Enze Li <lienze@kylinos.cn>: 1 commits
+    4. Daniel Lysyi <daniellysy566@gmail.com>: 1 commits
+    5. oopiec <157018150+oopiec@users.noreply.github.com>: 1 commits
+    # 5 authors, 261 commits in total
+
+The last line was "4 authors, 151 commits in total" for the last cycle [1].
+
+Mailing List Traffic
+--------------------
+
+DAMON mailing list was quite busy.
+
+    $ hkml list damon --since v7.2-rc1 --until v7.3-rc1 --collapse \
+            --stat_only --stdout --ignore_cache
+    # stat for total mails
+    # 2019 mails, 183 threads, 180 new threads
+    # 871 patches, 148 series
+    [...]
+
+The traffic for the last ten cycles were like below.  The numbers for the
+entire DAMON development history is also available [7] at DAMON project blog.
+
+    <version>  <nr_mails>  <nr_threads>  <nr_new_threads>  <nr_patches>  <nr_series>
+    v7.3-rc1   2019        183           180               871           148
+    v7.2-rc1   1486        164           142               671           126
+    v7.1-rc1   1098        152           147               450           129
+    v7.0-rc1   426         111           58                223           43
+    v6.19-rc1  414         48            43                222           38
+    v6.18-rc1  563         82            62                211           53
+    v6.17-rc1  499         78            72                256           64
+    v6.16-rc1  147         40            31                63            22
+    v6.15-rc1  263         56            41                176           34
+    v6.14-rc1  260         55            34                154           23
+
+So the traffic is continuously and exponentially increasing.  By every traffic
+metric, the last cycle was the busiest cycle in DAMON's history.
+
+Events
+======
+
+Lian Wang from ProcessMission continued working on mTHP monitoring
+improvement.  As a part of it, they developed and shared patches [8] for
+extending DAMOS to flexibly handle mTHP collapse and split.
+
+Asier Gutierrez from Huawei continued working on DAMOS tuning goal for THP
+(hugepage_mem_bp).  The latest version [9] of the series has passed my humble
+review.  Hopefully it will be merged into 7.4-rc1.
+
+Kunwu Chan and Lian Wang developed and shared [10] ARM SPE based DAMON backend.
+As soon as the major milestones of ongoing projects for multiple DAMON access
+check primitives support [4] is completed, this series will also hopefully be
+merged.
+
+Jason Angelov developed and shared [11] a user-space pager that finds cold
+pages using DAMON and compresses those.
+
+Krishna Iyer from Crusoe developed and shared patches [12] for monitoring
+hugetlb pages on physical address space mode.  It also includes interesting
+test results on Crusoe's VM host setups.
+
+I'm also more that excited to share that we will have our first DAMON (nano)
+Conference [13] at LPC this year.  There will be five small sessions covering
+the evolution of DAMON for multiple access check primitives, memory tiering,
+huge pages, and AI cloud.  Refer to the website [13] for more details.
+
+Newsletter Subscription
+=======================
+
+This newsletter series is posted to DAMON mailing list [14] and archived on the
+project blog [15], for each release.  If you want a reliable delivery of this
+newsletter series to your inbox, subscribing to the mailing list [16] could be
+an option.  If the mailing list traffic is too much, feel free to ask me (send
+mail to sj@kernel.org) to [b]cc you for each newsletter posting.
+
+References
+==========
+
+[1] 7.2-rc1 news: https://lore.kernel.org/20260628211904.94361-1-sj@kernel.org/
+[2] First MM PR for 7.3-rc1:
+    https://lore.kernel.org/178728181878.600189.588163658498005550.pr-tracker-bot@kernel.org
+[3] Second MM PR for 7.3-rc1:
+    https://lore.kernel.org/20260826152330.9cdd482b43726942d6c149cb@linux-foundation.org/
+[4] DAMON access primitives extension roadmap:
+    https://lore.kernel.org/20260525225208.1179-1-sj@kernel.org/
+[5] authors.py: https://github.com/sjp38/lazybox/blob/master/version_control/authors.py
+[6] hkml: https://github.com/hackermail
+[7] DAMON development stat history: https://damonitor.github.io/posts/dev_stat/
+[8] DAMOS mTHP collapse/split series:
+    https://lore.kernel.org/20260720030327.80153-1-lianux.mm@gmail.com
+[9] hugepage_mem_bp series:
+    https://lore.kernel.org/20260720120140.881468-1-gutierrez.asier@huawei-partners.com
+[10] ARM SPE-based DAMON backend:
+     https://lore.kernel.org/all/20260816142222.689624-1-kunwu.chan@linux.dev/
+[11] Cold Pages DAMON Pager:
+     https://github.com/jasonangelov/damon-compression-pager
+[12] paddr hugetlb monitoring series:
+     https://lore.kernel.org/20260830051407.50008-1-kiyer@crusoe.ai/
+[13] DAMON (nano) Conference: https://lpc.events/event/20/contributions/2453/
+[14] DAMON mailing list: https://lore.kernel.org/damon
+[15] News letter on project blog: https://damonitor.github.io/tags/release_news/
+[16] Mailing list subscription guide: https://subspace.kernel.org/subscribing.html
 
 
 Thanks,
 SJ
-
-[...]
