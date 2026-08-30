@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421591E9B1A
-	for <damon@lists.linux.dev>; Sun, 30 Aug 2026 05:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3DD1E9B1A
+	for <damon@lists.linux.dev>; Sun, 30 Aug 2026 05:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788067737; cv=none; b=D6BUKOXkRdqks/opGH2W5JtwRiCTtVOShUuoMqZJgp1mHIYSTL7cmj0Cj6l8s9dIRsLcvmDG7DwbgVzYRfGYenSwyVgQl7d1K6HK1DVfSfhnZpKf+ULtDHon1XeSdWrKzzDVkQzoPrsfvkgR0eIKHGcT/rLNIE5tvMtEyBdL7+E=
+	t=1788067777; cv=none; b=Qm8JV88upwEMlZ5SAxQSYjRv1SUAwYZhlucPoM17IDNE6D3nGLqqAaojawIqSWrKiZHJJeVecs4EIQQW6Em4oR+ucHbVz6RcY8Y1zeNf7pqWrXGtyP5SbAWhtqt3JmRv47dbHZnxTiD68r9bXlyzSVe7cVDU2w45nLvdJiZXyP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788067737; c=relaxed/simple;
-	bh=+8Q+wRvMB3TJ89m6CuNisMORPZ3MX0cGrzym6JBNKv0=;
+	s=arc-20240116; t=1788067777; c=relaxed/simple;
+	bh=IOWEyhRUf6Z6AIJXXeY389/Hh4hZDZLC76DgoJMilxk=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=t8fUv6x6q7eOxU4Qg+qu1G8hVrjOg8XFyyVoDMdhOmTvO4/zoZF0UgIVet74jbHkH2uKgHn/WKSy8gyJ08xXt1j9wAfgx758OXrJVzPBrlq6S98MydMXY/vKgO5Eb4ulB+ApkdH0uEJcmc5t/uj8OdH+yz6fvQ7s8rVwVI190n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vcmj3EED; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=gjhUzG+5wmOltOHnDQpOQXQL6OMW1ahe9ns7y0oBhXS7p//vbV4JdKrAVhMcRVS1aHp2iBPUpGrqNCV17sYQ73w9vagmnMY258OQMHhd/IqeMZwXGjiobCVyF/P86N9wkviuVH2kK6mtfJJSrB+/gemkIuixYT4SDDNAp3JFjyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lPNNnJHy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vcmj3EED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DE21F000E9;
-	Sun, 30 Aug 2026 05:28:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lPNNnJHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F301F000E9;
+	Sun, 30 Aug 2026 05:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788067735;
-	bh=Rmv4E07wwdg9iqnEgME21R7WzzKiGlIU7XZmWWKw0yQ=;
+	s=k20260515; t=1788067776;
+	bh=31K070obe1VBEihVyyBa7rFlqTDFswx0R1jwxcU5LRY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Vcmj3EEDlcVA4FTbBgaUiLM/W8WyD2geIoP/tThctCdoJLMMwHNfmY+YL4dO6MPDJ
-	 NxiBdiMNg2BRBZqjN9X0pvCw6zst9S/E9GgLk/cFZnHW81zTrWgxT3wgj+eQ+/yUJK
-	 R8j1w5wLKCQjLu8AvZG0XvhVbnEdWbZQflyb0a6ZTyJpHulYVinEYUb9mI14kQFbrd
-	 YkrqCEYfAIUn/hkKqGCW/VU50HagCCxKg3ucaqpD6Ap+QIIkiuLlp0s0oezrI1dROs
-	 9REuBzhRydFXFKb7hs2ztWZU2j5iCMy8TH8a/dj1a/jWGNbEeoQGy7yra9DrarHDH9
-	 Cb4cbqqVlhLsw==
+	b=lPNNnJHyoGN4FHCuHhqmL4SeU6UJxiu8kxmvjbtVdkP5Z+FLgGrvXK2RFpshgE7p0
+	 6OBPjRYNP0KI2lu1woAmTcwTMfVWFN/ZvewGrgKXgeNq87VT1h1oloUemDm52OXBub
+	 v6fcZrmJk87uPdarwCFW47orJl39azO6angMDQgSMZwT3lKL72anSKfHzXsJsFW2Ji
+	 hnRXUxekuDkJgKt1iHMJGqvj2MW3Lgk598WOtbXzFGwu33f7zfMy7Nro/TWr8+CD8H
+	 iiSXZZwOJyPUoZxuB77f2oHQ2uNLZ1xbnbNeXAlWmhcfmoWebcn4tQUjFdvjTQDZmJ
+	 dsM6sK1CXTE4g==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/6] mm/damon/ops-common: handle hugetlb folios in folio
- mkold/young rmap walkers
+Subject: Re: [PATCH 3/6] mm/damon/paddr: support hugetlb folios in access
+ monitoring
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Krishna Iyer" <kiyer@crusoe.ai>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260830051407.50008-3-kiyer@crusoe.ai>
+In-Reply-To: <20260830051407.50008-4-kiyer@crusoe.ai>
 References: <20260830051407.50008-1-kiyer@crusoe.ai>
- <20260830051407.50008-3-kiyer@crusoe.ai>
+ <20260830051407.50008-4-kiyer@crusoe.ai>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 30 Aug 2026 05:28:55 +0000
-Message-Id: <20260830052855.93DE21F000E9@smtp.kernel.org>
+Date: Sun, 30 Aug 2026 05:29:35 +0000
+Message-Id: <20260830052936.44F301F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,108 +48,86 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
 
-New issues:
-- [Medium] mmu_notifier_test_young() evaluates only a single base page, mas=
-king accesses within shattered huge pages.
-
 Pre-existing issues:
-- [High] Non-atomic read-modify-write of huge PTE in damon_hugetlb_mkold() =
-silently drops hardware-managed dirty bits.
+- [Critical] Non-atomic huge PTE modification in damon_hugetlb_mkold() caus=
+es a TOCTOU race with hardware page table walkers, silently dropping dirty =
+bits.
+- [High] Incorrect physical address advancement when starting from a tail p=
+age of a large folio.
 --
 
-commit 69bb3f48e79ddddcf3eaf4001d7704e62df0da69
+commit fa7cc985c2891991281afce141ed40264af354fe
 Author: Krishna Iyer <kiyer@crusoe.ai>
 
-mm/damon/ops-common: handle hugetlb folios in folio mkold/young rmap walkers
+    mm/damon/paddr: support hugetlb folios in access monitoring
+   =20
+    DAMON's physical address space monitoring is blind to hugetlb-backed
+    memory. Every access check starts at damon_get_folio(), which rejects
+    folios that are not on the LRU lists. This commit adds
+    damon_get_folio_incl_hugetlb() to additionally accept hugetlb folios.
 
-This commit introduces hugetlb branches to DAMON's rmap walkers by reusing
-damon_hugetlb_mkold() for clearing the young bit and introducing
-damon_hugetlb_young() for checking it. It ensures huge PTEs are read and
-aged correctly rather than using base page granularity helpers.
+[ ... ]
 
 > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> index f5fe92b825bbc..62004206ca310 100644
+> index 62004206ca310..ece101d346844 100644
 > --- a/mm/damon/ops-common.c
 > +++ b/mm/damon/ops-common.c
-> @@ -193,10 +193,20 @@ static bool damon_folio_mkold_one(struct folio *fol=
-io,
-> =20
->  	while (page_vma_mapped_walk(&pvmw)) {
->  		addr =3D pvmw.address;
-> -		if (pvmw.pte)
-> -			damon_ptep_mkold(pvmw.pte, vma, addr);
-> -		else
-> +		if (pvmw.pte) {
-> +			/*
-> +			 * For hugetlb folios, page_vma_mapped_walk() sets
-> +			 * pvmw.pte to the huge PTE with its page table lock
-> +			 * held.
-> +			 */
-> +			if (folio_test_hugetlb(folio))
-> +				damon_hugetlb_mkold(pvmw.pte, vma->vm_mm, vma,
-> +						addr);
 
-[Severity: High]
-This is a pre-existing issue, but does damon_hugetlb_mkold() perform a
-non-atomic read-modify-write that could silently drop hardware-managed
-dirty bits?
+[ ... ]
 
-Looking at damon_hugetlb_mkold(), the code reads the PTE, clears the young
-bit, and writes it back:
+[Severity: Critical]
+This is a pre-existing issue, but does this non-atomic huge PTE modification
+drop hardware dirty bits?
+
+In damon_hugetlb_mkold() in mm/damon/ops-common.c:
 
 	pte_t entry =3D huge_ptep_get(mm, addr, pte);
-...
+	struct folio *folio =3D pfn_folio(pte_pfn(entry));
+	unsigned long psize =3D huge_page_size(hstate_vma(vma));
+
+	folio_get(folio);
+
 	if (pte_young(entry)) {
 		referenced =3D true;
 		entry =3D pte_mkold(entry);
 		set_huge_pte_at(mm, addr, pte, entry, psize);
 	}
 
-If a hardware write access occurs and sets the hardware A/D bit after
-huge_ptep_get() but before set_huge_pte_at(), won't the dirty bit be
-overwritten with the stale, clean value?
+If a hardware page table walker sets the dirty bit concurrently between the
+read and the write, does the non-atomic writeback via set_huge_pte_at()
+silently overwrite and clear the dirty bit?
 
-This could potentially lead to data loss if hugetlb pages are reclaimed
-or migrated without writeback. Hooking this up for DAMON folio monitoring
-means this path can be triggered frequently in the background.
+[Severity: High]
+This isn't a bug introduced by this patch, but does this physical address
+advancement skip memory pages?
 
-> +			else
-> +				damon_ptep_mkold(pvmw.pte, vma, addr);
-> +		} else {
->  			damon_pmdp_mkold(pvmw.pmd, vma, addr);
-> +		}
->  	}
+In damon_pa_pageout() in mm/damon/paddr.c:
 
-[ ... ]
+	addr =3D damon_pa_phys_addr(r->ar.start, addr_unit);
+	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
+		folio =3D damon_get_folio(PHYS_PFN(addr));
+...
+put_folio:
+		addr +=3D folio_size(folio);
+		folio_put(folio);
+	}
 
-> +#ifdef CONFIG_HUGETLB_PAGE
-> +static bool damon_hugetlb_young(pte_t *pte, struct vm_area_struct *vma,
-> +		unsigned long addr, struct folio *folio)
-> +{
-> +	pte_t entry =3D huge_ptep_get(vma->vm_mm, addr, pte);
-> +
-> +	return (pte_present(entry) && pte_young(entry)) ||
-> +		!folio_test_idle(folio) ||
-> +		mmu_notifier_test_young(vma->vm_mm, addr);
+If the region's start address is not naturally aligned to the folio boundary
+and lands on a tail page of a large folio, does adding the full folio size
+overshoot the start of the next folio?
 
-[Severity: Medium]
-Will mmu_notifier_test_young() miss accesses within shattered huge pages he=
-re?
+The same pattern appears in damon_pa_stat() where it also over-accounts the
+filter size:
 
-Since the kernel's mmu_notifier_test_young() API does not take a size
-parameter, passing only the base address of the huge page means it will
-only evaluate the first base page.
-
-For secondary MMUs like KVM EPT that map huge pages as multiple smaller
-pages, wouldn't accesses to other subpages within the huge page be complete=
-ly
-missed? This could cause DAMON to classify the huge page as colder than it
-actually is, which might lead to inappropriate reclaim or migration decisio=
-ns.
-
-> +}
-> +#else
+		if (damos_pa_filter_out(s, folio))
+			goto put_folio;
+		else
+			*sz_filter_passed +=3D folio_size(folio) / addr_unit;
+...
+put_folio:
+		addr +=3D folio_size(folio);
+		folio_put(folio);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260830051407.5000=
-8-1-kiyer@crusoe.ai?part=3D2
+8-1-kiyer@crusoe.ai?part=3D3
