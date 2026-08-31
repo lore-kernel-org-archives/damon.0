@@ -1,44 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E868C368D7F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFDE367F23;
 	Mon, 31 Aug 2026 14:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788187663; cv=none; b=FMQFnNSglfSbUy8d7S4K1kQRi1NGqoJBt97bXSL43QPnZrAj4TXVm0rF4iPbz2nGndsROQX32VEfSJxLgqi5gFhuy14xWQzOYfbuCntkaUFrjhdvlCQgQQi6GaTFBimABH2XNOMECCQ/in4Gf5e8gQYGpRQpA9VEAE8z08R18UY=
+	t=1788187663; cv=none; b=OaiAVCzI0nSvvZsTE5ao+MZl/I2R+EpohXs1lwT5MN6hUdV028vm08KJzBMzQjmOOnxzDaiHbys8ilW0aT3mEWRjrw8DKYP/DBTnLt6MFH4rCLifn4Ty7RHExyUsu2m6jHTU/Mno3knxOziKraIed/PpzliEVRVEk2haEWIgCEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788187663; c=relaxed/simple;
-	bh=kEAyNHXTwDod8NgXdlV0AcwVMl/JMrysTsxpbtY9aCw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thzlgH3BmkVnQMSfG7hkFUwkUHBjU0jhaQRijp8s/99GV9oFQmr8YhKd9++/ZQ7XLKOI1sM/7LG5YzHBFfed1s56lr2Tgu3cvFJB1H5eZ66bu3aRFVN8HC2w6JYI5QOZDtDMBw7vpKqRf2FWImpsgDX7ZXuA2IO36X5o1+16rek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ayKS20LB; arc=none smtp.client-ip=100.103.45.18
+	bh=X0X0L2fK16qRK5lI0MBTc/V+TkzTilAPLpAT1LTKF64=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SJ7rtDekZeFQCQ9hL24W40PUfD+xMHqhg1kAiJ2FlMI/hof5unkX/7lu9jAHZvxWjS7jHkSZE6i4R07KGwiVu1EGe4dssJUdfbDy1iaWnCPCVHDbaVPH57eJ5wjJDuyHfbogRA9nhv8O0+WXr9eb9Yj5ouvOBEmlPxq6xzbolr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YVCZraL+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ayKS20LB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCA11F00A3D;
-	Mon, 31 Aug 2026 14:47:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YVCZraL+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5271F000E9;
+	Mon, 31 Aug 2026 14:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1788187661;
-	bh=y7QxbQi+gC20oHgrgxjKQCFyg8T7bvReTsftzDUfUgA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ayKS20LBXIFl8eNB8eN8Ldo+Xx6A76IS7z/PhNTKyHRafXBFPrVQRCb5g/RSPghgQ
-	 HRUqWyhztebBCMmmrxbWjs4B+ZNnQuNdtkVGFWkSv2RTJ23zJC8/v66iHXb436s7Ft
-	 FttTfy6Y/XFrVrznJBcvlpNj6xkSe9uaCmabeVB6FSYSQ+BmeGRcYbJe28X6yk6gWB
-	 oRHEJ5iSDX11osGi+YUCxlNtKx4/VVJvHORmAd1IDkXjw9Wlm3gejpibC8c/2ZGzmf
-	 71RfK4ZigJQvcPRq2NqCD2njbNgCxxI0FgKE+HMCzmigvQnE2JkExguDLrQ4Cdting
-	 lRWNHznwyaOFQ==
+	bh=Xhmwl9JHB2IkWqifzSdi9Ztd8FkooRsXdBNJtN34y6o=;
+	h=From:To:Cc:Subject:Date;
+	b=YVCZraL+1CF3ljGPOXiXzPK12Y3o9O1PPUq8fd7+ZAZBjca4i+L6L8N9i285SQGew
+	 Zo4E2VL5Qh658Ak63BYMbDrJy4l7a2nZ6wM6lZYT36QMkSmXK7FLw3IWPlNKk5ct+f
+	 7hGxGuUOhSCd5yZAwd1LJh8tWNDEDL78GzTzDqv8aqbQjXUauQNlOpfIFWoqdgco5f
+	 AFVc96jzCRxqrmvESToqlD8n/SAcfVtRAlS8yY5Bk/0gYH1X8z4pMa5vEFxlvdUIC7
+	 2b4GzxTmVhDRyv48PXZ4QEnbIjpUHxtibpH9N6ZKKtnMpZQhCE5QLwx90pLtE73Ch8
+	 8uU0Tw5wTifRg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
-	SJ Park <sj@kernel.org>,
+Cc: SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v4 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
-Date: Mon, 31 Aug 2026 07:47:28 -0700
-Message-ID: <20260831144732.80910-2-sj@kernel.org>
+Subject: [PATCH v4 0/3] mm/damon: Introduce a huge page collapsing mechanism using auto tuning
+Date: Mon, 31 Aug 2026 07:47:27 -0700
+Message-ID: <20260831144732.80910-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260831144732.80910-1-sj@kernel.org>
-References: <20260831144732.80910-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,81 +56,271 @@ Content-Transfer-Encoding: 8bit
 
 From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
 
-Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP auto tuning. Add a new DAMOS quota
-goal metric to measure the amount of huge page consumption to total
-memory consumption ratio.
+Overview
+========
+This patch set introduces a new autotuning which allows to collapse hot
+regions into hugepages.
 
-Vmstat may lag, which in some cases may lead to NR_FREE_PAGES being
-greater than or equal to the amount of RAM in the system. A guard is
-added to avoid the extremely unlikely case [1]. In the case, return 100%
-(10000 bp).
+Motivation
+==========
+Since TLB is a bottleneck for many systems[1], a way to optimize TLB
+misses (or hits) is to use huge pages. Unfortunately, using "always" in
+THP leads to memory fragmentation and memory waste. For this reason,
+most application guides and system administrators suggest to disable
+THP.
 
-[1] https://lore.kernel.org/all/20260715151615.99767-1-sj@kernel.org/
+Selective huge page collapse per process is possible using prctl and a
+launcher. However, this does not solve the issue with hot region
+detection.  Additionally, it the sysadmin should create a launcher that
+uses PRCTL to enable THP for a particular process.
 
-Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
- include/linux/damon.h |  2 ++
- mm/damon/core.c       | 19 +++++++++++++++++++
- 2 files changed, 21 insertions(+)
+We can use the DAMON support for DAMOS_HUGEPAGE and DAMOS_COLLAPSE, to
+target a certain process. DAMOS_COLLAPSE can also target the hot regions
+in that process.
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 5607f98ec6306..310509455db13 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -153,6 +153,7 @@ enum damos_action {
-  * @DAMOS_QUOTA_INACTIVE_MEM_BP:	Inactive to total LRU memory ratio.
-  * @DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:	Scheme-eligible memory ratio of a
-  *					node in basis points (0-10000).
-+ * @DAMOS_QUOTA_HUGEPAGE_MEM_BP:	Huge page to total used memory ratio.
-  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
-  *
-  * Metrics equal to larger than @NR_DAMOS_QUOTA_GOAL_METRICS are unsupported.
-@@ -167,6 +168,7 @@ enum damos_quota_goal_metric {
- 	DAMOS_QUOTA_ACTIVE_MEM_BP,
- 	DAMOS_QUOTA_INACTIVE_MEM_BP,
- 	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
-+	DAMOS_QUOTA_HUGEPAGE_MEM_BP,
- 	NR_DAMOS_QUOTA_GOAL_METRICS,
- };
- 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index a5ea3e61e7f41..3fa1b096c8330 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3038,6 +3038,22 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
- 	return mult_frac(inactive, 10000, total);
- }
- 
-+static unsigned int damos_hugepage_mem_bp(void)
-+{
-+	unsigned long thp, total_pages, free_pages;
-+
-+	total_pages = totalram_pages();
-+	free_pages = global_zone_page_state(NR_FREE_PAGES);
-+
-+	if (total_pages <= free_pages)
-+		return 10000;
-+
-+	thp = global_node_page_state(NR_ANON_THPS) +
-+				global_node_page_state(NR_SHMEM_THPS) +
-+				global_node_page_state(NR_FILE_THPS);
-+	return mult_frac(thp, 10000, total_pages - free_pages);
-+}
-+
- static void damos_set_quota_goal_current_value(struct damon_ctx *c,
- 		struct damos *s, struct damos_quota_goal *goal)
- {
-@@ -3074,6 +3090,9 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
- 		goal->current_value = damos_get_node_eligible_mem_bp(c, s,
- 				goal->nid);
- 		break;
-+	case DAMOS_QUOTA_HUGEPAGE_MEM_BP:
-+		goal->current_value = damos_hugepage_mem_bp();
-+		break;
- 	default:
- 		break;
- 	}
+Still, there is an issue with the amount of huge page consumption. Since
+huge pages can lead to memory fragmentation and waste, there should be a
+way to limit the amount of huge page consumption. There is hugetlbfs,
+but it requires changes to the application code or the use of
+libhugetlbfs.
+
+DAMON has now a way to autotune some of the variables and adjust quotas
+automatically, so that DAMON is fired only under the right
+circumstances.  It would be nice to have something similar, but for huge
+pages.
+
+Solution
+========
+A new autotuning quota goal[2], damos_hugepage_mem_bp, is introduced,
+which checks the huge page consumption to total memory consumption. This
+new quota mechanism reuses current autotuning architecture.
+
+In order to test this new mechanism, a sample module[3] was created, but
+not included in this patch series. To demonstrate the tool, damo user
+space tool was modified[4], which sets up huge pages collapse
+autotuning.
+
+Benchmarks
+==========
+Setup: physical server with arm64 processor with 4 NUMA nodes, 1 TB RAM
+and running mariaDB 10.5.29. Sysbench was used for the benchmark, with
+20 tables and 3 million rows per table. The database was pinned to one
+of the nodes, and the benchmark framework to a different node. No
+network traffic involved in the benchmark.
+
+Damo user space tool was forked and hugepage_mem_bp support added[4].
+
+DAMON was lauched using this command line:
+
+sudo ./damo start $(pidof mariadbd) \
+--monitoring_nr_regions_range 10 1000 \
+--monitoring_intervals 5000 100000 60000000 \
+--damos_quota_time 0 --damos_quota_space 128000000 \
+--damos_quota_interval 1000 \
+--damos_quota_weights 0 1 1 \
+--damos_quota_goal hugepage_mem_bp <target> \
+--damos_quota_goal_tuner temporal \
+--damos_apply_interval 50000 \
+--damos_access_rate 0 max --damos_age 50 max \
+--damos_action collapse --debug_damon
+
+<target> was 1000 to taget 10% hugepage to total memory ratio, or 2500
+to target 25%. Tuner was also tested with consistent and temporal.
+
+Results
+=======
+After the last timestamp, there was no change in huge page use, and the
+total huge page to memory consumption ratio barely moved.
+
+hugepage_mem_bp: 1000
+goal tuner: temporal
+
++-----------+----------------+----------------+----------------------+
+| timestamp | total mem used | huge page used | percentage hugepage  |
++-----------+----------------+----------------+----------------------+
+| 0         | 16945.04297    | 0              | 0                    |
+| 7         | 17008.69531    | 74             | 0.435071583          |
+| 8         | 17036.40234    | 194            | 1.138738074          |
+| 9         | 17017.01563    | 314            | 1.845211916          |
+| 10        | 17029.67969    | 434            | 2.548491856          |
+| 61        | 17111.30859    | 584            | 3.412947623          |
+| 120       | 17071.05859    | 694            | 4.065360072          |
+| 180       | 17133.88281    | 804            | 4.692456513          |
+| 203       | 17088.16406    | 916            | 5.360435426          |
+| 204       | 17126.34766    | 1046           | 6.107548562          |
+| 205       | 17093.84375    | 1176           | 6.879669764          |
+| 206       | 17142.77734    | 1298           | 7.571701913          |
+| 209       | 17149.17969    | 1686           | 9.831374041          |
+| 210       | 17097.30859    | 1754           | 10.25892462          |
++-----------+----------------+----------------+----------------------+
+
+hugepage_mem_bp: 1000
+goal tuner: consistent
+
++-----------+----------------+----------------+----------------------+
+| timestamp | total mem used | huge page used | percentage hugepage  |
++-----------+----------------+----------------+----------------------+
+| 0         | 16955.24609    | 0              | 0                    |
+| 34        | 17039.71875    | 106            | 0.622075995          |
+| 78        | 17009.47656    | 554            | 3.257007927          |
+| 90        | 17048.92188    | 596            | 3.495822225          |
+| 150       | 17092.90625    | 706            | 4.130368409          |
+| 180       | 17053.08984    | 764            | 4.480126517          |
+| 233       | 17100.50391    | 1496           | 8.748280216          |
+| 239       | 17098.89063    | 2216           | 12.95990511          |
+| 240       | 17135.44531    | 2334           | 13.62088908          |
+| 245       | 17132.55078    | 2932           | 17.11362212          |
+| 246       | 17117.95313    | 3052           | 17.82923448          |
+| 250       | 17163.12109    | 3532           | 20.57900763          |
++-----------+----------------+----------------+----------------------+
+
+hugepage_mem_bp: 2500
+goal tuner: temporal
+
++-----------+----------------+----------------+----------------------+
+| timestamp | total mem used | huge page used | percentage hugepage  |
++-----------+----------------+----------------+----------------------+
+| 0         | 17010.31641    | 0              | 0                    |
+| 9         | 17063.6875     | 50             | 0.2930199            |
+| 10        | 17051.75781    | 170            | 0.996964664          |
+| 60        | 17133.85547    | 572            | 3.338419663          |
+| 90        | 17192.07813    | 626            | 3.641211932          |
+| 120       | 17221.44531    | 682            | 3.960178647          |
+| 181       | 17199.76172    | 790            | 4.593086886          |
+| 208       | 17222.77734    | 1206           | 7.002354939          |
+| 214       | 17245.17969    | 1904           | 11.04076637          |
+| 215       | 17240.45703    | 2024           | 11.73982799          |
+| 220       | 17234.79688    | 2624           | 15.22501262          |
+| 228       | 17222.83594    | 3584           | 20.80958103          |
+| 231       | 17247.55469    | 3944           | 22.86700968          |
+| 235       | 17229.37109    | 4424           | 25.67708349          |
++-----------+----------------+----------------+----------------------+
+
+hugepage_mem_bp: 1000
+goal tuner: consist
+
++-----------+----------------+----------------+----------------------+
+| timestamp | total mem used | huge page used | percentage hugepage  |
++-----------+----------------+----------------+----------------------+
+| 0         | 17125.85156    | 0              | 0                    |
+| 38        | 17081.23438    | 76             | 0.444932716          |
+| 39        | 17133.11719    | 196            | 1.143983304          |
+| 40        | 17119.83984    | 316            | 1.84581166           |
+| 60        | 17109.72656    | 554            | 3.237924335          |
+| 90        | 17164.11328    | 628            | 3.65879664           |
+| 180       | 17177.66016    | 792            | 4.610639591          |
+| 220       | 17180.86719    | 1378           | 8.020549749          |
+| 226       | 17187.82031    | 1980           | 11.51978531          |
+| 233       | 17143.48438    | 2818           | 16.4377319           |
+| 240       | 17137.38281    | 3656           | 21.33347921          |
+| 250       | 17175.5        | 4856           | 28.27283049          |
+| 260       | 17199.66406    | 6056           | 35.20999002          |
+| 270       | 17203.98438    | 7254           | 42.16465118          |
+| 275       | 17207.21875    | 7762           | 45.10897498          |
++-----------+----------------+----------------+----------------------+
+
+More detailed tables are provided here[5]
+
+From this, we can conclude that the huge page autotuner works fine,
+achieving the target. When using consistent autotuner, it actually
+over-achieves the target, which is expected, since quota esz_bp is not
+set to 0 to cap the DAMOS policy.
+
+Patches Sequence
+================
+Patch 1 -> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP and autotuning
+Patch 2 -> sysfs support for the new quota goal
+Patch 3 -> Document hugepage_mem_bp parameter
+
+[1] https://dl.acm.org/doi/pdf/10.1145/3307650.3322227
+[2] https://lore.kernel.org/e67f05ad-dbb9-45e6-ba30-b167a99ac67d@huawei-partners.com
+[3] https://lore.kernel.org/20260616150316.580819-3-gutierrez.asier@huawei-partners.com
+[4] https://github.com/asierHuawei/damo/commit/79ae1a4ab1c012a7161db85a000d14f08fa36736
+[5] https://lore.kernel.org/all/03f678dd-9ef3-4b97-b753-c2e4554c5159@huawei-partners.com/
+
+Changes from previous versions
+==============================
+v3 -> v4
+  - v3: https://lore.kernel.org/20260720120140.881468-1-gutierrez.asier@huawei-partners.com
+  - Add R-b: from SJ.
+  - Handle a per-cpu count race where free pages larger than total
+    pages.
+  - Return 10,000 as hugepage memory ratio for the racy corner case,
+    instead of MAX_INT.
+  - Wordsmith commit message.
+  - Rebase to latest mm-new.
+v2[6] -> v3
+  - Reworked the cover letter to make more clean the intents, design
+    choices and results.
+  - Added a guard in damos_hugepage_mem_bp in order to avoid potential
+    division by 0.[7]
+  - Fixed a typo in the documentation.
+v1[8] -> v2
+  - Rebased onto updated mm-new
+  - Removed the sample module altogether, since it will increase
+    maintenance costs[9]
+  - Document hugepage_mem_bp in design.rst
+
+RFC 4[10] -> v1
+  - Renamed config to SAMPLE_DAMON_HPAGE, file to hpage.c and functions
+    to damon_sample_hpage_...
+  - Make the module depend on TRANSPARENT_HUGEPAGE, since the module
+    will need some THP functions anyway
+  - Removed documentation, since this is just a sample module
+  - Removed DAMOS_QUOTA_HUGEPAGE_MEM_BP from damos_sysfs_add_quota_score
+  - Added a short description of the module in Kconfig
+
+RFC 3[11] -> RFC 4
+  - Simplified the module
+  - Removed unnecessary parameters
+  - Renamed DAMOS_QUOTA_HUGEPAGE_MEM_BP to unify the naming style
+  - Switched to DAMOS_QUOTA_GOAL_TUNER_TEMPORAL
+  - Updated the documentation
+  - Removed new interface for context creation with DAMON_OPS_VADDR
+
+RFC 2[12] -> RFC 3
+  - Module moved to samples
+  - Change autotune to monitor total memory and hugepage
+  - Added performnace benchmarks to the cover letter
+  - Bail out gracefully when trying to start disable the module after
+    the monitored task exited. This issue was discovered by sashiko [13]
+  - Fixed typos and added quota_sz to the documentation discovered by
+    sashiko [14]
+
+RFC 1[15] -> RFC 2
+  - Rebased into mm-new
+  - Use DAMOS_COLLAPSE instead of DAMOS_HUGEPAGE
+  - Fixed an issue that returned silently an error when the PID didn't
+    exist in the system.[16]
+
+[6] https://lore.kernel.org/all/20260714150116.382521-1-gutierrez.asier@huawei-partners.com
+[7] https://lore.kernel.org/all/20260715151615.99767-1-sj@kernel.org/
+[8] https://lore.kernel.org/20260616150316.580819-1-gutierrez.asier@huawei-partners.com
+[9] https://lore.kernel.org/20260618150806.4633-1-sj@kernel.org
+[10] https://lore.kernel.org/20260611150244.3454699-1-gutierrez.asier@huawei-partners.com
+[11] https://lore.kernel.org/20260604150338.501128-1-gutierrez.asier@huawei-partners.com
+[12] https://lore.kernel.org/20260522145518.158910-1-gutierrez.asier@huawei-partners.com
+[13] https://lore.kernel.org/20260522171210.900B11F00A3D@smtp.kernel.org
+[14] https://lore.kernel.org/20260522171633.AAF5B1F000E9@smtp.kernel.org
+[15] https://lore.kernel.org/20260430134139.2446417-1-gutierrez.asier@huawei-partners.com
+[16] https://lore.kernel.org/all/20260430154338.E22E6C2BCB3@smtp.kernel.org/
+
+Note to Andrew:
+Footnote references 6-16 are only used for changelog.  Hence those can
+be removed with changelog.
+
+Asier Gutierrez (3):
+  mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+  mm/damon/sysfs: support hugepage_mem_bp quota goal metric
+  Docs/mm/damon/design: Document hugepage_mem_bp target metric
+
+ Documentation/mm/damon/design.rst |  2 ++
+ include/linux/damon.h             |  2 ++
+ mm/damon/core.c                   | 19 +++++++++++++++++++
+ mm/damon/sysfs-schemes.c          |  4 ++++
+ 4 files changed, 27 insertions(+)
+
+
+base-commit: 0ae786fcfff4cfea3290e16a65fe12f5c99a6d2f
 -- 
 2.47.3
