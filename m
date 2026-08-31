@@ -1,80 +1,72 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792C23BCD05
-	for <damon@lists.linux.dev>; Mon, 31 Aug 2026 18:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BA22EF67A
+	for <damon@lists.linux.dev>; Mon, 31 Aug 2026 18:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788200095; cv=none; b=OSXlm+oZqQMOhIFc/qVKSwPvck94E8RGn/Wn0m1fUhKBx5DVhDZk0KXb8IMFqTSfa7WcfwMtoNhgB65DnKD14vALOr/qPNYR5Ao2n+yhv0axF2LGp40qWiAX7XvU82knyF8DP+J5F351QfQGR5jDqJPbLnYLVWbHj5227rlPPU8=
+	t=1788200132; cv=none; b=Bvmg14YjmC/1lHmiajUh9zgqMPoicA11YXwJJ81K/iZB92/Q+UmFvMtX9jiTtS3HKRNy5knH7QQmViP49O7+I7e4U7OkE8nhtO7OgKsMmFFuFO4REoaW4KPfmG8pa30on4Wg+Fs3Bat08SIu9PQE4mireaqnQTv+bunnhxdc3MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788200095; c=relaxed/simple;
-	bh=iGmuc4CmScGA/6tEZdkv5Vq3245P2N5tMmR5FUWNofk=;
+	s=arc-20240116; t=1788200132; c=relaxed/simple;
+	bh=85yvcGxCvLbo3x4ALgakH22E4raFR3To4K7qj+mxw5s=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=bsIfESH1/q+BtYN6pNT1Mr91GXpfKspR3Lm8nMgUD1CE+LnVX+6GpVuK529yzyv04yCzkTs0kJ8Orz4GF30XE628dE0Gp1I5/9tFL7Q7w+7cEkX+NCGgBis9yx0BwhUSvYB2MdpIRUgi68GPXpTfFJcXy/w7RAIOHrYXeoNWB8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cFJPdscs; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=WDJRJOiYTe2f0o1WhIDw/6+tBTdmHpj7gAx6p4+bnk5pLjLswM9h/vkvzQpWGrZ7/qlNSLk44Ifgkk/VWbg7oWELbKVXX85uHOJeaAbxQcAkxaC8/IqTtSep3V/ufXy+Svm7ciaUrfVTOX60VhkBiwP7gFrxpwcd9wNWD9wkgsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h0jXppqk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cFJPdscs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E934C1F000E9;
-	Mon, 31 Aug 2026 18:14:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h0jXppqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895641F000E9;
+	Mon, 31 Aug 2026 18:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788200094;
-	bh=MkOo+fFeNfSE30V9qLuyaGgIjZ+S1tHg29XYJAHdOtc=;
+	s=k20260515; t=1788200130;
+	bh=wwjWL8KeZDWYjJKMCiSsuxERMpAQ3Xkna6GZEUn4NCk=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=cFJPdscspiCd2M03jc2/uOlFOXgiqvD/E6couDfOPFupCsIQFKperha3PYXCHYH45
-	 U7+ub8ZQT6WYmM4PHVyoplk4V2PWlNHiReSWaPxeBLMyAGpQUjC36obT10SEyzPEgr
-	 JCwMtpxAeDjICjH62T3Y9co3mUMl2mObQ9DdT0hbxx6AXt/o2qCi9tjLt5/gUgKMXh
-	 2wbBov0ZAq2/P1DDG+KXyMVGt7WKeoQQfzzFJmGQvm8P0cYdO0HXcXImhbKNwAwJeB
-	 n0jr2TT1oc/WsDGnxI0IYFmx0Eyo3wDlVcoFVdLOrUSxQDtSWNrpLLvKZJaGvRx+qq
-	 hoisEkfHl2z/g==
+	b=h0jXppqku9Ieu9/ZB3mVUGA/jwzGCSyUcMX2hoRp8k4iarDeMbfODn+8FamdS03cl
+	 RHw/almkhQ/GA+lv8tf7v8ibEsXOPZgpsSFxJuVimNZhcQWA05m9zv/Koh/M7Vld0M
+	 4Q1KyV7T6ZKhVeh5snaodExuZrPCT47pnfh4JH7p5SedoKP2R6up7yHVPk164tXRA9
+	 hHioTtNAkH9SliHmT9g+JOjuCSpGU8ekAyvdkHCkreVcMimFWE0QuVQYKNA1U4Cb/E
+	 nWqSgGFPNuQCTY+X4IqrrnTSJq8EWoLMovIoL4eRQT+vlGEJz1e4POQwDbLK3qnZeL
+	 qfogFTbLbVWdw==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.2 4/8] mm/damon/vaddr: respect folio end for
- DAMOS_STAT
+Subject: Re: [PATCH v2 2/2] mm/damon/core-kunit: test
+ damon_valid_probe_params()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260831140254.72004-5-sj@kernel.org>
-References: <20260831140254.72004-1-sj@kernel.org>
- <20260831140254.72004-5-sj@kernel.org>
+In-Reply-To: <20260831150650.84829-3-sj@kernel.org>
+References: <20260831150650.84829-1-sj@kernel.org>
+ <20260831150650.84829-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 31 Aug 2026 18:14:53 +0000
-Message-Id: <20260831181453.E934C1F000E9@smtp.kernel.org>
+Date: Mon, 31 Aug 2026 18:15:30 +0000
+Message-Id: <20260831181530.895641F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> For applying DAMOS_STAT action to a region, DAMON virtual address space
-> operation set (vaddr) calls walk_page_range[_vma]() for the region.  The
-> pmd walk entry function, namely damon_va_stat_pmd_entry(), applies DAMOS
-> filters to folios of addresses of the region in the pmd.  It starts from
-> the walking address and advances the address by the size of the folio of
-> the address until it goes out of the pmd or the region.
+> From: Jason Angelov <jasonangelov@ucla.edu>
 >=20
-> Let's suppose it is for the first pmd of the region, and the region
-> start address is in the middle of a large folio.  Also, the next folios
-> are small.  Then, some of the next folios could be skipped.  Fix the
-> issue by advancing the address to exactly the start address of the next
-> folio.
+> damon_valid_probe_params() makes damon_commit_ctx() reject probe
+> configurations that could overflow a probe_hits counter, a single
+> (weight * probe_hits) product, or the sum of those products.
 >=20
-> The user impact is that the DAMOS_STAT-based page level monitoring
-> results become inaccurate.  Since the page level monitoring is supposed
-> to provide relatively high precision, this is definitely a problem.  It
-> is arguably not critical since it is only monitoring quality
-> degradation.
+> Add a kunit test covering each rejection at its boundary:
 >=20
-> The issue was discovered [1] by Sashiko.
+> - samples per aggregation interval: U8_MAX is allowed, one more could
+>   overflow a probe_hits counter
+> - single weight: the largest whose product fits in unsigned int is
+>   allowed, one larger is rejected
+> - multiple probes: each product fits, but their sum overflows
+> - no weight set: the validation is skipped
 >=20
-> [1] https://lore.kernel.org/20260514015053.149396-1-sj@kernel.org
->=20
-> Fixes: 63f39737d1e3 ("mm/damon/vaddr: support stat-purpose DAMOS filters")
-> Cc: <stable@vger.kernel.org> # 6.18.x
+> Signed-off-by: Jason Angelov <jasonangelov@ucla.edu>
+> Reviewed-by: SJ Park <sj@kernel.org>
 > Signed-off-by: SJ Park <sj@kernel.org>
 
 Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831140254.7200=
-4-1-sj@kernel.org?part=3D4
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831150650.8482=
+9-1-sj@kernel.org?part=3D2
 
