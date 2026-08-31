@@ -1,152 +1,95 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7C951A72F;
-	Mon, 31 Aug 2026 15:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F04354937D;
+	Mon, 31 Aug 2026 15:45:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788188820; cv=none; b=tVJxAqwS148v0ZDtB2gq4JT599bB4IhM83QTtE+CYbOgDXJUHGnVuQ8VIEHaeO09Sm+naaV3P5ElVoS/Q8TU2l8/dMqvUo70XfWomv5giow2cjt6Q5tdzMkRYw1hYZQODYHS67FwtJ13LbOWLRzLwENxPHkj0YRZqWJsQidJtqM=
+	t=1788191114; cv=none; b=dEDwuejFeW6p79lc5EJb+gtEUcebLQ+xGMh5OC9d/kw37AgavFH8Ov1yOr1mBqTE+2dUHuQD0rnIBRU0OsJrc9qVFeH4A2l0zJLnQkbcv7vQZZZKTQT5vPD/k4SCqSVHBcER7nkclldR3nyRJQKERXHHlIX5wOBg0RHUhYyyPaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788188820; c=relaxed/simple;
-	bh=/m2MgfqcWMXWTS3rOf2JdJxa1KYmjpJgfVfa99jugPM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mnclsjet43V1Ju/og6U0XiC4guqlwvnVnzofpF7pCsjG/1vLvIp58McyIufRfWkGWdRr2GFnlLEod6XwXHotkMch5pzSHrL3RuHZ2RFNWZfL+z2WKV7zQu4nQ37UPGwHdmJQsRoXZsxONepZSf33B4beTZUKZCN6KSgdKiLvRIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F5wScyc6; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788191114; c=relaxed/simple;
+	bh=jy07sXZapQxw/1iN29gzUcPOiHz63cZXJvSY3pkqrr0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PMV1cv2nS40FYnFqg+xzpo1ktp7h5u0oEfyW1teS4DcVBNBFRtlE1axar8kdG2TKz3cOQVLrvWIEQqErnEXuk7kQ6h6sCABNn0CBZIdkns1vz81UoG+FG/qLfsLsM0MdS8fE3dsEfT2t5vDXvPmNscovFJpyhZRPowVcvISwisg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=If5PZsid; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F5wScyc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119F51F00A3F;
-	Mon, 31 Aug 2026 15:06:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788188819;
-	bh=o7lIq+lsQYzbYzf+cqUQ249deMwzfBwDjcIr5FOU1kQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F5wScyc6VUkcQzeNeObcmSoumA5UwCUlKoqWQIJjXLhYY/NhNn0CVz16iLB6Wof5X
-	 OVbAR8k2fpqNpOlw8oKOWNbtpgLrFd76oQ4H0cv34bKVOU8Twv0chFMJsgWvfk/PLP
-	 +Y8dF45RzxRUn3tlrqfTrFCLv9XnBsnjWxG6nf4WcmqBLEJtMgQS+5pE53CGvhVPSf
-	 fsnGoVnyVVwT/n1NZD9f6PU+O4e0k5p+6U16ExhiX+lWBunFoXtCTCV+/cBa4spfb+
-	 s8TVCYgOvdvblvVqxU62Sin/thY7oQUGByap+TxLzaHqDjUEYwf5HkFZz+zFqqIWDz
-	 0OFFIq2lQutSw==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Jason Angelov <jasonangelov@ucla.edu>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH v2 2/2] mm/damon/core-kunit: test damon_valid_probe_params()
-Date: Mon, 31 Aug 2026 08:06:49 -0700
-Message-ID: <20260831150650.84829-3-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260831150650.84829-1-sj@kernel.org>
-References: <20260831150650.84829-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="If5PZsid"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=N+ozKP2hZTv9niFnVaruRiYppqsUd5pv1oHMpzqQ8/k=; b=If5PZsid3cVdrDrjcSN5KO7Wcw
+	FJVve4GhzTiIekZvsysa7UiZ1zmzOE86kvHxzKxtBJ6JOUpWiT+GD14OzCPvVOKNWHmrcMeAUcXHc
+	uzzm7oGdJz/T3L7r9N+/32jGa+siIIhDpSJ2kI7JRil6uOsonUDYJEG42Cgv4YQgODy7g5w7L0Zjq
+	9aL7ew46uc0EzYN5qNBeLjsUomCJqr5gOpeogYA+DE2VN/2oQgYpp9ExpfODe9U+Qp2g6aXfVlwoh
+	+sjltxOqUJezGD6R7dAw0skpYsKl2oV+W7yVg/QSz4KH6cdghLTwWCeX4b4uIEURIckRCsjLHML6P
+	6yulnspQ==;
+Received: from [50.53.43.113] (helo=[192.168.254.34])
+	by bombadil.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1x14Bz-00000009uuz-1oVn;
+	Mon, 31 Aug 2026 15:45:03 +0000
+Message-ID: <f06ca3de-1cd9-4082-8c66-f6a26e417824@infradead.org>
+Date: Mon, 31 Aug 2026 08:45:02 -0700
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/3] Docs/mm/damon/design: Document hugepage_mem_bp
+ target metric
+To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+Cc: Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
+ "Liam R. Howlett" <liam@infradead.org>, David Hildenbrand
+ <david@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ Lorenzo Stoakes <ljs@kernel.org>, Michal Hocko <mhocko@suse.com>,
+ Mike Rapoport <rppt@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>,
+ Suren Baghdasaryan <surenb@google.com>, Vlastimil Babka <vbabka@kernel.org>,
+ damon@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org
+References: <20260831144732.80910-1-sj@kernel.org>
+ <20260831144732.80910-4-sj@kernel.org>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <20260831144732.80910-4-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Jason Angelov <jasonangelov@ucla.edu>
+Hi,
 
-damon_valid_probe_params() makes damon_commit_ctx() reject probe
-configurations that could overflow a probe_hits counter, a single
-(weight * probe_hits) product, or the sum of those products.
+On 8/31/26 7:47 AM, SJ Park wrote:
+> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> 
+> Document hugepage_mem_bp metric exposed by sysfs.
+> 
+> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+> Reviewed-by: SJ Park <sj@kernel.org>
+> Signed-off-by: SJ Park <sj@kernel.org>
+> ---
+>  Documentation/mm/damon/design.rst | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+> index aed6cb1cf4831..a8c163475ef2b 100644
+> --- a/Documentation/mm/damon/design.rst
+> +++ b/Documentation/mm/damon/design.rst
+> @@ -713,6 +713,8 @@ mechanism tries to make ``current_value`` of ``target_metric`` be same to
+>    bp (1/10,000).
+>  - ``node_eligible_mem_bp``: Scheme target access pattern-eligible memory ratio
+>    of a node in bp (1/10,000).
+> +- ``hugepage_mem_bp``: Total huge page to total used memory ratio in bp
+> +  (1/10,000).
+>  
+>  ``nid`` is optionally required for ``node_mem_used_bp``, ``node_mem_free_bp``,
+>  ``node_memcg_used_bp``, ``node_memcg_free_bp`` and ``node_eligible_mem_bp`` to
 
-Add a kunit test covering each rejection at its boundary:
+I've looked thru the entire design.rst file and cannot find anything telling
+me (or anyone) what "bp" means.  Explain??
 
-- samples per aggregation interval: U8_MAX is allowed, one more could
-  overflow a probe_hits counter
-- single weight: the largest whose product fits in unsigned int is
-  allowed, one larger is rejected
-- multiple probes: each product fits, but their sum overflows
-- no weight set: the validation is skipped
-
-Signed-off-by: Jason Angelov <jasonangelov@ucla.edu>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/tests/core-kunit.h | 57 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
-
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 68591ca99a4f7..af26b3d60957b 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -1341,6 +1341,62 @@ static void damon_test_commit_ctx(struct kunit *test)
- 	damon_destroy_ctx(dst);
- }
- 
-+static void damon_test_valid_probe_params(struct kunit *test)
-+{
-+	struct damon_ctx *ctx;
-+	struct damon_probe *probe, *probe2;
-+
-+	ctx = damon_new_ctx();
-+	if (!ctx)
-+		kunit_skip(test, "ctx alloc fail");
-+	probe = damon_new_probe();
-+	if (!probe) {
-+		damon_destroy_ctx(ctx);
-+		kunit_skip(test, "probe alloc fail");
-+	}
-+	damon_add_probe(ctx, probe);
-+
-+	/* Parameters are validated only if any probe weight is set. */
-+	ctx->attrs.sample_interval = 1;
-+	ctx->attrs.aggr_interval = 1000000;
-+	KUNIT_EXPECT_TRUE(test, damon_valid_probe_params(ctx));
-+
-+	/* Up to U8_MAX samples per aggregation interval are allowed. */
-+	probe->weight = 100;
-+	ctx->attrs.aggr_interval = 255;
-+	KUNIT_EXPECT_TRUE(test, damon_valid_probe_params(ctx));
-+
-+	/* More samples could overflow the probe_hits counters. */
-+	ctx->attrs.aggr_interval = 256;
-+	KUNIT_EXPECT_FALSE(test, damon_valid_probe_params(ctx));
-+
-+	/* The largest weight whose weighted hit count fits in unsigned int. */
-+	ctx->attrs.aggr_interval = 255;
-+	probe->weight = UINT_MAX / 255;
-+	KUNIT_EXPECT_TRUE(test, damon_valid_probe_params(ctx));
-+
-+	/* Any larger weight could overflow its weighted hit count. */
-+	probe->weight = UINT_MAX / 255 + 1;
-+	KUNIT_EXPECT_FALSE(test, damon_valid_probe_params(ctx));
-+
-+	/* With one sample per aggregation, even the largest weight fits. */
-+	ctx->attrs.aggr_interval = 1;
-+	probe->weight = UINT_MAX;
-+	KUNIT_EXPECT_TRUE(test, damon_valid_probe_params(ctx));
-+
-+	/* The sum of all probes' weighted hit counts could also overflow. */
-+	probe2 = damon_new_probe();
-+	if (!probe2) {
-+		damon_destroy_ctx(ctx);
-+		kunit_skip(test, "probe2 alloc fail");
-+	}
-+	probe2->weight = 1;
-+	damon_add_probe(ctx, probe2);
-+	KUNIT_EXPECT_FALSE(test, damon_valid_probe_params(ctx));
-+
-+	damon_destroy_ctx(ctx);
-+}
-+
- static void damos_test_filter_out(struct kunit *test)
- {
- 	struct damon_target *t;
-@@ -1667,6 +1723,7 @@ static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damos_test_commit_migrate_hot),
- 	KUNIT_CASE(damon_test_commit_target_regions),
- 	KUNIT_CASE(damon_test_commit_ctx),
-+	KUNIT_CASE(damon_test_valid_probe_params),
- 	KUNIT_CASE(damos_test_filter_out),
- 	KUNIT_CASE(damon_test_feed_loop_next_input),
- 	KUNIT_CASE(damon_test_set_filters_default_reject),
+thanks.
 -- 
-2.47.3
+~Randy
+
