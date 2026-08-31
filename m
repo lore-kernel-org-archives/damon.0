@@ -1,71 +1,147 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BDA348C50
-	for <damon@lists.linux.dev>; Mon, 31 Aug 2026 18:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A4A4457D5
+	for <damon@lists.linux.dev>; Mon, 31 Aug 2026 18:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788200991; cv=none; b=RJkUR4zvSrv4Gg8FqfP0A/i/eqLoKufkNPO/lX5gtycYFsuPY+cHUF878bCxAZdODHszqFxw4nds2MPgMf/wm7pWRhLp+EEqf6iJRPWc+pU0zr4Me61VPTw9scetOrj4muzR3OCyijeDA8cqKisVov8OlTYwcovjV+Po04woVzo=
+	t=1788201360; cv=none; b=N1ut9ipJr8v5R1g9iiH8QQRFpVBaBnlxf/dP86WVt6DV/O2SOXMBlpA6p6IVAIjYw4235J/4RTp/RuxkrRmQ6Yh5PrUssLz/VXmwUMNtRq7ARyYObe6T862IdJu4DfUGGQDZiEBdYKlOyTTLkr98/DQlILcGD5/96OhvcSmFOj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788200991; c=relaxed/simple;
-	bh=3j2xsDDYzKXbT8dXQClSlLcCjebyF6NqX8t11/hP7JA=;
+	s=arc-20240116; t=1788201360; c=relaxed/simple;
+	bh=ZEvwigpzeMkv/mMnQvV86WEm/lHhsT0sdckr9hcaY6c=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=fwO36cvl8YdzgU7Nelzr/glPxoB1RptJ6crKFVWYJ1z+MuyOXs+lHDAB3HINt0bafskv3khLvc1kEX8YUFDtBge/tBspCKwk+GvU3h64HLy5rYAEAR7CPlue/AB3Y83yVXur8AoE2ryshK/vZrHfYRXg4dLccUiCRabis4ikmFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HMiHyk1P; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=G9BjmPNr6UHtAFcbdwl75OeTIALzEPeI0VoxhoBW+6FHCQXZadV2I93mVXcAFzJpYUleQt8N2KGBHrKn0SNc/+d+iR+KA8JiuNfYP5zswSpVjE2cg58V3TXGwwvU8L7vCrQ4CKmYsCjl7daaENAJPS6J0Hr+IUuBjWlJYEBOmgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PwKv/oee; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HMiHyk1P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B89E1F00A3D;
-	Mon, 31 Aug 2026 18:29:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PwKv/oee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B4D1F000E9;
+	Mon, 31 Aug 2026 18:35:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788200990;
-	bh=33eTWJcRuz3KD71oYF9bKb7uNkjbACRaTPK4bSeKvRA=;
+	s=k20260515; t=1788201359;
+	bh=qmYgBPW2GZsGTmndTusSYSkguXgRIlez+sjGGPz+lh8=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=HMiHyk1PhprhlddNJwzPSmJGVfN7z9Fx3mXaA/J9+cW0UkghG8ovkqTICZernhOY0
-	 /TXPOkMP6t7ryoAHFSHb1NxQ19ROoKFR74IA1VCDOgiBOUqOQcDGYENuhri0dFx62+
-	 ja0YCPr9TA+/1hN6rI9be5+Lgbj4pzr7sChrnqoJ0qTxvU/S0DlZAl8o2iCU1xTxbE
-	 J0IWNrB049cF+Tjh4K2txOAMGvDadK+MNNdLyBCY8TqBZmFonzNMLTvc8a9o8IsAZ7
-	 M+f2kPmy08oAeZUeN50vldTD+YIEznLMSH75rmqzYAoBBluFHd5tT2/mjuWHe9915c
-	 ntoxRkbRizB4g==
+	b=PwKv/oeeenwpyDBZjL/coMGcQVf4zNEsTtHg9N6XuiDIHyWL2/tgg64NCEWfEixJj
+	 ZE89Mb4RQWl892iv5r4XPeM7pufuMrR4gPIf2MW5BFqFTtjZwj7V/4yn1gentrZo/j
+	 t551LRSflRz7wT0zGQ1QAl8nU9aorLJzPy4xFzkwl0B6f0ZXILSpPJ19ryAZ2odkVv
+	 X0y8QtpUJ84IIbzdti8j60x2ImwxVCM29KQGqJhMYZsi3w+OCH5ScpiJ7/l7gLQVhx
+	 WMZubNYYfRlZ0dcMtHHY+OxLzuY9r3kXulSC+ROjd43OpRISMXtiOA76CQABxwhFwq
+	 UkWrDKx01ycLg==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.2 6/8] mm/damon/core: handle extreme memory state
- in damon_get_node_mem_bp()
+Subject: Re: [PATCH v4 3/3] Docs/mm/damon/design: Document hugepage_mem_bp
+ target metric
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260831140254.72004-7-sj@kernel.org>
-References: <20260831140254.72004-1-sj@kernel.org>
- <20260831140254.72004-7-sj@kernel.org>
+In-Reply-To: <20260831144732.80910-4-sj@kernel.org>
+References: <20260831144732.80910-1-sj@kernel.org>
+ <20260831144732.80910-4-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 31 Aug 2026 18:29:50 +0000
-Message-Id: <20260831182950.8B89E1F00A3D@smtp.kernel.org>
+Date: Mon, 31 Aug 2026 18:35:58 +0000
+Message-Id: <20260831183558.F0B4D1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> In an extreme and unlikely situation, si_meminfo_node() might let the
-> caller show zero total ram.  That could cause a divide by zero in
-> damon_get_node_mem_bp().  It could also show free memory larger than the
-> total memory.  This could cause underflow and make DAMOS temporarily
-> make unexpected behavior.  Thanks to safety guards in the auto-tuning
-> feedback loop, that should not be a real problem, though.  Fix the
-> problems by respectively returning 100% and 0% for used and free memory
-> queries in the corner cases.
->=20
-> The issue was discovered [1] by Sashiko.
->=20
-> [1] https://lore.kernel.org/20260328133216.9697-1-sj@kernel.org
->=20
-> Fixes: 0e1c773b501f ("mm/damon/core: introduce damos quota goal metrics f=
-or memory node utilization")
-> Cc: <stable@vger.kernel.org> # 6.16.x
-> Signed-off-by: SJ Park <sj@kernel.org>
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [High] Integer overflow in `mult_frac` on 32-bit systems for memory excee=
+ding ~1.75 GB of huge pages, resulting in incorrect DAMOS quota auto-tuning.
+- [Medium] The newly introduced DAMOS quota goal metric 'hugepage_mem_bp' i=
+s not tested in the DAMON sysfs selftests.
+--
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+commit 59f2c739bce03363ce501965d6708d807908af18
+Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+
+mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+
+Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP auto tuning. Add a new DAMOS quota
+goal metric to measure the amount of huge page consumption to total
+memory consumption ratio.
+
+Link: https://lore.kernel.org/all/20260715151615.99767-1-sj@kernel.org/
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 644daf5a16560..9c0e42a1d2cfc 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+[ ... ]
+> @@ -3007,6 +3007,22 @@ static unsigned int damos_get_in_active_mem_bp(boo=
+l active_ratio)
+>  	return mult_frac(inactive, 10000, total);
+>  }
+> =20
+> +static unsigned int damos_hugepage_mem_bp(void)
+> +{
+> +	unsigned long thp, total_pages, free_pages;
+> +
+> +	total_pages =3D totalram_pages();
+> +	free_pages =3D global_zone_page_state(NR_FREE_PAGES);
+> +
+> +	if (total_pages <=3D free_pages)
+> +		return 10000;
+> +
+> +	thp =3D global_node_page_state(NR_ANON_THPS) +
+> +				global_node_page_state(NR_SHMEM_THPS) +
+> +				global_node_page_state(NR_FILE_THPS);
+> +	return mult_frac(thp, 10000, total_pages - free_pages);
+
+[Severity: High]
+Does this calculation overflow on 32-bit systems?
+
+Since thp is an unsigned long, on a 32-bit architecture it is a 32-bit
+integer. If the system has more than ~1.75 GB of huge pages (about 429,496
+pages), the internal multiplication thp * 10000 will exceed 4,294,967,295
+and wrap around.
+
+This leads to an incorrect value being returned from mult_frac() and results
+in incorrect DAMOS auto-tuning.
+
+commit a2c5ad81dadcc820e74efd9d73c1f576bbe76457
+Author: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+
+mm/damon/sysfs: support hugepage_mem_bp quota goal metric
+
+DAMOS has a new autotune policy metric: DAMOS_QUOTA_HUGEPAGE_MEM_BP.
+This patch exposes DAMOS_QUOTA_HUGEPAGE_MEM_BP through sysfs.
+
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 32f495a96b17a..d9b81d7b5910e 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+[ ... ]
+> @@ -1269,6 +1269,10 @@ struct damos_sysfs_qgoal_metric_name damos_sysfs_q=
+goal_metric_names[] =3D {
+>  		.metric =3D DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
+>  		.name =3D "node_eligible_mem_bp",
+>  	},
+> +	{
+> +		.metric =3D DAMOS_QUOTA_HUGEPAGE_MEM_BP,
+> +		.name =3D "hugepage_mem_bp",
+> +	},
+>  };
+
+[Severity: Medium]
+Should there be an accompanying update to the selftests for this new sysfs
+metric?
+
+Currently, the hugepage_mem_bp metric is missing from the tests. For
+example, in tools/testing/selftests/damon/sysfs.sh:test_goal(), the new
+metric is not verified:
+
+tools/testing/selftests/damon/sysfs.sh:test_goal() {
+    ...
+    ensure_write_succ "$fpath" "node_eligible_mem_bp" "valid input"
+    ensure_write_fail "$fpath" "foo" "invalid input"
+    ...
+}
+
+Running the sysfs.sh selftest will silently skip testing the new metric
+because it wasn't added to the hardcoded list of valid inputs.
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831140254.7200=
-4-1-sj@kernel.org?part=3D6
-
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831144732.8091=
+0-1-sj@kernel.org?part=3D3
