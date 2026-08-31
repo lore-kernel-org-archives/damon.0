@@ -1,55 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDAC51356B;
-	Mon, 31 Aug 2026 15:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B50466B70;
+	Mon, 31 Aug 2026 15:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788188558; cv=none; b=AGnXZc41YtMHlhmz5D+2qeRf2nPR63s39+vgD/ROuG87/uMH5wZZXStmQcTESE8L3FJv5xCK+ZhZORo3pBP5brSNC2ffGk6orFx3f4YeCPvZGG5zXlp6w0G0zJqzI3xJ+hVZMpr2Yb2aS9qO4jERofkw2wNYM1HAAxe/sShu5aU=
+	t=1788188819; cv=none; b=Cm2oQSY7jA7TmbDYT1AuU71sg0MTMJZ5F6SbV+pDc7kr/hFL0Ff/ZgoFEjz6eBf9vvilPW+mo2ASQjGAdZKIiCPGlQfDFzU35Y0uPzrK106fxwGEeVDiZ5Q5u+M5xXTwFGrjG35eJspefgDed8Kp3DsVw/HAZX8HBGzGLXQS3QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788188558; c=relaxed/simple;
-	bh=WS9IkyLIoDhqnmtPMHzmEZHH+zFH+nqwXWryqrjT36I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8iPkPf33N/HJv/yPcyV/IsdkIejGklxEL8QMPdrpw0bX2nGfzeNtxf/TFvf2WE3SeCi/Km1JrH+KgvRgpstqBti495N1W+q9Cdzt0S4Goo0ciKFPqhmDmSDon0gREjPIERUXqxSgjqeBGgnwe1czVREtCHwr4sAtwcwi8XwjV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLIlB6Sf; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788188819; c=relaxed/simple;
+	bh=wFnNt2jgm5r5DXiy28WZjbTPGQEheVu08ejp0XmG7mU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ddAQxTyAsZHpd8QOCQNMRXhgmkt/1fdOkrhKzMwSmYCwL6i0QR1OY8yLQxiYmyygQgUevQJ76I/6DG7Wy3jLUJgaIvt542zvpjGPXO7oBlNQg68qZl+7bxlO/6i1BGHhcrp6FJGoPAHYLE+rxufGvmCXh+cwy7Amo9oHXw8DHzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UETTYhjR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLIlB6Sf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1F01F00A3E;
-	Mon, 31 Aug 2026 15:02:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UETTYhjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2641A1F000E9;
+	Mon, 31 Aug 2026 15:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788188557;
-	bh=fP0OmW7AaCN1UBBu3eieNVT1hiNAdPr1GoBH/nwPos4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SLIlB6SfpA8AmTf/M6tefYj3BeCtREJ4QvfdwfP4DPz6DdnexLbsxZLrTiYPJSBfW
-	 KUYuEPlc4eGJ2e1oa7uaeuyF/DoZROmih/gY+20vA4Tzi90xWYOfwzC0+E7VL0/lDf
-	 qu51ty0064PMl8WzWR0NSawth/Gf/7cyzZOeDoREMjLq80zC3I0mF4ZraAkAN7yv1d
-	 NBaT3GkT/9lqzirq9o/PvpDmqya4XEoQxSkyz9Nzd7i4sPxsbJlfrfrUFkXzh+Ur/+
-	 Gq/8OCXK62Eh+dayewVvEJDr+uhwHiEYQS3dDKfMmYa7ruPI5BkESAVGPtFo8xR7g8
-	 i0LaH7vzQ3+vw==
+	s=k20260515; t=1788188818;
+	bh=f4iZoQApQIfopJT8EkqZwFe8+jFo1ysNs7WLaErjg9A=;
+	h=From:To:Cc:Subject:Date;
+	b=UETTYhjR1rTXv97DdzXd4cNx6xYLQVULNS4zG+oBtyJsqv+07TzNV73TUu3nwkFXA
+	 AVtE6H6Pmjk8cWrfo7SDBCOO/ZcQQEuHEuE94YCQiv6k5ZWVuXhNbwboKuxck9hCeZ
+	 kYuVySqZCoD/Tfw5wlqkrsTr0QcwiDLiz51k3uieIDmCdOtYn2t41OrjeaPIeZqCzC
+	 Bde08XvKxrSddVM3nnD1+hxa2koiRvD6z8Oloh1M4esG6f8GVlzumukBP9N85+VFfq
+	 Tnz56xumE6HiEqo/+VVgbxCz1Pc3eN7OEPoPxUSsTEDoY+ivpog0KyzQE2N4VWz6Bh
+	 I3e/5a5w4YYGg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Liew Rui Yan <aethernet65535@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	SJ Park <sj@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+Cc: SJ Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v3 3/3] docs/mm/damon/design: fix typo of max_nr_snapshots
-Date: Mon, 31 Aug 2026 08:02:26 -0700
-Message-ID: <20260831150227.83416-4-sj@kernel.org>
+Subject: [PATCH v2 0/2] mm/damon: add kunit tests for probe_hits handling and probe params validation
+Date: Mon, 31 Aug 2026 08:06:47 -0700
+Message-ID: <20260831150650.84829-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260831150227.83416-1-sj@kernel.org>
-References: <20260831150227.83416-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -58,46 +47,24 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+DAMON recently introduced probes and probe weights. Add kunit tests
+for the propagation of probe_hits at region split and merge, and the
+rejection of invalid probe parameters by damon_valid_probe_params().
 
-Fixes a typo (nr_snapshots -> max_nr_snapshots) and corrects a grammar
-error.
+Changes from v1
+- v1: https://lore.kernel.org/20260818034552.11975-1-jasonangelov@ucla.edu
+- Collec R-b: from SJ.
+- Rebase to latest mm-new.
 
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/mm/damon/design.rst | 4 ++--
- include/linux/damon.h             | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+Jason Angelov (2):
+  mm/damon/core-kunit: test probe_hits handling at region split and
+    merge
+  mm/damon/core-kunit: test damon_valid_probe_params()
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 74170a2285501..63cbb7b536da2 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -873,8 +873,8 @@ action is ``pageout`` while all pages of the region are unreclaimable, applying
- the action to the region will fail.
- 
- Unlike normal stats, ``max_nr_snapshots`` is set by users.  If it is set as
--non-zero and ``nr_snapshots`` be same to or greater than ``nr_snapshots``, the
--scheme is deactivated.  Note that, unlike watermarks, even if a scheme's
-+non-zero and ``nr_snapshots`` equals or is greater than ``max_nr_snapshots``,
-+the scheme is deactivated.  Note that, unlike watermarks, even if a scheme's
- ``nr_snapshots`` reaches ``max_nr_snapshots``, monitoring will not stop.
- 
- To know how user-space can read the stats via :ref:`DAMON sysfs interface
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index d3f45f4dcdafa..7b1b6050a8286 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -551,7 +551,7 @@ struct damos_migrate_dests {
-  *
-  * After applying the &action to each region, &stat is updated.
-  *
-- * If &max_nr_snapshots is set as non-zero and &stat.nr_snapshots be same to or
-+ * If &max_nr_snapshots is set as non-zero and &stat.nr_snapshots equals or is
-  * greater than it, the scheme is deactivated.
-  */
- struct damos {
+ mm/damon/tests/core-kunit.h | 64 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
+
+
+base-commit: e87656db0d5bae45056740ce6fc5d41e182013f4
 -- 
 2.47.3
