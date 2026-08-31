@@ -1,74 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA2F49503F
-	for <damon@lists.linux.dev>; Mon, 31 Aug 2026 17:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDC835C692
+	for <damon@lists.linux.dev>; Mon, 31 Aug 2026 17:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788198859; cv=none; b=ZZeFqj06U3nHL6JHEhjYs/gtKQErV2UJxbygbNjKdZgV93HO5wbjt4xUbayQepkqcyOZKZa4GuOaimJMSo53ERxwcEdo0/4q9dQFyxryZYpJhKvpXvjsflaEZ+NeV46HWLFkzfCdJJvkb1j/+MK4Ltwf1cPYrTHlK3HCUibcMR8=
+	t=1788199135; cv=none; b=ubS0840BEOo2ftke87u2q05rx2J1nvjrLC07rMzqK8d9iSmhoii9ehEATfmCIYume51E60t3giQbeMOHPi3E7vy0q8MY0AFqs0QZb5/F19mA75nCXat+qXabPwT4pR8sul+kDqHM+L0ltKzr4agc/FTpOoz8LBx6+l9hTYP7lb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788198859; c=relaxed/simple;
-	bh=nffnnv5oTf4OtNWibXcWlQsdM9yDs3iJX56kDMDXCBI=;
+	s=arc-20240116; t=1788199135; c=relaxed/simple;
+	bh=ITZNRIFrIw3XnPcMMsp9kE9VN0v59VJ/xfAILWFbIIw=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=bR2noaHrOdKNB0cfL0M6FZaav1NhwTottOhEgG3SnlW7SSqycwAEvpUFa3O1LVpXXEll3YQRVCvPt2DUIVoUQUH7qskFYXMu+VsY1R0lFemgZF43r+tgJqXYUhOlkskdZqenKkbBw2k9eRirKuQVQEZWcVUXBUW57m1/sQQWDGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZE2sJ/Ng; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=O5OAOqTz9GtsXAZxhAXoAK+pDnTeS34lYsXxbPSdaUXHiditGEC5HVaxiG9nttFtQnFskOOpRZMdQhKa9vImlRztWx+A0OE2yQhihi+QKvdrJjAfuyqSFwyKPkHW1r8M8smH7JkzUXDniJrOLcAUXHzzw+eiDhT/v/Rusu8baZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hnjYIRe7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZE2sJ/Ng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64EDE1F00A3D;
-	Mon, 31 Aug 2026 17:54:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hnjYIRe7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C371F000E9;
+	Mon, 31 Aug 2026 17:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788198858;
-	bh=WNXc6XfQOE1ffesllVgANkpx61pxxz3ukuTfax+6oV8=;
+	s=k20260515; t=1788199133;
+	bh=eFJbg71qqB69gpqC7Qj2MjaI+acSh2nxRLM/cW3p990=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZE2sJ/NgSVL+X7o1EopoCoIgtKyTnEbjwEOrLi8PthKyOy+Za/XH+3SBg8EsanaX/
-	 Rbjajtuwc5XEYp+VpwYZnUU2ayD/za3Uf7isy5TRLEr7I1pV49FchQm0o17D5AkZG6
-	 0ZM/MHUzMKLhqv1Bld7PiXjblW6x/8SxBAG465s5HYf0lo76dr+hbAMXc1kDD2P1Xs
-	 QNdBJ3kyILH1Qzybtj3HlpMaGhRXrxxbGCW0s8iPZS0eyFsvabRvJQjWCp7xKf5Eqt
-	 TD271JM704QLT/0fxu2OfW50nOX9pi6Be2asOjji4gAPn4VDCdfhpp/xW9Qcps/bVU
-	 bHJWqsBzFjUvw==
+	b=hnjYIRe7jNHWclDLbYrgx6OdtCpCAuvXvU27MbIOb8AwS2tzYfMIAyG0gF51Gwl7s
+	 m0S+xNzouD4NM8KtW4jnzyOmM6Vgna/sH6G5sjB/t5C+Mwo0XGhb3fDsg08wtWSC3d
+	 CKa3TH6LwXezkWd9YEeIdj43nqUyJGUg7PIX2FchrfM8dylZjc3vuyhnOCB2js1oAH
+	 myATBFL7+CDjR/TPuPXMlaYNnZR2ESs7cMyTbPsrMghS0wDh7V6VEEmipBu/ALOOY5
+	 /QEFmTLVskMH+nfHG/NjReE5WN/hX7WJNsyt3gsBtapWo7+TpoChOMtjAw17XSthQ3
+	 S1I3Rj4tvYflw==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v1.2 2/8] mm/damon/paddr: respect folio end for
- DAMOS_STAT
+Subject: Re: [PATCH 2/7] mm/damon/core: introduce damon_set_target_pid()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260831140254.72004-3-sj@kernel.org>
-References: <20260831140254.72004-1-sj@kernel.org>
- <20260831140254.72004-3-sj@kernel.org>
+In-Reply-To: <20260831142611.77572-3-sj@kernel.org>
+References: <20260831142611.77572-1-sj@kernel.org>
+ <20260831142611.77572-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 31 Aug 2026 17:54:17 +0000
-Message-Id: <20260831175418.64EDE1F00A3D@smtp.kernel.org>
+Date: Mon, 31 Aug 2026 17:58:52 +0000
+Message-Id: <20260831175853.15C371F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> The function for applying DAMOS_STAT in DAMON physical address space
-> operation set (paddr), namely damon_pa_stat(), applies DAMOS filters to
-> folios of the given region.  For that, it gets folios of addresses in
-> the region.  It starts from the region start address and advances the
-> address by the size of the folio of the address until it goes out of the
-> region.  If the start address is in the middle of a large folio, and if
-> the next folios are small, some of the next folios could be skipped. Fix
-> the issue by advancing the address to exactly the start address of the
-> next folio.
+> The logic that finds the struct pid for a given pid number and assigns
+> it to a damon_target is duplicated in multiple places.  Including
+> damon_sysfs_add_target() of mm/damon/sysfs.c and the start functions
+> of the two sample modules, samples/damon/wsse.c and
+> samples/damon/prcl.c.  Add a function that does the work, and replace
+> the duplicated code in the places with calls to the function.
 >=20
-> The user impact is that the DAMOS_STAT-based page level monitoring
-> results become inaccurate.  Since the page level monitoring is supposed
-> to provide relatively high precision, this is definitely a problem.  It
-> is arguably not critical since it is only monitoring quality
-> degradation.
->=20
-> Fixes: bdbe1d7bc325 ("mm/damon/paddr: increment pa_stat damon address ran=
-ge by folio size")
-> Cc: <stable@vger.kernel.org> # 6.14.x
+> Signed-off-by: Enze Li <lienze@kylinos.cn>
+> Reviewed-by: SJ Park <sj@kernel.org>
 > Signed-off-by: SJ Park <sj@kernel.org>
 
 Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831140254.7200=
-4-1-sj@kernel.org?part=3D2
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831142611.7757=
+2-1-sj@kernel.org?part=3D2
 
