@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77542513550;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD66513560;
 	Mon, 31 Aug 2026 15:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788188557; cv=none; b=Ji8TUh9cU0pSBEH58Pn+wQDw85yTmpbwaGh0MtPKNJLV7YGb3YtHBqmJs+JbqgHnjXRlB0QYbd6zFzhFf7GdrpFpnMZuo8ahOU5Q4nReNlowZwBG3ubl3Fu7BZ5d1m2IbsSpfU83mJ0A2anfWrgvstAo2HnKYQYEZRsLX6qw9T0=
+	t=1788188558; cv=none; b=DvTv4Wdd3V3JTsh7k5WUwWPrpxoRovfd540XOq1uVaCDPdEQO3JwON3qAUpsTXAjkijk3rO6VfJ4bxqgrm3PtXQW+k6TcfD2xgRdCDiZySGSKxlOx9kd7W36AmGUpsj5HvAi8jhINdEmFU6KEx8uyGBjxV6SP43GWNNLRhIOv5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788188557; c=relaxed/simple;
-	bh=FMTJY8tQ5CYFu/2voOK9rmQtbOuXDG1O1x347yWlbFM=;
+	s=arc-20240116; t=1788188558; c=relaxed/simple;
+	bh=lK0Y/Z334Pbk0QqzoKJO2Co5YZywBcoe4QWXecs3BKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EgxmjqHtpYZN5R8L3XEduooSDnRKTs0fXYv74aaTh1h2ti0FMq+gmvfa37KeJZll94ucYZsgqSVMVqNs6Dv3ddWSsmMxG/JR5/XLWSjcV72VZf2gzpkyf8keJlocLPxYYY58ItBBP+ID3GX2szPLhjDzk/aktG0ZHGC9va175Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cP91+K6W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=arzGh2MyQBnXiYg/SpJKuby1GFYWthPuFsmJZLO2XXGar4y0S9qKBEvLMUGeIL7Sipot8G26rYiYT76Zb0R6aCTiEXymymu4m1EpPYujPu847n71LabK58V4YUqMVCVSFtN3AyVBos/EPgJANKPdZJJ6HsmCvX6y/V0YHBGIVno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K67QxRPW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cP91+K6W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FED71F00A3D;
-	Mon, 31 Aug 2026 15:02:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K67QxRPW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9A51F00A3F;
+	Mon, 31 Aug 2026 15:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1788188556;
-	bh=ldXVDAFrMK0WYov6Pz6vPJ0KverWYpiwq3DPXGBw6GI=;
+	bh=yXn4FOiKb4JIWcSHZNBTe6EO/erUpMh++SEHXjVqCNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cP91+K6W1l0vMNI+aEt9HBCS/BD6vcbKSlcqecGCbKjPJ0EO/2njoekJReJYjHGds
-	 /gpP4UxjDqKgu6WfUbKC55GQGHg8rNohpF5cZfesoRhRkMZkFRO02a4dSpJRqdhL8S
-	 o4gLlxubm9ssPjMhpYzRg86UnIGzq9hkn+GXtAH2bkdrrciK1LdVzDOx+3KLqNk4EW
-	 ZjCbE9dCe3AAtf32cXyR63y3XfDyjm45kcIbCoc7hyoXAVRUC7ztynZAk+HTqVGEFK
-	 FSPJhDYcBQhoZCRQ3AMKiThTSzeLnIiNcNYX0ql8AGGN+ZSO16jpGG1zyXtc1T8Pia
-	 hw8QEh50gWFmg==
+	b=K67QxRPWwOvBzIuBi7VnzhsuXPxPepi/qpbAN0usUjIR9TeEMc+UwvMUAnDamy07U
+	 lw0WLuJjhWOPchA+iSwH/5ofeDhdsqFVq0kawpyRUGNjla7c9JvDfoW28/7ALet/5v
+	 rgMu+miDMDpojnONyalNpbR4UHz76N2Cc4g///DEOm4v2UaYykh35UvVy64oh1AQfZ
+	 ihlTSC/9Gk+dVFsQvfnZh/4/qA1JySu1qXkqdalz2fttrXGC/CkGce9LtR9zNkYvTb
+	 hsebKie7WeST3NOGnUbdrA6T/Fc/jUSjnTkgHq0RSJoojP19XsPto1R+oyx7ry7TiF
+	 6a5Ko+15QDoyQ==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Liew Rui Yan <aethernet65535@gmail.com>,
@@ -44,9 +44,9 @@ Cc: Liew Rui Yan <aethernet65535@gmail.com>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v3 1/3] docs/mm/damon/design: accurate semantics of nr_snapshots
-Date: Mon, 31 Aug 2026 08:02:24 -0700
-Message-ID: <20260831150227.83416-2-sj@kernel.org>
+Subject: [PATCH v3 2/3] docs/mm/damon/design: difference between watermarks and nr_snapshots
+Date: Mon, 31 Aug 2026 08:02:25 -0700
+Message-ID: <20260831150227.83416-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260831150227.83416-1-sj@kernel.org>
 References: <20260831150227.83416-1-sj@kernel.org>
@@ -60,45 +60,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Liew Rui Yan <aethernet65535@gmail.com>
 
-Change "tried to be applied" -> "completely tried to be applied" to
-maintain consistency between the documentation and the code.
+Explain the difference between nr_snapshots reaches max_nr_snapshots and
+watermarks.
 
 Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
 Reviewed-by: SJ Park <sj@kernel.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 4 ++--
- include/linux/damon.h             | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ Documentation/mm/damon/design.rst | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index a8c163475ef2b..af94fc27890b8 100644
+index af94fc27890b8..74170a2285501 100644
 --- a/Documentation/mm/damon/design.rst
 +++ b/Documentation/mm/damon/design.rst
-@@ -848,8 +848,8 @@ scheme's execution.
- - ``nr_applied``: Total number of regions that the scheme is applied.
- - ``sz_applied``: Total size of regions that the scheme is applied.
- - ``qt_exceeds``: Total number of times the quota of the scheme has exceeded.
--- ``nr_snapshots``: Total number of DAMON snapshots that the scheme is tried to
--  be applied.
-+- ``nr_snapshots``: Total number of DAMON snapshots that the scheme is
-+  completely tried to be applied.
- - ``max_nr_snapshots``: Upper limit of ``nr_snapshots``.
+@@ -874,7 +874,8 @@ the action to the region will fail.
  
- "A scheme is tried to be applied to a region" means DAMOS core logic determined
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 6842a336291e8..d3f45f4dcdafa 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -359,7 +359,8 @@ struct damos_watermarks {
-  *		Total bytes that passed ops layer-handled DAMOS filters.
-  * @qt_exceeds: Total number of times the quota of the scheme has exceeded.
-  * @nr_snapshots:
-- *		Total number of DAMON snapshots that the scheme has tried.
-+ *		Total number of DAMON snapshots that the scheme is completely
-+ *		tried to be applied.
-  *
-  * "Tried an action to a region" in this context means the DAMOS core logic
-  * determined the region as eligible to apply the action.  The access pattern
+ Unlike normal stats, ``max_nr_snapshots`` is set by users.  If it is set as
+ non-zero and ``nr_snapshots`` be same to or greater than ``nr_snapshots``, the
+-scheme is deactivated.
++scheme is deactivated.  Note that, unlike watermarks, even if a scheme's
++``nr_snapshots`` reaches ``max_nr_snapshots``, monitoring will not stop.
+ 
+ To know how user-space can read the stats via :ref:`DAMON sysfs interface
+ <sysfs_interface>`, refer to :ref:s`stats <sysfs_stats>` part of the
 -- 
 2.47.3
