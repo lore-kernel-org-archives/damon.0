@@ -1,198 +1,272 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com [44.245.243.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC26F3AAF54
-	for <damon@lists.linux.dev>; Mon, 31 Aug 2026 22:39:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B339659A
+	for <damon@lists.linux.dev>; Mon, 31 Aug 2026 22:50:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.245.243.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788215978; cv=none; b=K0+k7H4HZX0hK0jdMc/A331xwfu4DF6g1BEvla/kA+upXAFsxT2952f8U1d0HeE3iveAfGG6/w09u2mi9DkIYSJ/aG72nUIUwJPhs/L8/dRKqWeH2n+waDRRSDpN0wu9ygHZlz2aZVLjQ2uGfcDG59VDRLcJVzEcIqRoxEEGeXU=
+	t=1788216649; cv=none; b=GniHaK4x8lFm2lA2qWFVvIU09dtLGn/fZO9SSq6w54Hj21SykbYw5y7xqkzNoQsmsOqQhC/wHAIoKGZFLVcQsiIXtznu/DD4sYyfNJzV7glAWhravGiDpRs5dOa4suMCw/y+s8t0Cotluf/U3VBM2z2yvrYhjBMpVkBbBaYtXRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788215978; c=relaxed/simple;
-	bh=Qwh9ZK+lJt5vSb3Eex4BdprBaVZkUTEnrmZd+06vxmY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=g5g0v96xy7NWKimSvHUdQ1uVYaxq5ILABO/HdOhSGvlpE+D7+jivygwENs+7+mwTVZ5huGJ31OpaEQrN7QIO++XNb0KFDZb4L3CPEDlWrNT/yei13ljEapLRUQMqO0+n7f+ikmHy3uw12kuCKhVkKyJhHkvcA9I0m0w+xQhWRP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NSJ2bLyt; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788216649; c=relaxed/simple;
+	bh=gl2v/1L+wcPN6rQpNNQTnjg23DaQiqz2K074ashyohI=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WeFkkUnTh3TmZV5OmsyCiahQ4Wc7hmTK9aHdyFZ/jUnOoMhOX/2nC72wMtDJRwWlQkyfALpxMtpLv4qhoqmNlAq/Zyn2LlQSTMPwvj7tTjquXnTvd6aO2/rZO9dNvFqHZf9a/YQR9XmffcRI2vQlTbHurJwBMWp6asuBn3ZXkSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=qCilTKkm; arc=none smtp.client-ip=44.245.243.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NSJ2bLyt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42841F000E9;
-	Mon, 31 Aug 2026 22:39:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788215977;
-	bh=V3Fw4EyWlZfZBRPzq68sCOhKv6jmdLDdOXnMXiAnnRI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=NSJ2bLytDvw11t3kWDXr5XLCodIhLxijRfyxzFJP5jnmnbivsCQ5DdARTAoUVC8O+
-	 5bjEF8a4JLAHb89o3uh3HWiLzbyjSG3op9WyjSvNFOP4E+GBo0y+MlqFPdxBYOcjg0
-	 HKvPnJQ086h2I2LFEFPmTa8OqM3uTmAZOnClp0zHi1zE4ZzQ7a4/ZSYm5XF38LaVbZ
-	 e2o7o1ai/hGDF0cH6NjWHdjSfPMsKyeXAj+zMFZcdoZFR4ErXlOf49NSILu/eeLCvn
-	 YctKaer0M1Dv+65SNyFM0BWPSOTqcrDgxTzVXfEnHpRqM+bYJ0eaJBUe39H+9TFDrE
-	 LVavUljJ2FQ3g==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] mm/damon/vaddr: use a page-aligned address for the
- sampling walks
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Nathan Gao" <zcgao@amazon.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260831221151.50561-1-zcgao@amazon.com>
-References: <20260831221151.50561-1-zcgao@amazon.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 31 Aug 2026 22:39:36 +0000
-Message-Id: <20260831223936.D42841F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="qCilTKkm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1788216646; x=1819752646;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=F4AASk5pAsuqCt1k3uv39yeWLbs5DBs7DdYUaOL2uKk=;
+  b=qCilTKkmnht7vOyp0bgGWOstnRsQwRGYzlbCJIVEZcbG5H54U8d1sy6x
+   7lwO6YQSseNSC/vGq1FIQ2/GYFfpUj/7HY/VSP3bO8uDQfN6DrZIY78bR
+   stoNYTFtWhLFmshNbuLqHipnANeHYtzaDtGDmeTDwCtZueS2Cu6tq4a+C
+   BvTUAOXZ+lpFwBvZE3l6zYdqLwDoYwz6jCbHBVittuyNrWiuNLa4QDpty
+   W9JGyD6MM7ZEaSD0tMaSWWWTD6wqj2zisiONj1uYgcE/knswnnlfrCZxO
+   OIXanvSdrK3d9SCq1szspXnaXSFhHX6dBTweg65XnaR6Sm8EefYgY81HK
+   w==;
+X-CSE-ConnectionGUID: emM68SDdSm+SCPe6EuNcWA==
+X-CSE-MsgGUID: yJqCWLVLREuX1wKcmHNf8A==
+X-IronPort-AV: E=Sophos;i="6.25,254,1779148800"; 
+   d="scan'208";a="26947124"
+Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
+  by internal-pdx-out-001.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2026 22:50:45 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [205.251.233.53:10815]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.46.234:2525] with esmtp (Farcaster)
+ id 8ef9c425-d43b-4df8-8b37-7b1ddf3e28ba; Mon, 31 Aug 2026 22:50:44 +0000 (UTC)
+X-Farcaster-Flow-ID: 8ef9c425-d43b-4df8-8b37-7b1ddf3e28ba
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.45;
+ Mon, 31 Aug 2026 22:50:44 +0000
+Received: from 6c7e67c92ceb.amazon.com (10.187.171.29) by
+ EX19D001UWA001.ant.amazon.com (10.13.138.214) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.46;
+ Mon, 31 Aug 2026 22:50:44 +0000
+From: Nathan Gao <zcgao@amazon.com>
+To: <sj@kernel.org>
+CC: <akpm@linux-foundation.org>, <baolin.wang@linux.alibaba.com>,
+	<damon@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<linux-mm@kvack.org>, <stable@vger.kernel.org>, <zcgao@amazon.com>
+Subject: Re: [PATCH] mm/damon: use a page-aligned sampling address
+Date: Mon, 31 Aug 2026 15:50:32 -0700
+Message-ID: <20260831225032.58045-1-zcgao@amazon.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260829015511.74221-1-sj@kernel.org>
+References: <20260829015511.74221-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: EX19D032UWB001.ant.amazon.com (10.13.139.152) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
 
-Thank you for your contribution! Sashiko AI review found 4 potential issue(=
-s) to consider:
+On Fri, 28 Aug 2026 18:55:11 -0700 SJ Park <sj@kernel.org> wrote:
 
-Pre-existing issues:
-- [High] The patch fails to fix the unaligned page table walk vulnerability=
- for `r->ar.start` in DAMOS migration and stat paths.
-- [High] Incorrect PTE advancement for large folios in `damos_va_migrate_pm=
-d_entry` and `damos_va_stat_pmd_entry` causes unrelated PTEs to be silently=
- skipped.
-- [High] `damos_madvise` miscalculates the madvise range when region bounda=
-ries are not page-aligned, potentially applying actions to memory completel=
-y outside the region.
-- [High] Unaligned huge page address passed to `mmu_notifier_clear_young()`=
- corrupts adjacent huge pages' access bits.
---
+> On Fri, 28 Aug 2026 18:04:55 -0700 Nathan Gao <zcgao@amazon.com> wrote:
+> 
+> > Hi SJ,
+> > 
+> > Thanks for your review!
+> > 
+> > On Thu, 27 Aug 2026 17:22:11 -0700 SJ Park <sj@kernel.org> wrote:
+> > 
+> > > Hello Nathan,
+> > > 
+> > > On Thu, 27 Aug 2026 12:38:21 -0700 Nathan Gao <zcgao@amazon.com> wrote:
+> > > 
+> > > > __damon_va_prepare_access_check() picks a random byte address within the
+> > > > region and stores it in r->sampling_addr. There are two users of
+> > > > r->sampling_addr in vaddr.c that pass it into a page table walk, and
+> > > > both use it as the address of a page.
+> > > > 
+> > > >   damon_va_mkold(mm, r->sampling_addr)
+> > > >     damon_va_walk_page_range(mm, addr, addr + 1)
+> > > >       damon_mkold_pmd_entry()
+> > > >         damon_ptep_mkold(pte, vma, addr)
+> > > >           ptep_test_and_clear_young(vma, addr, pte)
+> > > >           mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE)
+> > > > 
+> > > >   damon_va_young(mm, r->sampling_addr, &folio_sz)
+> > > >     damon_va_walk_page_range(mm, addr, addr + 1)
+> > > >       damon_young_pmd_entry()
+> > > >         ptep_get(pte)
+> > > >         mmu_notifier_test_young(walk->mm, addr)
+> > > > 
+> > > > test_and_clear_young_ptes(), which backs ptep_test_and_clear_young() on
+> > > > arm64, documents @addr as "Address the first page is mapped at".
+> > > > 
+> > > > For arm64, before commit 6f0e1142173a ("arm64: mm: support batch
+> > > > clearing of the young flag for large folios"),
+> > > 
+> > > The @addr documentation is also introduced by this commit.  This commit is
+> > > authored at 2026-02-09.
+> 
+> I was wrong.  The documentation was introduced by commit 6d7237dda44f ("mm: add
+> a batched helper to clear the young flag for large folios"), which was authored
+> by Baolin on 2026-03-06.
+> 
+> > > 
+> > > > the contpte helper walked
+> > > > exactly CONT_PTES entries from the aligned-down page table pointer and
+> > > > used @addr only to pass down to each entry, so an unaligned value was
+> > > > harmless:
+> > > > 
+> > > >         ptep = contpte_align_down(ptep);
+> > > >         addr = ALIGN_DOWN(addr, CONT_PTE_SIZE);
+> > > >         for (i = 0; i < CONT_PTES; i++, ptep++, addr += PAGE_SIZE)
+> > > 
+> > > So, there was no issue before the commit.
+> > > 
+> > 
+> > Right. Before 6f0e1142173a, unaligned addresses were tolerated but I don't
+> > think this is guaranteed.
+> > 
+> > > > 
+> > > > Align the sampled address down to a page boundary. It is the address of
+> > > > the page to sample, so this matches its intended meaning and fixes both
+> > > > users in vaddr.c.
+> > > 
+> > > This indeed sounds like can fix the issue to me.  However, was it a clear rule
+> > > that we should pass only contepte-aligned addrss to
+> > > ptep_test_and_clear_young()?  And is DAMON the only ptep_test_and_clear_young()
+> > > caller that is mistakenly passing the unaligned address?
+> > > 
+> > 
+> > It is not spelled out as an explicit rule, but the documented "Address
+> > the first page is mapped at" implies it,
+> 
+> You mean the comment on test_and_clear_young_ptes(), right?  But as I mentioned
+> above, the comment was introduced by Baolin's patch that was authored on
+> 2026-03-06.  I'd still appreciate Baolin's opinion.
+> 
 
-commit fa91d6928f529249184a9980dfc55fc3ff427ea8
-Author: Nathan Gao <zcgao@amazon.com>
+I think you are right. I shouldn't reference this and I dropped it in v2 commit
+message. 
 
-mm/damon/vaddr: use a page-aligned address for the sampling walks
+> > and these callers are using
+> > aligned addresses:
+> > 
+> >  mm/page_idle.c: page_idle_clear_pte_refs_one()
+> >  fs/proc/task_mmu.c: clear_refs_pte_range()
+> > 
+> > > If not, it might make sense to make contpte_test_and_clear_young_ptes() support
+> > > unaligned adress again in my opinion.  May I ask your opinion, Baolin?
+> > > 
+> > > > 
+> > > > Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+> > > 
+> > > I think 6f0e1142173a ("arm64: mm: support batch clearing of the young flag for
+> > > large folios") would be mroe correct 'Fixes:', if there was no issue before the
+> > > commit.
+> > > 
+> > 
+> > Will use that in v2.
+> > 
+> > > > -	r->sampling_addr = damon_rand(ctx, r->ar.start, r->ar.end);
+> > > > +	r->sampling_addr = PAGE_ALIGN_DOWN(damon_rand(ctx, r->ar.start,
+> > > > +						      r->ar.end));
+> > > 
+> > > If we need to have the fix in DAMON, this kind of change would be needed.
+> > > 
+> > > However, what happens if the address is backed by large folios?
+> > > 
+> > > Before the commit 6f0e1142173a, also, it was aligning to CONT_PTE_SIZE.  Should
+> > > we do same?
+> > 
+> > Passing a page-aligned address restores the pre-6f0e1142173a behavior.
+> > Before the change, the helper aligned ptep down to the block start and
+> > walked a fixed CONT_PTES entries, regardless of addr.  After the
+> > change, the walk covers [ALIGN_DOWN(addr, CONT_PTE_SIZE),
+> > ALIGN(addr + nr * PAGE_SIZE, CONT_PTE_SIZE)).  With a sub-page offset,
+> > addr + PAGE_SIZE lands just past the block boundary, so the round-up
+> > extends the walk a whole block further.  With a page-aligned addr,
+> > addr + PAGE_SIZE is at most the block end, so the round-up lands
+> > exactly on the block end and the walk covers the same CONT_PTES
+> > entries as before the commit.
+> > 
+> > We also can't align to CONT_PTE_SIZE in DAMON since it's defined only under
+> > arch/arm64/:
+> > 
+> >   #define CONT_PTES		(1 << (CONT_PTE_SHIFT - PAGE_SHIFT))
+> >   #define CONT_PTE_SIZE		(CONT_PTES * PAGE_SIZE)
+> 
+> DAMON cares only exactly the byte of the address, so I agree this would work
+> for DAMON and be safe.  But, still the behavior is not exactly same to
+> pre-6f0e1142173a, isn't it?  I'm not really sure if this is really the correct
+> use of the function.  Again, I'd appreciate Baolin's comment.
+> 
 
-This commit aligns the sampling address passed to damon_va_walk_page_range()
-down to a page boundary in damon_va_mkold() and damon_va_young(). This
-prevents an out-of-bounds page table access on arm64 caused by clearing the
-young flag on a batch of PTEs derived from an unaligned address.
-
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 0648400b2d65b..fe76714d8e3d6 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -350,6 +350,9 @@ static void damon_va_mkold(struct mm_struct *mm, unsi=
-gned long addr)
->  		.hugetlb_entry =3D damon_mkold_hugetlb_entry,
->  	};
-> =20
-> +	/* Arch helpers can derive a page range from @addr; align it down. */
-> +	addr =3D PAGE_ALIGN_DOWN(addr);
-> +
-
-[Severity: High]
-This is a pre-existing issue, but does this patch miss fixing the same
-unaligned page table walk vulnerability for r->ar.start in the DAMOS
-migration and stat paths?
-
-While this commit fixes damon_va_mkold() and damon_va_young() by
-aligning the address before walking the page table, DAMON region boundaries
-(r->ar.start) can also be unaligned. damos_va_migrate() and
-damos_va_stat() pass r->ar.start to damon_va_walk_page_range()
-without aligning it.
-
-When a YOUNG filter is applied, this unaligned address propagates through
-damos_va_filter_out() to damon_ptep_mkold(..., addr):
-
-mm/damon/vaddr.c:damos_va_migrate() {
-    ...
-    damon_va_walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
-    ...
-}
-
-Will this trigger the exact same out-of-bounds PTE access bug on arm64
-that this patch intends to fix?
-
-
-[Severity: High]
-This is a pre-existing issue, but can passing this PAGE_SIZE aligned
-address cause state corruption for memory access tracking in secondary MMUs
-(like KVM) for huge pages?
-
-The page table walker calls damon_mkold_pmd_entry() and
-damon_mkold_hugetlb_entry() with this page-aligned, but not necessarily
-huge-page-aligned addr.
-
-In damon_pmdp_mkold(), this unaligned addr is passed verbatim to
-mmu_notifier_clear_young():
-
-mm/damon/ops-common.c:damon_pmdp_mkold() {
-    ...
-    young |=3D mmu_notifier_clear_young(vma->vm_mm, addr,
-                                      addr + HPAGE_PMD_SIZE);
-    ...
-}
-
-Because addr is offset within the huge page, does the invalidation range
-[addr, addr + HPAGE_PMD_SIZE) span past the end of the current huge page
-and corrupt the access bits of the adjacent huge page?
-
->  	damon_va_walk_page_range(mm, addr, addr + 1, &damon_mkold_ops, NULL);
->  }
-
-[ ... ]
-
-> @@ -476,6 +479,9 @@ static bool damon_va_young(struct mm_struct *mm, unsi=
-gned long addr)
->  		.hugetlb_entry =3D damon_young_hugetlb_entry,
->  	};
-> =20
-> +	/* Arch helpers can derive a page range from @addr; align it down. */
-> +	addr =3D PAGE_ALIGN_DOWN(addr);
-> +
-
-[Severity: High]
-This is a pre-existing issue, but does the PTE loop in
-damos_va_migrate_pmd_entry() and damos_va_stat_pmd_entry() incorrectly
-skip unrelated PTEs for large folios?
-
-In these PMD entry callbacks, the advancement relies on
-folio_nr_pages(folio):
-
-mm/damon/vaddr.c:damos_va_migrate_pmd_entry() {
-    ...
-    nr =3D folio_nr_pages(folio);
-    ...
-    pte +=3D nr;
-    addr +=3D nr * PAGE_SIZE;
-    ...
-}
-
-If the iteration starts on a tail subpage of a large folio (for example, if
-the region boundary r->ar.start lands in the middle of a folio), the
-remaining pages of that folio in the current PMD are fewer than
-folio_nr_pages(folio). By advancing by the full folio_nr_pages(folio),
-will this overstep the end of the folio and silently skip subsequent,
-unrelated PTEs?
+I'd appreciate Baolin's clarification as well here.
 
 
-[Severity: High]
-This is a pre-existing issue, but does damos_madvise() miscalculate the
-range when region boundaries are not page-aligned, potentially applying
-actions to memory completely outside the target region?
+> > 
+> > 
+> > > Also, I think we should pass aligned address to only the functions that
+> > > require alignement.  Making the alignment to the sampling address in general
+> > > sounds too much to me.  Particularly, we are working on supporting new page
+> > > access check primitives other than PTE Accessed bit, like AMd IBS.  In the
+> > > case, we might support <PAGE_SIZE granularity monitoring.  Aligning sampling
+> > > address in general will make it more complicated.
+> > 
+> > Makes sense. I will keep sampling_addr as is and align inside damon_va_mkold()
+> > and damon_va_young() in v2.
+> 
+> Regardless of Baolin's comment, let's fix this issue.  So the v2 would be
+> appreciated.  In the v2, could you also add more details about how the issue
+> can be reproduced, and the user impact?  You mentioned you found memory
+> corruption from DAMON selftets.  It would be nice if you could make it more
+> detailed, such as what selftest reproduces the issue and what symptoms it
+> showed you.
 
-The boundaries are calculated using PAGE_ALIGN:
+Added the crash stack trace and the impact to the v2 commit message:
+https://lore.kernel.org/all/20260831221151.50561-1-zcgao@amazon.com/
 
-mm/damon/vaddr.c:damos_madvise() {
-    ...
-    unsigned long start =3D PAGE_ALIGN(r->ar.start);
-    unsigned long len =3D PAGE_ALIGN(damon_sz_region(r));
-    ...
-}
+> 
+> Nevertheless I'm also wondering if supporting unaligned address again, like
+> below also works.
+> 
+> '''
+> --- a/arch/arm64/mm/contpte.c
+> +++ b/arch/arm64/mm/contpte.c
+> @@ -519,9 +519,12 @@ bool contpte_test_and_clear_young_ptes(struct vm_area_struct *vma,
+>          * of the same large folio in a single VMA and a single page table.
+>          */
+> 
+> -       unsigned long end = addr + nr * PAGE_SIZE;
+> +       unsigned long end;
+>         bool young = false;
+> 
+> +       ptep = contpte_align_down(ptep);
+> +       addr = ALIGN_DOWN(addr, CONT_PTE_SIZE);
+> +       end = addr + nr * PAGE_SIZE;
+>         ptep = contpte_align_addr_ptep(&addr, &end, ptep, nr);
+>         for (; addr != end; ptep++, addr += PAGE_SIZE)
+>                 young |= __ptep_test_and_clear_young(vma, addr, ptep);
+> '''
+> 
+> Nathan, what do you think?  If it makes sense to you, could you also test this?
 
-If a region spans from 0x10005 to 0x11000 (size 0xFFB), start
-becomes 0x11000 and len becomes 0x1000. The resulting do_madvise()
-range is 0x11000 to 0x12000. Will this completely miss the target
-region (which ends at 0x11000) and incorrectly apply destructive actions
-like MADV_PAGEOUT or MADV_FREE to the page entirely after the region?
+I think this may introduce an issue for the case that nr > 1.  If the
+address is in the middle of the block, an align like this would move it
+to the beginning of the block, so the walk would cover the wrong entries.
 
->  	damon_va_walk_page_range(mm, addr, addr + 1, &damon_young_ops, &arg);
->  	return arg.young;
->  }
+> 
+> 
+> Thanks,
+> SJ
+> 
+> [...]
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260831221151.5056=
-1-1-zcgao@amazon.com?part=3D1
+Thanks,
+Nathan
+
+Sent using hkml (https://github.com/sjp38/hackermail)
