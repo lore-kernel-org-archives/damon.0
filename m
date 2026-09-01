@@ -1,51 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D881E433BB0;
-	Tue,  1 Sep 2026 04:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8D643C7D3;
+	Tue,  1 Sep 2026 04:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788237273; cv=none; b=UquCh8uJDCCAIAE9qJiehHYm2CyNocoibGpq5T8VSpXCwdfTJA0zaaPyQcKVDp0UwokzriXlcbg/wdczeHXGKEDHDJH5yJOIZNbpOKbejAJ5fm7xiXll4udmcJXWIE+0qL7Nxr1R+6YlUPCHgO9ubZb6AIeAkrH0Xy10zW6Y5oI=
+	t=1788237273; cv=none; b=AFZN2uEM5hpqRf2sJVbBFTjM++07HbxM6EI1S8DiJSi15MCaAIylK2v5lqDmNGsOU6I3qfs/kzUt4PAOEUdEPjdm4NmjHQOhp+Mc3cU/sXM7v8VmmexVsIVw2oHMV4Nia8WNikwxqaU58vJp4gxU5OFktSaJn3vVJcrlu5cDk+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788237273; c=relaxed/simple;
-	bh=g/tFPfelQzKUfzsRZPs73xHoniRK3oTmoDYddCctcSI=;
+	bh=Pffw0QddcOdszpO6Pf+uRui7oVwqUV9y0L1CM1LEgZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oPtWWTxObuS+5O2aCpiD6SiMB2sGphv3qTgTPFvdExjFvi/k8Q7LKDrRePAQX+4ecHlLzHRcMf6+OOJ/mGLgSAvlhxngtyZStV4sqTYY+TogTcW91BxN+sEmftDY0X0WylxaeY/eZIBAfjfu1cYH6SGdtedwAwSbSjdusKAolKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E54dGmV+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PDoDL4FCqjVUED0Q7fuuFXaqEY4d9do+Bgp68rYVBZHLR5JYG7zJNtw4Irarnk4E6vgc7jdjS5b24eZyDyKRpUy1ExjrifB+DF+PJe2exgdm4ctnce3Wal8SphgkvJAy6KdBkmGA2GDMqJwrxLLYf1y4cm5nFhtDVGR1/MyEsAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KYef/bpG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E54dGmV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370791F00A3F;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KYef/bpG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78F81F00A3D;
 	Tue,  1 Sep 2026 04:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788237271;
-	bh=PjqVhtQyye+bbFZP93YpIQ5LAq+rT1MA3lQj7bnBnXw=;
+	s=k20260515; t=1788237272;
+	bh=Zxj0qXZlLFjv8Oo1ubEI7gb1ZBWWHlkx56zIdj50cXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E54dGmV+ijmLuWB8ca5ofN+kA/w6tVCBO5KUhCKNGelJFI4PmgsMMVB5Dpvcgk/HK
-	 uSsQT233Oud8vsXqD1t+tqGWAWy6Hjv5XvpDrEm9ePM8vNgIxCCvRkqkk7xreuWYlO
-	 DFKplMDLD4B0WhLknxqMVvShwQGh2wTNfBHa0d/E3/BEBHzOsxfsR2CzWo73FRxi+w
-	 ZNTKvaK21djuUvfW8Le/iaBTSBbExTyzVOLIqx0BpPNob44racSlYZywU4RpCDr1US
-	 Yeo1Id7ps2LAeg7V1g5K6Tsz8Ww6465Iy4/MmgQ2MsqrmwFO+sDT6D/V2YFuB1TqF6
-	 2aQy3OT6tb10w==
+	b=KYef/bpGHdth5P4hpCVs8AlrupN3bO+g/Ct0O+xni8mx5I4W4aahUiVZOSvaeGt5P
+	 hFQr4fppHSKmAviFXy3GEKD9F2/WlLSse2r99DeEt3jwhJRPXwqjk71puz7Zm6A1p8
+	 1csdIYo6QqE5ct8u+ONiCVPaio6JQERUgSb1EGHaIOaBApezvGSDrF1CAp41wmxpzL
+	 kiku/sCeJaebyCTbU5DDEjxJllIO0lHjfTQwmHe170oOIzdm6RKYlvdyIxrdvC+26+
+	 WiZGwNs1kKYsBOBytH2hvAupF53+GeWUzC3SJm/vGmoS4GGcZqOMTbxLvfo8MAuBbm
+	 0ZFv0izsEPekA==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
 	Lorenzo Stoakes <ljs@kernel.org>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 16/17] Docs/admin-guide/mm/damon/usage: document probe preps sysfs files
-Date: Mon, 31 Aug 2026 21:34:12 -0700
-Message-ID: <20260901043417.2165-17-sj@kernel.org>
+Subject: [PATCH 17/17] Docs/ABI/damon: document probe prep sysfs files
+Date: Mon, 31 Aug 2026 21:34:13 -0700
+Message-ID: <20260901043417.2165-18-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260901043417.2165-1-sj@kernel.org>
 References: <20260901043417.2165-1-sj@kernel.org>
@@ -55,52 +51,39 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for the newly added DAMON probe preps sysfs
+Update DAMON ABI document for the newly added DAMON probe prep sysfs
 files.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ Documentation/ABI/testing/sysfs-kernel-mm-damon | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index da5f9afd08aef..023c6334024f8 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -74,6 +74,9 @@ comma (",").
-     │ │ │ │ │ │ nr_regions/min,max
-     │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
-     │ │ │ │ │ │ │ 0/weight
-+    │ │ │ │ │ │ │ │ preps/nr_preps
-+    │ │ │ │ │ │ │ │ │ 0/prep_action
-+    │ │ │ │ │ │ │ │ │ ...
-     │ │ │ │ │ │ │ │ filters/nr_filters
-     │ │ │ │ │ │ │ │ │ 0/type,matching,allow,path
-     │ │ │ │ │ │ │ │ │ ...
-@@ -283,9 +286,18 @@ In the beginning, this directory has only one file, ``nr_probes``.  Writing a
- number (``N``) to the file creates the number of child directories named ``0``
- to ``N-1``.  Each directory represents each monitoring probe.
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index e675a57145e36..f8d2601e82904 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -173,6 +173,19 @@ Contact:	SJ Park <sj@kernel.org>
+ Description:	Writing to and reading from this file sets and gets the
+ 		per-probe attribute weight.
  
--In each probe directory, one directory, ``filters`` exists.  The directory
--contains files for installing filters for the probe, that is used to determine
--the data attribute for the probe.
-+In each probe directory, two directories, ``preps`` and ``filters`` exist.  The
-+directories contain files for installing probing preparation actions and
-+filters for the probe, that are used to determine the data attribute for the
-+probe.
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/preps/nr_preps
++Date:		Jun 2026
++Contact:	SJ Park <sj@kernel.org>
++Description:	Writing a number 'N' to this file creates the number of
++		directories for each DAMON probing preparation action named '0'
++		to 'N-1' under the preps/ directory.
 +
-+In the beginning, ``preps`` directory has only one file, ``nr_preps``.
-+Writing a number (``N``) to the file creates the number of child directories
-+named ``0`` to ``N-1``.  Each directory represents each preparation action.
-+Each directory has one file, ``prep_action``.  The preparation action can be
-+selected by writing the name of the action to the ``prep_action`` file.  Refer
-+to the :ref:`design doc <damon_design_data_attrs_monitoring>` for the list of
-+supported actions.
- 
- Each probe directory also contains ``weight`` file.  Reading from and writing
- to the file gets and sets the :ref:`attributes-only monitoring
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/preps/<R>/prep_action
++Date:		Jun 2026
++Contact:	SJ Park <sj@kernel.org>
++Description:	Writing to and reading from this file sets and gets the probing
++		preparation action.
++
+ What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/probes/<P>/filters/nr_filters
+ Date:		May 2026
+ Contact:	SJ Park <sj@kernel.org>
 -- 
 2.47.3
