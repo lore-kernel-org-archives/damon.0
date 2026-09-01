@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F262F7F13
-	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 13:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE05A22D7A1
+	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 13:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788270413; cv=none; b=RSZhZNcoJRwUo1EZYvK3G6qGvdRN9RVr6/1uWe+JGwSWTJSRzrhj1zMKPolNzzI2R3m2cpx533K7xqI6WLAHTCdSeuvwFwDAW1tNNuytQcVq8F2eWvjSq0eLpfGjS9U1BTy6vGavRKdUpZdyLRdapFLxaMBPy84vlEcCzIv+0N4=
+	t=1788271008; cv=none; b=KDpZZk44hdce4lMDnHWpL2QL8fEIaeeZkT2+dHytw6mQA45K6VygGKZA6NGpadhOHc0ZPYsxPaxgbgIWI00whd8FxwkcvHOR17yPmqpl2GHeVEQ/unobV0AUtmILc8zxtbHhCVvkyPbIzHUnkRfJX1Bsu2uxrH+zrXJyvGBzY3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788270413; c=relaxed/simple;
-	bh=tILzg9gvGdiMxCqH5QxTRU4n/jGhkSmDIKXaMjlpeww=;
+	s=arc-20240116; t=1788271008; c=relaxed/simple;
+	bh=N7vuLeT6nNM2KBenimtixOcVwuRyAIuRrCWV4sp2lv8=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=sX4ar2eu0lg3+ZgMjFNW8RiwJJghzHpbiEiiXCDTDNjTbIJfgBH1LyXsGAKEhf+NnI7O2Jtb/oKRqm64uzJYBty4IqXRenUgJSvheVHyVFdDBfrJnFPm+4jr7TaC16qflMZPsqFVr3VrXlA2iyR+ETbyGNKVYpPeOLRjnqIifLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YajQFIe3; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Yxa0BC+ujCFm27o8oqXtgdj9v+KdFbOMGinkoSaTfIS/mGuJhAtwCAUaOx/I2bt/N6F4W0ezhtkMjjquNS0vOXVADpy4z4qho6qjyQ3ySi5O7J7bvDwiWvyQ5068MFcMFhuSCd/RtDji2+Z9i9cJSrEKuNv282JPvRUIaMOZASM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lYikraPV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YajQFIe3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2EB1F00A3D;
-	Tue,  1 Sep 2026 13:46:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lYikraPV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD7A1F000E9;
+	Tue,  1 Sep 2026 13:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788270411;
-	bh=HmoIda8CcxATufmVBNGF3AstSQGPf6Yh+UKH+CsTHvs=;
+	s=k20260515; t=1788271007;
+	bh=KIPmT4Jh7AZ/KYErN7F6pEgv4FRG0ePULjLDt7WbxZw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=YajQFIe3ULHoEdKDq7jXS6flkQlvB/4gse/B4CEAxEvRsOUsBkYH+eCiK+/FgyLe+
-	 W3NbiJQuwEkG5/KuouGFPZxj+ee5o+DWKVkOVJ6bO8E6Ye8uFU5s4cCAGwbzjxRorV
-	 PIr63eBNnQ5ias5m+Ca+msIMnoo1joCnWGS/GFkiPKpn7HsCYvsrpX68yOPfU4zq0e
-	 dEQOytsGZZZPoHtVGtFY97ws/wtfRlv9lRtOfTJs6kXS9DyIT4dDK8h4qS4DArr9q7
-	 OPmp8T3iGL13Qs6e2ivI7Bvr6jcsPHqqq2X1pDCB8dt1IN2UYs9djTIe7n/H2fzmFl
-	 PwlhDNQWWyZoA==
+	b=lYikraPV5xBR4O3AgR3nu2RRg0PV6XRw/XNZaB+p8WqaLJWXaxeCvxeM0/NBKiKbm
+	 mv9QPtaoycmlnaxAzLozTVV1G0hyQQBBo5LAecwiAOToP+hU6dunX/jdBUDetgIPOw
+	 3VZ0NMjtwvIaaySV0Qz0ILUs7+ywvU+YiU2tXYUjVrRoO1FKqenfCD+PJWIFAoiNiu
+	 TZfGQzDAW6ywcD82TksYzr8iApbufr0AerzqLa7J9eOMyUvGINSXL1irekn204cxVk
+	 2m1euJwQo8zd2CdL8JLBVvg0uuLTSpsK96iIuuokrXKQwFi0dfW8npwrermCyCrBoz
+	 AbOlsaxl/cuQw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6/7] mm/damon/core: handle extreme memory state in
- get_node_memcg_used_bp()
+Subject: Re: [PATCH 7/7] mm/damon/core: handle extreme memory state in
+ get_in_active_mem_bp()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260901131326.97615-7-sj@kernel.org>
+In-Reply-To: <20260901131326.97615-8-sj@kernel.org>
 References: <20260901131326.97615-1-sj@kernel.org>
- <20260901131326.97615-7-sj@kernel.org>
+ <20260901131326.97615-8-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 01 Sep 2026 13:46:50 +0000
-Message-Id: <20260901134651.5F2EB1F00A3D@smtp.kernel.org>
+Date: Tue, 01 Sep 2026 13:56:46 +0000
+Message-Id: <20260901135647.3AD7A1F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,65 +49,62 @@ Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
 
 Pre-existing issues:
-- [High] 32-bit integer overflow in `mult_frac()` leads to wildly inaccurat=
-e quota calculations on architectures with 32-bit unsigned longs.
+- [High] 32-bit integer overflow in mult_frac() macro when calculating memo=
+ry ratio on 32-bit systems, leading to completely incorrect DAMOS quota met=
+rics.
 --
 
-commit f507259fcccb65ad40eabec53de3e020582667f6
+commit b2f8512e8018294c2ac5082c2964a0519b9242e8
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
+mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
+   =20
+damos_get_in_active_mem_bp() uses the sum of the active and inactive
+memory amount as a denominator.  In an extreme and unlikely environment,
+active and inactive memory might be zero.  In this case, hence, it
+results in a divide by zero problem.  Avoid it by changing the
+denominator to one if it is zero, before it is being used.
 
-In extreme unlikely situations, total memory might be zero. In less
-extreme but still very unlikely situations, lruvec_page_state() calls
-might let the caller show used memory larger than total memory. In the
-two cases, damos_get_node_memcg_used_bp() could cause division by zero,
-or return underflowed value, respectively. Handle the cases by
-respectively returning 100% and 0% for used and free memory queries in
-the corner cases.
-
-Link: https://lore.kernel.org/20260329154813.47382-1-sj@kernel.org
+[1] https://lore.kernel.org/20260721034756.147011-1-sj@kernel.org
 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 32cde20de2792..6288bb3b09e65 100644
+> index 6288bb3b09e65..fb96848174dcc 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-> @@ -2853,6 +2853,12 @@ static unsigned long damos_get_node_memcg_used_bp(
->  	mem_cgroup_put(memcg);
-> =20
->  	si_meminfo_node(&i, goal->nid);
-> +	if (!i.totalram || i.totalram < used_pages) {
-> +		if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEMCG_USED_BP)
-> +			return 10000;
-> +		else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
-> +			return 0;
-> +	}
->  	if (goal->metric =3D=3D DAMOS_QUOTA_NODE_MEMCG_USED_BP)
->  		numerator =3D used_pages;
->  	else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
->  		numerator =3D i.totalram - used_pages;
->  	return mult_frac(numerator, 10000, i.totalram);
+> @@ -3005,7 +3005,7 @@ static unsigned int damos_get_in_active_mem_bp(bool=
+ active_ratio)
+>  		global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_FILE);
+>  	inactive =3D global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_ANON) +
+>  		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
+> -	total =3D active + inactive;
+> +	total =3D max(active + inactive, 1);
+>  	if (active_ratio)
+>  		return mult_frac(active, 10000, total);
 
 [Severity: High]
-This is a pre-existing issue, but does this calculation overflow on 32-bit
-architectures?
+This is a pre-existing issue, but does this calculation overflow on
+32-bit systems?
 
-The mult_frac(numerator, 10000, i.totalram) macro computes
-numerator * 10000 / i.totalram when the numerator is smaller than the
-totalram. Because numerator is an unsigned long, this multiplication is
-performed using 32-bit arithmetic on 32-bit architectures.
+If the active memory size exceeds 429,496 pages (about 1.75 GB), multiplying
+the 32-bit unsigned long active variable by 10,000 inside the mult_frac()
+macro will overflow ULONG_MAX.
 
-If the numerator exceeds roughly 429,496 pages (about 1.7 gigabytes of
-memory), multiplying it by 10,000 exceeds the 32-bit integer maximum of
-roughly 4.29 billion. This wraparound yields a massively inaccurate fractio=
-n.
+This can result in effectively random DAMON quota metrics on 32-bit systems,
+leading DAMON to misinterpret memory states and potentially over-reclaim or
+under-reclaim memory.
 
-This same overflow appears to also affect damos_get_node_mem_bp() and
-damos_get_in_active_mem_bp().
+A similar overflow can also happen in damos_quota_score():
 
-Could numerator be cast to a 64-bit type before multiplication to prevent
-this issue on larger memory systems with 32-bit kernels?
+mm/damon/core.c:damos_quota_score() {
+    ...
+    return mult_frac(goal->current_value, 10000, goal->target_value);
+}
+
+Here, goal->current_value multiplied by 10,000 overflows for large values,
+such as when microseconds of stall time exceed 430ms.
+
+>  	return mult_frac(inactive, 10000, total);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901131326.9761=
-5-1-sj@kernel.org?part=3D6
+5-1-sj@kernel.org?part=3D7
