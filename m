@@ -1,123 +1,132 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AACB2DECA8
-	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 05:21:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA99B37E5C2
+	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 05:24:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788240068; cv=none; b=QOtNDkipVpesxonel0h/lzEy2TM8/a6tnPFMOyVFujB3iBTHedUPynn3zsg6t4I0FMDkR65tuHcYunD78/EmxHrc6avkQSIMlN9rBVN7eHVOcep+MVg/vEy7dX42AHNqC8ZCO7BSR54Rcoct0g/3Q+ZCGhyfDfP0Q61Eep3Wo78=
+	t=1788240294; cv=none; b=lRSPRfcjiC7UjthRLR251drW9uoc5yRU1BCLVOa1CHmng99Qp4hBs01OFEdvdbEcxuXg7McYX7ST7JtuKEe/2oH1bKr8vbbboXnYZdnFLNEFGTGO15SIasD//FNmJcdj4KoA7Z78zC1sUEzS/67zNiqVwNDhJ0EaQE+ZGJr5qpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788240068; c=relaxed/simple;
-	bh=noWTnldhMW0YaQPIX9cRomMQ5OuCMx3zIYIhKPHHTmM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KGQwWsgJIGW3q0YO7OMROyNcBz3thE8HdRTY/K0N1JtQ/G7hRRsaEfw8aSuiHkFlSlcVoPP5TlZsjzTLvO25N4X0hC7OevffRMV1aU5yBTWBF3ZohXp9s5GwjWKt9O/8CVAOJ9ly49nKV/EzJvVxZ+ko3/Jt9ntHuvhW3nkEgBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=KPdsfQ37; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+	s=arc-20240116; t=1788240294; c=relaxed/simple;
+	bh=AjFpDQH04QGhhEU4DYYHqdOqekbBChrM43hX314Hnv4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SLSFT3NObsL3igZGB3/ROHc4VLhxNihOe6+YzT/PpjLcg3c52FleLPXUHotIxy884A0G3aLyW3sE8dkIkY0bV9D2zzHniz9539I9mb6b9sJ9juYiF7PVDL1a22HM8InEXLTqesml7G/PIhe67QzMy1hr31wDq//DU5lKctEnUp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AVNVB2if; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="KPdsfQ37"
-dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=hEPG3P/x/ozu+lY/WnNZEs9objWoPkEaUik+WEJ687U=;
-	b=KPdsfQ37BIw1yCqTL5PIQaNbF5exr5rkTec1aVoNuzcPU3yQ+ea0WDzDhMS48cbUrfF+qGBOu
-	yhNp0EbXLwZopwcmteg9kMpKjsnxzMgY0gm2oE9kGpGgXaHgKNpti5y6Q3mvzD1RC8Mgps2g3Og
-	OxqYcw7lwXvkhP6CNvUXXHs=
-Received: from mail.maildlp.com (unknown [172.18.224.150])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4hYvMB44C4zJ468Y;
-	Tue,  1 Sep 2026 13:20:22 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id A095440571;
-	Tue,  1 Sep 2026 13:20:51 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Tue, 1 Sep 2026 08:20:51 +0300
-Message-ID: <893af75e-690b-48f0-9cc9-afe07c05565c@huawei-partners.com>
-Date: Tue, 1 Sep 2026 08:20:50 +0300
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AVNVB2if"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423331F000E9;
+	Tue,  1 Sep 2026 05:24:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788240293;
+	bh=N1Qef8p6H5tPefGA87iHYtftZppHaVJg2EVht5kxbPk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=AVNVB2ifmTwEqHfxZz+A3FX3OjufZNgx4qnm5CKl3LJj/JDqBUFMnmRW62+uzT2u+
+	 cQgDn9423OLOqmba2S2XCU4UmGZQm6sCKNiqsKt/NVkz7bFc1etADNduhmi4UqtadX
+	 DSyOBIMPNOi61FE9pvFtORqwPiylm+HAJlQC+KeOSGr+sWddKjjrnlKaXkafE5vC1F
+	 kmftWra2Wc1RAGgAk2+QvZKKeW8YPvgbB6YRdDTCzXYBb3j5FAstlgT2zzIGpec7NV
+	 cEpG76KqlqipgNE01eHcwUStt1YbnrVe2ehO27vvojtMTKdnxn9Lk2IcRNEkJQgWxP
+	 OwejYHO4DKp1w==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 13/17] mm/damon/sysfs: pass preps to DAMON core
+Date: Mon, 31 Aug 2026 22:24:44 -0700
+Message-ID: <20260901052446.4122-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260901045314.9C8631F000E9@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] Docs/mm/damon/design: Document hugepage_mem_bp
- target metric
-To: SJ Park <sj@kernel.org>, Randy Dunlap <rdunlap@infradead.org>
-CC: Andrew Morton <akpm@linux-foundation.org>, "Liam R. Howlett"
-	<liam@infradead.org>, David Hildenbrand <david@kernel.org>, Jonathan Corbet
-	<corbet@lwn.net>, Lorenzo Stoakes <ljs@kernel.org>, Michal Hocko
-	<mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>, Shuah Khan
-	<skhan@linuxfoundation.org>, Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>, <damon@lists.linux.dev>,
-	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-mm@kvack.org>
-References: <20260901004712.89669-1-sj@kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260901004712.89669-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 9/1/2026 3:47 AM, SJ Park wrote:
-> On Mon, 31 Aug 2026 13:00:26 -0700 Randy Dunlap <rdunlap@infradead.org> wrote:
-Hi,
-> 
->>
->>
->> On 8/31/26 8:45 AM, Randy Dunlap wrote:
->>> Hi,
->>>
->>> On 8/31/26 7:47 AM, SJ Park wrote:
->>>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
->>>>
->>>> Document hugepage_mem_bp metric exposed by sysfs.
->>>>
->>>> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
->>>> Reviewed-by: SJ Park <sj@kernel.org>
->>>> Signed-off-by: SJ Park <sj@kernel.org>
->>>> ---
->>>>  Documentation/mm/damon/design.rst | 2 ++
->>>>  1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
->>>> index aed6cb1cf4831..a8c163475ef2b 100644
->>>> --- a/Documentation/mm/damon/design.rst
->>>> +++ b/Documentation/mm/damon/design.rst
->>>> @@ -713,6 +713,8 @@ mechanism tries to make ``current_value`` of ``target_metric`` be same to
->>>>    bp (1/10,000).
->>>>  - ``node_eligible_mem_bp``: Scheme target access pattern-eligible memory ratio
->>>>    of a node in bp (1/10,000).
->>>> +- ``hugepage_mem_bp``: Total huge page to total used memory ratio in bp
->>>> +  (1/10,000).
->>>>  
->>>>  ``nid`` is optionally required for ``node_mem_used_bp``, ``node_mem_free_bp``,
->>>>  ``node_memcg_used_bp``, ``node_memcg_free_bp`` and ``node_eligible_mem_bp`` to
->>>
->>> I've looked thru the entire design.rst file and cannot find anything telling
->>> me (or anyone) what "bp" means.  Explain??
->>
->> OK, I found it on the internet. I still think that it would be a
->> good idea to say "basis point" one time (the first time that it is used).
-> 
-> You are right, and I agree.  I will add that clarification before the next
-> merge window.
-> 
->>
->>
->> -- 
->> ~Randy
-> 
-> 
-> Thanks,
-> SJ
+On Tue, 01 Sep 2026 04:53:14 +0000 sashiko-bot@kernel.org wrote:
 
-SJ, should I submit a new patch to fix design.rst?
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Data race on `sys_prep->action` due to lockless read and write
+> --
+> 
+> commit 09b46cd761363fb28603bd1d27adb637a6c16a7d
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/sysfs: pass preps to DAMON core
+>     
+> DAMON sysfs interface provides the files for setting DAMON probe preps.
+> But the underlying code is not really passing the user-set values to
+> DAMON core.  Pass those.
+> 
+> > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> > index c0130843223d7..d02f5f8ceae5b 100644
+> > --- a/mm/damon/sysfs.c
+> > +++ b/mm/damon/sysfs.c
+> > @@ -2176,6 +2176,23 @@ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
+> >  	return damon_set_attrs(ctx, &attrs);
+> >  }
+> >  
+> > +static int damon_sysfs_set_preps(struct damon_probe *probe,
+> > +		struct damon_sysfs_preps *sys_preps)
+> > +{
+> > +	int i;
+> > +
+> > +	for (i = 0; i < sys_preps->nr; i++) {
+> > +		struct damon_sysfs_prep *sys_prep = sys_preps->preps_arr[i];
+> > +		struct damon_prep *prep;
+> > +
+> > +		prep = damon_new_prep(sys_prep->action);
+> 
+> [Severity: Low]
+> Could this result in a data race on sys_prep->action?
+> 
+> During DAMON context building, this locklessly reads the action enum while a
+> concurrent root user could be writing to the /sys/.../prep_action attribute.
+> 
+> A concurrent write to prep_action could happen while another process issues a
+> commit command to the state file, which runs damon_sysfs_commit_input
+> asynchronously on the kdamond thread without holding damon_sysfs_lock.
+> 
+> Would it be better to use READ_ONCE() here, along with a corresponding
+> WRITE_ONCE() on the writer side, to adhere to the Linux Kernel Memory Model
+> guidelines and avoid potential KCSAN warnings?
 
--- 
-Asier Gutierrez
-Huawei
+Good catch.  A few similar call paths protect stores with damon_sysfs_lock.  I
+will protect prep->action writing with the lock.  Because the context build is
+done while holding the lock, it should avoid the race, like below.
 
+'''
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -827,7 +827,10 @@ static ssize_t prep_action_store(struct kobject *kobj,
+
+                action_name = &damon_sysfs_prep_action_names[i];
+                if (sysfs_streq(buf, action_name->name)) {
++                       if (!mutex_trylock(&damon_sysfs_lock))
++                               return -EBUSY;
+                        prep->action = action_name->action;
++                       mutex_unlock(&damon_sysfs_lock);
+                        ret = count;
+                        break;
+                }
+'''
+
+> 
+> > +		if (!prep)
+> > +			return -ENOMEM;
+> > +		damon_add_prep(probe, prep);
+> > +	}
+> > +	return 0;
+> > +}
+> > +
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260901043417.2165-1-sj@kernel.org?part=13
+
+
+Thanks,
+SJ
