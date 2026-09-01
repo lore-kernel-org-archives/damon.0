@@ -1,108 +1,118 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B599372B2B
-	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 04:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F89305693
+	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 05:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788238396; cv=none; b=pS8XpsZfXX4bXOKN6GknrAAIBgsJDLpTpmIzgejYhM1NWx/TTZMP6m3f4D22Xr3bKVzcFchyqu5jav193BLKCaOwniCrjpjZYAYccHKTRQerQCR1n4HqhLgh3t0TQSkuXdpzzBqTcyLe+A6K8mG6DTMgQZW+BxQI7kmfOD7wVsY=
+	t=1788238920; cv=none; b=HSqTgU2CB1rrdhB1G6HnUKSSSb/88m62XnqowdtMcNkPlmpGoQGIG/nfkcI8m8xdLF/sXNE+OcD3f5/FOQ4uUYrhl7Qx1nR7LDV80oITTX5FkqPM+AJobC9jGeL4UCA07/2XNM5c3bPamCB2Q7DvxkphWXKMfQtVJjJAQtndLSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788238396; c=relaxed/simple;
-	bh=SC6spaVV3/KblvtiJJwwdXNK4ETH0wDWSeZtog4O5+4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=C7m9UihUeWe6MQN5otMZ3GvK00jHNb2JtGTqpzxseT0M02VE9rYQRlUG87RtZO3CbwiUGfHIwSArZsvc0YS9TQw2QA3/dHnPF+cx+MBduY0JEHpcUc+P3srN2DeuOCUKwsdEWAqZkjUjGrlh3Zk9X6xjAo3cQA8v0CDWwaX8Al8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NwAcRdVd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788238920; c=relaxed/simple;
+	bh=vOW+sM+D8qh9dqmWyAfvoUKH9PH/zVQJopskjMwAu08=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iGDqPalXcLRxRkv/RIMNYxLOHA75Ftbmha9oaggcTEHlEdBzx5ArDiQ1X707NpBiz4A0kWOnNis2GHw7vpHQ6rmvGncPh3yygFaFu6n935Bd10k0eH5RT+ojdtDI1sKM9sBhrhIsX5GpDO1gPUpOdcba8T7/drk0ChXWixP+ebc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QnVIvTc5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NwAcRdVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8631F000E9;
-	Tue,  1 Sep 2026 04:53:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QnVIvTc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABC61F000E9;
+	Tue,  1 Sep 2026 05:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788238394;
-	bh=eBNS+k0lcKOK+DNNo8LSHNipKRDGHKedF+XPG8hxu2M=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=NwAcRdVdV51f+esPhvvZQ+8Q8GBYWXJZJi8n4OSOkbLje/VVR02xlOBuPmPV5gxsx
-	 adLrN6fTVifGB2APTGCJBV2X++kmboJym7GnYW3zA2NkG6EBYf4xJO2F5sx9tDomfK
-	 3sieUffgQnTQcVphf4Lb2qJu3kyuzwZNcwn5Nvbg/SBlpcjRZgxdy+21ff5679NG0B
-	 Ll9JtItLzgbmhVuEj4jEK7B7PYIX6JG1OT8wCKKs3dXhc/AJykmhwVI74CohiOk2BV
-	 Pc7fe+yOLihCR7JNNb45IqerIXbVgvH8u2/kd1bd++t7BEHRveY5aSIFdhOTIPmSQW
-	 I9+KyPv1C5ULw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 13/17] mm/damon/sysfs: pass preps to DAMON core
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260901043417.2165-14-sj@kernel.org>
-References: <20260901043417.2165-1-sj@kernel.org>
- <20260901043417.2165-14-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 01 Sep 2026 04:53:14 +0000
-Message-Id: <20260901045314.9C8631F000E9@smtp.kernel.org>
+	s=k20260515; t=1788238919;
+	bh=iCGdlz5ER+cIyhKOAbJyT6wCt9fkWTKkk/2tgNkHj+c=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=QnVIvTc5tgHgflSgHYc81MttL6PO2WqDohByc9cJwn/SC+GHUyFOWf8HW0+A74EhF
+	 ViiXOUVid1E4kPrt2vrVMNx4xOLeibANjwxC6mRV/59WnxlrSo5IvdAVtV6nmtlRU6
+	 kJoOKhpu7ohstpeU6AgqW+n6YP9MeMhUYOSUETxIdcWHPusQfUH4KfNommX83H527J
+	 rSmE2WnQpqUeuFAkhpx+zPaOPhxWBU7WfZWj0PxKIwTxL6vxrpArHEsPthY7s7c6ex
+	 58TMiRVg5gxvMhnOJoBF47uH0XrScDRthtn5atKf//wD8tnijQTTkyfRlpcGEW1HNW
+	 bgmN1RBK0LktQ==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 05/17] mm/damon/core: introduce damon_prep struct
+Date: Mon, 31 Aug 2026 22:01:49 -0700
+Message-ID: <20260901050151.3659-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260901044601.B5FCA1F00A3D@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] Data race on `sys_prep->action` due to lockless read and write
---
+On Tue, 01 Sep 2026 04:46:01 +0000 sashiko-bot@kernel.org wrote:
 
-commit 09b46cd761363fb28603bd1d27adb637a6c16a7d
-Author: SJ Park <sj@kernel.org>
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] Missing exported cleanup API for `struct damon_prep` leads to broken abstraction on error paths.
+> --
+> 
+> commit 046989ba790c1b12be9fe4a07f46c502a62eeb7b
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/core: introduce damon_prep struct
+> 
+> This commit introduces the damon_prep data structure to specify preparatory
+> actions for DAMON probes. It also adds DAMON_PREP_SET_PGIDLE as the initial
+> preparation action for access monitoring.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 644daf5a16560..0b396c2456d05 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> 
+> [ ... ]
+> 
+> > @@ -111,6 +111,28 @@ int damon_select_ops(struct damon_ctx *ctx, enum damon_ops_id id)
+> >  	return err;
+> >  }
+> >  
+> > +struct damon_prep *damon_new_prep(enum damon_prep_action action)
+> > +{
+> > +	struct damon_prep *prep;
+> > +
+> > +	prep = kmalloc_obj(*prep);
+> > +	if (!prep)
+> > +		return NULL;
+> > +	prep->action = action;
+> > +	INIT_LIST_HEAD(&prep->list);
+> > +	return prep;
+> > +}
+> 
+> [Severity: Low]
+> Is there a missing exported cleanup API for struct damon_prep?
+> 
+> Since damon_new_prep() is exposed for external modules to allocate a new
+> prep structure, do they need a corresponding exported destructor (like
+> damon_destroy_prep()) to clean it up if an error occurs before it is
+> attached to a probe via damon_add_prep()?
+> 
+> Currently, damon_free_prep() is static, which forces any external caller to
+> manually call kfree() on error paths, potentially breaking the subsystem's
+> abstraction.
 
-mm/damon/sysfs: pass preps to DAMON core
-   =20
-DAMON sysfs interface provides the files for setting DAMON probe preps.
-But the underlying code is not really passing the user-set values to
-DAMON core.  Pass those.
+The cleanup API is not necessary.  Callers will be able to free up preps with
+the context at once using damon_destroy_ctx().
 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index c0130843223d7..d02f5f8ceae5b 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -2176,6 +2176,23 @@ static int damon_sysfs_set_attrs(struct damon_ctx =
-*ctx,
->  	return damon_set_attrs(ctx, &attrs);
->  }
-> =20
-> +static int damon_sysfs_set_preps(struct damon_probe *probe,
-> +		struct damon_sysfs_preps *sys_preps)
-> +{
-> +	int i;
-> +
-> +	for (i =3D 0; i < sys_preps->nr; i++) {
-> +		struct damon_sysfs_prep *sys_prep =3D sys_preps->preps_arr[i];
-> +		struct damon_prep *prep;
-> +
-> +		prep =3D damon_new_prep(sys_prep->action);
+> 
+> > +
+> > +void damon_add_prep(struct damon_probe *p, struct damon_prep *prep)
+> > +{
+> > +	list_add_tail(&prep->list, &p->preps);
+> > +}
+> > +
+> > +static void damon_free_prep(struct damon_prep *p)
+> > +{
+> > +	kfree(p);
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260901043417.2165-1-sj@kernel.org?part=5
 
-[Severity: Low]
-Could this result in a data race on sys_prep->action?
 
-During DAMON context building, this locklessly reads the action enum while a
-concurrent root user could be writing to the /sys/.../prep_action attribute.
-
-A concurrent write to prep_action could happen while another process issues=
- a
-commit command to the state file, which runs damon_sysfs_commit_input
-asynchronously on the kdamond thread without holding damon_sysfs_lock.
-
-Would it be better to use READ_ONCE() here, along with a corresponding
-WRITE_ONCE() on the writer side, to adhere to the Linux Kernel Memory Model
-guidelines and avoid potential KCSAN warnings?
-
-> +		if (!prep)
-> +			return -ENOMEM;
-> +		damon_add_prep(probe, prep);
-> +	}
-> +	return 0;
-> +}
-> +
-
-[ ... ]
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901043417.2165=
--1-sj@kernel.org?part=3D13
+Thanks,
+SJ
