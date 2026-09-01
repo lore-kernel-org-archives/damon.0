@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823B736212D
-	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 00:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C058326928
+	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 00:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788223028; cv=none; b=ERjcGs4IlopixkA27iMFT8uOqEXJ7Arjp0E0pCAw3l66/sKDpg0A1hVpO4GuS43+GGHW4EdIZWmgEyOc3nGkVPah0kgtDfK0eT3Tu876PXnxZGzV9WuK6s0wWyr2U10+PmwBTKov22f/AnQSvnkW3aE74uMzt0NMXs2MA3ff5A4=
+	t=1788223076; cv=none; b=Cieb6wMAaANp0hcoA7x0f8HopqfCS9fVpwlamw32+VB+qvEQ4PQx0iIh/KcVnOs0QS2DiLje+pgGf5Muop/Yq85uAVkTa68trjm7jvKqZp+cZuxbad5A06bwMAO9y5PIh5tr5sQIITyXHihHFCvoPnWr++KR5X/219/e5sZH6gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788223028; c=relaxed/simple;
-	bh=N3n36qvQJHar4XuFtLOBNv9noQ9LLLFwOM1yNcYPoLs=;
+	s=arc-20240116; t=1788223076; c=relaxed/simple;
+	bh=gll1tmEnQqPkbSCMq2nO04aFlB+4+kKwAOBOtrGJEdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E1kQhhZvizq03kbI6D823dWWtEwSjTX7UnvRyTP63elu8E6PBwz19cGgw9q4ZfYN1w2MHgpCqDItdGT/PJ1keleuRYYGnM7Gf+oQlv/4YkKPgBVY3VmZzspiBDOZpjd12ZTntwLJgT6bVYcimmhd++T5k3+FLyOOgjn/cE7puoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WZHxz2fk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nZDqwaWI6vs/XtPS+OEszgLjq1wuDKB1aV4GFqIfyEZ0fvTfAbtaQCwAz/V1eFv7ig8inxWFbHj291M/wYzYxy0xxNofMZfK9PMWD0GXqv8yx5KtejDV1Jbf2SRdBbcTuBXFgFgppaXTC7QDdRUtZCfpw/znhdVir0kM0yWrAHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vf9yGMub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WZHxz2fk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E931F000E9;
-	Tue,  1 Sep 2026 00:37:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vf9yGMub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FD31F000E9;
+	Tue,  1 Sep 2026 00:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788223024;
-	bh=RwTbzm3moHBQigZWqwJmwTQu7rTM5rBbLVNz/7yZYZI=;
+	s=k20260515; t=1788223075;
+	bh=AxgJkGnJ8RizMhHAI7dsNMY5qH2qdzahPkMyAV4QJNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZHxz2fkuOHujkOiHNF7QFr/Avy2FOba6q+YMV1ozW+ee12S7dikNzPFJtY+e6p/5
-	 p4c4NsB7k9hekIuBFTjYkV4ZbL1z+Kvu/4TBg5Za21+bhn+v+oZFDOk6RUwltYJMBs
-	 hOmoVJNXv1COItS1E4s2mIufGSp2TF8k26Ee6sM6p9U/xvofHeesxiHHv9VBSKglnN
-	 GIR1hI6Z7GvdxxLoK+VbxHr/PppkoFPxQsvNjuogBIGDrNiApIZ0pZvo3+HuhMvOjZ
-	 fyhDbRN4hquQxfJT+GoyHLFVvyBekM6JbQU2aRbgBMGjShlpzrW42MEftRUQlxScmZ
-	 AAqky6s31cPAg==
+	b=Vf9yGMub0kgLgtF6ncusuCsxeRWsWNrZJExQAajoQuTZSAE26WskLWi/7iXyQFLOj
+	 varnuo+r+CpJMdaJ9ETc4bii9uPhmDPIn+pSvzJpMCbbNfrDXtLuJzFypwk08Bt0BE
+	 ibKtHsx/nG3g4yYPLNVqFCV/8ehkqgKPCtyWmBZ3vkdGFuF+eSNOPzvd9Gf+PC1QJV
+	 nKxfDeceWBocsHy4plEPMAVBR9zN5R96ToHusTTSKuWTu6O9/vEweXlIj4oI21qIJo
+	 tQK63R2vMCtGqVK2oZtpvmfS9e06+etxKfGA9CxvMFA0LYR5Ab8UQ8KflHriH7E1CU
+	 tR/GHXLHW0eww==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.2 7/8] mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
-Date: Mon, 31 Aug 2026 17:36:50 -0700
-Message-ID: <20260901003652.88823-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v1.2 8/8] mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
+Date: Mon, 31 Aug 2026 17:37:47 -0700
+Message-ID: <20260901003748.88963-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260831184153.330251F000E9@smtp.kernel.org>
+In-Reply-To: <20260831184956.1DA321F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,83 +45,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 31 Aug 2026 18:41:52 +0000 sashiko-bot@kernel.org wrote:
+On Mon, 31 Aug 2026 18:49:55 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
 > 
 > Pre-existing issues:
-> - [High] Incorrect fallback values in `damos_get_node_mem_bp` when `i.freeram` exceeds `i.totalram`.
+> - [High] Silent integer overflow on 32-bit systems in mult_frac() usage across DAMON quota metrics, leading to drastically incorrect memory metrics.
 > --
 > 
-> commit a048cc23be81d8e450e9ee2ce22eb0a86b0cb1ba
+> commit ba2ca9efc083502fb5555a81a42e9de1ab623b4d
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
+> mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
 > 
-> This commit handles extreme corner cases where total memory is zero or
-> reported used memory exceeds total memory. It updates
-> damos_get_node_memcg_used_bp() to prevent division by zero or underflows by
-> clamping the results to 100% or 0% appropriately.
+> damos_get_in_active_mem_bp() uses the sum of the active and inactive
+> memory amount as a denominator.  In an extreme and unlikely environment,
+> active and inactive memory might be zero.  In this case, hence, it
+> results in a divide by zero problem.  Avoid it by changing the
+> denominator to one if it is zero, before it is being used.
 > 
-> Link: https://lore.kernel.org/20260329154813.47382-1-sj@kernel.org
+> Link: https://lore.kernel.org/20260721034756.147011-1-sj@kernel.org
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 75d71ac09515e..3779a04753061 100644
+> > index 3779a04753061..f8dddbff74a77 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> > @@ -2863,6 +2863,12 @@ static unsigned long damos_get_node_memcg_used_bp(
-> >  	mem_cgroup_put(memcg);
-> >  
-> >  	si_meminfo_node(&i, goal->nid);
-> > +	if (!i.totalram || i.totalram < used_pages) {
-> > +		if (goal->metric == DAMOS_QUOTA_NODE_MEMCG_USED_BP)
-> > +			return 10000;
-> > +		else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
-> > +			return 0;
-> > +	}
+> > @@ -3015,7 +3015,7 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
+> >  		global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_FILE);
+> >  	inactive = global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_ANON) +
+> >  		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
+> > -	total = active + inactive;
+> > +	total = max(active + inactive, 1);
+> >  	if (active_ratio)
+> >  		return mult_frac(active, 10000, total);
 > 
 > [Severity: High]
-> This is a pre-existing issue, but I noticed a similar block of code just
-> above this in damos_get_node_mem_bp() that appears to handle the fallback
-> logic incorrectly:
+> This isn't a bug introduced by this patch, but does the use of mult_frac()
+> here cause a silent integer overflow on 32-bit systems?
 > 
-> mm/damon/core.c:damos_get_node_mem_bp() {
->     ...
->     si_meminfo_node(&i, goal->nid);
->     if (!i.totalram || i.totalram < i.freeram) {
->         if (goal->metric == DAMOS_QUOTA_NODE_MEM_USED_BP)
->             return 10000;
->         else    /* DAMOS_QUOTA_NODE_MEM_FREE_BP */
->             return 0;
->     }
->     ...
-> }
+> The mult_frac(x, n, d) macro calculates (x / d) * n + (x % d) * n / d. On
+> 32-bit architectures, intermediate multiplications like (x % d) * n are
+> evaluated as 32-bit unsigned integers if x is an unsigned long. This
+> silently overflows if the result exceeds ~4.29 billion.
 > 
-> When i.freeram exceeds i.totalram (which can happen due to per-CPU stat drift
-> during large frees or memory hot-remove), this logic returns 10000 (100%) for
-> DAMOS_QUOTA_NODE_MEM_USED_BP and 0 for DAMOS_QUOTA_NODE_MEM_FREE_BP.
+> For example, in damos_get_in_active_mem_bp(), active is counted in pages.
+> If active memory reaches roughly 429,496 pages (about 1.7 GB),
+> 429,496 * 10,000 exceeds the 32-bit maximum of 4,294,967,295 and wraps
+> around, resulting in drastically incorrect memory metrics.
 > 
-> Since the node is effectively completely free, shouldn't it return 0 for used
-> and 10000 for free?
+> This same unsigned long overflow seems to be pre-existing in other DAMON
+> quota metrics in mm/damon/core.c as well:
+> 
+> - damos_get_node_mem_bp(): same issue with node memory.
+> - damos_get_node_eligible_mem_bp(): node_eligible is cast to unsigned
+>   long bytes, which can overflow if eligible memory exceeds ~419 KB.
+> - damos_set_effective_quota(): total_charged_sz is in bytes, which
+>   overflows when multiplied by 1,000,000 if it exceeds 4294 bytes.
+> - damos_quota_score(): goal->current_value tracks PSI in microseconds,
+>   which can easily be millions, overflowing when multiplied by 10,000.
+> 
+> Could these calculations be performed using 64-bit math on 32-bit systems
+> to prevent runaway aggressive memory reclaim or total failure to reclaim?
 
-There could be different perspective, but I think that's fine.
-
-> 
-> Could this cause DAMON memory reclaim schemes to trigger aggressively on
-> nodes that are actually completely free, potentially causing performance
-> regressions?
-
-Anyway it is a corner case.  And even in this case, quota will be changed only
-up to 2x.  So no real problem in my opinion.  We can revisit if we find a real
-issue from this in real usage.
+Known low priority issue.
 
 > 
-> >  	if (goal->metric == DAMOS_QUOTA_NODE_MEMCG_USED_BP)
-> >  		numerator = used_pages;
-> >  	else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
+> >  	return mult_frac(inactive, 10000, total);
+> >  }
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260831140254.72004-1-sj@kernel.org?part=7
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260831140254.72004-1-sj@kernel.org?part=8
 
 
 Thanks,
