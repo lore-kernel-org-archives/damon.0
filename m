@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C058326928
-	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 00:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168FE31618B;
+	Tue,  1 Sep 2026 00:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788223076; cv=none; b=Cieb6wMAaANp0hcoA7x0f8HopqfCS9fVpwlamw32+VB+qvEQ4PQx0iIh/KcVnOs0QS2DiLje+pgGf5Muop/Yq85uAVkTa68trjm7jvKqZp+cZuxbad5A06bwMAO9y5PIh5tr5sQIITyXHihHFCvoPnWr++KR5X/219/e5sZH6gM=
+	t=1788223246; cv=none; b=ePib9awng7+aqpROqEeZcdQToAFRaO7y0Uj0+ztx/E4C6NsKU4ad2G7JBX2EMIg+FrLPcFpK1LQMSjj/eFUBYVb7+9xKPJk2om1ibrPJVWN3P2Rl4Rc4H/eCJThDKbxWYvokVaLwLc1Lm2kH5KTIwjx0VsFgkvRqLT352pEKuT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788223076; c=relaxed/simple;
-	bh=gll1tmEnQqPkbSCMq2nO04aFlB+4+kKwAOBOtrGJEdw=;
+	s=arc-20240116; t=1788223246; c=relaxed/simple;
+	bh=PK2n7vZOrhTsUmnMH3JvGIHgCFecO12vOBVtt6/xpEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nZDqwaWI6vs/XtPS+OEszgLjq1wuDKB1aV4GFqIfyEZ0fvTfAbtaQCwAz/V1eFv7ig8inxWFbHj291M/wYzYxy0xxNofMZfK9PMWD0GXqv8yx5KtejDV1Jbf2SRdBbcTuBXFgFgppaXTC7QDdRUtZCfpw/znhdVir0kM0yWrAHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vf9yGMub; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dgs86NrVVRSr31RZAs8wr8SgeQyjoFu2cRGhvnBxB00Gq7+HE9mS28t3kAIp2jXF6aOzCtuG/XjZzopkfGHlHJw0WFbmvqzZI4KM0W7NNX4A9WT7J91MZkuy+gIvgXKrFH0PZRuguBvwaFO3k9MvOnUB/UtF2jp0zWibRdedeDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZSpqM4kT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vf9yGMub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FD31F000E9;
-	Tue,  1 Sep 2026 00:37:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZSpqM4kT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7228B1F000E9;
+	Tue,  1 Sep 2026 00:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788223075;
-	bh=AxgJkGnJ8RizMhHAI7dsNMY5qH2qdzahPkMyAV4QJNA=;
+	s=k20260515; t=1788223244;
+	bh=3N8NIqIOxkcYSjk247eYz7rQGp0XJk93W3Myu5nHrNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vf9yGMub0kgLgtF6ncusuCsxeRWsWNrZJExQAajoQuTZSAE26WskLWi/7iXyQFLOj
-	 varnuo+r+CpJMdaJ9ETc4bii9uPhmDPIn+pSvzJpMCbbNfrDXtLuJzFypwk08Bt0BE
-	 ibKtHsx/nG3g4yYPLNVqFCV/8ehkqgKPCtyWmBZ3vkdGFuF+eSNOPzvd9Gf+PC1QJV
-	 nKxfDeceWBocsHy4plEPMAVBR9zN5R96ToHusTTSKuWTu6O9/vEweXlIj4oI21qIJo
-	 tQK63R2vMCtGqVK2oZtpvmfS9e06+etxKfGA9CxvMFA0LYR5Ab8UQ8KflHriH7E1CU
-	 tR/GHXLHW0eww==
+	b=ZSpqM4kTqw0jxKwvfK9n3dBnjAL8wdD5lAfrynrfZMtQdgiocvvGTm2AnKUmjRmzP
+	 hM+b/68DxI64UeXiepXd5zilqWLAcsS0ezVmCahaBG42SEUD+7v2ut23iudRjIGxcO
+	 yOkPj/u62Tnv2q+4r9fz/lZNxMCy5VfdlTYcMkqNBAVElYFX/pILLvqy6Q3/mlEaxK
+	 DpHXzTYN10PlSfrYZ9FCL6FhAzYsOpeFNgL2K6f7G73aDZgY2WOjqiIwqTk+f8NuUW
+	 wPFpvgGtndbxU6q2ctNNXs0GlobJ+Ph+hpsXl+0+ErZaTHZBY3KTVyjeMNg/DLylaK
+	 oXzAUe85DsQkw==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v1.2 8/8] mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
-Date: Mon, 31 Aug 2026 17:37:47 -0700
-Message-ID: <20260901003748.88963-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	Enze Li <lienze@kylinos.cn>
+Subject: Re: [PATCH 2/7] mm/damon/core: introduce damon_set_target_pid()
+Date: Mon, 31 Aug 2026 17:40:32 -0700
+Message-ID: <20260901004032.89105-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260831184956.1DA321F000E9@smtp.kernel.org>
+In-Reply-To: <20260831163119.66bcfdd8a4ee66b3609be63a@linux-foundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,79 +45,27 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 31 Aug 2026 18:49:55 +0000 sashiko-bot@kernel.org wrote:
+On Mon, 31 Aug 2026 16:31:19 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> On Mon, 31 Aug 2026 07:26:04 -0700 SJ Park <sj@kernel.org> wrote:
 > 
-> Pre-existing issues:
-> - [High] Silent integer overflow on 32-bit systems in mult_frac() usage across DAMON quota metrics, leading to drastically incorrect memory metrics.
-> --
+> > The logic that finds the struct pid for a given pid number and assigns
+> > it to a damon_target is duplicated in multiple places.  Including
+> > damon_sysfs_add_target() of mm/damon/sysfs.c and the start functions
+> > of the two sample modules, samples/damon/wsse.c and
+> > samples/damon/prcl.c.  Add a function that does the work, and replace
+> > the duplicated code in the places with calls to the function.
+> > 
+> > Signed-off-by: Enze Li <lienze@kylinos.cn>
+> > Reviewed-by: SJ Park <sj@kernel.org>
+> > Signed-off-by: SJ Park <sj@kernel.org>
 > 
-> commit ba2ca9efc083502fb5555a81a42e9de1ab623b4d
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
-> 
-> damos_get_in_active_mem_bp() uses the sum of the active and inactive
-> memory amount as a denominator.  In an extreme and unlikely environment,
-> active and inactive memory might be zero.  In this case, hence, it
-> results in a divide by zero problem.  Avoid it by changing the
-> denominator to one if it is zero, before it is being used.
-> 
-> Link: https://lore.kernel.org/20260721034756.147011-1-sj@kernel.org
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 3779a04753061..f8dddbff74a77 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -3015,7 +3015,7 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
-> >  		global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_FILE);
-> >  	inactive = global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_ANON) +
-> >  		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
-> > -	total = active + inactive;
-> > +	total = max(active + inactive, 1);
-> >  	if (active_ratio)
-> >  		return mult_frac(active, 10000, total);
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but does the use of mult_frac()
-> here cause a silent integer overflow on 32-bit systems?
-> 
-> The mult_frac(x, n, d) macro calculates (x / d) * n + (x % d) * n / d. On
-> 32-bit architectures, intermediate multiplications like (x % d) * n are
-> evaluated as 32-bit unsigned integers if x is an unsigned long. This
-> silently overflows if the result exceeds ~4.29 billion.
-> 
-> For example, in damos_get_in_active_mem_bp(), active is counted in pages.
-> If active memory reaches roughly 429,496 pages (about 1.7 GB),
-> 429,496 * 10,000 exceeds the 32-bit maximum of 4,294,967,295 and wraps
-> around, resulting in drastically incorrect memory metrics.
-> 
-> This same unsigned long overflow seems to be pre-existing in other DAMON
-> quota metrics in mm/damon/core.c as well:
-> 
-> - damos_get_node_mem_bp(): same issue with node memory.
-> - damos_get_node_eligible_mem_bp(): node_eligible is cast to unsigned
->   long bytes, which can overflow if eligible memory exceeds ~419 KB.
-> - damos_set_effective_quota(): total_charged_sz is in bytes, which
->   overflows when multiplied by 1,000,000 if it exceeds 4294 bytes.
-> - damos_quota_score(): goal->current_value tracks PSI in microseconds,
->   which can easily be millions, overflowing when multiplied by 10,000.
-> 
-> Could these calculations be performed using 64-bit math on 32-bit systems
-> to prevent runaway aggressive memory reclaim or total failure to reclaim?
+> I assumed that From:Enze was intended here.
 
-Known low priority issue.
-
-> 
-> >  	return mult_frac(inactive, 10000, total);
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260831140254.72004-1-sj@kernel.org?part=8
+You're correct Andrew.  I found you already fixed this when applying this to
+mm-new.  Appreciate!
 
 
 Thanks,
