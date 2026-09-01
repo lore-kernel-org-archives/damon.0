@@ -1,142 +1,123 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6609637A839
-	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 05:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AACB2DECA8
+	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 05:21:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788239136; cv=none; b=jgcZtV4iHCDMQbeZVt0+Gak/nJ8T9Tj7afXbI/4+saPawEO8bvu3NfcjNhxbyTPMT8QsS2gU0Oo15sKNgcFSrDQ637yp9cSmBycUlEx3vh1i5vdtY5WYsIWSz7xKlmsO7VCk79fJrA1iQJVDdf0uVy7JijS7Gqb4b+P0pt0odOQ=
+	t=1788240068; cv=none; b=QOtNDkipVpesxonel0h/lzEy2TM8/a6tnPFMOyVFujB3iBTHedUPynn3zsg6t4I0FMDkR65tuHcYunD78/EmxHrc6avkQSIMlN9rBVN7eHVOcep+MVg/vEy7dX42AHNqC8ZCO7BSR54Rcoct0g/3Q+ZCGhyfDfP0Q61Eep3Wo78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788239136; c=relaxed/simple;
-	bh=rPNFEwG9KXkNSQf4kt6YnzhJZCFYBUYh47JMgK1tY2k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b7+U3Ii8Camo3Y08z/3ERLRPOQzP+XvTwzX/FBOYdYfOkrlPG8iT7qBj865IyoL+WExTBBWRtYJqRG1N1MZa//8fkSDEAQ/Icz+wf/beXPRpGOA2Q3ajai8XaeEiqmuX9q4cT8MqjGGJLznFn7Za2JpSz/Fh5TRgo+MbaL8RGVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NYckLJoj; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788240068; c=relaxed/simple;
+	bh=noWTnldhMW0YaQPIX9cRomMQ5OuCMx3zIYIhKPHHTmM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KGQwWsgJIGW3q0YO7OMROyNcBz3thE8HdRTY/K0N1JtQ/G7hRRsaEfw8aSuiHkFlSlcVoPP5TlZsjzTLvO25N4X0hC7OevffRMV1aU5yBTWBF3ZohXp9s5GwjWKt9O/8CVAOJ9ly49nKV/EzJvVxZ+ko3/Jt9ntHuvhW3nkEgBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=KPdsfQ37; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NYckLJoj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34C01F000E9;
-	Tue,  1 Sep 2026 05:05:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788239135;
-	bh=eRllg9sl+PZoVy3fkKCwBWBEPwCAvQjCDjqybgffAb4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYckLJojeG++FmJ2Hnv9L+XpGUCMu1zjkgS1Oq/WFqqdsdGTFYyITMlf9DqNnVJXs
-	 ORr6Wuhzo0lKQVGxsP7fwImhDPeEXSqTAEcbSrPVBRJ5GPA9+aY1rWbBTlhnueHgcl
-	 T/EKMkBMEny/wTAENOtnf7wFZ9EO0tjFUM9inxEOAiE4jESY0QJmfthUqBwCQOXhEf
-	 P0nobn8Hf0UDDvpEEoxQrw9VnwdXjbETjGQMa7sklZXg29kcjDdF6TeaUZl1BFYfDi
-	 yhm2XXEgmWgzjpoH4juvmqZCquAP9SPiz8MLuDwU4jJo+rnsI9L22cLOvlSS/V3bBz
-	 vp/1mOoZdFspA==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 08/17] mm/damon/paddr: support damon_prep
-Date: Mon, 31 Aug 2026 22:05:26 -0700
-Message-ID: <20260901050528.3815-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260901044702.A19E71F000E9@smtp.kernel.org>
-References: 
+	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="KPdsfQ37"
+dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=hEPG3P/x/ozu+lY/WnNZEs9objWoPkEaUik+WEJ687U=;
+	b=KPdsfQ37BIw1yCqTL5PIQaNbF5exr5rkTec1aVoNuzcPU3yQ+ea0WDzDhMS48cbUrfF+qGBOu
+	yhNp0EbXLwZopwcmteg9kMpKjsnxzMgY0gm2oE9kGpGgXaHgKNpti5y6Q3mvzD1RC8Mgps2g3Og
+	OxqYcw7lwXvkhP6CNvUXXHs=
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4hYvMB44C4zJ468Y;
+	Tue,  1 Sep 2026 13:20:22 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id A095440571;
+	Tue,  1 Sep 2026 13:20:51 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Tue, 1 Sep 2026 08:20:51 +0300
+Message-ID: <893af75e-690b-48f0-9cc9-afe07c05565c@huawei-partners.com>
+Date: Tue, 1 Sep 2026 08:20:50 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/3] Docs/mm/damon/design: Document hugepage_mem_bp
+ target metric
+To: SJ Park <sj@kernel.org>, Randy Dunlap <rdunlap@infradead.org>
+CC: Andrew Morton <akpm@linux-foundation.org>, "Liam R. Howlett"
+	<liam@infradead.org>, David Hildenbrand <david@kernel.org>, Jonathan Corbet
+	<corbet@lwn.net>, Lorenzo Stoakes <ljs@kernel.org>, Michal Hocko
+	<mhocko@suse.com>, Mike Rapoport <rppt@kernel.org>, Shuah Khan
+	<skhan@linuxfoundation.org>, Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>, <damon@lists.linux.dev>,
+	<linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-mm@kvack.org>
+References: <20260901004712.89669-1-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260901004712.89669-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500003.china.huawei.com (7.188.49.51) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Tue, 01 Sep 2026 04:47:02 +0000 sashiko-bot@kernel.org wrote:
+On 9/1/2026 3:47 AM, SJ Park wrote:
+> On Mon, 31 Aug 2026 13:00:26 -0700 Randy Dunlap <rdunlap@infradead.org> wrote:
+Hi,
+> 
+>>
+>>
+>> On 8/31/26 8:45 AM, Randy Dunlap wrote:
+>>> Hi,
+>>>
+>>> On 8/31/26 7:47 AM, SJ Park wrote:
+>>>> From: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>>>
+>>>> Document hugepage_mem_bp metric exposed by sysfs.
+>>>>
+>>>> Signed-off-by: Asier Gutierrez <gutierrez.asier@huawei-partners.com>
+>>>> Reviewed-by: SJ Park <sj@kernel.org>
+>>>> Signed-off-by: SJ Park <sj@kernel.org>
+>>>> ---
+>>>>  Documentation/mm/damon/design.rst | 2 ++
+>>>>  1 file changed, 2 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+>>>> index aed6cb1cf4831..a8c163475ef2b 100644
+>>>> --- a/Documentation/mm/damon/design.rst
+>>>> +++ b/Documentation/mm/damon/design.rst
+>>>> @@ -713,6 +713,8 @@ mechanism tries to make ``current_value`` of ``target_metric`` be same to
+>>>>    bp (1/10,000).
+>>>>  - ``node_eligible_mem_bp``: Scheme target access pattern-eligible memory ratio
+>>>>    of a node in bp (1/10,000).
+>>>> +- ``hugepage_mem_bp``: Total huge page to total used memory ratio in bp
+>>>> +  (1/10,000).
+>>>>  
+>>>>  ``nid`` is optionally required for ``node_mem_used_bp``, ``node_mem_free_bp``,
+>>>>  ``node_memcg_used_bp``, ``node_memcg_free_bp`` and ``node_eligible_mem_bp`` to
+>>>
+>>> I've looked thru the entire design.rst file and cannot find anything telling
+>>> me (or anyone) what "bp" means.  Explain??
+>>
+>> OK, I found it on the internet. I still think that it would be a
+>> good idea to say "basis point" one time (the first time that it is used).
+> 
+> You are right, and I agree.  I will add that clarification before the next
+> merge window.
+> 
+>>
+>>
+>> -- 
+>> ~Randy
+> 
+> 
+> Thanks,
+> SJ
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] `damon_pa_prep_probes` applies probe preparation actions without checking probe filters, causing unintended page state modifications and redundant folio lookups.
-> --
-> 
-> commit 05f1236264960a0054ba7741a1b9b7ae78666ee1
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/paddr: support damon_prep
-> 
-> This commit implements the prep_probes() callback for damon_operations. It
-> adds support for the DAMON_PREP_SET_PGIDLE preparation action by unsetting
-> page table accessed bits and setting the PG_idle flag via damon_pa_mkold().
-> 
-> > diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> > index 5b307dcbb2a50..8fb71183b76c0 100644
-> > --- a/mm/damon/paddr.c
-> > +++ b/mm/damon/paddr.c
-> 
-> [ ... ]
-> 
-> > @@ -105,6 +105,40 @@ static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
-> >  	return max_nr_accesses;
-> >  }
-> >  
-> > +static void damon_pa_prep_probes_region(struct damon_region *r,
-> > +		struct damon_probe *probe, struct damon_ctx *ctx)
-> > +{
-> > +	struct damon_prep *p;
-> > +
-> > +	damon_for_each_prep(p, probe) {
-> > +		switch (p->action) {
-> > +		case DAMON_PREP_SET_PGIDLE:
-> > +			damon_pa_mkold(damon_pa_phys_addr(r->sampling_addr,
-> > +						ctx->addr_unit));
-> 
-> [Severity: Medium]
-> Will this unconditionally mutate the page state for every prep action,
-> regardless of whether the page passes the probe's filters?
-> 
-> Because damon_pa_prep_probes_region() doesn't check the filters, it appears
-> it will clear the accessed bit and set PG_idle on pages that are explicitly
-> excluded (e.g., when a probe only targets a specific memcg).
-> 
-> Could this disrupt legitimate LRU tracking and reclaim for processes not
-> targeted by the probe?
+SJ, should I submit a new patch to fix design.rst?
 
-No.  damon_pa_mkold() will set page as referenced if it was referenced before,
-to not disrupt LRU tracking and reclaim, same to the classical access
-monitoring and idle page tracking.
+-- 
+Asier Gutierrez
+Huawei
 
-> 
-> > +			break;
-> > +		default:
-> > +			break;
-> > +		}
-> > +	}
-> > +}
-> > +
-> > +static void damon_pa_prep_probes(struct damon_ctx *ctx, bool set_samples)
-> > +{
-> > +	struct damon_target *t;
-> > +	struct damon_region *r;
-> > +	struct damon_probe *p;
-> > +
-> > +	damon_for_each_target(t, ctx) {
-> > +		damon_for_each_region(r, t) {
-> > +			if (set_samples)
-> > +				r->sampling_addr = damon_rand(ctx, r->ar.start,
-> > +						r->ar.end);
-> > +			damon_for_each_probe(p, ctx)
-> > +				damon_pa_prep_probes_region(r, p, ctx);
-> 
-> [Severity: Medium]
-> Since damon_pa_prep_probes_region() is called in a nested loop for each probe,
-> could this cause redundant work?
-> 
-> If multiple probes use DAMON_PREP_SET_PGIDLE, this will redundantly invoke
-> damon_pa_mkold() multiple times on the exact same physical address, leading to
-> unnecessary folio lookups and reference cycles per region.
-
-No issue.  DAMON users would know what they are asking to do.
-
-> 
-> > +		}
-> > +	}
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260901043417.2165-1-sj@kernel.org?part=8
-
-
-Thanks,
-SJ
