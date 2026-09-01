@@ -1,60 +1,75 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0BC3DCD9B;
-	Mon, 31 Aug 2026 23:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A168831B803;
+	Tue,  1 Sep 2026 00:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788219081; cv=none; b=X5Eu05fY1L+fjrKU+XcEYAY9tt7coJZXQp/WbQSxtBXEFLAIQOtBBVOd80OQ+Yy1ZosR6mi5s8sZMU4hMTd5A8QVor/xELB1zjSlV4pjRF/JPa3vHvRKFrrwvi5xDOnSTY6CpGwOjgwr3NCNSWddSjmL2dj/qD95A2WUHGTjfC0=
+	t=1788222074; cv=none; b=lbSKwA0FzVjaq3ApoUvIMpm1CUjXjNFq3iVHRCFvtWAAYXRDJ8RMtJ2rxclorLnuy67N0XPpkcTZMyVgxMUWx1ELlNdG6sJqFa8NahteFwQi6ZZe8GVQK6lD6ecm6+VRuNmcaHXoeKKLlfmnU/08HuNkWGYhxNWtHB2kim7J4U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788219081; c=relaxed/simple;
-	bh=afVsImGUocGyybwn+/HgTgiCVncwqPFBjrVOSgHBm6c=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=M33NPNwBKzme3MrUre4EhMaB5eM+XUpX0hkD3Iav+Tb4m/bzEYuS+PNXi0CACuYx/240u1dvw1nc3f1lOoxJpj2m+lvYK5WbgzrpDHRziimOyxzwYfDnlBqhBgqnz0Ref5Z2KuWPE8+pOfLN8q1cqCyCZfN8Xavjf2LP5auapHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=Zg07NLIH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788222074; c=relaxed/simple;
+	bh=64CSXebaNyiMgoj4hSV15pKZhzEDvXV6lhK7ZQo+YQk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pJTzW8wQV2zAOFjrAF+j0lhxpmirNdAnExM3ZzDFlkvAXroKhgxZqGPfr6seL5TGYCexntQAbUmCk+efZR0m6Lrss5OdmSLDunpLy/qQGO8dgY341ToDLXJD5vWSkeqzT4YnwTB2g2vapTNaP08UkKid188JWXZ5ppxfIwCXBbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RhSEG2rY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="Zg07NLIH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD351F000E9;
-	Mon, 31 Aug 2026 23:31:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux-foundation.org; s=korg; t=1788219080;
-	bh=jizsFETCWcLjtbHiJF9W08hqM5CBVKybdf/GQ2X6ALI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Zg07NLIHLvXKjITd2jS6CzCbIu0ABOpMuUX0qsGivAZ6HN5JAgik4Z7hYq3tAXt0L
-	 luxyGGooi1iSkwnUYX4fwRzZqNpQ0zh8Ki4dpS5aixZ1hOeYohpKdX3zi68UYMN41b
-	 xZJYEbqMSW5Ogq9nhfYJqjW0Ain6xsCNjQPhU1Io=
-Date: Mon, 31 Aug 2026 16:31:19 -0700
-From: Andrew Morton <akpm@linux-foundation.org>
-To: SJ Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-kernel@vger.kernel.org, linux-mm@kvack.org,
- Enze Li <lienze@kylinos.cn>
-Subject: Re: [PATCH 2/7] mm/damon/core: introduce damon_set_target_pid()
-Message-Id: <20260831163119.66bcfdd8a4ee66b3609be63a@linux-foundation.org>
-In-Reply-To: <20260831142611.77572-3-sj@kernel.org>
-References: <20260831142611.77572-1-sj@kernel.org>
-	<20260831142611.77572-3-sj@kernel.org>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RhSEG2rY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5DC1F00A3D;
+	Tue,  1 Sep 2026 00:21:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788222072;
+	bh=jvKfPqEJVRTzFEJl0vjYm8BOKR3lZMkGSjjbcfR/pCw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=RhSEG2rYYG8OYS0Gu9ieptC8nln09mqp5PuYXNS69SJ7mmt3rarE2CioRnIFGqolE
+	 VJ0305JlqTUZeZ7b6Euqf0j/GJmIAbINze1JJefuNgc3fhPYtPoKBS167+zwDcqVqw
+	 W1acn+wgXEucT6qFQEOpt0JYV1lRWfOI93RJbG2udkrAMMmDJZIDmMR5xeKEgB1tZH
+	 APAQ+WJcYhArilZMw+F2gFUzg49+QRpM8SUZfpiVuqWlvL9ZUoUQXSnFL55Ubsdb6Y
+	 o4P0WNo68sS3ik9yRJS/nqa31FdcB8A0BzT7KN3+N+2CtXqFNsqWlVJ28HKe0bp9dU
+	 Iwok3SPKnikYg==
+From: SJ Park <sj@kernel.org>
+To: Liew Rui Yan <aethernet65535@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] mm/damon/core: fix unconditionally skip last region
+Date: Mon, 31 Aug 2026 17:21:04 -0700
+Message-ID: <20260901002105.88435-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260831005834.5270-1-aethernet65535@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Mon, 31 Aug 2026 07:26:04 -0700 SJ Park <sj@kernel.org> wrote:
+On Mon, 31 Aug 2026 08:57:56 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> The logic that finds the struct pid for a given pid number and assigns
-> it to a damon_target is duplicated in multiple places.  Including
-> damon_sysfs_add_target() of mm/damon/sysfs.c and the start functions
-> of the two sample modules, samples/damon/wsse.c and
-> samples/damon/prcl.c.  Add a function that does the work, and replace
-> the duplicated code in the places with calls to the function.
+> On Sun, 30 Aug 2026 11:38:51 -0700 SJ Park <sj@kernel.org> wrote:
 > 
-> Signed-off-by: Enze Li <lienze@kylinos.cn>
-> Reviewed-by: SJ Park <sj@kernel.org>
-> Signed-off-by: SJ Park <sj@kernel.org>
+> > On Sun, 30 Aug 2026 16:29:46 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+> > 
+> > > On Sun, 30 Aug 2026 06:47:07 +0000 sashiko-bot@kernel.org wrote:
+> > > 
+> > > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > > > 
+> > > > Pre-existing issues:
+> > > > - [High] A preexisting bug causes DAMOS scheme application to permanently stall for all subsequent targets if `quota->charge_target_from` points to a target that becomes invalid or loses all its regions.
+[...]
+> > > SJ, when should this bug be fixed?  Along with this patch, or before
+> > > this patch?
+> > 
+> > Whenever the fix is ready.  If you don't mind, I will take this.
+> 
+> I do not mind, thank you :>
 
-I assumed that From:Enze was intended here.
+Thank you for confirming, Liew!
 
+
+Thanks,
+SJ
+
+[...]
