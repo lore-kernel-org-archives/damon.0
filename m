@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E63A483811;
-	Tue,  1 Sep 2026 13:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10502485CEE;
+	Tue,  1 Sep 2026 13:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788269122; cv=none; b=uX517c9uwpfx2s1ZCiwkl4akgLhFUR+fyk49PtOTdTbJMAqsA/GZdL6yyZi55rwhkkbk501ggAnO/KliJHpA2LJXFzjGLvyjfQd5bW/47ST9HZdaCNTiP6l3pQRooympd1TEY6mq1w6QY4Ux/8t7c7taHk51Re2IliRC6OYeFsY=
+	t=1788269122; cv=none; b=FFYhMlC78nVKkju+id1ymVgg2f4v44z9KhwIo/U6Zg/6jwoDdbez9FmorRjFfB+jHEOIiVWQNStZ0Zrwx2OcizuAkTLClErSCIdsLBGe0H+0vBrbSRSYx75MBrnWDFdjZDUWmBGTbIW04oxMVmrqedr2tr+frVK6f3kqHG8gNtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788269122; c=relaxed/simple;
-	bh=AsHoCbwMwQPn54Uh42zQM6XfaiQXavuQ492jVm131qQ=;
+	bh=g/tFPfelQzKUfzsRZPs73xHoniRK3oTmoDYddCctcSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SyJ4+21UO/6iDnpbvnoCAGwB2cIQiN9Sbgr1n37BvpMfnf86WSB6Wn4HOcLunWxbs8HmRWyqF5FhOkGoBEx5yUqEKHXZY2RwQNAz/yU3uTHph429PgAWtqG/vqsewrF354gBuEnoeURzh+iM7sOk9vISomSKUnJ56M4NmbgwZeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GMSipk8U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ShX+zB9aMqc/CnQlpURavUmJGHZZB3eswK6wCq5JIJm93IjDEYJ9DQ2ClLzc1K+U2ccuQ2t0HbXx1nS8Z1SdjTLJzkbK82enX+ClRYdpMEtoZfFFMAaHMzVzFAYDWxQxwxTUdtwwdZmZojv7JRmoaoNbqXq/O2XF7NfauQJ9UDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G5I0h9Yk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GMSipk8U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF59F1F01559;
-	Tue,  1 Sep 2026 13:25:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G5I0h9Yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1A01F0155E;
+	Tue,  1 Sep 2026 13:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1788269120;
-	bh=CpXkgOmW3GSwhrOkMdO/S1mj76NXWWV8m3WM4J70bcE=;
+	bh=PjqVhtQyye+bbFZP93YpIQ5LAq+rT1MA3lQj7bnBnXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GMSipk8UkfFIcDDvF7JZOpQ51OlDWE7AOEaYd09MsYdaYHkkpPXXCCoqVV7aN89la
-	 57z2pqMr+WWOj6RieHPXnhPpP6e04h3p0BuAdUHBkTQt7rnyI3B3uLs0qzYe9Sgzxx
-	 zOelOFLUtOdrdche2+1I3cLfGOzGwOO6diu735898YqgOqb5jUBldpRlsZw/wu4r7y
-	 72e7X1zV/j5GM2ETzVC7IdrY4AuRDHaqJ0BsOldg5PiGnB3afG7XvPwGGSDmdVNSHJ
-	 f5i/sRhT0sNVX3RnwKRTeDiwMoFPe+WIrbN8VWpLYy/VLrrtAqcyPpvVcMxhsx/nF/
-	 CcC7v1hGjZCfQ==
+	b=G5I0h9YkcWnZ8KUsJyOrS3HjlUoaoJ2Yk4S9XxqPzPpXyZALfhmgP/WIwzm+GAZVa
+	 eoB9euU1S3qUWKM8ZUvxY7a2IOg1Jw6y3+cvftZbfNYckT7fXQPrHsYvyW34sfq+dd
+	 APfnCv9D1WbEHHik0KR7DzEHr2ttw43xhczb6uuNUa2ZWuX/iiKKRcglmxpGB39eL1
+	 2xxV8wWWbtu5bWSUno0jNGfTnOp43Oj1HHsKQA9+i4lEkfwcmPIhJUGyL9/PLlF5wP
+	 rYozQAUGOh0hDVgE+5MUbWINY4hUVA2NMaMnLcoxDtYYhN5QpoUBwAJma8sX2LpiQk
+	 9jNRhfcjue3zw==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -43,9 +43,9 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v1.1 15/17] Docs/mm/damon/design: document probe preps
-Date: Tue,  1 Sep 2026 06:25:02 -0700
-Message-ID: <20260901132506.99243-16-sj@kernel.org>
+Subject: [PATCH v1.1 16/17] Docs/admin-guide/mm/damon/usage: document probe preps sysfs files
+Date: Tue,  1 Sep 2026 06:25:03 -0700
+Message-ID: <20260901132506.99243-17-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260901132506.99243-1-sj@kernel.org>
 References: <20260901132506.99243-1-sj@kernel.org>
@@ -55,33 +55,52 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added DAMON probe preps
-feature.
+Update DAMON usage document for the newly added DAMON probe preps sysfs
+files.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 947d91ae24a39..d036340dae8af 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -309,6 +309,13 @@ Users can therefore know how much of a given DAMON region has a specific data
- attribute by reading the per-region per-probe probe hits counter after each
- aggregation interval.
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index da5f9afd08aef..023c6334024f8 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -74,6 +74,9 @@ comma (",").
+     │ │ │ │ │ │ nr_regions/min,max
+     │ │ │ │ │ │ :ref:`probes <damon_usage_sysfs_probes>`/nr_probes
+     │ │ │ │ │ │ │ 0/weight
++    │ │ │ │ │ │ │ │ preps/nr_preps
++    │ │ │ │ │ │ │ │ │ 0/prep_action
++    │ │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ │ │ filters/nr_filters
+     │ │ │ │ │ │ │ │ │ 0/type,matching,allow,path
+     │ │ │ │ │ │ │ │ │ ...
+@@ -283,9 +286,18 @@ In the beginning, this directory has only one file, ``nr_probes``.  Writing a
+ number (``N``) to the file creates the number of child directories named ``0``
+ to ``N-1``.  Each directory represents each monitoring probe.
  
-+Users can optionally register probing preparation actions per probe.  If such
-+actions are registered, DAMON applies the actions to each region's sampling
-+memory before starting the next sampling interval.  Currently only one action,
-+``set_pgidle`` is supported.  The action marks the page for the probing target
-+memory as access-idle.  This can be useful to be used together with
-+``pgidle_unset`` probe filter.
+-In each probe directory, one directory, ``filters`` exists.  The directory
+-contains files for installing filters for the probe, that is used to determine
+-the data attribute for the probe.
++In each probe directory, two directories, ``preps`` and ``filters`` exist.  The
++directories contain files for installing probing preparation actions and
++filters for the probe, that are used to determine the data attribute for the
++probe.
 +
- This is a sampling based mechanism.  Hence, it is lightweight but the output
- may include some measurement errors.  The output should be used with good
- understanding of statistics.
++In the beginning, ``preps`` directory has only one file, ``nr_preps``.
++Writing a number (``N``) to the file creates the number of child directories
++named ``0`` to ``N-1``.  Each directory represents each preparation action.
++Each directory has one file, ``prep_action``.  The preparation action can be
++selected by writing the name of the action to the ``prep_action`` file.  Refer
++to the :ref:`design doc <damon_design_data_attrs_monitoring>` for the list of
++supported actions.
+ 
+ Each probe directory also contains ``weight`` file.  Reading from and writing
+ to the file gets and sets the :ref:`attributes-only monitoring
 -- 
 2.47.3
