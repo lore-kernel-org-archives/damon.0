@@ -1,110 +1,138 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE05A22D7A1
-	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 13:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B7738239E;
+	Tue,  1 Sep 2026 14:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788271008; cv=none; b=KDpZZk44hdce4lMDnHWpL2QL8fEIaeeZkT2+dHytw6mQA45K6VygGKZA6NGpadhOHc0ZPYsxPaxgbgIWI00whd8FxwkcvHOR17yPmqpl2GHeVEQ/unobV0AUtmILc8zxtbHhCVvkyPbIzHUnkRfJX1Bsu2uxrH+zrXJyvGBzY3U=
+	t=1788272596; cv=none; b=qYw63eWUADt1z67WMBvY53oJAExQmvPin/2b4UI680saeCOFYqLF6SjKb7AMLPntduINpCSLpSUyCFGQuYq9KpNoCVhVTdbkSiC5EFwMrVsqaz44d7Wq/3J1nJ3Ub9sJJilL+4Opu2DOy4xOQwkCTlXn1ZleLvTkTNdv0YBuQZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788271008; c=relaxed/simple;
-	bh=N7vuLeT6nNM2KBenimtixOcVwuRyAIuRrCWV4sp2lv8=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Yxa0BC+ujCFm27o8oqXtgdj9v+KdFbOMGinkoSaTfIS/mGuJhAtwCAUaOx/I2bt/N6F4W0ezhtkMjjquNS0vOXVADpy4z4qho6qjyQ3ySi5O7J7bvDwiWvyQ5068MFcMFhuSCd/RtDji2+Z9i9cJSrEKuNv282JPvRUIaMOZASM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lYikraPV; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788272596; c=relaxed/simple;
+	bh=gUuI0GhsK1yS1mGIQXyP8DKxvToNm2loMMwqydRKzZQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IESTztZbNSW0J+h3JExpfiLrIeIvi2SucvdYVmUHPsAwBq22t/biriiJAi8JoZTBetXgM/htix5cojJNcsyXuFWfOk+eo1ruJR/WGvraRqjb6nzzA4JyxWgBn2h+ND8LF3CgYFuuyIVXqKVrg+KKukrTDG1GZIt/BA1/VwXJ23s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DPHfjvFX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lYikraPV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD7A1F000E9;
-	Tue,  1 Sep 2026 13:56:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DPHfjvFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98B31F000E9;
+	Tue,  1 Sep 2026 14:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788271007;
-	bh=KIPmT4Jh7AZ/KYErN7F6pEgv4FRG0ePULjLDt7WbxZw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=lYikraPV5xBR4O3AgR3nu2RRg0PV6XRw/XNZaB+p8WqaLJWXaxeCvxeM0/NBKiKbm
-	 mv9QPtaoycmlnaxAzLozTVV1G0hyQQBBo5LAecwiAOToP+hU6dunX/jdBUDetgIPOw
-	 3VZ0NMjtwvIaaySV0Qz0ILUs7+ywvU+YiU2tXYUjVrRoO1FKqenfCD+PJWIFAoiNiu
-	 TZfGQzDAW6ywcD82TksYzr8iApbufr0AerzqLa7J9eOMyUvGINSXL1irekn204cxVk
-	 2m1euJwQo8zd2CdL8JLBVvg0uuLTSpsK96iIuuokrXKQwFi0dfW8npwrermCyCrBoz
-	 AbOlsaxl/cuQw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 7/7] mm/damon/core: handle extreme memory state in
- get_in_active_mem_bp()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260901131326.97615-8-sj@kernel.org>
-References: <20260901131326.97615-1-sj@kernel.org>
- <20260901131326.97615-8-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 01 Sep 2026 13:56:46 +0000
-Message-Id: <20260901135647.3AD7A1F000E9@smtp.kernel.org>
+	s=k20260515; t=1788272595;
+	bh=HAnWOLBaYdAhbX/W7o4srvf+nw40P/4MunhygRfNOJY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=DPHfjvFXIyEpaCxKqRMtNK5UBj6fVVRSReoO7SSt9q74/XFmvDeLdUHGkjCfl7T88
+	 dHNnM45LM7ZeVd+cCgot6x0CHgRLRUe1BYxTlwFUQn5QBJRE1mqyiI9N83vKyddo7Q
+	 LMKF0fasYGqgRbWMG2WvXU1GDlOA6ZPV7Jc+zMW1+OGN5NBzDYUd051dkc6mNowGvA
+	 XUMDvHlQqyTKqFZ5b8Fm5zmXnj50AbxlgTkE0WiDXaT2GQFC2HTZiyzZ6YGnw/GBY4
+	 4bbk7HKIvRif63485w0YiniA1/cBiycD2iiuH/3on6ou4nJQTP2OwYMgVIWiG5NNP1
+	 68jliECJSBwEg==
+From: SJ Park <sj@kernel.org>
+To: Lian Wang <lianux.mm@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH v4 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+Date: Tue,  1 Sep 2026 07:23:07 -0700
+Message-ID: <20260901142307.100701-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260901065847.42869-1-lianux.mm@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+Hi Lian,
 
-Pre-existing issues:
-- [High] 32-bit integer overflow in mult_frac() macro when calculating memo=
-ry ratio on 32-bit systems, leading to completely incorrect DAMOS quota met=
-rics.
---
+On Tue,  1 Sep 2026 14:58:35 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
 
-commit b2f8512e8018294c2ac5082c2964a0519b9242e8
-Author: SJ Park <sj@kernel.org>
+> Hi SJ and Asier,
+> 
+> Thanks for working on this and for providing the server results.  I have two
+> questions about what hugepage_mem_bp is intended to represent.
+> 
+> > Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP auto tuning. Add a new DAMOS quota
+> > goal metric to measure the amount of huge page consumption to total
+> > memory consumption ratio.
+> 
+> First, NR_ANON_THPS tracks anonymous PMD mappings, while NR_SHMEM_THPS and
+> NR_FILE_THPS track PMD-mappable page-cache folios.  Therefore, splitting only
+> an anonymous PMD mapping can change hugepage_mem_bp without physically
+> splitting the folio.  Is the intended metric PMD-mapped memory or physical
+> large-folio memory?  Clarifying this and adding a mapping-only test may help.
 
-mm/damon/core: handle extreme memory state in get_in_active_mem_bp()
-   =20
-damos_get_in_active_mem_bp() uses the sum of the active and inactive
-memory amount as a denominator.  In an extreme and unlikely environment,
-active and inactive memory might be zero.  In this case, hence, it
-results in a divide by zero problem.  Avoid it by changing the
-denominator to one if it is zero, before it is being used.
+Good point.  I was just missing this.  So, hugepage_mem_bp is not accounting
+anon mTHPs, right?  Since hugepage_mem_bp is for general hugepages, I think
+this is better to be improved.  Seems using MTHP_STAT_NR_ANON that is exposed
+as 'nr_anon' can be used?  Because this is an improvement rather than a fix of
+a bug, I think doing this as either a followup or new version of this series
+are ok.  Asier, what do you think?
 
-[1] https://lore.kernel.org/20260721034756.147011-1-sj@kernel.org
+> 
+> Second, the metric is global while a DAMOS scheme can target one process.
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 6288bb3b09e65..fb96848174dcc 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -3005,7 +3005,7 @@ static unsigned int damos_get_in_active_mem_bp(bool=
- active_ratio)
->  		global_node_page_state(NR_LRU_BASE + LRU_ACTIVE_FILE);
->  	inactive =3D global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_ANON) +
->  		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
-> -	total =3D active + inactive;
-> +	total =3D max(active + inactive, 1);
->  	if (active_ratio)
->  		return mult_frac(active, 10000, total);
+Actually it can target multiple processes if those are in single DAMON context.
 
-[Severity: High]
-This is a pre-existing issue, but does this calculation overflow on
-32-bit systems?
+> THPs from other processes or NUMA nodes can satisfy the target or dilute the
+> monitored process's changes.  Is this intentional?
 
-If the active memory size exceeds 429,496 pages (about 1.75 GB), multiplying
-the 32-bit unsigned long active variable by 10,000 inside the mult_frac()
-macro will overflow ULONG_MAX.
+I think it is intentional.  The user should have the control on collapsing
+hugepages, or believe the uncontrolled collapse mechanisms.
 
-This can result in effectively random DAMON quota metrics on 32-bit systems,
-leading DAMON to misinterpret memory states and potentially over-reclaim or
-under-reclaim memory.
+> If so, documenting the
+> scope and testing a background THP workload may be useful.
 
-A similar overflow can also happen in damos_quota_score():
+More documentation and testing are always welcome :)
 
-mm/damon/core.c:damos_quota_score() {
-    ...
-    return mult_frac(goal->current_value, 10000, goal->target_value);
-}
+> 
+> The temporal results approach the 10% and 25% targets, while the consistent
+> results overshoot the 10% target to about 20% and 45%.  I would describe this
+> as control-response data.  TPS, latency, TLB, fragmentation and collapse CPU
+> data could further show the workload benefit and cost.
 
-Here, goal->current_value multiplied by 10,000 overflows for large values,
-such as when microseconds of stall time exceed 430ms.
+Yes, those would be helpful.  That's not mandatory for this simple change in my
+opinion, though.  I would let Asier decide whether and when to make and share
+such data.
 
->  	return mult_frac(inactive, 10000, total);
+> 
+> If I have misunderstood any of this, please feel free to ignore these
+> comments and correct me.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260901131326.9761=
-5-1-sj@kernel.org?part=3D7
+Your comments are very helpful, thank you for your review and comments, Lian.
+
+> 
+> The enum, quota-goal wiring and sysfs exposure otherwise look consistent with
+> the existing DAMOS autotuning framework.  I consider the points above
+> follow-up questions about semantics and evaluation, rather than blockers for
+> this series.
+
+I agree.
+
+> 
+> For the series:
+> 
+> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+
+Thank you!
+
+> 
+> Please feel free to Cc me on related follow-up patches.  I am happy to help
+> review the code.  Besides my own DAMON work, I have recently been reviewing
+> and learning from other DAMON and MM work, and I would be glad to continue.
+
+I'm curious if you and general reviewers need or prefer to directly be Cc-ed.
+I was naively thinking people can search and review DAMON patches by
+subscribing to the mailing list or using the archives via lore.kernel.org like
+tools.
+
+
+Thanks,
+SJ
+
+[...]
