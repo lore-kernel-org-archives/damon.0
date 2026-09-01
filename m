@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B7738239E;
-	Tue,  1 Sep 2026 14:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CDD3AEF4E
+	for <damon@lists.linux.dev>; Tue,  1 Sep 2026 14:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788272596; cv=none; b=qYw63eWUADt1z67WMBvY53oJAExQmvPin/2b4UI680saeCOFYqLF6SjKb7AMLPntduINpCSLpSUyCFGQuYq9KpNoCVhVTdbkSiC5EFwMrVsqaz44d7Wq/3J1nJ3Ub9sJJilL+4Opu2DOy4xOQwkCTlXn1ZleLvTkTNdv0YBuQZQ=
+	t=1788272989; cv=none; b=IBYJ7ncpyiyUKY3sLYt98z5NSYufkVxa7UaQc6vlfMDSkl8S5nEQZ4cdwnW+EgAq3Ge+ZdnrrLX8pKwjwPl3V6N9j0okgkmhDlswtwH5PCTKGACFerdG4Uo1KiEJ86PK8IkanT/c52xUX8zF7TjIyrxCWbQMOEqYetObiTWeFpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788272596; c=relaxed/simple;
-	bh=gUuI0GhsK1yS1mGIQXyP8DKxvToNm2loMMwqydRKzZQ=;
+	s=arc-20240116; t=1788272989; c=relaxed/simple;
+	bh=GXbwG0gLIRDubyNBp4D4V580q1ALcz6tEZ4QKFBFuF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IESTztZbNSW0J+h3JExpfiLrIeIvi2SucvdYVmUHPsAwBq22t/biriiJAi8JoZTBetXgM/htix5cojJNcsyXuFWfOk+eo1ruJR/WGvraRqjb6nzzA4JyxWgBn2h+ND8LF3CgYFuuyIVXqKVrg+KKukrTDG1GZIt/BA1/VwXJ23s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DPHfjvFX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=N09yS15KpacckfChazQQPpHZBKlIAR7r/DK1uzzDMYyM1xM+YLLss+y2LFg8igXb8QGLoBe1ZeGSYq44LIMDmcIVR/VtjnatLGgPDvCF/COcNr5Yz7NX8gVHlYYqs6dVCa7kF0IuvUMWdEMxiWuvyFrQbkEEVEXojrfTra8S2vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VtDXqjzI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DPHfjvFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98B31F000E9;
-	Tue,  1 Sep 2026 14:23:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VtDXqjzI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5081F00A3E;
+	Tue,  1 Sep 2026 14:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788272595;
-	bh=HAnWOLBaYdAhbX/W7o4srvf+nw40P/4MunhygRfNOJY=;
+	s=k20260515; t=1788272987;
+	bh=ssLephBzWB0NlAuEIlaYVIub1X41zCtupevTd0CHArU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DPHfjvFXIyEpaCxKqRMtNK5UBj6fVVRSReoO7SSt9q74/XFmvDeLdUHGkjCfl7T88
-	 dHNnM45LM7ZeVd+cCgot6x0CHgRLRUe1BYxTlwFUQn5QBJRE1mqyiI9N83vKyddo7Q
-	 LMKF0fasYGqgRbWMG2WvXU1GDlOA6ZPV7Jc+zMW1+OGN5NBzDYUd051dkc6mNowGvA
-	 XUMDvHlQqyTKqFZ5b8Fm5zmXnj50AbxlgTkE0WiDXaT2GQFC2HTZiyzZ6YGnw/GBY4
-	 4bbk7HKIvRif63485w0YiniA1/cBiycD2iiuH/3on6ou4nJQTP2OwYMgVIWiG5NNP1
-	 68jliECJSBwEg==
+	b=VtDXqjzIBkUukot4PAF7o26BPxwboWuETx3oXQC+AyjEvWVk9tZwsUAxrHsHkGPE4
+	 bCuQgo221VUHsUzbAk9y26U14C0jWmJKILizcyhG2X6KOSRaog47BLkE/+QNnAkFL0
+	 8ugFl6wricxByp8pckXJhZS4ddejfEHBu0qX0EJ9Zh30IX9evwvL00qD18pHhM0Gxk
+	 0ypsde9vNtKv0uK4g0QO0bfQYikTQGYo/iuAKtnf//KfpScd57UgZFzPtxgyU6RjcU
+	 vJonNSqtXzX2XROWP5xcPJET4YWyGeby1vjOjgQn1okpIB5MDtrV8eNK5PEYDX4QUR
+	 KEmELtcYi8PrQ==
 From: SJ Park <sj@kernel.org>
-To: Lian Wang <lianux.mm@gmail.com>
+To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH v4 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
-Date: Tue,  1 Sep 2026 07:23:07 -0700
-Message-ID: <20260901142307.100701-1-sj@kernel.org>
+	damon@lists.linux.dev
+Subject: Re: [PATCH 7/8] mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
+Date: Tue,  1 Sep 2026 07:29:39 -0700
+Message-ID: <20260901142940.100915-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260901065847.42869-1-lianux.mm@gmail.com>
+In-Reply-To: <20260901134108.9356D1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,93 +42,103 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Lian,
+On Tue, 01 Sep 2026 13:41:08 +0000 sashiko-bot@kernel.org wrote:
 
-On Tue,  1 Sep 2026 14:58:35 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
-
-> Hi SJ and Asier,
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> Thanks for working on this and for providing the server results.  I have two
-> questions about what hugepage_mem_bp is intended to represent.
+> Pre-existing issues:
+> - [High] Integer overflow in basis point calculation on 32-bit systems for large memory sizes.
+> - [High] Incorrect saturation logic for negative global memory utilization triggers false maximum reclaim.
+> --
 > 
-> > Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP auto tuning. Add a new DAMOS quota
-> > goal metric to measure the amount of huge page consumption to total
-> > memory consumption ratio.
+> commit 23b94672ac5d1c09d669ade5732261e82d129c96
+> Author: SJ Park <sj@kernel.org>
 > 
-> First, NR_ANON_THPS tracks anonymous PMD mappings, while NR_SHMEM_THPS and
-> NR_FILE_THPS track PMD-mappable page-cache folios.  Therefore, splitting only
-> an anonymous PMD mapping can change hugepage_mem_bp without physically
-> splitting the folio.  Is the intended metric PMD-mapped memory or physical
-> large-folio memory?  Clarifying this and adding a mapping-only test may help.
-
-Good point.  I was just missing this.  So, hugepage_mem_bp is not accounting
-anon mTHPs, right?  Since hugepage_mem_bp is for general hugepages, I think
-this is better to be improved.  Seems using MTHP_STAT_NR_ANON that is exposed
-as 'nr_anon' can be used?  Because this is an improvement rather than a fix of
-a bug, I think doing this as either a followup or new version of this series
-are ok.  Asier, what do you think?
-
+> mm/damon/core: handle extreme memory state in get_node_memcg_used_bp()
 > 
-> Second, the metric is global while a DAMOS scheme can target one process.
-
-Actually it can target multiple processes if those are in single DAMON context.
-
-> THPs from other processes or NUMA nodes can satisfy the target or dilute the
-> monitored process's changes.  Is this intentional?
-
-I think it is intentional.  The user should have the control on collapsing
-hugepages, or believe the uncontrolled collapse mechanisms.
-
-> If so, documenting the
-> scope and testing a background THP workload may be useful.
-
-More documentation and testing are always welcome :)
-
+> This commit handles corner cases where total memory is zero or
+> lruvec_page_state returns more used memory than total memory. It returns
+> 100% or 0% for used and free memory queries respectively in these scenarios.
 > 
-> The temporal results approach the 10% and 25% targets, while the consistent
-> results overshoot the 10% target to about 20% and 45%.  I would describe this
-> as control-response data.  TPS, latency, TLB, fragmentation and collapse CPU
-> data could further show the workload benefit and cost.
-
-Yes, those would be helpful.  That's not mandatory for this simple change in my
-opinion, though.  I would let Asier decide whether and when to make and share
-such data.
-
+> Link: https://lore.kernel.org/20260329154813.47382-1-sj@kernel.org
 > 
-> If I have misunderstood any of this, please feel free to ignore these
-> comments and correct me.
-
-Your comments are very helpful, thank you for your review and comments, Lian.
-
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index ad3657d356fbc..3060edf5e4fa6 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -2854,6 +2854,12 @@ static unsigned long damos_get_node_memcg_used_bp(
+> >  	mem_cgroup_put(memcg);
+> >  
+> >  	si_meminfo_node(&i, goal->nid);
+> > +	if (!i.totalram || i.totalram < used_pages) {
+> > +		if (goal->metric = DAMOS_QUOTA_NODE_MEMCG_USED_BP)
+> > +			return 10000;
+> > +		else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
+> > +			return 0;
+> > +	}
 > 
-> The enum, quota-goal wiring and sysfs exposure otherwise look consistent with
-> the existing DAMOS autotuning framework.  I consider the points above
-> follow-up questions about semantics and evaluation, rather than blockers for
-> this series.
+> [Severity: High]
+> This isn't a bug introduced by this patch, but looking at similar logic in
+> damos_get_node_mem_bp():
+> 
+>     if (!i.totalram || i.totalram < i.freeram) {
+>         if (goal->metric = DAMOS_QUOTA_NODE_MEM_USED_BP)
+>             return 10000;
+>         else    /* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+>             return 0;
+>     }
+> 
+> Can this regression trigger unwarranted memory reclaim pressure? If transient
+> per-CPU stats drift causes i.freeram to slightly exceed i.totalram, this
+> condition evaluates to true.
+> 
+> If free memory exceeds total memory, it implies used memory is less than 0.
+> Should the correct saturation be 0% used and 100% free instead? Returning
+> 10000 (100%) for used memory tells DAMON that the empty node is completely
+> full, which might cause aggressive reclaim behavior on mostly empty nodes.
 
-I agree.
+No issue.  It is a different perspective.  And DAMOS auto-tuning logic limits
+increasing quota arbitrarily.  Increasing quota is capped to only 2x of the
+current effective quota.
 
 > 
-> For the series:
+> >  	if (goal->metric = DAMOS_QUOTA_NODE_MEMCG_USED_BP)
+> >  		numerator = used_pages;
+> >  	else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
 > 
-> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+> [ ... ]
+> 
+> [Severity: High]
+> This is a pre-existing issue, but does this basis point calculation overflow
+> on 32-bit systems for large memory sizes?
+> 
+> A little further down in damos_get_node_memcg_used_bp() (and similarly in
+> damos_get_node_mem_bp()):
+> 
+>     return mult_frac(numerator, 10000, i.totalram);
+> 
+> The mult_frac macro evaluates its internal remainder multiplication using
+> the type of the numerator. On 32-bit systems, the numerator is a 32-bit
+> unsigned long.
+> 
+> If the numerator is greater than 429,496 (which corresponds to 1.75 GB of
+> RAM with 4K pages), the multiplication by 10000 wraps around ULONG_MAX. For
+> instance, 429,497 * 10000 modulo 2^32 evaluates to 2704, which then divided
+> by total RAM evaluates to near 0%.
+> 
+> Could this regression lead to incorrect memory quota enforcement for memcgs
+> or nodes exceeding this threshold?
 
-Thank you!
+Known low priority issue.
 
 > 
-> Please feel free to Cc me on related follow-up patches.  I am happy to help
-> review the code.  Besides my own DAMON work, I have recently been reviewing
-> and learning from other DAMON and MM work, and I would be glad to continue.
-
-I'm curious if you and general reviewers need or prefer to directly be Cc-ed.
-I was naively thinking people can search and review DAMON patches by
-subscribing to the mailing list or using the archives via lore.kernel.org like
-tools.
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260901131850.98037-1-sj@kernel.org?part=7
+> 
 
 
 Thanks,
 SJ
-
-[...]
