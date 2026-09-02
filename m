@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF4D4A8417;
-	Wed,  2 Sep 2026 15:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1744A6CC0;
+	Wed,  2 Sep 2026 15:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788362158; cv=none; b=kjx0xVeRXtVL3zJKFNQa0wvbyFs7AiNfLJ5m0O9pxgtGbi6cCEFUrTdosETRXnuVo8nK9NiH/r8+kiFapteIV4QNK1rYXTEPGKQpac6fNlVASSPvyNtz7s/e0D5f6oiibdEYMnfjYPpYzdECjNEiviOKjSn7qaArCjL0ZiqgKy0=
+	t=1788362404; cv=none; b=Nmfz4gtezG2YB+dNcuJVnvrty9ctRMMZH8PRMcf3YEBYv2C7Mt/5FACpoSa5IC9bkV3gzA+aShQ1HSjc+q+F5CgDUzApC74Efr56kti+nNcTZbfGs1cTPDhPlXbY6kqosDTo8PUedxH6bCklB+LXZPIZGiFMSuo8IAQSbTkXQLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788362158; c=relaxed/simple;
-	bh=C7GlblV3lduW5pRJ+8PzT7e2DgNLYOtJRCEzpWBM+xA=;
+	s=arc-20240116; t=1788362404; c=relaxed/simple;
+	bh=NFVBRBZp5DdpCmCsU1/ZmE187mRMxZ4l6mnWy8B/uLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ppKpGfFGwB230p8WMuqLj6Q2u30LRkWLllSozg/rGahJHwZU602CwKDY8W90jMPSZlwQdgIobMKY0aMGKjmJlCuG4z2iCamTtt7BxKorK3uqbAXu1EuVK/jnRF8v2l2TYT1mmhaqZQxOEMMLNoaSJEAg9/hC+Y3VnVd63u+HO8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iKE/XKpp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dm3l9cCGLIyvEBB22mPupJ+ZtgOXZ+WJPFK9aCZ6RUZxMkxdFT39yiPthmQskHTU3C31vuwWHx1kV5zePHbRBxQ6krt1LCMgBoPIR9ts3yiI+sLWl/99B+1t7XuHTjjtalYOI9dSMxFTu5EaxVsOuyNGNo5S0AvTT0QMz/bgsvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCjsPGcI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iKE/XKpp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CEF1F000E9;
-	Wed,  2 Sep 2026 15:15:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCjsPGcI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08BA1F00A3A;
+	Wed,  2 Sep 2026 15:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788362155;
-	bh=vE/Cggwy78pImngvxsbAxzUqhSZmdOdF6pnB66mIkJk=;
+	s=k20260515; t=1788362402;
+	bh=EmdLDOUaG296P9CvbM12jSxYGxNeVIbHfGvENxwCkbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKE/XKppWbSzjEt/knKYntQMNUjU3xxyGzG/qqWR+NjqD77xwNrloFoFmpEUo0H42
-	 roqpGnzg/ZLZSqyjVveOpTZCbABjNrSjLZSWz7qyeQNTfHZT+bzmgpID1DYDQ/kCtX
-	 aehIQzFzOxyaKZX8vE86cvy1wKe8GVf2THmdarEShk9FErMaLsEroyi1y7nSTrZGkM
-	 mTb6qKQSPEah//6s9yXgPifJZ9QYU7LkeavHkqOkGj1b8M2cOMO5TmoUkoyR0pt++p
-	 wiPnM9goFqsFH7vGYwOKMYLBeb1N6bnbPenlz7dGCKZxumg8CeTDclFwx39Bk33cAp
-	 16Ex83MlBaJiA==
+	b=LCjsPGcIlubZv/I7kxnTj2vuAMW6xD6HCrWwLZXW54VpxsS9HmVQYzAWbRqwbRM7R
+	 CrpUvX94Ul+n7/HGsKNLoQhlYASfOBEU2ugN6FckjCXhPzFEo1/5jW+cw901xqEDJS
+	 VewGQoJQls9BbW7hfWc8pU/7YmP1txFV8PEhBuXiEgrghJI9s5V5j5LjaMQE4RMdPx
+	 Fn1HdwMSsxyZ8fK7vCtiDCdXDtc5wt9GUHGfFs0FyOgsJYxP8ar1qJjIUh/n+hBmce
+	 H2vMq1krBKRNqmKrybjJuHkCNZeajfyNjh24aBDEpCNJC+BD/MMyb5eYaO50iG5/5T
+	 ZgWvEhZMnuaew==
 From: SJ Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+To: Kunwu Chan <kunwu.chan@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	Lian Wang <lianux.mm@gmail.com>,
+	Kunwu Chan <kunwu.chan@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH v4 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
-Date: Wed,  2 Sep 2026 08:15:48 -0700
-Message-ID: <20260902151548.88735-1-sj@kernel.org>
+Subject: Re: [PATCH 09/12] mm/damon/tests/core-kunit: test damon_nr_samples_per_aggr()
+Date: Wed,  2 Sep 2026 08:19:54 -0700
+Message-ID: <20260902151955.88892-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <9ac2a10f-1551-410e-a9c0-173a1daeb1ab@huawei-partners.com>
+In-Reply-To: <20260902150842.4033320-1-kunwu.chan@linux.dev>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,64 +52,24 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 2 Sep 2026 18:03:39 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+On Wed,  2 Sep 2026 23:08:41 +0800 Kunwu Chan <kunwu.chan@gmail.com> wrote:
 
-> Hi SJ and Lian,
-> 
-> On 9/1/2026 5:23 PM, SJ Park wrote:
-> > Hi Lian,
-> > 
-> > On Tue,  1 Sep 2026 14:58:35 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
-> > 
+> On Tue,  1 Sep 2026 22:47:42 -0700 SJ Park <sj@kernel.org> wrote:
 [...]
-> >> Second, the metric is global while a DAMOS scheme can target one process.
-> > 
-> > Actually it can target multiple processes if those are in single DAMON context.
-> > 
-> >> THPs from other processes or NUMA nodes can satisfy the target or dilute the
-> >> monitored process's changes.  Is this intentional?
-> > 
-> > I think it is intentional.  The user should have the control on collapsing
-> > hugepages, or believe the uncontrolled collapse mechanisms.
-> > 
-> >> If so, documenting the
-> >> scope and testing a background THP workload may be useful.
-> > 
-> > More documentation and testing are always welcome :)
-> > 
-> >>
-> >> The temporal results approach the 10% and 25% targets, while the consistent
-> >> results overshoot the 10% target to about 20% and 45%.  I would describe this
-> >> as control-response data.  TPS, latency, TLB, fragmentation and collapse CPU
-> >> data could further show the workload benefit and cost.
-> > 
-> > Yes, those would be helpful.  That's not mandatory for this simple change in my
-> > opinion, though.  I would let Asier decide whether and when to make and share
-> > such data.
-> The idea of this patch was to introduce auto tuning. I think I submitted thebenchmark results when I sent the DAMOS_COLLAPSE feature.
+> Both `sample_interval` and `aggr_interval` are zero here.  Since
+> `sample_interval` is the denominator in `damon_nr_samples_per_aggr()`,
+> would it be better to keep `aggr_interval` non-zero when testing the
+> zero `sample_interval` case?
 > 
-> Anyway, it shouldn't take long for me to get more data. I think it may be useful
-> for people to know the actual results in real application.
-> 
-> SJ, what's the best place to publish all those data? I believe you have more
-> experience sharing this data and which platform is the most useful one.>>
+> This would make the test explicitly cover the divide-by-zero protection.
+> If the `aggr_interval == 0` behavior is also worth covering, perhaps it
+> could be tested separately.
 
-I'm never an expert in visibility :)  But if I should recommend, I get three
-places off the top of my head.
+Thank you for your review and question, Kunwu!
 
-First, you could simply share the data with plain mail on DAMON and wider
-kernel mailing lists like linux-mm@ and linux-kernel@.
-
-Second, if the data is matured, sharing those in conferences like LPC,
-OSSummit, FOSDEM or DAMON (nano) Conference would be nice.
-
-Third, if you prefer text, LWN or personal blogs like medias could also be good
-places.  I also maintain DAMON porject blog [1].  Kunwu and Lian actually
-contributed an article to the blog before.  If you want to submit an article
-there, let me know.
-
-[1] https://damonitor.github.io/posts/
-[2] https://damonitor.github.io/posts/tlb_flush_policy/
+Yes, that kind of additional test case would be nice.  Please feel free to post
+a patch if you'd like to! :)  And no pressure, no rush.  I will also consider
+doing it myself if it seems you are not interested.
 
 
 Thanks,
