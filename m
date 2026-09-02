@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E0D38DC69;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B887738DC53;
 	Wed,  2 Sep 2026 05:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788328078; cv=none; b=LV7vAqiTzMKWPOSTMQbcsrk4wQH5AvxBOBCPW/dpn3xwOozL/nveE9LCbNlZfA4lgEAxb4vMQyR7lFo2qbeQYnML6E1V427pLGPMpeio7cxxempeLU5pEHHSlem96p6+rf73ykIFwVRc9yZzf5Udccu/RUPDu6HeYsmkQgPanLw=
+	t=1788328079; cv=none; b=NQqc9Qa2f9eC5Xf6Oy1AhOMyb0KBRsN3lI7XLDSSt7ouFlaYWRlFaNW5JsfUnHeTwD9Ebt7oByCldCQg5576WiSt9RhUEYJG5HdkyzVTt+n1uTmyy8fDd7suOstqZ3d0LF4I3NA1onFHvnqrznhxwc0f4e6Q+wG+ZlD9jBfF/O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788328078; c=relaxed/simple;
-	bh=u+oZCoOKdySThIkJPUr4RxCiZbFXrkCX08oE+VOZRT4=;
+	s=arc-20240116; t=1788328079; c=relaxed/simple;
+	bh=bhY4KhIyu4gwy+axujpyt57DuX8kkNxrt1KBoU8TmQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X3X9CyMleJy/pQvNrrkk1B7aPJaXxuA/zX8+0coxSVuzBPOOgTawuT87tQjqujdNz8OXXRYxAJdgsFQe9lX4fhvbD1t2+iO411k7qtJ0T+hp5Bs2opAJvzEkZuWtCvU0ktht8Tt+trkwcClM8MqYEGrheaIGGYSpJi4MF5RrSdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g/bSpy1o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LWkml9wue9SeCRLsC9EBq25q20t1+yS4YdNYJ5YaJ3h9EG4oUPw3y9IR5b/8IuVzysuurk1/fubC8hcRRleVMwY3sivk1JLeKYe9DhSVf9dt6WNmGSRfdObFPrI8CNPQOCasWQnNhIB3HzGGzcBpWc2s2Xncss34gcfYe7rYZP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EgyR80sS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g/bSpy1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6491F00A3A;
-	Wed,  2 Sep 2026 05:47:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EgyR80sS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362531F000E9;
+	Wed,  2 Sep 2026 05:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1788328077;
-	bh=KmA3XIkDsEGWw9Q0yqvFSyXfLgWn5kQtFO0BvVaBzPA=;
+	bh=KnjoWKXYy9mV4JP4a4wfsis0KbFL9ZmPOgZcY5kWfCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g/bSpy1oP6r9W1m5m4QtCcakQBc2X9gSn8wCas9R2qnb8rZfo0TiEGsjmLT0SsUz1
-	 Y5JhKg7MqDK+IPWptQ+GXfm7P2YCBQxEutJhb89J0+QettPXBWEAe8ICmMz/2D6ROw
-	 mCIQ/WW8hq3EPMKg7LrOqwLvcs86GZQu72nmLWV7sXxCr3I6g2t7caVI94oheqG5hi
-	 kcx3PpznSKVhwaBpYSpy/Ky35l7a1/yny/YvbvjDcxd1S+j1OqEe8gcmrEfBPPWROw
-	 dgViNOVYb1iI4882eDw2Q6RF53sfLGTEMOdhApqlbbWYFhfdTd5u0eX16kTTDAivu4
-	 OPTlUF0FemY4Q==
+	b=EgyR80sSVGZeqAZxZ92XTLPu7/ygW+YWlw9SJ+T3xdyG+MrPAYVWAuYYwIacpddeN
+	 ICh6gf/gejLtS8LofSIiOs75v5RelfALnKuSTdO+mg6SJaV32cPRkcd13FUyqBAxf/
+	 Pv+s+G0edkJ9J5bb/2vAGl7ahKfGV0EtXZJYfZ4G9Pi66X+L5ufr7fg9IH4bLJmeaC
+	 sLkfJlOzM2CyPwilF+7Gzmp1lMdmfcu8sMtW3BX8gr/EQhZBx/8AZJ0Of6E2kq+Osq
+	 1m/H436xwi8JcRP2gFLyszGHhqFdrIfWXlT/+J2DxX5dO9+dfm/MAlrQLDS1D3wMOo
+	 kaIsW99KfflpQ==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -36,9 +36,9 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 07/12] mm/damon/tests/core-kunit: test <=0 size damon_set_regions() inputs
-Date: Tue,  1 Sep 2026 22:47:40 -0700
-Message-ID: <20260902054747.99370-8-sj@kernel.org>
+Subject: [PATCH 08/12] mm/damon/tests/core-kunit: test overlapping ranges for set_regions()
+Date: Tue,  1 Sep 2026 22:47:41 -0700
+Message-ID: <20260902054747.99370-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260902054747.99370-1-sj@kernel.org>
 References: <20260902054747.99370-1-sj@kernel.org>
@@ -50,36 +50,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit 1292c0ecb1ca ("mm/damon/core: validate ranges in
-damon_set_regions()") disallowed passing zero or negative size input
-ranges to damon_set_regions().  Add kunit test cases for those inputs.
+Commit 954157679ec3 ("mm/damon/core: disallow overlapping input ranges
+for damon_set_regions()") disallowed passing overlapping input ranges to
+damon_set_regions().  Add a kunit test case for the overlapping input.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/tests/core-kunit.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mm/damon/tests/core-kunit.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 2bcf3bafe2e29..3cbbbcbfbef8f 100644
+index 3cbbbcbfbef8f..a4164ac489a61 100644
 --- a/mm/damon/tests/core-kunit.h
 +++ b/mm/damon/tests/core-kunit.h
-@@ -598,6 +598,20 @@ static void damon_test_set_regions(struct kunit *test)
- 			{.start = 25, .end = 40},
- 			{.start = 44, .end = 50},
- 			}, 3, 0);
-+	/* Zero size regions should return -EINVAL. */
+@@ -612,6 +612,17 @@ static void damon_test_set_regions(struct kunit *test)
+ 			{.start = 42, .end = 21},
+ 			}, 1, 1,
+ 			(struct damon_addr_range[]){}, 0, -EINVAL);
++	/*
++	 * Regions resulting in same region after alignment should return
++	 * -EINVAL.
++	 */
 +	damon_test_set_regions_for(test,
 +			(struct damon_addr_range[]){}, 0,
 +			(struct damon_addr_range[]){
-+			{.start = 42, .end = 42},
-+			}, 1, 1,
-+			(struct damon_addr_range[]){}, 0, -EINVAL);
-+	/* Negative size regions should return -EINVAL. */
-+	damon_test_set_regions_for(test,
-+			(struct damon_addr_range[]){}, 0,
-+			(struct damon_addr_range[]){
-+			{.start = 42, .end = 21},
-+			}, 1, 1,
++			{.start = 10, .end = 20},
++			{.start = 20, .end = 30},
++			}, 2, 4096,
 +			(struct damon_addr_range[]){}, 0, -EINVAL);
  }
  
