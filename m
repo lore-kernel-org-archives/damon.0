@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DE22AD3C;
-	Wed,  2 Sep 2026 04:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46953054E4
+	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 04:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788323033; cv=none; b=dU9jo86X7TBOPxQhgZWi3ljSftauuLrX1XU6hekIo7tt5hZenk1letGMVU1V6GA5MtrkJh+tr0hjraYW1Y3uCXu4lbQreDGA/sdfiBRGNpo94KU+w7OGy4CsVHbiLHoS0t5S5Iq63bJfxZhfHA7p+x5eqzTYgj2QxqNLoM+LgYc=
+	t=1788324695; cv=none; b=h/voZJ+O2hmrqkJs/lcgImlswYEm7dK3vjWSE8fIWKoEWX3mN6W3cBoynEeNzmeUsLCcR54WiYwqzivuMpNGHyduE4K9fTH9mOEtyjs1X0XqV9d2YN4sn8UCZEzVoiGdE588sC7EYvLW9uKs//J9588BwU+aAUk2IcawImAFEAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788323033; c=relaxed/simple;
-	bh=FmRC+bS02q4Tj5mANzuEg08tT9VklDzM46SUj5JT8z4=;
+	s=arc-20240116; t=1788324695; c=relaxed/simple;
+	bh=1XR8KwQMMf/rbgCHbURbMHqMD23RiuIsOTewp3wZA5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SzHdbD7Kyb3MHEImhXfEtOLSLqyVAEEvIx0pvuHXyQENctrKnOvf6g5DRWJR+//QoqHC1WtjtAp9PawR5dALgdFht1Af7rudLpbsxO9WcTpr+bkVEBg8A63FSABH1KF4Ec83xazTR9l1h7pBEWeaVvvp/cGk73CXt9APzYJRCxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=efsMFi5D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HhbdqAGKQfHSKkwdqShD48vHNrqAB2M9KjXA1/U2P3wCXro4s7dbnNFLU4suD1GJ9LgMIRo24Sp0F/f/q/YHjZgIbqLNQ0Mk1GNlwQavE9gvulPYjA9/aIjLzl7b1HLINK68MVe5bwraFzzw9rxhXYNXfdrtm+wGwApUVZ5pvAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hRC51GLr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="efsMFi5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462301F000E9;
-	Wed,  2 Sep 2026 04:23:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hRC51GLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CED51F000E9;
+	Wed,  2 Sep 2026 04:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788323031;
-	bh=k/BBp1rCaHO25EnmCw/gRO/quORSiIRxHq89BaWHrqY=;
+	s=k20260515; t=1788324693;
+	bh=M6OYJXPJkdJuS8D/y8LxBZlLzeawwZ954QV1hullYL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=efsMFi5DAOQl8K8tkDMkmeesth1Zr+E8qUFuw2SYFsiGrIU5k3mZKlRmHVjeoy5Up
-	 Mh232iQJOWIKNzjvGZYNeoeShVNyaDTa6lGsyyoN5DD9V/Kv85+QJDoFcN/i/D1jIH
-	 cCJGtC33GLJdrgibBOLbgxgMtziisfzeJY/Dk1K4+BNlLYGE4vznMbGd9JneORDsbl
-	 StPSReyIi3VT4KJ0syn8fAblDFXb4Dt3K59p4zgx5HO1lByfwnekQb1A+q/CXHVK/J
-	 DwPmaEabtuXNBgYMDcv5bKId6yA4W9hyeVShopEBuaww7OQsJN101tuGEQOcOO144E
-	 KqSYVzKqpxv8A==
+	b=hRC51GLrTDaO02opi14iqF+SQH2f8CeedUIwJ1Gt00ogDUIct9LdAMi7xtbuBnHD9
+	 qZ96DB7X7mbJLNIBXL9dIkLd3HlxRfE3MhkEkoAh5u4UyaVe5kdA6EMM21paENKVb1
+	 hyKWNl1IWiJq/vFDWs2/USWo/XToawNjnYq65YfKRkXpcIhyvF5Sp4gyFUQtyZn2wq
+	 /zTtiv97MYGTklcbxlT5ULbWoeHHLXg+OeEbavj4xfS2swF+7svrEJxbafyjrfz91z
+	 8ZB0pD0I5cftd6JPrVYAG7o7hyfvEu6ZwjJgmkZzg/Apm7ESxyAayPuRZK2Ui+HQV0
+	 6Q7v+sWBMz/lw==
 From: SJ Park <sj@kernel.org>
-To: Lian Wang <lianux.mm@gmail.com>
+To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH v4 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
-Date: Tue,  1 Sep 2026 21:23:43 -0700
-Message-ID: <20260902042344.83913-1-sj@kernel.org>
+	"Krishna Iyer" <kiyer@crusoe.ai>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH v2 1/3] mm/damon: move damon_hugetlb_mkold() from vaddr to ops-common
+Date: Tue,  1 Sep 2026 21:51:24 -0700
+Message-ID: <20260902045126.47244-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260902015616.57702-1-lianux.mm@gmail.com>
+In-Reply-To: <20260902031422.AD24A1F000E9@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,61 +43,105 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed,  2 Sep 2026 09:56:01 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
+On Wed, 02 Sep 2026 03:14:22 +0000 sashiko-bot@kernel.org wrote:
 
-> Hi SJ,
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
 > 
-> > Seems using MTHP_STAT_NR_ANON that is exposed as 'nr_anon' can be used?
+> Pre-existing issues:
+> - [Critical] Non-atomic read-modify-write of huge PTE in damon_hugetlb_mkold clobbers hardware-updated dirty bits.
+> - [High] Unaligned addresses in DAMON mkold functions cause incorrect secondary MMU aging.
+> --
 > 
-> Thank you for the suggestion.  I will study MTHP_STAT_NR_ANON and nr_anon
-> further, and document what I find.  We can continue discussing it by email,
-> and I will be happy to review any follow-up or updated patches.
+> commit c27851bf8f97112ca3d3c8258d2ecf636424ff88
+> Author: Krishna Iyer <kiyer@crusoe.ai>
 > 
-> > I'm curious if you and general reviewers need or prefer to directly be Cc-ed.
-> > I was naively thinking people can search and review DAMON patches by
-> > subscribing to the mailing list or using the archives via lore.kernel.org like
-> > tools.
+> mm/damon: move damon_hugetlb_mkold() from vaddr to ops-common
 > 
-> I subscribe to many mailing lists, including linux-mm and DAMON, and I also
-> follow patches through lore.  Direct Cc is not required, but I appreciate it
-> for DAMON-related patches.  Because I care deeply about DAMON, directly Cc-ed
-> messages are filtered into my important mailbox, so I can archive and review
-> them quickly.
+> This commit moves the damon_hugetlb_mkold function from the virtual address
+> space monitoring operations set to the common operations set. The physical
+> address space monitoring operations set will now be able to use it to
+> support access monitoring of hugetlb-backed memory.
+> 
+> > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> > index fbda70d8ea4d0..f5fe92b825bbc 100644
+> > --- a/mm/damon/ops-common.c
+> > +++ b/mm/damon/ops-common.c
+> [ ... ]
+> > @@ -98,6 +99,35 @@ void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr
+> >  #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
+> >  }
+> >  
+> > +#ifdef CONFIG_HUGETLB_PAGE
+> > +void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
+> > +		struct vm_area_struct *vma, unsigned long addr)
+> > +{
+> > +	bool referenced = false;
+> > +	pte_t entry = huge_ptep_get(mm, addr, pte);
+> > +	struct folio *folio = pfn_folio(pte_pfn(entry));
+> > +	unsigned long psize = huge_page_size(hstate_vma(vma));
+> > +
+> > +	folio_get(folio);
+> > +
+> > +	if (pte_young(entry)) {
+> > +		referenced = true;
+> > +		entry = pte_mkold(entry);
+> > +		set_huge_pte_at(mm, addr, pte, entry, psize);
+> > +	}
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but does this non-atomic sequence overwrite
+> the PTE and silently clobber concurrent hardware updates to the dirty bit?
+> 
+> In damon_hugetlb_mkold(), the entry is read via huge_ptep_get(), manually
+> cleared of the young bit with pte_mkold(), and unconditionally written back
+> with set_huge_pte_at(). A hardware update to the dirty bit occurring between
+> the read and the write could be lost. If the dirty bit is overwritten with a
+> stale clean copy, data could be reclaimed and lost instead of being written
+> back.
 
-Thank you so much for your interest in DAMON, Lian.  But, the problem is that
-my memory is so bad. :'(
-
-I am maintaing mm patches review status dashboard for people who want to find
-patches that waiting for their review.  It also provides the review status for
-each sub-mm components [2] including DAMON [3].  Maybe finding patches that
-waiting for your review from the dashboard is also a way for you?
-
-If having the mail directly in your important mailbox is what you need, I
-believe adding mails filtering rule for DAMON patches wouldn't be that
-difficult.  If you use hkml, it could also help you monitoring [4] those.
-
-Yet another systematic and long term solution that I could suggest is keep
-reviewing and posting DAMON patches one by one, build more tracked records and
-trusts, eventually adding your name as DAMON reviewer or maintainer on the
-MAINTAINERS file.  All patches sent with get_maintainers.pl will automatically
-Cc you.  It would take time and require patience, though, of course.
+I'm separatively working on this.
 
 > 
-> I am very happy to contribute to DAMON, and I look forward to continuing our
-> discussions and reviews by email.
+> > +
+> > +	if (mmu_notifier_clear_young(mm, addr,
+> > +				     addr + huge_page_size(hstate_vma(vma))))
+> 
+> [Severity: High]
+> This is a pre-existing issue, but could passing an unaligned addr to
+> mmu_notifier_clear_young() cause incorrect secondary MMU aging?
+> 
+> When mmu_notifier_clear_young() receives a range that crosses page
+> boundaries due to an unaligned start address, the secondary MMU (such as
+> KVM) may age multiple adjacent host pages instead of just the target page.
+> This would corrupt working set statistics for adjacent pages and lead to
+> incorrect memory management, like reclaiming hot pages.
+> 
+> This unaligned addr behavior appears to originate from damon_rand() and is
+> also present in damon_ptep_mkold() and damon_pmdp_mkold().
 
-I really appreciate your interest and contributions to DAMON.  I hope it to be
-continued long term!
+I will separatively work on this.
 
-[1] https://github.com/sjp38/mm_git_dashboard
-[2] https://github.com/sjp38/mm_git_dashboard/tree/master/summary/subsystem
-[3] https://github.com/sjp38/mm_git_dashboard/tree/master/summary/subsystem/DAMON
-[4] https://github.com/sjp38/hackermail/blob/master/USAGE.md#monitoring-mails
+FYI, I think Sashiko maybe reported this kind of issue before, but I ignored it
+by misunderstanding the point.  Now I understand it better and agree this is an
+issue that better to be fixed.
+
+> 
+> > +		referenced = true;
+> > +
+> > +	if (referenced)
+> > +		folio_set_young(folio);
+> > +
+> > +	folio_set_idle(folio);
+> > +	folio_put(folio);
+> > +}
+> > +#endif	/* CONFIG_HUGETLB_PAGE */
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260902025700.17975-1-kiyer@crusoe.ai?part=1
 
 
 Thanks,
 SJ
-
-[...]
