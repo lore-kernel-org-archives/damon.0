@@ -1,66 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC974921A1;
-	Wed,  2 Sep 2026 14:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD7B49C4B8
+	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 14:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788358437; cv=none; b=hLG1N3qW2tuSx1zhVI1JeuI0j0iCffXNTVEmGUM5XpLi/tX1N4WkRn8vQagAXBHPOLEgQTcPeFdE3IYQp3UdTyBgQp4IlmTwCsrcC1dvogJ1gFut0IxhOFAsB2jNUjl75QEDgpObXYUWby3+uFqO0ZChWvB13iB9CFXTL7618mI=
+	t=1788358506; cv=none; b=YU/Hoo6IhMoTrFiRQ5GEpBDCs886o6Xd+lUIy6Ax62SViMwrjmusZAyVOrgQ0AQMHlHcOWg9kN2VCDT48YqtV/7X/kFQPCAiocJKQwMgkUHGSjsULAhw2IYOychUJlSXFhscrEHjW8MJuRhgLLC6zKyWVaLgaDdX8yKV3uZbXKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788358437; c=relaxed/simple;
-	bh=dOK7fI1VcPTwRcA9wNF1yj6a+h3tgrU6RE4i5eS3SBQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=canOR0Hqm9kDxOKRN2qfA5Xi0A9PfeXVROFoD6krWzW79Vu+Fkz0ZuQ5Y/aAxJxGUVgl93KfriZ8c4tu2J2gkWobjYjbhKnWge0IqWKKmwGq1LP+dGdzTMedkDVLulH5yIH3ciU8toZl9uDFnmuNU/Q+8Iax+YRlRziMS6/etNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GveyguU3; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788358506; c=relaxed/simple;
+	bh=ToUrjO/xRjGSPPULlLnDDU2cUAum47gQcjmwLDu8+nQ=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=WRovbCuOQWogRpy2tvsdGl5b+2XGM47wrSoHfqAtyE8sbhcIU1dfTwIetWlhC7XahUeQqRV8DnWkWMNti0a+tB3XdWJimUr69DIEFnLgt29YPdeFb6G0wYts6IQZwSkXq3OKrBGl/AARkXw/pQIJRoJ9khA0ZLly9aPs6N8HLJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PHSBVzBF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GveyguU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED03D1F000E9;
-	Wed,  2 Sep 2026 14:13:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PHSBVzBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3521F000E9;
+	Wed,  2 Sep 2026 14:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788358436;
-	bh=/sY7iQ8sPr77cH4aM3sTeT7wFW0GP7eesI1PHSHpEgk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GveyguU3ESZbjw9mrZcN+gKwl14Um+a67M0pjqmHBKAfGaH12EGa4poXgUz15a+p1
-	 Ld7ko03aZH/1UwEetlHA9wPUj0aSl3BskI3AxGgwQ4F3DMwyk0Mu18hBOKbl9TEgjU
-	 9x0Tvi1mCuX21yj+oMftISrmfQvSiX+z76odon0feaIvVjCWDGqXpNc9fMu/stc8P/
-	 2xcqbgTyuwSNIMrfwXDiysh6D4DLIxBWrB8gBjzgAiQ+l2Vn8EQ0JZRWYrbKTXBxxo
-	 CchbzB+bjMYLw0vBRqw0XkRn4Cnxofeovu0V0XMl2CzXWaVQwyHK6sR5vFrMIN/IMD
-	 Y96xjI3CeWSLA==
-From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/core: allow esz to be set to zero
-Date: Wed,  2 Sep 2026 07:13:48 -0700
-Message-ID: <20260902141349.86896-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260902082050.19566-1-aethernet65535@gmail.com>
-References: 
+	s=k20260515; t=1788358505;
+	bh=ToUrjO/xRjGSPPULlLnDDU2cUAum47gQcjmwLDu8+nQ=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=PHSBVzBFvqRG1XLpmDdT4971sWMPNFTpei7rlJnm3uTODaSv6zNatQFAfd4dU2fo2
+	 GwAxikTiKy5rrEYHqTz49FVHEpaMEJrRFsmIb0hxmWSLKA2fkNmtC3CNkI3JTawt20
+	 Ne4ma49QApG5q/9m9D93kLnyZ6Qtj2PEyyrWH8LdmCJNPEzU+Qcd0qG9xJMc9jGl/B
+	 nuAQeyQ82LOzBk0qiwA6DCFR9i8puXiBbrL0UrgGk4Adc4hlJyqD8eTZb+TDCVkiDr
+	 e914qQt9fMzte0LZ9cp9lnd7GIyTL+qOc8To0WilWoOCO2wfsm9gkJMAUxSNPfMm8U
+	 VA4D83tXkeBJQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 3/6] selftests/damon/_damon_sysfs: implement DamonProbes
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260902140313.85983-4-sj@kernel.org>
+References: <20260902140313.85983-1-sj@kernel.org>
+ <20260902140313.85983-4-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 02 Sep 2026 14:15:04 +0000
+Message-Id: <20260902141505.1E3521F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Wed,  2 Sep 2026 16:20:50 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+> Extend _damon_sysfs.py to support staging and committing DAMON probes.
+> It will be used for setting DAMON probes via sysfs changes for testing
+> purposes.
+>=20
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-> When the temporal quota goal tuner determines that the goal has been
-> achieved (score >= 10000), it sets esz_bp to zero so that the effective
-> quota (esz) becomes zero.  However, damos_set_effective_quota() clamps
-> the quota to min_region_sz, preventing the quota from ever reaching
-> zero.
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-Where in the code it is clamped to min_region_sz, when?  And what user issue
-this can cause?
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902140313.8598=
+3-1-sj@kernel.org?part=3D3
 
-
-Thanks,
-SJ
-
-[...]
