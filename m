@@ -1,80 +1,44 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE804A49B7
-	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 15:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF4D4A8417;
+	Wed,  2 Sep 2026 15:15:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788361735; cv=none; b=k2nJhIItlDVODLXkYZToOJkB0mt0oDbeQqIoD3wiboUPTfPrIEFeAak/1u3aExQrMiRmVzuDdV1nPwr140mpmLfvaFd2ayEmOrKFkwcknzzh+QuLjreORpbRdKdgfGedm4Ah15N6aA2n6rQJDiMsxtInrTGImpCd7OqG4OTWSAc=
+	t=1788362158; cv=none; b=kjx0xVeRXtVL3zJKFNQa0wvbyFs7AiNfLJ5m0O9pxgtGbi6cCEFUrTdosETRXnuVo8nK9NiH/r8+kiFapteIV4QNK1rYXTEPGKQpac6fNlVASSPvyNtz7s/e0D5f6oiibdEYMnfjYPpYzdECjNEiviOKjSn7qaArCjL0ZiqgKy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788361735; c=relaxed/simple;
-	bh=I3mYKVGTKqP/H3LNKqz4oW31/g3MR2FuJzgjMuRu5I0=;
+	s=arc-20240116; t=1788362158; c=relaxed/simple;
+	bh=C7GlblV3lduW5pRJ+8PzT7e2DgNLYOtJRCEzpWBM+xA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gg2hFWkHMeZ74eaWeqiIJaCQnbI3ZDdgbsUVfRCd7Xi4NuxEB+oXkIyJfcx49aOOYgXZlBaw0+fEwXzjuEVQP+BfJAPZlNKa+ZTq7Bgc4+1J+GtACHIQqwcPWiCVbj1CnZz6ITs4LpME3vbfV2QjKxiqtlPJthwrKqakwedOO+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TTILltGn; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version; b=ppKpGfFGwB230p8WMuqLj6Q2u30LRkWLllSozg/rGahJHwZU602CwKDY8W90jMPSZlwQdgIobMKY0aMGKjmJlCuG4z2iCamTtt7BxKorK3uqbAXu1EuVK/jnRF8v2l2TYT1mmhaqZQxOEMMLNoaSJEAg9/hC+Y3VnVd63u+HO8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iKE/XKpp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TTILltGn"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2d6d28aa26cso7706035ad.2
-        for <damon@lists.linux.dev>; Wed, 02 Sep 2026 08:08:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788361732; x=1788966532; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=EIdbnMs2RBr+E/C3ONkDjLCzcgL/LziyquabNv/nyLY=;
-        b=TTILltGn/FiQdZzgAwQ+b196ZXOe5ydK36lY6h1oEgnnTvxaqAmuJuUucVvmnf7gWt
-         guTP71M7+BWTdt1HlwqQtuXhBoEs/k31c77w1T5RWrDozbgoApTioEO80AVm8dLUZkiK
-         uB8tF6izP3FXVRRBT5DhsQFzbfPhGJFk9ruf+wKvmUn4/uFRxOjRFkQYT9/IzZ6SoARf
-         EBla+7EPcvSTu0Qx3sMYQxD1FVBY022z0LwX81+FBsQHYU5CTF+mz7AvvFxngSJR6+qF
-         sUNnQ7R+5SrnOKxqBWRF0doDQw7lBAUmMpvzAzVkotldcovQvSByRHkPDYylZOGIrgaP
-         YEXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788361732; x=1788966532;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EIdbnMs2RBr+E/C3ONkDjLCzcgL/LziyquabNv/nyLY=;
-        b=O6vN1Gc4m4Zh5Osw5dLPxopRj+s2uIGn/ffghYOeSnokedKkZ7uFLUY8e2P8aJpU+A
-         HylVhJIOaDAWJ7pDdggvO+NyQ/AHHZwvtvDtztkiItZk27deQjRbD6uP/GZyBWuO3Bhe
-         OXpvpQS2jZgPsj+fLWEglLZpMUY3k+DEgMxgd/kMI9Byi6enCP9HxwyVBbcf6c9AKE2X
-         vo0rpmtkOUcfgB2rV+Gnw6phe4QSHZR0B1ezvrCDueQiKLC+qfZitenqgNzzNGtHuoFN
-         pDE7gH7xRLkjOeYqp6hAW/c3TT2Qu7xqDKOifXdRNsSFNmb2Sw/UL4zuW99ugEQspK+s
-         3xNA==
-X-Forwarded-Encrypted: i=1; AKwUvBySgH2f/gvDKAh55Xmmj/MISxxaC7pI99ID9mQ1g/sIvEokKKi0gTNoUymaprH9AN4C5uLakg==@lists.linux.dev
-X-Gm-Message-State: AFuF++mk+WzKWiwj4ho16o2O3iZ3SKSTeWCUvQuOp7zYCWfrb0kfTlIg
-	3jAVtKlkI5b5MfIz5YdQ6+IWlqWvuf6ZAh3pKomnDTH731dLDV+xW2Uq
-X-Gm-Gg: AYBFou3965U2nptIH4P+PqndJ5p3Rl1CryDgJR4SSzGInIszFy4rkLElp8+UKzot1Pz
-	eVTiV7qkRUgp1p2eHWOFi02BZ1YQvGNqp8PZNXXcREpDW2apney5pkMBxL3lyD7G5a0N9iaqw52
-	s9Ix5v8wwt3x26KAt/UG8vkQdC2LQ/qwGyCLll7/9YliKkiN/cOn7Rtuee9phPK06BbE8wVGCM9
-	cPRfN2un3ObpmNOpWRzq26xpnpikPmf0a0gQozrcacrsmS9r5J5xkS8rp9h+uOqmgX9OzidpEal
-	O3ZBbyn0U7/XB2OPtVy6TRWMQ95rtVkCFSf1FKUx5pVvjekIxJD4ICUrXvCgSLzYvVBQU1PsQto
-	bho5fTJ8T3GWDxkb43EEArRqoQgo/HyMk7jI/S4vsYGBQouq+CdBTISfzQA1YLZFusntFt+tmBy
-	EOEvgDtNWsIFIZveQJGvp7g0FHgXkOxX26j2UHcDwp/p1SlwiUF0ZJa4uLC5MX
-X-Received: by 2002:a17:903:19ec:b0:2d6:e4ff:9cad with SMTP id d9443c01a7336-2daec5ab9c5mr86317615ad.3.1788361731078;
-        Wed, 02 Sep 2026 08:08:51 -0700 (PDT)
-Received: from gmail.com ([185.220.238.35])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dadd488d18sm15030855ad.45.2026.09.02.08.08.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 08:08:50 -0700 (PDT)
-From: Kunwu Chan <kunwu.chan@gmail.com>
-X-Google-Original-From: Kunwu Chan <kunwu.chan@linux.dev>
-To: SJ Park <sj@kernel.org>
-Cc: Kunwu Chan <kunwu.chan@linux.dev>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iKE/XKpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CEF1F000E9;
+	Wed,  2 Sep 2026 15:15:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788362155;
+	bh=vE/Cggwy78pImngvxsbAxzUqhSZmdOdF6pnB66mIkJk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=iKE/XKppWbSzjEt/knKYntQMNUjU3xxyGzG/qqWR+NjqD77xwNrloFoFmpEUo0H42
+	 roqpGnzg/ZLZSqyjVveOpTZCbABjNrSjLZSWz7qyeQNTfHZT+bzmgpID1DYDQ/kCtX
+	 aehIQzFzOxyaKZX8vE86cvy1wKe8GVf2THmdarEShk9FErMaLsEroyi1y7nSTrZGkM
+	 mTb6qKQSPEah//6s9yXgPifJZ9QYU7LkeavHkqOkGj1b8M2cOMO5TmoUkoyR0pt++p
+	 wiPnM9goFqsFH7vGYwOKMYLBeb1N6bnbPenlz7dGCKZxumg8CeTDclFwx39Bk33cAp
+	 16Ex83MlBaJiA==
+From: SJ Park <sj@kernel.org>
+To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+Cc: SJ Park <sj@kernel.org>,
+	Lian Wang <lianux.mm@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH 09/12] mm/damon/tests/core-kunit: test damon_nr_samples_per_aggr()
-Date: Wed,  2 Sep 2026 23:08:41 +0800
-Message-ID: <20260902150842.4033320-1-kunwu.chan@linux.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260902054747.99370-10-sj@kernel.org>
+Subject: Re: [PATCH v4 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto tuning
+Date: Wed,  2 Sep 2026 08:15:48 -0700
+Message-ID: <20260902151548.88735-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <9ac2a10f-1551-410e-a9c0-173a1daeb1ab@huawei-partners.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -84,80 +48,67 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue,  1 Sep 2026 22:47:42 -0700 SJ Park <sj@kernel.org> wrote:
+On Wed, 2 Sep 2026 18:03:39 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
 
-> damon_max_nr_accesses(), which is a previous version of
-> damon_nr_samples_per_aggr() before the renaming, was wrongly returning
-> zero or random overflowed values for extreme intervals setup.  Commit
-> 35d4a3cf70a8 ("mm/damon/ops-common: handle extreme intervals in
-> damon_hot_score()") updated the function to return correct or more valid
-> values.  Add a kunit test to ensure it is working as expected.
+> Hi SJ and Lian,
 > 
-> Signed-off-by: SJ Park <sj@kernel.org>
-> ---
->  mm/damon/tests/core-kunit.h | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
+> On 9/1/2026 5:23 PM, SJ Park wrote:
+> > Hi Lian,
+> > 
+> > On Tue,  1 Sep 2026 14:58:35 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
+> > 
+[...]
+> >> Second, the metric is global while a DAMOS scheme can target one process.
+> > 
+> > Actually it can target multiple processes if those are in single DAMON context.
+> > 
+> >> THPs from other processes or NUMA nodes can satisfy the target or dilute the
+> >> monitored process's changes.  Is this intentional?
+> > 
+> > I think it is intentional.  The user should have the control on collapsing
+> > hugepages, or believe the uncontrolled collapse mechanisms.
+> > 
+> >> If so, documenting the
+> >> scope and testing a background THP workload may be useful.
+> > 
+> > More documentation and testing are always welcome :)
+> > 
+> >>
+> >> The temporal results approach the 10% and 25% targets, while the consistent
+> >> results overshoot the 10% target to about 20% and 45%.  I would describe this
+> >> as control-response data.  TPS, latency, TLB, fragmentation and collapse CPU
+> >> data could further show the workload benefit and cost.
+> > 
+> > Yes, those would be helpful.  That's not mandatory for this simple change in my
+> > opinion, though.  I would let Asier decide whether and when to make and share
+> > such data.
+> The idea of this patch was to introduce auto tuning. I think I submitted thebenchmark results when I sent the DAMOS_COLLAPSE feature.
 > 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index a4164ac489a61..d0bed01a5b7fe 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-> @@ -625,6 +625,27 @@ static void damon_test_set_regions(struct kunit *test)
->  			(struct damon_addr_range[]){}, 0, -EINVAL);
->  }
->  
-> +static void damon_test_nr_samples_per_aggr(struct kunit *test)
-> +{
-> +	struct damon_attrs attrs = {
-> +		.sample_interval = 0,
-> +		.aggr_interval = 0,
-> +	};
-> +
+> Anyway, it shouldn't take long for me to get more data. I think it may be useful
+> for people to know the actual results in real application.
+> 
+> SJ, what's the best place to publish all those data? I believe you have more
+> experience sharing this data and which platform is the most useful one.>>
 
-Hi SJ,
+I'm never an expert in visibility :)  But if I should recommend, I get three
+places off the top of my head.
 
-A small question about the first test case.
+First, you could simply share the data with plain mail on DAMON and wider
+kernel mailing lists like linux-mm@ and linux-kernel@.
 
-Both `sample_interval` and `aggr_interval` are zero here.  Since
-`sample_interval` is the denominator in `damon_nr_samples_per_aggr()`,
-would it be better to keep `aggr_interval` non-zero when testing the
-zero `sample_interval` case?
+Second, if the data is matured, sharing those in conferences like LPC,
+OSSummit, FOSDEM or DAMON (nano) Conference would be nice.
 
-This would make the test explicitly cover the divide-by-zero protection.
-If the `aggr_interval == 0` behavior is also worth covering, perhaps it
-could be tested separately.
+Third, if you prefer text, LWN or personal blogs like medias could also be good
+places.  I also maintain DAMON porject blog [1].  Kunwu and Lian actually
+contributed an article to the blog before.  If you want to submit an article
+there, let me know.
+
+[1] https://damonitor.github.io/posts/
+[2] https://damonitor.github.io/posts/tlb_flush_policy/
+
 
 Thanks,
-Kunwu
+SJ
 
-
-> +	/* Zero aggregation interval doesn't cause division by zero */
-> +	KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs), 1);
-> +
-> +	/*
-> +	 * Too large aggregation interval on 64 bit system doesn't cause
-> +	 * overflow
-> +	 */
-> +	if (ULONG_MAX > UINT_MAX) {
-> +		attrs.aggr_interval = (unsigned long)UINT_MAX + 1;
-> +		KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs),
-> +				UINT_MAX);
-> +	}
-> +}
-> +
->  static void damon_test_update_monitoring_result(struct kunit *test)
->  {
->  	struct damon_attrs old_attrs = {
-> @@ -1736,6 +1757,7 @@ static struct kunit_case damon_test_cases[] = {
->  	KUNIT_CASE(damon_test_split_above_half_progresses),
->  	KUNIT_CASE(damon_test_ops_registration),
->  	KUNIT_CASE(damon_test_set_regions),
-> +	KUNIT_CASE(damon_test_nr_samples_per_aggr),
->  	KUNIT_CASE(damon_test_update_monitoring_result),
->  	KUNIT_CASE(damon_test_set_attrs),
->  	KUNIT_CASE(damon_test_mvsum),
-> -- 
-> 2.47.3
-> 
-
-Sent using hkml (https://github.com/sjp38/hackermail)
+[...]
