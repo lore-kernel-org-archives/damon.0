@@ -1,90 +1,64 @@
-Received: from mta1.migadu.com (out-105.mta1.migadu.com [95.215.58.105])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B91E49503B
-	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 12:46:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A85C64
+	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 12:48:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788353167; cv=none; b=V2v+3mYzYVhbKOnW9VzNfkCK7uTAM/im518H15iP1Mmr6mQJXQdDrtxzqUrWaF7kZHrDXhoIkkh7Qv9WhzyX09nMpodPeJ1skQVbt2u6VAAB0kaB/I5m15xvr6JBHKL0XW9vUiNOAsdh8p0STlE0pNkXC3OV/eVnXiZI7zJ2dnQ=
+	t=1788353327; cv=none; b=DBUXdMNDhl01ool2EAh8N7lTLOaiyJ3xdZszHwMgzM5N30UrbiyBK5QDDVVAST+bnEaz7CPsPsgIRHqOJ32jYgpKhdjoTKaNyveql5PSR2KjK0MCgDJ9nKB9X7h8z/WfZDvH4nv1+fZari6o5veELZhXTfLiOBAP3U4gF41mF/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788353167; c=relaxed/simple;
-	bh=LIIZ67WyrJ1BbHKsYGuShJUWhBgeY1V01Hjjf2SBjxc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=D8U8srcb8Lib7FmNrOV/FcLrwvT2fQqAuTJlEilj/UFHP7iOOGke8Lu4Afsx5U2VukyElRvX4rNSM00wIhCVx1sRxFp0Nz4v0c4xJmMvEKvhuZhlHJHpOBuQ34D8PiEzBA3tPv7/sX5dnhk051bBnQs6veMvHgZ3MMywVU9X73Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=DLrKtyVC; arc=none smtp.client-ip=95.215.58.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1788353327; c=relaxed/simple;
+	bh=v1tBIUmRYJlj2ovfr7kZWb1/oDWPZnGZjbu83R95Z60=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=olIkVIp8JBvH5JVP25jXNr9Swf/+k8di2j0osSXYLy1D4DuDC7mtDDkkUmCowdkN94l3+8IDZkU01Vt01iCRSmZ745kPbc0T3jfDRTG0dZKDUDL5ciAHNUjBI4OSwUIe5ZfviVIlMTa15PlSowl8B3pJMbcjAiQ+WujWPR2XkM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j69aS+Ch; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="DLrKtyVC"
-X-Envelope-To: damon@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=LIIZ67WyrJ1BbHKsYGuShJUWhBgeY1V01Hjjf2SBjxc=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1788353162; v=1; x=1788957962;
- b=DLrKtyVCPx5vDxc+7XWqW6om1+OoqLKc9JK/HKEODrmYcmrzL+O1xpf7LsF79/KT4AR/3YOQ
- ILgODtcuiIGXLVQbo4QcIMQ0KO9+H97EV+hziHA+ZNgPeCzPmwcGfaSUfUNkzeNgrqpB9QQJMvt
- wyYO67TRevuZsU7PfWri96n8=
-X-Envelope-To: damon@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id f210d0b17b2194c4;
-	Wed, 02 Sep 2026 12:46:02 +0000
-X-Mizu-Trace-ID: f210d0b17b2194c4
-X-Migadu-Flow: FLOW_OUT
-From: Zenghui Yu <zenghui.yu@linux.dev>
-To: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Cc: sj@kernel.org,
-	akpm@linux-foundation.org,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
-Subject: [PATCH] Docs/mm/damon/design: fix broken :ref: usage and a typo
-Date: Wed,  2 Sep 2026 20:45:50 +0800
-Message-ID: <20260902124550.31175-1-zenghui.yu@linux.dev>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j69aS+Ch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB361F000E9;
+	Wed,  2 Sep 2026 12:48:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788353326;
+	bh=JTvIcXxoxwefuu+aEl5joQ89q376JuhfJKzB4ZZvg4I=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=j69aS+Ch5ndXRyuzJK9f+6p1NjTVtvOSses0Hs7B3KrK9hP7jU5r1i5ZPbrLhAV1G
+	 knXF87qofMFDc8JpjnkX31mRAK2O3pdiE4LQ0N1Zcq/V0RrO72Iba38S59GZSN4nna
+	 w7EjaSYqz9xqbhp8XUcdCDoo421KoU9ikn21P6zwl8HZJkboC1UqraJLRj0httaVqH
+	 WoUjT4rfv3/KTCWqZsiGXyz7Ab2Xnb0UT73XqIsuWDQKgy3DWXEKWOW1vMic90TJM1
+	 5Ew7h9AtdTT4NCOcwjo/CREjg+Ilmqhud8mzVicoRAcc3th4+cOw7KOjeovvSE0+Zy
+	 298m6aAY6i7ZA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] Docs/mm/damon/design: fix broken :ref: usage and a typo
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Zenghui Yu" <zenghui.yu@linux.dev>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260902124550.31175-1-zenghui.yu@linux.dev>
+References: <20260902124550.31175-1-zenghui.yu@linux.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 02 Sep 2026 12:48:45 +0000
+Message-Id: <20260902124845.DEB361F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: "Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
+> From: "Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
+>=20
+> The Statistics section refers readers to the DAMON sysfs interface
+> documentation for how to read the statistics, using a ':ref:' role.
+> However, the role name has a superfluous 's' appended (':ref:s' instead of
+> ':ref:').  Moreover, its target label 'sysfs_stats' does not exist; the
+> correct label is 'sysfs_schemes_stats'.  Fix both.
+>=20
+> Also fix a typo, 'frequenceis' -> 'frequencies', in the Adaptive Regions
+> Adjustment section.
+>=20
+> Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
 
-The Statistics section refers readers to the DAMON sysfs interface
-documentation for how to read the statistics, using a ':ref:' role.
-However, the role name has a superfluous 's' appended (':ref:s' instead of
-':ref:').  Moreover, its target label 'sysfs_stats' does not exist; the
-correct label is 'sysfs_schemes_stats'.  Fix both.
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-Also fix a typo, 'frequenceis' -> 'frequencies', in the Adaptive Regions
-Adjustment section.
-
-Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
----
- Documentation/mm/damon/design.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index aed6cb1cf483..08c981c1dd91 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -249,7 +249,7 @@ For each ``aggregation interval``, it compares the access frequencies
- sum of the two regions' sizes is smaller than the size of total regions divided
- by the ``minimum number of regions``, DAMON merges the two regions.  If the
- resulting number of total regions is still higher than ``maximum number of
--regions``, it repeats the merging with increasing access frequenceis difference
-+regions``, it repeats the merging with increasing access frequencies difference
- threshold until the upper-limit of the number of regions is met, or the
- threshold becomes higher than possible maximum value (``aggregation interval``
- divided by ``sampling interval``).   Then, after it reports and clears the
-@@ -875,7 +875,7 @@ the scheme is deactivated.  Note that, unlike watermarks, even if a scheme's
- ``nr_snapshots`` reaches ``max_nr_snapshots``, monitoring will not stop.
- 
- To know how user-space can read the stats via :ref:`DAMON sysfs interface
--<sysfs_interface>`, refer to :ref:s`stats <sysfs_stats>` part of the
-+<sysfs_interface>`, refer to :ref:`stats <sysfs_schemes_stats>` part of the
- documentation.
- 
- Regions Walking
--- 
-2.53.0
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902124550.3117=
+5-1-zenghui.yu@linux.dev?part=3D1
 
