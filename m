@@ -1,42 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD2C38E8DC;
-	Wed,  2 Sep 2026 06:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3424036E48B;
+	Wed,  2 Sep 2026 06:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788329652; cv=none; b=LvyqC+BNWAqhSoQvb7D/94nXSDPJM6BcLwVRGVHY4FahRG1soNqT7JtbBtx+HlnT4bNMq0La2luOHsfdgM3SjqSo/tc7RVkme3G730VtJ1M5CLiu8lRJb1GDnziyhiUfiWRiUFQ8TkhoyOdK846Kg/+KUY3r3JTHxQP8CYFRRvQ=
+	t=1788329796; cv=none; b=hc8b84FpQ159mHDrrhEnDDzkgB3zOj9iPuCGbpL9NwB9tKw8N00xz22/Eju2tv4FOncwELuULlQkwwTDym1Fz/FKkR4W/8cvw5fFHT3X2fJzR2EfbMQuFzJmd1bw3byMAvWekwF5ayG2GasIYuRqFNdhp2EoIC3SUMXHs/BeBO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788329652; c=relaxed/simple;
-	bh=KpmFv3av8tJKSZwWoE+ljhVHf5UhB9x9vRyYoQJVCC4=;
+	s=arc-20240116; t=1788329796; c=relaxed/simple;
+	bh=df9lM9HEu5E/py1w6LvCge4VSKqYYn85zxPTfe4YEkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDOC88ubFf+XBcQniXJT5k6mAcWKU/Hle7/0EILXP09Gmnft5CC3Wwb/SuVE0Y8FLgyLjL9eoRwUNIDOkhqQXIiJLny/RO3Czg0YcsN7cmI2M/po6xmvbxe/K2qI1Ahnj5yKtB5Yq1njqtCzHHxo42QJYjGlU0VE8xwQva1IZ0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J0HEzdLc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A8eyPxdc/dRR6+W6AEsJidpYeYcQqYPLOROjD1ppFAHWyEfLMXVR/gYZNWvoVICH2TcnPgI/Mq8euFVXsgSvX1W++UUIpRhFaB6TJ0mmWosjnqI/hrdtAwzRGlDXHfKNIQZrmBYh3S/au64LmLdsVqSoGCgHux2wuqLYuuKU6M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1e89WsA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J0HEzdLc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672511F000E9;
-	Wed,  2 Sep 2026 06:14:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1e89WsA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618FA1F000E9;
+	Wed,  2 Sep 2026 06:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788329648;
-	bh=K5x2CbYRmNV3MA8rM8UuqBOVvPVm0QxSLiJJvUd4pl4=;
+	s=k20260515; t=1788329795;
+	bh=BjODJWm4HQ0zWK/uBNhYkH4uHbacHZCWiA6PuoaG+UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J0HEzdLcQyh+gjzjo4CoIOYJFrANeLY4gXMg1LyNcjFr6rWcrj0m/Hafy9aqPlCSF
-	 ALFYGKLVhJmI+q6ot5Cvvenug3O+vhPsA5Dig7YijlgHp48jO1apupvCWM5RxwsPR0
-	 ZSmAYVD1chgBRb3d4X+RsEKZqmhvo0CQ5h1gNXbLTMHitAkbG19K+nc/GFekZmLVww
-	 CZRdawX6Kt4Qdf4noDfuKuFk0CoGYSs4ghtC2riWMDu603LGfoKn6YxOve03JgNrgD
-	 Zwttkptd+C2o5Nk2KWES1+sZ78juWyiHPYDlVnZHYopac3ztyAQhZKdwJrgKdp7thx
-	 xte1xVh8i/GBQ==
+	b=Q1e89WsAYo18WECLuDiEp5fWTcq0n+WFFOj1SD4qSWJT//FyO73JSKFuM+tyXMV85
+	 muzG6bod7qNplXg8aCpt/J5CztbBQe5DT9Ax1eDA58i2Q20sP5XqeAXpZnapWzSdSa
+	 6gBR4bomJzq7h9XE8Vx/E+szEW+iKc3UGlTGsGJcCu7CT6nwfXJj1PxgsPpXqKbtS2
+	 +3c2hlxMIUKKHn4hYVmtLFubOD+Nqb1xBxuy823jcUR1AlN5mKZK69NyQtlgPdf0vy
+	 NSGiHOcstE2jXkL0sEIoqiwTI+7vrJEDWccdu6OOjfTEeXKiYuWE7kWzZoPCqHQdga
+	 9LgVPRptuCVhA==
 From: SJ Park <sj@kernel.org>
 To: SJ Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH 02/12] mm/damon/core: remove debug messages
-Date: Tue,  1 Sep 2026 23:14:00 -0700
-Message-ID: <20260902061401.104419-1-sj@kernel.org>
+Subject: Re: [PATCH 00/12] mm/damon: cleanup code, add test cases, and update guidances in docs
+Date: Tue,  1 Sep 2026 23:16:26 -0700
+Message-ID: <20260902061627.104566-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260902054747.99370-3-sj@kernel.org>
+In-Reply-To: <20260902054747.99370-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,49 +62,21 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue,  1 Sep 2026 22:47:35 -0700 SJ Park <sj@kernel.org> wrote:
+On Tue,  1 Sep 2026 22:47:33 -0700 SJ Park <sj@kernel.org> wrote:
 
-> There are a few debug messages in DAMON core.  Those have not really
-> been used in a meaningful way for the last few years, though.  Remove
-> those.
+> Misc cleanup, improvements and updates of code, test, and documents.
 
-Hi Andrew,
+Sashiko found one better-to-do change for patch 2.  Since it is quite trivial
+in my opinion, I asked Andrew to pick a fixup patch as a reply to the patch 2.
+Andrew, please feel free to let me know if you prefer reposting.
 
+Sashiko sent findings to damon@ mailing list [1], and I replied to all the
+comments having some findings.  Please read those for details.
 
-Sashiko found with this patch, string_choices.h can also be excluded.  It is
-the only finding.  I guess reposting entire series for the small change is too
-much?  Could you please add below attaching fixup patch when you pick this?
-Let me know if you prefer reposting.
+[1] https://lore.kernel.org/damon/
 
 
 Thanks,
 SJ
 
-=== >8 ===
-From b9c86e50efd30bab8c5cb99b3063bd823184b033 Mon Sep 17 00:00:00 2001
-From: SJ Park <sj@kernel.org>
-Date: Tue, 1 Sep 2026 23:08:16 -0700
-Subject: [PATCH] mm/damon/core: remove string_choices.h include
-
-It is no more being used.
-
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/core.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index a7ed7724c85af..84f6bc634f377 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -15,7 +15,6 @@
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/string.h>
--#include <linux/string_choices.h>
-
- /* for damon_get_folio() used by node eligible memory metrics */
- #include "ops-common.h"
---
-2.47.3
-
+[...]
