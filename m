@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B30420486;
-	Wed,  2 Sep 2026 11:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9D23AA4E4;
+	Wed,  2 Sep 2026 11:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788347466; cv=none; b=r2h2xppN38Mq9dx4ppzD6R1jjAIAwzWIaoBhR10xrOxoY82ru9GQuag1NiNIs8WQJy43wk5OCPOrWI2zaII4/2SPzTHewQbZDtHqvYK8o5t6arq9dQ4If8S+oQ34dQYEkXTK/owhbX1GbYorp0beuoodz0C/vMLoZWwbXaQSrBw=
+	t=1788347498; cv=none; b=IYpjZDXLwPoXaggIMuAylUBF/AzTdcqBUMAJhhE7r7yEovjLgJ+bop6J/q4SoylWtbiySrIo/Jeg86S8kpcMtB3jrQrBL4WKBbd/K2Uac33rWcjekYUpvXa/ZqAVzeaTGB2oVMj0YkdYyY5WIcOql39Aa0DZ+7vbhE/bTwW+kSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788347466; c=relaxed/simple;
-	bh=OFl/UX9hLLyIQAuDJW3VzVeJuDfU+tjD7Zca28lKxL8=;
+	s=arc-20240116; t=1788347498; c=relaxed/simple;
+	bh=QU5hPoaD3ElLgmwVvxdHA32Gn9EZTR4pgNVm2/cAjBQ=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=tenDipk+Do/8b9ivpn8PItYH7Lq/JZe+eKrdG9xThxxj7tAOJqbasZqEEYflxY4ZyvCQKPzU5NVHqLmoj1DhAt+kOyA8nrK4lBY+N/j0SNQWkWjne8Ts1OCAMKCtnP9+DWzLRvodNZ4P2ouY79316PnoCsxrMwsH71OX35tQPNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H8HmyzRQ; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=coJiNrDgXT/cLza+D59PGpGPwetRO+iAhEL5e7j7WEpjmbZ/s1VoZFh0rVWtvN+2pFTSLlTtXY+c6GhiBQ8rJ4MivlzqMF4jSAWMUPBR3xjgsaKudSlCJ6zRMUIU5TdEnqYj7NPxZSbjvLKFoaRAh9kadkfT6Da5lEhGh0xuTQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aybAZ+P7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8HmyzRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8F61F000E9;
-	Wed,  2 Sep 2026 11:10:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aybAZ+P7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4EC1F00ACF;
+	Wed,  2 Sep 2026 11:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788347457;
-	bh=M7YwwbTGtEuB+tBWrp/YaAua1CCHgB0DuI83XfmsqqU=;
+	s=k20260515; t=1788347494;
+	bh=6y4Sid6XTEIIpFKa5O3xBLjBGa0uNaO7E4h8jBqU6IY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=H8HmyzRQo3wTfdc6ySO54Cd/SsXX+et7gceAIX1H7H5HINQ650iAM8992E9NRPpWw
-	 KsSL4QkgicirKS6arRqKHrrLCTBzvEBvhwpu1a7qqbHnKc91E7SJrS+R+WhpdNaPgl
-	 G4xZTDCfakVgMNWGK1oSTjFBk6tGoHXarCqfTB+IA/vhwuudxwcszgOTKMShLyB4dd
-	 dldUE2P5izPvuIkqyxvBkwL6ZclHvG3C7t0YzCjp2JrTOpxIFXGuODDeU00lgdAWpx
-	 Ns/qx7ftoH3UHj5KVrbC2z2ne4jhbOiiXoGn2ohfHE9R8X8JMOmi3ffLAXzcKcSZR9
-	 ruaBgJnCu3t1g==
+	b=aybAZ+P7yXr+8bje9FZkvvGZVrkJ6jYX7k+Ptmx4yjLrP1pXIXCK8NeGvuVd2KmPA
+	 UyokrqdKUhwxEBKS/w5WyY0C2m+Ce02sORu1OODuVTAbrZ5jZZfT6IZfWeYXoGkRAo
+	 k8xAS4hzPkeC84QFRX31UDXZFVdn1J6JaXtdLUV4iGqaIjOzSVvwS2+p8pehSqaW1x
+	 NlXAzC84oo1wbqu7/zgdIBvjsUmiIRmVTeIpLvpEjYsanvQOc7os9Yo7FSH7icVRhO
+	 VOqxTd0fdjB18NVtaug047xwTBdRQHfasiE915CGlMXGTQo5AsgBzv2QMG6SWUZjgx
+	 Jr4dF7azy/qqw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH RFC 11/11] mm/migrate: pass migrate_control to
- migrate_folio()
+Subject: Re: [PATCH RFC 10/11] mm/migrate: pass migrate_control to
+ migrate_pages()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Shivank Garg" <shivankg@amd.com>
-Cc: linux-cxl@vger.kernel.org, "Chuck Lever" <cel@kernel.org>, damon@lists.linux.dev, "Jeff
- Layton" <jlayton@kernel.org>, kvm@vger.kernel.org, dsterba@suse.cz, "Anna
- Schumaker" <anna@kernel.org>
-In-Reply-To: <20260902-migrate-refactor-shivank-v1-11-9dcca87669c4@amd.com>
+Cc: dsterba@suse.cz, "Jeff Layton" <jlayton@kernel.org>, linux-cxl@vger.kernel.org, "Anna
+ Schumaker" <anna@kernel.org>, damon@lists.linux.dev, kvm@vger.kernel.org, "Chuck
+ Lever" <cel@kernel.org>
+In-Reply-To: <20260902-migrate-refactor-shivank-v1-10-9dcca87669c4@amd.com>
 References: <20260902-migrate-refactor-shivank-v1-0-9dcca87669c4@amd.com>
- <20260902-migrate-refactor-shivank-v1-11-9dcca87669c4@amd.com>
+ <20260902-migrate-refactor-shivank-v1-10-9dcca87669c4@amd.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 02 Sep 2026 11:10:56 +0000
-Message-Id: <20260902111057.5F8F61F000E9@smtp.kernel.org>
+Date: Wed, 02 Sep 2026 11:11:33 +0000
+Message-Id: <20260902111133.9C4EC1F00ACF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -49,91 +49,73 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-
-Pre-existing issues:
-- [High] JFS metapage migration crashes or leaks references because it acce=
-sses `src->private` after `filemap_migrate_folio()` has detached it.
+- [High] Uninitialized `async_ctl` structure is passed to `migrate_folios_b=
+atch()` when `ctl->mode =3D=3D MIGRATE_ASYNC`.
 --
 
-commit 0c092f89cb8cd82947c067576e2c9c259c2c1dc2
+commit c0d77495768f5e8f1e4f178497970348e9942beb
 Author: Shivank Garg <shivankg@amd.com>
 
-mm/migrate: pass migrate_control to migrate_folio()
+mm/migrate: pass migrate_control to migrate_pages()
 
-This commit updates migrate_folio() callbacks across various filesystems to=
-=20
-accept a migrate_control structure instead of a simple migrate_mode enum.=20
-This change allows additional policy information to reach folio-specific=20
-migration code, while preserving the existing migration mode behavior.
+migrate_pages() still takes mode and reason separately and reconstructs a
+migrate_control internally. This prevents callers from supplying additional
+migration policy without extending its argument list.
 
-> diff --git a/fs/jfs/jfs_metapage.c b/fs/jfs/jfs_metapage.c
-> index 41fe12e641cee..7958edacb4971 100644
-> --- a/fs/jfs/jfs_metapage.c
-> +++ b/fs/jfs/jfs_metapage.c
-[ ... ]
-> @@ -241,7 +241,7 @@ static int __metapage_migrate_folio(struct address_sp=
-ace *mapping,
->  	if (metapage_locked(mp))
->  		return -EAGAIN;
+> diff --git a/mm/migrate.c b/mm/migrate.c
+> index e4bc7122076e1..549f8b57092cc 100644
+> --- a/mm/migrate.c
+> +++ b/mm/migrate.c
+> @@ -2359,7 +2354,7 @@ int migrate_pages(struct list_head *from, new_folio=
+_t get_new_folio,
+>  	rc_gather +=3D rc;
 > =20
-> -	rc =3D filemap_migrate_folio(mapping, dst, src, mode);
-> +	rc =3D filemap_migrate_folio(mapping, dst, src, ctl);
+>  	rc =3D migrate_lru_folios(from, get_new_folio, put_new_folio,
+> -			private, &ctl, &ret_folios, &stats);
+> +			private, ctl, &ret_folios, &stats);
+>  	if (rc < 0) {
+>  		rc_gather =3D rc;
+>  		goto out;
 
 [Severity: High]
-This isn't a bug introduced by this patch, but does this code crash or leak=
-=20
-folio references during migration due to accessing a detached private point=
-er?
+Does this execution path introduce a regression where an uninitialized
+structure is passed when the initial mode is MIGRATE_ASYNC?
 
-When __metapage_migrate_folio() calls filemap_migrate_folio(), the migratio=
-n=20
-core delegates to __migrate_folio(). That function moves the private data=20
-from the source to the destination folio:
+Looking at __migrate_lru_folios() which is called via migrate_lru_folios():
 
-mm/migrate.c:__migrate_folio() {
-    ...
-    if (src_private)
-        folio_attach_private(dst, folio_detach_private(src));
-    ...
+mm/migrate.c:__migrate_lru_folios() {
+	struct migrate_control async_ctl;
+
+	if (ctl->mode =3D=3D MIGRATE_ASYNC) {
+		rc =3D migrate_folios_batch(...);
+		goto out;
+	}
+
+	async_ctl =3D *ctl;
+	async_ctl.mode =3D MIGRATE_ASYNC;
+...
+out:
+...
+	} else if (!list_empty(&split_folios)) {
+		migrate_folios_batch(&split_folios, get_new_folio, put_new_folio,
+				private, &async_ctl, ret_folios,
+				NULL, stats, 1);
+	}
 }
 
-This detaches the JFS meta_anchor or metapage pointer, leaving src->private=
-=20
-as NULL.=20
+If a caller invokes migrate_pages() with MIGRATE_ASYNC (such as DAMON or
+NUMA balancing), the execution jumps to the out label, skipping the
+initialization of the async_ctl structure.
 
-Shortly after the filemap_migrate_folio() call returns successfully, the JF=
-S=20
-code calls remove_metapage(src, mp). When MPS_PER_PAGE > 1, remove_metapage=
-()=20
-reads the now-NULL src->private pointer:
+If a large folio fails to migrate and is successfully split, the split foli=
+os
+are placed into the split_folios list. Then migrate_folios_batch() is called
+to retry the split folios, passing the uninitialized async_ctl structure.
 
-fs/jfs/jfs_metapage.c:remove_metapage() {
-    struct meta_anchor *a =3D folio->private;
-    ...
-    BUG_ON(a->mp[index] !=3D mp);
-    ...
-}
-
-Dereferencing 'a' here triggers a severe NULL pointer dereference and kerne=
-l=20
-panic.
-
-Alternatively, if MPS_PER_PAGE =3D=3D 1, insert_metapage(dst, mp) is called=
-.=20
-Since dst->private is already set to mp by the migration core, the call to=
-=20
-folio_attach_private(dst, mp) inside insert_metapage() succeeds but=20
-increments the destination folio's refcount a second time. The subsequent=20
-remove_metapage(src, mp) calls folio_detach_private(src) which does nothing=
-=20
-since it is already NULL. Can this path permanently leak a folio reference=
-=20
-count?
-
->  	if (rc)
->  		return rc;
-[ ... ]
+Could this regression lead to unpredictable migration behavior by using
+garbage data from the stack for the mode and reason fields, potentially
+sleeping in paths that expect asynchronous behavior?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902-migrate-re=
-factor-shivank-v1-0-9dcca87669c4@amd.com?part=3D11
+factor-shivank-v1-0-9dcca87669c4@amd.com?part=3D10
