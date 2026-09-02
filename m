@@ -1,95 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7B23E5ED0
-	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 08:30:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A5E388E5B
+	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 08:44:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788337849; cv=none; b=C9aIHKi4EuRHAtDIUNdRodhFC0YnOfqY7eJrSCd3EXR5jw8t4tqwTVrVv/W9uqhxYk3UWCVzudFVnufR5GDR5eE2Df4k68vu+PNwowcqah5k2iX62LEApql5kEOqLD6ld0q/xq7Gy7QRoS6NjXpF2p8hCu3NclqgSbrIU6N0Mf8=
+	t=1788338692; cv=none; b=EnGcpFr5WbVRlZ/fADVZaloz4iP83CFmmOGfm97aIHkJHd0Hi8hF6DMRsIDqUdA3Cnaqm8i+vW0SxigehtEEdmjW1gQHonMQASbaRbo90QIIB0vLAS/vjgROF56N/h6YxfCHQfSDfIq/oxojTO1Hp+0JGJTWuFkPdVlDK7CxSC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788337849; c=relaxed/simple;
-	bh=/pz2eJYz05HgaYa6/cDgTwSYa6SMcvNPW1V/Z87d3j0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=c8/PQd0CTzkB+8H4kC6UNYVibIj7KK5RTVhm+yZEl2p1UPiwBaVtuKGFe0mP0FvQGPBdGJw437iQ5d7okActQcrynLv0s++ifL+Iearxm+/RzNYwtrZ8NCPsdjwDJGazgKeAYrO2OvweI2GdMWLdOWCTRvMOK+/dfwhQ0oYSYZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L/rnV4GD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788338692; c=relaxed/simple;
+	bh=W9gAYG0X9XJxEJUSM37YRKmyz4ctudzKtZ3GvTGFjQ8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=k2Pc0JNJB/g8S/CvpdTaHJI6J2GjKcsABs+ap3oM4mtbVh2QjkrfwraW8nqun23VIiT8A1e9rthWnmmRIjN1ZcM3zmQE56gEy9MaBhsYqOCoRg+Pm4PkHZ28wIXTby5FVNTgU0zgEDO/fyr1f0Mmb8bCGOFMxaqBTJAtugYv2hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sPpJd1VY; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L/rnV4GD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4081F000E9;
-	Wed,  2 Sep 2026 08:30:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788337847;
-	bh=M8TR2+wpPCr7dG78RAFKGGeJHDRB2hV9j8NpNhZyjvM=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=L/rnV4GDfZmoHVW3UHC3/OyknYDvkjVAnadOMwEsq/VcgWH1AXhakJzmxM9CwiOdp
-	 gn9H8H5sS7CDtM/rUHIS6Ytfw18G62dQJAgHhqUOzFQPpnCREuvIwM8X2ZdAvxGQni
-	 DZt6lYrPBID0VSFNJI8Y8wMagOhPEn9yinq8TpdkhLfjZh/6chcE74Ph5Suf6Mfhbp
-	 twxeeX0ysjGj2bYTuV6hc8TJS9CZs5ZFyBYbCTopnY4fSBzeWw0xpUumhahC+ffJOy
-	 IA7Iyf8yMPskQc3uff7+EfdRAVU3q+O3GY1hmJOaEL7nIAV+d4s5RPE/r4BuRnDg+U
-	 w6nnlYfY5ddWg==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] mm/damon/core: allow esz to be set to zero
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Liew Rui Yan" <aethernet65535@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260902082050.19566-1-aethernet65535@gmail.com>
-References: <20260902082050.19566-1-aethernet65535@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 02 Sep 2026 08:30:46 +0000
-Message-Id: <20260902083047.6D4081F000E9@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sPpJd1VY"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-8520161fdb9so1029386b3a.3
+        for <damon@lists.linux.dev>; Wed, 02 Sep 2026 01:44:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788338687; x=1788943487; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Uexc1NDi5NdMn1KWK0fKne2QitDNcH/zJBrubqnXvz0=;
+        b=sPpJd1VYYQpNKAjyVIocEPvX84YYKZcX9OaWy7DdVwcpg42PhMNSl0F9M5u4idjUWe
+         UsBRj7h1VIeAXv3ZmnJmdQfeHFPzNGeSxOw59P8sJTywRsuELCgmV8FlzJhYdrfFtOf2
+         Bc84aLQ7tuc50ktFqWLpLY2+TfkFa5oVk4M/4cnYUs1PCZUo56SicAlodYDA1Yt693Sl
+         voDOVrVi93nYa5XFP+S0ihpTzFgH71d1m3W88evia3WH7y2cIRx5NBPRtyJmjcKc49i9
+         Y7D6pyuGHXByr4lyBLiMtD+vxv2YSdhYaEaEj6xeUzIIa/OqiRL7KTacho4HRrJoiGK7
+         JX8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788338687; x=1788943487;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Uexc1NDi5NdMn1KWK0fKne2QitDNcH/zJBrubqnXvz0=;
+        b=PL6SkaAGo1ZlcDrCptIyNeewcfU8KgRvP+Vb6Kcbo8MZCvVdr7bzhN7y2STTN1heYq
+         zyj+00++ISexjvKI2kDZSOnBHfYzRiERd0/tffJqg1WqMyHdR55SsJJqAfnqTXZ2fzCc
+         3FwXwWQbcvWzFpwBwhwnvloP0Lrq0b4XXWBRkpR0azObgdbqXSzPYuOwaQE2M+n07gdz
+         i1AvRPo5FEo0Brnvmng2uKLXqnErZ9kuoSZgmGXYFxX+KMayVWTZFBSyfa783P8basJT
+         IrtUDSNDKQiuW3bBRTuzL0NAZQVe5mNRawuGeC8cZtwx+sLAZtXE7SQ9bSVU3qSiMvpR
+         dqQA==
+X-Forwarded-Encrypted: i=1; AKwUvBw1FPEKu4XMMv5EOUB10O7C7Lo0yBhlnzhDyXAa2SpvIN67QgbNPo98X2R90CZz90KwsKRJRA==@lists.linux.dev
+X-Gm-Message-State: AFuF++l3oyHts/Tnbp/pbm54IeW6pZkoKtm4yPtKgPVQjCw70l9Bs6en
+	Hgj0u9kZPBFq4PeH769sTMZKkmmC5SRE5EtaEQJIO+Xc994J4Dm0FzxI
+X-Gm-Gg: AYBFou2+Gkl29/un90faaxl27lGGkMuvjBv+/hWB3koGXGnpe/Pd7ItV21Ebl6J+YpG
+	iVJORvF4XIufRXEw6MRoDo6GdaMI/Z1rx6OycPdoCFBRcVB1oGLbSn7TU4ZIHsmFcEBr6J94Ugq
+	0yEs4M7pG9Lnp0DF8lSl+mzBxVJDd4NBPNFRZQGyRiQb/93JdyGLLoqorAO7Si9lduaUmbMzunQ
+	NpvMbKdkHZ6VZC8KexHK1x26TVhVdGUBhGX3+etoogO5RO/4yPGicDeQHvfkBXQ7Y41qft16ysT
+	HtQ3LaB8k5rR7pVvELZW/1zQj4rX9xlY/xoxzKzSf0cAIEQhVPp0jH0JeAiTVzux0jGlpbGSM6m
+	Qxg+OivoKNZstDEkaRlXJfhw7AY8UDYORat1rkT95nRTL8YGNAiP/rQP1YGeonrY8S1isCLYcIL
+	QNmDqOiPlN//usl5IqyBFKjhD+7habGyFQGFXTZ+zCGx3vAWWfQycTukoO8ndZLzdAbu9jTium2
+	PY0yDrOOUJKW6xU
+X-Received: by 2002:a05:6a00:124b:b0:857:726d:2709 with SMTP id d2e1a72fcca58-85ed3f6e6e8mr5014011b3a.21.1788338686927;
+        Wed, 02 Sep 2026 01:44:46 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:9c5:2de5:8b4e:3f3c:b637:4ca5])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-85db29deb9fsm1047430b3a.16.2026.09.02.01.44.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Sep 2026 01:44:46 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	stable@vger.kernel.org
+Subject: [PATCH v2.1] mm/damon/core: fix false positive in damos_quota_is_full() when esz is zero
+Date: Wed,  2 Sep 2026 16:44:45 +0800
+Message-ID: <20260902084445.27170-1-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [High] The patch breaks purely time-based quotas by unconditionally zeroi=
-ng the effective size quota (`esz`) for DAMOS schemes without goals.
---
+When setting goal_tuner to 'temporal', if the goal is achieved,
+quota->esz_bp will be set to zero.  In this case, damos_quota_is_full()
+will always return true, even if no regions have been tried to apply at
+all.  This causes qt_exceeds to increase unexpectedly.
 
-commit 34629844ff11daf28855cce5457468ad8bc08c73
-Author: Liew Rui Yan <aethernet65535@gmail.com>
+Fix it by:
 
-mm/damon/core: allow esz to be set to zero
+- Returning false in damos_quota_is_full() when quota->charged_sz is
+  zero.
+- Adding an early exit in damon_do_apply_schemes() for schemes with zero
+  esz.
 
-This commit updates damos_set_effective_quota() to allow the effective quota
-to be set to zero when the temporal quota goal tuner achieves its goal.
-Previously, the quota was clamped to min_region_sz, preventing it from
-reaching zero.
+Fixes: c7ec7d5f6b3d ("mm/damon/core: handle <min_region_sz remaining quota as empty")
+Cc: <stable@vger.kernel.org> # v7.2.x
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index df22621765911..73dc9a70fb12b 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -3251,6 +3251,9 @@ static void damos_set_effective_quota(struct damon_=
-ctx *ctx, struct damos *s)
->  	if (quota->sz && quota->sz < esz)
->  		esz =3D quota->sz;
-> =20
-> +	if (!quota->esz_bp)
-> +		esz =3D 0;
-> +
+Changes from v2:
+- v2: https://lore.kernel.org/damon/20260902081825.18931-1-aethernet65535@gmail.com
+- Changed patch title, v2 title is truncated.
 
-[Severity: High]
-Could this cause a regression for schemes that use purely time-based quotas?
+Changes from v1:
+- v1: https://lore.kernel.org/damon/20260901105925.106186-1-aethernet65535@gmail.com
+- Changed the check in damos_quota_is_full() from '!quota->esz' to
+  '!quota->charged_sz', because the former is an upper bound, while the
+  latter represents the actual quota usage.
+- Added an early exit in damon_do_apply_schemes() to prevent a scheme
+  with zero esz from being evaluated by damos_quota_is_full().
+- Changed patch title, original title: always return false when esz is
+  zero
 
-If a scheme is configured with a time-based quota (quota->ms > 0) but has no
-quota goals (list_empty(&quota->goals)), quota->esz_bp remains at its defau=
-lt
-initialization value of 0.
+---
+ mm/damon/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-While damos_set_effective_quota() correctly computes esz from the throughput
-and quota->ms, this unconditional check will then force esz to 0 because
-quota->esz_bp is 0. An esz of 0 causes damos_quota_is_full() to always retu=
-rn
-true, effectively breaking schemes relying only on time-based quotas.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 8e3ded1a2cf6..de78ad56c8b3 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2560,6 +2560,8 @@ static bool damos_quota_is_full(struct damos_quota *quota,
+ {
+ 	if (!damos_quota_is_set(quota))
+ 		return false;
++	if (!quota->charged_sz)
++		return false;
+ 	if (quota->charged_sz >= quota->esz)
+ 		return true;
+ 	/*
+@@ -2666,6 +2668,9 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 		if (!s->wmarks.activated)
+ 			continue;
+ 
++		if (!quota->esz)
++			continue;
++
+ 		/* Check the quota */
+ 		if (damos_quota_is_full(quota, c->min_region_sz))
+ 			continue;
+-- 
+2.55.0
 
->  	quota->esz =3D esz;
->  }
->
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260902082050.1956=
-6-1-aethernet65535@gmail.com?part=3D1
