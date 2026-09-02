@@ -1,142 +1,320 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013047.outbound.protection.outlook.com [40.107.201.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7360642DA3F
-	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 09:51:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788342688; cv=none; b=NSgzqrBBe+POMuf0BYYvms4OyCkjJ3j6U0tErrrcZiyMTnyVH24tQ6DIyBMuLtrpozPhTtPtBgx5uIz4Burts3cznlTXZaRiaUSHm/q9PVpzHMugddhDKo+RHIK+vHsvxUjUnhH+IVKwxc76TgvKU0WDpIy7ogab5wvE+gF9KJU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788342688; c=relaxed/simple;
-	bh=kpoO4XC5ZjwGe2R23ONKEYBPpJR/+J5srvdUMCfvzs0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f9wlJe8Jqle94ZNdTl9yB8XsjK0E61MeXJgpZjfAn4Iihr6hLfjle9rQzttIWhKz3WFXEemTGBl59+g03hF+8NLwhG55tu9dQhfp5U8MWjEcjrzF2wUfO38WajfeUrc9++Qf9ky5hq+ZgCcQINpa9UdbGGW2E3q1+8IaSUxv3H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cXQLKWKG; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE0A476CD2
+	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 10:52:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788346376; cv=fail; b=Lhh1sb8I6aTJGE8IY5gvkSccaVpEIct9U7+RZxaQEA2IFb/j+O8qLmcpiewXhusXKEJOkUJ4QX6ycqaLkbX0KIK1UPDY2SAsdaZK8M3u8JXMGHBVyVoSU1mY/Sq/Tb3iAJ4V5ib7l5fHN5PIvfHw3jib1AJeG20/HswwLzMRQPY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788346376; c=relaxed/simple;
+	bh=Mu+TgUSXajmjBg2+WPbNk2V8+vggDvRasZKUX+O5vXA=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=ucYK0Kkv9iu72J2Rpg8opHdsl8+jayQk2WNpnPRcIBc4ERv5MxFuV03iv6zzQ9rUeSv9XJAGcHa+eVVkSrsQsT4JHpbmBGY5ZN2TBI+IUA+CesMcmtn8ya3R7MZEIvqhdQc15k1dc/SQQz+d710dlWn0mAm6iLbVO/4i2aT3Jl8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=T9hHbCS8; arc=fail smtp.client-ip=40.107.201.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cXQLKWKG"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2cf452def93so19558745ad.1
-        for <damon@lists.linux.dev>; Wed, 02 Sep 2026 02:51:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788342686; x=1788947486; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=bUGd7SiZwszuY692VXLvSRgKuWVCf+DwlqdyCfU6+00=;
-        b=cXQLKWKGrriBQq0CtoqluRghB25BnsXZDBgSeakZvE0lDuSj34b9T3AhSqvV6K9oeP
-         9aderPPcPIJa9u7dKlrJnU7NQhX/2OXCzhkreAVdiQU6uGF6I6Igj5ZU5E7o+3lpwRLT
-         UzrerjXvRh95ftkC5bQ1oAqPnX20cKyZ7fs7hnVCM3d+DzN4gjjy/L5P6ceEyU/z117e
-         46X6F+mEFSm92ZFgJtngCOj3v6Xky2tqpxaALBf2oa1DxXmB+k5NSMW0T5ZtZsvaPiEa
-         3lVm6fvoL5AudnMpon4NWZm8Ls5V6+HHvisrzQ3ODuWDmgMdnv+zLhw+uJUv8vPrkJ/T
-         IPcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788342686; x=1788947486;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bUGd7SiZwszuY692VXLvSRgKuWVCf+DwlqdyCfU6+00=;
-        b=owjmFxmojNdRhEwoxSTm5UKExtIGe9wbksDM1AOhaVNddSH73aufPN7q6ooh9AO+tS
-         GOAiXuX12gN3lKAD1YdDzzLu7gPWlqdXFvZSpOPZh11/6FwTwrH9nnJp/2UN/Je9qzVI
-         M9WwqJOJEkQWq1ZMIK8p2sCYy8szoGhcRdmV0O2kdqw2SyNGhFt3SdOpr7J/zMu8t+gG
-         MSQB+zN2azqh2hh0Oi3q1u74NujQvxAweuHPIOM0tBD34s+pPmxUYe63PWlpFxE1tR4L
-         R0yuIVx4ZcjjYeQSDzDPvnG4FewwJUfEyKfYzcZlsolzIXymDt4oZlkiTZ03/4aKbiuV
-         b3Mg==
-X-Forwarded-Encrypted: i=1; AKwUvBwaNBT/RhUIfbfrKQeghtb8NHWJoCvs71CST9ALNsWDSWnOe3r3lbGbsroezadCw/GJy2lxYw==@lists.linux.dev
-X-Gm-Message-State: AFuF++lSZMZlcn+Q0ZRyaFWFAdMurKTdL3D76YCUya/P+lfI/oqWN7+0
-	cwz+y2xRjQlg7a1d8/NYMUizk/N1xEVAtrfQkxZZtz1tPZEMNrY4tW3t
-X-Gm-Gg: AYBFou3vo6aVxTEA65p909PFaRZ5bqzo+2JRZfu2/YEKwLWZl5cKmYvX/Uv8Ipx18fg
-	ggZzNsmApsqLHDJQfJKHeMye8nK1SR5++kHKyKHBJcA8NM4YCrFoTLGX7SGG1tGhdaZFjkPd8fd
-	qpuhFP5LZhaFtB+ikXW/RjWiXaWdD17nl54NOyJXxxe7ADFMEQIj1CZGGDypIAF5ZPX9mMSTH1x
-	T0mOfkXdYEH/RxA4prff/C/VE8j4JumVePWFqW4VgSSn3zWqiZsgOGm1SpQ681EYvjt8tpCjYrC
-	zeRDdMQRAOglPXAvCrBj5kuqdaiCq0xwmARquN72b8TRdzytUWB06mScW0M8dDgOp0BT/twLiEk
-	2ww4Y70Dy+SUmYAcDzsvXDqZp2G1FioLrQpUrH4I0NXSYqXl7huEko3WzDEb/jtbLPmVYsiGP7j
-	1OAO5I31i5jItJcl59ali23sBlYayTsxW+0k5fEL44mXrJ/vEhbNuyHPpb/398dKuojshfMcjd+
-	EF13xNoFggUSMmh
-X-Received: by 2002:a17:90b:52cf:b0:384:927f:3db9 with SMTP id 98e67ed59e1d1-39af57d22cemr1180978a91.1.1788342686482;
-        Wed, 02 Sep 2026 02:51:26 -0700 (PDT)
-Received: from celestia.taila51cc2.ts.net ([2402:1980:9c5:2de5:8b4e:3f3c:b637:4ca5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3990bd21e9dsm11092711a91.4.2026.09.02.02.51.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 02:51:26 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: aethernet65535@gmail.com,
-	damon@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2] mm/damon/core: allow esz to be set to zero
-Date: Wed,  2 Sep 2026 17:51:30 +0800
-Message-ID: <20260902095136.282835-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260902083047.6D4081F000E9@smtp.kernel.org>
-References: <20260902083047.6D4081F000E9@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="T9hHbCS8"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SM3u6QDPlMEAx/3xRp83f9Wd0Kky//1niIaSkceLnqy5wuIDdNmsltjtH2vRSsfZohfDr4z+G2x5V7gb+3x/Kt0cwK0JfoqudgCcHdYpGBH7gMHNQHWh69CphGhZaF5Aw7dDrTCUzJaJQqxbPpGYoPWjTXFkZezT4deVVmsChQbTgtcm/ixj6AzmnGOqG7/ZOmAvYFTkuVbOt4DdMVoTp9TnRiju7QeLgh3AAkUhwuB32/gTnhXZV/c5d+4OQV/iQesUiwqeGGLqKIwNido9DKFLP6umstIrH5g4YB0hEzKjmeevCalgbaAQyOsUmo9icGRZVBsmWYXlaJQExFlMLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rdSNa3qRI/UUcKBfvFodPhN1IFVSUG1PSxLc+cwrLYQ=;
+ b=dXkY5y4fnSq02SB495vJ2wCtEjBXO+AcLOKTqHUk2e7dm33JC2QO9S4YM63MZsYbDapFJEwWOZeGBe31Qc+XX5jfXf98YGvZCOV9aoOT2G+QD0Z/wdT/GkWzWszNw49tT/XxsJnMz8BTvGDIzGXBP2fJIuDZqSaM6mCOvGsLzxMdbYRzr1LKUrfakICZcXZiSzN7l9XOJVAyyoAP9fdOC/di/2JPuKO6wRK0tcTbtgqZ5gAc1nBLxv33Mt3rFZj7uHWe+gZLa3tZzacbysufw97fDcnCQhH6mtcJhpHqMAGOHJH4Z9JaFcUo3KIFMbrtSWmsLHyDJnyyoh65vm7EnQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=sk.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rdSNa3qRI/UUcKBfvFodPhN1IFVSUG1PSxLc+cwrLYQ=;
+ b=T9hHbCS87fNFpo0RkP0VUglohQnSVbCSfoqy7XpuNdlkjE77c4DU+OmKcp8+9CPybZVp2P7U//4ojj9FiaGB0aacuZD1rIPOYh/uEfPZW1YUSd2LVDcBIsPpPrE6oTAeNjQVPmmvHtMvc82mgwce7MKCCbbQFBDNyixVWUR/RKw=
+Received: from BN9PR03CA0600.namprd03.prod.outlook.com (2603:10b6:408:10d::35)
+ by SN7PR12MB8817.namprd12.prod.outlook.com (2603:10b6:806:347::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.7; Wed, 2 Sep 2026
+ 10:52:43 +0000
+Received: from BN1PEPF00004683.namprd03.prod.outlook.com
+ (2603:10b6:408:10d:cafe::37) by BN9PR03CA0600.outlook.office365.com
+ (2603:10b6:408:10d::35) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.382.11 via Frontend Transport; Wed, 2
+ Sep 2026 10:52:42 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN1PEPF00004683.mail.protection.outlook.com (10.167.243.89) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.382.8 via Frontend Transport; Wed, 2 Sep 2026 10:52:42 +0000
+Received: from [127.0.1.1] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Wed, 2 Sep
+ 2026 05:52:28 -0500
+From: Shivank Garg <shivankg@amd.com>
+Subject: [PATCH RFC 00/11] mm/migrate: separate migration paths and carry
+ migration policy
+Date: Wed, 2 Sep 2026 10:52:14 +0000
+Message-ID: <20260902-migrate-refactor-shivank-v1-0-9dcca87669c4@amd.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAN//l2oC/x2MwQpAQBBAf0VzNsXahKvyAa5yWGswydKspOTfb
+ Y6v3nsPeBImD1X0gNDFnncXII0jsItxMyGPgUElKk8KpXHjWcxJKDQZe+6CfuHLuBU1UVbqcrK
+ jHSDkRzD4/tcdtE0N/ft+mFMrJ28AAAA=
+X-Change-ID: 20260824-migrate-refactor-shivank-4ee3949fcdcb
+To: Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand
+	<david@kernel.org>, Zi Yan <ziy@nvidia.com>, Matthew Brost
+	<matthew.brost@intel.com>, Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim
+	<rakie.kim@sk.com>, Byungchul Park <byungchul@sk.com>, Gregory Price
+	<gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, "Alistair
+ Popple" <apopple@nvidia.com>, Vlastimil Babka <vbabka@kernel.org>, "Suren
+ Baghdasaryan" <surenb@google.com>, Michal Hocko <mhocko@suse.com>, "Brendan
+ Jackman" <brendan.jackman@linux.dev>, Johannes Weiner <hannes@cmpxchg.org>,
+	"SJ Park" <sj@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>, John Hubbard
+	<jhubbard@nvidia.com>, Peter Xu <peterx@redhat.com>, Miaohe Lin
+	<linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>, "Oscar
+ Salvador" <osalvador@suse.de>, Kairui Song <kasong@tencent.com>, Qi Zheng
+	<qi.zheng@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, Barry Song
+	<baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie
+	<yuanchu@google.com>, Wei Xu <weixugc@google.com>, Lorenzo Stoakes
+	<ljs@kernel.org>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara
+	<jack@suse.cz>, Jonathan Corbet <corbet@lwn.net>, Shuah Khan
+	<skhan@linuxfoundation.org>, Randy Dunlap <rdunlap@infradead.org>, "Alexander
+ Viro" <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>,
+	Benjamin LaHaise <bcrl@kvack.org>, Chris Mason <clm@fb.com>, David Sterba
+	<dsterba@suse.com>, Muchun Song <muchun.song@linux.dev>, Dave Kleikamp
+	<shaggy@kernel.org>, Trond Myklebust <trondmy@kernel.org>, Anna Schumaker
+	<anna@kernel.org>, Mike Rapoport <rppt@kernel.org>, Sean Christopherson
+	<seanjc@google.com>, Paolo Bonzini <pbonzini@redhat.com>, Bharata B Rao
+	<bharata@amd.com>, David Rientjes <rientjes@google.com>, "Yiannis
+ Nikolakopoulos" <yiannis@zptcorp.com>
+CC: <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>,
+	<damon@lists.linux.dev>, <linux-cxl@vger.kernel.org>,
+	<linux-fsdevel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+	<linux-aio@kvack.org>, <linux-btrfs@vger.kernel.org>,
+	<jfs-discussion@lists.sourceforge.net>, <linux-nfs@vger.kernel.org>,
+	<kvm@vger.kernel.org>, Shivank Garg <shivankg@amd.com>
+X-Mailer: b4 0.15-dev-47d62
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788346348; l=7312;
+ i=shivankg@amd.com; s=20260518; h=from:subject:message-id;
+ bh=Mu+TgUSXajmjBg2+WPbNk2V8+vggDvRasZKUX+O5vXA=;
+ b=pKzNUrNsQcUH5z2V4LTXZuGoIw3KiYvNiznMLhPp5FE8keBeSIEGyXQ8Jw/+v1GPzgnggP3DX
+ 4CjbAsJnHq3Dvw+Jl5mAq1EE39USFEZuwnMD4HmbBQHJM7J0BggxsSf
+X-Developer-Key: i=shivankg@amd.com; a=ed25519;
+ pk=2l2QGTeXuGkZTtfmx0nPQU8iFZfjYmX/ymMojitevx4=
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF00004683:EE_|SN7PR12MB8817:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6c233c01-8b81-44f4-a03f-08df08e05062
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|82310400026|36860700016|1800799024|23010399003|376014|13003099007|921020|10067099003|6133799003|56012099006|18002099003|11063799006|5023799004;
+X-Microsoft-Antispam-Message-Info:
+	CjtcWHC6mMi7eBnyjzj+KlogDEs98f+Tjj+6Zi25/Ci595orlqlTRVGR6leyXf35TbQSOBX34GQ96RLC+60MSw0+o8eoRbIFUBE0/GqZTKva/3DW03sLEjbfE8YcgeZMheHBDq/HdOR6gQkcV6U4tU4/neU4APSNTyb3UJSS+1IKIoRHm/lLCspUhNYXBrLgzo5lNTlUMRWl2J3Gzz7RCD/SiPLescCuvbSBum/j+YgUQn+ZVv6jy33liK3bxfsbRXsnnPV25o+9cEEAAfG5rAR9enPRj4PIuQR3b6I9f9OtDCrPWHurWmp6IlJQIpcSdD0BXf5eGppFoAUQ8x6G851uEMOhccerURXMBVBKAt2hw/VBUWD1WO6xwLz9oNKmMC7n6DvXY85Z2yesB9YteGPjZPD4PX51qsMiM7w/Vgdbd/1vnhudifOM8zfain27iJSbv/G+p3h/EQ9uvvcifBqf51Zy6tKiE9Li+bOi1o2eT38HL2Z+se6xtIzdOdI/ivv/+I7NOk3VpCmvPU8unIgzsHQYt0/tXFmjgHgxIcRCToxeWDkY/I6XxZBJLsoUMxPBhtFz26giuZu/FRP1u1VUpYvcCBNpQk8DRw1TeoK2ub6tlgZU7XP4wootp89pbEGuBVDnr6mUYs5YCvPx6h96YGioeaeascH0hA+GVqmqa/Ctqg5xopXvD7Sh1/Vrhz7PWPbemsNmCy+vRPszzzea9EtDvmEzQTVvmpDEzPJYWDk7ayI5z0VrP2Ok/w+Q
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(82310400026)(36860700016)(1800799024)(23010399003)(376014)(13003099007)(921020)(10067099003)(6133799003)(56012099006)(18002099003)(11063799006)(5023799004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	ggcarO+tyWKR8O6EsFWh0RBFqmpKPOL9XJGtBZhDrYozYever7JNK9scbsPVd17/mznrfVZvd+4oPhcjEK2WcaYR2S/jup0TE1hvnYJtQlupnLGtrjqR/73/YMdXk5C1otwzuUUwu/xC/YJip6BKXRAwK2g8fYzEVdHcJfFdtqDxsKUo13HE7TSTBG81YzKMcUTdrovTWP79Yvp+z31w45bXh24SaCQAVRxHXzvaa+i4uE3/1Y6TuvOTJhtj8Q7E7sw8dPVtbHFz4yePKfOpbEAUr+K/etTEtxFVWWOTuAkFOMtI34ix9lOZVBAJphRGUnbsCFkfaeplUH+ZKhtKDlODpXKEWrkps/NzhOJyoeKO/l99pwPao09lE9AM5uChyWK9kLWKV323qVOn9s1OFdqK3ZeZ2liCDe3jRBejH9QGkBQuvUN7siBD+7N0skkO
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 10:52:42.3795
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6c233c01-8b81-44f4-a03f-08df08e05062
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN1PEPF00004683.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8817
 
-On Wed, 02 Sep 2026 08:30:46 +0000 sashiko-bot@kernel.org wrote:
+migrate_pages() handles hugetlb folios, movable_ops pages and LRU folios,
+although their locking, mapping and retry requirements differ. It already
+dispatches hugetlb folios to a dedicated engine but movable_ops 
+pages still pass through the regular folio unmap and move machinery.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] The patch breaks purely time-based quotas by unconditionally zeroing the effective size quota (`esz`) for DAMOS schemes without goals.
-> --
-> 
-> commit 34629844ff11daf28855cce5457468ad8bc08c73
-> Author: Liew Rui Yan <aethernet65535@gmail.com>
-> 
-> mm/damon/core: allow esz to be set to zero
-> 
-> This commit updates damos_set_effective_quota() to allow the effective quota
-> to be set to zero when the temporal quota goal tuner achieves its goal.
-> Previously, the quota was clamped to min_region_sz, preventing it from
-> reaching zero.
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index df22621765911..73dc9a70fb12b 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -3251,6 +3251,9 @@ static void damos_set_effective_quota(struct damon_ctx *ctx, struct damos *s)
-> >  	if (quota->sz && quota->sz < esz)
-> >  		esz = quota->sz;
-> >  
-> > +	if (!quota->esz_bp)
-> > +		esz = 0;
-> > +
-> 
-> [Severity: High]
-> Could this cause a regression for schemes that use purely time-based quotas?
-> 
-> If a scheme is configured with a time-based quota (quota->ms > 0) but has no
-> quota goals (list_empty(&quota->goals)), quota->esz_bp remains at its default
-> initialization value of 0.
-> 
-> While damos_set_effective_quota() correctly computes esz from the throughput
-> and quota->ms, this unconditional check will then force esz to 0 because
-> quota->esz_bp is 0. An esz of 0 causes damos_quota_is_full() to always return
-> true, effectively breaking schemes relying only on time-based quotas.
+Migration policy has a separate interface problem. migrate_mode describes
+blocking discipline, but it is passed independently from migrate_reason
+through the core, and only migrate_mode reaches
+address_space_operations->migrate_folio(). Adding another policy dimension
+therefore requires more positional arguments, an overloaded mode or side
+state. [3] 
 
-Yes, thank you for pointing this out!
+This series separates the migration paths (classes) for movable_ops pages
+and LRU folios, moves LRU policy into the LRU engine, and carries mode and
+reason through struct migrate_control.
 
-esz_bp is a meaningful field only when (!list_empty(&quota->goals)), so
-the correct check should be:
+Thanks to Zi Yan and David Hildenbrand for the discussions and suggestions
+that helped shape this series. I also used AI tools (Opus 5, GPT-5.6 Sol)
+to refine my ideas, identify the edge-cases/bugs.
 
-'''
-if (!list_empty(&quota->goals) && !quota->esz_bp)
-    esz = 0;
-'''
+Old flow
+========
 
-> 
-> >  	quota->esz = esz;
-> >  }
-> >
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260902082050.19566-1-aethernet65535@gmail.com?part=1
+migrate_pages(mode, reason)
+  |
+  +-- migrate_hugetlbs()
+  |     `-- scan the mixed source list (from) on each retry
+  |
+  `-- split the remaining list into batches
+        |
+        +-- MIGRATE_ASYNC
+        |     `-- migrate_pages_batch()
+        |           inline unmap/retry -> flush -> move/retry
+        |
+        `-- MIGRATE_SYNC[_LIGHT]
+              `-- migrate_pages_sync()
+                   +-- try async batch pre-pass
+                   `-- retry failures one at a time through
+                       migrate_pages_batch()
+
+movable_ops pages are identified by branches inside the batch unmap and
+move paths.
+
+New flow
+========
+
+migrate_pages(ctl)
+  |
+  +-- migrate_hugetlbs()
+  |     `-- collect and retry hugetlb folios
+  |
+  +-- migrate_movable_ops_pages()
+  |     `-- allocate, lock, invoke the movable_ops callback and retry
+  |
+  `-- migrate_lru_folios()
+        `-- form bounded LRU batches
+              `-- __migrate_lru_folios()
+                    +-- async: migrate_folios_batch()
+                    `-- sync:
+                        +-- async batch pre-pass
+                        `-- retry failures one at a time
+
+migrate_folios_batch()
+  |
+  +-- migrate_folios_unmap()
+  +-- try_to_unmap_flush()
+  +-- migrate_folios_move()
+  `-- migrate_folios_undo()
+
+migrate_pages() now only dispatches classes. Each entry owns its lists and
+retries; the LRU entry also owns batching and synchronous fallback.
+
+Motivation
+==========
+
+This refactor makes the migration control flow easier to follow and gives
+new optimizations clear boundaries and insertion points.
+
+Separating movable_ops also prepares for memdescs, where these pages are
+expected to lose their folio representation and folio->lru handoff. The
+current list interface remains, but its folio dependencies are now isolated.
+
+struct migrate_control is caller-owned, stack allocated and passed as const.
+It carries mode and reason through migrate_pages() and ->migrate_folio(),
+and provide place for future extension to policy. This is one-time pain of
+updating callers, but doing it once avoids repeating that churn whenever
+a new use case or optimization need additional policy.
+
+Follow-on 
+=========
+
+This series establishes the class, phase and policy boundaries without
+adding copy implementation. Possible follow-on use looks like:
+
+Yiannis and Alirad's RFC adds an asynchronous non-temporal mode and updates
+existing asynchronous-mode checks. [1] A separate policy field would keep
+cache behavior independent of blocking discipline.
+
+  /* migrate_pages() caller: demote_folio_list() */
+  ctl.reason = MR_DEMOTION;   /* migration reason - already exists */
+  ctl.mode = MIGRATE_ASYNC;   /* blocking discipline - already exists */
+  ctl.cache_hint = MIGRATE_COPY_NT; /* caching intent- new policy */
+
+  __migrate_folio(..., ctl);       /* NT/offload based on caller's hint*/
+     `-> folio_mc_copy() or folio_mc_copy_nt() or ...
+
+My batch-copy/offload series [2] can extend migrate_control to take caller's
+preference of copy engines (like DMA offload, multi-threaded copy, etc.) or
+batch size. Some of this may remain wishful thinking but that is what the
+RFC is for :)
+
+Behavior Changes
+================
+
+No functional change is intended for the LRU and hugetlb migration paths.
+
+The movable_ops pass has three intentional differences:
+
+  - movable_ops pages are attempted before LRU folios;
+  - movable_ops pages no longer use the LRU asynchronous pre-pass.
+    synchronous callers use their requested mode from the first attempt.
+  - movable_ops callback returning -EAGAIN releases the destination, so
+    retry allocates a new one.
+
+Unmigrated pages are still returned through the original source list.
+
+[1] https://lore.kernel.org/r/20260730-rfc-nt-demote-v2-0-452dbe3b5073@zptcorp.com
+[2] https://lore.kernel.org/r/20260630-shivank-batch-migrate-offload-v6-0-da95d7e8b8a2@amd.com 
+[3] https://lore.kernel.org/r/cae6ab98-3441-38bd-1e07-4586a85cdc74@google.com
+
+---
+Shivank Garg (11):
+      mm/migrate: extract folio unmap phase
+      mm/migrate: handle retries in migrate_folios_move()
+      mm/migrate: factor out folio splitting on allocation failure
+      mm/migrate: use a dedicated list for hugetlb folios
+      mm/migrate: add a dedicated movable_ops migration pass
+      mm/migrate: rename migrate_pages_batch() to migrate_folios_batch()
+      mm/migrate: add migrate_lru_folios() entry point
+      mm/migrate: move LRU batching into migrate_lru_folios()
+      mm/migrate: thread migration policy through a control struct
+      mm/migrate: pass migrate_control to migrate_pages()
+      mm/migrate: pass migrate_control to migrate_folio()
+
+ Documentation/filesystems/locking.rst |   2 +-
+ Documentation/filesystems/vfs.rst     |   7 +-
+ fs/aio.c                              |   2 +-
+ fs/btrfs/disk-io.c                    |   5 +-
+ fs/btrfs/inode.c                      |   6 +-
+ fs/hugetlbfs/inode.c                  |   4 +-
+ fs/jfs/jfs_metapage.c                 |  14 +-
+ fs/nfs/internal.h                     |   2 +-
+ fs/nfs/write.c                        |   8 +-
+ include/linux/buffer_head.h           |   6 +-
+ include/linux/fs.h                    |   6 +-
+ include/linux/migrate.h               |   7 +-
+ include/linux/migrate_mode.h          |  14 +
+ include/linux/pagemap.h               |   2 +-
+ mm/compaction.c                       |   8 +-
+ mm/damon/ops-common.c                 |   7 +-
+ mm/gup.c                              |   7 +-
+ mm/memory-failure.c                   |   6 +-
+ mm/memory_hotplug.c                   |   6 +-
+ mm/mempolicy.c                        |  13 +-
+ mm/migrate.c                          | 717 ++++++++++++++++++++++------------
+ mm/page_alloc.c                       |   6 +-
+ mm/secretmem.c                        |   3 +-
+ mm/vmscan.c                           |   7 +-
+ virt/kvm/guest_memfd.c                |   2 +-
+ 25 files changed, 563 insertions(+), 304 deletions(-)
+---
+base-commit: cee9395acd8043be0644b25c34bfa86623f2b935
+change-id: 20260824-migrate-refactor-shivank-4ee3949fcdcb
 
 Best regards,
-Rui Yan
+-- 
+Shivank Garg <shivankg@amd.com>
+
