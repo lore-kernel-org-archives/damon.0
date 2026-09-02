@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB0D78F3A;
-	Wed,  2 Sep 2026 04:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423EB2DC792;
+	Wed,  2 Sep 2026 04:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788321670; cv=none; b=KObG0lxAGygebVrrnypPD7LKis5UThF1pHxk8KI9Y+C//2qtglniQfGNlwFOQa3ETq8spFpZU1AgP0JgiGL+bVEG9j6vm8uki2pO5PMdUGLd+pM/rIwfnlRZy68aAT9L5TGzofnU28QiBIm2db/4Nbt5s7Hn4uukiV/KHKVs6nk=
+	t=1788322012; cv=none; b=CA3ZDbKPyyyAfV1L58sFWyK0jagH1A4U4PoTjm5amh86tb9bF7OchJwHN/xhsrg8cxwUDQl2TeK9pwS3OsC9UfMm56PXdfy/y4bwYW2CFyg234F2hB8ZiGque+VmLBLwU9aAlaZFZaHW4eoeM3oEQjjMwgj88SbGd9l2W3HFNzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788321670; c=relaxed/simple;
-	bh=OxwbWwY38R7qZJOwWJVPTjMHHPTpg7pzp6qE46UgKRM=;
+	s=arc-20240116; t=1788322012; c=relaxed/simple;
+	bh=XTHG5wJj5NGKqwrE2Y7mCf0nsNqjmH3ry1IzuYt2aic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9qzh1noz0/9H/CV2nMi++NXG8JK2nTaBubRMNUDqGUeiDeYZdsySGLgeCC8MentGH5ssrJv77xMOWBBN4ioeKlH7emggPq+rrkdhW1cYXMxvP1t8ENMPtTx/xYbPbeVjJpASl8RLCGrj9iPcwJqMdLGwSBb4+TQYa1G40Vq6fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UHe6kNZf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h04acVqLXyOF6eMdLYzkeFOQfCIVZj+kxiElUD0OE0fM4Kdd+Z0F/pU16fgfS7zOnEvNQ0H/7y17Nivjofim/VgGm09Xy81QYXam4MI/tJERy5Y/XWgXQfkv5LYPntCw5be7znPu/FnadBd48mZ9ulxfl3rN+kej1jjnm2AUGZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WZ1AADmm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UHe6kNZf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FD21F000E9;
-	Wed,  2 Sep 2026 04:01:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WZ1AADmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27D81F000E9;
+	Wed,  2 Sep 2026 04:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788321668;
-	bh=wt1NDs6v7QlaW4AX3BZSW4pHiL3RYherAJk3Zng4lw4=;
+	s=k20260515; t=1788322011;
+	bh=rCDBGWhjOow6BVaXEWKL/bvhPOmCcwouuBw7qgvnDDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UHe6kNZf5rmhs+WiJaE82J7FaSKP8wwhWRLqIqODlnTNAtAdWzKDqJDhpZ7the4gb
-	 BySaOQHTe4g3MPz73i3oFeR+EbkrOkUWYsXkG1tl7JBaS1H2v5d/chbemHYKc6WlBn
-	 9uB0iJT5Qh3ImL8n1gbAsrOpqoG2RQB3puVsguSFmSWSEZbs1WUxm6jbB82TZaiPIs
-	 YCVtCDh6wfFGeE4zr7CnK8sTKWRgDdtHElW0YpvwGYu6R7/F9BrF2T3yeBgMyBfXnT
-	 buYjrwIukzSISdTA3Ma1Tfratnah1sTjb1caM3mtRH4o7VCRiubTycz/9lQlgLDm0v
-	 vIcTaWdhpFnwg==
+	b=WZ1AADmmQSSKkceQoWmcRuNr2I+ritEKK0lzbaH2WL8WAtsQRXEA/HP/1V8mTLmA4
+	 wY9glCWTT9p+9d5dc10HVqE3WbWRdPCriT4WIU46oMIVfv/hsHYGOuvvWH2Ehbzv2c
+	 T4zotcImWkaRHriM4rztuOff+Szmh1twI+Xs3XaM4NC1Ja+1sU4PUEK3jPAdsMIU6+
+	 vqlM/Sd/wF7jDMqQrJEDfPoVKoEB1IaamSynXftgSEe1Ax8mgFUblaS1Jckrt3Bvgw
+	 KVq0umxJ5deFr4I8vpZCO83MgKUIYiqS7iVOqcvdZlC1UJag7Bb8sVJ2wUQISczts4
+	 YnhepOW6Ry6yg==
 From: SJ Park <sj@kernel.org>
-To: Baolin Wang <baolin.wang@linux.alibaba.com>
+To: Nathan Gao <zcgao@amazon.com>
 Cc: SJ Park <sj@kernel.org>,
-	Nathan Gao <zcgao@amazon.com>,
 	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
+	baolin.wang@linux.alibaba.com,
 	david@kernel.org,
 	ryan.roberts@arm.com
-Subject: Re: [PATCH v3] mm/damon/ops-common: use a page-aligned address in damon_ptep_mkold()
-Date: Tue,  1 Sep 2026 21:01:00 -0700
-Message-ID: <20260902040101.83573-1-sj@kernel.org>
+Subject: Re: [PATCH v4] mm/damon/ops-common: use a page-aligned address in damon_ptep_mkold()
+Date: Tue,  1 Sep 2026 21:06:42 -0700
+Message-ID: <20260902040643.83720-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <ee0f3f47-f6c0-4b3c-807c-db80385db3b8@linux.alibaba.com>
+In-Reply-To: <20260902031655.84721-1-zcgao@amazon.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -50,85 +50,109 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 2 Sep 2026 10:34:39 +0800 Baolin Wang <baolin.wang@linux.alibaba.com> wrote:
+On Tue, 1 Sep 2026 20:16:55 -0700 Nathan Gao <zcgao@amazon.com> wrote:
+
+[...]
+> Triggered by the full 7.1/7.2 kernel selftest suite on arm64 (EC2
+> c/m6g.4xlarge). The kernel sometimes crashes at or shortly after the
+> DAMON test.
+> 
+> What the overrun does depends on the page that happens to follow the
+> page table, so there is no single signature. If that page is read-only,
+> the write faults in the sampling path itself:
+> 
+>   Unable to handle kernel write to read-only memory at virtual address ffff0003c5d2d000
+>     FSC = 0x0f: level 3 permission fault
+>     CM = 0, WnR = 1, TnD = 0, TagAccess = 0
+>   CPU: 10 UID: 0 PID: 3487 Comm: kdamond.2
+>   pc : contpte_test_and_clear_young_ptes+0x70/0xc0
+>   lr : damon_ptep_mkold+0x1e8/0x1f8
+>   Call trace:
+>    contpte_test_and_clear_young_ptes+0x70/0xc0 (P)
+>    damon_mkold_pmd_entry+0x150/0x170
+>    walk_pmd_range+0x110/0x2b0
+>    walk_pud_range+0x10c/0x208
+>    walk_pgd_range+0x134/0x258
+>    __walk_page_range+0x98/0x1b0
+>    walk_page_range_vma_unsafe+0x90/0x148
+>    walk_page_range_vma+0x28/0x40
+>    damon_va_walk_page_range+0x114/0x2b8
+>    damon_va_prepare_access_checks+0xec/0x1a8
+>    kdamond_fn+0x534/0x770
+>    kthread+0x128/0x138
+>    ret_from_fork+0x10/0x20
+> 
+> Otherwise the page is writable, the PTE_AF clearing succeeds silently
+> and the damage only surfaces later, in whatever happened to own the
+> page, so the backtrace is unrelated to DAMON and differs between runs.
+> 
+> Pass a page-aligned address to the ptep_test_and_clear_young() call in
+> damon_ptep_mkold(), which is the only place DAMON can reach
+> contpte_test_and_clear_young_ptes() from. Nothing else sees the aligned
+> address, and r->sampling_addr itself is left as is, so the sampling and
+> region bookkeeping semantics are unchanged.
+
+Thank you for finding this nasty bug and sharing this great fix, Nathan.  Also
+appreicate again for your revisioning efforts that accepted my humble and picky
+revisioning requests.
 
 > 
-> 
-> On 9/2/26 8:11 AM, SJ Park wrote:
-> > On Tue, 1 Sep 2026 13:10:01 -0700 Nathan Gao <zcgao@amazon.com> wrote:
-> > 
-> >> __damon_va_prepare_access_check() picks a random byte address within the
-> >> region and stores it in r->sampling_addr. damon_va_mkold() passes it into
-> >> a page table walk, which hands it to damon_ptep_mkold() as the address of
-> >> the page to sample:
-> >>
-> >>    damon_va_mkold(mm, r->sampling_addr)
-> >>      damon_va_walk_page_range(mm, addr, addr + 1)
-> >>        damon_mkold_pmd_entry()
-> >>          damon_ptep_mkold(pte, vma, addr)
-> >>            ptep_test_and_clear_young(vma, addr, pte)
-> >>            mmu_notifier_clear_young(mm, addr, addr + PAGE_SIZE)
-> >>
-> >> For arm64, before commit 6f0e1142173a ("arm64: mm: support batch
-> >> clearing of the young flag for large folios"), the contpte helper walked
-> >> exactly CONT_PTES entries from the aligned-down page table pointer and
-> >> used @addr only to pass down to each entry, so an unaligned value was
-> >> harmless:
-> >>
-> >>          ptep = contpte_align_down(ptep);
-> >>          addr = ALIGN_DOWN(addr, CONT_PTE_SIZE);
-> >>          for (i = 0; i < CONT_PTES; i++, ptep++, addr += PAGE_SIZE)
-> >>
-> >> Now the range to walk is derived from @addr instead: end = addr +
-> >> nr * PAGE_SIZE, rounded up to CONT_PTE_SIZE. For a sample in the last
-> >> page of a contpte block, the sub-page offset puts end just past the
-> >> block boundary, so the round-up lands a whole block further and the
-> >> walk clears PTE_AF in CONT_PTES entries beyond the sampled block. For
-> >> the last block in a page table page, those entries are past the end of
-> >> that page, so the walk writes into the page that follows.
-> > 
-> > I just wanted to call out again that I'm wondering if we could restore the
-> > unaligned address support in the helper.  E.g., as a very dirty hack that I can
-> > imagine off the top of my head,
-> > 
-> > '''
-> > --- a/arch/arm64/mm/contpte.c
-> > +++ b/arch/arm64/mm/contpte.c
-> > @@ -30,6 +30,7 @@ static inline pte_t *contpte_align_addr_ptep(unsigned long *start,
-> >                                               unsigned long *end, pte_t *ptep,
-> >                                               unsigned int nr)
-> >   {
-> > +       *start = PAGE_ALIGN_DOWN(*start);
-> >          /*
-> >           * Note: caller must ensure these nr PTEs are consecutive (present)
-> >           * PTEs that map consecutive pages of the same large folio within a
-> > '''
-> > 
-> > I and Nathan have no strong clue, so we are looking for Baolin and others'
-> > opinion.
-> > 
-> > While waiting for the opinions, I and Nathan agree we should stop bleeding with
-> > a pinpoint hotfix change in DAMON.
-> 
-> Thanks for the reporting.
-> 
-> IMO, we could let the arch low-level functions handle the alignment of 
-> addr, but that would also require changing functions like 
-> contpte_clear_young_dirty_ptes(), contpte_set_ptes() and so on, which 
-> would cause a lot of churn? (they also assume that addr is page aligned).
-> 
-> Since the arch low-level functions basically assume that addr is 
-> page-size aligned, and the addr handling in the mm core is also mostly 
-> page-size aligned, I think the caller guaranteeing that addr is 
-> page-size aligned is a reasonable fix. So:
+> Fixes: 6f0e1142173a ("arm64: mm: support batch clearing of the young flag for large folios")
+> Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+> Cc: David Hildenbrand (Arm) <david@kernel.org>
+> Cc: Ryan Roberts <ryan.roberts@arm.com>
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Nathan Gao <zcgao@amazon.com>
 
-Thank you for your opinion, Baolin.  That makes sense to me.  I will try to
-further revisit DAMON code to make alignment be more complete and consistent
-whenever needed.
+Reviewed-by: SJ Park <sj@kernel.org>
 
+> ---
+> V3 -> V4:
+> - Align only the address that is passed to ptep_test_and_clear_young(),
+>   rather than @addr for the whole of damon_ptep_mkold(), so the
+>   mmu_notifier_clear_young() call keeps seeing the sampled address (SJ)
 > 
-> Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+> V2 -> V3:
+> - Move the alignment into damon_ptep_mkold(), instead of aligning in
+>   damon_va_mkold() and damon_va_young().  The ptep_test_and_clear_young()
+>   call in damon_ptep_mkold() is DAMON's only path to
+>   contpte_test_and_clear_young_ptes(), so damon_ptep_mkold() is the
+>   closest place in DAMON to the function that requires an aligned
+>   address (SJ)
+> 
+> V1 -> V2:
+> - Align inside damon_va_mkold() and damon_va_young() rather than aligning
+>   r->sampling_addr itself, so that sub-page sampling addresses remain
+>   possible for future non-PTE access check primitives (SJ)
+> - Point Fixes: at 6f0e1142173a instead of 3f49584b262c, since the
+>   unaligned address was harmless before that commit (SJ)
+> - Describe how the issue was noticed and what it does to the kernel (SJ)
+> 
+> v3: https://lore.kernel.org/all/20260901201001.33271-1-zcgao@amazon.com/
+> v2: https://lore.kernel.org/all/20260831221151.50561-1-zcgao@amazon.com/
+> v1: https://lore.kernel.org/all/20260827193821.46115-1-zcgao@amazon.com/
+
+FWIW, I insisted on this version to make clear the intention of this pin point
+important fix.  I still believe this minimum and clear change is better as the
+hotfix.
+
+Meanwhile, to v3, Baolin mentioned it would be prefered to keep page alignment
+from callers.  As I replied to the comment, that makes sense to me.  And it
+seems some DAMON code has unnecessary unaligned address usages that could be
+problem in future.  I will try to revisit such DAMON code and fix/improve as a
+followup.  As a result, the resulting code might more look like v3 or v2.  If
+you are interested, please feel free to send patches, too.
+
+This patch is applied to damon/next [1] tree.  If this patch is not added to
+mm.git in short term (~2 days?), I will ask mm.git maintainer (Andrew Morton)
+to pick this.  So, no action from your side is needed for now.  If it seems I
+also forgot doing that or you cannot wait for my action, please feel free to
+directly ask that to Andrew.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
 SJ
+
+[...]
