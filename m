@@ -1,160 +1,163 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA7E481673
-	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 15:03:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE804A49B7
+	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 15:08:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788361438; cv=none; b=PElYdtlKygstQY6yIoFyty9rvy2AR3uz2z01h8qupjKAiaO4zOYcAHwla2228ZDhZ2MdggDZvDOnpGMZ0e/Yy8Bom3s2PWbeElhI2DvysXRTlthA4lcUlxTbi6KZ0/cmafuGxzQ/KsX53/b7GuZb33GdWOXY7tnJ6RqsnbK9bLc=
+	t=1788361735; cv=none; b=k2nJhIItlDVODLXkYZToOJkB0mt0oDbeQqIoD3wiboUPTfPrIEFeAak/1u3aExQrMiRmVzuDdV1nPwr140mpmLfvaFd2ayEmOrKFkwcknzzh+QuLjreORpbRdKdgfGedm4Ah15N6aA2n6rQJDiMsxtInrTGImpCd7OqG4OTWSAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788361438; c=relaxed/simple;
-	bh=yt0tIgNGVachlwlrDD5uOfjgvr9ImpP1acApgeOOnsg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=pOhGMpURLWJ1myeMrzoX39OfUfc/gAzdO0r53UaKiLbzmIpT4ZBGYbUz9IBG0xN248VUyf8ZkGygQmZBMbZriwnbqPXFrQROkEkuO50ZByMCWRPWgTtZVnZJqxwAzaGxTRUh36coReY/X7BVmQhn872ur7gkqpOsubUJtruCMS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=JjR28d8t; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
+	s=arc-20240116; t=1788361735; c=relaxed/simple;
+	bh=I3mYKVGTKqP/H3LNKqz4oW31/g3MR2FuJzgjMuRu5I0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gg2hFWkHMeZ74eaWeqiIJaCQnbI3ZDdgbsUVfRCd7Xi4NuxEB+oXkIyJfcx49aOOYgXZlBaw0+fEwXzjuEVQP+BfJAPZlNKa+ZTq7Bgc4+1J+GtACHIQqwcPWiCVbj1CnZz6ITs4LpME3vbfV2QjKxiqtlPJthwrKqakwedOO+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TTILltGn; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="JjR28d8t"
-dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=4M78E0ObIENsRiRRK+u7y9UbS3R6BJ4hM9bzTVDKV7o=;
-	b=JjR28d8tmO/cLBZzM28RFnyU2knLbRFYR2FV3FdhZxKQvodPP9FwXxFlgM5Nga5o56RYcTtSl
-	+SXgpKW4RWSvwDgFcjgLOvZbttMeR80lVBOD5kRCJe2Z7U5Eb8Thv07bV288/Oxa6HWq3yDnegO
-	/EzpcIZ0a2YUXxpnir7u2cc=
-Received: from mail.maildlp.com (unknown [172.18.224.150])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4hZmF93FJxzJ46Dn;
-	Wed,  2 Sep 2026 23:03:09 +0800 (CST)
-Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
-	by mail.maildlp.com (Postfix) with ESMTPS id D5D4740571;
-	Wed,  2 Sep 2026 23:03:40 +0800 (CST)
-Received: from [10.123.123.154] (10.123.123.154) by
- mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Wed, 2 Sep 2026 18:03:40 +0300
-Message-ID: <9ac2a10f-1551-410e-a9c0-173a1daeb1ab@huawei-partners.com>
-Date: Wed, 2 Sep 2026 18:03:39 +0300
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TTILltGn"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2d6d28aa26cso7706035ad.2
+        for <damon@lists.linux.dev>; Wed, 02 Sep 2026 08:08:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788361732; x=1788966532; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EIdbnMs2RBr+E/C3ONkDjLCzcgL/LziyquabNv/nyLY=;
+        b=TTILltGn/FiQdZzgAwQ+b196ZXOe5ydK36lY6h1oEgnnTvxaqAmuJuUucVvmnf7gWt
+         guTP71M7+BWTdt1HlwqQtuXhBoEs/k31c77w1T5RWrDozbgoApTioEO80AVm8dLUZkiK
+         uB8tF6izP3FXVRRBT5DhsQFzbfPhGJFk9ruf+wKvmUn4/uFRxOjRFkQYT9/IzZ6SoARf
+         EBla+7EPcvSTu0Qx3sMYQxD1FVBY022z0LwX81+FBsQHYU5CTF+mz7AvvFxngSJR6+qF
+         sUNnQ7R+5SrnOKxqBWRF0doDQw7lBAUmMpvzAzVkotldcovQvSByRHkPDYylZOGIrgaP
+         YEXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788361732; x=1788966532;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=EIdbnMs2RBr+E/C3ONkDjLCzcgL/LziyquabNv/nyLY=;
+        b=O6vN1Gc4m4Zh5Osw5dLPxopRj+s2uIGn/ffghYOeSnokedKkZ7uFLUY8e2P8aJpU+A
+         HylVhJIOaDAWJ7pDdggvO+NyQ/AHHZwvtvDtztkiItZk27deQjRbD6uP/GZyBWuO3Bhe
+         OXpvpQS2jZgPsj+fLWEglLZpMUY3k+DEgMxgd/kMI9Byi6enCP9HxwyVBbcf6c9AKE2X
+         vo0rpmtkOUcfgB2rV+Gnw6phe4QSHZR0B1ezvrCDueQiKLC+qfZitenqgNzzNGtHuoFN
+         pDE7gH7xRLkjOeYqp6hAW/c3TT2Qu7xqDKOifXdRNsSFNmb2Sw/UL4zuW99ugEQspK+s
+         3xNA==
+X-Forwarded-Encrypted: i=1; AKwUvBySgH2f/gvDKAh55Xmmj/MISxxaC7pI99ID9mQ1g/sIvEokKKi0gTNoUymaprH9AN4C5uLakg==@lists.linux.dev
+X-Gm-Message-State: AFuF++mk+WzKWiwj4ho16o2O3iZ3SKSTeWCUvQuOp7zYCWfrb0kfTlIg
+	3jAVtKlkI5b5MfIz5YdQ6+IWlqWvuf6ZAh3pKomnDTH731dLDV+xW2Uq
+X-Gm-Gg: AYBFou3965U2nptIH4P+PqndJ5p3Rl1CryDgJR4SSzGInIszFy4rkLElp8+UKzot1Pz
+	eVTiV7qkRUgp1p2eHWOFi02BZ1YQvGNqp8PZNXXcREpDW2apney5pkMBxL3lyD7G5a0N9iaqw52
+	s9Ix5v8wwt3x26KAt/UG8vkQdC2LQ/qwGyCLll7/9YliKkiN/cOn7Rtuee9phPK06BbE8wVGCM9
+	cPRfN2un3ObpmNOpWRzq26xpnpikPmf0a0gQozrcacrsmS9r5J5xkS8rp9h+uOqmgX9OzidpEal
+	O3ZBbyn0U7/XB2OPtVy6TRWMQ95rtVkCFSf1FKUx5pVvjekIxJD4ICUrXvCgSLzYvVBQU1PsQto
+	bho5fTJ8T3GWDxkb43EEArRqoQgo/HyMk7jI/S4vsYGBQouq+CdBTISfzQA1YLZFusntFt+tmBy
+	EOEvgDtNWsIFIZveQJGvp7g0FHgXkOxX26j2UHcDwp/p1SlwiUF0ZJa4uLC5MX
+X-Received: by 2002:a17:903:19ec:b0:2d6:e4ff:9cad with SMTP id d9443c01a7336-2daec5ab9c5mr86317615ad.3.1788361731078;
+        Wed, 02 Sep 2026 08:08:51 -0700 (PDT)
+Received: from gmail.com ([185.220.238.35])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dadd488d18sm15030855ad.45.2026.09.02.08.08.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Sep 2026 08:08:50 -0700 (PDT)
+From: Kunwu Chan <kunwu.chan@gmail.com>
+X-Google-Original-From: Kunwu Chan <kunwu.chan@linux.dev>
+To: SJ Park <sj@kernel.org>
+Cc: Kunwu Chan <kunwu.chan@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 09/12] mm/damon/tests/core-kunit: test damon_nr_samples_per_aggr()
+Date: Wed,  2 Sep 2026 23:08:41 +0800
+Message-ID: <20260902150842.4033320-1-kunwu.chan@linux.dev>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260902054747.99370-10-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] mm/damon: Introduce DAMOS_QUOTA_HUGEPAGE auto
- tuning
-To: SJ Park <sj@kernel.org>, Lian Wang <lianux.mm@gmail.com>
-CC: Andrew Morton <akpm@linux-foundation.org>, <damon@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>
-References: <20260901142307.100701-1-sj@kernel.org>
-Content-Language: en-US
-From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-In-Reply-To: <20260901142307.100701-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: mscpeml100003.china.huawei.com (10.199.174.67) To
- mscpeml500003.china.huawei.com (7.188.49.51)
+Content-Transfer-Encoding: 8bit
 
-Hi SJ and Lian,
+On Tue,  1 Sep 2026 22:47:42 -0700 SJ Park <sj@kernel.org> wrote:
 
-On 9/1/2026 5:23 PM, SJ Park wrote:
-> Hi Lian,
+> damon_max_nr_accesses(), which is a previous version of
+> damon_nr_samples_per_aggr() before the renaming, was wrongly returning
+> zero or random overflowed values for extreme intervals setup.  Commit
+> 35d4a3cf70a8 ("mm/damon/ops-common: handle extreme intervals in
+> damon_hot_score()") updated the function to return correct or more valid
+> values.  Add a kunit test to ensure it is working as expected.
 > 
-> On Tue,  1 Sep 2026 14:58:35 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
+> Signed-off-by: SJ Park <sj@kernel.org>
+> ---
+>  mm/damon/tests/core-kunit.h | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
 > 
->> Hi SJ and Asier,
->>
->> Thanks for working on this and for providing the server results.  I have two
->> questions about what hugepage_mem_bp is intended to represent.
->>
->>> Introduce DAMOS_QUOTA_HUGEPAGE_MEM_BP auto tuning. Add a new DAMOS quota
->>> goal metric to measure the amount of huge page consumption to total
->>> memory consumption ratio.
->>
->> First, NR_ANON_THPS tracks anonymous PMD mappings, while NR_SHMEM_THPS and
->> NR_FILE_THPS track PMD-mappable page-cache folios.  Therefore, splitting only
->> an anonymous PMD mapping can change hugepage_mem_bp without physically
->> splitting the folio.  Is the intended metric PMD-mapped memory or physical
->> large-folio memory?  Clarifying this and adding a mapping-only test may help.
-> 
-> Good point.  I was just missing this.  So, hugepage_mem_bp is not accounting
-> anon mTHPs, right?  Since hugepage_mem_bp is for general hugepages, I think
-> this is better to be improved.  Seems using MTHP_STAT_NR_ANON that is exposed
-> as 'nr_anon' can be used?  Because this is an improvement rather than a fix of
-> a bug, I think doing this as either a followup or new version of this series
-> are ok.  Asier, what do you think?
-Agree, I will submit a new patch to fix this behaviour and account for mTHP.
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index a4164ac489a61..d0bed01a5b7fe 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
+> @@ -625,6 +625,27 @@ static void damon_test_set_regions(struct kunit *test)
+>  			(struct damon_addr_range[]){}, 0, -EINVAL);
+>  }
+>  
+> +static void damon_test_nr_samples_per_aggr(struct kunit *test)
+> +{
+> +	struct damon_attrs attrs = {
+> +		.sample_interval = 0,
+> +		.aggr_interval = 0,
+> +	};
+> +
 
-Lian, thanks a lot for the review and pointing this issue.>>
->> Second, the metric is global while a DAMOS scheme can target one process.
-> 
-> Actually it can target multiple processes if those are in single DAMON context.
-> 
->> THPs from other processes or NUMA nodes can satisfy the target or dilute the
->> monitored process's changes.  Is this intentional?
-> 
-> I think it is intentional.  The user should have the control on collapsing
-> hugepages, or believe the uncontrolled collapse mechanisms.
-> 
->> If so, documenting the
->> scope and testing a background THP workload may be useful.
-> 
-> More documentation and testing are always welcome :)
-> 
->>
->> The temporal results approach the 10% and 25% targets, while the consistent
->> results overshoot the 10% target to about 20% and 45%.  I would describe this
->> as control-response data.  TPS, latency, TLB, fragmentation and collapse CPU
->> data could further show the workload benefit and cost.
-> 
-> Yes, those would be helpful.  That's not mandatory for this simple change in my
-> opinion, though.  I would let Asier decide whether and when to make and share
-> such data.
-The idea of this patch was to introduce auto tuning. I think I submitted thebenchmark results when I sent the DAMOS_COLLAPSE feature.
+Hi SJ,
 
-Anyway, it shouldn't take long for me to get more data. I think it may be useful
-for people to know the actual results in real application.
+A small question about the first test case.
 
-SJ, what's the best place to publish all those data? I believe you have more
-experience sharing this data and which platform is the most useful one.>>
->> If I have misunderstood any of this, please feel free to ignore these
->> comments and correct me.
-> 
-> Your comments are very helpful, thank you for your review and comments, Lian.
-> 
->>
->> The enum, quota-goal wiring and sysfs exposure otherwise look consistent with
->> the existing DAMOS autotuning framework.  I consider the points above
->> follow-up questions about semantics and evaluation, rather than blockers for
->> this series.
-> 
-> I agree.
-> 
->>
->> For the series:
->>
->> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
-> 
-> Thank you!
-> 
->>
->> Please feel free to Cc me on related follow-up patches.  I am happy to help
->> review the code.  Besides my own DAMON work, I have recently been reviewing
->> and learning from other DAMON and MM work, and I would be glad to continue.
-> 
-> I'm curious if you and general reviewers need or prefer to directly be Cc-ed.
-> I was naively thinking people can search and review DAMON patches by
-> subscribing to the mailing list or using the archives via lore.kernel.org like
-> tools.
-> 
-> 
-> Thanks,
-> SJ
-> 
-> [...]
+Both `sample_interval` and `aggr_interval` are zero here.  Since
+`sample_interval` is the denominator in `damon_nr_samples_per_aggr()`,
+would it be better to keep `aggr_interval` non-zero when testing the
+zero `sample_interval` case?
 
--- 
-Asier Gutierrez
-Huawei
+This would make the test explicitly cover the divide-by-zero protection.
+If the `aggr_interval == 0` behavior is also worth covering, perhaps it
+could be tested separately.
 
+Thanks,
+Kunwu
+
+
+> +	/* Zero aggregation interval doesn't cause division by zero */
+> +	KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs), 1);
+> +
+> +	/*
+> +	 * Too large aggregation interval on 64 bit system doesn't cause
+> +	 * overflow
+> +	 */
+> +	if (ULONG_MAX > UINT_MAX) {
+> +		attrs.aggr_interval = (unsigned long)UINT_MAX + 1;
+> +		KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs),
+> +				UINT_MAX);
+> +	}
+> +}
+> +
+>  static void damon_test_update_monitoring_result(struct kunit *test)
+>  {
+>  	struct damon_attrs old_attrs = {
+> @@ -1736,6 +1757,7 @@ static struct kunit_case damon_test_cases[] = {
+>  	KUNIT_CASE(damon_test_split_above_half_progresses),
+>  	KUNIT_CASE(damon_test_ops_registration),
+>  	KUNIT_CASE(damon_test_set_regions),
+> +	KUNIT_CASE(damon_test_nr_samples_per_aggr),
+>  	KUNIT_CASE(damon_test_update_monitoring_result),
+>  	KUNIT_CASE(damon_test_set_attrs),
+>  	KUNIT_CASE(damon_test_mvsum),
+> -- 
+> 2.47.3
+> 
+
+Sent using hkml (https://github.com/sjp38/hackermail)
