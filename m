@@ -1,62 +1,62 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7B4367B92
-	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 08:18:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF3638DC7E
+	for <damon@lists.linux.dev>; Wed,  2 Sep 2026 08:20:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788337131; cv=none; b=mKen+pg288MVh0wamBatFxd4F12Nv9GKHJmzzVZUfEACK+SN/oooRscnQXOanfqgafOmWv0hj/ir6bLQL919HLFmP4UxrTwXO9wRf/+Bcmxx9JtcgiuHie42eL54FQhLTGcqkDxhZQgLvSYrKBLA2iaoArArlV5oO+PieqJZlKg=
+	t=1788337243; cv=none; b=bmzU4lx6hSNHXrPQuo4DSCVAjr9uy6KrhDMcFbiTY87G0uZQ1Tx8Go6aUSHZlS8wt8HTlgEPV25DI/VesOs/qGBiowb6ybyLLVcv+Ens1cPWdCuGYkSxphruf0Nwpuxkt11+4dSoeU9Owj4HNtiitVuC1XWoRgt7WUTLsqpkDJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788337131; c=relaxed/simple;
-	bh=A6rLcvnK3adoCDStrd8do6BJqgmVpZd7sCs1Tc7EqNI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mV5vn1iP/zcmQTsQS5gT4bQ+LYriLJOMWuSdUzm0XvISmHHey/YM4vt5IK4SfHwyxtKX0MVlfOsuaBFGQjvTqe6uraSHUtHoMgCUS00L4C4oxpBTOUHFIDCjUHgfZ3BLA6A6Ou2QXJ4lpbRdf7nMt2+tiJ+NCpqoI9bin8Nmpm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OveYHQn1; arc=none smtp.client-ip=209.85.216.51
+	s=arc-20240116; t=1788337243; c=relaxed/simple;
+	bh=/N08HHB3j4IdAUsjRLdoa6VRu+ufxXx1qoUkqfxRshc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HozthPFgj7Is0tF4o+vR8/lJqmPxLFcgD77hIDJb87AiqZZurse6rD82xaYojEgts2BI0FGDooWs3kYEyn4oN+gGM4bYPYMF5DOKQFPdg+TGcwvn2fdhbRC7x4N+1vre+cXEXsdZEd9kDNZb1y8G1MTj+7D0di9mrY+adxvNvKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Khj2Fu67; arc=none smtp.client-ip=209.85.215.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OveYHQn1"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-39647184c73so1935660a91.1
-        for <damon@lists.linux.dev>; Wed, 02 Sep 2026 01:18:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Khj2Fu67"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-cc2276e6daeso641825a12.0
+        for <damon@lists.linux.dev>; Wed, 02 Sep 2026 01:20:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788337129; x=1788941929; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1788337242; x=1788942042; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=QPGyS0AHVOfUWMfJXbkr/UK6bKLRAGXdQYLecgn4LSo=;
-        b=OveYHQn1dH2SPXVJitz++M5kX//OhNDdiwIHyFwd+uMAk3v1z21Eo6It2VsRzesWec
-         AOb7B+7D3ajFt2k3fRN+jTY/kst+bZ0SkD1Uy5sRyiT0uFvL5gGpw1y0wNZMA+VAqZYJ
-         yBp7K5iyFa7yQwTr5OaRaOOjVmO3v3FsdwuHNgW3mdrxf+xc6ZD2rIyvHh2tYbowsUhP
-         LVaF10CZ2x7Bnvc+6VweUIpFJeyIEFNCSzWQ7y+IIjwMkzn+g9MSg22J7/lfSV+L2mmI
-         jtr6NlO7ng4ocCSESb+L9DIrLj/cXmHKU2OHFJvkLkORHW9RPwpOTU5F7tNHDYC6WogH
-         f+Vg==
+        bh=C6stb0h/TUGkigOyr7jwbkqUiojuR7BYoo9mkXkmykw=;
+        b=Khj2Fu67JVymLcBjbVUaarAVFqpO7F9u1lkY5YqVjAszDEytGF0/auID4QkLcI/R6l
+         vdNOgip3bYra0j8v3seIQ79s3SUCdufe2zqRh/0LJQ/vkrzdPWEVjLiwGNiHe2RStW3A
+         5PtwYYrh8T1PyBBVzTfIX6GpEI4+62sgBbkp/POAoKzsKgatm+HmR1LW5vN18CU9kOGI
+         h03FvwlOOpDoBbsVUYrm9yo509idffHym3aOe8kK3ITUCFPzpwxu9NyQ3dys+O2sL0+0
+         3txTRAWk4RmsL7rqoAQjyB3LUYqogcv46clWBFgtnHw58iEd2ZJpehX7VHQp60hG+T8x
+         dnGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788337129; x=1788941929;
+        d=1e100.net; s=20251104; t=1788337242; x=1788942042;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=QPGyS0AHVOfUWMfJXbkr/UK6bKLRAGXdQYLecgn4LSo=;
-        b=OGczflpjJWolk5cVVqMnz/Mqy+bgbZNI4qujPazs03zqLVIv6RFuV77AhPLQ0h2TKm
-         ZxgAqd8iCapf+TMHCafLaVeP+nNb0q2vR7D2rQfoshg1oquVvFgXXoBmN4DPcpHlRGUV
-         K0538IZz5Izu4E48T8oGUMn4N7QGRGJKQX0HmYvvT8xJYfIRni0YsqyaDc5uGqAKLBqE
-         I0JpuoXUbN8+9EMJL5eoBSP9igi4DBQqjz6oK1q/daaEebYVCyKCRBRAnUDu9Qdv1LCP
-         jpOisnL+bUYsEkPoBYZvtHjWMkBeP9n4AXnbcSL2jGGg4d1adZEVEp0F7zeIiwLkA8FA
-         netA==
-X-Forwarded-Encrypted: i=1; AKwUvBxNm1+ZvkqDRfuk4zbaD98suZH/i0G1yBLgo9HsZjEm79bB2dZNrXsxJ6AFfTzNzuALqQmjWg==@lists.linux.dev
-X-Gm-Message-State: AFuF++nsmNywbZwSzVVXt6LrDDXex55hARi2Rk+bNxA+juBhBzxpYw2a
-	2Aowc6okfqBxepOKeiz7CVQO+3n/vq6uJc6sTGjdSMw+2SksiGWKLtlo
-X-Gm-Gg: AYBFou1V8rgeVGXv0MLOfbuowN5A0xP5u3SovAHLlyNHErgFUqF97NV+XQiuOeNRhrA
-	S3d+uACMCVQFnFcvXjMjfrw1hjxRIOimPri6I8dkeEZnyGfjZ61hIfc59d2RphNC9YADIXDJN8s
-	hy2MNCZNvpqmkiDjibS+5fHqyWAatnv3UPvLvh9SFp+GM8uKqMPiWOa93RZ/JisHGGQLeaeFlWd
-	QoK6T3r6xPX+QVlw7cqeKE8iZ11Lj0kFuXbbdfbV/aICRRW+Tgs42DzDNf5gXpQeNHboW1/1ibm
-	JWlANnJHgTLM7doguh0o+TrZTgYnQll6uP7reSikELjeb9F6/RBKawDC7pdUTJBbbtVt06Hujh3
-	QUnCo/An3MLk1cSB4uosEXikg3lq/Um7CkRgkpV+y8BuU+xGqLAiXlNR4G1XzQuKx4lnTRu2ttz
-	MqyjzbqARfjMehFCExypUEEobMEJ8oIT3UbITAEyKfqbPs3p9+tyIIUQRD5YzsUnqp1X5n2zoWv
-	9grIWQorLBGVXKn
-X-Received: by 2002:a17:90b:2f84:b0:398:9bd3:d6d1 with SMTP id 98e67ed59e1d1-39af64e0adbmr1153860a91.11.1788337129220;
-        Wed, 02 Sep 2026 01:18:49 -0700 (PDT)
+        bh=C6stb0h/TUGkigOyr7jwbkqUiojuR7BYoo9mkXkmykw=;
+        b=SU6MPmYtFHGxW3c92fEggj2AutVrAlpo0BMYm9dllAL/M81CEZehFmKt62fJCGLJxS
+         XkFrKQ/7ZYUitGDLyLRz2NR1AqeK+IX4qx9lAR0g7tIeZe7DH0yIvhe9etRpeQmBZH9O
+         1/4nyTqx5vbDtsKu435B1rx24Wv+7TKjOUFipLpuEERKA9hklTei1Y02IFsc5l4FY5IQ
+         p0JmL9IZvBHhuoKohZ9UzejrRBIS394U2ODd0o/PlMUxhnyASjmsUUh8aNHYxSTCTZ3c
+         Uv0sJ6QPEra60WrAPIoGCEw0I1RBu3HYNSS9dUbmvKhQpOPJ90M4xDmoVv5xgAuYsPkT
+         T/WA==
+X-Forwarded-Encrypted: i=1; AKwUvBwXpsIqX0k2s6kDa8oyKoZ8sjYXpsQQE0Z4CUzLsv7U7HFhqCYDOcvvDt/q7wDj0UhV1B+btg==@lists.linux.dev
+X-Gm-Message-State: AFuF++kXOecEDh6wEpX5xRxO1fq3YmMGAhRnAkrgBM4V9t0X0seM/xl+
+	xii8rqnDjlZ17KkgAE6dsy2D4t0zeJmMSSdg9FEvG8TAcA2fQ9zYPg7T
+X-Gm-Gg: AYBFou24h4I2amxf5NUR3oSwTBO0MiJTpoo+zmQKRNx1aP9sA/4vmsLvcPnVtk9tHln
+	Eb6Ic1hEWMEgzIQsy2Dj3z339rdt2PLpoif2XCiRd0kbMxJPo6Ceh2Nz5ZysoPLuLyTZNEH0PxU
+	+ivyQF9tfmMa3E+Z7kJhBXLWej/R9SkUfv3ulHThYK7Oq41mZ5tULrhKRP6BIMVU4EHsd7t302J
+	g/aFbkwq1cu76jI9iyWvTsQceQ22Ba+ya7ayfjuxkc4wZaxcXo4zhSP3y568iy/8oVgd3ZCnonK
+	SwoPVSoAkUqMKF7h1Doa2JICAn6d1LqRFbwE7HszliOMvDuta64zFqdSW/cb29uG6lHgDsHtqnR
+	AcvKobHVt2rRf+mweOJ2Z16FPfeMwYPLZHZgnnUOrh3vS513VVx7+G+pVBOI2u1ndUg8chyZc1U
+	x2gvZFPGY27J0sI95I1HCsOoyoV1le/LEEhQeQJBm0oHO5b7xm5/6bm4/aECuTjGm0jB78OIUkE
+	LGeMKI0lC/PnhndeTkgTuOrbWkq
+X-Received: by 2002:a17:90b:3c89:b0:38f:aab1:5148 with SMTP id 98e67ed59e1d1-39aee066dd0mr5075947a91.13.1788337241788;
+        Wed, 02 Sep 2026 01:20:41 -0700 (PDT)
 Received: from celestia.taila51cc2.ts.net ([2402:1980:9c5:2de5:8b4e:3f3c:b637:4ca5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3990d75b540sm10430157a91.10.2026.09.02.01.18.46
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39ae3c72584sm4119404a91.17.2026.09.02.01.20.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 01:18:48 -0700 (PDT)
+        Wed, 02 Sep 2026 01:20:41 -0700 (PDT)
 From: Liew Rui Yan <aethernet65535@gmail.com>
 To: SJ Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
@@ -65,9 +65,9 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
 	linux-kernel@vger.kernel.org,
 	Liew Rui Yan <aethernet65535@gmail.com>,
 	stable@vger.kernel.org
-Subject: [PATCH v2] mm/damon/core: fix false positive in
-Date: Wed,  2 Sep 2026 16:18:25 +0800
-Message-ID: <20260902081825.18931-1-aethernet65535@gmail.com>
+Subject: [PATCH v2] mm/damon/core: allow esz to be set to zero
+Date: Wed,  2 Sep 2026 16:20:50 +0800
+Message-ID: <20260902082050.19566-1-aethernet65535@gmail.com>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -77,60 +77,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When setting goal_tuner to 'temporal', if the goal is achieved,
-quota->esz_bp will be set to zero.  In this case, damos_quota_is_full()
-will always return true, even if no regions have been tried to apply at
-all.  This causes qt_exceeds to increase unexpectedly.
+When the temporal quota goal tuner determines that the goal has been
+achieved (score >= 10000), it sets esz_bp to zero so that the effective
+quota (esz) becomes zero.  However, damos_set_effective_quota() clamps
+the quota to min_region_sz, preventing the quota from ever reaching
+zero.
 
-Fix it by:
+Fix this by adding a check for zero esz_bp.
 
-- Returning false in damos_quota_is_full() when quota->charged_sz is
-  zero.
-- Adding an early exit in damon_do_apply_schemes() for schemes with zero
-  esz.
-
-Fixes: c7ec7d5f6b3d ("mm/damon/core: handle <min_region_sz remaining quota as empty")
-Cc: <stable@vger.kernel.org> # v7.2.x
+Fixes: 8bbde987c2b8 ("mm/damon/core: disallow time-quota setting zero esz")
+Cc: <stable@vger.kernel.org> # v7.1.x
 Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
 ---
 
 Changes from v1:
-- v1: https://lore.kernel.org/damon/20260901105925.106186-1-aethernet65535@gmail.com
-- Changed the check in damos_quota_is_full() from '!quota->esz' to
-  '!quota->charged_sz', because the former is an upper bound, while the
-  latter represents the actual quota usage.
-- Added an early exit in damon_do_apply_schemes() to prevent a scheme
-  with zero esz from being evaluated by damos_quota_is_full().
-- Changed patch title, original title: always return false when esz is
+- v1: https://lore.kernel.org/damon/20260901105951.106246-1-aethernet65535@gmail.com
+- Changed implementation.  The initial solution skipped the
+  min_region_sz clamping when esz was already zero.  However, this would
+  revert the fix from commit 8bbde987c2b8 and cause a regression.  This
+  revision fixes the issue by adding a specific check for a zero esz_bp.
+- Changed patch title, original title: fix quota could not be set to
   zero
 
 ---
- mm/damon/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ mm/damon/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 8e3ded1a2cf6..de78ad56c8b3 100644
+index e13a154aa4b9..8e3ded1a2cf6 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -2560,6 +2560,8 @@ static bool damos_quota_is_full(struct damos_quota *quota,
- {
- 	if (!damos_quota_is_set(quota))
- 		return false;
-+	if (!quota->charged_sz)
-+		return false;
- 	if (quota->charged_sz >= quota->esz)
- 		return true;
- 	/*
-@@ -2666,6 +2668,9 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		if (!s->wmarks.activated)
- 			continue;
+@@ -3133,6 +3133,9 @@ static void damos_set_effective_quota(struct damon_ctx *ctx, struct damos *s)
+ 	if (quota->sz && quota->sz < esz)
+ 		esz = quota->sz;
  
-+		if (!quota->esz)
-+			continue;
++	if (!quota->esz_bp)
++		esz = 0;
 +
- 		/* Check the quota */
- 		if (damos_quota_is_full(quota, c->min_region_sz))
- 			continue;
+ 	quota->esz = esz;
+ }
+ 
 -- 
 2.55.0
 
