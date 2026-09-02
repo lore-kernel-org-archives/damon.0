@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8B138E8B9;
-	Wed,  2 Sep 2026 05:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB5B32F764;
+	Wed,  2 Sep 2026 05:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788328079; cv=none; b=lsLBfnMJzwF0yq/HRu3prc6oX+mUoaKOgPX8iOvG/d2s01Qbap50jVzTCUNxRZ39FVPJ1DvAy2+79iOSGOW3Lg1OTTJQZ2FnUOqL6naKS8WZmxrd+S2JDg2WYVY7+t0mBmT10c2MCIqcfkKCRVJXu8P/rxq+6W0Og/OxkV8/H2E=
+	t=1788328080; cv=none; b=Z9tNeuyNPB2SSW0+oFGf9Ct5zvp/C3QjCDzx4u88EBF3Pw7Ra1hG23vAOUSUcx+WvoQXo8APGALTBMAwf8Xy5Z1Q2jAJARzi21XvWZaKWDjRSI60PfDalE3CkrMXxOBN07Juxf0bA3kazJALJ7Zxd0oX2rSdIR1hkuSAwEQCuTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788328079; c=relaxed/simple;
-	bh=HbRbHRXJKLR5v8dTl/LSDMwKCFClK2aYCYBJgtV6g70=;
+	s=arc-20240116; t=1788328080; c=relaxed/simple;
+	bh=94L9Y6jblqW5ICiSyH0suMgSyVNNc6/w7ucmr3p0soQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tw+aqWfeAf55zWHW6CZJkTce5CwtRibE3GVa3Nrz4DHODR0KfH5/N3V7TE/5PUYISbXayVFBHtGOdu99re/IYYEwEf3qBJsyDuYOAh9ED0jcBXzse2yS/ypMv0xkDdQjCjng+K/MG+HLLLNt7UcbWysFGBo08b+V0g9r2TDM/Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ERR+va7v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H84fpAciVupbnYDZbjNdWqgnWx7bzpdhJDKLx++ey2Nyk/B4zXHb/1gNqtO+PXJR8Ljfmx/XhlyMs91BtQcAaV3lTN9yKHCR9NzLU/V03TEwt4ca6sISJxvkXYi7fh//JWht0c11+pav1HY6WVYySgIpwS9YIVw5CLCVBGPZo44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A7m5oHnu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ERR+va7v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFF01F00A3F;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A7m5oHnu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC481F00A3E;
 	Wed,  2 Sep 2026 05:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788328078;
-	bh=jEqn658128UTd1o8tS5ZjT5LQQ6f3vfRE5EdtC108ZE=;
+	s=k20260515; t=1788328079;
+	bh=+7L5cUB5gmn/G0XCH5EnzRVEYnRmQ6289QitHVcV3Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ERR+va7v7jV6syjvn8R/yUBvyK/UxNaRaNVakcrmAmMgw9hQqXPpDw1mb5jZ5LYx8
-	 TtN4CIzctFX1QXt5wHf49T7bWKsSfUJpb/1GU34Jl1i3mRYi+WhAIFpfPz071elkku
-	 C0v/ygGvwhHF23venbP+e7sMEzvp6WiC9Ns3KNDFueKGan1dYypMzz/AyXZNht+RwK
-	 iVEveqQLS/Zwp4ROh3IW8ytBFCiPVqIKpLKsjjNQtB+klPSWSEHgM/B7Luzy8vybWa
-	 fi/m9nROPRr6+/7KpCblcDNz8mT+iKNT89DuO3321p1eSA6pb9TPBrUkl6l2/gLfvl
-	 NQH+rzise8OVg==
+	b=A7m5oHnud/3hqN3P0e/92GwC1TwwvZkzr13eGqpNp6wNxffTd2DX243Ns/4sYjmuw
+	 SbeScDff73MU0Dji7jmkBwY6Je54afEvxYHwr5XXCX8km/tHl0/VUucaH2LJoZmYCR
+	 fcERvk8nMyRYJtpanZeVtevI1I4787S4PW1ktiElSZJZmhypyV7EXTJOsNJiclFO9D
+	 QhaibuNqlbNZsHHmgjvNu1cmwPJqSKXJctSLsNUcubQPlm0E40mCt3eNeOd0exjE7N
+	 4cMs/KFGDHHGmwCGLOJTuOjjIzqok1qvt5agmgcd1/BvgxsQKxw29zriy9IkEq/nTd
+	 ZbhMUsJ1Ppt+A==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 10/12] selftests/damon/sysfs.sh: test hugepage_mem_bp quota goal
-Date: Tue,  1 Sep 2026 22:47:43 -0700
-Message-ID: <20260902054747.99370-11-sj@kernel.org>
+Subject: [PATCH 11/12] Docs/mm/damon/maintainer-profile: update AI review for Sashiko replies
+Date: Tue,  1 Sep 2026 22:47:44 -0700
+Message-ID: <20260902054747.99370-12-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260902054747.99370-1-sj@kernel.org>
 References: <20260902054747.99370-1-sj@kernel.org>
@@ -48,26 +57,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs quota goal target_metric file now accepts 'hugepage_mem_bp'
-input.  Test it is accepted in fundamental DAMON sysfs file operation
-selftest.
+In the past, sharing Sashiko review results was tedious.  Also it was
+suggested to minimize the recipients on the sharing mails.  Hence the AI
+review section of DAMON maintainer profile document was updated to give
+guidance about available tools for making the sharing easier, and how
+the recipients list should be managed.
+
+Now DAMON is onboarded [1] to Sashiko's automatic review replies
+feature.  Sashiko directly sends its reviews as replies to the patch
+mail thread. It also reduces the recipients list to deliver the
+reporting to only the author and the mailing list.
+
+Remove the old guidance that is no more necessary but only confusing.
+
+[1] https://github.com/sashiko-dev/sashiko/commit/b554c7b6e733
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs.sh | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/mm/damon/maintainer-profile.rst | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
-index ddebde6edabe4..b66593c9ac471 100755
---- a/tools/testing/selftests/damon/sysfs.sh
-+++ b/tools/testing/selftests/damon/sysfs.sh
-@@ -210,6 +210,7 @@ test_goal()
- 	ensure_write_succ "$fpath" "active_mem_bp" "valid input"
- 	ensure_write_succ "$fpath" "inactive_mem_bp" "valid input"
- 	ensure_write_succ "$fpath" "node_eligible_mem_bp" "valid input"
-+	ensure_write_succ "$fpath" "hugepage_mem_bp" "valid input"
- 	ensure_write_fail "$fpath" "foo" "invalid input"
- 	ensure_file "$goal_dir/nid" "exist" "600"
- 	ensure_file "$goal_dir/path" "exist" "600"
+diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
+index fb2fa00cc9aa1..a7c1352339378 100644
+--- a/Documentation/mm/damon/maintainer-profile.rst
++++ b/Documentation/mm/damon/maintainer-profile.rst
+@@ -106,18 +106,9 @@ AI Review
+ 
+ For patches that are publicly posted to DAMON mailing list
+ (damon@lists.linux.dev), AI reviews of the patches will be available at
+-sashiko.dev.  The reviews could also be sent as mails to the author of the
+-patch.
+-
+-Patch authors are encouraged to check the AI reviews and share their opinions.
+-The sharing could be done as a reply to the mail thread.  Consider reducing the
+-recipients list for such sharing, since some people are not really interested
+-in AI reviews.  As a rule of thumb, drop stable@vger.kernel.org and individuals
+-except DAMON maintainer.
+-
+-`hkml` also provides a `feature
+-<https://github.com/sjp38/hackermail/blob/master/USAGE.md#forwarding-sashikodev-statuscomments-to-mailing-list>`_
+-for such sharing.  Please feel free to use the feature.
++sashiko.dev.  The reviews will also be sent as replies to the author of the
++patch and the mailing list.
+ 
+-It is only an optional recommendation.  DAMON maintainer could also ask any
+-question about the AI reviews, though.
++Patch authors are encouraged to check the AI reviews and share their opinions
++by replying on the mail thread.  It is only an optional recommendation.  DAMON
++maintainer could also ask any question about the AI reviews, though.
 -- 
 2.47.3
