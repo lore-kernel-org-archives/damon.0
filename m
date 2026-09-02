@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087B938F255;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8B138E8B9;
 	Wed,  2 Sep 2026 05:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788328079; cv=none; b=d+adaMjTYWllzwbdOoEVJFt1FmrRS8JPEHGOQIiuJMoquQ2zWjuDPZpuH7eAuoHhgk1VjXLwJdVUNLlCdl7n2szrXUWK5eAaA2zXQve8CRZF9Qhr9pFxYvI4JVNVMFJ017U7yjfltTSBEcngQT3niA8ErqjyJN003N3yWCfJ0KY=
+	t=1788328079; cv=none; b=lsLBfnMJzwF0yq/HRu3prc6oX+mUoaKOgPX8iOvG/d2s01Qbap50jVzTCUNxRZ39FVPJ1DvAy2+79iOSGOW3Lg1OTTJQZ2FnUOqL6naKS8WZmxrd+S2JDg2WYVY7+t0mBmT10c2MCIqcfkKCRVJXu8P/rxq+6W0Og/OxkV8/H2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788328079; c=relaxed/simple;
-	bh=2pZTkI/oCmWinwH6DeXmTbs9qIAw+27YX/dzECNnx2I=;
+	bh=HbRbHRXJKLR5v8dTl/LSDMwKCFClK2aYCYBJgtV6g70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFvxwxn96GnWcAiTdg/ru3s8OW02Uimpcn/Z6BTYz2qQTgfrKYlQkOYLi+/SekptcTTAbmwngzvAetWDOXqrGIj2UChl78tUxGpPiziVZ27mZDspl09hL2at825sjHrnWULYllxgi1BnmTr8e3yLjnBFHqJ4PBdKzrsSzyyxBFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vy6DkBnk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tw+aqWfeAf55zWHW6CZJkTce5CwtRibE3GVa3Nrz4DHODR0KfH5/N3V7TE/5PUYISbXayVFBHtGOdu99re/IYYEwEf3qBJsyDuYOAh9ED0jcBXzse2yS/ypMv0xkDdQjCjng+K/MG+HLLLNt7UcbWysFGBo08b+V0g9r2TDM/Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ERR+va7v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vy6DkBnk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AAD1F00A3D;
-	Wed,  2 Sep 2026 05:47:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ERR+va7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFF01F00A3F;
+	Wed,  2 Sep 2026 05:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788328077;
-	bh=LCVrTJpLa2unGCETWoawjk8AD+WeKZfpebJRiu9J1ew=;
+	s=k20260515; t=1788328078;
+	bh=jEqn658128UTd1o8tS5ZjT5LQQ6f3vfRE5EdtC108ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vy6DkBnkymZetvewrk8FS6KINWHWOlX1jyYBRcTg0m96UVSraiO/U0opQaAvso2ol
-	 P0cfp76K+VND/mokB6TfEyVBgGVp/nDpbqhde/ht1M9WqVoS+X/s6ZwYn6OqzldoPq
-	 Vm9vERApPAp5rqb+XY2Uh6TaUOchkGBsqufU4WYy+YUR8OGWiG+84iw6BttJrvTRJj
-	 YJSMYxjmEmy4oY3EwX7nFDkN9q7hkpaJBvhmyfilAhiMXVZWQJ9xZnnExnkNJKE9+r
-	 euSF1WZ15iwLkqCxjDpjwL12jtoknq6ISX74LXuzuJGhT0fURRvsPDL2zfNtuy+chG
-	 h+GGPRoBjgMlQ==
+	b=ERR+va7v7jV6syjvn8R/yUBvyK/UxNaRaNVakcrmAmMgw9hQqXPpDw1mb5jZ5LYx8
+	 TtN4CIzctFX1QXt5wHf49T7bWKsSfUJpb/1GU34Jl1i3mRYi+WhAIFpfPz071elkku
+	 C0v/ygGvwhHF23venbP+e7sMEzvp6WiC9Ns3KNDFueKGan1dYypMzz/AyXZNht+RwK
+	 iVEveqQLS/Zwp4ROh3IW8ytBFCiPVqIKpLKsjjNQtB+klPSWSEHgM/B7Luzy8vybWa
+	 fi/m9nROPRr6+/7KpCblcDNz8mT+iKNT89DuO3321p1eSA6pb9TPBrUkl6l2/gLfvl
+	 NQH+rzise8OVg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 09/12] mm/damon/tests/core-kunit: test damon_nr_samples_per_aggr()
-Date: Tue,  1 Sep 2026 22:47:42 -0700
-Message-ID: <20260902054747.99370-10-sj@kernel.org>
+Subject: [PATCH 10/12] selftests/damon/sysfs.sh: test hugepage_mem_bp quota goal
+Date: Tue,  1 Sep 2026 22:47:43 -0700
+Message-ID: <20260902054747.99370-11-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260902054747.99370-1-sj@kernel.org>
 References: <20260902054747.99370-1-sj@kernel.org>
@@ -50,57 +48,26 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_max_nr_accesses(), which is a previous version of
-damon_nr_samples_per_aggr() before the renaming, was wrongly returning
-zero or random overflowed values for extreme intervals setup.  Commit
-35d4a3cf70a8 ("mm/damon/ops-common: handle extreme intervals in
-damon_hot_score()") updated the function to return correct or more valid
-values.  Add a kunit test to ensure it is working as expected.
+DAMON sysfs quota goal target_metric file now accepts 'hugepage_mem_bp'
+input.  Test it is accepted in fundamental DAMON sysfs file operation
+selftest.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/tests/core-kunit.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ tools/testing/selftests/damon/sysfs.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index a4164ac489a61..d0bed01a5b7fe 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -625,6 +625,27 @@ static void damon_test_set_regions(struct kunit *test)
- 			(struct damon_addr_range[]){}, 0, -EINVAL);
- }
- 
-+static void damon_test_nr_samples_per_aggr(struct kunit *test)
-+{
-+	struct damon_attrs attrs = {
-+		.sample_interval = 0,
-+		.aggr_interval = 0,
-+	};
-+
-+	/* Zero aggregation interval doesn't cause division by zero */
-+	KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs), 1);
-+
-+	/*
-+	 * Too large aggregation interval on 64 bit system doesn't cause
-+	 * overflow
-+	 */
-+	if (ULONG_MAX > UINT_MAX) {
-+		attrs.aggr_interval = (unsigned long)UINT_MAX + 1;
-+		KUNIT_EXPECT_EQ(test, damon_nr_samples_per_aggr(&attrs),
-+				UINT_MAX);
-+	}
-+}
-+
- static void damon_test_update_monitoring_result(struct kunit *test)
- {
- 	struct damon_attrs old_attrs = {
-@@ -1736,6 +1757,7 @@ static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_split_above_half_progresses),
- 	KUNIT_CASE(damon_test_ops_registration),
- 	KUNIT_CASE(damon_test_set_regions),
-+	KUNIT_CASE(damon_test_nr_samples_per_aggr),
- 	KUNIT_CASE(damon_test_update_monitoring_result),
- 	KUNIT_CASE(damon_test_set_attrs),
- 	KUNIT_CASE(damon_test_mvsum),
+diff --git a/tools/testing/selftests/damon/sysfs.sh b/tools/testing/selftests/damon/sysfs.sh
+index ddebde6edabe4..b66593c9ac471 100755
+--- a/tools/testing/selftests/damon/sysfs.sh
++++ b/tools/testing/selftests/damon/sysfs.sh
+@@ -210,6 +210,7 @@ test_goal()
+ 	ensure_write_succ "$fpath" "active_mem_bp" "valid input"
+ 	ensure_write_succ "$fpath" "inactive_mem_bp" "valid input"
+ 	ensure_write_succ "$fpath" "node_eligible_mem_bp" "valid input"
++	ensure_write_succ "$fpath" "hugepage_mem_bp" "valid input"
+ 	ensure_write_fail "$fpath" "foo" "invalid input"
+ 	ensure_file "$goal_dir/nid" "exist" "600"
+ 	ensure_file "$goal_dir/path" "exist" "600"
 -- 
 2.47.3
