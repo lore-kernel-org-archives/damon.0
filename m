@@ -1,56 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1F134388F;
-	Thu,  3 Sep 2026 10:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277C544239A;
+	Thu,  3 Sep 2026 10:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788431808; cv=none; b=JcbzFGnlybzCKwBFZKpp8/bKR9qT0H6rkkAc5EzZyFbNw8tX3wN4xnwV4u9dexMhGEaTT+K4u/N/Sn6TNEn8mN0lCz8jfa9t1VuHZkiqJH9Ko74ikPlYQsxp28boozQALVkN5HBllpnwFF8ghExJ15EUQgFcMdkWYuT3quHtBG4=
+	t=1788432047; cv=none; b=s2TwEGJveVa0OAMt/vDt3boMKEod9qJt/h6rmJg6WBClWjHH0MFqvEC46qxkO2jOeeSIRNXP+ZwS7mkzn+nsaKQY0l5PmMwr+wwtpK44xfvu/7/wsdclpNDlP9gqHv9aHmMSVvFTtkhBecMJIYMi2d0IDWvl0GKHfL4+KEc6v7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788431808; c=relaxed/simple;
-	bh=22ZUzMnXtdQYEitOopngvwk/ja6iLf/slwghthetBoc=;
+	s=arc-20240116; t=1788432047; c=relaxed/simple;
+	bh=rFP8MZSPreuyFV+kIBVC97RoRv+t3a0YVteWnIuDHZg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=I682ysnse2E1rY7l9qIVTjEUiSGhEfElBqV1pjKbetbSRB/4S8fhIt7B2sT44ByN0FaZfqD40K3nca43JI78YnPK7Kx3Cmwh8vabXbI7AkFHi+sS/GCFoRf0SnY1NUBWxa45kaqehwcwYfN+9EDjMai75+eyMnyMFLCWgHY36dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OwM9M3bi; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=EcPadTNV3Zb4gGcgwQkN60pvMZcN64cowpwEWjcpcak1L1IFQtIW6iTnisgrc1OOTlj7WolVhUQI6RRu7MU2A/+2zl/bi60f8Q5TkfqzGYvowsmfsB2cof2INNacDcOoU4x6qBueEGC8jSp0Hl8UW+x9+gltww521p88xEgd4o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O1ccCcYu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OwM9M3bi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838241F000E9;
-	Thu,  3 Sep 2026 10:36:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O1ccCcYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF641F000E9;
+	Thu,  3 Sep 2026 10:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788431804;
-	bh=22ZUzMnXtdQYEitOopngvwk/ja6iLf/slwghthetBoc=;
+	s=k20260515; t=1788432045;
+	bh=rFP8MZSPreuyFV+kIBVC97RoRv+t3a0YVteWnIuDHZg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OwM9M3bi2++tXyKq/GDB2qV08xvz6cdsaQwJdAuVcttmqXnn2TcZnhMTcoBUPWZWP
-	 aUt0t6UQIeXnbxmuriuIBz55Q6Zu/VyR8fR1kHL0AA835goHcSDgdWS0QHmCqI9FIa
-	 VO9W1UAL5Q14yccYG53TOFfZKiWnN8XAwrD+wESP2TGudJhjdnbfJYvJ8JCPU3j/UX
-	 h5SpRGIfoSrktyIEp2GF8MBiFn/T/CkMts7ld0YbHZAD4TDIXyU7bbNCAaHNgu4+J4
-	 8DvoFzpBDqajoq69zYumLZNiuagsHFYEg8ukmx+cBOyyKscZVX5o0FwJoqvRofI2iF
-	 J0PzwyzQjmsGw==
+	b=O1ccCcYuZPfpTRf2+GXrYxW8aySXe0VfKpmKvIjc9gYA8CpeWvWzonEhSRwBr6JR6
+	 wlVeAbDwLa50zO/EQ+Ad/mRBGvNBSZK+DQ8u673b6gdowNlcAhEkLoT1zxapl1KQLg
+	 M+1H0283l/1yp2Mw89E4AUgD5POg9KajQmYEsmnCnfqkXfo6NtFumYXgAZgkARTaGP
+	 iuWtrjn6Wqbjysh7G8nHkkyR2IWoUw0R7B4lVc7AC2AoHRCFnS2pDj+cYRyOLgNyT9
+	 01w1VjdCp3iMLqX9Y2JVglTwJUSGKWDIz8GNDW7rT70dvQSNgErQEddUuZXzIM7m72
+	 y+o9UhvK74H+Q==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 7/8] drm/i915: use hw_pte_t for PTE range callbacks
+Subject: Re: [PATCH v2 5/8] mm: convert PTE table entry to pte
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Muhammad Usama Anjum" <usama.anjum@arm.com>
-Cc: linux-perf-users@vger.kernel.org, dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, linux-trace-kernel@vger.kernel.org, damon@lists.linux.dev, bpf@vger.kernel.org
-In-Reply-To: <20260903103002.1091859-8-usama.anjum@arm.com>
+Cc: damon@lists.linux.dev, bpf@vger.kernel.org, intel-gfx@lists.freedesktop.org, linux-perf-users@vger.kernel.org, dri-devel@lists.freedesktop.org, linux-trace-kernel@vger.kernel.org
+In-Reply-To: <20260903103002.1091859-6-usama.anjum@arm.com>
 References: <20260903103002.1091859-1-usama.anjum@arm.com>
- <20260903103002.1091859-8-usama.anjum@arm.com>
+ <20260903103002.1091859-6-usama.anjum@arm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 03 Sep 2026 10:36:44 +0000
-Message-Id: <20260903103644.838241F000E9@smtp.kernel.org>
+Date: Thu, 03 Sep 2026 10:40:45 +0000
+Message-Id: <20260903104045.8BF641F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> apply_to_page_range() now passes PTE table storage to its callback as
-> hw_pte_t *. Update the i915 remap and selftest callbacks to match the new
-> type.
->=20
-> Continue to use ptep_get() for software PTE values and set_pte_at() for
-> updates.
-> The type remains an alias of pte_t on x86 until that architecture opts in.
+> The non-MMU stub receives hw_pte_t but returns a software PTE value. It
+> has no attached PTE that requires ptep_get(), so convert only the stored
+> entry through __pte_from_hw().
 >=20
 > Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 
@@ -58,5 +54,5 @@ Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260903103002.1091=
-859-1-usama.anjum@arm.com?part=3D7
+859-1-usama.anjum@arm.com?part=3D5
 
