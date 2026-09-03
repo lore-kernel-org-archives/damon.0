@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EB01E8332;
-	Thu,  3 Sep 2026 01:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46A6282F20;
+	Thu,  3 Sep 2026 01:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788397424; cv=none; b=t5ZCYlQ14v7rySsFw0DlK6gC7LCESeCl+eSLqQ69jRnSFm1XAqM2ZhdvG1XYhFBA3AncdS+0+0d2ZeGZbP7221E9A3YZphSAT3B6Hh+OfgHgDu7n5jdNNYWHEv7yihegfgcqU+bD20HEdzJNP+VGCNIK1chDyNQJCPuXSHIIyMk=
+	t=1788397650; cv=none; b=g06ELPde5udSu5ocNI0fuB/glHIuyI1KLT66JFLhz93bvWXIfuVN8lnVTcmyNXLmAdR75TaYFE6p3rXVsTn6OVAvtqrZKa4CPvuloRX53G04S/7yHS7IKemThQ1oTo/e9PoeAjfIMD64xBjfE1hBOhl1+/cwQgEEcxrfKS1pdAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788397424; c=relaxed/simple;
-	bh=+w3rxutfnYBNIul7l279XZJ8W0YahLijvuvU2FVYbRw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjgfqII7MvEwftmiIB1gTNAsYpw7lEVGJfHeKgShZ9ZTnHw1+7xGHWNKhtMnM6uJsriIA8Iku5zQg4wNiju4uda6sMRkbpj4bHA49bvrHnnnzZfbVkkvICU61NOsEPcWDcZ1pf/gVCVs0Vb/Ed3cT9irRVnRrgZq7mij7VazGwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LodVKFzm; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788397650; c=relaxed/simple;
+	bh=2yz8Wh+9iL52rMrmr/Wox1uPaC67NPxNvV1yRJ65GMg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PxtG+kvF8fDciiSq6pQGCuzMkL2ZvMRJUJNj+OVmqXDQ2b9apfej/Rhd7Ww4IqCjLsmW53WxN1HrzNRUYoPoHxf/vGVHA1c0GfNJRRZ0PWs98lG4hS881hrYLNU7vO0nOc5dsfRzFCJO4dXKsVUfaOCflegn18s59iwBvcgOCKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ULtb46dv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LodVKFzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611081F00A3A;
-	Thu,  3 Sep 2026 01:03:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ULtb46dv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132311F000E9;
+	Thu,  3 Sep 2026 01:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788397423;
-	bh=a+KFNc38yAs5cF8y2PPkR2gfi2v/4V0wSG+v466VkTs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LodVKFzm7cPA/XKyLRrziPacDwGJLlxAjosgz7vkLzndAd43UwGSSmeTy3nRv2M7/
-	 P6Lstm9ApfK3wchi1TzvLIWDnUw4W2iM5ybBascq3HepMB8FEbtGlopObj8r9LweMG
-	 LaSH7hLz0s1lSfUaTG+bgYyPiZFhCuyvAOGGcRSgOVvq+0OkH42gIyECD34Uzw6Xvx
-	 +Q2MT8DiCFKURE+bUs4iEZnP9Ce3aFeFd06bLbXhJe31queYCqZM0u7jc1ZFAt/He+
-	 vO+lzpR02gxrpahg8y4YHOto7X8/N5J72vykyibw7X9QMZeneaPHd2OrjbT1AERYWu
-	 UQjWF0VZiOpJA==
+	s=k20260515; t=1788397649;
+	bh=Vzm/scJF4B/qwUzRWO3RKybiqI2rNfNYcnSpn8QAXGY=;
+	h=From:To:Cc:Subject:Date;
+	b=ULtb46dv95AH46NihZ+pCkNhjRhJKn9bWs4Ph7oKX/WbclWjZrVOyYrs7rOITU3UA
+	 yEzI4GnKGx/5m32PrvFZ+Di5jEVJNQxlNGXOlg1aqQBkiz6Z7QvEFqVQN34Tn+Z3nJ
+	 5rMDuKtEnnIIC6mSUDDwg/Rd0dnS6EQBP4HnZ4pfOsJI1glcQsr4w/T4ZA3+O6BEDK
+	 SKJyVEbqGdjvMsABDhAu3mFKPx7JKx8y7KwUjG+E6uYozMZ0eULUnTzwAchM72+2uH
+	 WmR6fCndZF0lobx+by8nHpMAfP4MFgCvuN0L861cqah5BC+VHBmY13NXENgRxrDQoL
+	 7ZPzP0VHOWj6w==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 4/4] mm/damon/lru_sort: remove unnecessary damon_call() param validation
-Date: Wed,  2 Sep 2026 18:03:33 -0700
-Message-ID: <20260903010334.93622-5-sj@kernel.org>
+Subject: [PATCH 0/3] mm/damon: move zero damos quota target_value handling to the core layer
+Date: Wed,  2 Sep 2026 18:07:18 -0700
+Message-ID: <20260903010722.94244-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260903010334.93622-1-sj@kernel.org>
-References: <20260903010334.93622-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,48 +43,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_LRU_SORT avoids passing NULL or unstarted damon_ctx to
-damon_call() with its own validation.  The validation is no longer
-needed, because the DAMON core layer now handles the corner cases
-itself.  Remove the unnecessary check.
+Having zero DAMOS quota target value can cause division by zero.  DAMON
+API callers are checking the target value parameters to avoid that.  It
+is easy to make mistakes in some of the multiple API callers.  Move that
+to the core layer.
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/lru_sort.c | 8 --------
- 1 file changed, 8 deletions(-)
+Patch 1 adds the corner case handling into the core layer DAMON
+parameters validation logic.  Patches 2 and 3 remove no more needed
+DAMON API callers side handling of the corner case in DAMON_LRU_SORT and
+DMON_SAMPLIE_MTIER, respectively.
 
-diff --git a/mm/damon/lru_sort.c b/mm/damon/lru_sort.c
-index bd847829a9907..f25ee7326e87c 100644
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -346,8 +346,6 @@ static int damon_lru_sort_commit_inputs_fn(void *arg)
- 	return damon_lru_sort_apply_parameters();
- }
- 
--static bool damon_lru_sort_damon_has_started;
--
- static int damon_lru_sort_commit_inputs_store(const char *val,
- 					      const struct kernel_param *kp)
- {
-@@ -368,10 +366,6 @@ static int damon_lru_sort_commit_inputs_store(const char *val,
- 	if (!commit_inputs_request)
- 		return 0;
- 
--	/* Skip damon_call() if ctx has not successfully started. */
--	if (!damon_lru_sort_damon_has_started)
--		return -EINVAL;
--
- 	err = damon_call(ctx, &control);
- 
- 	return err ? err : control.return_code;
-@@ -422,8 +416,6 @@ static int damon_lru_sort_turn(bool on)
- 	err = damon_start(&ctx, 1, true);
- 	if (err)
- 		return err;
--	if (!damon_lru_sort_damon_has_started)
--		damon_lru_sort_damon_has_started = true;
- 	return damon_call(ctx, &call_control);
- }
- 
+Changes from RFC
+- RFC: https://lore.kernel.org/20260813054432.101197-1-sj@kernel.org
+- Drop RFC tag.
+- Rebase to latest mm-new.
+
+SJ Park (3):
+  mm/damon/core: error damos_commit_quota_goal() for zero target_value
+  Revert "mm/damon/lru_sort: error out for >10000 active_mem_bp"
+  Revert "samples/damon/mtier: error out for zero quota goal target
+    values"
+
+ mm/damon/core.c       | 22 ++++++++++++++++------
+ mm/damon/lru_sort.c   |  2 --
+ samples/damon/mtier.c |  3 ---
+ 3 files changed, 16 insertions(+), 11 deletions(-)
+
+
+base-commit: e5bdf22abf33923f4571fae61ef1e184afc7ddf6
 -- 
 2.47.3
