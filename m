@@ -1,31 +1,31 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6203E48D867
-	for <damon@lists.linux.dev>; Thu,  3 Sep 2026 10:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E8AB48C41A
+	for <damon@lists.linux.dev>; Thu,  3 Sep 2026 10:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788431522; cv=none; b=JBjZa78iEx7gzVQVarC4qAYsc1sVRyjzn+6ODMs1dBkcL6y+lox5PBxP6qq9fI1FnOe1vI0OJ0WXWiVdnCy2vCXNCwweCnhDEyrBiOaD9nZsAM0jEsq1HT2qEk8AKo4CGGQD0aZK90JnEbfpsTCfmvzzoMfDZu3g3iCYbrBosjU=
+	t=1788431525; cv=none; b=VJ+4YwwmRe/gr3YEi1GUuAc8/x6I1vQcL4ovpnXk2lf73zgh5cxgo8y2y5zE2P2ydFF0/B1p9+/s3GonM2qgi5y8w37KnP/LX34CAVk4clFMgrTiFLAb77GZM81O+Wm1JJ0wQQasQqmGJnT1ad1Lv+D95ZyarYEiD9FfxA3NuBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788431522; c=relaxed/simple;
-	bh=O0VT6PN+p0N3DcZl+XBb/wJGiZ2FVgkE19Nq8WoZJ14=;
+	s=arc-20240116; t=1788431525; c=relaxed/simple;
+	bh=w5U+egOeicWr0JE6SxpCSEkSHT/w8+Jal3XqpPBc6p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O+2C2ojvtL3R3A965SFD9D+Y/hU6hV4Vq7BapasHHjC0UEeYE542xD+z9tqw5eEZAY+4l+dq61VY8YfGcYtybGkkV3UePVJHm/ml8FEErFVdhfqnxCDFV4QuCtShumclDfQCal1w0F3IV8jSsIw219ANLejeepYC+5bX37UfO7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Y8F0VVCc; arc=none smtp.client-ip=217.140.110.172
+	 MIME-Version; b=ewLJyntEWPXHmAafUB+BmXRF0IRaBwiEsTTQVxWQcGtHA50qIAA3RpkSFzd+6rVA/R2Zr/L7tZlk0xKbFpWHGJWx0dfMPaLA2GS3NiU108fBvXW1Zr9jb63z5MCWg996/rdw3cU2SVVhbUEcHYqxeMj/f2orr4CNc3j61Bnv3x0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=fCi9FIbO; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Y8F0VVCc"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="fCi9FIbO"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 58601165C;
-	Thu,  3 Sep 2026 03:31:40 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CD4A21EDB;
+	Thu,  3 Sep 2026 03:31:49 -0700 (PDT)
 Received: from e142334-100.cambridge.arm.com (e142334-100.cambridge.arm.com [10.2.198.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id F0A0D3FA32;
-	Thu,  3 Sep 2026 03:31:34 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 72E5A3F673;
+	Thu,  3 Sep 2026 03:31:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1788431504; bh=O0VT6PN+p0N3DcZl+XBb/wJGiZ2FVgkE19Nq8WoZJ14=;
+	t=1788431513; bh=w5U+egOeicWr0JE6SxpCSEkSHT/w8+Jal3XqpPBc6p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8F0VVCcChrrr0cBI7rnp1ARVvTx43edXevEN/zoEI2YC9Lg5GDUugXXY8YrKUaWq
-	 mS2JoUgkevK0SvLmnzRR1s/ldifBo+JMMM6Stx9f8CX/7MBduutu1Yt6rEe96u8Les
-	 jesuyKP7q9hVikqD+dnvZSKkHFrkiw4AZKWdyg3U=
+	b=fCi9FIbOxN1jAWaeu8417km2w3h5m6j38WVFLaXWNwK9oAUqbXpEZ0Y0M46SfnfHU
+	 is2CQLtW+RScu0xIwHD95QlemNucqa3eQLNLFkarQYw2QAH7o1yuYnaYCycw3vrZRL
+	 6/l1lRwWzVc9APR0jQ4tBwoWuIBVD/rN/qIPAsKg=
 From: Muhammad Usama Anjum <usama.anjum@arm.com>
 To: Jani Nikula <jani.nikula@linux.intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
@@ -94,9 +94,9 @@ Cc: Muhammad Usama Anjum <usama.anjum@arm.com>,
 	bpf@vger.kernel.org,
 	linux-perf-users@vger.kernel.org,
 	damon@lists.linux.dev
-Subject: [PATCH v2 6/8] mm/kasan: use hw_pte_t for the early shadow PTE table
-Date: Thu,  3 Sep 2026 11:29:58 +0100
-Message-ID: <20260903103002.1091859-7-usama.anjum@arm.com>
+Subject: [PATCH v2 7/8] drm/i915: use hw_pte_t for PTE range callbacks
+Date: Thu,  3 Sep 2026 11:29:59 +0100
+Message-ID: <20260903103002.1091859-8-usama.anjum@arm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260903103002.1091859-1-usama.anjum@arm.com>
 References: <20260903103002.1091859-1-usama.anjum@arm.com>
@@ -108,16 +108,13 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-kasan_early_shadow_pte is a complete PTE table rather than a software
-PTE value. Declare and define its elements as hw_pte_t so the object uses
-the PTE table storage type.
+apply_to_page_range() now passes PTE table storage to its callback as
+hw_pte_t *. Update the i915 remap and selftest callbacks to match the new
+type.
 
-Read the first element through ptep_get(), which returns the software PTE
-value expected by note_page_pte(), instead of accessing hw_pte_t storage
-directly. This also uses the accessor selected by the architecture.
-
-No architecture selects ARCH_HAS_HW_PTE_T at this point, so the storage
-representation remains unchanged.
+Continue to use ptep_get() for software PTE values and set_pte_at() for
+updates.
+The type remains an alias of pte_t on x86 until that architecture opts in.
 
 Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 ---
@@ -125,51 +122,55 @@ Changes since v1:
 - Use software PTE value terminology.
 
 Changes since RFC v1:
-- Update the description for the architecture opt-in model.
+- Clarify the effect on architectures that have not opted in.
 ---
- include/linux/kasan.h | 2 +-
- mm/kasan/init.c       | 2 +-
- mm/ptdump.c           | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 4 ++--
+ drivers/gpu/drm/i915/i915_mm.c                     | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/kasan.h b/include/linux/kasan.h
-index bf233bde68c7e..ff41949c0ac08 100644
---- a/include/linux/kasan.h
-+++ b/include/linux/kasan.h
-@@ -51,7 +51,7 @@ typedef unsigned int __bitwise kasan_vmalloc_flags_t;
- #endif
- 
- extern unsigned char kasan_early_shadow_page[PAGE_SIZE];
--extern pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS];
-+extern hw_pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS];
- extern pmd_t kasan_early_shadow_pmd[MAX_PTRS_PER_PMD];
- extern pud_t kasan_early_shadow_pud[MAX_PTRS_PER_PUD];
- extern p4d_t kasan_early_shadow_p4d[MAX_PTRS_PER_P4D];
-diff --git a/mm/kasan/init.c b/mm/kasan/init.c
-index 30c5266eaf37e..9bbc2a41d23f0 100644
---- a/mm/kasan/init.c
-+++ b/mm/kasan/init.c
-@@ -64,7 +64,7 @@ static inline bool kasan_pmd_table(pud_t pud)
- 	return false;
+diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+index d01acfb7d93d0..056faf4a3618b 100644
+--- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
++++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+@@ -1690,7 +1690,7 @@ static int igt_mmap_gpu(void *arg)
+ 	return 0;
  }
- #endif
--pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS]
-+hw_pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS]
- 	__bss_pgtbl;
  
- static inline bool kasan_pte_table(pmd_t pmd)
-diff --git a/mm/ptdump.c b/mm/ptdump.c
-index 376880071ca2a..8f19f20be3c44 100644
---- a/mm/ptdump.c
-+++ b/mm/ptdump.c
-@@ -19,7 +19,7 @@ static inline int note_kasan_page_table(struct mm_walk *walk,
+-static int check_present_pte(pte_t *pte, unsigned long addr, void *data)
++static int check_present_pte(hw_pte_t *pte, unsigned long addr, void *data)
  {
- 	struct ptdump_state *st = walk->private;
+ 	pte_t ptent = ptep_get(pte);
  
--	st->note_page_pte(st, addr, kasan_early_shadow_pte[0]);
-+	st->note_page_pte(st, addr, ptep_get(kasan_early_shadow_pte));
+@@ -1703,7 +1703,7 @@ static int check_present_pte(pte_t *pte, unsigned long addr, void *data)
+ 	return 0;
+ }
  
- 	walk->action = ACTION_CONTINUE;
+-static int check_absent_pte(pte_t *pte, unsigned long addr, void *data)
++static int check_absent_pte(hw_pte_t *pte, unsigned long addr, void *data)
+ {
+ 	pte_t ptent = ptep_get(pte);
+ 
+diff --git a/drivers/gpu/drm/i915/i915_mm.c b/drivers/gpu/drm/i915/i915_mm.c
+index fd89e7c7d8d6f..aab88e8edf946 100644
+--- a/drivers/gpu/drm/i915/i915_mm.c
++++ b/drivers/gpu/drm/i915/i915_mm.c
+@@ -48,7 +48,7 @@ static inline unsigned long sgt_pfn(const struct remap_pfn *r)
+ 		return r->sgt.pfn + (r->sgt.curr >> PAGE_SHIFT);
+ }
+ 
+-static int remap_sg(pte_t *pte, unsigned long addr, void *data)
++static int remap_sg(hw_pte_t *pte, unsigned long addr, void *data)
+ {
+ 	struct remap_pfn *r = data;
+ 
+@@ -70,7 +70,7 @@ static int remap_sg(pte_t *pte, unsigned long addr, void *data)
+ #define EXPECTED_FLAGS (VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP)
+ 
+ #if IS_ENABLED(CONFIG_X86)
+-static int remap_pfn(pte_t *pte, unsigned long addr, void *data)
++static int remap_pfn(hw_pte_t *pte, unsigned long addr, void *data)
+ {
+ 	struct remap_pfn *r = data;
  
 -- 
 2.47.3
