@@ -1,50 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AE24B1466;
-	Thu,  3 Sep 2026 13:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2427A4B04A8;
+	Thu,  3 Sep 2026 14:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788443510; cv=none; b=aEzeVzro2GFX9/nJuEerruZDx0NvNaORt+skMEazaGnf20mdxktGYJfh7mmn7vAJna44nYnWiACOR5cyvbzR9L/7/aVTcqFEL9Ucpyvau37+HH5yAaCJLk5JKEkvtTUXGT8qQnLff3eukFZBRmzaXpMHgIthaphJnoHURxcc8aQ=
+	t=1788444344; cv=none; b=pSy93YTmnuYUVt4Kv8K9oqra8O2eZV8sdIFq/nESotc3MNFcZHVvBtHhSxYcKlu+wqTYx8IlJ2MLNGQqEHYWKFA76CSoV5zDj707+gjZZlWXlSm3UqBQEAi1tFX4l0PdEWrmZHCxU3a63SmJn0YwyFUXbDpcDsSmxFHsgqsgNns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788443510; c=relaxed/simple;
-	bh=UrJvtxD2K/cNA5cj0gFVfE4SA6Se455/gWGMNBHC5hs=;
+	s=arc-20240116; t=1788444344; c=relaxed/simple;
+	bh=H2exkOVXvIrD9p5uc4sqHT4/wXdbw8AY8xV+9VDCOEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kPzpjnfF+TMVZIlWLoHdP+Pu8pSbz2AcSiyglaws2NNZNqDb4PYJIJDUdv6lYU/T39kIsG0WqzHaJwAWT4n3v9vYeDN3r8BK2/JIr+ID5wyB9tk3h735Svmlof6LW7escTujZp4EfD4bA+tOiOCaEWJ55yI2GF2QVIPv52r6xds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VI4ZfLtx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q/cKgQSkmTGHnlamnr06GiBiSXaE+SSSgb5qBgYglCLPSC/gj71/i98CThjlxxKXiYK8U9pa1exn//6+tN73yRWYwQCAMLT/rixMIhv5UBEfJC5MH4ktjo5LtezfTFEF5oAjDf5SK/BIS4WB0UFHO+9eF4cVN1+aGow9VWo3MHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ckNGaMeG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VI4ZfLtx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8481F00AC4;
-	Thu,  3 Sep 2026 13:51:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ckNGaMeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D421F00A3F;
+	Thu,  3 Sep 2026 14:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788443492;
-	bh=wwn+e7XYFkZ2YAWRETWCdW/iWdxBQOPcNHMzT3rsYDo=;
+	s=k20260515; t=1788444333;
+	bh=MaD2aj64RBdEMELfyTFkH990wKoNoGi7GvA6hmcvB1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VI4ZfLtxMcJNWHtm0wcwWDXgJgZzfNxCwxI9IO9vDJNLh0Twh0damukA1JtIipw6E
-	 ZKOIFVAisNr1e3MRfEXV1OfrbaecwgayHobdHwSl8FYxKX1Cz1nMWmUIOyTgevolZr
-	 89+CshcRRQl1Ncp4IeqHF6iRBXBqYJAlCz5QNCO98saaPMNwDBgIwwEHKK2skaFih9
-	 POnfEHQ09qtF1fLeiIbWiKHpQ2+7xNpf1d2r1BWgp+yoDkIKPFNblENtQ8Gvr1O72E
-	 CywAHgqdv67tS9MPgQQYYfFAPQP26nu+rNUpepwrx3RU3RbN60xFwM/L4i4Xj2lrIn
-	 /85OQHGPBfEag==
+	b=ckNGaMeGbq4NUN+udET1ZeqZaP+BGvezF9qItzpVRqi1NymBYkzNSg86+L3OXPGkB
+	 EexP2DVFe5g98f91vY1sZHDg2Xrjipeliav9WcdTCsN3zRCdwABTgmM8MieUj9tfsp
+	 86ccDTkqUoMikZZId9aNy+KFjTUAqk/ybNomIzxkG0aAFm+GO08/LvmBdzxRYyR+SH
+	 e6tvxXoNGt9vheJJbfBxh9QgO+mYD84xk45nT2Uo5QWMB03U36BrL8nd1uMEyuDlDe
+	 yEkVZ/bucO/W7E7MNvQIMZAJ83Q/QiE73ZY/SMFmKvg9bgN+2R4fRecNLULJBlNtLV
+	 TAQjFgQCoQ5kg==
 From: SJ Park <sj@kernel.org>
-To: Lian Wang <lianux.mm@gmail.com>
+To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	stable@vger.kernel.org,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 0/4] mm/damon: fix misc bugs in kunit, quota goals and sysfs refresh_ms
-Date: Thu,  3 Sep 2026 06:51:19 -0700
-Message-ID: <20260903135120.98408-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH v2.1] mm/damon/core: fix false positive in damos_quota_is_full() when esz is zero
+Date: Thu,  3 Sep 2026 07:05:20 -0700
+Message-ID: <20260903140521.98604-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260903031345.82679-1-lianux.mm@gmail.com>
+In-Reply-To: <20260903124422.5340-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -54,33 +48,47 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu,  3 Sep 2026 11:13:28 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
+On Thu,  3 Sep 2026 20:41:48 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> Hi SJ,
+> On Wed, 02 Sep 2026 17:33:50 -0700 SJ Park <sj@kernel.org> wrote:
 > 
-> > Patch 1 fixes the DAMOS quota goals commit unit test to cover a
-> > mistakenly uncovered case.  Patches 2 and 3 fix the bugs in DAMOS PSI
-> > goal initialization and eligible_mem_bp online commit, respectively.
-> > Patch 4 fixes the bug in DAMON sysfs refresh_ms file handling.
+> > On Thu,  3 Sep 2026 06:31:38 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+[...]
+> First, I would like to clarify my intention to avoid any
+> misunderstanding.  My actual goal is to fix the semantic of the
+> qt_exceeds statistic, rather than necessarily changing the underlying
+> logic of damos_quota_is_full().
 > 
-> I reviewed and tested the integrated four-patch series in mm-new:
+> Currently, there is an issue with how qt_exceeds is incremented.  When
+> the quota is set very small, qt_exceeds increases frequently.  This
+> produces a statistical trend that looks almost identical to the
+> continuous increments caused by the Temporal Goal being achieved.
 > 
->   a20e38846efb..72dc8fdaae62
+> The original intent of introducing qt_exceeds is to let users easily
+> notice if the quota is too small.
 > 
-> The integrated commits had stable patch-ids matching the posted patches.
-> DAMON KUnit passed 42/42 tests.  I also ran test-only eligible_mem_bp nid and
-> two-kdamond refresh-isolation regression cases; they passed 42/42 and 43/43
-> tests, respectively.  Both test-only changes were then removed and the
-> worktree returned clean at the unchanged series tip.
+> Commit Messages [1]:
 > 
-> These were functional UML KUnit tests.  The fixes look good to me.
+>     mm/damon/schemes: account how many times quota limit has exceeded
 > 
-> For the series:
+>     If the time/space quotas of a given DAMON-based operation scheme is too
+>     small, the scheme could show unexpectedly slow progress.  However, there
+>     is no good way to notice the case in runtime.  This commit extends the
+>     DAMOS stat to provide how many times the quota limits exceeded so that
+>     the users can easily notice the case and tune the scheme.
 > 
-> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
-> Tested-by: Lian Wang <lianux.mm@gmail.com>
+> However, under the current behavior, users are forced to manually ignore
+> or filter out the qt_exceeds increments that occur after the Temporal
+> Goal is achieved.  This adds an unnecessary burden to the users and
+> contradicts the core goal of making it "easy" for them to tune the
+> scheme.
 
-Thank you for your review and test, Lian!
+Still I feel the problem is unclear.  Why the users need to manually ignore or
+filter out the increments under what situation?  Knowing specific and detailed
+case would be helpful.  Are you or some people you know doing that and feeling
+it is too much?  If so, what is the real use case?  For what purpose and how
+DAMON is being used?  Why and how the ignorance of qt_exceeds is being done and
+how painful it is?
 
 
 Thanks,
