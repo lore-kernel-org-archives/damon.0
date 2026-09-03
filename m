@@ -1,46 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E88495041;
-	Thu,  3 Sep 2026 13:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AE24B1466;
+	Thu,  3 Sep 2026 13:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788443391; cv=none; b=A+ePJpVi063ZzwZgzXWr+a9Aarkk1rdU+oNn5F1fYIY5lONikaP9IaYUfvo8CnB6Ve0LK9Vr+YU+9yu/rMIGLuz6THi6hcKaT0aSMDawlWQx/AJC9Hb+AZO14gx5EM8+4u25xImFxuIOGM8+B0h6ccMnBm/C7x1IqR0czQvAtVk=
+	t=1788443510; cv=none; b=aEzeVzro2GFX9/nJuEerruZDx0NvNaORt+skMEazaGnf20mdxktGYJfh7mmn7vAJna44nYnWiACOR5cyvbzR9L/7/aVTcqFEL9Ucpyvau37+HH5yAaCJLk5JKEkvtTUXGT8qQnLff3eukFZBRmzaXpMHgIthaphJnoHURxcc8aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788443391; c=relaxed/simple;
-	bh=mzr2tSXvaH7QytRlE1diPlsz+ZNOf69Bgld2/cPQ4t8=;
+	s=arc-20240116; t=1788443510; c=relaxed/simple;
+	bh=UrJvtxD2K/cNA5cj0gFVfE4SA6Se455/gWGMNBHC5hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNugDX0lIShJAVghLZc1r6FDZ9wdHRx+NRKFB8faLUEBEb/uLBldoeJ7u68S/7konKElyeu7gzXnQbv+rAiCchJjhfo61eQq2cjLGHUwTraoMROzYu2iIiKPDoAJdhhgMz9NiN+0ClpNpzoybkPEIjR3wj5CgK0zl316cmkQ3Vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FaeBrCsC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kPzpjnfF+TMVZIlWLoHdP+Pu8pSbz2AcSiyglaws2NNZNqDb4PYJIJDUdv6lYU/T39kIsG0WqzHaJwAWT4n3v9vYeDN3r8BK2/JIr+ID5wyB9tk3h735Svmlof6LW7escTujZp4EfD4bA+tOiOCaEWJ55yI2GF2QVIPv52r6xds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VI4ZfLtx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FaeBrCsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077FC1F00ACA;
-	Thu,  3 Sep 2026 13:49:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VI4ZfLtx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8481F00AC4;
+	Thu,  3 Sep 2026 13:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788443380;
-	bh=N1gBpF65Vg6Gyw/Zq6rh5fI5TdbcUPlG3RhMgbn70b8=;
+	s=k20260515; t=1788443492;
+	bh=wwn+e7XYFkZ2YAWRETWCdW/iWdxBQOPcNHMzT3rsYDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FaeBrCsCT6Bl7pLBp0xGDbAO+DYJ1i8KLk0r28Fs2BQlmHWX95+u0w7z1rZFWtt9a
-	 bzf22vPAdGdjddw2VNxD6l6iA8fWPC7C8ChSYOWN6yWRu4+I3RrP1PsYUuuHqkWBbq
-	 QxM94vcd7FK5QCmetDCCNmZAPbD1JfYCwo23k1OHDwhUZO3j2acgBvsPfLX/1tw+Pz
-	 2WP8nPz5hfbD6RcBuWJYmuUyxsrfrquTRa7a5P8Krg7mQiQlc4Mju94kRehlcNY5VA
-	 n7MX0B2q3uPo/lhZV3xp5pshTus3KAZCX/mrU4i87RNYTjQTVDMQXHKXkWhGIQ+UTR
-	 LpX/YBzzGg3FQ==
+	b=VI4ZfLtxMcJNWHtm0wcwWDXgJgZzfNxCwxI9IO9vDJNLh0Twh0damukA1JtIipw6E
+	 ZKOIFVAisNr1e3MRfEXV1OfrbaecwgayHobdHwSl8FYxKX1Cz1nMWmUIOyTgevolZr
+	 89+CshcRRQl1Ncp4IeqHF6iRBXBqYJAlCz5QNCO98saaPMNwDBgIwwEHKK2skaFih9
+	 POnfEHQ09qtF1fLeiIbWiKHpQ2+7xNpf1d2r1BWgp+yoDkIKPFNblENtQ8Gvr1O72E
+	 CywAHgqdv67tS9MPgQQYYfFAPQP26nu+rNUpepwrx3RU3RbN60xFwM/L4i4Xj2lrIn
+	 /85OQHGPBfEag==
 From: SJ Park <sj@kernel.org>
-To: Kunwu Chan <kunwu.chan@gmail.com>
+To: Lian Wang <lianux.mm@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	Kunwu Chan <kunwu.chan@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	stable@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
 	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH 3/4] mm/damon/core: copy nid for eligible_mem_bp damos quota goal commit
-Date: Thu,  3 Sep 2026 06:49:32 -0700
-Message-ID: <20260903134932.98268-1-sj@kernel.org>
+Subject: Re: [PATCH 0/4] mm/damon: fix misc bugs in kunit, quota goals and sysfs refresh_ms
+Date: Thu,  3 Sep 2026 06:51:19 -0700
+Message-ID: <20260903135120.98408-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260903084547.960584-1-kunwu.chan@linux.dev>
+In-Reply-To: <20260903031345.82679-1-lianux.mm@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -50,29 +54,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu,  3 Sep 2026 16:45:45 +0800 Kunwu Chan <kunwu.chan@gmail.com> wrote:
+On Thu,  3 Sep 2026 11:13:28 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
 
-> On Tue,  1 Sep 2026 17:27:22 -0700 SJ Park <sj@kernel.org> wrote:
-[...]
-> > This issue was discovered [1] by Sashiko.
-> > 
-> > [1] https://lore.kkernel.org/20260827045035.94611-1-sj@kernel.org
-> 
 > Hi SJ,
 > 
-> The fix is consistent with the other node-based quota metrics. I also 
-> checked that damos_get_node_eligible_mem_bp() directly uses goal->nid 
-> when calculating the current value.
+> > Patch 1 fixes the DAMOS quota goals commit unit test to cover a
+> > mistakenly uncovered case.  Patches 2 and 3 fix the bugs in DAMOS PSI
+> > goal initialization and eligible_mem_bp online commit, respectively.
+> > Patch 4 fixes the bug in DAMON sysfs refresh_ms file handling.
 > 
-> One minor typo: the [1] has an extra k (kkernel should be kernel).
-
-Nice catch, thank you Kunwu!  Andrew, could you please fix this when you pick
-this series up?  Let me know if you prefer reposting the series with the fix.
-
+> I reviewed and tested the integrated four-patch series in mm-new:
 > 
-> Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+>   a20e38846efb..72dc8fdaae62
+> 
+> The integrated commits had stable patch-ids matching the posted patches.
+> DAMON KUnit passed 42/42 tests.  I also ran test-only eligible_mem_bp nid and
+> two-kdamond refresh-isolation regression cases; they passed 42/42 and 43/43
+> tests, respectively.  Both test-only changes were then removed and the
+> worktree returned clean at the unchanged series tip.
+> 
+> These were functional UML KUnit tests.  The fixes look good to me.
+> 
+> For the series:
+> 
+> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+> Tested-by: Lian Wang <lianux.mm@gmail.com>
 
-Appreciate all the reviews, Kunwu!
+Thank you for your review and test, Lian!
 
 
 Thanks,
