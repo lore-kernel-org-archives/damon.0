@@ -1,63 +1,63 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FCB2417D1
-	for <damon@lists.linux.dev>; Thu,  3 Sep 2026 02:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7510B34751F
+	for <damon@lists.linux.dev>; Thu,  3 Sep 2026 02:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788400827; cv=none; b=rNg78hhXzb8SHZceD80iJgVwvWjGyupl5PaJJge7zniehLA4v/WMzDrWdbtub0oZFV9kzbpDnE/J79E3QaRURs1uDPkuBZ3kEqwY45G4LdjuouwYbvk0kNYVcK8AoOIG/yrPLjvuDwiTwJrDsyRNwmZ575x4haA08WyNKJnr/BM=
+	t=1788402291; cv=none; b=tkej03m3YOYdSeVGPju1eV7MyLsyFQHligkk4d0NeAVu9mfxKqAFwZ/GjzD6sMVB7ELms0ssiEaflqWTeDuLN+k6c6eKUglAV2MpdmRD/2p6aLIZKhSe6kFIcEeOthDgbJ6g64o8I2DMbalPL7yYlsJDWd18iaDQGAlj8AMC0iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788400827; c=relaxed/simple;
-	bh=/CP95G0PR3H0g0ykJcTxUmn6njWoypYNANPsfaXRf3M=;
+	s=arc-20240116; t=1788402291; c=relaxed/simple;
+	bh=iC7and9h7b1SIUvtmbF0bA5C1kwIySKrp0zXHTwCAuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hw5LgIg2O5TGTbUHAzUkXuTr80bCMDCRkVnSwOYSiQNeNHVEenl6PdsHHnzuXum9bO366JEIDghn5vb/Nrp3K9InJSjAlS40EBT48Kblm9epVhXA5lbwAEDDqQDZO53uCeF0XgWnuJjJT3oTkHWU6z5E++qMS78r3zcV2Xf80zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MEzJUyOe; arc=none smtp.client-ip=209.85.214.174
+	 MIME-Version; b=LzbM0y4kPPAs7J1AiKNTx9KcCrfdcXTfJHuhMyMvPZeUMHxUp4ONKbeEnuyDGdWDUlztpbpgK031+iMkjoIahrYGWbXiEAYgb6vqwNpFCErFEXFgDuC7RpwWmsKg31IIvOtPiE8665zc7zqkZprvevgPvWTzXjgqJa0bjm9X7+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lnsacEce; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MEzJUyOe"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2d72ae08fa1so16217925ad.2
-        for <damon@lists.linux.dev>; Wed, 02 Sep 2026 19:00:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lnsacEce"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-cc1cf287ef8so1717252a12.3
+        for <damon@lists.linux.dev>; Wed, 02 Sep 2026 19:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788400825; x=1789005625; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1788402284; x=1789007084; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ozJ9M4cDK/IvV3gntKv2Fb/293HION6/QD0PdVWp1Zs=;
-        b=MEzJUyOeEOyjzAIWZI4SxYgemsGufTsLEZbZC0S/DjsXf+M3DOiUHcAyjiCMli6zxu
-         NKlChK52I6SSXD3DhGEtTnePe/uJfnU7RhPjD4Cq+jkHzHuQ+xWNDvjLNaeshFk2kzzK
-         490rZhXYSmtE/zBSo6O7oIOSYSqR+MgPdy37eIuMhOQPdz8ZNOu+i06d2fhoZJEs69u4
-         NPHzR5ltZKqD4XreqK7u8EM7wJCBjExcPpsm2mjV508yNNls6LZt0L8v6uVLfiq56ZTZ
-         EGOUJsQ47AB0jzbX17ngnNJAuQNPGnenEL1LeI8h0mzrryQaDxygDOQPIi2nfMj6Ch5r
-         MngA==
+        bh=nEnLbsLjH8lfXnlpNq4YY44i+y0cC+hZ66l4ewIS6QE=;
+        b=lnsacEceJZ79JDy5RibakFKVujI0ePg8K4LnbqC+yvxHJzBmY2bMSYvoek7TO+xMhE
+         Y7Ok/Qdn4dSzOlsJv/6T5YNIR3oWpdpRkP8fnk2X/UUzjXNOgBPBMCv5puYQEFgKupVa
+         JmF2E9E6lGGkeB6h8iK0iK02istL8pjHFGZ865rTOAskcCvlo4G3fApagCwEUu+DCxtZ
+         sr3DQvcE9+B8fzeF2sKtv/uyK1/N+y3l1Yo3YuwsrUuejZV/B8CYUOgehCnFJ/1U8kBh
+         hNUrDPAogdv6qXHTEHNJmMx3jo1ruFTma2yO/Wcspud37QDXdWQB/fpzJHWgNqfe0ysz
+         ns8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788400825; x=1789005625;
+        d=1e100.net; s=20251104; t=1788402284; x=1789007084;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ozJ9M4cDK/IvV3gntKv2Fb/293HION6/QD0PdVWp1Zs=;
-        b=AuMGwgGZdrfepHiUyetaPigMyS6B/XrLp5Sc7GGwjLrSvlswHzF/3JASDpxsFccOiZ
-         PwWL+Hq3YB66R8p9qB1QXtRzQ1U5WZ8wMfmcNz7Noye9uMidd7fJBVl1hgAa1Rbs5ZlO
-         ngYpZuCc1dAJX4fUB5LEcAUbegiAdZ5FypWmALMHz0dZ0gujTr5jTCHbeSwtAAoQMU4y
-         bdHrncUbt6KXPxIt5dAMtP6b2cyhdF83kxqUcT9ouUC0ugnJnrw03GVX9INsFLb2g8YJ
-         R3FbwwD9fRAEhsJEZ4EkTaWNImZNw0P2RNI+brj7SJ38nFdCAx4mq/5y5hMmTxVqGZIe
-         seNg==
-X-Forwarded-Encrypted: i=1; AKwUvBzUaF0zkRCk1zAtvk+w8hw97eR0WImGuOSwzdJ6COtME1Br/opg6xAEWgNoUk3cNW50CnJywA==@lists.linux.dev
-X-Gm-Message-State: AFuF++m1NIsbmMXpYHfNr7IB9+WNlvch1nS0h65aEIaBNOzznWpaQi3f
-	FK+QLB1TwdGJ0stRWmfpoLnVhwOmTr9LjSKwatUelISOc2o/01HcFmvVCekFnS1+
-X-Gm-Gg: AYBFou2y62/R75BrTnnkEAPokJMylGfRc/f76udkppLySDRiOpWRXXJj/76LrM8WaDo
-	eULksdEYktknMQm5XGWr4ZEaPx7VRz6EMR41bU9qdY+vN63DcBUsWS7G9OpYoLEDlEmdqbRVaev
-	5t35n224U4ft1MtRFi02YUIQSQ315S0jnTEnrftXcqELg19NInQ5Hmvncz3kCHH/E25ZjdMlVgh
-	Xzl/KZL5GokbCpcPhYmfbrEojWQyC7/nTNJirYcmDKIAwo4mbpbhN3fEp3DZeRPJeTU0NIpquoY
-	TDDorbaXJkOqvkcGWXQt6J2rd4bWHEmveYgURBBg1StuHwpwBXLGOpXGaRe910XT7AhmpQCInCz
-	OCJVHL3k1i+NWM+j2pwaO5uRc2aCCmmS/kfpLkyah2p4EqTTBceMykXTeOIxJz2pr0HTRX5x7Gw
-	vMuTTedPgPnNsX11NE7eO4+hZw4g3YOmmZ1bsIglymMLWOtoVKrGhnJfby/0uaiOGSso/1lA==
-X-Received: by 2002:a17:90b:5107:b0:398:e6b6:acc1 with SMTP id 98e67ed59e1d1-39aee066eaamr13504509a91.15.1788400824555;
-        Wed, 02 Sep 2026 19:00:24 -0700 (PDT)
+        bh=nEnLbsLjH8lfXnlpNq4YY44i+y0cC+hZ66l4ewIS6QE=;
+        b=YbuKHbZD0PPKp9CzuSEEsiC2AGsuERKhut8TxH02ls7q8egieVRqGXoVrEU2SXYIfm
+         u9/GCtFPsXHLDTJoo9vAmH06mwcKNoMgxbzMTofiacLAmrP5pLy4ZssGH+F8UJeg6+NE
+         J5fVMcaTKlYWdpx8nVQl50B4irwfbaNHiMLhCfLLKjCkBceRlkry9M12tMKru7azvieB
+         iVdVM6jyTcjxpcC2KNKNl023gLuvHtp0oVjXSnTr4q7b5KiKpkweadDZcrwPMMnZThIs
+         AbREYyPeRI4oiDMpW0VNsM+HJV5u4vO4n4POPxRz1lFuYE+arbdKs7jOPNY8zsPZq82h
+         S19Q==
+X-Forwarded-Encrypted: i=1; AKwUvByNRDFuIt3y5Y8G2FHuvS+sDCNL75xI1MdU6qSUA5mavTT35V+VqwVynevQMknt9dboCIRHcA==@lists.linux.dev
+X-Gm-Message-State: AFuF++nymS9cr5EhfRqLtk8VhufO9NJfPj8sw/s5VRk2XurTcz+J4YnN
+	WVoHX6FW40ZQre5FCAkJXx3/cbNdx6pv06N/2vrwN380xBwvvYg95sGJ
+X-Gm-Gg: AYBFou2imEwNKgsTji5Y22kGYrQPMucLT8hxEvacSAockTSLQLXHt5QB8tvtgu13p8d
+	gZYaV+0O5ZlOn/n662LLbRPjXAzIuWdINyV39LCQY1K/FDnU4ys0EVA0oAUoSIuGjl8MvKgpD+M
+	RNF0lXD/vfTkwKJqbPZ/d+uPqcZoUqbhRr84rrdIb770w/mQsuJntLMV8bE2WJP0/55LPZhcZl8
+	E+LulpAwFQcVpWDX1/T8gVpmq4L7mm0IHMLUJFVqiQGwcHN2qGOryXeYLppbUX82vd266uyFPj3
+	34q7TUhI4UlR61hUIWycYLlkfbOVa4wywAIV+eW9kdCVSA/iYo1XGcwPtgdZLvJRl2ZIU9+nHk/
+	kRSZj+ECDWXqWAqJN0nbW53fvEyC8E/Hx22H1zmZ1Ilm+3CVSq8g6tcvwD28kn6ic+AIPxjrP8y
+	sppHuAlCR5tR0t1FV4ZMtNWdAuHdGwZNtdUEYNXX5e6sRqaruMQee6eiJHvWw=
+X-Received: by 2002:a17:90b:5384:b0:398:ceef:edbd with SMTP id 98e67ed59e1d1-39aee1bbae0mr14243570a91.18.1788402283444;
+        Wed, 02 Sep 2026 19:24:43 -0700 (PDT)
 Received: from gmail.com ([185.220.238.35])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b08ce4221sm2179825a91.14.2026.09.02.19.00.21
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39b08766a2dsm2107662a91.15.2026.09.02.19.24.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Sep 2026 19:00:24 -0700 (PDT)
+        Wed, 02 Sep 2026 19:24:43 -0700 (PDT)
 From: Kunwu Chan <kunwu.chan@gmail.com>
 X-Google-Original-From: Kunwu Chan <kunwu.chan@linux.dev>
 To: SJ Park <sj@kernel.org>
@@ -67,11 +67,11 @@ Cc: Kunwu Chan <kunwu.chan@linux.dev>,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
 	Kunwu Chan <kunwu.chan@gmail.com>
-Subject: Re: [PATCH 01/12] mm/damon/core: use damon_nr_samples_per_aggr() for max merge threshold
-Date: Thu,  3 Sep 2026 10:00:08 +0800
-Message-ID: <20260903020012.4160595-1-kunwu.chan@linux.dev>
+Subject: Re: [PATCH 03/12] mm/damon/vaddr: remove a debug message
+Date: Thu,  3 Sep 2026 10:24:22 +0800
+Message-ID: <20260903022431.74074-1-kunwu.chan@linux.dev>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260902054747.99370-2-sj@kernel.org>
+In-Reply-To: <20260902054747.99370-4-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -81,45 +81,64 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue,  1 Sep 2026 22:47:34 -0700 SJ Park <sj@kernel.org> wrote:
+On Tue,  1 Sep 2026 22:47:36 -0700 SJ Park <sj@kernel.org> wrote:
 
-> kdamond_merge_regions() open-codes max region merge threshold
-> calculation.  What it does is fundamentally the same as
-> damon_nr_samples_per_aggr() but missing a few corner cases.  The
-> unhandled corner cases should be rare and make only a negligible level
-> of monitoring results degradation.  But having the inconsistency could
-> increase future maintenance burden.  Use the dedicated function.
+> There is a debug message in the DAMON virtual address space operation
+> set.  It has not really been used in a meaningful way for the last few
+> years, though.  Remove it.
 > 
 > Signed-off-by: SJ Park <sj@kernel.org>
 > ---
->  mm/damon/core.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  mm/damon/vaddr.c | 16 +++-------------
+>  1 file changed, 3 insertions(+), 13 deletions(-)
 > 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index f748acd6bbd5b..846da6df5b552 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -3509,8 +3509,7 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
->  	unsigned int max_thres;
->  	bool count_age = true;
+> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> index c8c32b2ae0402..f884d3f78f30a 100644
+> --- a/mm/damon/vaddr.c
+> +++ b/mm/damon/vaddr.c
+> @@ -189,22 +189,12 @@ static int damon_va_three_regions(struct damon_target *t,
+>   *   <BIG UNMAPPED REGION 2>
+>   *   <stack>
+>   */
+> -static void __damon_va_init_regions(struct damon_ctx *ctx,
+> -				     struct damon_target *t)
+> +static void __damon_va_init_regions(struct damon_target *t)
+>  {
+> -	struct damon_target *ti;
+>  	struct damon_addr_range regions[3];
+> -	int tidx = 0;
 >  
-> -	max_thres = c->attrs.aggr_interval /
-> -		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
-> +	max_thres = damon_nr_samples_per_aggr(&c->attrs);
+> -	if (damon_va_three_regions(t, regions)) {
+> -		damon_for_each_target(ti, ctx) {
 
-The helper replacement makes sense to me, and it also keeps 
-the corner-case handling centralized.
-
+Thanks for the cleanup. The debug message was the only user of
+ctx here, so the signature cleanup follows naturally.
 
 Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
 
 Thanks,
 Kunwu
 
-
->  	while (true) {
->  		nr_regions = 0;
->  		damon_for_each_target(t, c) {
+> -			if (ti == t)
+> -				break;
+> -			tidx++;
+> -		}
+> -		pr_debug("Failed to get three regions of %dth target\n", tidx);
+> +	if (damon_va_three_regions(t, regions))
+>  		return;
+> -	}
+>  
+>  	damon_set_regions(t, regions, 3, DAMON_MIN_REGION_SZ);
+>  }
+> @@ -217,7 +207,7 @@ static void damon_va_init(struct damon_ctx *ctx)
+>  	damon_for_each_target(t, ctx) {
+>  		/* the user may set the target regions as they want */
+>  		if (!damon_nr_regions(t))
+> -			__damon_va_init_regions(ctx, t);
+> +			__damon_va_init_regions(t);
+>  	}
+>  }
+>  
 > -- 
 > 2.47.3
 > 
