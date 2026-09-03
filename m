@@ -1,197 +1,71 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36CF2488209
-	for <damon@lists.linux.dev>; Thu,  3 Sep 2026 10:32:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB75E48381D;
+	Thu,  3 Sep 2026 10:35:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788431536; cv=none; b=CLkQV1SlBUlQdntR9qOchdxBeOA2JHk/kGQiwb4v1KsgKyRk1TB3lvVtCRMZK8Dn2CZLIOWHGidd3D8GpSo5BWeZqjrVOtaKTKh4n5EtFXxXCZN2Q2k0yZPJHcQQ+hzZFHSwL30DpBuJJR9Pg07Vd1IxJrLwgL4WAs0BPF8SPIQ=
+	t=1788431732; cv=none; b=pAKeZn/tNnOcBmuStTG2Ufxlyj+M9Q0q9kG6ZCCvzlTqu8Y137FnRcLBtp0PtrTU/MTtLagYydz5rDBbFXEWm8MyhQusJYv3Xaa9k8x6cb5eBrC4hzSburpEQ3h3xOHcI8snb4TABgBnrMGRLzXuptc7xXwM2EgtMRycmBhlG2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788431536; c=relaxed/simple;
-	bh=jnhKOvqXNxavrVkvy1TrIz2ZFbREXQCKHvvjfSTHsrk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agKFxhbtvKdR/hCxGicDKvmYxtctUs70Ww5qcXB/73U0lO9ozkHwCqiJd3lFuzmg1mnje84KEgj/iY9qCmyFAr6eP2cQA/ahEIreT4SN2IIKjshFP7MiSFzRiEGXxdMRtU6BfzLRNHxpmI75FeiS9rEdKpZQVImwbAM5s7CEziA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=TqdJTvjS; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1788431732; c=relaxed/simple;
+	bh=oupvZIQLRj2F8pwTGPPDeOgOmjETvsOL7Smn8U24vK4=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Xq3DFFytKhKFFt4QAAfwhNPnNTdOFi9iWdw6VwyyECqpuG6hX+D+AFC/xkRCmANa4yjf2CO1OSQ2gFCW/xvyRoHHuBAv818AQ794KHB2i9QVEIC2ylY5ihvNd24f3TGoHsTHhcjqzI7vvioU7Ac5VUmfCNJIoxUNDyoZdSKINAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hvl8VNPz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="TqdJTvjS"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5621D165C;
-	Thu,  3 Sep 2026 03:31:59 -0700 (PDT)
-Received: from e142334-100.cambridge.arm.com (e142334-100.cambridge.arm.com [10.2.198.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id E7E333F673;
-	Thu,  3 Sep 2026 03:31:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1788431523; bh=jnhKOvqXNxavrVkvy1TrIz2ZFbREXQCKHvvjfSTHsrk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TqdJTvjSMBL/Fecpzq69xnSc8TtbMviOhHJH0tSUQhuwn0beTUse/c0M5IvEcZQBk
-	 ZWuuBe3peOseXoJxaSyHvNwu+SsvzmYsY5yXAGPVWpK8KMU1ZQ4B3t4mAKW1iUi0QH
-	 u2Yb1Uhkv1kKR+XFEs06dtpTzXB1MMV4rnuygP5E=
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
-To: Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Dimitri Sivanich <dimitri.sivanich@hpe.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Nick Piggin <npiggin@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	David Hildenbrand <david@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Chris Li <chrisl@kernel.org>,
-	Kairui Song <kasong@tencent.com>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Jan Kara <jack@suse.cz>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Dennis Zhou <dennis@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Christoph Lameter <cl@gentwo.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	ziy@nvidia.com,
-	pfalcato@suse.de,
-	agordeev@linux.ibm.com,
-	ryan.roberts@arm.com
-Cc: Muhammad Usama Anjum <usama.anjum@arm.com>,
-	linux-kernel@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	linux-parisc@vger.kernel.org,
-	xen-devel@lists.xenproject.org,
-	linux-mm@kvack.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-arch@vger.kernel.org,
-	kasan-dev@googlegroups.com,
-	linux-trace-kernel@vger.kernel.org,
-	bpf@vger.kernel.org,
-	linux-perf-users@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: [PATCH v2 8/8] xen: use hw_pte_t for PTE range callbacks
-Date: Thu,  3 Sep 2026 11:30:00 +0100
-Message-ID: <20260903103002.1091859-9-usama.anjum@arm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260903103002.1091859-1-usama.anjum@arm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hvl8VNPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06971F00A3D;
+	Thu,  3 Sep 2026 10:35:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1788431722;
+	bh=oupvZIQLRj2F8pwTGPPDeOgOmjETvsOL7Smn8U24vK4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Hvl8VNPzvhooruZwipX6WzNUkFFm/74nfalux8huERIDwn31oavj0fOD2RPJntxJc
+	 gDipr9gn95yhIILgLp8MYQM1fB0jKwMWAl8q/iu1ab+IhFJELc2TLY6qEw6iiKODGo
+	 c6uLwt+wogqGTOWkxp0nUde21vklI29KvilJPZh90knTaHzTEqQtUJP42pddlwVqLD
+	 KnSVvMeYHqRWbKaad4sV7+AJ4ekNqd1PKAQfrkw3u21et7bDNnyG2goL/ehRv0nc+D
+	 k8wTfNJ5VCmwlSN7WilzGLnj716b5S5WBPosLIqBOpa1sAiFrfsQBUVJ9BzBB7FtAO
+	 Y3vURHxFO5Sjg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 2/8] mm: rename pointers to software PTE values as
+ ptentp
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Muhammad Usama Anjum" <usama.anjum@arm.com>
+Cc: intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, damon@lists.linux.dev, linux-perf-users@vger.kernel.org, bpf@vger.kernel.org, linux-trace-kernel@vger.kernel.org
+In-Reply-To: <20260903103002.1091859-3-usama.anjum@arm.com>
 References: <20260903103002.1091859-1-usama.anjum@arm.com>
+ <20260903103002.1091859-3-usama.anjum@arm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 03 Sep 2026 10:35:21 +0000
+Message-Id: <20260903103521.A06971F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Generic PTE range and remapping helpers now pass pointers to PTE table
-storage as hw_pte_t *. Update the Xen callbacks to match those interfaces.
+> Some interfaces use pte_t * for a software PTE value rather than for an
+> entry stored in a PTE table. These pointers must remain pte_t * when
+> pointers to PTE table storage are converted to hw_pte_t *.
+>=20
+> Rename these parameters in the install_pte callback,
+> write_protect_page(), and guard_install_set_pte() to ptentp. The later
+> Coccinelle conversion skips pointers named ptentp, allowing it to convert
+> the remaining PTE table pointers without changing these interfaces.
+>=20
+> Some functions already use ptentp for such pointers, including:
+> - madvise_folio_pte_batch()
+> - folio_pte_batch_flags()
+> No need to rename them.
+>=20
+> This patch only renames parameters and makes no functional change.
+>=20
+> Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 
-Keep software PTE values as pte_t and continue to access them through the
-existing PTE helpers. This is required when Xen is built for an
-architecture that selects the distinct hw_pte_t wrapper.
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
----
-Changes since v1:
-- Use software PTE value terminology.
-
-Changes since RFC v1:
-- Clarify why the callback conversion is required after architecture
-  opt-in.
----
- drivers/xen/gntdev.c               | 2 +-
- drivers/xen/privcmd.c              | 2 +-
- drivers/xen/xenbus/xenbus_client.c | 2 +-
- drivers/xen/xlate_mmu.c            | 4 ++--
- 4 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/xen/gntdev.c b/drivers/xen/gntdev.c
-index 1dcc4675580ed..b013bcad99b5b 100644
---- a/drivers/xen/gntdev.c
-+++ b/drivers/xen/gntdev.c
-@@ -301,7 +301,7 @@ void gntdev_put_map(struct gntdev_priv *priv, struct gntdev_grant_map *map)
- 
- /* ------------------------------------------------------------------ */
- 
--static int find_grant_ptes(pte_t *pte, unsigned long addr, void *data)
-+static int find_grant_ptes(hw_pte_t *pte, unsigned long addr, void *data)
- {
- 	struct gntdev_grant_map *map = data;
- 	unsigned int pgnr = (addr - map->pages_vm_start) >> PAGE_SHIFT;
-diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
-index 7cfc28f1bb86f..e724cc053e264 100644
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -1658,7 +1658,7 @@ static int privcmd_mmap(struct file *file, struct vm_area_struct *vma)
-  * on a per pfn/pte basis. Mapping calls that fail with ENOENT
-  * can be then retried until success.
-  */
--static int is_mapped_fn(pte_t *pte, unsigned long addr, void *data)
-+static int is_mapped_fn(hw_pte_t *pte, unsigned long addr, void *data)
- {
- 	return pte_none(ptep_get(pte)) ? 0 : -EBUSY;
- }
-diff --git a/drivers/xen/xenbus/xenbus_client.c b/drivers/xen/xenbus/xenbus_client.c
-index 27682cb5e58ab..387f97a555594 100644
---- a/drivers/xen/xenbus/xenbus_client.c
-+++ b/drivers/xen/xenbus/xenbus_client.c
-@@ -749,7 +749,7 @@ int xenbus_unmap_ring_vfree(struct xenbus_device *dev, void *vaddr)
- EXPORT_SYMBOL_GPL(xenbus_unmap_ring_vfree);
- 
- #ifdef CONFIG_XEN_PV
--static int map_ring_apply(pte_t *pte, unsigned long addr, void *data)
-+static int map_ring_apply(hw_pte_t *pte, unsigned long addr, void *data)
- {
- 	struct map_ring_valloc *info = data;
- 
-diff --git a/drivers/xen/xlate_mmu.c b/drivers/xen/xlate_mmu.c
-index 8efd7b55223fb..d7244f9f9a545 100644
---- a/drivers/xen/xlate_mmu.c
-+++ b/drivers/xen/xlate_mmu.c
-@@ -93,7 +93,7 @@ static void setup_hparams(unsigned long gfn, void *data)
- 	info->fgfn++;
- }
- 
--static int remap_pte_fn(pte_t *ptep, unsigned long addr, void *data)
-+static int remap_pte_fn(hw_pte_t *ptep, unsigned long addr, void *data)
- {
- 	struct remap_data *info = data;
- 	struct page *page = info->pages[info->index++];
-@@ -269,7 +269,7 @@ struct remap_pfn {
- 	unsigned long i;
- };
- 
--static int remap_pfn_fn(pte_t *ptep, unsigned long addr, void *data)
-+static int remap_pfn_fn(hw_pte_t *ptep, unsigned long addr, void *data)
- {
- 	struct remap_pfn *r = data;
- 	struct page *page = r->pages[r->i];
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260903103002.1091=
+859-1-usama.anjum@arm.com?part=3D2
 
