@@ -1,53 +1,72 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F67E48EBE8;
-	Thu,  3 Sep 2026 10:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6AB449EB8;
+	Thu,  3 Sep 2026 10:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788432360; cv=none; b=urm8SkBC3O897YoB6fWloeEmH8d4Ov3nH5bm/718t7rNtT4dynXL+v2JTiwoWfkxOt8cSNOYiYlYFbY/KGoH4TmX9bpwiE1rPpn091c2x3oXtlWgXGPOQtEGEEZCvoKV/ccdIfTPqQIGJ9U0rXws5LZ4DwA6an9sc/wzVCXaoI0=
+	t=1788432530; cv=none; b=GtdM3Jjh4OeduTG4H4ub08L5n5Gm8d5zYHhoSxwty+HEyG1cttM89xSlNiV40omB3WcR9rRw6E7r5blll/sqcMJNt4KYe1pf7QoC8co7BKmI1p9ll/T/mvOeRMAGxhCAO6FbRulbG7puwvpqYA/jZKjul2uCnqSA14Y4knoFqoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788432360; c=relaxed/simple;
-	bh=C0oL3UqeyZdGOSjmzc4EZnL/cchO/VVWF0NIt1FY0P0=;
+	s=arc-20240116; t=1788432530; c=relaxed/simple;
+	bh=8GGHXpoinHMF8S3XF+nIIttC4DJt7cPH2zOWSyjOLMk=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=dIloGZyXdz8SARbFOQgqfHFljaU5cSnoqawVUnmblRcaA/sCIp9yHT+35ndZrLun+ooRdvjAb4UueGsQ2AS46L0CecM8ZcTisKMN7KsGxxNPequjTv10dq7aSDDVmL4AdGsceyhqetCiYToS+5ZXnS2NdcM50zPSi0CDKRS/I30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R8HsYZ4W; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=S922WA+54SKq3SzCdWWhhx/5BEC9gyXCwJ9hVzC2AEII1AzpiQO3qJsGQ8ATnXa+cK9cIuP0ZadTeuRo1zlXCvY70+gFvWOv02G2GdhyCoXAE8SyzBVk9kJxifX4W1Z5xMJhdPHzi3zhActj8G+TMLJOwq1UT2kQpfHEZdGwrbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D0p67jG8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R8HsYZ4W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBE51F000E9;
-	Thu,  3 Sep 2026 10:45:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D0p67jG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF221F000E9;
+	Thu,  3 Sep 2026 10:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788432358;
-	bh=C0oL3UqeyZdGOSjmzc4EZnL/cchO/VVWF0NIt1FY0P0=;
+	s=k20260515; t=1788432528;
+	bh=8GGHXpoinHMF8S3XF+nIIttC4DJt7cPH2zOWSyjOLMk=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=R8HsYZ4W8Z1zqOJBRdk6tPXXobFFOVhpamfriWZn7izV417VMmiZ4zpB4ugB8H4NK
-	 Pm+4KLtdGoRwCNN3oVzK6gKH35pgwdJo9yXIG2j9qJUJ61xrsPn2WVyz3Yjsxct+Kg
-	 Zkvc+s/9XWDxLl5ciRcEr5YOilmyAlntXUCsYdTXT/ycMR+OfY8/vZL4r9hECSGCaK
-	 N9BytSGfHr8wKhYt6KI25aMiJI3w7qovCflpIV87X157CHhb7EbMzXmSAMok+D0O76
-	 6GKCDIM9MRwDYvlQFwzer/DXQeJ2BxEvEgUvh3TyRn/l1lr+WHxcAJBBHUGL1UpQsN
-	 N11g44KXO2wPQ==
+	b=D0p67jG81rSHSrJG5QAe435bHXddsWghRHB0VqZPykQEYgTMVVt2g9gEF/FEmMh5n
+	 o/p/SM1G8lmw0j0BoY128VNEO0viJykmsEP7VXs8saboatZHTjeVQDeuIHTgDQ+70e
+	 CXewnJcVqJYbGn3hu3qxegzZyNvFqsvXQxIP6jd+dA6TsTuzGNA8Pl1A5qnSRxyyio
+	 07/JJL7KkSaxhHOBtVPjxwIthxoc7useKZWfEMGtIqtYKU8Os8jeMqcq1Z1xpiKuQU
+	 O1a/DCQ+MCBuHcyERt94WQT3CQlw8joj9YzEZYqOQTHD69eNcugK5XcCBvthZw1yB0
+	 uDr1aROVc7I3w==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 4/8] mm: convert PTE table entries in ptep_get()
+Subject: Re: [PATCH v2 3/8] mm: use hw_pte_t for generic PTE table storage
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Muhammad Usama Anjum" <usama.anjum@arm.com>
-Cc: linux-perf-users@vger.kernel.org, dri-devel@lists.freedesktop.org, damon@lists.linux.dev, bpf@vger.kernel.org, linux-trace-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org
-In-Reply-To: <20260903103002.1091859-5-usama.anjum@arm.com>
+Cc: intel-gfx@lists.freedesktop.org, damon@lists.linux.dev, bpf@vger.kernel.org, linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org, dri-devel@lists.freedesktop.org
+In-Reply-To: <20260903103002.1091859-4-usama.anjum@arm.com>
 References: <20260903103002.1091859-1-usama.anjum@arm.com>
- <20260903103002.1091859-5-usama.anjum@arm.com>
+ <20260903103002.1091859-4-usama.anjum@arm.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 03 Sep 2026 10:45:57 +0000
-Message-Id: <20260903104558.6CBE51F000E9@smtp.kernel.org>
+Date: Thu, 03 Sep 2026 10:48:44 +0000
+Message-Id: <20260903104844.DEF221F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> ptep_get() now accepts a pointer to hw_pte_t storage but must continue to
-> return a software PTE value. Add __pte_from_hw for both generic hw_pte_t
-> definitions. Read the hw_pte_t table element atomically before converting
-> it to pte_t.
+> Generic page-table interfaces use pte_t * for both pointers to PTE table
+> storage and pointers to software PTE values. Convert the generic
+> declarations and their MM, fs, and kernel users together so parameters,
+> return types, callbacks, and local pointers that designate table storage
+> use hw_pte_t *.
+>=20
+> Include linux/pgtable_types.h from headers that expose the converted
+> interfaces. It continues to provide pgprot_t to vmalloc.h through
+> asm/page.h.
+>=20
+> Keep software PTE values as pte_t and retain pte_t * for value interfaces.
+>=20
+> No architecture selects ARCH_HAS_HW_PTE_T at this point, so hw_pte_t
+> remains an alias of pte_t and this changes the interface vocabulary witho=
+ut
+> changing representation or behavior.
+>=20
+> Most of this mechanical conversion was generated with the Coccinelle scri=
+pt
+> included in the cover letter. The script deliberately ignores pte_t *
+> pointers named ptentp because they designate software PTE values. The
+> result was then audited, and sites the script could not convert were
+> updated by hand.
 >=20
 > Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 
@@ -55,5 +74,5 @@ Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260903103002.1091=
-859-1-usama.anjum@arm.com?part=3D4
+859-1-usama.anjum@arm.com?part=3D3
 
