@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1929720D4FF
-	for <damon@lists.linux.dev>; Sat,  5 Sep 2026 17:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12C92F8E9E;
+	Sat,  5 Sep 2026 20:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788628546; cv=none; b=VBmSBLwS0zoFd02v3rwvn3efrJVfJBlQvnQsw+T2a8wY4zSIoaby9UITtUK+Hn3l+Lkl8q1pA08eeElPER3PkaUCANNsBA5yvlvAIrej0KM+6tHNGU5cuQ1fUrA1hGHIX8UHaQJbDyBtksd7suPGzyrlFP/7Y0ZfBgaMYchTl94=
+	t=1788640005; cv=none; b=jxrhWrUQZ19YBfEkEGGgNBr65FSCOi2vJuGH0DLuy2RxBYBKGYeD8VvNsHeyqwaD3qujuVF+Vnm6Kh4ymd+CR9YbErujrK3Lou85j1h8HJPRX5ekv5WbvhtiACbLi0cNprJOkeqXmzhZklHjY963L3Z7SdCJEAIRAa7ET+5+gwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788628546; c=relaxed/simple;
-	bh=GIppXOKf11BNOGUucWA4NliNYaLQk2ql7hcPjWuCm2E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FCNbXu/NipGZf8Ixl3rWhLpFDNVwJO/wyLjBJktiEhGvaMI7/DBJA8dji0lWPtQjn9cJFv3/5YtEZS3nSMFJGjs2tVRRj84HiVLUUuQIPLa9O7UgUu5u1WcPfK5ggF/V2usYuJDSB0Ad8saQhh83rgOhTxgnXQiDRKV0uRSr3Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cN5b/qOr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788640005; c=relaxed/simple;
+	bh=siS781YOL86d2A1OduE3YacXgWvCtixOx+Z3G3HlIik=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jBG2l8T7Wk0ttBQ1+AbMlKdiZzTgZktYva1ecF/x64ncJFuL/cvRr1s540NTkUj/dSC40FiyLstyJgGGcYtmczzyczlsjc2Ighssu0eg6NXIdC2milWa1LgN4/1KGRuIYnkLw03rbanl5QakMRIOTeETTcCo5Y55Fzuqi0Rqpac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cI9f8YtR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cN5b/qOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822281F00A3A;
-	Sat,  5 Sep 2026 17:15:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cI9f8YtR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACB31F00A3A;
+	Sat,  5 Sep 2026 20:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788628544;
-	bh=fZZBs2k/GFn6Fqbu0z0szmRZO1I3LQBslP+g1RshGhs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cN5b/qOrOk/l3+Df8AfvLjg+P/Y7JxGyUg7PNhDYfkIkmsFwfzRo1bq7DRIel3YG0
-	 7BzV78oZdzuULJQ1MfHqa0dwU3gj47pbHwsZb9XppkNKeWawl6vIw/IriHi7C0n+PB
-	 sebNzIzz/Mf4HslccQbfpRyx7WoZnuhvIdVpUrrJMNPSWjp7T/xGpffWN4q4W858zj
-	 bzjdjU58lTlrV3PDUNzmM80eqhYe3acV7TNvDiloFfznwhdlOn+AI7zLVfOmwMe5Sa
-	 0S5x5g2bMITL3o7Xr5a4GJ82dy/lE6GaKx6RgNCPZZ8casiiUm1NtwMC52EV8omecY
-	 dvDWDyC2DABmA==
+	s=k20260515; t=1788640003;
+	bh=M3fBlIwPeb0MLRMMvDOp8XO46lHImBBRdMKs8udzsHQ=;
+	h=From:To:Cc:Subject:Date;
+	b=cI9f8YtRJ+edLFJlYPyXxAzXRe8E6sxjDX+IW3YEp6gzU+FkO2TCYOxaY0tKab9xg
+	 AzpLZOrtpkGQFuEWklX59RZgAvTPv5ASwtwNPR6bbSD7hAyiY+WAMdQrYX3CKSeNWY
+	 Fl59i58l4G5p34IRrpvClc92blo8kMO5diA3fhI9tNcJsOePfVGDcF7zWLsqT671LD
+	 Qblp6NslfepNv31/aNO8rcqqJDtnpg7qQNvK7bfa/ir0yMfCe/hVcc8o34wD/1ziDb
+	 lL9HOS9ETJNmkg1yY2QqKYX/yBBIF+22icv8IAOuvnnd330Bn29qQXgwZ/wGl73zBc
+	 n7dloPmQHgGhg==
 From: SJ Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: damon@lists.linux.dev,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Andrew Paniakin <apanyaki@amazon.com>
-Subject: Re: Roadmap for extending DAMON beyond pte-accessed bit
-Date: Sat,  5 Sep 2026 10:15:36 -0700
-Message-ID: <20260905171537.84217-1-sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/5] mm/damon/vaddr: support {prep,apply}_probes
+Date: Sat,  5 Sep 2026 13:26:22 -0700
+Message-ID: <20260905202634.88102-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260525225208.1179-1-sj@kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -46,58 +44,112 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 25 May 2026 15:52:08 -0700 SeongJae Park <sj@kernel.org> wrote:
+DAMON supports data attributes monitoring.  However, only the physical
+address space operation set (paddr) is supporting it.  Add the support
+to the virtual address space operation set (vaddr).
 
-> Hello,
-> 
-> 
-> TLDR: Let's extend DAMON for data attributes monitoring, andd then further
-> extend that for multiple access check primitives including page faults, perf
-> memory-access events and optimized AMD IBS-like h/w feature drivers.
-[...]
-> Milestone 1: PTE Accessed bit as one of the data attributes
-> -----------------------------------------------------------
-> 
-> I will work on stabilizing and further extending the data attributes interface
-> and internal framework to be able to support PTE Accessed bit.  This may take
-> no small amount of efforts, but hopefully doable by the end of this year.
-> 
-> Milestone 2: First damon_report_access()-based data attribute monitoring
-> ------------------------------------------------------------------------
-> 
-> Once the first milestone is completed, we will add the damon_report_access()
-> and related infrastructure changes into the DAMON core.  On top of it, we will
-> further implement the first data attribute that utilizing the reporting
-> infrastructure.  I personally think the perf event based one is a good target
-> at the momentt.  I think so mainly because the perf maintainers didn't show
-> special concern yet.  We can discuss the target again after the first milestone
-> is completed, though.  Hopefully this is doable by the LSFMMBPF 2027.
-> 
-> The timeline is just a gut feeling.  It could be done much earlier or later.
+Patch 1 adds prep_probes support to vaddr.  Patch 2 moves probe filter
+handling code in paddr.c that can be reused by vaddr to ops-common.c.
+Patch 3 adds minimum apply_probes support to vaddr.  Patch 4 extends the
+support for hugetlb.  Patch 5 extends the support for pgidle_unset
+filter.
 
-The patch series [1] for milestone 1 is now merged into mm.git.  Having it
-merged into mm.git doesn't guarantee landing on the mainline.  More works for
-making it complete including support of vaddr and DAMOS should also be
-continued.  Refer to my another reply [2] for mroe details on the additional
-works.  But we show no concern for landing the series on the mainline as of
-now.  And the additional works are not blockers of milestone 2.
+Test
+====
 
-Therefore, I believe we can consider milestone 1 nearly done.  Hopefully the
-series will be merged into the mainline by 7.4, which is expected to be
-released on 2026-12-20.  Then we can officially mark milestone 1 as delivered
-on time.
+I confirmed it can capture ~48 mb working set of masim in vaddr mode,
+like below.
 
-So I believe it is the time to start milestone 2.  This would take time.  I
-need to start from learning perf event system.  This project is definitely
-important but I'm not dedicated to only this project.  Please bear in mind with
-me.  But I'm still optimistic to the planned timeline.  It still looks doable
-by LSFMMBPF'27.  We are still on the track.
+First, start masim [1] to access ~48 mb memory at a time, in the
+background.
 
-[1] https://lore.kernel.org/20260901132506.99243-1-sj@kernel.org 
-[2] https://lore.kernel.org/20260905165221.83994-1-sj@kernel.org
+    $ ./masim/masim.py run \
+            --config_file ./masim/configs/stairs-50mb.cfg \
+            --repeat 10 --quiet &
+
+Note that the config says the working set is 50mb.  It is 50 million
+bytes, so ~48 MiB.
+
+Start traditional access monitoring of masim's virtual address space
+using damo [2].
+
+    $ sudo ./damo/damo start $(pidof masim)
+
+Confirm it can capture the ~48 MiB working set as the 4-th region on the
+snapshot.
+
+    $ sudo ./damo/damo report access
+    heatmap:
+    11111111334[...]3000000000000000000000000000000000000000489999997777777743333333555556[...]8
+    # min/max temperatures: -1,150,000,000, 80,009,499, column size: 6.963
+    MiB
+    intervals: sample 5 ms aggr 100 ms (max access hz 200)
+    0   addr 85.355 TiB   size 55.703 MiB  access 0 hz   age 9.500 s
+    1   addr 85.355 TiB   size 18.984 MiB  access 0 hz   age 6.700 s
+    2   addr 127.183 TiB  size 278.516 MiB access 0 hz   age 11.500 s
+    3   addr 127.183 TiB  size 7.570 MiB   access 0 hz   age 900 ms
+    4   addr 127.183 TiB  size 48.133 MiB  access 190 hz age 800 ms
+    5   addr 127.183 TiB  size 54.977 MiB  access 0 hz   age 1.700 s
+    6   addr 127.183 TiB  size 55.113 MiB  access 0 hz   age 6.700 s
+    7   addr 127.183 TiB  size 37.902 MiB  access 0 hz   age 3.900 s
+    8   addr 127.990 TiB  size 120.000 KiB access 0 hz   age 11.400 s
+    9   addr 127.990 TiB  size 8.000 KiB   access 70 hz  age 0 ns
+    10  addr 127.990 TiB  size 4.000 KiB   access 0 hz   age 11.200 s
+    memory bw estimate: 8.931 GiB per second
+    total size: 557.027 MiB
+    record DAMON intervals: sample 5 ms, aggr 100 ms
+
+Stop access monitoring and start probe-only mode access monitoring.
+
+    $ sudo ./damo/damo stop
+    $ sudo ./damo/damo start $(pidof masim) --probe_prep set_pgidle \
+            --probe_filter allow pgidle_unset --probe_weight 1
+
+Confirm it can also capture the ~48 MiB working set as the 11-th region
+on the snapshot.
+
+    $ sudo ./damo/damo report attrs
+    heatmap:
+    00000000113[...]40000000000000000000000000000000000000000000000001111114999999533333336[...]6
+    # min/max temperatures: -840,000,000, 330,002,000, column size: 6.961
+    MiB
+    probe prep: set_pgidle, filter: allow pgidle_unset (weight: 1)
+    intervals: sample 5 ms aggr 100 ms (max probe hits 20)
+    #   size         address       age           probe_hits
+    0   8.000 KiB    127.990 TiB   8.700 s       0
+    1   120.000 KiB  127.990 TiB   8.600 s       0
+    2   55.543 MiB   127.183 TiB   8.400 s       0
+    3   110.008 MiB  127.183 TiB   8.300 s       0
+    4   55.352 MiB   127.183 TiB   8.100 s       0
+    5   55.605 MiB   127.183 TiB   8 s           0
+    6   55.691 MiB   85.355 TiB    7.900 s       0
+    7   54.430 MiB   127.183 TiB   7.900 s       0
+    8   50.391 MiB   127.183 TiB   6.900 s       0
+    9   18.879 MiB   85.355 TiB    6 s           0
+    10  52.844 MiB   127.183 TiB   3.500 s       0
+    11  48.039 MiB   127.183 TiB   3.300 s       20
+    12  4.000 KiB    127.990 TiB   8.500 s       20
+    memory bw estimate: 0 B per second
+    total size: 556.910 MiB
+    record DAMON intervals: sample 5 ms, aggr 100 ms
+
+[1] https://github.com/sjp38/masim
+[2] https://github.com/damonitor/damo
+
+SJ Park (5):
+  mm/damon/vaddr: support prep_probes
+  mm/damon/paddr: move probe filter handling to ops-common
+  mm/damon/vaddr: support apply_probe
+  mm/damon/vaddr: extend apply_probes() for hugetlb
+  mm/damon/vaddr: support pgidle_unset probe filter type
+
+ mm/damon/ops-common.c |  32 ++++++
+ mm/damon/ops-common.h |   2 +
+ mm/damon/paddr.c      |  23 +----
+ mm/damon/vaddr.c      | 232 ++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 267 insertions(+), 22 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 59446eebc45959fe2d899aeeb301c8df6a1eaf04
+-- 
+2.47.3
