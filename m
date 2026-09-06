@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA191F78E6
-	for <damon@lists.linux.dev>; Sun,  6 Sep 2026 21:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2194C1C5F1B
+	for <damon@lists.linux.dev>; Sun,  6 Sep 2026 21:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788729379; cv=none; b=WqwbLN/pkFZNrmGUh56k9/2HLLe9Wik04SOm3zHEREBaq7oGntdoFaS8rmNotFacbUN0HPeyjFueIFZ7w/9C2qYTRLEuvFGawsyFqTVrvaA3LnQmEvluLL0tDXONXiT+UqotYf5JuAx/4KXqU0MU0EtOci2C4DkggsCgSD8uciM=
+	t=1788729475; cv=none; b=Hr8ByeAnVBrClZH1J70xnPoGOaS1h7OD+VHHpkz/eWBHHsaU5ocOlI9VvXnwb7XtlDouyqjyFxCMW9ahKMg6+wVRRgvon9Eso1PJnalcu2G2W0mxamj83a/NCLO943WJkOxV2TiaHfzmlSY9U0TglxyqnrA8tIBS0nFzzRZl5ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788729379; c=relaxed/simple;
-	bh=ccOq6tClu26yJ3ZRbE8lRsuvvp2Ps/Wk+92Msgh+3Bg=;
+	s=arc-20240116; t=1788729475; c=relaxed/simple;
+	bh=Q7vINoIc5K+WYXh0rAWrqSNoAo2LuiHmeVSNZY59u6E=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=kUCDR57CPBiCQWS82DrwT1AlnDwTaKq9TtzsrkSWAAoc9ZifhuIY1mCTW/12b5mgBRnhLl5dI72UFYLeyWVNslQp6fVI3tozERO2EkZlL27bHcAr4pGKFKTWeCjvJ4l/4GiTirSWE2MkjmlIRAycZhkmPV+Dvik09gci9SZkPFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mz2ngZqp; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=aqA+GgckMXRhj9b2jeNQ5SRXEkKiT3rRLiuoe4UkLn1q+AQ0Pb9t9ieZ2LwV3TUh+6VMtVO3lvlXAprhnmV8rOG3ZsoG6hZFVlITDGmpPIGVVqXNR7l9VVEvO14U5FkuiZbO50GyyFTlN9Bf355jK7yfZjr3xvSJUJIzSuNF7dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q50viW2m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mz2ngZqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED221F00A3A;
-	Sun,  6 Sep 2026 21:16:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q50viW2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8911F00A3A;
+	Sun,  6 Sep 2026 21:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788729377;
-	bh=X8VOUYWBZmJEPXMCSddk1sZ7lplnTnHTDCTR63qtNkU=;
+	s=k20260515; t=1788729474;
+	bh=Tf4nTIycDkdJv4fGiz+WQLgYB7nCT467EkNze5++aKc=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Mz2ngZqphbiUzSWJ/yzCB1ZyVINvWfly/hos87oeIgfU0Ma4nNccGQdhsvdXYIv96
-	 qMWdOZ14u6v9OMctLRxU6w5bO6Htji2uJrRW5/J+U3gard3T+1hZOdY2rTalpcCBOG
-	 1mVFAQUTkrrhHmICaT8EheQYHeYecKYKueY2LpWHfgjkav2EFws52L/il6iHlzcM0Z
-	 6BJ7tBPbZUOy1+ofmq7WnWy0rMFJ1e95ftmvcVQbs9kqNOeqUVyGmmSdN7tH0p1ygK
-	 LNE/bL7xFpyAa+Fg3/6AEX3oNgCzebCMxE3BQEA8eOY8hFTJ+vBdkclvmf66E/ExSw
-	 510tDg9m8ApJQ==
+	b=Q50viW2mtPL5u+bGcwtUrgL9bSQCf6wfNGd+Ff3Cm4bEEkFYsh2Ked3tSee72oL4M
+	 ALSi4iPxaHhIy3WsKX5BoCRKmmx1kYxcnp5v41BHoc+KcowDwvL4bb+WiILUazUqS6
+	 4v4Rjvk+fHu6jeQUyhxzQNuQONsAprdHtU/olLQpL68GLXunM3ERL1bAe7TgAg44MA
+	 xAAH90GgSaO49Heb6NBe3ZxUuOhWKAVlkkpxHpm2p2XwVyMm2Qb3JqXqqdO2AOSzFD
+	 BP/KmnmOEawVVjb33Z/HHhm6r2nuRk6XeEqfmBjGU6G4S1bVf6WwPlSEQ3Z12G/L/9
+	 rljP6DYx/KDJA==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 4/6] mm/damon/sysfs-schemes: setup range_{min,max}
- for probe_hits_wsum filter
+Subject: Re: [RFC PATCH 2/6] mm/damon/core: support probe_hits_wsum damos
+ core filter
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260906210513.106895-5-sj@kernel.org>
+In-Reply-To: <20260906210513.106895-3-sj@kernel.org>
 References: <20260906210513.106895-1-sj@kernel.org>
- <20260906210513.106895-5-sj@kernel.org>
+ <20260906210513.106895-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 06 Sep 2026 21:16:17 +0000
-Message-Id: <20260906211617.9ED221F00A3A@smtp.kernel.org>
+Date: Sun, 06 Sep 2026 21:17:53 +0000
+Message-Id: <20260906211753.CD8911F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,61 +47,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [Low] Incorrect union member assignment for PROBE_HITS_WSUM filter type r=
-isks silent corruption if struct layout changes.
+- [Medium] DAMOS_FILTER_TYPE_PROBE_HITS_WSUM uses raw, unscaled probe hits =
+instead of a moving sum, leading to inaccurate filter evaluation when apply=
+_interval is smaller than aggr_interval.
 --
 
-commit 67e5bf0750883cfdf7b8857b78d72c17c2de406e
+commit 75c1f2781e8de8f015329fce3e8a8d40e521f7de
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/sysfs-schemes: setup range_{min,max} for probe_hits_wsum filter
+mm/damon/core: support probe_hits_wsum damos core filter
 
-This commit extends the DAMON sysfs interface to support probe_hits_wsum
-input. It updates the sysfs input based scheme build logic to set up the
-min/max probe hits weighted sum range provided by the user.
+This commit implements the probe_hits_wsum DAMOS core filter support. It
+updates damos_filter_for_ops, handles the range parameters during filter
+commits, and calculates the weighted sum of probe hits for filter matching.
 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 4d9147d2a269e..e297a20c0af03 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index ce8c6f99106ed..ec1a1666aa9cc 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
 
 [ ... ]
 
-> @@ -2844,6 +2847,14 @@ static int damon_sysfs_add_scheme_filters(struct d=
-amos *scheme,
->  			}
->  			filter->sz_range.min =3D sysfs_filter->range_min;
->  			filter->sz_range.max =3D sysfs_filter->range_max;
-> +		} else if (filter->type =3D=3D DAMOS_FILTER_TYPE_PROBE_HITS_WSUM) {
-> +			if (sysfs_filter->range_min >
-> +					sysfs_filter->range_max) {
-> +				damos_destroy_filter(filter);
-> +				return -EINVAL;
-> +			}
-> +			filter->sz_range.min =3D sysfs_filter->range_min;
-> +			filter->sz_range.max =3D sysfs_filter->range_max;
+> @@ -2538,6 +2543,11 @@ static bool damos_filter_match(struct damon_ctx *c=
+tx, struct damon_target *t,
+>  		damon_split_region_at(t, r, end - r->ar.start);
+>  		matched =3D true;
+>  		break;
+> +	case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
+> +		wsum =3D damon_probe_hits_wsum(r, false, ctx);
+> +		matched =3D filter->range_min <=3D wsum &&
+> +			wsum <=3D filter->range_max;
 
-[Severity: Low]
-Is this assigning to the wrong union member? Since the filter type is
-DAMOS_FILTER_TYPE_PROBE_HITS_WSUM, should this be assigning directly to
-filter->range_min and filter->range_max instead of filter->sz_range?
+[Severity: Medium]
+When a scheme's apply_interval_us is smaller than its aggr_interval_us, does
+this evaluate incomplete probe hits?
 
-While struct damon_size_range and the anonymous { unsigned long range_min;
-unsigned long range_max; } struct currently share the exact same memory lay=
-out
-in the struct damos_filter union, using sz_range here appears to be a
-copy-paste error from the DAMOS_FILTER_TYPE_HUGEPAGE_SIZE block.
+Because the probe_hits array accumulates from zero over the aggregation
+interval, evaluating the raw probe hits mid-interval yields artificially low
+values. This differs from access pattern evaluations, which scale the count
+based on the elapsed fraction of the aggregation interval (for example, usi=
+ng
+damon_nr_accesses_mvsum()).
 
-This seems to bypass the earlier refactoring that explicitly introduced
-the anonymous struct to avoid reusing sz_range for non-size fields. If
-struct damon_size_range is modified in the future, assigning via sz_range
-while the core logic consumes range_min could lead to silent data corruption
-when building a PROBE_HITS_WSUM scheme filter.
+Could this cause regions to incorrectly fail or falsely match the filter
+depending on when the scheme is evaluated within the aggregation interval?
 
->  		}
-> =20
->  		damos_add_filter(scheme, filter);
+> +		break;
+>  	default:
+>  		return false;
+>  	}
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260906210513.1068=
-95-1-sj@kernel.org?part=3D4
+95-1-sj@kernel.org?part=3D2
