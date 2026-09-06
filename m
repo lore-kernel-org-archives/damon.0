@@ -1,54 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CBF32B132
-	for <damon@lists.linux.dev>; Sun,  6 Sep 2026 18:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2765D222597
+	for <damon@lists.linux.dev>; Sun,  6 Sep 2026 18:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788720715; cv=none; b=bYGeddGs6PeFLdbxJqzztZpb6Yu9g0gEWDgd2ClgwkbHLbnMF9oajktKd2OJDdh4KAgthM55SuiO7oYuO3wyh7dR3YEjG4ul71atqtTNePF6O9jC2XKjIB6+S89r+WEppwStuHJpkX9NK9aGUKmCk5alnIrwA09//tHs+JzYr1E=
+	t=1788720781; cv=none; b=ieU/VRW/JAPhTbbFVs10OMimYO+233Z7WE9+UY0Ntjk5r1KURUWMmpD53GCEIlTPMA6mJyj9DXwz6k8rAmNClGmv+htqEf5wVJF3vO84EdegmrLj5vCl3LWR6kDHzU+PQ0+0TmpEnSI+W/xwwYgUOT8PDIytWS3jhHxrAWfOePs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788720715; c=relaxed/simple;
-	bh=I0v6PLFH4FPjSwcvklGY569pzQno6C7K+rOgw+FCjkY=;
+	s=arc-20240116; t=1788720781; c=relaxed/simple;
+	bh=HgoQMWIUrukOBdqWlpmhnd/6Hr6IGoDrzfFFd3ui+Oo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=AoMhbmttG0hRwN5aKES5qBpJ2U4r4FAU/vctfCgjKiCe6aILUHWPcVX4GYboQAqk953uiBdYWP7wMwNUGJdS92fj4UZSBI4s1KZhzm/QBnxaMhGmRXXgDeRNI51Voiryp4Ych4EBFx41HVS9xI9cS/VHju5NzqjidxD9F5X+FO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SzXoLegO; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=NI+aB0oMW2i4kEcGiF67jZJPT4IurxkIKAM2LMcyVEwoSQpcsXbyYsTMHYUMcWPrgk48n6g7oUrhOL8thHRrfQl0zwy2MvrRUQ3aw30OX0cKMybT1ZQfZfSTZuD7I9w7WFDPo9E01ZqkaazRlM4wzL9wsDYLhS121eev8iqVglM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YIgqfwRf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SzXoLegO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8A31F00A3A;
-	Sun,  6 Sep 2026 18:51:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YIgqfwRf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1221F00A3A;
+	Sun,  6 Sep 2026 18:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788720714;
-	bh=KhWhpb8CbTuva1YBBHVoPGgo7FHm4cDNalIItT5QhMU=;
+	s=k20260515; t=1788720779;
+	bh=L1LmMSHp87+xeNaVOA8rHkSH2xlHwPCAVveOA+PIwNo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=SzXoLegOPI/CRZkkR9rK84aFD733bB+0tlvDL8IT2N++jElpPhZE2Qo0sfExojIW1
-	 2JpjmNMolZ9g48NmvCVW/g1dePFTNidGsoBliil0lxuuqWcT7imTBQix14vxMy2tWg
-	 bRswBuAaJZH4zPJbrCBhxm0ZzdU1LioJD5PspIrzvsprw1oh1uTJfLdEz7xSBP/N/o
-	 OClX6baWI3KfCbsdIOcAvcom4QNkAo/ojmmMZ+3eK7xXFE6MJbMElvxYZl320PjY+x
-	 QgQSy85a1JtpxmafikwBzq+LhV186CP333NDwbMyZUbQoZFR1Ws60rtVt1Mf8diXnd
-	 IklPLzMsmIdFA==
+	b=YIgqfwRfyARv0hn4nCq8ipeo3EyMYke1ZKD5Iq95KHnQFoWgvoyTJDjwBWSW9lN1s
+	 OOFHqXXCJZ0nI/iZ4p2jx/t6KgkKP4HEF9CGNwcN/fR5Ix4lBta8kZ1rzmkeYH0SxH
+	 5FnPiQpIkR5q5KCyx3HHzVx0l9bcgUhbh/seS5T6nOFA88bFoO3I9KWhqeFy6g4WrW
+	 un6DqLQEG3FeGEPXAGcPQleALhi1ZyWiu3j04sNTgt06dCFRu9XSn000BOGcOFnIUa
+	 ftKbOSfcVC20GBis4AmBJ0qOcdtZfGL1RuxG6KusQkHDO3v1eAjnLH9fODcqjvsVwI
+	 +OP8wSnmkzogg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/5] mm/damon/paddr: move probe filter handling to
- ops-common
+Subject: Re: [PATCH 1/5] mm/damon/vaddr: support prep_probes
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260906184417.96621-3-sj@kernel.org>
+In-Reply-To: <20260906184417.96621-2-sj@kernel.org>
 References: <20260906184417.96621-1-sj@kernel.org>
- <20260906184417.96621-3-sj@kernel.org>
+ <20260906184417.96621-2-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 06 Sep 2026 18:51:53 +0000
-Message-Id: <20260906185153.DB8A31F00A3A@smtp.kernel.org>
+Date: Sun, 06 Sep 2026 18:52:59 +0000
+Message-Id: <20260906185259.8F1221F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> Probe filter matching logic for anon and memcg type filters in DAMON's
-> physical address space operation set (paddr) can be reused by virtual
-> address space operation set (vaddr) in future.  Prepare the future by
-> moving the code to ops-common.c
+> DAMON virtual address space operation set (vaddr) is not supporting
+> prep_probes.  Add the support.
 >=20
 > Signed-off-by: SJ Park <sj@kernel.org>
 
@@ -56,5 +53,5 @@ Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260906184417.9662=
-1-1-sj@kernel.org?part=3D2
+1-1-sj@kernel.org?part=3D1
 
