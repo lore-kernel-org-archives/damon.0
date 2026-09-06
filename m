@@ -1,162 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982AE29992A;
-	Sun,  6 Sep 2026 18:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FD536B935
+	for <damon@lists.linux.dev>; Sun,  6 Sep 2026 18:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788720268; cv=none; b=krZk8G0d7bnP9AVnIQMjHZA3ctts/9xbs52A2jsv5fhb9kfYV8FgssDP3twCJx7frRlQCBLfQoUJi4fwxAUKw9GuQbwgBEzarg835dkN3d5cCwIwt0/pA1wfLAp0/JJfTQplaH+oNYxm+O1WtT2fNIt0br0z2rSp2jytTZbco68=
+	t=1788720632; cv=none; b=ebw2XwpoIUGHlWAkdZ170QQFmMJkqIqPJw3RE6zoCR6e311WUoPe9EiXedoMXxyLofI1/Ir1BWXrQXbmL5E3EXupXpZTTbEvx5LSscKqdDLG+dgMC+gCGeFYogJhrMTnSXID+y1Ly4bv24inBaPi5cQYJ4dASUBXFPeJb3nW5zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788720268; c=relaxed/simple;
-	bh=chJoHZKREMSQchbWk7BcihNcvxO7HU8pRLDu7X832Ro=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpK35Lfz7ZFbChN9hzDohaZ26ZCCGZKm1p3GyMavtthCRlK8r28E2xgNY8ZEEawZcVpLQMofSwwutQgu9dP5NZIdO/FSC3p0fxPsHhcnL1auwO3YTflGm3IW/GxzImBgrUkKFoRDdR1pz7AttvuaJPg9gsaPgwgjI476mUMEZRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dml+ayEr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788720632; c=relaxed/simple;
+	bh=A/UEXCthQcVnFYgY9FD6Nhajs9VjwMiSvmYqoFH/t9w=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=RlpMPfst2y0qt0cYqPTw9m1KH8SWZxm996iyDIaY30VQJzBY0Xgao/XKmYYD+Apbf0ZtAdgUhofgwdNHY6xQYbCChRjov1i3py5rlCsUbfl2rhMvNpU88yODETtIRmGPd/TbEzu2D6mYFI/lJBbBB2WQQSng3BoDtG72CncV3wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=noqP1Hhx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dml+ayEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBF31F00AC4;
-	Sun,  6 Sep 2026 18:44:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="noqP1Hhx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CBA1F00A3A;
+	Sun,  6 Sep 2026 18:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788720266;
-	bh=XvOnZdXRT1oYcTh0OqGiqvrYhRphtRi0kIGud2JHRJM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dml+ayEr24UUZMmalGx6HoHSRg65X9HJ6baZH7/ZPWpn7t/kf9eT1Eg8MJY2m5k3O
-	 8fn/FqG8+5CpIyntoIkqMeztKJeGOel0ka+hOpzxFu4JaCsvntcoW0MxTpBvb/pBb0
-	 SU0AWPKOZFLHzJEDsjjBBpIc8kvrif2l51bgHSQ5Kx+wWnN7qmtqwQPJZJoaTH5gaX
-	 zNkCJyrDTiVNBE8d/JQoJnuR4Jr2wzNisZO+DN/vMz2y+10mSlSf4OlD0PMSndARDu
-	 U5/+O1WWZ4vpDyeYZtVqsi1VEmwzXMVQPEpuemy+W9bblhZuDEvyjeb5Ks+wG7irQo
-	 r15TYuhcXAHOQ==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 5/5] mm/damon/vaddr: support pgidle_unset probe filter type
-Date: Sun,  6 Sep 2026 11:44:15 -0700
-Message-ID: <20260906184417.96621-6-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260906184417.96621-1-sj@kernel.org>
+	s=k20260515; t=1788720631;
+	bh=SY4qMwaSzpri083axXSQvaImE7zo27F2PzM3Tv+6sQA=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=noqP1HhxsmvKW6XjtnWdkcoImESNA/uZBcoQ2ABJUqFJFrR2fQ+0K4xsQDFfH17U/
+	 TQq6KQAl/0e1oJcFCNv3kNcfgZDcPnOWn+VHsEQndLTI4iHfpxmZ+T8ItaQu4aRLgE
+	 O/scQ2/9Y0ul+HmKACvnpr345PInI98fv8iyhNpDwXa0N7RA3RRgKwHVG17NOkTOng
+	 i2rTBEankPEyZ2T7j5zKpeKX98It04xU64OUJ720wifF5NgN0ShNmsOiwWjU3ixDfi
+	 1feiX34EwItHeT6EBlDbdcRw4PnIVcqIrVVOq/w8XtahaxRGN9T0mh98PtrRAeJpCg
+	 DIa+R01f6FnKA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 3/5] mm/damon/vaddr: support apply_probe
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260906184417.96621-4-sj@kernel.org>
 References: <20260906184417.96621-1-sj@kernel.org>
+ <20260906184417.96621-4-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 06 Sep 2026 18:50:30 +0000
+Message-Id: <20260906185031.04CBA1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-DAMON virtual address space operation set (vaddr) does not support
-pgidle_unset probe filter type.  Add the support.
+> DAMON virtual address space operation set (vaddr) is not supporting
+> apply_probe.  Add a minimum support.  Do not support hugetlb pages and
+> PGIDLE_UNSET filter type for simplicity.
+>=20
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/vaddr.c | 55 ++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 48 insertions(+), 7 deletions(-)
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 45239f05e113b..9a38dc89a156e 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -522,13 +522,49 @@ static void damon_va_prep_probes(struct damon_ctx *ctx, bool set_samples)
- 	}
- }
- 
--static bool damon_va_filter_pass(struct folio *folio, struct damon_probe *p)
-+static bool damon_va_young_addr(struct folio *folio, pte_t *pte, pmd_t *pmd,
-+		struct mm_struct *mm, unsigned long addr)
-+{
-+	bool young = false;
-+
-+	if (pte)
-+		young = pte_young(*pte);
-+	else if (pmd)
-+		young = pmd_young(*pmd);
-+	young = young || !folio_test_idle(folio) ||
-+		mmu_notifier_test_young(mm, addr);
-+	return young;
-+}
-+
-+static bool damon_va_filter_match(struct damon_filter *filter,
-+		struct folio *folio, pte_t *pte, pmd_t *pmd,
-+		struct mm_struct *mm, unsigned long addr)
-+{
-+	bool matched = false;
-+
-+	switch (filter->type) {
-+	case DAMON_FILTER_TYPE_PGIDLE_UNSET:
-+		if (!folio)
-+			matched = false;
-+		else
-+			matched = damon_va_young_addr(folio, pte, pmd, mm,
-+					addr);
-+		break;
-+	default:
-+		return damon_ops_filter_match(filter, folio);
-+	}
-+	return matched == filter->matching;
-+}
-+
-+static bool damon_va_filter_pass(struct folio *folio, struct damon_probe *p,
-+		pte_t *pte, pmd_t *pmd, struct mm_struct *mm,
-+		unsigned long addr)
- {
- 	struct damon_filter *f;
- 	bool pass = true;
- 
- 	damon_for_each_filter(f, p) {
--		if (damon_ops_filter_match(f, folio)) {
-+		if (damon_va_filter_match(f, folio, pte, pmd, mm, addr)) {
- 			pass = f->allow;
- 			break;
- 		}
-@@ -543,13 +579,15 @@ struct damon_va_probe_walk_private {
- };
- 
- static void damon_va_probe_folio(struct damon_ctx *ctx,
--		struct damon_region *r, struct folio *folio)
-+		struct damon_region *r, struct folio *folio,
-+		pte_t *pte, pmd_t *pmd, struct mm_struct *mm)
- {
- 	struct damon_probe *probe;
- 	int i = 0;
- 
- 	damon_for_each_probe(probe, ctx) {
--		if (damon_va_filter_pass(folio, probe))
-+		if (damon_va_filter_pass(folio, probe, pte, pmd, mm,
-+					r->sampling_addr))
- 			r->probe_hits[i]++;
- 		i++;
- 	}
-@@ -574,7 +612,8 @@ static int damon_va_probe_pmd_entry(pmd_t *pmd, unsigned long addr,
- 		folio = vm_normal_folio_pmd(walk->vma, addr, pmde);
- 		if (!folio)
- 			goto huge_out;
--		damon_va_probe_folio(priv->ctx, priv->r, folio);
-+		damon_va_probe_folio(priv->ctx, priv->r, folio, NULL, &pmde,
-+				walk->vma->vm_mm);
- 
- huge_out:
- 		spin_unlock(ptl);
-@@ -591,7 +630,8 @@ static int damon_va_probe_pmd_entry(pmd_t *pmd, unsigned long addr,
- 	folio = vm_normal_folio(walk->vma, addr, ptent);
- 	if (!folio)
- 		goto out;
--	damon_va_probe_folio(priv->ctx, priv->r, folio);
-+	damon_va_probe_folio(priv->ctx, priv->r, folio, &ptent, NULL,
-+			walk->vma->vm_mm);
- 
- out:
- 	pte_unmap_unlock(pte, ptl);
-@@ -615,7 +655,8 @@ static int damon_va_probe_hugetlb_entry(pte_t *pte, unsigned long hmask,
- 
- 	folio = pfn_folio(pte_pfn(entry));
- 	folio_get(folio);
--	damon_va_probe_folio(priv->ctx, priv->r, folio);
-+	damon_va_probe_folio(priv->ctx, priv->r, folio, &entry, NULL,
-+			walk->vma->vm_mm);
- 	folio_put(folio);
- 
- out:
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260906184417.9662=
+1-1-sj@kernel.org?part=3D3
+
