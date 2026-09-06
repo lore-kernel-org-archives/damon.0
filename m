@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8863C1EB1AA;
-	Sun,  6 Sep 2026 17:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBB53C108E;
+	Sun,  6 Sep 2026 17:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788717019; cv=none; b=qCKlkPm5HtZdHZcdCD4pqmUjgB0eIAk4eB6YfrYlliRbz/DNxPmAs/oFfj6Mq15e7SDnqnTBEZSFK3I1U40EXDxVg7cl/X2NSJf6FjCgAS0uIo28cZ8xwsbT7nv9RVlnPs9prYZLuJYwJzq1l91l37PpeK8HXvfO0ppapxjDnI8=
+	t=1788717019; cv=none; b=aVpDitGQuaVJmmtra/QywF+FRfIW0guI4cweGfhqMPslY3fjL5yw1y92lLcC+UjAadpAVJAYIR+ek5ki/bl7kG5Ftw9p4knqgBfCDEYz4aW7aXtv8xG+Au/PBvrtiAt6nMRuSwhMGQGq49hDdnX2x8dIgwDHMVpulO3uVw7NwKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788717019; c=relaxed/simple;
-	bh=UYNii2J9N5IeNLw0Yeo1sxB3yu/PmjdINz6uaBoZpFI=;
+	bh=lG9lqwCCUx3kjP5fIT5XV2njsrpyfjDfi6mbNyCxEpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUVjtAFZGAFCcZdkM36lBzeY67F/5KD/E2Pg2ZPAu36Nl9fr4yZuHlJHZicfg6yjgS0ayrcEi1x1HW5emWsopbv3e7y0lEliTA0L0hb+3caHt9OLVZfc6IlzeBqUYyzXrhG8xy+9WeyfnO7wVZG4X/I0Lj4PK/OpUylDmygtRMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jLwmxA+0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RvpivaNQVERDVlPqwUA/tpSzBYv4i+9dzhVxYmwpdGQqw2vhNPY49Wk3RHwuUGlI6QZ+ZVGpp64gQmK5LBgSSZZtluXo6cGArRQDpS1BVS6UMg6+05yId6yGHosCPTuSDeJGosIcVrcqtG5NSzEVO5PL8phyb/yZf+FUtBqY220=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kckwBC9L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jLwmxA+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C231F00ACA;
-	Sun,  6 Sep 2026 17:50:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kckwBC9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB631F00A3D;
+	Sun,  6 Sep 2026 17:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788717018;
-	bh=2EEU3ekWc3qyXmh8drgRUKtX2xzp7GdjGEtLM6CGh4Y=;
+	s=k20260515; t=1788717017;
+	bh=YFqbfbUKFKtPu4Tcg/+wjsywNqHMCK5UIyCPc9N/dhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jLwmxA+04ye3YGz0VBhemPW2m3i7srO/e5FLayoCNgdSE4uwwsDDD8JzkXkOGMoeO
-	 8TkOYEqfSR0i9WcU4+Ec7NplPEQ9Wd4V4hfGzOra9ktb3/aGza9tGfOCGfI9OiTLUs
-	 qTqwbHejvllNfb/fSbqG2zT2sYmyqZtmoBS1DGRb8sTFPlpoOyhjwOGehMOogvqjYk
-	 mXIkOQkzy4oJFrCSTjvkkMDck24d0iEkmhX4FSzYrakSXFtz3FSFjBGVGf9qXAjW1v
-	 EOxPe3WVikiUT65txO7SKZNxgrnfJ7oPTxhWFrTvjbH8SumATtFZrKtsw1JUSJ2y9z
-	 m/xjoB9qRk+9g==
+	b=kckwBC9LDnSc9g5Qt9hX2Jg8RpnrPDawioOb7Ip3VrnszHtGfRL56TA9k5YmWynMS
+	 WxHegJsm37AtALSqEafJvf+L1neyrMMv2zeh+CUJITuQV1XWhdGKXhKWbR+MbLsEbH
+	 IT+pn7A5JQ4emDsCiEs7llAxFOdZrHi0bDjKAAM4lsqa5GIvkCRTWiGMmwaEn8icM1
+	 Gf/Yob5fiQsRfeNv0ihDGTW5ODWLVILlLFTETmCw4RdO9wYdY2xzfuKfdyTemVuW+6
+	 RJ1CLLIpqCXxiOF8OYN1FnrOnMdk9k2EUSI50cpaqfC6ffixedklo+MqfvW9wU1zyT
+	 IEqu+nb23XWgA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 4/5] mm/damon/sysfs: support DAMON_FILTER_TYPE_PGIDLE_SET
-Date: Sun,  6 Sep 2026 10:50:06 -0700
-Message-ID: <20260906175009.93471-5-sj@kernel.org>
+Subject: [RFC PATCH 1/5] mm/damon/api: introduce DAMON_FILTER_TYPE_PGIDLE_SET
+Date: Sun,  6 Sep 2026 10:50:03 -0700
+Message-ID: <20260906175009.93471-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260906175009.93471-1-sj@kernel.org>
 References: <20260906175009.93471-1-sj@kernel.org>
@@ -47,28 +46,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend DAMON sysfs interface to let users setup
-DAMON_FILTER_TYPE_PGIDLE_SET probe filter.
+DAMON_FILTER_TYPE_PGIDLE_UNSET matches only memory that was able to
+confirm if it is marked as idle.  If the memory cannot be marked as
+idle, it simply doesn't match.  Hence, finding memory that was marked as
+idle with only DAMON_FILTER_TYPE_PGIDLE_UNSET is impossible.  Introduce
+a new filter for the purpose, DAMON_FILTER_TYPE_PGIDLE_SET.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/damon.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index b576e97cbfdb8..51fa506c879b0 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1001,6 +1001,10 @@ damon_sysfs_filter_type_names[] = {
- 		.type = DAMON_FILTER_TYPE_PGIDLE_UNSET,
- 		.name = "pgidle_unset",
- 	},
-+	{
-+		.type = DAMON_FILTER_TYPE_PGIDLE_SET,
-+		.name = "pgidle_set",
-+	},
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 871d26adf6ae5..16800b3dc379b 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -774,11 +774,13 @@ struct damon_prep {
+  * @DAMON_FILTER_TYPE_ANON:		Anonymous pages.
+  * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
+  * @DAMON_FILTER_TYPE_PGIDLE_UNSET:	Pgidle is unset.
++ * @DAMON_FILTER_TYPE_PGIDLE_SET:	Pgidle is set.
+  */
+ enum damon_filter_type {
+ 	DAMON_FILTER_TYPE_ANON,
+ 	DAMON_FILTER_TYPE_MEMCG,
+ 	DAMON_FILTER_TYPE_PGIDLE_UNSET,
++	DAMON_FILTER_TYPE_PGIDLE_SET,
  };
  
- static ssize_t type_show(struct kobject *kobj,
+ /**
 -- 
 2.47.3
