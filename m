@@ -1,52 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEA43C5DD4;
-	Sun,  6 Sep 2026 21:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB083C8705;
+	Sun,  6 Sep 2026 21:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788728723; cv=none; b=H2+0MBYNZ9P2BxDOR+cKj1GCsyCA/qf1bhkjSMU/puWM0KRBk37/uz1cEMVeYUJ0rkFbXi1fMJJEnG5LewG8wqGNBhPT7sBrHxI0lMK6OXzyqsWNbHjlBknhs9ZxjYSWqIwRVVAcoNy2kFH9k0ddLaD8/sOuJk/b/rJ8/DrKD+s=
+	t=1788728723; cv=none; b=c37zQRV+ZhzcCO2ZPY+jSNDdoHqP+mOISstBF/pEuVQVTD4xyN0gCr2C93LMXpm3DnnBOfbmhnAbQW54ETmV7uH3TldTLlBi/5k6nqTaH5qncHEY3i1paCkUP2uV/aaXEdN0K7MtxXdB1jBPuihQI7yLWNznw6faTqHt5EjdGOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788728723; c=relaxed/simple;
-	bh=66xVvf9AYDaubgalGRElpfl7AJBa4gDemippERfSJ+M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dpCYidduJtEcRfc2l91Fm0wZusUu5YUv5N4HRdThxQyntT9dSr7cumZfODjhyfzf45MEBP78LTYkw5J4beRxZ5txDkdOA+7+tTytdGiYDaAPoyEZfptlHjDH0v+70fgczk0J/vupWH6yu/AClp1EJhRk6gfKi7fA7XNz7UAmZAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S0wOCysI; arc=none smtp.client-ip=100.103.45.18
+	bh=64A8eSI2cMClOGz3kyZmsTmWzNg+K9bSbEyPFRmR49E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TMBfshzTUWVW+GeBZsKglGvMcBuMc98x0vcfUqkUKeLIJ9zES8m4ay1ycpxhTNiHTFgKN3bcwM3DIArFADuHTyUHkuiV/XIBECEp+daptL8f/bth3Y+qc4CTwkAdpw5jOMiLwWTlOykyfM8B7yDTeo2pMvq7bFQQaKanJazLZ68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hev5VWS0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S0wOCysI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C721F00A3A;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hev5VWS0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0091E1F00A3E;
 	Sun,  6 Sep 2026 21:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788728721;
-	bh=tJB81UTgzrSfPhYv5eHHbGNV659HaY2JEk6GKYFHi0k=;
-	h=From:To:Cc:Subject:Date;
-	b=S0wOCysIgW+9naXrgkj4wzl/6wFSrTfkTZ9KQIHBnR6bB/Yj/Bws8uCf+uVyjSJgg
-	 p3YRGIgEiCMn4CQBMTaeOYZeHbPD/XdTeamAWbW1qsBEO8ncCsA1Ku7y4Yai40TBj6
-	 wiBIvgVvy+LUmXsxVHzUE4JxEqxRppss3YSVu4DMvgVgzgy1aPGqrc7q0xFxIqvfMW
-	 EmJ1ufzWrIieg99vs9+qAuQzo85z5QqxO9uwwBzFP43g7zmCl6MBfFONtJeGFphDqL
-	 GzxLKAmTozx+KY4dydyz3OQYuVQEfqtada9sXjJvLsi5uWO9JsCDcTmcLGjSQ/SSmD
-	 arkVrjqfWrNVQ==
+	s=k20260515; t=1788728722;
+	bh=enJ6Ikb+xyWqp47h1SJ/IEbgrZU8ueGVdQgMTNLWdsg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Hev5VWS0XGTr1CiIZQoRlNatCSnZKU1ZWGfV/gemtU6nYfmgwkNgdevPYhOdvcIft
+	 H7WX182R8g6uqDQqJ2JNNIIDkqUmr5H8zR5GXjpbQfbeubTqJgfgo075kzWjAk5m54
+	 jwwTumD/XDhtMuG4+OZpfRdWycm/Klu5RgNX1TNe0PAuibTmtbM1ahTEgPkseH+2Nt
+	 psK496Zlj8G8fu4R54TzMKogl2xswfhdYZX9ejbf+KOnkXKDoG1lo76zoG+Qs+eN8K
+	 tPLTvXxJB8TBgdfuzBAX6dyppUx0YiORIyz31qzZaZgKIjx7rzzMNvxqq6ao8nf07s
+	 aO6mZyYOVDKpA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 0/6] mm/damon: introduce probe_hits_wsum DAMOS core filter
-Date: Sun,  6 Sep 2026 14:05:06 -0700
-Message-ID: <20260906210513.106895-1-sj@kernel.org>
+Subject: [RFC PATCH 1/6] mm/damon/api: introduce DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
+Date: Sun,  6 Sep 2026 14:05:07 -0700
+Message-ID: <20260906210513.106895-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260906210513.106895-1-sj@kernel.org>
+References: <20260906210513.106895-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -55,59 +46,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON can do flexible data attributes monitoring.  The classical data
-access monitoring can also be done using the attributes monitoring.  The
-access event is just one of the data attributes that DAMON supports.
-Users do monitoring to make some actions based on it.  DAMOS is a
-feature for automating that.  However, DAMOS cannot utilize the data
-attributes monitoring results.  It is still Data "Access"
-Monitoring-based Operation Schemes.  It requires users to set the target
-"access" pattern.
+Update DAMON kernel API to introduce new DAMOS core filter type,
+PROBE_HITS_WSUM.  It will allow API callers to describe the DAMOS action
+target regions based on their probe_hits weighted sum.  For describing
+the filtering target weighted sum range, add two type-dependent union
+fields to damos_filter.
 
-DAMOS core filter is effectively the same as the target access pattern.
-It is just a more generalized and flexible way of describing the
-operation action target region.  Introduce a new DAMOS core filter type,
-probe_hits_wsum.  It specifies the filter target based on a range of the
-probe hits weighted sum.  Using this, users can apply DAMOS actions to
-regions of specific data attributes pattern.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Note that the classic target access pattern still works.  Hence the
-target nr_accesses range should still be properly configured.  The new
-filter would be used in only data attributes-only mode.  In the mode,
-classic access monitoring is just turned off, and therefore nr_accesses
-of regions are always zero.  Users could simply set the target
-nr_accesses range to include the zero nr_Accesses regions.
-
-Patches Sequence
-================
-
-Patch 1 updates the DAMON kernel API for the new filter type.  Patch 2
-implements the filter type in the core layer.  Patch 3 refactor DAMON
-sysfs interface internal data structure for efficient reuse of data
-structure for the probe hits weighted sum range user inputs.  Patch 4
-updates DAMON sysfs interface to support the new filter type.  Patches 5
-and 6 update design and usage documents for the new filter type,
-respectively.
-
-SJ Park (6):
-  mm/damon/api: introduce DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
-  mm/damon/core: support probe_hits_wsum damos core filter
-  mm/damon/sysfs-schemes: rename sysfs_filter->sz_range to
-    range_{min,max}
-  mm/damon/sysfs-schemes: setup range_{min,max} for probe_hits_wsum
-    filter
-  Docs/mm/damon/design: update for probe_hits_wsum DAMOS core filter
-  Docs/admin-guide/mm/damon/usage: update for probe_hits_wsum DAMOS
-    filter
-
- Documentation/admin-guide/mm/damon/usage.rst |  4 +++
- Documentation/mm/damon/design.rst            |  3 ++
- include/linux/damon.h                        |  8 ++++++
- mm/damon/core.c                              | 12 +++++++-
- mm/damon/sysfs-schemes.c                     | 30 ++++++++++++++------
- 5 files changed, 48 insertions(+), 9 deletions(-)
-
-
-base-commit: 787c63ba44ce65021966f55673e27d778c8d9c68
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 871d26adf6ae5..59d57131d8327 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -399,6 +399,7 @@ struct damos_stat {
+  * @DAMOS_FILTER_TYPE_UNMAPPED:	Unmapped pages.
+  * @DAMOS_FILTER_TYPE_ADDR:	Address range.
+  * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
++ * @DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:	probe_hits weighted sum range.
+  * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
+  *
+  * All types except &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET
+@@ -420,6 +421,7 @@ enum damos_filter_type {
+ 	DAMOS_FILTER_TYPE_UNMAPPED,
+ 	DAMOS_FILTER_TYPE_ADDR,
+ 	DAMOS_FILTER_TYPE_TARGET,
++	DAMOS_FILTER_TYPE_PROBE_HITS_WSUM,
+ 	NR_DAMOS_FILTER_TYPES,
+ };
+ 
+@@ -434,6 +436,8 @@ enum damos_filter_type {
+  *		&damon_ctx->adaptive_targets if @type is
+  *		DAMOS_FILTER_TYPE_TARGET.
+  * @sz_range:	Size range if @type is DAMOS_FILTER_TYPE_HUGEPAGE_SIZE.
++ * @range_min:	Minimum value of range arguments.
++ * @range_mx:	Maximum value of range arguments.
+  *
+  * Before applying the &damos->action to a memory region, DAMOS checks if each
+  * byte of the region matches to this given condition and avoid applying the
+@@ -450,6 +454,10 @@ struct damos_filter {
+ 		struct damon_addr_range addr_range;
+ 		int target_idx;
+ 		struct damon_size_range sz_range;
++		struct {
++			unsigned long range_min;
++			unsigned long range_max;
++		};
+ 	};
+ /* private: */
+ 	/* List head for siblings. */
 -- 
 2.47.3
