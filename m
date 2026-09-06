@@ -1,55 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D603101B6;
-	Sun,  6 Sep 2026 17:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA8535DA7B;
+	Sun,  6 Sep 2026 18:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788717020; cv=none; b=d+F2yOI785De01iFpb+kiKbM9uttj3Wx4t/mFfVqfVXFR5jcCvHUz8t/JWGetwac7e8ztSrK9nTYaYqnU0CEYdO2b5jAmxJVfY6ixwt0+RytwjsDuo+otT6H40p4Xhrpf2K0g0trTeDmp0JaOimMmg1UXH3Pd8ktKTzEba6SAVE=
+	t=1788719824; cv=none; b=btPrnEFaTJ5UUgiXCqUtt4uh1pwwTFEd9CR8xECSg7D68smK7v9QLZBiO5JnhP3zjOS6wFa8JWq015I8YpqFMecxKKbjFeI9sijgKvzkstTq0LEX5Ngo7y9d8yuJ2+ngaJSfOnr0EC6DZ8sJrzMhv781NrDXUZZZSypGURlFF9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788717020; c=relaxed/simple;
-	bh=yCxGfqVWzlMnnWV88b3PWYG2+zaRYg5Y3mxtSqQe6og=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B6jMRXcrDyv66seANpmB6Us1pzdEuJsPxzIgb4ktqSIKB8efzbJKlc2+8mL/UEogL8HOBi/1Al0yXrpKY6nTMwEGUYaxP8ZQL/0xHO7Htr3xX+Ox5hRiR9jJ+gZ0arMPve0xXd0Vq0aPkq9qIV/yEgyVZOQVaQbQmCySvRzSsso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NJvljSHw; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788719824; c=relaxed/simple;
+	bh=3wiM7WEt1lH28Oba676UHfY+FWMqbto7oH8GgKR+7ik=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=q//4k1sL3XfzmExumFOGrP8s0IQDrCdXJn0qfHwpQdnx4TOtocqITHx8/tQ4SeCaOyclzYWbz6NfpxcJjVklIXKYC3Y4xceWjr8jgF+//2+nlOXxUXlRjqmOn2AFyzcLsHSqO8OLGG6g6pIZxGB629zoPu45cgcTFgFDba4E1YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EPvD/Ofu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NJvljSHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EED81F00A3F;
-	Sun,  6 Sep 2026 17:50:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EPvD/Ofu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227151F00A3A;
+	Sun,  6 Sep 2026 18:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788717018;
-	bh=nO6vnuxi6J2KrNlifTLU/7q+ZvNIHG45rulFRzj97d4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NJvljSHw8101nwn1KyGpg27PWjkZXnR/Yeb7FxtPCgJ88B1jNoX4zs34vr1eGu53/
-	 bjhkjc+JDQuHyKScBjQoQ4RnmMxlaGsrASnJ+HNwsU4qF/5p2H2H8B5k+R2qM9EqzD
-	 9Qc6n58PH935cd9jISrtcW6kGCLt3VYrNq8nbbQc6OBsRnAquOFb5nSGDmNNvseP7U
-	 r2XXsL6a9IelMAo5QvrBkcQeJ1/ubw1DmSpQNNwF7tSrFHvthCA6FXdgdIVHObRhs/
-	 xkXBjOylJSdkBtSKWLYxjO9KJevPobziew6UR6WxYfXFajnHC0MA2i7gSLFCLJtTzF
-	 3h2Vym9oFP5MA==
+	s=k20260515; t=1788719822;
+	bh=zhQNwRYEIS4kE/CvLbGr7B/xSZlKygyBMw9AdWBN80M=;
+	h=From:To:Cc:Subject:Date;
+	b=EPvD/OfuoevHCK7mt42e9YBPXAB3eu7jlX3A97CwVt8yRfNwcGk3HJCwmSQRSyOLK
+	 SvOFyw6XWSkRC18AOBekLM87MOBgeeuumRQ8hJCkmMBkd7acmqF7pELC1JDOSMGrVj
+	 7z1CSAJB1I1HIxPB4aEfnbvcUzC8xs8Nf0xAxS+q6ukTqWV43di8ky6JdzzvkJAA1v
+	 VlDtK8dqgrPmy/CCZB6yNRJ6EX7ysEYaWLrQN+hp4bfgOEZWQ4om9GAOmWeeNqqJY+
+	 F4kwS7ls29EmxQPR3ED/ga/0padmKWz476l2+nUacd5/wmExJSSnHX9pbQimXlOz4N
+	 VW+BVPNNU6lGQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
+	stable@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Enze Li <lienze@kylinos.cn>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 5/5] Docs/mm/damon/design: update for pgidle_set probe filter
-Date: Sun,  6 Sep 2026 10:50:07 -0700
-Message-ID: <20260906175009.93471-6-sj@kernel.org>
+Subject: [RFC PATCH] mm/damon/core: reset invalid quota->charge_target_from
+Date: Sun,  6 Sep 2026 11:36:53 -0700
+Message-ID: <20260906183654.95634-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260906175009.93471-1-sj@kernel.org>
-References: <20260906175009.93471-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -58,34 +46,87 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added pgidle_set probe filter
-type.
+DAMOS can suddenly stop working if a target process that quota just
+fully charged in it is terminated.  Fix by catching and processing the
+corner case.
 
+When DAMOS quota is fully charged, the target and the region to continue
+applying the action in the next round is saved in
+damos_quota->charge_{target,addr}_from.  In the next round, DAMOS
+iterates targets and regions from the beginning.  It skips applying the
+action to the regions until it visits and skips the saved target/region.
+
+Virtual address space targets become invalid if the process is
+terminated.  Trying to apply the scheme to invalid target is just a
+waste of time.  Hence commit 6e4930e33329 ("mm/damon/core: fix wasteful
+CPU calls by skipping non-existent targets") made the logic to skip
+invalid targets.  However, it does skip before the charged target/region
+skipping/updating.
+
+Let's suppose the user runs DAMOS for multiple virtual address spaces
+with a quota.  The quota exceeded in the middle of a virtual address
+space.  And the process of the address space is terminated.  Then the
+charge_target_from points to the invalid target.  The pointer update
+logic is skipped for the invalid target, so the charge_target_from is
+never updated.  DAMOS action to every target/region is skipped.  From
+the user's perspective, it would look like suddenly DAMOS has stopped
+working.
+
+No critical leak or crash can happen.  The user could reinstall the
+scheme.  But this makes use of DAMOS under certain setups quite
+unreliable.
+
+Catch the corner case and reset the pointer in damos_adjust_quota(),
+which is called for adjustment of the quota for every round.
+
+This issue was discovered [1] by Sashiko.
+
+[1] https://lore.kernel.org/20260830064708.40CA61F000E9@smtp.kernel.org
+
+Fixes: 6e4930e33329 ("mm/damon/core: fix wasteful CPU calls by skipping non-existent targets")
+Cc: <stable@vger.kernel.org> # 7.0.x
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/damon/core.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index aac84de261aa8..22b785cd11dfe 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -299,6 +299,7 @@ filter types.  Currently below filter types are supported.
- - ``memcg``: Same to that for DAMOS filters.
- - ``pgidle_unset``: Matches if the page for the memory is marked as not
-   access-idle.
-+- ``pgidle_set``: Matches if the page for the memory is marked as access-idle.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index ce8c6f99106ed..2c58be9edbde4 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3283,6 +3283,22 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
+ 	trace_damos_esz(cidx, sidx, quota->esz);
+ }
  
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
-@@ -314,7 +315,7 @@ actions are registered, DAMON applies the actions to each region's sampling
- memory before starting the next sampling interval.  Currently only one action,
- ``set_pgidle`` is supported.  The action marks the page for the probing target
- memory as access-idle.  This can be useful to be used together with
--``pgidle_unset`` probe filter.
-+``pgidle_unset`` or ``pgidle_set`` probe filter.
++static void damos_reset_invalid_charge_target_from(struct damos_quota *quota,
++		struct damon_ctx *c)
++{
++	struct damon_target *t;
++
++	t = quota->charge_target_from;
++	if (!t)
++		return;
++	if (!c->ops.target_valid)
++		return;
++	if (c->ops.target_valid(t))
++		return;
++	quota->charge_target_from = NULL;
++	quota->charge_addr_from = 0;
++}
++
+ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ {
+ 	struct damos_quota *quota = &s->quota;
+@@ -3318,6 +3334,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 			damos_trace_esz(c, s, quota);
+ 	}
  
- This is a sampling based mechanism.  Hence, it is lightweight but the output
- may include some measurement errors.  The output should be used with good
++	damos_reset_invalid_charge_target_from(quota, c);
++
+ 	if (!c->ops.get_scheme_score)
+ 		return;
+ 
+
+base-commit: 98a7a286b6060dce5e93b37e28f2e0be80304027
 -- 
 2.47.3
