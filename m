@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2943C9EEC;
-	Sun,  6 Sep 2026 21:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381F93CAA47;
+	Sun,  6 Sep 2026 21:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788728724; cv=none; b=nekJplSuCw1qvTbu7ivIbXKAqFciu20eal8+4XA9q5warphvxEDGyKBpVr1STFlxc3vuqEdcQmuMFFTEzHtqlwLeNGM8nQzcSfxBDTgcAKMgls+Agv0fZH14EoORobKa9IVHoOdFyTmCQKOI1I2Rq2aiCJlbyWzI4ue6TEbKpJg=
+	t=1788728724; cv=none; b=Py+n6nqbLz7EnfmzGAZiTsHe1H2is90j28rJs3VsQvqLb5n5T1diK5IvbCIeTiFGOw48jwCgILnFv7buSPDZ8HCtuxuIj1uOjtb1F696P5G6qp0gjXcpSXMvdYH088Wc6wEacTrKMAgnkfOejensSh3nDG7G3TqrLaOEOH+Q5NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788728724; c=relaxed/simple;
-	bh=fgvSLC/gXautyKR9CQkvAKHXgVlLvuXKciF4/d8Tuao=;
+	bh=5MPlXzTMzu+dtxnKFeJkCBo3NIMp4n5dweksJaeBp/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PgCQ2Vlb0KZrqAP9Lv+d8QPWb1e45lo/ObpyRe1obYU6tLbW4FC/9iLognIP3ojKASVmCaDflHfxOPOn/HSmTyqWdnqd9tjHU+DmsqJMrdVuX2WNsdCyd2yzDgs51dLX4DWm5/q5gyMHl+xvwHBJFqLpZRAp8ySj1ZOjDuO47bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sz9smd3K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bKTUHs7/hqDhU3QFFt1hKJQ0aZdaFsSg4wML1iHuTvQTXBE6UuTqDhR7z0jxVZcFeYXRK5znJV/XinNsb6ISt2G6CjYZjtLIhYg040UQRKXRn10ltmHUhVl2eH2e+Cao2JNtOt+4FCyBiMyZQrTlJVGIqoRMj7rL/D9ZzrBxZ+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=azX6Hu6+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sz9smd3K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3411F00AC4;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="azX6Hu6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFDF1F00A3F;
 	Sun,  6 Sep 2026 21:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788728722;
-	bh=ILNnV2GNeZ514oIRb82a8/magMxY2v4d8tE00F50zJs=;
+	s=k20260515; t=1788728723;
+	bh=KfRQdDvn8Y4M2LTyexgG1B+ohuNKkP22FbeL73FEnAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sz9smd3K0kdpamyBM7yfwtN1T/yGLSKh6HIwF0592pndbKJYo92wSM89pOpSKGpv7
-	 gSVM4PjNlbzIV7Ab0D7KROaeL6RObir5GFu4jRkC43c6JQMYK5NEVF917pv3QqxP6R
-	 jJwYD3fEIbxNOp0nr4iCbyB5G71GNWkDBOXaPGSKxHRYBUBRNodhk8/ZRWj0uzNUt2
-	 Yls5FAzE6gytZm2ePvbhcIRoU4RpIGGIUMV877iR11qP66zBKrQCH7L34JIdTVIy2C
-	 y7qrb2bI3Toy6tSDMiw/5oXeIuRGieBOPj3zsE8Af/1cmJ/Qh8Hkubm+KAZW9VwP4/
-	 usA5kqJdejTXQ==
+	b=azX6Hu6+AM7WikMiNEgis2NfbDfVi+nNwMk8uq1WQ5j59Gx41P6zAzVDFJmKB2R9b
+	 VITdlxluRE7NjpziLnevoqTrfM9aglvtrXBemBnJoRsAh6zTDoANecthhYuhoHx07t
+	 TJDMYtAU/02VVKhbbAQrd0kv2q1Y7rT32uUVKIhFBKJQbKF3y7vSB9W71ppE3osmCQ
+	 ZyWuQq+EzTBOtwlc/9Vt0w+vKarkgxwDGHo/tSV1OnOGpm9tGDXZkgK6K7u58qPVuc
+	 6OIG1Nr2x/tfZMCDgG5Dc8PZCc58D2dnF4EFMMVPjXzVVe20AGnkRlb+b6CGnWkTux
+	 4hpkr2JL3e64A==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 3/6] mm/damon/sysfs-schemes: rename sysfs_filter->sz_range to range_{min,max}
-Date: Sun,  6 Sep 2026 14:05:09 -0700
-Message-ID: <20260906210513.106895-4-sj@kernel.org>
+Subject: [RFC PATCH 4/6] mm/damon/sysfs-schemes: setup range_{min,max} for probe_hits_wsum filter
+Date: Sun,  6 Sep 2026 14:05:10 -0700
+Message-ID: <20260906210513.106895-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260906210513.106895-1-sj@kernel.org>
 References: <20260906210513.106895-1-sj@kernel.org>
@@ -47,93 +47,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface provides 'min' and 'max' files under the DAMOS
-filter directory.  The purpose is setting the general range arguments
-for hugepage_size like filters that require range arguments.  So far,
-hugepage_size was the only filter using it.  Hence sz_range field of
-damon_sysfs_scheme_filter struct was connected to the files.
-
-In future, we could add a new filter that can reuse the 'min' and 'max'
-files.  And the filter might use a range of a type that is not size. For
-example, probe_hits weighted sum.  In this case, simply reusing the
-sz_range field would make it a little confusing.  Rename sz_range to
-range_{min,max} to avoid such confusion.
+Extend DAMON sysfs interface to support probe_hits_wsum input.  Also
+update sysfs input based scheme build logic to setup the min/max probe
+hits weighted sum range as user provided.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ mm/damon/sysfs-schemes.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index d9b81d7b5910e..4d9147d2a269e 100644
+index 4d9147d2a269e..e297a20c0af03 100644
 --- a/mm/damon/sysfs-schemes.c
 +++ b/mm/damon/sysfs-schemes.c
-@@ -534,7 +534,8 @@ struct damon_sysfs_scheme_filter {
- 	bool allow;
- 	char *memcg_path;
- 	struct damon_addr_range addr_range;
--	struct damon_size_range sz_range;
-+	unsigned long range_min;
-+	unsigned long range_max;
- 	int target_idx;
- };
- 
-@@ -588,6 +589,7 @@ damos_sysfs_filter_type_names[] = {
+@@ -589,7 +589,10 @@ damos_sysfs_filter_type_names[] = {
  		.type = DAMOS_FILTER_TYPE_TARGET,
  		.name = "target",
  	},
-+
+-
++	{
++		.type = DAMOS_FILTER_TYPE_PROBE_HITS_WSUM,
++		.name = "probe_hits_wsum",
++	},
  };
  
  static ssize_t type_show(struct kobject *kobj,
-@@ -778,7 +780,7 @@ static ssize_t min_show(struct kobject *kobj,
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
- 
--	return sysfs_emit(buf, "%lu\n", filter->sz_range.min);
-+	return sysfs_emit(buf, "%lu\n", filter->range_min);
- }
- 
- static ssize_t min_store(struct kobject *kobj,
-@@ -786,7 +788,7 @@ static ssize_t min_store(struct kobject *kobj,
- {
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
--	int err = kstrtoul(buf, 0, &filter->sz_range.min);
-+	int err = kstrtoul(buf, 0, &filter->range_min);
- 
- 	return err ? err : count;
- }
-@@ -797,7 +799,7 @@ static ssize_t max_show(struct kobject *kobj,
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
- 
--	return sysfs_emit(buf, "%lu\n", filter->sz_range.max);
-+	return sysfs_emit(buf, "%lu\n", filter->range_max);
- }
- 
- static ssize_t max_store(struct kobject *kobj,
-@@ -805,7 +807,7 @@ static ssize_t max_store(struct kobject *kobj,
- {
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
--	int err = kstrtoul(buf, 0, &filter->sz_range.max);
-+	int err = kstrtoul(buf, 0, &filter->range_max);
- 
- 	return err ? err : count;
- }
-@@ -2835,12 +2837,13 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
- 		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
- 			filter->target_idx = sysfs_filter->target_idx;
- 		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
--			if (sysfs_filter->sz_range.min >
--					sysfs_filter->sz_range.max) {
+@@ -2844,6 +2847,14 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
+ 			}
+ 			filter->sz_range.min = sysfs_filter->range_min;
+ 			filter->sz_range.max = sysfs_filter->range_max;
++		} else if (filter->type == DAMOS_FILTER_TYPE_PROBE_HITS_WSUM) {
 +			if (sysfs_filter->range_min >
 +					sysfs_filter->range_max) {
- 				damos_destroy_filter(filter);
- 				return -EINVAL;
- 			}
--			filter->sz_range = sysfs_filter->sz_range;
++				damos_destroy_filter(filter);
++				return -EINVAL;
++			}
 +			filter->sz_range.min = sysfs_filter->range_min;
 +			filter->sz_range.max = sysfs_filter->range_max;
  		}
