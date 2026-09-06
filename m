@@ -1,115 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B66391E51
-	for <damon@lists.linux.dev>; Sun,  6 Sep 2026 18:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D9C3B28D;
+	Sun,  6 Sep 2026 19:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788721113; cv=none; b=Yss6KcocVv5Y85jP1YAVqqxekHy/D4LppAVNykWkVxiIZNHKNQ2gnwMlDu25IVr52zYCuoJi9W63T6gLJ6PG+B9FF0CsOE9sYyPgHkVOVDPIDxP5IkeP3m5JcZHbsqs2v9S6HRCYeqV8gDPDtnYnEhCxPfwNqG8TnR+N7198lSc=
+	t=1788721521; cv=none; b=ta2Qiquvo4UnFo4EyBwq1fxAF9EbE9EvS+MQPVgtv0MLa3tVSYCHWol1yoyvdbkTQW6yZi23g0brbPhGz/ZM30mgU3U/GthdlHoJHZARYYsKdw06Mgm9pJ5En8Zwbflubkj6Y/7oCER7XwyuWeN3Fmm5pGyokTzWLu0ZpOz1n+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788721113; c=relaxed/simple;
-	bh=ZbLWwTK/Jocu6SkRAujFQLJHSax5lQt5E0TCJgEZqGk=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=atKCcgvqpzngdBRn4+vvj48sBYLqucwBy9Z5sT9g8PNOnfsbH7n+rvd1Kfrmesx9qxDowTnREa0DodhS8yuBd8jUY/01nFB3tfUeBTrg3klwiDQTo89M+YQFYkHqIuMEE4QhJx8+2tDgyYYjUpj5e9c46wSPQPaLmuLeuMuy9H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JI23hwnz; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788721521; c=relaxed/simple;
+	bh=lETY9aZwq/hOoo0xW/rBFXJkJiGG6zoo/qAU1fjk32o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tKy3dw6QES+sIRT/UHswzuDry4gnta1ivMxadGeVj142ez3TCeIPuGwDAbVezBqEe0SStZnZ2+QnUQ5PW3ztvP0Ug5mran9vEljWcUYDgjPJ2K6M1E3soeH5mndTRXSFWdD7tx2jmTlKaMPQAr/OG/Cqa3ls5BSd+qgePeJ8DYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i0DSUdFT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JI23hwnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535EB1F00A3A;
-	Sun,  6 Sep 2026 18:58:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i0DSUdFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF241F00A3A;
+	Sun,  6 Sep 2026 19:05:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788721111;
-	bh=20XEzvUQf9yxkzJzWRD9FiWO05u5w9/aMYKCYLAvJng=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=JI23hwnzUMRM0pa9enUFI3gfaH0Q/ldpzweSfZk0sjGGQgSjBj3PXW0xe+gvVy1Fr
-	 mKJiqkfg/JciOO9Arp4onn7su5/pjn/+HPygswe8eXLXKcj+eQy27kZnZm5F3uC6w/
-	 UDgVMQXJ7PdP/olaHhsc8UZWeWKDjApnEbiz2uiEX6dRbqa6FSOdq+B9AO0BplUngc
-	 2vOIy6istHWNgAQdJLbXVQc8cDPLgx5BnNIIi+3Ep6QlJJabVEnQkbGW1nemwJivbF
-	 gxVSlrWff2EzaTfIYCf6vLEjZy74LQs5cQkySRs7AlhNot+X5epGfplNuwI2BlbpGw
-	 Hi8iMoJkeQ8UQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH] mm/damon/core: reset invalid
- quota->charge_target_from
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260906183654.95634-1-sj@kernel.org>
-References: <20260906183654.95634-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 06 Sep 2026 18:58:30 +0000
-Message-Id: <20260906185831.535EB1F00A3A@smtp.kernel.org>
+	s=k20260515; t=1788721520;
+	bh=dtAM+2bE0Rt5IW1MUTCf8ImDEJDLu+CH2iU80hmdl/4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=i0DSUdFT3c6tYVS+//GqcD97I/17wah1Ryw8N2s1nkwwrEScYCZKdLGfnZvC/WTpF
+	 53Q8JEqP+DoBDKx+ywlx4UIAinCp+Ze68MJkbvkMD5wq6UKf+iNSkvPrtv17YGBv4x
+	 wVoqXaJ1SGuXL/znhrd/UgapwfNetF8hSRMEOJjvU+fyljxPYw/JyepxHblzox9Z6K
+	 hEXF4WjHCWn+iQRcIKp/sI0IFWMUp+ySZoDSNrrst07GS6pGZNTI/HEyJd8bDOcDmo
+	 G5y7wjqgWvuLGQ11XWo4vqq1broom0+UUDt2bUoPl2X5Fz+vQ5D43wFZ+wDDxDIcGW
+	 7dr1AoJoszn5Q==
+From: SJ Park <sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 0/5] mm/damon/vaddr: support {prep,apply}_probes
+Date: Sun,  6 Sep 2026 12:05:12 -0700
+Message-ID: <20260906190513.98247-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260906184417.96621-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+On Sun,  6 Sep 2026 11:44:10 -0700 SJ Park <sj@kernel.org> wrote:
 
-Pre-existing issues:
-- [High] The new `damos_reset_invalid_charge_target_from()` function fails =
-to reset dangling `charge_target_from` pointers for PADDR operations, perma=
-nently breaking `damon_reclaim` functionality across restarts.
---
+> DAMON supports data attributes monitoring.  However, only the physical
+> address space operation set (paddr) is supporting it.  Add the support
+> to the virtual address space operation set (vaddr).
 
-commit 6f10f4f2fc1ae76229671b5157f9aa34aed9227b
-Author: SJ Park <sj@kernel.org>
+Sashiko found no blocker for this series.  Sashiko send its findings to damon@
+mailing list [1], and I reply those if anything needs to be clarified.  Please
+refer to those for details.
 
-    mm/damon/core: reset invalid quota->charge_target_from
+[1] https://lore.kernel.org/damon/
 
-This commit fixes an issue where DAMOS suddenly stops working if a target
-process that a quota just fully charged in is terminated. It catches this
-corner case and resets the invalid quota->charge_target_from pointer.
 
-Link: https://lore.kernel.org/20260830064708.40CA61F000E9@smtp.kernel.org
+Thanks,
+SJ
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index ce8c6f99106ed..2c58be9edbde4 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -3283,6 +3283,22 @@ static void damos_trace_esz(struct damon_ctx *c, s=
-truct damos *s,
->  	trace_damos_esz(cidx, sidx, quota->esz);
->  }
-> =20
-> +static void damos_reset_invalid_charge_target_from(struct damos_quota *q=
-uota,
-> +		struct damon_ctx *c)
-> +{
-> +	struct damon_target *t;
-> +
-> +	t =3D quota->charge_target_from;
-> +	if (!t)
-> +		return;
-> +	if (!c->ops.target_valid)
-> +		return;
-
-[Severity: High]
-This is a pre-existing issue, but by returning early here, does this new
-function fail to clear dangling charge_target_from pointers for PADDR
-operations (like damon_reclaim)?
-
-If damon_reclaim is enabled with quotas and hits quota exhaustion,
-quota->charge_target_from is set. If damon_reclaim is then disabled,
-damon_stop() destroys the targets, leaving charge_target_from as a dangling
-pointer.
-
-When damon_reclaim is re-enabled, a new target is created. Because
-target_valid is NULL for PADDR operations, this new function returns early.
-
-Could this lead to damos_skip_charged_region() comparing the new target
-against the dangling pointer, evaluating to true, and permanently skipping
-all memory reclaim actions?
-
-> +	if (c->ops.target_valid(t))
-> +		return;
-> +	quota->charge_target_from =3D NULL;
-> +	quota->charge_addr_from =3D 0;
-> +}
->
->  static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260906183654.9563=
-4-1-sj@kernel.org?part=3D1
+[...]
