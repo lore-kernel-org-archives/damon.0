@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5A8288C2D
-	for <damon@lists.linux.dev>; Mon,  7 Sep 2026 17:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26D94FDE4F;
+	Mon,  7 Sep 2026 17:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788802063; cv=none; b=BbAouM5YPQ5IAAoD5+isyOO/1HU5P7gaIiXxdWbu886pWFdjSNmIdsvJyc2Ku3GdRhmwtRoSH985BTFeNI8zaynz33ijYHU8F/CeUUJBc8ZnSuglzGq1YjmFn2FnLqpcneK8BfiBvv4N0VGmWRlx3F2Ye2u6CV/94Y3HJaXb8+c=
+	t=1788802122; cv=none; b=K0g1E6xVklBC73ULdE76mt3fgRcPtAeNBPFxnR74IMfkkPmOFKPqKDRqKhw84ouUVup2A5AyuYCrrCADRimO61ZkHPGdu6Emz4wQIAgzmZw/diG/qSmdUag1pvzsykIDVY1tOKqm8Yw56uSXIINMbQXjQsVXTgHWhyYKoek8eec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788802063; c=relaxed/simple;
-	bh=1Q+kswFFpeW0ZOxAaa3jY06CP66s/iag/Rd6bVKldt4=;
+	s=arc-20240116; t=1788802122; c=relaxed/simple;
+	bh=vXwLNfHPzU8bfsofq4g8bmwUYL5F0bhrd10fUU0cZT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QLHU3LA1FBWEclQCDTyMZDZrnPP671g8YP9vHRKcYvy2gzYWlwDZw1eJapTWJn8+XTcnswCxSJD0hG106JInPPV5UnT3eRdrozOrt1Uye6vZf09/deWlNRsOaCtPA3GT6BE9d8h1m5AZhpL1hcjN9lybdu2zUW2RNQxLasyq3Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g0dD3/4R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lZxu06PrLc1kc1FI/Ql1zDLixlaGuTXiRCQUC8qN++YELTz0P1FHcck/ATapeHunnbDfaS7/tg4lvwwjZKHvREgQPHm0s/vpxx1Ugx70AmxyKhbBeXu9Lm/i9v1KTywarG7PCN+heYiESkHwWuZ+4F7dRnH0FQ/J5PjKIjLs5X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PYW1rCbZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g0dD3/4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71A21F00A3A;
-	Mon,  7 Sep 2026 17:27:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PYW1rCbZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045F01F00A3A;
+	Mon,  7 Sep 2026 17:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788802062;
-	bh=Q6YrkXr/3FXXrH3UqW/aw/UXhavx+q5JQzDg0jcelVA=;
+	s=k20260515; t=1788802121;
+	bh=5b/sg7nRQD9/2QrfkHXPbfXaDTnpNCHth002k6PlL6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0dD3/4RXFphcgJYpoB3Jts6VHZ3ZfEKz+h63W5XjCNfpPngJ1dQGhCA6F/haMao6
-	 RMytYkR4Qsl/NtkTtzxQwAZiy5Zddh/jHjbXFxrOHdtr8sqNPYmUW3Hj/UkJETOM9K
-	 Bs06HRxtRoshG5vgV0TYaIfNgrLRwPmxMPyUgMNd4rS4DNRMfPVDfqo/Jq+taYKhY/
-	 yG3G9vmIHe2wgkKz3FYKIpYbDXDdXDFNU9nxT+S9HbH2PumHtIkXMWAq5Ouf0KWH5Q
-	 6QcRseL8rcYZ77R7jtHuGIb4VNhv2gY3R8kp9YSVmJ90tg64lE3Cb6AO14AJ+x3lDE
-	 hFt7oX2RAvHGQ==
+	b=PYW1rCbZTZK99N+NNFGs7g/OHBV3T9qv/759RQ4v6LlXSkJ2M2a128/B1bdIaxXiN
+	 5gvQxG2k5CpBoaJC9t/yFqaiCKSsnDMm5ncqUSG7xSz9uBwyPVrJYpAd8PZBW1DwdS
+	 7MQG73viD3iqAfSx5H3LSBirkbRRQFY8UQ3PPQUU2wi6wOAX2Yh6wcaqUIV4CYBRJJ
+	 f+I1jPepRGT9vQfbvrexSaraqe5iImI36nqXHWZvskLwPhdRZmzQ++s3b3NoncP5Ff
+	 73LRe7TTCFuEfILDGmnK/iqP69dlFoKRAN9lqsvyeD9M8l7qnmhJf0jIoUMrjMXz3Q
+	 rnEiPxrVlZXUQ==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	stable@vger.kernel.org,
+	Enze Li <lienze@kylinos.cn>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
 Subject: Re: [PATCH] mm/damon/core: reset invalid quota->charge_target_from
-Date: Mon,  7 Sep 2026 10:27:33 -0700
-Message-ID: <20260907172735.102248-1-sj@kernel.org>
+Date: Mon,  7 Sep 2026 10:28:32 -0700
+Message-ID: <20260907172833.102388-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260907171346.9A93F1F00A3A@smtp.kernel.org>
+In-Reply-To: <20260907165529.98874-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,77 +46,18 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 07 Sep 2026 17:13:46 +0000 sashiko-bot@kernel.org wrote:
+On Mon,  7 Sep 2026 09:55:27 -0700 SJ Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] The newly added fix for invalid `charge_target_from` pointers is bypassed if a scheme's quota is dynamically disabled, leaving the scheme permanently broken.
-> --
-> 
-> commit f88287bb2670346a5987d086e0731c7ba6d0b19e
-> Author: SJ Park <sj@kernel.org>
-> 
->     mm/damon/core: reset invalid quota->charge_target_from
->     
->     DAMOS can suddenly stop working if a target process that quota just
->     fully charged in it is terminated.  Fix by catching and processing the
->     corner case.
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index ce8c6f99106ed..2c58be9edbde4 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> [ ... ]
-> > @@ -3318,6 +3334,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
-> >  			damos_trace_esz(c, s, quota);
-> >  	}
-> >  
-> > +	damos_reset_invalid_charge_target_from(quota, c);
-> > +
-> >  	if (!c->ops.get_scheme_score)
-> >  		return;
-> >  
-> 
-> [Severity: High]
-> This is a pre-existing issue, but does this bypass the newly added reset if a
-> scheme's quota is dynamically disabled?
-> 
-> If a user hits the corner case where charge_target_from becomes invalid, and
-> then dynamically disables the scheme's quota via sysfs (setting ms=0 and
-> sz=0), damos_adjust_quota() will return early before the reset is reached:
-> 
-> mm/damon/core.c:damos_adjust_quota() {
-> 	if (!quota->ms && !quota->sz && list_empty(&quota->goals))
-> 		return;
-> 	...
-> }
-> 
-> Because damos_skip_charged_region() does not check if the quota is enabled
-> before evaluating charge_target_from, it will continue to skip all regions
-> forever:
-> 
-> mm/damon/core.c:damos_skip_charged_region() {
-> 	...
-> 		if (t != quota->charge_target_from)
-> 			return true;
-> 	...
-> }
-> 
-> Could the pointer reset be moved before the early return in
-> damos_adjust_quota(), or could the skipping logic be updated to handle
-> disabled quotas?
+> DAMOS can suddenly stop working if a target process that quota just
+> fully charged in it is terminated.  Fix by catching and processing the
+> corner case.
 
-Good catch.  I think we should unset the charge_{target,addr}_from in
-damos_commit_quota().  I will do so in the next version.
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260907165529.98874-1-sj@kernel.org?part=1
+Sashiko found this fix is not complete.  I will post a new version.
 
 
 Thanks,
 SJ
+
+[...]
