@@ -1,41 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FDB51E44B;
-	Mon,  7 Sep 2026 17:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C00D51FCA0;
+	Mon,  7 Sep 2026 17:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788801149; cv=none; b=JCCbQiz/oIIrHQKqrP9B2tAmASvUmq/GctLa875sIVFUGGED4wgJfNrtEwMnB9hdFxtsNlaJ9yPaLS+3MkxIJrcZ62cKUhAfFm/wyg1cbUCPJ8qI99FXnL3A9gHeN10tpgTIY4umeiZil/e6Dzm6g2XCCOC16fLmv61VGGm+mPs=
+	t=1788801149; cv=none; b=iqoMZQnTj6kh4XpgWOxQEOSlctYhGCCnb4iVD2N2WIK2Y0vk3MsaR3ybI65iqeIGn/2meRODf5S38uCjl5hYOHA5IMi/Y+OuK8IjQa1yygVgLC2VsINi8ms2a+Ql/P937nfwfoCPpGPfntZYHV5rnsJO2R/z4Lw0hrCQXIIMxeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788801149; c=relaxed/simple;
-	bh=NxJNNkLIMwN7Y3HTJHZKVUGVJLfNN3bM8VvJRz993Jc=;
+	bh=+pwt7ytLNv7N/tXD0TT/aWOG89chC7GSwPZ5TDexaSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4TmDaEuAyj3mKik7ex6D5jKnhN3t6gC5InO0j5DwyG9vdzUBU+Dr/oIEZD45WZT6HMLPOmRONTH+YqkxJPz9+tV8PU7FeMNPCRrsPPVkmnvnT3d1WeOE3MZz/eVWtK45a+vw30gAiTCZqmGSaTBCQcekI7wmAKlurr14C2iwnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CA9dADgt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FeAYNZArl/Bmzws60qcXnL2rugg52ah+YRqA8nwwXRI2USYHiazmjkKJ1Jre5Gvgeya3IO/GNBBL9tMUwMrFYX7kkSe5ffbXs8YhgmIh3YXrAyvAbS3aI7tIYwGiwbpHcBzeLd9kp5D3tp2ZsH0zWQFfCg0EQYiIy7N9MFmvkGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ULOcj1+A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CA9dADgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063A91F00ACA;
-	Mon,  7 Sep 2026 17:12:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ULOcj1+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547671F00ACF;
+	Mon,  7 Sep 2026 17:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1788801147;
-	bh=0LMfK+vJvFqvjmpgUK8C/JqVd+cTrrKRqz+a3Phr1zw=;
+	bh=3QelAmhdJ8KPxvwLkmNC9X/53BNSeYX//IkIfked+Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CA9dADgtK6IS30SWaNAkNxa55qZYJ4+mHnCLcym4xvMm/SrQ0hSfu5yvB0XQPcayH
-	 yqMERbE98Vd5iJ0RRCudq+w2WC0al1HUlFrZ26A4YZHPFqN3A8qFRYyIeE3Die/SFV
-	 K1RMICJPB+GHJKu22h8NhLdABZRVuaOwOuHEoYTe6w6Rsha/rFxXj/7P9uhyKhHaCS
-	 fuGb/jxvgE+A1vO8R0jJ2VEUppklpJ01IgrrBjfkSw79R+FyKU/1WBItixY9EYH4ML
-	 9VCtfgudJWNc2tydeFhQFjSyLC1mfFr+F8dzBa+/A665w1x19eUOJwMTAAsnsWTnVa
-	 sxI89uKyqAVEw==
+	b=ULOcj1+AJUjnPLd17XkSPhcPcHUidVKWGqekiLNjlvxtZ3f+/XbjQoNwssXBu8OzU
+	 G3zcFDrA1JQRHS4fK21J8STziU+/+9C+Vqn/1qmxpGe8cM8YtTwrKVz9ayrRyRHkjl
+	 W5bCGu2n05qfFsaGOdhPfDz8v7BclHFLLwgr6zoyUPX7W1jedNkN7rgGGpp2FrgwcZ
+	 6YgBtAvzZlEEM1BqM8e2trpVuPTOJQbYGvsy0eCm7LoUmMzk+s4iR2LarRMAi/g2mY
+	 AYtqHxN6V8Wey793BFm5f+uhDMEEYTm5KIxG4KfdeP3UWnwssw4h6NxG+uBX+WiE05
+	 OYGzpEk1N4GhA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 5/7] mm/damon/sysfs-schemes: support probe_hits_wsum damos core filter
-Date: Mon,  7 Sep 2026 10:12:14 -0700
-Message-ID: <20260907171218.101430-6-sj@kernel.org>
+Subject: [RFC PATCH v2 6/7] Docs/mm/damon/design: update for probe_hits_wsum DAMOS core filter
+Date: Mon,  7 Sep 2026 10:12:15 -0700
+Message-ID: <20260907171218.101430-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260907171218.101430-1-sj@kernel.org>
 References: <20260907171218.101430-1-sj@kernel.org>
@@ -47,45 +58,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend DAMON sysfs interface to support probe_hits_wsum input.  Also
-update sysfs input based scheme build logic to setup the min/max probe
-hits weighted sum range as user provided.
+Update DAMON design document for the newly added probe hits weighted sum
+based DAMOS core filter type.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ Documentation/mm/damon/design.rst | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 4d9147d2a269e..d9dd4ee0442c7 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -589,7 +589,10 @@ damos_sysfs_filter_type_names[] = {
- 		.type = DAMOS_FILTER_TYPE_TARGET,
- 		.name = "target",
- 	},
--
-+	{
-+		.type = DAMOS_FILTER_TYPE_PROBE_HITS_WSUM,
-+		.name = "probe_hits_wsum",
-+	},
- };
- 
- static ssize_t type_show(struct kobject *kobj,
-@@ -2844,6 +2847,14 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
- 			}
- 			filter->sz_range.min = sysfs_filter->range_min;
- 			filter->sz_range.max = sysfs_filter->range_max;
-+		} else if (filter->type == DAMOS_FILTER_TYPE_PROBE_HITS_WSUM) {
-+			if (sysfs_filter->range_min >
-+					sysfs_filter->range_max) {
-+				damos_destroy_filter(filter);
-+				return -EINVAL;
-+			}
-+			filter->range_min = sysfs_filter->range_min;
-+			filter->range_max = sysfs_filter->range_max;
- 		}
- 
- 		damos_add_filter(scheme, filter);
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index aac84de261aa8..8e980dde362de 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -822,6 +822,9 @@ Below ``type`` of filters are currently supported.
+         - Applied to pages that belonging to a given address range.
+     - target
+         - Applied to pages that belonging to a given DAMON monitoring target.
++    - probe_hits_wsum
++        - Matches to monitoring regions having a given range of :ref:`probe
++          hits weighted sum <damon_design_attrs_only_monitoring>` value.
+ - Operations layer handled, supported by only ``paddr`` operations set.
+     - anon
+         - Applied to pages that containing data that not stored in files.
 -- 
 2.47.3
