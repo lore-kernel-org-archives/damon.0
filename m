@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F94F51D506;
-	Mon,  7 Sep 2026 17:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C47C501F53;
+	Mon,  7 Sep 2026 17:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788800647; cv=none; b=cpEKmaqOxQlqKteuwVfWBb09RpZvcv2hg9MtJReMoEhBYdPhgK7n1zUfZo2GWtwoB9KHs/OtJyA3Df4Y063Y5ZGYHXLmY2y3toLubOVF81jWfBWimqo1HX2QGLnJVEVe3ImUxxCOBieL+YxtGTfSu+phjxSJWf7zxOESmmN+gJA=
+	t=1788801147; cv=none; b=gYo7LHVyNjkMCZGViVLq2PNR8hRb/5u3db6fzkfshegEBBpU26IKBq9hVR8ZogaHS2F6bVYYZGCatn/nw9bGlOoRyIoRbLL57vrv7uQX0Zyo5TVwYZzASulx4+KFEru4rH6MjeHMaQSF4i/hu/b2ctSu6lDnHbrp7r8vtjNnVBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788800647; c=relaxed/simple;
-	bh=1nb2Lrl4FkREdUYUC2wFNA9dEf2CCOJ0Ise5FV4ANp0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iHYR4eU5Sfk/AwV+QdgapXUamanaalbBEtNgJBd9UIgHVwwZR+2GnyeAX8dDBrEAjna4pJ7RMBnZKueUJD6cPg5RAA8EnZbL8Xv5qSS7fpuS9OES5wr0cXZj4qlnNZn5IvKM6FywqWb9YWIbusrVXGJzMFg52GceHmifzVucS6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AqLQYXbK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788801147; c=relaxed/simple;
+	bh=Y1BNgJTPI/nQKjFvvasfGPi5MdMWj2Yvyi9brUFOviM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=dVbGR0b6mcSlOsF/tGQTaJNvhNdKgQ2nXLFCHJg6BsXC5ze5IX+AFZutDx/Ynr3Oo3zCsa8ad0WF/N21HdjLoo2h/AxEhjEGWaODeBi0E/+WPEIHqGvIm50RePMi41JKPawBs1qE6xWRj5o7h5NwisT+f1xlN+ruR8zjtYeRJaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KHBRoN/J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AqLQYXbK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C5E1F00A3A;
-	Mon,  7 Sep 2026 17:04:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KHBRoN/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B364C1F00A3E;
+	Mon,  7 Sep 2026 17:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788800645;
-	bh=EvrEEOMq5Q8SO0XgN8y2BpwwzJurxJLVntxkjNABWa4=;
-	h=From:To:Cc:Subject:Date;
-	b=AqLQYXbKd70NwZm4KHuilLL0jYtbDLHWAXuIWodIdBdO+1DQQF0PSpDYJcm7udxm9
-	 ouQxzYVgqWsk+Epp+RWOmgnbIDgWeXueoWSlgx+b2svEghbgTrrFZSkZnF1r2DsfkN
-	 qnkmgUTVwdmgKKE7TnX7amoPNWUmnZMOloJLmO3mzg7J/Y3kL6KghALj9CfGG5t6BJ
-	 CzMF+62xCEMOKVKzRHcNFp+6tzsj+qx5wOf5/JUXy8x9P6SuAlmRUnAmUfjjnqHOkX
-	 DODaRnJSfCiIKkeo1/+TsOX7rV3mhyRILi33ySH1mMF7KA4j3n9dQB3tyRpIjHYq82
-	 G8unYZCFa+0zw==
+	s=k20260515; t=1788801145;
+	bh=Dxxa5wP8u6+NzrCeSUKIx091CaUINS3Abxx04SVxcHc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=KHBRoN/JWf+JSmblQjMDXNP3atlUTDvNsd4f4vJv+3KdhlTwqVCDKx4TLP5HdJMh7
+	 SZCE1v99rIiKmttJvXs0hQmgyeiICbIfE25qXhypdvBuI7kqoG+Vc/mjPjDy/954BN
+	 pqDCLAOXybS3PKOZT9s9efM7vhJ8xnm+RKldCioPS8IRAeBZ8GKqdyLevetfjmlNSV
+	 F9f9eDyaUSNODVeD2BZn0Fym77oZj/rSloYHl3AF31Goqky1lq1JkiYdLzS2yewKmV
+	 GY2qrMU5jJDYPXyEFILOEaFPcyB8ClW0xf1i6cvH6A8NLIQuMMS/JURU8T1c9zJL4R
+	 E/ovuggBfCETw==
 From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: 
 Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH] mm/damon/vaddr: avoid hw-driven pte updates during damon_hugetlb_mkold()
-Date: Mon,  7 Sep 2026 10:03:56 -0700
-Message-ID: <20260907170358.100168-1-sj@kernel.org>
+Subject: [RFC PATCH v2 1/7] mm/damon/api: introduce DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
+Date: Mon,  7 Sep 2026 10:12:10 -0700
+Message-ID: <20260907171218.101430-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260907171218.101430-1-sj@kernel.org>
+References: <20260907171218.101430-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,81 +46,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_hugetlb_mkold() reads the page table entry into a local variable,
-unsets the accessed bit in the variable, and updates the page table
-entry with the updated variable value.  If hardware updates the same
-page table entry in parallel, the hw updates could be lost.  For
-example, hardware-updated dirty bits might be lost.
+Update DAMON kernel API to introduce new DAMOS core filter type,
+PROBE_HITS_WSUM.  It will allow API callers to describe the DAMOS action
+target regions based on their probe_hits weighted sum.  For describing
+the filtering target weighted sum range, add two type-dependent union
+fields to damos_filter.
 
-Avoid the parallel updates by clearing the page table entry when reading
-it together, using huge_ptep_get_and_clear().  If a parallel write to
-the memory is made after the clearing, the hw will see the page table
-entry is cleared, trigger page fault and wait until it is handled.  The
-page fault handling will wait for damon_hugetlb_mkold() due to the page
-table lock.
-
-Because hugetlbfs is an in-memory file system and hugetlb pages cannot
-be reclaimed, no critical issue is expected to my best knowledge.  But
-definitely this is a nasty bug that should be fixed sooner rather than
-later.
-
-The issue was discovered [1] by Sashiko.
-
-[1] https://lore.kernel.org/20260830160545.98969-1-sj@kernel.org
-
-Changes from RFC
-- RFC: https://lore.kernel.org/20260906195417.103263-1-sj@kernel.org
-- Drop RFC tag.
-
-Fixes: 49f4203aae06 ("mm/damon: add access checking for hugetlb pages")
-Cc: <stable@vger.kernel.org> # 5.17.x
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/vaddr.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ include/linux/damon.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index f884d3f78f30a..91a0d441c1f94 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -283,22 +283,29 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
- }
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 871d26adf6ae5..1deda16bb70b5 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -399,6 +399,7 @@ struct damos_stat {
+  * @DAMOS_FILTER_TYPE_UNMAPPED:	Unmapped pages.
+  * @DAMOS_FILTER_TYPE_ADDR:	Address range.
+  * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
++ * @DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:	probe_hits weighted sum range.
+  * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
+  *
+  * All types except &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET
+@@ -420,6 +421,7 @@ enum damos_filter_type {
+ 	DAMOS_FILTER_TYPE_UNMAPPED,
+ 	DAMOS_FILTER_TYPE_ADDR,
+ 	DAMOS_FILTER_TYPE_TARGET,
++	DAMOS_FILTER_TYPE_PROBE_HITS_WSUM,
+ 	NR_DAMOS_FILTER_TYPES,
+ };
  
- #ifdef CONFIG_HUGETLB_PAGE
-+static bool damon_hugetlb_ptep_mkold(pte_t *pte, struct mm_struct *mm,
-+		struct vm_area_struct *vma, unsigned long addr, pte_t *entry)
-+{
-+	unsigned long psize = huge_page_size(hstate_vma(vma));
-+
-+	if (!pte_young(*entry))
-+		return false;
-+	*entry = huge_ptep_get_and_clear(mm, addr, pte, psize);
-+	*entry = pte_mkold(*entry);
-+	set_huge_pte_at(mm, addr, pte, *entry, psize);
-+	return true;
-+}
-+
- static void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
- 				struct vm_area_struct *vma, unsigned long addr)
- {
- 	bool referenced = false;
- 	pte_t entry = huge_ptep_get(mm, addr, pte);
- 	struct folio *folio = pfn_folio(pte_pfn(entry));
--	unsigned long psize = huge_page_size(hstate_vma(vma));
- 
- 	folio_get(folio);
- 
--	if (pte_young(entry)) {
--		referenced = true;
--		entry = pte_mkold(entry);
--		set_huge_pte_at(mm, addr, pte, entry, psize);
--	}
--
-+	referenced = damon_hugetlb_ptep_mkold(pte, mm, vma, addr, &entry);
- 	if (mmu_notifier_clear_young(mm, addr,
- 				     addr + huge_page_size(hstate_vma(vma))))
- 		referenced = true;
-
-base-commit: 13eba1898080a8a54c60710322909fb0a4d35e84
+@@ -434,6 +436,8 @@ enum damos_filter_type {
+  *		&damon_ctx->adaptive_targets if @type is
+  *		DAMOS_FILTER_TYPE_TARGET.
+  * @sz_range:	Size range if @type is DAMOS_FILTER_TYPE_HUGEPAGE_SIZE.
++ * @range_min:	Minimum value of range arguments.
++ * @range_max:	Maximum value of range arguments.
+  *
+  * Before applying the &damos->action to a memory region, DAMOS checks if each
+  * byte of the region matches to this given condition and avoid applying the
+@@ -450,6 +454,10 @@ struct damos_filter {
+ 		struct damon_addr_range addr_range;
+ 		int target_idx;
+ 		struct damon_size_range sz_range;
++		struct {
++			unsigned long range_min;
++			unsigned long range_max;
++		};
+ 	};
+ /* private: */
+ 	/* List head for siblings. */
 -- 
 2.47.3
