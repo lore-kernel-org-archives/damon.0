@@ -1,44 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E641B51E437;
-	Mon,  7 Sep 2026 17:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD4C51D53C;
+	Mon,  7 Sep 2026 17:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788801148; cv=none; b=ScfGwvvwXIuhcGs80hPkk/pcXK26vRLlhTuCq8Gm/ynrGc2TxXHUYNvSXW/uCtYl2dmo0mMZN8bBvQSbAMUxqaweyLReR3rmQK2rZwSxf38lDd1ft5j/L7DYLowHA0FOUVHG+DySmjmVTcZ+Yh8xZ7RxeC6DGVkd38PsgJCNFws=
+	t=1788801148; cv=none; b=jtpFK5ya8FLOqbngwwIfEZ/5HQ1HModo2cTheLjoq9JcKd32fQYxiogHOOAoyROZEG5PW0HODd+yrGCTNKHM2zVYS2XWfYOOz8AB6ZVM14QE7UtGpSd0pdHbJ/gfQER9SXVpYx3skSu4TNNZw5vMR1ltZR//0+lUw5wVT0uPQds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788801148; c=relaxed/simple;
-	bh=fgvSLC/gXautyKR9CQkvAKHXgVlLvuXKciF4/d8Tuao=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKbFAMDvwMUc2spfcIQ54GbfaFmkDemZifO7fMwZCTRVgZDu7g/QpgfbQn5wkgMddLgZ57+hcyet/hIGg7sGuvxp7r8D9+VKQhjB4qJCYsqHxdXpZlpsWH2r8MrdBuFSeZIaqCSws4wZPYtoViZPNUg9TWUMTwaMpkD9bi0MbdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S10ENAEz; arc=none smtp.client-ip=100.103.45.18
+	bh=CXgZSpIQXX9GUpSFbygQz96dQyeP8fiQOTkP/Q1JHSs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ch7+J6e9/Rg2Ca21bVXS+bwNfVHkXi8+MpUH6Zj4dqivx17TJV8ZDNnRo3Jf1JC0VjyDJpFsV/mpKYYmWeCMN6p6KizyoQKEMJLlWrDUbIV1LDT3MhhQNXQPS+sDn/jU/ubEg54xreqKZNYqWOwMT827iihWYrnYP9e9jxUux8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=np/evmUe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S10ENAEz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30DB1F00AC4;
-	Mon,  7 Sep 2026 17:12:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="np/evmUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099081F00A3A;
+	Mon,  7 Sep 2026 17:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788801146;
-	bh=ILNnV2GNeZ514oIRb82a8/magMxY2v4d8tE00F50zJs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S10ENAEz+rTe0VzLVb8HlABccmpIU/BJbaBfKG1ypPbkRLmNGyWW5j3QOF4dslhwp
-	 eRcQDIfY10Icfh+8+ZtdbSa/jUQDAbdVGBFsnEhVEaR6fyZ0/8ft9fDNCxo8MkqNhT
-	 GLlzQPE0SmLLym6fL47jGYWCYATA3Cqpw0g1uH5Y+OwhVYyetS4+JHolbyIQpNOBEA
-	 M1rNkmMjokbEugQw93ptF0ZOfp7S13iryzneWxE5Acq/0pEFzdRk4iWh98qbWh6tyj
-	 Wl4Gh35D/5nvIfDB+5dUt0lJw/Cdyiz5LLT77848z9kYG6Z59bRpll6urXHjZq0Drn
-	 qOcAJgmYObDJw==
+	s=k20260515; t=1788801145;
+	bh=Y4p31XPgokx2qGPPsP878fh0V85lBvlTq2ciEbDGO3U=;
+	h=From:To:Cc:Subject:Date;
+	b=np/evmUeNjelzFmw9xTdA+JsbGs2ltTV2QDwKxwAcVeIdX6kt3gku2vENsL3wRZRk
+	 eVZB4+X8aRVXmz7mM/V0LTwoH+hqtzMzpW3ElsYo57KVgxbasBMregeE6v7eSCG3jx
+	 aYyN014d7bUA9dBcRPw39EfEIBlPJtomNq+he3HqOAKLRmptzRzj0VgteoTyFq0dnh
+	 Uw2DNz3W4uYLrkOmjbRJtdkkc8/zmzG/O3pCVMU952hdHp3i9sKLnllmyF3ss8fcPb
+	 4700rT65guzgVUEa6HlwV6MxJKGDAcBHWcm/Y87JulXMeB6vY0AgnvfG7GuaUSSmqE
+	 AM5vIJc9hyCiQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 4/7] mm/damon/sysfs-schemes: rename sysfs_filter->sz_range to range_{min,max}
-Date: Mon,  7 Sep 2026 10:12:13 -0700
-Message-ID: <20260907171218.101430-5-sj@kernel.org>
+Subject: [RFC PATCH v2 0/7] mm/damon: introduce probe_hits_wsum DAMOS core filter
+Date: Mon,  7 Sep 2026 10:12:09 -0700
+Message-ID: <20260907171218.101430-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260907171218.101430-1-sj@kernel.org>
-References: <20260907171218.101430-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,97 +55,72 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface provides 'min' and 'max' files under the DAMOS
-filter directory.  The purpose is setting the general range arguments
-for hugepage_size like filters that require range arguments.  So far,
-hugepage_size was the only filter using it.  Hence sz_range field of
-damon_sysfs_scheme_filter struct was connected to the files.
+DAMON can do flexible data attributes monitoring.  The classical data
+access monitoring can also be done using the attributes monitoring.  The
+access event is just one of the data attributes that DAMON supports.
+Users do monitoring to make some actions based on it.  DAMOS is a
+feature for automating that.  However, DAMOS cannot utilize the data
+attributes monitoring results.  It is still Data "Access"
+Monitoring-based Operation Schemes.  It requires users to set the target
+"access" pattern.
 
-In future, we could add a new filter that can reuse the 'min' and 'max'
-files.  And the filter might use a range of a type that is not size. For
-example, probe_hits weighted sum.  In this case, simply reusing the
-sz_range field would make it a little confusing.  Rename sz_range to
-range_{min,max} to avoid such confusion.
+DAMOS core filter is effectively the same as the target access pattern.
+It is just a more generalized and flexible way of describing the
+operation action target region.  Introduce a new DAMOS core filter type,
+probe_hits_wsum.  It specifies the filter target based on a range of the
+probe hits weighted sum.  Using this, users can apply DAMOS actions to
+regions of specific data attributes pattern.
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/sysfs-schemes.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+Note that the classic target access pattern still works.  Hence the
+target nr_accesses range should still be properly configured.  The new
+filter would be used in only data attributes-only mode.  In the mode,
+classic access monitoring is just turned off, and therefore nr_accesses
+of regions are always zero.  Users could simply set the target
+nr_accesses range to include the zero nr_Accesses regions.
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index d9b81d7b5910e..4d9147d2a269e 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -534,7 +534,8 @@ struct damon_sysfs_scheme_filter {
- 	bool allow;
- 	char *memcg_path;
- 	struct damon_addr_range addr_range;
--	struct damon_size_range sz_range;
-+	unsigned long range_min;
-+	unsigned long range_max;
- 	int target_idx;
- };
- 
-@@ -588,6 +589,7 @@ damos_sysfs_filter_type_names[] = {
- 		.type = DAMOS_FILTER_TYPE_TARGET,
- 		.name = "target",
- 	},
-+
- };
- 
- static ssize_t type_show(struct kobject *kobj,
-@@ -778,7 +780,7 @@ static ssize_t min_show(struct kobject *kobj,
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
- 
--	return sysfs_emit(buf, "%lu\n", filter->sz_range.min);
-+	return sysfs_emit(buf, "%lu\n", filter->range_min);
- }
- 
- static ssize_t min_store(struct kobject *kobj,
-@@ -786,7 +788,7 @@ static ssize_t min_store(struct kobject *kobj,
- {
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
--	int err = kstrtoul(buf, 0, &filter->sz_range.min);
-+	int err = kstrtoul(buf, 0, &filter->range_min);
- 
- 	return err ? err : count;
- }
-@@ -797,7 +799,7 @@ static ssize_t max_show(struct kobject *kobj,
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
- 
--	return sysfs_emit(buf, "%lu\n", filter->sz_range.max);
-+	return sysfs_emit(buf, "%lu\n", filter->range_max);
- }
- 
- static ssize_t max_store(struct kobject *kobj,
-@@ -805,7 +807,7 @@ static ssize_t max_store(struct kobject *kobj,
- {
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
--	int err = kstrtoul(buf, 0, &filter->sz_range.max);
-+	int err = kstrtoul(buf, 0, &filter->range_max);
- 
- 	return err ? err : count;
- }
-@@ -2835,12 +2837,13 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
- 		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
- 			filter->target_idx = sysfs_filter->target_idx;
- 		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
--			if (sysfs_filter->sz_range.min >
--					sysfs_filter->sz_range.max) {
-+			if (sysfs_filter->range_min >
-+					sysfs_filter->range_max) {
- 				damos_destroy_filter(filter);
- 				return -EINVAL;
- 			}
--			filter->sz_range = sysfs_filter->sz_range;
-+			filter->sz_range.min = sysfs_filter->range_min;
-+			filter->sz_range.max = sysfs_filter->range_max;
- 		}
- 
- 		damos_add_filter(scheme, filter);
+Patches Sequence
+================
+
+Patch 1 updates the DAMON kernel API for the new filter type.  Patch 2
+extends damon_probe_hits_wsum() to do the calculation based on moving
+sum.  Patch 3 implements the filter type in the core layer.  Patch 4
+refactors DAMON sysfs interface internal data structure for efficient
+reuse of data structure for the probe hits weighted sum range user
+inputs.  Patch 5 updates DAMON sysfs interface to support the new filter
+type.  Patches 6 and 7 update design and usage documents for the new
+filter type, respectively.
+
+Changelog
+=========
+
+Changes from RFC
+- RFC: https://lore.kernel.org/20260906210513.106895-1-sj@kernel.org
+- Fix kernel-doc typo.
+- Use moving sum based weighted sum.
+- Fix wrong range saving field names in sysfs.
+
+SJ Park (7):
+  mm/damon/api: introduce DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
+  mm/damon/core: extend probe_hits_wsum() for moving sum based
+    calculation
+  mm/damon/core: support probe_hits_wsum damos core filter
+  mm/damon/sysfs-schemes: rename sysfs_filter->sz_range to
+    range_{min,max}
+  mm/damon/sysfs-schemes: support probe_hits_wsum damos core filter
+  Docs/mm/damon/design: update for probe_hits_wsum DAMOS core filter
+  Docs/admin-guide/mm/damon/usage: update for probe_hits_wsum DAMOS
+    filter
+
+ Documentation/admin-guide/mm/damon/usage.rst |  4 +++
+ Documentation/mm/damon/design.rst            |  3 ++
+ include/linux/damon.h                        | 10 ++++++-
+ mm/damon/core.c                              | 20 +++++++++++--
+ mm/damon/paddr.c                             |  2 +-
+ mm/damon/sysfs-schemes.c                     | 30 ++++++++++++++------
+ mm/damon/vaddr.c                             |  2 +-
+ 7 files changed, 57 insertions(+), 14 deletions(-)
+
+
+base-commit: 48856ec5bf2f614ff3ef647bbf7cc605faf8c977
 -- 
 2.47.3
