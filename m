@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D1454B1CC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF61F4A92D7;
 	Tue,  8 Sep 2026 13:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788875539; cv=none; b=fbRQtDmdOwlLi1QDDW5EWmXFt95/9JHU/aw6apMGaHjEHF3YKZzASn6hs9KTUvQxiqcaBv5CE2V2LRh74FHFHlxWdznjQ0VFkM4Zn7qWdc2wwhzbNRIeKLD1vNfrtN7Ws4tge/I84V8eAKP8RGP6QChUfdGaHnyO10KdlIHPcFM=
+	t=1788875541; cv=none; b=OT7swWNJxtWN1hKPNCdUOKEMWm3wmrXDwjmi1rQGTP4/Z0jHfBMvsa+xR97Nj5W36Z7xL53Lm/o0+nJ/pH+LafkpN19CaPZeNCKxUM/v6UGgmiUKh9gfjAoDytKdzXinw8DkYzpyE4f7Jsn5H3mTDVbiExOMxdug9BVTZRHxC9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788875539; c=relaxed/simple;
-	bh=KHDIh335W8FKetHqgUJZAilYRrFY8ilqgzc0OxsOTfE=;
+	s=arc-20240116; t=1788875541; c=relaxed/simple;
+	bh=LgpzZwApGv4Mf3DVIQPh9CC2QnA5d+vuXcWDfFntOAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMIMs24r+ih28J5Jmq+W5Skqlz6XVufoK620NGHzE8UuVuf/0GRQ6Ij5/ZDV4I+xVaar/EDeRagQuoXyg7EZ3ZYEZXVocien1ME+dtmYmghxvTNZS8pCxLlBlaglw7MWuuO3tEchkaEieDjQwyGe3EhBxUrnwGAeC+M9I9YZcRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hdfYkuV6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iUPObOhl8rlYJTmNRY3PAobOEQPY5HJvzSTFE3MDSwLQD6iCL7LCTIlqYYnFXoAyBdJ4fCn/Peysr4cI1gEx3ahZY+y/uUyflaGFaguS0IdBi/BdBEzsvjZq0jcW83vcbwpzXo51k0cAMsJv8H7fdYmkc8MQeiHGytcEOw7bzyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OMph5lxd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hdfYkuV6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC24B1F00A3E;
-	Tue,  8 Sep 2026 13:52:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OMph5lxd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC801F00A3F;
+	Tue,  8 Sep 2026 13:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1788875524;
-	bh=6kczmrPAUogSYXZZ+xxo8bL8jMA/tFmXj3bQ+IC2xRQ=;
+	bh=AChODC5AHZLUdfC+ioRgIkad6KpONv/acCA4JtBhMak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdfYkuV6xeUH2S6Q+QtzgR+3pVWXzHTRUCvHcyhdEZt8PVcgIXAC002vdQo9mo8Rn
-	 YHOYP5gHWieUOEJwHEqM8ENToViQzIareRHLM8Ha8X5aVR82QP0fU2IewbK/3bqP5v
-	 xL4h+XtBdkoQFonQesAT+1hjqUQ0wDcXasz59emqgCP80Mf4vnQEOj40ulgIcFvQ/V
-	 AmROXWB5pqz2v2yvd6yfl0C+XB3iccrOUEvg+DFM4vp4hggxnH4kqbOFjDB9ki0iR/
-	 +sn7i3tFBS4RO61PrkgZJTG1SKKbFdybDvj3Pq9yX2NcC237Yuw/cxdc9+Dm1QPTlU
-	 SWEo19qZcOdaA==
+	b=OMph5lxdwJPFP27MCU5ckrGtAumdEQ53z1H3ThxtpdEwMOOIpqKEJUuSpfL+ejXL4
+	 I/+huYYYGxVpn2d5Q1DcUtlw7rlZ2IU0C5KErJIsm2i2qYU/TAjg+Ta0otZloeIdm6
+	 GkPabVyGquEO4w29MHJui6yuNwFjVSfkIYMhy8YNxgZRoVQ9Tf80ks3n45prLoeMbu
+	 eEuMVzLrteuNpqsCd1daSvIEHkMg86PHi4ss2sRY5Fp2PGCan1Yo3j1TisitL9KGaf
+	 TD/okaz5/bW1iwY2fLJTnykbuw+EtfphToMcCVl1NOEthVd+0ZPUfLsrzcYaZQQoox
+	 WoxJLRbo8QQZQ==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Krishna Iyer <kiyer@crusoe.ai>,
@@ -33,9 +33,9 @@ Cc: Krishna Iyer <kiyer@crusoe.ai>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v3 1/3] mm/damon: move damon_hugetlb_mkold() from vaddr to ops-common
-Date: Tue,  8 Sep 2026 06:51:53 -0700
-Message-ID: <20260908135156.97481-2-sj@kernel.org>
+Subject: [PATCH v3 2/3] mm/damon/ops-common: handle hugetlb folios in folio mkold/young rmap walkers
+Date: Tue,  8 Sep 2026 06:51:54 -0700
+Message-ID: <20260908135156.97481-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260908135156.97481-1-sj@kernel.org>
 References: <20260908135156.97481-1-sj@kernel.org>
@@ -49,148 +49,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Krishna Iyer <kiyer@crusoe.ai>
 
-damon_hugetlb_mkold() clears the accessed bit of a hugetlb-mapping huge
-PTE and propagates the aging to secondary MMUs via
-mmu_notifier_clear_young(), spanning the whole huge page size.  It
-currently lives in vaddr.c, and is thus usable only by the virtual
-address space monitoring operations set.
+damon_folio_mkold_one() and damon_folio_young_one() assume the folios
+they walk are mapped by normal PTEs or THP PMDs.  When the folio is a
+hugetlb folio, page_vma_mapped_walk() returns the huge PTE in pvmw.pte
+with its page table lock held, but the walkers treat it as a normal
+PTE: they read and age it with PAGE_SIZE-granularity helpers, which is
+wrong for huge PTEs (up to PUD level), and notify secondary MMUs for
+only PAGE_SIZE of the mapping.
 
-The physical address space monitoring operations set will need the same
-logic, to support access monitoring of hugetlb-backed memory.  Move the
-function to ops-common as-is, with no behavioral change.  A follow-up
-change will use it from the folio-granular rmap walkers.
+Add hugetlb branches to both walkers.  The mkold walker reuses
+damon_hugetlb_mkold(), which the virtual address space operations set
+has been using for hugetlb aging: it clears the young bit of the huge
+PTE via set_huge_pte_at() and calls mmu_notifier_clear_young() spanning
+the whole huge page size.  The young walker gets an equivalent new
+helper, damon_hugetlb_young(), which reads the huge PTE with
+huge_ptep_get() and consults the page idle flag and
+mmu_notifier_test_young() like the existing PTE branch.
 
-Link: https://lore.kernel.org/20260902025700.17975-2-kiyer@crusoe.ai
+Locking mirrors what page_vma_mapped_walk() provides: the huge PTE's
+page table lock is held inside the walk, and for shared hugetlb
+mappings (the only ones subject to huge PMD sharing), rmap_walk_file()
+already holds i_mmap_rwsem, satisfying hugetlb_walk()'s locking
+requirements.
+
+This is currently dead code: both rmap walkers are only reachable
+through damon_get_folio(), which rejects hugetlb folios since they are
+not on the LRU lists.  A following commit will let the physical address
+space monitoring primitives opt in to hugetlb folios.
+
+Link: https://lore.kernel.org/20260902025700.17975-3-kiyer@crusoe.ai
 Cc: Andrew Morton <akpm@linux-foundation.org>
 Assisted-by: Claude:claude-fable-5
 Signed-off-by: Krishna Iyer <kiyer@crusoe.ai>
 Reviewed-by: SJ Park <sj@kernel.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/ops-common.c | 37 +++++++++++++++++++++++++++++++++++++
- mm/damon/ops-common.h |  9 +++++++++
- mm/damon/vaddr.c      | 34 ----------------------------------
- 3 files changed, 46 insertions(+), 34 deletions(-)
+ mm/damon/ops-common.c | 61 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 47 insertions(+), 14 deletions(-)
 
 diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index 7219c608b1952..995cc1f3b9f32 100644
+index 995cc1f3b9f32..349e1604cc1b1 100644
 --- a/mm/damon/ops-common.c
 +++ b/mm/damon/ops-common.c
-@@ -3,6 +3,7 @@
-  * Common Code for Data Access Monitoring
-  */
+@@ -205,10 +205,15 @@ static bool damon_folio_mkold_one(struct folio *folio,
  
-+#include <linux/hugetlb.h>
- #include <linux/migrate.h>
- #include <linux/mmu_notifier.h>
- #include <linux/page_idle.h>
-@@ -103,6 +104,42 @@ void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr
- #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
+ 	while (page_vma_mapped_walk(&pvmw)) {
+ 		addr = pvmw.address;
+-		if (pvmw.pte)
+-			damon_ptep_mkold(pvmw.pte, vma, addr);
+-		else
++		if (pvmw.pte) {
++			if (folio_test_hugetlb(folio))
++				damon_hugetlb_mkold(pvmw.pte, vma->vm_mm, vma,
++						addr);
++			else
++				damon_ptep_mkold(pvmw.pte, vma, addr);
++		} else {
+ 			damon_pmdp_mkold(pvmw.pmd, vma, addr);
++		}
+ 	}
+ 	return true;
+ }
+@@ -233,27 +238,55 @@ void damon_folio_mkold(struct folio *folio)
+ 
  }
  
 +#ifdef CONFIG_HUGETLB_PAGE
-+static bool damon_hugetlb_ptep_mkold(pte_t *pte, struct mm_struct *mm,
-+		struct vm_area_struct *vma, unsigned long addr, pte_t *entry)
++static bool damon_hugetlb_young(pte_t *pte, struct vm_area_struct *vma,
++		unsigned long addr, struct folio *folio)
 +{
-+	unsigned long psize = huge_page_size(hstate_vma(vma));
++	pte_t entry = huge_ptep_get(vma->vm_mm, addr, pte);
 +
-+	if (!pte_young(*entry))
-+		return false;
-+	*entry = huge_ptep_get_and_clear(mm, addr, pte, psize);
-+	*entry = pte_mkold(*entry);
-+	set_huge_pte_at(mm, addr, pte, *entry, psize);
-+	return true;
++	return (pte_present(entry) && pte_young(entry)) ||
++		!folio_test_idle(folio) ||
++		mmu_notifier_test_young(vma->vm_mm, addr);
 +}
-+
-+void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
-+		struct vm_area_struct *vma, unsigned long addr)
-+{
-+	bool referenced = false;
-+	pte_t entry = huge_ptep_get(mm, addr, pte);
-+	struct folio *folio = pfn_folio(pte_pfn(entry));
-+
-+	folio_get(folio);
-+
-+	referenced = damon_hugetlb_ptep_mkold(pte, mm, vma, addr, &entry);
-+	if (mmu_notifier_clear_young(mm, addr,
-+				     addr + huge_page_size(hstate_vma(vma))))
-+		referenced = true;
-+
-+	if (referenced)
-+		folio_set_young(folio);
-+
-+	folio_set_idle(folio);
-+	folio_put(folio);
-+}
-+#endif	/* CONFIG_HUGETLB_PAGE */
-+
- #define DAMON_MAX_SUBSCORE	(100)
- #define DAMON_MAX_AGE_IN_LOG	(32)
- 
-diff --git a/mm/damon/ops-common.h b/mm/damon/ops-common.h
-index 38d295488fa18..f7811c9c7a024 100644
---- a/mm/damon/ops-common.h
-+++ b/mm/damon/ops-common.h
-@@ -9,6 +9,15 @@ struct folio *damon_get_folio(unsigned long pfn);
- 
- void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr);
- void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr);
-+#ifdef CONFIG_HUGETLB_PAGE
-+void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
-+		struct vm_area_struct *vma, unsigned long addr);
 +#else
-+static inline void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
-+		struct vm_area_struct *vma, unsigned long addr)
++static bool damon_hugetlb_young(pte_t *pte, struct vm_area_struct *vma,
++		unsigned long addr, struct folio *folio)
 +{
++	return false;
 +}
 +#endif	/* CONFIG_HUGETLB_PAGE */
- void damon_folio_mkold(struct folio *folio);
- bool damon_folio_young(struct folio *folio);
++
++static bool damon_pte_young(pte_t *pte, struct vm_area_struct *vma,
++		unsigned long addr, struct folio *folio)
++{
++	pte_t entry = ptep_get(pte);
++
++	/*
++	 * PFN swap PTEs, such as device-exclusive ones, that actually map
++	 * pages are "old" from a CPU perspective. The MMU notifier takes care
++	 * of any device aspects.
++	 */
++	return (pte_present(entry) && pte_young(entry)) ||
++		!folio_test_idle(folio) ||
++		mmu_notifier_test_young(vma->vm_mm, addr);
++}
++
+ static bool damon_folio_young_one(struct folio *folio,
+ 		struct vm_area_struct *vma, unsigned long addr, void *arg)
+ {
+ 	bool *accessed = arg;
+ 	DEFINE_FOLIO_VMA_WALK(pvmw, folio, vma, addr, 0);
+-	pte_t pte;
  
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 91a0d441c1f94..af9e1b82454cc 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -283,40 +283,6 @@ static int damon_mkold_pmd_entry(pmd_t *pmd, unsigned long addr,
- }
- 
- #ifdef CONFIG_HUGETLB_PAGE
--static bool damon_hugetlb_ptep_mkold(pte_t *pte, struct mm_struct *mm,
--		struct vm_area_struct *vma, unsigned long addr, pte_t *entry)
--{
--	unsigned long psize = huge_page_size(hstate_vma(vma));
+ 	*accessed = false;
+ 	while (page_vma_mapped_walk(&pvmw)) {
+ 		addr = pvmw.address;
+ 		if (pvmw.pte) {
+-			pte = ptep_get(pvmw.pte);
 -
--	if (!pte_young(*entry))
--		return false;
--	*entry = huge_ptep_get_and_clear(mm, addr, pte, psize);
--	*entry = pte_mkold(*entry);
--	set_huge_pte_at(mm, addr, pte, *entry, psize);
--	return true;
--}
--
--static void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
--				struct vm_area_struct *vma, unsigned long addr)
--{
--	bool referenced = false;
--	pte_t entry = huge_ptep_get(mm, addr, pte);
--	struct folio *folio = pfn_folio(pte_pfn(entry));
--
--	folio_get(folio);
--
--	referenced = damon_hugetlb_ptep_mkold(pte, mm, vma, addr, &entry);
--	if (mmu_notifier_clear_young(mm, addr,
--				     addr + huge_page_size(hstate_vma(vma))))
--		referenced = true;
--
--	if (referenced)
--		folio_set_young(folio);
--
--	folio_set_idle(folio);
--	folio_put(folio);
--}
--
- static int damon_mkold_hugetlb_entry(pte_t *pte, unsigned long hmask,
- 				     unsigned long addr, unsigned long end,
- 				     struct mm_walk *walk)
+-			/*
+-			 * PFN swap PTEs, such as device-exclusive ones, that
+-			 * actually map pages are "old" from a CPU perspective.
+-			 * The MMU notifier takes care of any device aspects.
+-			 */
+-			*accessed = (pte_present(pte) && pte_young(pte)) ||
+-				!folio_test_idle(folio) ||
+-				mmu_notifier_test_young(vma->vm_mm, addr);
++			if (folio_test_hugetlb(folio))
++				*accessed = damon_hugetlb_young(pvmw.pte, vma,
++						addr, folio);
++			else
++				*accessed = damon_pte_young(pvmw.pte, vma,
++						addr, folio);
+ 		} else {
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 			pmd_t pmd = pmdp_get(pvmw.pmd);
 -- 
 2.47.3
