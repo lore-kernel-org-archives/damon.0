@@ -1,61 +1,151 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0F5576ED4
-	for <damon@lists.linux.dev>; Tue,  8 Sep 2026 16:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66803568FCD
+	for <damon@lists.linux.dev>; Tue,  8 Sep 2026 17:52:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788884915; cv=none; b=LvHX31V0pjI11m8yjj68B4A1KSKRrRxBvX8+lpYHTMbh/oCXbeHIwf7ZJO1eA3WQrfT9QlWxG2hVwTOU4lueqL1tJTF/bGPCER6DRHsS+nEL5r1FdzwoJhaV1B1nx1NBNAcq2sfMm1zsWXeMstdzNjgFxvwxssCnHh7dE8pWX5Q=
+	t=1788889954; cv=none; b=q4gyPGdiMgwR2/pw4BjtSrl21fKRfshrMQ3EgwZUecTqzeP3L+yHNoudpt6BggqS+Clensv2qSgAPz4w+89sqXZSkP5DfGIkAph7/lz2fPJP0Lb+Z8s+PeqLaWjpP7AuO/rDm8DxKs5Y4neE+VYEy1xVctwUvbVL2hLHXfrbk7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788884915; c=relaxed/simple;
-	bh=/j8nDaDHyJ8yDIMk9Ca9qYI9JRa01I8yPeev9KAxdAc=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=thcJseZc+LvVyZXGMIt+7TlfrvuMpb/OiSV3oYrwbrnhePtQiJkz8PemF6WgOeF3ckt3s/8+PT08mcH50qRU2wxHBUvvl8pkq/IeWxcuLkJmRcwz3MTY2oqtS0WE/8ihaIhwLmd6NX1akd7wLyEehQ1JCxTlFomoannDj53mfLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VrKCxiwO; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788889954; c=relaxed/simple;
+	bh=KLjeMvdxyqc6SnotIiFUKvLtc/Zy+nfps2KNDr3g1+M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d9QVsNOuPQpzhE0KeEIAXqddzai1LaimjlJ6xi6Z4RvfmK4i+nYvN8HkofmBYmNHCscqeScbIKAHNEbtr9rKzK043Kxg/dSBFRvE3EVp22e8OrCEc9rUtDf+4ghi4P+wEFnA/OkO8WlVURJsWnN8LvBb4yojH7H+FxN8Y9pEMwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mBmGvKO4; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VrKCxiwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8E51F00A3A;
-	Tue,  8 Sep 2026 16:28:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788884913;
-	bh=ROvFynrWcvpdb/VLe9DB8eTurYy7eEgaJWSrD+ZtLBU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VrKCxiwO5ZxpDHPCGoZcWLv8ZpMLLYOBf70d0+Puhg6xrBg5uuCMg7SXpmz/fsAQO
-	 LRd00aJeK3KAL51t8XNrEUeOVgE4qt9Cc43+wNs+0KEm8mqxhmjuvcnJAG64GhQn93
-	 XcQDzOo2ZOGm9qXw9L8yMiY9rAygEbwbY0C7Nf8YG/ErgB9yDsCs6nAN3ERoTJDPpT
-	 Vh/BI6Qa5lerxQ053v8IyySeLyFOAwJMMEPNo9YoJ4/KeYP7lgQ+woMkGB7D7Eue2t
-	 MQ1NFUWedmKWAie5sLZk8CS0oWFwJ/DLkLZLVvWn5obvV0Yr3nuEmVvn2tfyJzqu98
-	 3jZq6bN2bs5aA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] selftests/damon: ignore test-generated
- damon_dump_output
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Zenghui Yu" <zenghui.yu@linux.dev>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260908162716.85648-1-zenghui.yu@linux.dev>
-References: <20260908162716.85648-1-zenghui.yu@linux.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 08 Sep 2026 16:28:33 +0000
-Message-Id: <20260908162833.9F8E51F00A3A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBmGvKO4"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-cc1c3c90074so4185403a12.2
+        for <damon@lists.linux.dev>; Tue, 08 Sep 2026 10:52:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1788889951; x=1789494751; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=yuf7kW9a8gMm8dZPCPYh7BVn/yZWMPnrvgi9MavGUdA=;
+        b=mBmGvKO4C6rvkGfUrSbi/G0FuHRLQMD8sFG7WILxKnv3KosodntLfkDG44qrJXLh5o
+         BMLd7RwvZzjborbLpwQYTfYiIWB0/d6dm+59kTMbHcwMClKKQjUWPOiuMRszGPUxwihF
+         UulKZKYH+Kru9m/slJa/6zgYjzHN8JcsuUSgIne1gti6wNEWRm5/uMPMkq1J6W5Il1cK
+         A4aPNxrfU7j96ZdyhDkRtroJNkdanRP/lgUObpj51N/xE4CIKwsSNzu34S3sZrawjGRT
+         u0sYTInPt1l9BfRU3aZaZRkioUb5y3WpagfCaqslnctxTaxCUT4Rz8rUiiLXEhdFSPwh
+         t6wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1788889951; x=1789494751;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=yuf7kW9a8gMm8dZPCPYh7BVn/yZWMPnrvgi9MavGUdA=;
+        b=RMh8RbNXE+YGOF6PLhsHqMN2AVHaAsZPgvqfWynTnYoS2ngl4245IdW0P5fnsmM33r
+         so+e7OnAliCbpq5wworkoxk7zCShX7Qw5/IuAQUdL2zs2uS8YlYf185Mtk2EU0cJPd9L
+         Iv8wYorDobjvMaTa5BtF9v6h9e8vWu6oIOTTvwE3N9Pks4bW+FrP7KbAWhyTA4EXeSWL
+         vGP1OSu/YtFyfbdDO3cAQFlPZxK9k+marJUVf4hcvE5kG5VTjIK32OryaRwltCbkpQIg
+         idZLRFVzNJgN8Y70l59tvEmMGD6HIHOT92iZ/qGQxq7x9+zg5BhFCXMwLi6Y280mGgMM
+         jqUg==
+X-Forwarded-Encrypted: i=1; AKwUvBxYsj+xekO1BCs9F8OAMtuDY18cfEbN8wHob+llOg46xyZdVrF/TnPxwIvVF6tFJCRjWM5drA==@lists.linux.dev
+X-Gm-Message-State: AFuF++kNjtLbYeqKh6wd85fqshZ+5z+5Uhz7qPv5lsuXPiu3b0nIkA+A
+	q2Vg4PVQK4m87nqJhwhFQRB790e7LTFuEs9ITLgVOkgM39/cNwm7rwaK
+X-Gm-Gg: AYBFou1w94eguYlp/51rx4olucbioaJNZMQkxlFUJM89l0eNV8SfTIKr+79P7TC51ua
+	ALuM2NyA18Qhyrrv+tQ6r8Rbk4RrUlHnzyaHMxeNgFwYdZ5pGTQQPYFj/94TDTMBe3d3ENryd+I
+	Bp1o3HJeJgkDxri38NDb+t9l7dNQUI4ALwUcCMqYYf9dxhajI05UsahmBGYafbamz2ZomSyVKJ0
+	ma9RY9Ml2NcklUyQ5xc/vMbJ5mHllS2M09PioHQyoO7D4S6JZZRazaVdOM4P/44ClKbyiF8N8jP
+	2LQZfdn5+vHVQOZTr0zIjBAuwMOD1cEbPiEpE01isobn2JLGTzeOzFPRt4K5lzwmlNAXtYQJN9w
+	D5m2VWIh2OMrrLhc+riQggDNHPE1op5wsLRq/pJFLKMlt3hnWJsrjkw7kk/5VNDJvTIyjgdR5Ag
+	ii1QLaJlO9/eAFjR6yU/z1ftIa9GwuMRVlXCIrHpd/Ktk5mbMOLBgjORLMAuaD3eF+mC2sInoDm
+	NbSIE6jXb0RcpUGgA==
+X-Received: by 2002:a05:6a21:d82:b0:3d3:af86:fb94 with SMTP id adf61e73a8af0-3da3a246eb2mr48825562637.26.1788889951323;
+        Tue, 08 Sep 2026 10:52:31 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:885b:4183:b098:c1b9:7033:be8a])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc45a6abaa2sm5384356a12.23.2026.09.08.10.52.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Sep 2026 10:52:30 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: 
+Cc: Liew Rui Yan <aethernet65535@gmail.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [RFC PATCH] Docs/mm/damon/design: clarify when qt_exceeds increases
+Date: Wed,  9 Sep 2026 01:50:23 +0800
+Message-ID: <20260908175105.42558-2-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> From: "Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
->=20
-> sysfs.py and sysfs_no_op_commit_break.py dump the DAMON status collected
-> via drgn_dump_damon_status.py into a damon_dump_output file in the working
-> directory.  Ignore it so that running the tests in-tree does not pollute
-> git status.
->=20
-> Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+qt_exceeds counts how many times the quota of a scheme has exceeded.
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+The value can confuse users when the effective size quota is zero,
+because a zero effective size quota does not always mean the quotas are
+unset.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260908162716.8564=
-8-1-zenghui.yu@linux.dev?part=3D1
+If the quotas are unset, that is, both ms and bytes are zero and no
+quota goal is set, qt_exceeds never increases.  But if the user uses
+the temporal auto-tuning algorithm, the effective size quota becomes
+zero once the goal is [over-]achieved.  In that case the quotas are
+still set, so qt_exceeds keeps increasing once per quota reset
+interval while the goal stays achieved.
+
+Clarify this on the design document.
+
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+---
+
+By the way, I found a thing in the design document that confused me.
+
+    temporal: More straightforward algorithm. Tries to achieve the goal
+    as fast as possible, using maximum allowed quota, but only for a
+    temporal short time. ---> When the quota is under-achieved, this
+    algorithm keeps tuning quota to a maximum allowed one. Once the
+    quota is [over]-achieved <---, this sets the quota zero. Useful for
+    deterministic control required environments.
+
+I'm not sure if "goal" was accidentally written as "quota" here.  Would
+this be better?
+
+    When the goal is under-achieved, this algorithm keeps tuning quota
+    to a maximum allowed one. Once the goal is [over-]achieved, [...]
+
+---
+ Documentation/mm/damon/design.rst | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index d036340dae8a..e083b74d618b 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -863,6 +863,16 @@ scheme's execution.
+   completely tried to be applied.
+ - ``max_nr_snapshots``: Upper limit of ``nr_snapshots``.
+ 
++``qt_exceeds`` is increased for schemes with set quotas when the quota is found
++full at a quota reset interval boundary.  While the quotas are unset,
++``qt_exceeds`` never increased.  However, a zero effective size quota does not
++always mean the quotas are unset, if the ``temporal`` :ref:`auto-tuning
++algorithm <damon_design_damos_quotas_auto_tuning>` is used, the effective size
++quota is set to zero once the goal is [over-]achieved.  Since a set quota of
++zero effective size is always considered full, ``qt_exceeds`` keeps being
++increased once per quota reset interval in that case, until the goal is
++under-achieved again.
++
+ "A scheme is tried to be applied to a region" means DAMOS core logic determined
+ the region is eligible to apply the scheme's :ref:`action
+ <damon_design_damos_action>`.  The :ref:`access pattern
+-- 
+2.55.0
 
