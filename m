@@ -1,63 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-7.mta0.migadu.com [91.218.175.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47329556BA0
-	for <damon@lists.linux.dev>; Tue,  8 Sep 2026 14:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC81357983F
+	for <damon@lists.linux.dev>; Tue,  8 Sep 2026 16:27:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788879391; cv=none; b=g0r8mdWBf0JJe2Non+1Z6+UzyPXhHCElDlBzpqOjs9Z4PKGaHq6UtAR3JAsHDqAXyv4fzFtREG6q1fWuGN/L2ABth80FPmInhArebOKsiocHGlpV91yfgsj+ugPBaTMM7FnUhN84npu2oWoW//5Nf/xPu/4d31Yk+NvrEsGRRaM=
+	t=1788884855; cv=none; b=kUX+4ukX6W7N9KvrMf8XCwGD39TltVGN/k30VKWu0HWyiEHwO1RJ32mUfqhSc/qguXzKsPHoyhytW3OCoCNzeGFzL1NJpGEmfsPm7NrU/aLRsgWyuXY1udN4VuiKdj3SBuezPBc/rgcRwbr95Lo8EwopUuB6yjpy8tS5jpU46W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788879391; c=relaxed/simple;
-	bh=2I4WVyPc17dY+iQqY7wyoJr/cqhYb/4bSP7fq4+xL0M=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=SXAMpTMcREX+wNhfpMkU5TZRZzdkLDD+C6JZ0S64JlaWZDCwP8DlkmgENNreTU7YAnkD7yxdF25TS7fHbQU7QN87JOBz6tiNqH5WqTd0ILoZfYxYi9oOK0IbLfWqBHRM74mKFz+x7Hj6JcoJnd6BGwStDRYB4FWDDlzN9suVVCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4164D1F00A3A;
-	Tue,  8 Sep 2026 14:56:20 +0000 (UTC)
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2] mm/damon/core: reset invalid
- quota->charge_target_from
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260908144246.104162-1-sj@kernel.org>
-References: <20260908144246.104162-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 08 Sep 2026 14:56:12 +0000
-Message-Id: <20260908145620.4164D1F00A3A@smtp.kernel.org>
+	s=arc-20240116; t=1788884855; c=relaxed/simple;
+	bh=P9rcx9cRYKzp1j2igJPf6N36DH81nBcUWy49yeFgq6s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KBeSQv+fRUP0KCVM/SjvIda52Yebb4dj1ATHjS1OnZIxTmJ6tsh7TGoC0fW7nFyj/mU7AkUk0KgtvZDL06ijfCP2y4aJybi2m6MEeQpTLGYQzrZ1qlFjKUTojQ4iStVqhDbTSWQbnKuNLPoUas9wa4IFwBNCpFhHyk5guTsHTBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uY6g9PS7; arc=none smtp.client-ip=91.218.175.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uY6g9PS7"
+X-Envelope-To: damon@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=P9rcx9cRYKzp1j2igJPf6N36DH81nBcUWy49yeFgq6s=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1788884850; v=1; x=1789489650;
+ b=uY6g9PS7jFL3fQgacYlFZadH5klyrWZHPkaqhsknw1WBCFuEKKBiUpQBjC1/WQZjyF1aWjue
+ ZTZErUWstlgmViILyrBOD1mCDCg6bK68aUqOXswZGALVbLKRIsA4XhmvNeTogpXWD4okYlbwHvJ
+ 0hu8JiZO7eTUA/H4IPlZMkm0=
+X-Envelope-To: damon@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 24572b4011ab19ae;
+	Tue, 08 Sep 2026 16:27:30 +0000
+X-Mizu-Trace-ID: 24572b4011ab19ae
+X-Migadu-Flow: FLOW_OUT
+From: Zenghui Yu <zenghui.yu@linux.dev>
+To: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: sj@kernel.org,
+	shuah@kernel.org,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
+Subject: [PATCH] selftests/damon: ignore test-generated damon_dump_output
+Date: Wed,  9 Sep 2026 00:27:16 +0800
+Message-ID: <20260908162716.85648-1-zenghui.yu@linux.dev>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> DAMOS can suddenly stop working if a target process that the quota is
-> just fully charged on is terminated.  Fix by catching and processing the
-> corner case.
->=20
-> When DAMOS quota is fully charged, the target and the region to continue
-> applying the action in the next round is saved in
-> damos_quota->charge_{target,addr}_from.  In the next round, DAMOS
-> iterates targets and regions from the beginning.  It skips applying the
-> action to the regions until it visits and skips the saved target/region.
->=20
-> Virtual address space targets become invalid if the process is
-> terminated.  Trying to apply the scheme to invalid target is just a
-> waste of time.  Hence commit 6e4930e33329 ("mm/damon/core: fix wasteful
-> CPU calls by skipping non-existent targets") made the logic to skip
-> invalid targets.  However, it does skip before the charged target/region
-> [ ... ]
-> [1] https://lore.kernel.org/20260830064708.40CA61F000E9@smtp.kernel.org
->=20
-> Fixes: 6e4930e33329 ("mm/damon/core: fix wasteful CPU calls by skipping n=
-on-existent targets")
-> Cc: <stable@vger.kernel.org> # 7.0.x
-> Signed-off-by: SJ Park <sj@kernel.org>
+From: "Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+sysfs.py and sysfs_no_op_commit_break.py dump the DAMON status collected
+via drgn_dump_damon_status.py into a damon_dump_output file in the working
+directory.  Ignore it so that running the tests in-tree does not pollute
+git status.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260908144246.1041=
-62-1-sj@kernel.org?part=3D1
+Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+---
+ tools/testing/selftests/damon/.gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tools/testing/selftests/damon/.gitignore b/tools/testing/selftests/damon/.gitignore
+index 2f0297657c81..226bd7c4e072 100644
+--- a/tools/testing/selftests/damon/.gitignore
++++ b/tools/testing/selftests/damon/.gitignore
+@@ -1,3 +1,4 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ access_memory
+ access_memory_even
++damon_dump_output
+-- 
+2.53.0
 
