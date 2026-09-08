@@ -1,116 +1,126 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CB654DADC
-	for <damon@lists.linux.dev>; Tue,  8 Sep 2026 14:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2A149EC69;
+	Tue,  8 Sep 2026 14:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788878111; cv=none; b=SQLJOUwXfTxvoKvWF2GylDDfVgyJXWfwun2Uw0u3SWW1wZ28sczORcR5LHNbna7aIu+dYUn7UCQ+3Y8J1Y8eKIq9R4bf9qeDQMBMwNujgdVpwjmWNSKhGQ44YMimXMg3MsWzjK7dXJukgJsjLpu2wuBWIfSrQuDS7/LKgWZTrUc=
+	t=1788878584; cv=none; b=dXl/qPq+FV9/sHPoAxspCrpPiv6+2nKRvTlzmO5hTbywZg6m0TIxarcygfL+ITg1kMr69SoCy8wgxQGSxkwYk+JG/8vadI9sGq279wH0wrFaNYHQuBJj404Tip6ed3UtHj/WrkLBNNOS5PjAP9GR6lSJYWFb/hhQayXkQmA/sF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788878111; c=relaxed/simple;
-	bh=UOV3D+JKQom9LxNErC2aMRjfkFPGOwKK+Cf7ZNeMApk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o5o59kkyM7jRPth5UcAwGqdeItguKGU0Cy5JZX5txb1qmqB3vGMeX+Sgwtx/Ai1uIrMju1ook7uzyxErix/F6v/phndbrBg6vdtYKj/fviBXDMf6WTjg+TEqcNWd1NoeQtzkZmLs76omvDQqbnCLZQ8in1ZAUBAxI4ibkKVlFMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRq9X5uv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788878584; c=relaxed/simple;
+	bh=8I4SJYLaWlCODfgGIIihvoylnRMJJuun9WzbuneMutE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Abjmmz5wV9Ytve3hq8wJ//TvbdCxjOB6MUCJhh3yiFfUENFL8GvOu7whAUqs9np56bcPdbFGeszilHbQwmjETY/lbPh5iuYYtk0U/Wyfoff+JJBm04UXW6qkRHPCmPkZV0SFTyv/mOQcobkn1lVS1uN10kb3P+JJLApIcJB1wrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lz51TJq/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRq9X5uv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8981F00A3D;
-	Tue,  8 Sep 2026 14:35:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lz51TJq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3A11F00A3A;
+	Tue,  8 Sep 2026 14:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788878101;
-	bh=RL7tLHFAhfpvTsI7HEDiRikX7HHkWZAondRZExIIDvo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DRq9X5uvmy2z6o9TYljmgxyhgUJWj3cacEpc/w9owOGsrTFj0/pBFF6mQshd866LI
-	 ejPKCGjH7iIFisbKHM/W4K6RSuUnSkXg3KkeVm4CQVIF/o5mB+WR4v+qH4KWMHNwn0
-	 Uc6/H+59QmHaoZ5ZdxKL3TPZmJgNlnrWEj9wmtXO47NZzjycBsgU4iY2SlKOpEmk62
-	 /2QVWORojojvKrVmp7YhD5PqqgmKP/t0CBpANmZ05QOSpv/AJrUP3wlbVjZfwF/OKJ
-	 9OSzkZTQ7SdrMD5ZcPY34Zd+91eQa9OW3K0SCFZVgvYL/e1MdAOaRmFItJ9rnirlCC
-	 QZhIHjxp5GUHg==
+	s=k20260515; t=1788878574;
+	bh=jNxvFKt4UGJwKbXlYaf84gFPggvY9g3V38ihxwf2lM8=;
+	h=From:To:Cc:Subject:Date;
+	b=Lz51TJq/mLh0SOQWb50eZFJzbQhGHKJc5jizpRNUWLtlYghmUsHLlz7VUn2nmVaHn
+	 PPEhEdOtcobvJfaCFckPbFhXzZjyP5DsE6uAP6lbzYBrcrk9hzuF8n8TVxRHhFNl+R
+	 zZR7/V8OIrpLE9ji89C2nhPBMFrwBNYS/TVq+tMAr6MQdoyY5YE24JPjoww2ahRZPs
+	 NkTcKG8s4dfB0MCugKnrPX666QGVF6y5LCq9HDrcVghJ3Qj8GMLkcYqKWg4KRModJk
+	 UUr5mE/VAvZNUOGeNEDG5UCHf9M+ER9a03dJVu8+oVriCPIEYk6Mag+W8/c5o0IKDF
+	 Me4RIGqmuTfdQ==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: 
 Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH v3] mm/damon/core: fix unconditionally skip last region
-Date: Tue,  8 Sep 2026 07:34:52 -0700
-Message-ID: <20260908143454.102867-1-sj@kernel.org>
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Enze Li <lienze@kylinos.cn>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v2] mm/damon/core: reset invalid quota->charge_target_from
+Date: Tue,  8 Sep 2026 07:42:44 -0700
+Message-ID: <20260908144246.104162-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260908140737.2022F1F00A3E@smtp.kernel.org>
-References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Tue, 08 Sep 2026 14:07:20 +0000 sashiko-bot@kernel.org wrote:
+DAMOS can suddenly stop working if a target process that the quota is
+just fully charged on is terminated.  Fix by catching and processing the
+corner case.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> 
-> Pre-existing issues:
-> - [High] Quota tracking pointer `charge_target_from` can get permanently stuck if its corresponding target becomes invalid, freezing scheme application for all subsequent targets indefinitely.
-> --
-> 
-> commit 4d9a4144cc83637a927f5110bc1cc97f4064d9e8
-> Author: Liew Rui Yan <aethernet65535@gmail.com>
-> 
-> mm/damon/core: fix unconditionally skip last region
-> 
-> This commit modifies damos_skip_charged_region() to only reset the quota's
-> charge_target_from and charge_addr_from when the last region is reached.
-> It ensures that the last region of a tracked target is only skipped if it
-> was actually applied or cannot be split.
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index ce8c6f99106ed..89d1c77417450 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -2452,36 +2452,39 @@ static bool damos_skip_charged_region(struct damon_target *t,
-> >  {
-> >  	struct damos_quota *quota = &s->quota;
-> >  	unsigned long sz_to_skip;
-> > +	bool skip = false;
-> >  
-> >  	/* Skip previously charged regions */
-> >  	if (quota->charge_target_from) {
-> >  		if (t != quota->charge_target_from)
-> >  			return true;
-> 
-> [Severity: High]
-> This isn't a bug introduced by this patch, but is it possible for
-> quota->charge_target_from to remain stuck indefinitely if its corresponding
-> target becomes invalid?
-> 
-> Looking at kdamond_apply_schemes() in mm/damon/core.c, if a target becomes
-> invalid, it is skipped and damos_apply_target() is never called for it:
-> 
->     damon_for_each_target(t, c) {
->         if (c->ops.target_valid && c->ops.target_valid(t) == false)
->             continue;
->         damos_apply_target(c, t, max_region_sz);
->     }
-> 
-> If the previous quota window ended with quota->charge_target_from pointing
-> to this now-invalid target, wouldn't the 'return true' here in
-> damos_skip_charged_region() cause all regions of all subsequent valid targets
-> to be skipped?
-> 
-> Because the invalid target is never processed, t will never equal
-> quota->charge_target_from again.
-> 
-> Does this mean the pointer is never cleared, freezing scheme application for
-> all targets?
+When DAMOS quota is fully charged, the target and the region to continue
+applying the action in the next round is saved in
+damos_quota->charge_{target,addr}_from.  In the next round, DAMOS
+iterates targets and regions from the beginning.  It skips applying the
+action to the regions until it visits and skips the saved target/region.
 
-I'm working [1] on this issue.
+Virtual address space targets become invalid if the process is
+terminated.  Trying to apply the scheme to invalid target is just a
+waste of time.  Hence commit 6e4930e33329 ("mm/damon/core: fix wasteful
+CPU calls by skipping non-existent targets") made the logic to skip
+invalid targets.  However, it does skip before the charged target/region
+skipping/updating.
 
-[1] https://lore.kernel.org/20260907165529.98874-1-sj@kernel.org
+Let's suppose the user runs DAMOS for multiple virtual address spaces
+with a quota.  The quota exceeded in the middle of a virtual address
+space.  And the process of the address space is terminated.  Then the
+charge_target_from points to the invalid target.  The pointer update
+logic is skipped for the invalid target, so the charge_target_from is
+never updated.  DAMOS action to every target/region is skipped.  From
+the user's perspective, it would look like suddenly DAMOS has stopped
+working.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260908134739.96919-1-sj@kernel.org?part=1
+No critical leak or crash can happen.  The user could reinstall the
+scheme.  But this makes use of DAMOS under certain setups quite
+unreliable.
 
+When the invalid target is found, further check the corner case and
+reset the pointer.
 
-Thanks,
-SJ
+This issue was discovered [1] by Sashiko.
+
+[1] https://lore.kernel.org/20260830064708.40CA61F000E9@smtp.kernel.org
+
+Fixes: 6e4930e33329 ("mm/damon/core: fix wasteful CPU calls by skipping non-existent targets")
+Cc: <stable@vger.kernel.org> # 7.0.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from v1
+- v1: https://lore.kernel.org/20260907165529.98874-1-sj@kernel.org
+- Move the corner case check to invalid target found case, to handle
+  dynamic quota uninstall case.
+- Add RFC tag again.
+Changes from RFC v1
+- RFC v1: https://lore.kernel.org/20260906183654.95634-1-sj@kernel.org
+- Drop RFC tag.
+
+ mm/damon/core.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index ce8c6f99106ed..a360c41cda89c 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3389,8 +3389,15 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+ 	max_region_sz = damon_region_sz_limit(c);
+ 	mutex_lock(&c->walk_control_lock);
+ 	damon_for_each_target(t, c) {
+-		if (c->ops.target_valid && c->ops.target_valid(t) == false)
++		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
++			damon_for_each_scheme(s, c) {
++				if (s->quota.charge_target_from != t)
++					continue;
++				s->quota.charge_target_from = NULL;
++				s->quota.charge_addr_from = 0;
++			}
+ 			continue;
++		}
+ 		damos_apply_target(c, t, max_region_sz);
+ 	}
+ 
+
+base-commit: 4c152875952628604696dbba38cd487fdfde28ea
+-- 
+2.47.3
