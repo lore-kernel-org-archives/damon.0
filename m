@@ -1,94 +1,113 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4571B492E22;
-	Wed,  9 Sep 2026 03:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06DA492E47
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 03:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788926138; cv=none; b=m4BYSPYLHp8j7w0za1U/EYzlehhDNnZC0ZDhj866fdw9khIStp+UGm2E/TN/tk3IjGyoNW4QfKgYycARAYyw9G/D+JmuFO2+raBzsyl5vGRfyPRGZQHtsr3jQm5fgZWLdPYNjHWP5lRBDyvlxqrIncnWhZ1gph/VzCVaMzCMLFs=
+	t=1788926212; cv=none; b=HPiA8PjcyXV1lhh3rhRTCp534RUgpq3UP++AZwnqWfOH6tULAeGoBgBQCGEeLnGI2u/RNbtEnK1kzKBeDBCteDhDx5DAkGFzATLKmVeFoTRYLGYR1I1/YhUG2zC1YMjXVvWZ0zyZgh2qfq9/CPjbHqwnMTYvN2iXCix0zWMaXEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788926138; c=relaxed/simple;
-	bh=cq7mUkAGeEyv3KgxkJgZ8NEWFrXTCVefYXMxgG+OApc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONoNccqAOTc2TfCjnI5EQFMPKU1WcnIbUQX9IzyrfYX4DC9Cva4c+nZiXozFFloe+Tf80qq9yg66tGUsXxn8qRDFcg2RvjJBRkPt3YLH0W7uchggb6uAD7b03lXCJqYG/DjQdlXp4bd/8id7ZmzPLveUkzlyQrmhwhOWa5uU5uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQgXwf/l; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788926212; c=relaxed/simple;
+	bh=hWDpiUCrvzCX8Yg+AGkp/bWSFtdVi+MXY0lb7IW6Qro=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=F1cPtaln3xqS5bssIU7kxaJPq20qqMwEv7pdDNuIHiV4PRsjw2VPXWVgz/1G3W6RDp0nZV0xemWRf2kvSRL96d1E6YnWZ3KFnd+Q7gcuJRjNUsR9TmZbtibYeMB6pzDFJSfD7dG+CJDZslMNULZDsZvudLx9zp1GJRF+t861LhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SjnUmONd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQgXwf/l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003111F00A3A;
-	Wed,  9 Sep 2026 03:55:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SjnUmONd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2B91F00A3A;
+	Wed,  9 Sep 2026 03:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788926137;
-	bh=Vq+t2kJ2c2koofbAuX5JsAQ3LgK32fLRwrrs3+BfP34=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cQgXwf/l2H/LSx576oCNoYYcH9Dl9R4fEsOxUrJoWuOcjHn7buyAIpMD8x9GZL/LM
-	 +cdlvIGiadzL94PPW3N7Zbjb92leySFXPtEvc5vGKeyIfcex2f7TGxN6WR/4snLxUS
-	 RD7uf3F422nkRfJ/XNsgX9AeHKnl1Jhfhk2ZmWAsjED5lbExxrnfEds3/Q75e2TpTi
-	 HJWCJA+SxI1nKDrQwFr0JWBTU79djS/jAlBOTMnvQDU9P5cK3YxX2OWoncXbhtwIQN
-	 EAmxDqJJaoci/6tD1jgqPAh790l5zC4rWKqeFsGQ/F4DykYeHiGjOOt+t9bu2gRSJh
-	 YXISL2JsnMCiQ==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1.y] mm/damon/sysfs-schemes: kobject_del() scheme dirs
-Date: Tue,  8 Sep 2026 20:55:29 -0700
-Message-ID: <20260909035529.159422-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090817-livable-sturdily-4c48@gregkh>
-References: <2026090817-livable-sturdily-4c48@gregkh>
+	s=k20260515; t=1788926211;
+	bh=Ojpc84TxPtX1gu8TvK+285txzQf8yR0Atl0xuGAy5NE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=SjnUmONdQPciKRXSBe196p4dFXS9Y2fB2kBRkUf8qWpJvKR+iP0KjKo4MLPdzHEsh
+	 XME20rBvlYw6JPD5Q7no7/U09E/HSFCIfhz1ys3mXQoEGF/c3N2R2CbrN8rKyMI4zG
+	 PA8tBKrn9P1+31+NwW6rgkerZhdj8cFVR8fVplT2ldBUuQfADdK9DbYNcMJx02eU35
+	 CuHIFj1PvfMKXjX/9crpm4gcpfa8Kjcjl5iF+CUKm5jI/DHSDp2tesClXy4jjDuxKq
+	 M3XwFpEwcqnDgpgCcUmFQMLuCfvPL2SfhHEoDi79lvFsQszRUaMRODheUyvitv/4j5
+	 P9nNokz4KvEHw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.12.y] mm/damon/vaddr-kunit: check region count in
+ three_regions test
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260909034509.142303-1-sj@kernel.org>
+References: <2026090819-haiku-machinist-83fa@gregkh>
+ <20260909034509.142303-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2026 03:56:50 +0000
+Message-Id: <20260909035651.1E2B91F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
-could cause directories creation failures due to the name conflicts.  Fix
-those issues for scheme directories by adding kobject_del() calls.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-Link: https://lore.kernel.org/20260628220121.97360-4-sj@kernel.org
-Fixes: 7e84b1f8212a ("mm/damon/sysfs: support DAMON-based Operation Schemes")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 05fb6ac98c49be870c5f9ccdfdf95f0107e564ae)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/sysfs.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Pre-existing issues:
+- [High] Incomplete fix: The same vulnerable test pattern fixed by this pat=
+ch in `vaddr-kunit.h` also exists in `mm/damon/tests/core-kunit.h` within `=
+damon_test_merge_regions_of()`, where a hardcoded loop accesses regions via=
+ `__nth_region_of()` after an unchecked operation.
+--
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index bb2f4650741fa..7e4fb112d1154 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -954,6 +954,7 @@ static void damon_sysfs_schemes_rm_dirs(struct damon_sysfs_schemes *schemes)
- 
- 	for (i = 0; i < schemes->nr; i++) {
- 		damon_sysfs_scheme_rm_dirs(schemes_arr[i]);
-+		kobject_del(&schemes_arr[i]->kobj);
- 		kobject_put(&schemes_arr[i]->kobj);
- 	}
- 	schemes->nr = 0;
-@@ -991,13 +992,15 @@ static int damon_sysfs_schemes_add_dirs(struct damon_sysfs_schemes *schemes,
- 			goto out;
- 		err = damon_sysfs_scheme_add_dirs(scheme);
- 		if (err)
--			goto out;
-+			goto del_out;
- 
- 		schemes_arr[i] = scheme;
- 		schemes->nr++;
- 	}
- 	return 0;
- 
-+del_out:
-+	kobject_del(&scheme->kobj);
- out:
- 	damon_sysfs_schemes_rm_dirs(schemes);
- 	kobject_put(&scheme->kobj);
--- 
-2.47.3
+commit 95900378d75f76847738ad9f2040d727e3455432
+Author: SJ Park <sj@kernel.org>
 
+    mm/damon/vaddr-kunit: check region count in three_regions test
+
+This commit adds a check in damon_do_test_apply_three_regions() to verify
+that damon_set_regions() updated the region count as expected. If the count
+is wrong, it exits early to prevent a potential NULL pointer dereference
+when accessing the regions.
+
+Link: https://lore.kernel.org/20260718001442.87129-4-sj@kernel.org
+Link: https://lore.kernel.org/20260713144757.39740-1-sj@kernel.org [1]
+
+> diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
+> index ed2845d9f9a95..9eead9882dcce 100644
+> --- a/mm/damon/tests/vaddr-kunit.h
+> +++ b/mm/damon/tests/vaddr-kunit.h
+> @@ -149,12 +149,17 @@ static void damon_do_test_apply_three_regions(struc=
+t kunit *test,
+> =20
+>  	damon_set_regions(t, three_regions, 3);
+> =20
+> +	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), nr_expected / 2);
+> +	if (damon_nr_regions(t) !=3D nr_expected / 2)
+> +		goto out;
+> +
+>  	for (i =3D 0; i < nr_expected / 2; i++) {
+>  		r =3D __nth_region_of(t, i);
+>  		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
+>  		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
+>  	}
+
+[Severity: High]
+This is a pre-existing issue, but should a similar fix also be applied to
+mm/damon/tests/core-kunit.h?
+
+Looking at damon_test_merge_regions_of() in mm/damon/tests/core-kunit.h,
+there is an identical vulnerable pattern:
+
+	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
+	for (i =3D 0; i < 5; i++) {
+		r =3D __nth_region_of(t, i);
+		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+
+If a regression causes damon_merge_regions_of() to return fewer than 5
+regions, the KUNIT_EXPECT_EQ() check will log a failure but will not abort
+execution.
+
+Will the subsequent loop continue executing past the actual number of
+regions, causing __nth_region_of(t, i) to return NULL? Does this result
+in a NULL pointer dereference when accessing r->ar.start that crashes the
+test execution environment?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909034509.1423=
+03-1-sj@kernel.org?part=3D1
