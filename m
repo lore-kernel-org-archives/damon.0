@@ -1,114 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747813793B4
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 06:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25203A873C
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 06:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788935084; cv=none; b=GZ08Yy7zYSpF5TqDUJ3tULY+67iiMdOFC8y8CiHXEs2D2aqsTBZemQNEKgXDzrkVwNggkdGiUyCmM9AbBp5kwPmBe+Q/HMfysk2U7Q/oja3+Sr+wGAOBf5obPKaBBMm01qj+dvY4IPUGSMFEmmz0ChTJyMWN+z8eSSMagBpOCCo=
+	t=1788935214; cv=none; b=iBE6djfjRTym+87jeroTK0+FwI1qdYS70vWRnlJhjYatGNCEDhGu3hgEffMeP0CGg9yZyGtrq5pQQ3bzI3HC8Xto3I8Wx4bv9aDfybp1Wm6WdSKwIqQryVel58b22IhQdO34te0dVpMNUXi8PcsqGnEtaS0Fe0yHOM6nJc3ee8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788935084; c=relaxed/simple;
-	bh=3EFv5lP2OsyndLwAZLZ5r38va7nqKzSmvQV+O4/J5rg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Jw4nJsC3I3l6hFHwF5fKJdVI/UIkuM6MAPnUt9Sv3AiI4/CZ7V1QQMp+9Lhgx6fJgjR6oWk3gIjzSEIfsmumpdpay6t2UhjdVUH5xnfKqt7l7jGAbKMZFuKxO5A7VSdYMa5bEBkvaX+2ejXdT/ciyo5Cxizw9j00iurQWkGlw+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3x40k9j; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788935214; c=relaxed/simple;
+	bh=++nLD4CW/JIxaHgTRwIDBfDpPnRkCTRjFpLZWH3z0gI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=t+U0WuZrHOu2EtelNP6aiOQXPMZqVn5UCkdFB9tFlkfS4TBff6kNSgA9WCxOSVK15L4kkdVfPh2u5gSUo8HzKPgHjHeM+oJIuyQE87UhkyRUM7Sklamd4G7d7LvGcEn8zWHyDj8Gc5bXtDERJX7b56XFYDFz7PQoMU7WeJX5TrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l7horAq8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3x40k9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1AF1F00A3A;
-	Wed,  9 Sep 2026 06:24:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l7horAq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC701F00A3A;
+	Wed,  9 Sep 2026 06:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788935083;
-	bh=z4BHE2lelVEt+IqddrSfibN15Kab/dT8CWpQPsG2BME=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=M3x40k9jO30QCtbapDPJH7ZiG16UMM2M6sltDkyjrsE9q/qNH4twoZf4Ki54ya9R7
-	 rZVutefWSpBZdy8TaIrHrpQFYC37in5wx1fEfdePFEWDT7MM5eYO8qlI9KzQJ1KmcE
-	 iia5ZAtgNKkyN6SIDI8+/g80vpvWebFVu9jxsj5mhCbc/I5mavqHmR2Xa9kXR9rT9t
-	 Q0wrsjI7DKgKpKZHJmClEy/DpJxWSQkNj/CuA0sUBa4m4GWHsH7Ua9i/na7zRrUpyT
-	 qY+J4IZyGDCq2DYK4sLwMQd/6lc4ApARmEhu1HfA4AT4dEOuHdL60VcD1kaRjAQCE0
-	 u/y4nM678Ik7g==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.1.y] mm/damon/vaddr: drop last same folio access check
- optimization
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260909061152.278678-1-sj@kernel.org>
-References: <2026090858-legislate-monogamy-2299@gregkh>
- <20260909061152.278678-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 06:24:42 +0000
-Message-Id: <20260909062442.DB1AF1F00A3A@smtp.kernel.org>
+	s=k20260515; t=1788935213;
+	bh=2KprQSR5vbBz6efSyX+euayQ90qAp2/bQabxYGVABco=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=l7horAq8pdzLsXkbZNd9tZJAOVVRay+D/RGbLxLbLjROAsDYEbnVziH6h+40ea3rA
+	 JbAYh0jiAaSpTYIkYWRWFHc2rH86KOdonj87KRw2/cnp/HGv6xrFSm9MpJrglshsS2
+	 Vv7QpM4VmHaJm81f9/CGYTCIj+ufNk7Gcd8y96l9nrXGoaRlVKI8mq5Vly5XJN22nU
+	 SezSulSqdF5b6OEDfSfHRJLuJhe8buD5WW0QiQO9A8L9bOJ1+w4lpniCBbscuM8Sod
+	 9c6Y8xqtQXrY0I1w+W/7FZfPBL6Jzykk9ZDrtdMa/1y4mUKxiFfBICG4HUayX04XBG
+	 CPIDQ38Is4YBQ==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.18.y] mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
+Date: Tue,  8 Sep 2026 23:26:39 -0700
+Message-ID: <20260909062641.24252-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260909034527.D29C71F00A3A@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+On Wed, 09 Sep 2026 03:45:27 +0000 sashiko-bot@kernel.org wrote:
 
-Pre-existing issues:
-- [High] The PMD is read directly via `*pmd` outside a lock, which can caus=
-e torn reads on architectures where PMD size is larger than the word size (=
-e.g., 32-bit PAE).
---
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] Typo in the early exit condition causes the unit test to silently skip validation on successful execution.
+> --
+> 
+> commit 8cca227124d565ed51f4791e649f908f0754a67f
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
+> 
+> This commit adds an early exit to the damon_test_merge_regions_of() unit test
+> to catch when the region merge expectation is not met. By skipping the
+> per-region test loop on failure, it prevents potential NULL pointer
+> dereferences.
+> 
+> Link: https://lore.kernel.org/20260715031002.108504-3-sj@kernel.org
+> Link: https://lore.kernel.org/20260710144937.26981-1-sj@kernel.org [1]
+> 
+> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> > index 6687778752728..c1f0be6746abd 100644
+> > --- a/mm/damon/tests/core-kunit.h
+> > +++ b/mm/damon/tests/core-kunit.h
+> > @@ -264,11 +264,14 @@ static void damon_test_merge_regions_of(struct kunit *test)
+> >  	damon_merge_regions_of(t, 9, 9999);
+> >  	/* 0-112, 114-130, 130-156, 156-170 */
+> >  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
+> > +	if (damon_nr_regions(t) != 6)
+> > +		goto out;
+> 
+> [Severity: Medium]
+> Should this check compare against 5 instead of 6?
+> 
+> When damon_merge_regions_of() works correctly, it merges the target into
+> exactly 5 regions, matching the KUNIT_EXPECT_EQ check immediately above. 
+> 
+> Because 5 != 6 evaluates to true, a successful test execution will jump out 
+> and silently bypass the per-region validation loop. The validations will only 
+> execute if exactly 6 regions are produced, which would indicate a test failure.
 
-commit 3ab3595f2bebbbf09add4e61c160f37ee6aa2807
-Author: SJ Park <sj@kernel.org>
+Nice catch.  I will fix.
 
-mm/damon/vaddr: drop last same folio access check optimization
+> 
+> >  	for (i = 0; i < 5; i++) {
+> >  		r = __nth_region_of(t, i);
+> >  		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+> >  		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
+> >  	}
+> > +out:
+> >  	damon_free_target(t);
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260909033832.132107-1-sj@kernel.org?part=1
+> 
 
-This commit removes the same-folio access check optimization from DAMON's
-virtual address monitoring. The optimization was found to race when multiple
-kdamonds are running, and its impact was deemed doubtful.
 
-Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
-Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
-
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 708f281c1b6b4..4aa89347d754d 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-[ ... ]
-> @@ -453,10 +452,8 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigne=
-d long addr,
->  			goto huge_out;
->  		if (pmd_young(*pmd) || !page_is_idle(page) ||
->  					mmu_notifier_test_young(walk->mm,
-> -						addr)) {
-> -			*priv->page_sz =3D HPAGE_PMD_SIZE;
-> +						addr))
->  			priv->young =3D true;
-
-[Severity: High]
-This is a pre-existing issue, but does reading the PMD directly via *pmd
-outside a lock risk torn reads on architectures where the PMD size is larger
-than the word size (like 32-bit PAE)?
-
-Earlier in damon_young_pmd_entry(), the code does:
-
-if (pmd_trans_huge(*pmd)) {
-        ptl =3D pmd_lock(walk->mm, pmd);
-
-Since damon_young_pmd_entry() runs during DAMON's page table walk under
-mmap_read_lock(), concurrent THP modifications aren't prevented. If a torn
-read occurs on the lockless *pmd evaluation during a concurrent THP split or
-collapse, it could bypass both the pmd_trans_huge() and pmd_bad() checks.
-
-If it falls through to the regular page path, pte_offset_map_lock() might
-map a bogus physical address from the torn value, allowing arbitrary memory
-to be treated as PTEs.
-
-A similar lockless check appears to exist in damon_mkold_pmd_entry() as
-well. Could these paths use pmd_read_atomic() or pmdp_get_lockless() to
-safely evaluate the PMD?
-
-> -		}
->  		put_page(page);
->  huge_out:
->  		spin_unlock(ptl);
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909061152.2786=
-78-1-sj@kernel.org?part=3D1
+Thanks,
+SJ
