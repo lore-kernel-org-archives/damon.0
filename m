@@ -1,74 +1,114 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EEC37E5C0
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 05:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EC935E93E
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 05:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788933218; cv=none; b=EYNI6etACqY40yZH1UPwpy1cNaeYr/Cavh2Voquq2bsfcct3eQiRtt+rK5DUNUiNWBlxk1EFxPyTyt1k4wK5oc793bBYCjnemgNCgZEwov4yIaDJUvQsRDAme6nrVlGOFbzvJcPcSGeP/PCxI/1gg/qS6HPxJXaod0aIhwTIDtA=
+	t=1788933374; cv=none; b=Aj5t5/RcDmTlkS83kJtCAABYoZcJPsMQ9bZRFWM6iE/QO4hJ4WJY+HiZP7af9y1z0Q0b5GLQGEc6ngJh78T0H3vc2wM1e7Xh/qWEGrr5RZ7KiGJIXmK3qVol8KsdSfDP0oIyOG2trmysxamZSfyuh8TCpm0Z5AkjhQpBSmLI4Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788933218; c=relaxed/simple;
-	bh=7MRVNcNk+hkLDqv+YCHI8AWEcQhgXzV4nU9m7uSVvoQ=;
+	s=arc-20240116; t=1788933374; c=relaxed/simple;
+	bh=SgnfopaEl3XME4MAu7aYCWExP2mDH4XsV//2te4WB7M=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=rBBmrmMtcEhWobfzkEFpH20QjLDIhQ0/73SElHF/XeHqg56AhRFCtHli4TaSWo6Sk33Y/d4pmP3zmAJcHpqO/BqXDpPkoAdTlCtsMwPASUDUCqhYJ3vojN+z/tmqSWuHc+Nr5GqVJFrcJSnzkIitoyU3PV5vsCqmfnefTi4wrU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IvYIAv6J; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=b8UFKUG8IOqugEBHPflSPSdXvzs4LTtLCxxNvd/6PijrkSJklX5O+vio50LjzuEarVopqC7U+a/YZWqKqjjXeNFDDGS/3MjAEnQljsljNNEzJ7ItvkUAPPdmVxJuvnkr1A8FBP94p27rTuKJCyWEuWPNCcplxBT+qLPXeEJYTuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FvYnaB3a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IvYIAv6J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2F31F00A3A;
-	Wed,  9 Sep 2026 05:53:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FvYnaB3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31801F00A3D;
+	Wed,  9 Sep 2026 05:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788933216;
-	bh=NBG12cjPEF22pKbZjnnzF8i2ucMeb+lb4pYArEjaWeI=;
+	s=k20260515; t=1788933373;
+	bh=AFQ1xylIOQoEVCskyy2BlJ3nkK0lQWURhAqsPquKutw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IvYIAv6J7DMVUwSxIetTCfyHqmyp0NRzODQsBsiU0B0mHI6ymOPZLspo5chNIY3gA
-	 sE5/E4Gqm129cTRyh4NnWvQl8cgS321AaynGz0/lJfu4tHobAjpljjgHpPdEIao+dK
-	 T3UaOZmjh58NRKYlQAKVA8pwMa4SrNEmtwl/uqaHI/CGAUItnLebApad/CJ/0yfv5f
-	 1hoz2NnfGbHXUZqIqL64UxSYrMFg/cc5fHmIzNDQSUnKg0IEuqh5RKhw3eZyAugLO2
-	 c7L70l2vXBVrkGb5ljDZQTfvDK7ok6ETIrefJyFhxPHtJuENHHQH8j6GswizblEOLU
-	 u0OqqsyrhbLUA==
+	b=FvYnaB3afDw/fkUO3uxbkn+YHZr4AAInMQTSY/xA/wFGkuzAwWQoCdJE90oHAjZmw
+	 JuINNgz13CX/sT+aoAkm6lKAspf8LVMwyecdxVOExDl+3xMrKE6AVJsgxpWkOimzjp
+	 VPkyz8Mt5GsJDk4w8mk0d8cV9Z2xK2KQNItdXopPEIwthDOz4nvX9O0ZcOhYlxqD8o
+	 PmpTUrLKpn2WPHzOYVZdm71u+Pw/7WXTJ4A5keEt2oWzclswQV8TFhWeKATOV7dSli
+	 ro04ja9iFj4qYkJjq/3i/oXlzkIOQ5k/rLnq8dw3cQxECyca52C5pE2bDF+7m4n7GP
+	 u7XKKi8j5YUSg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.18.y] mm/damon/vaddr: drop last same folio access
- check optimization
+Subject: Re: [PATCH 6.6.y] mm/damon/paddr: drop last same folio access check
+ reuse optimization
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260909055038.259529-1-sj@kernel.org>
-References: <2026090857-overhear-pull-af4d@gregkh>
- <20260909055038.259529-1-sj@kernel.org>
+In-Reply-To: <20260909054545.256743-1-sj@kernel.org>
+References: <2026090853-disparity-bazooka-4747@gregkh>
+ <20260909054545.256743-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 05:53:36 +0000
-Message-Id: <20260909055336.AC2F31F00A3A@smtp.kernel.org>
+Date: Wed, 09 Sep 2026 05:56:12 +0000
+Message-Id: <20260909055612.D31801F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> The optimization can race when multiple kdamonds are running.  Meanwhile,
-> the impact of the optimization is quite doubtful.  Just remove it.
->=20
-> The user impact of the issue should be quite trivial.  After all, the race
-> can happen only when the user intentionally setup DAMON in the way.  Even
-> if it happens, it would be rare and only degrade the best-effort
-> monitoring results.  No critical consequences like kernel panic or memory
-> corruption happen.
->=20
-> The race possibility was discovered [1] by Sashiko.
->=20
-> Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
-> Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
-> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memo=
-ry address spaces")
-> Signed-off-by: SJ Park <sj@kernel.org>
-> Cc: <stable@vger.kernel.org> # 5.15.x
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> (cherry picked from commit 831846078caa14b7d00b2ccca8b8fe522afe3204)
-> Signed-off-by: SJ Park <sj@kernel.org>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+Pre-existing issues:
+- [High] Physical address sampling and PFN iterations fail for large folios=
+ because `damon_get_folio` explicitly rejects tail pages.
+--
+
+commit cb37cb361a4cb244731d8cba3a6b765eff4dcbaf
+Author: SJ Park <sj@kernel.org>
+
+mm/damon/paddr: drop last same folio access check reuse optimization
+
+This commit drops the optimization that reuses the previous physical address
+access check if the region falls within the last checked folio. The author
+removes it in favor of code simplicity, noting it can race when multiple
+kdamonds are used.
+
+Link: https://lore.kernel.org/20260715031002.108504-5-sj@kernel.org
+Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
+
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index 909db25efb35e..fe481ae64f37e 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+[ ... ]
+> @@ -111,7 +111,7 @@ static bool __damon_pa_young(struct folio *folio, str=
+uct vm_area_struct *vma,
+>  	return *accessed =3D=3D false;
+>  }
+> =20
+> -static bool damon_pa_young(unsigned long paddr, unsigned long *folio_sz)
+> +static bool damon_pa_young(unsigned long paddr)
+>  {
+>  	struct folio *folio =3D damon_get_folio(PHYS_PFN(paddr));
+>  	bool accessed =3D false;
+
+[Severity: High]
+This isn't a bug introduced by this patch, but does physical address sampli=
+ng
+fail for large folios because damon_get_folio() rejects tail pages?
+
+In damon_pa_young(), the sampled physical address is passed to
+damon_get_folio() via PHYS_PFN(paddr). For large folios, this randomly
+sampled address is extremely likely to fall on a tail page. Since
+damon_get_folio() explicitly returns NULL for tail pages:
+
+mm/damon/ops-common.c:damon_get_folio() {
+    ...
+    if (!page || PageTail(page))
+        return NULL;
+    ...
+}
+
+Does this mean DAMON silently ignores large folios for physical address
+monitoring? This same tail page rejection seems to cause the unconditional
+PAGE_SIZE stepping in damon_pa_pageout() and
+damon_pa_mark_accessed_or_deactivate() to skip entire large folios if the
+region boundaries start on a tail page.
+
+While this wasn't introduced by this patch, dropping the last-folio-size
+cache here removes the only mechanism that might have partially masked this
+flaw for randomly sampled addresses that happened to hit a head page.
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909055038.2595=
-29-1-sj@kernel.org?part=3D1
-
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909054545.2567=
+43-1-sj@kernel.org?part=3D1
