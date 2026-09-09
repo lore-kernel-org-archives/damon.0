@@ -1,94 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2EF331ED1;
-	Wed,  9 Sep 2026 03:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D9D331ED1
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 03:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788925120; cv=none; b=tD0di6eZeHh7nd3dSDV/Go3KGecEyJOxmyPGlntxbzTpOdoSXbYJwke7ZDqM8pq6CsAft18SXO/+sPNV5XQu3HhhBlpl1QwQdI0zpDamTvygHvrT1h9kTLRkIKdHlAZf5yYGPPrCiR9vG7vQjuY9tDh6EibCkOy48QIuh2cKf4Q=
+	t=1788925135; cv=none; b=AjWLW0XoEZmH0CXrOuQkj3NuL9sin6BCjT2RvcJHzufcQbEG84b7dTT37Fw9e3xeQl61INKSxXug9ekKAywER+idT4wYbXDz0uA2WutkYwJsbekRZ7wVuTw4CnN9dtszucNRucNKbspgDkFCULmnnc7c8wbbTDhPkeP1H+Afjls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788925120; c=relaxed/simple;
-	bh=D/ddij/Vg4ff5Z1uOC5tTlo461t///okHimcNaQTFxM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtSnrz45BJ8eohSKg5PvV/mH2etS7KrDVLLfg2Sr1Eu/aBxj6huMZbsKPrj1qVXB34/P2pqD/T7y3LCFO0BlGgrahxLssDMzLEjnoFdDUyBrbTBpyUZwo6cwhk4FRS70rZz1msFRrdsOk3d7nbYH/NfWec4knaU+sxmby7YugnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J4VakY6U; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788925135; c=relaxed/simple;
+	bh=5vlGbAaBO7+E+r4QMUyrAIAy3Hu0pkUSEs8AEvpmVMM=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=VBQ91MtHL8M8zof7V+4Gsm8ULcLAKBdoZmDeMbT6dQBYt5OsbU5RqVAXKK6uODsLM52ZBPluy/8PTAP81GIFiqyNbc+4URIaPdv8OKEkYhsiVeqv2U4lSPji0gI7xewas328hGCD2E4zEfvaH6qL47wO0lMTuBe/P5aKrMTaGHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nudn9E9L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J4VakY6U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790141F00A3A;
-	Wed,  9 Sep 2026 03:38:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nudn9E9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4CF1F00A3A;
+	Wed,  9 Sep 2026 03:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788925119;
-	bh=DTLoBPmPhawDk2X7sNrppY4vwdPisie0jrSHUyT41Ms=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J4VakY6Uu3Xb4BJv+bitgA42HSc00lj16jtDJaTS1ebpRNdyJRh6t7zklz8OD3Y3q
-	 67P3+TkJtPgutU4fbrlmcSvFRWMlNtYdl7odgvDgq6Mlx2ytmmUrz3mZXfDyIB6nsR
-	 9FKHXqGfkuPC6Rk1xwAgW1of0jTtBf+Shzc+bX8GWJi7ZzjBwlCbLwBqfrQ+ZrH7Rx
-	 lV+NXdLKj8jm0oLL58bxB6RrH/gQis89SpZ2jOixYzBF+hZe0snpa5hXc0sDCW/ZoR
-	 DRo+xhjMQ1hbWiGubAfrT3ME7B9EBQ8vg42IY3Dab/ijyJFc1I0a95JF92whNybSvg
-	 lqXKq01gBptqw==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18.y] mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
-Date: Tue,  8 Sep 2026 20:38:32 -0700
-Message-ID: <20260909033832.132107-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090808-phoniness-repaying-46f0@gregkh>
-References: <2026090808-phoniness-repaying-46f0@gregkh>
+	s=k20260515; t=1788925133;
+	bh=zGuSORYyfTP4t28+qQE9TcwnwIPTdI3AiXdoqD3Z9ds=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=nudn9E9LQS0+jVaUYb5ridseYUPoN6zn8mFGilTji3rez9Vh+LOMhH/IwoHoNgESm
+	 SD1XsOYsTppJ3XfW+sM9m70IaKEbFGjUNkjBMpbrLLpN6AtNsIhzrAl3syW5Q1D0ij
+	 ctwEFtToZEgNpxgJnE/QfnaMxd3GjzmBggG8L7hqVSod8hrndr6+YDEW58SwOLTTnf
+	 AEKZUMetn89fwancCQC/+XRLp5MES3HLl2JDnzVzbWL2fPN+ndYTXcJGtd/E3i7sOj
+	 g5VIYlkTE5+C6Nnjq66hhm7IDuYXzh/65Ep1BCGDD57bzFUHEhaNvbMd7emKUQhP0r
+	 +FiBqmn7B7xhw==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.18.y] mm/damon/sysfs: read addr_unit only once in
+ damon_sysfs_apply_inputs()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260909032452.118744-1-sj@kernel.org>
+References: <2026090850-untried-sanctity-a00c@gregkh>
+ <20260909032452.118744-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2026 03:38:52 +0000
+Message-Id: <20260909033853.6E4CF1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-KUNIT_EXPECT_EQ() does not abort the execution of test code when the
-expectation is not met.  But damon_test_merge_regions_of() code after its
-initial KUNIT_EXPECT_EQ() call assumes the expectation is met.  It does a
-per-region test with a hard-coded number of regions that is correct only
-if the expectation was met.  As a result, __nth_region_of() could return
-NULL, and the test code can dereference NULL pointers.  Fix the issue by
-catching the expectation failure and skip the per-region tests.
+> damon_sysfs_apply_inputs() reads addr_unit twice.  It could race with
+> addr_unit_store().  As a result, the min_region_sz could wrongly be set
+> up.  Read it once.
+>=20
+> The user impact is trivial.  Sane users ain't update the parameter in
+> parallel.  Even if it happens, the DAMON core layer handles the wrong
+> min_region_sz (!is_power_of_2()).  Even if somehow the race ended up
+> making a min_region_sz that is different from the user's intention but
+> still valid, only monitoring itself runs differently than expected.  No
+> critical consequences like kernel panic or memory corruption happen.
+>=20
+> The issue was discovered [1] by Sashiko.
+>=20
+> Link: https://lore.kernel.org/20260715031002.108504-6-sj@kernel.org
+> Link: https://lore.kernel.org/20260714142950.100711-1-sj@kernel.org [1]
+> Fixes: 540a2aebc657 ("mm/damon/sysfs: implement addr_unit file under cont=
+ext dir")
+> Signed-off-by: SJ Park <sj@kernel.org>
+> Cc: <stable@vger.kernel.org> # 6.18.x
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> (cherry picked from commit ab4d9358e32316fa39b5f1f5360292135978c3d9)
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-The user impact on realistic setups should be negligible, as it is a unit
-test.
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260715031002.108504-3-sj@kernel.org
-Link: https://lore.kernel.org/20260710144937.26981-1-sj@kernel.org [1]
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit b640708929aa956235866bf7717d89018c661083)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/tests/core-kunit.h | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 6687778752728..c1f0be6746abd 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -264,11 +264,14 @@ static void damon_test_merge_regions_of(struct kunit *test)
- 	damon_merge_regions_of(t, 9, 9999);
- 	/* 0-112, 114-130, 130-156, 156-170 */
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
-+	if (damon_nr_regions(t) != 6)
-+		goto out;
- 	for (i = 0; i < 5; i++) {
- 		r = __nth_region_of(t, i);
- 		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
- 		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
- 	}
-+out:
- 	damon_free_target(t);
- }
- 
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909032452.1187=
+44-1-sj@kernel.org?part=3D1
 
