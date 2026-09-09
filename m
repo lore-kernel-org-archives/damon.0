@@ -1,101 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BB7492E34;
-	Wed,  9 Sep 2026 03:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5122AD37
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 03:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788925518; cv=none; b=eZL66w3ImErzMenHrRDxODTujzwNq/DBragzaztXuqo1sHI510U1C9AhfGJMzHEhQwjZU6nxASJKcrX1ncuDpAlrOxb/QDf0vAcr9bdNzeSj9k932TOfYzJI67NDxexpqod4swy2l2PtqCEIKAf4PppO3zBEavKf+TdYJ3MHGUQ=
+	t=1788925529; cv=none; b=mWo+2hAdAi7yEOr3g7bv8f8Pljk/g7H8shvlfdU2yzTsruJWEo/38RAazaQxw7/chMa9JfxZYd4eh+5GUNudBfIiSsfhsbsLNrpOKBGINe66BoFU7MvTSYNm44owMdrWVFjq/owkgYieReqk/fqvkdkQ7HUbyuGugtYDp0f/qKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788925518; c=relaxed/simple;
-	bh=OgBdTMiOSO4mWM0NMai55l/3o3ESJIjHRlBT0NFiQeE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rnZfyCaOP8jX024B0F/56wgnensAElO8p0Azjqb7Okf+YLykuQ7nLvjNFch3EkenaB+ABa/4DKzzzZI1mf8J/3/QszPBiVEh0fAFJwx0FshJQUDoGy8jV2lG/mhX2ilwvmm26bI3z01k0exmAKB6DBrkUfL2bg8T4nnQF6pa/Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oNv+1JOP; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788925529; c=relaxed/simple;
+	bh=yN672SbwFgRbwFJ4CJE5QSjDusLJQ468NurgZnE05Ng=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=Jx25F8r21MEl4Mr6yZ8HVt9RzRni6lYQDESqnlfh/wE2K4mwj7HU/Klh0yAvH0N9NmpP9b8aO+mt3ghsJcGhSvuioAyjbG5XrG7fSSuLO4TRs5lQT/QJQEulYA4BKoCpSOfM+fU8eDJXu5EKlgwua+/zRh5ngfiZc8TZj2ldax0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YMBVVShh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oNv+1JOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752111F00A3A;
-	Wed,  9 Sep 2026 03:45:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YMBVVShh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29C71F00A3A;
+	Wed,  9 Sep 2026 03:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788925516;
-	bh=sgl4dOjid3ViaesF0HbPp1/4EKDbGxPZqbY+ws8lPS0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oNv+1JOPCzl6RLHCgd3x9J0sdTPuirk2eoXGZ2p0A+n1wJr3MFV64go1Prw3+U+Jg
-	 o5FQkP0BB04agobr7dAkpshMvT0QIYlpnu+H0vjL4F2MEQqgJg512X0bd9ZB98l5xZ
-	 eNBW5PMPbg6OXJHiZtzjOMLfREft8Q6gTav37UWGTKJeOv3m+gSt7eWhWph9xQxuSf
-	 YEmUHSAY6nItBJfJYkfQQnQmI7ZJ9Q3ean4c+j43F3LPpyuAajKqDSeeUb8W9pT+JV
-	 V2hN0/06wiOblpIc6LujWF0mWJW9bz4sORgImR/Pj1fr6yv+Koa9wpa+6z8DbgwF5X
-	 iZj/swqzGTW2w==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12.y] mm/damon/vaddr-kunit: check region count in three_regions test
-Date: Tue,  8 Sep 2026 20:45:09 -0700
-Message-ID: <20260909034509.142303-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090819-haiku-machinist-83fa@gregkh>
-References: <2026090819-haiku-machinist-83fa@gregkh>
+	s=k20260515; t=1788925528;
+	bh=B7hSH+RE9sZfVQJb0NbutC5xcf2p0L1KI0q2H0ehRg4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=YMBVVShhV6xLliRF8QqB6ZAScjn+4jFds9XFZJFBT5xhgyj1IXNmDAyaAIdb5uXIR
+	 JvyVUkV+uPIzpESs9h1H+BAAdI1pcfP4yROIRlpRG0F/mS4oK6gkHXO6JH84KhZrQS
+	 b5am/sqcsA/uX89xI5wfxJD/09hoNylPC5Cq3aQUeqQzWPPhqH6Za4ehlKmBtvHiEJ
+	 nPIMgllyj0hP2bWC6ilXXmyHmzntexWJko6irJBHi9YvW/Rr3s3VNc0i2gBysqdNwF
+	 BBgJzlRFTJAGJ0XojkEWgDopMaasGMtpbuwT/xIGnqOPT7Mpzu9Pdp5LlkhkHT54ml
+	 pu2Ik7ImNAiow==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.18.y] mm/damon/tests/core-kunit: catch test failure in
+ test_merge_regions_of()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260909033832.132107-1-sj@kernel.org>
+References: <2026090808-phoniness-repaying-46f0@gregkh>
+ <20260909033832.132107-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2026 03:45:27 +0000
+Message-Id: <20260909034527.D29C71F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-damon_do_test_apply_three_regions() iterates regions after
-damon_set_regions() call assuming the function would succeed at setting
-the number of regions the same to the expected one.  It might have failed.
-In this case, __nth_region_of() in the iteration could return NULL and
-NULL dereference can happen in the test.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] Typo in the early exit condition causes the unit test to silentl=
+y skip validation on successful execution.
+--
 
-The consequent user impact (NULL dereference) is quite bad.  The realistic
-user impact would be limited, though.  It would affect only test run
-setups.
+commit 8cca227124d565ed51f4791e649f908f0754a67f
+Author: SJ Park <sj@kernel.org>
 
-Fix it by testing if the number of regions was also changed as expected
-and exit early for the failure.
+mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
 
-The issue was discovered [1] by Sashiko.
+This commit adds an early exit to the damon_test_merge_regions_of() unit te=
+st
+to catch when the region merge expectation is not met. By skipping the
+per-region test loop on failure, it prevents potential NULL pointer
+dereferences.
 
-Link: https://lore.kernel.org/20260718001442.87129-4-sj@kernel.org
-Link: https://lore.kernel.org/20260713144757.39740-1-sj@kernel.org [1]
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 5fea07e460874c8c7cf00f728efbe22abc62c8d8)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/tests/vaddr-kunit.h | 5 +++++
- 1 file changed, 5 insertions(+)
+Link: https://lore.kernel.org/20260715031002.108504-3-sj@kernel.org
+Link: https://lore.kernel.org/20260710144937.26981-1-sj@kernel.org [1]
 
-diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
-index ed2845d9f9a95..9eead9882dcce 100644
---- a/mm/damon/tests/vaddr-kunit.h
-+++ b/mm/damon/tests/vaddr-kunit.h
-@@ -149,12 +149,17 @@ static void damon_do_test_apply_three_regions(struct kunit *test,
- 
- 	damon_set_regions(t, three_regions, 3);
- 
-+	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), nr_expected / 2);
-+	if (damon_nr_regions(t) != nr_expected / 2)
-+		goto out;
-+
- 	for (i = 0; i < nr_expected / 2; i++) {
- 		r = __nth_region_of(t, i);
- 		KUNIT_EXPECT_EQ(test, r->ar.start, expected[i * 2]);
- 		KUNIT_EXPECT_EQ(test, r->ar.end, expected[i * 2 + 1]);
- 	}
- 
-+out:
- 	damon_destroy_target(t);
- }
- 
--- 
-2.47.3
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index 6687778752728..c1f0be6746abd 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
+> @@ -264,11 +264,14 @@ static void damon_test_merge_regions_of(struct kuni=
+t *test)
+>  	damon_merge_regions_of(t, 9, 9999);
+>  	/* 0-112, 114-130, 130-156, 156-170 */
+>  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
+> +	if (damon_nr_regions(t) !=3D 6)
+> +		goto out;
 
+[Severity: Medium]
+Should this check compare against 5 instead of 6?
+
+When damon_merge_regions_of() works correctly, it merges the target into
+exactly 5 regions, matching the KUNIT_EXPECT_EQ check immediately above.=20
+
+Because 5 !=3D 6 evaluates to true, a successful test execution will jump o=
+ut=20
+and silently bypass the per-region validation loop. The validations will on=
+ly=20
+execute if exactly 6 regions are produced, which would indicate a test fail=
+ure.
+
+>  	for (i =3D 0; i < 5; i++) {
+>  		r =3D __nth_region_of(t, i);
+>  		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+>  		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
+>  	}
+> +out:
+>  	damon_free_target(t);
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909033832.1321=
+07-1-sj@kernel.org?part=3D1
