@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8336E21D5B0
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 04:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B29492E27
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 04:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788928096; cv=none; b=dCIyKyFLaJpPKFKWZ+rY0HWNBAilO7ZYE1a8P1l2Zp8T+rTXsKMMGg1zfeKkW/8uYnHvDp2tu3nGd7qXdTa97JU5Uy2xnqM075CRe8LDCwopqEVeLSRKG20iRWPtyfcxdgSRdUsJqu4181zkQr120oGFo8n+UPv6I0iAKfyGCRo=
+	t=1788928242; cv=none; b=AKeSn5e4R9PzDgJH/YmhH+7xzMTnstHcYq5TdSQd5kMIA+VevyF2Fp4jw3nvAgoYV2MP5HL5vTrdsoVgU5nM6e+R2eH7GWNf1LTNw1MD5mUeq11M+7wZPl6le7me9rtrJYh0eBo8f3AvArArX0ixsxnxA6o33c99v7myXyf7LgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788928096; c=relaxed/simple;
-	bh=7T1SAuBHgNIRWcl5Uulvfq1raBM3pEs397vcvE/MBE8=;
+	s=arc-20240116; t=1788928242; c=relaxed/simple;
+	bh=3lLXYQYyvmuBuRvTDs3RKnnsA5jyWCr5NUwn4wnAwPM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Q86ZUOcmZhBiPfhqYBdu0LCxjv7wQNgt9hIHKR4DtgByGcvzzIhI/YtDZrB+V6tduiuo/IDrK9d4EU94ULFfPYubSmxWpFGCvCQMHo+kKEMDlNw5VNnDnroZLFqcJGE5WukSi2S6gSf0sDF2rywDXVMfhCF+0gt/jC0aY+lymNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IbM4hNtv; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=IEwiQDR1hAIFXGB8K9wWolDJScg2BAxhjFwrkem/Ms2Juzlyp+68SZwoFYvT3o3cIGcoxFUr9+ZOZwLBJAQmAy3rkoG56Jb+h8yr78mXddfU6HVvIM/g2CIY9aJZUN4l9Zg+VSmxhMuKE4mFc3b5pA1JfQ18SngCiVKM5J8U3Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AgUkdAoY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IbM4hNtv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CE51F00A3A;
-	Wed,  9 Sep 2026 04:28:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AgUkdAoY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44701F00A3A;
+	Wed,  9 Sep 2026 04:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788928094;
-	bh=+toJ6HxGlg2ELZrbKCfbodQdzibAubazOi2BfJSGnzs=;
+	s=k20260515; t=1788928241;
+	bh=SzbZ3IfHI+ZrpVl/MyjLg2YNQRhBXUdDM8WGm1BJy00=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IbM4hNtvHXj4Jab+sRDhrkSF8WDJQ7Q1pu/N29p2tUOwVJmF9ygHIOf+Fia/E7BwA
-	 nrssqRd1BJGVNO5rjrqP/IIpJXrGeioPYP9aKDA0XBQxFC1XMSvDdzwumz73g201X/
-	 oyvMiPE0e81OlFnH3SByiB5x81CHmaOIjqVA1wsNn0voKDDBeZTNw3RHqORgsL1CvC
-	 rbyslbQVs6PQ42v7s22e9P0i/DODJZva23VQYhEKbCc6QPSmNw3F4/8sBzEH6/S6Xu
-	 Vcbw/JiV2/IQUwwaB9YinG+qqPHjBZqOroSO4kP/6wl9sDfCIitj35kXTv7rDCS71O
-	 vRnqqeejF6EGA==
+	b=AgUkdAoYV6tI8+xRGuC5L7YNnkssP6G8zlA/SdYYRRVuVBb/lwh63AzD6RPlLI/Bb
+	 mi+ZSNTgd1B/oQeNy6nvy0r6QPSiivKgS9vnA48/Ml/P0DwTCEE3CHVrq55WTbUzc7
+	 BfLaZc5aTqTPYQepABcKingFkakPdEgbrqK88MOwR9TM7MjyII6DiirMITFWrhSJcq
+	 QXC0RPcwNmJEk1TNqiVQq0tV/rEh0D5ql7112jzFYR2MwkcIZrfncz7P1Ko2dQdH2+
+	 6xvUYB0gkh2JhNFAQU32d7It+t+4XKJ2iQEHAyU1rxOHMYfnLSIMxXtXu0gmO36K4R
+	 dTjc4v2xAD+FQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 7.2.y] mm/damon/core: avoid infinite
+Subject: Re: [PATCH 6.12.y] mm/damon/core: avoid infinite
  kdamond_merge_regions() internal loop
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260909041712.186196-1-sj@kernel.org>
-References: <2026090831-desecrate-cheddar-be5a@gregkh>
- <20260909041712.186196-1-sj@kernel.org>
+In-Reply-To: <20260909041900.189118-1-sj@kernel.org>
+References: <2026090832-stood-aspire-6c82@gregkh>
+ <20260909041900.189118-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 04:28:14 +0000
-Message-Id: <20260909042814.B4CE51F00A3A@smtp.kernel.org>
+Date: Wed, 09 Sep 2026 04:30:40 +0000
+Message-Id: <20260909043040.D44701F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -70,6 +70,6 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909041712.1861=
-96-1-sj@kernel.org?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909041900.1891=
+18-1-sj@kernel.org?part=3D1
 
