@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BDC348C63;
-	Wed,  9 Sep 2026 03:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1512FDC28;
+	Wed,  9 Sep 2026 03:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788924745; cv=none; b=MyXhjOlc/cttT0Qaw3wScdVyL7JmlH7M6RsBJF2VWR/JkJjen3YtlGVsQAdfCdKwAQcyFX+X+XkfHAcDDHntCfZYPOuyZHi3o+/V8fMsl3HuM/uG3YiUlrHfNRgiiyIyXBSe90TeelkoOwxg+AfuqM76Axkh0ol2t9V3+B5zheQ=
+	t=1788924903; cv=none; b=Bt3X1egnqTnm9KlOHOeljhKfiV8cWt6tWU6v5jKB7QKm6MCY9NBfsU8XDYcXn6HLVXLXoN57dVROVGDIHV33AYIaeg7HObAMSftBrYs9tJSLg8AeP+troh3qCcg08bofEewmHeCMGdYZ6FKmZmUAe5hD0+1BOCSKYCJsJRSK5wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788924745; c=relaxed/simple;
-	bh=Nll6ZwwPuyr6qoJ3nNwpHXSi+9U4EtB7FAhESeZQMsQ=;
+	s=arc-20240116; t=1788924903; c=relaxed/simple;
+	bh=0t9S+5YZVblmItpBrXlzJMnlJr1PTOfmeh1ZHnSwAjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhckCdioAl0MNV3grEZq1AN5gEO+JGxOqiI1zHOF2Eg1FacV6+bSeX0MX8lZaD7n7+OVCUSzIsRHONXTOw8R08JpOurxbte04F/73Kx5Gh5K5wgvi+BDSZ0M8ao7CxT7kO5j3R96yqMy3y7YQgvQnLEDtef/BxMlCEiIaXmgBEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fvqNe6dx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l/vVOvgS1qTmG4voYOOwbUyEcU42CaSmzBD+6nTGm50xQzzuJ7DvlI4lSe5UuXaK6YMS1VY4T094QT3+bT6xhlaZk2fhSmtdkjx4Mg/i7qOgrGN5oLbU3KT50K2CUE3vycderR8eJbTLbgGYyOKvg3Hjlv7uTrO9+V2Chd+2pTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aqgO0EFm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fvqNe6dx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ACC1F00A3A;
-	Wed,  9 Sep 2026 03:32:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aqgO0EFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A611F00A3A;
+	Wed,  9 Sep 2026 03:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788924744;
-	bh=3kn+Gctsm96ES4+vGfS+3z35ShTYAttXRKN88Izlnv0=;
+	s=k20260515; t=1788924902;
+	bh=1hif4kRXGKRlv7XCaBOz5TzhPf5u9j8mx7cCV88z3fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fvqNe6dxMGtmeTFl8McuWyzS5MO3WfnBEuLrvf+5dcDjbDWjaM/alVqAA+bp2+2wJ
-	 3C/+l8guO/RojW6Udpm7LpzC0KuPGHRDO3iihIPzJjCH74Fb6rVTUmWie2GSMHmewN
-	 sOn/gP5m4sVldV0+F0I9g5ooBZgB9yUNx7tRpriyDByZ5KHdJVQGhrNlezrup4QikA
-	 i9xTNObYtIxXKw8d+Brc6/CMfDL3BL9GiBJbDvdTEbtyg9jGqyh5lWa2NIynZbgq/V
-	 qyQHXgXza3EFsdTCH1jGzr7qAPd0v9iQxsLhyPr+1AvjLbChbLJv6rYXtd0HZTXwQi
-	 5Q+zxI+9GwWqA==
+	b=aqgO0EFmtA1p9UshtYQOQPa5eVslosHTFEaAnn5/PVwi1ga+gCUJYZdU7eGhf16PH
+	 lc00K9YKFDwRJIBZKKaK7gGNCID7QF35K3GoZYR5V1McrQG2K07QVH/RGp7co/eHvS
+	 2gj+QwZH2GnhAQKqtXlY31wItlRZ61+rptqL5aEN1DJuMGFx7Yb7P2yvnrFSAxMeps
+	 63wDvFHZQcDneZ4fe2YB2yt90miL5QNV2gekAB55i6ovpPK6LVm0PkImDypWNLNFfK
+	 yYRpFDST0R+eix12yK7vKphWYPnEHvDXZu17azjUUzjoOynJBPZYSSoPQoNfye2mjz
+	 THZlhtnsdhaNw==
 From: SJ Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12.y] mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
-Date: Tue,  8 Sep 2026 20:32:16 -0700
-Message-ID: <20260909033217.123340-1-sj@kernel.org>
+Subject: [PATCH 6.6.y] mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
+Date: Tue,  8 Sep 2026 20:34:49 -0700
+Message-ID: <20260909033449.123677-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090808-snowy-dynamic-3f12@gregkh>
-References: <2026090808-snowy-dynamic-3f12@gregkh>
+In-Reply-To: <2026090808-subscript-extortion-d6f9@gregkh>
+References: <2026090808-subscript-extortion-d6f9@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -67,14 +67,14 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 (cherry picked from commit b640708929aa956235866bf7717d89018c661083)
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/tests/core-kunit.h | 3 +++
+ mm/damon/core-test.h | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index d7737f5df6688..1053d7acd8e45 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -264,11 +264,14 @@ static void damon_test_merge_regions_of(struct kunit *test)
+diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
+index a2aa410d6d0d0..2e191cc4a1b3d 100644
+--- a/mm/damon/core-test.h
++++ b/mm/damon/core-test.h
+@@ -253,11 +253,14 @@ static void damon_test_merge_regions_of(struct kunit *test)
  	damon_merge_regions_of(t, 9, 9999);
  	/* 0-112, 114-130, 130-156, 156-170 */
  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
