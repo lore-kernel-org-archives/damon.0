@@ -1,112 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FBC35F162
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 06:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DC32DC783
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 06:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788933803; cv=none; b=IMgYF0ecbe/6JUOmMLTM9DEiRbHTQahcEegwzYLMXNCCcEIREAF0fRaLiNnBRQcOJRiHKEX5zYE38VrYqyFRhWZiA1erHdK+XLPziprvJJeVVnQDH5M2uAAJ0ChfaM63WsSr5d45RSe4wCqIbQHtL9vrQWnaE+ibMN6y3x3ofc8=
+	t=1788933939; cv=none; b=CU1oWQQ9V3L8JyNyFXugXRp38IIEFqQVgw7fsXXDnd4A3cUxVW60boRRs2bLXlHK2czaynLY5uMOHpnw2H0hlRxijCmR6Hji+k9y9RcOq00i/+2eJa1/O46A6DfVcCtMRURIV5jQAI5P94U14caRiZf2QEDD6SK6PVig5OKp4g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788933803; c=relaxed/simple;
-	bh=C2HpbGcjbr1iWehRGzAutXKrwUTnHYo/ByGZG5my3Xk=;
+	s=arc-20240116; t=1788933939; c=relaxed/simple;
+	bh=hpY1RodClVTebYO9SJoIjMx7NzWCIBuEozRlMabXVAI=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=oFSMY7FwM6ZxHIM5GxG3Oj4MLZUXlZ0TjLLi9ZE6WZlkvKT20/vWV0Vn5qxzPsLgx1ZTMKwgrsS3LnJj4U8r53hVpD0CuiWQhvqUMPl7G2t9x3y/xx5w2OEns13XIClGUKJqDF6p4kvysyCemOHHj46/nZI0/ADN/qcjpwx0Fco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FeTbAw12; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Ivzk+z757XeIiJjkjJEIMV+gsGJCC1voo3VykWqHOzQ/+e1r4mlENRb1XZwwuHt9uV8Ey8TVzbGtcflidsVX+sotOY6V2o0nNbANGlBBuIO90kpqIZ1TVOyfOBROPIzB6PTKDzjb9/77v0IIfE5Bz/O5nurv/eGieC/qO5nUqnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G/a8xGfM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FeTbAw12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B47E1F00A3D;
-	Wed,  9 Sep 2026 06:03:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G/a8xGfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA2B1F00A3D;
+	Wed,  9 Sep 2026 06:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788933802;
-	bh=nQ0545lBSwbl5qgxMAqcnIVPwTRKt2YbweaOuZZU30U=;
+	s=k20260515; t=1788933938;
+	bh=rxuDkJJ0dEDV7zcWV/rcsfuJErl8nI4SyUdUjsQ9rls=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=FeTbAw12FXrsNqwa3OcC1wTRZDRg/+E4Pkvi4P5QtOLq2hVHwye3pdVWEhPDc+oyX
-	 nME7xbfURgYTbCjE27bn8FD+723P8xhBmfRlE+29PHbXljX4Gcbj2YqEkF+edgx1uP
-	 W8mxtyKCqbEbGLasvvOPIuowT6fRPjlbKt5hh65SuBLSE8jduu6Ut3Iq9SCG8EYjh/
-	 2Bm2vy0PIaNkXAp3vWJjLFlKRsFj/4qztTSl9d46aXqVl2qqtelX3HDYihztZCQLau
-	 brvhc7y6vpfRZ2/gTAYf9OHSNbsp1N9EpajGDcdqXC5IWf9owGPhDkD4Pw4Zs5l2sE
-	 FyWOiuC7isPUQ==
+	b=G/a8xGfMakt8cI21VOC4D2eBPnH8d7vo8y86rjWVYFeNb25Rp6FMIJqMt58J9Ja1l
+	 3aIwPV9Aqr4Ocwlwn3osg/BTfgNeIY0s6OD8piy+apmIW8cYwdGwTgCMGDTXni5q6F
+	 54nh4rUZtv1Aag7TVmvOtWySanZm8fFqg0ZrERY+BREhjsw3+K0q2u3o9vzHhGVPso
+	 fGqpGZARn0ApWiv+iddOwJCSkFb0LXRNyOANxstWrsFp1Wh2E2Y2atzZAOY0GCfr4G
+	 37B/KVXU3benx3QO+A4DD94rvg9E5+x3zLNCVSiGv1IDpXjOb5uRxCd792q+Z4GdL+
+	 uFI/eL9PnBhlg==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 7.2.y] mm/damon/vaddr: drop last same folio access check
+Subject: Re: [PATCH 6.6.y] mm/damon/vaddr: drop last same folio access check
  optimization
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260909055319.263738-1-sj@kernel.org>
-References: <2026090857-turtle-delirious-bcbc@gregkh>
- <20260909055319.263738-1-sj@kernel.org>
+In-Reply-To: <20260909055857.266952-1-sj@kernel.org>
+References: <2026090858-excusable-alkaline-da79@gregkh>
+ <20260909055857.266952-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 06:03:21 +0000
-Message-Id: <20260909060322.3B47E1F00A3D@smtp.kernel.org>
+Date: Wed, 09 Sep 2026 06:05:38 +0000
+Message-Id: <20260909060538.7CA2B1F00A3D@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+> The optimization can race when multiple kdamonds are running.  Meanwhile,
+> the impact of the optimization is quite doubtful.  Just remove it.
+>=20
+> The user impact of the issue should be quite trivial.  After all, the race
+> can happen only when the user intentionally setup DAMON in the way.  Even
+> if it happens, it would be rare and only degrade the best-effort
+> monitoring results.  No critical consequences like kernel panic or memory
+> corruption happen.
+>=20
+> The race possibility was discovered [1] by Sashiko.
+>=20
+> Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
+> Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
+> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memo=
+ry address spaces")
+> Signed-off-by: SJ Park <sj@kernel.org>
+> Cc: <stable@vger.kernel.org> # 5.15.x
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> (cherry picked from commit 831846078caa14b7d00b2ccca8b8fe522afe3204)
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Pre-existing issues:
-- [High] DAMOS PTE-level PMD iteration incorrectly advances past unrelated =
-memory when encountering large folio tail pages.
---
-
-commit d786b1179a857b410a9db73cdc4ee0d7bdcbede5
-Author: SJ Park <sj@kernel.org>
-
-mm/damon/vaddr: drop last same folio access check optimization
-   =20
-This commit drops the last same folio access check optimization in DAMON.
-The optimization can race when multiple kdamonds are running, and its
-impact is doubtful.
-
-Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
-Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
-
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index 2c1c1952c008d..404785128ffd7 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-[ ... ]
-
-[Severity: High]
-This is a pre-existing issue, but does this code incorrectly advance past
-unrelated memory when encountering large folio tail pages?
-
-Looking at damos_va_migrate_pmd_entry() and damos_va_stat_pmd_entry() in
-mm/damon/vaddr.c, the PTE iterator unconditionally advances by the full fol=
-io
-size:
-
-mm/damon/vaddr.c:damos_va_migrate_pmd_entry() {
-    ...
-	for (; addr < next; pte +=3D nr, addr +=3D nr * PAGE_SIZE) {
-		nr =3D 1;
-		ptent =3D ptep_get(pte);
-
-		if (pte_none(ptent) || !pte_present(ptent))
-			continue;
-		folio =3D vm_normal_folio(walk->vma, addr, ptent);
-    ...
-		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
-				migration_lists);
-		nr =3D folio_nr_pages(folio);
-	}
-    ...
-}
-
-If the loop encounters a PTE pointing to a tail page of a large folio,
-folio_nr_pages(folio) returns the size of the entire large folio. Because t=
-he
-current PTE does not point to the head of the folio, advancing pte and
-addr by the full folio size will overshoot into unrelated page table
-entries, skipping memory regions during migration and stats scanning.
-
-Could this lead to incorrect functional behavior where unrelated memory
-regions are silently skipped by DAMOS actions?
+Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909055319.2637=
-38-1-sj@kernel.org?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909055857.2669=
+52-1-sj@kernel.org?part=3D1
+
