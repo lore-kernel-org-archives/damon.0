@@ -1,54 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB620492E4C;
-	Wed,  9 Sep 2026 00:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34146492E3B;
+	Wed,  9 Sep 2026 00:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788914290; cv=none; b=VI1rTCfnN35auArT0mV/4b4i/LRFxOWCTRfuqSCxGpLcOTWd5d6H/dOk0GzXsZwM/qoZRd9n9zOK/i57vn7B4wdKs4ZyO/O55K3eoobfAYPQSpnz7DSZGUynqsdn7H8IJf5Wq8Qpfe2fUN6f/BrNT1IvZ3ieoOxNT351YW29hZ8=
+	t=1788914732; cv=none; b=f3WTBh3+9VEEXSxjLD4hnnNLgp9NcLMwSs4HTyuy7K+kCho/qBKM75MRzpHbT+zOELFTVj34urKqZZvKxzp+MleRCxlM3z+HUYP2TuQYZiEYhI8bPMn7x9eCrf4tjqmFes/4InpgGsFO76iPLu9zVdcnIcVmhgicPJoi2LcGsJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788914290; c=relaxed/simple;
-	bh=WDXVCXp54tcC37VGDDpXC7Ad4CbKESWsEb5Si6CaZ7o=;
+	s=arc-20240116; t=1788914732; c=relaxed/simple;
+	bh=TR7MTN1fGXA4hfoTIJ46T+NHldD9mwQQvo8T9xEWdXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lxm0UweuzjYAV8IPBDfs8erE9lvQA8hiF2vS1BoBIOXJnKYthAZ/96A17Sxtx5hCLbCsGSuTFR5laHQibBZNZO5O+GAURNYDkXenBhkQwmhUEFbiZ9W6vjcah7YMHFTCRJUWEVpjYH36i82aOf2HB1KxTHx9eYLMxFF7RBosftw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJDbuH4X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AZbfYj5G4Y8GiELfD4sxR+bF6jW0lRg9nswyDIqjuMZ7qr0NKLlK6pJ6qqEk+Zv8/p0Ja9KUnXp9VHN9tyu2R5YfAACuBTPmEh326bJEe40Lp/f4ztzcQbBeMt9n0Nw7Ryk8R90La2X91O12XwEaoBqriAym5YWlU3CTVchoAoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NRMTXI5L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RJDbuH4X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D81E1F00A3D;
-	Wed,  9 Sep 2026 00:38:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NRMTXI5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540891F00A3A;
+	Wed,  9 Sep 2026 00:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788914288;
-	bh=LW2YRdHu/X4/AGFVGhsWuCM7o9IYlbhU7Z1SrOilMgY=;
+	s=k20260515; t=1788914730;
+	bh=ZNopAaAzl4l7FgpL2NX3Esneyi/PfV8GDqKzg7A+eWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RJDbuH4Xd8C32OmTjQnl1Ekc1TagPeVNucME62r/LSxjMqbUS/NpGkKhLw7X77v+t
-	 wMD2iRE4JvWPJckS/fJD5vdKocCwK6cSiFHPfLDFm5QCeOdDBUuqXySJuzh+hN4jIL
-	 QJNwBLPpS66PBzJrC250WUOOlP7t5iDk9EddOCFqwsDJ7tkjd/gnVXUWP4NksqxE3f
-	 PA1eV110rvY3PDvvKKUlioPKp2SknHbCSGVw/xhVwLX2zGKcypjNbH7ZZTrctTlWFl
-	 VODweHOCKjSH0rM3I6byMsrxpjMyiMMkucPr1NxyRySHFGmzpeEO1O3IwZgiupc0NQ
-	 qHZVDDlRkOWIw==
+	b=NRMTXI5LTdLH8UBQUVL75Ne4wsGyyqbLlOWfIZh8O5U92WQbxbNUZ0tyc9cMVwhj8
+	 4C9Yt1aAExJ2jT+xMlwTtu24XMlk07ApGbQ3LXvjfjeppJuT+9iBJvrx4snpx3QR1k
+	 20hZHkLkCl20E9nF/dFDNVyuVimE+CGV8bhjVFsbnxmJJ53XrlT9tFfuf5Mp/5Yy9o
+	 w1klF/NP7eKnJOFW4VLKEgnxmWJZAweD7BKR8oX+Z8GasMv8Sr9Ci6AkK/lErrRbuO
+	 kfftRhUZGaHSzN8mSs7LRZOTAv0Oz2tflAz6ylMd8ky9ERtu+pH9BnYhbgY6Pril96
+	 OEigpzFjTAHTg==
 From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: Zenghui Yu <zenghui.yu@linux.dev>
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] Docs/mm/damon/design: clarify when qt_exceeds increases
-Date: Tue,  8 Sep 2026 17:38:00 -0700
-Message-ID: <20260909003800.112569-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	shuah@kernel.org
+Subject: Re: [PATCH] selftests/damon: ignore test-generated damon_dump_output
+Date: Tue,  8 Sep 2026 17:45:22 -0700
+Message-ID: <20260909004523.112863-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260908175105.42558-2-aethernet65535@gmail.com>
+In-Reply-To: <20260908162716.85648-1-zenghui.yu@linux.dev>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -58,98 +48,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Liew,
+On Wed,  9 Sep 2026 00:27:16 +0800 Zenghui Yu <zenghui.yu@linux.dev> wrote:
 
-On Wed,  9 Sep 2026 01:50:23 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+> From: "Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
+> 
+> sysfs.py and sysfs_no_op_commit_break.py dump the DAMON status collected
+> via drgn_dump_damon_status.py into a damon_dump_output file in the working
+> directory.  Ignore it so that running the tests in-tree does not pollute
+> git status.
 
-> qt_exceeds counts how many times the quota of a scheme has exceeded.
-> 
-> The value can confuse users when the effective size quota is zero,
-> because a zero effective size quota does not always mean the quotas are
-> unset.
-> 
-> If the quotas are unset, that is, both ms and bytes are zero and no
-> quota goal is set, qt_exceeds never increases.  But if the user uses
-> the temporal auto-tuning algorithm, the effective size quota becomes
-> zero once the goal is [over-]achieved.  In that case the quotas are
-> still set, so qt_exceeds keeps increasing once per quota reset
-> interval while the goal stays achieved.
-> 
-> Clarify this on the design document.
-
-Thank you for keep working on this with patience.
+Nice catch!  Thank you for finding and fixing this!
 
 > 
-> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-> ---
-> 
-> By the way, I found a thing in the design document that confused me.
-> 
->     temporal: More straightforward algorithm. Tries to achieve the goal
->     as fast as possible, using maximum allowed quota, but only for a
->     temporal short time. ---> When the quota is under-achieved, this
->     algorithm keeps tuning quota to a maximum allowed one. Once the
->     quota is [over]-achieved <---, this sets the quota zero. Useful for
->     deterministic control required environments.
-> 
-> I'm not sure if "goal" was accidentally written as "quota" here.  Would
-> this be better?
-> 
->     When the goal is under-achieved, this algorithm keeps tuning quota
->     to a maximum allowed one. Once the goal is [over-]achieved, [...]
+> Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
 
-Good eyes!  Yes, seems it was only mistakenly written in the way.  Please feel
-free to send a separate patch or include it into the next version of this
-patch, whatever better for you.
+Reviewed-by: SJ Park <sj@kernel.org>
 
-> 
-> ---
->  Documentation/mm/damon/design.rst | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-> index d036340dae8a..e083b74d618b 100644
-> --- a/Documentation/mm/damon/design.rst
-> +++ b/Documentation/mm/damon/design.rst
-> @@ -863,6 +863,16 @@ scheme's execution.
->    completely tried to be applied.
->  - ``max_nr_snapshots``: Upper limit of ``nr_snapshots``.
->  
-> +``qt_exceeds`` is increased for schemes with set quotas when the quota is found
-> +full at a quota reset interval boundary.  While the quotas are unset,
-> +``qt_exceeds`` never increased.  However, a zero effective size quota does not
-> +always mean the quotas are unset, if the ``temporal`` :ref:`auto-tuning
-> +algorithm <damon_design_damos_quotas_auto_tuning>` is used, the effective size
-> +quota is set to zero once the goal is [over-]achieved.  Since a set quota of
-> +zero effective size is always considered full, ``qt_exceeds`` keeps being
-> +increased once per quota reset interval in that case, until the goal is
-> +under-achieved again.
-> +
->  "A scheme is tried to be applied to a region" means DAMOS core logic determined
->  the region is eligible to apply the scheme's :ref:`action
->  <damon_design_damos_action>`.  The :ref:`access pattern
+This patch is applied to damon/next [1] tree.  If this patch is not added to
+mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
+to pick this.  So, no action from your side is needed for now.  If it seems I
+also forgot doing that or you cannot wait for my action, please feel free to
+directly ask that to Andrew.
 
-I think the clarification is better to be added to the 'temporal' quota tuner,
-since this happens only when it is used.  Maybe the clarification could also be
-shorter.  For example,
-
-'''
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -775,7 +775,9 @@ There are two such tuning algorithms that users can select as they need.
-   fast as possible, using maximum allowed quota, but only for a temporal short
-   time.  When the quota is under-achieved, this algorithm keeps tuning quota to
-   a maximum allowed one.  Once the quota is [over]-achieved, this sets the
--  quota zero.  Useful for deterministic control required environments.
-+  quota zero.  Useful for deterministic control required environments.  Note
-+  that the zero quota is a valid quota, and therefore ``qt_exceeds`` :ref:`stat
-+  <damon_design_damos_stat>` will keep increasing in the case.
-
- The goal can be specified with five parameters, namely ``target_metric``,
- ``target_value``, ``current_value``, ``nid`` and ``path``.  The auto-tuning
-'''
-
-What do you think, Liew?
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
