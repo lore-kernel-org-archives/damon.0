@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5F853FD37;
-	Wed,  9 Sep 2026 14:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0931F5650F4;
+	Wed,  9 Sep 2026 14:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962658; cv=none; b=mMeDZMBqDSXO9nXHHid5peIaJfG4SmXA7AWq0jDM/V42r9q5qmqb2JR21vPBCtnLzwQAonUi53436V5gjzOY2UXvoOKx3paU8WX3j9Hp3btwLUqXP4CmdI7qR1sLzUtwBK0AzBnb5opNLHx94A1c0UPNLbXFbbuuNbMXYfGppSU=
+	t=1788962658; cv=none; b=EbvLpmk4B8kgabyjSg+JDMoHq69qaooj+E6yRFodMXeIkA9QXDL41OmcPivYIss/YV5HpuR3RfuyV++xAjbTddf0xdKJ6X2VXOk4gzlYnoOzWLTjbhCRvZf3I/7GgyTU4USlqowFNcS8fSZoP2DPB8b2Xfayi5/dv82LWBi1pKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1788962658; c=relaxed/simple;
-	bh=joj+oZhcKNxCBlFa64dD6fvIqv0Vs4g/OHf5Lxq+AoA=;
+	bh=E7fgarhF93UmeFS3xcsx89VbQHqmZiIyVfzBU35jzC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXn4vWDjbLmUxreNGxos0kfEw8/LOfe3KQji+JgTHxPPBtsTelrUDlZtwm9MVtNg34bCQK46DjtpNGTvn6RsvquG0pJqAfVAnaf8JdOYPhBgeR0KTwtoDwr8F4OPzVlFEK6BEwCwO4tnzKMXrBJAlOyjO9kumeUtYuWeig5dYVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZirFfFOi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nh941v0eqwve0QA3SZn8ARL3qxSogoU/cc6tC698ha4tO2wp/f2rhGUTJ1pSl20rgr1dl/mKn7YcX87CO5f5danYvvbzRbDcMCs1lSY5aqkJPtOC4EWxRNzzG6ZPy5brcKEbAxXZmg9FoqDY6oOdBB3StFArFCmqM+Jyj6dPWfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HcZwPB0q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZirFfFOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AFB1F00A3F;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HcZwPB0q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BE01F00ACF;
 	Wed,  9 Sep 2026 14:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1788962656;
-	bh=/q4lRoCEmtfAN8WJows66A5UoAjh8q66hyUmXRAz+Cg=;
+	bh=fT43lELJTSuTapSRQfge6uMBnWbBQLknesZmv7ILLgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZirFfFOiBYwMdynaPn83142DNnMx1cuqIsMzSc0P2ONtSNMa4vl2Ewt3lij1t26/m
-	 ZE7+4PClUCLBsuGhidUxKcJz6qTgaL1pU0aLttA9zIY1d3ptddWB5qQKYSz7euuGfL
-	 ZprN3LznRcQvT0+HIy5gRQPmKGxwoJVb+jesgW5imusIvql9JF7Wrh2ywlbl3OouRf
-	 2n5BCj+AyZT54O7KcTzXP+sgpd/8+2zSn01srWSRU1q26dUqIdDsGPL6idcHkDGbOB
-	 qmzBMbNGSvyoyp45XZ4ARSgCPrdhM0AV47xxrNSKfP/rrpXbIulO2ukV+UDQifcc30
-	 In3oDeyosUN1Q==
+	b=HcZwPB0qrB/sK2rmHLrOG8VFxqZzdxLD+Yrt5RErfNb3SK0iwJtfGaOZXUrzvLNma
+	 XOF3Ujgi4A8RMqKAPK2Pb075WlT4Ix4xmTGxfSHxY3oIAC8EfggxNgFykJiZ4cihE4
+	 nISmtQ6Ki/BTKWztzWUQRg0o/IRc3XFgAx+F7Hm5mxiz5m6vONdneB0axFrgf4yF/z
+	 LvclTuxEFyJJJA2sO71mCPKllk4MvwtprPvzOIGyUGdf7M+YDFEyJ3OuvXc4qvDmAS
+	 +RPMfxn3uTAdTGVWimMNfhCG3D3DCzdilmsR6SVS+LDwim0MoBfq8GaERlKd/juuzh
+	 /HGeD0r5WOZHg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH REPOST 2/5] mm/damon/paddr: move probe filter handling to ops-common
-Date: Wed,  9 Sep 2026 07:04:04 -0700
-Message-ID: <20260909140408.104699-3-sj@kernel.org>
+Subject: [PATCH REPOST 3/5] mm/damon/vaddr: support apply_probe
+Date: Wed,  9 Sep 2026 07:04:05 -0700
+Message-ID: <20260909140408.104699-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260909140408.104699-1-sj@kernel.org>
 References: <20260909140408.104699-1-sj@kernel.org>
@@ -46,110 +46,155 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Probe filter matching logic for anon and memcg type filters in DAMON's
-physical address space operation set (paddr) can be reused by virtual
-address space operation set (vaddr) in future.  Prepare the future by
-moving the code to ops-common.c
+DAMON virtual address space operation set (vaddr) is not supporting
+apply_probe.  Add a minimum support.  Do not support hugetlb pages and
+PGIDLE_UNSET filter type for simplicity.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/ops-common.c | 32 ++++++++++++++++++++++++++++++++
- mm/damon/ops-common.h |  2 ++
- mm/damon/paddr.c      | 23 +----------------------
- 3 files changed, 35 insertions(+), 22 deletions(-)
+ mm/damon/vaddr.c | 123 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 123 insertions(+)
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index acf8f216c51cc..c36cc39cd2c70 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -531,3 +531,35 @@ bool damos_ops_has_filter(struct damos *s)
- 		return true;
- 	return false;
- }
-+
-+bool damon_ops_filter_match(struct damon_filter *filter, struct folio *folio)
-+{
-+	bool matched = false;
-+	struct mem_cgroup *memcg;
-+
-+	switch (filter->type) {
-+	case DAMON_FILTER_TYPE_ANON:
-+		if (!folio) {
-+			matched = false;
-+			break;
-+		}
-+		matched = folio_test_anon(folio);
-+		break;
-+	case DAMON_FILTER_TYPE_MEMCG:
-+		if (!folio) {
-+			matched = false;
-+			break;
-+		}
-+		rcu_read_lock();
-+		memcg = folio_memcg_check(folio);
-+		if (!memcg)
-+			matched = false;
-+		else
-+			matched = filter->memcg_id == mem_cgroup_id(memcg);
-+		rcu_read_unlock();
-+		break;
-+	default:
-+		break;
-+	}
-+	return matched == filter->matching;
-+}
-diff --git a/mm/damon/ops-common.h b/mm/damon/ops-common.h
-index 172f0f17c4a84..ee27058251005 100644
---- a/mm/damon/ops-common.h
-+++ b/mm/damon/ops-common.h
-@@ -31,3 +31,5 @@ bool damos_folio_filter_match(struct damos_filter *filter, struct folio *folio);
- unsigned long damon_migrate_pages(struct list_head *folio_list, int target_nid);
- 
- bool damos_ops_has_filter(struct damos *s);
-+
-+bool damon_ops_filter_match(struct damon_filter *filter, struct folio *folio);
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index d2173a448d0b0..d7c81829445ba 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -143,29 +143,8 @@ static bool damon_pa_filter_match(struct damon_filter *filter,
- 		struct folio *folio)
- {
- 	bool matched = false;
--	struct mem_cgroup *memcg;
- 
- 	switch (filter->type) {
--	case DAMON_FILTER_TYPE_ANON:
--		if (!folio) {
--			matched = false;
--			break;
--		}
--		matched = folio_test_anon(folio);
--		break;
--	case DAMON_FILTER_TYPE_MEMCG:
--		if (!folio) {
--			matched = false;
--			break;
--		}
--		rcu_read_lock();
--		memcg = folio_memcg_check(folio);
--		if (!memcg)
--			matched = false;
--		else
--			matched = filter->memcg_id == mem_cgroup_id(memcg);
--		rcu_read_unlock();
--		break;
- 	case DAMON_FILTER_TYPE_PGIDLE_UNSET:
- 		if (!folio)
- 			matched = false;
-@@ -173,7 +152,7 @@ static bool damon_pa_filter_match(struct damon_filter *filter,
- 			matched = damon_folio_young(folio);
- 		break;
- 	default:
--		break;
-+		return damon_ops_filter_match(filter, folio);
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 20f4784f17817..7c548ec0cf6b5 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -522,6 +522,128 @@ static void damon_va_prep_probes(struct damon_ctx *ctx, bool set_samples)
  	}
- 	return matched == filter->matching;
  }
+ 
++static bool damon_va_filter_pass(struct folio *folio, struct damon_probe *p)
++{
++	struct damon_filter *f;
++	bool pass = true;
++
++	damon_for_each_filter(f, p) {
++		if (damon_ops_filter_match(f, folio)) {
++			pass = f->allow;
++			break;
++		}
++		pass = !f->allow;
++	}
++	return pass;
++}
++
++struct damon_va_probe_walk_private {
++	struct damon_ctx *ctx;
++	struct damon_region *r;
++};
++
++static void damon_va_probe_folio(struct damon_ctx *ctx,
++		struct damon_region *r, struct folio *folio)
++{
++	struct damon_probe *probe;
++	int i = 0;
++
++	damon_for_each_probe(probe, ctx) {
++		if (damon_va_filter_pass(folio, probe))
++			r->probe_hits[i]++;
++		i++;
++	}
++}
++
++static int damon_va_probe_pmd_entry(pmd_t *pmd, unsigned long addr,
++		unsigned long next, struct mm_walk *walk)
++{
++	pte_t *pte;
++	pte_t ptent;
++	spinlock_t *ptl;
++	struct folio *folio;
++	struct damon_va_probe_walk_private *priv = walk->private;
++
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
++	ptl = pmd_trans_huge_lock(pmd, walk->vma);
++	if (ptl) {
++		pmd_t pmde = pmdp_get(pmd);
++
++		if (!pmd_present(pmde))
++			goto huge_out;
++		folio = vm_normal_folio_pmd(walk->vma, addr, pmde);
++		if (!folio)
++			goto huge_out;
++		damon_va_probe_folio(priv->ctx, priv->r, folio);
++
++huge_out:
++		spin_unlock(ptl);
++		return 0;
++	}
++#endif	/* CONFIG_TRANSPARENT_HUGEPAGE */
++
++	pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
++	if (!pte)
++		return 0;
++	ptent = ptep_get(pte);
++	if (!pte_present(ptent))
++		goto out;
++	folio = vm_normal_folio(walk->vma, addr, ptent);
++	if (!folio)
++		goto out;
++	damon_va_probe_folio(priv->ctx, priv->r, folio);
++
++out:
++	pte_unmap_unlock(pte, ptl);
++	return 0;
++}
++
++static void __damon_va_apply_probes(struct damon_ctx *ctx,
++		struct mm_struct *mm,  struct damon_region *r)
++{
++	struct damon_va_probe_walk_private arg = {
++		.ctx = ctx,
++		.r = r,
++	};
++	struct mm_walk_ops damon_probe_walk_ops = {
++		.pmd_entry = damon_va_probe_pmd_entry,
++		.hugetlb_entry = NULL,
++	};
++	unsigned long addr = r->sampling_addr;
++
++	if (!mm)
++		return;
++
++	damon_va_walk_page_range(mm, addr, addr + 1, &damon_probe_walk_ops,
++			&arg);
++}
++
++static unsigned int damon_va_apply_probes(struct damon_ctx *ctx,
++		bool set_samples, bool return_max_wsum)
++{
++	struct damon_target *t;
++	struct mm_struct *mm;
++	struct damon_region *r;
++	unsigned int max_wsum = 0;
++
++	damon_for_each_target(t, ctx) {
++		mm = damon_get_mm(t);
++		damon_for_each_region(r, t) {
++			if (set_samples)
++				r->sampling_addr = damon_rand(ctx, r->ar.start,
++						r->ar.end);
++			__damon_va_apply_probes(ctx, mm, r);
++			if (return_max_wsum)
++				max_wsum = max(damon_probe_hits_wsum(r, false,
++							ctx), max_wsum);
++		}
++		if (mm)
++			mmput(mm);
++	}
++
++	return max_wsum;
++}
++
+ static bool damos_va_filter_young_match(struct damos_filter *filter,
+ 		struct folio *folio, struct vm_area_struct *vma,
+ 		unsigned long addr, pte_t *ptep, pmd_t *pmdp)
+@@ -951,6 +1073,7 @@ static int __init damon_va_initcall(void)
+ 		.prepare_access_checks = damon_va_prepare_access_checks,
+ 		.check_accesses = damon_va_check_accesses,
+ 		.prep_probes = damon_va_prep_probes,
++		.apply_probes = damon_va_apply_probes,
+ 		.target_valid = damon_va_target_valid,
+ 		.cleanup_target = damon_va_cleanup_target,
+ 		.apply_scheme = damon_va_apply_scheme,
 -- 
 2.47.3
