@@ -1,94 +1,175 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D923515FE
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 05:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAA837E5C0;
+	Wed,  9 Sep 2026 05:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788933137; cv=none; b=DVnGyOsxsrdofY6Sh/VXJnw3mfsxbFp5KYzCQn3Nsg8s/5mkYzzf+xKdFjK7CL/6KUkQSpSWqmsboNLCf924zraP3WivIhxHMcZbS4IG0d/BCUBtxtITShJ1IhfGHzyLBONdZAEEpR2tes5z6NhHp9w2/KGXmfyUMjpOrgZWUfo=
+	t=1788933208; cv=none; b=Epg+nYpRVUPsd7tUq7FxgF/FTExx7aelNzxR75g0BN74I9Pt9Hpzkz56PlfP0IGckv95ffxuUZ5Tqs3H19gQqYcYUVLUw/Bcj70paKhtZ5zD2CKCJG9lP0loQo61Fszswe5/jVrszKnCMyv5J5AJ5n4NGTVfrjncBnJRp0ll7fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788933137; c=relaxed/simple;
-	bh=0jjcSgzaI+B15K5LekBIdxBUdOjL2igQvIUTKZFi264=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=KNFwPntRxfGBjX+pTT9yyHyN4++ixrKaXisR6typ1XYEiBT7zpmvQbxiiPj1sKQIBJY0N6UQarjfRjth0war9ZZFzx5s1spd+DOWga1bF1vSO+XR3PGNGy1/4im5uSrOtrAEGJ2fGACFPhuqx0UQK0NEAMFYevms+Lde0Qdkts0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bx5EzzCJ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788933208; c=relaxed/simple;
+	bh=qwP5ZNlX4B8IHP/LioYBERsrFKlMEeisgl6HE/JKSWQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UBF2Fu7OKsdPEARbjOvbU2rtYuc/6lb1dE77y2M172gNQ4sO5+mV/L18tmsC8aOS4rp8/gZVDY581BCdVpZxqor/lp6ml/9vL4NQhlEY7/9b5Do4Ls7+Vik7fAPExmrP4w7nd4vxC8/gO7sC9Y1OHu71hdncKWGzOrEoiSCsJP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YvMGjYdc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bx5EzzCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A781F00A3A;
-	Wed,  9 Sep 2026 05:52:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YvMGjYdc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75401F00A3A;
+	Wed,  9 Sep 2026 05:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788933136;
-	bh=n919cd2z8aoF6dDUoMb798w6ru3ir+vnd7fDq1iddcU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=bx5EzzCJeTgWv98rI4lyCi8u4b7fG+RVZgc8negVATevtqK0ut1NieMZBpokO+jRE
-	 L4eyv+u8vV3RFR6xUvUeYzn4t5vJ92xToCV7i5FVcyqSZkWy0ieOU+IhGIh8IfonSx
-	 g1AitJ+y2hxJLSpiOv8G2KYu4sZRov3sT9HVdh3NRnud84yusXRW/mRa4CT/V2ZEZt
-	 Eu6xCRra9RQ3wGQpWloeeRIo1Pk04CnAlBYJCAoFnlBUaY1KmAfm3GyQTb+38yQUtg
-	 Nqyz533gwFOnXKIVyb4rp7SD9X30VvRQUUv2uNuIEtwlIp732XhVPJqiU7Z1lIXFSX
-	 9d9HRdubUOv0w==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.1.y] mm/damon/paddr: drop last same folio access check
- reuse optimization
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260909054255.253652-1-sj@kernel.org>
-References: <2026090853-handoff-bootlace-9e07@gregkh>
- <20260909054255.253652-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 05:52:15 +0000
-Message-Id: <20260909055216.13A781F00A3A@smtp.kernel.org>
+	s=k20260515; t=1788933206;
+	bh=X85vxEgaq7VjpbAhXrgy7gXEDusjwY4a/3yzhtIgPds=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=YvMGjYdceTa3MdWwfDpUS+9zbcw5amnl5dVMR7bSa05t9FynevCfoVZ6IaeTfnim2
+	 6osFiD2VQvijo2NTIwKnj1LDKpMEc20YzUMubkdeI+bq9gYxdHQC0kkNohJeS4Uowj
+	 GP7m7gDcCwLsYEPL+iyu03po372vcNuf+Ytq6X43hTnpyhqh9+C7X73npyYF6B4b2e
+	 B6eLWB8OmUGWrrRC1HNRiHcNnVSU9dmjhmTk7+nYkwxUBxomgEX9fap9e+RDEISRpZ
+	 LTNIGHrHBrYAbCxUxsq57rOehinn3PyHjBr1RDRf9ywbRSK2xZ4qV+NheeMUpN/4sg
+	 tR/dWMQFyY1ig==
+From: SJ Park <sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.2.y] mm/damon/vaddr: drop last same folio access check optimization
+Date: Tue,  8 Sep 2026 22:53:19 -0700
+Message-ID: <20260909055319.263738-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <2026090857-turtle-delirious-bcbc@gregkh>
+References: <2026090857-turtle-delirious-bcbc@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] Unused field `page_sz` left in `struct damon_pa_access_chk_result` =
-after dropping the optimization.
---
+The optimization can race when multiple kdamonds are running.  Meanwhile,
+the impact of the optimization is quite doubtful.  Just remove it.
 
-commit 9b0877a60d53720420f674776094bf4134b4f6d7
-Author: SJ Park <sj@kernel.org>
+The user impact of the issue should be quite trivial.  After all, the race
+can happen only when the user intentionally setup DAMON in the way.  Even
+if it happens, it would be rare and only degrade the best-effort
+monitoring results.  No critical consequences like kernel panic or memory
+corruption happen.
 
-mm/damon/paddr: drop last same folio access check reuse optimization
+The race possibility was discovered [1] by Sashiko.
 
-This commit drops the optimization that reuses the last access check result
-if the region is in the same page. This removes the race condition when
-multiple kdamonds are used and favors code simplicity.
-
-Link: https://lore.kernel.org/20260715031002.108504-5-sj@kernel.org
+Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
 Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 831846078caa14b7d00b2ccca8b8fe522afe3204)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/vaddr.c | 34 ++++++----------------------------
+ 1 file changed, 6 insertions(+), 28 deletions(-)
 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 7bc8d79c7fa07..d1d047f494aed 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 2c1c1952c008d..404785128ffd7 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -382,8 +382,6 @@ static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
+ }
+ 
+ struct damon_young_walk_private {
+-	/* size of the folio for the access checked virtual memory address */
+-	unsigned long *folio_sz;
+ 	bool young;
+ };
+ 
+@@ -410,7 +408,6 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 					mmu_notifier_test_young(walk->mm,
+ 						addr))
+ 			priv->young = true;
+-		*priv->folio_sz = HPAGE_PMD_SIZE;
+ huge_out:
+ 		spin_unlock(ptl);
+ 		return 0;
+@@ -429,7 +426,6 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	if (pte_young(ptent) || !folio_test_idle(folio) ||
+ 			mmu_notifier_test_young(walk->mm, addr))
+ 		priv->young = true;
+-	*priv->folio_sz = folio_size(folio);
+ out:
+ 	pte_unmap_unlock(pte, ptl);
+ 	return 0;
+@@ -457,7 +453,6 @@ static int damon_young_hugetlb_entry(pte_t *pte, unsigned long hmask,
+ 	if (pte_young(entry) || !folio_test_idle(folio) ||
+ 	    mmu_notifier_test_young(walk->mm, addr))
+ 		priv->young = true;
+-	*priv->folio_sz = huge_page_size(h);
+ 
+ 	folio_put(folio);
+ 
+@@ -469,11 +464,9 @@ static int damon_young_hugetlb_entry(pte_t *pte, unsigned long hmask,
+ #define damon_young_hugetlb_entry NULL
+ #endif /* CONFIG_HUGETLB_PAGE */
+ 
+-static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+-		unsigned long *folio_sz)
++static bool damon_va_young(struct mm_struct *mm, unsigned long addr)
+ {
+ 	struct damon_young_walk_private arg = {
+-		.folio_sz = folio_sz,
+ 		.young = false,
+ 	};
+ 
+@@ -493,29 +486,18 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+  * r	the region to be checked
+  */
+ static void __damon_va_check_access(struct mm_struct *mm,
+-				struct damon_region *r, bool same_target,
++				struct damon_region *r,
+ 				struct damon_attrs *attrs)
+ {
+-	static unsigned long last_addr;
+-	static unsigned long last_folio_sz = PAGE_SIZE;
+-	static bool last_accessed;
++	bool accessed;
+ 
+ 	if (!mm) {
+ 		damon_update_region_access_rate(r, false, attrs);
+ 		return;
+ 	}
+ 
+-	/* If the region is in the last checked page, reuse the result */
+-	if (same_target && (ALIGN_DOWN(last_addr, last_folio_sz) ==
+-				ALIGN_DOWN(r->sampling_addr, last_folio_sz))) {
+-		damon_update_region_access_rate(r, last_accessed, attrs);
+-		return;
+-	}
+-
+-	last_accessed = damon_va_young(mm, r->sampling_addr, &last_folio_sz);
+-	damon_update_region_access_rate(r, last_accessed, attrs);
+-
+-	last_addr = r->sampling_addr;
++	accessed = damon_va_young(mm, r->sampling_addr);
++	damon_update_region_access_rate(r, accessed, attrs);
+ }
+ 
+ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+@@ -524,16 +506,12 @@ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+ 	struct mm_struct *mm;
+ 	struct damon_region *r;
+ 	unsigned int max_nr_accesses = 0;
+-	bool same_target;
+ 
+ 	damon_for_each_target(t, ctx) {
+ 		mm = damon_get_mm(t);
+-		same_target = false;
+ 		damon_for_each_region(r, t) {
+-			__damon_va_check_access(mm, r, same_target,
+-					&ctx->attrs);
++			__damon_va_check_access(mm, r, &ctx->attrs);
+ 			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
+-			same_target = true;
+ 		}
+ 		if (mm)
+ 			mmput(mm);
+-- 
+2.47.3
 
-[ ... ]
-
-> @@ -161,29 +161,16 @@ static bool damon_pa_young(unsigned long paddr, uns=
-igned long *page_sz)
->  	folio_put(folio);
-> =20
->  out:
-> -	*page_sz =3D result.page_sz;
-
-[Severity: Low]
-Since the optimization was removed and page_sz is no longer returned, is it
-necessary to keep the page_sz field in struct damon_pa_access_chk_result?
-
-It looks like result.page_sz is still being assigned in __damon_pa_young()
-and initialized in damon_pa_young(), but the value is never used by any
-caller after this patch. Can the field and its assignments be removed
-entirely to clean up the remaining dead stores?
-
->  	return result.accessed;
->  }
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909054255.2536=
-52-1-sj@kernel.org?part=3D1
