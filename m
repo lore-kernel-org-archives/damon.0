@@ -1,199 +1,189 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8454B04BB
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 10:09:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1445505F1
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 12:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788948544; cv=none; b=LpdEvyxvAodoNqjZHcOhFQ48K2hoz/BZ7ZPKFrVch8sCNBxy9j6dKj2pNPnSRUYkdoiIGKOj2cxuoMMXAgzYqov+c2MPteqNpkCFg8yfIcM8kedNtF47Eo9QMLStKnrN90J+E40bpNFd6q020xjBcLr6/6H8+dZRzRDaRyfgv0Y=
+	t=1788956412; cv=none; b=hRHpmSa+aZ5wdDBVKS007P2PMtFxe/eDTKa6IXGo0aF+rpxDD58nvZGTXGNlBSbF7nxhGzs1z6gmeM5LkmcNlUNrwvIXq3hzUXqsF4IJapETJ4seoxlkN/npOU5svfbxCQfePAI1mB1hCZm97idrI4X0ETFwAMjf1Lf2+VCxRaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788948544; c=relaxed/simple;
-	bh=YnBXD+T/yH9/YjPEUD5GRTVBzz7NWd4Ym7TZDeqX61U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9mfFvgdjQBNXpp6GxG6sJ6BDUbtbGoKM2bRIliX7pPiQKTLjHjk1nT1zii6vqFDBSiemVlwClKIR4qQ8VBHw2dEb5c//p0BN/ZQZE7X3RhUGwZawskFVlhRLQRPT/MM4uXqjhfzogbqvFUU1UBbBtaMXgzKic63RYkWoYFASHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lSz8hEJg; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788956412; c=relaxed/simple;
+	bh=dLoENm/5dHcwLHwJ6/geeKDZfEa5bk/MeVe3uFzrjsQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ccbvxq7b3ZoI/A3A3CusPY7zBmht7Do/++4/vnpuWlYzLxpyJEAtLRmsRaNULz9dZSFurdEZQ6ahiN0Y1gQ2vpnaRCsEvy5+Yaaw8gifhAqnE8Wr5l/4so+h/tnJ4NG9WJV3c3bLuUsGAHK1e4A0/RHnbod/gjUjMvUJmJt2/Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com; spf=pass smtp.mailfrom=kroah.com; dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b=jFHIssvo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jf6ZZJQH; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kroah.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lSz8hEJg"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-851cbd64814so2910481b3a.1
-        for <damon@lists.linux.dev>; Wed, 09 Sep 2026 03:09:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788948542; x=1789553342; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Cspt3kRXGk/I1h0yuaYP6XGwO6IhBwUrx4BknaruqsY=;
-        b=lSz8hEJg39xNwZ+XSqvJzKBLV+BTSytYcUkczp5gShkqAERbIBW6P793mLlYm0skAz
-         TXGAOc+H5nQ8fHJTj2rnYIaSEIrAeFbF0Y1WXPXnkQHfqOYh0z84Ax7rNQoA8+f8knyl
-         SWSLyqx7eS1I2SAY9sXtu/yTDsgvNkYZvCeLrPyuBci8/YvAFwmyIcJuama0ioVfZbMD
-         7mqA39YfHfwRrWlybCmK/bKvukRmsFh5xxghAHqV+ybYnyzJW9FBoe3HifVifamRj9RN
-         9/1x2FKFvOhz6KJYmIV+foSpGpciLBGHFH3KHr/36bXPl7KU95y0rvEVLfgpW+x+EQNV
-         qHZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788948542; x=1789553342;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Cspt3kRXGk/I1h0yuaYP6XGwO6IhBwUrx4BknaruqsY=;
-        b=L/Ny/iJRDBVwWFw/JbHsFcqQgP8IPWx70RbXrMeekKSc8uSE/zZGhHJHINa0FbTsPf
-         HHaC4ooxj+JxFneiUYxOxisLSF+CYPuA1jYee3459mxAaHwVYAGE1ToFD/yDzdBR1Kbf
-         m0Crfnh4v3Zl4sR2DgI1Ia3YF4eHx2XqB8nX0K9BnBbnbvzRWsw61qrArkFxgAeFnEhL
-         hWY2D9fTr7G061cz2md27w93/upkw3t8LG+BP5Z3Fl32XOol65H9oZJGuo+tgDir8AP/
-         +5GmHH5mahGYfs1mCeqKWLO90wVn1ItolYEl3Kcq+2JG1kLpRKgKofQrY39lM4cAr2Qc
-         80YQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwmISFVoX2/1IIWkoI5OyK7VvJ+od6DHMLLAy2BWdgIADbUNi1CCcfYNYX3GOu5XwDlLehpYw==@lists.linux.dev
-X-Gm-Message-State: AFuF++kaNS/HFgOPeIOkn1o5LbJup13gAkKqU/9YsH0Oa18N8FR6i6e2
-	/qdbibliM09GfcgQWB+znOSH6cOq5cCKv87WUmIkpNX+NiQr0NwQKHGc
-X-Gm-Gg: AYBFou3JtOhxXmQtgBuXlRGsUenxZyOrlf47ZFBTwkV50wd9nkc6SSmxKekancp1Uvj
-	wtGWr1SZLKtFidYyRMXKfbYCCnZIztXAB45vu6BsurcQmLpoYYZf7JIPghG/u8ihH9+ktH3IuK5
-	9r/ygOQp+t8bGjGbB9VtW6pkiA+M7NAhR8CXynm9sGOc8vqL+uIQK2nJbH+VLPbDgLICOzE5oee
-	lTbDZuEQdNY0NbKjPN2w3P8tgN/njVMqByYP8ygJFnVZf4OrXj2WCa8Q6otd8EG8+JkRWoJtbDL
-	PZdiYMMgE0IaDD+DRvBk6dseCxj3tjPwH3cBJ+n+FR40JjCzwAFcxAXCTPRXVRkvyyRL8Oq0DZw
-	UaRvZ0S5srURh9Zqk/Wi9tTSpxvdHY8mRN6EBE+2ZSUul08zD4E4PUOnbxdnzWGbm9959luYh4/
-	sGyappkPf/kNcm5F1B8w9Ge6ox/MS0JhjYg64iTHJg5HX6Y8oY0v4y8kF1pcd+ab4O0REb1xIEb
-	YozlRgmnIllC3E=
-X-Received: by 2002:a05:6a00:2d91:b0:846:8b22:4933 with SMTP id d2e1a72fcca58-8616bd5c57amr45991902b3a.17.1788948542332;
-        Wed, 09 Sep 2026 03:09:02 -0700 (PDT)
-Received: from celestia ([2402:1980:885b:4183:b098:c1b9:7033:be8a])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86152c2a52asm6745792b3a.30.2026.09.09.03.08.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 03:09:01 -0700 (PDT)
-From: Liew Rui Yan <aethernet65535@gmail.com>
-To: sj@kernel.org
-Cc: aethernet65535@gmail.com,
-	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	damon@lists.linux.dev,
-	david@kernel.org,
-	liam@infradead.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	ljs@kernel.org,
-	mhocko@suse.com,
-	rdunlap@infradead.org,
-	rppt@kernel.org,
-	skhan@linuxfoundation.org,
-	surenb@google.com,
-	vbabka@kernel.org
-Subject: Re: [RFC PATCH] Docs/mm/damon/design: clarify when qt_exceeds increases
-Date: Wed,  9 Sep 2026 18:07:33 +0800
-Message-ID: <20260909100913.30568-1-aethernet65535@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260909003800.112569-1-sj@kernel.org>
-References: <20260909003800.112569-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b="jFHIssvo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jf6ZZJQH"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id B7795EC00BB;
+	Wed,  9 Sep 2026 08:20:08 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 09 Sep 2026 08:20:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1788956408; x=1789042808; bh=LxTePqthyS
+	ekJGVkxNn8lrAT6VrBneOK7CqtEDy0JiQ=; b=jFHIssvoYEC2RKRoux+fznDIfj
+	hrV6Tk/a4ONOix2kncSNmc82pEbxZUCp8ceOtm7lGoIHDw+5voud+on2tEMV0dS6
+	WwLeUxeE2yI9Tf/mgRAbnwTzz8jdo9fUPU/I8cyEW6vcrqEH+HrHjfCwgLdfZCkx
+	1+iKBylmOFk1XMXnkdO2Q5zjpPBYUrFoWzWeZ8gPplqJZMHvN2QWdq4uIblNzfma
+	T5ip3lgWEor3MZdgSaVYg165jxIpwIXMKTLKBTN1HxFRcR6GErms+qC8n39VuuIk
+	mn6KDydmT0s4qZ7rJwGpQeGHVJcZEnSaWztA2s8lyeVHub9asShOzevLFdyQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1788956408; x=1789042808; bh=LxTePqthySekJGVkxNn8lrAT6VrBneOK7Cq
+	tEDy0JiQ=; b=jf6ZZJQHxH7T8+z4XkpHe+zKmoO81p+7VDo4bRl3zYgvRMHEuXf
+	vacHu54f1hABr2LgCPoMPKdZmhvXt/a8kraVUMA2n7PeO8hIkMII4bkHxvsLjAIv
+	Iw6Lv8TtBB7bCMWGLOuS66LoiamIjKIesdWJ+1bgjcW43yliLlpPJR0pH3EAIuOb
+	2uYkWsqDy92G5l0mc2e3b+I2Wou3PZQqHAjoMmmorPtLpzEOdXkOEK0YbmgVrA3q
+	i/2PdeImiqVij7mYNj0JENCBuAjD7NyO9dE5T3ETeEtiD3pSQ5pvHtFrbejpx6bQ
+	ZVW59b078qUjCYs/cWeG5xCcYIW01/EA+nw==
+X-ME-Sender: <xms:-E6halLm2dCm-AfxKAy2kuwFvl9fnPdtRxkWDDVJvXD12jgyMgao4A>
+    <xme:-E6hajudAFRPVrOvQ00nxJ5hC_RpJIw66NY_VsHPniVUyCvSzmvZavR0owyEQcWjz
+    eHr1I3bNzTnWRykkIrdsJH94HNOFSaqfVrwU62jO-E6_ci1jQ>
+X-ME-Received: <xmr:-E6hahXJB_W2qHCtHpkwo-mix85nowlmQAnvq-TTi-yJuFdEHlVTfbPv5ROisBZYahSJIIXaTehMBZ1Xge1pfninJLPrNTVLUHXZTwE8MWY>
+X-ME-Proxy-Cause: dmFkZTEdRzn9ALU2TlM/TWPVd3IwwHDV5EiJ9wBW9t4yilh7yskSpuYImTEvo+pcVSFbpn
+    KVRR+RrqTIqTKoFvwGzRiRmNbbP20uejyrsPvEvlkWg507nQDDOZ3m7SvvkxYKOb40JoO1
+    86lVvCII628EKhs71WCUtbaTAMzWj8PHKfD/pbdtRA2sIlNKK4NL9B7tqkvLLIozTh/zcx
+    yA2TCHxo16EPUsiwWNN7NFxgnOSAwUUMZwOioFdjbvVtx6GlUoZnL04Do6xxHL5A6MB0YZ
+    uZYIBjKmq8xR3zH/kCILRgTmA5KQ1xTeJLSkNtuUjdCBUHCjhpLM9on65AlhAlxKGxJYON
+    Vl9BiynAn6O4M4+KWORo9TP2atHF7MQGA5Xu0dQfWsQmL89KuuASmMPeiE7MsA7bBdBB2L
+    aGNRRiwsxGTzQ8QWaGkMuz3LaTYzIq7ETg+ea0hqulrZYNDgjnRX1oJwhu9Y+nVgmIwAVQ
+    WRMk1sbTAhjfFjTmh1sKg8PNx1F8fAR0C+e5VWnlufQEcqnuW/1wR5yWURuVK7JFLQEVY7
+    5zvokdGp8PWUFmZvJ/XF8bhJN5mVp2YL0BJ+fMjjOE5Cyocca4MsV38X8+UBoI2wM/+5I6
+    YAEBEJV7Xd3745njHT7VP3kfEazcL7BO4ntssCreWsXO3xwong0tdEKOLMRA
+X-ME-Proxy: <xmx:-E6hamgx4vWDm4K4PoS4E-ZvBGO7lFxJMbNLIG_SCviyLF5dowR-uA>
+    <xmx:-E6hahqpEicFwzD__gG4sKaOZATyhnh6sFut7SjpOllV27S0iRe-FA>
+    <xmx:-E6hakESeejfg-PkQC2AgBJgIN_9ptNC3zjA87cPch_aK0IR5S6DNg>
+    <xmx:-E6hau4n5rxNiWVackjHaZSzG1haL0TmS8WpNsOwvhEH-Fnci-ZL4A>
+    <xmx:-E6haiaS1LiM0cPIJnNXrSJf6ONvZvyPVihzqLCZK6UrrY7Lo82W0wKg>
+Feedback-ID: i787e41f1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Sep 2026 08:20:07 -0400 (EDT)
+Date: Wed, 9 Sep 2026 14:19:27 +0200
+From: Greg KH <greg@kroah.com>
+To: SJ Park <sj@kernel.org>
+Cc: stable@vger.kernel.org, damon@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 7.2.y] mm/damon/core: skip aging from repeated aggressive
+ merging
+Message-ID: <2026090918-relic-padded-3b25@gregkh>
+References: <2026090839-reoccupy-dizzy-a7bd@gregkh>
+ <20260909043419.207354-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260909043419.207354-1-sj@kernel.org>
 
-On Tue, 08 Sep 2026 17:38:00 -0700 SJ Park <sj@kernel.org> wrote:
+On Tue, Sep 08, 2026 at 09:34:19PM -0700, SJ Park wrote:
+> The number of DAMON regions could temporarily exceed the user-defined
+> maximum number of regions limit for corner cases.  For example, users
+> could lower the limit via runtime parameters update.  For such a case,
+> kdamond_merge_regions() repeats merging regions in the case doubling the
+> merge threshold.  The repeated merge operation could update the age of
+> regions multiple times.  This corrupts the monitoring results.  Fix the
+> issue by asking the merge operation to skip aging for the corner case.
+> 
+> The user impact is degradation of the monitoring quality.  The impact
+> should be mild, since the degradation is only temporal, and it is not
+> common to happen in realistic setups.
+> 
+> The issue was discovered [1,2] by Sashiko.
+> 
+> Link: https://lore.kernel.org/20260712165432.87609-1-sj@kernel.org
+> Link: https://lore.kernel.org/20260621203548.10718-1-sj@kernel.org [1]
+> Link: https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org [2]
+> Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
+> Signed-off-by: SJ Park <sj@kernel.org>
+> Cc: <stable@vger.kernel.org> # 6.10
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> (cherry picked from commit 0250dbe08c730d003ef9f484da56ae09a1ea0c4c)
+> Signed-off-by: SJ Park <sj@kernel.org>
+> ---
+>  mm/damon/core.c             | 21 +++++++++++++--------
+>  mm/damon/tests/core-kunit.h |  2 +-
+>  2 files changed, 14 insertions(+), 9 deletions(-)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index cff932b3317d0..024a3a185bfe8 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -3115,18 +3115,20 @@ static void damon_verify_merge_regions_of(struct damon_region *r)
+>   * sz_limit	size upper limit of each region
+>   */
+>  static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
+> -				   unsigned long sz_limit)
+> +		unsigned long sz_limit, bool count_age)
+>  {
+>  	struct damon_region *r, *prev = NULL, *next;
+>  
+>  	damon_for_each_region_safe(r, next, t) {
+>  		damon_verify_merge_regions_of(r);
+> -		if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
+> -			r->age = 0;
+> -		else if ((r->nr_accesses == 0) != (r->last_nr_accesses == 0))
+> -			r->age = 0;
+> -		else
+> -			r->age++;
+> +		if (count_age) {
+> +			if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
+> +				r->age = 0;
+> +			else if ((r->nr_accesses == 0) != (r->last_nr_accesses == 0))
+> +				r->age = 0;
+> +			else
+> +				r->age++;
+> +		}
+>  
+>  		if (prev && prev->ar.end == r->ar.start &&
+>  		    abs(prev->nr_accesses - r->nr_accesses) <= thres &&
+> @@ -3160,15 +3162,18 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+>  	struct damon_target *t;
+>  	unsigned int nr_regions;
+>  	unsigned int max_thres;
+> +	bool count_age = true;
+>  
+>  	max_thres = c->attrs.aggr_interval /
+>  		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
+>  	do {
+>  		nr_regions = 0;
+>  		damon_for_each_target(t, c) {
+> -			damon_merge_regions_of(t, threshold, sz_limit);
+> +			damon_merge_regions_of(t, threshold, sz_limit,
+> +					count_age);
+>  			nr_regions += damon_nr_regions(t);
+>  		}
+> +		count_age = false;
+>  		threshold = max(1, threshold * 2);
+>  	} while (nr_regions > c->attrs.max_nr_regions &&
+>  			threshold / 2 < max_thres);
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index fcf7c7fadb5fe..59bba0552d88c 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
+> @@ -256,7 +256,7 @@ static void damon_test_merge_regions_of(struct kunit *test)
+>  		damon_add_region(r, t);
+>  	}
+>  
+> -	damon_merge_regions_of(t, 9, 9999);
+> +	damon_merge_regions_of(t, 9, 9999, true);
+>  	/* 0-112, 114-130, 130-156, 156-170, 170-230, 230-10170 */
+>  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 6u);
+>  	for (i = 0; i < 6; i++) {
+> -- 
+> 2.47.3
+> 
+> 
 
-> Hi Liew,
-> 
-> On Wed,  9 Sep 2026 01:50:23 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> 
-> > qt_exceeds counts how many times the quota of a scheme has exceeded.
-> > 
-> > The value can confuse users when the effective size quota is zero,
-> > because a zero effective size quota does not always mean the quotas are
-> > unset.
-> > 
-> > If the quotas are unset, that is, both ms and bytes are zero and no
-> > quota goal is set, qt_exceeds never increases.  But if the user uses
-> > the temporal auto-tuning algorithm, the effective size quota becomes
-> > zero once the goal is [over-]achieved.  In that case the quotas are
-> > still set, so qt_exceeds keeps increasing once per quota reset
-> > interval while the goal stays achieved.
-> > 
-> > Clarify this on the design document.
-> 
-> Thank you for keep working on this with patience.
-> 
-> > 
-> > Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-> > ---
-> > 
-> > By the way, I found a thing in the design document that confused me.
-> > 
-> >     temporal: More straightforward algorithm. Tries to achieve the goal
-> >     as fast as possible, using maximum allowed quota, but only for a
-> >     temporal short time. ---> When the quota is under-achieved, this
-> >     algorithm keeps tuning quota to a maximum allowed one. Once the
-> >     quota is [over]-achieved <---, this sets the quota zero. Useful for
-> >     deterministic control required environments.
-> > 
-> > I'm not sure if "goal" was accidentally written as "quota" here.  Would
-> > this be better?
-> > 
-> >     When the goal is under-achieved, this algorithm keeps tuning quota
-> >     to a maximum allowed one. Once the goal is [over-]achieved, [...]
-> 
-> Good eyes!  Yes, seems it was only mistakenly written in the way.  Please feel
-> free to send a separate patch or include it into the next version of this
-> patch, whatever better for you.
+Does not apply to the latest 7.2.y queue :(
 
-I will send a separate patch.
-
-> 
-> > 
-> > ---
-> >  Documentation/mm/damon/design.rst | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-> > index d036340dae8a..e083b74d618b 100644
-> > --- a/Documentation/mm/damon/design.rst
-> > +++ b/Documentation/mm/damon/design.rst
-> > @@ -863,6 +863,16 @@ scheme's execution.
-> >    completely tried to be applied.
-> >  - ``max_nr_snapshots``: Upper limit of ``nr_snapshots``.
-> >  
-> > +``qt_exceeds`` is increased for schemes with set quotas when the quota is found
-> > +full at a quota reset interval boundary.  While the quotas are unset,
-> > +``qt_exceeds`` never increased.  However, a zero effective size quota does not
-> > +always mean the quotas are unset, if the ``temporal`` :ref:`auto-tuning
-> > +algorithm <damon_design_damos_quotas_auto_tuning>` is used, the effective size
-> > +quota is set to zero once the goal is [over-]achieved.  Since a set quota of
-> > +zero effective size is always considered full, ``qt_exceeds`` keeps being
-> > +increased once per quota reset interval in that case, until the goal is
-> > +under-achieved again.
-> > +
-> >  "A scheme is tried to be applied to a region" means DAMOS core logic determined
-> >  the region is eligible to apply the scheme's :ref:`action
-> >  <damon_design_damos_action>`.  The :ref:`access pattern
-> 
-> I think the clarification is better to be added to the 'temporal' quota tuner,
-> since this happens only when it is used.  Maybe the clarification could also be
-> shorter.  For example,
-> 
-> '''
-> --- a/Documentation/mm/damon/design.rst
-> +++ b/Documentation/mm/damon/design.rst
-> @@ -775,7 +775,9 @@ There are two such tuning algorithms that users can select as they need.
->    fast as possible, using maximum allowed quota, but only for a temporal short
->    time.  When the quota is under-achieved, this algorithm keeps tuning quota to
->    a maximum allowed one.  Once the quota is [over]-achieved, this sets the
-> -  quota zero.  Useful for deterministic control required environments.
-> +  quota zero.  Useful for deterministic control required environments.  Note
-> +  that the zero quota is a valid quota, and therefore ``qt_exceeds`` :ref:`stat
-> +  <damon_design_damos_stat>` will keep increasing in the case.
-> 
->  The goal can be specified with five parameters, namely ``target_metric``,
->  ``target_value``, ``current_value``, ``nid`` and ``path``.  The auto-tuning
-> '''
-> 
-> What do you think, Liew?
-
-I agree that would be better.  Although users might look up the
-definition of qt_exceeds first, they are also likely to navigate
-directly to the temporal section.
-
-I will clarify at the temporal section in the next revision.
-
-Best regards,
-Rui Yan
