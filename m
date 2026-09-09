@@ -1,45 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34146492E3B;
-	Wed,  9 Sep 2026 00:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DB83019A9;
+	Wed,  9 Sep 2026 03:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788914732; cv=none; b=f3WTBh3+9VEEXSxjLD4hnnNLgp9NcLMwSs4HTyuy7K+kCho/qBKM75MRzpHbT+zOELFTVj34urKqZZvKxzp+MleRCxlM3z+HUYP2TuQYZiEYhI8bPMn7x9eCrf4tjqmFes/4InpgGsFO76iPLu9zVdcnIcVmhgicPJoi2LcGsJo=
+	t=1788924132; cv=none; b=Qge7B/O5gABPJXSbt7QlLzpHppwF4OrVIfZLRUSoGcdFrhx1t7Z+XL2aDpj6rLwp/CkRsMSeh3H3bBdYEvqIp9InoE/cXTczZFfC9xWQJDjzrVxKoV8t7fsuxLANwi9AMsoV7rmVD/7JVsSuchOKxa8wDbgyCja3Mdk91z1VHKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788914732; c=relaxed/simple;
-	bh=TR7MTN1fGXA4hfoTIJ46T+NHldD9mwQQvo8T9xEWdXo=;
+	s=arc-20240116; t=1788924132; c=relaxed/simple;
+	bh=O1z0Ka5qMkUbQRoWXg+QK2LvuOW27PIgbEXIjf6kySQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZbfYj5G4Y8GiELfD4sxR+bF6jW0lRg9nswyDIqjuMZ7qr0NKLlK6pJ6qqEk+Zv8/p0Ja9KUnXp9VHN9tyu2R5YfAACuBTPmEh326bJEe40Lp/f4ztzcQbBeMt9n0Nw7Ryk8R90La2X91O12XwEaoBqriAym5YWlU3CTVchoAoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NRMTXI5L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XS7a1Ulud462a+v+iaHd4fhErAZ6fMJMBLBNvo+pO8JLRop9y32Fk6pYyfVADK7Sb1LdW7MlE02XcsX4ctR1Ba5aSt/cIERtqfVx3t7YStEd7G+bniISm/6JzPxRZlgUweaFf85hsGpzj4lou7LMhKesNVw55Hoy+pv2/Taf6Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gaxlVO4Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NRMTXI5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540891F00A3A;
-	Wed,  9 Sep 2026 00:45:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gaxlVO4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16B71F00A3A;
+	Wed,  9 Sep 2026 03:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788914730;
-	bh=ZNopAaAzl4l7FgpL2NX3Esneyi/PfV8GDqKzg7A+eWw=;
+	s=k20260515; t=1788924130;
+	bh=kGEFJZ/BG5s2iSF5fW6GXrJzUtrIb/z0f3Xtu7APSKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NRMTXI5LTdLH8UBQUVL75Ne4wsGyyqbLlOWfIZh8O5U92WQbxbNUZ0tyc9cMVwhj8
-	 4C9Yt1aAExJ2jT+xMlwTtu24XMlk07ApGbQ3LXvjfjeppJuT+9iBJvrx4snpx3QR1k
-	 20hZHkLkCl20E9nF/dFDNVyuVimE+CGV8bhjVFsbnxmJJ53XrlT9tFfuf5Mp/5Yy9o
-	 w1klF/NP7eKnJOFW4VLKEgnxmWJZAweD7BKR8oX+Z8GasMv8Sr9Ci6AkK/lErrRbuO
-	 kfftRhUZGaHSzN8mSs7LRZOTAv0Oz2tflAz6ylMd8ky9ERtu+pH9BnYhbgY6Pril96
-	 OEigpzFjTAHTg==
+	b=gaxlVO4YIu2G/AxaC0gIFer1XtfOUPBgMi7rK3LmsBdk5AYNaTpPHiaulVj1WFZmP
+	 C0TnuTgf6EyxExONblzY5LckvSLChKYfrcY7Ev1XzAgP7G5rwClp1Q36M/AYZ2xx6K
+	 xxBDeOVBgW9e/wGS9fdBLuGO0PGi09DbtSSxxJ6kGYUwvztHX2AcdU4KGD/UCQAEV9
+	 JOv6TdMD16gqsSfhhuT3ZQp+qQM6qE2lzuKb9FZ09yogt5T1rIHa0Hcvp6rAF5/Phg
+	 6UrzcPNlWdna8zzmssQrNmwJwkHgXQvOXXh0hf/xIc8cj6VRMfdolukf8E0JJgwMUu
+	 ffEFrg4GzFqpw==
 From: SJ Park <sj@kernel.org>
-To: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	shuah@kernel.org
-Subject: Re: [PATCH] selftests/damon: ignore test-generated damon_dump_output
-Date: Tue,  8 Sep 2026 17:45:22 -0700
-Message-ID: <20260909004523.112863-1-sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	Song Hu <husong@kylinos.cn>,
+	SJ Park <sj@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18.y] Docs/ABI/damon: fix typo in intervals_goal sysfs path
+Date: Tue,  8 Sep 2026 20:21:55 -0700
+Message-ID: <20260909032155.118089-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260908162716.85648-1-zenghui.yu@linux.dev>
-References: 
+In-Reply-To: <2026090815-crane-crease-f5f5@gregkh>
+References: <2026090815-crane-crease-f5f5@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,32 +54,92 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed,  9 Sep 2026 00:27:16 +0800 Zenghui Yu <zenghui.yu@linux.dev> wrote:
+From: Song Hu <husong@kylinos.cn>
 
-> From: "Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
-> 
-> sysfs.py and sysfs_no_op_commit_break.py dump the DAMON status collected
-> via drgn_dump_damon_status.py into a damon_dump_output file in the working
-> directory.  Ignore it so that running the tests in-tree does not pollute
-> git status.
+Patch series "Docs/ABI/damon: sysfs ABI document fixes and additions", v2.
 
-Nice catch!  Thank you for finding and fixing this!
+This series fixes typos and fills in missing entries in the DAMON sysfs
+ABI document (Documentation/ABI/testing/sysfs-kernel-mm-damon).
 
-> 
-> Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Patch 1 fixes a path typo, "intrvals_goal" -> "intervals_goal", in four
+What: entries; the documented path points to a non-existent directory, so
+it is Cc'ed to stable.
 
+Patch 2 fixes two further typos ("WDate:", "manimum").
+
+Patches 3 and 4 add ABI entries that exist in the kernel and are already
+described in usage.rst but are missing from the canonical ABI document:
+the 'update_tuned_intervals' state command (patch 3) and the
+'tried_regions/<R>/probes/<P>/hits' file (patch 4).
+
+This patch (of 4):
+
+The ABI document spells the DAMON sysfs directory as "intrvals_goal"
+(missing 'e') in four What: entries, but the kernel creates it as
+"intervals_goal" (mm/damon/sysfs.c).  Following the documented path
+therefore yields a non-existent directory.
+
+Link: https://lore.kernel.org/20260714140117.94147-1-sj@kernel.org
+Link: https://lore.kernel.org/20260714140117.94147-2-sj@kernel.org
+Fixes: e2b23dc62369 ("Docs/ABI/damon: document intervals auto-tuning ABI")
+Signed-off-by: Song Hu <husong@kylinos.cn>
 Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 1b492fc82368399123413c937f13da6ed312ee4d)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ Documentation/ABI/testing/sysfs-kernel-mm-damon | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-This patch is applied to damon/next [1] tree.  If this patch is not added to
-mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
-to pick this.  So, no action from your side is needed for now.  If it seems I
-also forgot doing that or you cannot wait for my action, please feel free to
-directly ask that to Andrew.
+diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+index b6b71db36ca72..ee111f632ed85 100644
+--- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
++++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
+@@ -105,7 +105,7 @@ Description:	Writing a value to this file sets the update interval of the
+ 		DAMON context in microseconds as the value.  Reading this file
+ 		returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/access_bp
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/access_bp
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the monitoring intervals
+@@ -113,7 +113,7 @@ Description:	Writing a value to this file sets the monitoring intervals
+ 		the given time interval (aggrs in same directory), in bp
+ 		(1/10,000).  Reading this file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/aggrs
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/aggrs
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the time interval to achieve
+@@ -121,14 +121,14 @@ Description:	Writing a value to this file sets the time interval to achieve
+ 		access events ratio (access_bp in same directory) within.
+ 		Reading this file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/min_sample_us
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/min_sample_us
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the minimum value of
+ 		auto-tuned sampling interval in microseconds.  Reading this
+ 		file returns the value.
+ 
+-What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intrvals_goal/max_sample_us
++What:		/sys/kernel/mm/damon/admin/kdamonds/<K>/contexts/<C>/monitoring_attrs/intervals/intervals_goal/max_sample_us
+ Date:		Feb 2025
+ Contact:	SeongJae Park <sj@kernel.org>
+ Description:	Writing a value to this file sets the maximum value of
+-- 
+2.47.3
 
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-
-
-Thanks,
-SJ
-
-[...]
