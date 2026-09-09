@@ -1,60 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A803576EC2
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 14:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA39557D22E;
+	Wed,  9 Sep 2026 14:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788962997; cv=none; b=XowrSYzNUCx9RAKOl7JOXpTdKDQfhxequ3FN31NP/2h0VwTleI2jyN0q54nE95p3wbqAwy4gWhYgv3ZRNGuLu1wuMFzrLLVBdIBX6nvdi2GKnfU/vKDMlUU4YvehwuUVCCUxDrIXgEgXxVcQ6+ONwvsnBIgURJw1JIHJzyXbBeU=
+	t=1788963053; cv=none; b=EMms945fegKOEDSsEkovQ8Azc+tebJ6TBfwgHvaN/b8GNoXDC5IfePHs3g7HpJlN30NVxxgMZhZyUoegP/pAiUYsy8MuFD7IPlcEk/rrKJguEv/6ckE2Ng053qujeGG6zS/MMuX3YrqAGdohFjhA7udsuZcid2SyiQemn/INmA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788962997; c=relaxed/simple;
-	bh=R8EbR8r8RqhqUGtWS4s9lAUlA8gXa1oqEZZ++ifNbe4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=JTmlPrS4aK0FL2neAEdEFWEw963Se5yvOxEwYOwfwPfFfJA97YylYXnV21gpYsMNRCrgsax5dfWYHlsHjX/5WFdQPhjGUqXuTZLG/pQjkyFf6D7fVRKBnI+FNNdVsMKp9VlXp1RZPrzTpuxz/d/yIPU12HHbk6Sqa4GCt2KVcik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WBFJJ9TK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788963053; c=relaxed/simple;
+	bh=ZgibdlYM3tl5BTcEFpMhi4IiQYjmjdqNhDir7a1veQE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bVE+agUCnKFhtVAiutI2RIPrbXK0n0cSvgpcoGlsdGxslTyYadC0pMUgsRcVsxSvBjIBjCLDYJbu1fhk7354a7dYWh1gd4k0ZgjMcOxN8dFzUhJe4QMZP8oIbxVTmsLn/HIJ5j7pzYzNGaG9uAxb9h6Q3EvF5lhabdzQAUs3eCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R1mlK8DV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WBFJJ9TK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F251F00A3D;
-	Wed,  9 Sep 2026 14:09:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R1mlK8DV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B101F00A3D;
+	Wed,  9 Sep 2026 14:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788962996;
-	bh=JjazqQfpzcSEiVjbjp9lhUpIGvRVp3VSoS0VljNsacQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=WBFJJ9TKulXArFtUpLvZbTrquGbicANPp4s9PF06f0X8QCzB+Y5lF5By5S+hFcyKs
-	 2BXB2wptbqhA4h6dAdIhHJoE2mKsu2+EJdGVQTYbqNEDp+fJDSR+twMc1AMzh8gnmI
-	 DxFQzaIjzU0W+Pdb0Sp+DroVLflDOVHRgfDRwPnwDlMleVjl1J4Fb8ocYA5ax+GA6p
-	 IDoVbr9zIiIp58NLNzuoVvV+gOWRrRXb5Zgrre2ke9gTDe/kns6nEtQathIlVpl+lL
-	 lw23/gI+PA0XZbm7P9zeftXcpH1mCs5c95Wxc8NgX5BbUXcF2Swl1DRiJwDuaQrYKT
-	 OKlSRCfx5z8NQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH REPOST 2/5] mm/damon/paddr: move probe filter handling
- to ops-common
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260909140408.104699-3-sj@kernel.org>
-References: <20260909140408.104699-1-sj@kernel.org>
- <20260909140408.104699-3-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 14:09:55 +0000
-Message-Id: <20260909140956.07F251F00A3D@smtp.kernel.org>
+	s=k20260515; t=1788963052;
+	bh=B1G0RE11rFuDv8wSwFJPMwA6T59xz3vA91P/lORF3w8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=R1mlK8DVE2PwiOkw+/PXbEwPI21LrBP20p7j9w8UB8vjSkz4wNAMoCcNY3JqrVsab
+	 2tsWexYVhqmjeQc3ujZWA6SYioFZC4WB+fjA0OOa/M62Ch59BRMZb9/XiGSDYxPugr
+	 uDSsjGy0qnDN/EFRxKLPOk9NAV4BSbMCrDIJxvpq3NwjJKhjH6//MfgCj2i5+8oHni
+	 /eNwclIaDsuUgH4qTdf4+RgartRtTRGnmtI0Iwv0ATTX1O5US6KLMcIuG1EgenBPPv
+	 sLJWWSVOc0OOrw5aXPSjAnZa/WhBuM7Iir0l8BfPQ6m0hOcvC/O5QR8346dGR6OyII
+	 fVyUXLgzv7utA==
+From: SJ Park <sj@kernel.org>
+To: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Lian Wang <lianux.mm@gmail.com>
+Subject: Re: [PATCH v2] mm/damon/tests/core-kunit: improve nr_samples_per_aggr test isolation
+Date: Wed,  9 Sep 2026 07:10:44 -0700
+Message-ID: <20260909141045.105514-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260909070711.2448346-1-kunwu.chan@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> Probe filter matching logic for anon and memcg type filters in DAMON's
-> physical address space operation set (paddr) can be reused by virtual
-> address space operation set (vaddr) in future.  Prepare the future by
-> moving the code to ops-common.c
->=20
-> Signed-off-by: SJ Park <sj@kernel.org>
+On Wed,  9 Sep 2026 15:07:11 +0800 Kunwu Chan <kunwu.chan@gmail.com> wrote:
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+> Test the zero sample interval case with a non-zero aggregation
+> interval, and keep the zero/zero case to cover the zero-result
+> fallback.
+> 
+> Also make the overflow case use an explicit sample interval so that
+> it does not depend on the zero sample interval fallback.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909140408.1046=
-99-1-sj@kernel.org?part=3D2
+Thank you for improving the test.  This looks good to me :)
 
+> 
+> Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
+> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
+This patch is applied to damon/next [1] tree.  If this patch is not added to
+mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
+to pick this.  So, no action from your side is needed for now.  If it seems I
+also forgot doing that or you cannot wait for my action, please feel free to
+directly ask that to Andrew.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+
+
+Thanks,
+SJ
+
+[...]
