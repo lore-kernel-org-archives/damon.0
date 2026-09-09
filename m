@@ -1,49 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EAB2931FE;
-	Wed,  9 Sep 2026 05:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B442D3733
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 05:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788930482; cv=none; b=R39+DizK5CeEgLejRaoQrGVPsiuy7mv3LBNLyvXc99U/oEl+k68EoL/WbhVknofLNK/bVWCEgZR52uz0rW71wHaV6TID0WJgEa4pyJ0iVjpv7kxPjydGFUuCFeXFD9kvEr3Gl78cbhaFIzIZwPRt7d4SzpA58/5deI+9enmJU4A=
+	t=1788931037; cv=none; b=dUk3p3/vA4Nx4H+52fBHMcUI9v7lPYZc5Be3l+iHtP6AET9PEchgbPr6IT9+vHKzEz6HlwAaKTG0YozF5hiMlLvBfkbdgFd4O1xb558gnwYjSQ14ZPzp/xYAVGZBgeszGVXgTZmidGD7DrhmEeUfsqWYjQUdqq+1f91MYVSQIk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788930482; c=relaxed/simple;
-	bh=yxyCtlXZryrpANBaTXHTQ7JagPYx9B118GCuMkERp/k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s17pA/TZsK+boCokv/osh/ho0QjBRbHH1f/v/4TxsOu73X7UKKuC61VFxuUNqSK26zWl7x9xz6pLjgPtFZnmrfoU4QUz3HxyfAZQCAGljAmrNsdAaaG+wT1g1e6kHNt8Reqv3tkXezt7hD2OqNnVtRk237I88UBCBqrip/t7Zxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JJEmE1Bo; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788931037; c=relaxed/simple;
+	bh=A2x9Y27bEOVeAkGvYYH3pEhy0GAq3R58kcj0tC++uEs=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=PueLBWTDl2gp466UGIZlnCfirEG5Mha7oYDxaz4IJTSp230DGjWx5wn57y0+L7lbiDAYqybOnKdsYolRSJtGkRvZ4uA1xll433tT5Yb99E9Ds0vkjXwKANf/GoyGGxeZMyAvooW3HIORZaHDz9/GzJnSuX+T0eLy51HZUBFpfeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XY+/6CKz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JJEmE1Bo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87471F00A3A;
-	Wed,  9 Sep 2026 05:08:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XY+/6CKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB8B1F00A3A;
+	Wed,  9 Sep 2026 05:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788930480;
-	bh=seXS5XTS+FPlWs6Hrjlu5q9H7f9qaWnrbuwB3zY33Vo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJEmE1Bo0GTSzcE+r1bK4jkE/VF84XZ3LVu2Abs8HZf/4RrWiOqj3/YqiYstNV1Ik
-	 lEWkU9PcfOnFxVP0vUzIKbIWqkVnpSyOcAr8OCLgwiRkb2Hck53Fgwnrp7aqCAfvbB
-	 lK5M4gk/3DVd19/r2g/v0lsrrvHakJ5x/UEmdK6uC+ZZ9hEHatLGwS2OLxtPLDDB+3
-	 SDAGk+17JGktPB8o6lxWK1JGIoJpeP0dFT1LEuI55+zNSuYwyuKVbBEPsdrPd7VFzg
-	 JLacEO6BTQk+OLsJa2s9moUdD+xekLggy768ooDNXnFUTf0EHih+2GNj+chEXr/B+v
-	 SzMeAcc0kbTww==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2.y] mm/damon/ops-common: use nr_accesses moving sum for quota score
-Date: Tue,  8 Sep 2026 22:07:53 -0700
-Message-ID: <20260909050753.232078-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090846-diffusive-headfirst-c45d@gregkh>
-References: <2026090846-diffusive-headfirst-c45d@gregkh>
+	s=k20260515; t=1788931035;
+	bh=rhUcmLDsgts9xzSivHGiLeaZZjhGSKKU3TQpKsRBEqE=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=XY+/6CKzb22JCvMS4/Dqbv5ulLn878P7NFnTHVEPwMg9XpjNeBLxlooK4r7AvrotK
+	 b84UsqndjjFc1/DTawbTz7mFVlGReOG+DVoNcfwpMgeIdbMI0kdsGMqfJSBE66SAFZ
+	 Eohwg7z6HTbju0mjPeDbK/InCyQbx3XYUjbtXdx8dFdyoxr5DklksYfyM8dOKWBkE/
+	 WtQw/4rWM/UcL6OqCzHVjQuWGC/WCxCuhKWzscTBxR2BYds6ZcmgXQMjsnzlJ/0rDx
+	 5a0rfjlzz1pSMXDPDfdkscfh8UeI/bnXcgZucxpkx8gUDJ+pScThNLnjJwga2DXX3t
+	 oUa8oaZcGs8yQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.18.y] mm/damon/ops-common: use nr_accesses moving sum
+ for quota score
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260909050521.225965-1-sj@kernel.org>
+References: <2026090846-defendant-neglector-22c4@gregkh>
+ <20260909050521.225965-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2026 05:17:14 +0000
+Message-Id: <20260909051715.3DB8B1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] The commit message claims to fix the issue by using a new helper=
+ function `damon_nr_accesses_mvsum()`, but this function is never defined o=
+r called.
+--
+
+commit 3c964119e352fe243aaf217b238b33be4fa99148
+Author: SJ Park <sj@kernel.org>
+
+mm/damon/ops-common: use nr_accesses moving sum for quota score
 
 Since commit 42f994b71404 ("mm/damon/core: implement scheme-specific apply
 interval"), DAMOS scheme can be applied at any time.  At that time,
@@ -52,41 +64,33 @@ score is calculated using the not fully aggregated count.  As a result,
 the performance of DAMOS could be degraded.  Fix by using
 damon_nr_accesses_mvsum() instead.
 
-The user impact of the issue is suboptimum DAMOS performance under certain
-setups.  Nonetheless, the bug was there from the beginning of the setup
-availability.  In other words, the suboptimum performance is the baseline
-of the setup and hence it didn't cause regression.  Also the extent of the
-suboptimality was not big enough to be found from users and testers.
-Still, this is a clear bug that is better to be fixed, and can be easily
-fixed.
-
 Link: https://lore.kernel.org/20260719161136.90191-1-sj@kernel.org
-Fixes: 42f994b71404 ("mm/damon/core: implement scheme-specific apply interval")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.7.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 6c25083f7ae7e2660d766169e5b4d3e96010503f)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/ops-common.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index 0bcad6b1e5b9e..6a969b1d29871 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -111,8 +111,9 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
- 	unsigned int age_weight = s->quota.weight_age;
- 	int hotness;
- 
--	freq_subscore = r->nr_accesses * DAMON_MAX_SUBSCORE /
--		damon_max_nr_accesses(&c->attrs);
-+	freq_subscore = mult_frac(r->nr_accesses_bp / 10000,
-+			DAMON_MAX_SUBSCORE,
-+			damon_max_nr_accesses(&c->attrs));
- 
- 	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
- 	if (age_in_sec)
--- 
-2.47.3
+> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+> index ceaa2a6e1c9a3..929aab600c745 100644
+> --- a/mm/damon/ops-common.c
+> +++ b/mm/damon/ops-common.c
+> @@ -101,8 +101,9 @@ int damon_hot_score(struct damon_ctx *c, struct damon=
+_region *r,
+>  	unsigned int age_weight =3D s->quota.weight_age;
+>  	int hotness;
+> =20
+> -	freq_subscore =3D r->nr_accesses * DAMON_MAX_SUBSCORE /
+> -		damon_max_nr_accesses(&c->attrs);
+> +	freq_subscore =3D mult_frac(r->nr_accesses_bp / 10000,
+> +			DAMON_MAX_SUBSCORE,
+> +			damon_max_nr_accesses(&c->attrs));
 
+[Severity: Medium]
+The commit message claims to fix the issue by using a new helper function
+damon_nr_accesses_mvsum(), but this function is never defined or called.
+
+Instead, the implementation in damon_hot_score() manually inlines the moving
+sum calculation (r->nr_accesses_bp / 10000).
+
+Is there a missing patch that adds damon_nr_accesses_mvsum(), or should the
+commit message be updated to match the inline calculation?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909050521.2259=
+65-1-sj@kernel.org?part=3D1
