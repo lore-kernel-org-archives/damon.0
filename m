@@ -1,133 +1,195 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416771D7E5C;
-	Wed,  9 Sep 2026 04:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7551492E37
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 04:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788927441; cv=none; b=XGN9Yo+oysBp4Cc6/6r5LeTv0XwcwOS6b3PLcvuiuoL4r6SIsLesferKR376yM9WcqEajJ7CZvmxGc9mTi3MpWDbvxSstkMAr3o4Npkn95nv21rgTNNwgFpyB+vK9DrCWFgqt8odwopOSBzZHC2S5OuHeppkCuJszXCKgKyJJ7s=
+	t=1788927542; cv=none; b=Gi7UbAfpCzB5tzootx/cIfBEeayvuXa4r46KsWRfgBexIxz+8uhj3Ts0Yy+mZxrThjExr7w/M9+OrcZTbUfZuTy4yy3hSNJCagQ/NSr2GxGtBXV9gyi/6IWbq9MFLcHjffPZHfjWY9t860xBH99sE6Rutafd6F8z0yLr0XJ1KAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788927441; c=relaxed/simple;
-	bh=8Pby1kvw9akP5PPzg/O/K6yuhfmpmlu3tayGeARsFKk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vnr2NP2KoCS+tm9K92mqTnSnQ4Wft8VTt/iPeE6YLe7Vutky7hPzn8eKr883dvW86WpG2HzVTljdCi8Hh+Vr15M3TBTv2neAeQLEMDG9QKK/0+G9gW+nZGvY9UOOyigkVC4R2645EPkDfzZCp2uQ8bXHz402N4k4PLIy/NVUONs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ONySlsQ0; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788927542; c=relaxed/simple;
+	bh=EwDW/N/SBWHwdhGDIYWxUQGRoMbUM3TbIoiHGJlTyKk=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=d8Y1rYIAegz5KJZs80jfS/K6oW/AR9UmOP8+Vd1qLGq4PLe0N1vU85TUMW1iZ2PDbZPwqP91l5PedV0qfK6i6j/cqTG2gd+OK0yCyodOtitdjsOm5OvX6aLAY9/2TKZ7bIK2buHb3zZH52UyAMOq/Ntehl2j8evCuWhcfNFZnAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XxrpWf7I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ONySlsQ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C471F00A3A;
-	Wed,  9 Sep 2026 04:17:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XxrpWf7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D65F1F00A3A;
+	Wed,  9 Sep 2026 04:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788927439;
-	bh=4rW3Q15MXsW3EhYQRCKgMroiHZhdeMnsPauQR18anGU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ONySlsQ0o5TwbyjYOqowXm69iXsL27wqxHBHJi4RxQUMkd8HoasRMroaFy2S/m5Um
-	 E0Siek0M5U+aW1HvrLKpIgBBhSRHg85Ltx4wh3KOpN6o13X9a+1Bwi9c/mTvH9m7w0
-	 xRXTn7ZBJWwngdmcLwpFlVZXcKqbJq8qroOinwV4PI+pVJqXe1/piCl+Z+kWgd/tSf
-	 MxuXLY6a5V2tTXKov+a3RSwwvhHIaCRsDQMXlm7LlMGm2QG7UdAJMN74l+WpWIDAIQ
-	 godozKwSRYBLd5s7wvOZWEKwtbBvD2jFnqgvh7Tb5NozNZ4pCakv60PAyGlYygmdlc
-	 F03ShWDYpmLrg==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.2.y] mm/damon/core: avoid infinite kdamond_merge_regions() internal loop
-Date: Tue,  8 Sep 2026 21:17:12 -0700
-Message-ID: <20260909041712.186196-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090831-desecrate-cheddar-be5a@gregkh>
-References: <2026090831-desecrate-cheddar-be5a@gregkh>
+	s=k20260515; t=1788927540;
+	bh=mqvXRNBTXQEfDLNEeJfjjYRjmpV45hS4tnOZ9KWdDxA=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=XxrpWf7IO2E+EIAsP09LgWJIkTYhhMB0ezI+bQq84Jo9Q4pxWC/SlbliTB7kKqUrQ
+	 R3YUZO3cuk/FFQHMWP433wThdqbmKiAp7qjoadzd8O1uISrc/pM7PGtEovtbwh/xpL
+	 qIicerOltAtuFkOp6p3NSJSKRwuiCYXAsWSLPR5xSalgE56vhfRaUAoRW5SNJY/YCS
+	 brPE/IJYBF7rXK+1TN+DiG/GuGrjpuY4wOIrH2zb78z8J4hcf1HNdYuxCeaWe7uRt5
+	 3TPAmYXQA/ljd7RdZj+Wdkdl1P02PCQgD1Ws3Hs8IcxcSLb8eH227qLheWCSInXVtH
+	 hmf3rUd+N68jg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.12.y] mm/damon/core-kunit: handle region split failure
+ in filter_out()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260909040931.177877-1-sj@kernel.org>
+References: <2026090831-handshake-cytoplasm-0b8a@gregkh>
+ <20260909040931.177877-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2026 04:18:59 +0000
+Message-Id: <20260909041900.4D65F1F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Patch series "mm/damon: unurgent fixes for infinite loop, NULL de-ref and
-races", v1.1.
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
 
-Sashiko found a few issues in DAMON that could cause infinite loop, NULL
-dereference and monitoring results degradation.  The first two sounds
-scary but the infinite loop happens only under unreasonable user setup.
-The NULL dereference is only in a unit test.  Monitoring results
-degradation is trivial since it is only best-effort, and those happens
-from only unlikely races.  Still those are bugs that better to fix if
-possible.  Fix those.
+Pre-existing issues:
+- [High] Missing NULL pointer checks for memory allocations in `damos_test_=
+filter_out()`.
+- [High] Invalid pointer dereference in `damon_test_split_at()` upon alloca=
+tion failure.
+- [High] NULL pointer dereference in `damon_test_merge_regions_of()` on tes=
+t failure.
+--
 
-This patch (of 6):
+commit 020584f45aa55bb3f0f5c526132499202f23f3f1
+Author: SJ Park <sj@kernel.org>
 
-Due to online parameter update like events, the number of DAMON regions
-could be higher than the user-set upper limit.  kdamond_merge_regions()
-repeats merge regions until the number meets the limit, while doubling the
-merge threshold up to the theoretical maximum threshold.  It is tried only
-up to the theoretical maximum threshold because even the aggressive
-merging can fail from reducing the number of regions under the
-user-defined upper limit.  For example, there could be many user-defined
-non-contiguous regions that cannot be merged.
-
-The threshold based loop break condition is evaluated by comparing the
-threshold for the next merging try against the theoretical maximum
-threshold.  If max_thres is larger than UINT_MAX / 2, doubling the
-threshold could make it overflow, and bypass the loop break condition.  In
-the case, if the number of regions cannot be reduced under the upper limit
-like explained above, the loop will run infinitely.
-
-Prevent the case by doing the break condition check before doubling the
-threshold.  Also, prevent the threshold exceeding the maximum threshold,
-as it could overflow and apply the wrong merge threshold.
-
-This issue is unlikely to occur in real world, since having the max_thres
-higher than UINT_MAX / 2 require unrealistically large aggregation
-intervals compared to the sampling interval.  Also, it requires an
-unrealistically large number of uncontiguous regions setup.  Nonetheless,
-the consequence is bad and the fix is simple.
-
+mm/damon/core-kunit: handle region split failure in filter_out()
+   =20
+damos_test_filter_out() test checks if damos_filter_match() of an address
+filter splits the region as expected under a given condition.  But, the
+test continued regardless of the split successes.  As a result, the later
+part of the test could dereference invalid pointers that returned from
+damon_next_region().  Further, it could corrupt memory from
+damon_destroy_region().
+   =20
+The consequent user impact (memory corruption) is quite bad.  The
+realistic user impact would be limited, though.  It would affect only test
+run setups.
+   =20
+Fix it by exiting early for the number of regions test failure.
+   =20
 The issue was discovered [1] by Sashiko.
+   =20
+Link: https://lore.kernel.org/20260718001442.87129-5-sj@kernel.org
+Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org [1]
 
-Link: https://lore.kernel.org/20260715031002.108504-1-sj@kernel.org
-Link: https://lore.kernel.org/20260715031002.108504-2-sj@kernel.org
-Link: https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org [1]
-Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.10.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 123e4619ab6c8ab1c4cb1d7a58311a2af13929cd)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/core.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> index d7737f5df6688..a9d852e666657 100644
+> --- a/mm/damon/tests/core-kunit.h
+> +++ b/mm/damon/tests/core-kunit.h
+> @@ -552,6 +552,8 @@ static void damos_test_filter_out(struct kunit *test)
+>  	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 1);
+>  	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 2);
+>  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
+> +	if (damon_nr_regions(t) !=3D 2)
+> +		goto out;
+>  	r2 =3D damon_next_region(r);
+>  	KUNIT_EXPECT_EQ(test, r2->ar.start, DAMON_MIN_REGION * 2);
+>  	KUNIT_EXPECT_EQ(test, r2->ar.end, DAMON_MIN_REGION * 4);
+> @@ -565,11 +567,14 @@ static void damos_test_filter_out(struct kunit *tes=
+t)
+>  	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 2);
+>  	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 6);
+>  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
+> +	if (damon_nr_regions(t) !=3D 2)
+> +		goto out;
+>  	r2 =3D damon_next_region(r);
+>  	KUNIT_EXPECT_EQ(test, r2->ar.start, DAMON_MIN_REGION * 6);
+>  	KUNIT_EXPECT_EQ(test, r2->ar.end, DAMON_MIN_REGION * 8);
+>  	damon_destroy_region(r2, t);
+> =20
+> +out:
+>  	damon_free_target(t);
+>  	damos_free_filter(f);
+>  }
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index cff932b3317d0..135ede06039c2 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3163,15 +3163,20 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
- 
- 	max_thres = c->attrs.aggr_interval /
- 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
--	do {
-+	while (true) {
- 		nr_regions = 0;
- 		damon_for_each_target(t, c) {
- 			damon_merge_regions_of(t, threshold, sz_limit);
- 			nr_regions += damon_nr_regions(t);
- 		}
--		threshold = max(1, threshold * 2);
--	} while (nr_regions > c->attrs.max_nr_regions &&
--			threshold / 2 < max_thres);
-+		if (nr_regions <= c->attrs.max_nr_regions ||
-+				max_thres <= threshold)
-+			break;
-+		if (threshold < max_thres / 2)
-+			threshold = max(1, threshold * 2);
-+		else
-+			threshold = max_thres;
-+	}
- }
- 
- #ifdef CONFIG_DAMON_DEBUG_SANITY
--- 
-2.47.3
+[Severity: High]
+This isn't a bug introduced by this patch, but does this test miss NULL
+pointer checks for memory allocations earlier in the same function?
 
+If memory allocation fails (e.g., during KUnit OOM simulation),
+damos_new_filter(), damon_new_target(), or damon_new_region() will
+return NULL. The returned pointers f, t, and r are immediately
+dereferenced without any verification:
+
+mm/damon/tests/core-kunit.h:damos_test_filter_out() {
+	f =3D damos_new_filter(DAMOS_FILTER_TYPE_ADDR, true);
+	f->addr_range =3D (struct damon_addr_range){
+		.start =3D DAMON_MIN_REGION * 2, .end =3D DAMON_MIN_REGION * 6};
+
+	t =3D damon_new_target();
+	r =3D damon_new_region(DAMON_MIN_REGION * 3, DAMON_MIN_REGION * 5);
+	damon_add_region(r, t);
+    ...
+}
+
+While this only impacts test environments, KUnit tests should not trigger
+kernel panics on allocation failures. This is a standard already followed
+by other tests in the same file which safely use
+kunit_skip(test, "alloc fail");
+
+
+[Severity: High]
+This is a pre-existing issue, but could this code dereference an invalid
+pointer upon allocation failure?
+
+damon_split_region_at() silently returns without splitting if
+damon_new_region() fails to allocate memory. In damon_test_split_at(), if
+the split fails, r remains the last region. damon_next_region(r) will then
+use container_of() on the list head, returning an invalid pointer outside
+the bounds of struct damon_target. Dereferencing this pointer reads
+memory out of bounds:
+
+mm/damon/tests/core-kunit.h:damon_test_split_at() {
+    ...
+	damon_split_region_at(t, r, 25);
+	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
+	KUNIT_EXPECT_EQ(test, r->ar.end, 25ul);
+
+	r_new =3D damon_next_region(r);
+	KUNIT_EXPECT_EQ(test, r_new->ar.start, 25ul);
+    ...
+}
+
+This requires an allocation failure during test execution, which is the exa=
+ct
+same class of vulnerability that this patch addresses for
+damos_test_filter_out().
+
+
+[Severity: High]
+This is a pre-existing issue, but could this test trigger a NULL pointer
+dereference on failure?
+
+The test expects 5 regions to remain after a merge operation. It verifies
+this with KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);. However,
+KUNIT_EXPECT_EQ does not abort test execution if the expectation fails. If
+the merge operation results in fewer than 5 regions, the subsequent loop
+will call __nth_region_of(t, i) with an out-of-bounds index, returning a
+NULL pointer. The NULL pointer is then unconditionally dereferenced by
+r->ar.start:
+
+mm/damon/tests/core-kunit.h:damon_test_merge_regions_of() {
+    ...
+	damon_merge_regions_of(t, 9, 9999);
+	/* 0-112, 114-130, 130-156, 156-170 */
+	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
+	for (i =3D 0; i < 5; i++) {
+		r =3D __nth_region_of(t, i);
+		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
+    ...
+}
+
+Should KUNIT_ASSERT_EQ be used instead of KUNIT_EXPECT_EQ to safely abort
+the test and prevent the subsequent NULL pointer dereference?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909040931.1778=
+77-1-sj@kernel.org?part=3D1
