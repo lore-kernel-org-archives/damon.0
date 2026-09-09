@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C383330B32;
-	Wed,  9 Sep 2026 05:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441393A4539;
+	Wed,  9 Sep 2026 06:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788933547; cv=none; b=TAV0sXPobyZ30fOBvgd3kbFFPjFMBFXINw/Z6Vz6UyAnRx+XJyh9LManOm40XbLcNAyEu0FDoQtr5D/zEAIQfu9krsRgYQ9yQDZpbsOZSJLlvtjC2fcddGResufGVNfOPVXlYAwC2wfgx6XLHqNTdr3QqaQP1ybpXL9iv627kKs=
+	t=1788933699; cv=none; b=TCajttuBA5BwL+4X5uBYTBUmupi9qwJwfgrsXjt4jQim2WyAsrUAJKgJYm0y37QnEpBWftELPdrPc8xZjEwXBQqu1T67HVJXI1jEutN02LM7ef/T673TqWtfyHph53AFhTOtsJN26v7xbh3FviuD/hwfllHmS3PyuU1ASqb/go0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788933547; c=relaxed/simple;
-	bh=YUVUEp206WDEqlY6ppGgGlJU16y5C+XT48cMlXenyb8=;
+	s=arc-20240116; t=1788933699; c=relaxed/simple;
+	bh=OWnAmViDZIdhH+Y11hvWMW1lcEEC/8IMVjzceFaqtwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nu7UDj12HO1rgtcdkF0+HDz5OE87eJQASCUaiTLhktMcRLPIWtGlTkmW2mV7khNVAIriLOVSc2jZgLDWqsb/rvJoNbhCXXh7E5HOrETgHkcDnYGCk4Wzb7VLdtrgsyLfPA2bGGpE+DQgs0m81M0O74H2+4l7fW3leb6o63hSAiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O/frkGtP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SSvVBmJ6/qsBrTFB88d6jK/psGRkF4X8AdOBR8u3ElqdZTU4JQuOfgNHyrbU3LR7bJMfCDKmuC8uce9w7ZvvWyQR2YG1TDXT67wjNdpgKCvx6xNM7ZEsxtXlftFF2OpwdVnC/AVFviw19dn64Tf/NHlx4rpsdInAE1nbPeYUU64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dSath82p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/frkGtP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBB11F00A3D;
-	Wed,  9 Sep 2026 05:59:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dSath82p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2961F00A3D;
+	Wed,  9 Sep 2026 06:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788933545;
-	bh=Epg7VvkQFn4idS3jDgNCme+/Oh0x5i324IkAs6cBC8k=;
+	s=k20260515; t=1788933697;
+	bh=8S/NR6gv+Tdj/c9Q0ycSR3IKOo6+xZ6IP//pqHLXrtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O/frkGtP7zeTOWd39MZ5p0OwjH42hqg0zdTFxTJukmkjR3kBHW/HHc35Y+Oz4UNBN
-	 /jmV6K0JYE7FPs04gwPK2ES1zSJfDlo3Ar2ubs9/ApcBRAu3FzhCOYXlIU49XpWT2+
-	 zgtvTT+aZBZ8thn9xzojGHcRxIaQfQYCEdDPdv53inQwfBE7fGHF2QosjMv1N6SpIL
-	 rhw7f+OKk+44eWHN4HXYC+o1HYYvm5+jwUxngYmZtvVyG4gzQY6SIqSoeqEFAVPesp
-	 VWrnBkzVOoVchQSBl8ASEhMt9toaipwgAfI9UrnL0GJQccus+i9WlZvA+J12nNmWwU
-	 DwymJA36OAsaA==
+	b=dSath82pvRsaSpjYssqlt+JDuvLUZH0YrAukQfrVJMyjF+bLaDuChmcbXmuaGCYMw
+	 oV/0ZfzODgKhZfquPFmuO3ySS4WbFnHilkzrdVd3we8AwVWmlJP7goFyGYy3rUP5dn
+	 vCxBGvm4tKOJNdcM50VHsS9O76IubVns0TbVChXn9OiIn13ad5wotFbyD6jmJJaWPv
+	 3O1RLWtXK06WIikDAO91DiK0f/W0R6h5YsISO/Tql/HkCaodaFBZYPXlMJW0a8asWZ
+	 uOWQWreiueLf6VEX0ht9busU/QLMEJqcdBkgrAYuW14kmJn+uAfacOfSsIZhmOw/03
+	 JY3FAtJRZ/FuQ==
 From: SJ Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6.y] mm/damon/vaddr: drop last same folio access check optimization
-Date: Tue,  8 Sep 2026 22:58:57 -0700
-Message-ID: <20260909055857.266952-1-sj@kernel.org>
+Subject: [PATCH 6.12.y] mm/damon/vaddr: drop last same folio access check optimization
+Date: Tue,  8 Sep 2026 23:01:30 -0700
+Message-ID: <20260909060130.269798-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090858-excusable-alkaline-da79@gregkh>
-References: <2026090858-excusable-alkaline-da79@gregkh>
+In-Reply-To: <2026090858-underwent-outlying-c364@gregkh>
+References: <2026090858-underwent-outlying-c364@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -69,7 +69,7 @@ Signed-off-by: SJ Park <sj@kernel.org>
  1 file changed, 6 insertions(+), 28 deletions(-)
 
 diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 4d7dc9f65f682..c74b3fd1d227a 100644
+index 52e5c244bd021..089ee23e07de7 100644
 --- a/mm/damon/vaddr.c
 +++ b/mm/damon/vaddr.c
 @@ -429,8 +429,6 @@ static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
@@ -118,37 +118,41 @@ index 4d7dc9f65f682..c74b3fd1d227a 100644
  		.young = false,
  	};
  
-@@ -556,25 +549,13 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+@@ -556,29 +549,18 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
   * r	the region to be checked
   */
  static void __damon_va_check_access(struct mm_struct *mm,
--				struct damon_region *r, bool same_target)
-+				struct damon_region *r)
+-				struct damon_region *r, bool same_target,
++				struct damon_region *r,
+ 				struct damon_attrs *attrs)
  {
 -	static unsigned long last_addr;
 -	static unsigned long last_folio_sz = PAGE_SIZE;
 -	static bool last_accessed;
--
++	bool accessed;
+ 
+ 	if (!mm) {
+ 		damon_update_region_access_rate(r, false, attrs);
+ 		return;
+ 	}
+ 
 -	/* If the region is in the last checked page, reuse the result */
 -	if (same_target && (ALIGN_DOWN(last_addr, last_folio_sz) ==
 -				ALIGN_DOWN(r->sampling_addr, last_folio_sz))) {
--		if (last_accessed)
--			r->nr_accesses++;
+-		damon_update_region_access_rate(r, last_accessed, attrs);
 -		return;
 -	}
-+	bool accessed;
- 
+-
 -	last_accessed = damon_va_young(mm, r->sampling_addr, &last_folio_sz);
--	if (last_accessed)
-+	accessed = damon_va_young(mm, r->sampling_addr);
-+	if (accessed)
- 		r->nr_accesses++;
+-	damon_update_region_access_rate(r, last_accessed, attrs);
 -
 -	last_addr = r->sampling_addr;
++	accessed = damon_va_young(mm, r->sampling_addr);
++	damon_update_region_access_rate(r, accessed, attrs);
  }
  
  static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
-@@ -583,17 +564,14 @@ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+@@ -587,16 +569,12 @@ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
  	struct mm_struct *mm;
  	struct damon_region *r;
  	unsigned int max_nr_accesses = 0;
@@ -156,17 +160,16 @@ index 4d7dc9f65f682..c74b3fd1d227a 100644
  
  	damon_for_each_target(t, ctx) {
  		mm = damon_get_mm(t);
- 		if (!mm)
- 			continue;
 -		same_target = false;
  		damon_for_each_region(r, t) {
--			__damon_va_check_access(mm, r, same_target);
-+			__damon_va_check_access(mm, r);
+-			__damon_va_check_access(mm, r, same_target,
+-					&ctx->attrs);
++			__damon_va_check_access(mm, r, &ctx->attrs);
  			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
 -			same_target = true;
  		}
- 		mmput(mm);
- 	}
+ 		if (mm)
+ 			mmput(mm);
 -- 
 2.47.3
 
