@@ -1,106 +1,163 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3833D2BB13;
-	Wed,  9 Sep 2026 04:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201AE1EB5E3
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 04:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788926680; cv=none; b=gRf4Ucv5qbPUazeDg6RXvJ3AWVDszOEfgl9KgLsyG7PWx8Z6Y5ijej83f6jG7yBcdGq8uQoAhR48tiLUBnAq1qrISYcCH3w737QgT9a7zj8Li+MxbPDdL3osKnVmG6C0kjamWsL24K0PxhlbrXnlqv6ifm994LJJQs3UcqtB+K0=
+	t=1788926751; cv=none; b=fPw0CBUFV/XN1TsnvM7kJpEqahoZhWVMKYDdUcKFX19tdStn5dFNFlMzSrh96LIM+k34ttky9K+d/9hNxWuCUEMtUw6IdW1Fqd0bkEOf7GCwnmdjLAozjvdQKOHfXLUjMiXcv/ucq90AF3Fj9A+2H6iPcSV0d4gVqk8zBU6krLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788926680; c=relaxed/simple;
-	bh=PYZ+PNvw3K9DHj4qV3lJuHfssXeUvBrx/KRpbN9ogJo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4gaZ/OyAO8GfahK4mcFY5kozGY18jQI9lmTCoX80bLqxSdHkxUvIub5gaq5An00gNxevJDs7k5V/s9Zkwl9d5hb42E7dNhXsS3Ds2Ndn4OlqDNVNblQ+fxAm1FpxXHWiBM2TB18lAERJmuxs9AcgK2z6qEgV2f+HTXhhnYi2NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CVbcHgS4; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788926751; c=relaxed/simple;
+	bh=JoPpm+FMKlPF/adWSFXfNHNM1WSoV1qmLpgmmrLJ5IU=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=NVSmsy6fdfYzhraMlZnQtf+DjNH9OTfDN5VBkwHJksINWjCWT9QaP0U7vPMxlRK4IwcKWzziOMIjK343MPKjFBtG8UeLVANDXDJXMCqG+OY5L//x+8jr7ypDJVpczdf4vqat47rqSxEfuH7JLdy53ou+Vg6a+SRiSavGg6Awc8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SilKJB29; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CVbcHgS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C212B1F00A3A;
-	Wed,  9 Sep 2026 04:04:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SilKJB29"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50701F00A3A;
+	Wed,  9 Sep 2026 04:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788926679;
-	bh=zyNiAICHBw3DWYftkk0LJOlG6tRmin3KFcDAWF09ZaA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CVbcHgS47Nc+x6f9IGYQ2LhRvPfv7RZVvHXYY8fxchf1dJGipRf+2q6XFVcrFEEMS
-	 bB0lUSp3r8EF2Oa5IiyzG44GIdMuN//mh6sb3xKNAE54J1KVvpadvsN5YtwG7V86LW
-	 a4zhpHcEQGiC1nGIy9G/Io3Tuqrr3uTbAl58YP/x8HRMmovyEZtHBrFlqlZD96S+nV
-	 vkwQjnVnXFdZ1Gu4iBQV1nBCaI8g7hyQurx00gVlwZpgf82LuklDXqflBPxaj2wCRi
-	 t4NtrYGBR2h+1fBZWT4S7affHS4tbheYa8b01+kdkU5Qx1koffw721tCLyBVyWTaLW
-	 0xiaTG+sSDt7g==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18.y] mm/damon/core-kunit: handle region split failure in filter_out()
-Date: Tue,  8 Sep 2026 21:04:31 -0700
-Message-ID: <20260909040431.171803-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090830-think-magical-cf80@gregkh>
-References: <2026090830-think-magical-cf80@gregkh>
+	s=k20260515; t=1788926750;
+	bh=NojPrNk4bBs9B35U+fVNJFQtsnuAydvLm+gHADa4U9Y=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=SilKJB29DN7HhvgbPu2lNxviprFcXD5nnG4Y0Vt8v4IWd9ZDqK9avfJOzd7IdrcxX
+	 M+YoGVpRydFY4LepPegUlOoAY05IcEKstGAuEOPXZThCGmeXFloQUT9ay0vfopFIG4
+	 N81vKl2T/4aZ452cEU5xKiMkZ43mqb/Evo5SSqkZ1S4PLdrleM+J7HXDXP+h57Uxc/
+	 ZJm4pkUFozh1HDaRJoVFmEJGZKg7A9DNb5YqdakfaIFiuWzHwhLfXg6zKsIo6ef1nz
+	 6+QuarvYIS9mrbBYxCrnlLsHLbA5C4aIIUzw3yh3c21klfJCautTE3NkWxtPjDO506
+	 IVnhi2GcEF9jg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.1.y] mm/damon/sysfs-schemes: kobject_del() scheme dirs
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260909035529.159422-1-sj@kernel.org>
+References: <2026090817-livable-sturdily-4c48@gregkh>
+ <20260909035529.159422-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Sep 2026 04:05:49 +0000
+Message-Id: <20260909040549.D50701F00A3A@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-damos_test_filter_out() test checks if damos_filter_match() of an address
-filter splits the region as expected under a given condition.  But, the
-test continued regardless of the split successes.  As a result, the later
-part of the test could dereference invalid pointers that returned from
-damon_next_region().  Further, it could corrupt memory from
-damon_destroy_region().
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
 
-The consequent user impact (memory corruption) is quite bad.  The
-realistic user impact would be limited, though.  It would affect only test
-run setups.
+Pre-existing issues:
+- [High] Incomplete fix: Missing `kobject_del()` for dynamically sized sysf=
+s array directories (kdamonds, contexts, targets, regions) causes name conf=
+licts on recreation.
+--
 
-Fix it by exiting early for the number of regions test failure.
+commit 313d3e99fc72ef8df36e0924dc61e045a278961d
+Author: SJ Park <sj@kernel.org>
 
-The issue was discovered [1] by Sashiko.
+mm/damon/sysfs-schemes: kobject_del() scheme dirs
 
-Link: https://lore.kernel.org/20260718001442.87129-5-sj@kernel.org
-Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org [1]
-Fixes: 26713c890875 ("mm/damon/core-test: add a unit test for __damos_filter_out()")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: <stable@vger.kernel.org> # 6.6.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 3423fe70395210e2f0cd795270292f6a27cd57b5)
----
- mm/damon/tests/core-kunit.h | 5 +++++
- 1 file changed, 5 insertions(+)
+On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
+could cause directories creation failures due to the name conflicts.  Fix
+those issues for scheme directories by adding kobject_del() calls.
 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 6687778752728..801407b481cdc 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -588,6 +588,8 @@ static void damos_test_filter_out(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 1);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 2);
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-+	if (damon_nr_regions(t) != 2)
-+		goto out;
- 	r2 = damon_next_region(r);
- 	KUNIT_EXPECT_EQ(test, r2->ar.start, DAMON_MIN_REGION * 2);
- 	KUNIT_EXPECT_EQ(test, r2->ar.end, DAMON_MIN_REGION * 4);
-@@ -602,11 +604,14 @@ static void damos_test_filter_out(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 2);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 6);
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-+	if (damon_nr_regions(t) != 2)
-+		goto out;
- 	r2 = damon_next_region(r);
- 	KUNIT_EXPECT_EQ(test, r2->ar.start, DAMON_MIN_REGION * 6);
- 	KUNIT_EXPECT_EQ(test, r2->ar.end, DAMON_MIN_REGION * 8);
- 	damon_destroy_region(r2, t);
- 
-+out:
- 	damon_free_target(t);
- 	damos_free_filter(f);
- }
--- 
-2.47.3
+Link: https://lore.kernel.org/20260628220121.97360-4-sj@kernel.org
 
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index bb2f4650741fa..7e4fb112d1154 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+> @@ -954,6 +954,7 @@ static void damon_sysfs_schemes_rm_dirs(struct damon_=
+sysfs_schemes *schemes)
+> =20
+>  	for (i =3D 0; i < schemes->nr; i++) {
+>  		damon_sysfs_scheme_rm_dirs(schemes_arr[i]);
+> +		kobject_del(&schemes_arr[i]->kobj);
+>  		kobject_put(&schemes_arr[i]->kobj);
+>  	}
+
+[Severity: High]
+This isn't a bug introduced by this patch, but while reviewing this fix for
+the schemes directories, it appears the exact same omission of kobject_del()
+is still present for other dynamically sized sysfs arrays (kdamonds,
+contexts, targets, and regions).
+
+For instance, in damon_sysfs_kdamonds_rm_dirs():
+
+static void damon_sysfs_kdamonds_rm_dirs(struct damon_sysfs_kdamonds *kdamo=
+nds)
+{
+	...
+	for (i =3D 0; i < kdamonds->nr; i++) {
+		damon_sysfs_kdamond_rm_dirs(kdamonds_arr[i]);
+		kobject_put(&kdamonds_arr[i]->kobj);
+	}
+	...
+}
+
+When updating these directories, the old directories are dropped using only
+kobject_put() and new ones are immediately added with kobject_init_and_add()
+using the same names. If CONFIG_DEBUG_KOBJECT_RELEASE is enabled or a
+reference is held, won't this deferred removal leave the old directory
+active and cause the recreation to fail with -EEXIST?
+
+Should kobject_del() also be added to damon_sysfs_kdamonds_rm_dirs(),
+damon_sysfs_contexts_rm_dirs(), damon_sysfs_targets_rm_dirs(), and
+damon_sysfs_regions_rm_dirs() to prevent these same name conflicts?
+
+> @@ -991,13 +992,15 @@ static int damon_sysfs_schemes_add_dirs(struct damo=
+n_sysfs_schemes *schemes,
+>  			goto out;
+>  		err =3D damon_sysfs_scheme_add_dirs(scheme);
+>  		if (err)
+> -			goto out;
+> +			goto del_out;
+> =20
+>  		schemes_arr[i] =3D scheme;
+>  		schemes->nr++;
+>  	}
+>  	return 0;
+> =20
+> +del_out:
+> +	kobject_del(&scheme->kobj);
+>  out:
+>  	damon_sysfs_schemes_rm_dirs(schemes);
+>  	kobject_put(&scheme->kobj);
+
+[Severity: High]
+This is also a pre-existing issue, but similar to the rm_dirs() paths, the
+error paths for adding other array elements appear to be missing
+kobject_del().
+
+For example, in damon_sysfs_kdamonds_add_dirs():
+
+	for (i =3D 0; i < nr_kdamonds; i++) {
+		...
+		err =3D kobject_init_and_add(&kdamond->kobj,
+				&damon_sysfs_kdamond_ktype, &kdamonds->kobj,
+				"%d", i);
+		if (err)
+			goto out;
+
+		err =3D damon_sysfs_kdamond_add_dirs(kdamond);
+		if (err)
+			goto out;
+		...
+out:
+	damon_sysfs_kdamonds_rm_dirs(kdamonds);
+	kobject_put(&kdamond->kobj);
+	return err;
+
+If adding the child directories via damon_sysfs_kdamond_add_dirs() fails,
+the parent kdamond->kobj has already been added to sysfs. Doesn't branching
+directly to 'out' leave a lingering sysfs node without calling kobject_del(=
+)?
+
+Should a similar 'del_out' error path be added to
+damon_sysfs_kdamonds_add_dirs(), damon_sysfs_contexts_add_dirs(), and
+damon_sysfs_targets_add_dirs()?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909035529.1594=
+22-1-sj@kernel.org?part=3D1
