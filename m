@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265B02EFD9B;
-	Wed,  9 Sep 2026 14:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2727427F84;
+	Wed,  9 Sep 2026 20:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788964998; cv=none; b=JpWwZ9N7hT+J6AsbFro6A1R2gfcpEzShz/XBVMFyhx2XZtWMFQEOc6XQ/rL+3lLspwj+Ms/JUDtf+O988vOEdV+g1EPD2BNEBOH5zmWU8c2U92cyTKs2pwJOJ0KMaYXGoNSbG1xw9jUmVNqAdE193d1MRTA1OoBB8sOvAmJUr5Y=
+	t=1788985608; cv=none; b=i8rDvZm/m10xqZW6+hJLBsuqYXOSibAtMp5qar8Ze323a0ZmjuNQcXIMBPUUtRqAASDwwGIuAHELXJWpB/GWyTKyD2xr64MvjGKSFPXrwmvvuKsNn8QdkMi8NBF7paOoO6liP3XLwUx2HSg7y4qqlLViwKtIJdjT7dn9zNybQs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788964998; c=relaxed/simple;
-	bh=nJc8p2GNs8Jm6YRITnkhJNzeSRIo/EeYI8iIPi22W3g=;
+	s=arc-20240116; t=1788985608; c=relaxed/simple;
+	bh=6XFIPkccwtFTt9zM2Tx9yG/it56yLKTaFGBnsYCW9k0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMmkpCnW6eEYpKikdUKIKoTa8EBQEb681R6xHvRb/vG2lpukd9l53nB//ABfw9BK+oO/Li8UnnMybJAJukOqSvPTTWDloSGEZwKax2AN/Wu73Z9GNKF5sbfb9I2YIab8G6C902c91IDWCJfgQ5hjBKWBnw9quLTWnGda/RQX+iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dGNXFG3q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TALYUDzO3u/P11FfDzwVQvBFIshpiirEACGTLciIFCcFza2rbUWAVPXGsxKgjZf6t64tJSqmvhxMXS4MozB6hmMgt80F8+p7l6e6bM4DnLM+1b2JCmG0v2riYh8aKaiDd19XXQQMQGzcxBQ3ACgow5E6S43kIIZVxH78ZMzssAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CfLWzolr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dGNXFG3q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39C21F00A3A;
-	Wed,  9 Sep 2026 14:43:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CfLWzolr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B06D1F0089A;
+	Wed,  9 Sep 2026 20:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788964996;
-	bh=c1hwgXWxZ0ZvoTcNt6lGAe9EqL9kR6PwfvJHBh/+4Zw=;
+	s=k20260515; t=1788985602;
+	bh=4jauhr50Vhr1JSR/2XIR1kRIUoNU7gawqPy2Hjf78No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dGNXFG3qh6sPrMF71B38Ur31/d2qagzKp354yvPFIioxM5g9vP/re9IKijSXNnj/8
-	 LY+eV/yOJCQ+3bagFO7MyuAEzUw7r4Ij1cmFNYxs51Uc8Ez4HhH+pQyrlBhb0m9irO
-	 18ZEwF6FRT1Kr/qSNu0K+xF0a5L94WU1Wz/motRW15xwNxQ63je9sfYNHd/458jS0W
-	 GGcdk81pW2iriyQai1ZY6F+oYxDHjf9hr4Y5HxJ9WjYWIOUQICLlRfbEtA7Qp0M6US
-	 0sj8rl7EDb0JJGGyhKmh1MgPe5+eLJ/EgX5xBG1bmvs+PtmEqf5uXZF+Ty6BtxXEup
-	 EjRLYhS1Q/hIQ==
-From: SJ Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	b=CfLWzolrJdp1z89BCp+3uF1I7HPwhBpHPtl1iVig6Vd016mpoKZ58XIGBwOU3N0w3
+	 ZSYrwsS4O1abv8ZeffxRpJamQ7ofb9zbWQFWGnfK0KLgGKWvbTzeOtWh1H6+65HPsa
+	 9tPceEc1J0mr6ziagNFm63jAU+HN3wYVKie++AiUMIq+kErcm/DvXTPEisSxuxpoWG
+	 DhQ/laYk2sCM6v49urye0BQtxD2x7xJ2DwJRqCkTzDlg9+5jswywkTdFwxGEGQWm2g
+	 ktdgqiofdlfJpXkFSFpTGXk5E/fRig11b9fA6gy/zQ1igIDWcteULOqYqnQjUwKrVb
+	 YEMxD1OoJRLwQ==
+From: Sasha Levin <sashal@kernel.org>
+To: stable@vger.kernel.org
+Cc: Sasha Levin <sashal@kernel.org>,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH REPOST 0/5] mm/damon/vaddr: support {prep,apply}_probes
-Date: Wed,  9 Sep 2026 07:43:09 -0700
-Message-ID: <20260909144310.107006-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <8f193651-9a6a-421b-91a7-df4a231786fd@huawei-partners.com>
-References: 
+	SJ Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 6.6.y] mm/damon/core-kunit: check region count before testing in split_at()
+Date: Wed,  9 Sep 2026 16:26:05 -0400
+Message-ID: <2026-09-09-daily-reply-0007-damon-core-kunit-split-at-6-6@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260909040016.165245-1-sj@kernel.org>
+References: <20260909040016.165245-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,18 +47,13 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 9 Sep 2026 17:39:23 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
-[...]
-> I was under the impression that with the change, all possible operations would
-> have a prep_probes handler. I just noticed that we also have fvaddr, where
-> ctx->ops.prep_probes is NULL.
-> 
-> Ignore my comment :-)> 
+> damon_test_split_at() test next region that is assumed to be created by
+> damon_split_region_at() invocation.  But the split might fail.  In this
+> case, the succeeding test may dereference invalid pointers returned by
+> damon_next_region().
 
-No worry, thank you for reviewing this :)
+Queued for 6.6, thanks.
 
-
+-- 
 Thanks,
-SJ
-
-[...]
+Sasha
