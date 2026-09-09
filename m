@@ -1,94 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A8F242D70;
-	Wed,  9 Sep 2026 06:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19B236195A
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 06:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788935528; cv=none; b=oceGJX+BahEBkOdIHfVAzCaktH7k4q7OTsfP9fCuyienzT/KHNs/N0WXbwJO0jwdqa+/RaRBQ1PUNf242h7lMx2D0V8cfG/9Hh4R7AHmhGvUbMiG+O0nSPerfjxkS8he/kUqIyGQLO0fltxynMe6kp6xu+iPAKB1j5N89/He4QY=
+	t=1788935593; cv=none; b=FcpN2ABGGcmz576qAH7X3Jd44y69KkCTL5AXdhUCZD9zCSNuMP9blVEgmAnJcRMtLinpaiinFcJ8q7Vwba/8iqn0H1vw47BNFu7xjVgi5hg0RLghfCnHdIvSus+ZvzNE65tfiNZb+3Lzq4RYoNxpgV1ZbMLB+C11y1lV22D1CBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788935528; c=relaxed/simple;
-	bh=yELPdQF+Omw0vXyXjLn6OVDxsNcoeiFYUd60ADXbfWM=;
+	s=arc-20240116; t=1788935593; c=relaxed/simple;
+	bh=F/b7L2zys2YOZrgc+NSdUCwGaax+6iYxNZdBBSZmM28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k4xXctG8uvzpv9K9Q5COgEXm/IORGU/KAEA0pAQL1XdiDwFxjH8dFoBLjjJuQSBHYXdJwl3y52IqOfqL1YyxmvncPF0Q5PmejvfkSYcwGacl6ewQxDuIngMJ+sicsOrNGmoQcZbClIo+ga6Dy2Nmi6bBY63ak1B2lTCuPH+/xfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=exmYd2tN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sEQKNSm4Ew4ShgFNJVdRsH5o2zQxPl/yZXkJo1pd/1PsqM39IPsszt4ajjgzNF/hNh0KfTkeBWcbcQZw2HEYBCz/UdKDjXZLH4NFDjQn16CbJAZX28POQkcfsBi+BlVhBFU00AvZYJnvhMrx9/mrQT76Q0//jK8Gxcvg5QyEw7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Os5xTcM9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="exmYd2tN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52A91F00A3A;
-	Wed,  9 Sep 2026 06:32:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Os5xTcM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A48B1F00A3A;
+	Wed,  9 Sep 2026 06:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788935527;
-	bh=2Vx7xmWYbur/vutWySXxlaNJStJPVrPK1WxT4I2dRPw=;
+	s=k20260515; t=1788935591;
+	bh=O3PDCjhFqqzdQFXDdXRXU7Iz+wO39R8npA16fWg7tm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=exmYd2tNjEbrS1XtaMLE9kNLuT8VBUKX5uE/hqET+uGz5dPFE2QkTf8nqtc7S8OE3
-	 K9OooDSh+Bb3k0z5ogSsd7JXJcfAYSwZwSFomq686AFHxnf1l7mopqD8EtUrsQ8DaS
-	 bvCUyLcnpHC0CQyq6HFmzhgJXnlLgbZk6RBTrFm4J8sLk7FTWA7YtycTlCGD1ndlTt
-	 17rb40gbipT05Bl7C+e/2te/j5UAixCG/5IP8hLv4/Mq+R1IjossXU59N3mTxqhPQh
-	 KiS5fTod8ahSOhzIJHVewyLI3KTQRsUKa22igQG2wjIQRsMF1kJKon/j/WLsw9TSZn
-	 59G9DipAm4qQg==
+	b=Os5xTcM9c4TePg30N+HjVzl+ahBlye+5vfwEEQwJvG89oQL8zlBrK+SUJoF9YUliP
+	 KViRJB3gpjrs/CKqPSn9wItEmth44BeGyu0BC5N7lxlTcBJNANdX02b2uCCMBgTVRi
+	 My/qlR3rX5W3YxVz5SakILLXkG27MpqPIIW6YFcyKDz/5JU9apYTA2Eu8zI9HIg2D5
+	 9CjF/LasxDhr9/+v1317VU8JEnmlMx3nnBqP5K1HAVIFIkQ9xEboME//L1PoNRrYe5
+	 BbOviBHdmH8g96DkNVRgZBPqRU0XWwLcNmP6SngHm0PXAFUPvg9a5YgnAWPoRN/drb
+	 gCRgAbsBnBxgQ==
 From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18.y] mm/damon/tests/core-kunit: catch test failure in test_merge_regions_of()
-Date: Tue,  8 Sep 2026 23:31:59 -0700
-Message-ID: <20260909063159.63420-1-sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.1.y] mm/damon/core-kunit: check region count before testing in split_at()
+Date: Tue,  8 Sep 2026 23:32:58 -0700
+Message-ID: <20260909063259.79031-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090808-phoniness-repaying-46f0@gregkh>
-References: <2026090808-phoniness-repaying-46f0@gregkh>
+In-Reply-To: <20260909040249.243941F00A3D@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-KUNIT_EXPECT_EQ() does not abort the execution of test code when the
-expectation is not met.  But damon_test_merge_regions_of() code after its
-initial KUNIT_EXPECT_EQ() call assumes the expectation is met.  It does a
-per-region test with a hard-coded number of regions that is correct only
-if the expectation was met.  As a result, __nth_region_of() could return
-NULL, and the test code can dereference NULL pointers.  Fix the issue by
-catching the expectation failure and skip the per-region tests.
+On Wed, 09 Sep 2026 04:02:48 +0000 sashiko-bot@kernel.org wrote:
 
-The user impact on realistic setups should be negligible, as it is a unit
-test.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The error-checking condition `!damon_nr_regions(t) != 2` is always true due to operator precedence, causing the test to unconditionally skip its core assertions.
+> --
+> 
+> commit 6fefc501724f8572d4bbc1782d2ab55fa7568e21
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/core-kunit: check region count before testing in split_at()
+> 
+> This patch updates damon_test_split_at() to verify the region count was
+> successfully changed before proceeding. This prevents invalid pointer
+> dereferences if the split fails.
+> 
+> Link: https://lore.kernel.org/20260718001442.87129-3-sj@kernel.org
+> Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org [1]
+> 
+> > diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
+> > index d8fef225930a5..1dd17d43a642c 100644
+> > --- a/mm/damon/core-test.h
+> > +++ b/mm/damon/core-test.h
+> > @@ -162,6 +162,9 @@ static void damon_test_split_at(struct kunit *test)
+> >  	}
+> >  	damon_add_region(r, t);
+> >  	damon_split_region_at(t, r, 25);
+> > +	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
+> > +	if (!damon_nr_regions(t) != 2)
+> > +		goto out;
+> 
+> [Severity: Medium]
+> Will this error-checking condition unintentionally skip the core assertions
+> of the test?
+> 
+> Because of operator precedence, !damon_nr_regions(t) evaluates to either 0
+> or 1. Neither 0 nor 1 equals 2, meaning the inequality (!= 2) is always true.
+> 
+> This seems to force the test to unconditionally take the goto out path, 
+> bypassing the boundary validations it is designed to perform.
 
-The issue was discovered [1] by Sashiko.
+Nice finding, it was a typo.  I will fix.
 
-Link: https://lore.kernel.org/20260715031002.108504-3-sj@kernel.org
-Link: https://lore.kernel.org/20260710144937.26981-1-sj@kernel.org [1]
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit b640708929aa956235866bf7717d89018c661083)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/tests/core-kunit.h | 3 +++
- 1 file changed, 3 insertions(+)
+> 
+> >  	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
+> >  	KUNIT_EXPECT_EQ(test, r->ar.end, 25ul);
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260909035813.162131-1-sj@kernel.org?part=1
+> 
 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 6687778752728..7a3a923dec7cf 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -264,11 +264,14 @@ static void damon_test_merge_regions_of(struct kunit *test)
- 	damon_merge_regions_of(t, 9, 9999);
- 	/* 0-112, 114-130, 130-156, 156-170 */
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 5u);
-+	if (damon_nr_regions(t) != 5)
-+		goto out;
- 	for (i = 0; i < 5; i++) {
- 		r = __nth_region_of(t, i);
- 		KUNIT_EXPECT_EQ(test, r->ar.start, saddrs[i]);
- 		KUNIT_EXPECT_EQ(test, r->ar.end, eaddrs[i]);
- 	}
-+out:
- 	damon_free_target(t);
- }
- 
--- 
-2.47.3
 
+Thanks,
+SJ
