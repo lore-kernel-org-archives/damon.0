@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E42492E5D;
-	Wed,  9 Sep 2026 00:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395A1492E5D
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 00:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788913221; cv=none; b=BhdBZrA8dhMx0dOO5rUqJdwZa/ISkycVECa6HJg/2zX1MkrB5SIUWAhTpZ6b67WCW9jLqnwKTPllFbzBT/6eyPDLI++ikpS4yORnHnVo/wcb4JElRsJGoS/ys/7P6mQRfLC4ONkJPRjoDsDSRjojcD0xYr0LDH0YsTOw785fPso=
+	t=1788913466; cv=none; b=dXthHfsu/qBVQcRzJBgYNEafHy4nC7wyDgfALyKLy5el1q6EIG+3Mc4Z8dPuSr+WHQPAKOK2KGxzSNoedyRdLQD8MXALRzLTtpVMpc/fAdn5sS+ANTz/mgLpJMeIXVtObr1848Qn04Ubp1yZLySXGOftkdwdZfICYITcHGHJnuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788913221; c=relaxed/simple;
-	bh=+q1UQrOJ+CPRTDzi0p6Gp12CC5JetN3GLzx0WP+sRD0=;
+	s=arc-20240116; t=1788913466; c=relaxed/simple;
+	bh=z4zMmpSJsPYe9WzeUa2CxParJlsibiD0I0ZVPGVK/Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLDoPWNAIQinWGuVjl/hE5gYRMVNqiKFT/bauB6sR9BuPGz0FfUq0oNNxEXhpf3j7FO916yjF91Kiaw4Wp4xorVXLY0TqEWq58QewBrfbbH3FVnOO/Rp1CJnCncbxPmR4hHsfOtHJBSoCt8x7ysfkCvVPcXYbBVuCI2/Pznx5ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D9xr8xsP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rJlKTmFugekAdIvMJ0uUwJR0ayVhmqDCoM8dEaInEb4WuBbktEAW5Meu/AdxvNh39Teih9kx6CymO2eP1IX/ZfEXTXiGi9BYQaJfLK+ANLY5Z3BHYu4eFLCA7r3N8pTPr1cLWHLc7WkX03sQT+ILuoboYckf3Qqe41ow45ECTC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZAOx6t+n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D9xr8xsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD9C1F00A3A;
-	Wed,  9 Sep 2026 00:20:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZAOx6t+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E0E1F00A3A;
+	Wed,  9 Sep 2026 00:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788913220;
-	bh=GnjhAVP/V30TSMfLwyIvSXBQLxYlj9VOI1IVLcD+S/k=;
+	s=k20260515; t=1788913464;
+	bh=LAEFtICJHIqUC4FM3nbTOtzpBR/BNCiABESPCrtleJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D9xr8xsPsQajrh7KNO3zQeEHBHiWOotHZ0SrQLVlX2ZYwElLcciKlJZwVz0Tjkvnr
-	 d+TRxaTBdCUUQWTQARSgAJPRFD7xNHX+fZz+gvoMyP4urTw/ADH7Sq2s+iqFsaFlBA
-	 S5/eWZIBHBJssqlUrv15QhPAS1VVHLGBZG9hjlV3oaJyYNkK/JLcZU7+4oK7SdFpoQ
-	 b9wKTHus37Jw4iTqhTW+daFZijKPBRYsnYd9lk3Ajf6L2V4iyt9QC1S1fkLqc0ufPQ
-	 5yg04sE+dc931sH6Zyy2MlAlFRqBN3I+t2TPXRrfpF4I2ZySTy9FtZA5xyn4ZmiJHs
-	 dKXDsajhL3K0A==
+	b=ZAOx6t+n66Z4lQ8nxcBtR+SK+kZcbDN1iU08juVASwUMhaC0NKKW/tJDm8VfNILF1
+	 oyTFtYJfxOWZfPV+GIHLUeMS9I5wbbo+3uoh0OtpkOdfLzK6fDN5KrJMXmZyfqCegT
+	 A3NkyjgscfK09C9j9frLjlQj5hezgvvPXspBLZCwh3lv7ikksKNc8v72oBTnKTHa9r
+	 HlqanomDGA8Yw8Mhbx5Y6Vu2av7peqToML7+LGntBYOTCiHaIFvPdSkP3rVcbrRvYl
+	 30HpePQHEYx3lw0VE1IA+IAzNJbaa5p1h19TsYSePaMTu92kIjTdX6dVTqZSBObU4D
+	 8Zh2zl6eG1SZw==
 From: SJ Park <sj@kernel.org>
-To: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+To: "Eva Kurchatova" <eva.kurchatova@virtuozzo.com>
 Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org
+	sashiko-bot@kernel.org,
+	damon@lists.linux.dev
 Subject: Re: [PATCH] selftests: damon: add script dir to sys.path for PYTHONSAFEPATH compatibility
-Date: Tue,  8 Sep 2026 17:20:11 -0700
-Message-ID: <20260909002012.111767-1-sj@kernel.org>
+Date: Tue,  8 Sep 2026 17:24:16 -0700
+Message-ID: <20260909002417.112320-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260908214238.2680324-1-eva.kurchatova@virtuozzo.com>
+In-Reply-To: <20260908214818.355E91F00A3A@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -46,42 +43,48 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed,  9 Sep 2026 00:42:35 +0300 Eva Kurchatova <eva.kurchatova@virtuozzo.com> wrote:
+Hi Eva,
 
-> Running these tests under Python's safe path mode, either with -P on the
-> interpreter command line or with PYTHONSAFEPATH set in the environment,
-> stops the script's own directory being prepended to sys.path. Some
-> distributions (RHEL, for example) build the tests with -P in the shebang.
+On Tue, 08 Sep 2026 21:48:17 +0000 sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] The patch claims to fix PYTHONSAFEPATH compatibility for all DAMON Python selftests, but misses 3 test scripts, leading to an incomplete fix and a commit message mismatch.
+> --
 > 
-> This breaks all 7 DAMON Python selftests that import the _damon_sysfs
-> helper module located in the same directory:
+> commit 3a3c43c4b8c811027e52bf0fa5b68c48216e86c4
+> Author: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
 > 
->   ModuleNotFoundError: No module named '_damon_sysfs'
+> selftests: damon: add script dir to sys.path for PYTHONSAFEPATH compatibility
 > 
-> Fix this by explicitly adding the script's directory to sys.path before
-> importing _damon_sysfs, following the same pattern used in commit
-> c3b3eb565bd7 ("tools: ynl: add script dir to sys.path") which fixed the
-> identical issue for the YNL tools.
+> This commit adds the script's directory to sys.path for several DAMON Python
+> selftests to fix ModuleNotFoundError issues when running under Python's safe
+> path mode. It claims to fix all 7 tests that import the _damon_sysfs helper
+> module.
+> 
+> >     This breaks all 7 DAMON Python selftests that import the _damon_sysfs
+> >     helper module located in the same directory:
+> 
+> [Severity: Medium]
+> Are there more than 7 tests affected by this? It looks like sysfs.py,
+> sysfs_refresh.py, and sysfs_no_op_commit_break.py in
+> tools/testing/selftests/damon/ also import _damon_sysfs but lack the
+> sys.path.append() workaround introduced in this commit.
+> 
+> If these tests are run with PYTHONSAFEPATH set in the environment or with -P
+> on the interpreter command line, will they continue to fail with a
+> ModuleNotFoundError?
 
-Thank you for finding and fixing this, Eva!
+I think this is not a blocker of your patch, but could you please confirm if
+Sashiko's finding is correct, and if you have a plan to fix those in future?
 
 > 
-> Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
-
-Reviewed-by: SJ Park <sj@kernel.org>
-
-This patch is applied to damon/next [1] tree.  If this patch is not added to
-mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
-to pick this.  So, no action from your side is needed for now.  If it seems I
-also forgot doing that or you cannot wait for my action, please feel free to
-directly ask that to Andrew.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260908214238.2680324-1-eva.kurchatova@virtuozzo.com?part=1
+> 
 
 
 Thanks,
 SJ
-
-[...]
