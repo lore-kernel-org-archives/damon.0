@@ -1,95 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F421D5146
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 04:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3833D2BB13;
+	Wed,  9 Sep 2026 04:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788926571; cv=none; b=CJpRFQDB8xcLz6kAmHA2Z+KWpZ+jrwFNZrkWLw/Ve/UWNu5qxRZUsnTe+kQHVO8xm3B5oDjwE5EZA5xd0jfXQIwgIDOvsAgfjjVVuP56cNmsC/aV5kbp7fFhVIkFysPKZcva2emftXnWLD5tjC610wwNb+W1pECvjJ7MrtcHb94=
+	t=1788926680; cv=none; b=gRf4Ucv5qbPUazeDg6RXvJ3AWVDszOEfgl9KgLsyG7PWx8Z6Y5ijej83f6jG7yBcdGq8uQoAhR48tiLUBnAq1qrISYcCH3w737QgT9a7zj8Li+MxbPDdL3osKnVmG6C0kjamWsL24K0PxhlbrXnlqv6ifm994LJJQs3UcqtB+K0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788926571; c=relaxed/simple;
-	bh=06hFxjk1xpIDOu5CLoqQHSRH+qs7K1YxC2cx6Wjrz50=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=k2ly3u4DwgdZX/KHttge61/Hmqbgp2nuir3WwzUtN+W9htz15r4PHPTolWkCF+CbpZqx8aO1y+xkNtHB4jEkE4L9tWZBhhaUqMtstJNo3FGSIwlvk8r3g00yXUa2riUk2uN+VkDMUYt1NRNrZZhvR2IylVltfQcy0mGaTPaY/ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mZkveEZm; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1788926680; c=relaxed/simple;
+	bh=PYZ+PNvw3K9DHj4qV3lJuHfssXeUvBrx/KRpbN9ogJo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=i4gaZ/OyAO8GfahK4mcFY5kozGY18jQI9lmTCoX80bLqxSdHkxUvIub5gaq5An00gNxevJDs7k5V/s9Zkwl9d5hb42E7dNhXsS3Ds2Ndn4OlqDNVNblQ+fxAm1FpxXHWiBM2TB18lAERJmuxs9AcgK2z6qEgV2f+HTXhhnYi2NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CVbcHgS4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mZkveEZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243941F00A3D;
-	Wed,  9 Sep 2026 04:02:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CVbcHgS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C212B1F00A3A;
+	Wed,  9 Sep 2026 04:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788926569;
-	bh=g7sQd2LxjsTarj090nsATHB6h2h0xIqj68MCEciEWdw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mZkveEZmBASZKjGG0rerFajHO6XcuBxKskXkvNSVmrRws9cBa7W00QahLtKwVi+1t
-	 Py3Vuex38mm9N2ymEI2QRWTRTO8IjbReMVdyxUGjU2iUz3RYSC2BFicGxwl0c29puZ
-	 WpHtpPtgWEkpcxfDIerkOX7XSK0eJrytGXqRst0v+aB7C7nxDkXKY7lTZY1qaMk3jD
-	 d26qSSbVP0THojFdjJCUxNnukvT7wTvSke3Mn8MOoqWWVA4pbtSBRKwKVAOW8ftOor
-	 H8XfFdKWOSHaxqoE/J93U1ZbK6qAgnc/hQKchOgUXTHG4DTWRA20qZ6JM+7kp1gLCc
-	 7H32dBCSgteww==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.1.y] mm/damon/core-kunit: check region count before
- testing in split_at()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260909035813.162131-1-sj@kernel.org>
-References: <2026090820-envoy-endanger-c99b@gregkh>
- <20260909035813.162131-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Sep 2026 04:02:48 +0000
-Message-Id: <20260909040249.243941F00A3D@smtp.kernel.org>
+	s=k20260515; t=1788926679;
+	bh=zyNiAICHBw3DWYftkk0LJOlG6tRmin3KFcDAWF09ZaA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=CVbcHgS47Nc+x6f9IGYQ2LhRvPfv7RZVvHXYY8fxchf1dJGipRf+2q6XFVcrFEEMS
+	 bB0lUSp3r8EF2Oa5IiyzG44GIdMuN//mh6sb3xKNAE54J1KVvpadvsN5YtwG7V86LW
+	 a4zhpHcEQGiC1nGIy9G/Io3Tuqrr3uTbAl58YP/x8HRMmovyEZtHBrFlqlZD96S+nV
+	 vkwQjnVnXFdZ1Gu4iBQV1nBCaI8g7hyQurx00gVlwZpgf82LuklDXqflBPxaj2wCRi
+	 t4NtrYGBR2h+1fBZWT4S7affHS4tbheYa8b01+kdkU5Qx1koffw721tCLyBVyWTaLW
+	 0xiaTG+sSDt7g==
+From: SJ Park <sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	SJ Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18.y] mm/damon/core-kunit: handle region split failure in filter_out()
+Date: Tue,  8 Sep 2026 21:04:31 -0700
+Message-ID: <20260909040431.171803-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <2026090830-think-magical-cf80@gregkh>
+References: <2026090830-think-magical-cf80@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] The error-checking condition `!damon_nr_regions(t) !=3D 2` is al=
-ways true due to operator precedence, causing the test to unconditionally s=
-kip its core assertions.
---
+damos_test_filter_out() test checks if damos_filter_match() of an address
+filter splits the region as expected under a given condition.  But, the
+test continued regardless of the split successes.  As a result, the later
+part of the test could dereference invalid pointers that returned from
+damon_next_region().  Further, it could corrupt memory from
+damon_destroy_region().
 
-commit 6fefc501724f8572d4bbc1782d2ab55fa7568e21
-Author: SJ Park <sj@kernel.org>
+The consequent user impact (memory corruption) is quite bad.  The
+realistic user impact would be limited, though.  It would affect only test
+run setups.
 
-mm/damon/core-kunit: check region count before testing in split_at()
+Fix it by exiting early for the number of regions test failure.
 
-This patch updates damon_test_split_at() to verify the region count was
-successfully changed before proceeding. This prevents invalid pointer
-dereferences if the split fails.
+The issue was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260718001442.87129-3-sj@kernel.org
+Link: https://lore.kernel.org/20260718001442.87129-5-sj@kernel.org
 Link: https://lore.kernel.org/20260714142352.100478-1-sj@kernel.org [1]
+Fixes: 26713c890875 ("mm/damon/core-test: add a unit test for __damos_filter_out()")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: <stable@vger.kernel.org> # 6.6.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 3423fe70395210e2f0cd795270292f6a27cd57b5)
+---
+ mm/damon/tests/core-kunit.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-> diff --git a/mm/damon/core-test.h b/mm/damon/core-test.h
-> index d8fef225930a5..1dd17d43a642c 100644
-> --- a/mm/damon/core-test.h
-> +++ b/mm/damon/core-test.h
-> @@ -162,6 +162,9 @@ static void damon_test_split_at(struct kunit *test)
->  	}
->  	damon_add_region(r, t);
->  	damon_split_region_at(t, r, 25);
-> +	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
-> +	if (!damon_nr_regions(t) !=3D 2)
-> +		goto out;
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 6687778752728..801407b481cdc 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -588,6 +588,8 @@ static void damos_test_filter_out(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 1);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 2);
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
++	if (damon_nr_regions(t) != 2)
++		goto out;
+ 	r2 = damon_next_region(r);
+ 	KUNIT_EXPECT_EQ(test, r2->ar.start, DAMON_MIN_REGION * 2);
+ 	KUNIT_EXPECT_EQ(test, r2->ar.end, DAMON_MIN_REGION * 4);
+@@ -602,11 +604,14 @@ static void damos_test_filter_out(struct kunit *test)
+ 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 2);
+ 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 6);
+ 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 2);
++	if (damon_nr_regions(t) != 2)
++		goto out;
+ 	r2 = damon_next_region(r);
+ 	KUNIT_EXPECT_EQ(test, r2->ar.start, DAMON_MIN_REGION * 6);
+ 	KUNIT_EXPECT_EQ(test, r2->ar.end, DAMON_MIN_REGION * 8);
+ 	damon_destroy_region(r2, t);
+ 
++out:
+ 	damon_free_target(t);
+ 	damos_free_filter(f);
+ }
+-- 
+2.47.3
 
-[Severity: Medium]
-Will this error-checking condition unintentionally skip the core assertions
-of the test?
-
-Because of operator precedence, !damon_nr_regions(t) evaluates to either 0
-or 1. Neither 0 nor 1 equals 2, meaning the inequality (!=3D 2) is always t=
-rue.
-
-This seems to force the test to unconditionally take the goto out path,=20
-bypassing the boundary validations it is designed to perform.
-
->  	KUNIT_EXPECT_EQ(test, r->ar.start, 0ul);
->  	KUNIT_EXPECT_EQ(test, r->ar.end, 25ul);
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260909035813.1621=
-31-1-sj@kernel.org?part=3D1
