@@ -1,41 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395A1492E5D
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 00:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB620492E4C;
+	Wed,  9 Sep 2026 00:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788913466; cv=none; b=dXthHfsu/qBVQcRzJBgYNEafHy4nC7wyDgfALyKLy5el1q6EIG+3Mc4Z8dPuSr+WHQPAKOK2KGxzSNoedyRdLQD8MXALRzLTtpVMpc/fAdn5sS+ANTz/mgLpJMeIXVtObr1848Qn04Ubp1yZLySXGOftkdwdZfICYITcHGHJnuM=
+	t=1788914290; cv=none; b=VI1rTCfnN35auArT0mV/4b4i/LRFxOWCTRfuqSCxGpLcOTWd5d6H/dOk0GzXsZwM/qoZRd9n9zOK/i57vn7B4wdKs4ZyO/O55K3eoobfAYPQSpnz7DSZGUynqsdn7H8IJf5Wq8Qpfe2fUN6f/BrNT1IvZ3ieoOxNT351YW29hZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788913466; c=relaxed/simple;
-	bh=z4zMmpSJsPYe9WzeUa2CxParJlsibiD0I0ZVPGVK/Hg=;
+	s=arc-20240116; t=1788914290; c=relaxed/simple;
+	bh=WDXVCXp54tcC37VGDDpXC7Ad4CbKESWsEb5Si6CaZ7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rJlKTmFugekAdIvMJ0uUwJR0ayVhmqDCoM8dEaInEb4WuBbktEAW5Meu/AdxvNh39Teih9kx6CymO2eP1IX/ZfEXTXiGi9BYQaJfLK+ANLY5Z3BHYu4eFLCA7r3N8pTPr1cLWHLc7WkX03sQT+ILuoboYckf3Qqe41ow45ECTC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZAOx6t+n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lxm0UweuzjYAV8IPBDfs8erE9lvQA8hiF2vS1BoBIOXJnKYthAZ/96A17Sxtx5hCLbCsGSuTFR5laHQibBZNZO5O+GAURNYDkXenBhkQwmhUEFbiZ9W6vjcah7YMHFTCRJUWEVpjYH36i82aOf2HB1KxTHx9eYLMxFF7RBosftw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RJDbuH4X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZAOx6t+n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E0E1F00A3A;
-	Wed,  9 Sep 2026 00:24:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RJDbuH4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D81E1F00A3D;
+	Wed,  9 Sep 2026 00:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788913464;
-	bh=LAEFtICJHIqUC4FM3nbTOtzpBR/BNCiABESPCrtleJw=;
+	s=k20260515; t=1788914288;
+	bh=LW2YRdHu/X4/AGFVGhsWuCM7o9IYlbhU7Z1SrOilMgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZAOx6t+n66Z4lQ8nxcBtR+SK+kZcbDN1iU08juVASwUMhaC0NKKW/tJDm8VfNILF1
-	 oyTFtYJfxOWZfPV+GIHLUeMS9I5wbbo+3uoh0OtpkOdfLzK6fDN5KrJMXmZyfqCegT
-	 A3NkyjgscfK09C9j9frLjlQj5hezgvvPXspBLZCwh3lv7ikksKNc8v72oBTnKTHa9r
-	 HlqanomDGA8Yw8Mhbx5Y6Vu2av7peqToML7+LGntBYOTCiHaIFvPdSkP3rVcbrRvYl
-	 30HpePQHEYx3lw0VE1IA+IAzNJbaa5p1h19TsYSePaMTu92kIjTdX6dVTqZSBObU4D
-	 8Zh2zl6eG1SZw==
+	b=RJDbuH4Xd8C32OmTjQnl1Ekc1TagPeVNucME62r/LSxjMqbUS/NpGkKhLw7X77v+t
+	 wMD2iRE4JvWPJckS/fJD5vdKocCwK6cSiFHPfLDFm5QCeOdDBUuqXySJuzh+hN4jIL
+	 QJNwBLPpS66PBzJrC250WUOOlP7t5iDk9EddOCFqwsDJ7tkjd/gnVXUWP4NksqxE3f
+	 PA1eV110rvY3PDvvKKUlioPKp2SknHbCSGVw/xhVwLX2zGKcypjNbH7ZZTrctTlWFl
+	 VODweHOCKjSH0rM3I6byMsrxpjMyiMMkucPr1NxyRySHFGmzpeEO1O3IwZgiupc0NQ
+	 qHZVDDlRkOWIw==
 From: SJ Park <sj@kernel.org>
-To: "Eva Kurchatova" <eva.kurchatova@virtuozzo.com>
+To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	sashiko-bot@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH] selftests: damon: add script dir to sys.path for PYTHONSAFEPATH compatibility
-Date: Tue,  8 Sep 2026 17:24:16 -0700
-Message-ID: <20260909002417.112320-1-sj@kernel.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH] Docs/mm/damon/design: clarify when qt_exceeds increases
+Date: Tue,  8 Sep 2026 17:38:00 -0700
+Message-ID: <20260909003800.112569-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260908214818.355E91F00A3A@smtp.kernel.org>
+In-Reply-To: <20260908175105.42558-2-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -43,48 +56,103 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Eva,
+Hi Liew,
 
-On Tue, 08 Sep 2026 21:48:17 +0000 sashiko-bot@kernel.org wrote:
+On Wed,  9 Sep 2026 01:50:23 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The patch claims to fix PYTHONSAFEPATH compatibility for all DAMON Python selftests, but misses 3 test scripts, leading to an incomplete fix and a commit message mismatch.
-> --
+> qt_exceeds counts how many times the quota of a scheme has exceeded.
 > 
-> commit 3a3c43c4b8c811027e52bf0fa5b68c48216e86c4
-> Author: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+> The value can confuse users when the effective size quota is zero,
+> because a zero effective size quota does not always mean the quotas are
+> unset.
 > 
-> selftests: damon: add script dir to sys.path for PYTHONSAFEPATH compatibility
+> If the quotas are unset, that is, both ms and bytes are zero and no
+> quota goal is set, qt_exceeds never increases.  But if the user uses
+> the temporal auto-tuning algorithm, the effective size quota becomes
+> zero once the goal is [over-]achieved.  In that case the quotas are
+> still set, so qt_exceeds keeps increasing once per quota reset
+> interval while the goal stays achieved.
 > 
-> This commit adds the script's directory to sys.path for several DAMON Python
-> selftests to fix ModuleNotFoundError issues when running under Python's safe
-> path mode. It claims to fix all 7 tests that import the _damon_sysfs helper
-> module.
-> 
-> >     This breaks all 7 DAMON Python selftests that import the _damon_sysfs
-> >     helper module located in the same directory:
-> 
-> [Severity: Medium]
-> Are there more than 7 tests affected by this? It looks like sysfs.py,
-> sysfs_refresh.py, and sysfs_no_op_commit_break.py in
-> tools/testing/selftests/damon/ also import _damon_sysfs but lack the
-> sys.path.append() workaround introduced in this commit.
-> 
-> If these tests are run with PYTHONSAFEPATH set in the environment or with -P
-> on the interpreter command line, will they continue to fail with a
-> ModuleNotFoundError?
+> Clarify this on the design document.
 
-I think this is not a blocker of your patch, but could you please confirm if
-Sashiko's finding is correct, and if you have a plan to fix those in future?
+Thank you for keep working on this with patience.
 
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260908214238.2680324-1-eva.kurchatova@virtuozzo.com?part=1
+> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+> ---
 > 
+> By the way, I found a thing in the design document that confused me.
+> 
+>     temporal: More straightforward algorithm. Tries to achieve the goal
+>     as fast as possible, using maximum allowed quota, but only for a
+>     temporal short time. ---> When the quota is under-achieved, this
+>     algorithm keeps tuning quota to a maximum allowed one. Once the
+>     quota is [over]-achieved <---, this sets the quota zero. Useful for
+>     deterministic control required environments.
+> 
+> I'm not sure if "goal" was accidentally written as "quota" here.  Would
+> this be better?
+> 
+>     When the goal is under-achieved, this algorithm keeps tuning quota
+>     to a maximum allowed one. Once the goal is [over-]achieved, [...]
+
+Good eyes!  Yes, seems it was only mistakenly written in the way.  Please feel
+free to send a separate patch or include it into the next version of this
+patch, whatever better for you.
+
+> 
+> ---
+>  Documentation/mm/damon/design.rst | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+> index d036340dae8a..e083b74d618b 100644
+> --- a/Documentation/mm/damon/design.rst
+> +++ b/Documentation/mm/damon/design.rst
+> @@ -863,6 +863,16 @@ scheme's execution.
+>    completely tried to be applied.
+>  - ``max_nr_snapshots``: Upper limit of ``nr_snapshots``.
+>  
+> +``qt_exceeds`` is increased for schemes with set quotas when the quota is found
+> +full at a quota reset interval boundary.  While the quotas are unset,
+> +``qt_exceeds`` never increased.  However, a zero effective size quota does not
+> +always mean the quotas are unset, if the ``temporal`` :ref:`auto-tuning
+> +algorithm <damon_design_damos_quotas_auto_tuning>` is used, the effective size
+> +quota is set to zero once the goal is [over-]achieved.  Since a set quota of
+> +zero effective size is always considered full, ``qt_exceeds`` keeps being
+> +increased once per quota reset interval in that case, until the goal is
+> +under-achieved again.
+> +
+>  "A scheme is tried to be applied to a region" means DAMOS core logic determined
+>  the region is eligible to apply the scheme's :ref:`action
+>  <damon_design_damos_action>`.  The :ref:`access pattern
+
+I think the clarification is better to be added to the 'temporal' quota tuner,
+since this happens only when it is used.  Maybe the clarification could also be
+shorter.  For example,
+
+'''
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -775,7 +775,9 @@ There are two such tuning algorithms that users can select as they need.
+   fast as possible, using maximum allowed quota, but only for a temporal short
+   time.  When the quota is under-achieved, this algorithm keeps tuning quota to
+   a maximum allowed one.  Once the quota is [over]-achieved, this sets the
+-  quota zero.  Useful for deterministic control required environments.
++  quota zero.  Useful for deterministic control required environments.  Note
++  that the zero quota is a valid quota, and therefore ``qt_exceeds`` :ref:`stat
++  <damon_design_damos_stat>` will keep increasing in the case.
+
+ The goal can be specified with five parameters, namely ``target_metric``,
+ ``target_value``, ``current_value``, ``nid`` and ``path``.  The auto-tuning
+'''
+
+What do you think, Liew?
 
 
 Thanks,
 SJ
+
+[...]
