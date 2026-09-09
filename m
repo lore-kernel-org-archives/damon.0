@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E133624B7;
-	Wed,  9 Sep 2026 05:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4733730648C;
+	Wed,  9 Sep 2026 05:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788932322; cv=none; b=WJQ8CkXxQEN2Wz6x0C8iSRA2jF9dG/kXKXaNalrCbZX+x6M/thLW1quz073GVD94l+nYTlWwXmxnalEL50dMAzWO3hre7FUxt+qxTCTqvdnc3dDUcotWz9PocJtNjqcaTpK6KGR8HGpe8dlY2Ccg5VxkYDPlj3qH1hmQtVw1eu4=
+	t=1788932584; cv=none; b=TgEYOlwk5jH4ldE8xe6o0I/NeTHLpJqSKxK9+xZYb1CXwqpDMUfL5K0BLGacJQ/RTGoV9wnWdZUkVk9MvgbpmrooKYMJT2TxImcgXTPTQWywk9nsSykk+/21Ayh9u8wt8pit0aJ9LKFafWgj4a1oSeFNU9UuUMRis7QfSZiyzao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788932322; c=relaxed/simple;
-	bh=zxDhyvymcuwzAURMsoCw8Wp3wYwU9K1/dYLyI1QwXVA=;
+	s=arc-20240116; t=1788932584; c=relaxed/simple;
+	bh=rr3hEOzS6wNnpn7JbL58jpSP0MguAL6pqxYWDazAArU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7Fej5nw7MLz+yo/ZjGnOWLNARC9jdM6p/HCffQcKINUJJcGmGJmUzaFS4mYQFE9C/P053cdtWqNto4u95GCPCydp6VyfTiu8FXcxyHV3LD8vdLupG0hGcJAdfQH3SIMZHhMXMqqPU2PrGQ7yNhWI7ciPzMAUrAiaoK5zm50sQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TPp7TqrU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eukbSKdykPWDjYAPNgo4magJyySavRycQ4NYJar/xqtpmS4yNW2NnFzFHdPoptXLNBeBMTF/fIrVvREKFbSaLswJBSWYkGQjwXIEwbBKwBe9XTgQpk3aMgcUpNv/ue2meqbGMz52PWD4GiWlbdxRF2HBgY/z6Ld82i9+2lRRv5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZGuqOTOk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TPp7TqrU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3461F00A3A;
-	Wed,  9 Sep 2026 05:38:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZGuqOTOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F831F00A3E;
+	Wed,  9 Sep 2026 05:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1788932321;
-	bh=WWUZDq1zLCHt/fRrrDBcda6tFYXpO6QtbUhmJBGoxKI=;
+	s=k20260515; t=1788932582;
+	bh=zf7x3TbXalEJF2sMMhkyWdw4YMTc1v08MJk4nc1HYGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPp7TqrUDkSRlsibgIUdhU3sCukvCdgPoDDbGjVUavMKZUj2r3SzSTpcuAaowmGGp
-	 JfgQJbjtpnVOWI3XYgWtGCikU9kZmIHJ8mTQZHDpfpo7QEZQkgWk59d3b1/jdUDN1n
-	 vS99hfktlNue0rjUNBGMH2pTzxOiG802OOZldPtfhhabuDu1kzWR6sTFYJwnxspsZM
-	 WwqbNAoQIn3WV0qnScVDv++KYes8tbGYRwffg7jFGKZ6sPCgB3h3Gx9LZD5pkXT/Lr
-	 xO0mpYcdVgM9lIj7UrVThXLAp9DQgOw2LbLHLrszPImiRbK05LpalqdYReNYRO5uIi
-	 NBxhRWyLsPYxA==
+	b=ZGuqOTOkY5Ye+gQ2NavGARPwZJ4AviIjC/FUBAtdyx8hiD0jg6U4jIL2RQLlRmRFg
+	 q/KOQgrFtvPOAA4KUc3JsWjwbQFwomgGq2FbM0DdkUbrUQNtmjOsrKxo/4KmpRiOi7
+	 fHV/W2yB2gpxXH6wnPfksr+AhGx9GxD1Z+rgdT53uB6FxTa1nltLq9pY0aEOOu7uMH
+	 DB8TqOzDXvjBrToV+XztpWPy4iXIThX5OlWgriTH2N/0qFT3wiDsb4RRyZRMj2sQs/
+	 Sx9xtn+/zYEzfvEfRJMSCXAiDJfAGCub2nR+m+q93FpZXsxNfRBSmFbCNRIfwuQVye
+	 mHjTKZ6kjKX+A==
 From: SJ Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18.y] mm/damon/paddr: drop last same folio access check reuse optimization
-Date: Tue,  8 Sep 2026 22:38:34 -0700
-Message-ID: <20260909053834.248582-1-sj@kernel.org>
+Subject: [PATCH 6.1.y] mm/damon/paddr: drop last same folio access check reuse optimization
+Date: Tue,  8 Sep 2026 22:42:54 -0700
+Message-ID: <20260909054255.253652-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026090852-ought-makeover-4182@gregkh>
-References: <2026090852-ought-makeover-4182@gregkh>
+In-Reply-To: <2026090853-handoff-bootlace-9e07@gregkh>
+References: <2026090853-handoff-bootlace-9e07@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -66,54 +66,52 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 (cherry picked from commit f23f0aa62b2f32c2b12f95959fc4603ef81678b2)
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ mm/damon/paddr.c | 21 ++++-----------------
+ 1 file changed, 4 insertions(+), 17 deletions(-)
 
 diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index f28cfee8351d3..1854b4bb6bd29 100644
+index 7bc8d79c7fa07..d1d047f494aed 100644
 --- a/mm/damon/paddr.c
 +++ b/mm/damon/paddr.c
-@@ -67,7 +67,7 @@ static void damon_pa_prepare_access_checks(struct damon_ctx *ctx)
- 	}
+@@ -120,7 +120,7 @@ static bool __damon_pa_young(struct folio *folio, struct vm_area_struct *vma,
+ 	return !result->accessed;
  }
  
--static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
-+static bool damon_pa_young(phys_addr_t paddr)
+-static bool damon_pa_young(unsigned long paddr, unsigned long *page_sz)
++static bool damon_pa_young(unsigned long paddr)
  {
- 	struct folio *folio = damon_get_folio(PHYS_PFN(paddr));
- 	bool accessed;
-@@ -76,7 +76,6 @@ static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
- 		return false;
- 
- 	accessed = damon_folio_young(folio);
--	*folio_sz = folio_size(folio);
+ 	struct folio *folio;
+ 	struct page *page = damon_get_page(PHYS_PFN(paddr));
+@@ -161,29 +161,16 @@ static bool damon_pa_young(unsigned long paddr, unsigned long *page_sz)
  	folio_put(folio);
- 	return accessed;
- }
-@@ -84,23 +83,12 @@ static bool damon_pa_young(phys_addr_t paddr, unsigned long *folio_sz)
- static void __damon_pa_check_access(struct damon_region *r,
- 		struct damon_attrs *attrs, unsigned long addr_unit)
- {
--	static phys_addr_t last_addr;
--	static unsigned long last_folio_sz = PAGE_SIZE;
--	static bool last_accessed;
-+	bool accessed;
- 	phys_addr_t sampling_addr = damon_pa_phys_addr(
- 			r->sampling_addr, addr_unit);
  
+ out:
+-	*page_sz = result.page_sz;
+ 	return result.accessed;
+ }
+ 
+ static void __damon_pa_check_access(struct damon_region *r)
+ {
+-	static unsigned long last_addr;
+-	static unsigned long last_page_sz = PAGE_SIZE;
+-	static bool last_accessed;
+-
 -	/* If the region is in the last checked page, reuse the result */
--	if (ALIGN_DOWN(last_addr, last_folio_sz) ==
--				ALIGN_DOWN(sampling_addr, last_folio_sz)) {
--		damon_update_region_access_rate(r, last_accessed, attrs);
+-	if (ALIGN_DOWN(last_addr, last_page_sz) ==
+-				ALIGN_DOWN(r->sampling_addr, last_page_sz)) {
+-		if (last_accessed)
+-			r->nr_accesses++;
 -		return;
 -	}
++	bool accessed;
+ 
+-	last_accessed = damon_pa_young(r->sampling_addr, &last_page_sz);
+-	if (last_accessed)
++	accessed = damon_pa_young(r->sampling_addr);
++	if (accessed)
+ 		r->nr_accesses++;
 -
--	last_accessed = damon_pa_young(sampling_addr, &last_folio_sz);
--	damon_update_region_access_rate(r, last_accessed, attrs);
--
--	last_addr = sampling_addr;
-+	accessed = damon_pa_young(sampling_addr);
-+	damon_update_region_access_rate(r, accessed, attrs);
+-	last_addr = r->sampling_addr;
  }
  
  static unsigned int damon_pa_check_accesses(struct damon_ctx *ctx)
