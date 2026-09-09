@@ -1,81 +1,81 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1445505F1
-	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 12:20:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C96255C33E
+	for <damon@lists.linux.dev>; Wed,  9 Sep 2026 13:04:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788956412; cv=none; b=hRHpmSa+aZ5wdDBVKS007P2PMtFxe/eDTKa6IXGo0aF+rpxDD58nvZGTXGNlBSbF7nxhGzs1z6gmeM5LkmcNlUNrwvIXq3hzUXqsF4IJapETJ4seoxlkN/npOU5svfbxCQfePAI1mB1hCZm97idrI4X0ETFwAMjf1Lf2+VCxRaA=
+	t=1788959099; cv=none; b=pPeCJKRphlPwhErm7kdfJGbsRqrrOMkTcyfvIyMYhvUDhSbtApBo9t/ntJ9i4oMQ9SZc6EBotVabKDbAv+dIxC674/gc8Oat5Mv/jhv++A8tB0gdtujYP/cY+G+0HUBnL/L9Nck5PbpF4x51OhqcxtJFQzSS96ELgNiV/p++lF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788956412; c=relaxed/simple;
-	bh=dLoENm/5dHcwLHwJ6/geeKDZfEa5bk/MeVe3uFzrjsQ=;
+	s=arc-20240116; t=1788959099; c=relaxed/simple;
+	bh=v4VqNLLxyBFyXPEz+FFatds3IOR4HXZIa8xaMEQCYuI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ccbvxq7b3ZoI/A3A3CusPY7zBmht7Do/++4/vnpuWlYzLxpyJEAtLRmsRaNULz9dZSFurdEZQ6ahiN0Y1gQ2vpnaRCsEvy5+Yaaw8gifhAqnE8Wr5l/4so+h/tnJ4NG9WJV3c3bLuUsGAHK1e4A0/RHnbod/gjUjMvUJmJt2/Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com; spf=pass smtp.mailfrom=kroah.com; dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b=jFHIssvo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jf6ZZJQH; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=mqvxMT81BDnbeXoHiqlimPl2x8+Nzqbbuaj/OSJpkR+ebd545cGbf0M7fmay42pqkLdeRnyc2Z/Vd6hGIkyOjyKH+6dBGqVAerkIp2xGSFEacjCtdY52mFzlXFTq2MSNjZ47t8VniUk5b48R5CCjU7fyuwRBAcU6xNqZI5hq1dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com; spf=pass smtp.mailfrom=kroah.com; dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b=lK0gX1jl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ea0uzDEf; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kroah.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b="jFHIssvo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jf6ZZJQH"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B7795EC00BB;
-	Wed,  9 Sep 2026 08:20:08 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 09 Sep 2026 08:20:08 -0400
+	dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b="lK0gX1jl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ea0uzDEf"
+Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2D7431400090;
+	Wed,  9 Sep 2026 09:04:57 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Wed, 09 Sep 2026 09:04:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1788956408; x=1789042808; bh=LxTePqthyS
-	ekJGVkxNn8lrAT6VrBneOK7CqtEDy0JiQ=; b=jFHIssvoYEC2RKRoux+fznDIfj
-	hrV6Tk/a4ONOix2kncSNmc82pEbxZUCp8ceOtm7lGoIHDw+5voud+on2tEMV0dS6
-	WwLeUxeE2yI9Tf/mgRAbnwTzz8jdo9fUPU/I8cyEW6vcrqEH+HrHjfCwgLdfZCkx
-	1+iKBylmOFk1XMXnkdO2Q5zjpPBYUrFoWzWeZ8gPplqJZMHvN2QWdq4uIblNzfma
-	T5ip3lgWEor3MZdgSaVYg165jxIpwIXMKTLKBTN1HxFRcR6GErms+qC8n39VuuIk
-	mn6KDydmT0s4qZ7rJwGpQeGHVJcZEnSaWztA2s8lyeVHub9asShOzevLFdyQ==
+	:subject:to:to; s=fm1; t=1788959097; x=1789045497; bh=Cp+uMzlMK/
+	KeNZeKJ5ADKs7kT/O0gbhghehmz59EEgo=; b=lK0gX1jlj7shqNcBP6IRfxPsOR
+	fTXHWo4ttPUJXsTI0sy4p0rnGFGcT28hofEYZHYpLBM9HbzPH3/7TW5L08NyWDla
+	kAPd+TPgQkz+CtMIRswrdba08qLrgKU05lcHfA5xNQQpJXP+hPYKY+znWGJnFPvw
+	E77LZdmlOgvVNecCwEShq31mooMML2us6f6xgiXRopWmSCKUjtVhQtdhuN/hRi7O
+	G/yesFmpdJM9ADXKnI2Z4mN023GveOhjv15w07mR+h4feWe04mCciL6IU0/5m4Sh
+	jzmIyKm6TwE2Kwv3/0v01RRjVRMv7hGBZZSyiL3oC+dYBtBUlD/TW79BSrMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1788956408; x=1789042808; bh=LxTePqthySekJGVkxNn8lrAT6VrBneOK7Cq
-	tEDy0JiQ=; b=jf6ZZJQHxH7T8+z4XkpHe+zKmoO81p+7VDo4bRl3zYgvRMHEuXf
-	vacHu54f1hABr2LgCPoMPKdZmhvXt/a8kraVUMA2n7PeO8hIkMII4bkHxvsLjAIv
-	Iw6Lv8TtBB7bCMWGLOuS66LoiamIjKIesdWJ+1bgjcW43yliLlpPJR0pH3EAIuOb
-	2uYkWsqDy92G5l0mc2e3b+I2Wou3PZQqHAjoMmmorPtLpzEOdXkOEK0YbmgVrA3q
-	i/2PdeImiqVij7mYNj0JENCBuAjD7NyO9dE5T3ETeEtiD3pSQ5pvHtFrbejpx6bQ
-	ZVW59b078qUjCYs/cWeG5xCcYIW01/EA+nw==
-X-ME-Sender: <xms:-E6halLm2dCm-AfxKAy2kuwFvl9fnPdtRxkWDDVJvXD12jgyMgao4A>
-    <xme:-E6hajudAFRPVrOvQ00nxJ5hC_RpJIw66NY_VsHPniVUyCvSzmvZavR0owyEQcWjz
-    eHr1I3bNzTnWRykkIrdsJH94HNOFSaqfVrwU62jO-E6_ci1jQ>
-X-ME-Received: <xmr:-E6hahXJB_W2qHCtHpkwo-mix85nowlmQAnvq-TTi-yJuFdEHlVTfbPv5ROisBZYahSJIIXaTehMBZ1Xge1pfninJLPrNTVLUHXZTwE8MWY>
-X-ME-Proxy-Cause: dmFkZTEdRzn9ALU2TlM/TWPVd3IwwHDV5EiJ9wBW9t4yilh7yskSpuYImTEvo+pcVSFbpn
-    KVRR+RrqTIqTKoFvwGzRiRmNbbP20uejyrsPvEvlkWg507nQDDOZ3m7SvvkxYKOb40JoO1
-    86lVvCII628EKhs71WCUtbaTAMzWj8PHKfD/pbdtRA2sIlNKK4NL9B7tqkvLLIozTh/zcx
-    yA2TCHxo16EPUsiwWNN7NFxgnOSAwUUMZwOioFdjbvVtx6GlUoZnL04Do6xxHL5A6MB0YZ
-    uZYIBjKmq8xR3zH/kCILRgTmA5KQ1xTeJLSkNtuUjdCBUHCjhpLM9on65AlhAlxKGxJYON
-    Vl9BiynAn6O4M4+KWORo9TP2atHF7MQGA5Xu0dQfWsQmL89KuuASmMPeiE7MsA7bBdBB2L
-    aGNRRiwsxGTzQ8QWaGkMuz3LaTYzIq7ETg+ea0hqulrZYNDgjnRX1oJwhu9Y+nVgmIwAVQ
-    WRMk1sbTAhjfFjTmh1sKg8PNx1F8fAR0C+e5VWnlufQEcqnuW/1wR5yWURuVK7JFLQEVY7
-    5zvokdGp8PWUFmZvJ/XF8bhJN5mVp2YL0BJ+fMjjOE5Cyocca4MsV38X8+UBoI2wM/+5I6
-    YAEBEJV7Xd3745njHT7VP3kfEazcL7BO4ntssCreWsXO3xwong0tdEKOLMRA
-X-ME-Proxy: <xmx:-E6hamgx4vWDm4K4PoS4E-ZvBGO7lFxJMbNLIG_SCviyLF5dowR-uA>
-    <xmx:-E6hahqpEicFwzD__gG4sKaOZATyhnh6sFut7SjpOllV27S0iRe-FA>
-    <xmx:-E6hakESeejfg-PkQC2AgBJgIN_9ptNC3zjA87cPch_aK0IR5S6DNg>
-    <xmx:-E6hau4n5rxNiWVackjHaZSzG1haL0TmS8WpNsOwvhEH-Fnci-ZL4A>
-    <xmx:-E6haiaS1LiM0cPIJnNXrSJf6ONvZvyPVihzqLCZK6UrrY7Lo82W0wKg>
+	1788959097; x=1789045497; bh=Cp+uMzlMK/KeNZeKJ5ADKs7kT/O0gbhgheh
+	mz59EEgo=; b=Ea0uzDEfUCu8/uXboyVhRZgZYdQyZhA/aipLBUSQkY7ZiwEKgML
+	rwmyHylezT0T2BaeEMcaBI3B29lwDKGv8OJ3RkOMNmm73yy74cqZmJrNev+xeIXK
+	Ciq96yg5ZkmuyQBl6bKoYuk/Ed7RLCscaTjbeRmV8DwOWs7pbEpLnaZ93PFmthn/
+	0o4i1KNTfVxlEx7EfctpOQW4TNExe1LfG5HhdiZhpFhgA/FZTey3K35OfcO2Twyf
+	yeCnPgJuAI0QizzWVPykKex5xoEk1zZH/9wyZi9JDS7AWzxRsGpWwiK/UlHnGFwE
+	cP4EzAv7nMnL+hCtf+OI5Qm8+iZXkByllcA==
+X-ME-Sender: <xms:eFmhal1-uMiPvKI3haeLBYhCTkbHOw80UtLTEPw38gyjbxopNuzmxQ>
+    <xme:eFmhauo7hY4K6X9vNQjFZ_wj_LOWSOZ3cAdXMaz0R9ulm-uaQEg4nQb5xrIOS2mh6
+    9NbP-WAHT11MQ1i2D4xOhnP-QIiQ1VRm8aq0KNTmttpOWCfaQ>
+X-ME-Received: <xmr:eFmhapiTZBGu6i40iJT8ahqPXheRRSRLkFcpZiRn8ip5rwhNTmT9UNsy-FRUZCMgMedwhOnw9fOgNzpEc3DnAE0zUylzqvx7JbFI3uCz424>
+X-ME-Proxy-Cause: dmFkZTGaIBFiSoWFVcJthg96Ptn0ECcIsNt8On2fuSuVGv0aVthh/Bd6fQ9fODVCm/pCYU
+    Ya6E1Uavd5iuzPHqoNMX5CDmKM74LLXW3sl7D9aTK/mJ0RWHL2fpa/l/i/uS6yxi5SDiPw
+    6/7qd2HragC1CKuRNAEN1gQr8cwpbA2IOCnNCY14VGTTtiPGqOVoICIDTnT1q18PfEtzCG
+    YS8mbD4YPMvbcotFc1dQWa4/Mq50/pQTUFhKV5OT5Hgfkrmgmtc/2Se2VfcU/4FC4nvL+C
+    I+55sW/AsfBiHbLvOOtsQ7LKL7NW2GuYHNz4ORDtuexWHYtl+C4kp/b04XWJ+c7nywDxMN
+    4rSlnfT4MtKhCm4x00w3CRFCKw3rL4e7hNUn8Q0w6/vsroy1A0OmAqlWOwBLMD6mPvLxL3
+    x7hwhdbFAgtbQOvRF/C2ekEPEzKYHnLprSP5V2FokiyZsXybI0bkJt79buI6WJ2FdUbZXA
+    tRQada2WHHheaPwYNSOqbc6Gpy0j+g/tf+PJIz35izJOizoPfy6EgvvADyQ8WCGA1fejYE
+    U6zu3bMFGtIA1SCKk5M3euo5idwrscrtV5Isgl6pKx946Hnhc8hEvNkriV6iZ6sSvOV+L3
+    Xl5d9mJhSanxDvT965zRCvhyUypb3R5OHDvBZb9FA5j/l4/JSzFZbPqF2leg
+X-ME-Proxy: <xmx:eFmhai8dGrLfoc7S16CO2CQWmMTmnaWFjrsFyKiLlh2nJPYTMpYBEA>
+    <xmx:eVmhatXWKnZpf068eue6vhs_7auRqTfS3vs0kxrGmcuWaPWOrdgJpw>
+    <xmx:eVmhauCMPqG1WVgQEjsanah5qb0ECjDmZtpQKQN-BExzcGePv0VDEg>
+    <xmx:eVmhaqE3usHFRvUvxAmn3P5RgRNsMbEGvBfZLsWfik3sNexhNLiuug>
+    <xmx:eVmhagEsDWNhZjZulSK-dq9i0g9TB1rwCIzt5tqPzmLIQqY1cCeKbseY>
 Feedback-ID: i787e41f1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Sep 2026 08:20:07 -0400 (EDT)
-Date: Wed, 9 Sep 2026 14:19:27 +0200
+ 9 Sep 2026 09:04:56 -0400 (EDT)
+Date: Wed, 9 Sep 2026 15:01:49 +0200
 From: Greg KH <greg@kroah.com>
 To: SJ Park <sj@kernel.org>
 Cc: stable@vger.kernel.org, damon@lists.linux.dev,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 7.2.y] mm/damon/core: skip aging from repeated aggressive
- merging
-Message-ID: <2026090918-relic-padded-3b25@gregkh>
-References: <2026090839-reoccupy-dizzy-a7bd@gregkh>
- <20260909043419.207354-1-sj@kernel.org>
+Subject: Re: [PATCH 6.18.y] mm/damon/sysfs: read ops_id only once in
+ damon_sysfs_apply_inputs()
+Message-ID: <2026090945-spookily-leotard-ecf3@gregkh>
+References: <2026090858-arousal-getting-ee35@gregkh>
+ <20260909032830.119383-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -84,106 +84,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260909043419.207354-1-sj@kernel.org>
+In-Reply-To: <20260909032830.119383-1-sj@kernel.org>
 
-On Tue, Sep 08, 2026 at 09:34:19PM -0700, SJ Park wrote:
-> The number of DAMON regions could temporarily exceed the user-defined
-> maximum number of regions limit for corner cases.  For example, users
-> could lower the limit via runtime parameters update.  For such a case,
-> kdamond_merge_regions() repeats merging regions in the case doubling the
-> merge threshold.  The repeated merge operation could update the age of
-> regions multiple times.  This corrupts the monitoring results.  Fix the
-> issue by asking the merge operation to skip aging for the corner case.
+On Tue, Sep 08, 2026 at 08:28:30PM -0700, SJ Park wrote:
+> damon_sysfs_apply_inputs() reads ops_id twice.  It could race with
+> ops_id_store().  As a result, the min_region_sz could wrongly be set up.
+> Read it once.
 > 
-> The user impact is degradation of the monitoring quality.  The impact
-> should be mild, since the degradation is only temporal, and it is not
-> common to happen in realistic setups.
+> The user impact is trivial.  Sane users ain't update the parameter in
+> parallel.  Even if it happens, the DAMON core layer handles the wrong
+> min_region_sz (!is_power_of_2()).  Even if somehow the race ended up
+> making a min_region_sz that is different from the user's intention but
+> still valid, only monitoring itself runs differently than expected.  No
+> critical consequences like kernel panic or memory corruption happen
 > 
-> The issue was discovered [1,2] by Sashiko.
+> The issue was discovered [1] by Sashiko.
 > 
-> Link: https://lore.kernel.org/20260712165432.87609-1-sj@kernel.org
-> Link: https://lore.kernel.org/20260621203548.10718-1-sj@kernel.org [1]
-> Link: https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org [2]
-> Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
+> Link: https://lore.kernel.org/20260715031002.108504-7-sj@kernel.org
+> Link: https://lore.kernel.org/20260703172417.95426-1-sj@kernel.org [1]
+> Fixes: 8d009da32f13 ("mm/damon/sysfs: set damon_ctx->min_sz_region only for paddr use case")
 > Signed-off-by: SJ Park <sj@kernel.org>
-> Cc: <stable@vger.kernel.org> # 6.10
+> Cc: <stable@vger.kernel.org> # 6.18.x
 > Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> (cherry picked from commit 0250dbe08c730d003ef9f484da56ae09a1ea0c4c)
+> (cherry picked from commit 5adaaa28be8a79ddd7e103b171f9d6e14e7fc26e)
 > Signed-off-by: SJ Park <sj@kernel.org>
 > ---
->  mm/damon/core.c             | 21 +++++++++++++--------
->  mm/damon/tests/core-kunit.h |  2 +-
->  2 files changed, 14 insertions(+), 9 deletions(-)
+>  mm/damon/sysfs.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index cff932b3317d0..024a3a185bfe8 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -3115,18 +3115,20 @@ static void damon_verify_merge_regions_of(struct damon_region *r)
->   * sz_limit	size upper limit of each region
->   */
->  static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
-> -				   unsigned long sz_limit)
-> +		unsigned long sz_limit, bool count_age)
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index a6c3e83a3dad5..655e4de69bee8 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+> @@ -1432,14 +1432,16 @@ static inline bool damon_sysfs_kdamond_running(
+>  static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
+>  		struct damon_sysfs_context *sys_ctx)
 >  {
->  	struct damon_region *r, *prev = NULL, *next;
+> +	enum damon_ops_id ops_id;
+>  	int err;
 >  
->  	damon_for_each_region_safe(r, next, t) {
->  		damon_verify_merge_regions_of(r);
-> -		if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
-> -			r->age = 0;
-> -		else if ((r->nr_accesses == 0) != (r->last_nr_accesses == 0))
-> -			r->age = 0;
-> -		else
-> -			r->age++;
-> +		if (count_age) {
-> +			if (abs(r->nr_accesses - r->last_nr_accesses) > thres)
-> +				r->age = 0;
-> +			else if ((r->nr_accesses == 0) != (r->last_nr_accesses == 0))
-> +				r->age = 0;
-> +			else
-> +				r->age++;
-> +		}
->  
->  		if (prev && prev->ar.end == r->ar.start &&
->  		    abs(prev->nr_accesses - r->nr_accesses) <= thres &&
-> @@ -3160,15 +3162,18 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
->  	struct damon_target *t;
->  	unsigned int nr_regions;
->  	unsigned int max_thres;
-> +	bool count_age = true;
->  
->  	max_thres = c->attrs.aggr_interval /
->  		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
->  	do {
->  		nr_regions = 0;
->  		damon_for_each_target(t, c) {
-> -			damon_merge_regions_of(t, threshold, sz_limit);
-> +			damon_merge_regions_of(t, threshold, sz_limit,
-> +					count_age);
->  			nr_regions += damon_nr_regions(t);
->  		}
-> +		count_age = false;
->  		threshold = max(1, threshold * 2);
->  	} while (nr_regions > c->attrs.max_nr_regions &&
->  			threshold / 2 < max_thres);
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index fcf7c7fadb5fe..59bba0552d88c 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-> @@ -256,7 +256,7 @@ static void damon_test_merge_regions_of(struct kunit *test)
->  		damon_add_region(r, t);
->  	}
->  
-> -	damon_merge_regions_of(t, 9, 9999);
-> +	damon_merge_regions_of(t, 9, 9999, true);
->  	/* 0-112, 114-130, 130-156, 156-170, 170-230, 230-10170 */
->  	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 6u);
->  	for (i = 0; i < 6; i++) {
+> -	err = damon_select_ops(ctx, sys_ctx->ops_id);
+> +	ops_id = READ_ONCE(sys_ctx->ops_id);
+> +	err = damon_select_ops(ctx, ops_id);
+>  	if (err)
+>  		return err;
+>  	ctx->addr_unit = sys_ctx->addr_unit;
+>  	/* addr_unit is respected by only DAMON_OPS_PADDR */
+> -	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
+> +	if (ops_id == DAMON_OPS_PADDR)
+>  		ctx->min_sz_region = max(
+>  				DAMON_MIN_REGION / sys_ctx->addr_unit, 1);
+>  	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
 > -- 
 > 2.47.3
 > 
 > 
 
-Does not apply to the latest 7.2.y queue :(
-
+Does not apply :(
