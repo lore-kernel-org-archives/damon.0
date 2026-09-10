@@ -1,64 +1,64 @@
-Received: from mail-yx2-f1.google.com (mail-yx2-f1.google.com [74.125.224.129])
+Received: from mail-yx2-f3.google.com (mail-yx2-f3.google.com [74.125.224.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93301DF98F
-	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 17:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF808545D93
+	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 17:16:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789060599; cv=none; b=cx74IKxtz6qNRKDBfW+0mbFVV5CDntHA8m2fz3+Invk4c33+QF9kx/NHNxxZHHvv9JZ7MTKK3mWfGJwAqurCN8hgSp22N+orrJhGXs+13X/v7vyaSdPPEQ6WOwbky+05UxDm/lno2GfE1eZTt9VNWiju+3JlT/w8Qdx9Gi7hjfQ=
+	t=1789060604; cv=none; b=EQQ2oDwAXUROzGvh/lOu0jv6SX7sed4kR1XB/5mCsTNDjfAu68o3lMyDpnRdT41NuqLFU66fCen9/9Le9NhffigmyKwKENuKXF4w0Cm4RLeIOlKT8fLpNHA/J48JpYQZpaXw6vN/vFoC3YS2pRmzcu+zC2pBl4oJQDS5TpAOKlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789060599; c=relaxed/simple;
-	bh=A8owNqUmKrddFiv3sxwqZAYgp8IhOnZKxvxLH1qdKhM=;
+	s=arc-20240116; t=1789060604; c=relaxed/simple;
+	bh=dKBhc/qYjs60oa/k5fBVE/b8yc5t8ryc/K02fqOJhvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdmNYlkTRrKnr+ewH4mSXbMpHT+HJ6T4DH+Ln+3aK5T9p9Jty/z511hD1GUNasNyhQFECbaALNiIdDIxZAFvZP4Ba3Zb9C2/1gHCwmdTcr2o5M9giyO+kehqULP993wTO3iAW6NH5oq+m+6ddN0upG3TA0uZ4BaSKHwpxV6jo4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yp/XWvsQ; arc=none smtp.client-ip=74.125.224.129
+	 MIME-Version; b=SoCL45Yp7ylcI64oejmA7beEPAdGOkDaGRWeb+tj53aaVwLxQN9J4o5T2eOIOgb9gdM7MTlLpjYhj7Qxo5io0gjBfeYwmKDBD2tzwVPfgQmoob30gHMNFGcPBxDYCcwKqGXJCYhpcXhseLMAN7KLgfnu9Gz5nS/M1EUfhgllhNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a35nuTFV; arc=none smtp.client-ip=74.125.224.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yp/XWvsQ"
-Received: by mail-yx2-f1.google.com with SMTP id 00721157ae682-857cb570f53so29164167b3.1
-        for <damon@lists.linux.dev>; Thu, 10 Sep 2026 10:16:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a35nuTFV"
+Received: by mail-yx2-f3.google.com with SMTP id 956f58d0204a3-66fd0af9eb0so2123122d50.0
+        for <damon@lists.linux.dev>; Thu, 10 Sep 2026 10:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789060590; x=1789665390; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789060596; x=1789665396; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=U8F+pCWHvp6Bk2nFVk5sf15ui0cPT96FgZ/ARqD+0QM=;
-        b=Yp/XWvsQrqPgN5zUe/NKCLsOD511fhrKN5ozmHfP3o81OUVOe8KLkAFikduoJW8rw9
-         yFxIQO5ZU0fNvesVHbZmJZuQxxBxKXzmj2F7oBMQHG+N6FCE5+fer0QfAso0N2ROup6u
-         mdO7VIVys7vZuwb9zwE4u3GDQGY9LhRUv5QfdZr2/srm4giS9MeoAWXZDP9YzI1rF4KT
-         HyCk5c38/2ctFNaAmP1ki+E7HP4wWgCMHglAZUcKr/p/v3yuxowQdQ7+fFCIGPHXK4JW
-         CxZXNUYDyp+/5npWf9IOp03azJn8rx3EHj9cAuX71pFR0cN5ZIKeqkldsUvUdC6tCuPZ
-         Sg6w==
+        bh=zCG1VvuHQ6SCJdLVUga8vZowwN0KJmpgx8fDOpUOTA0=;
+        b=a35nuTFV/wJGnPmAAounx4yswkOGP5ihQKmqC0UwkiQe6LpfcQlLw9+0mnnAEjUAkl
+         jmht6/wVz6uWdxvRcm7rs5iTJt9DSRdh2nnsUJrqfUY7K+WS7n4gf9fM0bjdn2fZ3wHt
+         1IVDV4IZO9yXa+BCicoUVlI0LFSrmd9krM+RSBS2wYFZunWUUGMTZeZ9H/06VZVNYpti
+         6dQAVvtT4hEuhnQqUi2vlgPBjNnZjM88peN4co9Kwe5GybT8FlhnypzdCZnELjl+IOXB
+         WyFepCcAxOU7XhUZatJItbadfSs+m0wv1pPnWvkcyALv3zLP94A9V2CV7Ns2bUIxLbCH
+         uabw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789060590; x=1789665390;
+        d=1e100.net; s=20251104; t=1789060596; x=1789665396;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=U8F+pCWHvp6Bk2nFVk5sf15ui0cPT96FgZ/ARqD+0QM=;
-        b=Oh1mTvJekh8dA8iom4/i3T7lYE4DGeyvA3bAqNcuQ69lhwqHZg9tUjS/CBob39VZ7I
-         6W8wv0KZC/N54eQZos+fYYDWWDB8H7L8OukAYP28fmPzo0b8CYBoeRWcOQlCZ+jqKiaL
-         iJ//ALBJSG2Yi3Biq9rOwfVzwlgZmQDk90W8qO1S9BNDDL2TZL5HR9J5X95Jzd8S8eKc
-         5GV0GINJHStu6WzJl2nf8kCER1i4BNIvMYUEqRQmehH57hOaQxJJlz2P1XAMlpb+x/XP
-         9fErgjY+D0JaoDJV+VxJ5tHy0dWCEk3MwMoDD/eHwabc7h2s4p2Ncn8GvN05iltJO6AW
-         nmSg==
-X-Forwarded-Encrypted: i=1; AKwUvBxvYLqE6v9vS36jpPmqIajGujVrXKgvFDg813vGsPRO4G//HpTMCQ9+ZidRqDewcUVre+F4Vg==@lists.linux.dev
-X-Gm-Message-State: AFuF++lZA/woHbBBl1BNmE820w631SR3/Vhbxm7H6F8G2EmAhMVVrjQ/
-	CW0ECS6trY5TMk13lcIPgSX0T+Axqu0pVQI1SPRBezbg+pJj9g0vneU=
-X-Gm-Gg: AYBFou1P4DiCimMiSGCefivtLeq38XW/HC2iaNX3yR8usJ36dIFbFVDrOH7Al/XvbEr
-	GpQP73n0TqfaNTRazA9T0G0KLQvlgg+abvYrSU1vqKRx3B/KpW+wt/CzlkXfskcygUrZVAiqVYD
-	MUl+37Zjke7NC/wCGXKZH0w+vqzvSffwyg2MYpmPMSqPdYtkH5+AHUsyN6ieyFIycO03A5Zvvbn
-	pS5TgOUBae0PS5MTHihx8KURCIzMz+nVkgxMdx4do4a3LNkjq+ulq1LU86UgtD/KVlR9K+D4Vnj
-	Oru9LpzPB+vDBkRuOpzkZzsV3aJTtScymAb+PAKcypdpPTJxYX+s3k4Ry5P6x6hi/o4Co7tWZ8B
-	J5yfF3xTTlmDKx2kjf1dajETfgvLXVQEl4g6Jir3daFcIi4z3F3eGlFNiGjt1pRkT8H3zfyyuOm
-	d+JKEoXZq8v3jEwuukd7oPZcD88Paatk6HLFZeUcvxN7wt98a4LKeKQEyMMP1CTyJTwXtqVRdz6
-	Q2seLFCFznZ+fGLNLYvRV6bqpXkZBS+QDYfA3khlthLy94ADNkdRzVHexO2
-X-Received: by 2002:a05:690c:d83:b0:865:838f:485b with SMTP id 00721157ae682-884ad14f632mr2358197b3.4.1789060590335;
-        Thu, 10 Sep 2026 10:16:30 -0700 (PDT)
+        bh=zCG1VvuHQ6SCJdLVUga8vZowwN0KJmpgx8fDOpUOTA0=;
+        b=XVKNLDzMbBuJNm28qXR6U5a1nkpaQsWRKnSdyCuYKR2jvozWz3q2T9mx8yY+eveXK0
+         ugzygm20EEIZ+yPC6n9RgVbM0m4RZn27ll3CkF57az6oUeSZxCyxHq+8wPI2DGbIV59M
+         mdbUx+VlbC4hJ8eclwUE5/1uVm7ATQSKjm0UzTlNofxewJh3OCrRBUM/zp/LVWkeK2Ff
+         N5TLxln2db1fU5gxLIS8sg3G4VRJSDTym8WAvvG2cbLfJctnCGCmvT5NMOn/wIOCC1Ux
+         J8IFBJb+nC+07rallf2DlGBKMfH/z3Zty2UTcWDerSo4NlveKSZGk8dwvrz9EkEnsCEp
+         wj3w==
+X-Forwarded-Encrypted: i=1; AKwUvBwcITXRLAxtgLg81ZmDwbdhctxJTk+kwrAUdedB47LJP1WEdIGy2U7ZZrr0/O+FS0BKInxKfQ==@lists.linux.dev
+X-Gm-Message-State: AFuF++kva+7KNYIu2H0zAIFqSCnFPLjf4+uNBnKh31CDoB5+J7lIGHZs
+	O5jbocsfr+P4YGqNEtdMkvDyRGb68yTj09+U9UHVGsEt9mDIddZC8e0=
+X-Gm-Gg: AYBFou0JWnF7JtFP4mS+8B51LVJbUkrYxZXdlqgoBFOr/mQ/jVa7YUmNT1ezJYuMqjK
+	PCAzF8QqFEa68AIaH18vQWcPte9ONcDiJ6ztY99SuE461pJqgV2Pd+VnhMFNiUG7KDvYWEJYdMp
+	dnwrhV4W/UO/aNq0KpMa/VFY07WVKgKyHG1JmTGog0SUx+EepOfh/xOFTHQwXnqNXHmerd4totk
+	PgQq6kJACzao20DP3S/4oa4lMTCNyTWuhD28OeAVtUjtJhiS/zEPiSEM9jF2ckSgdNmi2+GND/6
+	CjLwfGEQ1a5EKG1c3bLycxJ4dAVM537pWGFKMSYQYoF5qtVb6ZLhGM1ca3k/OvJWaQgzV/Jsbru
+	8fUWNfgCieW08sYLXDqTlHd1K3TfPUUx3BAr5bpbQaa6HQQhmG9Ra2pT+PC5S+e3cOXdtUOzOGt
+	GXXIo6ElSRREEiq1lYQhvq2Oh/lpbhMFHUjXN6LYjC94rac89ZYW6sv71Feajjpql5Wr//zREwp
+	UydZiq5ISeBqnYg9x3y7fZiqbdQbjoJ7HqhnF81Fu0A5oAVp/seUdoI9/kx
+X-Received: by 2002:a05:690e:12c2:b0:66f:ca93:eae4 with SMTP id 956f58d0204a3-67124722b0dmr151051d50.92.1789060595769;
+        Thu, 10 Sep 2026 10:16:35 -0700 (PDT)
 Received: from localhost (23-116-43-216.lightspeed.sntcca.sbcglobal.net. [23.116.43.216])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-884890160bbsm2241007b3.42.2026.09.10.10.16.29
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-66fb47a8b8fsm14316278d50.2.2026.09.10.10.16.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Sep 2026 10:16:29 -0700 (PDT)
+        Thu, 10 Sep 2026 10:16:35 -0700 (PDT)
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 To: sj@kernel.org,
 	akinobu.mita@gmail.com,
@@ -77,9 +77,9 @@ Cc: akpm@linux-foundation.org,
 	weixugc@google.com,
 	jic23@kernel.org,
 	gourry@gourry.net
-Subject: [RFC PATCH v2 1/9] mm/damon/vaddr: support page fault access check primitive
-Date: Thu, 10 Sep 2026 10:16:15 -0700
-Message-ID: <20260910171623.6638-2-ravis.opensrc@gmail.com>
+Subject: [RFC PATCH v2 4/9] mm/damon: add damos_node_eligible_mem_bp tracepoint
+Date: Thu, 10 Sep 2026 10:16:18 -0700
+Message-ID: <20260910171623.6638-5-ravis.opensrc@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260910171623.6638-1-ravis.opensrc@gmail.com>
 References: <20260910171623.6638-1-ravis.opensrc@gmail.com>
@@ -91,116 +91,99 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The page-fault sampling primitive was implemented for the physical
-address space only, so a virtual address space context had no way to
-enable it.
-
-Implement it for the virtual address space.  The prep installs the marker
-whose fault reports the access on the sampling address of each region,
-mirroring the physical address space primitive, and prepare_access_checks()
-now dispatches on the enabled primitive as the physical address space one
-does.
-
-The target mm and the vma of the sampling address are both available
-here, so the marker is installed on the mapping directly.  The physical
-address space primitive has only a physical address and reaches its
-mappings through a reverse mapping walk.
+Add a per-tick tracepoint for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP goal
+evaluation, exposing the goal target/current values for observability of
+the node-eligible-memory bandwidth quota loop.  Bandwidth-feedback tiering
+loops read this goal metric to detect convergence.
 
 Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 ---
- mm/damon/vaddr.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 64 insertions(+), 1 deletion(-)
+ include/trace/events/damon.h | 32 ++++++++++++++++++++++++++++++++
+ mm/damon/core.c              | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+)
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index d5dde97b3cd0d..1f2d923e569d6 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -13,6 +13,7 @@
- #include <linux/pagemap.h>
- #include <linux/pagewalk.h>
- #include <linux/sched/mm.h>
-+#include <asm/tlb.h>
+diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
+index 4dfc9467ea4b5..b2a472eb45d95 100644
+--- a/include/trace/events/damon.h
++++ b/include/trace/events/damon.h
+@@ -74,6 +74,38 @@ TRACE_EVENT(damos_esz,
+ 			__entry->esz)
+ );
  
- #include "../internal.h"
- #include "ops-common.h"
-@@ -329,7 +330,8 @@ static void __damon_va_prepare_access_check(struct mm_struct *mm,
- 	damon_va_mkold(mm, r->sampling_addr);
- }
++/* Per-tick DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP goal evaluation. */
++TRACE_EVENT(damos_node_eligible_mem_bp,
++
++	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
++		int nid,
++		unsigned long target_value, unsigned long current_value),
++
++	TP_ARGS(context_idx, scheme_idx, nid, target_value, current_value),
++
++	TP_STRUCT__entry(
++		__field(unsigned int, context_idx)
++		__field(unsigned int, scheme_idx)
++		__field(int, nid)
++		__field(unsigned long, target_value)
++		__field(unsigned long, current_value)
++	),
++
++	TP_fast_assign(
++		__entry->context_idx = context_idx;
++		__entry->scheme_idx = scheme_idx;
++		__entry->nid = nid;
++		__entry->target_value = target_value;
++		__entry->current_value = current_value;
++	),
++
++	TP_printk("ctx_idx=%u scheme_idx=%u nid=%d "
++			"target_value=%lu current_value=%lu",
++			__entry->context_idx, __entry->scheme_idx,
++			__entry->nid,
++			__entry->target_value, __entry->current_value)
++);
++
+ TRACE_EVENT_CONDITION(damos_before_apply,
  
--static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
-+/* Use page table accessed bits */
-+static void damon_va_prepare_access_checks_abit(struct damon_ctx *ctx)
- {
- 	struct damon_target *t;
- 	struct mm_struct *mm;
-@@ -345,6 +347,67 @@ static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
- 	}
- }
- 
-+/*
-+ * Install the page table marker whose fault reports the access.  The target
-+ * mm and the vma of the address are available here, so the marker is set on
-+ * the mapping directly, without a reverse mapping walk.
-+ */
-+static void damon_va_change_protection(struct mm_struct *mm,
-+		unsigned long addr)
-+{
-+	struct vm_area_struct *vma;
-+	struct mmu_gather tlb;
+ 	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 991ddb9a09414..6b56a3e961c4e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3461,6 +3461,34 @@ static unsigned long damos_quota_score(struct damon_ctx *c, struct damos *s)
+ 		highest_score = max(highest_score,
+ 				mult_frac(goal->current_value, 10000,
+ 					goal->target_value));
 +
-+	/*
-+	 * The sampling address is a random offset within the region, so round
-+	 * it down to the page it falls in.  change_protection() walks whole
-+	 * page table entries and expects a page aligned range.
-+	 */
-+	addr = ALIGN_DOWN(addr, PAGE_SIZE);
++		/*
++		 * Per-tick visibility of NODE_ELIGIBLE_MEM_BP goal evaluation
++		 * for userspace convergence-detection.
++		 */
++		if (goal->metric == DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP &&
++		    trace_damos_node_eligible_mem_bp_enabled()) {
++			/*
++			 * cidx is hardcoded 0 because DAMON sysfs currently
++			 * supports a single context per kdamond.  Other DAMOS
++			 * tracepoints (damos_before_apply, damos_esz,
++			 * damos_stat_after_apply_interval) follow the same
++			 * convention; once multi-ctx-per-kdamond lands the
++			 * field becomes meaningful.
++			 */
++			unsigned int cidx = 0, sidx = 0;
++			struct damos *siter;
 +
-+	mmap_read_lock(mm);
-+
-+	vma = vma_lookup(mm, addr);
-+	if (!vma || !vma_is_accessible(vma) || (vma->vm_flags & VM_PFNMAP))
-+		goto unlock;
-+
-+	tlb_gather_mmu(&tlb, mm);
-+	/* todo: batch or remove tlb flushing */
-+	change_protection(&tlb, vma, addr, addr + PAGE_SIZE, MM_CP_DAMON);
-+	tlb_finish_mmu(&tlb);
-+
-+unlock:
-+	mmap_read_unlock(mm);
-+}
-+
-+/* Use page faults */
-+static void damon_va_prepare_access_checks_faults(struct damon_ctx *ctx)
-+{
-+	struct damon_target *t;
-+	struct mm_struct *mm;
-+	struct damon_region *r;
-+
-+	damon_for_each_target(t, ctx) {
-+		mm = damon_get_mm(t);
-+		if (!mm)
-+			continue;
-+		damon_for_each_region(r, t) {
-+			r->sampling_addr = damon_rand(ctx, r->ar.start,
-+					r->ar.end);
-+			damon_va_change_protection(mm, r->sampling_addr);
++			damon_for_each_scheme(siter, c) {
++				if (siter == s)
++					break;
++				sidx++;
++			}
++			trace_damos_node_eligible_mem_bp(cidx, sidx,
++					goal->nid,
++					goal->target_value,
++					goal->current_value);
 +		}
-+		mmput(mm);
-+	}
-+}
-+
-+static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
-+{
-+	if (ctx->sample_control.primitives_enabled.page_table)
-+		damon_va_prepare_access_checks_abit(ctx);
-+	if (ctx->sample_control.primitives_enabled.page_fault)
-+		damon_va_prepare_access_checks_faults(ctx);
-+}
-+
- struct damon_young_walk_private {
- 	bool young;
- };
+ 	}
+ 
+ 	return highest_score;
 -- 
 2.43.0
 
