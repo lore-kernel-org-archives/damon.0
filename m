@@ -1,90 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867F649DB96;
-	Thu, 10 Sep 2026 14:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AF84BFE90
+	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 14:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789050166; cv=none; b=BNH6we9MyKvQNF/akMaQlIJ0s2IZZ6HwaC2ezsDvh7I2wYf8eGiROLRySIJYpriKvvgmmW3D8yt9KgjLbZAcdA0cxiF6TMs6LmWR4wdX92GUeIJiEY9e2yuxy0+TDFesxxOhXvvBZNSxXIiplbx0tVPAcKlI+JUU2ARZP4yZVXA=
+	t=1789050256; cv=none; b=VPOkVxQXyO85QSMcJ+xnKVktR7hCSxXu+q48enfujk+qafc6Xgi+a/tJbMVm0r/pSsP5FSpq1gZBvIJr+KqGHpQ1tKc02YI8pohv1kcRFSwJG2KeoTaFAhIHO/VfwHdAl4Mu1uW9IcAy7RXa/OsfKzvC8idFHZWGjfj/oYRn3/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789050166; c=relaxed/simple;
-	bh=KCZ0Yk5WQx6KDsQSc5ywq2cca89SEG4MnZVTSMJg/mQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YlWzzb4d8pPHwVjU3PyDgJrbE25ZFwVlsbMZ/8+CPEkUAX482LV20fxF0n0OnzsEDp7IREVxTROBNwN6cZFgoz1xFIiVHeaOI9eSKVTzJc1UoAqwuAqeqJGyD9cOQqZMmmDgg7yEYDqWoFMlPTKozWp+HkZRFpwExE1M0OHyGow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PHd53DEN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789050256; c=relaxed/simple;
+	bh=YM37jsRLJ0dpuenH2sXGFfZZyLMo6VVVQ/9Iq4wIXs0=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=nIdQSphKokfYGpjWstFfr/KJATd5a5yODr1TBzq/oa+ZaNABIKPPwxuOAKzKp6tUb1lZxIqm49nmrmcjhXlyK/+F0N4Us/tpYAQaAWlMEThaTxYWL6JmZo5zEykUAik3VeZDX9/GMfsT9gXUydffqovEn28SeEWGYFTVoBU60Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X8oeDRg5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PHd53DEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7331F00899;
-	Thu, 10 Sep 2026 14:22:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X8oeDRg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F10E1F000FF;
+	Thu, 10 Sep 2026 14:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789050163;
-	bh=YGHkp73SOXJ8OAqpC14uJPbey8Nk7EBIVu4GrdElavM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PHd53DENUTYY7vRprpcZNyTffPeiy3FX1l+LpLOaJ55At22n08OvMdQCJlAXl8F+8
-	 LALmvYW7gCkPjpkRQtX2T3Mcw5W0WpjIvwQA8LRu3yys4AbCX1J4ynA71Up27O4MA0
-	 6Xw22Nyq8cuPVGOBdaePl/56vY0RLZcutZTcebwJvt7tpQUnUmhjIJ3JOixbHVP5aH
-	 Nhghcv3il2U11FMStdmxyP+q2rDqXcAaeiK7Dv7ghzuCS+hEdUboEgtMUvzhoji3/m
-	 9OU/JJe4K8worscSK8pkDxyxuV4LQZYh9+qtGmqHrJgASDlrAQhY2AY3Wf5aTfAViI
-	 +e+co2v/riEmA==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 5/5] Docs/mm/damon/design: update for pgidle_set probe filter
-Date: Thu, 10 Sep 2026 07:22:32 -0700
-Message-ID: <20260910142234.171562-6-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260910142234.171562-1-sj@kernel.org>
-References: <20260910142234.171562-1-sj@kernel.org>
+	s=k20260515; t=1789050255;
+	bh=zHot1FzcDjGctANTf5Szb5d0fROA9ZcuIf1xnsrL/Rc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=X8oeDRg5XnR71uS0hlKs1xZfuj/HeIl5rlvqdPDWI8wvEpL2Y90NO/8DC5U/a3jWE
+	 2wZp23kzIHThyzJEr7Gos9/DKasrE8yfG+z//t20mYBZsRp0Umle2TeEWNrjheh8u9
+	 R1MCJJ2tPWPeyckf48y5h3z1SQy4QAs5Z3ZGB4OoBW7bSLe3fxBADEVvuuEdjDhZE2
+	 ZYK961a5FbAEO3DXHjzUTxH1VZlczAHr/YZ56hOAs6e8n9CCYs7kcBN5Ly2u1AhzY7
+	 SNacyilEN//ucN3RJ8tkG1EAeqCeCpDjgwD8VQ/f/YkQQorsBV0W1iarxk3efvG+64
+	 kECUaT+uDvs3Q==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 2/7] mm/damon/core: extend probe_hits_wsum() for moving
+ sum based calculation
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260910141849.170896-3-sj@kernel.org>
+References: <20260910141849.170896-1-sj@kernel.org>
+ <20260910141849.170896-3-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 10 Sep 2026 14:24:14 +0000
+Message-Id: <20260910142415.1F10E1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added pgidle_set probe filter
-type.
+> damon_probe_hits_wsum() is being called only in aggregation time.  In
+> future, it could also be used by DAMOS.  In this case, since DAMOS uses
+> its own apply_interval, it could be called in sampling time.  Then using
+> the not yet fully aggregated probe_hits could result in suboptimum
+> outcomes.  Extend damon_probe_hits_wsum() to get the weighted sum based
+> on moving sum to prepare the DAMOS usage.
+>=20
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/mm/damon/design.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 8e980dde362de..cb116a82ff20b 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -299,6 +299,7 @@ filter types.  Currently below filter types are supported.
- - ``memcg``: Same to that for DAMOS filters.
- - ``pgidle_unset``: Matches if the page for the memory is marked as not
-   access-idle.
-+- ``pgidle_set``: Matches if the page for the memory is marked as access-idle.
- 
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
-@@ -314,7 +315,7 @@ actions are registered, DAMON applies the actions to each region's sampling
- memory before starting the next sampling interval.  Currently only one action,
- ``set_pgidle`` is supported.  The action marks the page for the probing target
- memory as access-idle.  This can be useful to be used together with
--``pgidle_unset`` probe filter.
-+``pgidle_unset`` or ``pgidle_set`` probe filter.
- 
- This is a sampling based mechanism.  Hence, it is lightweight but the output
- may include some measurement errors.  The output should be used with good
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910141849.1708=
+96-1-sj@kernel.org?part=3D2
+
