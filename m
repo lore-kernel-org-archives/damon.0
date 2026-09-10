@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E8B36923F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925F436E46C;
 	Thu, 10 Sep 2026 04:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789013009; cv=none; b=SdhDCXS+XJBPKUnz7//tKY2BifMdz4kGIjP+C4NMNf4buj2DBJva3YldE0xxtQq9DBxL8IhtFg0yY0286Cd2SwWCRS+py1Z5+Dh0BMj68xBSnev1Xy+1mUtQgc2eylQSPgM9hRyss4/vekXlusqhtWIW5Vh1xfKSedBaAw2OVKg=
+	t=1789013009; cv=none; b=u+Qow+vqI8NpDVjDmtBB1HARKduiWEy7NWu+d3Bw9/DitgRbuEcod5j0GLsBXr/Ia4rsNqqnl/FMRUCG5LzpjpfEjNi3/JlBR2zQVUkSlUL6dKeGd2ppALPpFF4jQq9vnQwbGLaCPkWSe9pwhhis+D52k43p0/S59H61wDEudxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789013009; c=relaxed/simple;
-	bh=XCLNTmWip52cot71D04VbReQLPgXJA7i5vWCjMSpq3k=;
+	bh=/s5M0my2VRrF4bdGS8mHHWAW5UTy+skM6R6wa2GBleg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jgHU4zJD9raObBQmNo/VSSQMNlICRmHdc/VoYlCCd4phk9joRRu5Ub15Shf4xmFT/4MEkJOvr/Yj9tgW+hkP0hqw1OVq7d3fu8DLlpgE3aXvo/bgu2RjADRsEs/DG4EBvnPisMB+0bUoXqUWiDMsWdMex0xXOjpYS728QmT84oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeQNpx3v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lGwpFir9g11jhFdfd2JRjs8+vt24uE49m9iamgE0t2brF80zQCscuYOa5mtyn1a86qQxTEGyAc1NHAtTfywqhZMN/D6mUpTWrbKyrkGNu0zUthmfxIqcFgL/9PTFjB1RE/phF7ShiDJahmH5tTpmdSrHZiFq/JkaUEVPUeiNBMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iuAe1Q0Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeQNpx3v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37B61F00893;
-	Thu, 10 Sep 2026 04:03:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iuAe1Q0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A51F0089A;
+	Thu, 10 Sep 2026 04:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1789013008;
-	bh=0OvKCQwVrbdq884qmAo02GJLGvlhIZi43wP/kzZVb6A=;
+	bh=b57SpIkbZ6AMBsE6RM4G3dlGWMR1DXMsNf+oP0yvVfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oeQNpx3v1F0Di5qlSqfbke+lKAvzSgjoKl+XISZq8xqDNY9BSHyQujqVytKdb7y3f
-	 yuBjSf4naKO/i5XZ1oF1567g75vpL3sJNWHKWMt1q1ut9bPN9crTgxlsjrAfzP6YrG
-	 npb7VB3P7Mam9P+ywOW2TI/3wTDC4ymwPZIi8lsFBQDQPLTSCRzI7hZfwfrPdNMsGq
-	 VAabLh5KaIiu+dcNI0OZ1z1bEwHQejCeABCU+HqlUhGa34gJxDqQ+Pw668Oou5TK4x
-	 yfbEZyCxEiMofyOKpyNFt0X04YBhXUCUslG5wBX6Z8c9Gzqv/GwG5FFP3v89dMo2PA
-	 1AbjE3ZACLOYA==
+	b=iuAe1Q0YUHJimYcpz18LK6OjYduQt4A9/RkIC4nCX5SUrQ/xXI1A5ah8/fTFhs2nv
+	 qSCIGjcGC/gtG7gBvdVZO6/Z2I3ZnvCz5FINszIOgN/QC3r7x4goXa5Gfz7yAZoB3s
+	 dFsPQ3qFss+48nKU1mbn5RBBe8m+0KcYTVNV2myFIxKzLNpi2uY55MX887aWyAn0ef
+	 loW/QBfP4RckCvfZsyhnIi6F40Pl1X8aCAVAtraGZsizCn0ZPMO65FDaEQ6KJOdD7Q
+	 OktxLiAbHM5nL95lPb8v+6/BKUx/WqeuZX1qar8Z2xhwe0RaOHXO4yuGf3Zo8jtH6d
+	 2IM4hAdMjfveA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 2/7] mm/damon/core: extend probe_hits_wsum() for moving sum based calculation
-Date: Wed,  9 Sep 2026 21:03:13 -0700
-Message-ID: <20260910040319.147037-3-sj@kernel.org>
+Subject: [RFC PATCH v2.1 3/7] mm/damon/core: support probe_hits_wsum damos core filter
+Date: Wed,  9 Sep 2026 21:03:14 -0700
+Message-ID: <20260910040319.147037-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260910040319.147037-1-sj@kernel.org>
 References: <20260910040319.147037-1-sj@kernel.org>
@@ -47,96 +47,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_probe_hits_wsum() is being called only in aggregation time.  In
-future, it could also be used by DAMOS.  In this case, since DAMOS uses
-its own apply_interval, it could be called in sampling time.  Then using
-the not yet fully aggregated probe_hits could result in suboptimum
-outcomes.  Extend damon_probe_hits_wsum() to get the weighted sum based
-on moving sum to prepare the DAMOS usage.
+Implement probe_hits_wsum DAMOS core filter support in the core layer.
+Make three small changes for the support.  First, update
+damos_filter_for_ops() to treat probe_hits_wsum filter as core filter.
+Second, Update destination damos_filter->range_{min,max} for
+probe_hits_wsum type damos filter commits.  Third, extend
+damos_filter_match() to handle probe_hits_wsum type filter. Calculate
+the weighted sum of the given region and compare it with the given
+filter's target weighted sum range.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h | 2 +-
- mm/damon/core.c       | 8 ++++++--
- mm/damon/paddr.c      | 2 +-
- mm/damon/vaddr.c      | 2 +-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ mm/damon/core.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 1deda16bb70b5..9fa99f92a2e94 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -1073,7 +1073,7 @@ unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
- 		struct damon_ctx *ctx);
- unsigned char damon_probe_hits_mvsum(int probe_idx, struct damon_region *r,
- 		struct damon_ctx *ctx);
--unsigned int damon_probe_hits_wsum(struct damon_region *r, bool last,
-+unsigned int damon_probe_hits_wsum(struct damon_region *r, bool last, bool mv,
- 		struct damon_ctx *ctx);
- 
- int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 06cf2ab7e97d7..50e0f9407db2b 100644
+index 50e0f9407db2b..0c98f7e267d07 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -469,11 +469,12 @@ static bool damon_is_last_region(struct damon_region *r,
-  * damon_probe_hits_wsum() - Returns probe hits weighted sum of a region.
-  * @r:		region to get the weighted sum of.
-  * @last:	if the request is for last-window aggregated probe hits.
-+ * @mv:		use moving sum.
-  * @ctx:	context of &r.
-  *
-  * Return: the weighted sum of probe hits of the region.
-  */
--unsigned int damon_probe_hits_wsum(struct damon_region *r, bool last,
-+unsigned int damon_probe_hits_wsum(struct damon_region *r, bool last, bool mv,
- 		struct damon_ctx *ctx)
- {
- 	struct damon_probe *probe;
-@@ -483,6 +484,9 @@ unsigned int damon_probe_hits_wsum(struct damon_region *r, bool last,
- 	damon_for_each_probe(probe, ctx) {
- 		if (last)
- 			sum += r->last_probe_hits[i++] * probe->weight;
-+		else if (mv)
-+			sum += damon_probe_hits_mvsum(i++, r, ctx) *
-+				probe->weight;
- 		else
- 			sum += r->probe_hits[i++] * probe->weight;
+@@ -658,6 +658,7 @@ bool damos_filter_for_ops(enum damos_filter_type type)
+ 	switch (type) {
+ 	case DAMOS_FILTER_TYPE_ADDR:
+ 	case DAMOS_FILTER_TYPE_TARGET:
++	case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
+ 		return false;
+ 	default:
+ 		break;
+@@ -1332,6 +1333,10 @@ static void damos_commit_filter_arg(
+ 	case DAMOS_FILTER_TYPE_HUGEPAGE_SIZE:
+ 		dst->sz_range = src->sz_range;
+ 		break;
++	case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
++		dst->range_min = src->range_min;
++		dst->range_max = src->range_max;
++		break;
+ 	default:
+ 		break;
  	}
-@@ -3456,7 +3460,7 @@ static unsigned int damon_merge_score(struct damon_region *r, bool last,
- 		struct damon_ctx *ctx, bool use_probe_hits)
- {
- 	if (use_probe_hits)
--		return damon_probe_hits_wsum(r, last, ctx);
-+		return damon_probe_hits_wsum(r, last, false, ctx);
- 	if (last)
- 		return r->last_nr_accesses;
- 	return r->nr_accesses;
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index d7c81829445ba..b8f4d28165dd7 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -202,7 +202,7 @@ static unsigned int damon_pa_apply_probes(struct damon_ctx *ctx,
- 				folio_put(folio);
- 			if (return_max_wsum)
- 				max_wsum = max(damon_probe_hits_wsum(r, false,
--							ctx), max_wsum);
-+							false, ctx), max_wsum);
- 		}
+@@ -2510,7 +2515,7 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
+ 	bool matched = false;
+ 	struct damon_target *ti;
+ 	int target_idx = 0;
+-	unsigned long start, end;
++	unsigned long start, end, wsum;
+ 
+ 	switch (filter->type) {
+ 	case DAMOS_FILTER_TYPE_TARGET:
+@@ -2545,6 +2550,11 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
+ 		damon_split_region_at(t, r, end - r->ar.start);
+ 		matched = true;
+ 		break;
++	case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
++		wsum = damon_probe_hits_wsum(r, false, true, ctx);
++		matched = filter->range_min <= wsum &&
++			wsum <= filter->range_max;
++		break;
+ 	default:
+ 		return false;
  	}
- 	return max_wsum;
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 9a38dc89a156e..4aecf34e39be2 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -704,7 +704,7 @@ static unsigned int damon_va_apply_probes(struct damon_ctx *ctx,
- 			__damon_va_apply_probes(ctx, mm, r);
- 			if (return_max_wsum)
- 				max_wsum = max(damon_probe_hits_wsum(r, false,
--							ctx), max_wsum);
-+							false, ctx), max_wsum);
- 		}
- 		if (mm)
- 			mmput(mm);
 -- 
 2.47.3
