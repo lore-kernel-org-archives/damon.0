@@ -1,114 +1,145 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D802D7DD7
-	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 06:17:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF52E3AFD08;
+	Thu, 10 Sep 2026 08:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789021028; cv=none; b=sgJpF8qiqJI+53mOUmphriveRXYeef0nwV0duGMo4KZKZqRl1gZa1/X0IMmAdaGF5iq+vVLOV9QZIhkJxPXTs0ovdydN6si1WfjZ3s4DfXBgirC/f2ZREZS9dpdSjIEnUpqZA5Wlz3LRczTTil8PhCkpfG+lfWOpNZnnu+til+U=
+	t=1789030707; cv=none; b=oi7ysXHcpwvT3GbqH+Idw7sIAnpwZoyqGn906wXJyPlz7mnU75RRjqmFRxPPjPfvo+eConxa2WesDWXR0kDmBg2EBtuDkX0JReGIHYPMv6gBVRAPMCrlrCxJlpngKGDNMFJgOJlWE6rh3EKnRT9Yhn2ZfZ2xZJ9t/zqaXzrrwNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789021028; c=relaxed/simple;
-	bh=ax7iAItCZxhp4U77ALZrLCStzQORbjOVlFCPe8cAHxA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FU7ectZ9VEfjxLUf15fu57GaogGauG0PFOMfauM6R2KKOgFIcrov/vO9sQ5qk0XJ6POQcoOQhmdM1/+ZCEUqXa0skDUbvNjQxmeJzIeI0+W71L2ajANlVPCo1XM68KhqjYGOBo2dj4OudqPx5hQCEpYlXs5HnpSpkU4K7kGQnbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com; spf=pass smtp.mailfrom=kroah.com; dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b=HmZPtklR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xLxhpp7P; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kroah.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kroah.com
+	s=arc-20240116; t=1789030707; c=relaxed/simple;
+	bh=he5KiB6VLqYXxJgUJv16m3SCnnY9BNTeNN1ibGIWJqM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XqerZ7GShUykS21BTRJUw3NFS3kyB4EONMCjwDtCMMyM4/3Mc+GdZ4z1mpQc8fDj6CEAm/w/xhqEORCJKLZARWHRKwOAtnjsAFl4lL7ONplk52/iWek2YZUBMP73xGpEh460s4w4n/jN0x554KhG1Yecwyy9qwXket6zjxfjRyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MpUzMoWR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kroah.com header.i=@kroah.com header.b="HmZPtklR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xLxhpp7P"
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 118F514000EC;
-	Thu, 10 Sep 2026 02:17:01 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 10 Sep 2026 02:17:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1789021021; x=1789107421; bh=xFWtt2eHg+
-	oZnfJ3PfjUfyENZxtN7vqiiamMOKqGF74=; b=HmZPtklR4A9knrQOOcBqn6G2Ar
-	c7WatLkg73f8w6KW4hP2+iPxHB/JJJE1nk/DWrUxp5JO0viCxo0l1j1RhZJ/bKYD
-	d7CTBYvlgSu2Y8Q0GNhsrkej8XJ45tGCtw6kE/Bn4nOtNoHzFYZ7As1hmdv9zfcd
-	tro7ao3YMTMc+njrVBAwmM+Y8gxrcRFEt6hTwab23QSS6H5dDItQX7WCit23Cesu
-	oguLfV0AXYm8JAcHitfTNnSYuLwMyTZ/tRsRrNhBNsWCJeXb2xVX7MrrkS9OFm0J
-	7SWWRIeeWDxrq5OGlCtNYSmCgus9IUpSdF3crc1JXzAfBwbAdTRX87at6lfQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1789021021; x=1789107421; bh=xFWtt2eHg+oZnfJ3PfjUfyENZxtN7vqiiam
-	MOKqGF74=; b=xLxhpp7Pm2N1qN4TM7gpalt2ib0I8sebaWUsHOdym3vV+LYJ2/D
-	65/pH8gvoOQKbIOtAF7IOnvuAkggiNizmQ4T24pYapK+5RKXkdZfZII5ZOxK0q0G
-	7S28G4OWTtTbzxpNd0rXhOjHElK3dnNeN5/+2aWigBGFSVY4WG3sZ+gJwlpWdt4x
-	pPGTOcODm0gSmK+pXw1xEEYbltwUriQgUYYSSt3NfXNIpxKEJ+k9HAaUawUaeJxl
-	KEznM2y9GoThdujmxKbYoYVg2sP2XscimN9+Y4L4dXO+x6vp/O4iRkKYz5pDF2OM
-	YTKaMsfKwehwG8b90Vn0WTdkDir0IfdUeWg==
-X-ME-Sender: <xms:XEuiamDlkUFKjDd8wGzFFvlTyIFt6xwnuUFWMEnzqNJhHXl1fCEzcQ>
-    <xme:XEuiajHKZuaMiiPMJEnB4QhBy2PVMpJTjr2Zf1XEH2xSjYJSHpbwFJKOQ-WNks73J
-    wpSTB8sgqt967PeigxuRmsNem5yFVHmDXQ6uwY5tOm2Zjzh6lI>
-X-ME-Received: <xmr:XEuiatPxtd3ihGH_o0nIWynQRpayiAbt1S7F-so3nNozczCQKpj5ABTajFcuEcNNjYO-TtuwtsZPI7HtKMmv_uObpNEipDGxUQZofQCkhFc>
-X-ME-Proxy-Cause: dmFkZTG3nOssro9I0zqEyPaTpfkjsS1VYtxU9VsZgd4z++2dxU5uKj69mrC64FkeWFoQpf
-    zHGGEJ3/3DmMaetFztzdnl11j83g/DBT9N7TOeaLG+e3IdPL/Lk4m7xHp0qt3koZH4AR8x
-    IdTXvXTOeY8teVt0we3JFRFG/ezzUIkcPQGOJCYwdevX2GO/vSJoTb+mggbxwD91Bin5NK
-    3Z7wVZH2Pm/erWLmwH70K09feFejys1lICswGSPnrVlU5oYDM7GOMQCX2A1XYkX5o5C/7z
-    yq2pvXoDRIM6dCLsrawicXuWjbbBqzTG/iVnFpBBEgT7aWm5u1+v7fH2N93Y7UKSq0oPXm
-    7WtBSjAycEZkPS0CV0frq7byZHIcfpty2GdxJxOKIsXtFwP7jGwOfv0e62HAZ1zUyeYtmt
-    pV1FHsoiXG7XikLp0ykOLwwGYLt1fAU1pHrtVd29bSL8FiWv8v/6hYxE3b4wnuCg2G99qI
-    zI2pz9+f3+Hl0T7N/RczZTvmv6EjCQR3A7SGlRdUioHslE7Dt52E5+f4vwCjWhzAe8+PpG
-    dgR2SABxZqWVmeOpFk7hrg+uijJSXQwOTB+BiPJYrh6pXKt64g9Oge54JNQ0nebINI6c+u
-    aVmXDhd4T2k4bRxY3S1hl6JPhBKCOpa3Whvtsk04jPQuhHfF2Z+fhkdBlWTg
-X-ME-Proxy: <xmx:XEuiak4-zNMCTPB1WWH-I_dq0Up0E7sbccjMTS77XtOXp-fZFSr-qA>
-    <xmx:XEuiagjLWEODFANLHHhHbOjsyaHCMWU_e0-qa29MWNIXTKEMTnu5Tg>
-    <xmx:XEuiapdYOaC36nUMR8QX_nWPTVBZi1G6qrvujIKIAex8PIkpxPKhuw>
-    <xmx:XEuiaoxePSRUkKwhrUX1MTKMLp_C5koACwd8TzZ3Y0fMS18l0dV3DQ>
-    <xmx:XUuialRpN51T53sWBNnZnjrmpv7oY_DCIcW90_qWJoMEorqKwMR1vzgk>
-Feedback-ID: i787e41f1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Sep 2026 02:17:00 -0400 (EDT)
-Date: Thu, 10 Sep 2026 08:15:05 +0200
-From: Greg KH <greg@kroah.com>
-To: SJ Park <sj@kernel.org>
-Cc: stable@vger.kernel.org, damon@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 7.2.y] mm/damon/core: skip aging from repeated aggressive
- merging
-Message-ID: <2026091032-outright-varsity-64d9@gregkh>
-References: <2026090918-relic-padded-3b25@gregkh>
- <20260910010209.126591-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MpUzMoWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F9A1F000FF;
+	Thu, 10 Sep 2026 08:58:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789030705;
+	bh=MG/9KXk2jvCpvz70MN0ACXgz/x6FHQZmZN1K2kd/4gQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=MpUzMoWRzc3w1dvHb0CKLDIJvfk81hBvJ+Ry3Z+tKkJ33lHiA4C3lJqJduoDoCZg9
+	 goTs7zPI+AZIcnyDN+JDE8LQnV+mGfKRV4T7DqsNyTS9GLLTKG3YL8q4VaukX5vyNr
+	 2Bdt5xG4J/Yp4QB3ushFrsyBjyEuFRxjMrzXErhETCfeTUi0Wst2Jtmc5CirLr/bar
+	 FVhUeA0camPh5dX7vV9lPfJ79mNvls4s+q0bUM8P+Q7GyqdIpCADxOmPdHsPoBgMKd
+	 0PPSkqz+JiLYrDRjsj0HyjbPQQE1nOrSub/adIftRor4yJB57BG447JjC0MsMN/ncm
+	 LvpeJNdugcQEA==
+Message-ID: <e2d2b01e-e6eb-4009-a07e-e615d576c0c3@kernel.org>
+Date: Thu, 10 Sep 2026 10:58:05 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260910010209.126591-1-sj@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 14/36] mm/damon: skip private node memory in DAMON
+ migration and pageout
+To: Gregory Price <gourry@gourry.net>, SJ Park <sj@kernel.org>
+Cc: arun.george@samsung.com, balbirs@nvidia.com, brendan.jackman@linux.dev,
+ yuzenghui@huawei.com, apopple@nvidia.com, alucerop@amd.com,
+ matthew.brost@intel.com, akpm@linux-foundation.org, ljs@kernel.org,
+ liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, surenb@google.com,
+ mhocko@suse.com, corbet@lwn.net, skhan@linuxfoundation.org,
+ gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org,
+ djbw@kernel.org, vishal.l.verma@intel.com, dave.jiang@intel.com,
+ alison.schofield@intel.com, osandov@osandov.com, jannh@google.com,
+ pfalcato@suse.de, jackmanb@google.com, hannes@cmpxchg.org, ziy@nvidia.com,
+ pbonzini@redhat.com, osalvador@suse.de, joshua.hahnjy@gmail.com,
+ rakie.kim@sk.com, byungchul@sk.com, ying.huang@linux.alibaba.com,
+ kasong@tencent.com, qi.zheng@linux.dev, shakeel.butt@linux.dev,
+ baohua@kernel.org, axelrasmussen@google.com, yuanchu@google.com,
+ weixugc@google.com, yury.norov@gmail.com, linux@rasmusvillemoes.dk,
+ longman@redhat.com, ridong.chen@linux.dev, tj@kernel.org, mkoutny@suse.com,
+ jgg@ziepe.ca, jhubbard@nvidia.com, peterx@redhat.com,
+ baolin.wang@linux.alibaba.com, npache@redhat.com, ryan.roberts@arm.com,
+ dev.jain@arm.com, lance.yang@linux.dev, usama.arif@linux.dev,
+ xu.xin16@zte.com.cn, chengming.zhou@linux.dev, roman.gushchin@linux.dev,
+ muchun.song@linux.dev, linux-kernel@vger.kernel.org,
+ linux-doc@vger.kernel.org, driver-core@lists.linux.dev,
+ nvdimm@lists.linux.dev, linux-cxl@vger.kernel.org,
+ linux-debuggers@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ kvm@vger.kernel.org, cgroups@vger.kernel.org, damon@lists.linux.dev,
+ linux-kselftest@vger.kernel.org, kernel-team@meta.com
+References: <amCzmkdOr6AFv_kQ@gourry-fedora-PF4VCD3F>
+ <20260723001943.95854-1-sj@kernel.org>
+ <amGHuputMNCFZ9CV@gourry-fedora-PF4VCD3F>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzS5EYXZpZCBIaWxk
+ ZW5icmFuZCAoQ3VycmVudCkgPGRhdmlkQGtlcm5lbC5vcmc+wsGQBBMBCAA6AhsDBQkmWAik
+ AgsJBBUKCQgCFgICHgUCF4AWIQQb2cqtc1xMOkYN/MpN3hD3AP+DWgUCaYJt/AIZAQAKCRBN
+ 3hD3AP+DWriiD/9BLGEKG+N8L2AXhikJg6YmXom9ytRwPqDgpHpVg2xdhopoWdMRXjzOrIKD
+ g4LSnFaKneQD0hZhoArEeamG5tyo32xoRsPwkbpIzL0OKSZ8G6mVbFGpjmyDLQCAxteXCLXz
+ ZI0VbsuJKelYnKcXWOIndOrNRvE5eoOfTt2XfBnAapxMYY2IsV+qaUXlO63GgfIOg8RBaj7x
+ 3NxkI3rV0SHhI4GU9K6jCvGghxeS1QX6L/XI9mfAYaIwGy5B68kF26piAVYv/QZDEVIpo3t7
+ /fjSpxKT8plJH6rhhR0epy8dWRHk3qT5tk2P85twasdloWtkMZ7FsCJRKWscm1BLpsDn6EQ4
+ jeMHECiY9kGKKi8dQpv3FRyo2QApZ49NNDbwcR0ZndK0XFo15iH708H5Qja/8TuXCwnPWAcJ
+ DQoNIDFyaxe26Rx3ZwUkRALa3iPcVjE0//TrQ4KnFf+lMBSrS33xDDBfevW9+Dk6IISmDH1R
+ HFq2jpkN+FX/PE8eVhV68B2DsAPZ5rUwyCKUXPTJ/irrCCmAAb5Jpv11S7hUSpqtM/6oVESC
+ 3z/7CzrVtRODzLtNgV4r5EI+wAv/3PgJLlMwgJM90Fb3CB2IgbxhjvmB1WNdvXACVydx55V7
+ LPPKodSTF29rlnQAf9HLgCphuuSrrPn5VQDaYZl4N/7zc2wcWM7BTQRVy5+RARAA59fefSDR
+ 9nMGCb9LbMX+TFAoIQo/wgP5XPyzLYakO+94GrgfZjfhdaxPXMsl2+o8jhp/hlIzG56taNdt
+ VZtPp3ih1AgbR8rHgXw1xwOpuAd5lE1qNd54ndHuADO9a9A0vPimIes78Hi1/yy+ZEEvRkHk
+ /kDa6F3AtTc1m4rbbOk2fiKzzsE9YXweFjQvl9p+AMw6qd/iC4lUk9g0+FQXNdRs+o4o6Qvy
+ iOQJfGQ4UcBuOy1IrkJrd8qq5jet1fcM2j4QvsW8CLDWZS1L7kZ5gT5EycMKxUWb8LuRjxzZ
+ 3QY1aQH2kkzn6acigU3HLtgFyV1gBNV44ehjgvJpRY2cC8VhanTx0dZ9mj1YKIky5N+C0f21
+ zvntBqcxV0+3p8MrxRRcgEtDZNav+xAoT3G0W4SahAaUTWXpsZoOecwtxi74CyneQNPTDjNg
+ azHmvpdBVEfj7k3p4dmJp5i0U66Onmf6mMFpArvBRSMOKU9DlAzMi4IvhiNWjKVaIE2Se9BY
+ FdKVAJaZq85P2y20ZBd08ILnKcj7XKZkLU5FkoA0udEBvQ0f9QLNyyy3DZMCQWcwRuj1m73D
+ sq8DEFBdZ5eEkj1dCyx+t/ga6x2rHyc8Sl86oK1tvAkwBNsfKou3v+jP/l14a7DGBvrmlYjO
+ 59o3t6inu6H7pt7OL6u6BQj7DoMAEQEAAcLBfAQYAQgAJgIbDBYhBBvZyq1zXEw6Rg38yk3e
+ EPcA/4NaBQJonNqrBQkmWAihAAoJEE3eEPcA/4NaKtMQALAJ8PzprBEXbXcEXwDKQu+P/vts
+ IfUb1UNMfMV76BicGa5NCZnJNQASDP/+bFg6O3gx5NbhHHPeaWz/VxlOmYHokHodOvtL0WCC
+ 8A5PEP8tOk6029Z+J+xUcMrJClNVFpzVvOpb1lCbhjwAV465Hy+NUSbbUiRxdzNQtLtgZzOV
+ Zw7jxUCs4UUZLQTCuBpFgb15bBxYZ/BL9MbzxPxvfUQIPbnzQMcqtpUs21CMK2PdfCh5c4gS
+ sDci6D5/ZIBw94UQWmGpM/O1ilGXde2ZzzGYl64glmccD8e87OnEgKnH3FbnJnT4iJchtSvx
+ yJNi1+t0+qDti4m88+/9IuPqCKb6Stl+s2dnLtJNrjXBGJtsQG/sRpqsJz5x1/2nPJSRMsx9
+ 5YfqbdrJSOFXDzZ8/r82HgQEtUvlSXNaXCa95ez0UkOG7+bDm2b3s0XahBQeLVCH0mw3RAQg
+ r7xDAYKIrAwfHHmMTnBQDPJwVqxJjVNr7yBic4yfzVWGCGNE4DnOW0vcIeoyhy9vnIa3w1uZ
+ 3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
+ CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
+ qIws/H2t
+In-Reply-To: <amGHuputMNCFZ9CV@gourry-fedora-PF4VCD3F>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 09, 2026 at 06:02:09PM -0700, SJ Park wrote:
-> On Wed, 9 Sep 2026 14:19:27 +0200 Greg KH <greg@kroah.com> wrote:
-> [...]
-> > Does not apply to the latest 7.2.y queue :(
+On 7/23/26 05:25, Gregory Price wrote:
+> On Wed, Jul 22, 2026 at 05:19:42PM -0700, SJ Park wrote:
+>> On Wed, 22 Jul 2026 08:16:56 -0400 Gregory Price <gourry@gourry.net> wrote:
+>>
+>>>
+>>> See the damon changes in:
+>>>
+>>> https://lore.kernel.org/linux-mm/al-pkvmgIxGu3LzM@gourry-fedora-PF4VCD3F/T/#mfb99303c85dd9d4c3f58832dc28fc55583a7217a
+>>
+>> Summarizing what you want to say, quoting something from the patch, or at least
+>> calling it "26th patch of this series" would have made reviewing much easier.
+>> Cc-ing damon@ for only patches that toucing DAMON source files and the cover
+>> letter of the series could also be helpful.  Please consider doing some of
+>> these for future replies.
+>>
 > 
-> Thank you, just rebased the patch to 7.2.5-rc1 and posted as another reply [1].
-> 
-> As number of stable patches for DAMON is increasing, this kind of patch
-> applying-order based conflict might be even more common in future.  Maybe I
-> could reduce this kind of issues if I could post fixed patches as single patch
-> series, instead of replying to this kind of individual failure report.
-> 
-> I was initially worried if your workflow is dependent to the guided workflow
-> (replying ported patch as a reply to each failure report), and hence if this
-> could make your job more difficult.  But I know the stable patch submission
-> rules are quite flexible.  And you may already have good enough automation for
-> such small change.s  So as long as I keep the essential stable patches rule
-> (use 'cherry-pick -x' option and add target branch name as patch subject tag),
-> that might not really make your work worse?
+> I have been very much discouraged from this kind of trimming because it
+> removes the context of the series from the individual patches - making it
+> even more confusing.
 
-A patch series is great, and much simpler for me to apply, otherwise I
-have to just guess and go by the email date/time stamp to order them.
+Yes, 99% of upstream maintainers will scream at you if you CC them only on
+individual patches :)
 
-thanks,
+-- 
+Cheers,
 
-greg k-h
+David
