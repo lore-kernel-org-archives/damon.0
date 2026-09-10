@@ -1,56 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AF84BFE90
-	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 14:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A443C308F2A
+	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 14:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789050256; cv=none; b=VPOkVxQXyO85QSMcJ+xnKVktR7hCSxXu+q48enfujk+qafc6Xgi+a/tJbMVm0r/pSsP5FSpq1gZBvIJr+KqGHpQ1tKc02YI8pohv1kcRFSwJG2KeoTaFAhIHO/VfwHdAl4Mu1uW9IcAy7RXa/OsfKzvC8idFHZWGjfj/oYRn3/s=
+	t=1789050297; cv=none; b=FmWVRhDizAqEngHFTshJFrWiFBxnmGbgaeplif3S6ZkbyLznDs01dnMZOsUrY1Qs9vun0yewoq4JHjLvAiz8iSr/O8AodNt2QDuC3r4e9occ5dxeWJm2Fjbve3aKnjTltnrE3Zbai/jNqY+J/7wPQ7rHve1iCF+VQi/avI/oU8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789050256; c=relaxed/simple;
-	bh=YM37jsRLJ0dpuenH2sXGFfZZyLMo6VVVQ/9Iq4wIXs0=;
+	s=arc-20240116; t=1789050297; c=relaxed/simple;
+	bh=Qq72opKDcUoOVeSoq1c0ZuxdBj/hP0Jl0q31v82+tDo=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=nIdQSphKokfYGpjWstFfr/KJATd5a5yODr1TBzq/oa+ZaNABIKPPwxuOAKzKp6tUb1lZxIqm49nmrmcjhXlyK/+F0N4Us/tpYAQaAWlMEThaTxYWL6JmZo5zEykUAik3VeZDX9/GMfsT9gXUydffqovEn28SeEWGYFTVoBU60Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X8oeDRg5; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=kuHoT6fWYK6CYP2P3t7o1uD/e27y8/TRKNJH6zb2RKyLzpgDaq/4tS0dXsUwpnSCjFskCPSjplf+dUvp1zqNrJdPOCHU0PLPFqfs+zxD2TBbMTKdwfrtAgZYwX02ih932yUn5U0iUEiFVGYR70LuGLMHCwiB7oMGk2mUXWCqJEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WMHIC+8W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X8oeDRg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F10E1F000FF;
-	Thu, 10 Sep 2026 14:24:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WMHIC+8W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016D51F000FF;
+	Thu, 10 Sep 2026 14:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789050255;
-	bh=zHot1FzcDjGctANTf5Szb5d0fROA9ZcuIf1xnsrL/Rc=;
+	s=k20260515; t=1789050296;
+	bh=Qq72opKDcUoOVeSoq1c0ZuxdBj/hP0Jl0q31v82+tDo=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=X8oeDRg5XnR71uS0hlKs1xZfuj/HeIl5rlvqdPDWI8wvEpL2Y90NO/8DC5U/a3jWE
-	 2wZp23kzIHThyzJEr7Gos9/DKasrE8yfG+z//t20mYBZsRp0Umle2TeEWNrjheh8u9
-	 R1MCJJ2tPWPeyckf48y5h3z1SQy4QAs5Z3ZGB4OoBW7bSLe3fxBADEVvuuEdjDhZE2
-	 ZYK961a5FbAEO3DXHjzUTxH1VZlczAHr/YZ56hOAs6e8n9CCYs7kcBN5Ly2u1AhzY7
-	 SNacyilEN//ucN3RJ8tkG1EAeqCeCpDjgwD8VQ/f/YkQQorsBV0W1iarxk3efvG+64
-	 kECUaT+uDvs3Q==
+	b=WMHIC+8WOHNX0S4X6bf+w7y8Blf7lVrijCU2VskBsScmZpF1AAtB54qxXDoT16fli
+	 p/NujnBj+9gMuQctdrZWAYAT46F/nLF14GWt/8dszrbD/8lsxRstWpyljoA+gl6l81
+	 Nt67DEJc2eJORTkQ9npVomLAlcm+2IdA6nQTUskMEhmx8ZhUUDoTEHNFONiK5sla6+
+	 TR983A8+TjpbcXAlrQRGs8i5HQxyq4xyzT4jLzMbbkclvwmJMeCwktVMoLh0sgPSCa
+	 MIuaKcvX+edGyKmApt5Fz+GKXbHygEtoNR1RtBcA9Z5RoEVgIJFhGuAL7bZlE2B9X/
+	 yubYqaUv4ajLw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/7] mm/damon/core: extend probe_hits_wsum() for moving
- sum based calculation
+Subject: Re: [PATCH 6/7] Docs/mm/damon/design: update for probe_hits_wsum
+ DAMOS core filter
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260910141849.170896-3-sj@kernel.org>
+In-Reply-To: <20260910141849.170896-7-sj@kernel.org>
 References: <20260910141849.170896-1-sj@kernel.org>
- <20260910141849.170896-3-sj@kernel.org>
+ <20260910141849.170896-7-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 10 Sep 2026 14:24:14 +0000
-Message-Id: <20260910142415.1F10E1F000FF@smtp.kernel.org>
+Date: Thu, 10 Sep 2026 14:24:55 +0000
+Message-Id: <20260910142456.016D51F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> damon_probe_hits_wsum() is being called only in aggregation time.  In
-> future, it could also be used by DAMOS.  In this case, since DAMOS uses
-> its own apply_interval, it could be called in sampling time.  Then using
-> the not yet fully aggregated probe_hits could result in suboptimum
-> outcomes.  Extend damon_probe_hits_wsum() to get the weighted sum based
-> on moving sum to prepare the DAMOS usage.
+> Update DAMON design document for the newly added probe hits weighted sum
+> based DAMOS core filter type.
 >=20
 > Signed-off-by: SJ Park <sj@kernel.org>
 
@@ -58,5 +54,5 @@ Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910141849.1708=
-96-1-sj@kernel.org?part=3D2
+96-1-sj@kernel.org?part=3D6
 
