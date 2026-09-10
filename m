@@ -1,91 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABF53AB288;
-	Thu, 10 Sep 2026 04:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BDD3A1696
+	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 04:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789013368; cv=none; b=tqP6Gwo9LrleC0Juh+66f8mr+amEOiNy+890ghaGmEMQFqOFG8ROWQyeffOq0rPNctziy64TmX2YFQwCrZjn83Sgryy6Uzf34XNEyIkMnv4gWRfBUv4OSCN8afSgTVwjwIhE+SFWJ7QQL0NTMJq+Bv2bIklG2HTtpqtLbkAINSo=
+	t=1789013434; cv=none; b=Q6GplwH7wJz6N5rKL/mSRLXOq1J83J8iZh6AKw2J2VQmphfpnHacU5n1dzLlByMSn9eZCHSeLcziymT6KfzsX6fsudRXkTO+aeqVktJmWCYqMOlFbFUKRjjF/kyBL/h/sxLlA/aTGDIpcF4jkHxK+jOn8T4h+3CV3hXj7Vw2zuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789013368; c=relaxed/simple;
-	bh=KCZ0Yk5WQx6KDsQSc5ywq2cca89SEG4MnZVTSMJg/mQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUDxS9Zo3ic4cn7258l+SrzxtX4rAbE91kYa9ipsx58INKEGsjinTCrhAP+gG/GuTyFboJ6TfUssEyB7NFYwc9JVaSihU1H/KF207guWDvmoIp9L8gz4Cw2bnc+PHjrFlIc0BTJcztWtN8D53r7qpjadxg1ao8j+dx0akPgApR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T74ZWSkN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789013434; c=relaxed/simple;
+	bh=B73rF8GQm78qWKWyKyvrJxjVGZrn9kSDP4NF8/toyuo=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=SXgIk46yz2GwTstFezElXVp3t80tf2o7qQng+DcevTv87wU0xdfsHCpEDBqzX87JP1h9/arkQM0YXCoRMJMoj8vkBHUo5g5jm99rF90uey+PWtikcM9Q0v9Q21Xyw0fbDbC79Rj76fDiTjDP8e+9ENvpP38Y0TLlCn8t2kSy9Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WzTUpVcB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T74ZWSkN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FBE1F0089C;
-	Thu, 10 Sep 2026 04:09:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WzTUpVcB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180AE1F000FF;
+	Thu, 10 Sep 2026 04:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789013366;
-	bh=YGHkp73SOXJ8OAqpC14uJPbey8Nk7EBIVu4GrdElavM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T74ZWSkNJGxb/rEDsWUcATa7kBm3vaR5wctOIL0VkTCuMzG16cfJTs5879VEQn+ry
-	 Gexsnph5pgy0D5tA9g/+AWNddDRx0k6La+DONOFFhLcLewMicFWyY08zSHoam3zdZr
-	 +f/ueO8e9g5vyDBc0zLdkgXIUCTUF9tJXZribfU92tzdbadOOWYcUBp50cPgBQHfM1
-	 aKqh7KoES3Sa7JffhYavHuq2moVktpmDiYh3bY8GLWptRahRwmExGp+fhrzGC7qimu
-	 KAIbuDFVP7URM3U20yG/hQMoL3X+LOaGqelYhrpLCqNJ5xsYoq5LZW0WQbXUcuGGdM
-	 cHoXLVGRS5ucw==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v1.1 5/5] Docs/mm/damon/design: update for pgidle_set probe filter
-Date: Wed,  9 Sep 2026 21:09:07 -0700
-Message-ID: <20260910040911.148273-6-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260910040911.148273-1-sj@kernel.org>
+	s=k20260515; t=1789013433;
+	bh=B73rF8GQm78qWKWyKyvrJxjVGZrn9kSDP4NF8/toyuo=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=WzTUpVcBtVBypuViL+e3Ye9Gazdas71eKMF4ONKZRHYdWASAJFUZU4FGcAo92Y/tK
+	 5nVCeEXVqJBeErCOCIzcBol/1QlLXPRjjX9NjqUk51yv6OatUFUEYEIODytnsGV9wB
+	 i997av0ShcZMRFD5Nd1ywmlu5/HGePPdoHiQ41sUMGwtCaDEY8T/gHPuGtE+PbUmcw
+	 PvtoyLM2uHA4OTL6osLQ3dFm765iN2jXw1fdbHCwtIrJ59NyxUMAfX6YxpnoNjlDZY
+	 UCZ5qtCryXHBwYPQLL8t+WvnvcWjkT9cKT+q5mBDExXcyLJe57FLwGGAm+dda75WxX
+	 Su0Blzq2bwiUg==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v1.1 5/5] Docs/mm/damon/design: update for
+ pgidle_set probe filter
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260910040911.148273-6-sj@kernel.org>
 References: <20260910040911.148273-1-sj@kernel.org>
+ <20260910040911.148273-6-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 10 Sep 2026 04:10:32 +0000
+Message-Id: <20260910041033.180AE1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added pgidle_set probe filter
-type.
+> Update DAMON design document for the newly added pgidle_set probe filter
+> type.
+>=20
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/mm/damon/design.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 8e980dde362de..cb116a82ff20b 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -299,6 +299,7 @@ filter types.  Currently below filter types are supported.
- - ``memcg``: Same to that for DAMOS filters.
- - ``pgidle_unset``: Matches if the page for the memory is marked as not
-   access-idle.
-+- ``pgidle_set``: Matches if the page for the memory is marked as access-idle.
- 
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
-@@ -314,7 +315,7 @@ actions are registered, DAMON applies the actions to each region's sampling
- memory before starting the next sampling interval.  Currently only one action,
- ``set_pgidle`` is supported.  The action marks the page for the probing target
- memory as access-idle.  This can be useful to be used together with
--``pgidle_unset`` probe filter.
-+``pgidle_unset`` or ``pgidle_set`` probe filter.
- 
- This is a sampling based mechanism.  Hence, it is lightweight but the output
- may include some measurement errors.  The output should be used with good
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910040911.1482=
+73-1-sj@kernel.org?part=3D5
+
