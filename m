@@ -1,40 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053E949F134
-	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 14:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F1D49BD6D;
+	Thu, 10 Sep 2026 14:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789051102; cv=none; b=Wmg4uig9JpXcykpXXemZ4jSXtmuQuWx60YdnEXLZi7S8VHjJYspxMIpwXW/zU2bwGnaw8TpqrVesIs/MFZ7Qcj+xUk5UnXibRR2rBOJcZ5litYKVt6rAxESlQp9GDxgRGr7ZEMGjMyRePVKshCg5IaPu7pAlQ1MaxuoE8VVJmLk=
+	t=1789051217; cv=none; b=QJVx1jS2hqTYi8yKUtA567R3MasTy5J9tV6/vTz3y0EA+ZFYi//Br0yyUfSTfG/OGKEf41bgt45Fw3iKwFmjXOStPp3O/cjj+WsKAhUfz+YXwIKNsDSsH6GETmpwnn5RcWyuVik4qVrWpz5Wz/0dH41HiVTQSD7p+7VoBTkdWO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789051102; c=relaxed/simple;
-	bh=8J0PqdLIMBv9wrPZQOkVVBqFO9P1s9rH1lNJmFiTZF8=;
+	s=arc-20240116; t=1789051217; c=relaxed/simple;
+	bh=yfRISRanjw1H3aT/l8T10f0oHjoSPqjx8o6UtE5iThM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c0Iys+adD7nADuc0xcoXExaCmfQo1NAZsLb/dgPHH6D/y8ZaucFUmoelOiHOGw8M5xOP33HYcl5mZnH+wOUtbpFhdR9hJei7VC3UKqumAdbdnR968YKxwxvS5fefUjkOKw/EYSY/2FWzk+bjoHqRYrySQYA3vcZzAvy9w1O9ANQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mpykvp3r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b7hluam/9gC9xD51o62Tjzv9rcGOOsI+pWWwfVVUnvpBvPI1GxUfGBwrc3n9it34qR+vEPO7yjmpCC723IE51Rzpq/m3resrbnhQLz8A3ausq9GLarWNtXx9Pobu3zHTlzX1L2ujcaeyRKJI7BDGd17bnCNfFER5r2ZkuNr0KUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZHeHvxvp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mpykvp3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDFD1F000FF;
-	Thu, 10 Sep 2026 14:38:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZHeHvxvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A721F000FF;
+	Thu, 10 Sep 2026 14:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789051100;
-	bh=ICt6fnyQZoQEnhUKuDiDZbgqMl1+Am6Mmx7M9NU2T3o=;
+	s=k20260515; t=1789051215;
+	bh=ZiIRwFEuHdfHVtyCjAJ5wkFmxjF09C/RketUI/wtcPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mpykvp3rt69mI8jqXD+XmQie32cB3Ew0nJ8SbRo/aRIVzYcns2XcGtLWeGkXcyPMH
-	 up5ibIiaEYvpIyQnbFJ7b93sqE8iR91QC+vPrrDVBjvlhZ3eRnkGjLLOqmtJzsdsmJ
-	 kR0wYLNPiDFaJMbfAxlul5zwojUYFEhSqrd730UVAwXbHlSkzaHHKL28KasgAcv5xO
-	 IhT3cXHt90aYUs8PQiBiFaWO7MxxGtU6B3lb35U8JdPjIQP8u++Ih6Mh0BiX6ffNJx
-	 cCRZYTcz1cTL4ws/Ht9E7stA6ZQz9DiSK4Yut/M68DWT3dhkxcjdRmCA0cx/evLy8U
-	 01+9Cxg0S8BLQ==
+	b=ZHeHvxvptj4gChQtNiKjW0RmyP8s3WN/X4u7TguJSn+uC6oPiO5iLn3mV3KfmUjwA
+	 u97EK1rsmi1XOyQtyLiwvn9wi4l9FwDcSwEirpD4+vKLIOvcVnJ2pvmPQRKwfUPJ2v
+	 Bj28PoLfuqdse4OEgPvWiifW0DetnkLI7iCiOus5jQSmFo5SoGye1IJAbboNH8h0r8
+	 KuJEOnMT04yTd3amLajpElescGmWt8/yEvdnF07vTX3Y3NAKYs/pKDM7kZ1QmOf5UR
+	 IwgeobKvlq+7+R95uAbuTL4KM2Krnj/wXDCdfZMVcCYSyVupGPo9QqBwdLxt7AHRY3
+	 dU5WNxHG3umPg==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 5/7] mm/damon/sysfs-schemes: support probe_hits_wsum damos core filter
-Date: Thu, 10 Sep 2026 07:38:12 -0700
-Message-ID: <20260910143813.173904-1-sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 0/7] mm/damon: introduce probe_hits_wsum DAMOS core filter
+Date: Thu, 10 Sep 2026 07:40:07 -0700
+Message-ID: <20260910144007.174043-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260910143014.114E01F000FF@smtp.kernel.org>
+In-Reply-To: <20260910141849.170896-1-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,76 +55,31 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Thu, 10 Sep 2026 14:30:13 +0000 sashiko-bot@kernel.org wrote:
+On Thu, 10 Sep 2026 07:18:40 -0700 SJ Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Time-of-Check to Time-of-Use race when validating probe_hits_wsum range allows invalid filter configurations to bypass validation.
-> --
+> DAMON can do flexible data attributes monitoring.  The classical data
+> access monitoring can also be done using the attributes monitoring.  The
+> access event is just one of the data attributes that DAMON supports.
+> Users do monitoring to make some actions based on it.  DAMOS is a
+> feature for automating that.  However, DAMOS cannot utilize the data
+> attributes monitoring results.  It is still Data "Access"
+> Monitoring-based Operation Schemes.  It requires users to set the target
+> "access" pattern.
 > 
-> commit 27bc99697c36a87c8e4b72fe6006955a564a4bb2
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/sysfs-schemes: support probe_hits_wsum damos core filter
-> 
-> Extend DAMON sysfs interface to support probe_hits_wsum input. Also
-> update sysfs input based scheme build logic to setup the min/max probe
-> hits weighted sum range as user provided.
-> 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 4d9147d2a269e..d9dd4ee0442c7 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
-> 
-> [ ... ]
-> 
-> > @@ -2844,6 +2847,14 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
-> >  			}
-> >  			filter->sz_range.min = sysfs_filter->range_min;
-> >  			filter->sz_range.max = sysfs_filter->range_max;
-> > +		} else if (filter->type == DAMOS_FILTER_TYPE_PROBE_HITS_WSUM) {
-> > +			if (sysfs_filter->range_min >
-> > +					sysfs_filter->range_max) {
-> > +				damos_destroy_filter(filter);
-> > +				return -EINVAL;
-> > +			}
-> > +			filter->range_min = sysfs_filter->range_min;
-> > +			filter->range_max = sysfs_filter->range_max;
-> 
-> [Severity: Medium]
-> Are these repeated reads of sysfs_filter->range_min and sysfs_filter->range_max
-> susceptible to a time-of-check to time-of-use race?
-> 
-> If a privileged user concurrently writes to a filter's min or max sysfs
-> attribute between the validation check and the assignments:
-> 
->     if (sysfs_filter->range_min > sysfs_filter->range_max) {
->         // Validation passes
->     }
-> 
->     // Concurrent sysfs write updates range_min here
-> 
->     filter->range_min = sysfs_filter->range_min; // Now invalid
-> 
-> Could this allow an invalid configuration to bypass the check and be added to
-> the DAMON scheme? Would it be safer to read the values into local variables
-> first, validate those local variables, and then assign them to the filter?
+> DAMOS core filter is effectively the same as the target access pattern.
+> It is just a more generalized and flexible way of describing the
+> operation action target region.  Introduce a new DAMOS core filter type,
+> probe_hits_wsum.  It specifies the filter target based on a range of the
+> probe hits weighted sum.  Using this, users can apply DAMOS actions to
+> regions of specific data attributes pattern.
 
-Good finding, I agree this is better to be fixed.  And maybe we could move the
-validation to the core layer parameters validation logic.
-
-I will fix this in the next revision.
-
-> 
-> >  		}
-> >  
-> >  		damos_add_filter(scheme, filter);
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260910141849.170896-1-sj@kernel.org?part=5
+Sashiko found a minor issue in patch 5 that is better to be fixed.  I will
+send a new version of this series after adding the fix.
 
 
 Thanks,
 SJ
+
+[...]
