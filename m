@@ -1,62 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327504BFE73
-	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 11:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393C249EC68;
+	Thu, 10 Sep 2026 13:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789039423; cv=none; b=PlRleo5Du9BTqMoYERan1kTObh2TfiPeTOU0KsSZiwSyW0LxITQsD643NSSHgESbs/hWMsfn05rCqWLkhc/NP36dvZCu4hYTd14ImcCnnJ9vajQkQTDvJSIcpmHKc+YE9R4n2E9a4K9cKfq2J2HOsMX4BUVXdxy2ZRwZ7ibpwPI=
+	t=1789048236; cv=none; b=ndwA938tsuV4XhD2ME1VLT5ZLfeZwA2Qw1QQCbOENUoSbd3MlLGpopXasQrpHylElObXsOJHpFGZxqze93wMgdYbXnbxecXbG2zYxY4owJ/+D88/0CHBsf+0mC7ROXdTTkeYUTs9NJgo5fm9lF+13XZ6UEGFlAnPxe4ckxz/JVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789039423; c=relaxed/simple;
-	bh=pikWPDqfA81cpbJXhc7A2Qhx4miuLdgWcfaVCbnfdP0=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=hIbVKEjttW2pdGQ+n6AjGsWmrK9O+4yc2ip0m/g7erUcTbXVhurigLWybCbD842gTswUzGu7EWcF0b3QB2VXh9qJg2/1R3kz+pFWuytvn7f60Pwj39OEXdyCefwOLFj3R8fNy3WVem153nuIetGs1LkzBy8pg2wk6cXFy1/mxWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mQZLEszk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789048236; c=relaxed/simple;
+	bh=ObttSUPuJWtDREqVBevLWOSAjo0/o1kGgBLjBF1pRgA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tN+LcQrZj2vHOIsPJDbZ2FNt9kPiUMkrSK+sJEui0zd4GEt87P44jYfxyeqLdMLw7486AkSp3uXIM3GIhVQ7p1GgVdygsLR2S/iIeBIvIcaVcShxElUXZcyMgWl/jSqedJIjLfGKnIHN5AfiUmSixdDtqpefc8HuwORVShKIdGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RHYXqgrP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mQZLEszk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3881F000FF;
-	Thu, 10 Sep 2026 11:23:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RHYXqgrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B891F000FF;
+	Thu, 10 Sep 2026 13:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789039421;
-	bh=RFFcNXAzaWNJcK4tHdqxM6M1Ete2prsQD1X+54kzx8A=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=mQZLEszksTx0XRFW5YctVNJOwdrv+F+rKdIeOImN6+FudYe9kispdlIeRLy6jXhYu
-	 i+ZmV2coYDS2CpFARLgZLceAfd4Bg2q899y1rNsOM6cfYY4rorFuAk5AbrC9wx/+Zn
-	 mkxmTVHXktVVzpsgqAVAfWsLTDF1IViuNzNBLzLqxm0f3VqBxvMCDqK6E95xUMTSgV
-	 BmduAUw/jfnpRoM8F8SXyGAQkHu1l2cKUz1uOOIfCA1G66GbntkNwKptaG2/KzGYtb
-	 96pA18tY7d9a/IV5YEDP26bUvCqdyORId1nYg6IYFTJfUWfkYvh4ZySX0hKo+THIuB
-	 0e5wWqJQb1apA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] Docs/mm/damon/design: clarify when qt_exceeds increases
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Liew Rui Yan" <aethernet65535@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260910112255.157012-1-aethernet65535@gmail.com>
-References: <20260910112255.157012-1-aethernet65535@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 10 Sep 2026 11:23:41 +0000
-Message-Id: <20260910112341.7A3881F000FF@smtp.kernel.org>
+	s=k20260515; t=1789048234;
+	bh=VwmO6JoyIp8oliMkCBTQzJRr3QLobohWKKLtGJcigbI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=RHYXqgrPDudf68ZIe71XivQwMdxIothA27PwDc+d1AeI10KiiYWat3axWAz+0zIxj
+	 ppL00eQtpr0UHGsPc1le+P1MGVSi/burLZy6HM+AJkXUin+d1xrOAtvfVS/bei0otv
+	 LQjqWHbCStdg7d7R04Tvy/Y9iDtk+qLgiMxsNMLFuV5Ne7mJhyR2zcXPYWubcx67Wy
+	 DDq47p8TBwgfEWZ/dWSGiLYPJd8NlL7sukIiFrj8jp5Di+jScVaaybsKN5PpIITRy4
+	 sWJT2vcprFMmEoOcI6gmKxdpY0RpVD1TvVAIrIlnac7xhFbyya86I5K/cuc3VhGb0U
+	 Quf8gy7LciChA==
+From: SJ Park <sj@kernel.org>
+To: Greg KH <greg@kroah.com>
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	damon@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 7.2.y] mm/damon/core: skip aging from repeated aggressive merging
+Date: Thu, 10 Sep 2026 06:50:26 -0700
+Message-ID: <20260910135026.168722-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <2026091032-outright-varsity-64d9@gregkh>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> qt_exceeds counts how many times a scheme's quota has been exceeded.
->=20
-> When using the temporal auto-tuning algorithm, the effective size quota
-> becomes zero once the goal is [over-]achieved.  In this case, the quotas
-> are still set, so qt_exceeds keeps increasing once per quota reset
-> interval while the goal stays achieved.
->=20
-> Clarify this behavior in the design document.
->=20
-> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+On Thu, 10 Sep 2026 08:15:05 +0200 Greg KH <greg@kroah.com> wrote:
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+> On Wed, Sep 09, 2026 at 06:02:09PM -0700, SJ Park wrote:
+> > On Wed, 9 Sep 2026 14:19:27 +0200 Greg KH <greg@kroah.com> wrote:
+> > [...]
+> > > Does not apply to the latest 7.2.y queue :(
+> > 
+> > Thank you, just rebased the patch to 7.2.5-rc1 and posted as another reply [1].
+> > 
+> > As number of stable patches for DAMON is increasing, this kind of patch
+> > applying-order based conflict might be even more common in future.  Maybe I
+> > could reduce this kind of issues if I could post fixed patches as single patch
+> > series, instead of replying to this kind of individual failure report.
+> > 
+> > I was initially worried if your workflow is dependent to the guided workflow
+> > (replying ported patch as a reply to each failure report), and hence if this
+> > could make your job more difficult.  But I know the stable patch submission
+> > rules are quite flexible.  And you may already have good enough automation for
+> > such small change.s  So as long as I keep the essential stable patches rule
+> > (use 'cherry-pick -x' option and add target branch name as patch subject tag),
+> > that might not really make your work worse?
+> 
+> A patch series is great, and much simpler for me to apply, otherwise I
+> have to just guess and go by the email date/time stamp to order them.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910112255.1570=
-12-1-aethernet65535@gmail.com?part=3D1
+Thank you, I will try this next time.
 
+
+Thanks,
+SJ
+
+[...]
