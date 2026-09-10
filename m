@@ -1,128 +1,111 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C26F493D3D;
-	Thu, 10 Sep 2026 14:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897D341A4E4
+	for <damon@lists.linux.dev>; Thu, 10 Sep 2026 14:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789050536; cv=none; b=eWiAFgR1htiavLqhnRTJH4QrnCrJ0qxquuFF3wuvlMrqeTHx4KxjN35z2gNbet4Oog89Ng8uzc+dOky/74+jHZG1vs7nfhqBs5RG8NEAbt6eDnFgurO3JVbgjIsdrwOgPop/kR4R5ADoMevYWNQnsljTEhlaYHMncd9R1jQwBq8=
+	t=1789050616; cv=none; b=gpSyGj33en1WtUNCVdflz+JH9XFg8jpr+d8xT7KtG3RiC7TNN37c/xJaoOWR2Mfse8vFqmLZtDMgoLLOKmy/zU8QiuPbyM/wXEy8HAtdEOAWNa7sHGz2Z3AcVHlxyftlchgvhtN8gyrdpBrPZ4MTth/B1ADEp5wRMj//42EeS/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789050536; c=relaxed/simple;
-	bh=Vs4wjfHszeZkCmfK7zEffUP85vyI8R7s0ImJGwV3oe0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jpsgrlXdJ+UjQ3Ll7FFXgw+4rXWCcBHKIvsZDiYfyJqfZqvzhPT0MZlFF5bMqhidMYASqCROpi4FZTd4V5Q8pvW/l7FJwASDMpByed/HNukxQAYsmD6w6pUrmW9X1IpMrvUZUlFP3tJw76PLmd/Lh53fAaxe3HippZbhrj75PeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=USlad1nL; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789050616; c=relaxed/simple;
+	bh=EOoDDWSFdEMSHq90FM0/QGNB2anB1MxXNxQMjFlSYyY=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=f/+io9llaFR+gGpdaH4TeYjj0zLBBkJpzbUzv+/+uf+vCgADPMrLngnKGvnZSvb4Gj0cx6ZP8+mQPRGEu944RQBwY3E/VzrJ5KtqK5Sx7khI8gHNqFu6PEC5WXgEPNySDZHBMogv+JAx3GyC0GpVEL/X8Wy7+tIoXgkLVOGalc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U9iMJlK3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="USlad1nL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3E81F000FF;
-	Thu, 10 Sep 2026 14:28:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U9iMJlK3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114E01F000FF;
+	Thu, 10 Sep 2026 14:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789050535;
-	bh=SW8evpy02DamdqiEXgaSrgnCDzWYzeYmnUuButPjW68=;
-	h=From:To:Cc:Subject:Date;
-	b=USlad1nLJGBwm1TYjCXfWCjFwVc1+yp1yNfaYzaZ2UJTL28VarH9mHjDofJ5U7qdV
-	 yWXTkCa/SzEwXLxakf5RFyH7CY7LMTIHvqcYDuegGK7bfn2gk5RbIrWbJEo9S+wlkd
-	 4duC0LuhDN3UJH7DgtLTMNm6efHvoqmzIXtCsqlV2EJuoGTzpQS86cY4/CWCYDea6d
-	 ALvqaZeSwbE/JQCTCzbYz5E37L/ffg3v3krMg/iF9/p7ZHnAVlAdiMfLGYCJZ6QNLE
-	 Pq/2/bKG+mVUCkVR6sQrTfozCGq9RpnpEmVOl5r9zVu8w+8v+y1JYxog7C4jwqlGfq
-	 6qqXOstwzJBPg==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Enze Li <lienze@kylinos.cn>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH v2] mm/damon/core: reset invalid quota->charge_target_from
-Date: Thu, 10 Sep 2026 07:28:45 -0700
-Message-ID: <20260910142846.172957-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	s=k20260515; t=1789050614;
+	bh=bTaPuU9Hw1oeAKkBNhFvOFax/y8w5h6LVA9dfwvVS04=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=U9iMJlK3sMyHXRnxedjDa/RM+B8JZVV/c2+L7Tqw+YfMisYY1580GkgRq+ZH96gpg
+	 woEUlgFUAodlth0+B6xSk2vr9PtZZctk4oTkMNlxE8fdE7GQpfExR9uLEYfi2MWdAw
+	 cUuiCvLDQZGkF5yhYEGw303B0vkC2u0nmOyJzj8mDnvIggiLBim+LxizNscl40kAJ/
+	 rDL9Zrfvq2LnHqjBH8ZKtqa6xEtwnqotwsbwtP6awEawwKbZR1JUvXBSUx3BVgGcow
+	 VtssLF32zQ9nhO7rkGPUABRD0FvFWn/sKO3Egsz5v/VB9TWjM+aA2IRJZTLzEXO5iI
+	 qjBcsVaiwCpaQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 5/7] mm/damon/sysfs-schemes: support probe_hits_wsum
+ damos core filter
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260910141849.170896-6-sj@kernel.org>
+References: <20260910141849.170896-1-sj@kernel.org>
+ <20260910141849.170896-6-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 10 Sep 2026 14:30:13 +0000
+Message-Id: <20260910143014.114E01F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-DAMOS can suddenly stop working if a target process that the quota is
-just fully charged on is terminated.  Fix by catching and processing the
-corner case.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] Time-of-Check to Time-of-Use race when validating probe_hits_wsu=
+m range allows invalid filter configurations to bypass validation.
+--
 
-When DAMOS quota is fully charged, the target and the region to continue
-applying the action in the next round is saved in
-damos_quota->charge_{target,addr}_from.  In the next round, DAMOS
-iterates targets and regions from the beginning.  It skips applying the
-action to the regions until it visits and skips the saved target/region.
+commit 27bc99697c36a87c8e4b72fe6006955a564a4bb2
+Author: SJ Park <sj@kernel.org>
 
-Virtual address space targets become invalid if the process is
-terminated.  Trying to apply the scheme to invalid target is just a
-waste of time.  Hence commit 6e4930e33329 ("mm/damon/core: fix wasteful
-CPU calls by skipping non-existent targets") made the logic to skip
-invalid targets.  However, it does skip before the charged target/region
-skipping/updating.
+mm/damon/sysfs-schemes: support probe_hits_wsum damos core filter
 
-Let's suppose the user runs DAMOS for multiple virtual address spaces
-with a quota.  The quota exceeded in the middle of a virtual address
-space.  And the process of the address space is terminated.  Then the
-charge_target_from points to the invalid target.  The pointer update
-logic is skipped for the invalid target, so the charge_target_from is
-never updated.  DAMOS action to every target/region is skipped.  From
-the user's perspective, it would look like suddenly DAMOS has stopped
-working.
+Extend DAMON sysfs interface to support probe_hits_wsum input. Also
+update sysfs input based scheme build logic to setup the min/max probe
+hits weighted sum range as user provided.
 
-No critical leak or crash can happen.  The user could reinstall the
-scheme.  But this makes use of DAMOS under certain setups quite
-unreliable.
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 4d9147d2a269e..d9dd4ee0442c7 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
 
-When the invalid target is found, further check the corner case and
-reset the pointer.
+[ ... ]
 
-This issue was discovered [1] by Sashiko.
+> @@ -2844,6 +2847,14 @@ static int damon_sysfs_add_scheme_filters(struct d=
+amos *scheme,
+>  			}
+>  			filter->sz_range.min =3D sysfs_filter->range_min;
+>  			filter->sz_range.max =3D sysfs_filter->range_max;
+> +		} else if (filter->type =3D=3D DAMOS_FILTER_TYPE_PROBE_HITS_WSUM) {
+> +			if (sysfs_filter->range_min >
+> +					sysfs_filter->range_max) {
+> +				damos_destroy_filter(filter);
+> +				return -EINVAL;
+> +			}
+> +			filter->range_min =3D sysfs_filter->range_min;
+> +			filter->range_max =3D sysfs_filter->range_max;
 
-[1] https://lore.kernel.org/20260830064708.40CA61F000E9@smtp.kernel.org
+[Severity: Medium]
+Are these repeated reads of sysfs_filter->range_min and sysfs_filter->range=
+_max
+susceptible to a time-of-check to time-of-use race?
 
-Fixes: 6e4930e33329 ("mm/damon/core: fix wasteful CPU calls by skipping non-existent targets")
-Cc: <stable@vger.kernel.org> # 7.0.x
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from RFC v2
-- RFC v2: https://lore.kernel.org/20260908144246.104162-1-sj@kernel.org
-- Drop RFC tag again.
-Changes from v1
-- v1: https://lore.kernel.org/20260907165529.98874-1-sj@kernel.org
-- Move the corner case check to invalid target found case, to handle
-  dynamic quota uninstall case.
-- Add RFC tag again.
-Changes from RFC v1
-- RFC v1: https://lore.kernel.org/20260906183654.95634-1-sj@kernel.org
-- Drop RFC tag.
+If a privileged user concurrently writes to a filter's min or max sysfs
+attribute between the validation check and the assignments:
 
- mm/damon/core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+    if (sysfs_filter->range_min > sysfs_filter->range_max) {
+        // Validation passes
+    }
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 645cb367019ae..06cf2ab7e97d7 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3393,8 +3393,15 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
- 	max_region_sz = damon_region_sz_limit(c);
- 	mutex_lock(&c->walk_control_lock);
- 	damon_for_each_target(t, c) {
--		if (c->ops.target_valid && c->ops.target_valid(t) == false)
-+		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
-+			damon_for_each_scheme(s, c) {
-+				if (s->quota.charge_target_from != t)
-+					continue;
-+				s->quota.charge_target_from = NULL;
-+				s->quota.charge_addr_from = 0;
-+			}
- 			continue;
-+		}
- 		damos_apply_target(c, t, max_region_sz);
- 	}
- 
+    // Concurrent sysfs write updates range_min here
 
-base-commit: bd699d8a4388cda037f01797294c834fb422ebe6
--- 
-2.47.3
+    filter->range_min =3D sysfs_filter->range_min; // Now invalid
+
+Could this allow an invalid configuration to bypass the check and be added =
+to
+the DAMON scheme? Would it be safer to read the values into local variables
+first, validate those local variables, and then assign them to the filter?
+
+>  		}
+> =20
+>  		damos_add_filter(scheme, filter);
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260910141849.1708=
+96-1-sj@kernel.org?part=3D5
