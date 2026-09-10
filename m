@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED9439E178;
-	Thu, 10 Sep 2026 04:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBF53A2E25;
+	Thu, 10 Sep 2026 04:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789013011; cv=none; b=EU8asOD+mIDwM0WKhwpIxSrAymwZXh7ranFEl3O+i1yF6VfbaRW7YsTDVhL09JZ2VMixJaLlLRYJeIjULJJPWM1u/o4n/a1PKzz9wg8OceMQY08hRTwsW7mVU231J9vqiZp5j6g/rNPGDZaU5wZypsyWWnCBwGMd1ifeZRvEcqg=
+	t=1789013012; cv=none; b=NuosgoETk2rME9Wp3Z268MmdeyI6udw4HknMKmiqSJvrMyY3We7L/YkYtu83l37/lp9oUUMBiOCuPYl509L1eVCDHcSKI5QlrZ8qwD0W+Bh0urKBJfvJKJ6x9fDyueEP4yVUGq8vop0IsspfIac0UvWgePcPwqvjsqliJHNHPTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789013011; c=relaxed/simple;
-	bh=+pwt7ytLNv7N/tXD0TT/aWOG89chC7GSwPZ5TDexaSo=;
+	s=arc-20240116; t=1789013012; c=relaxed/simple;
+	bh=mVf9wc6j2RBh8UGDkyG+fy24tCnZhupeyl66dUumXGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhZhILlaxFGU0HwUH0oTLrp7hu9yqrDc1M6eG1ytMJyI3IsTdPz0gJyBFA8DoeOXxElG5WrzIb4hYSU4dQdWvzRy0n06dywYaBXGqtpu/bPEznxOnTAMccNB3emGU//yxx4VtXqwsZdt7wUN2KAlv0HSlyUpUmyRRi9ACvmUVgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QxWnZPHz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h3HoD6Xy4hDJnOTg9IsXG30Ij0ZMTXWmIToLXey05UjI7Sjsn28Zo9sDnGJiKgyXU0S2RtbkgRbbzU1NVIFGBqoVecQnWtaSYR1iz3ziUm4k3K7tMhpuup7Xqpba2V3tXA/3MaVrpkMXNcljdW6W5fqcOLsWpXSftEJrr1rlmnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RpWI6tNv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QxWnZPHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D63F1F00898;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RpWI6tNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5ED1F00893;
 	Thu, 10 Sep 2026 04:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789013009;
-	bh=3QelAmhdJ8KPxvwLkmNC9X/53BNSeYX//IkIfked+Kg=;
+	s=k20260515; t=1789013010;
+	bh=0/q3LnB7iB4S2lxLwjnJON3GEVnAZWX6/MrZWM0ze7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QxWnZPHz98zrgKc4YjL39GC2Q1AzUgVaEEb6WcElQtEcSOng6LOWvo891VglfeOq/
-	 cC33bMtlq4BkVFWmD8zbQJNkR2nEADt5myV7g4JM70bNIdaHRitgT66G9RDDgrlXAM
-	 vnYVaQKKSrk4O+/wCrgLUIQLL8cUx6TgJMhH0PfcT3/gTvLhatWwymrumZwuzkdCku
-	 P+PTU2fHBGXUkrC7j4h3Gz02I5SqzOkCjA7NDqeQ7fVyY6aLPZfZuhDjwtfD+ZgaUr
-	 oC413ZfSCKKJJYrivDOrbap4mhasdHJDOwR2ZQMupSNPSx7s/AJmGZ5C0VZyLg6h4I
-	 YgTmkS8ffYfKg==
+	b=RpWI6tNvgvWTzO4BrOIHfQxzMwCpsBSf6iQt37YryEJ+3MipCGOhmc45wQ3Xk8HKY
+	 VV45/IGLrV8l+H3svr8ExoPuVyXIvBcAdO3wni3d0JrdFVSPwYnxJf6b35/T5u1vdD
+	 VSC+zlXnIMwaLWOMmst3JVoYcfzuXIzIT8x2RFT67gcEWJF+qQsccCNU8ZKmL69lx5
+	 3/e6FSduRg6Q4shY4beBcbf+roTCu9UpwXasGNFV1yrEwwo8Wq43DVDgbaWSbfai7q
+	 /wIOKWa+E+m2vbp72DmZbauQAFFO5x2r+bbBt3GKn7QSrxvOmnBGogjR/a1iNH9TXP
+	 9T3FaI9Lk5pEg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -44,9 +44,9 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2.1 6/7] Docs/mm/damon/design: update for probe_hits_wsum DAMOS core filter
-Date: Wed,  9 Sep 2026 21:03:17 -0700
-Message-ID: <20260910040319.147037-7-sj@kernel.org>
+Subject: [RFC PATCH v2.1 7/7] Docs/admin-guide/mm/damon/usage: update for probe_hits_wsum DAMOS filter
+Date: Wed,  9 Sep 2026 21:03:18 -0700
+Message-ID: <20260910040319.147037-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260910040319.147037-1-sj@kernel.org>
 References: <20260910040319.147037-1-sj@kernel.org>
@@ -58,27 +58,28 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added probe hits weighted sum
+Update DAMON usage document for the newly added probe hits weighted sum
 based DAMOS core filter type.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index aac84de261aa8..8e980dde362de 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -822,6 +822,9 @@ Below ``type`` of filters are currently supported.
-         - Applied to pages that belonging to a given address range.
-     - target
-         - Applied to pages that belonging to a given DAMON monitoring target.
-+    - probe_hits_wsum
-+        - Matches to monitoring regions having a given range of :ref:`probe
-+          hits weighted sum <damon_design_attrs_only_monitoring>` value.
- - Operations layer handled, supported by only ``paddr`` operations set.
-     - anon
-         - Applied to pages that containing data that not stored in files.
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index 023c6334024f8..d3e37400367bd 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -551,6 +551,10 @@ and ``damon_target_idx``.  To ``type`` file, you can write the type of the
+ filter.  Refer to :ref:`the design doc <damon_design_damos_filters>` for
+ available type names, their meaning and on what layer those are handled.
+ 
++For ``probe_hits_wsum`` type, you can specify the minimum and maximum probe
++hits weighted sum value for the filter to ``min`` and ``max`` files,
++respectively.
++
+ For ``memcg`` type, you can specify the memory cgroup of the interest by
+ writing the path of the memory cgroup from the cgroups mount point to
+ ``memcg_path`` file.  For ``addr`` type, you can specify the start and end
 -- 
 2.47.3
