@@ -1,94 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18DCCA6B
-	for <damon@lists.linux.dev>; Fri, 11 Sep 2026 01:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A8526F2BF
+	for <damon@lists.linux.dev>; Fri, 11 Sep 2026 01:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789089770; cv=none; b=RrIc5eLb1w412v2PY1a5MY/RnhtjNwLBgCUh2hLnYOOK6U/Y1hjCwkIL4IvdKdW8w46+Tcb/guM3/tZdI76fV5zoT7fBayOJN7vSWG9ikxveoOSSUeuzRkZH7PEpDlTYZUGnbODSR9/od3QF3tPNeMp0TqJz5LVFKAGrIMUrTj0=
+	t=1789090068; cv=none; b=lHA12FnVBcTeqqne4V/unEM/zxBILzqfmMHOitkWwmEOTBuGPtiXpn4YX2bHfrc9+8AviRg3NTA/gEWl1BDWq20f9mLlCuvDsL8zfetmJD+YsepT+0+qBOfijLvi5Mkq3ktMZJnr9eHnUUf+/TRxmU1Xya4BrZDVqt+N1lauBAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789089770; c=relaxed/simple;
-	bh=y7CNgVSg4/q7IyXf2enRTruN8y5wI3TLkIFHGZkyf3A=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=s6p2n5kXCt8spB+hUCstOEIXL7O0i4z5hd4nEU2rLtUWP6eyKMf9LwlgIYHoFutJAf/OcOClCU+98JT2cGm7iabpBMBAR7KWhcqLbSbWUHrB0xnkIyZAK2loF3HbZfGur164XUheuw3qDZrLd9syQX6a70+/xQEhw9fkBu3sCrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GKMhr8p8; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789090068; c=relaxed/simple;
+	bh=FRBK20/vP1odeYcqKFlwSuc0/03UOPLqr+hdH/sC1ds=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=saHixNndox2yFS2dIUwpg18rEWFBP6sN/bOMg8ly25OPMAwTSHejN09HOsfZCe3UjkZpaig1eXTg6pf1rFswV+u2BWrVOR7knn6tM8nF89mqJVO8p7LkQWrLvagqQBKOp0Hu9Ya7uFreKgppTRfoiHqL6h1W4WtNYK1t1XpC7ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DwNxk7mm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GKMhr8p8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541D21F000FF;
-	Fri, 11 Sep 2026 01:22:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DwNxk7mm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9801F000FF;
+	Fri, 11 Sep 2026 01:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789089769;
-	bh=bHwa2uogmEKSRArSlU0k2/OU8o7TWr0mIBaXaJKJXg4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=GKMhr8p8EiZp0tnzGNhlJp3a4H1AFir6ewYxqI73gT7d0nimJcRpkfA5orhuj6hvu
-	 K0OllpE5Vd3Sd5A0JmT4/TleP2JaDVtYjftTxtKY5qIO7xfreHPgqqQpi74NMz0vsV
-	 gBeYFP0YVq3vUrB3GfC5s2kH+OGryufryUNYVKOa1wdqkFBrR32+yvpMYYm7xAmN6T
-	 ljEXZjENGhJ18JzGcRXy4yn5MfDcHHyNuyM5H39q1Z8cjpQdo2vCu4DcK2vX+OX9Se
-	 tLqZj1MYHZnfA8hB92k4RYSlJ9KndcBxKAlJ8cDVmNcKe1EjT/JCU67gceZ98tK0Tm
-	 DzzE2Ca4GNG2g==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2.2 3/7] mm/damon/core: support probe_hits_wsum
- damos core filter
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260911011330.93678-4-sj@kernel.org>
-References: <20260911011330.93678-1-sj@kernel.org>
- <20260911011330.93678-4-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 11 Sep 2026 01:22:48 +0000
-Message-Id: <20260911012249.541D21F000FF@smtp.kernel.org>
+	s=k20260515; t=1789090067;
+	bh=UXu+dIbQFcvER6hZ7r+LGSUj7qZxyDZZVFa2SYH00s0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=DwNxk7mmdKh+A18v2Hp7HOh0VRG8nfDoK7tTlwe6+bX7qEVe0CUXBTYR/aQPfJfXb
+	 +4WdGBlxxYyKj0WhpDKWIUg1uCIssBmlwTl/cvkn5sjmXArlp13mQClFdOVyNlFH0Q
+	 VJZ7wZ/+y1j7Ezl81k+EoGft6QKZEPYb8Sfrs6Z88fBChpJwsfYanu5mjFWN6aYkhN
+	 pH3zdicMY7qsA0lsL5geSr2oIX5I8AD1gmABGW/UgfcUYqdWd+Eu7GinvubzAi6kA+
+	 gp6CbHXhO1Oj+SueEykPT/IFhWJmdSIUYEDyxcdfjkbdAmkjBFmDE79lBpf6rZb8Tu
+	 tvzybvPh849Uw==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH v2.2 1/7] mm/damon/api: introduce DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
+Date: Thu, 10 Sep 2026 18:27:38 -0700
+Message-ID: <20260911012740.94409-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260911012007.0397B1F000FF@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] Missing test coverage for new DAMOS_FILTER_TYPE_PROBE_HITS_WSUM =
-filter type.
---
+On Fri, 11 Sep 2026 01:20:06 +0000 sashiko-bot@kernel.org wrote:
 
-commit 6772f4f420525d4fa844eff78fb5f202b6550013
-Author: SJ Park <sj@kernel.org>
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] The kernel-doc update for `enum damos_filter_type` creates ambiguity regarding the handling of `DAMOS_FILTER_TYPE_PROBE_HITS_WSUM`.
+> --
+> 
+> commit 901df9c4ed650529dec43469f4e3c96f3bf07c6f
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/api: introduce DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
+> 
+> This commit updates the DAMON kernel API to introduce a new DAMOS core
+> filter type, PROBE_HITS_WSUM. It allows API callers to describe the DAMOS
+> action target regions based on their probe_hits weighted sum.
+> 
+> > diff --git a/include/linux/damon.h b/include/linux/damon.h
+> > index 871d26adf6ae5..ef99ff778ae10 100644
+> > --- a/include/linux/damon.h
+> > +++ b/include/linux/damon.h
+> > @@ -399,14 +399,15 @@ struct damos_stat {
+> >   * @DAMOS_FILTER_TYPE_UNMAPPED:	Unmapped pages.
+> >   * @DAMOS_FILTER_TYPE_ADDR:	Address range.
+> >   * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
+> > + * @DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:	probe_hits weighted sum range.
+> >   * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
+> >   *
+> > - * All types except &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET
+> > - * are handled by the underlying &struct damon_operations as a part of scheme
+> > - * action trying, and therefore accounted as 'tried'.  In contrast,
+> > - * &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET filters are handled
+> > - * by the core layer before trying of the action, and therefore not accounted
+> > - * as 'tried'.
+> > + * All types except &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET and
+> > + * &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM are handled by the underlying &struct
+> > + * damon_operations as a part of scheme action trying, and therefore accounted
+> > + * as 'tried'.  In contrast, &DAMOS_FILTER_TYPE_ADDR and
+> > + * &DAMOS_FILTER_TYPE_TARGET filters are handled by the core layer before
+> > + * trying of the action, and therefore not accounted as 'tried'.
+> 
+> [Severity: Low]
+> Does this documentation update leave the handling of
+> DAMOS_FILTER_TYPE_PROBE_HITS_WSUM ambiguous?
+> 
+> The first sentence excludes DAMOS_FILTER_TYPE_PROBE_HITS_WSUM from being
+> handled by damon_operations, but the second sentence does not add it to the
+> list of filters handled by the core layer. 
+> 
+> Could the second sentence be updated to explicitly mention
+> DAMOS_FILTER_TYPE_PROBE_HITS_WSUM so developers reading the kernel-doc for
+> enum damos_filter_type know exactly when its evaluation phase occurs?
 
-mm/damon/core: support probe_hits_wsum damos core filter
+The documentation could be improved, but no blocker.  I will consider adding a
+reference to the design document which is describing the detail in future.
 
-Implement probe_hits_wsum DAMOS core filter support in the core layer
-by updating filter operations, argument commits, and match handlers.
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260911011330.93678-1-sj@kernel.org?part=1
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index e9630f41e51fe..d9d56f4be1a97 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-[ ... ]
-> @@ -1332,6 +1333,10 @@ static void damos_commit_filter_arg(
->  	case DAMOS_FILTER_TYPE_HUGEPAGE_SIZE:
->  		dst->sz_range =3D src->sz_range;
->  		break;
-> +	case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
-> +		dst->range_min =3D src->range_min;
-> +		dst->range_max =3D src->range_max;
-> +		break;
 
-[Severity: Medium]
-Should this new filter type also be added to the kunit tests in
-mm/damon/tests/core-kunit.h?
-
-Looking at mm/damon/tests/core-kunit.h, damos_test_commit_filter_for() has a
-switch statement verifying that filter arguments are copied, but it lacks a
-case to verify range_min and range_max for DAMOS_FILTER_TYPE_PROBE_HITS_WSU=
-M.
-
-Similarly, damos_test_commit_filter() invokes tests for all other filter ty=
-pes
-but seems to omit the newly added DAMOS_FILTER_TYPE_PROBE_HITS_WSUM.
-
-Could test coverage be added for this new filter type to prevent future
-regressions?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260911011330.9367=
-8-1-sj@kernel.org?part=3D3
+Thanks,
+SJ
