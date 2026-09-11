@@ -1,76 +1,76 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A83B3BCD05
-	for <damon@lists.linux.dev>; Fri, 11 Sep 2026 02:00:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FB13AA1AE
+	for <damon@lists.linux.dev>; Fri, 11 Sep 2026 02:00:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789092025; cv=none; b=VStcz3YRvDK5WOKUgRVnfnu4eH+LeYK54jZYUvFlXPluydlbx5mbS+owAQWtybJOohd4ZVsM9G3f0gPT7pmp54Gyl13VWCl145xRSzHUZQgeR3f11f0iybbyCyvFhO9pKQLLpn80YllweZgE6ce4lnz6NFIWq1wSF1oJO9jbQ8k=
+	t=1789092060; cv=none; b=JLyZ7hNiQuExP5CBQqHa9TYUHZ9e1mMlT6wQ7chc3Hm4c43vx69fHkEzcW2YdOQ6pnqkJ5dduZnEBkCFlWt4Bup3wALLNVuTjxy8/6Phx0K0LnSyrvHfitxjYtBufyJmaPrC5XmQZGVv2Su5os7KLt6IVBR76VYlOjiU8wJ/1ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789092025; c=relaxed/simple;
-	bh=eMcNxywo4P22GAl1/QRj+gOPAB3bl1kko11WHwQr9l0=;
+	s=arc-20240116; t=1789092060; c=relaxed/simple;
+	bh=wp0r7AgCRJS+78I9gN02wWq64Qe+gJJTd7gRl1+NHX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puXlxehSO+Xp0bwLj/0qkj6QBEwfF0jKq9Rj4mwJ+lVeDt0Nt00g1wahR0O8J7xUXswqduam6E5Xt0dzbIEaZDfyJ2jh5NH0gLvDYLuPmUZnrf2NJzTB8UtN84p6kQ4OnqySjy74qnd4uEqVyzyNVk6vlmlMQgQluIPLv0sk+uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJp8s0mx; arc=none smtp.client-ip=209.85.214.182
+	 MIME-Version; b=lysWhxnqkWsIQ/B0sOi3kkh+Ca2D6OWtLPCVq++F5Hrs/qp2Hs5qR245D4/gcNVwKp1qYcs1Z/lGQk5Fn4BeyFJegWP70ayKESwac47pi7/lq12Hy7dXn6IqT2s1BJxoUcOkf8+tzD90+0LlnfJkh76CJRfxzY9cYwyEaT96x/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sa6HD/KM; arc=none smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJp8s0mx"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2d58efc7356so5164315ad.1
-        for <damon@lists.linux.dev>; Thu, 10 Sep 2026 19:00:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sa6HD/KM"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-398c1101c1bso391208a91.1
+        for <damon@lists.linux.dev>; Thu, 10 Sep 2026 19:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789092024; x=1789696824; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789092059; x=1789696859; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=g2mR6Y35CkB0Sm25OWNIh+4C9SYin4d4S4zqnM9oCeA=;
-        b=LJp8s0mxfBhVDv81ciC7vO3Mprcu/0SQP2+LOOIlQvrYv4eAYWWFUbORNpaGDOHS+N
-         yHttTZ7wA1aTYGFDItEXGEtGsMfDR2fGDHXCSkeGqPgJHV212k6676CiDVwU8o/ghwiX
-         laMMOge2a7bFqzt8HRMcVD21LDlKwQB1Cdos6a0p3n7V6mCGIPu0K/2bb2/kM61lvyO8
-         5/dD/71/nezgicCDoN9DSM4/Is66YE138ShIkPHNr01AR5nmkRdpZuSreuUNcj55Bgqo
-         rXtDySw8tuYiKglk7aRn1fc+dnRjeHKutaYeVnFxgSy0DGb4eQRvx8Mq99oEYjr93RoA
-         tu9g==
+        bh=i9aokmFcZIJ0AXOYQkqpTsd2jezFgj/8e1f52oVYV64=;
+        b=Sa6HD/KMRwATjo0LpApXCktWsOydXxqQVolVQGMk4PGo+BEFQilLnQil2ailuyoDQa
+         aDISg51qh8Vu9XcaLxo9t/9iRBf8PUi/OEXx8KWOIVTgrag1+DyZcTyr4ot4VgOdzZjQ
+         q0IjzP749DHXVIEk/G5S4pCFwXNiygWyOAJN+Yy38QNyU/jP+msYpMHqZ7pYAjbDJKj9
+         XG/79M1ikWriel3uHtfGZH6QyZDlvb/b2tBatX+vV6rkzVbn9+NASz7dcrSBOmOZqFfl
+         zMgFdPyml7T+8fhNL+vvnjz9q12+VNayZEQPKUVkY4UtHjNk+/YbLx2H4kQqj0lol4y2
+         i/nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789092024; x=1789696824;
+        d=1e100.net; s=20251104; t=1789092059; x=1789696859;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=g2mR6Y35CkB0Sm25OWNIh+4C9SYin4d4S4zqnM9oCeA=;
-        b=FpBu4tBlh3InCB2bZ+YSUlpnSYYaRPbRYjNYwBqwRNTd8vte/TaRMqol6iGMKZ0yi1
-         MXlBTi1E/d0IkO2AmecLs5Ji9JOJaKmQKrSAdo9oFr9bdlJQNFtfT5O+vBx7UzAsgwwI
-         BmeLY8oj4B+0L1TbCCiwg/LCO+ZLG9Qve3+qAP8sP5QNIX5Ch71p810k/02Pxg+3vACz
-         3CCJyfZbhxAYCmEympRcLtVD23f8TrgkD/65gKUM8NKjKXgHFj6jjQI2/aziC9+NILDV
-         Wo24XNdgI8apRXLzKP+XonFKN1d99WUKNJMzKRKDZhqIl4K7AyQQSJ9Lv5ZFdlfnwQwP
-         HheA==
-X-Forwarded-Encrypted: i=1; AKwUvBx4ZbxvFL1Gp8B2XD7QoWoNlH3W5oREzDarTqyykY+unDGOgvkAKYGNyy0Au+OG+5GNkSiF5g==@lists.linux.dev
-X-Gm-Message-State: AFuF++nJL0S5OenliTQ/kbuKPMQ1jwsCDtc2Z7t2Jpwi138Fv5av6Ug4
-	PwP41ayZVivYk6cR2GeDI6HFcVKdelExqoZu+rZhroi2EiZd0w0cl6Pa
-X-Gm-Gg: AYBFou2Lw8RIuRSZIrbQrZXN+nUxAD+lP/BpB0MJdo5xzUwTwObJM06iMWKCc310Tsq
-	bPWZcxktC3HTxZS0O7W+HtDKOJohG84DEBV0ILVSEi4sSKvREqKaDXA4epVkw+0K2WMZsCHnnVD
-	ZarYkwVPjKblP/skcjdL38nAX6ho7i3N9Il9aYzvKvPq5mQyWOZoOwDSN5bF/VBB41dO98gHONf
-	exIMyUlVht1tBXz7KHZPJQb1O12mrpZ0ydHcF6hPStyiEUyjqaBEQNxRq1HjgS16axV/bILl7fO
-	C1RTEu4hYubqve+A2vSuj/a3frtXe9p8qZkOdX1I+qsNFsrQ8M69QXmAhxanteuCxrMa3mYVSyK
-	K2VIoqgJU8zFTayJBUEV9oNYWt2Vnhf0DZR8TzJvae1CWGxIdLDoiAsJ/OHBzlV4ImKS1HAYCqE
-	iLTJUbbX1NuqYOytVVuFSvNuEVmXt/t+Utt6uGCWa4jV5Cnlbs2nJXG50ilIlPAAwK3nxTg/Jpe
-	TPjClzuVBSRKW6pj5FLmKQpraId952Nt/VDsFkw
-X-Received: by 2002:a17:90b:384d:b0:398:c315:fa6f with SMTP id 98e67ed59e1d1-39d9c1db3c9mr2574336a91.14.1789092023699;
-        Thu, 10 Sep 2026 19:00:23 -0700 (PDT)
+        bh=i9aokmFcZIJ0AXOYQkqpTsd2jezFgj/8e1f52oVYV64=;
+        b=gJNM5FD2ftGmT6DUUereb3BNEVBBj8T9KaHx6C+vzAu9B8f5knmsJAuqiONOCYkdVN
+         HNX1OFsTZGkZIw9IFzOv5Avnebe5DGXOFRmj1Wt2I7EhYlB6i6/fB3h4MbbbU4o+sMGc
+         m4cC2wq5vpF+MyliMxaj2cxi/IcETdqG4UCs9b8WijiDMyLu6nVYtiMysx12T7J48ydR
+         f1xD5pWA68aG9wJT8mENX5XuwZQTkjFpm1RpXxZc7MCfV3PJwHkT7IYzuOVRK9ErgJSr
+         sJ7R39/2F+ugdoARW1AJEqu0z7n3dF9ua8LBJeuszVJTUcDSyMmQqSuuENJmaDguR6Vz
+         74Pg==
+X-Forwarded-Encrypted: i=1; AKwUvBw0610YRoaH6fZbsla8ikDFzUmkexTjSY8s5TX7fuM1ZtQ4+r9jP7DpzVdfQgbKj8FromHtBQ==@lists.linux.dev
+X-Gm-Message-State: AFuF++lg+ZFxqmVEshCVIw4NBahECXFNB+5Vf6TaUne9KIx9YseA/NR2
+	xnFwCSX8mS1iAYYuXjl+EG5YhxhL/0JAqG3u/cPeGwK0vNuWwDkl3uPM
+X-Gm-Gg: AYBFou3mGkcD7lJ0K6VOBIssis21Y0b41aqY2uheWn4YWYbAxKGcveeYQpa8NXZkboH
+	2EgaLJkqWXm0z3Ni96AfWKF9G6KJP2RsON9LzDfangELigm/FpBthL8yxyY/18DIuYZjByb/mpf
+	5Z8tsSUT2FqzYlgoH7ecREiG8KXmKlextaTxzDedmNdMGlltHQh/Yij+Jxz0SE1N5igRQvNWCLZ
+	kPRMfCPiIq/OMzfyRomlwYWpYzkygwkndAkP3KoDzi6Y2UoZLd7lkdcFCGcwQowHFTPWX05JUF5
+	mu7D+0BzbltAHwzggPth1aXpUCfFdh8V8Im2OdHK8cpbzkn6kh3DDeaZg9uvYStn1aeHYx+2g1s
+	6Kvt7BrqkGGi0R+lT8rKVEvw6tGwKKxkTGsniniCyXtb3AvXnouGEabM4PGcOGdCh2vOC/Db6Id
+	I0W3KSk/qVPRgcuAPUGJ9jWPtyVYTJsufgsK6iZCLzzEH6A/8DR9paZrKftWO97qLynau2Ohnfx
+	VAl4hqYY1/DoNFV94pRXpTGJ8ifHUu3EzfxMMia
+X-Received: by 2002:a17:90b:54cb:b0:39b:51cc:4586 with SMTP id 98e67ed59e1d1-39d9c21bba2mr2583345a91.19.1789092058595;
+        Thu, 10 Sep 2026 19:00:58 -0700 (PDT)
 Received: from localhost.localdomain (vmi2317697.contaboserver.net. [85.239.239.233])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39d94bb0119sm2263927a91.2.2026.09.10.19.00.21
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd2cfce707sm3587205ad.55.2026.09.10.19.00.55
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 10 Sep 2026 19:00:23 -0700 (PDT)
+        Thu, 10 Sep 2026 19:00:58 -0700 (PDT)
 From: Lian Wang <lianux.mm@gmail.com>
 To: SJ Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH REPOST 2/5] mm/damon/paddr: move probe filter handling to ops-common
-Date: Fri, 11 Sep 2026 10:00:01 +0800
-Message-ID: <20260911020009.37475-1-lianux.mm@gmail.com>
+Subject: Re: [PATCH REPOST 4/5] mm/damon/vaddr: extend apply_probes() for hugetlb
+Date: Fri, 11 Sep 2026 10:00:36 +0800
+Message-ID: <20260911020044.37520-1-lianux.mm@gmail.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260909140408.104699-3-sj@kernel.org>
-References: <20260909140408.104699-1-sj@kernel.org> <20260909140408.104699-3-sj@kernel.org>
+In-Reply-To: <20260909140408.104699-5-sj@kernel.org>
+References: <20260909140408.104699-1-sj@kernel.org> <20260909140408.104699-5-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -79,15 +79,13 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 9 Sep 2026 07:04:04 -0700, SJ Park wrote:
-> Probe filter matching logic for anon and memcg type filters in DAMON's
-> physical address space operation set (paddr) can be reused by virtual
-> address space operation set (vaddr) in future.  Prepare the future by
-> moving the code to ops-common.c
+On Wed, 9 Sep 2026 07:04:06 -0700, SJ Park wrote:
+> DAMON virtual address space operation set(vaddr) does not support
+> hugetlb pages in apply_probes.  Extend it for hugetlb pages.
 
-Nice cleanup.  Moving the common anon and memcg matching to ops-common
-preserves the existing paddr behavior and makes the logic reusable by
-vaddr.
+This looks good to me.  The new callback follows the existing vaddr
+hugetlb walk, takes the huge PTE lock, and keeps a folio reference while
+the probes inspect it.
 
 Reviewed-by: Lian Wang <lianux.mm@gmail.com>
 
