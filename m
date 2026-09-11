@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A5135202E
-	for <damon@lists.linux.dev>; Fri, 11 Sep 2026 14:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A6030ACF2;
+	Fri, 11 Sep 2026 14:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789136458; cv=none; b=f5zrqI7MRllj4jR1JcsyIsJNy21l83RrSNHd7rUzQwfO3vYhVpy946YR0zpMViZBoztg8BA1AEOYN0s4CvQHlK7SW/62aMoMHnzuY948WXapQYH9iXE/16lze2IOqVZtOC0TmybZR9MqpWwqoogV55YNLfSEwiiIzZWNjC4vjT4=
+	t=1789136731; cv=none; b=ZXm4KPRAzO2cpPbn1U03lGmzuGpJnfl0DtRtC377FCBvRkkwIzsGkX5dYJattr1r0Z8vK8DcORKSf9aQqhhsUJMVQvrOWk2cJ0KT/OecaSkxpIZO95Eed9U2DpSfA1X6ZC/Y/Gy+tgTRzkNKgrC5TggGFtVfQKBsf2EShdOggj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789136458; c=relaxed/simple;
-	bh=Ik/s960xrhgcaZjxGdarvpkpnvSA2L1T+ow4igqd5rw=;
+	s=arc-20240116; t=1789136731; c=relaxed/simple;
+	bh=SkahHKFXGt/ZhOVlK8irr1HdYWXacq2DcQ3BGyRJEnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BpAlGyhy4lOqgHB1ceZ0mZO967svfR+TP8+Xses+wTs0H6QFx4oI65P54JIDUxf83aeEBkZ75QJqtsNem82bhqcp6BiNmTGKvPrqtxXAGPz4Gc55VLzFxCu2ECUiT7wWhj58o8hsUBE6LIksg+nXiRQ8oxJFY6nZ1kE6EnqeDBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=evc26UEc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BA1DaJ1ff/RygGfMT3oJB9yPFWNGYG1cC0u6NF8BgPyXX4CDsuQQq4WStfoHUR/KIdBQUZzBFrVh06qPZ1Ab5pZkcjcubrTjbnCwydR/EoDLsZepqMpRLs8k3EvZGGw/6p4Zdkvs0x4K1L3c08nLiDyiIbk31r+S4bu4swUlZ0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l9HYc2BH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="evc26UEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796241F000FF;
-	Fri, 11 Sep 2026 14:20:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l9HYc2BH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBC01F000FF;
+	Fri, 11 Sep 2026 14:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789136456;
-	bh=5JE8zWJWP8vhfeRkcNu8iDrtX4zx98G6SOWtcTwUae8=;
+	s=k20260515; t=1789136729;
+	bh=UWnB1+LHCrUWvW0DYQclwKKSDqJPcdee5LBGVppRb50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evc26UEcuIUZoj4uWIvXQYZcHfrj5N5Hbi0CZdwgOVUoCe+NrEHMWRawyVH5EgE+r
-	 fSM8YyqnRic+WdwQgqUC7PBmca7V2DQe8Kj0hYMrxfZmbzuKqQtembRzoxX+qlH881
-	 KM6DolW9GApCXq6BqS7HSYbjFfXKZtb578p1S7Wf99ASY5sX3PNXPXYOYcFI4gqbNs
-	 CF0U5aH7zNKZqHHnsjotot4/vK2I3XDUtBbpMiZs2yoPKT5xhdmSR3WyMTKoPjm40V
-	 7JgBmsvnHZBz1n4yNn2JaxlWhkbeSe55MEzbL2LEo7sSrfEknTqlYWx0e8F+RKUEYJ
-	 G9uRVMt5hyFow==
+	b=l9HYc2BHkIpkXbRx3zT79clZlV0VQtq0mhtO0jud9OHUaUCKW+LFtATJ0JJCcLmqW
+	 32U0Pjz8d6MvglKVDkLWGy3uljiLOWAhk/Rn/mDTzdAbIzRnXzgq1GSUvOdPjAx0xJ
+	 PY7nU6mVO0s/lZFxK6Zi9MKEQWONuJNh+NI15nfZrEyBfEYb1g6D84ItB2Wp8S5CPy
+	 cfsng1L4wIIEJuKkSYKVgN/TMeK8Oq9BdGc1loa2bh7Y+EmslWSJsWSMKftIUqTjrg
+	 ZLMyJVomRZJwstJ1eG8ZfasXc3rYGoipzquGKR10h705ZSFgh2oxxw9qK6+ULvZRk1
+	 2uKNsxiIxqPFw==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
 Subject: Re: [PATCH v2 1/7] mm/damon/api: introduce DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
-Date: Fri, 11 Sep 2026 07:20:47 -0700
-Message-ID: <20260911142049.97838-1-sj@kernel.org>
+Date: Fri, 11 Sep 2026 07:25:22 -0700
+Message-ID: <20260911142522.98013-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260911140425.390011F000FF@smtp.kernel.org>
+In-Reply-To: <20260911135510.96914-2-sj@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -42,66 +44,89 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 11 Sep 2026 14:04:24 +0000 sashiko-bot@kernel.org wrote:
+On Fri, 11 Sep 2026 06:55:03 -0700 SJ Park <sj@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] The docstring for damos_filter_type omits DAMOS_FILTER_TYPE_PROBE_HITS_WSUM from the list of core filters in the second sentence, creating a contradiction in the documentation.
-> --
-> 
-> commit e68a3c149b1b27ea94bc8212e0cde17817f1e4cc
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/api: introduce DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
-> 
 > Update DAMON kernel API to introduce new DAMOS core filter type,
-> PROBE_HITS_WSUM. It allows API callers to describe the DAMOS action
-> target regions based on their probe_hits weighted sum.
+> PROBE_HITS_WSUM.  It will allow API callers to describe the DAMOS action
+> target regions based on their probe_hits weighted sum.  For describing
+> the filtering target weighted sum range, add two type-dependent union
+> fields to damos_filter.
 > 
-> > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > index 16800b3dc379b..9e84bdeb5616d 100644
-> > --- a/include/linux/damon.h
-> > +++ b/include/linux/damon.h
-> > @@ -399,14 +399,15 @@ struct damos_stat {
-> >   * @DAMOS_FILTER_TYPE_UNMAPPED:	Unmapped pages.
-> >   * @DAMOS_FILTER_TYPE_ADDR:	Address range.
-> >   * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
-> > + * @DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:	probe_hits weighted sum range.
-> >   * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
-> >   *
-> > - * All types except &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET
-> > - * are handled by the underlying &struct damon_operations as a part of scheme
-> > - * action trying, and therefore accounted as 'tried'.  In contrast,
-> > - * &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET filters are handled
-> > - * by the core layer before trying of the action, and therefore not accounted
-> > - * as 'tried'.
-> > + * All types except &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET and
-> > + * &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM are handled by the underlying &struct
-> > + * damon_operations as a part of scheme action trying, and therefore accounted
-> > + * as 'tried'.  In contrast, &DAMOS_FILTER_TYPE_ADDR and
-> > + * &DAMOS_FILTER_TYPE_TARGET filters are handled by the core layer before
-> > + * trying of the action, and therefore not accounted as 'tried'.
+> Signed-off-by: SJ Park <sj@kernel.org>
+> ---
+>  include/linux/damon.h | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
 > 
-> [Severity: Low]
-> This isn't a bug, but should &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM be included
-> in this second sentence?
-> 
-> The first sentence explicitly excludes it from being handled by the underlying
-> operations, but the second sentence omits it when listing the filters handled
-> by the core layer. 
-> 
-> Could this omission in the enum damos_filter_type docstring confuse developers 
-> about whether PROBE_HITS_WSUM is accounted as 'tried'?
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 16800b3dc379b..9e84bdeb5616d 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -399,14 +399,15 @@ struct damos_stat {
+>   * @DAMOS_FILTER_TYPE_UNMAPPED:	Unmapped pages.
+>   * @DAMOS_FILTER_TYPE_ADDR:	Address range.
+>   * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
+> + * @DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:	probe_hits weighted sum range.
+>   * @NR_DAMOS_FILTER_TYPES:	Number of filter types.
+>   *
+> - * All types except &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET
+> - * are handled by the underlying &struct damon_operations as a part of scheme
+> - * action trying, and therefore accounted as 'tried'.  In contrast,
+> - * &DAMOS_FILTER_TYPE_ADDR and &DAMOS_FILTER_TYPE_TARGET filters are handled
+> - * by the core layer before trying of the action, and therefore not accounted
+> - * as 'tried'.
+> + * All types except &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET and
+> + * &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM are handled by the underlying &struct
+> + * damon_operations as a part of scheme action trying, and therefore accounted
+> + * as 'tried'.  In contrast, &DAMOS_FILTER_TYPE_ADDR and
+> + * &DAMOS_FILTER_TYPE_TARGET filters are handled by the core layer before
+> + * trying of the action, and therefore not accounted as 'tried'.
 
-Good finding.  Reposting the series for this is too much, though.  I will post
-fixup patch and request Andrew to squash it if he doesn't mind.
+Sashiko found [1] the second sentence is also better to be updated.  Reposting
+this patch only for the trivial change feels too much to me.  Andrew, could you
+please add attaching patch as a fixup?  Please let me know if you prefer
+reposting the series.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260911135510.96914-1-sj@kernel.org?part=1
+[1] https://lore.kernel.org/20260911142049.97838-1-sj@kernel.org
 
 
 Thanks,
 SJ
+
+[...]
+=== >8 ===
+From 8095628debba5ececa0664314ef4a3b777ef0fbf Mon Sep 17 00:00:00 2001
+From: SJ Park <sj@kernel.org>
+Date: Fri, 11 Sep 2026 07:20:01 -0700
+Subject: [PATCH] mm/damon/api: clarify DAMOS_FILTER_TYPE_PROBE_HITS_WSUM
+ behavior
+
+Clarify it's behavior.
+
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 33929a400aa7a..23df189015198 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -440,9 +440,9 @@ struct damos_stat {
+  * All types except &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET and
+  * &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM are handled by the underlying &struct
+  * damon_operations as a part of scheme action trying, and therefore accounted
+- * as 'tried'.  In contrast, &DAMOS_FILTER_TYPE_ADDR and
+- * &DAMOS_FILTER_TYPE_TARGET filters are handled by the core layer before
+- * trying of the action, and therefore not accounted as 'tried'.
++ * as 'tried'.  In contrast, &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET
++ * and &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM filters are handled by the core layer
++ * before trying of the action, and therefore not accounted as 'tried'.
+  *
+  * Support for the operations-handled filters depends on the running
+  * &struct damon_operations.
+--
+2.47.3
+
+
