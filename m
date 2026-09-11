@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155EA4A8A18;
-	Fri, 11 Sep 2026 16:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216FE4A68B5;
+	Fri, 11 Sep 2026 17:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789145982; cv=none; b=X7O0u8Vx8DfQzAmMqe/d3qvIaxAD6qNFVoZM42JMWLhF+92JPscNNLOCySAFnBENIRXEyXs370mipCZnY4E0C13KHfVW9gEfXiMNJXFYgUw0j/0tle4YTf7OihARDcvdqDwxO38W5M11kkv550xWf/zJrGxEa0ur0DbumCiSzW4=
+	t=1789146049; cv=none; b=Y6Inm9U3Ija9P1xWeN8PQTTcGVXaolz+skKytWGXk8eWwCqSSE2EbTj/ERIq695L9YgGpB+r/tbUqhbBUgYIBE3VlFHfUCGjcSoPEMRs/5BF6F/WJerJALkVaqe+l8SUiCNz/adAlfM29FYGvIK+cw+weUnrR+Z3vgdBadPGgpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789145982; c=relaxed/simple;
-	bh=EfCs6vOsOfk98ApZGlwPmKE+R924lY9ile+0eoJGZ7Y=;
+	s=arc-20240116; t=1789146049; c=relaxed/simple;
+	bh=ip+FDbf0dxuirIOsWZVRvAMkxGyy0el6gfmAZvlzuYg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=clUoV0vzCziwonPPjBTat4Ec/ON85Sdcub1I1RCGPie3SVugxMhZux6X5uS1tpOYaDZCV4EJ//ZRXhpEKrYX2O/rnr4p2AYA+T8VIG0ZUN/dtXBVxT64iDq+wULGvmTBA4uy/xLKE0dqtV03E/jzhhL9c3aEXLt5rbhLEHXlMlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ou4A8YC2; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=AeWY0M5iiqiTqIoexqJ7ZtgUZqfhQTT88u/mgB+yDU4acp2y36uZIXHOztyilfpWpoSRnOai2rt4klwITxbeFxuf+p9k6z5mI9ScGb7yTJRD4R4H0O3R/tZ61FtP1WHkqxDEidh7XNgSqH95D5ua8fLo95zHkx237wns0LjGq80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dqzLbr7P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ou4A8YC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379961F00898;
-	Fri, 11 Sep 2026 16:59:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dqzLbr7P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803B11F000FF;
+	Fri, 11 Sep 2026 17:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789145967;
-	bh=qM4x/VyJS4MpFkPRmtAp/dwZSEf7BNj/Y7zsnmyHsqg=;
+	s=k20260515; t=1789146043;
+	bh=SDhdb+1yueFGYCfGv2/iY4/JhNsnY4MHmhr2o01xj7U=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Ou4A8YC2F6O1EQtFW1YZOr6bVr2+s+ihTPkOTXSuzLWS+Cc6eD6PIOzLJeuiKIyvQ
-	 JwxsyI6YUXmX45BBAQxB8OYi/wyHeoP2FZWOx4kh82jj8klR9F/LQ8bOCWxW/Oo6Re
-	 Eo8mW9QEcAaGuTtykPlAmcPJuXu5gk0wxaGfd2AVAWl/D2lawDmMhQg3iDYUwUuHYw
-	 zuWtfU0zvPCWxENsoROZd8H/uu73aHGKmzvV36atSCabSMGxHjg64KkTpB12LVGbzh
-	 HWFSQPEDWDvZ5Hi73zQYh3QYUlItPYuBwtcY1gGae8CFr1qGgQfyIGrRgrWzKBkGHM
-	 6ZbPiVuTm6ijA==
-Message-ID: <d5093fa7-d057-471d-9c50-f53e6fe267df@kernel.org>
-Date: Fri, 11 Sep 2026 18:59:08 +0200
+	b=dqzLbr7PT9UPg2vyaVcVWkqDnTJLnNl/+9rbrIO5j+Xc/wJPxcpDAZtHGb0O5p3wx
+	 xxwXDj+5wfoXizGaX4IUDbtQjoGNGIBmbFh9r+Ih/Swh0lmJo1x2rXjXAotQlrIA5i
+	 8CALl0IKEmojHmvftuOoofMkLRwZj2jPgwYN/P9EP0Ge2Yy2o0vx9O1Tc9LnRc7d8a
+	 ECioA+6R8JEa+dnDWQvYkyKqpHAO81tDbTlKvOLsbaMVoBHTGt5Y2bsOxTUhPmn5m/
+	 bZSIlx+oLSNnrcP6gkKiSYENsTC+1lLLRiHh3dEhvB47zpFmLxPKtk1t4g8IwsgehU
+	 sPQt4Xy2dY91w==
+Message-ID: <e430cbf2-52a0-4fee-8730-06bb9496c1f1@kernel.org>
+Date: Fri, 11 Sep 2026 19:00:24 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,7 +35,7 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/8] mm: distinguish PTE table storage from PTE values
+Subject: Re: [PATCH v2 1/8] mm: introduce hw_pte_t for PTE table storage
 To: Muhammad Usama Anjum <usama.anjum@arm.com>,
  Jani Nikula <jani.nikula@linux.intel.com>,
  Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
@@ -76,6 +76,7 @@ Cc: linux-kernel@vger.kernel.org, intel-gfx@lists.freedesktop.org,
  kasan-dev@googlegroups.com, linux-trace-kernel@vger.kernel.org,
  bpf@vger.kernel.org, linux-perf-users@vger.kernel.org, damon@lists.linux.dev
 References: <20260903103002.1091859-1-usama.anjum@arm.com>
+ <20260903103002.1091859-2-usama.anjum@arm.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -122,18 +123,34 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260903103002.1091859-1-usama.anjum@arm.com>
+In-Reply-To: <20260903103002.1091859-2-usama.anjum@arm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 9/3/26 12:29, Muhammad Usama Anjum wrote:
-> Hi,
+> pte_t is used both for software PTE values and for entries stored in a PTE
+> table, so pte_t * does not distinguish a pointer to a software PTE
+> value from a pointer to table storage.
+> 
+> Introduce hw_pte_t as the generic name for a PTE table element. Define it
+> as a macro alias of pte_t by default. When an architecture selects
+> ARCH_HAS_HW_PTE_T, define it as a structure containing a pte_t instead.
+> This preserves the representation while allowing converted architectures
+> to enforce the distinction at compile time.
+> 
+> Name the generic wrapper structure __hw_pte_t so architectures can
+> forward-declare it when pgtable_t must be defined before the generic
+> hw_pte_t typedef is visible. This avoids header-order dependencies.
+> 
+> Keep the C type definitions behind an __ASSEMBLY__ check because
+> architecture assembly sources can include this header indirectly. Include
+> asm/page.h so consumers such as linux/vmalloc.h retain the page definitions
+> they previously obtained from that header.
+> 
+> Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+> ---
 
-Btw, I was wonder whether the subject would be better as
-
-"mm: distinguish HW PTE pointers from SW PTE value pointers"
-
-or sth. like that.
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 
 -- 
 Cheers,
