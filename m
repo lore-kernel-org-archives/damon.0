@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8158539A80E;
-	Fri, 11 Sep 2026 16:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155EA4A8A18;
+	Fri, 11 Sep 2026 16:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789145739; cv=none; b=R7EKe01KE+kPViH7wZ+SQtYzFbFifUwKZsYwX6TEhgWJBXEY6ADkgEXEI0Gk9sVV9DE6qopmhBxzi3ZRhYCKK9EdL81oJGYeVQp3hLLtzTpI1Nf3zXGfjiwaQSkh4ir0Nmf6sg/Skd5uj9TkP+qetYeCUAXwbIEg+2Zo1PPMvA0=
+	t=1789145982; cv=none; b=X7O0u8Vx8DfQzAmMqe/d3qvIaxAD6qNFVoZM42JMWLhF+92JPscNNLOCySAFnBENIRXEyXs370mipCZnY4E0C13KHfVW9gEfXiMNJXFYgUw0j/0tle4YTf7OihARDcvdqDwxO38W5M11kkv550xWf/zJrGxEa0ur0DbumCiSzW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789145739; c=relaxed/simple;
-	bh=ZiylWdrtk7UfYd1FPSofm/eCvpiVCQAyHxhe4F4V/+c=;
+	s=arc-20240116; t=1789145982; c=relaxed/simple;
+	bh=EfCs6vOsOfk98ApZGlwPmKE+R924lY9ile+0eoJGZ7Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P1au4kfWg4XnKkez+mEsjfsDtJ6iHajeeoPHHy0M2D3WpPrXpmX2Eg2k1kmGqW27doPPEKWmf3iEc7h28+f745MKnNW2/2TNE91WvHNXBDS9cYIGZ/ShL+W39K5K8SlcehrA7ri2QaiklpHM6nunYWqxmfJIYRHV5uh+yDlpQPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c0NoZhUu; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=clUoV0vzCziwonPPjBTat4Ec/ON85Sdcub1I1RCGPie3SVugxMhZux6X5uS1tpOYaDZCV4EJ//ZRXhpEKrYX2O/rnr4p2AYA+T8VIG0ZUN/dtXBVxT64iDq+wULGvmTBA4uy/xLKE0dqtV03E/jzhhL9c3aEXLt5rbhLEHXlMlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ou4A8YC2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c0NoZhUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEC91F00893;
-	Fri, 11 Sep 2026 16:55:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ou4A8YC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379961F00898;
+	Fri, 11 Sep 2026 16:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789145738;
-	bh=yE+7Pez0ot5mrGbBn0XwFu3bOI3y9SJeDDhq4Pq3Cgc=;
+	s=k20260515; t=1789145967;
+	bh=qM4x/VyJS4MpFkPRmtAp/dwZSEf7BNj/Y7zsnmyHsqg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=c0NoZhUuLC8eojSn10Dl+/6UkGx8wGOb/eBDtEA0CIyk1hQ6mP9dgGNHHGBX3N7yA
-	 X71r+aiXtzF4bhp3C1o/xG+WbKq9dsGWuGA3Hu4bxgxtDeR0HzLHnKDlSwnkTzN4I0
-	 yNFvdrydYpmyeMrh9F90cWrJC226CBBW/A2ArZjcVPRInVrizb9o3/D2/gMDnyMPx1
-	 YbCSjQU+p0HSOBH8E3Fyc1mpmYrLR8tCHSP8jSjf3gDgXExbXqvDifcxjWpIDa/PKf
-	 vZyITqtq+KtGCpN47eXarSnhSRPzuOIVrud/pd7SbcUw4idHZQTzpTNbHJv4fgl0sg
-	 qtZmvLKps6t8w==
-Message-ID: <dd6ecac2-9bd2-4184-a034-9e13afa614bb@kernel.org>
-Date: Fri, 11 Sep 2026 18:55:18 +0200
+	b=Ou4A8YC2F6O1EQtFW1YZOr6bVr2+s+ihTPkOTXSuzLWS+Cc6eD6PIOzLJeuiKIyvQ
+	 JwxsyI6YUXmX45BBAQxB8OYi/wyHeoP2FZWOx4kh82jj8klR9F/LQ8bOCWxW/Oo6Re
+	 Eo8mW9QEcAaGuTtykPlAmcPJuXu5gk0wxaGfd2AVAWl/D2lawDmMhQg3iDYUwUuHYw
+	 zuWtfU0zvPCWxENsoROZd8H/uu73aHGKmzvV36atSCabSMGxHjg64KkTpB12LVGbzh
+	 HWFSQPEDWDvZ5Hi73zQYh3QYUlItPYuBwtcY1gGae8CFr1qGgQfyIGrRgrWzKBkGHM
+	 6ZbPiVuTm6ijA==
+Message-ID: <d5093fa7-d057-471d-9c50-f53e6fe267df@kernel.org>
+Date: Fri, 11 Sep 2026 18:59:08 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -128,70 +128,12 @@ Content-Transfer-Encoding: 7bit
 
 On 9/3/26 12:29, Muhammad Usama Anjum wrote:
 > Hi,
-> 
-> pte_t currently describes both a software PTE value and an element stored
-> in a PTE table. Consequently, pte_t * can point either to a software PTE
-> value, often a stack copy, or to a PTE-table slot. The compiler cannot
-> distinguish these cases. A value pointer can therefore be passed to an
-> interface that expects table storage, while table storage can be read by
-> direct dereference instead of the architecture accessor.
-> 
-> This series begins a staged conversion at the PTE level. It introduces
-> hw_pte_t as the element type for PTE-table storage and converts generic
-> MM to use hw_pte_t *. Software PTE values remain pte_t. Interfaces that
-> intentionally return a value through pte_t *, such as install_pte,
-> remain value interfaces; the relevant parameters are named ptentp to
-> make that distinction explicit.
-> 
-> The generic definition aliases hw_pte_t to pte_t unless an architecture
-> selects ARCH_HAS_HW_PTE_T, which enables a distinct generic wrapper named
-> __hw_pte_t. Some architectures define pgtable_t in headers parsed before
-> the generic hw_pte_t typedef is visible. The structure tag allows those
-> headers to define pgtable_t as struct __hw_pte_t * without creating an
-> include-order dependency. This is required when converting s390, m68k,
-> powerpc and sparc.
-> 
-> No architecture selects ARCH_HAS_HW_PTE_T in this series, so the
-> representation and behavior of every architecture are preserved. ptep_get()
-> keeps its existing READ_ONCE() semantics and converts the stored element
-> through __pte_from_hw(). An architecture can later select the option and
-> convert its PTE interfaces to make the distinction compiler-enforced.
-> Architecture PTE implementations and most architecture code are
-> deliberately left for those later opt-in conversions.
-> 
-> Here, hw_pte_t identifies PTE-table storage rather than table lifetime:
-> complete PTE tables use hw_pte_t whether or not they are currently
-> linked into a page-table hierarchy, while software PTE values use
-> pte_t. The distinction between complete but unlinked tables and
-> hardware-reachable tables was raised during discussion and remains an
-> important point for review.
-> 
-> PMD, PUD, P4D and PGD storage are deliberately out of scope. They can be
-> converted in later series after the PTE boundary is agreed, avoiding the
-> PMD-specific cases that made an all-level conversion difficult to
-> review.
-> 
-> Most mechanical pointer conversions were generated with the Coccinelle
-> script included below, then audited and fixed by hand.
-> 
-> This series does not add a second ptep_get_once() accessor and does not
-> remove or replace STRICT_MM_TYPECHECKS.
-> 
-> The design discussion is available at [1]; while the original idea came
-> from [2].
-> 
-> I've the patches here [3] for arm64 conversion which I used to find
-> usages in generic code which I missed during development. These would be
-> sent separately.
 
-Unless there is more feedback on the overall approach, the next step for this is
-to have at least one architecture support posted.
+Btw, I was wonder whether the subject would be better as
 
-We should only merge this if at least one architecture (better two? :) arm64 and
-s390x? ) would merge the architecture bits.
+"mm: distinguish HW PTE pointers from SW PTE value pointers"
 
-That is, we should get an ACK from the arch maintainer son the common code bits
-and the arch bits.
+or sth. like that.
 
 -- 
 Cheers,
