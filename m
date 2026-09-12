@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAE437EFE2;
-	Sat, 12 Sep 2026 19:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7112C3803F1;
+	Sat, 12 Sep 2026 19:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240698; cv=none; b=P2ueiGyo4DyUyG88pRx3Mk03BH1mGu98FPN7LQar3lf8ztYIr7LKrHjfNfgGxx672G/3yYS8Vfz2UZmBWfWUdXlCNbj1eUzaW28+zrUTAtPwcBtaqDV06o2x5v2NDnjcvie2EuF+h+2XS9ZO+ihUsQjVlyByTJ8TrQb0LJklsNM=
+	t=1789240698; cv=none; b=QXG6ChF2XuHbO1enkBaiyrp4k6UVX0CYaCcoUHuHKt/SCou9/LkiBYACZFs0YgGta6K+JGqMDw/ZuDWMFA8ZxQpiwaCimcvmzBPOJK1BnM5PdXWlNbebBvOFx6JRHv7aoS6N3ymrbBEFsVT8Ml++gNv/C8dX6xrAHcpsbwQCtDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789240698; c=relaxed/simple;
-	bh=6h3GJnIwfR+wAmW138+iTOVPy0JzFMMNyZ+vHGhSeTY=;
+	bh=tpVaEb4AYEZ73fAxIIPOmUa+AX18NBp3TqT+frNo5vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDEEAwV9Yznds8Ear3U5PXS2drDfNg8dc3JwggTgeaDzpUzrsPwhz4KVThrLoVKvgYkfrhm9SE90X1Ccn0OdfT3p3J/pVnaBgpvSUwB8km5S44voLiQ2YI7T/Pg5PiRjq6qYbld5QJu2ROoJCMPIDiyWhRNieDqh0oQ8BrO5mWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YSDnYgil; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gIs8go8BTuz6WNtme6pexOlkUe95DyVlfvxIaJxM9R/6DX6vu4rcuOGcuVVnYPP/GcrXugK8rowB0NGJ0Vbe4sr3wMkhzxd2mX7VKakji+YK8by01Vg+bobjrDm7hsHE8kGzLinIqBcMi0Ybx5dLjWMRaxz9GVjl/j3ny9Cpo3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hrI54Zs0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YSDnYgil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A3F1F0089B;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hrI54Zs0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D961F0089C;
 	Sat, 12 Sep 2026 19:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789240696;
-	bh=I5maU5zzmZHDxR2AzfaTKL3DQf78nhgNoQRlzVqJW+4=;
+	s=k20260515; t=1789240697;
+	bh=SymGB/Aunbf5NpktH/MrAmxXwvCzvOB6NopidPvvPWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YSDnYgil9MBGd5k4BYAZLCJOj9+ScoGA7iOy1ENZ2EvV1HQxJKVh3ZYcGuLQw+gPX
-	 17X6y/h6zrIyGk6scu9KMcNCvh3IzV7xnRnNvFiX5r33B9qn72XXz5YKQX5Du0Thc3
-	 RnbzbpyZZIjP0KnqDnZT6RtICn3w8COslSAngr0T6nX4bI6og3IhXk7Sb8WHc8IcRk
-	 SF2qVg2ZW3bXaGs9eVBP8ooUisap4kWv+5Ixwo67THw1A/wjhkui2sdfgtKF2kYO1u
-	 YZXtA8J+nzq0KsDcZulZsowyGvU9ZItY/la65zwfxvjtf/5XfPGziZVQzlChH2nZT5
-	 FD42pwaD2QfFg==
+	b=hrI54Zs0ZHlyuNs81eKuRAMlM85IMUjCFlUF75HLy3CHQEDjXuDocyb4YDK9bd7RP
+	 XXV8088K0UCW72zqDqixZ018ccn0C3TVca1VwYtAar8GVcp/9Wk+WqOd5uJovhKCBC
+	 B8juJYsoPO5PZY/B2LP+S97g5c2Rx3gD1bxwMqg76MBNOwGZxmAvRTL4t7v3HXznre
+	 SdTY3I3TGhLB0revSdscRgpafcNMBFbKIE+/JByjWA6pYnP/nBC7RndrwtxO8usccU
+	 cvPAfDkYbxIW9LGScNDVhchTHJHoHhaYcqkZUpHqb5jDJM2U85ZxMJ4AlnMLbRZdyT
+	 2xD2GqsAT++7g==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -33,9 +33,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 4/8] mm/damon/core: disallow max < min damos filter range arguments commit
-Date: Sat, 12 Sep 2026 12:18:02 -0700
-Message-ID: <20260912191807.138502-5-sj@kernel.org>
+Subject: [RFC PATCH 5/8] mm/damon/sysfs-schemes: drop centralized filter range arg validations
+Date: Sat, 12 Sep 2026 12:18:03 -0700
+Message-ID: <20260912191807.138502-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260912191807.138502-1-sj@kernel.org>
 References: <20260912191807.138502-1-sj@kernel.org>
@@ -47,43 +47,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damos_commit_filter_arg() receives range arguments for a few types of
-DAMOS filters.  It allows any range including max < min range.  It is
-fine for the logic, but makes no sense to support it.  Actually DAMON
-sysfs interface is doing the validation on its own.  To avoid duplicated
-validations in multiple DAMON API callers, it would be better to do the
-validation in the core layer.  Add a validation of the given range.
+DAMON sysfs interface is validating wrong range arguments for DAMOS
+filters.  Now the core layer is doing the same validation.  Drop the
+duplicated validation in DAMON sysfs interface.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/damon/sysfs-schemes.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 3ad1fb2f21f3f..3dec1a8f7ed3a 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1325,15 +1325,21 @@ static int damos_commit_filter_arg(
- 		dst->memcg_id = src->memcg_id;
- 		break;
- 	case DAMOS_FILTER_TYPE_ADDR:
-+		if (src->addr_range.end < src->addr_range.start)
-+			return -EINVAL;
- 		dst->addr_range = src->addr_range;
- 		break;
- 	case DAMOS_FILTER_TYPE_TARGET:
- 		dst->target_idx = src->target_idx;
- 		break;
- 	case DAMOS_FILTER_TYPE_HUGEPAGE_SIZE:
-+		if (src->sz_range.max < src->sz_range.min)
-+			return -EINVAL;
- 		dst->sz_range = src->sz_range;
- 		break;
- 	case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
-+		if (src->range_max < src->range_min)
-+			return -EINVAL;
- 		dst->range_min = src->range_min;
- 		dst->range_max = src->range_max;
- 		break;
+diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+index 8c8ab82c8facc..a4ec5d54cfbd1 100644
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -2832,27 +2832,14 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
+ 			}
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_ADDR) {
+ 			filter->addr_range = sysfs_filter->addr_range;
+-			if (filter->addr_range.end <
+-					filter->addr_range.start) {
+-				damos_destroy_filter(filter);
+-				return -EINVAL;
+-			}
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
+ 			filter->target_idx = sysfs_filter->target_idx;
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
+ 			filter->sz_range.min = sysfs_filter->range_min;
+ 			filter->sz_range.max = sysfs_filter->range_max;
+-			if (filter->range_min > filter->range_max) {
+-				damos_destroy_filter(filter);
+-				return -EINVAL;
+-			}
+ 		} else if (filter->type == DAMOS_FILTER_TYPE_PROBE_HITS_WSUM) {
+ 			filter->range_min = sysfs_filter->range_min;
+ 			filter->range_max = sysfs_filter->range_max;
+-			if (filter->range_min > filter->range_max) {
+-				damos_destroy_filter(filter);
+-				return -EINVAL;
+-			}
+ 		}
+ 
+ 		damos_add_filter(scheme, filter);
 -- 
 2.47.3
