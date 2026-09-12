@@ -1,123 +1,169 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E473578C9C
-	for <damon@lists.linux.dev>; Sat, 12 Sep 2026 19:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B2A32B126
+	for <damon@lists.linux.dev>; Sat, 12 Sep 2026 19:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241838; cv=none; b=mLj1rmSGjwNJy50Euit65HcHVTvHnoFhrsGSbihJ9+aNza7yLp0DQwZ3la+o6KHT6dRz5oQzA0iC+4mqfGl3mI1KTLDZ+TaA3ZmQdISUgdsGT6aMIVgg29cmJJeAXrj8+FJTHl6TzAB9OZh6RBl/ArSzuq7XKoXT0aNfg0so1Sk=
+	t=1789241854; cv=none; b=bMZC+W0AbefIYJHgEjWgRiEsMNyzFwC8oWKRq9GFs3Sm24+wEBrXRLcnVpYXlLyHx67+yNs5LoKvTXaKtPeNciQGowSEGlwS2kpf9qroe5kMnW3QChGtX/DBd8JDvDR6HmHNkLQVMaA0h0eudajblPH5QXc1d/laBXjwSK8HoFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241838; c=relaxed/simple;
-	bh=IQkKMmYuZWKi6J91TH9C9hUoSkPF4lysTg6y8XvjQrg=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=LfRifAkNIfkm59azhlpLiZnNJMm50X7jEa4fGPvH0VP+QTzknUbmiwy2F5yxDig9qSEIS8bOrcp6z+PHw5ewr8zGqJ9L5MPnyVQ4uEw/2GIR46YR3NXGaj3PK7s/GOVM+1HwVVEu5USCjFkcVcIqlHCYNXY/2zdzKVo8+CUeQxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JNUtQzjH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789241854; c=relaxed/simple;
+	bh=+bQflERObibiPKkgMLTrkMB6vKzpOjYtSLSAVf1F2Qo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=K0f26KAOk5RLnNpN04bmCzI4Bn2f4SZBT7zQ1fr1WWqSdtQqbVE2htw3JtpW+a6Qc/dvDfg8rxsvczUCK3GSmFdG/U2R4rK4a1UKkXaPHL7fPCyn8cctHeokDB7Pqbt2VrMvQfhvVAIa34ciW9ISR5OltqkppDZ/s4PHjh57N54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gEMHAvPS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JNUtQzjH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EE41F0089A;
-	Sat, 12 Sep 2026 19:37:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gEMHAvPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2591F00893;
+	Sat, 12 Sep 2026 19:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789241836;
-	bh=nn3i74FYnhcPTRhMPL54M2b+4TEzF3Jq9RuhLNxwZDk=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=JNUtQzjHfbkVbwvSjRXgiSVipGFoj1++xng4Ftt7stxCGup7GzPrGdsQ7ereyOI/Q
-	 3Zi5kmQrF7wD/lnfqJ78JLL432SZ6Z45ctS0Cdkn/d3fZs4TSuc7pG3ifS3qYhTPen
-	 rvbHbJ441tw1kTCTudM4rxay7L/u68OutylDu8bDTL8MiL+74G1iBSbcMUBF/6hBNp
-	 zJ9v8O3gFEej7kn6reAqX+v913SiabxImuusHq3W9CnLKulDFtbreKzz99DjFFVXJE
-	 DFJH+j+Zt+MjZOWbNDNwOXENaA2i+5URtJx4pE6GHyc71A5kQtwb1tOAsx7DPNuXe1
-	 zs3RDofSVeE4g==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 1/8] mm/damon/sysfs-schemes: read
- sysfs_filter->addr_range only once
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260912191807.138502-2-sj@kernel.org>
-References: <20260912191807.138502-1-sj@kernel.org>
- <20260912191807.138502-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 12 Sep 2026 19:37:16 +0000
-Message-Id: <20260912193716.99EE41F0089A@smtp.kernel.org>
+	s=k20260515; t=1789241853;
+	bh=EDgQn9P+7qerdWJ/0waF913SbnlvDNkOUQSSCrPH0vg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=gEMHAvPSxiCdhZQLZXnKqYJNv4NI6vglmq/I6BtfUhq70wJfocNPWqzt81O09Znlr
+	 hKSFRgtotaqH2R1Pd5owBl87V6THqN1ejrPwNj4uN1au9P4Rd8cfCr5tftAeoleRG+
+	 3L61FWTa1OdhHLZqQtu9djSGcQHhC61QrqlkWUXN0dG/DFI6i2Oj4vDWoanOQyc+ty
+	 H6RcFIHlG5kXr1+aEzhFq/Mdoxn/rL7zXJaR/1xv/8VVPypm/8S2pmX5TZowC45vab
+	 30037k50VYG5k1vfebr8w6l5q54Fdp9b7txstfOmtg90F70VUeX4jiz8mI7K30gLiU
+	 EqE74gNs4hXPg==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH 3/8] mm/damon/core: return an error from damos_commit_filter_arg()
+Date: Sat, 12 Sep 2026 12:37:20 -0700
+Message-ID: <20260912193721.139165-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260912192916.F2BE81F000FF@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
+On Sat, 12 Sep 2026 19:29:16 +0000 sashiko-bot@kernel.org wrote:
 
-Pre-existing issues:
-- [High] A double-read of `sysfs_goal->metric` in `damos_sysfs_add_quota_sc=
-ore()` causes uninitialized memory use in the core DAMOS quota auto-tuning =
-logic.
---
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Unhandled error returns in DAMOS filter commit functions lead to uninitialized memory use and type confusion.
+> --
+> 
+> commit f2946ab5f9d35b397a925510dc71e57f307f11d2
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/core: return an error from damos_commit_filter_arg()
+> 
+> damos_commit_filter_arg() is supposed to always succeed.  It may not in
+> future, for example, if the given filter is invalid.  Prepare the case
+> by modifying its signature to return an error when it failed.  Also pipe
+> the return value to its callers and let them handle the error.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 0c98f7e267d07..3ad1fb2f21f3f 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> [ ... ]
+> > -static void damos_commit_filter(
+> > +static int damos_commit_filter(
+> >  		struct damos_filter *dst, struct damos_filter *src)
+> >  {
+> >  	dst->type = src->type;
+> >  	dst->matching = src->matching;
+> >  	dst->allow = src->allow;
+> > -	damos_commit_filter_arg(dst, src);
+> > +	return damos_commit_filter_arg(dst, src);
+> >  }
+> 
+> [Severity: High]
+> Does this code leave the target filter in a type-confused state if
+> damos_commit_filter_arg() fails?
+> 
+> Since dst->type is modified before the arguments are committed, if an error
+> is returned and subsequently ignored by the caller, the filter could have a
+> new type but mismatched union arguments from the old type.
 
-commit 4b90a6724a684c24da0cc60a260ec280b6d479ac
-Author: SJ Park <sj@kernel.org>
-Subject: mm/damon/sysfs-schemes: read sysfs_filter->addr_range only once
+Yes, and the caller will destroy the filter, so no problem.
 
-This commit fixes a potential race in the DAMON sysfs interface where
-sysfs_filter->addr_range is read twice. By copying the address range first
-and validating the copy, it prevents invalid configurations from reaching
-the core layer.
+> 
+> >  static int damos_commit_core_filters(struct damos *dst, struct damos *src)
+> >  {
+> >  	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
+> > -	int i = 0, j = 0;
+> > +	int i = 0, j = 0, err;
+> >  
+> >  	damos_for_each_core_filter_safe(dst_filter, next, dst) {
+> >  		src_filter = damos_nth_core_filter(i++, src);
+> > -		if (src_filter)
+> > -			damos_commit_filter(dst_filter, src_filter);
+> > -		else
+> > +		if (src_filter) {
+> > +			err = damos_commit_filter(dst_filter, src_filter);
+> > +			if (err)
+> > +				return err;
+> > +		} else {
+> >  			damos_destroy_filter(dst_filter);
+> > +		}
+> >  	}
+> >  
+> >  	damos_for_each_core_filter_safe(src_filter, next, src) {
+> 
+> [Severity: High]
+> Does this code ignore the return value of damos_commit_filter_arg() when
+> creating new core filters?
+> 
+> Further down in this loop:
+> 
+> mm/damon/core.c:damos_commit_core_filters() {
+> 	...
+> 	new_filter = damos_new_filter(
+> 			src_filter->type, src_filter->matching,
+> 			src_filter->allow);
+> 	if (!new_filter)
+> 		return -ENOMEM;
+> 	damos_commit_filter_arg(new_filter, src_filter);
+> 	damos_add_filter(dst, new_filter);
+> 	...
+> }
+> 
+> If damos_commit_filter_arg() fails, does this silently add an uninitialized
+> filter with garbage union arguments to the destination scheme?
 
-> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> index 3de4d804e049f..3c1c1cb387fec 100644
-> --- a/mm/damon/sysfs-schemes.c
-> +++ b/mm/damon/sysfs-schemes.c
-> @@ -2831,12 +2831,12 @@ static int damon_sysfs_add_scheme_filters(struct =
-damos *scheme,
->  				return err;
->  			}
->  		} else if (filter->type =3D=3D DAMOS_FILTER_TYPE_ADDR) {
-> -			if (sysfs_filter->addr_range.end <
-> -					sysfs_filter->addr_range.start) {
-> +			filter->addr_range =3D sysfs_filter->addr_range;
-> +			if (filter->addr_range.end <
-> +					filter->addr_range.start) {
->  				damos_destroy_filter(filter);
->  				return -EINVAL;
->  			}
-> -			filter->addr_range =3D sysfs_filter->addr_range;
->  		} else if (filter->type =3D=3D DAMOS_FILTER_TYPE_TARGET) {
->  			filter->target_idx =3D sysfs_filter->target_idx;
->  		} else if (filter->type =3D=3D DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
+Good finding, I will fix this in the next spin.
 
-[ ... ]
+> 
+> [Severity: High]
+> Are there also missing error checks in damos_commit_ops_filters()?
+> 
+> It appears damos_commit_ops_filters() wasn't updated in this patch to
+> check the new integer return values from damos_commit_filter() or
+> damos_commit_filter_arg():
+> 
+> mm/damon/core.c:damos_commit_ops_filters() {
+> 	...
+> 	damos_for_each_ops_filter_safe(dst_filter, next, dst) {
+> 		src_filter = damos_nth_ops_filter(i++, src);
+> 		if (src_filter)
+> 			damos_commit_filter(dst_filter, src_filter);
+> 	...
+> 	damos_for_each_ops_filter_safe(src_filter, next, src) {
+> 		...
+> 		damos_commit_filter_arg(new_filter, src_filter);
+> 		damos_add_filter(dst, new_filter);
+> 	...
+> }
+> 
+> Can ignoring these errors leave the ops filter in a type-confused state or
+> silently add uninitialized filters to the destination scheme?
 
-While reviewing this fix for the double-read of addr_range, I noticed a
-similar pattern in the same file:
+Good finding, I will fix this in the next spin.
 
-mm/damon/sysfs-schemes.c:damos_sysfs_add_quota_score() {
-    ...
-		goal =3D damos_new_quota_goal(sysfs_goal->metric,
-				sysfs_goal->target_value);
-		if (!goal)
-			return -ENOMEM;
-		switch (sysfs_goal->metric) {
-		case DAMOS_QUOTA_USER_INPUT:
-			goal->current_value =3D sysfs_goal->current_value;
-			break;
-    ...
-}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260912191807.138502-1-sj@kernel.org?part=3
 
-[Severity: High]
-This is a pre-existing issue, but does this code double-read
-sysfs_goal->metric?
 
-The sysfs_goal->metric value is read first to allocate and initialize
-goal->metric via damos_new_quota_goal(), and then read a second time
-in the switch statement.
-
-If the metric changes concurrently from DAMOS_QUOTA_USER_INPUT to another
-value between these two reads, could the switch statement branch away and
-skip the initialization of goal->current_value?
-
-Since kmalloc does not zero memory, wouldn't goal->current_value be left
-uninitialized, causing the core auto-tuning logic to read garbage data?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260912191807.1385=
-02-1-sj@kernel.org?part=3D1
+Thanks,
+SJ
