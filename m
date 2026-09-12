@@ -1,59 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB95D3C4562
-	for <damon@lists.linux.dev>; Sat, 12 Sep 2026 20:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E0537B030
+	for <damon@lists.linux.dev>; Sat, 12 Sep 2026 20:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789244072; cv=none; b=ca6annYcA6mJdpMXSiEbNlwveFQTilbJftMPX3DZA2oXH6zofYxtple9dso9RPUNjxhAn2RfbFifcjc3ZBX2Kw6e2uomM7yggo2xPAzM3Rc6Ata8nj6++WZ3QawVR1byOl30tgBOLtdzh1gvUV7CEJzVb6VJIeote17IJWJyMIc=
+	t=1789244120; cv=none; b=juGHoy657Gy/4AQeWGYZjY2jdySQP2GBgJ3utEJKyla9eGJ2mb73lESCDXUFc8dejnZ/q8Wpl32Un51FMrPLRWE9pPPSjoDM2xmR/ejpH/1xK8SkzD+EH3LuhSJpb2QEO15DIt15/ll/BdTf4Zjg6rfJJU4WQ6GLA0jLZJED/3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789244072; c=relaxed/simple;
-	bh=mAWaS8HXPHzVTtrdggzI+vpZ+2NcGeIXs5PRD6A+zs8=;
+	s=arc-20240116; t=1789244120; c=relaxed/simple;
+	bh=sKIDK7S4xyjiuXDmp52/QVbc/a+pg1nsMVDECbQ+t1Q=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Oz90x0phjQnvyhYyO4AK7p3XTX5L4+72DjZ3Z4CNJ1epwngw413ie6/N9Wqggm39eNt8jmpjLKctwfmUu0O1Sq+I+mQ5cFd+UNUxOtLi4KmJ/auIxYrhCSSJsq2qDVVv/WNtnSVmZY5U5koIFwQZMpw6buxssUQAWYQqKU/+Cic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EG5CmD5x; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=kmYzWY+WIN0ahqOq5KhhVhglzuZdC0dDuaCDYSk22pBuzRl04a1Egb8ob40OUORj7Ub3ecsSpP/AbXbQLBmSN34Jk2IXW1RdoTgNqqHs/k1fMX0NHO0CtqkqHpNf+nOhbZoaU3chF+3+KpMQlP7rf8L7dKI0biAV3kPXeNHm8rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xyuxdb0H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EG5CmD5x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92AB1F00893;
-	Sat, 12 Sep 2026 20:14:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xyuxdb0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700171F000FF;
+	Sat, 12 Sep 2026 20:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789244057;
-	bh=qUSoqKNE4pqcZnvd4igIq165s41yLXo2ck6iOJ3lXHc=;
+	s=k20260515; t=1789244118;
+	bh=g9GTRfUJ5UwKgZWxgfu8ZiN+4iI5QqypNgeSYpdUHnw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=EG5CmD5xv/yOWxpwCuv0dMF5yF1mQHLcdhS39xHNHg1jVfE7Lg526fkG99Ce3CuYL
-	 Rntw4vQ99y+EJiNC7pmlh8lzLpLoqEmLe25w+Yr7AD0B0jLy4bVG2chcqVLsl0KHA+
-	 RV2MW/v59Qa/J+tANizQY2+FZBWousDqy148KK1uaIKQpvckwrXkF17u/f57XZpoLj
-	 EZcrjhEF/dnV3OhHnWwhIZZmcyRWlYGOM0GyGTv7fkgxI6ZGbzMgk2P463CJ+LCpzW
-	 ZkEFNGZ/GaBoTpBpeT9DK4BnzAPwTUjmJDVr7nmfNVnBSNtE/Pq20jYkfwGXv5KvPT
-	 FtyH5LbmuL3ZQ==
+	b=Xyuxdb0H6RVAaRZVGEL7BCyM9LgcEG19WzWpFaCYqF+vgmDIjgtAUEYAZL498kSe6
+	 j5skR3IUw5Qcy04JkJxCKzgsZ29dPqyh9ORSvAHaz4KSAh5sxrKjeHLxSAiYrKjwRc
+	 0s2JEy663Y9ZhGrqXOikVPagp7otiLX2hNbCzKLQeuFLQP3j/qJ3fs2PooisA4P21T
+	 fDis1RLHQCPk25hUuPcmxIePvjm5DocJaFbgI5MyDLT9viRfKUMiZRE2/JjwivV89j
+	 MycK0sWCu9056iOQIg7HAcToDWjJQxUrTUSn7ctshMojzNeFEXkdr0N5p6TtCZ5Lzy
+	 X+6wbHNlLOPKQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 4/9] mm/damon/core: use damos_quota_is_set() in
- damos_adjust_quota()
+Subject: Re: [RFC PATCH 7/9] selftests/damon/sysfs_memcg_path_leak: fail
+ only for real DAMON leak
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260912200814.145612-5-sj@kernel.org>
+In-Reply-To: <20260912200814.145612-8-sj@kernel.org>
 References: <20260912200814.145612-1-sj@kernel.org>
- <20260912200814.145612-5-sj@kernel.org>
+ <20260912200814.145612-8-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 12 Sep 2026 20:14:16 +0000
-Message-Id: <20260912201416.E92AB1F00893@smtp.kernel.org>
+Date: Sat, 12 Sep 2026 20:15:18 +0000
+Message-Id: <20260912201518.700171F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> damos_adjust_quota() is manually checking if the user set the DAMOS
-> quota.  There is a dedicated helper, damos_quota_is_set(), for the
-> purpose.  Use the helper.
->=20
-> Signed-off-by: SJ Park <sj@kernel.org>
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [Medium] Use of the non-standard `--quiet` flag in `grep` can cause the t=
+est to silently mask real memory leaks on systems with strict POSIX grep im=
+plementations.
+- [Low] Typo in the warning message: 'apparenty' instead of 'apparently'.
+--
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+commit afc83fe4758b4c2e76cc3da97cb99e2a990b6b83
+Author: SJ Park <sj@kernel.org>
+
+selftests/damon/sysfs_memcg_path_leak: fail only for real DAMON leak
+
+The selftest can fail for any leak if it happens while the test is running.
+Remove the false positive test failures by further checking if the expected
+leaking function is called out on the report.
+
+> diff --git a/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh b/too=
+ls/testing/selftests/damon/sysfs_memcg_path_leak.sh
+> index 33a7ff43ed6cc..6c2d8bb3fe570 100755
+> --- a/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
+> +++ b/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
+> @@ -41,5 +41,12 @@ if [ "$kmemleak_report" =3D "" ]
+>  then
+>  	exit 0
+>  fi
+> +if ! echo "$kmemleak_report" | grep "memcg_path_store" --quiet
+
+[Severity: Medium]
+Could the --quiet flag cause the test to accidentally mask real memory leak=
+s?
+
+If the test runs in an environment with a strict POSIX grep implementation
+that does not support the GNU extension --quiet, grep will fail with an
+unrecognized option error.
+
+Because of the negated condition, a non-zero exit code from grep causes the
+script to evaluate to true, print a warning, and exit 0. Should the standard
+POSIX -q flag be used instead to ensure compatibility?
+
+> +then
+> +	echo "[WARN] memleak found; apparenty not from DAMON, though"
+
+[Severity: Low]
+This isn't a bug, but there is a typo in the warning message (apparenty
+instead of apparently).
+
+> +	echo "$kmemleak_report"
+> +	exit 0
+> +fi
+> +
+>  echo "$kmemleak_report"
+>  exit 1
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260912200814.1456=
-12-1-sj@kernel.org?part=3D4
-
+12-1-sj@kernel.org?part=3D7
