@@ -1,59 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA5F368D4D
-	for <damon@lists.linux.dev>; Sat, 12 Sep 2026 19:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D009778C9C
+	for <damon@lists.linux.dev>; Sat, 12 Sep 2026 19:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241018; cv=none; b=HVakWFnb7HEOBsV00Q2niopLIUzga2AIfJ31EV2g6RZQX9lqqXv11C0XSobOOOTH0rJBpDAJ55tSPak+PSxICEk8Y1cyBmg1RIqOTF6g7xzznWz4SUzi19r4jgZIXs2puIunuqr1ONiZHY8BfvooHEL4edB4RIQMvIBQeFDZWjk=
+	t=1789241209; cv=none; b=XMdjm+i0lXsoxd0cIO60/jVxZrx6hr7+mn633Q9+19BPltM5Onfn8HOakB3Ks+B1RcjJCG8vkfQbKuRgFohEHGmj3NvVn5lckK/BTL36ioCEKiDQW1R0LYd+H/j7dd2/m7YUcTPHSCTVI5HSKYdD/VLMNFP7GQvl4HOMdMBVzVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241018; c=relaxed/simple;
-	bh=Xz/0P9ahkW5O57hDoxlUYSBmC4bfYmJ2OjX5r1tFXS0=;
+	s=arc-20240116; t=1789241209; c=relaxed/simple;
+	bh=CwRzfsPJDe/hEPuqNTct1AB1a94XcEg0QeAQslUgtEg=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=tRcG4LwtJozUcaEHYXdc12aV+/GqmzJzy2slLVASdMARosk1iFlO6nohRB0WYB4zXdDLaj2Zuux3FRphZYPIbY/9xmyeo3QmmqIv7y4dY8FjICZdsYESjzNZb+wb9v1f8UdqSz0yv5n0mZibW5qjy+LPYRhMho0P7ESMEn3YHlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ayH66Kfk; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=anR5ipQNu9AgKb0Tqpr41SuXohmrpxn/80r3N3xTssuwDyiNWNkzcRSYfJRdSaIVrtFHKCPNYTaoQQgsiQ9VrOR4XuX2hRG5d4SzWICGMRsnye1uENKXdpeNY1zLRI58xhgSKnisveObFPO1CWlyzjRHkOQ+57KNyra4uc2wPB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nxG3rSC4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ayH66Kfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F1F1F000FF;
-	Sat, 12 Sep 2026 19:23:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nxG3rSC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8082A1F000FF;
+	Sat, 12 Sep 2026 19:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789241017;
-	bh=/ECUq3fJLkr89eKvI2wco98bp66D2aAxWHgnyiI+gq0=;
+	s=k20260515; t=1789241208;
+	bh=V56APdqCi4cLwSbnLenumiYmSu7YR4x9J5on8eE0MdE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ayH66KfkB3AQoMiLCRKy+u5nOvrd2d7zO2PArLiZsAUmAsu62k/+rhMB25GElLXa/
-	 mHjEI5xOgTtPSNddgez9fxN9wRsOxZ6mZThkW+Zx37HhtYyJpIWpAozgyOts2GMZuX
-	 NW24JfLaLcqYiO01i/0sDmMmqWU6N9Jq3IGtZUwSdJ4PXG0vpQ4zx8VbAY/gYbDtJB
-	 aDWtQgshfaIg66hCXd+n0d4egwdYKD7kVpQZT+/wo92xCzrrSxECvuIgr9Wy9iPdeH
-	 zPxHLOCv6f0gZEEFZ/kG6dkjHh1XpCTm1+VV7gOnkS4vwX3meq9VBHce+uwriEs/Xk
-	 gAoD6rZQjBBQA==
+	b=nxG3rSC4wKEvdVn4rlHdYjyjym0HiqB+s4a9L9kUuBDDtrzrPEGIt8LeG8dgeh1cZ
+	 Sqv07pDK9GHqaZBS3FiZnXerN7bEqpsmKgSsFguIrBFaGaUgXFy0cnyvGD2l9XFtap
+	 2juvXvctV2UeTHHOc7Qotw8KRydItdgFOSLZgmUlK2jITHZQ3SyKK0s1Cx5iJpkWu/
+	 cOsUecUyqjtf5demDlm4E5w+W20ldpZyFbFfkfYLq40FHJH94Zha9IuyPTTwiOwEaW
+	 wX7gCyCEqkiDyNmtcA2/+aBqb91yHZiL1hiaHDz7PCkmGP4NFfdKL9h6c4kZBWwI8H
+	 Rjn27DOO8uVyw==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 6/8] mm/damon/sysfs-schemes: use switch-case in
- add_scheme_filters()
+Subject: Re: [RFC PATCH 2/8] mm/damon/sysfs-schemes: read
+ sysfs_filter->sz_range only once
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260912191807.138502-7-sj@kernel.org>
+In-Reply-To: <20260912191807.138502-3-sj@kernel.org>
 References: <20260912191807.138502-1-sj@kernel.org>
- <20260912191807.138502-7-sj@kernel.org>
+ <20260912191807.138502-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 12 Sep 2026 19:23:36 +0000
-Message-Id: <20260912192336.F1F1F1F000FF@smtp.kernel.org>
+Date: Sat, 12 Sep 2026 19:26:48 +0000
+Message-Id: <20260912192648.8082A1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> damon_sysfs_add_scheeme_filters() has long if-else chains for DAMOS
-> filter types.  Convert the code to use switch-case, which would be
-> cleaner and more efficient.
+> DAMON sysfs interface reads the user-provided size range arguments for
+> hugepage_size type DAMOS filter twice.  Once for validation, and once
+> again for assignments to the variable that will be passed to the core
+> layer.  If the user updates the arguments in parallel, an invalid size
+> range could be passed to the core layer.  Avoid it by doing the
+> assignments first, and then validating the assigned variables before
+> passing those to the core layer.
 >=20
+> User impact of the bug should be trivial.  From the core layer's
+> perspective, the invalid size range is not really invalid.  It just
+> works as having a weird size range.  No critical issues such as a crash
+> or a leak could happen.  And sane users ain't do such parallel arguments
+> update anyway.  If they do, such racy behavior is arguably somewhat
+> expected and deserved.  That said, there is no reason to keep such
+> races.
+>=20
+> Fixes: ea1f204ba29a ("mm/damon/sysfs-schemes: add files for setting damos=
+_filter->sz_range")
+> Cc: <stable@vger.kernel.org> # 6.15.x
 > Signed-off-by: SJ Park <sj@kernel.org>
 
 Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260912191807.1385=
-02-1-sj@kernel.org?part=3D6
+02-1-sj@kernel.org?part=3D2
 
