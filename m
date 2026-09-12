@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FBC37CD3E
-	for <damon@lists.linux.dev>; Sat, 12 Sep 2026 19:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C37E35E1D5
+	for <damon@lists.linux.dev>; Sat, 12 Sep 2026 19:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242206; cv=none; b=NwgFxC0XEDt8PJ7wp3S/6p0+z0hAuCNLHY9yNBIe3MxzaB+BfJOgk8bGN/XYl21HcMKkAPjpoQS4pGsimNZ9AIE+saDUpRr+48SjI/AavjXJvlCfwT1m5+nrZfYQZKJ5RczD0X9/8CeX/89/ySN/JjguW+qxw7qfJUqadU4koOU=
+	t=1789242458; cv=none; b=oub6yx+upzTvX6hAxnw8AckF4DjsB2VdbNFEBgn9jrzR9116UFu9Ufk8EJWzH/bEAB96rMu6AIeq3ZQUjQW2l/SNuCsIRdgUMADhVt6mGJbLTJAA0ZdJl+8VHfbiPpsnrbL/jD+91GYYhIPA+GURj8DrVp+xqgxMLZXaIeKkbfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242206; c=relaxed/simple;
-	bh=SVDF+gr6dws7gt+sx9aOPcsqtrcnTuiCe9OmPPQ6mQw=;
+	s=arc-20240116; t=1789242458; c=relaxed/simple;
+	bh=fghhG8RZtNS9uIIwKDfQKBAdoSid1z5Yp3iGWLVc+PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ttkRQvKaPoSLLAVehyHriGxOW0VEYksg8BnI9ZU4TpMm8i/8OQWTQaKUKyjejXFIRdJtEkGq59hFlS2k49t03F+0sEpimj/91qFftQ3MqIYlvbI60z3AglfMA2axaj0wF7XLw1f7cwdtcG1ETANSgZbIc6gFT/6rGDdZ476AO0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PGcgv0GS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=U0SwYdNlk9EARP1djGEPLscBzI9G4dlEE4KUceWxlS8t4WpQEB7UJ6zAXHCvYb/IWbsVCJCWqmr2KW9BUAhmCPGUgqBViyNMWZ/B+X/QlytlWqHkzzzrQn4s+1jw6yK7Limu9zZENBllcjQ4AWu23lr7vtWErf/mwUAT7Bg44Eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ia0KC3PN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PGcgv0GS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F58D1F000FF;
-	Sat, 12 Sep 2026 19:43:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ia0KC3PN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A341F00893;
+	Sat, 12 Sep 2026 19:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789242205;
-	bh=aJ+7jI67m2bPZ9NUb/rjQqDEwEyK3PCtV+9wlPLMl9U=;
+	s=k20260515; t=1789242457;
+	bh=9KKQN4+WQllVGBBIvRIXjVYzsvgNavTCEe9DtOPGLj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PGcgv0GSVYRgUXmUjoZ0K7DV4SO86B8yBDf7ypNQa0bmA9rI8lWnYhpKi0bgQ/9TO
-	 qZ7qNzKJFh3GHTxbxIQ3P5hct0pn9rM8MpyC5ry9l3GxET7qERtP3TvUOhV6jeSxlw
-	 7MR1aGo6utDamswe0jyiWhAxaW5WDO6pgNNrXOfHHKymD0ECaEXKYF+sJFNGGCFeEL
-	 BGWqF7DNVYZFFdW5gBEEhjOLIj6XdeMNLBnrlXpHW9U33pnPrBTeZF+zPdMR8ORlHM
-	 sCAYbaDY/9/Dt9qVw84+p7Wni7cGAXhgvVjNjEBKlY/aLFczKbWj/1nHiW2giQuT07
-	 RIV/4sd8D1qMg==
+	b=ia0KC3PNuVjImF+1RjPwebfuG2mUYOo0hGOFmXLSIHG+r+UYpgh2GGXW5g3onqM84
+	 Aw62fGoM+XRbGu7gi+6rCzx+/O4qfp5mTaJGSITZtLnN23CIXkV7G/VUgYN3G6Uapu
+	 TmLEcLOG0MV6sfMKmCZfAD6KiByVRMgEXC4pIuy3t6u1pAadniBlb/MTXg1nRQ6mA8
+	 Lt6IwgRXW/Qi3oeisIN1LRFauKEhra9njR0WYXGrnXl7KqeCdp/JcSb05Nx75TfsQp
+	 8Tn48s7qoQnVs06H9VXoRO8jEd3XBkswfn6I6PKW0bv8j884BhdYoR9JYY9dxiOBtg
+	 HQ9P2vI9O2sQg==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 5/8] mm/damon/sysfs-schemes: drop centralized filter range arg validations
-Date: Sat, 12 Sep 2026 12:43:17 -0700
-Message-ID: <20260912194318.139608-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 8/8] mm/damon/core-kunit: test invalid damos filter commits
+Date: Sat, 12 Sep 2026 12:47:28 -0700
+Message-ID: <20260912194730.139780-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260912193003.54B061F000FF@smtp.kernel.org>
+In-Reply-To: <20260912193641.04AF61F000FF@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,97 +45,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 12 Sep 2026 19:30:02 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 12 Sep 2026 19:36:40 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] Removing the filter range argument validation in `damon_sysfs_add_scheme_filters()` relies on the core layer to perform this validation. However, the core layer's commit functions (`damos_commit_core_filters()` and `damos_commit_ops_filters()`) silently ignore the return value of `damos_commit_filter_arg()` when adding new filters. When an invalid range is provided via sysfs, `damos_commit_filter_arg()` returns `-EINVAL` and aborts before copying the arguments. Because `damos_new_filter()` uses `kmalloc_obj()` (which does not zero memory), the new filter's union arguments (e.g., `addr_range`) are left completely uninitialized. The filter is then added to the active DAMON context, resulting in the scheme acting on an unpredictable memory range derived from uninitialized heap garbage.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> 
+> New issues:
+> - [High] Missing error handling for damos_commit_filter_arg() and damos_commit_filter() leads to uninitialized memory use for DAMON filters.
+> 
+> Pre-existing issues:
+> - [Critical] Memory allocation failure during damos_commit_dests() leaves the active scheme object partially torn down, leading to a deterministic NULL pointer dereference.
 > --
 > 
-> commit a45f05608fa3c7f9050ea4eac0fd8f19b22ee509
+> commit 0ffd278b1f3947b2729c57dd026fc9283304d3af
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/sysfs-schemes: drop centralized filter range arg validations
+> mm/damon/core-kunit: test invalid damos filter commits
+>     
+> Add test cases for testing the validation of damos filter arguments in
+> commit time.
 > 
-> This patch drops the centralized filter range argument validations in the
-> DAMON sysfs interface, relying on the core layer to perform this validation.
-> 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 8c8ab82c8facc..a4ec5d54cfbd1 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
-> 
-> [ ... ]
-> 
-> > @@ -2832,27 +2832,14 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
-> >  			}
-> >  		} else if (filter->type == DAMOS_FILTER_TYPE_ADDR) {
-> >  			filter->addr_range = sysfs_filter->addr_range;
-> > -			if (filter->addr_range.end <
-> > -					filter->addr_range.start) {
-> > -				damos_destroy_filter(filter);
-> > -				return -EINVAL;
-> > -			}
-> >  		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
-> >  			filter->target_idx = sysfs_filter->target_idx;
-> >  		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
-> >  			filter->sz_range.min = sysfs_filter->range_min;
-> >  			filter->sz_range.max = sysfs_filter->range_max;
-> > -			if (filter->range_min > filter->range_max) {
-> > -				damos_destroy_filter(filter);
-> > -				return -EINVAL;
-> > -			}
+> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> > index 2b0931cf6fb32..527abc2570616 100644
+> > --- a/mm/damon/tests/core-kunit.h
+> > +++ b/mm/damon/tests/core-kunit.h
+> > @@ -1184,6 +1184,13 @@ static void damos_test_commit_filter(struct kunit *test)
+> >  			.allow = false,
+> >  			.sz_range = {.min = 234, .max = 345},
+> >  			}, false);
+> > +	damos_test_commit_filter_for(test, &dst,
+> > +			&(struct damos_filter){
+> > +			.type = DAMOS_FILTER_TYPE_HUGEPAGE_SIZE,
+> > +			.matching = false,
+> > +			.allow = false,
+> > +			.sz_range = {.min = 456, .max = 123},
+> > +			}, true);
 > 
 > [Severity: High]
-> Does removing this validation allow invalid ranges to bypass sysfs and reach
-> the core layer logic where errors are silently ignored?
+> Does this patch series leave uninitialized memory in the payload of DAMON
+> filters if an invalid range is provided?
 > 
-> Looking at damos_commit_core_filters() in mm/damon/core.c, the return value
-> of damos_commit_filter_arg() is not checked when adding new filters:
+> While this patch adds tests for invalid filter ranges, it appears the error
+> handling in earlier patches of the series might be incomplete. If a user
+> provides an invalid range (e.g., max < min) via DAMON sysfs, the core
+> validation returns -EINVAL, but this error is ignored when allocating a new
+> core filter:
 > 
 > mm/damon/core.c:damos_commit_core_filters() {
 >     ...
->     damos_commit_filter_arg(new_filter, src_filter);
->     damos_add_filter(dst, new_filter);
+> 	damos_for_each_core_filter_safe(src_filter, next, src) {
+> 		if (j++ < i)
+> 			continue;
+> 
+> 		new_filter = damos_new_filter(
+> 				src_filter->type, src_filter->matching,
+> 				src_filter->allow);
+> 		if (!new_filter)
+> 			return -ENOMEM;
+> 		damos_commit_filter_arg(new_filter, src_filter);
+> 		damos_add_filter(dst, new_filter);
+> 	}
 >     ...
 > }
 > 
-> A similar pattern exists for ops filters in damos_commit_ops_filters():
+> Similarly, the return values of both damos_commit_filter() and
+> damos_commit_filter_arg() are ignored when updating or allocating an ops
+> filter:
 > 
 > mm/damon/core.c:damos_commit_ops_filters() {
 >     ...
->     if (src_filter)
->         damos_commit_filter(dst_filter, src_filter);
->     ...
->     damos_commit_filter_arg(new_filter, src_filter);
->     damos_add_filter(dst, new_filter);
+> 	damos_for_each_ops_filter_safe(dst_filter, next, dst) {
+> 		src_filter = damos_nth_ops_filter(i++, src);
+> 		if (src_filter)
+> 			damos_commit_filter(dst_filter, src_filter);
+> 		else
+> 			damos_destroy_filter(dst_filter);
+> 	}
+> 
+> 	damos_for_each_ops_filter_safe(src_filter, next, src) {
+> 		if (j++ < i)
+> 			continue;
+> 
+> 		new_filter = damos_new_filter(
+> 				src_filter->type, src_filter->matching,
+> 				src_filter->allow);
+> 		if (!new_filter)
+> 			return -ENOMEM;
+> 		damos_commit_filter_arg(new_filter, src_filter);
+> 		damos_add_filter(dst, new_filter);
+> 	}
 >     ...
 > }
 > 
-> When an invalid range is provided via sysfs, damos_commit_filter_arg()
-> returns -EINVAL and aborts before copying the arguments. Because the new
-> filter is allocated without zeroing its memory, the filter's union arguments
-> (like addr_range) are left completely uninitialized.
-> 
-> Since the error is ignored and damos_add_filter() is still called, won't
-> this result in the scheme acting on an unpredictable memory range derived
-> from uninitialized heap garbage?
+> Since damos_new_filter() allocates with kmalloc_obj() (which does not zero
+> memory), ignoring the return value of damos_commit_filter_arg() could lead to
+> the uninitialized heap data remaining in the filter's payload
+> (e.g. sz_range or addr_range) when it is added to the active DAMON context.
 
-Yes, I will fix those in the next spin.
+Yes, I will fix in the next spin.
 
 > 
-> >  		} else if (filter->type == DAMOS_FILTER_TYPE_PROBE_HITS_WSUM) {
-> >  			filter->range_min = sysfs_filter->range_min;
-> >  			filter->range_max = sysfs_filter->range_max;
-> > -			if (filter->range_min > filter->range_max) {
-> > -				damos_destroy_filter(filter);
-> > -				return -EINVAL;
-> > -			}
-> >  		}
-> >  
-> >  		damos_add_filter(scheme, filter);
+> 
+> [Severity: Critical]
+> This is a pre-existing issue, but can memory allocation failure during
+> damos_commit_dests() leave the active scheme partially torn down and lead to a
+> NULL pointer dereference?
+> 
+> If memory allocation fails for dst->weight_arr, damos_commit_dests() leaves
+> dst->nr_dests with its old non-zero value, but assigns NULL to the array:
+> 
+> mm/damon/core.c:damos_commit_dests() {
+>     ...
+> 		dst->weight_arr = kmalloc_array(src->nr_dests,
+> 			sizeof(*dst->weight_arr), GFP_KERNEL);
+> 		if (!dst->weight_arr) {
+> 			/* ->node_id_arr will be freed by scheme destruction */
+> 			return -ENOMEM;
+> 		}
+>     ...
+> }
+> 
+> Because damon_commit_schemes() breaks its loop on -ENOMEM and returns, the
+> partially modified scheme is left physically linked in the live context's
+> scheme list:
+> 
+> mm/damon/core.c:damon_commit_schemes() {
+>     ...
+> 		src_scheme = damon_nth_scheme(i++, src);
+> 		if (src_scheme) {
+> 			err = damos_commit(dst_scheme, src_scheme);
+> 			if (err)
+> 				return err;
+> 		}
+>     ...
+> }
+> 
+> When the kdamond worker thread later executes damos_va_migrate_dests_add() on
+> this corrupted scheme, it appears it will iterate up to dests->nr_dests and
+> dereference the NULL weight_arr pointer:
+> 
+> mm/damon/vaddr.c:damos_va_migrate_dests_add() {
+>     ...
+> 	for (i = 0; i < dests->nr_dests; i++)
+> 		weight_total += dests->weight_arr[i];
+>     ...
+> }
+> 
+> Is there a mechanism preventing this kernel panic if memory allocation
+> fails on the live destination context?
+
+Yes, we have damon_ctx->maybe_corrupted to prevent this.  So, no issue.
+
+> 
+> [ ... ]
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260912191807.138502-1-sj@kernel.org?part=5
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260912191807.138502-1-sj@kernel.org?part=8
+> 
 
 
 Thanks,
