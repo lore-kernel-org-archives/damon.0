@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B5D3C4B89;
-	Sat, 12 Sep 2026 20:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B7E377ABA;
+	Sat, 12 Sep 2026 20:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243706; cv=none; b=JjFC5hdzI+KqVksJL458BZgoRaRvz0PYdW5Ms5waU183aMmSH0z3TJeHaD8JCmHB9brz1+NI2oxP6eGW+x11wDowNgo9Q3+Xu+1K5xbvRDvAVGmzqO66srrlJplk8zwEnY0bCvdm87Z2c12Q8Jrtvd3ypGnYvz4AJ2wPTCnl2xM=
+	t=1789243706; cv=none; b=MYZLTR9z+dTIE7g3sGDoq3inZIIOFUh0ng8uykSKbFvS0lqmIgBviUPxYOhbtGaHj1p0lxUq/GarkCJ0jRFbUl7/dAugfv3RzA1tjkpu6KvMfGbx/CZxswz74u9J+p6TSdW7xWNEIGr+v0ZK0+t3fLgV75+k7wuh3YDkCJ2VJUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789243706; c=relaxed/simple;
-	bh=bjtcYrrTiZT4RNIGJFWJVQzFb7L92Ii/zB1yIuKqeu0=;
+	bh=tj57dOkpo5p8mqK620ygw5xHdLzVPd/Z+Uk+Xtaw24o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jzbc0nADyBW6yY8LrHIyiuYK7fnbX7+mR/6yN5+h90pvi6iAcb40MbPV7Bq12tN6efU2i7jGo65V9BPxmowNLCb3ch/O/YspTRWqF+OCkSdow8LCljYcrGyztnK0T5f4AkSHLpNSv/A4KWdMjhBlyJd0R2nBhydt1wdso3b0SCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aNzo2xmm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sLGNj4Xc4xicDvy0ORN/74U9rCvhSSSNQ4rjdN0tdvtfDPjp6U+87fmKjBYj3vU5++/H8iReiY+7PVOjHIqeqfeuEKwBYSEPiiuMICD8WWwh0FeLjnCyybtqY+dFYYY9dtoDj46AnfbMcvDcj85saLMkGtdniVSQTYDXkZx5+tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fr2Ct0gj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aNzo2xmm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6771F0089A;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fr2Ct0gj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41F11F00898;
 	Sat, 12 Sep 2026 20:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789243704;
-	bh=Qx5d1rQtT/tGb8Wbxvj4YF32pPVa2cNIDlP4wDI5PfI=;
+	s=k20260515; t=1789243705;
+	bh=lL1r3CUzqH0YyqVpSIiKQgN1c4eEo+XPmJg0bTQTEPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aNzo2xmmmXhHI+aFi0zDeDdLhUEQY8SIQ5ntFJ6nRAuZWwOC23SrPD1b7tdXwa9yZ
-	 uQ9CUgTl8DEOTd8z3/KpxiB7UT/GqvZ91uHLPSlYUxDy1l6v9LFw3yNhKDAIv1MGLA
-	 rQTJtLt7XEmBS8tOPWC3AhYOlmcXJkERVBVreTvUENYdGM7PJvYQPmVVCU8YoEi8uc
-	 KVfjAwhwyhPSGOoqr6EXrYkt9Vmivbz5ZX5IMdgBGKwYoqlfchVLS/niaA0kh62+6K
-	 p1tMojc1wmbqkBr/iA2+NI9IfJKJvqdB229+3cNt9rY0tzrpuatCMORHO1vkyoMwld
-	 W1MtxCAvFjvpQ==
+	b=fr2Ct0gjx4ey0HMKZepWjvvdEdapyTx2PkS66AnwV5UQk0uNr5wG1pgfCcUH3xCFR
+	 qoVkZgJUj29+fIgDyZ0H61stEZv38yIKh/TXvgJGKs2ENWdJa7RYznv++695Hyddnc
+	 1vue1U9ySEs44c8LZMnPE6p9wVc2MMGQVxtRBCEmW0mxROCJbTpYDxHZhmhwSJKD/J
+	 9Oxc80N/4g4oybr2HskM5CEY+6wGN82O8fbsgsOKgpyPsG6eqgsCIGn+SAjwVGdruJ
+	 fxkJ7oXlpSI0uDMWyzK/curlpqr9F4gBJRhdV68+h+mJuk0+dlWwTyzhve3jLIUIBm
+	 0T0eV6xqNavDA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 7/9] selftests/damon/sysfs_memcg_path_leak: fail only for real DAMON leak
-Date: Sat, 12 Sep 2026 13:08:08 -0700
-Message-ID: <20260912200814.145612-8-sj@kernel.org>
+Subject: [RFC PATCH 8/9] mm/damon/tests/core-kunit: test eligible_mem_bp commitment
+Date: Sat, 12 Sep 2026 13:08:09 -0700
+Message-ID: <20260912200814.145612-9-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260912200814.145612-1-sj@kernel.org>
 References: <20260912200814.145612-1-sj@kernel.org>
@@ -48,31 +51,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The selftest can fail for any leak if it happens while the test is
-running.  Remove the false positive test failures by further checking if
-the expected leaking function is called out on the report.
+There was a DAMOS quota goal commit bug [1] that doesn't update the nid
+field for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP metric goal.  Add a kunit
+test case for confirming nid commitment.
+
+[1] https://lore.kkernel.org/20260827045035.94611-1-sj@kernel.org
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs_memcg_path_leak.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/damon/tests/core-kunit.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh b/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
-index 33a7ff43ed6cc..6c2d8bb3fe570 100755
---- a/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
-+++ b/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
-@@ -41,5 +41,12 @@ if [ "$kmemleak_report" = "" ]
- then
- 	exit 0
- fi
-+if ! echo "$kmemleak_report" | grep "memcg_path_store" --quiet
-+then
-+	echo "[WARN] memleak found; apparenty not from DAMON, though"
-+	echo "$kmemleak_report"
-+	exit 0
-+fi
-+
- echo "$kmemleak_report"
- exit 1
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 5e8ead5ef8728..c2da4a3fbcafb 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -836,6 +836,9 @@ static void damos_test_commit_quota_goal_for(struct kunit *test,
+ 		KUNIT_EXPECT_EQ(test, dst->nid, src->nid);
+ 		KUNIT_EXPECT_EQ(test, dst->memcg_id, src->memcg_id);
+ 		break;
++	case DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:
++		KUNIT_EXPECT_EQ(test, dst->nid, src->nid);
++		break;
+ 	default:
+ 		break;
+ 	}
+@@ -900,6 +903,13 @@ static void damos_test_commit_quota_goal(struct kunit *test)
+ 			.current_value = 345,
+ 			.last_psi_total = 567,
+ 			});
++	damos_test_commit_quota_goal_for(test, &dst,
++			&(struct damos_quota_goal){
++			.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
++			.target_value = 12,
++			.current_value = 345,
++			.nid = 6,
++			});
+ }
+ 
+ static void damos_test_commit_quota_goals_for(struct kunit *test,
 -- 
 2.47.3
