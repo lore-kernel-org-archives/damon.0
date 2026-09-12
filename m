@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F1D37F75B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5A537F75E;
 	Sat, 12 Sep 2026 19:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240697; cv=none; b=QJHYu1m9ojb2WEOQGP95Okm6Kba+diMIpDXQUdIQW2tqCLL0YrWsSSfFgPemWzJhPRcRQhKDs26AJ7x639aal4fatLbmbBtLJIan5d6jrhF/rWhwgsU+nwEp7YXdWtBkVdp667oNiaOIFJ+Y+K/h8M4/yixGfkfhW5zXQ1DEy1s=
+	t=1789240697; cv=none; b=h6HBVVelMUn0Ma4uY7IZWrCAzDEBRRXEooIJV+RegCAIOL27mXufYjpSN4SytfLjPJkWUr06HzgUM0tYDiluKn8y/u2oYulMLDnsWHtODLQhrd41LXoxTJ0XA3nwsV080UVcClAmnGax5/SQ1Uz1YAPNNZcX3w1Q/cDfdwPCLp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789240697; c=relaxed/simple;
-	bh=coOKyd0rtvaMCxH/mKUGhnrdea7b8MWsrIPmIS/QuxI=;
+	bh=90f9yZ7JrVqlLjVYd4BWbp5Wf93983JuyPp/tZs9Kz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hag6CP9vinEOQFkYepRPtQk/BJQMCXwVmy3aiw7aoz9tUtd/Cu99v+CoHCyn3vdGe4REAdzr5RP+GdTjpMunbxEztyDkUVF6UoV1btZCeGZslD6wm6zvLF4ajSXLKO8gB3JpF6jUKDdKmpYHS2tgZ4q/AQ5dg5d8z4PSHR38IUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pb2rwd3i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XdspVEp9192sM07U8rKf9Jjb7yvF0PMR13aE1UgUyy06OAjlv6p25+EF7EerDZ2g7Xq/HCSqlJQThiMARPBrOPn4jJHPKAOUt0cUtUjVnnzVTHPT2VSOzrRsFFWNKcfWs0yweMf0Kh1Ol6+h3444pzI7b0FOxDYLdoCT0+agb3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ToRA9W2S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pb2rwd3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41E81F00898;
-	Sat, 12 Sep 2026 19:18:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ToRA9W2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BACE1F0089A;
+	Sat, 12 Sep 2026 19:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1789240696;
-	bh=hAIupWOiZk1Nz5VeipyYWCDtbEHKa9N+XsP7giaox3I=;
+	bh=RCy1mpgnGFNfwJbYRh4cYXVMRxk5ZkvS/1Omzx6vs3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pb2rwd3i7YJEayi20uaPGc3CcA5bXzPFyUFJ6I+PnkBjhyagDQ/JtJWVamOJZF+QZ
-	 GOBKiyeMwZ2GNRSpemAIE2yOVYItKsiz4HeJIasjJF1H5qRlhCmaYsdsXBXGAf71Cs
-	 f6nfS73vDuIkg1HclAThaPxtO/A0l6G2sVUFkjxrWD2axGUwu1JD4t/zORtLzmv03T
-	 sJwuVILiLssQCHhr8TbmtAavsdYwv1yVDyvdGmvvpC4XgP5d2RNC/j77EjuD4XsH1r
-	 N5pcZq3qd2B3sCy6+ISy6uggHu+ZC3xFc8mETLPmp0lWmE5pqCmYuZ156H/9E8vh3u
-	 FEBDLK2vkmtew==
+	b=ToRA9W2SK4fhF4Qsb8Q/v0HI8l5gMOI8Rx9/MdPJY20eeTc/Vf3G+V5giJolzRLdi
+	 nDAeXesvRJa0J1Y5D+HV+iqKc4Wm/UMi1bkinZTAkfS5cbdYbw5EHoyXPBfLkYLorb
+	 Qd0u6kqCp7em6DBSJ/7ZmAorUZkAvj2eF6mLcgjSiZ31hHtxMAQN/45JthcbAMBf74
+	 jyftB5XC8zvcSy8HUds3z2r6xnOBpQjRp/Amg3HRnGtwnN4E/+ZFNgeNS3FM1OLgVN
+	 SoGuDnC+35BjXPhBhmGVLMvDr2NXAaD7z9yIfFbjaLU9mTpzHgOvEZWehyZlkqE+Xa
+	 ZP/Xu/Zfw/JUA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Usama Arif <usamaarif642@gmail.com>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 2/8] mm/damon/sysfs-schemes: read sysfs_filter->sz_range only once
-Date: Sat, 12 Sep 2026 12:18:00 -0700
-Message-ID: <20260912191807.138502-3-sj@kernel.org>
+Subject: [RFC PATCH 3/8] mm/damon/core: return an error from damos_commit_filter_arg()
+Date: Sat, 12 Sep 2026 12:18:01 -0700
+Message-ID: <20260912191807.138502-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260912191807.138502-1-sj@kernel.org>
 References: <20260912191807.138502-1-sj@kernel.org>
@@ -49,49 +47,67 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON sysfs interface reads the user-provided size range arguments for
-hugepage_size type DAMOS filter twice.  Once for validation, and once
-again for assignments to the variable that will be passed to the core
-layer.  If the user updates the arguments in parallel, an invalid size
-range could be passed to the core layer.  Avoid it by doing the
-assignments first, and then validating the assigned variables before
-passing those to the core layer.
+damos_commit_filter_arg() is supposed to always succeed.  It may not in
+future, for example, if the given filter is invalid.  Prepare the case
+by modifying its signature to return an error when it failed.  Also pipe
+the return value to its callers and let them handle the error.
 
-User impact of the bug should be trivial.  From the core layer's
-perspective, the invalid size range is not really invalid.  It just
-works as having a weird size range.  No critical issues such as a crash
-or a leak could happen.  And sane users ain't do such parallel arguments
-update anyway.  If they do, such racy behavior is arguably somewhat
-expected and deserved.  That said, there is no reason to keep such
-races.
-
-Fixes: ea1f204ba29a ("mm/damon/sysfs-schemes: add files for setting damos_filter->sz_range")
-Cc: <stable@vger.kernel.org> # 6.15.x
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ mm/damon/core.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 3c1c1cb387fec..8c8ab82c8facc 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -2840,13 +2840,12 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
- 		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
- 			filter->target_idx = sysfs_filter->target_idx;
- 		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
--			if (sysfs_filter->range_min >
--					sysfs_filter->range_max) {
-+			filter->sz_range.min = sysfs_filter->range_min;
-+			filter->sz_range.max = sysfs_filter->range_max;
-+			if (filter->range_min > filter->range_max) {
- 				damos_destroy_filter(filter);
- 				return -EINVAL;
- 			}
--			filter->sz_range.min = sysfs_filter->range_min;
--			filter->sz_range.max = sysfs_filter->range_max;
- 		} else if (filter->type == DAMOS_FILTER_TYPE_PROBE_HITS_WSUM) {
- 			filter->range_min = sysfs_filter->range_min;
- 			filter->range_max = sysfs_filter->range_max;
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 0c98f7e267d07..3ad1fb2f21f3f 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1317,7 +1317,7 @@ static struct damos_filter *damos_nth_ops_filter(int n, struct damos *s)
+ 	return NULL;
+ }
+ 
+-static void damos_commit_filter_arg(
++static int damos_commit_filter_arg(
+ 		struct damos_filter *dst, struct damos_filter *src)
+ {
+ 	switch (dst->type) {
+@@ -1340,28 +1340,32 @@ static void damos_commit_filter_arg(
+ 	default:
+ 		break;
+ 	}
++	return 0;
+ }
+ 
+-static void damos_commit_filter(
++static int damos_commit_filter(
+ 		struct damos_filter *dst, struct damos_filter *src)
+ {
+ 	dst->type = src->type;
+ 	dst->matching = src->matching;
+ 	dst->allow = src->allow;
+-	damos_commit_filter_arg(dst, src);
++	return damos_commit_filter_arg(dst, src);
+ }
+ 
+ static int damos_commit_core_filters(struct damos *dst, struct damos *src)
+ {
+ 	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
+-	int i = 0, j = 0;
++	int i = 0, j = 0, err;
+ 
+ 	damos_for_each_core_filter_safe(dst_filter, next, dst) {
+ 		src_filter = damos_nth_core_filter(i++, src);
+-		if (src_filter)
+-			damos_commit_filter(dst_filter, src_filter);
+-		else
++		if (src_filter) {
++			err = damos_commit_filter(dst_filter, src_filter);
++			if (err)
++				return err;
++		} else {
+ 			damos_destroy_filter(dst_filter);
++		}
+ 	}
+ 
+ 	damos_for_each_core_filter_safe(src_filter, next, src) {
 -- 
 2.47.3
