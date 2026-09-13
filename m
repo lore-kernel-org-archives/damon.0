@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9213438A0
-	for <damon@lists.linux.dev>; Sun, 13 Sep 2026 17:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B474BEE4A
+	for <damon@lists.linux.dev>; Sun, 13 Sep 2026 17:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789321310; cv=none; b=oODrcS/JbmaQtUWvaks8tVnEu3abRPpXGHcJl7FfaUUIzxaqwgLu0Nifsu2/pEpPDHSzq248ylC5ZLlBG3UcCDLna3TcSmy5Md6PBeV68Xqd8v8+dzbZZ8lLjPXpIxYZSGMtInJJ3WJO5KNmXRUCPqvJ1HMBRKyOvSXLSoF3/x4=
+	t=1789321380; cv=none; b=OkNVvOLf8fh6+cZpafYemE5pwhZD+S7HQza90uXK3gEEIROtCE2C2wFbDxbRWEXFKDs1XRR5atrQe5/EBGEa7ZwfUrBVZwQIKnpG6gLUSk8pnFboMIi6ICrsPV2pdffFBWs1aUZSz+BcMiNEv3HpSYzeJOYeCdhajo+GLYQlYAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789321310; c=relaxed/simple;
-	bh=R6yhLAYXibZrubgAooU34EbmcONZzNcfiochE1XZivg=;
+	s=arc-20240116; t=1789321380; c=relaxed/simple;
+	bh=gtxJqUXAN8et+RbGNG9aj3kr57QtG7PP6oU3R2QyI6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cZkJENENmpqeKG5ax1EBAw/Z+ETYmeTQtv737Uo85jwLulZ3rbtDPvmIeh9z3BYI3h4xDrz5lFk+T2FWzlJd+aOn+M2WFV6JCgyNFxHdQ/F8Bg861HUNP9xuqP1dTv1gKiVPiJJfLQMDgQrJvChgzJvQMGnx0O5uI1KxiHQuZUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oYiMCUeO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fTcznLPHhVHFn0UKDo/TV0fU+n5ESZVOi4vCzIrFG91XpyYPrCdn8NAVWzSg1Lqus4UfyXlpj/05DFDYwiko947QdwVEmxExsyoD3XnLPBopID0kVmwl+SntESPiQj/MSSs/kjEU2nY56zn3iRlXZT1ftyGLCDXxIA98EoUHu84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G6/5eDTX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oYiMCUeO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8161F000FF;
-	Sun, 13 Sep 2026 17:41:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G6/5eDTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6ED91F000FF;
+	Sun, 13 Sep 2026 17:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789321309;
-	bh=1ygj0kkeNQVIvlfTtE6I4xdKd9EyQFDx/NQIe4A910Q=;
+	s=k20260515; t=1789321379;
+	bh=/xAYl1gvr2+BygapBFgn5JdOfoEJe/fO/ytyVi53p2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYiMCUeOXQWQ+6+5tqtdh9y3ym5pyK3ODc3592Pg9Zy3YETfTDjafbn5/qkdzz2uq
-	 LRVQuA9jJtdsN6ZDKFQ85e3mN8hIqsUEf7vFqPX3Qii2rCZNvAvr2alP9n+h1ikVAq
-	 L0aebVAt0UKKqo8k7dM5YVRaEHbpDCdcqI/SBAwu7KbJOOg8EWV1t0stFgVUUDK71W
-	 n44qhx67+68czpP4gyNYWcCNMXFNKr6gy8MNtW0s/8pmgjEHQPDHBGzElz+Edd7AvX
-	 cKYWVMpYOJ2Rmm9NI6qDyQoAjA64GZFdXwmBZqop+nAQT3SePeYgr13PWGJPnTD/jO
-	 NetD3/vsFNKqw==
+	b=G6/5eDTX29LwPck3ncZ/3JMip2NEO71yXLxkAaqYPAZw2i34cdeROncAn5ou7UBjc
+	 1yU7VTbPTbamJtxeTmXeCw/xrSfq/HzihO2KLN0Liho4KqayklXyRZWqISfrvQz4RE
+	 Ha0c+38KjwjkComf7WiPbwalQqFY/ao0BoEwcHXPmYhXpmNP5mefmpkdxxVS5Pz2Tg
+	 DngI5dVDE34t/cPEaLn9TW7KOkzak1g1CDod9BBZKYcz5V6CUR5DbRa8AlGVJANHQa
+	 TSBjrbIVvGx4GCSQS/TP63ZBSP4UY3Brx1fIc8h36bjCPbzOlbfJc/6aWWskPHLtdC
+	 McyJ6gua3zvmw==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: sashiko-bot@kernel.org,
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH 3/8] mm/damon/ops-common: support hugepage_size damon filter matching
-Date: Sun, 13 Sep 2026 10:41:41 -0700
-Message-ID: <20260913174142.105047-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 6/8] Docs/mm/damon/design: update for hugepage_size probe filter
+Date: Sun, 13 Sep 2026 10:42:51 -0700
+Message-ID: <20260913174252.105487-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260913173502.104385-1-sj@kernel.org>
+In-Reply-To: <20260913172453.9592D1F000FF@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,93 +45,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 13 Sep 2026 10:35:09 -0700 SJ Park <sj@kernel.org> wrote:
+On Sun, 13 Sep 2026 17:24:53 +0000 sashiko-bot@kernel.org wrote:
 
-> On Sun, 13 Sep 2026 17:24:42 +0000 sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] Newly added probe filters of type DAMON_FILTER_TYPE_HUGEPAGE_SIZE are left with uninitialized `range_min` and `range_max` values, and bypass bounds validation.
+> --
 > 
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [High] damon_commit_filters() leaves range_min and range_max uninitialized for appended hugepage_size filters.
-> > --
-> > 
-> > commit 377608c283881250a794879309e80b931825b0d3
-> > Author: SJ Park <sj@kernel.org>
-> > 
-> > mm/damon/ops-common: support hugepage_size damon filter matching
-> > 
-> > Update ops-common data attribute filter matching logic to support
-> > hugepage_size filter type.
-> > 
-> > > diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> > > index c36cc39cd2c70..77366f42b3e5b 100644
-> > > --- a/mm/damon/ops-common.c
-> > > +++ b/mm/damon/ops-common.c
-> > 
-> > [ ... ]
-> > 
-> > > @@ -558,6 +559,15 @@ bool damon_ops_filter_match(struct damon_filter *filter, struct folio *folio)
-> > >  			matched = filter->memcg_id == mem_cgroup_id(memcg);
-> > >  		rcu_read_unlock();
-> > >  		break;
-> > > +	case DAMON_FILTER_TYPE_HUGEPAGE_SIZE:
-> > > +		if (!folio) {
-> > > +			matched = false;
-> > > +			break;
-> > > +		}
-> > > +		folio_sz = folio_size(folio);
-> > > +		matched = filter->range_min <= folio_sz &&
-> > > +			folio_sz <= filter->range_max;
-> > > +		break;
-> > 
-> > [Severity: High]
-> > Does this new filter type need to be explicitly copied when a newly appended
-> > filter is committed?
-> > 
-> > When userspace adds a new filter to an existing DAMON probe via sysfs,
-> > damon_commit_filters() in mm/damon/core.c invokes damon_new_filter() which
-> > allocates memory without zeroing it. The attributes are then copied in a
-> > switch block:
-> > 
-> > mm/damon/core.c:damon_commit_filters() {
-> > 	...
-> > 	new_filter = damon_new_filter(src_filter->type,
-> > 			src_filter->matching, src_filter->allow);
-> > 	if (!new_filter)
-> > 		return -ENOMEM;
-> > 	switch (src_filter->type) {
-> > 	case DAMON_FILTER_TYPE_MEMCG:
-> > 		new_filter->memcg_id = src_filter->memcg_id;
-> > 		break;
-> > 	default:
-> > 		break;
-> > 	}
-> > 	damon_add_filter(dst, new_filter);
-> > 	...
-> > }
-> > 
-> > Because DAMON_FILTER_TYPE_HUGEPAGE_SIZE is missing from this switch block,
-> > range_min and range_max will be left uninitialized for appended filters. This
-> > could result in the filtering logic using garbage memory values.
-> > 
-> > Should DAMON_FILTER_TYPE_HUGEPAGE_SIZE be added to this switch statement
-> > so the range boundaries are properly copied to the new filter?
+> commit b9cb7bf28c7342005a919d584ad8cc1ce1cf9694
+> Author: SJ Park <sj@kernel.org>
 > 
-> No issue.  DAMON sysfs is not allowing hugepage_size probe filter at this
-> moment.  Later, it will add the support with proper range setup.
+> Docs/mm/damon/design: update for hugepage_size probe filter
+> 
+> Update DAMON design document for the newly added hugepage_size data
+> attribute probe filter type.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 0c98f7e267d07..a3febdc355c1e 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -1807,23 +1807,33 @@ static void damon_commit_filter(struct damon_filter *dst,
+> >  	case DAMON_FILTER_TYPE_MEMCG:
+> >  		dst->memcg_id = src->memcg_id;
+> >  		break;
+> > +	case DAMON_FILTER_TYPE_HUGEPAGE_SIZE:
+> > +		if (src->range_max < src->range_min)
+> > +			return -EINVAL;
+> > +		dst->range_min = src->range_min;
+> > +		dst->range_max = src->range_max;
+> > +		break;
+> >  	default:
+> >  		break;
+> >  	}
+> > +	return 0;
+> >  }
+> >  
+> >  static int damon_commit_filters(struct damon_probe *dst,
+> >  		struct damon_probe *src)
+> >  {
+> >  	struct damon_filter *dst_filter, *next, *src_filter, *new_filter;
+> > -	int i = 0, j = 0;
+> > +	int i = 0, j = 0, err;
+> >  
+> >  	damon_for_each_filter_safe(dst_filter, next, dst) {
+> >  		src_filter = damon_nth_filter(i++, src);
+> > -		if (src_filter)
+> > -			damon_commit_filter(dst_filter, src_filter);
+> > -		else
+> > +		if (src_filter) {
+> > +			err = damon_commit_filter(dst_filter, src_filter);
+> > +			if (err)
+> > +				return err;
+> > +		} else {
+> >  			damon_destroy_filter(dst_filter);
+> > +		}
+> >  	}
+> >  
+> >  	damon_for_each_filter_safe(src_filter, next, src) {
+> 
+> [ ... ]
+> 
+> > 		new_filter = damon_new_filter(src_filter->type,
+> > 				src_filter->matching, src_filter->allow);
+> > 		if (!new_filter)
+> > 			return -ENOMEM;
+> > 		switch (src_filter->type) {
+> > 		case DAMON_FILTER_TYPE_MEMCG:
+> > 			new_filter->memcg_id = src_filter->memcg_id;
+> > 			break;
+> > 		default:
+> > 			break;
+> > 		}
+> 		^^^^
+> 
+> [Severity: High]
+> Does this code miss copying range_min and range_max when a HUGEPAGE_SIZE filter
+> is dynamically appended?
+> 
+> Since damon_new_filter() allocates new_filter without zeroing it, range_min and
+> range_max are left uninitialized for newly appended HUGEPAGE_SIZE filters.
+> 
+> Furthermore, because damon_commit_filter() isn't called here, the bounds
+> validation (src->range_max < src->range_min) added above is completely
+> bypassed. This leads to erratic memory filtering behavior since DAMON might
+> skip or apply actions based on memory garbage.
+> 
+> Should case DAMON_FILTER_TYPE_HUGEPAGE_SIZE be added to this switch block, or
+> perhaps the code could be refactored to reuse damon_commit_filter() here?
 
-I was wrong.  I will fix this in the next spin.
+Yes, I will fix this in the next spin.
 
 > 
-> > 
-> > >  	default:
-> > >  		break;
-> > >  	}
-> > 
-> > -- 
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260913171133.102366-1-sj@kernel.org?part=3
-> 
-> 
-> Thanks,
-> SJ
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260913171133.102366-1-sj@kernel.org?part=6
 > 
 
 
