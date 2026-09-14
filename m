@@ -1,57 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B18E47D462;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD4946AEFE;
 	Mon, 14 Sep 2026 14:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789395608; cv=none; b=jXhYSdKb66Y2ZOUsR4drSOGqRgHvICU4fSvbwmM0iUtw7/l9t+bIag33k8ypGgJRG022sMRtN8SNch/NNM0J2oLaZ7qzDvoUm03KG39ucynOjKJ5qb4czlX5xv+uNw7iikb/SXyA4OmZkfUcrgs72WI7K6XO6r6NL29G3kmZJHg=
+	t=1789395608; cv=none; b=Bk4t03je4M9XD8bL4t3c950QynJGX5gdMQC0vPatgYMiHMRZtXr/pzfnBcM/k4+o87XfIw7qaEA7/+3KLVIP00Q9kTPCEofMArXLSBsLO/HLuJMi7/yqjO16ZvQY6MTS02Z0PWWcXuk1QKYRUSr5moVtNkoHZzvrAyz7iVIojrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789395608; c=relaxed/simple;
-	bh=7R50BPVYpr4c2NJfRdDUq8laf344UbkGortnVLm0Lls=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TTIs3B8Icg0sNiNGfEQ97mMQK4Ya+E5DAiMFVKbrI6711PF4I1dUH1LjiRP0mCbbfikBleBr/FJTEeqRGxoMCmeTB3BILK5+UDh7IhsfF46wans7XUsRjxpZY42udIxc4OfdVf113rcELcTRxQtGk+icgNUz6sPykBOBWVqZ5a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aOxl9EV4; arc=none smtp.client-ip=100.103.45.18
+	bh=YkUGaOGxAboONSlOCUlrI0V3DUz26aswBLoll6hE1Hw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EKYGmvJVbyO9wSZPsiSw26HFt6EXOWym7ez4eK9PS5GP3oWKJSLzXFqN0pg5fQsEhMLsr6SpD4I3/1+vss+d/GSSbMU82VzvLyM2WPp1XGqqzeaPfpNbaMS7+2anQJLi/RFiyUuRZ3B4lV2mJJOt0wo6zZHykrz7YE0shJEsz0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QJpoxhar; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aOxl9EV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF401F000FF;
-	Mon, 14 Sep 2026 14:19:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QJpoxhar"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F381F0089A;
+	Mon, 14 Sep 2026 14:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789395600;
-	bh=Xe9pCAP7+znsH3YX32HlW65HgZEqytv0rSrycprzx2U=;
-	h=From:To:Cc:Subject:Date;
-	b=aOxl9EV4HfSn4CW4ndI8Yc7wmc+68nQ/AG7gNNVkiYH+WZ/fZX/7xfou5DflqaULS
-	 lcLmDByziVNq0IgTmy0cqm9KA5KSuXP+p1WglgvPGKksP5/7kx4kEAmyPW5UyheGNI
-	 C/XgdTjlg0zYIIFnR69ygbDwuI4DUke3vlA46dbWm8RBXjz3ZC3FtyiISJhTXHcXtd
-	 LG8nJFRUTA5UBX+nMAViIamKQ/ShECpxvjzgvLm2u6UgOgFpYhzIxIXLWda3ZXu0gT
-	 5L1YRjxd7+KUUPCyMoTJjDYgQ+8U/M3+uvoCct07REl1W6f37ygGoq4imEEiHkAhOg
-	 yRh0Y/qG6F0ug==
+	s=k20260515; t=1789395602;
+	bh=iMSM+RY05r6OH+v1CtMIxEVXYlWKzTDj5y/6JWGPvKc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=QJpoxhar5EcAr9Tj32UEKCjB7ygUKbu+YQU2MwEULu89BluCAJAvbiz8D9aLFe3YG
+	 m4O61hGCSQ0UYdO8yIgUDixQlB/et1Zirheejfmo2ktwuCi9r78kzt8BPtFgRqgAaK
+	 +V13J3DqhduxvjoE1QY0FHOAfyKFB+Pz/Ig249foADiDCtx+eEA3yPQT2WcsNgafrD
+	 OoAJudEDwKaYMoCTZQ44t5loXVYBMqre193GtpoUpCzRikHp8b7PTkneOrR/PF55Cr
+	 eRw7wbeExZ967wBmO1MYstDrdkz3rC5DwnrmueWTUku27UgrfALTFxxvXDiCtCobf3
+	 dzdsJmnzyR7Fw==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
+Cc: Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	SJ Park <sj@kernel.org>,
 	Shuah Khan <shuah@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/6] mm/damon: misc improvements in tests and documents
-Date: Mon, 14 Sep 2026 07:19:45 -0700
-Message-ID: <20260914141952.91465-1-sj@kernel.org>
+Subject: [PATCH 3/6] selftests/damon: add script dir to sys.path for PYTHONSAFEPATH compatibility
+Date: Mon, 14 Sep 2026 07:19:48 -0700
+Message-ID: <20260914141952.91465-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260914141952.91465-1-sj@kernel.org>
+References: <20260914141952.91465-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -60,50 +49,159 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add various improvements to DAMON tests and documents.
+From: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
 
-Patch 1 and 2 from Zenghui Yu (Huawei) let DAMON selftest to clean up
-its state and output after running the tests.  Patch 3 from Eva
-Kurchatova makes a few selftest be able to run with Python's safe path
-mode.  Patch 4 from Kunwu Chan improves coverage of DAMON kunit tests.
-Finally, patches 5 and 6 from Liew Rui Yan clarify and fix typos on
-documents for DAMOS quota behaviors.
+Running these tests under Python's safe path mode, either with -P on the
+interpreter command line or with PYTHONSAFEPATH set in the environment,
+stops the script's own directory being prepended to sys.path. Some
+distributions (RHEL, for example) build the tests with -P in the shebang.
 
-Below are notes that can be removed in the final commit message.
+This breaks all 7 DAMON Python selftests that import the _damon_sysfs
+helper module located in the same directory:
 
-This is a batched repost of DAMON patches that were individually posted.
-Please refer to each patch for changelog.
+  ModuleNotFoundError: No module named '_damon_sysfs'
 
-Eva Kurchatova (1):
-  selftests/damon: add script dir to sys.path for PYTHONSAFEPATH
-    compatibility
+Fix this by explicitly adding the script's directory to sys.path before
+importing _damon_sysfs, following the same pattern used in commit
+c3b3eb565bd7 ("tools: ynl: add script dir to sys.path") which fixed the
+identical issue for the YNL tools.
 
-Kunwu Chan (1):
-  mm/damon/tests/core-kunit: improve nr_samples_per_aggr test isolation
+Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from v1
+- v1: https://lore.kernel.org/20260908214238.2680324-1-eva.kurchatova@virtuozzo.com
+- Collect R-b: from SJ.
+- Rebase to latest mm-new.
 
-Liew Rui Yan (2):
-  Docs/mm/damon/design: clarify when qt_exceeds increases
-  Docs/mm/damon/design: fix typos in temporal auto-tuning algorithm
-    section
+ tools/testing/selftests/damon/damon_nr_regions.py              | 3 +++
+ tools/testing/selftests/damon/damos_apply_interval.py          | 3 +++
+ tools/testing/selftests/damon/damos_quota.py                   | 3 +++
+ tools/testing/selftests/damon/damos_quota_goal.py              | 3 +++
+ tools/testing/selftests/damon/damos_tried_regions.py           | 3 +++
+ .../selftests/damon/sysfs_update_schemes_tried_regions_hang.py | 3 +++
+ .../damon/sysfs_update_schemes_tried_regions_wss_estimation.py | 3 +++
+ 7 files changed, 21 insertions(+)
 
-Zenghui Yu (Huawei) (2):
-  selftests/damon: stop kdamond on error exits of no-op commit test
-  selftests/damon: ignore test-generated damon_dump_output
-
- Documentation/mm/damon/design.rst             |  8 +++--
- mm/damon/tests/core-kunit.h                   | 19 +++++++---
- tools/testing/selftests/damon/.gitignore      |  1 +
- .../selftests/damon/damon_nr_regions.py       |  3 ++
- .../selftests/damon/damos_apply_interval.py   |  3 ++
- tools/testing/selftests/damon/damos_quota.py  |  3 ++
- .../selftests/damon/damos_quota_goal.py       |  3 ++
- .../selftests/damon/damos_tried_regions.py    |  3 ++
- .../damon/sysfs_no_op_commit_break.py         | 35 ++++++++++---------
- ...sysfs_update_schemes_tried_regions_hang.py |  3 ++
- ...te_schemes_tried_regions_wss_estimation.py |  3 ++
- 11 files changed, 60 insertions(+), 24 deletions(-)
-
-
-base-commit: d1153a22117b5c6171bdf24d32b7f6c314887d23
+diff --git a/tools/testing/selftests/damon/damon_nr_regions.py b/tools/testing/selftests/damon/damon_nr_regions.py
+index 58f3291fed12a..e55239813c654 100755
+--- a/tools/testing/selftests/damon/damon_nr_regions.py
++++ b/tools/testing/selftests/damon/damon_nr_regions.py
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ 
++import os
+ import subprocess
++import sys
+ import time
+ 
++sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ import _damon_sysfs
+ 
+ def test_nr_regions(real_nr_regions, min_nr_regions, max_nr_regions):
+diff --git a/tools/testing/selftests/damon/damos_apply_interval.py b/tools/testing/selftests/damon/damos_apply_interval.py
+index 0f2f36584e48c..0bf7768b2006a 100755
+--- a/tools/testing/selftests/damon/damos_apply_interval.py
++++ b/tools/testing/selftests/damon/damos_apply_interval.py
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ 
++import os
+ import subprocess
++import sys
+ import time
+ 
++sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ import _damon_sysfs
+ 
+ def main():
+diff --git a/tools/testing/selftests/damon/damos_quota.py b/tools/testing/selftests/damon/damos_quota.py
+index 57c4937aaed28..879115a499bf8 100755
+--- a/tools/testing/selftests/damon/damos_quota.py
++++ b/tools/testing/selftests/damon/damos_quota.py
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ 
++import os
+ import subprocess
++import sys
+ import time
+ 
++sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ import _damon_sysfs
+ 
+ def main():
+diff --git a/tools/testing/selftests/damon/damos_quota_goal.py b/tools/testing/selftests/damon/damos_quota_goal.py
+index 661e4ba4765ae..fed033a0afdf9 100755
+--- a/tools/testing/selftests/damon/damos_quota_goal.py
++++ b/tools/testing/selftests/damon/damos_quota_goal.py
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ 
++import os
+ import subprocess
++import sys
+ import time
+ 
++sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ import _damon_sysfs
+ 
+ def main():
+diff --git a/tools/testing/selftests/damon/damos_tried_regions.py b/tools/testing/selftests/damon/damos_tried_regions.py
+index d6472e6a6e082..6941f87c10b1c 100755
+--- a/tools/testing/selftests/damon/damos_tried_regions.py
++++ b/tools/testing/selftests/damon/damos_tried_regions.py
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ 
++import os
+ import subprocess
++import sys
+ import time
+ 
++sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ import _damon_sysfs
+ 
+ def main():
+diff --git a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
+index 28c887a0108fd..625761c243b58 100755
+--- a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
++++ b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ 
++import os
+ import subprocess
++import sys
+ import time
+ 
++sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ import _damon_sysfs
+ 
+ def main():
+diff --git a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
+index 16fdc6e7fc566..36e7ae5f826d8 100755
+--- a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
++++ b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_wss_estimation.py
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ 
++import os
+ import subprocess
++import sys
+ import time
+ 
++sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ import _damon_sysfs
+ 
+ def pass_wss_estimation(sz_region):
 -- 
 2.47.3
