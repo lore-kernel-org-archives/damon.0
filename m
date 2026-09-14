@@ -1,83 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB73C403AFD;
-	Mon, 14 Sep 2026 14:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492B83FADFD
+	for <damon@lists.linux.dev>; Mon, 14 Sep 2026 14:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789397104; cv=none; b=WGRILJISON/YvZnmW955eqS61pRIop9hhzCYZNXMUzvC52CKsO+HZWjMthS39H2PsHreVYjTugltFZsgrd02c/kNuA9xY0afewrCcLydZzYBnf0HJZZ0IB+vBsd0WxBSW0AfJLz+ZzI2In2M+XNJP02Pk/Ss+CC+F5e7UXLm29E=
+	t=1789397184; cv=none; b=XnpPq7NYdkG/k70hOYt8aKfUsDducx2h5tY36HA0tAN3tXf4IvR9cHlrDcTNYHPAnQvl2zqQbeeyN8x7e352xEWUj0B20joV40fs0snU7HesEkLeyiaAQ2wxcAV7VcU8KbNT4GOtTPSoTxrISZPn+0OJ6nT6WTg7vpFH3kWGKOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789397104; c=relaxed/simple;
-	bh=6622FqAoJyylnw82hdIzdoflo9b7IhzEAZqdmcHMO9w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2VKPFXA7JPm/Otg1Y9sPXrs94MRVN22Cbd8+gqbKRp6LeUh2BtlBMKKYo+z4LfXdNaUPebslVlJdVgYTve7BDnKpdNG6dfoEpxKvbrwjW/Yr2yamRwHcqk8o6PBU1Fosk+aXq5+Yw/SbjdAsGmlEu07dpwMPmDb1IyaSnjEq0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AZ4BIdI5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789397184; c=relaxed/simple;
+	bh=zBPSdfSx+4Lg1JRd5Kzfubw9RDmU0JAPdQbhO5VzHKc=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=eP9enUzsyjI9MfXFsfyIAA4Lzn65/4djWesMoVIhJgdJ3besdApYMKGE0LxLar9oOrylD1ri36paRsWHDyclP0nP+K+GFlDrzd3rstLmqRdUczRdxup9hyCD1kNvTUsmPe4gAuM/Tf3oWnjE7C5ioRJex23vPadGNs0ORHtE/fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oqvdjV/n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AZ4BIdI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB6F1F0089A;
-	Mon, 14 Sep 2026 14:44:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oqvdjV/n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51A11F000FF;
+	Mon, 14 Sep 2026 14:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789397098;
-	bh=KlTkThYMNDC2bLrO2MA1hCJuFVsV7BXLwZ+Px5RpEUU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZ4BIdI5O3hJqwLDTzpdnlXAJJ8z5jmnuGpDAmnV9v9bxOPtFQHcFG9lgURso2RHk
-	 BIg+MpMzQ/TAsnLTVbVxSL5Cmxt/NaebNIucLcvwN4X/3CufGd4o/mNCkCk9zpzReL
-	 mTkDPQE32ASU1w/wPwv7mC9dEbsC7uY/l8Gabedtm4AnkBnWdCWYvWehOZl8ZmOzD0
-	 Fz/jEc/joTy88BjTUpf8K5ImN4g4uDXyBJCxvNrqlN4PEXz2CflftdTBqDSk71cC9+
-	 nBBOB0pOpis86iohGXrxEkxXhx5jCYtswugXw/Za3//v45QzwZ08MZEK6gxVfP9Tif
-	 CpwngOKfFPeGg==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v2 6/8] Docs/mm/damon/design: update for hugepage_size probe filter
-Date: Mon, 14 Sep 2026 07:44:43 -0700
-Message-ID: <20260914144448.93732-7-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260914144448.93732-1-sj@kernel.org>
+	s=k20260515; t=1789397183;
+	bh=zBPSdfSx+4Lg1JRd5Kzfubw9RDmU0JAPdQbhO5VzHKc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=oqvdjV/nMN0vxQF03YhFzGf5MFK/hVDutgY8VlXaBVxkTEBVqD4A7otlxxo03EKq1
+	 KLRfe9LU+SErO8axuzLbj0UiP0ZjcEqR6iN7Jkkd74jwjgpe1UL/Rk8zgMtruQCGRJ
+	 96M7upwF+kfdZsD57tSDeeOerFvwgvMtJGGkNFVyybYp2zvS13asZ+EBnrZ0ceT6BN
+	 pCOzs8pDpu+QRDI8TANSqdEihfdRK/IhoPgq2mc2zb10yot6Qwc2h+/ndjQAlAHiLt
+	 OE++vzG/e8LVb6lRnM7w8Pb+1SGWLC+vKbymU7YN716Tw3fTB/XVKUtlsJKIuCXJRI
+	 fSDu/48RLYH6A==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v2 7/8] Docs/admin-guide/mm/damon/usage: update for
+ hugepage_size
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260914144448.93732-8-sj@kernel.org>
 References: <20260914144448.93732-1-sj@kernel.org>
+ <20260914144448.93732-8-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 14 Sep 2026 14:46:22 +0000
+Message-Id: <20260914144622.C51A11F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added hugepage_size data
-attribute probe filter type.
+> Update DAMON usage document for the newly added hugepage_size data
+> attribute filter type.
+>=20
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/mm/damon/design.rst | 2 ++
- 1 file changed, 2 insertions(+)
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 707170bcd1b33..0a86792f90a18 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -300,6 +300,8 @@ filter types.  Currently below filter types are supported.
- - ``pgidle_unset``: Matches if the page for the memory is marked as not
-   access-idle.
- - ``pgidle_set``: Matches if the page for the memory is marked as access-idle.
-+- ``hugepage_size``: Matches if the page for the memory is a part of a hugepage
-+  of a given size range.
- 
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260914144448.9373=
+2-1-sj@kernel.org?part=3D7
+
