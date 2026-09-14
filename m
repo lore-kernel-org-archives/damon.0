@@ -1,74 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BD136D4F1
-	for <damon@lists.linux.dev>; Mon, 14 Sep 2026 14:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A82481652;
+	Mon, 14 Sep 2026 14:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789397083; cv=none; b=iDpqpOsyPFxmT25hahC67AzmIDAe9VLTsAk00bQTBJYuph/0vJUDVKosgpgmpSp118nQOuiLA+NAnj19Ge1gAWTqr+HDbxPjGi8/aTRKy5aaayh3SFbEU5GiklBRrkNuv93wiJE5BV4X3ZGSgCPhIf9MdXNpzaY01GB7gT9+8Uk=
+	t=1789397098; cv=none; b=tzcHlxPjV7HJ9Y05Ga49SQvVLZIMCMzGfp/YHPWv0Dv/2nUBufRhu9YEKF8pf3dQXl1E+baYh8Qw9ZLopN7D21os+otFdgYsLub5pfUQulOCoISv0GaXxRdvWfbKAmZ1p/F42nWb6nIL+9udAziMqRfMtanMmaqC99ajcgKogO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789397083; c=relaxed/simple;
-	bh=rDX2W5U4EWi444wTdtmrQniFpeZJCZIetJW3MtjVADc=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=lwJ+VkAjSZtgxR/Iu0efZaodtxqFLXBfnYyNXy868DLRcF0vddNaBfiG2t2e+o9gD2LBO3z1RKqqb30bIXhzOZuI9cn6mAHpaQjvLzz3xgTcjYBLrCSUmjh/XabsEUkFcmhcPDewLBGDwlYti34cV+uMFJuT3ImYdhHLZLuJcdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IZjaattU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789397098; c=relaxed/simple;
+	bh=rKplGYxWCKFMa7GYxEp6v+ntDcuuIqtHQHXYrF7Fkeg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BTsm1nqf5rW3DpF7qz2UXyjzr2K4lsrYHX9V4Kr02KeDPMZssfSgG2nu3EvfTBRF7cpijIAYo59urhRUCitGGzAPVbZfNyoQsyOWoyNgCPMW0GLg9fK5ZUyd0bdS5JbWhCdlSKod4QWrh1or5UuURELbCi/u/y3hJlCT/ag2Qa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X7c2Qz36; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IZjaattU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054651F000FF;
-	Mon, 14 Sep 2026 14:44:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X7c2Qz36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF4A1F00898;
+	Mon, 14 Sep 2026 14:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789397082;
-	bh=OvVR72wBa9TZny1eLPD8N65WCuigWBN1UDofNfAsrg4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IZjaattUTqkmDK/amtzmozzgEK9Knwn+N79wVWPR5d/Af3HpQ6l7xgxv6sH+EgN1h
-	 8/VvppHzJLg4PHvoYJmaCaIyug12f6I3/unD1uVeWROiXNdRIXvKAHO2wpvxnPBVBa
-	 OQ3bSGU6OzjITMUJ3wUC/tmBWGUnyKZeFJe8KCzVRkVW4h/Gr6NQ3zGD53b0UbwsDh
-	 w2PssxiwPMTY2solnlxwygQDGsqZRInO8IHR5F4YACMXCCaqwT84sWvvLwu71HERzy
-	 sh5r6sRFAfp7UXL2/RX4dB7Y5XhjF7RhmPmS3SMeJzWJkZddP8ERW5NVT/OHfWqkto
-	 MiMS0lUtaPiUQ==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/8] mm/damon/sysfs-schemes: read
- sysfs_filter->addr_range only once
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260914142327.92510-2-sj@kernel.org>
-References: <20260914142327.92510-1-sj@kernel.org>
- <20260914142327.92510-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 14 Sep 2026 14:44:41 +0000
-Message-Id: <20260914144442.054651F000FF@smtp.kernel.org>
+	s=k20260515; t=1789397096;
+	bh=WKHC2ohfBCTfxJBQb1w+ZA1oqxl4Tap4PnGbWDCoJ/8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=X7c2Qz36NUgvIzawLbL+0tKSDFObpIvoXFWFaPLtr+oyXmr11JU1czou0VO/s+43Z
+	 Cjs1+YPJ3oK1KLQIwltKv4wuWvZK/PRjyx/r9mJE2JkEeJoDkd1YXmIuBUfw5jzfuC
+	 k19BbUOni6ei726Sviqeba/Vf/XCgTsIi0UNi9tvrMYD4kHS8PSsUQiUD5IUlLf87h
+	 Rpi6MIzp259mxca/HTW+QdEgFXks/qiidM3Nnk+for8RKBt7dcHEkjHuzZpnmc2sgC
+	 Yr1F3BBJdUK6FtKWp0P85blro/Bj2ilbs6QN7QVNJz+gw+B4BVQkd+sReX0f1K1JNV
+	 oeP1FgH4QQIxA==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v2 1/8] mm/damon/api: introduce DAMON_FILTER_TYPE_HUGEPAGE_SIZE
+Date: Mon, 14 Sep 2026 07:44:38 -0700
+Message-ID: <20260914144448.93732-2-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260914144448.93732-1-sj@kernel.org>
+References: <20260914144448.93732-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> DAMON sysfs interface reads the user-provided address range arguments
-> for addr type DAMOS filter twice.  Once for validation, and once again
-> for assignments to the variable that will be passed to the core
-> layer. If the user updates the argument in parallel, an invalid address
-> range could be passed to the core layer.  Avoid it by doing the
-> assignments first, and then validating the assigned variables before
-> passing those to the core layer.
->=20
-> User impact of the bug should be trivial.  From the core layer's
-> perspective, the invalid address range is not really invalid.  It just
-> works as having a weird address range.  No critical issues such as a
-> crash or a leak could happen.  And sane users ain't do such parallel
-> arguments update anyway.  If they do, such racy behavior is arguably
-> somewhat expected and deserved.  That said, there is no reason to keep
-> such races.
->=20
-> Fixes: 2f1abcfccd86 ("mm/damon/sysfs-schemes: support address range type =
-DAMOS filter")
-> Cc: <stable@vger.kernel.org> # 6.6.x
-> Signed-off-by: SJ Park <sj@kernel.org>
+Introduce a new data attribute probe filter type, hugepage_size.  It
+will work for memory that is backed by a hugepage of a given size range.
+Add a new damon_filter_type enum DAMON_FILTER_TYPE_HUGEPAGE_SIZE to
+identify the type.  Add two new fields in the damon_filter struct for
+saving the size range.
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260914142327.9251=
-0-1-sj@kernel.org?part=3D1
-
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 4be7d1df8e71f..bbb190b474015 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -783,12 +783,14 @@ struct damon_prep {
+  * @DAMON_FILTER_TYPE_MEMCG:		Specific memcg's pages.
+  * @DAMON_FILTER_TYPE_PGIDLE_UNSET:	Pgidle is unset.
+  * @DAMON_FILTER_TYPE_PGIDLE_SET:	Pgidle is set.
++ * @DAMON_FILTER_TYPE_HUGEPAGE_SIZE:	Page is part of a hugepage.
+  */
+ enum damon_filter_type {
+ 	DAMON_FILTER_TYPE_ANON,
+ 	DAMON_FILTER_TYPE_MEMCG,
+ 	DAMON_FILTER_TYPE_PGIDLE_UNSET,
+ 	DAMON_FILTER_TYPE_PGIDLE_SET,
++	DAMON_FILTER_TYPE_HUGEPAGE_SIZE,
+ };
+ 
+ /**
+@@ -798,6 +800,8 @@ enum damon_filter_type {
+  * @matching:	Whether this filter is for the type-matching ones.
+  * @allow:	Whether the @type-@matching ones should pass this filter.
+  * @memcg_id:	Memcg id of the question if @type is DAMON_FILTER_MEMCG.
++ * @range_min:	Minimum value of range arguments.
++ * @range_max:	Maximum value of range arguments.
+  */
+ struct damon_filter {
+ 	enum damon_filter_type type;
+@@ -805,6 +809,10 @@ struct damon_filter {
+ 	bool allow;
+ 	union {
+ 		u64 memcg_id;
++		struct {
++			unsigned long range_min;
++			unsigned long range_max;
++		};
+ 	};
+ /* private: */
+ 	/* Siblings list. */
+-- 
+2.47.3
