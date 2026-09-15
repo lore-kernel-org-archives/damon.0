@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0B23C81BE;
-	Tue, 15 Sep 2026 14:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C0E3C343A;
+	Tue, 15 Sep 2026 14:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789482851; cv=none; b=iiYMYqx/EK/2sGF3NUhoeJIqFBOy5bKEJvE6QzlhU2GzgJbyWyLwxx19th0GWBTGiLiMlzntRFtrx8WB7Jk05s0roSAjnBP1sQsw00hxd7eMdlbdzbHJjIzojplyvoXbUMPKEU0oQQq3Eiu2nTFGz/j1Ssnvde52b2gCKWj+G+U=
+	t=1789482852; cv=none; b=CMPcOzbTwrZIdatwASqvjLUXRqLm6Smm8IAFQpQqw35l9lJFisBt9tpi5lhK/H2YwM1ZW2tQ+XQL0zdpDKDg5RPR+4GYumiCqqfh40MZutNp15Vab0DJk4SgAl+AduZLhYcarDbMYJmr6P75co317k7R8v3wh9kkOAqiaD9+XKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789482851; c=relaxed/simple;
-	bh=6622FqAoJyylnw82hdIzdoflo9b7IhzEAZqdmcHMO9w=;
+	s=arc-20240116; t=1789482852; c=relaxed/simple;
+	bh=5Ih8qSxrx+1FoiQrZrDyi0m7BSRP8d4efVZQoDuXGTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XaT+pMqQp/ozHDeYEEGSvS6IsZ3So1PvUxuFhStf8/sGg/SFZVcRL0bi44KcWZNQFo7L0KqX5/yRUdYM+B0F+drvd3dwmITsTZ9Wj5HtnoRTz3pnpDVCON4tlTT+BVA6VYqslylsnRw0YDWp9l5IfH5W5ANoMe35v7hrZkW8dI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cR7JWe2z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=s2cKBNR011EK22nqrZ0BHbiOeHUw6ZswjUy2ydo3vVtbh2KYiSxhb3lZX7k+XkMJ2r0JuH0vZLqGVYCn1QpWJNwsyP6ae3Bx+lETgzwzKa77PvHuii2afgSNqhiuw/j2j7uVrC9iql5t8hL6jUm7LFJTXBK9A6NDBNUwB4Ugn3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HgUT09d5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cR7JWe2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4BA1F000FF;
-	Tue, 15 Sep 2026 14:34:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HgUT09d5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949BC1F0089A;
+	Tue, 15 Sep 2026 14:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789482849;
-	bh=KlTkThYMNDC2bLrO2MA1hCJuFVsV7BXLwZ+Px5RpEUU=;
+	s=k20260515; t=1789482850;
+	bh=9PbkWTjWrdG2mF2OjLqwQA4JbmDDau4Exk+WU0SHNwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cR7JWe2zcCQzbzw/3IUbtt6LlH6sxUB1CaBML78zP72aDs3bdE2z3u5y2S5kv5nca
-	 Gkqaczsf3sV2zpyPAxB40mALEbAhCIDKi7+dyz5Yfuxd9fF9CwByOqmqEl1LTOZmvf
-	 t9hL/XmYVGduQkZUUuzm6ZYrfKb6LANkn5EsdO+aJR5NiAmHwqLZV50Fpmc8060MUW
-	 7jZHf9fyU30Vsxh68ReppviRZ4n5t0cLbbxz6WLEKOoKuEtRmB38FmWtSpLr66YYmr
-	 lFUvml+ZfbI+v+P3RFgY1ZB58sHJqiIqMCoAG7290MGJSoEjqDcdAoSaiSWuJxXknp
-	 IfOU5xVFxNf8A==
+	b=HgUT09d5ds6pCIoWo2JOBAnd3tlvDqG/n0pWkNgSbNxYbSis7mFqOPRrGiZu2UEDM
+	 inijRcU+3TOX2jwVNzZIJ6tn9vp3ldP4lgtMiW0QYRrKY36hfP3vsfpPVUFgcM3Lbs
+	 oVhf57TvQ+jVFTriGybHMkr68tQ5bkYaH0EhGdCLOjqGuRPOgYYMDXcOI5JsL44PRX
+	 7j/9KIz+xSXCVb77UtSQw2BeR31cUmVXDYv19kVJFh0s2Edt4yrk7glfBymvU4SJjB
+	 oVLbS4SwReREByD1KNgehWo67kB7Qf8tEZWFO6Z1cPEMUWRaFMdT4KJJdxQcxZowKw
+	 uJEpLCUUNq6lA==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -43,9 +43,9 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 6/8] Docs/mm/damon/design: update for hugepage_size probe filter
-Date: Tue, 15 Sep 2026 07:33:55 -0700
-Message-ID: <20260915143359.91472-7-sj@kernel.org>
+Subject: [PATCH 7/8] Docs/admin-guide/mm/damon/usage: update for hugepage_size
+Date: Tue, 15 Sep 2026 07:33:56 -0700
+Message-ID: <20260915143359.91472-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260915143359.91472-1-sj@kernel.org>
 References: <20260915143359.91472-1-sj@kernel.org>
@@ -55,28 +55,38 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added hugepage_size data
-attribute probe filter type.
+Update DAMON usage document for the newly added hugepage_size data
+attribute filter type.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/admin-guide/mm/damon/usage.rst | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 707170bcd1b33..0a86792f90a18 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -300,6 +300,8 @@ filter types.  Currently below filter types are supported.
- - ``pgidle_unset``: Matches if the page for the memory is marked as not
-   access-idle.
- - ``pgidle_set``: Matches if the page for the memory is marked as access-idle.
-+- ``hugepage_size``: Matches if the page for the memory is a part of a hugepage
-+  of a given size range.
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index d3e37400367bd..6b80bce5d678d 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -78,7 +78,7 @@ comma (",").
+     │ │ │ │ │ │ │ │ │ 0/prep_action
+     │ │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ │ │ filters/nr_filters
+-    │ │ │ │ │ │ │ │ │ 0/type,matching,allow,path
++    │ │ │ │ │ │ │ │ │ 0/type,matching,allow,path,min,max
+     │ │ │ │ │ │ │ │ │ ...
+     │ │ │ │ │ │ │ ...
+     │ │ │ │ │ :ref:`targets <sysfs_targets>`/nr_targets
+@@ -308,6 +308,8 @@ Writing a number (``N``) to the file creates the number of child directories
+ named ``0`` to ``N-1``.  Each directory represents each filter and works in a
+ way similar to that for :ref:`DAMOS filter <sysfs_filters>`.  When the filter
+ ``type`` is ``memcg``, ``path`` file acts as ``memcg_path`` for :ref:`DAMOS
++filter <sysfs_filters>`.  When the filter ``type`` is ``hugepage_size``,
++``min`` and ``max`` files acts as files of the same names for :ref:`DAMOS
+ filter <sysfs_filters>`.
  
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
+ .. _sysfs_targets:
 -- 
 2.47.3
