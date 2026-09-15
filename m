@@ -1,70 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DB73CEB98;
-	Tue, 15 Sep 2026 02:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7323D7D6C;
+	Tue, 15 Sep 2026 02:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789437627; cv=none; b=Au17F1Lp3XUgtWDJjwxhLJ5i5JEpuOrwx9whUmIAcfIB8wAPsUK+CencO7byUvD8zdy10V6GcUzgWlFeSfNg8MnDqecKpwUEaatyijp8kLRZzDkrE4KbkuZoWaW/ehj6Z0oJ3PXGWcUndSK0/tbQVtMwO8hiktW9k5PQnDZCGJQ=
+	t=1789437842; cv=none; b=tD8BCUKZnhswGsYQjXiLJbriEChMoHylqPP/78fbiBXZe1FkxTliBbh+ohvznNUFN42kOszmcWEom//9i3pQz+FI689YMbye3/vHama8yCyTbmtnLsrmWHVV/Tok5umvRWR8jplUeNNoidSt1IgfQP6bTz76Dq6IHCz1vZ9VwQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789437627; c=relaxed/simple;
-	bh=6fRVEXV2uHngOQepnlsDfQPT/CwZLG42dPNSEGi78xY=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=Llj0OVVY0Hmf+vWmkzbDXJbthtq+VL34HEPSoUulhyA4zyGzOpwX5k+8jjUCKwdbkywbMML9f/SkIq62UgNJLGWmC3OxE71G6oxIwgsoldRaNflZcfQe9lBDnQYB30H0Fb5OJ6uDIgALCd+BC0yadITW7IKhfCpjzNliS+GWr6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=AsWED0K5; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789437842; c=relaxed/simple;
+	bh=xgknFQhI6Gi9FL+RBgQK0JznXAMYNBAeel35EE3vNco=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IiHaEB0cFbSkSd/Q/V4cTS/1vAs++jdcrz0MXugiIU2YLJxzINJutFBoIINAJeAj2Jh/leijotOtzpZmnGxUKlOUKqHjyYUq7HjLO4KyB2+ZgdCPcBofb7FWHdK8v7Eqy11Ce+Jjwf/nEFp4kJw0oKja8MpoCZmUTxRFq4IqgW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BNh83LG0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="AsWED0K5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8B41F000FF;
-	Tue, 15 Sep 2026 02:00:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux-foundation.org; s=korg; t=1789437625;
-	bh=seOLtn7PZjOcFpj74bjwxSYEG88tNO9Fy59lprCxUnQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=AsWED0K55GRxQa+2by8CN/aH5Eu+FIzfpnhXxCbY7do0WSyI9wDy8wdp12TmIvIVg
-	 qlc7+DhAH2ZkbQ/cirw5BQZ/x/H1cFkRq9pkxmXbQLDE/6pcDGQO+LZjR+plypPG7b
-	 o6d6oDlH/NV09BN1XhW3tamrb6bbP+TOeoflg+aA=
-Date: Mon, 14 Sep 2026 19:00:24 -0700
-From: Andrew Morton <akpm@linux-foundation.org>
-To: SJ Park <sj@kernel.org>
-Cc: "Liam R. Howlett" <liam@infradead.org>, Brendan Higgins
- <brendan.higgins@linux.dev>, David Gow <davidgow@davidgow.net>, David
- Hildenbrand <david@kernel.org>, Jonathan Corbet <corbet@lwn.net>, Lorenzo
- Stoakes <ljs@kernel.org>, Michal Hocko <mhocko@suse.com>, Mike Rapoport
- <rppt@kernel.org>, Randy Dunlap <rdunlap@infradead.org>, Sang-Heon Jeon
- <ekffu200098@gmail.com>, Shuah Khan <shuah@kernel.org>, Shuah Khan
- <skhan@linuxfoundation.org>, Suren Baghdasaryan <surenb@google.com>,
- Vlastimil Babka <vbabka@kernel.org>, damon@lists.linux.dev,
- kunit-dev@googlegroups.com, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
- linux-mm@kvack.org
-Subject: Re: [PATCH 0/6] mm/damon: misc improvements in tests and documents
-Message-Id: <20260914190024.358f167aea301b78d50e6a00@linux-foundation.org>
-In-Reply-To: <20260914141952.91465-1-sj@kernel.org>
-References: <20260914141952.91465-1-sj@kernel.org>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BNh83LG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55AB1F00898;
+	Tue, 15 Sep 2026 02:03:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789437840;
+	bh=2ExXhYw4140NQhYA7NJ57bnziNBZPppsMFWVZ83+lTQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=BNh83LG0DIQB1ESdDkT1rarha7yVCWZHZkcXBckw9hojvmxaQfbNbJ+l71CvRBYjy
+	 JbO0b8+kDI5VjH9BEZ7/lRilKXwINegOmx9sDJpc3b68wDBDP8nQklsHtOBgaW3D2z
+	 H48Xxq9JvzlsQvURnUTFUpNf9jwG/Kp8VETRrWpEFLMXyl7Qt97Oy8FKl5A3e+l9EN
+	 RzK4a5v6pR1Tu2J5RDbzxVOa9TlGbrAPblozPRcTv4oOe2Ckkzl6vGrxAUxiDsqeFz
+	 SS7Gv7jypkU6TwYCif2SlgVcIO6ki2Su3HW+JjAtUx4s/PfQ6JbBunGclUM7kOpSf8
+	 noweQMIgp8CfA==
+From: Sasha Levin <sashal@kernel.org>
+To: stable@vger.kernel.org
+Cc: Sasha Levin <sashal@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 6.18.y] mm/damon/core: avoid infinite kdamond_merge_regions() internal loop
+Date: Mon, 14 Sep 2026 22:03:33 -0400
+Message-ID: <daily-reply-0017-re-damon-merge-regions-remaining@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260911135003.96395-1-sj@kernel.org>
+References: <20260911135003.96395-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Mon, 14 Sep 2026 07:19:45 -0700 SJ Park <sj@kernel.org> wrote:
+> > Once that lands, the other four branches are ready to go.
+>
+> Cool, let me know if there is anything that I can help!
 
-> Add various improvements to DAMON tests and documents.
-> 
-> Patch 1 and 2 from Zenghui Yu (Huawei) let DAMON selftest to clean up
-> its state and output after running the tests.  Patch 3 from Eva
-> Kurchatova makes a few selftest be able to run with Python's safe path
-> mode.  Patch 4 from Kunwu Chan improves coverage of DAMON kunit tests.
-> Finally, patches 5 and 6 from Liew Rui Yan clarify and fix typos on
-> documents for DAMOS quota behaviors.
-> 
-> Below are notes that can be removed in the final commit message.
-> 
-> This is a batched repost of DAMON patches that were individually posted.
-> Please refer to each patch for changelog.
+Queued for 6.12, 6.6, 6.1 and 5.15, thanks.
 
-All queued, thanks,
+-- 
+Thanks,
+Sasha
