@@ -1,60 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7668844160F
-	for <damon@lists.linux.dev>; Tue, 15 Sep 2026 06:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ADC248881
+	for <damon@lists.linux.dev>; Tue, 15 Sep 2026 06:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789452941; cv=none; b=RXy0MdWwkofQHKRDgmf13Gzrq6n3KgceNA/ifURnLEJoDw1rhmd54fY3pYHPGKIjKYyp+XPDOXp1xyoSc5t8p7NHF4f4s/s36hWoOLp5eY6AFiGshrN9vqdozQvlLUHWoHONT4BhyGKFERm21QHqbjzgmzvb5Ja2+vk9YdBNnhw=
+	t=1789453117; cv=none; b=hiSa4gyumXMW/xoiZYfV5fTW/dscUFGm+VGzG7hj3upotQ6kAOAhBLJPj1FwBY8cDL7WvyUwXKvr7YRQ5aEBESwbFiN64ZIVo9c6CdbKdgdtQ8fk87NkuUy77orS5bfqXP7Fwh3q6MR8qgnGruRzLi19JNmwenA2htXK2/ZlR4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789452941; c=relaxed/simple;
-	bh=7GH9/eighyLvTspG4hp4V/XUggSVcIWA2CCwhiMDfkg=;
+	s=arc-20240116; t=1789453117; c=relaxed/simple;
+	bh=0hM6EGLa5n5kDsPQEl8d0vxVJ1ygtJaQsk1mX6SXM04=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=n9HxbFwmcXlw0cqG+cLHEtesSoDrs0eOFk4Ixv3lAbdbKOgUi277I+hXuVobNviOQsOlsDXrdpgmgMt8l/2z11AGC+t+WJlLzn+PC/GQA7E7evRZkWE1ZfKT3SNe5I6QHoLF5qHB2bV9V71AmBoSNtOFm4Le+dSoDWzkAZWvTac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B41gvzmq; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=sMZDAcCKWGxfRSavtEbWzjlMIMmGitBOXEavKfMkw8NFDhQrHxjMPNXoIiT6XJfe8kgwYx0IkvwzAhqjpVCKw5UZFN43uKnaoRYdnoW1yjI3KvRIaihh3SFXrRrjQFceXCIgoZu6OIc1m0WkZozuG0/Ljy3DYxKHvi82O+xmoD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLxHNTTt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B41gvzmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C561F000FF;
-	Tue, 15 Sep 2026 06:15:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLxHNTTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38AF1F000FF;
+	Tue, 15 Sep 2026 06:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789452940;
-	bh=7GH9/eighyLvTspG4hp4V/XUggSVcIWA2CCwhiMDfkg=;
+	s=k20260515; t=1789453115;
+	bh=0hM6EGLa5n5kDsPQEl8d0vxVJ1ygtJaQsk1mX6SXM04=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=B41gvzmqk3zLyCgE9upeueyWj81cO9YY5R4nzpw6xxajlyQ7s9BLRP5RTrZPLcvSl
-	 owrgAKhEhA4woQaANika1Eeh2fPGmFZdx6a92zuu6MR5OB7w5R38vvqRGd2Undii6k
-	 JdNkcrUhNIxsH6O0mXnS03QuNcj2Ifm6sugJvx4H9KKpBsZx6r5PFNfLoaVyk/EAOO
-	 d/bGKcfs988x27gU9dw+AIGdFdW/HbIxZ10UJqJ48XXz2b907hYkyoTRdsvTt0r4M4
-	 sCv4FVMIs+xHvWRxgpYAwhCb2u5242rPtsxb9YltkWlOvgdPV/J9OJ4NAIXaOiUBg8
-	 4UxB3K0f80/Lg==
+	b=NLxHNTTt8DWCU5may5/p0nNBrwYO0IBPFhkDv1e6zYXHiWE8+Daz5FEU2d2g22ijR
+	 Gsdx323ja6uPqy5j4UWDPvXFtq5I8jvsLRYLo05F0JjkojhorPaSH39F6pDt55hjMy
+	 wx3Z0kKSbQmpRsvdxbwgewZClNMlDwDUiucPy9nRSTxW+qt4VsyH6/gDGy9p+vOb58
+	 ZbY/XBwWvVnYmWbR1n7PbL+Pkce+sQQkmkfJPhN3t26T4iFmFxka9Q8NCSZupWLcX2
+	 JGQ2Ji9wtzOTP5PFjKwZAuKZMiEa3zh2frOAVNACb4/Ob+QWpHJWxiDBIK7SWVfK9R
+	 LcTooqPJZovqA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/2] mm/damon/tests/core-kunit: test PSI goal rounds
- under the temporal tuner
+Subject: Re: [PATCH 1/2] mm/damon/core: score an unmeasured PSI goal as not
+ achieved for the temporal tuner
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Karl Mehltretter" <kmehltretter@gmail.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260915060937.3423-3-kmehltretter@gmail.com>
+In-Reply-To: <20260915060937.3423-2-kmehltretter@gmail.com>
 References: <20260915060937.3423-1-kmehltretter@gmail.com>
- <20260915060937.3423-3-kmehltretter@gmail.com>
+ <20260915060937.3423-2-kmehltretter@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 15 Sep 2026 06:15:39 +0000
-Message-Id: <20260915061539.E8C561F000FF@smtp.kernel.org>
+Date: Tue, 15 Sep 2026 06:18:35 +0000
+Message-Id: <20260915061835.C38AF1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> Exercise a PSI quota goal under the temporal tuner on its first
-> round, its next measured round, and after a goal commit. Use
-> ULONG_MAX as the target so the goal is not reached during the test.
-> Then check that a measured round which does reach the target sets
-> the quota to zero, and that the consist tuner keeps its quota over
-> an unmeasured round.
+> A newly created or committed PSI quota goal has no previous sample.
+> Commit a68878f83ae6 ("mm/damon/core: handle uninitialized
+> damos_quota_goal->last_psi_total") scores the first tuning round as
+> achieved to preserve the consist tuner's quota, since the feedback
+> loop returns its input unchanged at that score.
 >=20
-> Without the previous patch, the first and the post-commit checks see
-> a zero quota.
+> The temporal tuner sets the quota to zero for an achieved goal. This
+> skips the first charge window and the window after each goal commit.
+> Committing the PSI goal before every tuning round keeps the scheme
+> idle indefinitely.
 >=20
+> Score an unmeasured PSI goal as not achieved for the temporal tuner,
+> so a new scheme can run in its first window. Keep the consist tuner's
+> behaviour unchanged.
+>=20
+> Fixes: a68878f83ae6 ("mm/damon/core: handle uninitialized damos_quota_goa=
+l->last_psi_total")
+> Cc: <stable@vger.kernel.org> # 7.1.x
 > Assisted-by: LLM
 > Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 
@@ -62,5 +70,5 @@ Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260915060937.3423=
--1-kmehltretter@gmail.com?part=3D2
+-1-kmehltretter@gmail.com?part=3D1
 
