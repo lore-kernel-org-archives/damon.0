@@ -1,131 +1,151 @@
-Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DA23DB333
-	for <damon@lists.linux.dev>; Tue, 15 Sep 2026 02:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.140
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789439992; cv=pass; b=TczMaCfrqwVMR1mrMXHto0omNwtZWG8w2srtT2GFhwDI+marR9eTL4oBZRui+jJh/18w7n17t/4YwL+ndNjMkEbiNofiavG+ixKJIEMcZpOrSE20M9hEDf9HMQ/RaoaLRZ3McObZfx5cR4UqquQL4wXbNy8UUKTPNR5IHF/iD+4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789439992; c=relaxed/simple;
-	bh=eKLUaFl3MY3wwrqb6j5IuVvJPNafZ/2V9PYh3wKn53U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kV7/s/VDBH7knqV2RREeKLkn70qOfbtP3pvbBC8oqLm/Q0kOceRJowFoFue3KfSTqeUwiEjXvX7hcw5Pr/2mc11zCkpW/PBYUg6nOEvsW7n2p8Ylr+J/xYKwcseEhNya/jP0GXuHKPZKID69uHOZBFCLYbh6rCo9j/tH5Rz43bc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RvYmBTjc; arc=pass smtp.client-ip=74.125.225.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBC328033B
+	for <damon@lists.linux.dev>; Tue, 15 Sep 2026 02:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789440939; cv=none; b=bj6vGRW7rd44NJ/uqwP7EGv9NXekbY2YEImPbWXnk9K+3JEZ8W3yy72VR83p1w4gVT/ItQW/j5pwkcRpUA1o/rBfqWF19eCE6pqd3zdHLA6mI4L82l8zq49MteSmEUDB29F7zmJMOb3hFvPMC4KU48Mbr2YaDg+sNX+luQ8nI0k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789440939; c=relaxed/simple;
+	bh=136EN4ADhppTSjdnfWdxiOC89bNO775Gf/FZTu/DZWg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RyI8o+CN5eR9bCJujp/RMTS8n1cEaFky1O8wZLkWSMAEEiERVfQR0/RN7boJzfl1bywJsHszVGDAB/AqfCBZxfOGWxy8kjlxzwlsrqfH/2NqXZdGuASheJD/sjkYuznMJzxxW0/t0FadDEyYJIS20nG2LwbLqddEtp82XbTiIE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T1pZpgbJ; arc=none smtp.client-ip=74.125.227.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RvYmBTjc"
-Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49cd38e0e5dso31453305e9.2
-        for <damon@lists.linux.dev>; Mon, 14 Sep 2026 19:39:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789439987; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KgPzYBhW3wwFRiFXRx0TS24I9dPNAdhg8EkD1QjiNicoTJHftTWslL1C1ZpdYd2caj
-         J6xLFPUH/1uD6HmjoC5dMIGCN4Lu8yYuMRyhAeVCXfyB5OG6UjjucTNIEcx4MQXfdmgY
-         wH8esNllEUOf7ivUo1N15gbc18bOlHz0i1nxqifv+3Swlvjdt33NpVg/AOckR1gCHWcg
-         chpV4ktbmn4le+gOMH+q8ePAMZDtAUy5KsyRtmvqJQ93c6IDJJptbskK5c3f6oq/FJxR
-         +E3jNJE+LPBR/ym/lPJyKm6pWDEOO2Q9pl+CFHWxHYItPtT+UngC8BbtU4pY8OJ10PDD
-         PYnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=2jmDylHBt6Z/mwGiXz/nmJJJ0KqybZ3pQ4MP3rJZ7V4=;
-        fh=aVl1y3Mt4Svm7Sl+vT96rpqQMEJp9zNCgoaDzkFn+WE=;
-        b=k0WWJeN7v3JGo07gd5kLJzoVnQYbTTQhZaac/goSJsc1eK1XYjUSc5toIQyDggz0LT
-         wjFY1hYgPTRtikID/crWH4joJ99RgcantOBkaZH+/uNMUkf1yrEFpCebwEPhRybeDE2Z
-         OypzGCmxpSiMLBatZhn8pcax8tjiSnM6MU6u4uhwlLfGCC8m0rNB+twuZSlaz8e3R+Ug
-         wPL6Z6TqpLjfKzOjpsBQLP1sV/WkESCw7vrWaVYenOnVfzzpJKpJbHOgjiHLluE6Rvbb
-         CIknO+bwb3W2gVWrOMcPcn32lUXfanC+vykBIjxGnyZHv4DHfOq05i6bdDb6BefRERBE
-         M2pQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T1pZpgbJ"
+Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d747ed6d6eso19935355ad.2
+        for <damon@lists.linux.dev>; Mon, 14 Sep 2026 19:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789439987; x=1790044787; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=2jmDylHBt6Z/mwGiXz/nmJJJ0KqybZ3pQ4MP3rJZ7V4=;
-        b=RvYmBTjcvC5PbC+J8+1W61soT/ZZ2YwLtM6jj8AY8Fo45xXVnRQKT8TiHqFHNR5Ebh
-         0DFCmAymv5bQILiAepD1yjJQ4V2AbX7zNNUaoqU0T1JMWzg0jR/WL7KSc4y5S6Gti4iw
-         OpRTWuiVKmRkVLVS/pk5wsjWpJ5A9MONneeYSBCn8cuqunBnUpdnJT2ET92RGJQzVNfD
-         ryKN3vI9kuSjFItJOHYnzOe7gF5qX2TwoBv3Mm4GAtk4qReV8i3O0GPzeWpBZXGmsYd0
-         Ygicg8ai+ORzMFIxW6JiHPr7QyHCkUPhPqZBzltAq+tqt1XD+/Lzb9P6NOojWNKGewUp
-         Sahw==
+        d=gmail.com; s=20251104; t=1789440937; x=1790045737; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=4rONIJ4rFKQNYtEnPGvXxCw20wCu4aJ48o2Acfvenuc=;
+        b=T1pZpgbJerns3T9LZOV/KlyAQfPnJl12crW4oiVcj5u3MjR6WnPvhc2rrN59nfqnMZ
+         HqOz4uSTmYcQBKALMpHvIAz8Rk3BnMAy11w98NF6csyD+FhsEOPDGUsnpl85vnF31t6D
+         PuqfQ1mUkDhyJakWOKqAl4FEUFgDh8BLAoGlurFgnyFyU8xqrJMYkrMPYgBCmvUK/ze9
+         YF/rEL2kv97gJBd9zKQR/+HTF0tXl2pKvtW1JvpyfJ20ZPwVI7v1cD2RHtNI9mrKlc6V
+         zUtNLW5dTCUinU5bsejmxA/WS52Qa0dnIC3Lyenusqq3c66oKcDxgAc0bUWudgAc9bCv
+         M7yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789439987; x=1790044787;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2jmDylHBt6Z/mwGiXz/nmJJJ0KqybZ3pQ4MP3rJZ7V4=;
-        b=NVSRvUvSHwZz04L0PVBH6WyQadaAzzlfsQJHBHuXHDyfc7X6rTWMTWEFSXyZOOX/+e
-         kPR6GgAT69ujk/G9JPymjyuObahRFhu5C3k6QWnUH+yqugkIe9UAQK7eadqlbEQn0NPB
-         SE4yWHkXWpM8VSrgAYWLl4zJsbmm+ES2a9DYFPNgXQiW3APl/SX3jfZQdRX4mm2yMrFe
-         vi5+fifD7+pN4iGp3fiJ0+IBXL36rTcoi11zPuzcBXL2pz0LJYFpK95xgfFvIYOfYjpj
-         r5W26qFECGyP3oZEwEpqoHSBfpdunlEsLPLy1B77lKl6B05ISVKag34gMRBaVOTcl+2q
-         3xYw==
-X-Forwarded-Encrypted: i=1; AKwUvBwqihbCP+jMpUW36JIQh/4n3pRRdY/kzarl9zYTk8xk20dSoIArvhWDIGm7hVmRLltIWq276w==@lists.linux.dev
-X-Gm-Message-State: AFuF++nemz0fv+SCpE9yFvzo/MObt44jbk6szBNxiegZOWDjvUHl2pLb
-	TBv6GBCgG6qmbOwIR2wewtzqPobzjWdxbkYXVVE72MNUBWY70T6pj2wuEfbv5/OmTpzPit6fTku
-	aXKA4ohtHCegob5Az+G+TcPUE2RkjPo8=
-X-Gm-Gg: AYBFou2XGPO926D2yrfYn/8CPw2NVuiP1gdfcLBa+lPzXW1T/fum16H+c9kt2bqPu6+
-	KwdzOYBEAiCR3LnZ+jgjfil782kC+mPvCjk/PVSGENly2sP3FsSpbpSeckH2bUjKkG9jd+uHhn5
-	0kr8mBNwG+adb1f0RPV0J1zamLTMa/aVGKxMgArb6gseUgOkSUDbjmxRZwFrau+GkiNL0QYrXR3
-	yl9pA8F7rImB8oChMyMTpf5StzNxbH30r84T6kwJT4BdMWbgrCrsJuo1f8qyjcXK64Kubvojv3z
-	76ofBHylsUWoMUAhtRqAVvJK6T/BdOFWtkBqe7ZzHlrtwiC31/QFc9pqGY1PCy+0sLfPf+oWgsO
-	57nUciT25LUbz7OpTbuJYGzBB
-X-Received: by 2002:a05:600c:3548:b0:49e:602a:b4ec with SMTP id
- 5b1f17b1804b1-49e7a656bf6mr108019915e9.8.1789439986429; Mon, 14 Sep 2026
- 19:39:46 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1789440937; x=1790045737;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=4rONIJ4rFKQNYtEnPGvXxCw20wCu4aJ48o2Acfvenuc=;
+        b=tWRB11KkHlW/bvCX7rQOsW3CKtyHPaBoD2E62FTHqNN/hek7Ig73drEFiNef+D0k7P
+         J0KIXeHxj/ENsAXCh6+GQtW14N1qUyA6llzasSB37aV2scWTvVBZ8svfwFMUFNOHkP8H
+         K7wm+6S8lhvEmLC21J8miHRJF2KRoJ2QQ247FZQgndlQWARVhMXVJsuE1oKQl9Xbqeqw
+         4b4RaK5Sor5uaB44VfQ3aYET0we2T01H+NG7nL88EQ38EH/tzG61EIi5/MogrUV2SwM8
+         de5xVDWB2Nkumbz7JlrVwhexfV1fMNalwR8V4KXmwY1L7ZDxhfnAkZ7NJMt+xBmzq+KZ
+         ICMg==
+X-Forwarded-Encrypted: i=1; AKwUvBycER1wnqIWQRVBW7qg784pPh+oETcP2GUBO1pWlLWEWETAmhgvZ0SOguTJpHxxQDokC2DcGA==@lists.linux.dev
+X-Gm-Message-State: AFuF++mDhWEUVt01dCQPZMhqy7xbQCvsfRsmwqp8f8IjyLskiyv/MAQL
+	1m7BSgpykbrwuHsjabyiM0Uy++rZb+rtJftuRW0cOuwLLDIRulzyv2wd
+X-Gm-Gg: AYBFou2OhV66oZZIRt7ljcxue/kbXIAKA48ijnBL90BfxSRP0iDost6cj4vnL+z+RgJ
+	vBoH59ltie8wofyghaPMqMDpRGQH4rQ7LRdKjZilE+ZJ9FjeMIaPqVjiE8npXBSsLT4GQT6cGbK
+	bpxdfeOr8lpAUvzewDOG4sTbsRrOA7VYNbyr/DdFsFvv86EGF39Nvcdn9tCux84/nQ2bcV3Upg3
+	MHVNE0DvFhm8akjmuQH7GwD+9Oi2msg++jkrcSSEqBBod7Sr/sm3bl4t0+71nepNeNwCV4FLkB3
+	SRo4aXFxDGieLyjSXX3xQuoF002Li/4pQXjmHyWxCLSm/5iUiDPPJVgz5vNdgjd/apzmD1qGeXD
+	SaWfuctK6is32XsJJlYbpEdHLlXm61K78FsesXUzED9UMOSoBkUCvipwDj1dlFHAu8xvG39O7yT
+	ySE93Ga83yqp07cGuZsYvAggGlelCsw0lWqwfLOfKrLuTrDnltwaHIBA/1RjZeIcB0VdOwQWahP
+	0YIYJKBzdZI3Ddiz/g4e2AdQZve49DySa9U2+7T
+X-Received: by 2002:a17:903:1ac6:b0:2da:e634:370e with SMTP id d9443c01a7336-2dd6c6eb5f4mr114307505ad.14.1789440937165;
+        Mon, 14 Sep 2026 19:55:37 -0700 (PDT)
+Received: from localhost.localdomain (vmi2317699.contaboserver.net. [85.239.239.237])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd2ceb7720sm57859485ad.37.2026.09.14.19.55.30
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 14 Sep 2026 19:55:36 -0700 (PDT)
+From: Lian Wang <lianux.mm@gmail.com>
+To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Cc: "Lian Wang (ProcessMission)" <lianux.mm@gmail.com>,
+	sj@kernel.org,
+	akinobu.mita@gmail.com,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	akpm@linux-foundation.org,
+	corbet@lwn.net,
+	bijan311@gmail.com,
+	ajayjoshi@micron.com,
+	honggyu.kim@sk.com,
+	yunjeong.mun@sk.com,
+	rientjes@google.com,
+	weixugc@google.com,
+	jic23@kernel.org,
+	gourry@gourry.net,
+	Kunwu Chan <kunwu.chan@linux.dev>
+Subject: Re: [RFC PATCH v2 0/9] mm/damon: hardware-sampled access reports
+Date: Tue, 15 Sep 2026 10:54:51 +0800
+Message-ID: <20260915025514.2434-1-lianux.mm@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260910171623.6638-1-ravis.opensrc@gmail.com>
+References: <20260910171623.6638-1-ravis.opensrc@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260914155729.1518105-1-kunwu.chan@gmail.com> <20260914234924.100335-1-sj@kernel.org>
-In-Reply-To: <20260914234924.100335-1-sj@kernel.org>
-From: KunWu Chan <kunwu.chan@gmail.com>
-Date: Tue, 15 Sep 2026 10:39:35 +0800
-X-Gm-Features: AcwNN1Uk_DUdhz76I0hRVSRZulITZWPos7_upPjkw2hrucXG5m-I4GLxm605D_A
-Message-ID: <CAN_Opa-cJDOOtQo+24kSrO6E9khoJuD3wzHZxcgAWZrrSOOSqw@mail.gmail.com>
-Subject: Re: [RFC PATCH 8/8] mm/damon/core-kunit: test invalid damos filter commits
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Brendan Higgins <brendan.higgins@linux.dev>, 
-	David Gow <davidgow@davidgow.net>, damon@lists.linux.dev, kunit-dev@googlegroups.com, 
-	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, 
-	linux-mm@kvack.org, lianux.mm@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Sep 15, 2026 at 7:49=E2=80=AFAM SJ Park <sj@kernel.org> wrote:
->
-> Hi Kunwu,
->
-> On Mon, 14 Sep 2026 23:57:27 +0800 Kunwu Chan <kunwu.chan@gmail.com> wrot=
-e:
->
-> > On Sat, 12 Sep 2026 12:18:06 -0700 SJ Park <sj@kernel.org> wrote:
-> >
-> > > Add test cases for testing the validation of damos filter arguments i=
-n
-> > > commit time.
-> [...]
-> > Could we also test an invalid PROBE_HITS_WSUM range here?
-> >
-> > Patch 4 adds the same max < min validation for
-> > DAMOS_FILTER_TYPE_PROBE_HITS_WSUM, but this test only covers
-> > ADDR and HUGEPAGE_SIZE.
->
-> I agree it is better to add a test.  But not necessarily together with th=
-is
-> series, in my humble opinion.  I am separately working on the test.
+From: "Lian Wang (ProcessMission)" <lianux.mm@gmail.com>
 
-Thanks, SJ. Sounds good to me.
+Hi Ravi and SJ,
 
->
->
-> Thanks,
-> SJ
->
-> [...]
+Thank you for sharing this work.  The report path looks potentially useful
+for a DAMON observation-granularity problem that we are investigating.
+
+The scenario originated from an issue reported by SXF, and we are planning to
+share and discuss it at LPC.  We have now reproduced the underlying observation
+difference on both a local PC and an x86 server.  The server run below is our
+larger, controlled reproduction.
+
+Our test monitors a QEMU process whose guest memory is backed by a shared
+tmpfs file.  The guest repeatedly writes one 4 KiB page in every 2 MiB range
+of a resident 48 GiB data set.  The unique 4 KiB spatial coverage of one sweep
+is about 96 MiB, or 0.195% of that data set.
+
+Using vaddr DAMON with a 500 ms sampling interval, 20 second aggregation
+interval, and 500--2000 regions, two opposite-order runs reported a mean hot
+ratio of 1.751% without shmem PMD mappings and 75.836% with them.  A control
+that writes the full 2 MiB ranges reported 75.366% with PMD mappings.  Hence,
+in this workload the current observation does not distinguish spatially sparse
+4 KiB activity from dense activity once the large mappings are present.
+
+We are testing existing DAMON strategy mitigations first.  As a next step, we
+plan to replay recorded access addresses through the report/probe decision
+path, independently of a live PMU, and check whether DAMOS can distinguish the
+sparse and dense cases.  In that experiment, raw report frequency and unique
+4 KiB spatial coverage will remain separate quantities; lack of reports will
+remain unknown when source coverage or loss is insufficient.
+
+If the report evidence makes the decision reliable, the response we want to
+evaluate is an internal, bounded PMD mapping demotion (splitting the mapping
+while retaining the underlying THP folio), rather than exposing physical folio
+split as a DAMOS action.  We will first keep the response stat-only and archive
+the would-act ranges.  After the replay result is repeatable, we can replace
+the replay producer with an appropriate hardware source and share the results.
+
+This seems like a useful consumer experiment for the report interface, even if
+the vaddr and optimized transport parts belong to the later phase.  Please let
+us know if this direction conflicts with the intended report semantics.
+
+We will share the strategy, replay, and mapping-decision results once they are
+repeatable.  We are also reviewing and testing this series, and will follow up
+with the appropriate tag(s) for the exact revision if that work justifies them.
+
+Thanks,
+Lian
+
+On Thu, 10 Sep 2026 10:16:14 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+
+> This series lets DAMON take its access information from a hardware sampler
+> instead of from a page-table scan, and lets a scheme's score be weighted by what
+> that sampler reported.
+
+Sent using hkml (https://github.com/sjp38/hackermail)
