@@ -1,90 +1,76 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBC328033B
-	for <damon@lists.linux.dev>; Tue, 15 Sep 2026 02:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A911C36215B
+	for <damon@lists.linux.dev>; Tue, 15 Sep 2026 03:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789440939; cv=none; b=bj6vGRW7rd44NJ/uqwP7EGv9NXekbY2YEImPbWXnk9K+3JEZ8W3yy72VR83p1w4gVT/ItQW/j5pwkcRpUA1o/rBfqWF19eCE6pqd3zdHLA6mI4L82l8zq49MteSmEUDB29F7zmJMOb3hFvPMC4KU48Mbr2YaDg+sNX+luQ8nI0k=
+	t=1789443067; cv=none; b=dxU2m0nSwiqg+4klw2Q+VHKDLum2JZfFECAteIsrp9UA7vEyWjG+NSYJcqOjRrJCwHUa0T7reVreQ2Y5V10esaEdXYqIyfSSn5mmK5FyLAEQmZJAESbXpwvsQSlp4lFnTDoDlLbQOBUoGa599PSg8M9Q2gSXu/j7recFAw4XiDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789440939; c=relaxed/simple;
-	bh=136EN4ADhppTSjdnfWdxiOC89bNO775Gf/FZTu/DZWg=;
+	s=arc-20240116; t=1789443067; c=relaxed/simple;
+	bh=s+LsBuhIlfs/w0lJnlNuOPSGSL6VueLtw5zs57ipXSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RyI8o+CN5eR9bCJujp/RMTS8n1cEaFky1O8wZLkWSMAEEiERVfQR0/RN7boJzfl1bywJsHszVGDAB/AqfCBZxfOGWxy8kjlxzwlsrqfH/2NqXZdGuASheJD/sjkYuznMJzxxW0/t0FadDEyYJIS20nG2LwbLqddEtp82XbTiIE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T1pZpgbJ; arc=none smtp.client-ip=74.125.227.141
+	 MIME-Version; b=d7PWRtNWKAzkFiQ1ASxY+yVMZA6imPkahWoX/wpCIyVN8YcFKR58r4g49yqgmlk2QhdN9n1aOqViBsSmR6L8K/fCXxgv7UhMeU7uTdZpISqrUQe4gY/Z2Ze6irWHVPV2jp15lIfegXe5modhlDIwMJYYwy0l3ElDVyXIDkXEh6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i4AJ23ue; arc=none smtp.client-ip=74.125.227.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T1pZpgbJ"
-Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d747ed6d6eso19935355ad.2
-        for <damon@lists.linux.dev>; Mon, 14 Sep 2026 19:55:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i4AJ23ue"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-39b350c6920so2540756a91.1
+        for <damon@lists.linux.dev>; Mon, 14 Sep 2026 20:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789440937; x=1790045737; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789443059; x=1790047859; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=4rONIJ4rFKQNYtEnPGvXxCw20wCu4aJ48o2Acfvenuc=;
-        b=T1pZpgbJerns3T9LZOV/KlyAQfPnJl12crW4oiVcj5u3MjR6WnPvhc2rrN59nfqnMZ
-         HqOz4uSTmYcQBKALMpHvIAz8Rk3BnMAy11w98NF6csyD+FhsEOPDGUsnpl85vnF31t6D
-         PuqfQ1mUkDhyJakWOKqAl4FEUFgDh8BLAoGlurFgnyFyU8xqrJMYkrMPYgBCmvUK/ze9
-         YF/rEL2kv97gJBd9zKQR/+HTF0tXl2pKvtW1JvpyfJ20ZPwVI7v1cD2RHtNI9mrKlc6V
-         zUtNLW5dTCUinU5bsejmxA/WS52Qa0dnIC3Lyenusqq3c66oKcDxgAc0bUWudgAc9bCv
-         M7yA==
+        bh=s7nWcLz8pfZOPdgnq2ek5GovUDuRsqxFmdnwCI+6u6U=;
+        b=i4AJ23uellIMBAXm/n5ybSgqHOIsyvVaNKnySrOCAoqj/uT47G9vrKfNlJYx13uoo/
+         K9Jm9lAhnGIHj8dz47RODtge8mCdgVU2FOOtVEzPl0lYZIrnuPc7cqz3ymdlp/Iz/vYX
+         15SH57Y6gU0EQtvT7SCmqp59AL8TqEet23aPOk7DhV5cn83Kz//yy4jcaxnbhALwfVmP
+         93G+CrYTGHuvLnvs9z9bKoHmPdM+r+ND16BFuz0021R+dWNuhlWiP9Y30JytkC98Enhq
+         TPpkAZzJkucQpGHHaomrap78fFPKix5gi/oS9qFYm7PSH7/AoAZFFU4WWkdSE2uqGJMJ
+         1F/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789440937; x=1790045737;
+        d=1e100.net; s=20260707; t=1789443059; x=1790047859;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4rONIJ4rFKQNYtEnPGvXxCw20wCu4aJ48o2Acfvenuc=;
-        b=tWRB11KkHlW/bvCX7rQOsW3CKtyHPaBoD2E62FTHqNN/hek7Ig73drEFiNef+D0k7P
-         J0KIXeHxj/ENsAXCh6+GQtW14N1qUyA6llzasSB37aV2scWTvVBZ8svfwFMUFNOHkP8H
-         K7wm+6S8lhvEmLC21J8miHRJF2KRoJ2QQ247FZQgndlQWARVhMXVJsuE1oKQl9Xbqeqw
-         4b4RaK5Sor5uaB44VfQ3aYET0we2T01H+NG7nL88EQ38EH/tzG61EIi5/MogrUV2SwM8
-         de5xVDWB2Nkumbz7JlrVwhexfV1fMNalwR8V4KXmwY1L7ZDxhfnAkZ7NJMt+xBmzq+KZ
-         ICMg==
-X-Forwarded-Encrypted: i=1; AKwUvBycER1wnqIWQRVBW7qg784pPh+oETcP2GUBO1pWlLWEWETAmhgvZ0SOguTJpHxxQDokC2DcGA==@lists.linux.dev
-X-Gm-Message-State: AFuF++mDhWEUVt01dCQPZMhqy7xbQCvsfRsmwqp8f8IjyLskiyv/MAQL
-	1m7BSgpykbrwuHsjabyiM0Uy++rZb+rtJftuRW0cOuwLLDIRulzyv2wd
-X-Gm-Gg: AYBFou2OhV66oZZIRt7ljcxue/kbXIAKA48ijnBL90BfxSRP0iDost6cj4vnL+z+RgJ
-	vBoH59ltie8wofyghaPMqMDpRGQH4rQ7LRdKjZilE+ZJ9FjeMIaPqVjiE8npXBSsLT4GQT6cGbK
-	bpxdfeOr8lpAUvzewDOG4sTbsRrOA7VYNbyr/DdFsFvv86EGF39Nvcdn9tCux84/nQ2bcV3Upg3
-	MHVNE0DvFhm8akjmuQH7GwD+9Oi2msg++jkrcSSEqBBod7Sr/sm3bl4t0+71nepNeNwCV4FLkB3
-	SRo4aXFxDGieLyjSXX3xQuoF002Li/4pQXjmHyWxCLSm/5iUiDPPJVgz5vNdgjd/apzmD1qGeXD
-	SaWfuctK6is32XsJJlYbpEdHLlXm61K78FsesXUzED9UMOSoBkUCvipwDj1dlFHAu8xvG39O7yT
-	ySE93Ga83yqp07cGuZsYvAggGlelCsw0lWqwfLOfKrLuTrDnltwaHIBA/1RjZeIcB0VdOwQWahP
-	0YIYJKBzdZI3Ddiz/g4e2AdQZve49DySa9U2+7T
-X-Received: by 2002:a17:903:1ac6:b0:2da:e634:370e with SMTP id d9443c01a7336-2dd6c6eb5f4mr114307505ad.14.1789440937165;
-        Mon, 14 Sep 2026 19:55:37 -0700 (PDT)
-Received: from localhost.localdomain (vmi2317699.contaboserver.net. [85.239.239.237])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd2ceb7720sm57859485ad.37.2026.09.14.19.55.30
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 14 Sep 2026 19:55:36 -0700 (PDT)
-From: Lian Wang <lianux.mm@gmail.com>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Cc: "Lian Wang (ProcessMission)" <lianux.mm@gmail.com>,
-	sj@kernel.org,
-	akinobu.mita@gmail.com,
+        bh=s7nWcLz8pfZOPdgnq2ek5GovUDuRsqxFmdnwCI+6u6U=;
+        b=wusb2qHmB6qawk3SFJhofsI3kFQi8GVmW23YHp0eMWWS4B+U3ZHj8OztPSI9fJ7n3a
+         x03tKant487yXZlKPmxmk8fHKuJdvT3W/iIzzcKR2Ctm+Jct7oTASzkVPpse42WnJxBt
+         YZOMnXc3go3gEyn1ExOYRRCUc4F8r8qVwJWVatDJ9068X4Pv+cymuTl++4H3BDYO+Lwj
+         NCaO5Y83H7aLhHoc/L9G90mjjVHbhV3sCVBvAWTlIdfFkC5axxVKykLETig1P6ansq7S
+         ZqsqWPD3Z8vBXqd2Sh1p4XBahMsS600GbHFjNyZNyjPIWuQB1IC34mTEmwJVSZU3oMU0
+         dw7g==
+X-Forwarded-Encrypted: i=1; AKwUvBwBDqhqHVHHgJefQA7Hn7RAOopwwo7TUiiaVqf3bkAAf3GU491yZYkaig9H1wEUcspJXxgBNA==@lists.linux.dev
+X-Gm-Message-State: AFuF++kC5PdBNnVpBAPJGynzMZP2o43R45IEHviQAJbP8PEMOEWms+xB
+	6pg7V245WcSpmlzchcIOywagk1hGGsIuna0aqFgCljsui1w+4BA+/n4DEgbik1gB
+X-Gm-Gg: AYBFou0RFc/n340zEItiJmvHdVqpzEogyUqQ1Rbf9C3eIBX9f4bDwIdrhsDK1Jn9xHC
+	63bmYZy0n4VZyb2yhIlKhwJTyyTld14rny7cpi6+BUjr0BYLKSz/rMoRt8W/9mylRpj9kkK3kCC
+	biU5zMDWn++p+mqv5QsfXJrtL920dG+bi0IXai1KLDrvsRW7NFAbzWAZyMxbfE6bK3QTEUeP8/J
+	BbDc6G7yAP4ptgMye5yijeqDj1g8RUgka1S8jiWCxoYA4asbuMxjiOvCAMiBeuWoqWlB/je/yCB
+	o/XxR0Ptu8OD0ZNmGYPkc52fgIU/BEE5M8/oh+vM8l5FTbz/ypKsazJT0NLZwCIN1T6zzyMp2pA
+	HgGhVWNUCWUiDkrRZ77AAc9XH3TgBkXahoE9uAh0buknFIA5q/O6TJdmnV3mxU2uRDV7XBw5Ch7
+	FesuDu9Ltn6lEbAfZrB03U9+Wgx6P5zAyd/TLTGDsQVtXXdTyo4O91KDayn5BYUfRjQlxwnA==
+X-Received: by 2002:a17:90a:e7cc:b0:39d:fe64:5725 with SMTP id 98e67ed59e1d1-39dfe6461f0mr4210211a91.5.1789443058917;
+        Mon, 14 Sep 2026 20:30:58 -0700 (PDT)
+Received: from gmail.com ([185.220.238.35])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33ba4f55735sm31317478eec.24.2026.09.14.20.30.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Sep 2026 20:30:58 -0700 (PDT)
+From: Kunwu Chan <kunwu.chan@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Kunwu Chan <kunwu.chan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com,
-	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com,
-	rientjes@google.com,
-	weixugc@google.com,
-	jic23@kernel.org,
-	gourry@gourry.net,
-	Kunwu Chan <kunwu.chan@linux.dev>
-Subject: Re: [RFC PATCH v2 0/9] mm/damon: hardware-sampled access reports
-Date: Tue, 15 Sep 2026 10:54:51 +0800
-Message-ID: <20260915025514.2434-1-lianux.mm@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260910171623.6638-1-ravis.opensrc@gmail.com>
-References: <20260910171623.6638-1-ravis.opensrc@gmail.com>
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH v2 3/8] mm/damon/core: return an error from damos_commit_filter_arg()
+Date: Tue, 15 Sep 2026 11:30:49 +0800
+Message-ID: <20260915033050.1579457-1-kunwu.chan@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260913171706.103052-4-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -93,59 +79,133 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: "Lian Wang (ProcessMission)" <lianux.mm@gmail.com>
+On Sun, 13 Sep 2026 10:17:00 -0700 SJ Park <sj@kernel.org> wrote:
 
-Hi Ravi and SJ,
+> damos_commit_filter_arg() is supposed to always succeed.  It may not in
+> future, for example, if the given filter is invalid.  Prepare the case
+> by modifying its signature to return an error when it failed.  Also pipe
+> the return value to its callers and let them handle the error.
+> 
+> Signed-off-by: SJ Park <sj@kernel.org>
+> ---
+>  mm/damon/core.c | 41 ++++++++++++++++++++++++++++-------------
+>  1 file changed, 28 insertions(+), 13 deletions(-)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 3d7a973ea8b6f..ea7d8d5a4abf6 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -1317,7 +1317,7 @@ static struct damos_filter *damos_nth_ops_filter(int n, struct damos *s)
+>  	return NULL;
+>  }
+>  
+> -static void damos_commit_filter_arg(
+> +static int damos_commit_filter_arg(
+>  		struct damos_filter *dst, struct damos_filter *src)
+>  {
+>  	switch (dst->type) {
+> @@ -1340,28 +1340,32 @@ static void damos_commit_filter_arg(
+>  	default:
+>  		break;
+>  	}
+> +	return 0;
+>  }
+>  
+> -static void damos_commit_filter(
+> +static int damos_commit_filter(
+>  		struct damos_filter *dst, struct damos_filter *src)
+>  {
+>  	dst->type = src->type;
+>  	dst->matching = src->matching;
+>  	dst->allow = src->allow;
+> -	damos_commit_filter_arg(dst, src);
+> +	return damos_commit_filter_arg(dst, src);
+>  }
+>  
+>  static int damos_commit_core_filters(struct damos *dst, struct damos *src)
+>  {
+>  	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
+> -	int i = 0, j = 0;
+> +	int i = 0, j = 0, err;
+>  
+>  	damos_for_each_core_filter_safe(dst_filter, next, dst) {
+>  		src_filter = damos_nth_core_filter(i++, src);
+> -		if (src_filter)
+> -			damos_commit_filter(dst_filter, src_filter);
+> -		else
+> +		if (src_filter) {
+> +			err = damos_commit_filter(dst_filter, src_filter);
+> +			if (err)
+> +				return err;
+> +		} else {
+>  			damos_destroy_filter(dst_filter);
+> +		}
+>  	}
+>  
+>  	damos_for_each_core_filter_safe(src_filter, next, src) {
+> @@ -1373,7 +1377,11 @@ static int damos_commit_core_filters(struct damos *dst, struct damos *src)
+>  				src_filter->allow);
+>  		if (!new_filter)
+>  			return -ENOMEM;
+> -		damos_commit_filter_arg(new_filter, src_filter);
+> +		err = damos_commit_filter_arg(new_filter, src_filter);
+> +		if (err) {
+> +			damos_destroy_filter(new_filter);
+> +			return err;
+> +		}
+>  		damos_add_filter(dst, new_filter);
+>  	}
+>  	return 0;
+> @@ -1382,14 +1390,17 @@ static int damos_commit_core_filters(struct damos *dst, struct damos *src)
+>  static int damos_commit_ops_filters(struct damos *dst, struct damos *src)
+>  {
+>  	struct damos_filter *dst_filter, *next, *src_filter, *new_filter;
+> -	int i = 0, j = 0;
+> +	int i = 0, j = 0, err;
+>  
+>  	damos_for_each_ops_filter_safe(dst_filter, next, dst) {
+>  		src_filter = damos_nth_ops_filter(i++, src);
+> -		if (src_filter)
+> -			damos_commit_filter(dst_filter, src_filter);
+> -		else
+> +		if (src_filter) {
+> +			err = damos_commit_filter(dst_filter, src_filter);
+> +			if (err)
+> +				return err;
+> +		} else {
+>  			damos_destroy_filter(dst_filter);
+> +		}
+>  	}
+>  
+>  	damos_for_each_ops_filter_safe(src_filter, next, src) {
+> @@ -1401,7 +1412,11 @@ static int damos_commit_ops_filters(struct damos *dst, struct damos *src)
+>  				src_filter->allow);
+>  		if (!new_filter)
+>  			return -ENOMEM;
+> -		damos_commit_filter_arg(new_filter, src_filter);
+> +		err = damos_commit_filter_arg(new_filter, src_filter);
+> +		if (err) {
+> +			damos_destroy_filter(new_filter);
+> +			return err;
+> +		}
 
-Thank you for sharing this work.  The report path looks potentially useful
-for a DAMON observation-granularity problem that we are investigating.
+I re-checked this version, and the error return from
+damos_commit_filter_arg() is now handled at all call sites,
+including the new-filter paths.
 
-The scenario originated from an issue reported by SXF, and we are planning to
-share and discuss it at LPC.  We have now reproduced the underlying observation
-difference on both a local PC and an x86 server.  The server run below is our
-larger, controlled reproduction.
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
 
-Our test monitors a QEMU process whose guest memory is backed by a shared
-tmpfs file.  The guest repeatedly writes one 4 KiB page in every 2 MiB range
-of a resident 48 GiB data set.  The unique 4 KiB spatial coverage of one sweep
-is about 96 MiB, or 0.195% of that data set.
-
-Using vaddr DAMON with a 500 ms sampling interval, 20 second aggregation
-interval, and 500--2000 regions, two opposite-order runs reported a mean hot
-ratio of 1.751% without shmem PMD mappings and 75.836% with them.  A control
-that writes the full 2 MiB ranges reported 75.366% with PMD mappings.  Hence,
-in this workload the current observation does not distinguish spatially sparse
-4 KiB activity from dense activity once the large mappings are present.
-
-We are testing existing DAMON strategy mitigations first.  As a next step, we
-plan to replay recorded access addresses through the report/probe decision
-path, independently of a live PMU, and check whether DAMOS can distinguish the
-sparse and dense cases.  In that experiment, raw report frequency and unique
-4 KiB spatial coverage will remain separate quantities; lack of reports will
-remain unknown when source coverage or loss is insufficient.
-
-If the report evidence makes the decision reliable, the response we want to
-evaluate is an internal, bounded PMD mapping demotion (splitting the mapping
-while retaining the underlying THP folio), rather than exposing physical folio
-split as a DAMOS action.  We will first keep the response stat-only and archive
-the would-act ranges.  After the replay result is repeatable, we can replace
-the replay producer with an appropriate hardware source and share the results.
-
-This seems like a useful consumer experiment for the report interface, even if
-the vaddr and optimized transport parts belong to the later phase.  Please let
-us know if this direction conflicts with the intended report semantics.
-
-We will share the strategy, replay, and mapping-decision results once they are
-repeatable.  We are also reviewing and testing this series, and will follow up
-with the appropriate tag(s) for the exact revision if that work justifies them.
+I'll take another look at the remaining patches.
 
 Thanks,
-Lian
+Kunwu
 
-On Thu, 10 Sep 2026 10:16:14 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
-> This series lets DAMON take its access information from a hardware sampler
-> instead of from a page-table scan, and lets a scheme's score be weighted by what
-> that sampler reported.
+>  		damos_add_filter(dst, new_filter);
+>  	}
+>  	return 0;
+> -- 
+> 2.47.3
+> 
 
 Sent using hkml (https://github.com/sjp38/hackermail)
