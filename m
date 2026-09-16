@@ -1,56 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16CC356757;
-	Wed, 16 Sep 2026 05:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE753DDAF7;
+	Wed, 16 Sep 2026 05:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789535519; cv=none; b=XnLP07Dgal1rKF09+hKF5cVC2ue4wNwzyYH7jjSvghl72xUmzbc/XytNm0UqDRRep3DCTMnI9cq/tMLDqCIGoUcWgvARauQ4sLu+AbWkjoFukxIfVhjDAbYz0EPPsBgL7RpwoHwGwhGPoRJ7be0pdx4o5J54pC2QKUUorx8Ggl4=
+	t=1789538240; cv=none; b=QemL1ICS0vHNURdo4WS7Y7yhDUwxip34H7VddezwkV/Y09z9GABahDgw+xCz6sAdP5VsP+U7xalCuv9cUCK74+o1sUZXW+pnEgpA/sxwtMlA5XQYK1c7O2mC2Hv2z29qd5+1U2FJwQL6ayzV9GpbgpTL2fXQlQDrLe13Em0BWR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789535519; c=relaxed/simple;
-	bh=40uwVthNvpqCFoNvfj6Yz4eGpiTrsvWrYCjFS0g9jRw=;
+	s=arc-20240116; t=1789538240; c=relaxed/simple;
+	bh=qR8fzXpgBz9DWPvv0UgtKTwPVJEESO+CHZAOb6aBuxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iPyWDXL+kmWxgkAY8RtwKU9bmbLvwVMY3xP6VrsDoiuU5UaI8U82IISGQXHvpFpzvOB7u7NZI0A6tIjqxLxF7eoEh+7wpF2KXnhBmrE3uvN2iXFm60hQN5hM+zxGZpkNUSCa4MaeNimvYtzlEORkKk+BQ7zvsEq8JPAsK29St7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FLQGCWUr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XSpb4EWKEDw2htfpyhrqkjriibcXY6kn03xuUhcNKLpf2FGfI142mQHaRbkLc+tC7FCUPS2euspVEmSCeWHn4QIvb1Sm7ElqrSfB4Fq5CGmYS3TzAH21CMxebAZM+U+eq7kRPEEIFqZzvc43uBin8sskJnpoOloTyn3yp+MvCEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hfjbn/14; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FLQGCWUr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23D01F000FF;
-	Wed, 16 Sep 2026 05:11:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hfjbn/14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AAF1F00893;
+	Wed, 16 Sep 2026 05:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789535517;
-	bh=kNEW7NhnOUY8v9q+C+Hpu+A+v8WziHcF3NFyEfbmrH8=;
+	s=k20260515; t=1789538238;
+	bh=m6SKrH4CseAWkOxTNnD7adA5OG5gHGdFDKDZV8MwdQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLQGCWUrq4wrW/Oa3OqlQ5cNqAUaO3UEA49euXSpwoEG5p2n1OFcnoRNbwUgX7sMC
-	 ln7tCuXC8SL1cuAcqZYIXev2KqfozXLELQT+Gl2IEqpCNxfbCpQ1k/aA0t21wKLm38
-	 8NWpPW5fKFGqU/mQ7p/8x+Xw7wejdA0M4qf7HSxMnyV9HfeG4GF+4PjgTpQVU7IIDM
-	 cge+ZUq7HpmCFI49B+HjLpo3ua1E5lNrwpFvHQtm40eNzy0CVXOZBQUjwATPyPRoQr
-	 hs+HvFbzDzatb2hcwj3KioP8m1gbCHmCwbHCfJY83+/FpYjV+6miW6FNRXk+F5DaWI
-	 jyesMs//9cc8w==
+	b=Hfjbn/14ap3NphlFUGF122siXy5FCwFpEPoVLD/bkd+cBzcIjiKB6/MC5XRcHHUDE
+	 BUE4Y8+QMyH1XCUvSJSf8eRGEfjMlCj9wnfBzVCwFXv3IwxFVMtGNTuAHgTBJe5pID
+	 OEQI12RtTWQ0jmOWZeDg5lNVuxrA9jf6Ykbl8Z5puaZI/XWFlizjnsciuMt2Zezswm
+	 EweQSqqGtp5HWk8w+BJ3a7A4GO0DotOvPw6wNEwfag0dnM/3DhqO5Dk/0n8lR3qJAi
+	 sG+5atyvp3JADGHGrMHBXPGJvYivWpXwzTF9csYn4q23Zn7dnYeNgsS0Z5qUcu+u50
+	 jXFEPammnloAg==
 From: SJ Park <sj@kernel.org>
-To: "Lian Wang (ProcessMission)" <lianux.mm@gmail.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
-	akinobu.mita@gmail.com,
+	"Liam R. Howlett" <liam@infradead.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org,
-	akpm@linux-foundation.org,
-	corbet@lwn.net,
-	bijan311@gmail.com,
-	ajayjoshi@micron.com,
-	honggyu.kim@sk.com,
-	yunjeong.mun@sk.com,
-	rientjes@google.com,
-	weixugc@google.com,
-	jic23@kernel.org,
-	gourry@gourry.net,
-	Kunwu Chan <kunwu.chan@linux.dev>
-Subject: DAMON reporting more hot memory on huge pages (was: "Re: [RFC PATCH v2 0/9] mm/damon: hardware-sampled access reports")
-Date: Tue, 15 Sep 2026 22:11:49 -0700
-Message-ID: <20260916051150.107931-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 0/8] mm/damon: introduce hugepage_size probe filter
+Date: Tue, 15 Sep 2026 22:57:10 -0700
+Message-ID: <20260916055711.24926-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260916034439.28517-1-lianux.mm@gmail.com>
+In-Reply-To: <20260915163928.9d6260f445d895429d115fd8@linux-foundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -60,117 +57,50 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 16 Sep 2026 11:44:30 +0800 "Lian Wang (ProcessMission)" <lianux.mm@gmail.com> wrote:
+Hi Andrew,
 
-> Hi SJ,
+On Tue, 15 Sep 2026 16:39:28 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
+
+> On Tue, 15 Sep 2026 07:33:49 -0700 SJ Park <sj@kernel.org> wrote:
 > 
-> Thank you for the questions.  I mixed the original field scenario and our
-> controlled reproducer in my previous mail.  I also jumped from the observation
-> problem to PMD mapping demotion before explaining why the deployment needs both
-> huge pages and finer-grained observation.  That made it sound as if our goal
-> was simply to stop using huge pages.
+> > Knowing whether a given memory is backed by a hugepage of specific size
+> > is useful for efficient utilization of hugepages.  For easy monitoring
+> > of the information, introduce a new data attribute probe filter type,
+> > hugepage_size.  It works similar to the DAMOS filter of the same name.
+> > It works for memory that is backed by a hugepage of a given size range.
+> > 
+> > Patch 1 introduces the new probe filter type to DAMON API and extends
+> > related data structures.  Patch 2 updates probe filter commit logic to
+> > handle the size range.  Patch 3 Updates the filtering logic to support
+> > the new type.  Patch 4 adds new DAMON sysfs files for the size range.
+> > Patch 5 updates DAMON sysfs interface to fully support the new filter
+> > type.  Patches 6-8 updates design, usage and ABI documents for the new
+> > feature.
 > 
-> > The observation makes sense.  However, does the sparse access pattern
-> > realistic?  If so, what is the purpose or expected benefit of using huge page
-> > for workloads having such access pattern?
-> 
-> The original case is not a lab-created request to use huge pages for a sparse
-> microbenchmark.  It was reported by SXF from a KVM/QEMU deployment where the
-> VM has a large memory allocation backed by a shared tmpfs file, host THP is
-> enabled, and Oracle runs inside the guest.  They use host-side DAMON to measure
-> the VM's hot-memory proportion.  With the same business memory use, they
-> observed a much larger hot proportion when THP was enabled.
+> All queued up, thanks.  With a -fix for [7/8].
 
-Thank you for clarifying this.  So I understand it is an issue from a real
-world workload.  I'm still curious how sparse the real access pattern in the
-real world workload is, and if there is a low haning fruit.  There might be
-rooms to improve in their DAMON usage.
+Thank you!  I found the -fix is in the mm.git as below:
 
-Could you share more details about the real world setup and findings?  More
-specifically, how they define the hot proportion and how they collect the
-number?  What is DAMON setup?  What are the real numbers they saw?
-
-Also, I understand they want to understand real working set size of guests.
-Could you further share what they are planning to do with the monitored working
-set size?  The required level of accuracy of the monitoring could depend on the
-purpose.
-
-> 
-> The guest tmpfs 4 KiB/2 MiB writer is their controlled diagnostic case for
-> isolating that observation; it is not a claim that the Oracle workload is
-> exactly a one-page-per-2-MiB loop.  We then reproduced and quantified the same
-> effect on a PC and on the x86 server.
-> 
-> For this deployment, keeping large pages is a real requirement at the host
-> virtualization layer.  QEMU owns a large resident guest-RAM mapping.  Host THP
-> allows that mapping to use PMDs and allows KVM to use large secondary mappings,
-> reducing host page-table memory, TLB and nested-page-walk pressure, and KVM
-> mapping/fault overhead.  These benefits are independent of whether every 4 KiB
-> page inside a particular 2 MiB range is hot at one observation time.
-
-Thank you for clarifying this.  Now I understand why they use THP, and I fully
-agree they should keep using THP.
-
+'''
+$ git show 81c69fbb4128
 [...]
-> The performance requirement and monitoring use case come from the deployment,
-> not from our lab model.  We will also report the measured Oracle/VM benefit and
-> the production access distribution when those data are ready.  The diagnostic
-> result establishes the observation mechanism, but it should not substitute for
-> those workload-level measurements.
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -309,7 +309,7 @@ named ``0`` to ``N-1``.  Each directory represents each filter and works in a
+ way similar to that for :ref:`DAMOS filter <sysfs_filters>`.  When the filter
+ ``type`` is ``memcg``, ``path`` file acts as ``memcg_path`` for :ref:`DAMOS
+ filter <sysfs_filters>`.  When the filter ``type`` is ``hugepage_size``,
+-``min`` and ``max`` files acts as files of the same names for :ref:`DAMOS
++``min`` and ``max`` file acts as files of the same names for :ref:`DAMOS
+ filter <sysfs_filters>`.
 
-Thanks to your detailed and nice explanation, I don't doubt about the needs to
-use huge pages.  So I wouldn't insist on Oracle/VM benefit from huge pages.
+ .. _sysfs_targets:
+'''
 
-I'm still curious the real access distribution, though.  I understand you don't
-have the data yet.  It would be very helpful if you could share that in future.
-
-> 
-> > I'm not very sure if this is the right direction.  PMD mapping demotion sounds
-> > like you just don't want to use huge pages.  If so, you could disable huge
-> > pages.
-> 
-> I agree.  My reasoning in the previous mail was too jumpy: I went from a coarse
-> observation directly to a possible MM response, and that obscured the actual
-> goal.  PMD mapping demotion is not part of our current proposed solution.  The
-> current direction is to keep both the huge folio and PMD mapping unchanged and
-> use a genuinely fine-grained access primitive to improve the observation and
-> the stat-only decision.  We should first find out whether that is sufficient
-> before discussing any mapping change at all.
-
-Thank you for clarifying.  Yes, if you really need sub-pmd access, I believe
-the perf event based DAMON could be more useful.  Nonetheless, as I requested
-above, knowing the DAMON usage and purpose in more detail might let us finding
-a low hanging fruit.
-
-[...]
-> With this context clarified, we will return to the immediate work: use the
-> existing IBS/perf-event proposal as the concrete strategy under test, and see
-> whether its fine-grained evidence can improve the observation and DAMOS
-> decision for this case.  We will use the results to test and review this series,
-> report both improvements and remaining gaps, and not assume in advance that it
-> is the final solution.
-
-That makes sense.  Because Ravi thankfully already implemented this nice
-working version prototype, there is no reason to not test it right now.
-
-> 
-> I hope this clarifies why keeping huge pages and requesting finer-grained
-> observation are not contradictory requirements in this case.
-
-Yes, it is now clear to me.  Thank you for patiently englightening me, Lian.
-
-> 
-> If I am still misunderstanding any part of your questions, or if any part of
-> this explanation remains unclear, please continue to correct me.  We will keep
-> sharing our findings and would like to make sure we are aligned before going
-> further.
-
-I believe testing the perf event based monitoring with Ravi's implementation is
-a good path forward.
-
-I'm curious about the real setup and results your clients got from their real
-world wokload.  But that's not necessarily a blocker of the perf event based
-monitoring test.
+But, I think it is slightly wrong.  The fix I requested is
+'s/files acts/files act/', but the committed fix is doing
+'s/files acts/file acts/'.  Could you please fix it when you get a chance?  Let
+me know if there is anything that I can help, too.
 
 
 Thanks,
