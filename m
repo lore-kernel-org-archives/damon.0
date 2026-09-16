@@ -1,53 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE32457E47;
-	Tue, 15 Sep 2026 23:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F903597B;
+	Wed, 16 Sep 2026 00:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789516192; cv=none; b=CPwX5OiWsMsYsq6CG0CUFIbJUu4WsGdB9u95oVOkcXpktLzgIRxGxdQzddh/Zt4bgRypgu9PMieG9zxPn4fOfTGwBM2igc/8Yg4xdHG2VBYD+L1KGSQ28vBr/WQcDV8IXFD6+1ZpZQxysqh338mf2uPRWYfbA+aDG7fcGDRYenQ=
+	t=1789517600; cv=none; b=YjZ3NcTw+ZxtOArJDFjSeMyHnaxL+GhdY64e04ePXwiw8qMqoRVwCclfJboxRZFjth2upnqvWns28marmEkeqfLJxC9z8aaT7qou8IferJGTlr/Zyi5Og0iJkT1AmhviU7zL/vvG2QcPUR1Iu8IJHYHz9RVOe0chdmjyMHE4bd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789516192; c=relaxed/simple;
-	bh=MruNz6SkLIuD3dVyTIrnmTDONKX0EZNOfWCcqOrnr+s=;
+	s=arc-20240116; t=1789517600; c=relaxed/simple;
+	bh=QQkbmPZa6FzOkJZznNSjvTnbZVVcFugLnbH/fXVmVVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hdFmG5uzy1/Xgb7x27rTRTptwcKjIrJ+SMTURH9Hr+HeJDhQgMMAEMDvgp7HtOa54WuDhVrGWWSnQ+qZSo02LW0QUL5Yj0YraaX2IkS+yaZ7j9hjLCdWuPrt9DKLte6aJIxnULNgNVyQ3vrDhVlt1pP0QKRMLHrFKd4fJQRgH/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R37/l7MY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vDV+Z+3Xpw2NV+/vXKBvd9uh9WrdVr649l1au8+zrPRZwQMsGfd7lMN6ZSsZBu1mABzoTrI63P7SCtr0vt4q/Jjbk9qUhvC1KcyrD2W/tXmiDHiS+DInaNxT6uiOTvuTmC261rcem1V+tJkq5ZcHbr6fooh4WvS1s4yPyyWSdOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m+bv99ac; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R37/l7MY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE551F000FF;
-	Tue, 15 Sep 2026 23:49:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m+bv99ac"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A568C1F000FF;
+	Wed, 16 Sep 2026 00:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789516186;
-	bh=wfsqsA42RTLaHAcEouHB0BdpY6IKOeqMBzzSUc5mNWU=;
+	s=k20260515; t=1789517598;
+	bh=a2lhPSF5A/5CV1Lodrkn/7v4I07Gpj63s01SJKcdomg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R37/l7MYIzsZWvs5bZA4sl2BNGKXaeQTUKIkLpnn4ERbwxLWzRGTp42Lb49HJVLOZ
-	 fL/IWFbPUll5P8RPuLLKKdJsieaNIvHIcM88ihHRTbiehVsx+0TIuFSwwXH2nZ1Z/h
-	 WYqTy49GZ1Wc9VebvC3D3CLEsoI8gHOm/er7yzjX7qdQiWoZ4633W0vSIKotxr3Eeu
-	 V+s8vWfD3KA6XnS0C+e+qSli92CS7cUQwWv4JRf6FXvEbxSrtFbpCScZp2999cHcbG
-	 qntq+e82CwPXl30d/H4odHWaEruwXvx/Hn2OPgkkxb6Rx68+RT2IhpQG89kGgGC2cF
-	 NAu0dogVEyUvg==
+	b=m+bv99acZdpFAL97ydOR3AZHyf7sKcsXCrUMb32kvLoj9H9lyg3wioFfBCZ2W9IT/
+	 kOGZVQU5b1C6l+x2Aw/1b5u1wFTrfHkcd49xva39auAfyWtmr2HYbWu9ZPYcTnnxUJ
+	 ATikHTEWv66JWjpuPGrP/hbtv/jCMQjVJHsVRMHLvLShOrQr1KZqvFg6+Aysx+aodd
+	 stz4cOlw/lVwJ9yBnuP5FPiGz7jWbHMh4ECN9qbTPrRN8ZCbtv0WndhiYcuc5Lzw0p
+	 7geGvuPbQHEcWuc+R3wksSse8mHGP1OzZM0XBg7ne91VVvsnzYLeDeM5coZqyzKxNO
+	 DSSp0Xy0jBE5A==
 From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: Karl Mehltretter <kmehltretter@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 0/8] mm/damon: introduce hugepage_size probe filter
-Date: Tue, 15 Sep 2026 16:49:38 -0700
-Message-ID: <20260915234938.98475-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] mm/damon/core: score an unmeasured PSI goal as not achieved for the temporal tuner
+Date: Tue, 15 Sep 2026 17:13:11 -0700
+Message-ID: <20260916001311.101024-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260915163928.9d6260f445d895429d115fd8@linux-foundation.org>
+In-Reply-To: <aqm1ZPUHiXf9PFWq@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -57,46 +49,100 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 15 Sep 2026 16:39:28 -0700 Andrew Morton <akpm@linux-foundation.org> wrote:
+On Tue, 15 Sep 2026 23:19:27 +0200 Karl Mehltretter <kmehltretter@gmail.com> wrote:
 
-> On Tue, 15 Sep 2026 07:33:49 -0700 SJ Park <sj@kernel.org> wrote:
-> 
-> > Knowing whether a given memory is backed by a hugepage of specific size
-> > is useful for efficient utilization of hugepages.  For easy monitoring
-> > of the information, introduce a new data attribute probe filter type,
-> > hugepage_size.  It works similar to the DAMOS filter of the same name.
-> > It works for memory that is backed by a hugepage of a given size range.
+> On Tue, Sep 15, 2026 at 07:50:54AM +0100, SJ Park wrote:
 > > 
-> > Patch 1 introduces the new probe filter type to DAMON API and extends
-> > related data structures.  Patch 2 updates probe filter commit logic to
-> > handle the size range.  Patch 3 Updates the filtering logic to support
-> > the new type.  Patch 4 adds new DAMON sysfs files for the size range.
-> > Patch 5 updates DAMON sysfs interface to fully support the new filter
-> > type.  Patches 6-8 updates design, usage and ABI documents for the new
-> > feature.
+> > The intention is to make no effect this round.  Setting current_value to zero
+> > to temporal tuner means it will now have highest quota it could have.  If the
+> > effective quota before this was zero, it gets an effect.
+> > 
+> > Ideally, we should somehow remember what was the last esz and keep it.  I have
+> > no good idea for doing that with minimum change.  This is a corner case in my
+> > opinion (correct me if I'm wrong) so I want to keep the change as simple as
+> > possible.
+> > 
+> > If there is not easy way to do that, I think just keeping the behavior but
+> > making it explicitly explained might be better.
+> > 
 > 
-> All queued up, thanks.  With a -fix for [7/8].
+> Hello SJ,
 > 
-> > Test
-> 
-> fyi, I'm always reluctant to include testing info in the permanent
-> record.  Because it's development-time info which becomes obsolete very
-> quickly.
-> 
-> It isn't useful to someone who is reading the changelog in mainline in
-> 2028 (or even Nov 2026) because the patchset will have had far more testing
-> since these words were written.
-> 
-> It is of course very useful info but I suggest it be maintained below
-> the "---", where all short-term development-time info is best
-> maintained.
+> I believe I have a version that addresses your concern without adding
+> too much complexity.
 
-Agreed.  I will do so for individual patches.  For cover letters that don't
-have the "---" lines, I will add an informal note saying "please do not add
-below to the commit message".  If you prefer, I could add "---" line on the
-cover letter instead of the informal note.  Or, I could add the informal note
-below the manual "---" line, too.  Let me know if you prefer that.
+Thank you for keep pursuing on improving DAMON, Karl!
+
+> 
+> In short, it leaves the tuners as they are and instead keeps
+> last_psi_total across a commit of an existing PSI goal, as the code
+> did before a68878f83ae6. The U64_MAX round then happens only once per
+> new goal.
+
+I actually considered this option when working on commit a68878f83ae6.  I had
+two following concerns though.  First, if the user commits multiple times
+before the next quota reset interval, the next tuning round will work with
+pressure times that cumulated for longer than the quota reset interval.  This
+is a quite rare corner case, but I didn't feel that comfortable.  Second, the
+behavior for new commit and update commit is different.
+
+So I'd still prefer to just making no effect this round.  And my commit was
+failed at doing that, because it didn't aware of temporal tuner.  Maybe we
+could show whether the goal was achieved or not, using esz and let the tuner
+show same achieveness?  What about something like below?
+
+'''
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3187,6 +3187,25 @@ static inline u64 damos_get_some_mem_psi_total(void)
+
+ #endif /* CONFIG_PSI */
+
++static void damos_set_psi_current_val(u64 now_psi_total, struct
++               damos_quota_goal *goal, struct damos *s)
++{
++       if (goal->last_psi_total != U64_MAX) {
++               goal->current_value = now_psi_total - goal->last_psi_total;
++               return;
++       }
++       /* Uninitialized last_psi_total; make no effect this round */
++       if (s->quota.goal_tuner == DAMOS_QUOTA_GOAL_TUNER_CONSIST) {
++               goal->current_value = goal->target_value;
++               return;
++       }
++       /* Let temporal tuner show goal achieveness same to the last round */
++       if (!s->quota.esz)
++               goal->current_value = goal->target_value;
++       else
++               goal->current_value = 0;
++}
++
+ #ifdef CONFIG_NUMA
+ static bool invalid_mem_node(int nid)
+ {
+@@ -3439,12 +3458,7 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+                break;
+        case DAMOS_QUOTA_SOME_MEM_PSI_US:
+                now_psi_total = damos_get_some_mem_psi_total();
+-               /* uninitialized last_psi_total; make no effect this round */
+-               if (goal->last_psi_total == U64_MAX)
+-                       goal->current_value = goal->target_value;
+-               else
+-                       goal->current_value = now_psi_total -
+-                               goal->last_psi_total;
++               damos_set_psi_current_val(now_psi_total, goal, s);
+                goal->last_psi_total = now_psi_total;
+                break;
+        case DAMOS_QUOTA_NODE_MEM_USED_BP:
+'''
+
+The code could further cleaned and optimized, but hopefully that will give you
+my rough idea.
+
+What do you think?
 
 
 Thanks,
 SJ
+
+[...]
