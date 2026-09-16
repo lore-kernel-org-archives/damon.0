@@ -1,34 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88C9378D8C;
-	Wed, 16 Sep 2026 00:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030E1361973;
+	Wed, 16 Sep 2026 00:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789519379; cv=none; b=c6k/rZ0zWgW6cr57KGDmpYCC1WHPJ26eU3xbTiPhCNi1GFU5blyxVDxP4T0otAMIQL+2jd1puH4acEVnSR+vOZoJxOaluB2EguY+/IEAiAtQbYCSXHGhB9dp9kfuM69NrpcYKUH7qCyt8f4AQv/+95QeuyduPAPNAExTM48IqkU=
+	t=1789520306; cv=none; b=nhejYe+2R0T2dlu0yBEE8J3wZfpMZU2Z6bzNozUPqoW0CAFRtX3M3Wv4cVSbTf3H1/8cThFY3sN8X7DJi+1G8f0YF1+Fyrj+K6WCQJD+u69WvVVkXGuJTb10VWHlvuigc1nEsjpMe1RYVKTgg17SYavqHvg9XR2+hVh1m0jsn5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789519379; c=relaxed/simple;
-	bh=M79rNXIuCXBavZscdTkcVfTLyKvWAUxuMw6XfalyHPA=;
+	s=arc-20240116; t=1789520306; c=relaxed/simple;
+	bh=YkL2dHG2NNAhGHoLaq8TL4l3RtmhbKg16eOq7hcUi3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ogjLCBSSdQqaISP7HP0igXujMqDD4Fl7D0jDGUYi8QHOlBRyUTHTePEK9xR6IMG0TyNbbzMUv+uPY5yzJAz6oxCPirD6SJEoMnsUnZin8MUcW3SX4Gh1U+v7dEeNY4Pyv5R6vN3Gbt88oW5aaknS5d/vBW3d0qL1mI+GEHhsU0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iwoU/MyH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BsFQX7ar26BMlv0mQ5eWNuhHHEM0Eo3rRmjpdbyWCHoVWTTWRTMB7umK812TaDDmSyY3YMXpWfvc+r2G79UK4MoiiMb8JngWCIwIe7YqtGUA83G/SMqNtLmHUUVv6w7K9jZRHDmTl7vqP7jpiC3oLUn88+OqbIecHQCV8oPB8QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NvauvRPr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iwoU/MyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63ED11F000FF;
-	Wed, 16 Sep 2026 00:42:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NvauvRPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6871F000FF;
+	Wed, 16 Sep 2026 00:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789519358;
-	bh=lSFqgIB/QkG8NNxRnnvdrACKkHikqffoikxUFlVJO+0=;
+	s=k20260515; t=1789520302;
+	bh=KwdyHdv4MnQJM3h6YHH803Ox/K0l+mlSFgFkCNPYbYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iwoU/MyHU5H3ffHp5R6u8BJl2K2nKRPi4E6PniVHazaizPYr0Aqt3zBS8+NI2rCRv
-	 7X65gQjc+rdA63Vu9rhQiTWwVKJC/2y5wzUdcurQ5CZIsXikvkhE4hu0kWufoWww15
-	 1XUqlm1jBYClQqcaGA9+g4sVOOBwsdkmxmEoHwpwOc+25kylVsfulDQR51cOw0xlue
-	 xODeWztXJi4Mi5s9J/g4W42nzhg19DCGaA++Rf4rJTlNcQuWH6ztDUfTbWGOrKbNmM
-	 8eoeHDXRSbJB19rBoKj9xJjXtoEtnS8XFGoPGid8mGlAwFcQnZGsIela4PIGHQiAoF
-	 NN8jt0mOG4VOg==
+	b=NvauvRPrJvajpFZpLH57aY0fnKI0MrpEwDocwhlvNxlhitzUAEG1AjRQF0oH+wQP3
+	 MWU2ycopmmE5EBaM4XTUqnGWsFjLOqf+TsnyvgN5qRbDYOFIjm7YZEy5auL/3ITcd7
+	 Cu38tdUCRb2G7X4lhYdowX2GKEUyB9YQCltLSkoWHfX2fQlUdvuoMz+7FLJkF8TCuT
+	 gXFljaNWwWacPpijchGAOBJWwo0Q0CIZOn2hjPgAQoD55QTWOU8Ef1CUAy+gUp/YeF
+	 WoVLeKCl1I9WTmtZMO9ac0uuFVwyUiRjbBn9MMpbA67DsdNCOxmnEQiTF3HiMeR5YN
+	 zUFWdJBywhiyA==
 From: SJ Park <sj@kernel.org>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: Lian Wang <lianux.mm@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
 	akinobu.mita@gmail.com,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
@@ -43,12 +44,13 @@ Cc: SJ Park <sj@kernel.org>,
 	rientjes@google.com,
 	weixugc@google.com,
 	jic23@kernel.org,
-	gourry@gourry.net
+	gourry@gourry.net,
+	Kunwu Chan <kunwu.chan@linux.dev>
 Subject: Re: [RFC PATCH v2 0/9] mm/damon: hardware-sampled access reports
-Date: Tue, 15 Sep 2026 17:42:28 -0700
-Message-ID: <20260916004230.101408-1-sj@kernel.org>
+Date: Tue, 15 Sep 2026 17:58:09 -0700
+Message-ID: <20260916005810.101606-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CALa+Y17GK7TQHA5FyoMdnOFM1Y38g7P9qc-nMgP-dO4zfRj8Ug@mail.gmail.com>
+In-Reply-To: <20260915025514.2434-1-lianux.mm@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -56,189 +58,81 @@ List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Tue, 15 Sep 2026 14:23:02 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+Hi Lian,
 
-> On Fri, Sep 11, 2026 at 6:38 PM SJ Park <sj@kernel.org> wrote:
-> >
-> > Hello Ravi,
-> >
-> > On Thu, 10 Sep 2026 10:16:14 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
-> >
-> > > This series lets DAMON take its access information from a hardware sampler
-> > > instead of from a page-table scan, and lets a scheme's score be weighted by what
-> > > that sampler reported.
-[...]
-> > First of all, thank you very much for sharing this great series.
-> >
+On Tue, 15 Sep 2026 10:54:51 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
+
+> From: "Lian Wang (ProcessMission)" <lianux.mm@gmail.com>
 > 
-> Thanks SJ for the detailed review and the milestone 2 / phase 3 clarifications.
-
-Glad to hear that!
-
-[...]
-> > > What running it
-> > > across vendors needed on top of that direction is:
-> > >
-> > >   - per-CPU lockless rings between the NMI sample handler and the kdamond drain,
-> >
-> > I understand we need to make it lockless.  I wonder if we have to make it
-> > per-CPU.  I understand it will be better in terms of performance, especially on
-> > machines having many CPUs.  That said, this feels like somewhat we can discuss
-> > in phase 3.  And it would deserve to have sufficient discussions and
-> > performance evaluations.
+> Hi Ravi and SJ,
 > 
-> The per-CPU structure is not a performance optimization we can defer -- it
-> is required by the calling context.  A perf-event overflow handler runs in
-> NMI context, which cannot take a mutex or any sleeping lock.
-> damon_report_access() takes a mutex, so it cannot be called from there.
-
-Thank you for clarifying, Ravi.  But, what I wanted to say is, we could update
-damon_report_access() to not use mutex but atomic operations.  Does that make
-sense?  FYI, damon_report_access() will also be renamed, say,
-damon_report_attr().
-
-[...]
-> Understood.  I included the page-fault source in v2 because the December
-> 2025 RFC [1] that introduced damon_report_access() had it as the primary
-> consumer, and I wanted to carry forward that ability.  Since it is out of
-> scope for milestone 2, I will drop it from v3.
+> Thank you for sharing this work.  The report path looks potentially useful
+> for a DAMON observation-granularity problem that we are investigating.
 > 
-> Patches 1, 2, and 3 will be dropped from the v3 submission since they are
-> all tied to the page fault path.
+> The scenario originated from an issue reported by SXF, and we are planning to
+> share and discuss it at LPC.  We have now reproduced the underlying observation
+> difference on both a local PC and an x86 server.  The server run below is our
+> larger, controlled reproduction.
+> 
+> Our test monitors a QEMU process whose guest memory is backed by a shared
+> tmpfs file.  The guest repeatedly writes one 4 KiB page in every 2 MiB range
+> of a resident 48 GiB data set.  The unique 4 KiB spatial coverage of one sweep
+> is about 96 MiB, or 0.195% of that data set.
+> 
+> Using vaddr DAMON with a 500 ms sampling interval, 20 second aggregation
+> interval, and 500--2000 regions, two opposite-order runs reported a mean hot
+> ratio of 1.751% without shmem PMD mappings and 75.836% with them.  A control
+> that writes the full 2 MiB ranges reported 75.366% with PMD mappings.  Hence,
+> in this workload the current observation does not distinguish spatially sparse
+> 4 KiB activity from dense activity once the large mappings are present.
 
-Makes sense, thank you!
+The observation makes sense.  However, does the sparse access pattern
+realistic?  If so, what is the purpose or expected benefit of using huge page
+for workloads having such access pattern?
 
 > 
-> >
-> > >   - per-CPU events that follow CPU hotplug, armed when the kdamond starts and
-> > >     disarmed and drained when it stops,
-> > >   - a per-PMU owner, so two contexts cannot claim the same PMU type,
-> > >   - whichever address a PMU does report carried on the report and matched
-> > >     against the context's own address space, so one source serves a paddr or a
-> > >     vaddr context without a backend per address space.
-> >
-> > These all soudns making sense to me.  Nonetheless, I think we can scope
-> > milestone 2 to support only physical address and defer these things to the
-> > phase 3.
-> >
+> We are testing existing DAMON strategy mitigations first.  As a next step, we
+> plan to replay recorded access addresses through the report/probe decision
+> path, independently of a live PMU, and check whether DAMOS can distinguish the
+> sparse and dense cases.  In that experiment, raw report frequency and unique
+> 4 KiB spatial coverage will remain separate quantities; lack of reports will
+> remain unknown when source coverage or loss is insufficient.
 > 
-> Got it. Will scope v3 to PA only. so included results for v3 would be based on
-> AMD IBS testing.
+> If the report evidence makes the decision reliable, the response we want to
+> evaluate is an internal, bounded PMD mapping demotion (splitting the mapping
+> while retaining the underlying THP folio), rather than exposing physical folio
+> split as a DAMOS action.  We will first keep the response stat-only and archive
+> the would-act ranges.  After the replay result is repeatable, we can replace
+> the replay producer with an appropriate hardware source and share the results.
 
-Sounds good!
-
-> 
-> > >
-> > > This is tested with PEBS on Intel and IBS on AMD, both configured as `perf_event`
-> > > attributes on a probe and using the perf core's event plumbing rather than
-> > > per-vendor MSR code.  A third source has already been written against the same
-> > > ring: Kunwu Chan's ARM SPE backend [5], which reaches it through an AUX buffer
-> > > drained in process context instead of an overflow callback, and which the
-> > > roadmap [2] places in its third milestone.
-> >
-> > Awesome, appreciate your huge effort on this!
-> >
-> > >
-> > > The partitioning is what lets promotion and demotion run in one context.  A
-> > > sampler says which regions are hot; it says nothing about which are cold, because
-> > > a sampler that reports nothing about a page cannot distinguish untouched from
-> > > unsampled.
-> >
-> > I'm not really sure.  I think absence of samples for an address range can also
-> > mean the address range is cold?  Actually the page table accessed bit based
-> > monitoring also use a sort of sampling, so I don't show real distinction.
-> >
-> > Maybe you're right, but I think this deserves sufficient discussions and
-> > testing that we could defer to the phase 3.
-> >
-> > > Region age is what a demotion scheme matches on, and age comes from
-> > > the page-fault primitive.
-> >
-> > We would have age in perf event based mode, too.  Isn't it?
-> >
-> 
-> You are right.  Region age accumulates whenever nr_accesses stays at zero
-> across aggregation boundaries, and that holds whether the zero comes from a
-> PTE scan or from an empty perf-event drain.
-> 
-> I was initially concerned that a sparse sampling PMU might not cover every
-> cold region in every aggregation window, leaving silence that could be
-> mistaken for cold,
-> whereas page faults provide higher spatial coverage for confirming
-> first-access.  Having both together was intended as a defence against that gap.
-> 
-> Based on your observation I retested this on hardware.  On AMD Turin
-> the cold demotion scheme found and demoted the idle working set
-> correctly using only the hardware-sampled IBS signal -- nr_accesses aged to zero
-> for regions that genuinely had no traffic, and the scheme acted on age as
-> expected.  The combined design may still be worth exploring later when
-> page fault
-> is considered to be reintroduced in phase 3.
-
-Sounds good, thank you for the testing Ravi!
+I'm not very sure if this is the right direction.  PMD mapping demotion sounds
+like you just don't want to use huge pages.  If so, you could disable huge
+pages.  Answers to my above questions would be helpful for me.
 
 > 
-> > > With the ring partitioned by class both are live at
-> > > once: the probe supplies hotness, the primitive supplies age, and two schemes
-> > > over the same regions can move memory in both directions under one kdamond.
-> >
-> > Unless the needs are clearly confirmed, I'd prefer having single class for
-> > simplicity.
-> >
-> 
-> With the page fault primitive out of scope there is no case for two ring
-> classes.  I will prepare v3 with a single class.
+> This seems like a useful consumer experiment for the report interface, even if
+> the vaddr and optimized transport parts belong to the later phase.  Please let
+> us know if this direction conflicts with the intended report semantics.
 
-Sounds good!
+I believe this doesn't conflict with the project, though.  Nevertheless,
+technically speaking, it is not the report semantics.  Reporting allows any
+information to be reported.  Page faults like information could be coarse
+grained, same to the current page table accessed-bit based one.  Only finer
+grained access primitive reports, like those from perf events, would increase
+the accuracy for the sparse access pattern monitoring.
 
-[...]
-> > >   4. `mm/damon: add damos_node_eligible_mem_bp tracepoint` -- a per-tick
-> > >      tracepoint over the node-eligible-memory quota goal evaluation, exposing
-> > >      the goal's target and current values, so the loop a bandwidth-driven
-> > >      controller steers is visible to a tracer.
-> >
-> > This seems doesn't need to wait anything.  If this turned out to be helpful,
-> > please feel free to separately send patches for this.
-> >
-> 
-> Yes. It is quite useful to track goal convergence. Will send a single patch
-> targeting mm-new.
-
-Looking forward to the patch!
-
-[...]
-> Summary of what v3 will contain (5 patches, former patches 5-9 of v2):
->   - paddr-only, single ring class, no page fault primitive
->   - per-CPU rings retained (required by NMI calling context, not an
->     optimization)
->   - perf-event overflow handler (paddr path, vaddr parts deferred to phase 3)
->   - sysfs/lifecycle surface
->   - probe-weighted score
->   - kunit tests updated for the simplified scope
-
-Makes sense.  And regardless of my global ring idea, feel free to keep the
-per-CPU rings.  As long as it is an RFC, please feel free to implement it in an
-easy-to-implement way.
-
-Please also note that I'm still working on shaping the milestone 2
-deliverables.  I'm not yet in a stage that I can share how it will really look
-like.  So the final version of your work might need a significant amount of
-change to rebase on it.  I will also try to make it not unnecessarily delayed
-more than our planned timeline.  But please bear in mind with me.
+Whether sparse access pattern is realistic and using huge pages on systems
+having such access pattern makes sense are different questions, though.
 
 > 
-> Separate send targeting mm-new:
->   - tracepoint (former patch 4)
+> We will share the strategy, replay, and mapping-decision results once they are
+> repeatable.  We are also reviewing and testing this series, and will follow up
+> with the appropriate tag(s) for the exact revision if that work justifies them.
 
-Looking forward to it.
-
-[...]
-> [1] RFC PATCH v3 00/37: mm/damon: introduce
-> per-CPUs/threads/write/read monitoring
->     https://lore.kernel.org/damon/20251208062943.68824-1-sj@kernel.org/
+Looking forward to!  Nonetheless, it would better to make sure we are on the
+same page for the above questions before digging deeper, in my humble opinion.
 
 
 Thanks,
