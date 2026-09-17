@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740F23BAD88;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DA03BBFB4;
 	Thu, 17 Sep 2026 04:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789617948; cv=none; b=AtvOamMHQlbuGVkEkVSTY+Anej7n7aByNUZu/N4AD96zslBrO/HjKTS3IL7GhHLBY3AumZv0m2KJwdEhMuiFc+Yro6jkLZRqrERBY62pxMjKfRUMvygNGmgA1kMoNCBZYYQCCFRdex+bT7K2A/CUT1swWnPLYnAEpP5Ko/y8brE=
+	t=1789617949; cv=none; b=RHSb/wCPbmLdMELF6hnRruHqBzWB8wDsN4snVbED9R0P6z9U+cRf9xGMZKD2mvdk9PgVJ+mYTbPqXCTgfxmuYt5bx2QQe7pi5H7EuS997K7GhUinr1gYWO7MwYNT8Yl35sqT79AkP/aIKKqnjRoU5rKhC3fJ4ssaroTU+XrDBtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789617948; c=relaxed/simple;
-	bh=Ddkx7ZTSFvFyvhnKdja06+laaOkv/3+hcb3Kam2zg7Q=;
+	s=arc-20240116; t=1789617949; c=relaxed/simple;
+	bh=3waL/h3q7DZwEaKW66X8co0xhOUYc545eSn+/YM2mqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGOgAKwylZNV1EMo9K/Omq5wupvaAMPc4HyCd5amw8GxJZXl6CYa3/bljx2pX+E6N0RTKwl1iWXwHP8yPWCOw1wBUvfx0PG8QW/30+WO3Jjy+Nim9jG6V/jp1dkldQI7rlNkXPgKAmhJneRmLRRfu9IZTURLCmYqRqK6tdAqjwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eVJlBFLu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uTpToZp9GMdSbKE5dmDEa3l4QdeY2cr+Zp8TcxdJ6oOjjzETT/3NYb4xm48IMkykfjczUc5xPfyOf1bkXQZgCarp6+FzJQORWdJ2uAqRgeonGyTyn/UG9ralo9TDBJhGNdSx5xzQGdf1N2oWq8Bz374PZmah94DQw2Yu9bAWSF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLy5Z/jH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eVJlBFLu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204D71F000FF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLy5Z/jH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE3B1F00898;
 	Thu, 17 Sep 2026 04:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1789617947;
-	bh=3HzbqHqjQymjaA7BsBDU1/xd02tq5ixlWdlSiDNtUtY=;
+	bh=PDYFtYaMI0AhnykvPFvkzlsotZmDoTCT5c0S8nqI1O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eVJlBFLuAAEcE0McA4H2A92moJphJQNyCLtRJOYqmffUyhdzTDtPz7AZYB3R4kvC1
-	 VV5/cE5e2xkL+odrzu3tuJrCLgimM6mOCCZ1rqp7plBxPXC1GrN8a/YQEWLjqBwqU/
-	 Tn1Sm0drOOrkqUO+dhSvHfnqdPNMMrR0whTPqnkAJzgYa1nEW+GdHt3Gb8cpSqJp9S
-	 vOfNdgrXvPy9Rtv1W8hrLqZwmxZHypptUhbe3Mx+6dpSYeNUOg2cxXx+9p8dAxKPPC
-	 /dqx9dDWBGV4XC/bvLjTCDGfP/xz2FUkDXx1PWB/Q8UzTGTTL7c4MKnlSwgcQLTnFq
-	 t2uWbKUmxBxOA==
+	b=NLy5Z/jH1+4dW/Yv3fuWWsqcwJbHuH4Bx4sq02CzSo0x9EY1cLKhIflZFhRTlu0/f
+	 AY6MfHFCp3fRe5oU1QbtD+4yHCYdzXR7W00DWNScRkznBrhufu+aID6C/Hp/cyRKTu
+	 C2vkv+AoIhr1n9Ghwr/tfXfb1mkR0Koi3velQZlIbMt77XNMtsJYF7l8U+fHvtOhLQ
+	 /gMfhtJ2GWYbc0CMeuZX0o12UAzebRzYCaZCyGNPDCt8Uc53PEPXOS1uLaPUYwFSou
+	 smGV+thHWKYurYjIQXR1DBmtSEC1Ce6M09b5AbNPCSuDguhyvkZxlWcgEZagI+W0uy
+	 4yYWJsNOPBJ2Q==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 06/10] mm/damon/paddr: remove pa parameter from damon_pa_filter_pass()
-Date: Wed, 16 Sep 2026 21:05:32 -0700
-Message-ID: <20260917040537.107341-7-sj@kernel.org>
+Subject: [RFC PATCH v2 07/10] mm/damon/tests/core-kunit: test eligible_mem_bp commitment
+Date: Wed, 16 Sep 2026 21:05:33 -0700
+Message-ID: <20260917040537.107341-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260917040537.107341-1-sj@kernel.org>
 References: <20260917040537.107341-1-sj@kernel.org>
@@ -47,36 +51,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_pa_filter_pass() receives the 'pa' parameter, but doesn't use it.
-Remove the parameter from the function signature.
+There was a DAMOS quota goal commit bug [1] that doesn't update the nid
+field for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP metric goal.  Add a kunit
+test case for confirming nid commitment.
+
+[1] https://lore.kkernel.org/20260827045035.94611-1-sj@kernel.org
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ mm/damon/tests/core-kunit.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 5abfabaa339e0..2cfdc356b4157 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -163,8 +163,7 @@ static bool damon_pa_filter_match(struct damon_filter *filter,
- 	return matched == filter->matching;
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 82c542afaa60e..1244cfeae5e70 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -835,6 +835,9 @@ static void damos_test_commit_quota_goal_for(struct kunit *test,
+ 		KUNIT_EXPECT_EQ(test, dst->nid, src->nid);
+ 		KUNIT_EXPECT_EQ(test, dst->memcg_id, src->memcg_id);
+ 		break;
++	case DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:
++		KUNIT_EXPECT_EQ(test, dst->nid, src->nid);
++		break;
+ 	default:
+ 		break;
+ 	}
+@@ -898,6 +901,13 @@ static void damos_test_commit_quota_goal(struct kunit *test)
+ 			.current_value = 345,
+ 			.last_psi_total = 567,
+ 			});
++	damos_test_commit_quota_goal_for(test, &dst,
++			&(struct damos_quota_goal){
++			.metric = DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
++			.target_value = 12,
++			.current_value = 345,
++			.nid = 6,
++			});
  }
  
--static bool damon_pa_filter_pass(phys_addr_t pa, struct folio *folio,
--		struct damon_probe *p)
-+static bool damon_pa_filter_pass(struct folio *folio, struct damon_probe *p)
- {
- 	struct damon_filter *f;
- 	bool pass = true;
-@@ -200,7 +199,7 @@ static unsigned int damon_pa_apply_probes(struct damon_ctx *ctx,
- 					ctx->addr_unit);
- 			folio = damon_get_folio(PHYS_PFN(pa));
- 			damon_for_each_probe(p, ctx) {
--				if (damon_pa_filter_pass(pa, folio, p))
-+				if (damon_pa_filter_pass(folio, p))
- 					r->probe_hits[i]++;
- 				i++;
- 			}
+ static void damos_test_commit_quota_goals_for(struct kunit *test,
 -- 
 2.47.3
