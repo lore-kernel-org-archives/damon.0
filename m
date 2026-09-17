@@ -1,61 +1,63 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82C531AA87
-	for <damon@lists.linux.dev>; Thu, 17 Sep 2026 00:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5A733E374
+	for <damon@lists.linux.dev>; Thu, 17 Sep 2026 00:36:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789605363; cv=none; b=Bmnez/FwjrWwtSVJefrQ7C7tjIRtaHIlBg/DU1zK3I+mRujH4vxAY1k1X/Wg0A9UosQmNIcs+UH7GmOtd+Ah2cZ+Snvhr6GU8TxyZJtnaLer6H2SeTN+QVs1jBLgDPtudyEQlwYSKDBYFTCfeA00ULM+fZ+tzEXFINuKNeMOWrY=
+	t=1789605367; cv=none; b=TVdEDyIEVoCi/dBu7VjLMyHJk6C3DasC1zZcn/WIyCd6El2ZIATiudpI/xuthC/b8rxi0wDRz/TxxCSHkNQ6Vy0PEKlB9BAz7UUZebzR5Q2fWe7rdeeknH4Khnhvm/Ra37t39nxpqgNnFH435LXxc/Oxc6NqLowEwdBk/EVogRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789605363; c=relaxed/simple;
-	bh=uJKa+EA5s7zr0a/1+eXgcUZRVzW4K3hs5659/g48Bl4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=a8DhDmhWuPq0UgGUI70gH/VqmsikAHiUb+2mqPA/Qz70nOr5kyw4bZDu7i5B+1w8WJAPguQj4YcOl2WmPHhKHSLLeA6vyD1cLrRh3UZgdYXxWfr6JFciMe+GAiAXSr/y1NZh4wFQ5Ll0MWNQod7ZyTa7fSI3oUpg4f9p2s7OEQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U5YrhGy2; arc=none smtp.client-ip=74.125.227.141
+	s=arc-20240116; t=1789605367; c=relaxed/simple;
+	bh=oY1XqwwwWT1+uL3YekTkyArK2uBkPFLMbeNHh5pTIV4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BZZva57mXZnxDVjHvebAxHEbJB9Onl/vI0aPBTLgJdkj5Gf68843P4inwxZZR9pJD+kUJzqzntLqsAkTqaDZjJltWPqvf9MhkP2NdyyILeEyBSbP7GmfpSVqZd949MeSYIQ/qlPJ5asq3/mJKGK97iaq7xqC9e1zd3JacnalxtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UU7fOJ/I; arc=none smtp.client-ip=74.125.227.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U5YrhGy2"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-39e03468a5fso233815a91.0
-        for <damon@lists.linux.dev>; Wed, 16 Sep 2026 17:36:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UU7fOJ/I"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-39dacf053eeso174944a91.2
+        for <damon@lists.linux.dev>; Wed, 16 Sep 2026 17:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789605360; x=1790210160; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=VEj2fyxUopAvzTBRoq/IFzzaeRf7xOyxSUgSKR9PaFA=;
-        b=U5YrhGy2cIko0IZ/kimPXef11BZgr16/psxSA2fjCwkNUQ2ekZXtpesuvNmeXGCJJR
-         Dh/544/JN85r265y9fTqsZqM5PRBuzxBiOGMrgXRu5qRKEaCjJCTT6haYch//LMcfjRw
-         LBD2drE+LvlFyBh5KPBZhXmuKOKJ6majaKCfyQ6KxkkcpYeRmG1pjkeRsqfX4uB9X6a2
-         JFW2k39z6fQGOX1fOPqASTAvHIxPHKmBWIKkwR7QXsMKd3yW39sZpVYST8/osCRAFsnV
-         JyY7sfzaqVL2DPwPbMGzXX6Aaabc6wQAvqJt4NlqUzvV0Iikx+bDsvxqPFoZ30oHSNwu
-         Rijw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789605360; x=1790210160;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1789605363; x=1790210163; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=VEj2fyxUopAvzTBRoq/IFzzaeRf7xOyxSUgSKR9PaFA=;
-        b=tME9ZeFmpv+KQAv+mZdLM9WoBbADl5or7M9vKjySOKXsDFZO9/+oilfUiOQQugJcHg
-         M4hZnJtiouA+WULflPRf3/uHpP2h14YpVcko55MD4ofVA0KvyLBMlxg4ttZrK7SPkZPm
-         SVe+ND1fjJp9Jx4zGK72EWOkOWSyXwT9X7jPmDBj7RLSJg+k/ltbybreHcqbZ/hesao/
-         BAKex8Tv6BZ66VyGnfb3nPC97AhGEplhtmnwJwDAKmgyF+6jsxp31e5ZkJVwG2+Bl5E7
-         ziKnRHWXIJqMIrjuWoihZLpysYeuc0fhTGl7LxAFCqR8P1D0Wjd3PHPt0dPITYAv4Q06
-         ku3g==
-X-Gm-Message-State: AFuF++mIzm5do5ibAsIKUH3/ismLZ/P3COdsgMEqNHzenHzSHBZ0upX9
-	3gDCOhTYdw2VTPfZHm16jk1XeSksFG80UarTENNoqgt8T5QiqWG+AWJTsimjdeNoJg==
-X-Gm-Gg: AYBFou1P9IePWIf1+rANX+HZy/4L7Pv//kpFrCwcZ+DXtaWSxwBzjfDVRbREj6M3HPv
-	ufzzzArteLu47bjq5X+ntk2n1cFdRu5fkUoog/btebcmDwr0zqm/yujCdFzhXVYhnZAUY/uOGDK
-	Ha0i+qSRuxmOr41IgBIigxIgNONycPzdRLI1vY7WrHIhO3zlVxDfh5myurNUf4/CM0DRekOWCV0
-	1ZFqaihAa+qX8Tu2yxYlO/dKboYkbR2iYwaueRnPb/nBN6GiFA5ThAIvGBjfmGDTLG87DyPiwTz
-	v52yDU1vthYXgXCtIZYHrS6+3OSFSM39kVhzrrJ2shxcYvVkiQMrKd/LVIe3Gf2I5/kfijKobeP
-	6LnYW2LPWf3YSIEmxTF2Cgh3QacEjpQsGMe9I5UHYzMQxGpCCV3pRzph20NxfPRL8XPlvlrnZFT
-	Ga6xwCQbbFfvL12P1RqflXCrUba9DIg12iTsS6R0xRqe2hnDFWhyW0YYNyqhZhIreCbFwVTw0lP
-	cXgDIU6FRLBovFArOQyPfa3Nrg=
-X-Received: by 2002:a17:90b:4ad0:b0:39e:3559:12df with SMTP id 98e67ed59e1d1-39e35592079mr3560740a91.1.1789605359950;
-        Wed, 16 Sep 2026 17:35:59 -0700 (PDT)
+        bh=+SZOEiF1GstbodCCQqhjQU6Va5Mh92J9eROCVHW7eeM=;
+        b=UU7fOJ/II47ZYwHUp2xQUQmvsML2D0sHGwgUKWjP6xG1yStyvc32UjN9biPONVQUcF
+         mH7xz4H8WC4sKw/9ZYsqlHlnPPFtefDDQabLzB690aaBXJC2iXvBPSzwCvVubMXWzQ4C
+         p1f6+S8y4ytJJ7ayJEJZMvoel2gs0goKkEyDaNOT3zIKlSVJtoFhi9lj+iy0gP0aS97r
+         8Wk8D3O/nnO0ERyVPDtof40u4V/BdWjeiTuW8LbtrDpttTGI1wIk50eesBdo8BeWY2NK
+         AX1P1CmaCxVDD3AyvJoEHyAestHzxKkeLTki6lkie8Da1NPGci1Jn9FK//3YfhnpaFGF
+         3JKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789605363; x=1790210163;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+SZOEiF1GstbodCCQqhjQU6Va5Mh92J9eROCVHW7eeM=;
+        b=ONSRYPW1O/NwrxOYgOVsZKmmpiCkYuOPWpB830LVKWX4BsE9Nv4kE6XKVnPj/aB6d+
+         ymsLVMyHVrAmVLocAgl4nxoWqKKEeYGHdpkQIolXbW/ExYE52sp248YCkJJ5O7zvIsda
+         DZLEoaqOZpMg8PwPaMJBZ+DexZ2W6d2zgauQ9v76xiIGOyCsZoIW5HTUWBXPx77B4222
+         MOBkMwFG5a1GkLWymJ1NH1CdqLBukhxQFvu3AAKcpMTIxcZrVtuGvKEVPOV8XU4GSxGF
+         TyEHJVT+2Ht8VSIHdpGkIjz3p31chGbFlMeZF6BJ+KaTSV28Auw3rg7WYEUuZBy7I0F4
+         KVEQ==
+X-Gm-Message-State: AFuF++kpRX+ZBfXtygqdqnFNTLxEFRmTxi8mfjD2WxmQ+I4NPpy+zbn7
+	quvR6jA0fkRFNnkS9G4rxOiEp9sRThrCMtnNw18zPPm9lQ9FQS86dnc=
+X-Gm-Gg: AYBFou0OKu43QRnKF4vkMAJXuJgpLR/xzX0/8GB11GZRQo9fwg7k3rFHfJeRxSj7Nbj
+	CQa5mxLnoiF/+66hUsqPqBCZ1elT/lu1wInSHsEbAWBgPspNQnkHJN2WIQAlv6Lt6fgRdrsHXGr
+	VGO/txaL7iTPDskPhuc/OgXKV6qwdfeBBYAR24XJI5HrUp33vZYisUC+dEnKKPk5ZZQjc1IxdqV
+	wCLGl4URKlxIm3pql4JsshRj14ZnB1lsqKDta+tTBJ2C13qkxTFz8bYGlSfhDdvV8YSDZ0CwauE
+	NfRHM8P71zECyJ5i1bM/ZEgBAGGzdynRPQ3pNRpoMtYkhWKghXfVLi58Lt88s8kE5VKQ/mZ7VcX
+	3ySvWqOKevEYCwFxhJ8IP/5B7tdBJHiy2fwOze9krHwSdBPIqWYQAPZDyqcJAtzV549/2k+GVC/
+	+Q15q+uaQpr+albvknCYdPlovHK6xGEQW5fMxY6rlwUbz7Jqua+kHa3gR3H/41LEj0JcxujH4Ux
+	wQby65hJJzF3fExGJfStLrkgpM=
+X-Received: by 2002:a17:90b:2585:b0:39d:f351:8f0c with SMTP id 98e67ed59e1d1-39e1e48b580mr10065782a91.13.1789605363080;
+        Wed, 16 Sep 2026 17:36:03 -0700 (PDT)
 Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f00:8c85:3990:d106:a51f:be7c])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e36115cc8sm1722374a91.3.2026.09.16.17.35.56
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e36115cc8sm1722374a91.3.2026.09.16.17.36.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2026 17:35:59 -0700 (PDT)
+        Wed, 16 Sep 2026 17:36:02 -0700 (PDT)
 From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 To: sj@kernel.org,
 	akpm@linux-foundation.org
@@ -63,10 +65,12 @@ Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
 	donggeunyoo.kernel@gmail.com
-Subject: [PATCH v1 0/2] mm/damon/core: fix the size charged for a filter-trimmed region
-Date: Thu, 17 Sep 2026 09:35:51 +0900
-Message-ID: <20260917003553.2465523-1-donggeunyoo.kernel@gmail.com>
+Subject: [PATCH v1 1/2] mm/damon/core: charge only the part of a region the filter left
+Date: Thu, 17 Sep 2026 09:35:52 +0900
+Message-ID: <20260917003553.2465523-2-donggeunyoo.kernel@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260917003553.2465523-1-donggeunyoo.kernel@gmail.com>
+References: <20260917003553.2465523-1-donggeunyoo.kernel@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -75,27 +79,60 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-An address range DAMOS filter that partially overlaps a monitoring region
-splits it, so the scheme action reaches only one side of the boundary.
-damos_apply_scheme() reads the region size before that split and never
-re-reads it, so the quota charge and schemes/<S>/stats/sz_tried account for
-the whole original region.
+An address range DAMOS filter that partially overlaps a monitoring
+region splits the region at the filter boundary, so the scheme action is
+applied to only one side of it.  damos_apply_scheme() reads the region
+size once on entry, before damos_core_filter_out() performs that split.
 
-Patch 1 re-reads the size after the core filters have run.  Patch 2 adds
-KUnit coverage for what the function charges and reports, for the trimmed
-cases and for the cases that must not change.
+The quota charge and the statistics update therefore account for the
+region as it was before the trim.  schemes/<S>/stats/sz_tried counts
+memory the filter excluded, which Documentation/mm/damon/design.rst says
+is not counted as tried, and with quotas/bytes set the excluded part is
+charged against the budget, throttling the scheme to a fraction of what
+was configured.
 
-Donggeun Yoo (2):
-  mm/damon/core: charge only the part of a region the filter left
-  mm/damon/tests/core-kunit: test the size charged for a filter-trimmed
-    region
+Re-read the region size after the core filters have run.
 
- mm/damon/core.c             |   1 +
- mm/damon/tests/core-kunit.h | 316 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 317 insertions(+)
+Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
+Cc: <stable@vger.kernel.org> # 6.6.x
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+---
+KUnit, mm/damon/tests, x86_64, with patch 2 applied to both trees:
 
+  without patch 1  36/38  damos_test_apply_scheme_filtered_sz and
+                          damos_test_apply_scheme_filter_sz_unchanged fail
+  with patch 1     38/38
 
-base-commit: 892f5b3b07e5b07f2f29c87750ff94fa58dcab73
+  Expected s->stat.sz_tried == 2 * min_sz, but
+      s->stat.sz_tried == 16384 (0x4000)
+      2 * min_sz == 8192 (0x2000)
+
+All 15 DAMON selftests pass with the series applied, in a QEMU guest booted
+with slab_nomerge and CONFIG_DEBUG_INFO, the latter so drgn could run two of
+them.  sysfs_update_schemes_tried_regions_wss_estimation.py and
+damos_quota.py are timing sensitive and have each failed intermittently on
+both patched and unpatched trees over 15 runs.
+
+One path is not covered by patch 2: the quota split failing at
+damon_split_region_at().  A KUnit case cannot make that allocation fail.  The
+sibling exit, a quota remainder below one region, is covered and reaches the
+same update_stat label.
+
+ mm/damon/core.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index dd4317df42ff..68f1749ded43 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2784,6 +2784,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 		}
+ 		if (damos_core_filter_out(c, t, r, s))
+ 			return;
++		sz = damon_sz_region(r);
+ 		ktime_get_coarse_ts64(&begin);
+ 		trace_damos_before_apply(cidx, sidx, tidx, r, nr_accesses,
+ 				damon_nr_regions(t), do_trace);
 -- 
 2.53.0
 
