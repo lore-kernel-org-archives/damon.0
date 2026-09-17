@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E205908DA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CEC58FD2A;
 	Thu, 17 Sep 2026 14:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789654943; cv=none; b=on1QQA4TUBghZNn9QNLPGAcJlZrwaROQRlTN9ueZ8sIassSVb/CMcLwa/YTm1Y+yO4pkG7E1hmFz+sUDTBkk5eX//aNsLrYngSM/kIC/ccgRG58e31UeYmx2BaA2if42mNer1EtiE6k1sOxH6027MhYuelntPxZbVXBqvp6zoPw=
+	t=1789654943; cv=none; b=QxULL7sk6IcvbS6BNImdr+vN2fnsCuOc611etni5gd0NQ0XNmHuP/6kMoy3+ZzUXpnbYYbtCVaknRmUYBr4NIiLopnfeAQgsbo6oODW2LwCSktdSu/Vjb3lIKHkgENf1lQbAAF6xtEuQGyuYSGOMRktDMKQdV/coAlCzJvD/fRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789654943; c=relaxed/simple;
-	bh=Ddkx7ZTSFvFyvhnKdja06+laaOkv/3+hcb3Kam2zg7Q=;
+	bh=lKpqzybvZ9hwDEn5zppDbcOvdMRte/Qiq/Xarpxk8U0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3jlF5wOWKlSUPsPpfy23jGGXBF+j+LFuqs5wCsx2bSTbtzy4DXYn+rMklxFaDoO4edytlaXso/f6gUWvGngFWLzO6HxhEIEOlp/6vtc3gzYL4xOr+47dz5zolPhfAzsQ7cDD8p8Zp0NNvCjEX9vRyANlsWVJlq/rhEujQIY3jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ltc9y5z/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RTQjUfNbNcAw9snPoU//s06i5KEfAqk5aySSnKzli3Wbg8cWL3gychdcPacrZ2o8XntCpK51jCz3asLkTi/C9UFaLXz6LQgWMED6gtfAOGuQzWU5fFYmNiA4Ot6KbrJgkcW844/azCLqOQA65k8pjCb11KER1GEpApUgu2S/h0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eomREd/j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ltc9y5z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F81B1F0089D;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eomREd/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1026B1F0089C;
 	Thu, 17 Sep 2026 14:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1789654940;
-	bh=3HzbqHqjQymjaA7BsBDU1/xd02tq5ixlWdlSiDNtUtY=;
+	bh=w6dSI4kuA6F6vgFBpIvecMt6EtgI2oZu6oc7TQA5lks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ltc9y5z/3ONggzQaz+gWDW8wvl9S5sQIQvHt4ii/ZG7pw4aYnhxQILLkHd0qMSIPd
-	 QX5qZgfzGBZaPQWgqq1C3J71poLBiq5KvE4fNgneVsV9IfpdC7UqsBAvNIA68dw0Ft
-	 zJOA2aa+AhZ+DLS10cWjzjM5cjN4gX1qZyKBvx7vhDXEu5Elbiv17UQwJsLvSx7lip
-	 jWU/j0V+ccDF+Rt9HBkImVWV2l8JOND8kN/T3MDg0aVLDX5BgTyH0KUIrMnHhGmLXj
-	 E9j+OlVfh6B9EKu6HW3ByybAECIXzsJLj/BmzBp4D4YFpkmq1xZEXhWJyV3YBxTI3z
-	 S6LrUkRHOD9Hw==
+	b=eomREd/jqdFfEgIBTkw87GKHW8I0aNQbEYgqPC+XhMuQfF2kvqLQHuoDRkVWKW8Um
+	 h/kWbDGPyuzYBZ9C0uO7GVGW9GkEayqY6gWg8tx/KLP0ob8veYHtN+HgVlApO0Nt/8
+	 pashGIOoSOk27LBlcMGTWhdXFRBKtPQoIGzHA19aJ3BcK86worHf/tRgXwAfjZoy+9
+	 H+Lkytu5tfiU2+lMFJRsJ+SEDBGG8vVOUKTzOxEegmp4KRpGy03h5ob5Di7vvErmuO
+	 rlRcia4W1GnwI5pHxpDwSEpNjcLXIY6tmJhMcCLGum7zrR+2OitqMapuYcDiQXwIyN
+	 Qj4Qyt1OaS6Cw==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 06/10] mm/damon/paddr: remove pa parameter from damon_pa_filter_pass()
-Date: Thu, 17 Sep 2026 07:22:04 -0700
-Message-ID: <20260917142210.90829-7-sj@kernel.org>
+Subject: [PATCH 05/10] mm/damon/core: document damon_call()/damon_start() race hang issue
+Date: Thu, 17 Sep 2026 07:22:03 -0700
+Message-ID: <20260917142210.90829-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260917142210.90829-1-sj@kernel.org>
 References: <20260917142210.90829-1-sj@kernel.org>
@@ -46,36 +46,33 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_pa_filter_pass() receives the 'pa' parameter, but doesn't use it.
-Remove the parameter from the function signature.
+Let's suppose damon_start() and damon_call() are executed in parallel
+for the same DAMON context.  Then, damon_call() could show
+ctx->damon_calls_obsolete set while ctx->kdamond is unset.  If
+damon_start() sets ctx->kdamond before damon_call() starts the
+cancelling, damon_call() can indefinitely hang.  No DAMON API caller
+does such parallel execution of damon_start() and damon_call(), so the
+issue doesn't exist.  But who knows what will happen in future.  Add a
+clarification comment for caution.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ mm/damon/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 5abfabaa339e0..2cfdc356b4157 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -163,8 +163,7 @@ static bool damon_pa_filter_match(struct damon_filter *filter,
- 	return matched == filter->matching;
- }
- 
--static bool damon_pa_filter_pass(phys_addr_t pa, struct folio *folio,
--		struct damon_probe *p)
-+static bool damon_pa_filter_pass(struct folio *folio, struct damon_probe *p)
- {
- 	struct damon_filter *f;
- 	bool pass = true;
-@@ -200,7 +199,7 @@ static unsigned int damon_pa_apply_probes(struct damon_ctx *ctx,
- 					ctx->addr_unit);
- 			folio = damon_get_folio(PHYS_PFN(pa));
- 			damon_for_each_probe(p, ctx) {
--				if (damon_pa_filter_pass(pa, folio, p))
-+				if (damon_pa_filter_pass(folio, p))
- 					r->probe_hits[i]++;
- 				i++;
- 			}
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index c63b09d4a2d0d..2258b72da7a78 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2258,6 +2258,9 @@ int damon_kdamond_pid(struct damon_ctx *ctx)
+  *
+  * When this function is failed, the @ctx is guaranteed to be stopped.
+  *
++ * This function should not be called in parallel to damon_start() for the
++ * @ctx.  In the case, this function could indefinitely hang.
++ *
+  * Return: 0 on success, negative error code otherwise.
+  */
+ int damon_call(struct damon_ctx *ctx, struct damon_call_control *control)
 -- 
 2.47.3
