@@ -1,64 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D4024E4C6
-	for <damon@lists.linux.dev>; Thu, 17 Sep 2026 04:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0720450EBFF;
+	Thu, 17 Sep 2026 14:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789618421; cv=none; b=ZvQTVUR/TqlUxv+IE8JjjDNUFMWg9zC9pctSsXxV8rIIO6JZ7e/6jvGKayPnEqj0pWGki+7TyVz46eKgFXjbMUhW7C54eshczTxDMA3oyQIfRda9CXPMSjOks/5piqPCJKCaUJLQhBsXP6IEnZoplhFRVdN4wwjudNg8st75PRo=
+	t=1789654941; cv=none; b=Ps8xPSdsfuyLAxnq0MIfikzEZQZb+wjFbzbwFv2zPDWJ+N4yWumucVGwj52UR3W9RRBHcoPOwabinSfugMEu9nZlaKT8ZyySvRRnWyVdQ8V2loL5Y8uMQ2TKGdnryMip5+2KUyo50a6NKonJL53c/dES8C7dqKhxc51f2Pye6Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789618421; c=relaxed/simple;
-	bh=Z5O2ZSmGJAW+nf6nGb0m/gG0vyjs8jaWUbSLNCFQCkU=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=O6BQA7DI5hJxMDbUIj62KKUO0rdwfSZYQiDgbYHZsVcaewjjR6kHVf4YtmFccTrXFrQeK66QesS0JF+msl3yJwoeVvMWh3HqV5cxKMhW3TxFZn/1/Gp0LMH7r8iiyQKpVIqFCx1i8JPLU7lxZ8HQZWhXdVzwWj9vvwJRRt9NwqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bySgDv6u; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789654941; c=relaxed/simple;
+	bh=KOp46QavelWc9MpAB/7pUoY+w8+SCJr5MpMBLdzDA6o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Se/SD4rdqjYmHXUApCDjyj71gaCPSdObweQ2suL+ClBS0aHYu/gRPJuPd0gMQ13Waf+F99AQ8q1rE3gbPi/SQB/SThB7uEPQRqrGC5CVTD7pPK5EbyPW4Zen4QEURCetyL/8WrRdEkV27G0YATshxAzyRL2euLH4i9FKzjchFlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gb8759cU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bySgDv6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9007E1F00893;
-	Thu, 17 Sep 2026 04:13:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gb8759cU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5FF1F000FF;
+	Thu, 17 Sep 2026 14:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789618419;
-	bh=1lXexOO/YxvrOi1V8eCeNiE5wpg17ZW7B7KjHXhBNNE=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=bySgDv6uJYQBSXFl92ggLUu+yv6m8fZYW+ziYrqbI7u41288xJ3346SGOIW2RV6Bh
-	 UY9jdRbDMgV98FeX8XhXceZQf28Xd06lcPupDgekhNGOxWfTHw+E2wa+ULKufZAAIC
-	 i6wxzEx8w3/YwjSsC2GF7kwUA92YAWeLyZ8woPfpQNvE4Rl571ZUKw6zi0fAwufWL8
-	 +n2Oooc3JXjmXxq4ZlvkyRr7uqzkonynVPqHyj+iuz+9T+ikDwxz0pS4uAsHtoa53Z
-	 YaWB8FrxUuEcsgPi7DJNnCqTMIbSml7hyzDHomnP42LeQHWa4dsiwfmEiWx9FvBd0C
-	 Af5jHvBfI65hw==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 05/10] mm/damon/core: document
- damon_call()/damon_start() race hang issue
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260917040537.107341-6-sj@kernel.org>
-References: <20260917040537.107341-1-sj@kernel.org>
- <20260917040537.107341-6-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 17 Sep 2026 04:13:39 +0000
-Message-Id: <20260917041339.9007E1F00893@smtp.kernel.org>
+	s=k20260515; t=1789654938;
+	bh=tjofGGPSHVfcqzboPWJ6IAtm4wQQNel3C2UWwfDef+A=;
+	h=From:To:Cc:Subject:Date;
+	b=Gb8759cUP4F7z65rAz0mmY+nlIY5k81T3VIPeUin1rbrmVvM+ZXx62gTB7IFUlPVt
+	 Znub8YBvftvVjKpiRv/Na/rttLudHP4zP3b5qv5/6Cb08R3CMx/ieJA/PHNqJiyb0e
+	 q+xwyomlbMEpEbPz44JLrIlBc60dY49oaQajc+RJhHynUja3RL78LslqWtO+fZ8s9a
+	 UQNA3D/GkIuYY41/1Hi/x6veTaZm1zuE3Ef6iQiV0P++pYoKj83T+oU+3AhJp6FMJf
+	 dk6acrZuagzDiLn58yIB62qgsy4eAbprozdbTgJIylfUestjXzCTphymOIHUroWuJN
+	 5jqJ3swApSXPQ==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 00/10] mm/damon: improve readability, clarity and test coverage
+Date: Thu, 17 Sep 2026 07:21:58 -0700
+Message-ID: <20260917142210.90829-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> Let's suppose damon_start() and damon_call() are executed in parallel
-> for the same DAMON context.  Then, damon_call() could show
-> ctx->damon_calls_obsolete set while ctx->kdamond is unset.  If
-> damon_start() sets ctx->kdamond before damon_call() starts the
-> cancelling, damon_call() can indefinitely hang.  No DAMON API caller
-> does such parallel execution of damon_start() and damon_call(), so the
-> issue doesn't exist.  But who knows what will happen in future.  Add a
-> clarification comment for caution.
->=20
-> Signed-off-by: SJ Park <sj@kernel.org>
+Yet another batch of miscellaneous DAMON minor improvements.  Mostly
+focused on readability and clarity of code and document, and unit/self
+test coverage.  No user-visible behavioral change is intended.
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+Changes from RFC v2
+- RFC v2: https://lore.kernel.org/20260917040537.107341-1-sj@kernel.org
+- Drop RFC tag.
+- Rebase to the latest mm-new.
+Changes from RFC
+- RFC: https://lore.kernel.org/20260912200814.145612-1-sj@kernel.org
+- Fix a typo in the selftest warning message.
+- Collect A-b: from Randy.
+- Split out damos_adjust_quota() fix to an individual hotfix patch.
+- Add a patch for initializing walk_control_obsolete in damon_new_ctx().
+- Add a patch for probe_hits_wsum damos filter commit kunit test.
+- Trivial patch sequence update.
+- Rebase to the latest mm-new.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260917040537.1073=
-41-1-sj@kernel.org?part=3D5
+SJ Park (10):
+  mm/damon/api: remove NR_DAMOS_FILTER_TYPES
+  mm/damon/core: use abs_diff() in damon_feed_loop_next_input()
+  mm/damon/core: use mult_frac() in damon_feed_loop_next_input()
+  mm/damon/core: set damon_ctx->walk_control_obsolete in damon_new_ctx()
+  mm/damon/core: document damon_call()/damon_start() race hang issue
+  mm/damon/paddr: remove pa parameter from damon_pa_filter_pass()
+  mm/damon/tests/core-kunit: test eligible_mem_bp commitment
+  mm/damon/tests/core-kunit: add probe_hits_wsum damos filter commit
+    test
+  selftests/damon/sysfs_memcg_path_leak: fail only for real DAMON leak
+  Docs/mm/damon/design: clarify bp is basis point
 
+ Documentation/mm/damon/design.rst             |  5 ++--
+ include/linux/damon.h                         |  2 --
+ mm/damon/core.c                               | 19 ++++--------
+ mm/damon/paddr.c                              |  5 ++--
+ mm/damon/tests/core-kunit.h                   | 30 +++++++++++++++++++
+ .../selftests/damon/sysfs_memcg_path_leak.sh  |  7 +++++
+ 6 files changed, 48 insertions(+), 20 deletions(-)
+
+
+base-commit: 942682790e570c9422a389bf34097e74c4777fe9
+-- 
+2.47.3
