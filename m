@@ -1,68 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2995724E4C6
-	for <damon@lists.linux.dev>; Thu, 17 Sep 2026 04:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D4024E4C6
+	for <damon@lists.linux.dev>; Thu, 17 Sep 2026 04:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789618410; cv=none; b=gdw60Xq2p5f8g/bh63hHgx1CuLT8wmYEEiTmhWuQ/fTa8H0SiWRmnm66UrB98LysyKvxe3by5A/hUBUHLVfOuk/gE2vsba2FQjKg+FxHNjLg7eHoIljACL9cCZpqtYe8yB0uoi/rtDQ/57hWcP/54vIV/e6SRuunG1u+B+xSLcs=
+	t=1789618421; cv=none; b=ZvQTVUR/TqlUxv+IE8JjjDNUFMWg9zC9pctSsXxV8rIIO6JZ7e/6jvGKayPnEqj0pWGki+7TyVz46eKgFXjbMUhW7C54eshczTxDMA3oyQIfRda9CXPMSjOks/5piqPCJKCaUJLQhBsXP6IEnZoplhFRVdN4wwjudNg8st75PRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789618410; c=relaxed/simple;
-	bh=qAjmzQOkudNDEGTZ1QxXxRznb+lc5DGMJhwArAn4v2c=;
+	s=arc-20240116; t=1789618421; c=relaxed/simple;
+	bh=Z5O2ZSmGJAW+nf6nGb0m/gG0vyjs8jaWUbSLNCFQCkU=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=CPm4kkngBpI2nF0jThMqPIJHNqMOm1t1V0OzjygIacKL3lWECE0k4pnIGyg8/W6PiiETRDfAaoplUwkTQ2/bTtC+ztaaVYUo8PGOEU+SPR+rZh46RFat26qKTEPsq/tvMGfBw5Ck4o0wZhu6Sjo0/9euS8KBEUFrFH/ft+oCags=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fxPz/ppx; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=O6BQA7DI5hJxMDbUIj62KKUO0rdwfSZYQiDgbYHZsVcaewjjR6kHVf4YtmFccTrXFrQeK66QesS0JF+msl3yJwoeVvMWh3HqV5cxKMhW3TxFZn/1/Gp0LMH7r8iiyQKpVIqFCx1i8JPLU7lxZ8HQZWhXdVzwWj9vvwJRRt9NwqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bySgDv6u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fxPz/ppx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E751F00898;
-	Thu, 17 Sep 2026 04:13:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bySgDv6u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9007E1F00893;
+	Thu, 17 Sep 2026 04:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789618409;
-	bh=qKssEIGWnmjPYyz6xTJmEXS0aqDYDt7y6eeMFQy9yqc=;
+	s=k20260515; t=1789618419;
+	bh=1lXexOO/YxvrOi1V8eCeNiE5wpg17ZW7B7KjHXhBNNE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fxPz/ppxuhh/3KcxzL2QavW2ctNZAWTlZDCeoI5/vceVteHNnIfCFv3KszJ+M0ypo
-	 Kb4rSE8lXmV/3o0Wf3+tTKtgF7dCCMU99pdeQaJ1Lnr4DA8CSfAakVUD36JvT1vReU
-	 w8PVys3GU/rFvvif6uT/yJdh+r41Wzk1wqJmOL13PUvAILENc/eUm8160RYoiPmQ4o
-	 0VwQNcL9CSE1HnXNabudDKycEZViDjqh8G9HYZpGZUsV0T4pLcNg879JwBuqavront
-	 dQYItg70ZuoZX3aFW4ryMbfAMTJHI7Vw7bEFNozwqY7VrsaqASNvjseshZe2Ci0/XW
-	 oSR5pc/VvLcQQ==
+	b=bySgDv6uJYQBSXFl92ggLUu+yv6m8fZYW+ziYrqbI7u41288xJ3346SGOIW2RV6Bh
+	 UY9jdRbDMgV98FeX8XhXceZQf28Xd06lcPupDgekhNGOxWfTHw+E2wa+ULKufZAAIC
+	 i6wxzEx8w3/YwjSsC2GF7kwUA92YAWeLyZ8woPfpQNvE4Rl571ZUKw6zi0fAwufWL8
+	 +n2Oooc3JXjmXxq4ZlvkyRr7uqzkonynVPqHyj+iuz+9T+ikDwxz0pS4uAsHtoa53Z
+	 YaWB8FrxUuEcsgPi7DJNnCqTMIbSml7hyzDHomnP42LeQHWa4dsiwfmEiWx9FvBd0C
+	 Af5jHvBfI65hw==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 04/10] mm/damon/core: set
- damon_ctx->walk_control_obsolete in damon_new_ctx()
+Subject: Re: [RFC PATCH v2 05/10] mm/damon/core: document
+ damon_call()/damon_start() race hang issue
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260917040537.107341-5-sj@kernel.org>
+In-Reply-To: <20260917040537.107341-6-sj@kernel.org>
 References: <20260917040537.107341-1-sj@kernel.org>
- <20260917040537.107341-5-sj@kernel.org>
+ <20260917040537.107341-6-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 17 Sep 2026 04:13:28 +0000
-Message-Id: <20260917041328.E2E751F00898@smtp.kernel.org>
+Date: Thu, 17 Sep 2026 04:13:39 +0000
+Message-Id: <20260917041339.9007E1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> damos_walk() should be called for a damon_ctx context that has
-> successfully started at least once.  That's because
-> damon_ctx->walk_control_obsolete is initialized when kdamond starts.  If
-> the rule is violated, an indefinite wait can happen.  There is no
-> existing violation of the rule.
->=20
-> damon_call() had a similar rule, and it turned out keeping the rule is
-> not easy for damon_call()'s case.  Hence, commit 8023b5f47e09
-> ("mm/damon/core: set ctx->call_controls_obsolete in damon_new_ctx()")
-> added the initialization in damon_new_ctx() and removed the rule.
->=20
-> Keeping the rule for damos_walk() is relatively easier.  But having
-> slightly different rules for similar functions could be confusing.
-> Sashiko, for example, repeatedly asked questions about this.  Do the
-> initialization of walk_control_obsolete in damon_new_ctx() for
-> consistency.
->=20
-> [1] https://lore.kernel.org/20260915011614.102342-1-sj@kernel.org
+> Let's suppose damon_start() and damon_call() are executed in parallel
+> for the same DAMON context.  Then, damon_call() could show
+> ctx->damon_calls_obsolete set while ctx->kdamond is unset.  If
+> damon_start() sets ctx->kdamond before damon_call() starts the
+> cancelling, damon_call() can indefinitely hang.  No DAMON API caller
+> does such parallel execution of damon_start() and damon_call(), so the
+> issue doesn't exist.  But who knows what will happen in future.  Add a
+> clarification comment for caution.
 >=20
 > Signed-off-by: SJ Park <sj@kernel.org>
 
@@ -70,5 +60,5 @@ Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260917040537.1073=
-41-1-sj@kernel.org?part=3D4
+41-1-sj@kernel.org?part=3D5
 
