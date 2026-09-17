@@ -1,97 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5843C3F51;
-	Thu, 17 Sep 2026 04:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D81036F8EF
+	for <damon@lists.linux.dev>; Thu, 17 Sep 2026 04:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789617951; cv=none; b=GpkOdYrPf22CmXaS6w5CELecXFhsu5QzU0+NOwfcleCiojv4ffVkXjeakkK595w7J37R3EeIKGosL8E3bsZglygQnVv2Vw5SKiClmQFmnDGJWJDk5ND62v2KruLPlZZFpg65S1NJvVzl1a1ee+6uehFYDzEunG+cUjf7bZZwQVs=
+	t=1789618092; cv=none; b=jLYgaTKXFgq/GOG2jrsdQSaoONFQ8aAuQbYKGHCdjumsJSZU72A3gfPDssLh1/Z4VO7oX5EbCHcfFCpPAL0qyV4rZRDYngwiKaqIGZ5Q0KCJ2hkhWXLFtURgaJcxHEof4N6iGNLihgOfVxjiklPbWWAJCEY/D1xfeQmDVEVhdfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789617951; c=relaxed/simple;
-	bh=Eqre9EVQ7YlVbIBp2jqspJzGDFxFiz5ITzxRB7dmjSU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVj8NQXAvbgqrqFY8AvTz4Q8vE8t+vmLGS9T0hEzKEQPoohiQ8rD4MGyOOF98HmGx+yzFNzhZiXA2HHA7VofsDfo7SqZxWxaFbnQDvLLcLgV5gHOLLgum7tlQZ8y6KNsRq9/osl7waLMA6GUE88uUYsoZ4th9IJ9N1Ar9I/dFFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GhN2puzE; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789618092; c=relaxed/simple;
+	bh=2+EIleYzIEil63CG1NVa5E/7kUF3WaL/zt58bgddYTk=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=FfDYdTSpWOI0KsyIwZTk6SfT+1biEEnnlHTMIKNqsXFjOS90fEbxbULvp8KIdFmEmgOkjWm15n7CzH6cagbe+lQW35rTbc9hPtep+fNCPTgachCsn0YFAIDpoQBbx7qtjOjyi3XsaK+71m4Jr2acEWcUB2xRJiyf+yKSfJG+6Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S4/kEc+M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GhN2puzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48691F0089B;
-	Thu, 17 Sep 2026 04:05:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S4/kEc+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D908F1F000FF;
+	Thu, 17 Sep 2026 04:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789617949;
-	bh=Mozf9eR83klndQFJraTt18kHcl1hxd6yOHCmDoYKrX8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GhN2puzEsWiLv7s8wcGaPWWWFYfc1kACptDmFKSTdaoePt3/+GPX8BMMgRD3+GIKC
-	 S4nfxqpdKNvJqtKASnnu/vk47kNDkTULgZCFUH0L7TowQXoA0A7UiFeWHBloVXRa5n
-	 FrNaeF9cNUq3qq1RyAX1viVPh6HwjgiYC3VR/Ap4tkMhLfZ+3ufUSti61FyoU4JRDe
-	 DX9CC8elLVbULwp0z+5LPeilDddi0plmtHLv+XK+GIVpP7jxItIuMB+t2UHOCRqDec
-	 7raemiTAjfgKfRywm7kLR5JKOGzLnt1U9hDheawk4CluP8C5YojvSHQ9cnMtR/URik
-	 V8rYQJKHyUPkg==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v2 10/10] Docs/mm/damon/design: clarify bp is basis point
-Date: Wed, 16 Sep 2026 21:05:36 -0700
-Message-ID: <20260917040537.107341-11-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260917040537.107341-1-sj@kernel.org>
+	s=k20260515; t=1789618091;
+	bh=2+EIleYzIEil63CG1NVa5E/7kUF3WaL/zt58bgddYTk=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=S4/kEc+ME4pZBs4d13pJWxneUimlmX8ZAyPu80E1uY2w3vf8s7y/M5/SD9ncTWIRz
+	 rk8fb/68mR0bskIHxk40Hj7uL9UsLd5tROODxl6S4XcgJ7iexLN1RDYZm3c4zIeV/w
+	 FZCHqggONZpcsuVyWJyID+9f6jVScRtIYcsoKqv2xfKPz2b+yH4rhMeo3vAByDsWvz
+	 FW3JsQSmc7uJ7LJcbfA9HTWNXzVWXKWPsdyPjz5Vra5Ak5X2K8WqzG6rdNq293S1PF
+	 hinPcVrFyDzcgclAjFdZ5q1vihxH+Pkvi0hVOGSF/u1X358e+mpBEZVi4bso5qTFG/
+	 GJSbrG8gzzFGw==
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v2 06/10] mm/damon/paddr: remove pa parameter from
+ damon_pa_filter_pass()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260917040537.107341-7-sj@kernel.org>
 References: <20260917040537.107341-1-sj@kernel.org>
+ <20260917040537.107341-7-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 17 Sep 2026 04:08:10 +0000
+Message-Id: <20260917040810.D908F1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-DAMON design document uses "bp" for "basis point" in multiple places.
-Because it is not clearly mentioned, it is difficult to understand what
-"bp" stands for.  Add the clarification.
+> damon_pa_filter_pass() receives the 'pa' parameter, but doesn't use it.
+> Remove the parameter from the function signature.
+>=20
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Closes: https://lore.kernel.org/107dc6ba-697e-4b25-ba3e-8ce2499cac9a@infradead.org
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/mm/damon/design.rst | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 0a86792f90a18..e82390e77a70a 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -445,7 +445,7 @@ users to set the aimed amount of access events to observe via DAMON within
- given time interval.  The target can be specified by the user as a ratio of
- DAMON-observed access events to the theoretical maximum amount of the events
- (``access_bp``) that measured within a given number of aggregations
--(``aggrs``).
-+(``aggrs``).  The ratio is in basis point (bp or 1/10,000).
- 
- The DAMON-observed access events are calculated in byte granularity based on
- DAMON :ref:`region assumption <damon_design_region_based_sampling>`.  For
-@@ -717,7 +717,8 @@ mechanism tries to make ``current_value`` of ``target_metric`` be same to
-   in microseconds that measured from last quota reset to next quota reset.
-   DAMOS does the measurement on its own, so only ``target_value`` need to be
-   set by users at the initial time.  In other words, DAMOS does self-feedback.
--- ``node_mem_used_bp``: Specific NUMA node's used memory ratio in bp (1/10,000).
-+- ``node_mem_used_bp``: Specific NUMA node's used memory ratio in basis point
-+  (bp or 1/10,000).
- - ``node_mem_free_bp``: Specific NUMA node's free memory ratio in bp (1/10,000).
- - ``node_memcg_used_bp``: Specific cgroup's node used memory ratio for a
-   specific NUMA node, in bp (1/10,000).
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260917040537.1073=
+41-1-sj@kernel.org?part=3D6
+
