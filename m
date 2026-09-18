@@ -1,45 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D90D3AF662;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77B344A3FE;
 	Fri, 18 Sep 2026 14:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789741718; cv=none; b=XoO2hLwHu/70LRjb3AylqRpWC1//MR5x2GP02F5rbvcpXRWx5IQpzWDMX+JMS0VGpRzop1gfVMRDfBVGVyy78KGkYbh4/GuDHPNIWnuXbL6Z9FnqT3IXpf3hoxt2zQMb+XfCkNnVxVF19RWmDKJdSDMFbbc3PgPVts5xX/0EnO8=
+	t=1789741719; cv=none; b=uJL9J4bSz4yEh3xWbISKvBGDpbhdPLgqTw+7SBp4HRHBIWJ+bCN7PyispSx+mv0F/1DRxd/X/PVn9zI61DAy0VyYjG1qGc38kgfSyIrtruEkAz/XUlNnJtANhB7WU76KerZ5pjYCKgYzLOhuVEYoHMexdrZOKFPJAi98tn84bVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789741718; c=relaxed/simple;
-	bh=GDXvN/oUdxtfz8ODbwp2BnCBx7mlLzYNo2acZWvIxyk=;
+	s=arc-20240116; t=1789741719; c=relaxed/simple;
+	bh=plGbdbehTitQph8PfjL4EU6xReU3ILvw6sBrO0FSP4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NN/ul0uF5Om84CL+t5ppziG0aOgWq0TMWGXvBcm5prib56vKp6Zw/8PCbRPcfptMxIII9O2qNpEu3wHbQq6B++J23dgLIQnUROSLrp78sSgUaW6O7PvAcz6d+zWOP29J2qoTyOxINZcYqBWIZLwcNJ8x1MjxLo4/nCzS2HwVZL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U3UKdxmk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nq9+Gpvg3YAgzp6AlKVEta2c3FNuQ6f0mDy/kA6NOOfKj+Vw2/r459nfEPp0j0kAbHvXckeqKlSvZQhAv6qoDrZasK7c8KsQBO8gThyZwUhMsHiNJJJrfwXHOJoZdaxTM4soNjcRiwelhtKpKGftC8OCajz3wqRyhT8ZgJiHScw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TuycTjiV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U3UKdxmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28071F0089A;
-	Fri, 18 Sep 2026 14:28:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TuycTjiV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264691F0089C;
+	Fri, 18 Sep 2026 14:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1789741717;
-	bh=yRWBrRHzXRD4yV6zK3pssB5trIwz9nJ/p0K/bKugcGc=;
+	bh=tnIaLQ3JqTQKlYGtXSLMaRVuIin07S/F5Nx3QIjWklQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U3UKdxmkO5xWdreA65UuGBv1dqMomRvgd54gkrZ8RGNPAlQjZAq+HKNGLEcYZQdbE
-	 7FlyQwK7gtWLhJdK+doRYKhEDNLUliIW6k7PyptSPoUO0cuxoq+Fme7pGTKaxWfBSL
-	 gHas31tt1h9X4+SvaTrHq9RL8a35T82XKwc0oj6+Tep7ja5PVwwdhwXFIadaRuQ7tt
-	 knun83sYAYvGf4A+FOw8JMPrtT6Pz+/iN+j5GrXLKzVQoTjnFEa6vXE5FS5Zl2RwN1
-	 zf03kLTVzXa6oPA87qFQqd2OEkjZ61EV+erS0KYZKfnzaFcYg04rXISNChyqAb2eWf
-	 Nl19yQJQ3PYHA==
+	b=TuycTjiVoeVMzOYC+QdjBjiq2BtWAOT6mVWKFFYP1Q43SZJ2ylFR9x/qtM3GZAT+h
+	 zjOFGtdgHcHNpp+9JwBfJTsNLBbFG2CZqKSUTHTEf7E6RrX08oaAiqv0tqrhCTraDE
+	 6J2OVhxJYCIL4mIpl1F8U9fscvpS5y04kEKEGEe1ebq8On3ygxfxwPw787L5pZN7I5
+	 j/RofLP4S0KKXUwUaOXn/3kOObyFeb2QH4164d5Qv7xMPS+LoKHc498YgRdZyGtP7y
+	 1Igmc9WPRZ60staPoaoDWecFA5qWlwLfiqX5l4/7ep0D4/UnudyPmXl3LxV21brM83
+	 bvpdf1PGF+ceA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 4/7] mm/damon/tests/core-kunit: test quota_goal->complement commit
-Date: Fri, 18 Sep 2026 07:28:23 -0700
-Message-ID: <20260918142827.85303-5-sj@kernel.org>
+Subject: [RFC PATCH 5/7] Docs/mm/damon/design: document damos quota goal complement flag
+Date: Fri, 18 Sep 2026 07:28:24 -0700
+Message-ID: <20260918142827.85303-6-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260918142827.85303-1-sj@kernel.org>
 References: <20260918142827.85303-1-sj@kernel.org>
@@ -51,34 +58,44 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend existing DAMOS quota goal commit unit test to test the complement
-flag.  Set the source complement flag and confirm the destination is
-updated to the given input.
+Update DAMON design document for the newly added damos quota goal metric
+value complement flag.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/tests/core-kunit.h | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/mm/damon/design.rst | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index e8290a2c6f343..a2504e96954f7 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -819,6 +819,7 @@ static void damos_test_commit_quota_goal_for(struct kunit *test,
- 	damos_commit_quota_goal(dst, src);
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index e82390e77a70a..c82be80738c45 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -702,10 +702,10 @@ There are two such tuning algorithms that users can select as they need.
+   that the zero quota is a valid quota, and therefore ``qt_exceeds`` :ref:`stat
+   <damon_design_damos_stat>` will keep increasing in this case.
  
- 	KUNIT_EXPECT_EQ(test, dst->metric, src->metric);
-+	KUNIT_EXPECT_EQ(test, dst->complement, src->complement);
- 	KUNIT_EXPECT_EQ(test, dst->target_value, src->target_value);
- 	if (src->metric == DAMOS_QUOTA_USER_INPUT)
- 		KUNIT_EXPECT_EQ(test, dst->current_value, src->current_value);
-@@ -862,6 +863,7 @@ static void damos_test_commit_quota_goal(struct kunit *test)
- 	damos_test_commit_quota_goal_for(test, &dst,
- 			&(struct damos_quota_goal){
- 			.metric = DAMOS_QUOTA_USER_INPUT,
-+			.complement = true,
- 			.target_value = 789,
- 			.current_value = 12});
- 	damos_test_commit_quota_goal_for(test, &dst,
+-The goal can be specified with five parameters, namely ``target_metric``,
+-``target_value``, ``current_value``, ``nid`` and ``path``.  The auto-tuning
+-mechanism tries to make ``current_value`` of ``target_metric`` be same to
+-``target_value``.
++The goal can be specified with six parameters, namely ``target_metric``,
++``complement``, ``target_value``, ``current_value``, ``nid`` and ``path``.  The
++auto-tuning mechanism tries to make ``current_value`` of ``complement``-ed
++``target_metric`` be same to ``target_value``.
+ 
+ - ``user_input``: User-provided value.  Users could use any metric that they
+   has interest in for the value.  Use space main workload's latency or
+@@ -733,6 +733,11 @@ mechanism tries to make ``current_value`` of ``target_metric`` be same to
+ - ``hugepage_mem_bp``: Total huge page to total used memory ratio in bp
+   (1/10,000).
+ 
++``complement`` is a boolean parameter that determines whether to use
++complemented value of the target metric.  For example, if ``complement`` is set
++and target metric is ``active_mem_bp``, it is effectively same to
++``inactive_mem_bp``.
++
+ ``nid`` is optionally required for ``node_mem_used_bp``, ``node_mem_free_bp``,
+ ``node_memcg_used_bp``, ``node_memcg_free_bp`` and ``node_eligible_mem_bp`` to
+ point the specific NUMA node.
 -- 
 2.47.3
