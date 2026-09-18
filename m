@@ -1,58 +1,120 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4254A3F33
-	for <damon@lists.linux.dev>; Fri, 18 Sep 2026 15:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288864E3EED
+	for <damon@lists.linux.dev>; Fri, 18 Sep 2026 15:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789744057; cv=none; b=LPuwIX1CKYUg4TGWnnQjCJ+/UstOP5q9KW/udxssFyvYcqq0f90FxjR0yIt3I+GrRqUtJ3fNvWTOn18dhZ3B0pv1BUQ5vlPvROSePlIeQNW7x1tWzyKjNwDA/XHeYydmprB5M4UtttrE2+tlsb2bKWuShuK3E1G5m9Y9iS8aXAw=
+	t=1789744117; cv=none; b=IBTok7gqAhJ5QbSsLLSW0bGG9ywPcQMdZgjVIZTEVMX/KXjFil2Uqhmk/PkDbtoUHikbQN3TKIMPyV50zxsKgf6U3lmkcPED5qQltHJpgKIwqYNP8GF8DGmna2zIfeX4Mv4YlVgVAY+1Rr1K0lAryx5dRHZUgdbkNMMl+T79Fyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789744057; c=relaxed/simple;
-	bh=E0ONb7Y3Z9JL50ENx0N3WugmyJPhWktTmHj6IgNVG7A=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=rPIhwsHLx8Eta2h3Ui5d+D3t80tgqhbcuxvUBw/vPag1EgUXrMGd6J5wypnJ7WbPt0ndw7w/xD0742NHPlxF8nVH2rr8kmhNpjpc8RC1AeTPFQ2pC+4MHzeN89fvfo3hDGfDZFD9N4/bKJeyF9/qUnOl8brItyPOB5INGAY1fHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kamJzu+d; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789744117; c=relaxed/simple;
+	bh=WDfYOm2872oUwTuoifkSy3EAzu63GPjLEor9PeKnnR0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dahZ2AcPOGJpr/ANLxLP+8l59RXgI6miBHZ9L/J63PEbtDrlUn3pk7Pkol1HsH5SINA/xhQLOlDKT32Z9Xo8g9i8TTi42Mz0EIvZF5AQnenLQ0pEymsaLNrn2MCNd01GT/yOEgLt6bynrA1k9R9pxTctm85nOP8/eT6n+W1opf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mpAu/d+x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kamJzu+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6501F000FF;
-	Fri, 18 Sep 2026 15:07:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mpAu/d+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8421F000FF;
+	Fri, 18 Sep 2026 15:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789744054;
-	bh=E0ONb7Y3Z9JL50ENx0N3WugmyJPhWktTmHj6IgNVG7A=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=kamJzu+dSGHBm24r/dsjqDqsnn00h3bwHuN3QSdt1FkhP489S96LWU2KqKV4yoxgP
-	 uYcC3Oj8+2apvT198TEr1qeby6s4TSiZUYggCcJwHV2uh5eQzLzNGFTTBmKQLTwI/P
-	 z28mEJlx/dYsDtutP3pFPcFshoozKIeQpH4GTrM0OTJ9pmJQlt2l+c5+f8dk5fXRjF
-	 LYvXC9vnA1rHIkYNtKHmy0GbScaWjm1Pwn0UT/htv+0VY47WRosXimRttmbvVkPA/E
-	 Op0RFX8VOU896hpRk0cseVReF3hyk4QCzdcNGr1n7LOf6YCvRGcg+w6EXE0W7MMm2i
-	 swh9ZdaWdJbwA==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 5/7] Docs/mm/damon/design: document damos quota goal
- complement flag
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260918142827.85303-6-sj@kernel.org>
-References: <20260918142827.85303-1-sj@kernel.org>
- <20260918142827.85303-6-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 18 Sep 2026 15:07:34 +0000
-Message-Id: <20260918150734.8E6501F000FF@smtp.kernel.org>
+	s=k20260515; t=1789744110;
+	bh=zOfXrroKCTraD74IVyxB6/Tf60wFb2jg7Mh7+2EyFUE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=mpAu/d+xQy3YpY1oco61oYnww+tcWYebUTPBkhZtd44oKrvm4hyN4Q+7Ym5M/RQvA
+	 /ayjUoY7cN6qcgpTVsNEM+8FXZExdS9pPwFtPi7vN7COQ/mBmcIkLCFeka04uIOosa
+	 8ifKOjuShEnkPETfKpdvHh2Dg+R9KSAJ/dDglFTNC9CzQVXqQk5gkvyWqugQya0guW
+	 sTtB1JX9+iyRAb3EKT/3MNmBaVM1qZyfWh4INbegCAQjWJysan0ZyvO2WjW/SG/jlo
+	 VNvS+E97+Rk4X4pDrXj+Ui8YlzHic5bVgPCdot3aah0MQ1wOANHDUXNSqItjCBDZO4
+	 ZYpuDk+O+UyRQ==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [RFC PATCH 1/7] mm/damon/core: introduce damos_quota_goal->complement
+Date: Fri, 18 Sep 2026 08:08:22 -0700
+Message-ID: <20260918150823.86172-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260918144818.18C831F000FF@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> Update DAMON design document for the newly added damos quota goal metric
-> value complement flag.
->=20
-> Signed-off-by: SJ Park <sj@kernel.org>
+On Fri, 18 Sep 2026 14:48:17 +0000 sashiko-bot@kernel.org wrote:
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] mm: integer underflow in damos_set_quota_goal_current_value() for complemented metrics
+> --
+> 
+> commit 94b0fa41235165f1d082ca5735dcefbf9f65199b
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/core: introduce damos_quota_goal->complement
+> 
+> This commit introduces the complement field to struct damos_quota_goal
+> to allow specifying whether to use a complemented value of the goal target
+> metric. It adds the field and implements the core support, handling the flag
+> during quota goal commit and current quota goal metric value retrieval.
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 2258b72da7a78..25a8221dd2a40 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> 
+> [ ... ]
+> 
+> > @@ -3238,6 +3239,19 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+> >  	default:
+> >  		break;
+> >  	}
+> > +	if (!goal->complement)
+> > +		return;
+> > +
+> > +	/* updte current_value to complemented value */
+> > +
+> > +	/* for user_input, users set complemented value on their own */
+> > +	if (goal->metric == DAMOS_QUOTA_USER_INPUT)
+> > +		return;
+> > +	if (goal->metric == DAMOS_QUOTA_SOME_MEM_PSI_US)
+> > +		goal->current_value = s->quota.reset_interval * 1000 -
+> > +			goal->current_value;
+> > +	else
+> > +		goal->current_value = 10000 - goal->current_value;
+> 
+> [Severity: High]
+> Can this unsigned subtraction result in an integer underflow?
+> 
+> In damos_set_quota_goal_current_value(), if the measured memory stall
+> (current_value) exceeds the reset interval due to kdamond thread
+> scheduling delays, heavy system load, or if the user configures
+> reset_interval_ms to 0 via sysfs, s->quota.reset_interval * 1000 -
+> goal->current_value will underflow.
+> 
+> Similarly, for BP metrics relying on loosely-coupled lockless kernel counters
+> (e.g., global_node_page_state), per-CPU drift can occasionally cause the
+> returned value to exceed 10000, causing 10000 - goal->current_value to
+> underflow.
+> 
+> If an underflow occurs, it produces a value near ULONG_MAX.
+> 
+> Would passing this immense value to the auto-tuner mistakenly drop the scheme's
+> reclaim quota to its minimum precisely when memory pressure is highest?
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260918142827.8530=
-3-1-sj@kernel.org?part=3D5
+Good catch.  I will fix this in the next revision.
 
+> 
+> >  }
+> >  
+> >  /* Return the highest score since it makes schemes least aggressive */
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260918142827.85303-1-sj@kernel.org?part=1
+
+
+Thanks,
+SJ
