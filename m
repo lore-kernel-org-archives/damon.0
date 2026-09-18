@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9015A3D5C2A;
-	Fri, 18 Sep 2026 02:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37F4274B53
+	for <damon@lists.linux.dev>; Fri, 18 Sep 2026 02:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789699150; cv=none; b=nfGEtwO2GLOGhoFSZhMMk5Vf6TRdLFfiEOAHiG3VbS4v6ff170fwg4IhF+IK5YZ25+pa/ck7qCu2E4PdC88rVG1nsMuM3YqWSNh+qgp9bdpK8e8CYyO1Z+leP+CWfjRN5URhIKu+rqUG4uyCaNO4HMhISETxRfKwCYgRZfVMfvc=
+	t=1789699515; cv=none; b=rWWQBRR0Sn4v5Uz+W2UnyMhSEwlFWtcnFZ7T/uWWc3BojLeAzsaqTCRH1N1VgqRWAn0ER8dg8hiZxe3M65BgkRCmlWGnrtvhvTD7wnraPvv0UUn9kyDa9f5fUgS+6sEpqNYVmfrAM9Gc0sFUHKMDylQWhKAtcGGlASNNaSJ/c+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789699150; c=relaxed/simple;
-	bh=lVcb7JMl9+mQgNhF1+gbNYM+yWP9vUq59rxw4DlhIZ4=;
+	s=arc-20240116; t=1789699515; c=relaxed/simple;
+	bh=GeDNviqQSoLOJWu2U0uEky1r++R+rN93+PAIz17N/Fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBWXfh5Hi1laNHupp2g4CBFbddsFRJcPpojue/JabUcAYM0K8kiVHw8kSraEzOvR44wDaBuM/5VsSJicPlFMX8pe40lE0QY9vpK73uWlNymFOzB89DwE9a/7Dv+zE/CmNEbiWS59qMgKbc0oZDDMOS2T9Ek2IPJgOlAgMqoKFXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MiP7VDcR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=neuEpB4eG9W3KA3afT1K67hHrnocHjO8odal1I7fO5JU0NwKoeTg/vmhb8E9ZMEjpg1/v5zohK4AuUy74ftPIKD1zUM6B5L9m61uk/QETh4Al6srcwREXF29sW84Wz1o0W3dPZkqC1znuFYh6IVTMvu3umr/U94QkYRg9J1mayY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OtO4oQkX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MiP7VDcR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE8D1F000FF;
-	Fri, 18 Sep 2026 02:39:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OtO4oQkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955701F000FF;
+	Fri, 18 Sep 2026 02:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789699141;
-	bh=XFn+Q7rC2VQ5SocqsOrcZJwTW1fdmqaD8YlZTdVp2Do=;
+	s=k20260515; t=1789699507;
+	bh=R14pZAPKTWtI40ZADQt5vUsL+yTt0PnIysZP3xDrxNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MiP7VDcRQNxMZAViYh9ABN4d1iXEi+V+WYJvnsLJAWfhT+7QAEotrRl6/3uITknyl
-	 6ttkv7XDTs0ivbLlBK3OAqzmDL9aj7TLgOpOkmxJYOqmcfG6CiWZX0VRwITgxVfG9O
-	 Ai0TSUZsRilaiaPW83IHQgYwu6lIZpA/s5BpV38Q8m2y40zOoOBC0Qu9oVv4AN72TB
-	 S46vabyDMQ5O725glZrJD9WbtjIOYpUauf3tuqnzBHLQN4aGPyd5VYRN1+7p4+kE4p
-	 uW4LOKg+ciwSt4XlhEXu+ClA50kwYL0IpZxAPoQnsuUsDECimD0zW5p1MueQwKA+HO
-	 qD+IjFaOgQtqw==
+	b=OtO4oQkXL394zylW82oIJ6NtcnuMCH0GboyXLkcRE82GQ1VqTcxYV0CF+943S/Mdt
+	 eM8i0IXyTk/PpqoSKLqaAMirncYISOzlieMlKabxQO6kSXkZ0fixNLYCpra6PK6k2F
+	 nLHcn8qwYISLNITyqWoIjKieG6F0PwiixB07KRyeV7oCxI5nu9iX1TOuBwDAGfIZbQ
+	 a1TtRotorlZd6hMU0Cdxrn/7JtfdA2m0C480ksgtghAT7oHfVf1mgMD9ShbLrwnDAM
+	 0Per22B5/ozytgIPdFZJjUqlaZ49mSwZYbV5RstHHMkopT/uuu8A2gP8FWwHOriT5v
+	 ic6D8ajN5ZMJQ==
 From: SeongJae Park <sj@kernel.org>
-To: Karthikeyan KS <karthiproffesional@gmail.com>
+To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SeongJae Park <sj@kernel.org>,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: reject zero sampling interval
-Date: Thu, 17 Sep 2026 19:38:58 -0700
-Message-ID: <20260918023859.13556-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: Re: [RFC/Discussion] mm/damon: Implementation for paused kdamond
+Date: Thu, 17 Sep 2026 19:45:06 -0700
+Message-ID: <20260918024506.13715-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260917180013.1279018-1-karthiproffesional@gmail.com>
+In-Reply-To: <20260917153238.76020-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -48,40 +45,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Karthikeyan and Sang-Heon,
+On Thu, 17 Sep 2026 23:31:53 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-On Thu, 17 Sep 2026 18:00:13 +0000 Karthikeyan KS <karthiproffesional@gmail.com> wrote:
+> On Mon, 14 Sep 2026 17:28:35 -0700 SJ Park <sj@kernel.org> wrote:
+> 
+> > On Mon, 14 Sep 2026 23:35:10 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+> > 
+> > > Hi SJ,
+> > > 
+> > > I noticed that the current implementation for paused kdamond is
+> > > periodically applies online parameter updates by kdamond_usleep().
+> > > 
+> > > I'd like to know if we should change it to waitqueue to achieve a lower
+> > > power consumption?
+> > 
+> > I'd like to make a data driven decision :)
+> > 
+> > > 
+> > > Previous Discussion
+> > > ===================
+> > > 
+> > > I noticed that when you introduced ctx->pause [1], Sashiko asked the
+> > > same question, and your response at the time was:
+> > > 
+> > >     "sample internval is 5ms by default and recommended auto-tuning
+> > >     setup makes it hundreds of milliseconds.  So I don't think such
+> > >     change is required."
+> > > 
+> > > I'm curious that, did you think it wasn't neccessary to change it to
+> > > waitqueue when it was introduced, or it wasn't neccessary to do so even
+> > > after it had been introduced?
+> > 
+> > I guess I thought so when the quiestion is raised.
+> > 
+> > > 
+> > > Asussmption
+> > > ===========
+> > > 
+> > > This is just my assumption, not a real use case I knew:  When 'pause' is
+> > > set on an Android device, user might want DAMON to stop running
+> > > completely when the screen is off, thereby reducing the load on the CPU
+> > > without losing important information such as regions and age.
+> > > 
+> > > The current polling may make it harder for the phone to enter idle mode,
+> > > resulting in some unnecessary power consumption.
+> > > 
+> > > However, pause feature is only present in the stable version v7.2 or
+> > > higher, and since the latest Android kernel is 6.18, this highly
+> > > unlikely will affect any Android users.
+> > 
+> > If whoever comes with a data that require changes, we can discuss.
+> 
+> Thank you for your clarify.
+> 
+> I recently backported the pause feature to my phone.  However, due to
+> Android's screen-off mechanisms, I wasn't able to obtain any valid data
+> during testing.
+> 
+> Since we haven't identified any practical issues with the existing pause
+> feature, switching to waitqueue isn't neccessary at this time.
 
-> Hi Sang-Heon, Hi SJ,
-> 
-> > I think SJ already commented on a similar patch. please refer to [1]
-> >
-> > [1] https://lore.kernel.org/all/20260722094304.3132750-1-dayou5941@163.com/
-
-Thank you for pointing this out, Sang-Heon!
+Thank you for checking this.  I agree.
 
 > 
-> Thanks, missed that thread. Same objection applies to mine.
-> 
-> > Can't we keep supporting zero sample interval and fix the warning
-> > or the real bug instead?
-> 
-> I measured a few floors for kdamond_usleep():
-> 
->   floor    kdamond CPU (3s)   vs sample_us=5000
->   1us      84%                28x
->   100us    42%                14x
->   1000us   12%                ~3x
->   5000us   ~2%                1x (matches control)
-> 
-> 5000us is damon_new_ctx()'s own default, and at that floor the spin
-> is just gone.
-> 
-> Would you rather we just document sample_us=0 as accepted/expected
-> behavior, or clamp it to that default inside damon_set_attrs()?
+> Regarding the documentation, should we explicitly explain the
+> relationship between 'pause' and sample_interval in the documentation?
+> That way, users can adjust the sample_interval value when using pause
+> feature based on their specific use case.
 
-I'd prefer adding a comment saying zero sampling interval is accepted.  I think
-damon_attr kernel-doc comment is a good place for adding that.
+I think that is too much detail for normal users, unless we find a problem from
+the lack of the documentation.
 
 
 Thanks,
