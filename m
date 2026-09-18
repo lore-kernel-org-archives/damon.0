@@ -1,123 +1,167 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37F4274B53
-	for <damon@lists.linux.dev>; Fri, 18 Sep 2026 02:45:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D5B3A9013
+	for <damon@lists.linux.dev>; Fri, 18 Sep 2026 12:58:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789699515; cv=none; b=rWWQBRR0Sn4v5Uz+W2UnyMhSEwlFWtcnFZ7T/uWWc3BojLeAzsaqTCRH1N1VgqRWAn0ER8dg8hiZxe3M65BgkRCmlWGnrtvhvTD7wnraPvv0UUn9kyDa9f5fUgS+6sEpqNYVmfrAM9Gc0sFUHKMDylQWhKAtcGGlASNNaSJ/c+s=
+	t=1789736282; cv=none; b=oKYI1pfcSjKBOZQ0D/uY42KVliQBLB4xibuolzneWFxNyA9eX6Z19GC8Fn92MpbtlMLH9ev/kA9SNEVJ6bGyIHspcNlcoClZQS01/6H6ElTBGlPj18J+k4ImOreG7QWEyVSFRHfJdiMaNX0Tt63BpMk3I/QYY34d5Ll9U8D9rhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789699515; c=relaxed/simple;
-	bh=GeDNviqQSoLOJWu2U0uEky1r++R+rN93+PAIz17N/Fc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=neuEpB4eG9W3KA3afT1K67hHrnocHjO8odal1I7fO5JU0NwKoeTg/vmhb8E9ZMEjpg1/v5zohK4AuUy74ftPIKD1zUM6B5L9m61uk/QETh4Al6srcwREXF29sW84Wz1o0W3dPZkqC1znuFYh6IVTMvu3umr/U94QkYRg9J1mayY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OtO4oQkX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789736282; c=relaxed/simple;
+	bh=CxfmQzrEOjhuFPDY1BS8dbTxfRSnF9AUCc8h06gmwj8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rhmV5IzzRzLAh1VYhgZFxmBdl5rQMNk98xznsHgTHwatOc8suJw/QOv1DrNWEKsB0CTo02LFYL9rCK0xzAdiI1fc9TzzNcTpighNnaQUShEN//ARtF4+FGAcoyvRFDUufhsyvsxDcTje/dyQcQrfEz6ThIJzOQCjb5f68KsyU8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=byvnC9Dg; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OtO4oQkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955701F000FF;
-	Fri, 18 Sep 2026 02:45:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789699507;
-	bh=R14pZAPKTWtI40ZADQt5vUsL+yTt0PnIysZP3xDrxNU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OtO4oQkXL394zylW82oIJ6NtcnuMCH0GboyXLkcRE82GQ1VqTcxYV0CF+943S/Mdt
-	 eM8i0IXyTk/PpqoSKLqaAMirncYISOzlieMlKabxQO6kSXkZ0fixNLYCpra6PK6k2F
-	 nLHcn8qwYISLNITyqWoIjKieG6F0PwiixB07KRyeV7oCxI5nu9iX1TOuBwDAGfIZbQ
-	 a1TtRotorlZd6hMU0Cdxrn/7JtfdA2m0C480ksgtghAT7oHfVf1mgMD9ShbLrwnDAM
-	 0Per22B5/ozytgIPdFZJjUqlaZ49mSwZYbV5RstHHMkopT/uuu8A2gP8FWwHOriT5v
-	 ic6D8ajN5ZMJQ==
-From: SeongJae Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
-Cc: SeongJae Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC/Discussion] mm/damon: Implementation for paused kdamond
-Date: Thu, 17 Sep 2026 19:45:06 -0700
-Message-ID: <20260918024506.13715-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260917153238.76020-1-aethernet65535@gmail.com>
-References: 
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="byvnC9Dg"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68IA2ka3990915;
+	Fri, 18 Sep 2026 12:57:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=vvXTEBXtIpBfma8CBebbY+SSqqX1Qu
+	WR6+4vIHcllvk=; b=byvnC9DgZuLKYo4mY9QFMiFQ6Zc5eAvVokdOQ/jMnu/ROL
+	Ihy697HfGNSs027KQksAAkjwX7YaRrLsOO1g/6wd0s+CHm/STBQ5bGQE02PrUNuG
+	/jNGEuQyMJ0GgJpPIZLUjqfcXRUhYNBUGxSiAGrMMe/ZN3ie+9Negm0sXqB2qPGg
+	G78+ulSPRFoKyeDh2Y4ugEz6Mth2PVTjmT/mNSj1OZo6IEDn3Mmfrt4AuGBiF3It
+	82M05ljqdaF9c5/06LrZaWpRH1x7tFsqkPtu0asE5M/h1WbsI4/lZhbLwmk3A6qp
+	RqNdQRRqouleichhat5Xw20CbOufAHP17/U7CBSg==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gmxcvfgrx-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 18 Sep 2026 12:57:17 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68I9oGpj507832;
+	Fri, 18 Sep 2026 12:57:16 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gra3yxedq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 18 Sep 2026 12:57:16 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68ICvEb851904874
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 18 Sep 2026 12:57:14 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9D53820043;
+	Fri, 18 Sep 2026 12:57:14 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EB2DB20040;
+	Fri, 18 Sep 2026 12:57:13 +0000 (GMT)
+Received: from li-008a6a4c-3549-11b2-a85c-c5cc2836eea2.ibm.com (unknown [9.224.92.206])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 18 Sep 2026 12:57:13 +0000 (GMT)
+Date: Fri, 18 Sep 2026 14:57:12 +0200
+From: Alexander Gordeev <agordeev@linux.ibm.com>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: Muhammad Usama Anjum <usama.anjum@arm.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tursulin@ursulin.net>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Dimitri Sivanich <dimitri.sivanich@hpe.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+        Helge Deller <deller@gmx.de>, Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Muchun Song <muchun.song@linux.dev>,
+        Oscar Salvador <osalvador@suse.de>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        "Liam R. Howlett" <liam@infradead.org>,
+        Lorenzo Stoakes <ljs@kernel.org>, Will Deacon <will@kernel.org>,
+        "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
+        Nick Piggin <npiggin@gmail.com>, Peter Zijlstra <peterz@infradead.org>,
+        Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+        Pasha Tatashin <pasha.tatashin@soleen.com>,
+        Chris Li <chrisl@kernel.org>, Kairui Song <kasong@tencent.com>,
+        Uladzislau Rezki <urezki@gmail.com>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Alexei Starovoitov <ast@kernel.org>,
+        Daniel Borkmann <daniel@iogearbox.net>,
+        Andrii Nakryiko <andrii@kernel.org>,
+        Eduard Zingerman <eddyz87@gmail.com>,
+        Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+        Ingo Molnar <mingo@redhat.com>,
+        Arnaldo Carvalho de Melo <acme@kernel.org>,
+        Namhyung Kim <namhyung@kernel.org>, SJ Park <sj@kernel.org>,
+        "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+        Jan Kara <jack@suse.cz>, Jason Gunthorpe <jgg@ziepe.ca>,
+        Leon Romanovsky <leon@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>,
+        Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>,
+        Christoph Lameter <cl@gentwo.org>, Mike Rapoport <rppt@kernel.org>,
+        Johannes Weiner <hannes@cmpxchg.org>, ziy@nvidia.com, pfalcato@suse.de,
+        ryan.roberts@arm.com, linux-kernel@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-parisc@vger.kernel.org, xen-devel@lists.xenproject.org,
+        linux-mm@kvack.org, linux-fsdevel@vger.kernel.org,
+        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com,
+        linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org,
+        linux-perf-users@vger.kernel.org, damon@lists.linux.dev
+Subject: Re: [PATCH v2 0/8] mm: distinguish PTE table storage from PTE values
+Message-ID: <d4080bad-1546-4a9a-9325-7ab91161a9b9-agordeev@linux.ibm.com>
+References: <20260903103002.1091859-1-usama.anjum@arm.com>
+ <dd6ecac2-9bd2-4184-a034-9e13afa614bb@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dd6ecac2-9bd2-4184-a034-9e13afa614bb@kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE4MDE3NyBTYWx0ZWRfX0a+YmMinfqLY
+ thIpqQ3k+YsaEL1Nu5Xtb4MVEpoHSHo6PXFxsq+F/Wx3xKw0f3hhtQwBUt801YS/UAG/0atek9m
+ HF3E84n9wG4sj7upDsGZ+DoHJXM8gUk=
+X-Proofpoint-ORIG-GUID: m4DES1QILxZeg9-Jkqr1aSPqQzDTxZM1
+X-Proofpoint-GUID: m4DES1QILxZeg9-Jkqr1aSPqQzDTxZM1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE4MDE3NyBTYWx0ZWRfX/T2l95nFB1Uq
+ xYhD9MK3T3CmjxCnR5kdtXxgndhWw6MxRYXoXqGlboj2UoA37O8EdLIe4YiWjjUCSxbCjYPDLdb
+ zLflGPxTioAC9+xJzOGZkBco09vb3ShkcVMCROX8/GZfFwvrgzmx7n0qXL0rX5zPKB/njtDxwgb
+ gMHToemhE70TFtiB9Pj1PeVjgH1oGQscKJTsEGRxHL5kVet2L1efcSErMDeLFJpVDhkGjX606/4
+ v67gUAI8g2+alWIwtI8/jPJ+6ph22PnYWj6b88V7/Iglrvc/jT0GvjzhQ6L6hTrFOvO8q+nsLfd
+ IM1uuwdfshQ6+5Im7f+26qdGKHnOEavHW8zEdphBYVrG/drJ0FH1jWiiDkeaELYlUGloVtsBlh+
+ 7nM/BRgAPEjc6uhD2wSkdjVssp3wph+7cmdpYUKnvEQX/Ft2fdQFowSRajI1e1u1DVerG791p4M
+ bjrU9H6l+Tvys0K+DAw==
+X-Authority-Analysis: v=2.4 cv=F+7C5ahN c=1 sm=1 tr=0 ts=6aad352d cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=36OLCuKFP8Pi5wnj2vYA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-18_03,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1011 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609180177
 
-On Thu, 17 Sep 2026 23:31:53 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
+On Fri, Sep 11, 2026 at 06:55:18PM +0200, David Hildenbrand (Arm) wrote:
 
-> On Mon, 14 Sep 2026 17:28:35 -0700 SJ Park <sj@kernel.org> wrote:
+Hi David, Muhammad,
+
+Sorry for the long delay.
+
+> Unless there is more feedback on the overall approach, the next step for this is
+> to have at least one architecture support posted.
 > 
-> > On Mon, 14 Sep 2026 23:35:10 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-> > 
-> > > Hi SJ,
-> > > 
-> > > I noticed that the current implementation for paused kdamond is
-> > > periodically applies online parameter updates by kdamond_usleep().
-> > > 
-> > > I'd like to know if we should change it to waitqueue to achieve a lower
-> > > power consumption?
-> > 
-> > I'd like to make a data driven decision :)
-> > 
-> > > 
-> > > Previous Discussion
-> > > ===================
-> > > 
-> > > I noticed that when you introduced ctx->pause [1], Sashiko asked the
-> > > same question, and your response at the time was:
-> > > 
-> > >     "sample internval is 5ms by default and recommended auto-tuning
-> > >     setup makes it hundreds of milliseconds.  So I don't think such
-> > >     change is required."
-> > > 
-> > > I'm curious that, did you think it wasn't neccessary to change it to
-> > > waitqueue when it was introduced, or it wasn't neccessary to do so even
-> > > after it had been introduced?
-> > 
-> > I guess I thought so when the quiestion is raised.
-> > 
-> > > 
-> > > Asussmption
-> > > ===========
-> > > 
-> > > This is just my assumption, not a real use case I knew:  When 'pause' is
-> > > set on an Android device, user might want DAMON to stop running
-> > > completely when the screen is off, thereby reducing the load on the CPU
-> > > without losing important information such as regions and age.
-> > > 
-> > > The current polling may make it harder for the phone to enter idle mode,
-> > > resulting in some unnecessary power consumption.
-> > > 
-> > > However, pause feature is only present in the stable version v7.2 or
-> > > higher, and since the latest Android kernel is 6.18, this highly
-> > > unlikely will affect any Android users.
-> > 
-> > If whoever comes with a data that require changes, we can discuss.
+> We should only merge this if at least one architecture (better two? :) arm64 and
+> s390x? ) would merge the architecture bits.
+
+I am going to give it a try, hopefully next week.
+
+> That is, we should get an ACK from the arch maintainer son the common code bits
+> and the arch bits.
 > 
-> Thank you for your clarify.
-> 
-> I recently backported the pause feature to my phone.  However, due to
-> Android's screen-off mechanisms, I wasn't able to obtain any valid data
-> during testing.
-> 
-> Since we haven't identified any practical issues with the existing pause
-> feature, switching to waitqueue isn't neccessary at this time.
+> -- 
+> Cheers,
 
-Thank you for checking this.  I agree.
+Thanks!
 
-> 
-> Regarding the documentation, should we explicitly explain the
-> relationship between 'pause' and sample_interval in the documentation?
-> That way, users can adjust the sample_interval value when using pause
-> feature based on their specific use case.
-
-I think that is too much detail for normal users, unless we find a problem from
-the lack of the documentation.
-
-
-Thanks,
-SJ
-
-[...]
+> David
