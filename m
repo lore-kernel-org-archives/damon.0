@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1881C33688B
-	for <damon@lists.linux.dev>; Sat, 19 Sep 2026 01:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4D22931D3
+	for <damon@lists.linux.dev>; Sat, 19 Sep 2026 01:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789781883; cv=none; b=rC640OLzBPcRSyaQ+++2gWFX2c5MXeEckHue8TALexsrKKSH0vyS9yRBqitGpyEqQrixdiZooz7QB7oX6bphSRZ3ODWixA8GiChOE8B2G9lYIwtlPPpdMRTnHOib+K7CtjkVDB8MaW3NQj4AU1mOpL1TtIJbGocF6Q+2tw3gibw=
+	t=1789781929; cv=none; b=g6maQDCoK2dyraVvrbq9xJy91z4EwJkQUqKExr+QjrcOM3YFtPZg0SRa65obszGVlnOo3eES/cIrFWzzqqfbfLwaxrTgxFOpWALmxxCopXHVlNg1sXYUoKDV9dy2Uj7KDsURzwFO55C7woWan6IlAKaJLI7vEfVrJLARzjcsE30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789781883; c=relaxed/simple;
-	bh=LnpTJIirvRjxesU0mciflnFYm/drNP2x11AmIBr4kEg=;
+	s=arc-20240116; t=1789781929; c=relaxed/simple;
+	bh=3DpiRHmG5YeAkgNQXKDs/+YbsgPmtBzn+CxKzMO1N0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GrbfoqFs9gnXS8hKh8/lrK+nCnl7RiF4VSwBZ8n6OooTP+TrU4/R2fFDc8LHA4oSc0dzO2sx5sGjFm5i9F1IbJbpWh/JTLCyhO+XCA51X511jeBmH5DBdDDpNtp6uaXT2k0VRjXM2I8OE0mXKipHZMqDOMH5V82hX+5Nddo49Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MI5Q3P+4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QhNe81S3N1RufTSQc2lZZk6KEpSUqz7moU45aWpGSLDxHvmfXHix4Q07yfb4ikJ1hIuPEeZSNWLOf3N0yFlR60oUrCx6J9eBK8Rgl8MhfV/3E+qJgVewr4yXYuzZ7xlx7iJqxgW9Ur1/BPt7w55Bqn6GqYn1E4eIRTIhXYm/PvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TIoRM/S+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MI5Q3P+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BCC1F000FF;
-	Sat, 19 Sep 2026 01:38:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TIoRM/S+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEE71F000FF;
+	Sat, 19 Sep 2026 01:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789781881;
-	bh=e1BUJQ/abwTQIiNzlnUTAOXVGHza7H4pq3J/+2VAeZs=;
+	s=k20260515; t=1789781927;
+	bh=QZ6OupXNyt902coKsKYx7U9Y2IRRFBcethda+ikm0Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MI5Q3P+4i3t1+rQ8/THcXljV1mQV+ko4J76eosWwPE9Z56O9HEYxtE7OuSVikXgcD
-	 RyeKUgrV3wGeIAKKQyZemDbpeVqLxJXT5kjBQxRUUVcG0ItvEwpTzHLX+22kVTjAxR
-	 JH40StXr7VhyiQaP0kFEzfgn5i8kadYaw5/MbkltoJO+C7+HF+BvfqT0jwHnJrDpai
-	 9t/AO4uZfyFWy23Y2YyttdaqLOeUwByjqhPBGy5R8okXEiEq7qm4wCFKkG8xi211oG
-	 NtTJdyP2TJvHt/dAY1u53k9OdddHey1qaabVUfpTGxhhJAABnzqv2MKP6fs0HjN1sT
-	 ExsIe1Sib+ciA==
+	b=TIoRM/S+Ls1CftlhYHBOvOu7KPSKtexKxyvsSupT9TtOGnvkWdS7OOKWyhvxS3iXR
+	 V10t2fcjAHXdm8fVaDbLHzZcdQkEotsoskysNpNX5AKtYghweBOce/etEt2XvBeCql
+	 cAwP7Z8Rdke+X88tjO9g6xAj8hWUu15fl/EYGnRid7Nqzbp7fJwlLSrhfVrz97Mhxy
+	 jZPGGwUap3dKW9nQefDZ1fBhoqUkkzXsd+xYkdYIRZSAdVKaijFIoqn+b1YQAP8Ybh
+	 CuA+q4WlQrmnFsv/oxhHi+O6gh8v+mbQGRXunzkchaKMECNaGPi0E9BCblQplGRi8y
+	 bTn3zj/DsX1pw==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2 3/7] mm/damon/sysfs-schemes: support quota goal complement flag
-Date: Fri, 18 Sep 2026 18:37:47 -0700
-Message-ID: <20260919013749.89856-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 7/7] Docs/ABI/damon: update for quota goal metric complement sysfs file
+Date: Fri, 18 Sep 2026 18:38:39 -0700
+Message-ID: <20260919013840.89998-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260919012635.E49A41F000FF@smtp.kernel.org>
+In-Reply-To: <20260919012322.2F2241F000FF@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,73 +45,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 19 Sep 2026 01:26:35 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 19 Sep 2026 01:23:21 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mm/damon: integer underflow in DAMOS_QUOTA_SOME_MEM_PSI_US complement calculation
+> - [High] mm: integer underflow in damos_set_quota_goal_current_value()
 > --
 > 
-> commit cd02e1bd14a7884bf9a21f0cab584b1a0f9992ce
+> commit f2de2d4493473c2c847f3ad213eaef640f0e1600
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/sysfs-schemes: support quota goal complement flag
+> mm/damon/core: introduce damos_quota_goal->complement
 > 
-> This patch adds a new sysfs file for the quota goal directory to allow
-> setting and getting the quota goal metric complement flag value.
+> Introduce damos_quota_goal->complement for specifying whether to use a
+> complemented value of the given goal target metric. Add the field to
+> the data structure and implement essential core support.
 > 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 06af417bc9a2f..8f083611741fd 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 2258b72da7a78..9fd08cbfacd8c 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
 > 
 > [ ... ]
 > 
-> > @@ -2869,7 +2898,8 @@ static int damos_sysfs_add_quota_score(
-> >  		if (!sysfs_goal->target_value)
-> >  			continue;
-> >  
-> > -		goal = damos_new_quota_goal(sysfs_goal->metric, false,
-> > +		goal = damos_new_quota_goal(sysfs_goal->metric,
-> > +				sysfs_goal->complement,
-> >  				sysfs_goal->target_value);
-> >  		if (!goal)
-> >  			return -ENOMEM;
+> > @@ -3238,6 +3239,23 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+> >  	default:
+> >  		break;
+> >  	}
+> > +	if (!goal->complement)
+> > +		return;
+> > +
+> > +	/* updte current_value to complemented value */
+> > +
+> > +	/* for user_input, users set complemented value on their own */
+> > +	if (goal->metric = DAMOS_QUOTA_USER_INPUT)
+> > +		return;
+> > +	if (goal->metric = DAMOS_QUOTA_SOME_MEM_PSI_US) {
+> > +		goal->current_value = s->quota.reset_interval * 1000 -
+> > +			goal->current_value;
 > 
 > [Severity: High]
-> Now that complement = true can be configured via sysfs, does this expose
-> an integer underflow in damos_set_quota_goal_current_value()?
+> Does this unprotected subtraction in damos_set_quota_goal_current_value() risk
+> an integer underflow?
 > 
-> If a user configures a DAMOS quota goal using DAMOS_QUOTA_SOME_MEM_PSI_US
-> with complement = true, the actual elapsed wall-clock time between
-> evaluations can exceed the configured s->quota.reset_interval due to
-> routine thread scheduling delays or high system load.
+> If a user configures DAMOS_QUOTA_SOME_MEM_PSI_US with complement enabled via
+> sysfs and sets a target_value greater than reset_interval * 1000, the initial
+> round (where current_value = target_value) will immediately underflow.
 > 
-> In mm/damon/core.c:damos_set_quota_goal_current_value(), the accumulated
-> PSI time (goal->current_value) could then exceed reset_interval * 1000,
-> underflowing the unsigned subtraction:
+> Furthermore, if the kdamond thread is delayed by the scheduler beyond the reset
+> interval, the measured PSI time can naturally exceed reset_interval * 1000,
+> which would also trigger the underflow.
 > 
-> 	if (goal->metric = DAMOS_QUOTA_SOME_MEM_PSI_US) {
-> 		goal->current_value = s->quota.reset_interval * 1000 -
-> 			goal->current_value;
-> 		return;
-> 	}
-> 
-> Unlike the basis-point metrics below it, this lacks a safety bounds check.
-> The unsigned integer underflow results in an erroneously massive quota score.
-> 
-> This causes damon_feed_loop_next_input() to evaluate score >= goal * 2 and
-> return the minimum possible input (min_input), severely throttling the quota
-> size (esz) to a minimal value.
-> 
-> This effectively disables DAMOS scheme actions for that window, despite the
-> system being under severe memory pressure, which is exactly when tuning
-> is most important.
+> This underflow would result in a huge current_value (near ULONG_MAX), which is
+> then fed into damos_quota_score(), producing an astronomically high tuning
+> score that aggressively drops the effective quota to zero, breaking the quota
+> regulation mechanism.
 
-I will fix in the next revision.
+I will fix this in the next spin.
 
+> 
+> > +		return;
+> > +	}
+> > +	if (goal->current_value < 10000)
+> > +		goal->current_value = 10000 - goal->current_value;
+> > +	else
+> > +		goal->current_value = 0;
+> >  }
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260919011359.88921-1-sj@kernel.org?part=3
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260919011359.88921-1-sj@kernel.org?part=7
 > 
 
 
