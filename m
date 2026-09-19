@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CDE37F8BA;
-	Sat, 19 Sep 2026 15:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D05F2C027C;
+	Sat, 19 Sep 2026 16:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789833446; cv=none; b=hY4gsNLT+FQiBXknrA6BCAShct/zN0nKYdlnH+t2ikz9126PY5mvwxtJ6ekQsb92oFdyL75xWDTAVJqIGrsGkTjdfCbNEDOW9PH9m8onl5gWtDlFVPg8ZcVtCxSLUrtpiv72HjsSaLps8bWKrzIL7UHTrM8eVU0v40Dyv2KQ0kA=
+	t=1789834055; cv=none; b=m4SqB0s9sIYcuY6g2WKhH+997KBT2MW5x1Xi4HNi9r0mYCG3kR9rs7FqrlD72kQn16GGYRj0Rvgn48ldwOGn037+gp+qxr9pEB9NyqBxpSaf8dLW71qZ5qvPxnrGoKgw9IqKDi9ULXvPxSwoeaslv2aU2ys4RpP3vI0ZgPjygsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789833446; c=relaxed/simple;
-	bh=k5SS+UicrfICTSVa63Rs03ykt3ipnWo/mQoMRp3+wmI=;
+	s=arc-20240116; t=1789834055; c=relaxed/simple;
+	bh=/VlrtPDUpDev4RfHTVdEtHu1XRRION5bX++6Q3PjPYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AMr8+tGjMpi5lg2jOKTmUXZ7NCHMds+jlYdDPIkeueqX2O+t8UfpAmc42704gh3fmBN7oxv9VACffOEVjVmyMZwxmTRzqFlunOajoFPcRrdn3LsQBiPdXHFNBUKQ5PlpsH0hJQfpngDJRSmFxfRl3DmQsf0l9/MISRTgCBuCE2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n1CP6FuF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sktS3H0jCzEjQgDO9ePsFx3zW9eFuJma1k05lbGbW1rZb28HofRrHAf+NTHWexmcpoJFkg3hOXsjL/RCzOcUoGjTvUVTXi9Sa9sO0owJaQpEQSxcv6RpejMFK+3JdXrx4M6d39JNo8i2YvDjJEOYrFgpMJy+xhIu3TFqEMFo7Ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bcnzfZV0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n1CP6FuF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513441F000FF;
-	Sat, 19 Sep 2026 15:57:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bcnzfZV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2641F000FF;
+	Sat, 19 Sep 2026 16:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789833443;
-	bh=2vMQb7udZL3y0xIqeUPoqQ6nfJil4eFetW2PhuHVfyU=;
+	s=k20260515; t=1789834053;
+	bh=wQHa39SbYUNszRpbhZJPTtwB+DOrWIjoWgUc5UFfUZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n1CP6FuF2cU0FlyUyib3oHPT683ZPiPqR9rhrCDfPrg8Deubd+G/PT/8nTq3Lfayv
-	 7kcbNB1Zu8NbnX2vLjqQKzU3FbOo6dfTrClsssGwSNRtSkkK0GlnY80TPzSjjkMrFa
-	 W1TA1ppchwCwcI8Wa52Qd873vEd6nf7rcrIHavL6IACVUZ8qJBDs7BcjbspI7LaL3W
-	 82CWe561q16aaLbPgwpYy83sbtVaN5DFD4NxIPUnU98WUaBwC67mj/FGRHinqV/UF5
-	 TkQijl3pGqjEj1hD296ajuoHzlLh0AAeYRV3NXTAOrY5yiUiIQQV4KP++ILXesX06X
-	 aJI6y97UVboYA==
+	b=bcnzfZV0jfozeaH0PTAEYh1w4FxYSswdPyKtVUe7I5onhLQzYRsjcBsnJ6PfYwrUI
+	 /SQ7eb0aaKAOjJIFvmYp2mXykwN+0PIPFCZG81ZoL8i+ucysh3PFFL4CiaJkOLylcq
+	 5A82Dfm4UtMfPFB4PHb5ucPYcMLmCd4Wb2dUIaeBii9chXlLnWoNyjyL4pKY1GPL9b
+	 UL8HpDBz4Dfa+0IDb2ZYKzw8TLZOz7pOzQDUoYzhhwsnE4cftsgRhvUPXk3n2MC9Fi
+	 lGqb7jVuOrqzH+0AYzeCZF9hfyftMY9YG2a2bgTJQcgGOgGgxbhxga40lLoj4gILKe
+	 ToZak5MabqyRg==
 From: SJ Park <sj@kernel.org>
-To: Zenghui Yu <zenghui.yu@linux.dev>
+To: Liew Rui Yan <aethernet65535@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 01/10] mm/damon/api: remove NR_DAMOS_FILTER_TYPES
-Date: Sat, 19 Sep 2026 08:57:15 -0700
-Message-ID: <20260919155716.86019-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RESEND PATCH] mm/damon/tests/core-kunit: add test for unconditionally skipping the last region
+Date: Sat, 19 Sep 2026 09:07:25 -0700
+Message-ID: <20260919160725.86256-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <ae900f5b-7f00-4c48-8097-f2f836c09f60@linux.dev>
+In-Reply-To: <20260919080453.628679-1-aethernet65535@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,27 +47,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 19 Sep 2026 21:02:30 +0800 Zenghui Yu <zenghui.yu@linux.dev> wrote:
+On Sat, 19 Sep 2026 16:01:58 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-> On 9/17/26 10:21 PM, SJ Park wrote:
-> > Nobody uses NR_DAMOS_FILTER_TYPES.  Remove it.
+> Commit 50585192bc2e ("mm/damon/schemes: skip already charged targets and
+> regions") introduced a minor issue that causes the last region to be
+> skipped before it is processed.
+> 
+> Example:
+> 
+>     1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
+>     2. Quota is configured to process only 100 bytes per window.
+>     3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
+>        addr}_from is saved at (Target, 100).
+>     4. Window 2: The loop reaches R2.  Because R2 is
+>        damon_last_region(t), the old code unconditionally returns true,
+>        skipping R2 entirely and resetting the charge_{target,addr}_from.
+> 
+>     Result: R2 is permanently skipped even though it has never been
+>     processed.
+> 
+> Add a test to prevent this regression in the future.
+> 
+> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+
+Other than a trivial style that I commented below,
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
 [...]
-> Similarly we have more definitions of NR_foo in damon.h:
-> 
->  * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
->  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
->  * @NR_DAMOS_WMARK_METRICS:	Total number of DAMOS watermark metrics
->  * @NR_DAMON_OPS:	Number of monitoring operations implementations
-> 
-> and only NR_DAMON_OPS is actually used (I checked mm-new).  If the
-> preference is removing all unused macros, we should probably clean them up
-> as well.
+> +static void damon_test_last_region_quota_reset(struct kunit *test)
+> +{
+[...]
+> +	t = damon_new_target();
+> +	if (!t) {
+> +		kunit_skip(test, "target alloc fail");
+> +	}
 
-Nice findings!  Please feel free to post a patch for cleaning those up if you
-don't mind!
+Let's drop braces for single line, as suggested [1] in coding-style.
+
+[1] https://docs.kernel.org/process/coding-style.html#placing-braces-and-spaces
 
 
 Thanks,
 SJ
-
-[...]
