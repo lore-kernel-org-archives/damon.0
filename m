@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFD01E7C18;
-	Sat, 19 Sep 2026 15:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CDE37F8BA;
+	Sat, 19 Sep 2026 15:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789833311; cv=none; b=M1ahV5LPXTD5oNwV2HJm39wAJDNpYdUa2Tjwi/C9F4XbQxUfyi1ViYss/ViatQobZS+rkgf2WP85U2/6OBAvkFBciHWnoCIV9SIZJGqoM/HzTNUY8VZRqdxgkS6KLXgjOpH9YnoHsl0c77hCOMKbsQhItYPSiBrgTH9JV2ydocE=
+	t=1789833446; cv=none; b=hY4gsNLT+FQiBXknrA6BCAShct/zN0nKYdlnH+t2ikz9126PY5mvwxtJ6ekQsb92oFdyL75xWDTAVJqIGrsGkTjdfCbNEDOW9PH9m8onl5gWtDlFVPg8ZcVtCxSLUrtpiv72HjsSaLps8bWKrzIL7UHTrM8eVU0v40Dyv2KQ0kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789833311; c=relaxed/simple;
-	bh=trMqCUestHIbZeJOOHN3QVUn8w7QUrEcBokjwjsfUFc=;
+	s=arc-20240116; t=1789833446; c=relaxed/simple;
+	bh=k5SS+UicrfICTSVa63Rs03ykt3ipnWo/mQoMRp3+wmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLA7MRb3maTAm20FwVZ7B9dE2MG6axUr892dvxNdqjmnCP0g6Nketa0I+C2YfEgeTWkxGG2M00yJmoueKpyjyKoRh2KgloNWkDJoSjNwYKB+AuAq30wGVi6qYw2ReyTRz6F+2XLQLQ6jN6ailo6IrIAyM8BBy4bo23KxuP4OFc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n2ZdRdGc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AMr8+tGjMpi5lg2jOKTmUXZ7NCHMds+jlYdDPIkeueqX2O+t8UfpAmc42704gh3fmBN7oxv9VACffOEVjVmyMZwxmTRzqFlunOajoFPcRrdn3LsQBiPdXHFNBUKQ5PlpsH0hJQfpngDJRSmFxfRl3DmQsf0l9/MISRTgCBuCE2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n1CP6FuF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n2ZdRdGc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9137D1F000FF;
-	Sat, 19 Sep 2026 15:55:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n1CP6FuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513441F000FF;
+	Sat, 19 Sep 2026 15:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789833309;
-	bh=B6BjE5sn0U6E/JVzt5jw8kZLRH2flS2xlqYcSGbx038=;
+	s=k20260515; t=1789833443;
+	bh=2vMQb7udZL3y0xIqeUPoqQ6nfJil4eFetW2PhuHVfyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n2ZdRdGcRKiydZel/9OJ+ZO85Vlb9e/IhAgUzsFhvZCWzVleWaLCMfiSS6ow4HtKV
-	 OXWBu38uvJ15HM84fyxkF8+VlnZeoyJZIT1qwHvSspUht3r3V7BEgLoBucl2M2h9Nm
-	 4YSq469HAwpFX64g3ewxY+5yGwCQSME6T4pXSMvuABsRZLYbeY1/RErcTopIO/JImn
-	 nBFs1v6QLUeTjheRZ1D7O+E+2nqcoHwx1MTYNgxNc8xf58zrwjgWEyGN8fWQA/wcAJ
-	 Ur0VSPqGy3gvWK8L0JRoEOFKESzwBeoHKoWgd6NnmodJnXIShjD6Os4Vedojzt3h6b
-	 HWoD0OO+5weUw==
+	b=n1CP6FuF2cU0FlyUyib3oHPT683ZPiPqR9rhrCDfPrg8Deubd+G/PT/8nTq3Lfayv
+	 7kcbNB1Zu8NbnX2vLjqQKzU3FbOo6dfTrClsssGwSNRtSkkK0GlnY80TPzSjjkMrFa
+	 W1TA1ppchwCwcI8Wa52Qd873vEd6nf7rcrIHavL6IACVUZ8qJBDs7BcjbspI7LaL3W
+	 82CWe561q16aaLbPgwpYy83sbtVaN5DFD4NxIPUnU98WUaBwC67mj/FGRHinqV/UF5
+	 TkQijl3pGqjEj1hD296ajuoHzlLh0AAeYRV3NXTAOrY5yiUiIQQV4KP++ILXesX06X
+	 aJI6y97UVboYA==
 From: SJ Park <sj@kernel.org>
-To: Karl Mehltretter <kmehltretter@gmail.com>
+To: Zenghui Yu <zenghui.yu@linux.dev>
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Lian Wang <lianux.mm@gmail.com>,
-	Kunwu Chan <kunwu.chan@gmail.com>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] mm/damon/tests/core-kunit: test PSI goal rounds under the temporal tuner
-Date: Sat, 19 Sep 2026 08:55:02 -0700
-Message-ID: <20260919155503.85841-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 01/10] mm/damon/api: remove NR_DAMOS_FILTER_TYPES
+Date: Sat, 19 Sep 2026 08:57:15 -0700
+Message-ID: <20260919155716.86019-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <aq4hU5DNjnGELpUT@gmail.com>
+In-Reply-To: <ae900f5b-7f00-4c48-8097-f2f836c09f60@linux.dev>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,27 +47,24 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 19 Sep 2026 07:47:11 +0200 Karl Mehltretter <kmehltretter@gmail.com> wrote:
+On Sat, 19 Sep 2026 21:02:30 +0800 Zenghui Yu <zenghui.yu@linux.dev> wrote:
 
-> On Tue, Sep 15, 2026 at 05:21:36PM +0100, SJ Park wrote:
-> > So, this test depends on the memory pressure level of the testing system?  I
-> > concern if that could make the test result not very reliable.  Maybe we could
-> > split out the corner case handling logic to explicitly receive the current
-> > memory PSI total time.  For example, like what I suggested in the reply to the
-> > first patch of this series.  With it, we could build a kunit test for only the
-> > target logic, without depending on the test system's status.
-> > 
+> On 9/17/26 10:21 PM, SJ Park wrote:
+> > Nobody uses NR_DAMOS_FILTER_TYPES.  Remove it.
+[...]
+> Similarly we have more definitions of NR_foo in damon.h:
 > 
-> Yes, the second round reads the real PSI total. I used ULONG_MAX as
-> the target to make it unreachable, but I agree that a test which
-> does not read system state is better.
+>  * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
+>  * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
+>  * @NR_DAMOS_WMARK_METRICS:	Total number of DAMOS watermark metrics
+>  * @NR_DAMON_OPS:	Number of monitoring operations implementations
 > 
-> For v2 I can test only the helper from your reply to patch 1,
-> with explicit PSI totals. It would cover both tuners, zero and
-> non-zero esz for the temporal one, and the last_psi_total value after
-> each call as Kunwu asked.
+> and only NR_DAMON_OPS is actually used (I checked mm-new).  If the
+> preference is removing all unused macros, we should probably clean them up
+> as well.
 
-Sounds good, looking forward to your v2!
+Nice findings!  Please feel free to post a patch for cleaning those up if you
+don't mind!
 
 
 Thanks,
