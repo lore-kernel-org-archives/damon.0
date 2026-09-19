@@ -1,112 +1,76 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-169.mta1.migadu.com [95.215.58.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284EA1BD9D0
-	for <damon@lists.linux.dev>; Sat, 19 Sep 2026 08:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DC819B5A3
+	for <damon@lists.linux.dev>; Sat, 19 Sep 2026 12:39:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789805561; cv=none; b=NLEgSYrXJ/EvPkju+rDSfgsHDzemlR1nUHiypdnxestPyFMdk+4lQElNStpPmvwsagkRVQh4lsjBlzwooGgKQBe73ZUITxB4oNb0wL/hCBvHXQw1TeJxNJi7ub6BylRK0vzN9PKwB9Qfd8XkAaCyJZGb0J4CItFzqVqE7Me8gaw=
+	t=1789821563; cv=none; b=XpxiJHAbys8bRS98DQiCePdJ1NdGMhcJh0cBp+/dJxKiyw0c44uErERe4KnmYHg8YQ0r3KGlItqRWNSp0sGNyb/AdM0m7ggi3crdzZUY/ghQs0smyFzMyL9AUmDLjdMBgWCdAee41GgO6hkTskMb/0Eqm6qV6J4q0AyA7N4ZDK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789805561; c=relaxed/simple;
-	bh=OgPvuqO83BEvuGghuiy3CR+xmL87HIA6P4eWJ+A2C1M=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=cAfgTUkEawto+30sJy7P8ZEgZ0IY1oTk5SuqrmuWJWPVtP5c4X8ntCrLp1mXZB6ToaygoD+GzhT0qO3Y1k21XtrzjT+DPjBuqbqsHYFN7WYeM56ZON1xLM85+zdRohKWzJT7gkv1JPb+07i4AfTqR2rmDBxk+QGi1xxtgNq/eIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VHQcK6Ds; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789821563; c=relaxed/simple;
+	bh=63TAU/20trh3z6ZWmLlRWwzB6HR6yfQpshRqu4iyzzs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gxXUeyK60nYPpC3JZKITC9gkqJNcwOwLlYSaDJNZNRH3p1JdrKgy6lGJWlIWrKG74ilMsc8F8VZnYdyvVZnEewUB0P3SGQnIYZnxZY37dLZmd5AJ/GzIKY3fN0LWR/G8WxP/UmbYZxtKnZ4dHbEVVbS+24Tix9mdj11FmrjihSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=PB5lQdny; arc=none smtp.client-ip=95.215.58.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VHQcK6Ds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3D91F000FF;
-	Sat, 19 Sep 2026 08:12:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789805559;
-	bh=lwP3A/673VbgDfoQCrTICraehMl+miQlS62+ZX9wtFY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=VHQcK6DsSshgtvZHd77G+cTjQxFbllH7TUXGTlFUrSn+/B4wBT9XTlhsnf9vv9SG0
-	 6WhgDJg1Uz87H+5CveUANWRrIcEOUNpzWzVvIe/8EAbSF7YYRo/ha+g5JdYVGWMIRp
-	 WI+tlX6NHqMh3UoN8X+FQC4e0McvT4Lo2cKCbzEk9DzeU/3mAxx6lX2SeiBcjdMMeh
-	 xXy6AByL05Zg0XwA1SEhqyMgaVq0jMKFAcrb7TDzjCgk5GKtgtxeTC66TkimZCFXh1
-	 oVFGEr2qJV5ApGrVr8+RPVpvNj17pgijo8ZtU2SHNQto/VDqfMiCHAfK3iROQ84KMM
-	 duJfozE1ZKICA==
-From: sashiko-bot@kernel.org
-Subject: Re: [RESEND PATCH] mm/damon/tests/core-kunit: add test for
- unconditionally skipping the last region
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Liew Rui Yan" <aethernet65535@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260919080453.628679-1-aethernet65535@gmail.com>
-References: <20260919080453.628679-1-aethernet65535@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 19 Sep 2026 08:12:39 +0000
-Message-Id: <20260919081239.8A3D91F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="PB5lQdny"
+X-Envelope-To: damon@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=63TAU/20trh3z6ZWmLlRWwzB6HR6yfQpshRqu4iyzzs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789821558; v=1; x=1790426358;
+ b=PB5lQdnydCZ+8HxpMA6fr1TxMOUTZ0dGEfTVtjzKq4p9Qfl6Z28VZLewJJODMtjSgOriE43z
+ s60beLBYJu6Y17MAv9kUicQOXxXT3RH07Ad32d2awo8Di3FM31PN8bERGm/yg/cTkM7AbGyqczX
+ q7q4yxBWVj2Gvi+BMi29Wn40=
+X-Envelope-To: damon@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 39ea79bec7641d4d;
+	Sat, 19 Sep 2026 12:39:18 +0000
+X-Mizu-Trace-ID: 39ea79bec7641d4d
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <f38bce8f-ee47-40aa-a215-e2e605d17c91@linux.dev>
+Date: Sat, 19 Sep 2026 20:39:07 +0800
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/10] Docs/mm/damon/design: clarify bp is basis point
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ "Liam R. Howlett" <liam@infradead.org>, David Hildenbrand
+ <david@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+ Lorenzo Stoakes <ljs@kernel.org>, Michal Hocko <mhocko@suse.com>,
+ Mike Rapoport <rppt@kernel.org>, Randy Dunlap <rdunlap@infradead.org>,
+ Shuah Khan <skhan@linuxfoundation.org>,
+ Suren Baghdasaryan <surenb@google.com>, Vlastimil Babka <vbabka@kernel.org>,
+ damon@lists.linux.dev, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org
+References: <20260917142210.90829-1-sj@kernel.org>
+ <20260917142210.90829-11-sj@kernel.org>
+Content-Language: en-US
+From: Zenghui Yu <zenghui.yu@linux.dev>
+In-Reply-To: <20260917142210.90829-11-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Low] mm: invalid non-power-of-two alignment in damon test
---
+On 9/17/26 10:22 PM, SJ Park wrote:
+> DAMON design document uses "bp" for "basis point" in multiple places.
+> Because it is not clearly mentioned, it is difficult to understand what
+> "bp" stands for.  Add the clarification.
 
-commit a99d6a5362b525870f71ce4be82705b420aea7ef
-Author: Liew Rui Yan <aethernet65535@gmail.com>
+Exactly ;-)  I had such confusion when I was reading the doc.
 
-mm/damon/tests/core-kunit: add test for unconditionally skipping the last r=
-egion
+> 
+> Reported-by: Randy Dunlap <rdunlap@infradead.org>
+> Closes: https://lore.kernel.org/107dc6ba-697e-4b25-ba3e-8ce2499cac9a@infradead.org
+> Acked-by: Randy Dunlap <rdunlap@infradead.org>
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-This commit adds a kunit test to ensure the last region is not skipped
-before it is processed.
+Acked-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
 
-> diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-> index 5ff0436c58441..84e50f08f417d 100644
-> --- a/mm/damon/tests/core-kunit.h
-> +++ b/mm/damon/tests/core-kunit.h
-
-[ ... ]
-
-> @@ -1929,6 +1929,48 @@ static void damon_test_rand(struct kunit *test)
->  	}
->  }
-> =20
-> +static void damon_test_last_region_quota_reset(struct kunit *test)
-> +{
-> +	struct damos s =3D {0};
-> +	struct damon_target *t;
-> +	struct damon_region *r1, *r2;
-> +	unsigned long min_region_sz =3D 10;
-
-[Severity: Low]
-Is it safe to initialize min_region_sz to a non-power-of-two value?
-
-The ALIGN_DOWN() macro inside damos_skip_charged_region() relies on bitwise
-masking and mathematically guarantees correct alignment arithmetic only when
-the alignment boundary is a strict power of two. Passing 10 yields incorrect
-values (e.g., ALIGN_DOWN(120, 10) incorrectly evaluates to 112).
-
-> +	bool skipped;
-> +
-> +	t =3D damon_new_target();
-
-[ ... ]
-
-> +	s.quota.charge_target_from =3D t;
-> +	s.quota.charge_addr_from =3D r1->ar.end;
-> +
-> +	skipped =3D damos_skip_charged_region(t, r2, &s, min_region_sz);
-
-[Severity: Low]
-Can this call silently corrupt the region skip calculation in the future?
-
-While the current test parameters bypass the ALIGN_DOWN() logic inside
-damos_skip_charged_region(), any future expansion or variation of the test
-that hits the branch will encounter the incorrect alignment arithmetic
-caused by min_region_sz being set to 10.
-
-> +
-> +	/* 'r2' is not processed, it should not skip */
-> +	KUNIT_EXPECT_EQ(test, skipped, false);
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260919080453.6286=
-79-1-aethernet65535@gmail.com?part=3D1
+Thanks,
+Zenghui
