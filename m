@@ -1,78 +1,44 @@
-Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DEE51AEEC
-	for <damon@lists.linux.dev>; Fri, 18 Sep 2026 17:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B616237D12F;
+	Sat, 19 Sep 2026 01:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789751249; cv=none; b=khuxSCaooUMqMFYhf725ctQsosRR21UxAKuXjABRsSZJ0cWMRy8vaSdZD+F/zFKSV4nSk+eKv+zjk7FY6MdZjGbr43a1PDYGbsawHnHPSlmcZpVGk/4V3HzHNx665c37pfpTzWrlB+8XTTWKcwHR2Kn9AUq74RHk0XB7cvks7IM=
+	t=1789780454; cv=none; b=hb8uIz72+4iDytjq3LA9JTCP5Yv7E8dlYO7OWYmmKKZrzwKGE2yYro+jDrKqoGMWqp/jh/dpF8iOKSs4B9HaDW3nAf5BDmcpHKtXeQIIZgQBhzNQwS4lebewUr7y2HsnqFZHSmbp0cHNusRxhFmBnvvkDgH3KHwv/P35UqXuy3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789751249; c=relaxed/simple;
-	bh=PVQkb8h/HFIIvBjGE5JjDQ6o5No3SfXCNcrCIUgaTp4=;
+	s=arc-20240116; t=1789780454; c=relaxed/simple;
+	bh=3ZxVr4r2yvbUvKXK4+V4XR9/fVECWUlccUz9xb7cG2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z178qxorgrvG1xGuc1LrxpQRfEh68rr/V8/yQz4eJtS1BKl+sLZh420iO1WlLHmzdI9WoFhEupvf4boRIfQL35JfmZaZJnbhU7hPpaPQpLgjs6HfxjYH8V3qUTYNXxD8LUUpTsdxKEV9Uzk6mHxMUe8A859nFeVka/NMvBvCprE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KnyyhqGB; arc=none smtp.client-ip=74.125.228.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version; b=M0uem4+a4bsGFsh1NZFTkFoKJaJmn15M0+aOag0fW7h0Uosba6mplj0Oy37msBpM7bYBH/QUeugZWx+kMrqao7/yl0L3Zi6lAc7iL7HPR5MIS2jr7WjlebSi4pMH9MMZ62Kprdybkozjfwk2rrQHQia7oejq2kkP0jdzgqFTDqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lLiqC8bt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KnyyhqGB"
-Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc4c08393b0so837151a12.0
-        for <damon@lists.linux.dev>; Fri, 18 Sep 2026 10:07:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789751248; x=1790356048; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=PVQkb8h/HFIIvBjGE5JjDQ6o5No3SfXCNcrCIUgaTp4=;
-        b=KnyyhqGBrQPMLcAGwxF73/QYZwn4xNW23PvZ0n0yoSVnkb0b0vuY7zPbcW3NyO+i3X
-         Z2CFlNZ+8aE/dajn6LPdRm0UXWQUCeM4FT7EtGWQOhBS7+qyNnv1Yo33csn4MEZeHKD6
-         GPBN9mlOQdLpisgBhG4GDbB9hHFAqGVSQZ+eLL6FNGRubrFResO9MXg1Xm7zlmMgAFPi
-         EdXDxLnOmhEfbQJ6YeJJeD46E+dyyY5wih+LihBzoFajJpj6els6YofhCpuJrgDxQOmn
-         5TFp83OMgruXh/2RHd5bGRYJ0BHq2LXeo1noYtCt8uc2FR6xpmpmYm+1cXklveeE6Hvg
-         pFFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789751248; x=1790356048;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=PVQkb8h/HFIIvBjGE5JjDQ6o5No3SfXCNcrCIUgaTp4=;
-        b=TZK2ppUhXifd4ON+Fj4RySdcuwKkYPd4gx3+axfmJshJJo07OYNooALlt914nAElYU
-         d2vMYl1mOfvQiK/lwgbjHi1H1Awu7L7JeqzwLJkBAaC8jarxHYLnemgMK7z1SaQnVAmE
-         C/uv1KYjaEiNVaC5naSDyBCnLnNYjOILz9GPFf1AFeMpUy6asGwFU087MeIPNJJRmvIg
-         Eb9xh51Xotb2Eo2l3HBFI5LqAwwo4/DEQYkUO9qX78/BczDvmJAIePAPcEX46tXAHrB6
-         P2sQN3pt5lmWNqNiX5pTG4Jf748SyCqQ2B0k9ukLF7g+SYmaoi1Xd+yDu1vBzpeKqXjl
-         m9iQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxxbjwcdfFLzsuK37p04LLJvd2p9JgwSFODmyfb/ajmhDbHX67bI9XXns8x7KRdpUrK9bVSDA==@lists.linux.dev
-X-Gm-Message-State: AFuF++l2o3QOL14PbaKQG08Vkfx6OP0cxkv3Q77/zIX1qJDuXpLkkRbN
-	yZ9qRewv1MFheRyF1SRpYIEQ7tQU4fvkbh/loUwUJFt8kCi42TgA0BWgzNNT+9ZA
-X-Gm-Gg: AYBFou2JxG0OAYi0tvaiIArEKuqIiP2mk4MN7ldc2uJjQalE++wrlouRm3+FJY/CaGZ
-	tMlKAizon0YmqdF6sI9E1cOf0o2qA1/3gT3AsRkXdRS88fmfv//vpX2vtjoJahfCahcYHNJIRou
-	DVr2PR4AtxNEoJaBFRq7XyDWxpgR8zlJdiv/eAe1vUToOMSB2TmkULvwuxf2tageUgC4brtfWey
-	MV7gGHULNs97o+rt5dya6V3EVyFeC3nBTt8e/8mjVlieLI80jf0OE0KmNyg8TCVWeHmBgmMnisK
-	dXiYuYehqowp/uQewAZXm5U/1IeriVW2cIUkGaTqSFR9j2fn8crxBMX44ZFygYXYtMtPUc85Lnd
-	CnKaEwS1xoLVz8IZt3dyjdiHfwFvYhA/F80jQqkfgRqVd09YBKv90l8nDfj3vdrvCC1LKdQDGEO
-	31+Hb5Oc+ztm7dYQnIa9l26mb9DERyoDReTWUQ+ABZ/0K3Wx81z7ah91VBE39dbAXAH5gWeSmwN
-	vMBJ/G0eiP/ypmAcple2KkY11bFqS+NmdcA0QDIgeeBR+1HnFY8Xycn5RzfNyMGcF0PncZje0V+
-	ScJdTb42s63neGrLEmeduuT9ELvxCM2HPwxW/NywzF9o
-X-Received: by 2002:a17:90b:39ae:b0:39e:6c69:34d2 with SMTP id 98e67ed59e1d1-39e6c693659mr358962a91.54.1789751247561;
-        Fri, 18 Sep 2026 10:07:27 -0700 (PDT)
-Received: from LAPTOP-97G9G880.domain.name ([106.222.202.182])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-144d55e29absm116665c88.12.2026.09.18.10.07.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 10:07:27 -0700 (PDT)
-From: Karthikeyan KS <karthiproffesional@gmail.com>
-To: SJ Park <sj@kernel.org>
-Cc: Sang-Heon Jeon <ekffu200098@gmail.com>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lLiqC8bt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237081F0089D;
+	Sat, 19 Sep 2026 01:14:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789780448;
+	bh=r4oxXYRuQjWd+sGDrw6IwSBotjvM7beQln0V1eFRUVk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=lLiqC8btuCHiDoIaDtMK3nKE6F8yr4kzmUZVcBu16PG+/5FQiVNJbfveuJTwnZus4
+	 LpqIA/K6vd7gtuCJ9uEp4Kmi6a40P4fvVJX3IOjF9eZrUJisET45Ps2Fs5wIY4aFIq
+	 Sl0abzUnuR6ctFMct+7B/XjNSI64r8ZzHf4BqpZ61u3bwCfigyZqH4MmUpwhFZm2yt
+	 Sy8Xr90yFlsZ5s/+Wcb1NrvtZo8leVc/BirD4h2fWbGyaILlFo0nmA6Cv1uz2IH1Qe
+	 g9p288J2eNqBXLWsVeYHWr7lla9DhN8nsG4OxMmlKWaDIF9xzOhCZJjHNbCAiCc8aK
+	 74/fjYzQGt13A==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon: document that a zero sample_interval is accepted
-Date: Fri, 18 Sep 2026 17:07:20 +0000
-Message-ID: <20260918170720.105849-1-karthiproffesional@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260918133513.26828-1-sj@kernel.org>
-References: <20260918133513.26828-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v2 1/7] mm/damon/core: introduce damos_quota_goal->complement
+Date: Fri, 18 Sep 2026 18:13:50 -0700
+Message-ID: <20260919011359.88921-2-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260919011359.88921-1-sj@kernel.org>
+References: <20260919011359.88921-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -81,11 +47,73 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi SJ, hi Sang-Heon,
+Introduce damos_quota_goal->complement for specifying whether to use a
+complemented value of the given goal target metric.  Add the field to
+the data structure and implement essential core support.  Handle the
+flag in the quota goal commit and current quota goal metric value
+retrieval.
 
-Thanks -- appreciate the review, and the pointer to the July thread.
-Will post as a new thread with a link to the previous
-version next time.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h |  2 ++
+ mm/damon/core.c       | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+)
 
-Thanks,
-Karthikeyan KS
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 844b175120f09..78b227875287d 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -175,6 +175,7 @@ enum damos_quota_goal_metric {
+ /**
+  * struct damos_quota_goal - DAMOS scheme quota auto-tuning goal.
+  * @metric:		Metric to be used for representing the goal.
++ * @complement:		Use the complement of the metric.
+  * @target_value:	Target value of @metric to achieve with the tuning.
+  * @current_value:	Current value of @metric.
+  * @nid:		Node id.
+@@ -197,6 +198,7 @@ enum damos_quota_goal_metric {
+  */
+ struct damos_quota_goal {
+ 	enum damos_quota_goal_metric metric;
++	bool complement;
+ 	unsigned long target_value;
+ 	unsigned long current_value;
+ 	/* metric-dependent fields */
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 4687b909d42c9..05d1df3746e83 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1224,6 +1224,7 @@ static int damos_commit_quota_goal(
+ 	if (!src->target_value)
+ 		return  -EINVAL;
+ 	dst->metric = src->metric;
++	dst->complement = src->complement;
+ 	dst->target_value = src->target_value;
+ 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
+ 		dst->current_value = src->current_value;
+@@ -3239,6 +3240,23 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+ 	default:
+ 		break;
+ 	}
++	if (!goal->complement)
++		return;
++
++	/* updte current_value to complemented value */
++
++	/* for user_input, users set complemented value on their own */
++	if (goal->metric == DAMOS_QUOTA_USER_INPUT)
++		return;
++	if (goal->metric == DAMOS_QUOTA_SOME_MEM_PSI_US) {
++		goal->current_value = s->quota.reset_interval * 1000 -
++			goal->current_value;
++		return;
++	}
++	if (goal->current_value < 10000)
++		goal->current_value = 10000 - goal->current_value;
++	else
++		goal->current_value = 0;
+ }
+ 
+ /* Return the highest score since it makes schemes least aggressive */
+-- 
+2.47.3
