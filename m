@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29022BFC60
-	for <damon@lists.linux.dev>; Sat, 19 Sep 2026 01:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB912931D3
+	for <damon@lists.linux.dev>; Sat, 19 Sep 2026 01:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789781279; cv=none; b=Pdv0Sc07Dy9r3a47to86EnsxCcz6OksyLYpAMHN/oSa5gfIyAL+3gUvyaW3yy9pfwxIW5BS1hDwiNRYAolLnnEmvvXvrKm8zleM4xDh14YtpeHucHKAOkvVslkapf0yLQlQqjCyHg8mu5xRfc8guYX8t0VborDLeMOc4pRqn86k=
+	t=1789781792; cv=none; b=u6ZF3XKbkl3S9arxYr6LSpSGxTAANwNvp4xWtQCxigzlBhTqA6wptcHiEMP/TXRYcsQXsZfSPoTYgIgSdV8QrlllyQ9gtYjkt/4fu2iDFoES1Rc9JP2/c7QB6B0KCi9E3ZuafRZRFmQAuVjJlEOYJMwQ11ykJKuwNbnWHH0fq0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789781279; c=relaxed/simple;
-	bh=iLNROn9KBrzGmR9Uo5fX2p78C4fx9ARAiGyeHPJOg+M=;
+	s=arc-20240116; t=1789781792; c=relaxed/simple;
+	bh=+kGKG445nyvAiGYIIY0i2EtQeVZDHmPPBiWyA4tsmOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rXN89Usa/MS20OV2AIgMolLu0bFXQQEnJz0HMVSQe/wUcKC4h457hpR2K/wIT4vbaCW1UTStPpGD5FSW2oGg6FtOKDtmt9MpJQ/zI7TUsIB87hM0adwFaneuBGGPfYmPcuxx95hcqa48SzkCJucqsgKkjiXWXpGsgqMJjKNpBDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y573RNEn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OdURp5RCn6Ka9p2DaaltnM7B2iriYRuGnXYu0PpuRsrFPWYETU2cbT6+JxUzXG560JjCsZcsG0YURmsuWKoRNaKiC46wb9i5AkUYo6Mz/1foQHHfEHBiz1KBwIbLx8vkNsBiFJY7E/RRHegN285Cw6U4SFL/ySNvEo0+qtfXv3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lZ2TDPc7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y573RNEn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774AA1F000FF;
-	Sat, 19 Sep 2026 01:27:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lZ2TDPc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3AC1F000FF;
+	Sat, 19 Sep 2026 01:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789781277;
-	bh=rkUzwboCnAEP2sWB3AZtLvCbvW8lfr8WBF1wLwQ1xBI=;
+	s=k20260515; t=1789781790;
+	bh=HQnxngAbYvXUK/VgBaHHVp3UZxOzVIXS06Zg0ub2+UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y573RNEng5Wjj+CB9rVjHf/+FID20WTi3qNIUSY0K2nn1TXinRaakJ3J3qfqAOjqX
-	 lLULXem9Gx3friWZVwMVPR4IQbR7MUFqfI7cyURehtk+QsNru8GJTkLfFsv5FNvDw+
-	 xFxx9/Oi4BwKCacxnvEqfLKCNYeCTTDHHkQxSXp/qtRVW3rIyzLP9WCYwvy3CfqF0U
-	 623v1RoFNLWjlFht0ngbvjbXO1+gAjuY/PBcwCWqX9ghDYXdh0+SlfFD3wTZjL8BAA
-	 IjplMLSX3JiSzrQX9X3k0WiSRsH7rBmbhGfNIBQmLAEU2wOytyhnPizKImhNU4QvD9
-	 aBtCWGaJmQRxQ==
+	b=lZ2TDPc761nXVx++Z+Cir5fZqWv/D9PaoZ2kBjqWc02J6KBfEs+l2/g/tXqJUKPyp
+	 v00z1agTJDCrtxn+8wk6oRt6BbTkkYJD6DrQqjAWjlPx8TKKsAXse/2VSNRSvrfdyH
+	 bfvEIhRuHVxktDwC9hiPLbSD5SHlXCXJD+UoovleJpioWmXabM7wTlJzNRfdxb9YUz
+	 p2MPrClpuXwjWZyhfreyrJdx9Q7Lo6WNW9g+BjGRa45G9Jp/5i7GTi/Jg96rIzP2WR
+	 9JanaDL5iAPml0Cgzmbqu7V8s1/UHruLpJk5Mo6K05Qjz8K72JtESnxKspFfHMIVl9
+	 Mao0zzq5oUobQ==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [RFC PATCH v2 1/7] mm/damon/core: introduce damos_quota_goal->complement
-Date: Fri, 18 Sep 2026 18:27:47 -0700
-Message-ID: <20260919012750.89211-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 2/7] mm/damon: add complement argument to damos_new_quota_goal()
+Date: Fri, 18 Sep 2026 18:36:22 -0700
+Message-ID: <20260919013623.89644-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260919012510.22CD61F000FF@smtp.kernel.org>
+In-Reply-To: <20260919012327.DA7141F00898@smtp.kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,75 +45,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 19 Sep 2026 01:25:09 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 19 Sep 2026 01:23:27 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mm: Integer underflow in DAMOS_QUOTA_SOME_MEM_PSI_US complement calculation
+> - [Low] mm: damon: hardcoded false complement flag when cloning quota goals
 > --
 > 
-> commit f2de2d4493473c2c847f3ad213eaef640f0e1600
+> commit 9116ea6f94ac9ade4ef359ba8351ef835957bf80
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: introduce damos_quota_goal->complement
+> mm/damon: add complement argument to damos_new_quota_goal()
 > 
-> Introduce damos_quota_goal->complement for specifying whether to use a
-> complemented value of the given goal target metric. Add the field to
-> the data structure and implement essential core support. Handle the
-> flag in the quota goal commit and current quota goal metric value
-> retrieval.
+> This commit extends the damos_new_quota_goal() constructor to accept and
+> set the 'complement' flag value. It also updates all API callers to use
+> the new signature, which aims to prevent mistakes where the complement
+> flag was previously set manually.
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 2258b72da7a78..9fd08cbfacd8c 100644
+> > index 9fd08cbfacd8c..932ca3ad0e593 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
+> > @@ -1262,8 +1263,8 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
+> >  	damos_for_each_quota_goal_safe(src_goal, next, src) {
+> >  		if (j++ < i)
+> >  			continue;
+> > -		new_goal = damos_new_quota_goal(
+> > -				src_goal->metric, src_goal->target_value);
+> > +		new_goal = damos_new_quota_goal(src_goal->metric, false,
+> > +				src_goal->target_value);
+> 
+> [Severity: Low]
+> Does this code discard the 'complement' flag from 'src_goal'?
+> 
+> By hardcoding 'false' here instead of passing 'src_goal->complement', the
+> copied goal initially loses its complement state. While it appears
+> damos_commit_quota_goal() immediately overwrites the flag with the correct
+> value, passing 'false' defeats the purpose of the explicit constructor
+> argument and could create a brittle pattern.
+
+Makes sense, I will fix this.
+
+> 
+> >  		if (!new_goal)
+> >  			return -ENOMEM;
+> >  		err = damos_commit_quota_goal(new_goal, src_goal);
+> 
 > [ ... ]
-> > @@ -3238,6 +3239,23 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
-> >  	default:
-> >  		break;
-> >  	}
-> > +	if (!goal->complement)
-> > +		return;
-> > +
-> > +	/* updte current_value to complemented value */
-> > +
-> > +	/* for user_input, users set complemented value on their own */
-> > +	if (goal->metric == DAMOS_QUOTA_USER_INPUT)
-> > +		return;
-> > +	if (goal->metric == DAMOS_QUOTA_SOME_MEM_PSI_US) {
-> > +		goal->current_value = s->quota.reset_interval * 1000 -
-> > +			goal->current_value;
 > 
-> [Severity: High]
-> Does this unsigned subtraction underflow if goal->current_value exceeds
-> s->quota.reset_interval * 1000?
+> > diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+> > index 5ff0436c58441..bba97ad449110 100644
+> > --- a/mm/damon/tests/core-kunit.h
+> > +++ b/mm/damon/tests/core-kunit.h
+> > @@ -929,7 +929,7 @@ static void damos_test_commit_quota_goals_for(struct kunit *test,
+> >  		 * damos_commit_quota_goals() will kfree() the dst goals.
+> >  		 * Make it kfree()-able.
+> >  		 */
+> > -		goal = damos_new_quota_goal(dst_goals[i].metric,
+> > +		goal = damos_new_quota_goal(dst_goals[i].metric, false,
+> >  				dst_goals[i].target_value);
 > 
-> If goal->current_value exceeds the nominal reset interval, which can happen on
-> the first iteration when initialized to an arbitrarily large user-provided
-> target_value, or on subsequent iterations if kernel scheduling delays cause the
-> actual elapsed time between callbacks to exceed the nominal reset_interval,
-> this subtraction will underflow and produce a massive current_value near
-> ULONG_MAX.
+> [Severity: Low]
+> Does this discard the 'complement' flag from 'dst_goals[i]'?
 > 
-> This large value is then passed to damos_quota_score(), which computes a
-> normalized score that maxes out the feedback loop, forcing the tuned quota
-> limit to drop aggressively.
+> Hardcoding 'false' instead of passing 'dst_goals[i].complement' might
+> break future tests that attempt to verify complemented goals, as the
+> destination goals in the test framework will lose their intended complement
+> state.
 
-It's an unlikely corner case.  But I agree it would be nice to handle it.  I
-will do so in the next revision.
+Nice catch, I will fix this.
 
 > 
-> > +		return;
-> > +	}
-> > +	if (goal->current_value < 10000)
-> > +		goal->current_value = 10000 - goal->current_value;
-> > +	else
-> > +		goal->current_value = 0;
-> >  }
-> >  
-> >  /* Return the highest score since it makes schemes least aggressive */
+> >  		if (!goal)
+> >  			goto out;
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260919011359.88921-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260919011359.88921-1-sj@kernel.org?part=2
+> 
 
 
 Thanks,
