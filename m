@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C70376A16;
-	Sat, 19 Sep 2026 01:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AA63B5303;
+	Sat, 19 Sep 2026 01:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789780462; cv=none; b=XLFtCr11UQGOrjOE/ABwI4FDmLwrhLR3Ew1mx9FrVwwTWZI2H596/QcWVPJORWYd5THN9ZOzF6m44tEqAlLwd8daVmsS3xosCSOuSxNTpEQX9rz/YfOwote6gJTJGGdgkFrzwYjswDtVfAoV1aYT2bnWSFiACc7FBh2MsT6z3pM=
+	t=1789780468; cv=none; b=OSU7MWICZrXSSGvxQ1aQkLwKmHq6o0439v8ycxzzJS4kS0Zo4Ya8NLjXm5yYbg4elRQLqJOXw7zUNQelk+I6hwIFVMruWHB9H7p5eEv0khyHu4evrAciSG2I8UrgHXCf06KLdsyAGvlpvcF7nbR8iDGHHgv2+7znaGJWKJWs6EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789780462; c=relaxed/simple;
-	bh=I0Ap04Z92whhNkXUtcSqXftws+zfURa9umHb8evL7kA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tUW2R+P9wAUMRQF9IwKjZV9dxva9t5XloKGFv2QX+zHNmxYqiNS+qDJbN108HZIDNc0iL2F8nGqFg6dM028rmZAmJx0tWHR1bTVNj62rGLzoK44dk79LQC5g7nDpjj6MZyPXz2WoCJhXG1hAzvbuArCOZZtsDbDucMgReJtQf08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yj/NwpFo; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789780468; c=relaxed/simple;
+	bh=+92ZNcH0gStxX1tgFiZvRe9YqpnlVLfLQhixRnzIXoE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZYR6gaCGAXQfjy0AXL0wGX+GpuPk3QynbV7umhn2nLTO2whPg3vmdGU5MRUDho/fUWbvX7SfOc6WzG3c7j3nHpXMcyS7JvqK5An4LNejFcIW1X1Xk5dwvHCAJdv2Crgw5D3jxRE5bIK8usDfodnFjEy3xgK21Cml1XEE3hIFVtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dpaoMUZj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yj/NwpFo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C431F000FF;
-	Sat, 19 Sep 2026 01:14:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dpaoMUZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3011F008A2;
+	Sat, 19 Sep 2026 01:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789780448;
-	bh=Zb5CytK3hYGdz5zNBs0yHNibNYLTEYY9210AEwdD6LE=;
-	h=From:To:Cc:Subject:Date;
-	b=Yj/NwpFoDHOxMfDN3lLRnXCT5GzM3QUuYF7ZVmAiNqK29M8boQiCTEe8yKrCVj63s
-	 fLAk8XbIM1Me0N/FDK0an4iweUCUZS31ludZnpSKf4zY53M9nQtp4wBZzgZMUCnKOl
-	 Qj7YDHSocgO3EfuOiZokUsHuBAsOTVZ89swhot8FH+FI1zZeDyrNxWe+ufesq3Pp9+
-	 Ute+vkKNPD3DzDg9BLKVfRIPCHj7+bHoTOqYrXa11GonE91i2WVxefTuR7gLS3gpoK
-	 lv8ogbNjBUbJaaQ1vGKERY84aEpCPl2g7uppasxSIWtefwVU1PY6QXhbKlu8SN7vyk
-	 B+zIMBZhyWPRg==
+	s=k20260515; t=1789780450;
+	bh=dykUrachf0u9bofU0mtE+nICAqd1iXPgIj01UxhVDRI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=dpaoMUZjsmfc/gRSWi3EkRqOcddy/QYjiD4soj42whor/9DMlYFcCo3gLyoL69r0f
+	 Nj/qgW1TD2kUcui8NKjwYtwtHXHsI8uqaLA2gDqxA+xnoHRnSfJmw9L9z9Voh1+xoI
+	 6pQwu32hNXK4dQg0Ain9vDo3qAMGAYrvO473unjqD1q7/DykNzexfCnRYX53d0Zc9f
+	 dLxylJ2FOiyH6RnKZsHaJ2tHEstbqRh1qTwFUdFXHVrOg3bNNkJNylFa9JG+tkIuX5
+	 EOuujj6WiaQCTg3LpHznuibP5Ern3L/tqaM1D0hB5yriLc6Dui2K3h7WR6p0TMA4FJ
+	 nOQg/DnTNTXLA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
 	David Hildenbrand <david@kernel.org>,
 	Jonathan Corbet <corbet@lwn.net>,
 	Lorenzo Stoakes <ljs@kernel.org>,
@@ -42,85 +41,64 @@ Cc: SJ Park <sj@kernel.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 0/7] mm/damon: introduce damos quota goal target metric complement flag
-Date: Fri, 18 Sep 2026 18:13:49 -0700
-Message-ID: <20260919011359.88921-1-sj@kernel.org>
+Subject: [RFC PATCH v2 6/7] Docs/admin-guide/mm/damon/usage: update for quota goal complement file
+Date: Fri, 18 Sep 2026 18:13:55 -0700
+Message-ID: <20260919011359.88921-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260919011359.88921-1-sj@kernel.org>
+References: <20260919011359.88921-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Aim-oriented DAMOS quota auto-tuning assumes the aggressiveness of the
-scheme (quota) and the quota goal metric are directly proportional.
-Depending on the scheme setup and usage, keeping the relationship can be
-challenging.
+Update DAMON usage document for the newly added quota goal metric
+complement sysfs file.
 
-For example, let's suppose a memory tiering approach for higher upper
-tier utilization.  One common idea for that (TPP) is utilizing two
-schemes, one for promotion and the other one for demotion.  The
-promotion scheme migrates hot pages from lower tier to upper tier,
-aiming for high utilization of the upper tier.  The demotion scheme
-migrates cold pages from upper tier to lower tier, aiming for head room
-free memory of the upper tier.  Both schemes and their goals are in
-direct proportion.  However, for this kind of use case, we need to
-implement two different goal metrics (per-node memory utilization and
-free memory ratio) while essentially the free memory ratio is just a
-complemented value of the utilization.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ Documentation/admin-guide/mm/damon/usage.rst | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-To avoid adding too many new metrics, we are adding metrics that turn
-out to be really needed for each found use case.  For example,
-some_mem_psi_us, node_eligible_mem_bp and hugepage_mem_bp don't have
-their complemented value version.  But it is not really difficult to
-expect use cases that their complemented version can be useful.  For
-example, hugepage_mem_bp use case may need a way to reduce the hugepage
-ratio.  That would require a complemented version of hugepage_mem_bp.
-Adding a new metric for each of such use cases could make the number of
-metrics unnecessarily high, and discourage flexible usages of DAMOS.
-
-Add a new flag, quota goal complement, to allow flexible tuning goal
-setup without unnecessarily increasing the number of metrics.  The flag
-specifies whether to use the complemented value of the given goal metric
-for the tuning.  For example, if the complement flag is set, the upper
-tier memory utilization ratio metric works the same as the free memory
-ratio metric for the tier.
-
-Changes from RFC
-- RFC: https://lore.kernel.org/20260918142827.85303-1-sj@kernel.org
-- Avoid quota goal value underflow.
-- Fix usage doc for number of files in each goal directory.
-- Rebase to the latest mm-new.
-
-SJ Park (7):
-  mm/damon/core: introduce damos_quota_goal->complement
-  mm/damon: add complement argument to damos_new_quota_goal()
-  mm/damon/sysfs-schemes: support quota goal complement flag
-  mm/damon/tests/core-kunit: test quota_goal->complement commit
-  Docs/mm/damon/design: document damos quota goal complement flag
-  Docs/admin-guide/mm/damon/usage: update for quota goal complement file
-  Docs/ABI/damon: update for quota goal metric complement sysfs file
-
- .../ABI/testing/sysfs-kernel-mm-damon         |  6 ++++
- Documentation/admin-guide/mm/damon/usage.rst  | 15 +++++-----
- Documentation/mm/damon/design.rst             | 13 +++++---
- include/linux/damon.h                         |  4 ++-
- mm/damon/core.c                               | 25 ++++++++++++++--
- mm/damon/lru_sort.c                           |  5 ++--
- mm/damon/reclaim.c                            |  5 ++--
- mm/damon/sysfs-schemes.c                      | 30 +++++++++++++++++++
- mm/damon/tests/core-kunit.h                   |  4 ++-
- samples/damon/mtier.c                         |  2 +-
- 10 files changed, 88 insertions(+), 21 deletions(-)
-
-
-base-commit: 026f1215e57024b54116f6388ca96c64ff84f44d
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index ba47255448564..3d43954c7046c 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -98,7 +98,8 @@ comma (",").
+     │ │ │ │ │ │ │     fail_charge_num,fail_charge_denom
+     │ │ │ │ │ │ │ │ weights/sz_permil,nr_accesses_permil,age_permil
+     │ │ │ │ │ │ │ │ :ref:`goals <sysfs_schemes_quota_goals>`/nr_goals
+-    │ │ │ │ │ │ │ │ │ 0/target_metric,target_value,current_value,nid,path
++    │ │ │ │ │ │ │ │ │ 0/target_metric,complement,target_value,
++    │ │ │ │ │ │ │ │ │  current_value,nid,path
+     │ │ │ │ │ │ │ :ref:`watermarks <sysfs_watermarks>`/metric,interval_us,high,mid,low
+     │ │ │ │ │ │ │ :ref:`{core_,ops_,}filters <sysfs_filters>`/nr_filters
+     │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,damon_target_idx,min,max
+@@ -492,12 +493,12 @@ number (``N``) to the file creates the number of child directories named ``0``
+ to ``N-1``.  Each directory represents each goal and current achievement.
+ Among the multiple feedback, the best one is used.
+ 
+-Each goal directory contains five files, namely ``target_metric``,
+-``target_value``, ``current_value``, ``nid``, and ``path``.  Users can set and
+-get the five parameters for the quota auto-tuning goals that specified on the
+-:ref:`design doc <damon_design_damos_quotas_auto_tuning>` by writing to and
+-reading from each of the files.  Because the kernel does not update
+-``current_value``, reading it only makes sense when ``target_metric`` is
++Each goal directory contains six files, namely ``target_metric``,
++``complement``, ``target_value``, ``current_value``, ``nid``, and ``path``.
++Users can set and get the six parameters for the quota auto-tuning goals that
++specified on the :ref:`design doc <damon_design_damos_quotas_auto_tuning>` by
++writing to and reading from each of the files.  Because the kernel does not
++update ``current_value``, reading it only makes sense when ``target_metric`` is
+ ``user_input``.  Note that users should further write
+ ``commit_schemes_quota_goals`` to the ``state`` file of the :ref:`kdamond
+ directory <sysfs_kdamond>` to pass the feedback to DAMON.
 -- 
 2.47.3
