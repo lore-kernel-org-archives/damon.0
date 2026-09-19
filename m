@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7298A2F6562;
-	Sat, 19 Sep 2026 15:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFD01E7C18;
+	Sat, 19 Sep 2026 15:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789833232; cv=none; b=b+AEho3msUjTYkve6uADF4o8jxPnGLGAOoBtNSxfaLKOKYs51vHxUcYjmVV3mPTo2OLp4r6bRTiejZrT0X0ObdUr9K1acMeJhBpUWg+uqF34p8/3gYgr0lr5JnYny1hlX6b2foAUoDdM6RPpFw/9ew6w5sVg5D8hme7KsySt50A=
+	t=1789833311; cv=none; b=M1ahV5LPXTD5oNwV2HJm39wAJDNpYdUa2Tjwi/C9F4XbQxUfyi1ViYss/ViatQobZS+rkgf2WP85U2/6OBAvkFBciHWnoCIV9SIZJGqoM/HzTNUY8VZRqdxgkS6KLXgjOpH9YnoHsl0c77hCOMKbsQhItYPSiBrgTH9JV2ydocE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789833232; c=relaxed/simple;
-	bh=TuB8MHyrxAOCzn7Y/px8CN8uozVWxe8hrGP17bOcswo=;
+	s=arc-20240116; t=1789833311; c=relaxed/simple;
+	bh=trMqCUestHIbZeJOOHN3QVUn8w7QUrEcBokjwjsfUFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCpIaXDxjF0wvz4zxm0ykP40gtB4PT7LAY0nfC4rzEn/zCKnrgpxPb05gVtIh1+/InXVnXeiKbN63FEA5n24RWX/CZCSJkWejeL5eZ3u8lYaIKDTZ2vZf1T0QfO919iZx6DH98m5Z1w0FhXGIJJlDWesh6JNmAj15MO7vt7xSjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iTIX4ZY1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uLA7MRb3maTAm20FwVZ7B9dE2MG6axUr892dvxNdqjmnCP0g6Nketa0I+C2YfEgeTWkxGG2M00yJmoueKpyjyKoRh2KgloNWkDJoSjNwYKB+AuAq30wGVi6qYw2ReyTRz6F+2XLQLQ6jN6ailo6IrIAyM8BBy4bo23KxuP4OFc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n2ZdRdGc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iTIX4ZY1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226951F000FF;
-	Sat, 19 Sep 2026 15:53:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n2ZdRdGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9137D1F000FF;
+	Sat, 19 Sep 2026 15:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789833229;
-	bh=i/uBEdJPm1aQswNq4LdASQ6ufGvoxHbey0sIvh1PP5Y=;
+	s=k20260515; t=1789833309;
+	bh=B6BjE5sn0U6E/JVzt5jw8kZLRH2flS2xlqYcSGbx038=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTIX4ZY1UjG0u1Zijb/Prirq3sF+j0Y0tqKsLQ1PigyMCQNg8c0mDUATHMU/NO4xq
-	 6gGUsAFfRMEv8ttEzoNmOr2oYHgxLKR9ttRGg1U3259Ts8Zf2p8f/dilzHKhN19wx5
-	 ji2RWjLuZC2b07j1knyz5qze7vla3heqSBwT0VuzYQYZHyT1vxdYGwVtPNfrp7Xrc1
-	 f2dQoh6/ZDQvDv8yKGjZP2KIj8ju7DsGK3cVC+ILV3JIVHGTnuf4h3ACIXxI7HRFcS
-	 F5EC4+lp9wKpFGO8ev1jEIZY6jQFaxemzW5IbpGUiu24EjYcUPEl3X3XWAzhME+8d4
-	 0oes1c7tWCfNg==
+	b=n2ZdRdGcRKiydZel/9OJ+ZO85Vlb9e/IhAgUzsFhvZCWzVleWaLCMfiSS6ow4HtKV
+	 OXWBu38uvJ15HM84fyxkF8+VlnZeoyJZIT1qwHvSspUht3r3V7BEgLoBucl2M2h9Nm
+	 4YSq469HAwpFX64g3ewxY+5yGwCQSME6T4pXSMvuABsRZLYbeY1/RErcTopIO/JImn
+	 nBFs1v6QLUeTjheRZ1D7O+E+2nqcoHwx1MTYNgxNc8xf58zrwjgWEyGN8fWQA/wcAJ
+	 Ur0VSPqGy3gvWK8L0JRoEOFKESzwBeoHKoWgd6NnmodJnXIShjD6Os4Vedojzt3h6b
+	 HWoD0OO+5weUw==
 From: SJ Park <sj@kernel.org>
 To: Karl Mehltretter <kmehltretter@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
@@ -35,11 +35,11 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] mm/damon/core: score an unmeasured PSI goal as not achieved for the temporal tuner
-Date: Sat, 19 Sep 2026 08:53:41 -0700
-Message-ID: <20260919155342.85699-1-sj@kernel.org>
+Subject: Re: [PATCH 2/2] mm/damon/tests/core-kunit: test PSI goal rounds under the temporal tuner
+Date: Sat, 19 Sep 2026 08:55:02 -0700
+Message-ID: <20260919155503.85841-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <aq4g5W58PgWLqJ8p@gmail.com>
+In-Reply-To: <aq4hU5DNjnGELpUT@gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -49,88 +49,30 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 19 Sep 2026 07:44:11 +0200 Karl Mehltretter <kmehltretter@gmail.com> wrote:
+On Sat, 19 Sep 2026 07:47:11 +0200 Karl Mehltretter <kmehltretter@gmail.com> wrote:
 
-> On Tue, Sep 15, 2026 at 05:13:11PM +0100, SJ Park wrote:
-> > So I'd still prefer to just making no effect this round.  And my commit was
-> > failed at doing that, because it didn't aware of temporal tuner.  Maybe we
-> > could show whether the goal was achieved or not, using esz and let the tuner
-> > show same achieveness?  What about something like below?
+> On Tue, Sep 15, 2026 at 05:21:36PM +0100, SJ Park wrote:
+> > So, this test depends on the memory pressure level of the testing system?  I
+> > concern if that could make the test result not very reliable.  Maybe we could
+> > split out the corner case handling logic to explicitly receive the current
+> > memory PSI total time.  For example, like what I suggested in the reply to the
+> > first patch of this series.  With it, we could build a kunit test for only the
+> > target logic, without depending on the test system's status.
 > > 
 > 
-> Thanks for explaining the two concerns. I am still new to the DAMON
-> code, so I may be missing something, but your suggestion looks good
-> to me and it is simpler than what I had. I have prepared a v2 this
-> way and will wait for your comments before I send it.
-
-Thank you for accepting my humble suggestion, please feel free to send it when
-you are ready!
-
+> Yes, the second round reads the real PSI total. I used ULONG_MAX as
+> the target to make it unreachable, but I agree that a test which
+> does not read system state is better.
 > 
-> One note on the first concern: as far as I can see last_psi_total is
-> updated in every tuning round, so commits in between would not make
-> the measured time longer than the reset interval. But I am fine with
-> your approach either way.
+> For v2 I can test only the helper from your reply to patch 1,
+> with explicit PSI totals. It would cover both tuners, zero and
+> non-zero esz for the temporal one, and the last_psi_total value after
+> each call as Kunwu asked.
 
-last_psi_total is updated in every tuning round, as you mentioned.  But the
-tuning round comes if both the scheme apply interval and the quota reset
-interval are passed.  damos_adjust_quota() has the quota reset interval check.
-kdamond_apply_schemes() has the apply interval check before calling
-damos_adjust_quota().
-
-'''
-static void kdamond_apply_schemes(struct damon_ctx *c)
-{
-[...]
-        damon_for_each_scheme(s, c) {
-                if (time_before(c->passed_sample_intervals, s->next_apply_sis))
-                        continue;
-[...]
-                damos_adjust_quota(c, s);
-'''
-
-'''
-static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
-{
-[...]
-        /* New charge window starts */
-        if (!time_in_range_open(jiffies, quota->charged_from,
-                                quota->charged_from +
-                                msecs_to_jiffies(quota->reset_interval))) {
-[...]
-                damos_set_effective_quota(c, s);
-'''
-
-And the apply interval (or, next_apply_sis) is extended for each commit, in
-damon_set_attrs().  Hence, the problem can still happen.
-
-> 
-> I would also move the last_psi_total update into the new helper, so
-> that the helper is the only place that touches the field and the
-> unit test can check it.
-
-Sounds good!
-
-> 
-> While testing this with damo I found a second problem. A full
-> "damo tune" still gave a zero quota for one window, on the unpatched
-> kernel too. damon_new_scheme() runs damos_quota_init() on the quota
-> of the caller, and since b90408ef1163 damon_commit_ctx() passes the
-> quota of each running scheme to it for the test context. So every
-> full commit zeroes esz, esz_bp and the charge state of the running
-> schemes. Please correct me if I read this wrong. I can send a
-> separate patch for that.
-
-I don't really understand the problem.  Could you please further elaborate?
-
-> 
-> In a quick QEMU test with your suggestion and that change, the quota
-> stays at 1 MiB over "damo tune" and "damo tune --quota_goals_only".
-
-Sounds good.  Looking forward to your next patch!
+Sounds good, looking forward to your v2!
 
 
 Thanks,
-SJ 
+SJ
 
 [...]
