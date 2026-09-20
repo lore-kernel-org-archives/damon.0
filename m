@@ -1,87 +1,78 @@
-Received: from mail-pz2-f40.google.com (mail-pz2-f40.google.com [74.125.228.40])
+Received: from mail-pz2-f16.google.com (mail-pz2-f16.google.com [74.125.228.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCC63B9D97
-	for <damon@lists.linux.dev>; Sun, 20 Sep 2026 02:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.40
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0223B52E7
+	for <damon@lists.linux.dev>; Sun, 20 Sep 2026 02:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789871497; cv=none; b=YkBR+MbkLKBxCW85JnIZTCUTBnw1uo69aLJfSZToACPOggrziRvZymKlbpBRhRlOZn5/UuGcfBWhIFvyMgPgWjHs8o6rwzG6sXVN3XaCQohXgMyZWbLjNDLp35dBZX8F5RBbKHEX4yiazpEQ1uRAJ4GbSLYANTs1sjOwGCamY4E=
+	t=1789871859; cv=none; b=nhEi4lkg9sylIXkOoVLWrfGVxj4hn16tmrzf5C0GGnFaS/kj21gUyypEjSEE3ffocdoGDEaHSHAwzehMjdhqc+Q6tHJJU9yn4ft1UZ6t2oNkNP7Xvo2gKisDzzGh/VAi4qrxy4peUurJNjGOj9PkjLtCv1wZ0d3gpnHKEDA3lu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789871497; c=relaxed/simple;
-	bh=ta4KGzvy3+Q0Ym3V/maRaZ1/VI/KlL2UlxoFdTcXU1Q=;
+	s=arc-20240116; t=1789871859; c=relaxed/simple;
+	bh=G6MJJlrNk7Yn2tf9+AziitycZl/J9WfVYQtX5uMidQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lh15hUO/ps8AwOhnA1EcFdA9qUNpXiMe/zlid34I0mEIQp8ABz9ipvIpT2d8L7+miNzl4QhXsCieNdXm/b04zXUW3xT08yWBUjTaH8p0/vMghfA0QWPTpd9yUKLJd8UlAeeMsIEvc6b64DAdrPmahu63/HIshoiSWNy8NSDScqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iywQ/qQl; arc=none smtp.client-ip=74.125.228.40
+	 MIME-Version; b=fDD83jSGo+HEM2UAOt3FTHgG9FREpUmAYoGRrIR10pRc/HXls+/CQRNqsQnys/ckg88qzuxsfGptrDoarLEPRBpG/SzgVP2/T+iw3G+O4UmlNf9MMoEe5ROoWXNXyHBRWUVaKLum4OB080/8uMajcBvOPqAiZXK1+xhPdqDKbA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eUxrinlB; arc=none smtp.client-ip=74.125.228.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iywQ/qQl"
-Received: by mail-pz2-f40.google.com with SMTP id d2e1a72fcca58-8748f34b1f2so1893782b3a.0
-        for <damon@lists.linux.dev>; Sat, 19 Sep 2026 19:31:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eUxrinlB"
+Received: by mail-pz2-f16.google.com with SMTP id 41be03b00d2f7-cc4d2fe2056so1174975a12.2
+        for <damon@lists.linux.dev>; Sat, 19 Sep 2026 19:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789871487; x=1790476287; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789871858; x=1790476658; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ucMEt/HYfCdI1ngc+n5yPNtAEmxJEE4zo8QA8w8ZEKw=;
-        b=iywQ/qQl7V5VUgeBK36fU7bHqYxhAP7FDd9j8BfRQ+5ayjnvLEcwJJ61u5UR3dOq5n
-         +u9FiIcgRHIKvCGkzRQm+kISXEdAzpGcghojJc4HjoaAxWN/ppJFKqHCmAQXKTYsc1xQ
-         tBZRht/pveXG+7vfLwX1vTnIlkik6QLeak1czludl/MrIGSWQLOs9eK5EsWBqBUPWi8M
-         i9N0+8tzWxsgmacHreVxCUPG8EGtTCE6cuPoDXPb7GffVep8pOs/q77gc63/bvguM8Vb
-         UgQQKkDBXdJ1cPWZ/FYcfurliekbbx4pPIfJLo/n5ui7u4yp7ANuXSd2WsIDkh1gHB/t
-         xcbw==
+        bh=a661l6/McfJBsW6ih7SIBpxNulf6pfTW6jSdeP75Wo8=;
+        b=eUxrinlBg6/hQ8auUeNNHstsZyTd/owhvWVRoogKqNJ/QltaXUIj7qPpNfvZ1XeJ9f
+         pl2lVNvqr+ttoT2NJZ1/UMT3PmZt8MHurve4PCW5Q97kmDfd4VWLC8HMW9T6d5U/EXJ5
+         XC+7qjFSUfaLmdkdpqpZC8pL+5IW6DhPYymT6b0NQVmiKjV6GjxT2fO5kXM6jwFSD/Zu
+         +qCfKUOYwu6yISVfo9d8AnUAXlP+6bxRHiUmJ/IVUdJpAmBqUW2bGDw1o/RnemY+mqKi
+         w37bJBUAuFXPz8d9Pf35HngcfBrPisKIzQHeMYPR2CJiDTyZDN/TYrVhPj+XNF2g69Pn
+         XBgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789871487; x=1790476287;
+        d=1e100.net; s=20260707; t=1789871858; x=1790476658;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ucMEt/HYfCdI1ngc+n5yPNtAEmxJEE4zo8QA8w8ZEKw=;
-        b=jHETAXF4G2SEcEeqBqi/35LtlpYklK+trXf4GBEPyTpuV9tpeu4KgYFgMlGxghUsT6
-         w4JVlQgbrUNMynC/t1xyvN9kJ46BC5ZADXB8Ibuvgvznf9x7ZrN0BFjrx4QnO/m/W8Sx
-         tu+E+MSxj2anDBMlHcPLCvQw7+CoIcl1KCZJZDqfzSRgu4oX3KQU/VtSku85SPQYQhKZ
-         rmork/O1z/0lFwZ4fGmpz3LN9zxZe97nfTr0kWCMYITLYNr1Gk3Jzt+KIeAsKEvyNiqc
-         t4YDYblKq8ACIJH8BiXJ41VHddrfDihdR8o3S1m2lPx4oGhR21GYmMv6cjG1FOljtur4
-         s2lQ==
-X-Gm-Message-State: AFuF++ked1VDfLLCiWrEUdaWfAUjjm5RqXF1jYAGSwUi8PMlQoPZPgiI
-	PQR7zOtsyppbidlt97Jg6zJzGLMgzNJXAU/GMjcma0Jqb2cHPI/kfUc=
-X-Gm-Gg: AYBFou3PhOxW7VVhB4uPuipxi8+tsbL9rWSrk1tv2sMqvgw2z1aYKyKzR9qrYqq4esf
-	uTAD4eXj4FHGHC4/8a76BBVtlF0pbPAU0wYNgb3XtFrfjkd0CVgUEIocIYyerdTEju2lOgZhAcf
-	/U5v9UhNWnZYzpAvAuGq6Sp9MyOc0A3U0rVgGSEWtdP/Ht8QE2zlDLaekmHTxZ9u3Vgl/2KtR2m
-	GRnGUOf7VuRCahR7R1qgERraf/D8L+EjD9W5jpQbu780MrMIFyCFfLtnMJ8MKJoWlS5exKswtFz
-	v1C6NQ20HwblkugE93cD4aNOVvfKLNcLug/+VnJBUa2o4plbpMW3QR8haOSYl6gv/Ex3E0S793i
-	hvlqW+B08etS38ly+f9JzKNtfAPAAPulu+M2V/lUko3fCDLHo5yZTRHmzvg7S2V9524dyg6a/WC
-	8SWy8L4x92R9IPtZOQMrDlkFYuidGgosDySTnsaiR2gcLIpl0lXgDVDcONzOxxX3bl+XQsg2u4h
-	cs843dm2OSNZ8dGdb5Jx4Kdotaiz1rJ0A1hxg==
-X-Received: by 2002:a05:6a20:2586:b0:3dd:85a8:4c66 with SMTP id adf61e73a8af0-3dd8c5db1e1mr10707714637.45.1789871487313;
-        Sat, 19 Sep 2026 19:31:27 -0700 (PDT)
+        bh=a661l6/McfJBsW6ih7SIBpxNulf6pfTW6jSdeP75Wo8=;
+        b=jmHsmeiw5HC/dCtaxeFKk7hXQlM2c7f3HakV8rP0gxYFDEl0muY6ohiKVFjDXdPGi6
+         VWOVyG8ug8kMe/oq9gb0WAKimERVgb5z+DZoNkMuxZCqG0M1ceqjOPDkM3IyfTzCwN7K
+         saF29toYP5l4tHwWfjMrDZQUFJEsT1vSVLpLEQ8SYDIxWcEBgyeTsWCVutvP2X/xGfvl
+         E9s6QZ2s8nEdYZsawr1C4HKM/38/HFErcLlBSF3m0AOso2PEeP9R7kVnzVLmW2FI4z/F
+         ogF3qKaHlu7R0bCHxt3DllyenJkurqD8bo3j2lbSwv5z5e58h8friXE+4Zu7uiiBLrlY
+         lbrg==
+X-Forwarded-Encrypted: i=1; AKwUvByS1FtebdCU49zphDcjpYabzMS9tpYcByAR5toFhACRSiuSUA/mvhI5boZYR/zy0/Wu6S9ezg==@lists.linux.dev
+X-Gm-Message-State: AFuF++lKUDTnODh1RBlZ7zZIHytVLKc6814W3NN+ipLd8s69Av93uxW+
+	a0PGQ4kVMpH5hQZBNWMHw7ZpJgAQrEihTS2o3Fe2/Pu4YDHQhhxR2Qw=
+X-Gm-Gg: AYBFou31xgKrOD1aXNnFk9Xj5sa9idzudB9y8MfH/6Snoq2EUZu7HesiCCDNzAKqqv+
+	1DHVmxBAMtQXDdtaWA6P3xyufgmV95ck+YiwzhHnp8z3bzd4k1zjfF40ij6qHeiPNs4uyWmkN+p
+	bW76iSFsLfnMrmAMCbrgG42YW4CukBvzcW5yA3MHASY66aDyWhc12RrF0xvl2iBwnRu7Po+1RV8
+	DYyiZsU9JCcG20Xbi8/VYpOzugQp5J+NzBcTEzutbGtP3rbK9ZY4zug2gx0RcCdt0jt7/oY4Kj/
+	y6fWc2e7w2Vbw2wjAKScM1GVfhugkIAg7KMPgly99cgxGxvp4Bb03O1gi9T8XH5ZDiW+77ycP7h
+	xxWLZo7BOOVxN3ZrcaFO2cisZffaTLfkf9DvF8aUZuHII3cGPkBjzuWIk4s0371hhGd2JoiBnIq
+	G9NH0A7SLcq2SddE0cYst3C31Kxt3k6lrMJrngjOpbHbUHDjAETSJFqcJ1iXl5uIvDykGFT86v+
+	l/oCVszfumgVZoc7GEmjcwVGQ==
+X-Received: by 2002:a17:90b:5287:b0:38e:7168:281 with SMTP id 98e67ed59e1d1-39e54ce361emr12233813a91.10.1789871857656;
+        Sat, 19 Sep 2026 19:37:37 -0700 (PDT)
 Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f00:8c85:36d8:54a:e0bc:3e5e])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cc72aee03efsm1481341a12.24.2026.09.19.19.31.22
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e6c37c8e7sm6799764a91.9.2026.09.19.19.37.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Sep 2026 19:31:26 -0700 (PDT)
+        Sat, 19 Sep 2026 19:37:35 -0700 (PDT)
 From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-To: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Cc: damon@lists.linux.dev,
+To: SJ Park <sj@kernel.org>
+Cc: Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	donggeunyoo.kernel@gmail.com,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	linux-doc@vger.kernel.org
-Subject: [PATCH v2 3/3] Docs/admin-guide/mm/damon/usage: document the temporal tuner's quota limit
-Date: Sun, 20 Sep 2026 11:31:11 +0900
-Message-ID: <20260920023111.2466265-4-donggeunyoo.kernel@gmail.com>
+	stable@vger.kernel.org
+Subject: Re: [PATCH v1 1/2] mm/damon/core: prevent size quota overflow in the temporal goal tuner
+Date: Sun, 20 Sep 2026 11:37:28 +0900
+Message-ID: <20260920023730.2468388-1-donggeunyoo.kernel@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260920023111.2466265-1-donggeunyoo.kernel@gmail.com>
-References: <20260920023111.2466265-1-donggeunyoo.kernel@gmail.com>
+In-Reply-To: <20260919165509.86678-1-sj@kernel.org>
+References: <20260919071324.1583280-2-donggeunyoo.kernel@gmail.com> <20260919165509.86678-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -90,38 +81,31 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The temporal goal tuner converts the size quota into basis points in an
-unsigned long, so a quotas/bytes above ULONG_MAX / 10000 does not fit,
-and is handled as if no size quota were set.  On 32-bit that is 429496
-bytes, well below the "echo $((1024*1024*1024)) > quotas/bytes" this
-document instructs.  addr_unit does not raise the limit, though a larger
-unit does make it harder to reach.
+Hi SJ,
 
-Note both in the goal_tuner description.
+Thank you for the review, and for pointing me at addr_unit -- I did not
+know about it.
 
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
----
- Documentation/admin-guide/mm/damon/usage.rst | 7 +++++++
- 1 file changed, 7 insertions(+)
+On Sat, 19 Sep 2026 09:55:08 -0700 SJ Park <sj@kernel.org> wrote:
+> For 32-bit machines, we have addr_unit parameter.  I believe use of it could
+> effectively solve this kind of issues.  Correct me if I'm wrong.
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index ba47255448564..ea7443b307826 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -455,6 +455,13 @@ the background design of the feature and the name of the selectable algorithms.
- Refer to :ref:`goals directory <sysfs_schemes_quota_goals>` for the goals
- setup.
- 
-+The ``temporal`` algorithm converts the size quota into basis points, so it
-+cannot represent a ``bytes`` value larger than 429496 on 32-bit kernels, or
-+1844674407370955 on 64-bit ones.  Larger values are handled as if no size
-+quota were set.  :ref:`addr_unit <damon_design_addr_unit>` does not raise the
-+limit, but it does make the limit harder to reach: with a larger unit, the
-+same amount of memory is written to ``bytes`` as a smaller number.
-+
- You can set the action-failed memory quota charging ratio by writing the
- numerator and the denominator for the ratio to ``fail_charge_num`` and
- ``fail_charge_denom`` files, respectively.  Reading those files will return the
--- 
-2.53.0
+You are right that it helps, and quite a lot: with a larger unit the same
+amount of memory is written to quotas/bytes as a smaller number, so the
+boundary is much harder to reach in practice.  It does not move the
+boundary itself, though, since the multiply is on the value written
+whatever the unit means.  And as you say, only paddr implements addr_unit,
+so vaddr and fvaddr get nothing from it.
 
+The 64-bit case turned out to be a little more than theoretical too.
+bytes_store() takes whatever kstrtoul() parses, so a quotas/bytes above
+1844674407370955 wraps there with no scaling involved.
+
+v2 says both in the changelog, and your suggestion about the user
+documents became a third patch.  I also took your form of the guard; it is
+a one-line diff and it reads better.
+
+  https://lore.kernel.org/damon/20260920023111.2466265-1-donggeunyoo.kernel@gmail.com/
+
+Thanks,
+Donggeun
