@@ -1,103 +1,60 @@
-Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA65E43DED4
-	for <damon@lists.linux.dev>; Sun, 20 Sep 2026 12:24:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28942D47E9
+	for <damon@lists.linux.dev>; Sun, 20 Sep 2026 12:31:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789907124; cv=none; b=XPxJf2dukNnhRRVQfqQiIOyFt4hBJvNcBPWTZND83+drYcTz7YoR1dHIrF5biGrc1AAhLIg93kuAZbjYG9yEIDWhGiw1uOoF1BrJJj9GBIXmeGvvnGrWkA3aSyFUPlYRQnIvFRDvHWGxyN6cUOO00UsGl407OLqXAszte57eaPk=
+	t=1789907519; cv=none; b=lwtwVc8eGZQ/utXctrx+uzwcd+qSdOfhgUoI1tNn/kpP4P5chdZ+iU8Ue3THbzkQjnQFa41kEGWYc7natrbdaXGKs1elYw+H1NJZTz7tA23lOu3aDHlRAOadp7JQmbya1HXxJCNfYoF7FQ+/ZyPNebDsD0UX6ATLiXgzFaRjrxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789907124; c=relaxed/simple;
-	bh=OG5lCEUgYa4YxqH+9PDo4SHEg58BB5hNYIqEZJkrC9c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gezyNnBrZHCilEhTVdpLnzpdSzgBGhrQD3jfZwy8USFZ0jPUWnP1JgOATFSOqfQjn3Dq/6a/al9fGt5IvLjaTM1C1IgBzI8qOsAvQY3Jf8iKjwf5TT4/Jr0EHsR89AjUdCSp6k3pAamjuP/2nKleEQZsAykVflKCd4DVXSodNJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hV0sOSC9; arc=none smtp.client-ip=74.125.228.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789907519; c=relaxed/simple;
+	bh=pcnz4ihX2Tbf5v7+Ug6CjePSiDm7Xxc0gf6TWWMYeYA=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=bCSAQUhdyPelHEieQDZFdPd9KH26VzK5hGpKev29LLukQ/HrMwM/vM7BFfzc1/5nbNiWTPfO8xC8WMmvIuNYqv881zlVHleWMOHTQBT6Nx+rm37B8oJFERXywf1NKV4l1/PuDJz/1+o0qKhEjAKOMDFR3MojYLIEWIEdHk7M/dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aQKPI5kI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hV0sOSC9"
-Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc4cdc0d663so1328001a12.3
-        for <damon@lists.linux.dev>; Sun, 20 Sep 2026 05:24:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789907095; x=1790511895; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=bpdMVsVBLYjzWDTXbQjKSYrSvCe+sMnBTBU+TbdKtJ0=;
-        b=hV0sOSC9Ht0jCCPqJHrknwXdOtLa7IxogejMy/ylbk/fhCt9CIleECWZBHm6XJEgVS
-         gibBppJ2MNSAGLYMVLKWPscNNzZy6Sj0P+7m8ftlFINozTLQLfS6UVLBzfhLaVJuPtz2
-         Oc5sT/Onf9yEcwxxGmTAYiHbN41QYOrbeP893oXsixWzu2kljWQXv9QmvYBf5Llt+BYh
-         w1a9f8r9ku+98Egb7qkryiJBcawunwgPrUr140sEaGcQ/WobVRPhDZaqm1+4p5p6jLXz
-         M49VNcfIEE8WwIKbygvdtizFN9l2VdX2VabIed8u2AOlGJxhc2ZlMixM3r16z/3qpIPH
-         pzbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789907095; x=1790511895;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=bpdMVsVBLYjzWDTXbQjKSYrSvCe+sMnBTBU+TbdKtJ0=;
-        b=wcirooDiVO1hDSZ0I7JKIX3Yef1bQheGtHruSlBXcNvyYZftp7LZXQxFHnDOI4QGsD
-         ND2XvBQjGbiUi+8giYMfxU4BiRHFlUfky2NJXdEIy4bujZ+Nim0xtLmlEP9NCYnHF8pB
-         BVkrS/baA+t5kMBZfuutkwHnq7zM79S5rLZVf5Sdlo7syjfyrlzXWKHfJgxY1625WKM/
-         claTs5BYRrvggebG8nDZm2LVVHu1ABh39ziHJfy4d5yF9RpluEbfIEbWoBakuTAg+r8S
-         QIHijgrKdvmxemw5rPbEMIVm4EHysHE/WMS3bgiITHfs9nIyDjwW5UO1cVNchw3+In0H
-         DKBw==
-X-Gm-Message-State: AFuF++l1N6T6MloGCiW6H+isccaMXdNq2RjUYTT6RLulmyuDLFJGjVsd
-	ffd/dTAtYxZ+KW4UyJL8cgKcFOzhvbbpaIwhhAJViunff/hd4rqomQ8=
-X-Gm-Gg: AYBFou3EyMCeGrC3ZW5m9oYou9GxU6/+DGne8To4JTV+eis6TmCH8sR/Z13YP6TfVIp
-	XZI479Pfse9nby/mJOpO23uqJSx/ruiJYy/+VnGlC/ehHSQO+9I28nDjgXEzCQwAVHy+PIJ86Bh
-	hN48YpF6QWg1VFwUv6B+Kx/eLDF9NFAlh4apMEkWrtMy8Y19cQCgu8PCL1Ujr/Uwue46uV6adgr
-	8JseRiJbLF4CI7mnRJRdcxYOWsrv5w2r3ZxVZcRSK4ajC2Zy79Xys18QNtFJKBgizDfuulyrO5W
-	8opmgjAo7RFAYYA8AXiVw4XxY/X0z3gmlwGP8j64cLI0zohr4HjrXBu/cVHtEUCy+Hs7Rbr+gcg
-	Q1NT2zNYn8QpwORCP76IN3nsJsGCIj79hJVITQzpmgpjO4m+BxIGbARKSi4OUb3bZ61oaDJp0Vm
-	Gyi3hoTKOF4rq2NEfDXrHJzfHZHnjpSIaEf3VdHbjxdik+9HET0mV4NxQq3rCfg9rS9VhnYmW5+
-	tmV0uaamue3inZfE9AYr0zZ0wU=
-X-Received: by 2002:a17:90a:b82:b0:3a0:42a9:9c82 with SMTP id 98e67ed59e1d1-3a042a9a040mr609569a91.43.1789907095575;
-        Sun, 20 Sep 2026 05:24:55 -0700 (PDT)
-Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f00:8c85:e0d6:4b87:c472:c9ae])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e6c3145e5sm9445857a91.5.2026.09.20.05.24.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Sep 2026 05:24:54 -0700 (PDT)
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-To: sj@kernel.org,
-	akpm@linux-foundation.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	david@kernel.org,
-	ljs@kernel.org,
-	liam@infradead.org,
-	vbabka@kernel.org,
-	rppt@kernel.org,
-	surenb@google.com,
-	mhocko@suse.com,
-	corbet@lwn.net,
-	skhan@linuxfoundation.org,
-	rdunlap@infradead.org,
-	linux-doc@vger.kernel.org,
-	donggeunyoo.kernel@gmail.com
-Subject: Re: [PATCH v2 3/3] Docs/admin-guide/mm/damon/usage: document the temporal tuner's quota limit
-Date: Sun, 20 Sep 2026 21:24:48 +0900
-Message-ID: <20260920122448.610319-1-donggeunyoo.kernel@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260920104921.48065-1-sj@kernel.org>
-References: <20260920023111.2466265-1-donggeunyoo.kernel@gmail.com> <20260920023111.2466265-4-donggeunyoo.kernel@gmail.com> <20260920104921.48065-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aQKPI5kI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1621F000FF;
+	Sun, 20 Sep 2026 12:31:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789907502;
+	bh=+cpaQ1/AkC7g25plYv6uErGi2SSsuUZcU314t8hkUOw=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=aQKPI5kI/mEpG3A0FQM1fP10HC+6gCztVyD3qyonFWWOwmNAFkGe3iHZcsRP4gGjI
+	 LrGRUKD2WJroFdBmhPJOpGdxBS7W1vFV4eMcB6iK0LOYQeyX2mtE307tYnXASw0Fd6
+	 vIr4Q17uMLWDH4Odaz3CwkXwGM/Xzr+kAgB2B/RCPHbuxzCt/V/qjANeqMaUjv+rEU
+	 Jkua3FPQ3pdtmnrFlHSdlBE1CPHH7esxGv4ashPso8uGWwT8tTI5hCZcYilOH9D79e
+	 JOdO+JFr/hI8ebWatvKKVHaqOzyGBgi9pICJMEpr+vATQcTj/P+ID9fza3JwmwWRjc
+	 c2zcdtwJndqvA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 2/2] mm/damon/tests/core-kunit: test the temporal
+ tuner's size quota conversion
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Donggeun Yoo" <donggeunyoo.kernel@gmail.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260920122411.610213-3-donggeunyoo.kernel@gmail.com>
+References: <20260920122411.610213-1-donggeunyoo.kernel@gmail.com>
+ <20260920122411.610213-3-donggeunyoo.kernel@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 20 Sep 2026 12:31:41 +0000
+Message-Id: <20260920123141.CA1621F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Thank you for the review.
+> damos_goal_tune_esz_bp_temporal() encodes the size quota in basis
+> points, so the conversion is exact only up to ULONG_MAX / 10000.  Pin
+> the three sizes around that boundary: the largest one that fits, the
+> first one that does not, and ULONG_MAX.
+>=20
+> Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-On Sun, 20 Sep 2026 03:49:20 -0700 SJ Park <sj@kernel.org> wrote:
-> I now think this documentation change is better not to be made.
-> Correct me if I'm wrong.  If I'm not incorrect, could we drop this
-> patch?
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-You are not wrong, and I agree.  Dropped in v3.
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260920122411.6102=
+13-1-donggeunyoo.kernel@gmail.com?part=3D2
 
-Thanks,
-Donggeun
