@@ -1,80 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFCC1A239A
-	for <damon@lists.linux.dev>; Mon, 21 Sep 2026 02:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881104B3364;
+	Mon, 21 Sep 2026 15:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789956475; cv=none; b=Z91CpTZcpW9ZVqTekSF1JLj2LkzSXCOdhTgdVNbuxbWLXWPKmGDwJdP/B3GOEas9lhOraCAwZbExO6IAGmlwQMM9oNGbk9UgWBWDDaps3+Q71jszDey46VJIYVMPln4+x1hivnvIy5f6lxpGAe6Rv+BkxOfRoj9YTRVrm2hvy9M=
+	t=1790003753; cv=none; b=r81Q9DwN3E8e1iin7ED4Ps5GfSoBP+eUrR44hH2nrQgGwC59tHjFqPAO4vlOVlv7aRuiuSpn0M4dyYXnKd5nerMtdBKy3zrGs8XAOSPkxj7QbpwiRX5HZgK6AoE4BPPtkjmeVTjz5ft9xd5iSrN2hDbwcA6nAt7IYEuqxM/CpG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789956475; c=relaxed/simple;
-	bh=6bHKwYK7TQnStn9RyVGhwTQKNPN8mUdfJt/LOdTqG0I=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=hhGhW6hrdlIfrXhvtoVWowy1qJY7BMkgpqKbxJXcFpv8CHiNgeMWCug58rANHA280Yf8etHRBq7OGiZ3DTqT3W0k1GwIeKj73sBZJTskz0yUUHGeWpjQ9nkYHx7LRQfRE7f/ZEsFAlzQbAc2k5jIjM24VsbbOcMn49OHxiO+uxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y2BHm9Gw; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790003753; c=relaxed/simple;
+	bh=KVcK1Y1ih5u1kIcLe/uH3njGYuZ9fXYh/XiLrz4d1/s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=R5JslJVSqSB6g2n4A+XYZR0Oj0l3Xh/tN95gEtLsCBoybJcd2XamQPJMO2rrEBK1FXRMwnNj6t+ibBPkBY1l7cE4++see/YtkBnHwah2E+oqScG5Ctj0nMfBMSK8zOkQqkz9bBKgzPM0xJ0RZKislBMBvHOZUgzH04KbhLrgaLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iJ5oC3YT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y2BHm9Gw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E341F000FF;
-	Mon, 21 Sep 2026 02:07:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJ5oC3YT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE501F000FF;
+	Mon, 21 Sep 2026 15:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789956473;
-	bh=6bHKwYK7TQnStn9RyVGhwTQKNPN8mUdfJt/LOdTqG0I=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Y2BHm9GwdJoXlK0qve1vs9b+fpkFIIxGWn6d4Gk8xPVh0uBMfJhflZqydCaDBxB5S
-	 0wo+GzPKC0GwSV5L3czbhHYbtUrzWsrj7PHakbKbedBwI+gl40I4zCbya9ospID9lC
-	 QLz+aZGejZu9d8BWn/3mO46ZGEglloeCjrmk2GM0PYWtv9KxK5AdHxK2c9fEiR+VVn
-	 WiDFUPSVl8v7BePXVh0JJ1O1G0Em2Jw5Cue4i9+Icn1ljmAOvHmd+DVm2VF6vcj1/h
-	 pVhc/Liqm4SC8/3/Fimgo64sPSpVoB8QiZx/TUgePSDXorJHP5H0S/T49GwNJHzoOd
-	 PIxOpZkKa0Skw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 1/2] mm/damon/core: keep the temporal tuner quota
- over an unmeasured PSI round
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Karl Mehltretter" <kmehltretter@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260921020013.33105-2-kmehltretter@gmail.com>
-References: <20260921020013.33105-1-kmehltretter@gmail.com>
- <20260921020013.33105-2-kmehltretter@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 21 Sep 2026 02:07:53 +0000
-Message-Id: <20260921020753.B3E341F000FF@smtp.kernel.org>
+	s=k20260515; t=1790003752;
+	bh=v2TT2RzKq0ySasMECuIA77pplW9JQNZIwLSdAY2y1e4=;
+	h=From:To:Cc:Subject:Date;
+	b=iJ5oC3YT2dCKI0AwnslGMi+n4gVJufBi1ZPcJxeK/Q5reOxklap/Edzae+xY9CkJx
+	 EekHs+4Iops46s7MuiHT2GCd5FyhyXyn/cp6FM7IEc30WVSSZ5VtRtc1RcqLfCfPRn
+	 Eh5hfwPTKbE4vtdqNUIBvl0k/0tEQQzxYzgcuG4HyCR92j0iNCuuxwNbFodY8YFXPm
+	 p72zzcItP45FCvQcZ1sNhW1c62aMfJImyZJaVne2f/EzFWcx2ygGtyP7L/YBSLLf6b
+	 nXiOX7VG5tG20E/3neCVwZX6jAHV3i69/ByzOwQnXWThoS7oaJpJa2xvu3EbxHWFas
+	 5MfDPTp0M0ISQ==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	Adrian Huang <adrianhuang0701@gmail.com>,
+	Karthikeyan KS <karthiproffesional@gmail.com>,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	Xuewen Wang <wangxuewen@kylinos.cn>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 0/4] mm/damon: improvements in efficiency, error handling, documents
+Date: Mon, 21 Sep 2026 08:15:42 -0700
+Message-ID: <20260921151547.78472-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> Commit b73198a47ffe ("mm/damon/core: handle uninitialized
-> damos_quota_goal->last_psi_total") scores a PSI quota goal without a
-> previous sample as achieved. This leaves the consist tuner's input
-> unchanged, but the temporal tuner sets its quota to zero for an achieved
-> goal. A running scheme with a nonzero temporal quota therefore loses a
-> charge window after a quota-goal commit.
->=20
-> Use the effective quota to preserve the temporal tuner's previous
-> goal-achievement state during an unmeasured round, as SJ suggested [1].
-> Score the goal as achieved when the effective quota is zero and as not
-> achieved otherwise. A new scheme's initially zero quota stays zero, and
-> the consist tuner's behavior is unchanged.
->=20
-> Move the PSI current-value calculation and last_psi_total update into a
-> helper that takes the current PSI total. This lets a unit test cover the
-> unmeasured and measured rounds without depending on system memory
-> pressure.
->=20
-> Fixes: b73198a47ffe ("mm/damon/core: handle uninitialized damos_quota_goa=
-l->last_psi_total")
-> Cc: <stable@vger.kernel.org> # 7.1.x
-> Suggested-by: SJ Park <sj@kernel.org>
-> Link: https://lore.kernel.org/damon/20260916001311.101024-1-sj@kernel.org=
-/ [1]
-> Assisted-by: LLM
-> Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Four various improvements.  Patch 1 from Liew Rui Yan skips unnecessary
+quota setup work when relevant.  Patch 2 from Xuewen Wang propagates
+ignored damon_call() error to sysfs users.  Patch 3 from Adrian Huang
+(Lenovo) fixes typos in comments.  Patch 4 from Karthikeyan KS clarifies
+zero sample interval acceptance on kernel-doc comment.
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+---
+Note: this is a batched reposting of DAMON patches that were
+individually posted and reviewed by the DAMON maintainer.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260921020013.3310=
-5-1-kmehltretter@gmail.com?part=3D1
+Adrian Huang (Lenovo) (1):
+  mm/damon: fix typos in comments
 
+Karthikeyan KS (1):
+  mm/damon: document that a zero sample_interval is accepted
+
+Liew Rui Yan (1):
+  mm/damon/core: skip quota score setup when the quota is full
+
+Xuewen Wang (1):
+  mm/damon/sysfs: propagate damon_call() error in turn_damon_on
+
+ include/linux/damon.h | 3 ++-
+ mm/damon/core.c       | 8 +++++---
+ mm/damon/lru_sort.c   | 2 +-
+ mm/damon/sysfs.c      | 3 ++-
+ 4 files changed, 10 insertions(+), 6 deletions(-)
+
+
+base-commit: 05b2dd9725f76b0024d387ed2226d1ab531620ce
+-- 
+2.47.3
