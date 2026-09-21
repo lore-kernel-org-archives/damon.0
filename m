@@ -1,96 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040224BE433;
-	Mon, 21 Sep 2026 15:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E278B478E56
+	for <damon@lists.linux.dev>; Mon, 21 Sep 2026 15:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790003764; cv=none; b=NAYs6Enh1UPhuWpzNr/4vT4EIKqRidyg89e7lrTNG//pkAKFA5bA210o7VgRKUo+DC8FnFTJF5OPR7TP8YTdSljnBU0fFsl08DZ6yu9uRDpFz9CrWJM9ZE6SWyDA/LufvymSO64iYx/SDsgE8cqYI0AtAs8XKSgE8JNvjOlt2lM=
+	t=1790003852; cv=none; b=XGiIuvP38HH4092+CykoPFfH5ho09ALtgiEVaKFSD/SmGZFHqkB43FDbVUa076mopjaFDyB4r4rUpxjJqbqWOWM8Yyw/yHyEqPsMckZOP05qHA29bApXu/83RU1zhumtoqsAjts2viG4d5MKx915s/mioUrDA/Lpvq3A+oxH4/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790003764; c=relaxed/simple;
-	bh=DHEQNVH304dFHicWq52GyticC8lXMEruY2thjkBwJ8g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXTlqb3855spkYnOa1nwLhiU3onFebtL4IIWri9lJfz2YmD7/0MxYWCNl/e0uV//qwt3KDPNwtFQauhXRAL0g3JO6jhWOxrwVozZte6f7D5ZcjW2t8WIaMpdBOT4IkB5Sd/OFbzPntYPTd4s/1Mqf8F6NCA06HQex4oTJT+wbPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lNF9xyVL; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790003852; c=relaxed/simple;
+	bh=57ef5MJkugfIYn1Foat3ubqIgbpAXCAscu2XeayenA0=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=LxjjzlmmPrwNqBa2RInbTe7I/1BfBwlXkJoVOp/2WrtXy9aCk0/FblOsccE6G0CTB58g92dU2k9S+42ft+JN6kahkqxPcTu+bH3MT/Mq+K+S8EmhCiDLUKiChOK/gcIN3JLxbXvPv0I1doXBeR0sQgpAbDTfErNoJZBMyJ29X0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KmTmri3y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lNF9xyVL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C537A1F00893;
-	Mon, 21 Sep 2026 15:16:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KmTmri3y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980B31F000FF;
+	Mon, 21 Sep 2026 15:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790003762;
-	bh=hOvG/uo1bcbPermo8brtuzKlqeWj0xatwdIh6bjgz5k=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lNF9xyVLj41JefydyGx3JzxqT5j0YaN32U2Of7wQEspNIopu0YEFYUyAkCkfCw8cr
-	 FCtVPu3/wHKKG2DsljiMyt/yZuL+/Fa9aui+A+uBZg+Vc0ti+qEroNjZSkvpNgGKJU
-	 pNsGpvuSAVaY6jQI3hobjXB9oLvLsEGHwMZ6jiRwnfRGbvr5e6UFh59vJP+irwm4ql
-	 5pEk4jcRocgT27DGtPS0DzBuT4nx/PKL6n0cuBn/SgbBl5RdKteVS5VasCmucA3UpD
-	 B3YJoRf5mzIC/TkyG4Hv9YEJP8wXB8hq0DYs2IninuqjATB0FNKhXm9VimeZ42JP0u
-	 xCn1LrwjvY1tA==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Karthikeyan KS <karthiproffesional@gmail.com>,
-	Adrian Huang <adrianhuang0701@gmail.com>,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Xuewen Wang <wangxuewen@kylinos.cn>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 4/4] mm/damon: document that a zero sample_interval is accepted
-Date: Mon, 21 Sep 2026 08:15:46 -0700
-Message-ID: <20260921151547.78472-5-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260921151547.78472-1-sj@kernel.org>
+	s=k20260515; t=1790003850;
+	bh=57ef5MJkugfIYn1Foat3ubqIgbpAXCAscu2XeayenA0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=KmTmri3yNcoqJKapzZE73xRHjUjvaACbDha3T9gHqzfPO67K6xrSD0pa4voi/5jDZ
+	 w6FtdymkLNZbPA5UbpshT0TKsoMgbE/Zjqc2EZO3H+TzeDNDGJ7/OcouiCon3Z1VXd
+	 KAH2+ldq+FzoDA+WN8xEF947HhFYxQceUg1pYEJ1GLNA2kkL3VJGRrUi/KJqZhLk17
+	 i/PedJqAsQeQdYo1TdLTL9TVdeuMXVAE7IUeLAkdQJyoTXi2d3bCeb5EiVI1+Jo/bX
+	 09G9UfPKIgsekdoqVTc2aBehiM4RMJsjO+Z1SKveOtOlfNqc0b3mpOYaeYYg+4IJF6
+	 rkVe+d6jJoTZg==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 3/4] mm/damon: fix typos in comments
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260921151547.78472-4-sj@kernel.org>
 References: <20260921151547.78472-1-sj@kernel.org>
+ <20260921151547.78472-4-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 21 Sep 2026 15:17:30 +0000
+Message-Id: <20260921151730.980B31F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Karthikeyan KS <karthiproffesional@gmail.com>
+> From: "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>
+>=20
+> Correct spelling mistakes. No functional changes.
+>=20
+> Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
+> Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+> Reviewed-by: SJ Park <sj@kernel.org>
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-damon_set_attrs() accepts sample_interval == 0.  This was reported as a
-bug in v1 of this patch (rejecting it in damon_set_attrs()).  A similar
-patch was already declined for the same reason: a zero interval is
-intentionally supported [1].
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-Document the behavior instead of changing it.
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260921151547.7847=
+2-1-sj@kernel.org?part=3D3
 
-[1] https://lore.kernel.org/all/20260722094304.3132750-1-dayou5941@163.com/
-
-Signed-off-by: Karthikeyan KS <karthiproffesional@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from v2
-- v2: https://lore.kernel.org/20260918131301.75879-1-karthiproffesional@gmail.com
-- Collect R-b: from SJ.
-- Rebas to the latest mm-new.
-Changes from v1:
-- Dropped the damon_set_attrs() rejection and the KUnit cases that
-  tested it.
-- Added a kernel-doc note on struct damon_attrs's @sample_interval
-  instead.
-
- include/linux/damon.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 836353c4ab9a..844b175120f0 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -836,7 +836,8 @@ struct damon_probe {
- /**
-  * struct damon_attrs - Monitoring attributes for accuracy/overhead control.
-  *
-- * @sample_interval:		The time between access samplings.
-+ * @sample_interval:		The time between access samplings.  Zero is
-+ *				accepted.
-  * @aggr_interval:		The time between monitor results aggregations.
-  * @ops_update_interval:	The time between monitoring operations updates.
-  * @intervals_goal:		Intervals auto-tuning goal.
--- 
-2.47.3
