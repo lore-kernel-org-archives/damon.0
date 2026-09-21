@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881104B3364;
-	Mon, 21 Sep 2026 15:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80B64B8DF2;
+	Mon, 21 Sep 2026 15:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790003753; cv=none; b=r81Q9DwN3E8e1iin7ED4Ps5GfSoBP+eUrR44hH2nrQgGwC59tHjFqPAO4vlOVlv7aRuiuSpn0M4dyYXnKd5nerMtdBKy3zrGs8XAOSPkxj7QbpwiRX5HZgK6AoE4BPPtkjmeVTjz5ft9xd5iSrN2hDbwcA6nAt7IYEuqxM/CpG0=
+	t=1790003755; cv=none; b=SRR20GhjCkNetNSXj0+QPVn4eYCNaMmTsgId3bNN6WgMGQHUVcocEXn6IIswCnhWD2rwESuX/eB7pjTPtR8T9S0qTTIPfOc5EM7PYl3Qeq3c4yh+SLpPvIpqpC1a+fRPT2K0G/jbDsr+ur/FB0P2F+SUnyX6OptjHtE2OeTO6J8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790003753; c=relaxed/simple;
-	bh=KVcK1Y1ih5u1kIcLe/uH3njGYuZ9fXYh/XiLrz4d1/s=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=R5JslJVSqSB6g2n4A+XYZR0Oj0l3Xh/tN95gEtLsCBoybJcd2XamQPJMO2rrEBK1FXRMwnNj6t+ibBPkBY1l7cE4++see/YtkBnHwah2E+oqScG5Ctj0nMfBMSK8zOkQqkz9bBKgzPM0xJ0RZKislBMBvHOZUgzH04KbhLrgaLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iJ5oC3YT; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790003755; c=relaxed/simple;
+	bh=dItxma8qc0SkoheGjWCNg7RiKY5jxIzSc/QRGZ4Ae9w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Pg0AjnP4V/qk14AWrXRVEaFTCN8A4cVVyNMydDM0F1dVy8nEfnWuwMJ1qfnYWoNeVXvQ4E/lbZKx0uEcE+4AqTuIrPBMLGVfCW/vLC+2ziefrFePiijI1hbWNl/igxul7gaYUjbNwhocn2rMNgKf5F9xRqcHAkWMIsj8gT2ldr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BWgeKyzF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJ5oC3YT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE501F000FF;
-	Mon, 21 Sep 2026 15:15:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BWgeKyzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06FB1F00893;
+	Mon, 21 Sep 2026 15:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790003752;
-	bh=v2TT2RzKq0ySasMECuIA77pplW9JQNZIwLSdAY2y1e4=;
-	h=From:To:Cc:Subject:Date;
-	b=iJ5oC3YT2dCKI0AwnslGMi+n4gVJufBi1ZPcJxeK/Q5reOxklap/Edzae+xY9CkJx
-	 EekHs+4Iops46s7MuiHT2GCd5FyhyXyn/cp6FM7IEc30WVSSZ5VtRtc1RcqLfCfPRn
-	 Eh5hfwPTKbE4vtdqNUIBvl0k/0tEQQzxYzgcuG4HyCR92j0iNCuuxwNbFodY8YFXPm
-	 p72zzcItP45FCvQcZ1sNhW1c62aMfJImyZJaVne2f/EzFWcx2ygGtyP7L/YBSLLf6b
-	 nXiOX7VG5tG20E/3neCVwZX6jAHV3i69/ByzOwQnXWThoS7oaJpJa2xvu3EbxHWFas
-	 5MfDPTp0M0ISQ==
+	s=k20260515; t=1790003754;
+	bh=YZi9IVNfJSY7xxoADBVX0u2PfclU5VsMjaW1uA9UFkU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=BWgeKyzFjdqIj4tW9+UBBQAuV5uAkWPL1DXxt2dlrnleSInIzPDC/OCzQPyJlVlmd
+	 SzIgeTw1WNHB2g/GbOEemtZPaq0J3qNjQEHL3MrmKqchXkpYKNydcyeErIUVd6z3gi
+	 d7/8lVYaf0FPwXRYx9auipAG/RoQfJjtyYS6idYw+Cslo55S9LnJqk8Y+Fdk4Kujj0
+	 cTVGjte27A9Ghxl5UQ58h24uOTUrDjEPyuQrsv1Vg3/UjoNg6gzHEbaF1J1sRfLWqb
+	 SLEktZvY0vMp+P+b125uSntGrzRLnicOrFueh0ReYtxcXIcLww3zLtMIhiudE59eqa
+	 G7BEEAsrvpO5g==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
+Cc: Liew Rui Yan <aethernet65535@gmail.com>,
 	Adrian Huang <adrianhuang0701@gmail.com>,
 	Karthikeyan KS <karthiproffesional@gmail.com>,
-	Liew Rui Yan <aethernet65535@gmail.com>,
+	SJ Park <sj@kernel.org>,
 	Xuewen Wang <wangxuewen@kylinos.cn>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/4] mm/damon: improvements in efficiency, error handling, documents
-Date: Mon, 21 Sep 2026 08:15:42 -0700
-Message-ID: <20260921151547.78472-1-sj@kernel.org>
+Subject: [PATCH 1/4] mm/damon/core: skip quota score setup when the quota is full
+Date: Mon, 21 Sep 2026 08:15:43 -0700
+Message-ID: <20260921151547.78472-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260921151547.78472-1-sj@kernel.org>
+References: <20260921151547.78472-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,35 +50,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Four various improvements.  Patch 1 from Liew Rui Yan skips unnecessary
-quota setup work when relevant.  Patch 2 from Xuewen Wang propagates
-ignored damon_call() error to sysfs users.  Patch 3 from Adrian Huang
-(Lenovo) fixes typos in comments.  Patch 4 from Karthikeyan KS clarifies
-zero sample interval acceptance on kernel-doc comment.
+From: Liew Rui Yan <aethernet65535@gmail.com>
 
+In damos_adjust_quota(), the quota could already be full.
+
+In this situation, damos_adjust_quota() will still calculates
+quota->min_score.  However, this min_score will not be used in this
+window, because in damon_do_apply_schemes(), damos_quota_is_full() will
+always returns true, preventing the scheme from being applied to any
+region.
+
+Therefore, add a short circuit for 'esz < min_region_sz' schemes to
+early return from damos_adjust_quota() before calculating min_score.
+
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 ---
-Note: this is a batched reposting of DAMON patches that were
-individually posted and reviewed by the DAMON maintainer.
+Changes from v1
+- v1: https://lore.kernel.org/20260913110407.32558-1-aethernet65535@gmail.com
+- Collect R-b: from SJ.
+- Rebase to the latest mm-new.
 
-Adrian Huang (Lenovo) (1):
-  mm/damon: fix typos in comments
+ mm/damon/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Karthikeyan KS (1):
-  mm/damon: document that a zero sample_interval is accepted
-
-Liew Rui Yan (1):
-  mm/damon/core: skip quota score setup when the quota is full
-
-Xuewen Wang (1):
-  mm/damon/sysfs: propagate damon_call() error in turn_damon_on
-
- include/linux/damon.h | 3 ++-
- mm/damon/core.c       | 8 +++++---
- mm/damon/lru_sort.c   | 2 +-
- mm/damon/sysfs.c      | 3 ++-
- 4 files changed, 10 insertions(+), 6 deletions(-)
-
-
-base-commit: 05b2dd9725f76b0024d387ed2226d1ab531620ce
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 2258b72da7a7..98c767b9e6ef 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3368,6 +3368,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 			damos_trace_esz(c, s, quota);
+ 	}
+ 
++	if (damos_quota_is_full(quota, c->min_region_sz))
++		return;
+ 	if (!c->ops.get_scheme_score)
+ 		return;
+ 
 -- 
 2.47.3
