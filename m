@@ -1,80 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E8F4B7A4B
-	for <damon@lists.linux.dev>; Mon, 21 Sep 2026 15:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB6B4D5962;
+	Mon, 21 Sep 2026 16:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790004735; cv=none; b=HdLTJxuHueS/IoewhDAdoUraxjIe7GoQbXZBSSWidbAFtomOgDtjLeLoyZst7Dlk9ZcGxyQ/0ix6SqgKpOCUDcWtrcbQcH4dW7IqfcdktJ2P86TZYzcmVVAz/BEYKuISCzacJxn6ryoKAUN95p/HzZRpWDHHrdWQLV24kxNg1D8=
+	t=1790008578; cv=none; b=XQF4lg15TfHwcAud0GHHiJQ0JUamzm0+x74hmAZjp6NIMDZR0X1mfttpiKRljoFo1rlfJjMW4D3ube2lVuUR7q2hcTPtbfk3qlqR7kD7ht+Ws/eziZjBp5FvtF1JoMNTKHo6acHhEnvhFMPMpbLCxy/IQEajawQwg4yIPhn1UDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790004735; c=relaxed/simple;
-	bh=iQ4mBY7ezjNbpPY5jNor2Oh6r6/VYS1pS9QN2LC0SlY=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=TuA+hJpxKeQxQKDjld2Qw5+toO3snz8DH+XB3iymn0+OGoHlAAv7kfQekqnWldlPnd9I7d+6E0lKfQGnjiVrmnNaO6rdRV16Z6J/+qnR0EPaPiTO9vM0gVJSGwixj+yLVs0zZUFjF6FSfoSxe6bFBhrM09uhg1qml+oAV0mLS/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bIS6BVci; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790008578; c=relaxed/simple;
+	bh=B1y/e19sBkH6jnaw1dCr8IYTp3sMCyzUTEZOeIGqP74=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=I2/UfYVWVL5e/yDcp/XV38sp5dgjrxxI6hF3l39RBcTI3nvAZ+nwCB1ag9jQIP+B8QvbtHBauHaYCGc9W6VUvNmKxkIA0WPd5ryohFgkMqFEdw1o8B77QrZSMdbgfbfgbqmnsvKxWIVrH20Bmjy1CbGHhX2p+FQz7xu71LdYHbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EiZr+ppo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bIS6BVci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081C81F000FF;
-	Mon, 21 Sep 2026 15:32:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EiZr+ppo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0A11F000FF;
+	Mon, 21 Sep 2026 16:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790004734;
-	bh=S8rrM9XIvQpv1U9A9FT2rDEp9AHpYANqoQeBAfGh7UI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=bIS6BVcir6UMCF7/aB/1ezFNBw6Fes5W74NNVd+vRDYwUwMi3/iGv3pKyEpXatreH
-	 0rrQvl+TmuyEOddZuiE9oeksOHhxveU0ecyt461F1h8KDebS55dljX1BeAdSt8GIj6
-	 UFuQXQcRBD+zPWVdakNffcwt1UtkJ2i71EM10GrH84gjxqJTCtG+Qf568JFbwoyGd1
-	 L/zam4Wnfw7qLuJDYSh5I2yzyqf4LI/XwPqZJfYTS9gqv6ZeBpNJfNC8eEHFrVzX0O
-	 NboLd5z8NmGhSuC32PecEKSo6/35azIg9E84jNDmAKr3XPyqAVJGYonLVd2gCKCxFO
-	 p6rg7nk2FndFw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 1/2] mm/damon/core: charge only the part of a region
- the filter left
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260921152443.80132-2-sj@kernel.org>
-References: <20260921152443.80132-1-sj@kernel.org>
- <20260921152443.80132-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 21 Sep 2026 15:32:13 +0000
-Message-Id: <20260921153214.081C81F000FF@smtp.kernel.org>
+	s=k20260515; t=1790008571;
+	bh=4mcvkpNssIr9zsxZTvdb3UBAq6HomywEqsmTm1KMjY8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=EiZr+ppooIZMW0rM50EkJwB3hmEjBh+yQmM16YqF0W51wi83p9SeIEmoGsie+kVtl
+	 FEO2LukxA4gzfl8XSR6zm/MTVL7oBF+Q64T24E0IsPAAlr3PiXnwPxkKcsMYAOlQ09
+	 u142y4lCKVUiiPSRARmbTKo4yZ9W8WAmhkgwHcXMZhs82/gGNHh9txjAJctPGgQTe4
+	 j85aTl3ncOAczAK9NcudNF6KwFUYBXzg1jcJSg9nJffijqo6eAP7XTq+5JWi+RPQ0x
+	 WqX6wz9KyDa1ZjYBD+AzfP+MkVlYJk0sPjJ8TD/cl67PQqB8UM9JZqXLqnBaHe4gTs
+	 JmOAwKP/zwTHg==
+From: SJ Park <sj@kernel.org>
+To: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] mm/damon/core: keep the temporal tuner quota over an unmeasured PSI round
+Date: Mon, 21 Sep 2026 09:36:06 -0700
+Message-ID: <20260921163607.81366-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260921020013.33105-2-kmehltretter@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
->=20
-> An address range DAMOS filter that partially overlaps a monitoring
-> region splits the region at the filter boundary, so the scheme action is
-> applied to only one side of it.  damos_apply_scheme() reads the region
-> size once on entry, before damos_core_filter_out() performs that split.
->=20
-> The quota charge and the statistics update therefore account for the
-> region as it was before the trim.  schemes/<S>/stats/sz_tried counts
-> memory the filter excluded, which Documentation/mm/damon/design.rst says
-> is not counted as tried, and with quotas/bytes set the excluded part is
-> charged against the budget, throttling the scheme to a fraction of what
-> was configured.
->=20
-> User impact is that DAMOS could unexpectedly slowly run, due to
-> over-charged quota.  DAMOS stat could also be confusing.  No critical
-> events such as crashes or leask happen.
->=20
-> Re-read the region size after the core filters have run.
->=20
-> Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos f=
-ilter")
-> Cc: <stable@vger.kernel.org> # 6.6.x
-> Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-> Reviewee-by: SJ Park <sj@kernel.org>
-> Signed-off-by: SJ Park <sj@kernel.org>
+On Mon, 21 Sep 2026 04:00:12 +0200 Karl Mehltretter <kmehltretter@gmail.com> wrote:
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+> Commit b73198a47ffe ("mm/damon/core: handle uninitialized
+> damos_quota_goal->last_psi_total") scores a PSI quota goal without a
+> previous sample as achieved. This leaves the consist tuner's input
+> unchanged, but the temporal tuner sets its quota to zero for an achieved
+> goal. A running scheme with a nonzero temporal quota therefore loses a
+> charge window after a quota-goal commit.
+> 
+> Use the effective quota to preserve the temporal tuner's previous
+> goal-achievement state during an unmeasured round, as SJ suggested [1].
+> Score the goal as achieved when the effective quota is zero and as not
+> achieved otherwise. A new scheme's initially zero quota stays zero, and
+> the consist tuner's behavior is unchanged.
+> 
+> Move the PSI current-value calculation and last_psi_total update into a
+> helper that takes the current PSI total. This lets a unit test cover the
+> unmeasured and measured rounds without depending on system memory
+> pressure.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260921152443.8013=
-2-1-sj@kernel.org?part=3D1
+Looks good to me.
 
+> 
+> Fixes: b73198a47ffe ("mm/damon/core: handle uninitialized damos_quota_goal->last_psi_total")
+> Cc: <stable@vger.kernel.org> # 7.1.x
+
+The broken commit (b73198a47ffe) is not in the mainline but mm-unstable.  We
+should squash this to the broken commit before it is merged into the mainline.
+Or, maybe pointing the original broken fix (2dbb60f789cb) as 'Fixes:' is
+another option.
+
+Do you have a preferrence?
+
+> Suggested-by: SJ Park <sj@kernel.org>
+> Link: https://lore.kernel.org/damon/20260916001311.101024-1-sj@kernel.org/ [1]
+> Assisted-by: LLM
+> Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+
+Other than the above,
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
+
+Thanks,
+SJ
+
+[...]
