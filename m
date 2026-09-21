@@ -1,66 +1,66 @@
 Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2C71FC0
-	for <damon@lists.linux.dev>; Mon, 21 Sep 2026 00:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D66286D5E
+	for <damon@lists.linux.dev>; Mon, 21 Sep 2026 00:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789950654; cv=none; b=iH/YJqv1j4e5R4MhgNaboMBlJGIBKuHsrOOES0odsucYSVbY4diriVDl9ns5Q+PnDhauPFXrAg+Z3njvCKvTT8WMb6TeV2C8cFZI7CWD+387HH+GVOCFyOAYf1MTplNGc4LsBvo9Aar8MbqtCuOysL5ofz3SsxEKYQgvHDtUIJ4=
+	t=1789950657; cv=none; b=jCcSKY7khU3GWojMPgOvdX4d6oiIWbLJXSLqgffXxzoAJt0DKX4a92ESc7axomcWI+RMO8Up3zWSK5ogrHB+93nrYlGHPBoM52CSNx8EuSaFx/S9nAdUEboi7aM/8r7A5SExHTjOwDrDoRwbAOGIx//XvVhx3I1Kv9DRRS52XWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789950654; c=relaxed/simple;
-	bh=QQSAd2CYAnQxdw/DgFc6joStjKQYfZmSz3ZExj0RHZY=;
+	s=arc-20240116; t=1789950657; c=relaxed/simple;
+	bh=m3sULRI5UFp0Vrtz1PVlSriadvaJcu4eq0E21z1jQLs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jFtz8gW16FlCdSYzF2AwTEq4aQBJXE7QSi+9ty5N3Vcl3S8mVKpUfLFlORvMmH95vFCfj2aqXH/ieZdw2DS/kq1FP03xxE0dQ58yo2ylh9waj220iX0SHHcS31mqgimrjza0ucS5oyoKNOD2CoDGfnvHNeqxLoe6yhJudxtrvhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=suEDZ1rN; arc=none smtp.client-ip=74.125.225.76
+	 MIME-Version; b=jH11VY93iDVfq7cdXBpsPQoRgZgOzusPftk8LwSF4BGRtfKqb7b57DGz37on8BpVjI5T4r4Q35+/8hHX/vD1kZB/O8IIkDmR321vvWN5wqvv3/UD47bnTQgK6vBmImhpnXbCC0EEIGSyLS6XDJV/GFMHCL6pggAI6QMQCujPqYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O3WH6iTx; arc=none smtp.client-ip=74.125.225.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="suEDZ1rN"
-Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-485ac898fa4so2069737f8f.0
-        for <damon@lists.linux.dev>; Sun, 20 Sep 2026 17:30:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O3WH6iTx"
+Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-482f633cd80so1060585f8f.2
+        for <damon@lists.linux.dev>; Sun, 20 Sep 2026 17:30:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789950651; x=1790555451; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789950654; x=1790555454; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=8p2uHDJTRX2GGhCC6kgbhWuhGhbxvLj9khVv1KzE7G0=;
-        b=suEDZ1rNf7BcXeaNOiPEFVUxDAQUO00wtE/6D4fHd0dcZ+EyIrJYG9P4awVBP9Z6vF
-         r0tafIkj+x5M0vVLKj+FuM278Bs+Av4cXQ68Rv5XxxYWYZ6GCCgKDL0EeXryGsv16Sgw
-         xqN8xUdR4I3LRFHQxIcvgK9kRf6w93ZGxh5vVN739VTu8iLHpyjgYR1YZ4IaMaQJKq4x
-         /Hs/E9/YvCtrdi0Vz6Xby4IgWJsWVsBYBiVB6uMEM0EbYbH+D7FQvTUVzOF55uFc2QlN
-         ZRTeYEziLdPmtj+Mzwd1DN7qyqyEzYZyi3+W5ZEEEL5jUTCAvRkwO3Rs92CGa4H2gcFx
-         NRpQ==
+        bh=6dpGtqMcJeHhOEzV/bkAAFY9Zr0/SXcgfjA47TvgATw=;
+        b=O3WH6iTxVrSVQg9eeoCGhS925E/1fg/2YdfIPLHqPVjHlbYDHI6kOcI+WDer0hdWSs
+         Z7t7JYcgGUQev47sH/UjUbRdL23YGcplgRZmhce3E7E16NHJivqzBnHKcBsrWqtjeLwL
+         5NqW9CPtfXFi79Qv7M/OJDebYLUvgiuIWcRIxyoT+SCv5liegdm41+CpQZGJ+xGjbtfB
+         FLy5xobGureMzHrEv0jEQQ0whqHkW5n/yiEriz07BAxQyyOvqYOiqeZbtIemi/ig6Rwz
+         1NG3vuH+1/s4jwiI/G7Lj1nE619QuKy2DF4WMzZaaUYG3J3U43RnKyke5YKUiCafo2xc
+         XMsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789950651; x=1790555451;
+        d=1e100.net; s=20260707; t=1789950654; x=1790555454;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=8p2uHDJTRX2GGhCC6kgbhWuhGhbxvLj9khVv1KzE7G0=;
-        b=wtmpMDZ2g7yM/18RL5EwzojK5qVW1qyIYlXTKyflQq2R0UxpAycDzJDqzCBdA+v5BY
-         CfEoVY9JOSg6xn+HNZtNVBpQzSI1LqgiFyqFqFiuwDhaIlzTQswsmtDBF0wt7IGS2rqh
-         A6jgrGrP9INFOyAbgEk6kCaxBft4nGGMcz5cNMMBlaAoCHMP0hq/PHBkVB/eHxzD/Nku
-         /4o31UexvgrPbQAB1xRsNUTbyGtPibnVpJimX36FALaszBF5m7H00kLuBG4W4V+/kMCO
-         xLwcBET7vwtIO2XdtFOz0S056UZUhCC4LojknoPXRB0l28m8GrS/SrsW8uNV6yj94fIX
-         2tBA==
-X-Forwarded-Encrypted: i=1; AKwUvBy0fCNv3FHNMuJCPbohzqeB2n5l+SHKKhQIV4EGlYf2yWusKWBxkjxCWi+xYRGGBFU2uVrIPA==@lists.linux.dev
-X-Gm-Message-State: AFuF++lsbiVexuqgsaHQXNgtVaatP0e1VC2DxlDnFw5RWDfy6UuOl6td
-	o7ZkPKL9Ji4vJ5HwboTLLDOGpc6w3KwIan28jB7+cZBpAAwRkzDLjMsn
-X-Gm-Gg: AYBFou1ep0uGNNHeczI6mObntya8gMPSpuVEqrthcdOgfQmqHKPPDM6OR+nnNxJat7c
-	XKgXLi7bJMcnidl3TsajuRFscXP8TJYwXFSeDTc78aAmghQAoH+ehWRyBFLQ50BRWDJiNTRc34O
-	RcE9gs0oWyGxNmwYQsFzes3ReL7L8IwedQiV04WORXFt4i+UFyUcu/0v+b8EY4hzaaDdPPSCfHS
-	CVip/fyPDMJypTZXaNNUYh+BC4rqJkVUMTj925Lp/JENAeRmYgR+AT/WBdIeZk+OMkEMp/dS+qP
-	Nirc2bXaEAA4RlFnIvZldMcaAb1DPycKFaxMMbSbD91Ln3b33VSBoU58k2QHNtp/WUnA6wSrhn5
-	YwC9makAhHTTssCKd9tLtjvhn64rjX4WQBQhFpYYOK1AGsyipsnuvrshgYS4f9esgF0t11ETNcP
-	myCV+MQkdDzTjk4fgiAU9d9vTbRANi6KnWxQnEuTiX3xPOKqDVo2m4PQlCQEieDfAk8fsHLsD5m
-	xMq5FXKVd5BBz6KZIWacUVdtKftyPdr4PXIjHBdfbvo0RmfD0qeGQ1CDJfd68LHfcLgJpjKU5n6
-	sFXkP0q4qd7zW0y2hSGDRrBB/2yLILjNgYS6/nFtWaoLMnzedKcXfnhi0k50oGvweRj3Dfn2fg1
-	qyA==
-X-Received: by 2002:a05:6000:186a:b0:486:e949:532c with SMTP id ffacd0b85a97d-4871e367f08mr12791266f8f.43.1789950651450;
-        Sun, 20 Sep 2026 17:30:51 -0700 (PDT)
+        bh=6dpGtqMcJeHhOEzV/bkAAFY9Zr0/SXcgfjA47TvgATw=;
+        b=2doPQrxg0ItlPqYoPcHQm65T7YtF/tbRAlokwoBpee8OWiF/PgNMDThNYBR+mqlerf
+         TpaZS2nKRZ8fxNRzthjHlfcpxHgAguSdX5Oj9AeefuQ+k/3lNbVeAHu8bdhInos4dPyR
+         9yZgg84Dlu2K53bTcW3D21Ttkog6XSRi7WVHSA5a0P0jYFwyt0R0EWQmTuuRRBmxG+bn
+         jBBjdcQlYpEBFrEs7iedj1rib/HAdNHHsQCYl39AVamE/LorB5tDYr85/E/x3jbV9pKb
+         1g0dsfKxRH8nAN243dYCqY+R+w9KgyOgDL6Sy3oddY0sbSTqgUWeVZ2pPR/XliIwuIpT
+         rV0w==
+X-Forwarded-Encrypted: i=1; AKwUvBzQkWMnuv9QmIfvIwZzj/uqN5D+YIAqhbhZeyKgS9MVGmY58eV7TT7T2dsW5ZABPW7JaPCIcA==@lists.linux.dev
+X-Gm-Message-State: AFuF++mma13LB5gI019Br6SQwXHBqaqm96vZrsBZdDR0yYXst5Cucbq2
+	U9XxVKWCdA9bijxz0zOubbC9diHp0Lq8Hi2qZNJuXcJorN6ybJNRDrGy
+X-Gm-Gg: AYBFou2XSmDkYkhzNDlRD+FyBC76rvZSaG4fsr1PTuLxt6FwE7lKQGKyS8KThFaVP9O
+	GpA7ilM8tM83xAw++K6nGChVBSY6sdPT/Ydrv/TCAXeLTVJq1gg54nZadezrVfjfLz2/hTSckRK
+	KBOycM+AWNnxH71QmRUJ86yQgIzAx157Ed00OpU32zvd6h2Kmb3h8O9xaT56V9mM1P0fL//HkB3
+	Xc5Z9b5dgtqr7Se4CJsWo5+w+fyrLmABZdLa1av0m7y+GCoaSKMRQPoWq6m1fvairRGKozeEN3f
+	WvLCY70Ki/acIIdoLdFCbmM9cAcnpyUwuDoZzJ01wXGFxBiROqcY4nmyxnaqKAeQ9ciWG3fO2Tt
+	8zMrnW5eL+ffzDneiCvRB8RMtEW6n/h+dU2JWB1pxL0L1mVDKrg7dLZ/1CnndJa5PlShG1tb75z
+	WhIvY49AXWOl3CVb8nOiN3uDUTNQFaDZi8om3ksfJ3q85Z/a//HA6TO0VTf6WXXfHclYANhrAQt
+	nrGi/DCrVhQsHF8S9yfcjt1MuEoPrH2Nub9dcyGn5+z0qC1el4do36xEFkqvFUxx5wyYmJcadkV
+	HvlXM/Meg3bC9l/Qg4hOQgMR3/UAE5p7Uz669pMg3KCVxTLYxINXtB1x8Xmo7GxV8CrZj5/Qn7T
+	iGQ==
+X-Received: by 2002:a05:6000:610:b0:487:afe:c154 with SMTP id ffacd0b85a97d-4871e36bf11mr15086090f8f.40.1789950653979;
+        Sun, 20 Sep 2026 17:30:53 -0700 (PDT)
 Received: from localhost.localdomain (dynamic-2a02-3100-a012-6c01-e0c2-ccc1-7acc-3570.310.pool.telefonica.de. [2a02:3100:a012:6c01:e0c2:ccc1:7acc:3570])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48724583fffsm17515695f8f.23.2026.09.20.17.30.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48724583fffsm17515695f8f.23.2026.09.20.17.30.51
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 20 Sep 2026 17:30:51 -0700 (PDT)
+        Sun, 20 Sep 2026 17:30:52 -0700 (PDT)
 From: Karl Mehltretter <kmehltretter@gmail.com>
 To: SJ Park <sj@kernel.org>
 Cc: Karl Mehltretter <kmehltretter@gmail.com>,
@@ -68,9 +68,9 @@ Cc: Karl Mehltretter <kmehltretter@gmail.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] mm/damon/core: preserve the caller's quota in damon_new_scheme()
-Date: Mon, 21 Sep 2026 02:30:46 +0200
-Message-Id: <20260921003047.12041-2-kmehltretter@gmail.com>
+Subject: [PATCH 2/2] mm/damon/tests/core-kunit: test preservation of caller quota state
+Date: Mon, 21 Sep 2026 02:30:47 +0200
+Message-Id: <20260921003047.12041-3-kmehltretter@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20260921003047.12041-1-kmehltretter@gmail.com>
 References: <20260921003047.12041-1-kmehltretter@gmail.com>
@@ -82,78 +82,167 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-damon_new_scheme() calls damos_quota_init() on the caller's quota before
-copying it to the new scheme. This clears the caller's effective quota,
-feedback input and charging state as a side effect.
+Check that damon_new_scheme() initializes the new scheme's quota without
+changing the caller's quota. Cover all eight fields initialized by
+damos_quota_init().
 
-damon_commit_ctx() first copies the running context into a temporary
-context for validating the proposed parameters. When
-damon_commit_schemes() creates the temporary schemes, it passes the quota
-of each running scheme to damon_new_scheme(). The quota pointer therefore
-refers to the running scheme, and damos_quota_init() clears that scheme's
-state before it is copied to the temporary scheme. Even an update
-rejected with -EINVAL loses the running quota state.
+Also check that damon_commit_ctx() preserves those fields in the
+destination scheme for both accepted and rejected parameter updates.
+Use an invalid min_region_sz for the rejected update and confirm that
+returning -EINVAL leaves the running quota state unchanged.
 
-For a size quota, this discards the bytes already charged and allows the
-scheme to use a fresh quota before the reset interval has elapsed. For a
-goal-driven quota, the consist tuner loses its accumulated input and
-restarts from its minimum input. A time quota loses its throughput
-estimate and falls back to the initial estimate.
+Without the preceding fix, all eight fields are cleared in the
+constructor test and in both context update cases.
 
-The constructor side effect was introduced by commit 70e0c1d1bf94
-("mm/damon/core: factor out 'damos_quota' private fileds initialization").
-Commit 60bd24f272d0 ("mm/damon/sysfs: test commit input against realistic
-destination"), merged in v6.19, exposed it when
-validating sysfs updates against a copy of the running context. Commit
-b90408ef1163 ("mm/damon/core: safely validate src on damon_commit_ctx()")
-later moved that validation into the core API.
-
-Sashiko reported the same side effect [1] on the RFC of the core API
-change.
-
-Copy the quota to the new scheme first, then initialize that copy. Make
-damos_quota_init() return void, since its return value is no longer needed.
-
-Fixes: 70e0c1d1bf94 ("mm/damon/core: factor out 'damos_quota' private fileds initialization")
-Cc: <stable@vger.kernel.org> # 6.19.x
-Link: https://lore.kernel.org/damon/20260702212143.0CB6D1F00A3D@smtp.kernel.org/ [1]
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 ---
- mm/damon/core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Please feel free to take the fix on its own. I can also fold the
+context-update checks into damon_test_commit_ctx() if that would fit
+better.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 2258b72da7a78..e655863d33d9c 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -734,7 +734,7 @@ static bool damos_quota_goals_empty(struct damos_quota *q)
+ mm/damon/tests/core-kunit.h | 107 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 107 insertions(+)
+
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 5ff0436c58441..811fd668e2482 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -812,6 +812,48 @@ static void damos_test_new_filter(struct kunit *test)
+ 	damos_destroy_filter(filter);
  }
  
- /* initialize fields of @quota that normally API users wouldn't set */
--static struct damos_quota *damos_quota_init(struct damos_quota *quota)
-+static void damos_quota_init(struct damos_quota *quota)
++static void damos_test_new_scheme_keeps_src_quota(struct kunit *test)
++{
++	struct damos_access_pattern pattern = {};
++	struct damon_target target = {};
++	struct damos_quota quota = {
++		.sz = SZ_64K,
++		.esz = 123,
++		.esz_bp = 456,
++		.total_charged_sz = 789,
++		.total_charged_ns = 1011,
++		.charged_sz = 12,
++		.charged_from = 13,
++		.charge_target_from = &target,
++		.charge_addr_from = 14,
++	};
++	struct damos_watermarks wmarks = {};
++	struct damos *s;
++
++	s = damon_new_scheme(&pattern, DAMOS_STAT, 0, &quota, &wmarks,
++			NUMA_NO_NODE);
++	if (!s)
++		kunit_skip(test, "scheme alloc fail");
++	KUNIT_EXPECT_EQ(test, s->quota.sz, (unsigned long)SZ_64K);
++	KUNIT_EXPECT_EQ(test, s->quota.esz, 0ul);
++	KUNIT_EXPECT_EQ(test, s->quota.esz_bp, 0ul);
++	KUNIT_EXPECT_EQ(test, s->quota.total_charged_sz, 0ul);
++	KUNIT_EXPECT_EQ(test, s->quota.total_charged_ns, 0ul);
++	KUNIT_EXPECT_EQ(test, s->quota.charged_sz, 0ul);
++	KUNIT_EXPECT_EQ(test, s->quota.charged_from, 0ul);
++	KUNIT_EXPECT_PTR_EQ(test, s->quota.charge_target_from, NULL);
++	KUNIT_EXPECT_EQ(test, s->quota.charge_addr_from, 0ul);
++	KUNIT_EXPECT_EQ(test, quota.esz, 123ul);
++	KUNIT_EXPECT_EQ(test, quota.esz_bp, 456ul);
++	KUNIT_EXPECT_EQ(test, quota.total_charged_sz, 789ul);
++	KUNIT_EXPECT_EQ(test, quota.total_charged_ns, 1011ul);
++	KUNIT_EXPECT_EQ(test, quota.charged_sz, 12ul);
++	KUNIT_EXPECT_EQ(test, quota.charged_from, 13ul);
++	KUNIT_EXPECT_PTR_EQ(test, quota.charge_target_from, &target);
++	KUNIT_EXPECT_EQ(test, quota.charge_addr_from, 14ul);
++	damon_destroy_scheme(s);
++}
++
+ static void damos_test_commit_quota_goal_for(struct kunit *test,
+ 		struct damos_quota_goal *dst,
+ 		struct damos_quota_goal *src)
+@@ -1572,6 +1614,69 @@ static void damon_test_commit_ctx(struct kunit *test)
+ 	damon_destroy_ctx(dst);
+ }
+ 
++static void damon_test_commit_ctx_keeps_quota_for(struct kunit *test,
++		unsigned long min_region_sz, int expected_err)
++{
++	struct damos_access_pattern pattern = {};
++	struct damos_quota quota = {.sz = SZ_64K};
++	struct damos_watermarks wmarks = {};
++	struct damon_ctx *src, *dst;
++	struct damon_target *target;
++	struct damos *s;
++
++	dst = damon_new_ctx();
++	if (!dst)
++		kunit_skip(test, "dst alloc fail");
++	target = damon_new_target();
++	if (!target) {
++		damon_destroy_ctx(dst);
++		kunit_skip(test, "target alloc fail");
++	}
++	damon_add_target(dst, target);
++	s = damon_new_scheme(&pattern, DAMOS_STAT, 0, &quota, &wmarks,
++			NUMA_NO_NODE);
++	if (!s) {
++		damon_destroy_ctx(dst);
++		kunit_skip(test, "scheme alloc fail");
++	}
++	damon_add_scheme(dst, s);
++
++	/* Copy the parameters before populating dst's runtime quota state. */
++	src = damon_new_test_ctx(dst);
++	if (!src) {
++		damon_destroy_ctx(dst);
++		kunit_skip(test, "src alloc fail");
++	}
++	src->min_region_sz = min_region_sz;
++	s->quota.esz = 123;
++	s->quota.esz_bp = 456;
++	s->quota.total_charged_sz = 789;
++	s->quota.total_charged_ns = 1011;
++	s->quota.charged_sz = 12;
++	s->quota.charged_from = 13;
++	s->quota.charge_target_from = target;
++	s->quota.charge_addr_from = 14;
++
++	KUNIT_EXPECT_EQ(test, damon_commit_ctx(dst, src), expected_err);
++	KUNIT_EXPECT_EQ(test, s->quota.esz, 123ul);
++	KUNIT_EXPECT_EQ(test, s->quota.esz_bp, 456ul);
++	KUNIT_EXPECT_EQ(test, s->quota.total_charged_sz, 789ul);
++	KUNIT_EXPECT_EQ(test, s->quota.total_charged_ns, 1011ul);
++	KUNIT_EXPECT_EQ(test, s->quota.charged_sz, 12ul);
++	KUNIT_EXPECT_EQ(test, s->quota.charged_from, 13ul);
++	KUNIT_EXPECT_PTR_EQ(test, s->quota.charge_target_from, target);
++	KUNIT_EXPECT_EQ(test, s->quota.charge_addr_from, 14ul);
++	damon_destroy_ctx(src);
++	damon_destroy_ctx(dst);
++}
++
++static void damon_test_commit_ctx_keeps_quota(struct kunit *test)
++{
++	/* Only power of two min_region_sz is allowed. */
++	damon_test_commit_ctx_keeps_quota_for(test, 4096, 0);
++	damon_test_commit_ctx_keeps_quota_for(test, 4095, -EINVAL);
++}
++
+ static void damon_test_valid_probe_params(struct kunit *test)
  {
- 	quota->esz = 0;
- 	quota->total_charged_sz = 0;
-@@ -744,7 +744,6 @@ static struct damos_quota *damos_quota_init(struct damos_quota *quota)
- 	quota->charge_target_from = NULL;
- 	quota->charge_addr_from = 0;
- 	quota->esz_bp = 0;
--	return quota;
- }
- 
- struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
-@@ -776,7 +775,8 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
- 	scheme->last_applied = NULL;
- 	INIT_LIST_HEAD(&scheme->list);
- 
--	scheme->quota = *(damos_quota_init(quota));
-+	scheme->quota = *quota;
-+	damos_quota_init(&scheme->quota);
- 	/* quota.goals should be separately set by caller */
- 	INIT_LIST_HEAD(&scheme->quota.goals);
- 
+ 	struct damon_ctx *ctx;
+@@ -1946,6 +2051,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_mvsum),
+ 	KUNIT_CASE(damon_test_nr_accesses_mvsum),
+ 	KUNIT_CASE(damos_test_new_filter),
++	KUNIT_CASE(damos_test_new_scheme_keeps_src_quota),
+ 	KUNIT_CASE(damos_test_commit_quota_goal),
+ 	KUNIT_CASE(damos_test_commit_quota_goals),
+ 	KUNIT_CASE(damos_test_commit_quota),
+@@ -1957,6 +2063,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_commit_filter),
+ 	KUNIT_CASE(damon_test_commit_probes),
+ 	KUNIT_CASE(damon_test_commit_ctx),
++	KUNIT_CASE(damon_test_commit_ctx_keeps_quota),
+ 	KUNIT_CASE(damon_test_valid_probe_params),
+ 	KUNIT_CASE(damos_test_filter_out),
+ 	KUNIT_CASE(damon_test_feed_loop_next_input),
 -- 
 2.53.0
 
