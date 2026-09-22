@@ -1,60 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E21C35A395
-	for <damon@lists.linux.dev>; Tue, 22 Sep 2026 03:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68C14CC261;
+	Tue, 22 Sep 2026 06:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790048336; cv=none; b=ZCC8Ys8LKbDpuV22aat4RklRMHVtx9UetacULFEa4FbvY46fdBCQiUTNLXw9gQbgFwNUKlRU+c1eClI1vNg1n2KatOeCbs/avTu6Bp3W1FpeaOgVXvL6xMJ4Rap7qNCJDP42e5DGEa/GzkVz5ZDh3nAO00LMmWDf0RzJcgDeFWw=
+	t=1790058540; cv=none; b=qlZX87tAp5uMOP4W7aOOJbH+wWT6LXcmW13fxryXp0lRZgyjwSPlCrHHTlErYKMaAiCZscqdjeX9NmdMg88IP9WL3l1eAzkhVVqNdBdpRgXgTADVummtH12598YG+PSxuJ+olY6Jwg3UzFRuJfd8hvVxLj0ta/FpZ+D9FPscwvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790048336; c=relaxed/simple;
-	bh=5zIxPy7Dif6d9+U0QDP9H12X2Cypw5w/DGK0+Z0XIW4=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=eC6gsrcdEUXEsnkWXs+QxrJai/dIBpoq8THOKFcmtsRwm3/Qvr/Cvv/N15SqS9dmb8yVLB/wDScSKBKo5F+pYZnqtcIdRBKkaFm0HfThicZX76APa//3CrSSpXOBqZEJXquFetMf11pFzIKaYzpVfYYIzGXhUc29RWca9TyOeh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPYwDxRA; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790058540; c=relaxed/simple;
+	bh=IcYxJEgZuJM9fusDTu8OVMZeI7JRVZNX0SbSkTZbm14=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Wsn+qSr3nf0DXZgPOfqz3ozMJ5hwj0RvBWnljHP8EHkWGjO0xNTbWR/CXwfS2/g7mlO24Vh87kXgu3ljQis1u8AeeX5D3WFZjNPjGYDOKWTn1P6W6WLzQ6jksrLdEbtrH8zzPxg3w7M9K54OHq8fL/1WdF7rOgivF0mmAG7at5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NjggewUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPYwDxRA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22E01F000FF;
-	Tue, 22 Sep 2026 03:38:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NjggewUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0C71F000FF;
+	Tue, 22 Sep 2026 06:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790048335;
-	bh=5zIxPy7Dif6d9+U0QDP9H12X2Cypw5w/DGK0+Z0XIW4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=cPYwDxRAGuUpF0/ICm738+06sygGUBreueOejhzITsByzgCn8uQsWUJ/TC5w4ukqs
-	 tQEAefMhdwC5J1Ite1OTlK2g9lGBjLCMAOIzuZ07NQwhVwVSDfK+iS7SsDpRRbyAD5
-	 kz0qD6/s78/84uZBIIPhJZmhWMJDL1SXV2S+S/gkNtq1eG5vEvs2C1ahPqoWAHmpdR
-	 MGtDiYV9QU83o/ULS1291Xupyiebqcq+2jJ0gifXIAM+cFaNYJcx+b3jPayZjzLmti
-	 LxLkynSyfgfW46heUxFtiSlUkux6sJI0DwOnV7k2xmMkTH64HpKMi57bipwMiShEee
-	 Gn/HcD2h30qHw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] mm/damon: fix typos in comments
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Zhijian Han" <hanzhijian1991@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260922033618.2862687-1-hanzhijian1991@gmail.com>
-References: <20260922033618.2862687-1-hanzhijian1991@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 22 Sep 2026 03:38:54 +0000
-Message-Id: <20260922033854.C22E01F000FF@smtp.kernel.org>
+	s=k20260515; t=1790058532;
+	bh=KjA0mTADx3qPlEwSKVVtyou7JKb+m4+dYOfU+1IXyeQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=NjggewUa2OW/a72buV+ty3YEX1MFFXvoolgOwh9ZjB4lLNQ6G4BvvqISxjw6HvDsD
+	 tDRRE06ta1+TL+CPaAxBAO8ftW2LhJgfgevibZnFrVZGWtjY4O8lOpSNDtMPtREPb+
+	 tP86oUglV47fuyh6r1jOjCjygHP9Xc0HgMguKMmGs6yInel/r5uvZjbHTOfAjG3TBr
+	 yHcS1TsYuYWW6qyfOmUHnz+kgtsq3L8jlXwzHwB2/6m8W3MrNUcpRHyRf0hjHerVeW
+	 atTXG0I0yxMLlDPd4cT3NNHGxx1ZeSm+D6GSUek+kossuNakz8X403hEIf6aDpBuxH
+	 NsBnE5cDkauag==
+From: SJ Park <sj@kernel.org>
+To: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] mm/damon: preserve temporal quota state for unmeasured PSI goals
+Date: Mon, 21 Sep 2026 23:28:47 -0700
+Message-ID: <20260922062847.42316-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <arF2epnyKAdkwSG-@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> Fix spelling errors found by codespell in mm/damon/core.c:
->=20
-> - "widnow" -> "window"
-> - "makrs" -> "marks"
->=20
-> No functional changes.
->=20
-> Signed-off-by: Zhijian Han <hanzhijian1991@gmail.com>
+On Mon, 21 Sep 2026 20:39:27 +0200 Karl Mehltretter <kmehltretter@gmail.com> wrote:
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+> On Mon, Sep 21, 2026 at 09:47:48AM +0100, SJ Park wrote:
+> > The patch 1 has wrong Fixes: tag, as I replied to it with two options to path
+> > forward.  Speculatively assuming your preferrence is option 2 (adding this
+> > series with fixed 'Fixes:' tag), I applied this series to damon/next [1] tree
+> > with the suggested Fixes: tag modification.  Let me know if you want the
+> > options 1 (squash it into the incomplete fix [2] before it is merged into the
+> > mainline).
+> > 
+> > Unless you want option 1, and if this series is not added to mm.git in short
+> > term (~1 week?) with option 1 update, I will ask mm.git maintainer (Andrew
+> > Morton) to pick this.  So, no action from your side is needed for now unless
+> > you want option 1.  If it seems I forgot doing that or you cannot wait for my
+> > action, please feel free to ping me or Andrew.
+> > 
+> 
+> Hello SJ,
+> 
+> Thanks for reviewing both patches!
+> 
+> I used b73198a47ffe in Fixes because that commit introduced the problem
+> with the temporal tuner.
+> 
+> I thought a Fixes tag could also point to a commit that is still in a
+> maintainer tree. The tip handbook describes that for tip [1], though mm
+> may handle it differently.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260922033618.2862=
-687-1-hanzhijian1991@gmail.com?part=3D1
+You could do use a commit hash that is still in a maintainer tree.  I also
+sometimes do so.  But in the case it is better to explicitly mention it is for
+squashing on mm-unstable.  And if it was the intention, in this patch series,
+you were better to split the kunit patch.
 
+> 
+> The hash can still change in mm-unstable, so the tag may need updating.
+> 
+> I also found this reply from Andrew [2]. He says he tracks these fixes
+> by filename and folds them into the original patch before moving it to
+> non-rebasing git.
+> 
+> Maybe squashing is indeed simpler here, also for backports.
+> 
+> So either option is fine with me. I'll leave that to you and Andrew.
+
+Thank you for clarifying, Karl.  I was initially tempted to keep what I did
+(option 2), but maybe that's only because I am too lazy.  Let's do squash.
+Unless others raise other opinion, I will repost patch 1 with updated commit
+message tomorrow.
+
+I will keep patch 2 in damon/next and repost for mm.git merge as I explained in
+the earlier reply.
+
+
+Thanks,
+SJ
+
+[...]
