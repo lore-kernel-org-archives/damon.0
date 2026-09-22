@@ -1,34 +1,35 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFA8F4DA9A0
-	for <damon@lists.linux.dev>; Tue, 22 Sep 2026 17:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 835575650E2
+	for <damon@lists.linux.dev>; Tue, 22 Sep 2026 17:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790097263; cv=none; b=ujuigrnlpduMIcIiWXLTs/AoniXN0P56HC4ml9ZJg3FocFF9wAG7iOz/v52v5jRYmw3Z4ZKFrUPieN+dGi76sIWris9d5fj0PakfR4j6N2pwcVtygA6omZxWgRjcSLaurO3j9MDRlUED2aG+tf85VlvPnwGePjwtQfMPm8es5+4=
+	t=1790097277; cv=none; b=SK1a1gGHIj+nNzIzUw0O0l4EXzTUhSngFtCAcwR1XwQu+ycK3K1D1xr9KEK2rcNyV1fjDD0O8OYgKJkKl18SL8sH7/Nw065gf5Sesvb6qid9cOKYbvgKW2XFJ+0N6IVnAZspuvMKJHCbPZyNrtSvIzHndZ38447el4+mNWf/pfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790097263; c=relaxed/simple;
-	bh=m1/Zj1kl1r4NT70p2V5vARYiyafZNwoUEY016kfXI6M=;
+	s=arc-20240116; t=1790097277; c=relaxed/simple;
+	bh=SNK4rrwFvjnxcdknL2hsc20bUzMvwr6CIipWYMszSzs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=my8eZNPvd+Mm86zQBnecvdtYrR5N4w7vbGVdPFARhzRB2TgVUuD/9YnDLHBEhnoScaBVXNj/3P0Iu19/uqtjc4eg4h10e7gbqS5QpBONJY8aCWxD6I5Xr4XlO/E4mWwGBbBMvg+7WW5oxE4xJX7F54lTw5caHm4OZYo1LJbSNtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=uyMUOZj6; arc=none smtp.client-ip=217.140.110.172
+	 In-Reply-To:To:Cc; b=ImYtIrZwiZuuetaNliTu9M1aEy0d2WhGHBmhExUoh7Tg4RUbiSpSXGFOujtFCepVoUdyqE6CTSvWZqb8yEVILrHPwTY6bytLHMIcS0dVLfNHy4gFSPkr9Ha1eyLwG5hiYFKUWfAwuhZyXZtM0nnLwsw3Uf9c1NoruJpStkAcfQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=iARAx8Qy; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="uyMUOZj6"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="iARAx8Qy"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7B61A1576;
-	Tue, 22 Sep 2026 10:14:17 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 78D071595;
+	Tue, 22 Sep 2026 10:14:31 -0700 (PDT)
 Received: from [127.0.1.1] (e142334-100.cambridge.arm.com [10.2.198.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D30003F86C;
-	Tue, 22 Sep 2026 10:14:07 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 50FAF3FA32;
+	Tue, 22 Sep 2026 10:14:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1790097261; bh=m1/Zj1kl1r4NT70p2V5vARYiyafZNwoUEY016kfXI6M=;
+	t=1790097275; bh=SNK4rrwFvjnxcdknL2hsc20bUzMvwr6CIipWYMszSzs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=uyMUOZj6R5njDUnUE0WViDRG203+0ImQf8L3e4R3tvNeiQX8hthSWT3MmAozquZCC
-	 MtaevHRyysWE/QOR2DnQlqNWb2SZ0tKdXvT/wq71vEr+9CY6J3c/VDmp9lE+PtmgLq
-	 I6LApZTWohZd2n0AKddZqBwhz/kVnU82kKMdtcjU=
+	b=iARAx8Qyk1413VBr4PC7dGwIhlrToaTnagZ6dPlvezmqEddDjaVkHLgBTgS5wWhxt
+	 NG3MjS+xmLq1vZyn83oVsYzSt8u9iMTTXB3k+0eeRFDj4F3gou8popZy7lpyXeDKr4
+	 SHUdvtaZmDDnMdNPXUZnhs8extIVv21cyFM4/8oM=
 From: Muhammad Usama Anjum <usama.anjum@arm.com>
-Date: Tue, 22 Sep 2026 18:12:34 +0100
-Subject: [PATCH v3 6/9] mm: add hw_pte_val for HW PTE storage
+Date: Tue, 22 Sep 2026 18:12:35 +0100
+Subject: [PATCH v3 7/9] mm/kasan: use hw_pte_t for the early shadow PTE
+ table
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -37,7 +38,7 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260922-pte0-v3-6-5670b8cb9059@arm.com>
+Message-Id: <20260922-pte0-v3-7-5670b8cb9059@arm.com>
 References: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
 In-Reply-To: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
 To: Andrew Morton <akpm@linux-foundation.org>, 
@@ -108,43 +109,69 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  Muhammad Usama Anjum <usama.anjum@arm.com>
 X-Mailer: b4 0.16.0
 
-Atomic PTE updates need an lvalue for the bits stored in an HW PTE.
-pte_val() only accepts a SW PTE value, so it cannot operate directly on
-a distinct hw_pte_t.
+kasan_early_shadow_pte is a complete PTE table rather than a software
+PTE value. Declare and define its elements as hw_pte_t so the object uses
+the PTE table storage type.
 
-Add hw_pte_val() to expose the underlying pte_val() lvalue. Access the
-wrapper's __pte member when hw_pte_t is distinct, and use pte_val()
-directly when it remains an alias of pte_t.
+Read the first element through ptep_get(), which returns the software PTE
+value expected by note_page_pte(), instead of accessing hw_pte_t storage
+directly. This also uses the accessor selected by the architecture.
+
+No architecture selects ARCH_HAS_HW_PTE_T at this point, so the storage
+representation remains unchanged.
 
 Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 ---
-Changes in v3:
-- Moved from the arm64 series to generic series as it makes more sense
-  to add this in generic with all other changes. Usually we only add
-  code where its get used. But this whole series wouldn't get used
-  until an arch started using HW PTEs.
----
- include/linux/pgtable_types.h | 4 ++++
- 1 file changed, 4 insertions(+)
+Changes since v1:
+- Use software PTE value terminology.
 
-diff --git a/include/linux/pgtable_types.h b/include/linux/pgtable_types.h
-index d6c5a7548550b..ee4eace5c3e1c 100644
---- a/include/linux/pgtable_types.h
-+++ b/include/linux/pgtable_types.h
-@@ -9,9 +9,13 @@
- #ifdef CONFIG_ARCH_HAS_HW_PTE_T
- typedef struct __hw_pte_t { pte_t __pte; } hw_pte_t;
- #define __pte_from_hw(pte)	((pte).__pte)
-+
-+#define hw_pte_val(x)  pte_val((x).__pte)
- #else
- #define hw_pte_t pte_t
- #define __pte_from_hw(pte)	(pte)
-+
-+#define hw_pte_val(x)  pte_val(x)
+Changes since RFC v1:
+- Update the description for the architecture opt-in model.
+---
+ include/linux/kasan.h | 2 +-
+ mm/kasan/init.c       | 2 +-
+ mm/ptdump.c           | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/kasan.h b/include/linux/kasan.h
+index bf233bde68c7e..ff41949c0ac08 100644
+--- a/include/linux/kasan.h
++++ b/include/linux/kasan.h
+@@ -51,7 +51,7 @@ typedef unsigned int __bitwise kasan_vmalloc_flags_t;
  #endif
  
- #endif /* !__ASSEMBLY__ */
+ extern unsigned char kasan_early_shadow_page[PAGE_SIZE];
+-extern pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS];
++extern hw_pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS];
+ extern pmd_t kasan_early_shadow_pmd[MAX_PTRS_PER_PMD];
+ extern pud_t kasan_early_shadow_pud[MAX_PTRS_PER_PUD];
+ extern p4d_t kasan_early_shadow_p4d[MAX_PTRS_PER_P4D];
+diff --git a/mm/kasan/init.c b/mm/kasan/init.c
+index 30c5266eaf37e..9bbc2a41d23f0 100644
+--- a/mm/kasan/init.c
++++ b/mm/kasan/init.c
+@@ -64,7 +64,7 @@ static inline bool kasan_pmd_table(pud_t pud)
+ 	return false;
+ }
+ #endif
+-pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS]
++hw_pte_t kasan_early_shadow_pte[MAX_PTRS_PER_PTE + PTE_HWTABLE_PTRS]
+ 	__bss_pgtbl;
+ 
+ static inline bool kasan_pte_table(pmd_t pmd)
+diff --git a/mm/ptdump.c b/mm/ptdump.c
+index 376880071ca2a..8f19f20be3c44 100644
+--- a/mm/ptdump.c
++++ b/mm/ptdump.c
+@@ -19,7 +19,7 @@ static inline int note_kasan_page_table(struct mm_walk *walk,
+ {
+ 	struct ptdump_state *st = walk->private;
+ 
+-	st->note_page_pte(st, addr, kasan_early_shadow_pte[0]);
++	st->note_page_pte(st, addr, ptep_get(kasan_early_shadow_pte));
+ 
+ 	walk->action = ACTION_CONTINUE;
+ 
 
 -- 
 2.47.3
