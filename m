@@ -1,34 +1,34 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23204572698
-	for <damon@lists.linux.dev>; Tue, 22 Sep 2026 17:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EE76572696
+	for <damon@lists.linux.dev>; Tue, 22 Sep 2026 17:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790097236; cv=none; b=qA3A0X2hIVI6X/Aen79SPOFIV7QEwLMM6Ny6xQpRUgAMPxUkMMW6CXUYtFfLzcgA+MlflEDZn6ArpuIKfvo+wNMkUwx4Iu8ZzHB3FJel4VIJ0pPMsVCHOQmhqODEnK9zRWL2lr0/s9KrSEwP0SZ1p47pdjVzqbBoA/Sex1CV5d0=
+	t=1790097250; cv=none; b=jRb9t7mxPbmHTsWPK1LbFodWJC6CDZjGUoSazDE/3TMLBQ2/O+6J1G/k/dslBTaOxS9LzJaZtetwXwd/6KFwfszegqnsIMFC0PwHRCnCXXiITOcLkhYfK6IDpQtEa7xJdi+V9koTIN27at5efR1bLTJbp+7TLPz7jMw/X7BVO1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790097236; c=relaxed/simple;
-	bh=VSAJHWUAe7NS76HVRAMjNd0GQzrtewrgnfoeWDUMlnY=;
+	s=arc-20240116; t=1790097250; c=relaxed/simple;
+	bh=ycUddICsfxEifMnQljPG5LJ+QAfshpGj42pAhJYJWAs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Eo2lcE/n15b/rak5xaZWVxmX/OCPCwA3TZKAv559MeZW/0A1cpLh/tytNfiAJErAdM15VdnugZozcksEKR8ubEIgIye6t1Zot3RTBdfyfaZcyInxpcsl76OZYLss+EjUFh7FDyN+aqViqHHa75uHx6uceRujwWlrRugs7gsVtmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=FVt56hju; arc=none smtp.client-ip=217.140.110.172
+	 In-Reply-To:To:Cc; b=FOmWz7Ffs0PIbvOxzQsj6sv5iIqRGMMKjCeKTZ4/QaRc9/OizzH5xkF/rgbWwSBA1e3fck9jthf+wT33I6NdYlZNeDxX/V/NThNucuHvYIYSVhMy//B0TwGyUm4f8M3ELw6ClcTJGAky712imhQsPr+xt5iJ/D3sdyufzHMQnNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=SBP5DIfa; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="FVt56hju"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="SBP5DIfa"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 094B31595;
-	Tue, 22 Sep 2026 10:13:51 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0E2F91576;
+	Tue, 22 Sep 2026 10:14:04 -0700 (PDT)
 Received: from [127.0.1.1] (e142334-100.cambridge.arm.com [10.2.198.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C46153F86C;
-	Tue, 22 Sep 2026 10:13:41 -0700 (PDT)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CF53A3FA32;
+	Tue, 22 Sep 2026 10:13:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1790097234; bh=VSAJHWUAe7NS76HVRAMjNd0GQzrtewrgnfoeWDUMlnY=;
+	t=1790097247; bh=ycUddICsfxEifMnQljPG5LJ+QAfshpGj42pAhJYJWAs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=FVt56hjuBPaMyg/BnFKqE4fzU1cEu6NBRc7MPH68RUYG/CCz6y6YC9RG6hPWhN96x
-	 x9hwL9qrWyGY3gHSBta6j4l7PueQkx2vM6HZNIWXJTPqHrodyx2R2jU4yzc9rQNtJ/
-	 1suYvsUR4FuoJM/twYHmYXuJo99AkA0nApGsDh9M=
+	b=SBP5DIfa3nHM7wg1pyznXr/QOoBKyjohtWTUL8njVjJ2HZJ7Dx+/2lyN5lNkmMRzt
+	 MkKJj6bY+fLt8c5gDKfHKPh91F5Et1R0ROJrwOWzqHfSea49QFldK5bBAeUeM9p2Ca
+	 sZJWLtBML/JGGl2eO59i8Nq/hvCyVDsIRYBYPmlc=
 From: Muhammad Usama Anjum <usama.anjum@arm.com>
-Date: Tue, 22 Sep 2026 18:12:32 +0100
-Subject: [PATCH v3 4/9] mm: convert PTE table entries in ptep_get()
+Date: Tue, 22 Sep 2026 18:12:33 +0100
+Subject: [PATCH v3 5/9] mm: convert PTE table entry to pte
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -37,7 +37,7 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260922-pte0-v3-4-5670b8cb9059@arm.com>
+Message-Id: <20260922-pte0-v3-5-5670b8cb9059@arm.com>
 References: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
 In-Reply-To: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
 To: Andrew Morton <akpm@linux-foundation.org>, 
@@ -108,52 +108,33 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  Muhammad Usama Anjum <usama.anjum@arm.com>
 X-Mailer: b4 0.16.0
 
-ptep_get() now accepts a pointer to hw_pte_t storage but must continue to
-return a software PTE value. Add __pte_from_hw for both generic hw_pte_t
-definitions. Read the hw_pte_t table element atomically before converting
-it to pte_t.
+The non-MMU stub receives hw_pte_t but returns a software PTE value. It
+has no attached PTE that requires ptep_get(), so convert only the stored
+entry through __pte_from_hw().
 
 Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 ---
 Changes since v1:
+- Explain why the NOMMU stub does not use ptep_get().
 - Use software PTE value terminology.
-
-Changes since RFC v1:
-- Define __pte_from_hw for the opted-in generic wrapper.
-- Apply READ_ONCE() to hw_pte_t before converting it to pte_t.
 ---
- include/linux/pgtable.h       | 2 +-
- include/linux/pgtable_types.h | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ include/linux/hugetlb.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/pgtable.h b/include/linux/pgtable.h
-index 19098e302b75a..41337da0d65aa 100644
---- a/include/linux/pgtable.h
-+++ b/include/linux/pgtable.h
-@@ -493,7 +493,7 @@ static inline int pudp_set_access_flags(struct vm_area_struct *vma,
- #ifndef ptep_get
- static inline pte_t ptep_get(hw_pte_t *ptep)
- {
--	return READ_ONCE(*ptep);
-+	return __pte_from_hw(READ_ONCE(*ptep));
- }
- #endif
- 
-diff --git a/include/linux/pgtable_types.h b/include/linux/pgtable_types.h
-index 07da05d375c2c..d6c5a7548550b 100644
---- a/include/linux/pgtable_types.h
-+++ b/include/linux/pgtable_types.h
-@@ -8,8 +8,10 @@
- 
- #ifdef CONFIG_ARCH_HAS_HW_PTE_T
- typedef struct __hw_pte_t { pte_t __pte; } hw_pte_t;
-+#define __pte_from_hw(pte)	((pte).__pte)
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index 0d2101facaa50..637fc863d3687 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -1278,7 +1278,8 @@ static inline pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
+ #ifdef CONFIG_MMU
+ 	return ptep_get(ptep);
  #else
- #define hw_pte_t pte_t
-+#define __pte_from_hw(pte)	(pte)
+-	return *ptep;
++	/* No attached PTE that requires ptep_get(). */
++	return __pte_from_hw(*ptep);
  #endif
+ }
  
- #endif /* !__ASSEMBLY__ */
 
 -- 
 2.47.3
