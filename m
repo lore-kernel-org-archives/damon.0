@@ -1,92 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCED3AB460;
-	Wed, 23 Sep 2026 05:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269BC440A3E
+	for <damon@lists.linux.dev>; Wed, 23 Sep 2026 06:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790143184; cv=none; b=RJHbOkLiBPsel8s2vjEVHuNslGDjv7KLqg6hMYpMnLV23A7mjisvhxuQ99sL4r4nBA4vGreW1CvDOcPBExwQU8lHnPj1O5wMofabRVU9Qs0LoMm+Ve3htoGd+IRfV3PO0ww6XjU5BYPuVfrT0lel0d/RptUkEfJYX7b/E0wcndY=
+	t=1790143435; cv=none; b=KSgO4QARVjrljZj2Tbz1Yd0D36xILD1q8U1CK+p/JrbkNTYKL5dv/BGq+FCXjJU3J+N57rS+yTUeXUfvc0XMZvzPJ5cY5O3mFOTGPwau5u7cxinCz8EuJVlCeKW0WvsbUPV0Z8rtxFQMjr0E644CCcC5S+tTWzEBA5QvkFaTbBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790143184; c=relaxed/simple;
-	bh=2eMbm2UpcoovuzB4FRbd8fUnal4vcF7lk8+nHVbuGcs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H45ih8ckqhI/aN0T3KA8+gN+qUM4qBPNubRQq0HsURQKJ9ETQ4icEfx6IxSApSdi5znAB1LDWVQH7BgVX+APv4LFJEu9nr/XjTN4qJQxEuR1TyDXMeAvNR/Kz4JhVvifYrlDy1aineQ6UaaUHlm1p1xoMQUmk8RQumDmPgyTqh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h8VgSOXe; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790143435; c=relaxed/simple;
+	bh=32aTO6CCORGVEE7sjqD+ZhAwTSXEFXMw6mKDOPtuLp4=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=CmaajT8bMQnJOyEkSVJnOTmakLd35x1Kbi8LTVk27y1Kw3QSwaUDCxIoJ1nxL1IBF7tiEehontW1T2yvlRoHNF47YyEan9JAejR59IZXXHnpK5zgUOv4/drzuu/MTV/+NsYYQzFcbH7LKRGIlupx/Wc/+Y7eZsBEPVpQYjhlQWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLXWbssS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h8VgSOXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1E21F000FF;
-	Wed, 23 Sep 2026 05:59:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLXWbssS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6855C1F00893;
+	Wed, 23 Sep 2026 06:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790143183;
-	bh=T0q+UNTS7TEJdRtDKrLfE/EvgmECHCAwTbTZ2Ttusqc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h8VgSOXe4RBqqrmytkAtjUaYqpFZB31iG18EYsKuzTkeYHceZmdu1gDbB9HrOqDlJ
-	 uFvavOa8tcq5OzbHDrc5SnPNB5Q/MWDsCtjjDliUFCs6f9dtytrKzPMHJXp/jj9Vaw
-	 G/Y9OjeXbYQ6DKa82i2CCcwLx+79TmTO1D+d1bdOn605DffZKS/Y1jvfqkJm2D0PiN
-	 i0XHJXfBg5bR8fDO6CnT0FCgMVNTeieOiZnYpQBS9FFylEFTIZMtO/Wvgq6GnQMxWi
-	 PSDa0eKT3ycmB/EGiQ9Mwl/i8y6Yd8yl+ugUEoNDnwvPsAZegiIULIwVcS3jBheejI
-	 l9fUoogPcOIkQ==
-From: SJ Park <sj@kernel.org>
-To: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] mm/damon/core: prevent size quota overflow in the temporal goal tuner
-Date: Tue, 22 Sep 2026 22:59:38 -0700
-Message-ID: <20260923055939.3495-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260923002600.1825448-2-donggeunyoo.kernel@gmail.com>
-References: 
+	s=k20260515; t=1790143429;
+	bh=32aTO6CCORGVEE7sjqD+ZhAwTSXEFXMw6mKDOPtuLp4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=RLXWbssSkB8zuOh90VQDAcMMasRMcy3mOR+/Mllvj8WOpWSC3qoX3Vekrrales1NS
+	 l8Nsa3MSct/2ZvFyQ9W6hrvhNZeHwvLvlnn0vS/Xun7l33z2XpU4KgXxi1HE3eqsuZ
+	 xIxMUwCPP50ubcNn4LIejxraE4udQ8EXEG/QRCRtZPfjmf6TeOhFCqy30JkiDShCIc
+	 d6YHQ3BJl6pan3o7h/xkSGjPuSGISBL92HquAN4nQ4ibD3ZK+TrEgj8njFpiVQlTkd
+	 Hw5fblwW0eeCN3juwvmKCIsV88SvkpkiVFiip6vMNN+c8zqutkeAc45BKXeOejvMJx
+	 kB91nPgQUHfuQ==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v3 mm-unstable] mm/damon/core: keep the temporal tuner
+ quota over an unmeasured PSI round
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260923055139.2982-1-sj@kernel.org>
+References: <20260923055139.2982-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 23 Sep 2026 06:03:48 +0000
+Message-Id: <20260923060349.6855C1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Wed, 23 Sep 2026 09:25:58 +0900 Donggeun Yoo <donggeunyoo.kernel@gmail.com> wrote:
+> From: Karl Mehltretter <kmehltretter@gmail.com>
+>=20
+> The patch in mm-unstable of subject "mm/damon/core: handle uninitialized
+> damos_quota_goal->last_psi_total" scores a PSI quota goal without a
+> previous sample as achieved. This leaves the consist tuner's input
+> unchanged, but the temporal tuner sets its quota to zero for an achieved
+> goal. A running scheme with a nonzero temporal quota therefore loses a
+> charge window after a quota-goal commit.
+>=20
+> Use the effective quota to preserve the temporal tuner's previous
+> goal-achievement state during an unmeasured round, as SJ suggested [1].
+> Score the goal as achieved when the effective quota is zero and as not
+> achieved otherwise. A new scheme's initially zero quota stays zero, and
+> the consist tuner's behavior is unchanged.
+>=20
+> Move the PSI current-value calculation and last_psi_total update into a
+> helper that takes the current PSI total. This lets a unit test cover the
+> unmeasured and measured rounds without depending on system memory
+> pressure.
+>=20
+> Link: https://lore.kernel.org/damon/20260916001311.101024-1-sj@kernel.org=
+/ [1]
+> Fixes: 2dbb60f789cb ("mm/damon/core: implement PSI metric DAMOS quota goa=
+l")
+> Cc: <stable@vger.kernel.org> # 6.9.x
+> Cc: Lian Wang <lianux.mm@gmail.com>
+> Cc: Kunwu Chan <kunwu.chan@gmail.com>
+> Suggested-by: SJ Park <sj@kernel.org>
+> Assisted-by: LLM
+> Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+> Reviewed-by: SJ Park <sj@kernel.org>
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-> damos_goal_tune_esz_bp_temporal() converts the scheme's size quota
-> into basis points with "quota->esz_bp = quota->sz * 10000", both
-> unsigned long, and damos_set_effective_quota() divides the result
-> back by 10000.  quotas/bytes is unbounded; bytes_store() hands it to
-> kstrtoul() as is.
-> 
-> On 32-bit the product wraps for any size quota above ULONG_MAX /
-> 10000, that is 429496 bytes.  A wrapped product below 10000 divides
-> to a zero effective quota: 429497 gives 0.  damos_quota_is_full() is
-> then true on the first test of every charge window.  Other wrapped
-> values are wrong without being zero: 500000 gives 70503.
-> 
-> Triggering this needs a scheme with a quota goal, the temporal goal
-> tuner, and a size quota above ULONG_MAX / 10000 -- 429496 bytes on
-> 32-bit, 1844674407370955 on 64-bit.  The scheme then makes no
-> progress for as long as the goal is unachieved, which is easy to
-> notice, and writing a smaller size quota restores it.  Nothing is
-> corrupted and nothing leaks.  This is unlikely to be hit on a tested
-> setup.
-> 
-> addr_unit does not cover this.  It only scales the numbers a paddr
-> context writes to quotas/bytes, so a large enough scaled value wraps
-> just the same, and vaddr and fvaddr contexts take raw byte values.
-> 
-> Bound the multiply.
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-Looks good to me, thank you for finding and fixing this!
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923055139.2982=
+-1-sj@kernel.org?part=3D1
 
-> 
-> Fixes: af738a6a00c1 ("mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEMPORAL")
-> Cc: <stable@vger.kernel.org> # 7.1.x
-> Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-
-Reviewed-by: SJ Park <sj@kernel.org>
-
-
-Thanks,
-SJ
-
-[...]
