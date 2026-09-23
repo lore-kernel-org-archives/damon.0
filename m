@@ -1,160 +1,227 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0606E497B79
-	for <damon@lists.linux.dev>; Wed, 23 Sep 2026 14:19:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790173190; cv=none; b=OS2I9r6BxsnNbsA5hek/+y09euhzhv+GpOfy8hnMaRcrz+2FPOiz4JCYiP2vpSV8qUXZXYIv4Iif2HUnMbV+fQaZWZBct+6HvoK/JCmQrfLQoYZQQ6nT999S1NK/xnLsgLsrL1X6kZFSGFsbvWJBzfAKXsHAMpdOXRCQ4kH9UVY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790173190; c=relaxed/simple;
-	bh=yZlZW0o9M7tWhbJVi4HlLGBka0QiOAMHmIX/t/c4r9Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IT/gEHCuoWxq/wTxLDDR3gjw8kLDIUJwgWOKpeKUt075dzTML6vFNkB2U/F+abSwGZ6FGL6uWCSzPtivrLeeaRfz8NDsOaAk/djOEVXyZconhenHUmEw/7Vpe7/W/4qXifKxwT+cYMm/NfNrXMEaCgFkGFKrLkVguCmlCxIk80o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Ayo5EVps; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20BF5592E5
+	for <damon@lists.linux.dev>; Wed, 23 Sep 2026 16:47:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790182051; cv=pass; b=E8JgtnzvxYxmS325r8YAUh/l9HHx0AkvikerpAlVSvA6A+8bFAQCg0hyJgxqW5he4Zow2kpD5hzPFkja+r9NcYwxJLIFfbdsipfDLnZxnz0gXcPXDKpfpdi2Ch6dnXs0m+taiIJigbUVNoV9iNFQ9kUlRmNPl70xS9Lu07ZvP9A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790182051; c=relaxed/simple;
+	bh=ZUu/E4ThfNs6/hpOHi+oCAKFDMTBtwuUpcdaOif5M+A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DwBqXTxcl3595DPJopB5QaaYnN21Ud9MeLlxdNKQLvonhnEfvtcDHdRjEyAhal2DoC6IB/kjNu+e/hOrfAPT0K+YtfiDAB02m7K23RhHR5zm1duaStyweW+87jwSzLOUoOOBFDFMQLvHfSY9FvK8dgM/8qumZ3Qf0+HbqcE7/os=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HJ8dEHth; arc=pass smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Ayo5EVps"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68N8Zw1U1031879;
-	Wed, 23 Sep 2026 14:19:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=2QrGt4Pc68eDNguGqvx9OXhAmFpd9e
-	Q/n73e2TGYr7Y=; b=Ayo5EVpsou0Bg5ugqBjm1S51XWE2MeL2ndK2c3GelXo1lK
-	5hqPlah33xvQY5TiqA2OfPyJI1ZfTumV1sglYPdZ7J+lNyzWArp/be+tEWybqdm3
-	7Ve5yTDM8a3+Wg9738uiD6xhWxhhylckW5ZqezRi8Cc9Q5AEunEWV7aQhM7NO27B
-	Okbrx6sv1HOopcrolJiHRaZ338lgyLIYvzb9FxdGj5pvFeSaKMzAE4F41qbtjSQq
-	AV2hzyIV7EIC4N8FA7xw5n0/wfnzR+ZzBswzL4IaeXJmPTTJzIuRCesqj3zRD8qt
-	+Z1j6e4HHxla/ubKARuqvWe/47TX0HQ0l8xHnmJQ==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1useb-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 23 Sep 2026 14:19:11 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68NCp1Qt007936;
-	Wed, 23 Sep 2026 14:19:10 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbt2s7yt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Sep 2026 14:19:10 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68NEJ8X148628044
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 23 Sep 2026 14:19:08 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1776520040;
-	Wed, 23 Sep 2026 14:19:08 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5C68F20043;
-	Wed, 23 Sep 2026 14:19:07 +0000 (GMT)
-Received: from li-008a6a4c-3549-11b2-a85c-c5cc2836eea2.ibm.com (unknown [9.224.92.206])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Wed, 23 Sep 2026 14:19:07 +0000 (GMT)
-Date: Wed, 23 Sep 2026 16:19:06 +0200
-From: Alexander Gordeev <agordeev@linux.ibm.com>
-To: Muhammad Usama Anjum <usama.anjum@arm.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tursulin@ursulin.net>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Dimitri Sivanich <dimitri.sivanich@hpe.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-        Helge Deller <deller@gmx.de>, Juergen Gross <jgross@suse.com>,
-        Stefano Stabellini <sstabellini@kernel.org>,
-        Muchun Song <muchun.song@linux.dev>,
-        Oscar Salvador <osalvador@suse.de>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        "Liam R. Howlett" <liam@infradead.org>,
-        Lorenzo Stoakes <ljs@kernel.org>, Will Deacon <will@kernel.org>,
-        "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-        Nick Piggin <npiggin@gmail.com>, Peter Zijlstra <peterz@infradead.org>,
-        Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-        David Hildenbrand <david@kernel.org>,
-        Pasha Tatashin <pasha.tatashin@soleen.com>,
-        Chris Li <chrisl@kernel.org>, Kairui Song <kasong@tencent.com>,
-        Uladzislau Rezki <urezki@gmail.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Alexei Starovoitov <ast@kernel.org>,
-        Daniel Borkmann <daniel@iogearbox.net>,
-        Andrii Nakryiko <andrii@kernel.org>,
-        Eduard Zingerman <eddyz87@gmail.com>,
-        Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-        Ingo Molnar <mingo@redhat.com>,
-        Arnaldo Carvalho de Melo <acme@kernel.org>,
-        Namhyung Kim <namhyung@kernel.org>, SJ Park <sj@kernel.org>,
-        "Matthew Wilcox (Oracle)" <willy@infradead.org>,
-        Jan Kara <jack@suse.cz>, Jason Gunthorpe <jgg@ziepe.ca>,
-        Leon Romanovsky <leon@kernel.org>, Miaohe Lin <linmiaohe@huawei.com>,
-        Dennis Zhou <dennis@kernel.org>, Tejun Heo <tj@kernel.org>,
-        Christoph Lameter <cl@gentwo.org>, Mike Rapoport <rppt@kernel.org>,
-        Johannes Weiner <hannes@cmpxchg.org>, ziy@nvidia.com, pfalcato@suse.de,
-        ryan.roberts@arm.com, linux-kernel@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-parisc@vger.kernel.org, xen-devel@lists.xenproject.org,
-        linux-mm@kvack.org, linux-fsdevel@vger.kernel.org,
-        linux-arch@vger.kernel.org, kasan-dev@googlegroups.com,
-        linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org,
-        linux-perf-users@vger.kernel.org, damon@lists.linux.dev
-Subject: Re: [PATCH v2 0/8] mm: distinguish PTE table storage from PTE values
-Message-ID: <5a0c73a1-6875-49fc-8f85-28808cd6be19-agordeev@linux.ibm.com>
-References: <20260903103002.1091859-1-usama.anjum@arm.com>
- <1401e907-04ff-4ee5-ad03-00d88531a091-agordeev@linux.ibm.com>
- <e4bf62ca-886e-429b-a268-3c0ef7903bc8@arm.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJ8dEHth"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49d1ca5b0d6so7993735e9.0
+        for <damon@lists.linux.dev>; Wed, 23 Sep 2026 09:47:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790182039; cv=none;
+        d=google.com; s=arc-20260327;
+        b=QlxmXK9ehIt/My0Bu6SZeyackLYOwiqU/5ztg2ZU2RMDajA4Tpn0SsEyPUS2P0l6sg
+         9O0pHBxg8uZpI7pomfDAJYUdHavrUX28MuPdOsVhKOEfJ9roBiH2J98MjXlNcg+/D2tg
+         6zacqT+yhidBu6FoO9s5SHfKBzWb/nfSQ3NDpjYzB49Iq1xU4k9Sy7pVH2RbrJhN+0ZE
+         UonXQ54LtPeZEhE3tkWxhv0DomBnZrQ7sVZyVolxMady8ueKAjyPmaFGwban2KERm/F0
+         zNOF2yG5eXuPVogu4eue9VxLYg31irpSbKoJPSi+VcCK2s7njh7sCY/LkqK5k/RxnVzs
+         Scug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tAQcvfsEw2NREatFJ5f2rKVMnBOJ07JjjvYvVs9Yqug=;
+        fh=vDBakCW1gv+XKojX+pr7PmSiOhTuLUSRdEnIedJ2k3g=;
+        b=POAKT3pkjG+M1kiQ2Ksr35mDWR563c10yjfhw9oNwDMiYTyUHMf0lfPg9pGy+OxsBy
+         B8hMJ4Jwdq2i/2A4cAWuIq4c2ir9kMl7VyvFtT+8q60xEl3LcmVaWscHsKD3mv6vASkB
+         oPoWiXorkjmB6gFQDdyZUShm6w3b/0UeT2Qb03GJYKejXc/UH6eBWg7puETmtZhx6j+K
+         yRw6l4JFCF/yknB/TvsL11wZePc2IxLd/fCRVmjEjLEHBDatCmmJufUJS8aQA0P5rEp5
+         ntDnbr/gs2QTJwUYH4gSry+XEVmH96GUf6GN9gDzh+3pYA/3xO3oLkkyhLyeJCJbELkz
+         eDLw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790182039; x=1790786839; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=tAQcvfsEw2NREatFJ5f2rKVMnBOJ07JjjvYvVs9Yqug=;
+        b=HJ8dEHthcLLDPnpEBvxkmfUmQRliPPj1HCysxGIbcQUVosxCdsFsntduiPPgmsbM9n
+         xWZuVPMDCBlV/nuANG1mWokLQr6DQubvFz3mccYP4CORLVESFhjYX/ddxw5Woo6DbY5U
+         LOQ1Sk3mJ7jcB5lRpcdhGTXMdAT7LEsbzCOIHQEtpNg1v69XEIDZT4Yma4NniH/nzWo0
+         2tBb3oURWxennOXo6PHoWzV/wc2eI/G9hAVccvRpvpkyXz96CVHC8mQDHBUch6bWnoS7
+         H1Bqxjmr3TAWSSXCuezGIiq5f3Y6DI/5q+dtv+RQPKRLi3JDhr5CbgcZSr4Z6ScB9ZkA
+         FcaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790182039; x=1790786839;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tAQcvfsEw2NREatFJ5f2rKVMnBOJ07JjjvYvVs9Yqug=;
+        b=gVzc8TVQbsBKi0pZ3f1Ekxb0KrQ/zkqx4ZmnAO6X/I2bGrKZBhvvI2OPIr9zT5jgl9
+         JLAM6Q7rhwSDPeuqDDNdgFGR4+C4uK84vlb9U9tsMkGwgwGsOxX7Ol/7u5Uc2GH7yMh+
+         JF2jVENh7e+grUHv9qa2TT+M1mL1LV019Lfs5PnwkVPbTNXwOVMCGn9kaJ694IAjLloH
+         mq4+zoRBQj6edmvXxoGSLVCls7greVIN+5UxRFk2rwkcgAzAWhYyBnyIwFcBMcB0PW4u
+         TU1QxogY5g48REMmRLWUN4zX7EEXZp2FoLpOrD0VB6Gats/icdRhGPWSgu8eJpBxhsYk
+         mOGA==
+X-Forwarded-Encrypted: i=1; AKwUvByM0atBKRFlrwbdXQTVnAZS5VIqrgUFKrK0jfrL+Bi0wkBO8dV0OL1c/15kXYLcJVFI4EK/Yw==@lists.linux.dev
+X-Gm-Message-State: AFuF++nHdvEZFcZGIt7f6oeftroUmQyKQsr8DLnzh8fPW3cgKGnA1v9S
+	vDWEFYLw5Zt/4dPGUD8l4MLsSsJdg70HlOYGX5sLLfbLRDOURTBkVpPI1925IVZsIp3CcIRQy9B
+	6b7cURHOi+IO1+RFDwP8QL9G+S4iPaNE=
+X-Gm-Gg: AYBFou0gv0mlPrroFrmueNblV3EYsZ84n38el3F6GkllmUZSn3KjpM2iW+DibcMAWZk
+	MGHckMYsrtve2RVBec95IShMNoix58wUaLYICDwpauJhJueKZztGMLK6T7RXEIzqmaTWtkHSM7M
+	oo3nYfACMxmttVRplqsr3RvdNOjNevGKZX3kTMNQZ3rtDStdXS26b3taQ5yGMAx70aKHVo3TqQo
+	W1pZ1xxqED0z7jx/wWH0yXKORzeyEjs/alcDZNhpgrhOPFYCaNiHmDLW6G7J5+0VWvGVhaes724
+	6SmuzfNJNx1yG9rePOCfnAt5x3sVDBf/GgdAAtxbBaiC1ic3/9m3XlCutNvEQhmAXS8uTcsga2s
+	Jcgi722hgLstY0A==
+X-Received: by 2002:a05:600c:4e93:b0:49c:e27c:6b10 with SMTP id
+ 5b1f17b1804b1-49fdee0a952mr49666665e9.3.1790182038728; Wed, 23 Sep 2026
+ 09:47:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e4bf62ca-886e-429b-a268-3c0ef7903bc8@arm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: jvicsneNpoTmGgGlWjYDZudGR7T2so9J
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab3dfdf cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=m85HiHUexkU1pPaUjCgA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDA1NiBTYWx0ZWRfX9B/05+SWggVO
- 7agvUqd8dhoypg0FPuJExRBm8O+PxCJzpiY8LotmGeU/DhT6/xu2/Uj3hl/SR7hiQoNSed7OI9+
- TYVYgcC+u3rRF7SNRXDHxINKwsUMnTo=
-X-Proofpoint-GUID: jvicsneNpoTmGgGlWjYDZudGR7T2so9J
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDA1NiBTYWx0ZWRfX4HZcFdO5tIXY
- snGn2A3Db+S3OG1OjdgVbfGZEGUTHcIaKBobABDkMlLHsfwV9fFr8s4ZCTnpAdQPz9gYCpcRvNL
- meevVhPsIY2xb+UjLfiuVZTJR5I9Zgb+lOAD2ZqjDqXobpTi1VgByCxa+Ljb1FmoZoT62x64nIQ
- fdbmdyOp5uOBulJ9CpL0SOdFeWBnq23WXXdkmA4qDJBSelEfQbx6eUpb5+qNjYHhR6WCsLgthO5
- OBtuzT2aI8D749f3QJiK8fKsdS96je+rKxtHth8BGDr1UF7hBJcUQiLfUmB5WMY7DowN0JvY/Jx
- 4rIY70z4mFoa/Tic/6RAu9AhrTMaPpFzTTPwaqBT8FJxQwKV98aap20VP54g4vtUBeIGWlNiLHY
- vnukgu+KUPBn3PwkU+WliZg6ZldU5ChvdsqyiDG96cfqv7YaCvZMLzqxSd3YW2i1WLbfmVoGiqY
- oe0K7aX7lcrg4NwlsCQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-23_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230056
+References: <20260923055139.2982-1-sj@kernel.org>
+In-Reply-To: <20260923055139.2982-1-sj@kernel.org>
+From: KunWu Chan <kunwu.chan@gmail.com>
+Date: Thu, 24 Sep 2026 00:47:02 +0800
+X-Gm-Features: AclHuK-q8bibuGsWXEsNmxKAcN1nnzvypJ4ztbgQ6XSyFRq2oe6A825P900qgHo
+Message-ID: <CAN_Opa_d=Dta4hRcvXuyi0wj+uoOgLxOCuHU3K4d9o34e_Aypg@mail.gmail.com>
+Subject: Re: [PATCH v3 mm-unstable] mm/damon/core: keep the temporal tuner
+ quota over an unmeasured PSI round
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Karl Mehltretter <kmehltretter@gmail.com>, 
+	stable@vger.kernel.org, Lian Wang <lianux.mm@gmail.com>, damon@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 23, 2026 at 02:47:08PM +0100, Muhammad Usama Anjum wrote:
-> > However, is there a particular reason this series is against mm-new?
-> > Should it be against the master, it would be easier for me to try it in our CI.
-> 
-> I think, mm-new is the branch in which this series would be picked up. This is
-> why its based on that. Are you referring to mm/master?
+Thanks for the update.
 
-No, to the Linus master.
-I will try to backport it and give it a try.
+I also checked the issue I raised on v1 regarding unmeasured rounds.
+The temporal case now uses the effective quota to determine
+current_value when there is no previous PSI sample, while measured
+rounds continue to use the PSI delta and update last_psi_total.
 
-> -- 
-> Thanks,
-> Usama
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
 
-Thanks!
+Thanks,
+Kunwu
+
+On Wed, Sep 23, 2026 at 1:51=E2=80=AFPM SJ Park <sj@kernel.org> wrote:
+>
+> From: Karl Mehltretter <kmehltretter@gmail.com>
+>
+> The patch in mm-unstable of subject "mm/damon/core: handle uninitialized
+> damos_quota_goal->last_psi_total" scores a PSI quota goal without a
+> previous sample as achieved. This leaves the consist tuner's input
+> unchanged, but the temporal tuner sets its quota to zero for an achieved
+> goal. A running scheme with a nonzero temporal quota therefore loses a
+> charge window after a quota-goal commit.
+>
+> Use the effective quota to preserve the temporal tuner's previous
+> goal-achievement state during an unmeasured round, as SJ suggested [1].
+> Score the goal as achieved when the effective quota is zero and as not
+> achieved otherwise. A new scheme's initially zero quota stays zero, and
+> the consist tuner's behavior is unchanged.
+>
+> Move the PSI current-value calculation and last_psi_total update into a
+> helper that takes the current PSI total. This lets a unit test cover the
+> unmeasured and measured rounds without depending on system memory
+> pressure.
+>
+> Link: https://lore.kernel.org/damon/20260916001311.101024-1-sj@kernel.org=
+/ [1]
+> Fixes: 2dbb60f789cb ("mm/damon/core: implement PSI metric DAMOS quota goa=
+l")
+> Cc: <stable@vger.kernel.org> # 6.9.x
+> Cc: Lian Wang <lianux.mm@gmail.com>
+> Cc: Kunwu Chan <kunwu.chan@gmail.com>
+> Suggested-by: SJ Park <sj@kernel.org>
+> Assisted-by: LLM
+> Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+> Reviewed-by: SJ Park <sj@kernel.org>
+> Signed-off-by: SJ Park <sj@kernel.org>
+> ---
+> This is a fixup of a patch [1] that is still in mm-unstable tree.
+>
+> [1] https://lore.kernel.org/20260902002725.108635-3-sj@kernel.org
+>
+> Changes from v2
+> - v2: https://lore.kernel.org/20260921020013.33105-1-kmehltretter@gmail.c=
+om
+> - Split out of the series for squashing into the broken patch.
+> - Collect R-b: from SJ.
+> - Update commit message to make clear this is a fixup of a patch in
+>   mm-unstable.
+> Changes since v1
+>  - v1: https://lore.kernel.org/20260915060937.3423-1-kmehltretter@gmail.c=
+om/
+>  - Use the previous effective quota for the temporal decision, including
+>    when it is zero. Keep resetting last_psi_total for new and updated
+>    goals.
+>  - Move the current-value calculation and last_psi_total update into a
+>    helper. Test both tuners with explicit samples and check
+>    last_psi_total after each call.
+>
+>  mm/damon/core.c | 30 +++++++++++++++++++++++-------
+>  1 file changed, 23 insertions(+), 7 deletions(-)
+>
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 4687b909d42c..733025b36745 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2956,6 +2956,28 @@ static inline u64 damos_get_some_mem_psi_total(voi=
+d)
+>
+>  #endif /* CONFIG_PSI */
+>
+> +static void damos_set_psi_current_val(u64 now_psi_total,
+> +               struct damos_quota_goal *goal, struct damos *s)
+> +{
+> +       u64 last_psi_total =3D goal->last_psi_total;
+> +
+> +       goal->last_psi_total =3D now_psi_total;
+> +       if (last_psi_total !=3D U64_MAX) {
+> +               goal->current_value =3D now_psi_total - last_psi_total;
+> +               return;
+> +       }
+> +       /* uninitialized last_psi_total; make no effect this round */
+> +       if (s->quota.goal_tuner =3D=3D DAMOS_QUOTA_GOAL_TUNER_CONSIST) {
+> +               goal->current_value =3D goal->target_value;
+> +               return;
+> +       }
+> +       /* let temporal tuner show the same achievement as in the last ro=
+und */
+> +       if (!s->quota.esz)
+> +               goal->current_value =3D goal->target_value;
+> +       else
+> +               goal->current_value =3D 0;
+> +}
+> +
+>  #ifdef CONFIG_NUMA
+>  static bool invalid_mem_node(int nid)
+>  {
+> @@ -3208,13 +3230,7 @@ static void damos_set_quota_goal_current_value(str=
+uct damon_ctx *c,
+>                 break;
+>         case DAMOS_QUOTA_SOME_MEM_PSI_US:
+>                 now_psi_total =3D damos_get_some_mem_psi_total();
+> -               /* uninitialized last_psi_total; make no effect this roun=
+d */
+> -               if (goal->last_psi_total =3D=3D U64_MAX)
+> -                       goal->current_value =3D goal->target_value;
+> -               else
+> -                       goal->current_value =3D now_psi_total -
+> -                               goal->last_psi_total;
+> -               goal->last_psi_total =3D now_psi_total;
+> +               damos_set_psi_current_val(now_psi_total, goal, s);
+>                 break;
+>         case DAMOS_QUOTA_NODE_MEM_USED_BP:
+>         case DAMOS_QUOTA_NODE_MEM_FREE_BP:
+>
+> base-commit: 4b811cf44e3dd87981f18631be832027385f7d4f
+> --
+> 2.47.3
