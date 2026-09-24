@@ -1,71 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1971FB1
-	for <damon@lists.linux.dev>; Thu, 24 Sep 2026 20:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D4741DDF0
+	for <damon@lists.linux.dev>; Thu, 24 Sep 2026 20:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790281321; cv=none; b=tN7KHAITlrJ9HcpEVMsFG3DrwfeDMk3OAfpFACNv+In3VdaUzmo5FyzfU4sgvSyIJyzD6hqXYxSGn0jGDeCyDhwyEaHz9DVCkpFIUXiKeM1VVDXf4TmPunADd+B2QnVO3a7PTWNYRDuX+bAKJNy5x9/lH/dPRIj/1gjcDJPgCiM=
+	t=1790281376; cv=none; b=F98oY64UOnsHGLp1O9b+lCGUYUtxg3R44jmSbAkFPLGll8KHVMybyUj1Y/gOSbA0vsA814wIXCC348IAy3NOab05oywhh8m5vJUnEuStf19h190FSP8n6cGbWejqHZxHE46KKv4LoDal4b3au2t4ZQGBN0zBQ/gr7D2FNGpBWTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790281321; c=relaxed/simple;
-	bh=8myU76XZUSqIXsKZ4agDWbW67o6dysACkaIg4YilaS4=;
+	s=arc-20240116; t=1790281376; c=relaxed/simple;
+	bh=siWQp+wK2awmy+277hSgAMPOFTUqgmsMAlh0e7sZIFA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=XDJRwfEQKEZ/7WM/8Z9OfzIm8m1XSfC0ywujlK7A3Nc1+9AWCvP141ZhR4VQdIYwE7XXbnWr91wriTII9h1ccWD5YFDcikJiJAsSbl9AlFK75m1YDbYqp7t+1iHJav2mvNVHRUJtpopIlIPumWnhMexe6YH+RwQRckMr+Oil7LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CwDpXfxq; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=UZcJunR7F8my18V1Dr1+llcx1dBMQuqkCYdNu1ad4F9qkXmfXI3kXWQthpfhSsVCt0eri+78Kt9gvG7yKDUh+U+ujd9pGhE0FDpNEC5LosqlBy3wMy9kXPLzOlHkcryHfjOOsEoFop1Z6AnG5xB0K4A0zCt7cYSjklF5rXHaPLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=af80PwWg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CwDpXfxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6655B1F00893;
-	Thu, 24 Sep 2026 20:21:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="af80PwWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210EA1F000FF;
+	Thu, 24 Sep 2026 20:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790281319;
-	bh=8myU76XZUSqIXsKZ4agDWbW67o6dysACkaIg4YilaS4=;
+	s=k20260515; t=1790281375;
+	bh=siWQp+wK2awmy+277hSgAMPOFTUqgmsMAlh0e7sZIFA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=CwDpXfxqvcCUkY1HqWHEnw0Wl+PpRE2gATddDNaC5zacM0UByg3o5UfaSANfl9Rju
-	 dYPe2Q4xmoImxOUfs1JQY7I+uUB9s92A4JHBqQ8tPbJ/ibbrAFFGp+im51MJt1TLC/
-	 t6nCfgJwFZ+vXSv+k4qNSfimDtY3X4Nuk0Bu0fhYnE8311a/tjtEj1o+OgwQdL7FBL
-	 j1NxKVBSNwVMtZIdhSC5sUvPgm7KECZgT5tzQtqf3KGJrOKgWBaLvHgsaKECn3CID7
-	 TUQayhl7HGQEqGxHOTkDbtffJWRpVBk7M8MpDTnYXWHYVlHm2hzHxwPpAygF4//gBS
-	 ENq9oLdgpk5tw==
+	b=af80PwWgflbNZqXUD+NNELf0KiltGDbJgplrLZlNMgjUSd3jtHTrp/blTRblmMxy1
+	 l5Y8+V+IL16CNKbk/AyTLER03vZcpLgstKYox4b9MGPGyggl2Z2q2T+F5hBkGv+TDD
+	 05gltWEgEe4I7i2zQcA/ACFUBndVOsdAo3S1goM4qd3Hzft/3nn3aTw+9kZcUuBwvl
+	 LtUnPSiHvmfKDAwgGSKhP783k1TcGHnogOQvDaSVbdvzL34ZrHpTJSR/7TceljBS63
+	 WK0Je4wTTVhA6beIdOn5m+tEdpub6V+Tb/06utSckkCceuwUu7O65J542YMxf2Rfhz
+	 tzHT81AfoIGvA==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 1/2] mm/damon/core: preserve the quota passed to
- damon_new_scheme()
+Subject: Re: [PATCH v2 2/2] mm/damon/tests/core-kunit: test preservation of
+ quota state
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Karl Mehltretter" <kmehltretter@gmail.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260924201615.4478-2-kmehltretter@gmail.com>
+In-Reply-To: <20260924201615.4478-3-kmehltretter@gmail.com>
 References: <20260924201615.4478-1-kmehltretter@gmail.com>
- <20260924201615.4478-2-kmehltretter@gmail.com>
+ <20260924201615.4478-3-kmehltretter@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 24 Sep 2026 20:21:58 +0000
-Message-Id: <20260924202159.6655B1F00893@smtp.kernel.org>
+Date: Thu, 24 Sep 2026 20:22:54 +0000
+Message-Id: <20260924202255.210EA1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> damon_commit_ctx() first commits the running context's parameters to a
-> temporary context for validating proposed updates. When
-> damon_commit_schemes() creates the temporary schemes, it passes the
-> running scheme's quota as the quota parameter of damon_new_scheme().
+> Check that damon_new_scheme() initializes the new scheme's quota without
+> changing the quota passed as a parameter. Cover all eight fields
+> initialized by damos_quota_init().
 >=20
-> damon_new_scheme() calls damos_quota_init() on that quota before copying
-> it to the new scheme. This clears the running scheme's effective quota,
-> feedback input and charging state. Even an update rejected with -EINVAL
-> loses the running quota state.
+> Also check that damon_commit_ctx() preserves those fields in the
+> destination scheme for both accepted and rejected parameter updates.
+> Use an invalid min_region_sz for the rejected update and confirm that
+> returning -EINVAL leaves the running quota state unchanged.
 >=20
-> For a size quota, this discards the bytes already charged and allows the
-> scheme to use a fresh quota before the reset interval has elapsed. For a
-> goal-driven quota, the consist tuner loses its accumulated input and
-> restarts from its minimum input. A time quota loses its throughput
-> estimate and falls back to the initial estimate.
-> [ ... ]
-> Fixes: 60bd24f272d0 ("mm/damon/sysfs: test commit input against realistic=
- destination")
-> Cc: <stable@vger.kernel.org>
-> Link: https://lore.kernel.org/r/20260702212143.0CB6D1F00A3D@smtp.kernel.o=
-rg/ [1]
+> Without the preceding fix, all eight fields are cleared in the
+> constructor test and in both context update cases.
+>=20
+> Reviewed-by: SJ Park <sj@kernel.org>
 > Assisted-by: LLM
 > Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 
@@ -73,5 +65,5 @@ Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260924201615.4478=
--1-kmehltretter@gmail.com?part=3D1
+-1-kmehltretter@gmail.com?part=3D2
 
