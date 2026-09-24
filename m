@@ -1,64 +1,66 @@
-Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF56A3CF207
-	for <damon@lists.linux.dev>; Thu, 24 Sep 2026 20:16:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43E14C8FFE
+	for <damon@lists.linux.dev>; Thu, 24 Sep 2026 20:16:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790280995; cv=none; b=esIks8SXkb1W79Bb1NneQW2Jub+dyw+RTWzenygn//09CDITIu7tR2WepJtEGE/caY6nkh29gaeXLgdRkURx9pZS/Gj5zz/r2ALF2iULEHF3FPqzN0wZNcZiCQ0eykq+IPp+xLRvbTdNjU49wdbbKGFv3k1P5xmSq08eoV7/PjM=
+	t=1790280999; cv=none; b=HXEsqn5pgQYYlDIqz240U2frcPFh0WlyiVWmlrC40mmVpsAtgrwItqzAA06xx8EMaoUvHDD+lydeBrchBdb4NzrSFNcU4yHDZkaI2Ud98N//s4o2cQISdUMrxEDeqXxl8c1+6vvGf8yvhGXGsrW8WD0sv1Qj0FR6zQGudRwvgVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790280995; c=relaxed/simple;
-	bh=LmbjwTK4tuaONw1jCkYsUmgRPvsp4oLyl3+5bT69KPA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b800fhys7UJ9x2W0L7dXkbl7ZW+ityb8eeoKas9UrsnDt0NFJ9epZb6mHlCL/imVSFk3cmn0WenF1gor81ukHWh106WyRa/1ffT1j6KA1kD4o6DX+/ghm9wjJc3t6aok70fYHKCX1pU4g36l2gkAfnCbuqJZMvu2wxGUcOfhcMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pNy10wF+; arc=none smtp.client-ip=74.125.225.140
+	s=arc-20240116; t=1790280999; c=relaxed/simple;
+	bh=2wH2gjfAFykx3AnQ4m3Mv/Cv23ewq1StEc/E/nViiDs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=p4ZKT4iATA0iVUvXIi8jVLkS47dKuW+SYdwdmRDpyDquh/miRDievtWtqLGuSlHbsnaGym5/qPJQ6odC+AYhY6ab4HEM2rx7FU+luvIUnK33NGLB23KHYic+Oo1U/c0T2T3N33NGCz/cnN+uHAHYmnyNblU+BIgm2Qo2UG/ppt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RBWGpSb9; arc=none smtp.client-ip=74.125.225.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pNy10wF+"
-Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49ce364488dso755785e9.0
-        for <damon@lists.linux.dev>; Thu, 24 Sep 2026 13:16:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RBWGpSb9"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e83a388f8so1407955e9.1
+        for <damon@lists.linux.dev>; Thu, 24 Sep 2026 13:16:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790280990; x=1790885790; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=WT1vJAlJB3UqsXiDI150AgVhKS27Afshhi+pSW9AfhY=;
-        b=pNy10wF+v8IwMYCd1EztX7VJhi5M0MxU7YZlPGzPWGHo6WBk1xdO6AP/HsI1LXuSza
-         R23VVb021RNLGhUjYGu1fCxGgPj3+mnJSZIZGy4DrEhTyVXtTZhqwFzwbb8wcOxKk2dm
-         gQCfFwOnBexFAqyDreEa5PzuBHGyDsxyJSR3W4BxdQNhlAspcZkUZe2irz8Cmzo8d21P
-         kSTPhfTgif8T/Gzg1u616ttgFeLGougkjF3DoHeMAvfPC8Y7GMqkElEVnAH99NtA3NKi
-         K94SjNqDMZVKN1lCrAspT1OLIOfqkccY2pcQ/vYCAWy+axtyMkvSgmwun6a23TDkepn+
-         h8tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790280990; x=1790885790;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1790280994; x=1790885794; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=WT1vJAlJB3UqsXiDI150AgVhKS27Afshhi+pSW9AfhY=;
-        b=t5mLQEcAlS2xRPAaXolylI7CAJ55H/ynYFH8PYRktKfz9VjcLmVLOTrYidB5NWfcpi
-         0Ys+ED3cD6y8uXgUiXogr6yVx0FkiNP8oA42d3XvKGQEqANi7ZgduyYNFOQ6i//aG1GX
-         CGtEt+hkdXw/acwTNFzDJjxA26KIc6dhVvpx9Pu7DQjiziicjB34wy/eTAvB03mNcUXW
-         0KJ3dVixwglggkJJVVbWwTOIa3Tkr+PWrmdZG8s3RZiiFUwbwBxFdlUUw89NqWuSf/lS
-         Ez6+UWeE7eRo2paErVi3ojV0sObJgZOFY+uyTyiXgt+YIkXOzuOqat8PhJ0Ga4vFkwzU
-         5vaA==
-X-Forwarded-Encrypted: i=1; AKwUvBxju7ZK61ZG4AAGPgKoL8NU0tTcq5stsudjHVtPpCzxELh3qTIx7Bv8NmJB2G9n59RK/qv+Gg==@lists.linux.dev
-X-Gm-Message-State: AFuF++nh0fNOo67ulE+19kPInnqEvj4j+BnHJVsyGzOrdWj9TXwOawhC
-	jMf3XZIvwG1GSEbpkcDGOTAMbFRVTTNRuUSiz1akRGNrx5L4OmQgFdZl
-X-Gm-Gg: AYBFou11ZzwsJ2G0O/mUuZSRWR1Hd/E4svSXKq31h4uGBUjHXFoLgQFMaEG3hMjaEkr
-	ojScuJ0yTjuTKjGL1GF3q8usz/3EXfV4PTJDUYA4Igg+802f37+wbD7isGphU3x1oxJA5GMEOyF
-	aKLiWFU6802WKKXq7EbpZyo8W+MK8uijatkSomE76LoEVzIIw/SxlM4BHCILSCH8FpB3XEKgvQP
-	DidK6xU0eNVTjRcnIUhXSX3FrdMN1oNbfpuGrAdqSjQjY9dB2ohO1BH02RmtIuJpS04jZvLD2gh
-	AcmYoQRtY2IQbBQWcWwYilcrJutOiklIihj2CmLWT8lfKiQXYZqd9lkvqtNTc9lXYlucA5aKFLq
-	W0wub5NGK1fU1joIy4Lvenl8tyZpUf1+KiVxkz2nQG1RunUiqts63nXUO7DPHGyv/bRGcTZAaQA
-	Y65jxjVrFkXfrdAdgh/LzixEQ3YANuxTxhk1sWgzcnQz/j55L60yeicJNjGxGv8uJVj5EKx2vbs
-	DsKys0x91slsZqLTLT0uwi7HNKFrRnGZkBgyKLhudl42lt8QYSHY8z92N/2OF3P75hUmbLy4IPq
-	FX190nybdsHFSbHAI95P2r3hKleqECl9C/a4rXcVAjB8N1UqWHIBLkTb2GJv2U/JBmOXEoFF0N8
-	d4y5fKrkGILoF81L0PUaPLw==
-X-Received: by 2002:a05:600c:8b5b:b0:49c:f13e:e4d with SMTP id 5b1f17b1804b1-49fe66f17damr60720065e9.10.1790280989870;
-        Thu, 24 Sep 2026 13:16:29 -0700 (PDT)
+        bh=wNbMPD2l6k45HjCSlVyW5ug/N5eQ+jTGtlCh88p1xFw=;
+        b=RBWGpSb9OtPEtXYE8YuG5WjZNRVrhsUOfnTjFhFTbuvevMDf+IqZtZ3zEHOVf70jY2
+         QVzFxQG2zRxI57fX1wsx0JMVJSDCwwP4SCpGh+OYkpE+7vaOvSTsyPIm48Vh2J3S2CKu
+         qv56S9dpT5So6kDYWBNeybEExTmoubfRIZMTmEGnyvXG2FGzs9TTi/f+kl+OyyhFZI/X
+         qE21D2y5USXO2MOiEe3/M1KolgoJIWHHTihDnfA495db/lOL0lFl6SZ4QEoNMRzpUjG3
+         KXcmIP64mxBbkM8aKcOx/l9WzZV7vwwUd+Ia/TP7JAC1Kchc5LPzdAOAInVkjZdZ2+0Z
+         Q14w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790280994; x=1790885794;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=wNbMPD2l6k45HjCSlVyW5ug/N5eQ+jTGtlCh88p1xFw=;
+        b=p+6+/0O+R1xm2ouf+FeuwIleTugD85aDpgGZqveRwjt3deqBQl361Dtw7QN1ip1hj6
+         Ueyu4RgJayCsS6fHzmuOOhJaMjagNaD02uE487yq6k+Ncqs3UdiAa42Up/dsa9YEAsLa
+         FY0CrYHM0J3zrRORqam3LCI045fJxRD52soGIFXEvYGgz+FFaAECoLXyljGkF6/QkAwn
+         nG5owtiaREQh6/W2kWdkMEOxfM8BUCn7AQs0DoeYUgXzLHcye5E14g0alWzPigYcMycC
+         D0wGnYsMxjo2gpXcP0vwqv0/09TNaYwKRN74hIpPKyCx8oCRaiUuS7MowrxYYpfy8H7v
+         UPfg==
+X-Forwarded-Encrypted: i=1; AKwUvBwGVqd3vMKuwnfCVV10cD9Bsp9qk7ggEs7vhwbsq7Ll/tBVdgWZ2mVvNblKfpTfOHyMLXGN0g==@lists.linux.dev
+X-Gm-Message-State: AFuF++mlnKt5Xn9DB2qQJHVXXl0DVjBVczLYeppaqY+zQtlqolgUqrYh
+	HvatKmb6NnUJV/cuXFpHBzrzk5Yu+xTwxEKk3Cg8HY0dW0QAYoa2Cg23
+X-Gm-Gg: AYBFou0Z/jPeiqSDCRt/wgdZsUXY+rEG+SH2ciPKtSHLIGWW7nVYVpdZiNVwPSZJ1P4
+	Lh+NwPF8coZl1WdfaBs24+Jbx3bWem/6uP+8ziGSnSSpe3TzHgslmjkvk+5fP+AtdKmy2INJ48c
+	2ZB5UTh0Gt1RIXLWs78nhLiazxrSpMco9cpDiKkhfe9kLt5zF3smyqi/aGV/0xtxXe5eEWEgCAK
+	mNM0LXFu223V3/45ljMm0RZWW3zzTjFCUEjkVVj9DtxrYb95HwjnK+GVqzKytC8tlJhnPZ/QqK6
+	kI7sOnHf5wI1xJNXdyRYjb+6LAs63w4PeEj4OQ3m5PLIJFzuEHNCCollWYokUluICPkdwAtVDAs
+	a9as120Fel/Yx4BF3rAfBOKA+coMLQEzGo0a8WTm/tWUZKBlsy3y0evqRXUN9l1XCjSbKedxgYu
+	nfMfQLnQ3JVIa6V9Czeby+xFCpywXA3ubpJSFvO3f7UHD5KPVhuoiKOvI7R33ys180ww9/mUzAG
+	ecYwcOXn7jRcYDkWbXD5ycr7ZFDxzPIVRS/h6N2uQ/tjZlPsBSuipeTTkgXf6IYcKnGPG9qCei4
+	vYHBPfurlfaGayKUf59ktfVK57zdTq/qcj2DPz9Od1FcTgX6MUjw1icBno4mtTi5ALLPhlt+wuT
+	+K5FfZdD7clCRPhPVFjbALPY=
+X-Received: by 2002:a05:600c:3e07:b0:49f:d6f0:6f24 with SMTP id 5b1f17b1804b1-49fe66cab70mr70945335e9.2.1790280993575;
+        Thu, 24 Sep 2026 13:16:33 -0700 (PDT)
 Received: from MBP-von-Karl.localdomain (dynamic-2a02-3100-adbf-6901-3138-76b5-e9f7-b9cf.310.pool.telefonica.de. [2a02:3100:adbf:6901:3138:76b5:e9f7:b9cf])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fe5dfa6a7sm144818795e9.12.2026.09.24.13.16.28
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fe5dfa6a7sm144818795e9.12.2026.09.24.13.16.32
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 24 Sep 2026 13:16:29 -0700 (PDT)
+        Thu, 24 Sep 2026 13:16:33 -0700 (PDT)
 From: Karl Mehltretter <kmehltretter@gmail.com>
 To: SJ Park <sj@kernel.org>
 Cc: Karl Mehltretter <kmehltretter@gmail.com>,
@@ -67,10 +69,12 @@ Cc: Karl Mehltretter <kmehltretter@gmail.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/2] mm/damon: preserve quota state when constructing schemes
-Date: Thu, 24 Sep 2026 22:16:12 +0200
-Message-Id: <20260924201615.4478-1-kmehltretter@gmail.com>
+Subject: [PATCH v2 1/2] mm/damon/core: preserve the quota passed to damon_new_scheme()
+Date: Thu, 24 Sep 2026 22:16:13 +0200
+Message-Id: <20260924201615.4478-2-kmehltretter@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20260924201615.4478-1-kmehltretter@gmail.com>
+References: <20260924201615.4478-1-kmehltretter@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -80,59 +84,81 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 damon_commit_ctx() first commits the running context's parameters to a
-temporary context for validating proposed updates. Constructing the
-temporary schemes clears the running schemes' quota state because
-damon_new_scheme() initializes the quota passed as a parameter before
-copying it to the new scheme. Even an update later rejected with -EINVAL
+temporary context for validating proposed updates. When
+damon_commit_schemes() creates the temporary schemes, it passes the
+running scheme's quota as the quota parameter of damon_new_scheme().
+
+damon_new_scheme() calls damos_quota_init() on that quota before copying
+it to the new scheme. This clears the running scheme's effective quota,
+feedback input and charging state. Even an update rejected with -EINVAL
 loses the running quota state.
 
-Initialize the new scheme's copy instead, and add KUnit tests for the
-constructor and for accepted and rejected context updates.
+For a size quota, this discards the bytes already charged and allows the
+scheme to use a fresh quota before the reset interval has elapsed. For a
+goal-driven quota, the consist tuner loses its accumulated input and
+restarts from its minimum input. A time quota loses its throughput
+estimate and falls back to the initial estimate.
 
-In the v1 live test with damo, a scheme with a plain 64 KiB size quota and
-a 60-second reset interval uses its quota, and a full "damo tune" with
-unchanged parameters then lets it try another 64 KiB within the same
-window. With the fix, sz_tried stays at 64 KiB.
+Commit 60bd24f272d0 ("mm/damon/sysfs: test commit input against realistic
+destination") introduced this problem in v6.19 when sysfs validation
+began committing the running context's parameters to a temporary context.
+Commit b90408ef1163 ("mm/damon/core: safely validate src on
+damon_commit_ctx()") later moved that validation into the core API,
+exposing other callers including DAMON_RECLAIM and DAMON_LRU_SORT.
 
-KUnit was rerun after the rebase on x86-64 and i386. With only patch 2
-applied, the two new tests fail. With the fix, all 46 DAMON KUnit tests
-pass on both architectures.
+Sashiko reported the same side effect [1] on the RFC of the core API
+change.
 
-The v1 DAMON selftests showed no new failures (QEMU TCG guest; the
-wss_estimation test missed its accuracy bounds with and without the fix).
+Copy the quota to the new scheme first, then initialize that copy. Make
+damos_quota_init() return void, since its return value is no longer needed.
 
-Changes since v1 [1], following SJ's review [2]:
- - Collect SJ's Reviewed-by for patch 2.
- - Explain the running-context validation in the opening paragraph.
- - Clarify which quota is passed as a parameter and use "commit" for the
-   context operation.
+Fixes: 60bd24f272d0 ("mm/damon/sysfs: test commit input against realistic destination")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20260702212143.0CB6D1F00A3D@smtp.kernel.org/ [1]
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+---
+Changes in v2:
+ - Explain the running-context validation before the constructor side effect.
+ - Clarify the quota parameter and use "commit" for the context operation.
  - Point Fixes to commit 60bd24f272d0 ("mm/damon/sysfs: test commit input
-   against realistic destination"). Drop the redundant stable version
-   comment.
- - Rebase onto mm-new. No changes to the fix or test logic.
+   against realistic destination") and drop the stable version comment.
+ - Rebase onto mm-new. No changes to the fix logic.
 
-The series is based on mm-new at ad8b9fe7a502. On damon/next, patch 2
-shares context with the PSI goal test [3] and applies with git am -3.
+ mm/damon/core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-[1] v1
-https://lore.kernel.org/r/20260921003047.12041-1-kmehltretter@gmail.com/
-
-[2] SJ's clarification
-https://lore.kernel.org/r/20260922120845.44460-1-sj@kernel.org/
-
-[3] PSI goal tests
-https://lore.kernel.org/r/20260921020013.33105-3-kmehltretter@gmail.com/
-
-Karl Mehltretter (2):
-  mm/damon/core: preserve the quota passed to damon_new_scheme()
-  mm/damon/tests/core-kunit: test preservation of quota state
-
- mm/damon/core.c             |   6 +-
- mm/damon/tests/core-kunit.h | 107 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 110 insertions(+), 3 deletions(-)
-
-
-base-commit: ad8b9fe7a5021ee745b61d6d33254a69af65efdb
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 4687b909d42c9..f76333f26de22 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -734,7 +734,7 @@ static bool damos_quota_goals_empty(struct damos_quota *q)
+ }
+ 
+ /* initialize fields of @quota that normally API users wouldn't set */
+-static struct damos_quota *damos_quota_init(struct damos_quota *quota)
++static void damos_quota_init(struct damos_quota *quota)
+ {
+ 	quota->esz = 0;
+ 	quota->total_charged_sz = 0;
+@@ -744,7 +744,6 @@ static struct damos_quota *damos_quota_init(struct damos_quota *quota)
+ 	quota->charge_target_from = NULL;
+ 	quota->charge_addr_from = 0;
+ 	quota->esz_bp = 0;
+-	return quota;
+ }
+ 
+ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
+@@ -776,7 +775,8 @@ struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
+ 	scheme->last_applied = NULL;
+ 	INIT_LIST_HEAD(&scheme->list);
+ 
+-	scheme->quota = *(damos_quota_init(quota));
++	scheme->quota = *quota;
++	damos_quota_init(&scheme->quota);
+ 	/* quota.goals should be separately set by caller */
+ 	INIT_LIST_HEAD(&scheme->quota.goals);
+ 
 -- 
 2.53.0
 
