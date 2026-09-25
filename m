@@ -1,116 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA4149E145;
-	Fri, 25 Sep 2026 13:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9A44749D1
+	for <damon@lists.linux.dev>; Fri, 25 Sep 2026 13:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790341381; cv=none; b=f9/Acgf/HfhhUlLKkeYhvKngfnmtcf4VUwPIKmvIXh79KzC0zvfS/CEYwBb1gWtuzXii9bLCIS74AskiB9VWEnR0czcyqdW6GhWV8Umj6AIivKt9Oq8LUROIoN0MO3UA4FU++0+5OOaiualOZLZ8ktw+zNWmsx2LChxVQJNgKv4=
+	t=1790341630; cv=none; b=QJLv3SjClI+qQEkptISIKaugKDsRXjQ72We2eKS/LHyM/+ZUgjwV+Qxt1zzfeSq5zd7vEEash+8i7O7ACdr/tnKAkAfnrHGjhrPQMXJTTDBupQg5r/8nH/5r8AywlukIw8zw8e8Azg/oyf3do02d05ZF8RYyr4kMtJlOnHdSHRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790341381; c=relaxed/simple;
-	bh=pV6pLnY9VNbDFSg9wsmygELy03on28x8NoH07KyTAKo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MeFoP7O6BitJw73SmX6jBRltalTJQqozjPNGUUmolzhaThV8ztWOxzoKOvE0qIsElihjgrUYcqMlzrOWevxxS5pwOYZZdTuJobuZ115MXt2hxkqGgXzWTztgwK2myF/2QpWNAFlpk6r7PJwaaek3Hv9D3n8d5JIyfK81v81lxy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WNlscdXN; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790341630; c=relaxed/simple;
+	bh=w45YtsNu+aUJonX9LBTYZ1YTPHc+GgdT4oVuitc8HPc=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=GxYwIzewrnH5qpHX8omPrCod4/GYpW3tZY+NZA0j665V/iV9158OP1iE6/hCB4Dki67OFifoHncIyhT+9lhbuqu3l43gfdQt+nl0AbL9Ls5RJ0DXozggh/cXbXD5uaeLX544DQDd5CgyEq4TFjqnEZDXaWRulsk8c8vqFk/J4zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SvS26/9o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WNlscdXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2101F00898;
-	Fri, 25 Sep 2026 13:02:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SvS26/9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A251F000FF;
+	Fri, 25 Sep 2026 13:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790341379;
-	bh=BSVHtbgr7nZGd5dozOxzx685KlCmq8P9tbgu4h3dnZU=;
-	h=From:To:Cc:Subject:Date;
-	b=WNlscdXN90cGNUO5qLV+qUylIQXV1twQZcwaPEvgzo893O5zSrhulbVIZMPPD3tSc
-	 CIE1Zo+FPehfA5Tz9xtSJibZ4mI27225gJrdT3ACPUOw4CB+eb5bVuf0Gsh/BKTbVT
-	 0p22ZY1mRW6pROBFRQYRQ0YvgnLT+Tzv9OqMSvHOSM6+5UpG7kgICT1jt42opK5SB8
-	 hCsYDjXM0k7isT/nMvumZP84dZe24nNRwy0nTcUCUBoiCPNW5AKIJ8pXMv46aqpHxk
-	 o9BRP3KxWIl/cyCBa3kZTurtFeRUOtzJOkMq1UOb0CptJiBb4ujOI/ItL+mUzq5d7Z
-	 DBy7OymJdGuZQ==
-From: Arnd Bergmann <arnd@kernel.org>
-To: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Cc: Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH] damon: reduce stack usage further
-Date: Fri, 25 Sep 2026 15:02:46 +0200
-Message-ID: <20260925130254.4022227-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.53.0
+	s=k20260515; t=1790341629;
+	bh=Qa36mFtiaXAMKkwp/la26TiO03VUOFGx31QmRVVkLz8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=SvS26/9oQJqUNfDDJgbGpPa4lJCc1a0XF/vgbP4My+HOuOeQ3b1RrZR0TsMP+Sxuq
+	 8vGVSdFAlHV1llCKOK+GBPZvr00Df7fzpezY1oC3R7hbHm68gSvlKQm8er+iWpKMGh
+	 3qhm0+cEcdASSIiyhMmjdelhiDk0UHVqO5BwfWDCuHsbuZf45IvC7r/TflZSR1JD5N
+	 FJvMmgqzDIsxYPByK3Zi25aB9NhXC37AX0bF5wr3pukGdC0MITaILIdXqfabJkqm30
+	 FKMfo6Wz2KWZttW3YeZpKl5iNbZ6xDtfRdeZ+9xIZVB68KIBIC3E0vOiDGxGqUujsv
+	 /NM5diJz78jvA==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] damon: reduce stack usage further
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Arnd Bergmann" <arnd@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260925130254.4022227-1-arnd@kernel.org>
+References: <20260925130254.4022227-1-arnd@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 25 Sep 2026 13:07:08 +0000
+Message-Id: <20260925130708.E6A251F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+> From: Arnd Bergmann <arnd@arndb.de>
+>=20
+> In a previous patch, I had annotated kdamond_tune_intervals() as
+> noinline_for_stack in order to not exceed the stack frame warning
+> limit. Unfortunately, my current linux-next randconfig builds show
+> a similar problem again with clang-21:
+>=20
+> mm/damon/core.c:3953:12: error: stack frame size (1288) exceeds limit (12=
+80) in 'kdamond_fn' [-Werror,-Wframe-larger-than]
+>  3953 | static int kdamond_fn(void *data)
+>=20
+> Do the same thing with kdamond_apply_schemes(), kdamond_merge_regions(),
+> and kdamond_split_regions(), which also have individually large stacks.
+> This should work to keep the deepest total stack depth down much more
+> as well as avoid the warning.
+>=20
+> I also tried to reduce the complexity of kdamond_fn() itself by splitting
+> out the while() loop into a separate function. While this arguably led
+> to slightly more readable code, it had no effect on the total stack
+> usage and just made the new function the largest stack user and had
+> a nonzero risk of me getting the conversion wrong.
+>=20
+> Fixes: 5a00cae64de1 ("mm/damon/core: reduce kernel stack usage")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-In a previous patch, I had annotated kdamond_tune_intervals() as
-noinline_for_stack in order to not exceed the stack frame warning
-limit. Unfortunately, my current linux-next randconfig builds show
-a similar problem again with clang-21:
+Sashiko has reviewed this patch and found no issues. It looks great!
 
-mm/damon/core.c:3953:12: error: stack frame size (1288) exceeds limit (1280) in 'kdamond_fn' [-Werror,-Wframe-larger-than]
- 3953 | static int kdamond_fn(void *data)
-
-Do the same thing with kdamond_apply_schemes(), kdamond_merge_regions(),
-and kdamond_split_regions(), which also have individually large stacks.
-This should work to keep the deepest total stack depth down much more
-as well as avoid the warning.
-
-I also tried to reduce the complexity of kdamond_fn() itself by splitting
-out the while() loop into a separate function. While this arguably led
-to slightly more readable code, it had no effect on the total stack
-usage and just made the new function the largest stack user and had
-a nonzero risk of me getting the conversion wrong.
-
-Fixes: 5a00cae64de1 ("mm/damon/core: reduce kernel stack usage")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
----
- mm/damon/core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 4687b909d42c..9803b459a0a4 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3417,7 +3417,7 @@ static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
- 	trace_call__damos_stat_after_apply_interval(cidx, sidx, &s->stat);
- }
- 
--static void kdamond_apply_schemes(struct damon_ctx *c)
-+static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
- {
- 	struct damon_target *t;
- 	struct damos *s;
-@@ -3573,8 +3573,9 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
-  * while DAMON is running.  For such a case, repeat merging until the limit is
-  * met while increasing @threshold up to possible maximum level.
-  */
--static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
--				  unsigned long sz_limit)
-+static noinline_for_stack void kdamond_merge_regions(struct damon_ctx *c,
-+						     unsigned int threshold,
-+						     unsigned long sz_limit)
- {
- 	struct damon_target *t;
- 	unsigned int nr_regions;
-@@ -3718,7 +3719,7 @@ static void damon_split_some_regions(struct damon_ctx *ctx,
-  * split was unnecessarily made, later 'kdamond_merge_regions()' will revert
-  * it.
-  */
--static void kdamond_split_regions(struct damon_ctx *ctx)
-+static noinline_for_stack void kdamond_split_regions(struct damon_ctx *ctx)
- {
- 	struct damon_target *t;
- 	unsigned long nr_regions = 0;
--- 
-2.53.0
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260925130254.4022=
+227-1-arnd@kernel.org?part=3D1
 
