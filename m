@@ -1,73 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-129.mta0.migadu.com [91.218.175.129])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB813890FB
-	for <damon@lists.linux.dev>; Fri, 25 Sep 2026 04:58:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890593DD523
+	for <damon@lists.linux.dev>; Fri, 25 Sep 2026 05:44:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790312313; cv=none; b=sfFcXB3E2a9CSNDa0BWM7lkNLJ2bcRG6ysfORobYXvo+g8q1fjcB7CBvUS/t2uz/tXyLilN15W2XjmyDl1XdGsqNsyE13yDTTI3lwwTZ7Lmh/DGYkmC8k4kAt3yOR8fdj8T8f4UGdTYRKlgBwuwAeCSDzSuEScRZZ0TAkzIiMzM=
+	t=1790315068; cv=none; b=KudJaAFearTvH0el8UyFG7vH9ZrjiyVz/5PHOnJ/1NKwHxC6sqJWItTLQ8SdBiF/3sJ24aprMG5dqDNrg+rZEc7gASNgveyKyHo98MZ7l12MMzdGNlmprK+YW4e70IJqFrqhegJKqmcg/WOAPWX7y/JigLUOMFud2cQc8UFh9h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790312313; c=relaxed/simple;
-	bh=AUHhikV232P1KFjHi/1CW2u7Vb9sgtyLIe9Mh6m+uok=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=nWetb3TsRKNGSC5swI3g/q7xNq7RLixNybMoRC5JXQ3FcKDwrPjL90imKrh+YcGg6gveoVCMueFk9UUZ9VRyDzTPWBh4g2G8pNqWSiYmD37X1jnLvXVAFpqWtWLsoxW4lvDHZOhgJBmDnIEy/9Ps1174d5x0p01dadBKdbqqKyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mlyk+H7f; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790315068; c=relaxed/simple;
+	bh=5F6F7qba1uzyjFZMv+EeaWChEVyxbKI9bB3fX112gzw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Wf99/q/VWGoukd5W5oOWtamNZ/IrOAy/k2IsMH66LNuhY9nfslh9ajfUMOyiEOig2u1tnlOEAc3caf+L2fWUq9g6cgINXjpi0s95D7PVQXKhtCsviXUJDAaQOzbJMG+h6oW9Rc1HxRWPwNmJyGTla1BnZBOi7bA+Nf9g9iBkj3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=o1wGczzr; arc=none smtp.client-ip=91.218.175.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mlyk+H7f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8FF1F000FF;
-	Fri, 25 Sep 2026 04:58:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790312311;
-	bh=muTbN3/OJgTsijwg2MAvTZAXu3//lJrW0BZceRV1hwA=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Mlyk+H7fqUumP0a49GJ0FkYkiI5B+iuOvjpQsH5ZsHuAxT5/qdcTQfsW8eMPmXyCF
-	 B881Jy74g1hTPkpWNafh6Id7MoPdf+L4uAz8fQei8HyTGk715NO+sL80wN9qf9N+KU
-	 efRDQgEK+H13p1CiUPEKR+MAtdU2LvgLQFEOB/3j/E3WVCAR6B60KCAH+k87cL7kBK
-	 KQdx/gfUCHyjT7IYkR94memiA2JKyhpRCzloJ23yBOnOR2YGM6sa554+9SG3MWLe0w
-	 ZWUrTBqMDyCIcdImwz/4qCaZy/Lb7V/z4UVL+UdcvIx7Jo4Wo+eOog+D48vVGX9efA
-	 8aV3cWb5LMIiw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2] mm/damon/tests/core-kunit: add test for
- unconditionally skipping the last region
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Liew Rui Yan" <aethernet65535@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260925045350.66595-1-aethernet65535@gmail.com>
-References: <20260925045350.66595-1-aethernet65535@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 25 Sep 2026 04:58:30 +0000
-Message-Id: <20260925045831.4D8FF1F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="o1wGczzr"
+X-Envelope-To: damon@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=5F6F7qba1uzyjFZMv+EeaWChEVyxbKI9bB3fX112gzw=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790315063; v=1; x=1790919863;
+ b=o1wGczzrshXxLV2QjROjX1EmaKEI+0NMLUy52U0HQRDzLQ1pMkq3GfvTcrNhQLweCSz3Vq0p
+ mKs/NXaNpLLLX8qmPmIFndk87LGkzNsUM8ScNLgiC30XOBgqrRq9P71CcH6O+gKfnl8HlO00qov
+ NsLoSHYcJb3mTj81aMk9vn+o=
+X-Envelope-To: damon@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 14310745666562df;
+	Fri, 25 Sep 2026 05:44:13 +0000
+X-Mizu-Trace-ID: 14310745666562df
+X-Migadu-Flow: FLOW_OUT
+From: Lance Yang <lance.yang@linux.dev>
+To: sj@kernel.org,
+	mst@redhat.com,
+	david@kernel.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	virtualization@lists.linux.dev,
+	ryncsn@gmail.com,
+	kunwu.chan@gmail.com,
+	lianux.mm@gmail.com,
+	baohua@kernel.org,
+	xueyuan.chen21@gmail.com,
+	Lance Yang <lance.yang@linux.dev>
+Subject: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
+Date: Fri, 25 Sep 2026 13:44:08 +0800
+Message-ID: <20260925054408.10431-1-lance.yang@linux.dev>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> Commit 50585192bc2e ("mm/damon/schemes: skip already charged targets and
-> regions") introduced a minor issue that causes the last region to be
-> skipped before it is processed.
->=20
-> Example:
->=20
->     1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
->     2. Quota is configured to process only 100 bytes per window.
->     3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
->        addr}_from is saved at (Target, 100).
->     4. Window 2: The loop reaches R2.  Because R2 is
->        damon_last_region(t), the old code unconditionally returns true,
->        skipping R2 entirely and resetting the charge_{target,addr}_from.
->=20
->     Result: R2 is permanently skipped even though it has never been
->     processed.
->=20
-> Add a test to prevent this regression in the future.
->=20
-> Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Hi all,
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+I was reading DeepSeek's new DSec paper[1] and found a nice use of DAMON
+and virtio-balloon:
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260925045350.6659=
-5-1-aethernet65535@gmail.com?part=3D1
+With this kind of workload, an agent may read a file once and never touch
+it again, while those pages remain in the guest page cache. Without memory
+pressure in the guest, they can stay cached even though the host would
+like that memory back ...
 
+The trick is DAMON + virtio-balloon free-page reporting :) DAMON reclaims
+cold file pages from the guest page cache; buddy gets a chance to coalesce
+them into reportable blocks, and virtio-balloon passes those blocks to
+Firecracker. Firecracker can then drop the host backing with MADV_DONTNEED.
+
+And it worked: time-integrated host memory use fell by 21.2%, while peak
+usage stayed about the same, with no significant CPU overhead. Pretty cool
+to see these pieces show up in another real, large-scale system :)
+
+Kernel work still changes the world. Cheers to that!
+
+Anyhow, I still don't know DAMON and virtio-balloon as well as I should
+(mostly I just know the people who built them) :P
+
+[1] https://arxiv.org/html/2609.22978
+
+Cheers, Lance
