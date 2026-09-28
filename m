@@ -1,76 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA814488DB2
-	for <damon@lists.linux.dev>; Mon, 28 Sep 2026 08:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCC2364E89;
+	Mon, 28 Sep 2026 08:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790585803; cv=none; b=Ch/68hU2mnRhzEAk21Fwi5Waf+pz1Hl55H0zqKj8S8asSMMJM7PuXrYc2O/pWLqoUp98A6p++yApQSSAVRt4hc0e5NrXEfk1o/7uFF+I8e9RRK6V1aY//UaR9us36l4kPnGJs5TCskvYmt0aNxRedNkqVIooMtzE1m1/fyyWyFM=
+	t=1790585923; cv=none; b=q8z6eZbHRmA8Tl7rPZdoeuG6wZog5kyjIE68/HPnPOtmkvFmLPsa5ChnFoW9rYPgcTZrFiKw4CFPKG3XWNa24gONa1suyJFXJq7AYemM3O2S7vIwjKjuJB/GmI41fFksAAc6qNPat/A+dvbrxF32miUWCrfx4U8fgG9hAliC0PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790585803; c=relaxed/simple;
-	bh=kc5PDyZRjoV3XQPtl4qGYAAa8C9N1hvRTLOAY7TNTds=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=A08dWU4qZ7FHGWZ492eBxo/2aYtlPvXfkTicZztg/Qgc01QkWC+Afvp4tbO4JW7MFdln7C9GImz4pkU/FmztKJfzaFkxRZglSyk1dfN4USWmNZbCg1KF9bp7aF8Ckp8g+WTKhw4L6x0saxoPlhkD+rMpPpkssesjCGrjOKD+ldc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZDJVc92c; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790585923; c=relaxed/simple;
+	bh=41GXnO9AcaWtEJEkMCaWzHi2unS5XNYEPSNT92WHJ38=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=poWIfQ5ps7n2AQqWDmC5q8TpMKPd+AOxWwTVr3G5newanQX23kRgpHgxYEgGUs45ko/mOLXBswjjFW4bCz6q2o8C/KHa/UrEwEKp+Xr7jGbNzr8Bidy5l3GBuNPgNTvCY8Ya6gtpom3yupaQa5yskNLwItoLfO5/2YNWzhDLYxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KCC4hCff; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZDJVc92c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFF61F000FF;
-	Mon, 28 Sep 2026 08:56:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KCC4hCff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2581F000FF;
+	Mon, 28 Sep 2026 08:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790585801;
-	bh=zjLn9EsC8vh8WP4VIv6xeW6J3Gg858jpmOyA32trhog=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZDJVc92cotodtFi9eqAbGIV9yhE2krwlvZ5vKtREHepFLiFcXbiikWHa6YGBc1gjs
-	 9XMMT5X+C7cx9G/2Fjp+EAF94vPe5pIQXWJYYCTnq1tCTOO+U5eN1GBy/v9BmIxoXY
-	 sEtHgddM01u9BZ3UOxhUGTj9sqH5xLQj98IJW5qaJZqShgvFPIaMkZDet0sT3BnzQA
-	 WrgjMrybYCc+tLI7KMpvMeR8SFhzx1H/m85iX9EOoCNxEBrm7RZIk9bNqsn0+/xcvr
-	 FpRDDuC7Vu1+eXaCj4EJY6N919QVqNBIGoek+9yPeBMXHA1mzhAR8clfEjzO72fqj0
-	 a2Ri4m6LmnsqA==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 1/2] mm/damon/core: prevent size quota overflow in
- the temporal goal tuner
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260928084816.5575-2-sj@kernel.org>
-References: <20260928084816.5575-1-sj@kernel.org>
- <20260928084816.5575-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 28 Sep 2026 08:56:40 +0000
-Message-Id: <20260928085641.3CFF61F000FF@smtp.kernel.org>
+	s=k20260515; t=1790585921;
+	bh=zRvkh9OOneOJqU2wdlUkVFuqM0bBnkKnmh6zryJNhBo=;
+	h=From:To:Cc:Subject:Date;
+	b=KCC4hCffLBTujGpfM0vlV61kHxmWeskmD3ttbzKJjZY2I+VEJPl5/cj2RW7iVcoc0
+	 eVAd0MSWliugM0IG22R9sE/iFWlNFTKqYx1uVvHytkzrOV7mGA7jKwoXnf8SKsLJxX
+	 GGUih1gIZGCQMvReXH5//OymbfyH3okQQ1mK5ADkDJkV+1W8fPjmsMQxrNtQXkl5F+
+	 1s4KbS8sGm24J0M5nBhlFTjdg3DhDcSJQTzCdhjK2GKQpP2yPvQPxJ+VlsfaNwfmGY
+	 rf00wrgn7Y7B/52hdoKo5rg5MF2hvvSBsxOwQHxOHoxBJZG4A6aMc4hWoEur2z/rg+
+	 g7uZYPeeDljLA==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Bijan Tabatabai <bijan311@gmail.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v3 0/2] mm/damon/core: preserve quota state when constructing schemes
+Date: Mon, 28 Sep 2026 01:58:32 -0700
+Message-ID: <20260928085835.7675-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
->=20
-> damos_goal_tune_esz_bp_temporal() converts the scheme's size quota
-> into basis points with "quota->esz_bp =3D quota->sz * 10000", both
-> unsigned long, and damos_set_effective_quota() divides the result
-> back by 10000.  quotas/bytes is unbounded; bytes_store() hands it to
-> kstrtoul() as is.
->=20
-> On 32-bit the product wraps for any size quota above ULONG_MAX /
-> 10000, that is 429496 bytes.  A wrapped product below 10000 divides
-> to a zero effective quota: 429497 gives 0.  damos_quota_is_full() is
-> then true on the first test of every charge window.  Other wrapped
-> values are wrong without being zero: 500000 gives 70503.
->=20
-> Triggering this needs a scheme with a quota goal, the temporal goal
-> [ ... ]
-> Fixes: af738a6a00c1 ("mm/damon/core: introduce DAMOS_QUOTA_GOAL_TUNER_TEM=
-PORAL")
-> Cc: <stable@vger.kernel.org> # 7.1.x
-> Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-> Reviewed-by: SJ Park <sj@kernel.org>
-> Signed-off-by: SJ Park <sj@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+damon_commit_ctx() first commits the running context's parameters to a
+temporary context for validating proposed updates. Constructing the
+temporary schemes clears the running schemes' quota state because
+damon_new_scheme() initializes the quota passed as a parameter before
+copying it to the new scheme. Even an update later rejected with -EINVAL
+loses the running quota state.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260928084816.5575=
--1-sj@kernel.org?part=3D1
+Initialize the new scheme's copy instead, and add KUnit tests for the
+constructor and for accepted and rejected context updates.
 
+Note: below are test results and changelogs that could be removed from
+the final commit log.
+
+In the v1 live test with damo, a scheme with a plain 64 KiB size quota and
+a 60-second reset interval uses its quota, and a full "damo tune" with
+unchanged parameters then lets it try another 64 KiB within the same
+window. With the fix, sz_tried stays at 64 KiB.
+
+KUnit was rerun after the rebase on x86-64 and i386. With only patch 2
+applied, the two new tests fail. With the fix, all 46 DAMON KUnit tests
+pass on both architectures.
+
+The v1 DAMON selftests showed no new failures (QEMU TCG guest; the
+wss_estimation test missed its accuracy bounds with and without the fix).
+
+Changes from v2
+- v2: https://lore.kernel.org/20260924201615.4478-1-kmehltretter@gmail.com
+- Collect R-b: from SJ for patch 1.
+- Rebase to latest mm-new.
+- Add a note for starting point of test results and changelogs.
+- Fix typos in patch 1: s/detault/default/ s/occationally/occasionally/.
+- Update series subject prefix.
+Changes from v1
+- v1: https://lore.kernel.org/r/20260921003047.12041-1-kmehltretter@gmail.com/
+- Collect SJ's Reviewed-by for patch 2.
+- Explain the running-context validation in the opening paragraph.
+- Clarify which quota is passed as a parameter and use "commit" for the
+  context operation.
+- Point Fixes to commit 60bd24f272d0 ("mm/damon/sysfs: test commit input
+  against realistic destination"). Drop the redundant stable version
+  comment.
+- Rebase onto mm-new. No changes to the fix or test logic.
+
+Karl Mehltretter (2):
+  mm/damon/core: preserve the quota passed to damon_new_scheme()
+  mm/damon/tests/core-kunit: test preservation of quota state
+
+ mm/damon/core.c             |   6 +-
+ mm/damon/tests/core-kunit.h | 107 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 110 insertions(+), 3 deletions(-)
+
+
+base-commit: 0fa0454423ab5bbe40db5783aab8ae29b40adf89
+-- 
+2.47.3
