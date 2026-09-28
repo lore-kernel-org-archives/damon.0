@@ -1,53 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECF0480951;
-	Mon, 28 Sep 2026 08:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF2F484896;
+	Mon, 28 Sep 2026 08:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790584809; cv=none; b=WN2Zq1LwUaj4zQ44L5OundnF3kcvvZH350nLYA1oOa6+zAFo92f15DcJdbRh0802BN3+zQqf8yyRY8aUqLxztaa6IAZE6tMnSDFrnvrfA56uEYWzFsH0MJl62xjbDY1mj3KR+UlSNEUtlVFgfl9gRcopTEeFluFodElJkgUCsuw=
+	t=1790584812; cv=none; b=mvyCfZnaPT2PBEYOigusZmkN9LGXnDaCDD0VZUSZFHp/UJp7yUEqsBMZFPqmlluN+2/HDy8z9eyFYSkDyP+x3uqNka67mhXjTsnx+Mas80vTK3b6wodOb/QMy3PWFTVX9rhC2H8ITgL2af/J+MvcBbeSyHrAwnvzRsVX7nrWzhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790584809; c=relaxed/simple;
-	bh=EI6USUQ8jlxW8IJ45Bf07Gm+h1ulLVFmdQTepG0Dwds=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bomGcCnscsbRtWQTtuQ2lZ1/23U+8u6vvwpeIT1BaW6Yq8R7K5TEyEfnbFuBs22sra/pM2X6USefNG2TOKD2K0upsTaqj4kYMWdNWXvO7lc+jlzvvNp5ufHorYbrNaxwDq7HUbpt4mwbWswqYqp19dL6vP4n8ihrRO1JA0JC2ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9jAARX9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790584812; c=relaxed/simple;
+	bh=Ux+XRLdHH3mqzmbeYYP+7+dygvmdySbKleSnyBkwwnc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=B+mjHM9sU1AB/jYDYelexOHc6CNd5qPJN/SSHRJL8O4y5Kp2VYubY4WY8PjS2JkQisWyKezadV/lwLatVwSW9qM1ezs6nOTKIUZxEsblvx9TDfkL49Kw6DnCqt93cltcpTesBeE15kWvYZu/z52BIZF7DwGMOnpwSp8BEdFce14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DjfX74fr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9jAARX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4663E1F000FF;
-	Mon, 28 Sep 2026 08:40:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DjfX74fr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878901F00893;
+	Mon, 28 Sep 2026 08:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790584806;
-	bh=luI3cyiFOxUaGqTjp6wOLnxw6rfD0knECSRuoDaIkvE=;
-	h=From:To:Cc:Subject:Date;
-	b=b9jAARX9b4abbQnaQJg5hLkdK3FfaAc7TIbNbQDri1SX+IyOHh/xS5XU7rLUL0ZxY
-	 Xk4EJKOQLMGmkqxZoOxUc0SJRw5YSAgfAQQ9dTuypJgX9Z534jyCgD6MbHVXzXgPgD
-	 EfUcxueugy+VOpFxumshq0yaR+ltZ8W6FPEdeC3+FP2oPUIkY22Cbn2ck/MyGXLGyr
-	 AR1fUn0guVbfAQxS9dslnrqXFCYHnRTVxQxk9/Vi1uOuOcW7G7m8vniDWjgqYcx+cO
-	 Oc3WQOAm1d+8GjsrPBmfvchSY3YMOD0Nsg3fZ/4qtBQKSvqvGq8H40T973DbLixDzc
-	 7Vk4VYNodUhPg==
+	s=k20260515; t=1790584811;
+	bh=bGJHJrOH+riYBdOov+lE8FQ5rx8dbnRY2szuLD404PY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=DjfX74frxAWYMyUFQtctBiJmVvoieVS4KbUstf41uWpfgYe9XU6SBJTiYPEKy05bW
+	 Av6Wp2MbeN2MAsvyTLwige6CW21NJtEDMHa2kdPHER7QdvkknnBTXJOeCZp7q/it3u
+	 NTpy71mDmE3en438Lq4teRmKUMT6yYkwMaoWwwUHGYL8Ah+dg3rnV8uw85z27obf7p
+	 jmekeMJEeBwZuUXwjPAhfQg42yx3VaiHsbZDX7lUAIAnT9ey6SmZqIDRSmMSnIqwSO
+	 zD7wRSvydvw4xPprUp8m9oyr53dTKoIyjDm7whej4IbvWgTpOJF0hoKWWlvoe6TEO/
+	 +EKCMXDJ7ubmA==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
 	Bill Wendling <morbo@google.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
 	Justin Stitt <justinstitt@google.com>,
-	Kunwu Chan <kunwu.chan@gmail.com>,
-	Lian Wang <lianux.mm@gmail.com>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Nick Desaulniers <ndesaulniers@google.com>,
 	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
+	SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org,
 	llvm@lists.linux.dev
-Subject: [PATCH 0/3] mm/damon/core: cleanup code, reduce stack usage, and add kunit
-Date: Mon, 28 Sep 2026 01:39:54 -0700
-Message-ID: <20260928083959.4030-1-sj@kernel.org>
+Subject: [PATCH 2/3] mm/damon/core: reduce stack usage further
+Date: Mon, 28 Sep 2026 01:39:56 -0700
+Message-ID: <20260928083959.4030-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260928083959.4030-1-sj@kernel.org>
+References: <20260928083959.4030-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -56,26 +53,78 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Three various improvements.  Patch 1 from Zenghui Yu (Huawei) cleans up
-unused enums.  Patch 2 from Arnd Bergmann reduces kdamond's stack usage.
-Patch 3 from Karl Mehltretter adds a kunit test for uninitialized PSI
-quota goal stage logic.
+From: Arnd Bergmann <arnd@arndb.de>
 
-Arnd Bergmann (1):
-  mm/damon/core: reduce stack usage further
+In a previous patch, I had annotated kdamond_tune_intervals() as
+noinline_for_stack in order to not exceed the stack frame warning
+limit. Unfortunately, my current linux-next randconfig builds show
+a similar problem again with clang-21:
 
-Karl Mehltretter (1):
-  mm/damon/tests/core-kunit: test PSI goal values with explicit samples
+mm/damon/core.c:3953:12: error: stack frame size (1288) exceeds limit (1280) in 'kdamond_fn' [-Werror,-Wframe-larger-than]
+ 3953 | static int kdamond_fn(void *data)
 
-Zenghui Yu (Huawei) (1):
-  mm/damon/api: remove unused NR_DAMOS_* enumerators
+Do the same thing with kdamond_apply_schemes(), kdamond_merge_regions(),
+and kdamond_split_regions(), which also have individually large stacks.
+This should work to keep the deepest total stack depth down much more
+as well as avoid the warning.
 
- include/linux/damon.h       |  8 -------
- mm/damon/core.c             |  9 ++++----
- mm/damon/tests/core-kunit.h | 43 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 48 insertions(+), 12 deletions(-)
+I also tried to reduce the complexity of kdamond_fn() itself by splitting
+out the while() loop into a separate function. While this arguably led
+to slightly more readable code, it had no effect on the total stack
+usage and just made the new function the largest stack user and had
+a nonzero risk of me getting the conversion wrong.
 
+Fixes: 5a00cae64de1 ("mm/damon/core: reduce kernel stack usage")
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from v1
+- v1: https://lore.kernel.org/20260925130254.4022227-1-arnd@kernel.org
+- Collect R-b: from SJ.
+- Rebase to the latest mm-new.
+- Update subject prefix.
 
-base-commit: 9a7b617f9c0b3cc653987c9e6d0434cf1079130f
+ mm/damon/core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 733025b36745..0e375f4445fd 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3433,7 +3433,7 @@ static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
+ 	trace_call__damos_stat_after_apply_interval(cidx, sidx, &s->stat);
+ }
+ 
+-static void kdamond_apply_schemes(struct damon_ctx *c)
++static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
+ {
+ 	struct damon_target *t;
+ 	struct damos *s;
+@@ -3589,8 +3589,9 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
+  * while DAMON is running.  For such a case, repeat merging until the limit is
+  * met while increasing @threshold up to possible maximum level.
+  */
+-static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+-				  unsigned long sz_limit)
++static noinline_for_stack void kdamond_merge_regions(struct damon_ctx *c,
++						     unsigned int threshold,
++						     unsigned long sz_limit)
+ {
+ 	struct damon_target *t;
+ 	unsigned int nr_regions;
+@@ -3734,7 +3735,7 @@ static void damon_split_some_regions(struct damon_ctx *ctx,
+  * split was unnecessarily made, later 'kdamond_merge_regions()' will revert
+  * it.
+  */
+-static void kdamond_split_regions(struct damon_ctx *ctx)
++static noinline_for_stack void kdamond_split_regions(struct damon_ctx *ctx)
+ {
+ 	struct damon_target *t;
+ 	unsigned long nr_regions = 0;
 -- 
 2.47.3
