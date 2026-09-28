@@ -1,44 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDC6481FDF;
-	Mon, 28 Sep 2026 08:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECF0480951;
+	Mon, 28 Sep 2026 08:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790584809; cv=none; b=aHZvQpB3JY1yzeB8TVgBkuzgLFLGAr56reOZXWbRdOHbQ1fAkotIQQDLdgJmfr9ToJf/XNkKwfXM9MF0WOMtS1fGMwB/QN8wbSuUNsPhvQj+Ha8LehpQkqcp50gAMqnGHr1O4dpFbiTt8K8/Hg43CbVtG4UeI77fTH05Do8ynRo=
+	t=1790584809; cv=none; b=WN2Zq1LwUaj4zQ44L5OundnF3kcvvZH350nLYA1oOa6+zAFo92f15DcJdbRh0802BN3+zQqf8yyRY8aUqLxztaa6IAZE6tMnSDFrnvrfA56uEYWzFsH0MJl62xjbDY1mj3KR+UlSNEUtlVFgfl9gRcopTEeFluFodElJkgUCsuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790584809; c=relaxed/simple;
-	bh=OcmG0Y0qv+q80YJ75YzHC56qOPiVxrdDN1qj4YeCJOE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+4piPYkF7IcCNiM5oLQDeQCUXM/xlZK3ouV3lnN5s3WfQE88x4m2okuSg/cw3H20Qa68UKJEacm56dP87JSo51OzlIqTLDo3ka2IPseOSvC8i4MiEw4xSUh3aDJbrqM/EY0K2XVaSsq3d6uRC8d7Pohn/U/1eCJ2ZkHMOAHRJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQundLEG; arc=none smtp.client-ip=100.103.45.18
+	bh=EI6USUQ8jlxW8IJ45Bf07Gm+h1ulLVFmdQTepG0Dwds=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bomGcCnscsbRtWQTtuQ2lZ1/23U+8u6vvwpeIT1BaW6Yq8R7K5TEyEfnbFuBs22sra/pM2X6USefNG2TOKD2K0upsTaqj4kYMWdNWXvO7lc+jlzvvNp5ufHorYbrNaxwDq7HUbpt4mwbWswqYqp19dL6vP4n8ihrRO1JA0JC2ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9jAARX9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQundLEG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C44C1F00898;
-	Mon, 28 Sep 2026 08:40:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9jAARX9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4663E1F000FF;
+	Mon, 28 Sep 2026 08:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790584808;
-	bh=q2+vyI0uwtaGYfGHMp+R06X3EoG+48/p3c3tZsMizMc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GQundLEGOu6eEO8jgqUlI3iTPgbXb0YJUuVytRyOzpsjHNI3GcMnvJTabitLJbrOI
-	 eBCebOAUV/giTUc5XmMurZJuv7k30PCk9SE8MLnr4zfRaj0DlRRvAVL1EKBPoQbaAE
-	 UPictBPKmuxz5513dLXvKE01tjijw0lAqGIDQJFvoLJKIOXW3WHWpqPgzfq/Z7EJmv
-	 qj23PI/EZd1IaMtYWgslqLxDXrymgWPi2VwM5MKcuLJaX/+aMarEDByVadiBg+gYuo
-	 Ys2pvIoq4T6/7LT2K1rNCglE8/DgCCT2EbEpt6pgYEJR9TaBW+8UTsU2yux5J/Ouhm
-	 ASxtiPKjHkLlQ==
+	s=k20260515; t=1790584806;
+	bh=luI3cyiFOxUaGqTjp6wOLnxw6rfD0knECSRuoDaIkvE=;
+	h=From:To:Cc:Subject:Date;
+	b=b9jAARX9b4abbQnaQJg5hLkdK3FfaAc7TIbNbQDri1SX+IyOHh/xS5XU7rLUL0ZxY
+	 Xk4EJKOQLMGmkqxZoOxUc0SJRw5YSAgfAQQ9dTuypJgX9Z534jyCgD6MbHVXzXgPgD
+	 EfUcxueugy+VOpFxumshq0yaR+ltZ8W6FPEdeC3+FP2oPUIkY22Cbn2ck/MyGXLGyr
+	 AR1fUn0guVbfAQxS9dslnrqXFCYHnRTVxQxk9/Vi1uOuOcW7G7m8vniDWjgqYcx+cO
+	 Oc3WQOAm1d+8GjsrPBmfvchSY3YMOD0Nsg3fZ/4qtBQKSvqvGq8H40T973DbLixDzc
+	 7Vk4VYNodUhPg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: "Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	SJ Park <sj@kernel.org>,
+Cc: SJ Park <sj@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bill Wendling <morbo@google.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Justin Stitt <justinstitt@google.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 1/3] mm/damon/api: remove unused NR_DAMOS_* enumerators
-Date: Mon, 28 Sep 2026 01:39:55 -0700
-Message-ID: <20260928083959.4030-2-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	llvm@lists.linux.dev
+Subject: [PATCH 0/3] mm/damon/core: cleanup code, reduce stack usage, and add kunit
+Date: Mon, 28 Sep 2026 01:39:54 -0700
+Message-ID: <20260928083959.4030-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260928083959.4030-1-sj@kernel.org>
-References: <20260928083959.4030-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,75 +56,26 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: "Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>
+Three various improvements.  Patch 1 from Zenghui Yu (Huawei) cleans up
+unused enums.  Patch 2 from Arnd Bergmann reduces kdamond's stack usage.
+Patch 3 from Karl Mehltretter adds a kunit test for uninitialized PSI
+quota goal stage logic.
 
-NR_DAMOS_ACTIONS, NR_DAMOS_QUOTA_GOAL_METRICS, and NR_DAMOS_WMARK_METRICS
-are not referenced by any code.  Remove them.
+Arnd Bergmann (1):
+  mm/damon/core: reduce stack usage further
 
-They can be reintroduced if a real user comes up.
+Karl Mehltretter (1):
+  mm/damon/tests/core-kunit: test PSI goal values with explicit samples
 
-Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from v1
-- v1: https://lore.kernel.org/20260920012028.9565-1-zenghui.yu@linux.dev
-- Collect R-b: from SJ.
-- Rebase to the latest mm-new.
+Zenghui Yu (Huawei) (1):
+  mm/damon/api: remove unused NR_DAMOS_* enumerators
 
- include/linux/damon.h | 8 --------
- 1 file changed, 8 deletions(-)
+ include/linux/damon.h       |  8 -------
+ mm/damon/core.c             |  9 ++++----
+ mm/damon/tests/core-kunit.h | 43 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 48 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 844b175120f0..6a29dc2ac8db 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -117,7 +117,6 @@ struct damon_target {
-  * @DAMOS_MIGRATE_HOT:  Migrate the regions prioritizing warmer regions.
-  * @DAMOS_MIGRATE_COLD:	Migrate the regions prioritizing colder regions.
-  * @DAMOS_STAT:		Do nothing but count the stat.
-- * @NR_DAMOS_ACTIONS:	Total number of DAMOS actions
-  *
-  * The support of each action is up to running &struct damon_operations.
-  * Refer to 'Operation Action' section of Documentation/mm/damon/design.rst for
-@@ -137,7 +136,6 @@ enum damos_action {
- 	DAMOS_MIGRATE_HOT,
- 	DAMOS_MIGRATE_COLD,
- 	DAMOS_STAT,		/* Do nothing but only record the stat */
--	NR_DAMOS_ACTIONS,
- };
- 
- /**
-@@ -154,9 +152,6 @@ enum damos_action {
-  * @DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP:	Scheme-eligible memory ratio of a
-  *					node in basis points (0-10000).
-  * @DAMOS_QUOTA_HUGEPAGE_MEM_BP:	Huge page to total used memory ratio.
-- * @NR_DAMOS_QUOTA_GOAL_METRICS:	Number of DAMOS quota goal metrics.
-- *
-- * Metrics equal to larger than @NR_DAMOS_QUOTA_GOAL_METRICS are unsupported.
-  */
- enum damos_quota_goal_metric {
- 	DAMOS_QUOTA_USER_INPUT,
-@@ -169,7 +164,6 @@ enum damos_quota_goal_metric {
- 	DAMOS_QUOTA_INACTIVE_MEM_BP,
- 	DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP,
- 	DAMOS_QUOTA_HUGEPAGE_MEM_BP,
--	NR_DAMOS_QUOTA_GOAL_METRICS,
- };
- 
- /**
-@@ -313,12 +307,10 @@ struct damos_quota {
-  *
-  * @DAMOS_WMARK_NONE:		Ignore the watermarks of the given scheme.
-  * @DAMOS_WMARK_FREE_MEM_RATE:	Free memory rate of the system in [0,1000].
-- * @NR_DAMOS_WMARK_METRICS:	Total number of DAMOS watermark metrics
-  */
- enum damos_wmark_metric {
- 	DAMOS_WMARK_NONE,
- 	DAMOS_WMARK_FREE_MEM_RATE,
--	NR_DAMOS_WMARK_METRICS,
- };
- 
- /**
+
+base-commit: 9a7b617f9c0b3cc653987c9e6d0434cf1079130f
 -- 
 2.47.3
