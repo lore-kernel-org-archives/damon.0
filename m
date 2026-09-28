@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCE24908DA;
-	Mon, 28 Sep 2026 09:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EA3492E53;
+	Mon, 28 Sep 2026 09:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790588038; cv=none; b=nuokW7ZioapR6CkJecPE5b8YNccx5TxquK25ZpbjO0gVnL2GtwUs3wu1J9Em0QtqFi0XMaIOe8MCCsuf4+dZuUxqdQKwJGqyE1MEn4oUNyKClAkAQ1qMLTMcHjrHe5ygl6feQTSUFjYX4zZmdsNhsM5msXsDvynKYd4gCIsc6fU=
+	t=1790588040; cv=none; b=rcYC10OFswOMbvG8qzYDIkZWYKZQ+afGdMOJuZoXgwOYo7MazutoJrk8KL1TY2VZQabNyixWvJXy2KLaLqParU2tON1PiXfmUTOfpQsxJGoCyRUvO/+0T2M6EwqyYV4lRRcQULQ72eylthCFJNVO1ZA5FotGZ6dBMUyDOn9/Xn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790588038; c=relaxed/simple;
-	bh=c79D70eyw1T2juEsK4YQjmcQoXzAL9pxRWlhbxUlMFA=;
+	s=arc-20240116; t=1790588040; c=relaxed/simple;
+	bh=7+B3Aoz7wXM7fMdP0vsFzx5YK/hE4EEVfI+9bZvFrL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TeKvKUdeHdF5kyEZG7M783xoi4xOAFOi9dkxcFWPZ/Cr8efuzRdB+5mGa2FU71zQ4eJ/w3oqCB6q7DVLtub6HfaJzLKbFoAqO2PguExXO0dloXA2X6Me3W5qUERXX5purPd8tPLPztRCHgl43ZY/8SNS/5PAJo+t6ekTZTDTKxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AtC4+M7z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nc96DdIFxGt3+3ffTV/QIZMxXISQ4E2LFDGA0mGW6NUEC3undAauPwVg3H7z6e7GYszA9M21dP9+lawJJokHPHEQnc/EXIE+u5gE0aNAhfKw5Xlpj3oQAql5B+txCMX05S6iITxTeXdulx0LUGW0iX1hKF0g+kHJEedHuz1Vvng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hBYTnntk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AtC4+M7z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514851F0089B;
-	Mon, 28 Sep 2026 09:33:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hBYTnntk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C291F00893;
+	Mon, 28 Sep 2026 09:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790588036;
-	bh=Vdshcv/mUOg+wTQtdfCd8vXc9tZN4VpaqOf6VvBPPR8=;
+	s=k20260515; t=1790588039;
+	bh=bvxZAPrh873tByEC/VSENyOCS06X7bQblLdWzpYhHiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AtC4+M7zHV2yA+gAd+4igAmWzhN4V4krSxJl4WnFeNhxrkN/UAxpqVHngri3Vrabf
-	 ms7scbQpDtdazOuOShWLh2ZBgjrQYPPkBUKTIPf/3ld75olMrPHSHZ2TPmkbfXvewK
-	 US0dGIxRTWamajgrBMhHm/XxP7lqWx5CCvFZcRWP+DICwYZu6DcSa/+hYfxFQPAJkx
-	 XHh94smJ7FCOcGQcvtqRHQF5nB8bsXg5kY4f1+Dp5J1os9W7H6ZaGOZkmA6UNVhg3q
-	 szJeNq4vhBPfP47mMoii4/5lz18BPWeLVzqmiknEwgnJZHHdQRtk8ez2xF4ocaXt6r
-	 INMPwLKO92Pgw==
+	b=hBYTnntkncMsChVyMJu37KR6cC45yYnLGJ16rQWkS0H11rc7ApcXxyQeC1g05Vm4h
+	 2O8AOpqSLg3yXcuThqKfymMbpru2pSBdnlfZZhOh/LciGiFE/urZErF2O6Xiba3Ob4
+	 hOrF5btSePr+E2Us3ViLVWgUCYR1bFxessGdeAIbQsxsWEC0Ow/SIxNU3bZPUJ627M
+	 mgIiCflTx8vx8jPKM4WFBjfSX9N7EAlR5WXYywdonfWJj7Z/aDb96nwf+bbohPLI6K
+	 spm2IHi1ncYXUEi6DmeR88Sxrp5ZWgyLhiSgOMUwLU/DEHDq6rytfaZqySrlaXGpuK
+	 N3eVpkMPvZR9Q==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v5 3/8] mm/damon/sysfs-schemes: support quota goal complement flag
-Date: Mon, 28 Sep 2026 02:33:35 -0700
-Message-ID: <20260928093342.16584-4-sj@kernel.org>
+Subject: [RFC PATCH v5 4/8] mm/damon/tests/core-kunit: test quota_goal->complement commit
+Date: Mon, 28 Sep 2026 02:33:36 -0700
+Message-ID: <20260928093342.16584-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260928093342.16584-1-sj@kernel.org>
 References: <20260928093342.16584-1-sj@kernel.org>
@@ -47,85 +51,34 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a new sysfs file, complement, under the quota goal directory.  It
-works for setting and getting the quota goal metric complement flag
-value.
+Extend existing DAMOS quota goal commit unit test to test the complement
+flag.  Set the source complement flag and confirm the destination is
+updated to the given input.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ mm/damon/tests/core-kunit.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 06af417bc9a2..8f083611741f 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1220,6 +1220,7 @@ static const struct kobj_type damon_sysfs_watermarks_ktype = {
- struct damos_sysfs_quota_goal {
- 	struct kobject kobj;
- 	enum damos_quota_goal_metric metric;
-+	bool complement;
- 	unsigned long target_value;
- 	unsigned long current_value;
- 	int nid;
-@@ -1316,6 +1317,30 @@ static ssize_t target_metric_store(struct kobject *kobj,
- 	return -EINVAL;
- }
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 945037fe4be9..251b300eaa50 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -819,6 +819,7 @@ static void damos_test_commit_quota_goal_for(struct kunit *test,
+ 	damos_commit_quota_goal(dst, src);
  
-+static ssize_t complement_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damos_sysfs_quota_goal *goal = container_of(kobj,
-+			struct damos_sysfs_quota_goal, kobj);
-+
-+	return sysfs_emit(buf, "%c\n", goal->complement ? 'Y' : 'N');
-+}
-+
-+static ssize_t complement_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damos_sysfs_quota_goal *goal = container_of(kobj,
-+			struct damos_sysfs_quota_goal, kobj);
-+	bool complement;
-+	int err = kstrtobool(buf, &complement);
-+
-+	if (err)
-+		return err;
-+
-+	goal->complement = complement;
-+	return count;
-+}
-+
- static ssize_t target_value_show(struct kobject *kobj,
- 		struct kobj_attribute *attr, char *buf)
- {
-@@ -1424,6 +1449,9 @@ static void damos_sysfs_quota_goal_release(struct kobject *kobj)
- static struct kobj_attribute damos_sysfs_quota_goal_target_metric_attr =
- 		__ATTR_RW_MODE(target_metric, 0600);
- 
-+static struct kobj_attribute damos_sysfs_quota_goal_complement_attr =
-+		__ATTR_RW_MODE(complement, 0600);
-+
- static struct kobj_attribute damos_sysfs_quota_goal_target_value_attr =
- 		__ATTR_RW_MODE(target_value, 0600);
- 
-@@ -1438,6 +1466,7 @@ static struct kobj_attribute damos_sysfs_quota_goal_path_attr =
- 
- static struct attribute *damos_sysfs_quota_goal_attrs[] = {
- 	&damos_sysfs_quota_goal_target_metric_attr.attr,
-+	&damos_sysfs_quota_goal_complement_attr.attr,
- 	&damos_sysfs_quota_goal_target_value_attr.attr,
- 	&damos_sysfs_quota_goal_current_value_attr.attr,
- 	&damos_sysfs_quota_goal_nid_attr.attr,
-@@ -2869,7 +2898,8 @@ static int damos_sysfs_add_quota_score(
- 		if (!sysfs_goal->target_value)
- 			continue;
- 
--		goal = damos_new_quota_goal(sysfs_goal->metric, false,
-+		goal = damos_new_quota_goal(sysfs_goal->metric,
-+				sysfs_goal->complement,
- 				sysfs_goal->target_value);
- 		if (!goal)
- 			return -ENOMEM;
+ 	KUNIT_EXPECT_EQ(test, dst->metric, src->metric);
++	KUNIT_EXPECT_EQ(test, dst->complement, src->complement);
+ 	KUNIT_EXPECT_EQ(test, dst->target_value, src->target_value);
+ 	if (src->metric == DAMOS_QUOTA_USER_INPUT)
+ 		KUNIT_EXPECT_EQ(test, dst->current_value, src->current_value);
+@@ -862,6 +863,7 @@ static void damos_test_commit_quota_goal(struct kunit *test)
+ 	damos_test_commit_quota_goal_for(test, &dst,
+ 			&(struct damos_quota_goal){
+ 			.metric = DAMOS_QUOTA_USER_INPUT,
++			.complement = true,
+ 			.target_value = 789,
+ 			.current_value = 12});
+ 	damos_test_commit_quota_goal_for(test, &dst,
 -- 
 2.47.3
