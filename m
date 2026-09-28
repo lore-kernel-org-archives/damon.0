@@ -1,49 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3345E3CFF49;
-	Mon, 28 Sep 2026 08:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB9348FF63;
+	Mon, 28 Sep 2026 09:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790585928; cv=none; b=V1+DMPhDD+9rrJZrMxVkdRm7xaJCJ/NItRtALBee3+qrGQXUBkKGVedkFESB9oTn4Ri+3/JTxABq/tk1qqu8m0QgHm7wLF6epNoGMx3sdlvDR4PwUH8wP8bK4SowmN4dMUI1EUdcYm6VB9GT5gghORl0UukigY7Do/W9tEDM4oU=
+	t=1790588032; cv=none; b=P/jgGBCt2CcTexmdiCFq8HGaJMUtEgvpcK2LhuLiGUo4K55yR7DMNDR1S6KHrf7nvZjYrvcbZ9Ugi2K9AOw13T9EEtlg/G/4mf+jnFZmJlFMR0oeuitmL+uDJAic0HgahUIGOAykP3vjbhJK/pq+S8FXlk02S5uDnRzc5OCZoEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790585928; c=relaxed/simple;
-	bh=ZsasIKz9LrquGFQ0RxvVmkOnbxDHlWSL00/+mT+XzGc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9xgMHo0wunBHwWdMdaw7YB4wgabpMSv7dkRta+zpa7dVYunI45afpX5IzMCuEs8//nCdVKNZ0oSz9pmlOsKc1ZnToelA6W4YG8gSRRkGNibpshBY/bw3ITY2XkcIk9ai8tYuqqBUkd4jbZZFhvuuwjxYrnMvNMbXs0Tpt/EpzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GXDUvA6F; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790588032; c=relaxed/simple;
+	bh=1wvKm1m++FLR4+NrAOkX9t2MrXgw7GN1xe7X7Bt3Zmo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MauyorEpQxY+uRLK8dzFyGrJ21nNs3l9Qe3iA9ygFbmfU/Bh7mezm9QpLdngmpQnsNxAIC4857+0Er5ofUfvjjZl3MUG1Y6JM29RhUbdCjcK3eakWEKIInwRwAL8Uz8zCzkRjqOM5/ednFLcNNQnnwCvDr5l0kN3zHKAvF2psNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H+LRJZP7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GXDUvA6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512821F000FF;
-	Mon, 28 Sep 2026 08:58:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H+LRJZP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6041F000FF;
+	Mon, 28 Sep 2026 09:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790585926;
-	bh=Sd5+lKRVanR5td5IYZf/JY0OSKdgEdCsoPq05buSy0c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GXDUvA6F7RSYiyz/gPZnj8ACNny18VA0aKejKeF6T8gb8GocEXknOrsZICLv2zivg
-	 WnAx6HzIKhGCmKVM2RRY09C+e2WSRgCrliIL5IapThzmEYHa7VenBoy7hwpTgcQH8Y
-	 X7RwP+wyDR07Vr3E75bxV4eaFi/BAdDbCl3xKrz15gdCLNW3I0KvX8t68TWJpCVy1w
-	 UEbeGPUeZbXkkYF+LGIW3F0fk1E4unM1AErBHovOS6kKJOkjHBRl6XGlqKw+uxecAq
-	 t/02UZzG2kXy00RERkSLKrKIqL7jEHT4XF/MVHY+Y1GbvCW07znkZE553r8YZcamM6
-	 v9/ogbkNSJyAQ==
+	s=k20260515; t=1790588030;
+	bh=kqde+SayCEen5dyr2tikRuBWG+4Rk7ag/e7VecDgxZw=;
+	h=From:To:Cc:Subject:Date;
+	b=H+LRJZP7Bg8LClA3wWWTTlRIge8qXwjEuwm7B/62S1fXiuDlpeRCLe8xbSeaq3EfY
+	 W02mK1JI+pR/6ormB2T/+FnZarrvYR2GNbixlWzx0kjqto8gz5dxMGEnVxnfxWiMzT
+	 ZUKw1TmBkbQ4EeswrA0VcMxUMaaqetiupgD25Oh1FEhL6y5jypK8LsIFYS7kjD8QL5
+	 yJ5b4QOtHnvRs2cLbw7oNGwDu21UK0pG4g2v32Ma5L0r3f5/o+xIQiDJiYKtN+FXg+
+	 vvfJIW6faRsmM1AxgnNEzo8gTAzWTGjqjUoZllI3c4Eob/Gohn/LWruyr5N4Oo1xmt
+	 xWkv3ZT8Qt2jQ==
 From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>,
-	Bijan Tabatabai <bijan311@gmail.com>,
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Brendan Higgins <brendan.higgins@linux.dev>,
 	David Gow <davidgow@davidgow.net>,
-	SJ Park <sj@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
 	kunit-dev@googlegroups.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v3 2/2] mm/damon/tests/core-kunit: test preservation of quota state
-Date: Mon, 28 Sep 2026 01:58:34 -0700
-Message-ID: <20260928085835.7675-3-sj@kernel.org>
+Subject: [RFC PATCH v5 0/8] mm/damon: introduce damos quota goal target metric complement flag
+Date: Mon, 28 Sep 2026 02:33:32 -0700
+Message-ID: <20260928093342.16584-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260928085835.7675-1-sj@kernel.org>
-References: <20260928085835.7675-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -52,168 +60,137 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+Aim-oriented DAMOS quota auto-tuning assumes the aggressiveness of the
+scheme (quota) and the quota goal metric are directly proportional.
+Depending on the scheme setup and usage, keeping the relationship can be
+challenging.
 
-Check that damon_new_scheme() initializes the new scheme's quota without
-changing the quota passed as a parameter. Cover all eight fields
-initialized by damos_quota_init().
+For example, let's suppose a memory tiering approach for higher upper
+tier utilization.  One common idea for that (TPP) is utilizing two
+schemes, one for promotion and the other one for demotion.  The
+promotion scheme migrates hot pages from lower tier to upper tier,
+aiming for high utilization of the upper tier.  The demotion scheme
+migrates cold pages from upper tier to lower tier, aiming for head room
+free memory of the upper tier.  Both schemes and their goals are in
+direct proportion.  However, for this kind of use case, we need to
+implement two different goal metrics (per-node memory utilization and
+free memory ratio) while essentially the free memory ratio is just a
+complemented value of the utilization.
 
-Also check that damon_commit_ctx() preserves those fields in the
-destination scheme for both accepted and rejected parameter updates.
-Use an invalid min_region_sz for the rejected update and confirm that
-returning -EINVAL leaves the running quota state unchanged.
+To avoid adding too many new metrics, we are adding metrics that turn
+out to be really needed for each found use case.  For example,
+some_mem_psi_us, node_eligible_mem_bp and hugepage_mem_bp don't have
+their complemented value version.  But it is not really difficult to
+expect use cases that their complemented version can be useful.  For
+example, hugepage_mem_bp use case may need a way to reduce the hugepage
+ratio.  That would require a complemented version of hugepage_mem_bp.
+Adding a new metric for each of such use cases could make the number of
+metrics unnecessarily high, and discourage flexible usages of DAMOS.
 
-Without the preceding fix, all eight fields are cleared in the
-constructor test and in both context update cases.
+Add a new flag, quota goal complement, to allow flexible tuning goal
+setup without unnecessarily increasing the number of metrics.  The flag
+specifies whether to use the complemented value of the given goal metric
+for the tuning.  For example, if the complement flag is set, the upper
+tier memory utilization ratio metric works the same as the free memory
+ratio metric for the tier.
 
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Bijan Tabatabai <bijan311@gmail.com>
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/tests/core-kunit.h | 107 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 107 insertions(+)
+Patches Sequence
+================
 
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index caf582882f5f..2111faa58153 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -812,6 +812,48 @@ static void damos_test_new_filter(struct kunit *test)
- 	damos_destroy_filter(filter);
- }
- 
-+static void damos_test_new_scheme_keeps_src_quota(struct kunit *test)
-+{
-+	struct damos_access_pattern pattern = {};
-+	struct damon_target target = {};
-+	struct damos_quota quota = {
-+		.sz = SZ_64K,
-+		.esz = 123,
-+		.esz_bp = 456,
-+		.total_charged_sz = 789,
-+		.total_charged_ns = 1011,
-+		.charged_sz = 12,
-+		.charged_from = 13,
-+		.charge_target_from = &target,
-+		.charge_addr_from = 14,
-+	};
-+	struct damos_watermarks wmarks = {};
-+	struct damos *s;
-+
-+	s = damon_new_scheme(&pattern, DAMOS_STAT, 0, &quota, &wmarks,
-+			NUMA_NO_NODE);
-+	if (!s)
-+		kunit_skip(test, "scheme alloc fail");
-+	KUNIT_EXPECT_EQ(test, s->quota.sz, (unsigned long)SZ_64K);
-+	KUNIT_EXPECT_EQ(test, s->quota.esz, 0ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.esz_bp, 0ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.total_charged_sz, 0ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.total_charged_ns, 0ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.charged_sz, 0ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.charged_from, 0ul);
-+	KUNIT_EXPECT_PTR_EQ(test, s->quota.charge_target_from, NULL);
-+	KUNIT_EXPECT_EQ(test, s->quota.charge_addr_from, 0ul);
-+	KUNIT_EXPECT_EQ(test, quota.esz, 123ul);
-+	KUNIT_EXPECT_EQ(test, quota.esz_bp, 456ul);
-+	KUNIT_EXPECT_EQ(test, quota.total_charged_sz, 789ul);
-+	KUNIT_EXPECT_EQ(test, quota.total_charged_ns, 1011ul);
-+	KUNIT_EXPECT_EQ(test, quota.charged_sz, 12ul);
-+	KUNIT_EXPECT_EQ(test, quota.charged_from, 13ul);
-+	KUNIT_EXPECT_PTR_EQ(test, quota.charge_target_from, &target);
-+	KUNIT_EXPECT_EQ(test, quota.charge_addr_from, 14ul);
-+	damon_destroy_scheme(s);
-+}
-+
- static void damos_test_commit_quota_goal_for(struct kunit *test,
- 		struct damos_quota_goal *dst,
- 		struct damos_quota_goal *src)
-@@ -1614,6 +1656,69 @@ static void damon_test_commit_ctx(struct kunit *test)
- 	damon_destroy_ctx(dst);
- }
- 
-+static void damon_test_commit_ctx_keeps_quota_for(struct kunit *test,
-+		unsigned long min_region_sz, int expected_err)
-+{
-+	struct damos_access_pattern pattern = {};
-+	struct damos_quota quota = {.sz = SZ_64K};
-+	struct damos_watermarks wmarks = {};
-+	struct damon_ctx *src, *dst;
-+	struct damon_target *target;
-+	struct damos *s;
-+
-+	dst = damon_new_ctx();
-+	if (!dst)
-+		kunit_skip(test, "dst alloc fail");
-+	target = damon_new_target();
-+	if (!target) {
-+		damon_destroy_ctx(dst);
-+		kunit_skip(test, "target alloc fail");
-+	}
-+	damon_add_target(dst, target);
-+	s = damon_new_scheme(&pattern, DAMOS_STAT, 0, &quota, &wmarks,
-+			NUMA_NO_NODE);
-+	if (!s) {
-+		damon_destroy_ctx(dst);
-+		kunit_skip(test, "scheme alloc fail");
-+	}
-+	damon_add_scheme(dst, s);
-+
-+	/* Copy the parameters before populating dst's runtime quota state. */
-+	src = damon_new_test_ctx(dst);
-+	if (!src) {
-+		damon_destroy_ctx(dst);
-+		kunit_skip(test, "src alloc fail");
-+	}
-+	src->min_region_sz = min_region_sz;
-+	s->quota.esz = 123;
-+	s->quota.esz_bp = 456;
-+	s->quota.total_charged_sz = 789;
-+	s->quota.total_charged_ns = 1011;
-+	s->quota.charged_sz = 12;
-+	s->quota.charged_from = 13;
-+	s->quota.charge_target_from = target;
-+	s->quota.charge_addr_from = 14;
-+
-+	KUNIT_EXPECT_EQ(test, damon_commit_ctx(dst, src), expected_err);
-+	KUNIT_EXPECT_EQ(test, s->quota.esz, 123ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.esz_bp, 456ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.total_charged_sz, 789ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.total_charged_ns, 1011ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.charged_sz, 12ul);
-+	KUNIT_EXPECT_EQ(test, s->quota.charged_from, 13ul);
-+	KUNIT_EXPECT_PTR_EQ(test, s->quota.charge_target_from, target);
-+	KUNIT_EXPECT_EQ(test, s->quota.charge_addr_from, 14ul);
-+	damon_destroy_ctx(src);
-+	damon_destroy_ctx(dst);
-+}
-+
-+static void damon_test_commit_ctx_keeps_quota(struct kunit *test)
-+{
-+	/* Only power of two min_region_sz is allowed. */
-+	damon_test_commit_ctx_keeps_quota_for(test, 4096, 0);
-+	damon_test_commit_ctx_keeps_quota_for(test, 4095, -EINVAL);
-+}
-+
- static void damon_test_valid_probe_params(struct kunit *test)
- {
- 	struct damon_ctx *ctx;
-@@ -2348,6 +2453,7 @@ static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_mvsum),
- 	KUNIT_CASE(damon_test_nr_accesses_mvsum),
- 	KUNIT_CASE(damos_test_new_filter),
-+	KUNIT_CASE(damos_test_new_scheme_keeps_src_quota),
- 	KUNIT_CASE(damos_test_commit_quota_goal),
- 	KUNIT_CASE(damos_test_set_psi_current_val),
- 	KUNIT_CASE(damos_test_commit_quota_goals),
-@@ -2360,6 +2466,7 @@ static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_commit_filter),
- 	KUNIT_CASE(damon_test_commit_probes),
- 	KUNIT_CASE(damon_test_commit_ctx),
-+	KUNIT_CASE(damon_test_commit_ctx_keeps_quota),
- 	KUNIT_CASE(damon_test_valid_probe_params),
- 	KUNIT_CASE(damos_test_filter_out),
- 	KUNIT_CASE(damos_test_apply_scheme_filtered_sz),
+Patch 1 introduces the quota goal complement flag API and implements its
+behavior.  Patch 2 updates damos_new_quota_goal() to receive the flag.
+Patch 3 update DAMON sysfs interface to support the complement flag.
+Patches 4 and 5 extend existing kunit and kselftest to cover the new
+flag.  Patches 6-8 update design, usage and ABI documents for the new
+feature.
+
+Note: Below is additional information that is not intended to be added
+to the final commit message.
+
+Test
+====
+
+I tested this feature using the latest version of DAMON user-space tool,
+damo [1], as below.
+
+On an idle system having 10 GiB single node memory (node id 0), fill up
+80% of memory with page cache.
+
+    $ dd if=/dev/zero of=foo bs=1M count=$((1024*8))
+
+Run DAMOS with pageout action for 80% of free memory, but using
+node_mem_used_bp metric like below.
+
+    $ sudo ./damo start --damos_action pageout \
+            --damos_quota_space 100M --damos_quota_interval 1s \
+            --damos_quota_fail_charge_ratio 1 4096 \
+            --damos_quota_goal_tuner temporal \
+            --damos_quota_goal node_mem_used_bp 20% 0
+
+Because the system has more than 20% node 0 memory utilization, DAMOS
+does nothing, as expected.
+
+Run DAMOS with pageout action for 80% of free memory, using
+node_mem_used_bp metrics with complement flag like below.
+
+    $ sudo ./damo start --damos_action pageout \
+            --damos_quota_space 100M --damos_quota_interval 1s \
+            --damos_quota_fail_charge_ratio 1 4096 \
+            --damos_quota_goal_tuner temporal \
+            --damos_quota_goal node_mem_used_bp 80% complement 0
+
+Because the complement flag is given, it is effectively the same as
+node_mem_freepbp metrics with a target of 80%.  DAMOS reclaims the page
+cache ~100 MiB per second, until the free memory ratio (complemented
+memory utilization ratio) reaches the goal, 80%.
+
+Changes from RFC v4
+- RFC v4: https://lore.kernel.org/20260927120533.50484-1-sj@kernel.org
+- Fix a typo in test code (s/complementfalse/complement/).
+- Extend sysfs.sh DAMON selftest for complement flag sysfs file.
+Changes from RFC v3
+- RFC v3: https://lore.kernel.org/20260923101454.5748-1-sj@kernel.org
+- Rebase to the latest mm-new.
+- Add tests done to the cover letter.
+Changes from RFC v2
+- RFC v2: https://lore.kernel.org/20260919011359.88921-1-sj@kernel.org
+- Avoid quota goal value underflow for some_mem_psi.
+- Handle complement flag for psi goal with unset last_psi_total.
+- Pass complement argument to damos_new_quota_goal() from core and
+  core-kunit.
+- Explicitly document no-op complement behavior for user_input.
+Changes from RFC
+- RFC: https://lore.kernel.org/20260918142827.85303-1-sj@kernel.org
+- Avoid quota goal value underflow.
+- Fix usage doc for number of files in each goal directory.
+- Rebase to the latest mm-new.
+
+[1] https://github.com/damonitor/damo
+
+SJ Park (8):
+  mm/damon/core: introduce damos_quota_goal->complement
+  mm/damon/core: add complement argument to damos_new_quota_goal()
+  mm/damon/sysfs-schemes: support quota goal complement flag
+  mm/damon/tests/core-kunit: test quota_goal->complement commit
+  selftests/damon/sysfs.sh: test quota goal complement flag file
+  Docs/mm/damon/design: document damos quota goal complement flag
+  Docs/admin-guide/mm/damon/usage: update for quota goal complement file
+  Docs/ABI/damon: update for quota goal metric complement sysfs file
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |  6 ++++
+ Documentation/admin-guide/mm/damon/usage.rst  | 15 +++++----
+ Documentation/mm/damon/design.rst             | 15 ++++++---
+ include/linux/damon.h                         |  4 ++-
+ mm/damon/core.c                               | 33 ++++++++++++++++---
+ mm/damon/lru_sort.c                           |  5 +--
+ mm/damon/reclaim.c                            |  5 +--
+ mm/damon/sysfs-schemes.c                      | 30 +++++++++++++++++
+ mm/damon/tests/core-kunit.h                   |  3 ++
+ samples/damon/mtier.c                         |  2 +-
+ tools/testing/selftests/damon/sysfs.sh        |  3 ++
+ 11 files changed, 100 insertions(+), 21 deletions(-)
+
+
+base-commit: f3528689602b1d578d582cb060e89fa25516fd67
 -- 
 2.47.3
