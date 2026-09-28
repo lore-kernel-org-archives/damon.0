@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF2F484896;
-	Mon, 28 Sep 2026 08:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFD448488D;
+	Mon, 28 Sep 2026 08:40:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790584812; cv=none; b=mvyCfZnaPT2PBEYOigusZmkN9LGXnDaCDD0VZUSZFHp/UJp7yUEqsBMZFPqmlluN+2/HDy8z9eyFYSkDyP+x3uqNka67mhXjTsnx+Mas80vTK3b6wodOb/QMy3PWFTVX9rhC2H8ITgL2af/J+MvcBbeSyHrAwnvzRsVX7nrWzhI=
+	t=1790584816; cv=none; b=laqouVemvP/1bNBg6x3OqtthtsizMJ2G/Dw/8xCXaElfhnutDBn2X0BEb31k5R4hUbyVta+EMWtQkO2y73PB9PWhUa0k9BAORnt4TeNk3AeftgQGkPXtgOsSPglQC3h1XCsbnCzA9ASc2mW8hyP+dJCVi5JXm2vYsxltDs1u9yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790584812; c=relaxed/simple;
-	bh=Ux+XRLdHH3mqzmbeYYP+7+dygvmdySbKleSnyBkwwnc=;
+	s=arc-20240116; t=1790584816; c=relaxed/simple;
+	bh=h7evO3RcDKawrqH+2r5GnVJXoUllTPiWt0SIU9IWj9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+mjHM9sU1AB/jYDYelexOHc6CNd5qPJN/SSHRJL8O4y5Kp2VYubY4WY8PjS2JkQisWyKezadV/lwLatVwSW9qM1ezs6nOTKIUZxEsblvx9TDfkL49Kw6DnCqt93cltcpTesBeE15kWvYZu/z52BIZF7DwGMOnpwSp8BEdFce14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DjfX74fr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hEFhqG+VG1p3g+bCHQtOU2aV/0oKInU4TxQ2WIg10uGsnUUY0vM2eOtSTBCFiSUFHMHnh++JZ//4tSeQyvqLkTQrkyYeXL02wmBoZF65reMlZ1PyUdTolZ5FbjPkUO0UUJmcXxqYyo1BfLQOD2CTN0PL57prOhVfGFUIYIQArgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ouiy1Hwy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DjfX74fr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878901F00893;
-	Mon, 28 Sep 2026 08:40:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ouiy1Hwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87D31F000FF;
+	Mon, 28 Sep 2026 08:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790584811;
-	bh=bGJHJrOH+riYBdOov+lE8FQ5rx8dbnRY2szuLD404PY=;
+	s=k20260515; t=1790584815;
+	bh=QvJUQAwtTUqWjCL+OziAjJmsBq454CkzwYAl5nK+x/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjfX74frxAWYMyUFQtctBiJmVvoieVS4KbUstf41uWpfgYe9XU6SBJTiYPEKy05bW
-	 Av6Wp2MbeN2MAsvyTLwige6CW21NJtEDMHa2kdPHER7QdvkknnBTXJOeCZp7q/it3u
-	 NTpy71mDmE3en438Lq4teRmKUMT6yYkwMaoWwwUHGYL8Ah+dg3rnV8uw85z27obf7p
-	 jmekeMJEeBwZuUXwjPAhfQg42yx3VaiHsbZDX7lUAIAnT9ey6SmZqIDRSmMSnIqwSO
-	 zD7wRSvydvw4xPprUp8m9oyr53dTKoIyjDm7whej4IbvWgTpOJF0hoKWWlvoe6TEO/
-	 +EKCMXDJ7ubmA==
+	b=Ouiy1HwyCYaUI/6+irBuhHecQHFC48KigeHFwfi3HT7ohp/BjmgP2sISwQmFwbJFJ
+	 puXwxpH5Bs0tqz71RPnr1CvC1mP9jwoGQS4+iabRpSQVjjq/Q24nu8+gwdQryrMxPx
+	 9ve+/1vbmjl+EMKLgoUkMsOGnBsKm57LfGJ9BN/j8PMglicbrGNF6PPdGzFyJiEe7a
+	 aJ480RSA2ChAXIv9eb0eklGnB1ljkv8J/t2l8gmAyXDuoQqxqcqrPa9Bf1i2UZwsXZ
+	 6mvC4WziuAsALJLULuawfQofcBmlquxcj6BxgXt5e5BoIk1Gn1WdTm+2FqrHDliXzV
+	 grEBSYpFMEAPw==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Ravi Jonnalagadda <ravis.opensrc@gmail.com>,
+Cc: Karl Mehltretter <kmehltretter@gmail.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Lian Wang <lianux.mm@gmail.com>,
 	SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	llvm@lists.linux.dev
-Subject: [PATCH 2/3] mm/damon/core: reduce stack usage further
-Date: Mon, 28 Sep 2026 01:39:56 -0700
-Message-ID: <20260928083959.4030-3-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 3/3] mm/damon/tests/core-kunit: test PSI goal values with explicit samples
+Date: Mon, 28 Sep 2026 01:39:57 -0700
+Message-ID: <20260928083959.4030-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260928083959.4030-1-sj@kernel.org>
 References: <20260928083959.4030-1-sj@kernel.org>
@@ -53,78 +53,99 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-In a previous patch, I had annotated kdamond_tune_intervals() as
-noinline_for_stack in order to not exceed the stack frame warning
-limit. Unfortunately, my current linux-next randconfig builds show
-a similar problem again with clang-21:
+Test the PSI current-value helper with explicit totals so the result does
+not depend on the test system's memory pressure. Cover an unmeasured
+consist goal, unmeasured temporal goals with zero and nonzero effective
+quotas, and measured rounds for both tuners. Check last_psi_total after
+each call.
 
-mm/damon/core.c:3953:12: error: stack frame size (1288) exceeds limit (1280) in 'kdamond_fn' [-Werror,-Wframe-larger-than]
- 3953 | static int kdamond_fn(void *data)
-
-Do the same thing with kdamond_apply_schemes(), kdamond_merge_regions(),
-and kdamond_split_regions(), which also have individually large stacks.
-This should work to keep the deepest total stack depth down much more
-as well as avoid the warning.
-
-I also tried to reduce the complexity of kdamond_fn() itself by splitting
-out the while() loop into a separate function. While this arguably led
-to slightly more readable code, it had no effect on the total stack
-usage and just made the new function the largest stack user and had
-a nonzero risk of me getting the conversion wrong.
-
-Fixes: 5a00cae64de1 ("mm/damon/core: reduce kernel stack usage")
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Lian Wang <lianux.mm@gmail.com>
+Cc: Kunwu Chan <kunwu.chan@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Reviewed-by: SJ Park <sj@kernel.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
-Changes from v1
-- v1: https://lore.kernel.org/20260925130254.4022227-1-arnd@kernel.org
+Changes from v2
+- v2: https://lore.kernel.org/20260921020013.33105-1-kmehltretter@gmail.com
 - Collect R-b: from SJ.
+- Split out from the series.
 - Rebase to the latest mm-new.
-- Update subject prefix.
+- Delete mention of old behavior, as it is irrelevant for commit message.
+Changes from v1
+- v1: https://lore.kernel.org/20260915060937.3423-1-kmehltretter@gmail.com/
+- Use the previous effective quota for the temporal decision, including
+  when it is zero. Keep resetting last_psi_total for new and updated
+  goals.
+- Move the current-value calculation and last_psi_total update into a
+  helper. Test both tuners with explicit samples and check
+  last_psi_total after each call.
 
- mm/damon/core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ mm/damon/tests/core-kunit.h | 43 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 733025b36745..0e375f4445fd 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3433,7 +3433,7 @@ static void damos_trace_stat(struct damon_ctx *c, struct damos *s)
- 	trace_call__damos_stat_after_apply_interval(cidx, sidx, &s->stat);
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index df84d9cc7d20..ef4b8b85d67b 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -910,6 +910,48 @@ static void damos_test_commit_quota_goal(struct kunit *test)
+ 			});
  }
  
--static void kdamond_apply_schemes(struct damon_ctx *c)
-+static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
- {
- 	struct damon_target *t;
- 	struct damos *s;
-@@ -3589,8 +3589,9 @@ static void damon_merge_regions_of(struct damon_target *t, unsigned int thres,
-  * while DAMON is running.  For such a case, repeat merging until the limit is
-  * met while increasing @threshold up to possible maximum level.
-  */
--static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
--				  unsigned long sz_limit)
-+static noinline_for_stack void kdamond_merge_regions(struct damon_ctx *c,
-+						     unsigned int threshold,
-+						     unsigned long sz_limit)
- {
- 	struct damon_target *t;
- 	unsigned int nr_regions;
-@@ -3734,7 +3735,7 @@ static void damon_split_some_regions(struct damon_ctx *ctx,
-  * split was unnecessarily made, later 'kdamond_merge_regions()' will revert
-  * it.
-  */
--static void kdamond_split_regions(struct damon_ctx *ctx)
-+static noinline_for_stack void kdamond_split_regions(struct damon_ctx *ctx)
- {
- 	struct damon_target *t;
- 	unsigned long nr_regions = 0;
++static void damos_test_set_psi_current_val(struct kunit *test)
++{
++	struct damos s = {
++		.quota.goal_tuner = DAMOS_QUOTA_GOAL_TUNER_CONSIST,
++	};
++	struct damos_quota_goal goal = {
++		.metric = DAMOS_QUOTA_SOME_MEM_PSI_US,
++		.target_value = 100,
++		.last_psi_total = U64_MAX,
++	};
++
++	/* uninitialized last_psi_total keeps the consist tuner quota */
++	damos_set_psi_current_val(1000, &goal, &s);
++	KUNIT_EXPECT_EQ(test, goal.current_value, 100ul);
++	KUNIT_EXPECT_EQ(test, goal.last_psi_total, 1000ull);
++
++	/* initialized last_psi_total gives the delta */
++	damos_set_psi_current_val(1030, &goal, &s);
++	KUNIT_EXPECT_EQ(test, goal.current_value, 30ul);
++	KUNIT_EXPECT_EQ(test, goal.last_psi_total, 1030ull);
++
++	/* temporal tuner keeps a zero quota */
++	s.quota.goal_tuner = DAMOS_QUOTA_GOAL_TUNER_TEMPORAL;
++	s.quota.esz = 0;
++	goal.last_psi_total = U64_MAX;
++	damos_set_psi_current_val(2000, &goal, &s);
++	KUNIT_EXPECT_EQ(test, goal.current_value, 100ul);
++	KUNIT_EXPECT_EQ(test, goal.last_psi_total, 2000ull);
++
++	/* temporal tuner keeps a non-zero quota */
++	s.quota.esz = SZ_64K;
++	goal.last_psi_total = U64_MAX;
++	damos_set_psi_current_val(3000, &goal, &s);
++	KUNIT_EXPECT_EQ(test, goal.current_value, 0ul);
++	KUNIT_EXPECT_EQ(test, goal.last_psi_total, 3000ull);
++
++	/* temporal tuner uses the measured PSI delta */
++	damos_set_psi_current_val(3250, &goal, &s);
++	KUNIT_EXPECT_EQ(test, goal.current_value, 250ul);
++	KUNIT_EXPECT_EQ(test, goal.last_psi_total, 3250ull);
++}
++
+ static void damos_test_commit_quota_goals_for(struct kunit *test,
+ 		struct damos_quota_goal *dst_goals, int nr_dst_goals,
+ 		struct damos_quota_goal *src_goals, int nr_src_goals)
+@@ -2260,6 +2302,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_nr_accesses_mvsum),
+ 	KUNIT_CASE(damos_test_new_filter),
+ 	KUNIT_CASE(damos_test_commit_quota_goal),
++	KUNIT_CASE(damos_test_set_psi_current_val),
+ 	KUNIT_CASE(damos_test_commit_quota_goals),
+ 	KUNIT_CASE(damos_test_commit_quota),
+ 	KUNIT_CASE(damos_test_commit_dests),
 -- 
 2.47.3
