@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70F221FF23
-	for <damon@lists.linux.dev>; Tue, 29 Sep 2026 07:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BFA3AE1B4
+	for <damon@lists.linux.dev>; Tue, 29 Sep 2026 07:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790667787; cv=none; b=b/5J/vFajoM1HZjGn5opTP1yOLrKjAzXRyCb2FXYl+236fZ5gcE3tTkfk5pGfgysCKnZgARMdZUtPfa/YEV3pGB9w1o2mbLFhNyV+kR++BtKthTJsd6q9sHk+Y3aapi/G6r8afvZJU6cexXj3o4qaPUD7VfEiegZE9PlzAj//HQ=
+	t=1790668178; cv=none; b=J7lde1nZnKEfpn4pbJjRaRR1cOUKavgRPFLNOP2WdsorkLSljdbipTznWi/OHG6WUQiuZm353rbD4nO1b/b74elBmvDSuCiqn4jrkpDGT5TskVj2PxsrZZi7loq2DnF0SbPhiNcnj3zNFYOwik7mff8hRIT9GWe6mKwueB3U0Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790667787; c=relaxed/simple;
-	bh=cfVnVGUYjLNnZmMA1yfAbO8YfX+3Fdm8aoNFdenmsxs=;
+	s=arc-20240116; t=1790668178; c=relaxed/simple;
+	bh=7vwGVA1CH5yyx9BHzVr7wZ/CTvFXV0JWKiQicg87sfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYkny8YogJxEQnVPk+UCqoxZIuDBP0OqjWyp0l+QKMqlSNTUfCV/akHMP4XGEbLH7d7qLarUcQBk3N1I/VjUMoFkMJCPZ0pXxxwGFdLJ5UD3djDQX7hZLewYqwhXivksoLGrUKahno0BxDkn93Ljc8Ub8a6pEURX8VnEHyBRt/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GoO/qR8P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=txzC5ZsQxPv4mBjRLj1UsRx/EqeqzK1BZDuV/dPwma9aTxOEU83KP2TYyUSetCFSZRk+LT2DTfjBVtq9RBAc8i5pJG9JdQGIrTgwHP7el31hi6Oa+aLsGKeirNZxLlpDOl68YeeSiCrZU79orpBYwGMgooVCfsGkz3bqT/eZ4rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQ2YLwTa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GoO/qR8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D0E1F0089A;
-	Tue, 29 Sep 2026 07:43:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQ2YLwTa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9BC1F000FF;
+	Tue, 29 Sep 2026 07:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790667785;
-	bh=33XS3pljtgekiEg6Mr1oe8Qx6Mc8aJxJsqmFopwyONU=;
+	s=k20260515; t=1790668177;
+	bh=VPht9WNWFS86BiIEP+h7UzzhDcQB+WCi6crydl5nEfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GoO/qR8P4mfouqOU/vYLtzRNnWFHNol3JvN9wjAKgcll/AWX6dLOtGmrz4tid2rEF
-	 5EIwtIGqfhRxnymTsQnTNNgBbXaufIjKDDCQmnN/e88W2v5KjAfdhIaDNCARK9rK7O
-	 1DxEOviVRHmIlP7J3q1uQ0wWR51kS1lrqbyPZx3PVZ5CEKbnAuun7+dfnlPZbeMDix
-	 qahHEyK8vSn9BxrixT11N7nhXuSVwqFezJZGvSfDfjKHkTbz/f65d/HJaQIlOPLb0e
-	 OZeUWYmUGJtS/X869qMQpFVayiBaW5/8UMbZVQ9QMrHa56fCAjNaPhT4EcXDlIH/iu
-	 WbBbemCDLdU8g==
+	b=ZQ2YLwTaDIxcBYOoI4mOPIWSdq18GRFv0q0uZuqdTDWbALLjOcgVWdg3c+RKhLFR8
+	 KGLhxQvQuq8Nzu3u+DFIbrXHCSvk1EaAqClpilK/dmOLZwyu6v4DXjlgXBgaubL2nJ
+	 vAldv3pr3TMd7LdzLwUC1LrcyLMrktiAbAnKsmHOjU7KVqXVnRPJQ0pA4luMYobMwF
+	 Wrw1QVcN3ce8xT3qSXPRoWsvYbwX5aTdiuEn8B89wfCXPMZte0CTvGeIklunC5oP8c
+	 wBERpyKX3RfOUBG3KNIpvxaB/tf8hZEsIulChpc24166BQ0C2V2/tXogOZDHkd5y6f
+	 gIPiqUKxX1Uxw==
 From: SJ Park <sj@kernel.org>
-To: Liew Rui Yan <aethernet65535@gmail.com>
+To: Anton Gavriliuk <antosha20xx@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC] mm/damon/damo: saving damon sysfs configuration
-Date: Tue, 29 Sep 2026 00:43:00 -0700
-Message-ID: <20260929074300.40012-1-sj@kernel.org>
+	damon@lists.linux.dev
+Subject: Re: Memory tiering with DAMON/DAMOS auto-tuning
+Date: Tue, 29 Sep 2026 00:49:32 -0700
+Message-ID: <20260929074932.40176-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260928191332.138511-1-aethernet65535@gmail.com>
+In-Reply-To: <CAAiJnjrJxoKy3AdXHiCSEGZyDwSqDJa4riO5FZeQX9uZKfjgmg@mail.gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,42 +44,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Liew,
+On Mon, 28 Sep 2026 20:02:43 +0300 Anton Gavriliuk <antosha20xx@gmail.com> wrote:
 
-On Tue, 29 Sep 2026 03:13:06 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
-
-> Hi SJ and Community,
+> > Thank you for sharing your use case and question!
 > 
-> I've noticed that damo [1] doesn't seem to have a feature for saving
-> DAMON SYSFS configuration.  I tried 'damo args damon', but it doesn't
-> save the DAMOS schemes information.
+> Thank you for your quick response and your answer/comments.
+> 
+> We already had memory tiering implemented at hardware level 5-7 years
+> ago with Intel's Optane PEM when configured in Memory Mode.
+> Now we do the same thing at Linux level :-)
 
-If so, it is a bug.  Could you share more details including how the issue can
-be reproduced?  Directly sending a PR should also be fine.
+Interesting!
 
-> 'damo report damon --json' provides
-> more detailed information, but its output cannot be read by 'damo start
-> --kdamonds'.
+> I'm new at DAMON/DAMOS, there are lots of new tunables to me.
 
-Maybe this is also an issue that we could fix.
+Indeed there are.  I'd recommend starting with existing DAMON-based memory
+tiering solutions including SK Hynix HMSDK and my auto-tune based memory
+tiering script [1] and ask questions to the authors.
 
 > 
-> I'd like to know if there is currently any way in damo to save the DAMON
-> SYSFS configuration that can be correctly read by 'damo start
-> --kdamonds'.  If not, would it be worth adding one?
+> > The example memory tiering script [1] uses 4% as intervals goal.  Is there a
+> > reason to use 97% as the goal instead?
+> 
+> Oohhh... I moved to 5%.
 
-I believe it would be useful.  Please feel free to send a PR.
+I understand you mean 4%?
 
-Nonetheless, we added the json/yaml kdamonds config support mainly because
-there was no good way to flexibly configure kdamonds with the command line
-interface.  Now it is much more improved [1].
+> 
+> > Is the above node_mum_used_bp what you really want?  That means you want to
+> > promote hot pages from node 2 to node 0, until the node 0 memory utilization
+> > becomes 99.7%.  That overlaps with the demotion goal (50% free memory of node
+> > 0) quite a lot.  I'd suggest smaller overlap, say, 50.3%, to keep healthy
+> > circulation of hot/cold pages while not consuming too much resource under
+> > stabilized access pattern.
+> 
+> > DAMOS quota auto-tuning supports two tuner algorithms [2], consistent and
+> > temporal.  As the documentation [2] explains, 'consistent' tuner assumes it
+> > should keep applying the action in a level to keep the goal achieved.  In this
+> > case, for example, the demotion scheme assumes there will be continued
+> > promotion and therefore it keeps demoting.  If there is no appropriate
+> > promotion, it could result in demoting more than expected amount.
+> 
+> So let me firstly understand what I really want to test :-)
 
-I'd recommend using the command line interface.  That is, you could copy your
-command line setup in a bash script and modify/reuse it.
+Sure, and please feel free to ask any question in any ways.  If you prefer to,
+you could also ask questions privately to me or use DAMON Beer/Coffee/Tea Chat
+series [2].
 
-Is there a use case that it cannot work or suboptimum?
-
-[1] https://github.com/damonitor/damo/issues/3#issuecomment-5655965736
+[1] https://github.com/damonitor/damo/blob/next/scripts/mem_tier.sh
+[2] https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing
 
 
 Thanks,
