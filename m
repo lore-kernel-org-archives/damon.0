@@ -1,52 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4DF39EF0B
-	for <damon@lists.linux.dev>; Tue, 29 Sep 2026 08:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E58D3A6405
+	for <damon@lists.linux.dev>; Tue, 29 Sep 2026 08:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790669266; cv=none; b=tL5YaA5cMdiw3Z2Ks/nWI4XzlnB6bTXRHkXLRkrzGYvHz4UCy2PC6rSPMhc+TJA+f2pywnKbqVr/JBWwNN42hpnsWs4lpfDqOKGDulz1sj1fBGqYAZE2QmguMy4EG4eLh5dose9LXzHXruim9MpiRWYqIHS+gIz3MJKxff4rHvs=
+	t=1790669267; cv=none; b=bXH1PxKg5SupIS3r9GJp2EHl2gczv8+wyW95cGaflQdrWXkiT0BoqalCgcF/92KwpBSdPwoWnrIIPlzWJueS66E3gD1rWtyLNAnHe5mn61tdyTRL6K2/jrWKQ4kOOfS0zBL/y98mZRjuw67NW/NDNp8/dg3mvp6u/DE0TI6zw9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790669266; c=relaxed/simple;
-	bh=lyP5hZvSFn0xtlf7v8NAT/96T5s+atz9w7TA5AxRdAA=;
+	s=arc-20240116; t=1790669267; c=relaxed/simple;
+	bh=hKHGJ1CsGle8XA8JBXaovhNnMpSyHumD+0EJ6qd5+KY=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=ptqPtw1P4kjc/yaKdOQW8aRD9/isu6nd30dR+WpZfRUDmVaDe9WNHYAbl0IFCloJvP+ZCkmE/6qoAZ7RlJOtpeAc+i6UJYEpKvzznSOl2MB+EQoWJt+JcCCxGtxzAAl1BBmRIEipKrnr2rUCuvuKW6vjmLhtVLhoEwQIjW9zEfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WAQDqy+e; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=R9F65rIOsHD1QzCFqv0WpzNdqCpSmV4ipYA9ycjILEqMsuQR4+u52W/Lh/cHYYil0uisEh0DpnZ5gMBsCbp62T6bGciy4Hxj3zSavEGhKUyrFgjL6K0ylUq+gvSbkTlReTOVymN8F7tjJjIhWUiLqo9jJii9+6UP+s/easfMPJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QR70EmyI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WAQDqy+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA661F000FF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QR70EmyI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76341F00893;
 	Tue, 29 Sep 2026 08:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790669265;
-	bh=lyP5hZvSFn0xtlf7v8NAT/96T5s+atz9w7TA5AxRdAA=;
+	s=k20260515; t=1790669266;
+	bh=NJWSGzDcJGwDl9tgRQjKfDz5oXsgz2kvxdoE+ltlliY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=WAQDqy+ejtNRDSM2iHbayHOvRUT7a8l17VQKMXWHiRTZ9jYKOJAsjO2rnbFw1J9mG
-	 oigBCtxRFT3uF1Vj0JkWFoA6ReYQ3XzJk9lL7cxF1aqZmDOp/TiI1HDvW/FGYK1mNL
-	 1METcOX6xsq9mp9c5+qxu8DMLLY7yiKy9ghYa/E1KVumaT+RmtnUTqYSLhSw6thdBC
-	 wxdL/EQXfbopEjjZsriB3VHLqGE7dBy/VBhbwjLO5qN4wVjr9PrvnxPlhai44DE6BX
-	 OcpdFzfYN9yUT+evKrByjPf4W/nc1SRojdw8qZeoo1t7V3sQCjnrJTyjKo2Y0fQ10l
-	 STo/vKpOHTvVw==
+	b=QR70EmyIvD7w2lx7BETS8zEbOoaNQo82F+SSy0hmdHCIcRijWAnGRfrzmlPARTLhr
+	 967kowQcxzczMU6xQ2ufd+ypw00OvVPohmH4ZZzBqD/tYTrDR1fv89SQHU2bC928yP
+	 6z530MJEo4G4SWyPfdRf6vNl7VsnajZo9UA5bWwarM+Q1cVWQzNIk0Vxzi40gNImop
+	 NQiQKDROv7XAmVywNZboMk3SJgC1/gxBt7EusC25cJ6oFclp0XC0VnUtldbRLtAeoI
+	 gMeDS39qnaNXWwqikNO7Po97tCQiEtUlh1oQkXHjY1h1b5buJUL48Zicl+yzg2Qn7G
+	 BxTMwTCrcKrbw==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 5/8] selftests/damon/sysfs.sh: test quota goal
- complement flag file
+Subject: Re: [PATCH 2/8] mm/damon/core: add complement argument to
+ damos_new_quota_goal()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260929080113.41708-6-sj@kernel.org>
+In-Reply-To: <20260929080113.41708-3-sj@kernel.org>
 References: <20260929080113.41708-1-sj@kernel.org>
- <20260929080113.41708-6-sj@kernel.org>
+ <20260929080113.41708-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 29 Sep 2026 08:07:44 +0000
-Message-Id: <20260929080745.2CA661F000FF@smtp.kernel.org>
+Date: Tue, 29 Sep 2026 08:07:45 +0000
+Message-Id: <20260929080745.D76341F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-> Test the existence and the valid input acceptance of the newly added
-> quota goal complement flag sysfs file.
+> damos_quota_goal->complement needs to be manually set by each API
+> callers.  It is easy to make mistakes.  Extend the quota goal
+> constructor, damos_new_quota_goal() to receive and set the complement
+> flag value. Also update all callers to use the new signature.
 >=20
 > Signed-off-by: SJ Park <sj@kernel.org>
 
@@ -54,5 +56,5 @@ Sashiko has reviewed this patch and found no issues. It looks great!
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260929080113.4170=
-8-1-sj@kernel.org?part=3D5
+8-1-sj@kernel.org?part=3D2
 
