@@ -1,72 +1,154 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AE7515890;
-	Tue, 29 Sep 2026 10:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F88B519E17
+	for <damon@lists.linux.dev>; Tue, 29 Sep 2026 10:40:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790678065; cv=none; b=T8x04BsWeTFbomCvfVR9jIyQGCwT7VpyMmV1LPavRwGnuWwfdLUuerJDKvUizkHFt1cMcs4EJYVYBOEsmVQGwsyhPYHZooup+Qo5fdffW89NRkqDwBfGVlbLiPqa16nB0LNkZAy0RVLm+gz70cFdW8KCrgkDQxgnaJrXNa9Iyfs=
+	t=1790678440; cv=none; b=TZP/c2KDiNnjOQndLoJ+E2IktBAFhmDY5FuauiTdut2VSTqqxXDV5gG9Yj4UB3K5TOlXsztJN+tVQ+cwQ3LY9fEmi1VPyv/Io00wdDickhQjwEONXBJ1MkGsaHADirP7zFnvOeGs3NjcRj24leBYOK0YLqyl2l8HpBAj18etey4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790678065; c=relaxed/simple;
-	bh=kSH9iXgw4OzBViyz1Xa2n/YB37FaIuWGJHY131yUYb4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lexdnpFfiK86cajJXcHykJZAjgAEjB9fcVQQGjMYQwUQ5tfqzsPj2KCyIPtrxmZ3lQzoYAJmTI1qT2IGiSr7lcV/9ZpDqOyD4gavTecnpzigUDkDoMZa4Vpvr1YrWA00mkOMEQPWyrdpdnUCdo2+dYdVg+yEl1m/ZNHP1KeTDCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BkRAZzAA; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790678440; c=relaxed/simple;
+	bh=EFp+IIgLsS53IWlkb+HfsQhxHwEld0wQyO9Fu+1g4bY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=toHOlfgRTD5OZbR1Y+tlFQrDL99xm4Iu/+GgC6Hve7lCOTwWpdulgfBgrosaua8DMhV/5HiInKDeB1gBG3KH+esSA7ycJoFcWcM4U73Vktb9o4NJ7TYt3Xj1bzWYP6k1DHUZ1G6eJojOSnP+40TArh/K0HntD+TVTewADcQlZwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com; spf=pass smtp.mailfrom=huawei-partners.com; dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b=BomE8Z/A; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei-partners.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BkRAZzAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D041F000FF;
-	Tue, 29 Sep 2026 10:34:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790678049;
-	bh=yBXkg6lcF7PD3meg2Ejx15cUOLf+061n4vtekQxtgDo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BkRAZzAAV8/v/ofwm68pL7D7X30D+pQbx4GcFkSEH39MsIDPvjYEs8+iarX+qTD3m
-	 mMYFRfqWksoJomd5y2p/bfyMmxfpZsy8wEiD+kRWxk9dqFY1r0QwF0xFzAszOb24iI
-	 kRmvwYdoE5heMF5W1AQrn4P88T8mlyoioR+Ztx3AwTcNMtTXoSAEoK1k834K1KAHHc
-	 MOKzPZVDRj/tjwHLLrLCYw1yGuzqSXHRHPiHfZW18i3QRSpJT+zVr3hQBYbGRe2zhs
-	 8MoVlGNYutWNuwSP1RHMnEDXsCgOnkhlP+eBBHtJ2tBdjVudqPeCBalzAj+MVvyBp1
-	 Lu+IwyjQg0Rdw==
-From: SJ Park <sj@kernel.org>
-To: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 1/8] mm/damon/core: introduce damos_quota_goal->complement
-Date: Tue, 29 Sep 2026 03:34:03 -0700
-Message-ID: <20260929103404.48154-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <9e07dbdd-3b02-4175-b343-c8cb6f9885e0@huawei-partners.com>
-References: 
+	dkim=pass (1024-bit key) header.d=huawei-partners.com header.i=@huawei-partners.com header.b="BomE8Z/A"
+dkim-signature: v=1; a=rsa-sha256; d=huawei-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=zV15/2vXc2zmmCBC0wBRxIby3C3ggjhlTWNSwlGL0ro=;
+	b=BomE8Z/Agr0yj3ehCeSYnRmn1e64OrhvSs/g1NC/W0zvjSqOBYpNDl8KaxE3XefivF9VN1jBj
+	r+XraTw0qNIDUXuOko8ijMpOqXyBBSb+fqu1faPa4dJXTHpL4d0npNsa0q3xkHitf4XVevIs0bE
+	cHYdkGcNMgCPtlHy0mPPOZg=
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4hvDml6Y8jzJ46Xx;
+	Tue, 29 Sep 2026 18:24:07 +0800 (CST)
+Received: from mscpeml500003.china.huawei.com (unknown [7.188.49.51])
+	by mail.maildlp.com (Postfix) with ESMTPS id 7CA0F4058B;
+	Tue, 29 Sep 2026 18:24:22 +0800 (CST)
+Received: from [10.123.123.154] (10.123.123.154) by
+ mscpeml500003.china.huawei.com (7.188.49.51) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Tue, 29 Sep 2026 13:24:21 +0300
+Message-ID: <9e07dbdd-3b02-4175-b343-c8cb6f9885e0@huawei-partners.com>
+Date: Tue, 29 Sep 2026 13:24:20 +0300
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] mm/damon/core: introduce damos_quota_goal->complement
+To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+CC: <damon@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<linux-mm@kvack.org>
+References: <20260929080113.41708-1-sj@kernel.org>
+ <20260929080113.41708-2-sj@kernel.org>
+Content-Language: en-US
+From: Gutierrez Asier <gutierrez.asier@huawei-partners.com>
+In-Reply-To: <20260929080113.41708-2-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: mscpeml500004.china.huawei.com (7.188.26.250) To
+ mscpeml500003.china.huawei.com (7.188.49.51)
 
-On Tue, 29 Sep 2026 13:24:20 +0300 Gutierrez Asier <gutierrez.asier@huawei-partners.com> wrote:
+Hi SJ,
 
-> Hi SJ,
+On 9/29/2026 11:01 AM, SJ Park wrote:
+> Introduce damos_quota_goal->complement for specifying whether to use a
+> complemented value of the given goal target metric.  Add the field to
+> the data structure and implement essential core support.  Handle the
+> flag in the quota goal commit and current quota goal metric value
+> retrieval.
 > 
-> On 9/29/2026 11:01 AM, SJ Park wrote:
-[...]
-> > +	/* updte current_value to complemented value */
-> There is a typo there. It should be "update".
+> Signed-off-by: SJ Park <sj@kernel.org>
+> ---
+>  include/linux/damon.h |  2 ++
+>  mm/damon/core.c       | 26 +++++++++++++++++++++++++-
+>  2 files changed, 27 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/linux/damon.h b/include/linux/damon.h
+> index 6a29dc2ac8db..42234839ce29 100644
+> --- a/include/linux/damon.h
+> +++ b/include/linux/damon.h
+> @@ -169,6 +169,7 @@ enum damos_quota_goal_metric {
+>  /**
+>   * struct damos_quota_goal - DAMOS scheme quota auto-tuning goal.
+>   * @metric:		Metric to be used for representing the goal.
+> + * @complement:		Use the complement of the metric.
+>   * @target_value:	Target value of @metric to achieve with the tuning.
+>   * @current_value:	Current value of @metric.
+>   * @nid:		Node id.
+> @@ -191,6 +192,7 @@ enum damos_quota_goal_metric {
+>   */
+>  struct damos_quota_goal {
+>  	enum damos_quota_goal_metric metric;
+> +	bool complement;
+>  	unsigned long target_value;
+>  	unsigned long current_value;
+>  	/* metric-dependent fields */
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 5ecbea5d71e1..1ab5154511e6 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -1224,6 +1224,7 @@ static int damos_commit_quota_goal(
+>  	if (!src->target_value)
+>  		return  -EINVAL;
+>  	dst->metric = src->metric;
+> +	dst->complement = src->complement;
+>  	dst->target_value = src->target_value;
+>  	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
+>  		dst->current_value = src->current_value;
+> @@ -2960,10 +2961,18 @@ static void damos_set_psi_current_val(u64 now_psi_total,
+>  		struct damos_quota_goal *goal, struct damos *s)
+>  {
+>  	u64 last_psi_total = goal->last_psi_total;
+> +	unsigned long val;
+>  
+>  	goal->last_psi_total = now_psi_total;
+>  	if (last_psi_total != U64_MAX) {
+> -		goal->current_value = now_psi_total - last_psi_total;
+> +		val = now_psi_total - last_psi_total;
+> +		if (goal->complement) {
+> +			if (val < s->quota.reset_interval * 1000)
+> +				val = s->quota.reset_interval * 1000 - val;
+> +			else
+> +				val = 0;
+> +		}
+> +		goal->current_value = val;
+>  		return;
+>  	}
+>  	/* uninitialized last_psi_total; make no effect this round */
+> @@ -3255,6 +3264,21 @@ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+>  	default:
+>  		break;
+>  	}
+> +	if (!goal->complement)
+> +		return;
+> +
+> +	/* updte current_value to complemented value */
+There is a typo there. It should be "update". Also, what is the 
+purpose of this comment? It doesn't explain anything, which may
+not be obvious.> +
+> +	/* for user_input, users set complemented value on their own */
+> +	if (goal->metric == DAMOS_QUOTA_USER_INPUT)
+> +		return;
+> +	/* damos_set_psi_current_val() handles complement flag itself */
+> +	if (goal->metric == DAMOS_QUOTA_SOME_MEM_PSI_US)
+> +		return;
+> +	if (goal->current_value < 10000)
+> +		goal->current_value = 10000 - goal->current_value;
+> +	else
+> +		goal->current_value = 0;
+>  }
+>  
+>  /* Return the highest score since it makes schemes least aggressive */
 
-Good catch, thank you.  Andrew, could you please fix it up when you take this?
-Let me know if you prefer reposting.
+-- 
+Asier Gutierrez
+Huawei
 
-> Also, what is the 
-> purpose of this comment? It doesn't explain anything, which may
-> not be obvious.> +
-
-The purpose is explaining the code below does what the comment says.
-
-
-Thanks,
-SJ
-
-[...]
