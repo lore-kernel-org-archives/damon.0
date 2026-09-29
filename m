@@ -1,118 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC1E3D47AB
-	for <damon@lists.linux.dev>; Tue, 29 Sep 2026 17:59:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5C83D79EF
+	for <damon@lists.linux.dev>; Tue, 29 Sep 2026 18:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790704759; cv=none; b=RzML8GlWez/cfyHZ0B5X3wXMV/pAHDtL3PXDXb3vNAku2ugY3vmgHNPcdx4eehH4m2+8CLXY6PbVKg8d01MsHDTTF7Rsa6mmtslgPQ13nodpFYCaafreWHiGfuYBYA0fIN/uxNiiYMG18nGJtxYkDVx0iQiFNYsXYr6I+qAbDZ0=
+	t=1790705648; cv=none; b=K7b6hpomu0zNBK5A8SVYIe7TVHbo/7ZC4uS2hnsaOkF7vphLolaFMGAKFBvgodixwaA+i3nKuWNg9UIclPawBevJAlKoFY0Ft/f2JjHaCh3BigJKh25qIyoXluRz4p/DlN8R1UWlu77A30p862qkQ0ylK9dEcVDhBukKRPXqFC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790704759; c=relaxed/simple;
-	bh=JwBUWDGpe+odNmGnpbjKh4SwK4zcmQSu/4bkSoamB8c=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=OzUbbqXDn9VGhNWoWPkYrmQKsMYTgWhKUn/iIUX3/lWW1VFtQN5z35afV/+weVzjpCjcJmYWhOWArhf6sQ6xw1BeMKaeztfMroqQiu4Iyt/ovPdXLwF0uwbB+n9Zq4BRR8jIiLG4r0PCbEVNHHdRV8hO347eXZXbkBvIqZUb1eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fhOsZYBH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790705648; c=relaxed/simple;
+	bh=mZh9La+paKQR4zf/FQmxkRWHM4xhm7VufrGTHjDBftg=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=ZyHzd+G+WgxSs0IsVeWsydZ7F3JZ7/161wl2ia7RIcSzkeqwyKteoFvhW0Am62EI+JFngBvFaRILORZ7+Qrdk5AgzCrOkUrzN2gA4CIs+LuAJ9DhlQI4FlKySa7KjZlgi4OWwSiUWkSQLBMZorJa2V7hdVjfEFoRPMtkVz2+omk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--pratmal.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hJGPNSw/; arc=none smtp.client-ip=74.125.82.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--pratmal.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fhOsZYBH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5D71F000FF;
-	Tue, 29 Sep 2026 17:59:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790704757;
-	bh=WzV378YIc7iFXlFRYJ22tT1viPH0hRWgAd7C8LMPPH4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fhOsZYBH6PDLJGYDerdzJ+GnWCg94+B2xKJQGpw0mlLtbI3FHyROnYzwgG7gPXGf/
-	 EGobFiPIPJK4KUO4BHuAi0Y5gU3AV3bTxXVCwffEwSs+fEDgy50OA6a/7Ik6YSJM0l
-	 IFlElWDgmLAVK2T19PxY6uK2DN8VHaFkuB+vOQ3w9uMxxgFCnuV/x6F2tQzXkqZFju
-	 pKVANNHJQS0lwU8Yr8Bmpt8HHxB3ZtHBj8hMgkLJQLeXhAZ1+4es8o/acY8Zb3afIB
-	 GDlvd1GpL3dvLoCvfnKHEesYID4K8+XpbJmSuduFYVWBXzLCtL3T1N7M8+90QkYOa3
-	 OGlo70vLZseUw==
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.18.y 1/2] mm/damon/core: allow esz to be set to zero
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20260929174456.9251-1-sj@kernel.org>
-References: <20260929174456.9251-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 29 Sep 2026 17:59:16 +0000
-Message-Id: <20260929175917.6E5D71F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hJGPNSw/"
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-33baaba6371so16767585eec.1
+        for <damon@lists.linux.dev>; Tue, 29 Sep 2026 11:14:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790705644; x=1791310444; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mZh9La+paKQR4zf/FQmxkRWHM4xhm7VufrGTHjDBftg=;
+        b=hJGPNSw/3Lg4R/yaRcrTjblK0vxwgxK/JTUDUJl1EX2svwiJlJ9XBplFFe2F1qrd7h
+         vWjqayVd9Dsw3OWp43tcIzC7TvpcuZTBWVhaYc43pWwxtlyp1x+aw4EJDnwcGxMXKT0u
+         sHmK6FOFXns5ugEErzoV1nWDeDVI+6Js8O4ENyWr2xEBv+x44PRrzicA/EWCUYtsd6OB
+         Z+YVUuE69JwZ6N+tbPi4IYgSsIi3FMFKkfmSgEHooqXz4gWTg83phtICRTIaC1JAwV5e
+         WgRsQy+GxMqYQLFEw7akyjyn92EpmUxna2zynEpHOY0EK+sYdCjPtl3OitAN5mhOZ/Ue
+         VMjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790705644; x=1791310444;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mZh9La+paKQR4zf/FQmxkRWHM4xhm7VufrGTHjDBftg=;
+        b=m/vyypgMB8KeIFMF1CDh5SdLtD+Z4Ou5EVZOfFGdkL+kWMJbQftvDT2h1g9dtv48mb
+         CYZ+I5/pLiDAvYt/VpyMLwHv6eXzD1tXXsoRyuTjtN74U2Xhr5rbr11LHg6Yfdt79TvR
+         rQfdEcKGYfRS8fDB8nZ3Ec3wZDSYuJ3d8/9ZYOZsoX1Xlp+p5qTL8aEa5+GBRMiJBRYv
+         1LmnAqtiqCfUPyf4CXyglFcdYsSIefBxzcDBeYtlQvkf9jWD+9BCw6rLcyCjXVIPjWZn
+         akdSGZ2iqGs7BpmFvtsnq6Yiq3itcTn98sB6PasNJ5tBBnwVnnLBRYRNGu1xxaYvhGVD
+         TQcQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxfDdu9o45NezjCV4rp3EJRdaRxPbgq1IWnJ5wLSpttrKXl6gBeL6Ql0r25SqSnd57RNe9I7A==@lists.linux.dev
+X-Gm-Message-State: AFq9FYKxbqoP6iEtJdmM4wV3CSlJy8sCZ99v9iDTZRfhMJp1HXk4C6GI
+	cmZNhak8iig/mcERQcqGum0O3euSwwp+qkdmdyrFu3++tAMj70JYwH2G5lu3O2sEGBwJKBiQdVZ
+	zRkhNBgQcUw==
+X-Received: from dybme43.prod.google.com ([2002:a05:7301:18ab:b0:34a:10b2:be3d])
+ (user=pratmal job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7300:c8c8:b0:33c:e61:e201
+ with SMTP id 5a478bee46e88-34c647d537fmr196806eec.22.1790705643313; Tue, 29
+ Sep 2026 11:14:03 -0700 (PDT)
+Date: Tue, 29 Sep 2026 18:14:02 +0000
+In-Reply-To: <20260929123241.1408414-1-huang-jl@deepseek.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+Mime-Version: 1.0
+References: <20260929123241.1408414-1-huang-jl@deepseek.com>
+X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
+Message-ID: <20260929181402.44684-1-pratmal@google.com>
+Subject: Re: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
+From: Pratyush Mallick <pratmal@google.com>
+To: huang-jl@deepseek.com
+Cc: baohua@kernel.org, damon@lists.linux.dev, david@kernel.org, 
+	kunwu.chan@gmail.com, lance.yang@linux.dev, lianux.mm@gmail.com, 
+	linux-mm@kvack.org, mst@redhat.com, ryncsn@gmail.com, sj@kernel.org, 
+	virtualization@lists.linux.dev, xiang@kernel.org, xueyuan.chen21@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
-s) to consider:
-- [Medium] mm/damon: removing min_sz_region clamp on esz breaks quota accou=
-nting
---
+> We have not yet fully explored how best to tune the DAMON and free-page
+> reporting parameters for our workloads.
 
-commit f7906e90ad53cf62853b7b051dfd11b8012181f1
-Author: Liew Rui Yan <aethernet65535@gmail.com>
-Subject: mm/damon/core: allow esz to be set to zero
+You can also try tuning page_reporting_delay_ms, which can help you with
+saving time-integrated host memory.
 
-This patch modifies damos_set_effective_quota() to allow the effective
-size quota (esz) to be reduced as much as possible when temporal quota
-goals are achieved. It does this by removing the clamp against
-min_sz_region when calculating esz.
+[1] https://lore.kernel.org/20260731193705.2902728-1-pratmal@google.com
 
-Link: https://lore.kernel.org/20260908135413.97570-1-sj@kernel.org
-
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 6fa02025d2af1..facb1fa1f695f 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-
-[ ... ]
-
-> @@ -2212,8 +2213,8 @@ static void damos_set_effective_quota(struct damos_=
-quota *quota,
->  							quota->total_charged_ns);
->  		else
->  			throughput =3D PAGE_SIZE * 1024;
-> -		esz =3D min(throughput * quota->ms, esz);
-> -		esz =3D max(ctx->min_sz_region, esz);
-> +		esz_time =3D max(throughput * quota->ms, ctx->min_sz_region);
-> +		esz =3D min(esz_time, esz);
->  	}
-
-[Severity: Medium]
-Will this break quota accounting when goals are over-achieved?
-
-By removing the clamp against min_sz_region, esz can drop below the minimum
-region size, for example to 1.
-
-If esz becomes 1, does ALIGN_DOWN() in damos_apply_scheme() evaluate to 0?
-
-mm/damon/core.c:damos_apply_scheme() {
-        if (quota->esz && quota->charged_sz + sz > quota->esz) {
-                sz =3D ALIGN_DOWN(quota->esz - quota->charged_sz,
-                                c->min_sz_region);
-                if (!sz)
-                        goto update_stat;
-                damon_split_region_at(t, r, sz);
-        }
-        ...
-        quota->charged_sz +=3D sz;
-}
-
-If sz evaluates to 0, it jumps to update_stat and bypasses incrementing
-quota->charged_sz.
-
-Because quota->charged_sz gets frozen at 0, wouldn't this prevent the quota
-short-circuit from ever being taken in damon_do_apply_schemes()?
-
-mm/damon/core.c:damon_do_apply_schemes() {
-        /* Check the quota */
-        if (quota->esz && quota->charged_sz >=3D quota->esz)
-                continue;
-}
-
-Can this also corrupt the qt_exceeds statistic since the same check
-fails in damos_adjust_quota()?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260929174456.9251=
--1-sj@kernel.org?part=3D1
+Thanks,
+Pratyush
