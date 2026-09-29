@@ -1,82 +1,80 @@
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5C83D79EF
-	for <damon@lists.linux.dev>; Tue, 29 Sep 2026 18:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32D3560AB7;
+	Tue, 29 Sep 2026 19:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790705648; cv=none; b=K7b6hpomu0zNBK5A8SVYIe7TVHbo/7ZC4uS2hnsaOkF7vphLolaFMGAKFBvgodixwaA+i3nKuWNg9UIclPawBevJAlKoFY0Ft/f2JjHaCh3BigJKh25qIyoXluRz4p/DlN8R1UWlu77A30p862qkQ0ylK9dEcVDhBukKRPXqFC0=
+	t=1790709207; cv=none; b=Apd+X63pfUpRmNIA4lrJqf1CGcRrr8MV9kZuR/iFTcN8q4oWsFmtb3JvUZ8/HO0OaXvgAptjj6thn++jkUy7m7Wf7CGI9RWsgJMi5zxsTxs9cr0RCpHYv8EhnWzDJdaexh37SEjC96D5kzT5zU3/aHHpEWhQ66V0UvWWcIfO5s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790705648; c=relaxed/simple;
-	bh=mZh9La+paKQR4zf/FQmxkRWHM4xhm7VufrGTHjDBftg=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ZyHzd+G+WgxSs0IsVeWsydZ7F3JZ7/161wl2ia7RIcSzkeqwyKteoFvhW0Am62EI+JFngBvFaRILORZ7+Qrdk5AgzCrOkUrzN2gA4CIs+LuAJ9DhlQI4FlKySa7KjZlgi4OWwSiUWkSQLBMZorJa2V7hdVjfEFoRPMtkVz2+omk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--pratmal.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hJGPNSw/; arc=none smtp.client-ip=74.125.82.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--pratmal.bounces.google.com
+	s=arc-20240116; t=1790709207; c=relaxed/simple;
+	bh=dx4bxNxlHbgLPpIPVxflZdL3jaEoNZNWaR2/NXJmBzA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gphKhvyVwZDAeErCskYZYI9vW+qIWiZQa4FSOa79eBmPSuGIeEQOTErZWmeSo1kESukT35fqLk0YGtjpXL6tv/tbkq8gFUuViTsGV0SF7ZXtxCfCDGjMfQU9ZaHE6VC8UdmeRfRf+UJUQBlbjV+CdJbuFtTDIQZ7E4mkQM4RzqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NjwpQ11C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hJGPNSw/"
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-33baaba6371so16767585eec.1
-        for <damon@lists.linux.dev>; Tue, 29 Sep 2026 11:14:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790705644; x=1791310444; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=mZh9La+paKQR4zf/FQmxkRWHM4xhm7VufrGTHjDBftg=;
-        b=hJGPNSw/3Lg4R/yaRcrTjblK0vxwgxK/JTUDUJl1EX2svwiJlJ9XBplFFe2F1qrd7h
-         vWjqayVd9Dsw3OWp43tcIzC7TvpcuZTBWVhaYc43pWwxtlyp1x+aw4EJDnwcGxMXKT0u
-         sHmK6FOFXns5ugEErzoV1nWDeDVI+6Js8O4ENyWr2xEBv+x44PRrzicA/EWCUYtsd6OB
-         Z+YVUuE69JwZ6N+tbPi4IYgSsIi3FMFKkfmSgEHooqXz4gWTg83phtICRTIaC1JAwV5e
-         WgRsQy+GxMqYQLFEw7akyjyn92EpmUxna2zynEpHOY0EK+sYdCjPtl3OitAN5mhOZ/Ue
-         VMjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790705644; x=1791310444;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=mZh9La+paKQR4zf/FQmxkRWHM4xhm7VufrGTHjDBftg=;
-        b=m/vyypgMB8KeIFMF1CDh5SdLtD+Z4Ou5EVZOfFGdkL+kWMJbQftvDT2h1g9dtv48mb
-         CYZ+I5/pLiDAvYt/VpyMLwHv6eXzD1tXXsoRyuTjtN74U2Xhr5rbr11LHg6Yfdt79TvR
-         rQfdEcKGYfRS8fDB8nZ3Ec3wZDSYuJ3d8/9ZYOZsoX1Xlp+p5qTL8aEa5+GBRMiJBRYv
-         1LmnAqtiqCfUPyf4CXyglFcdYsSIefBxzcDBeYtlQvkf9jWD+9BCw6rLcyCjXVIPjWZn
-         akdSGZ2iqGs7BpmFvtsnq6Yiq3itcTn98sB6PasNJ5tBBnwVnnLBRYRNGu1xxaYvhGVD
-         TQcQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxfDdu9o45NezjCV4rp3EJRdaRxPbgq1IWnJ5wLSpttrKXl6gBeL6Ql0r25SqSnd57RNe9I7A==@lists.linux.dev
-X-Gm-Message-State: AFq9FYKxbqoP6iEtJdmM4wV3CSlJy8sCZ99v9iDTZRfhMJp1HXk4C6GI
-	cmZNhak8iig/mcERQcqGum0O3euSwwp+qkdmdyrFu3++tAMj70JYwH2G5lu3O2sEGBwJKBiQdVZ
-	zRkhNBgQcUw==
-X-Received: from dybme43.prod.google.com ([2002:a05:7301:18ab:b0:34a:10b2:be3d])
- (user=pratmal job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7300:c8c8:b0:33c:e61:e201
- with SMTP id 5a478bee46e88-34c647d537fmr196806eec.22.1790705643313; Tue, 29
- Sep 2026 11:14:03 -0700 (PDT)
-Date: Tue, 29 Sep 2026 18:14:02 +0000
-In-Reply-To: <20260929123241.1408414-1-huang-jl@deepseek.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NjwpQ11C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C391F000FF;
+	Tue, 29 Sep 2026 19:13:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790709204;
+	bh=5r3uHgRMEL0KjkMkPJ+LZyLaQ/rueZBjpaVZwh05yFk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=NjwpQ11CD05WkSCL5UBH+9YY1tbKVrT20kVb5z6MnTWmynKbfNwOW0XHqOGfy0Sg+
+	 wxNrMh4RgReKpMdAhGP4eRpRiYrM5dWd+JDplMwa6Ans29LCPYAoW93uW0LzEbFFeN
+	 CzkYj8ung4us6RrMkT8GvaD8vZwnEaozhgktKZcHKO2qQ41I+MP8VfucyoD/dDv3OM
+	 bzRCeSYqGsORuylELeNPMOwtE2+uNzPKKXLDrLOdAFlPJiLE8yzVaov8R80R71Xm9T
+	 Fil4VHQkWmXICyYev9ROYrTWYVrmU2o9LRlpq+6NA0y3RwRlzlOTZd3Hs7ijrUJ8nw
+	 ExLuDvUtdzvRw==
+From: SJ Park <sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: stable@vger.kernel.org,
+	damon@lists.linux.dev,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 6.18.y 1/2] mm/damon/core: allow esz to be set to zero
+Date: Tue, 29 Sep 2026 12:13:19 -0700
+Message-ID: <20260929191319.10187-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260929174456.9251-1-sj@kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260929123241.1408414-1-huang-jl@deepseek.com>
-X-Mailer: git-send-email 2.56.0.rc1.315.gc6ed9934b7-goog
-Message-ID: <20260929181402.44684-1-pratmal@google.com>
-Subject: Re: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
-From: Pratyush Mallick <pratmal@google.com>
-To: huang-jl@deepseek.com
-Cc: baohua@kernel.org, damon@lists.linux.dev, david@kernel.org, 
-	kunwu.chan@gmail.com, lance.yang@linux.dev, lianux.mm@gmail.com, 
-	linux-mm@kvack.org, mst@redhat.com, ryncsn@gmail.com, sj@kernel.org, 
-	virtualization@lists.linux.dev, xiang@kernel.org, xueyuan.chen21@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> We have not yet fully explored how best to tune the DAMON and free-page
-> reporting parameters for our workloads.
+Hello stable team,
 
-You can also try tuning page_reporting_delay_ms, which can help you with
-saving time-integrated host memory.
 
-[1] https://lore.kernel.org/20260731193705.2902728-1-pratmal@google.com
+Please don't apply this patch.
+
+On Tue, 29 Sep 2026 10:44:55 -0700 SJ Park <sj@kernel.org> wrote:
+
+> From: Liew Rui Yan <aethernet65535@gmail.com>
+> 
+> When the temporal quota goal tuner determines that the goal has been
+> achieved (score >= 10000), it sets esz_bp to zero so that the esz becomes
+> zero.  However, damos_set_effective_quota() clamps the esz to
+> min_region_sz when quota->ms is set.
+> 
+> This is a minor issue, the main problem is that it doesn't match the
+> description in the documentation, which state that if the goal has already
+> been [over-]achieved, the quota will be set to zero.
+> 
+> Fix this by set quota (esz) as minimum as possible.
+> 
+> Link: https://lore.kernel.org/20260908135413.97570-1-sj@kernel.org
+> Fixes: 8bbde987c2b8 ("mm/damon/core: disallow time-quota setting zero esz")
+
+The problem happens only when there is temporal tuner.  Temporal tuner is a
+feature that introduced in 7.1.  Hence <7.1 stable kernels don't have the
+temporal tuner, and this patch shouldn't be applied.
+
 
 Thanks,
-Pratyush
+SJ
+
+[...]
