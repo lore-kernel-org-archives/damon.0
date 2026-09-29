@@ -1,43 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail-m155100.qiye.163.com (mail-m155100.qiye.163.com [101.71.155.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32D3560AB7;
-	Tue, 29 Sep 2026 19:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DA3523785;
+	Tue, 29 Sep 2026 20:29:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790709207; cv=none; b=Apd+X63pfUpRmNIA4lrJqf1CGcRrr8MV9kZuR/iFTcN8q4oWsFmtb3JvUZ8/HO0OaXvgAptjj6thn++jkUy7m7Wf7CGI9RWsgJMi5zxsTxs9cr0RCpHYv8EhnWzDJdaexh37SEjC96D5kzT5zU3/aHHpEWhQ66V0UvWWcIfO5s4=
+	t=1790713767; cv=none; b=LdMscjs+EgGVF86BUVF79kOrgGYSyI7Boyo37R45Ddz78LIc0IDGd7lmwGkThrqSnY31La6+4ZbzPfs33PaMJ6dAuo2SDQYFwx+FFwox0KXPHJ1OsQMMbwti4ovHOEPPmq5AUB7dN7glaHsN1UWRfzugT4k4Ur0DwO1GfuWLCq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790709207; c=relaxed/simple;
-	bh=dx4bxNxlHbgLPpIPVxflZdL3jaEoNZNWaR2/NXJmBzA=;
+	s=arc-20240116; t=1790713767; c=relaxed/simple;
+	bh=O0SVgsWU1lSvWpVjmKROD9e89ZMTCMvum3N438FqEq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gphKhvyVwZDAeErCskYZYI9vW+qIWiZQa4FSOa79eBmPSuGIeEQOTErZWmeSo1kESukT35fqLk0YGtjpXL6tv/tbkq8gFUuViTsGV0SF7ZXtxCfCDGjMfQU9ZaHE6VC8UdmeRfRf+UJUQBlbjV+CdJbuFtTDIQZ7E4mkQM4RzqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NjwpQ11C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eRmsFtxzZxijFR0XZidYKfTa5Z2/054VZF/nNSBeI0Ittj+TmYdSUonOWQMk7JctN01oELwDYLwoihzUMezAFWv9Dtcm/f+yT6PC32vroAPUdt46c17DMvztUShcbvQmHbw4HXtgIziHZ/2vI5j0IdwhL91g9NKNq09ZXAOb/ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deepseek.com; spf=pass smtp.mailfrom=deepseek.com; dkim=pass (1024-bit key) header.d=deepseek.com header.i=@deepseek.com header.b=gzhKioD1; arc=none smtp.client-ip=101.71.155.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deepseek.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deepseek.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NjwpQ11C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C391F000FF;
-	Tue, 29 Sep 2026 19:13:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790709204;
-	bh=5r3uHgRMEL0KjkMkPJ+LZyLaQ/rueZBjpaVZwh05yFk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NjwpQ11CD05WkSCL5UBH+9YY1tbKVrT20kVb5z6MnTWmynKbfNwOW0XHqOGfy0Sg+
-	 wxNrMh4RgReKpMdAhGP4eRpRiYrM5dWd+JDplMwa6Ans29LCPYAoW93uW0LzEbFFeN
-	 CzkYj8ung4us6RrMkT8GvaD8vZwnEaozhgktKZcHKO2qQ41I+MP8VfucyoD/dDv3OM
-	 bzRCeSYqGsORuylELeNPMOwtE2+uNzPKKXLDrLOdAFlPJiLE8yzVaov8R80R71Xm9T
-	 Fil4VHQkWmXICyYev9ROYrTWYVrmU2o9LRlpq+6NA0y3RwRlzlOTZd3Hs7ijrUJ8nw
-	 ExLuDvUtdzvRw==
-From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: stable@vger.kernel.org,
+	dkim=pass (1024-bit key) header.d=deepseek.com header.i=@deepseek.com header.b="gzhKioD1"
+Received: from deepseek.com (unknown [61.164.44.162])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 4f821470c;
+	Tue, 29 Sep 2026 20:32:42 +0800 (GMT+08:00)
+From: Jialiang Huang <huang-jl@deepseek.com>
+To: lance.yang@linux.dev
+Cc: baohua@kernel.org,
 	damon@lists.linux.dev,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.18.y 1/2] mm/damon/core: allow esz to be set to zero
-Date: Tue, 29 Sep 2026 12:13:19 -0700
-Message-ID: <20260929191319.10187-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260929174456.9251-1-sj@kernel.org>
-References: 
+	david@kernel.org,
+	kunwu.chan@gmail.com,
+	lianux.mm@gmail.com,
+	linux-mm@kvack.org,
+	mst@redhat.com,
+	ryncsn@gmail.com,
+	sj@kernel.org,
+	virtualization@lists.linux.dev,
+	xueyuan.chen21@gmail.com,
+	huang-jl@deepseek.com,
+	xiang@kernel.org
+Subject: Re: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
+Date: Tue, 29 Sep 2026 20:32:41 +0800
+Message-ID: <20260929123241.1408414-1-huang-jl@deepseek.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260925054408.10431-1-lance.yang@linux.dev>
+References: <20260925054408.10431-1-lance.yang@linux.dev>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -45,36 +47,49 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa0ed272b5009cekunm228468aa65c5b2
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDSEpDVkJNGEJITUtNQ0xJGlYVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTU9VT09VSk1JWVdZFhoPEhUdFFlBWUtVS1VLVU
+	tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=gzhKioD1B1uZQpMFbOo3brtYlrSTQQuk4RhuZu76oYFOEoxNc+2X0r83h+DMn8d0wDnVxAUyFWufPZPvawOvTRF0WwSWL//a40fpZzwYpaDzfSRnoMiDU/mIhuKP0h+ZpRi0wpdTIoXpnEsWJsZZ1n/Xo3pTBUOA1UoFtNrs4JA=; s=default; c=relaxed/relaxed; d=deepseek.com; v=1;
+	bh=O0SVgsWU1lSvWpVjmKROD9e89ZMTCMvum3N438FqEq8=;
+	h=date:mime-version:subject:message-id:from;
 
-Hello stable team,
+Hi all,
 
+I'm an engineer at DeepSeek. Thanks for the discussion, and thanks
+to everyone working on DAMON and virtio-balloon free-page reporting.
+They have been very useful for our workloads.
 
-Please don't apply this patch.
+Gao Xiang wrote:
+> It can cause sync 4K faults on the host in the worst case
 
-On Tue, 29 Sep 2026 10:44:55 -0700 SJ Park <sj@kernel.org> wrote:
+This is one of our concerns with virtio-pmem as well: moving I/O onto
+the page-fault path can introduce performance trade-offs. The other
+concern is the substantial struct page overhead for large images.
 
-> From: Liew Rui Yan <aethernet65535@gmail.com>
-> 
-> When the temporal quota goal tuner determines that the goal has been
-> achieved (score >= 10000), it sets esz_bp to zero so that the esz becomes
-> zero.  However, damos_set_effective_quota() clamps the esz to
-> min_region_sz when quota->ms is set.
-> 
-> This is a minor issue, the main problem is that it doesn't match the
-> description in the documentation, which state that if the goal has already
-> been [over-]achieved, the quota will be set to zero.
-> 
-> Fix this by set quota (esz) as minimum as possible.
-> 
-> Link: https://lore.kernel.org/20260908135413.97570-1-sj@kernel.org
-> Fixes: 8bbde987c2b8 ("mm/damon/core: disallow time-quota setting zero esz")
+For now, we enable virtio-pmem only for moderately sized, frequently
+used read-only images, where there is more opportunity to share the
+same host page cache across sandboxes, as Gao pointed out.
 
-The problem happens only when there is temporal tuner.  Temporal tuner is a
-feature that introduced in 7.1.  Hence <7.1 stable kernels don't have the
-temporal tuner, and this patch shouldn't be applied.
+Muchun's vmemmap work is also interesting to us. My understanding is
+that it allocates private backing for struct page metadata on demand,
+which could help reduce the upfront memory overhead for large images.
 
+For disks without virtio-pmem, DAMON with virtio-balloon free-page
+reporting lets us reclaim cold guest page-cache pages and return
+the memory to the host, without those virtio-pmem-specific issues.
+The two approaches complement each other in our setup.
 
-Thanks,
-SJ
+We have not yet fully explored how best to tune the DAMON and free-page
+reporting parameters for our workloads. For example, the kernel's default
+free-page reporting granularity is 2 MiB, which is fairly coarse:
+reclaiming cold pages does not necessarily produce free blocks of that
+size. We still need to evaluate how finer reporting granularity and
+different DAMON settings affect memory savings and workload performance.
 
-[...]
+Best,
+Jialiang Huang
