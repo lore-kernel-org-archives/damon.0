@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC24403E8D
-	for <damon@lists.linux.dev>; Wed, 30 Sep 2026 08:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A9A30DD1B;
+	Wed, 30 Sep 2026 09:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790757364; cv=none; b=DzhkeQMysT/8Jsp8o6XRJJSZbwZ4iMNAvwCDCOu+x6VLl+Su8vpOylqx4/UiX80PEUF8S9xiECB7UWu4TzAMV9WF2x0MRZK2cDTGsh07wOtvSCLxmkZWqzpZ39oIpfZVU8QBHm3FEs2J+cL3RkcfB1v9QDtHopGX0yO0Dnql+eU=
+	t=1790760518; cv=none; b=h2AOP2KTqU01I32edSTw01NazVe5GluviARDj4seiOXkizvyBOir/SjZdM9wI1uKvy2xXyrH8aul4i51VX7y9ZPrdKhwxOr3OZgo98tc3L1sDHyjGb7vf85dCp93pD61/hD0OUyaXOP5r1veHEeSgzMM+ojVriGIg/3HiecuL38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790757364; c=relaxed/simple;
-	bh=WZRwva2hNDaFZUXMO9LcoiuI9jVdyuD0MbBqZMRlGTY=;
+	s=arc-20240116; t=1790760518; c=relaxed/simple;
+	bh=Xh9sEhecDpEPVFZGkk2gnqMsRkUSyI8LZGhckc58uIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2c/K0lQcSHR44YZUAtukZd8bEnPkaU0/sba9816cG4KkGcxIeCEViQYUX//ts+1FaUu1fuEKnFvFuWiRBhWfgH5IpF99b1OafRZ+pHWCLkjsqb+Afydyw8bfUiwxhAT3AoWnYJIpkpvvp6nCDbj0Pwp/ydupycGX25t3socYsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g/RpF3Cz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tsN9TG6aiCgmrgiq40bx3Oq8gTc0+73qjcKNLtKh4+3qaoS+wylr58yKB5+YxRvJy0PnHTdr/2Xl7v52HyEqqxNHLAV4M1p8TKR4DeCvHvhCu0H5QKFZLJifG8YIyPiQkDWZTs9fjT+6suuXW4+N0WwOLtlZYLkWwz/e9SXcHWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sqsc8pRz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g/RpF3Cz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DCC1F000FF;
-	Wed, 30 Sep 2026 08:35:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sqsc8pRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883221F000FF;
+	Wed, 30 Sep 2026 09:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790757356;
-	bh=deudgWLlS6fYg6PAww+QfzNnCqp9328c3dyy88B4LPA=;
+	s=k20260515; t=1790760516;
+	bh=z3aHHfyyrs0l8iPbF3zXb6TAyOINt0wayQCovhUONWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g/RpF3CzcGE2GBw033AqoorYtxxMkUHgV47guqXEkU+3jRV3teSrXluKXabXNK6hi
-	 QLeO6pHEqUjbVhrf4Kzg/k18VngJJiiAvfHxM9RUDGASPuS/D21uojKUIGF5JCkmLB
-	 x2OfPxgSIJYQefJlmjNesM/dSWTL+5nYX0F8B0AcsydY2KKUx590CDU2FhbmDxdAdG
-	 ZN/3wn3NAv2Gv4ZFxZryIR/EV/kIGHCjse9Im8z2gCNfEAXZpXaWmjKtLjogsuYXAg
-	 whj2zT6jwMxpQWRtOfz5G34qHquh6MkVsRoAr/hgLI2IGlBDw8fczV9Ensog1HotYE
-	 +5FnSSHJJZ+tw==
+	b=Sqsc8pRz+PJaFXnydT83DD1btS1vLMfBvBrfTKZIf5XAP2rbwBSv1Zs8wtEoH2egU
+	 E0GYb0LjkD3wggxA4GX9+/pEvOYYyWCjZI2rOB5MQRjeSbhBvFbokTYP09Ylb2Snl7
+	 OfEiAIlaJ0jVuJmPEORYd2x1WVddOJjZ/AGEJRRSJBrntbuDPmreP8V1zNgmCL9h1D
+	 XS2g9KqmDninr1CsXi+qHUMF4mkikL7DF/fIifj/tzemoiiLr5tRYs8rvYaj4lb6ym
+	 ANiM9BHylcIvJxasMbmOgrQAMEwnEZDtEYaeKm65Xhss4jlRlSpGhUUrpSE2gD/dPn
+	 Vf5RQLJtiNBgA==
 From: SJ Park <sj@kernel.org>
-To: Anton Gavriliuk <antosha20xx@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: Memory tiering with DAMON/DAMOS auto-tuning
-Date: Wed, 30 Sep 2026 01:35:51 -0700
-Message-ID: <20260930083552.11289-1-sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12.y] mm/damon/core: fix unconditionally skip last region
+Date: Wed, 30 Sep 2026 02:28:29 -0700
+Message-ID: <20260930092829.45885-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAAiJnjq_XJ+kvNFdbXNJUrJMVtj5BVqN+NoZ2PvxYavFjOg2fw@mail.gmail.com>
-References: 
+In-Reply-To: <2026092948-agency-overhand-3fd1@gregkh>
+References: <2026092948-agency-overhand-3fd1@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -44,99 +46,92 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 30 Sep 2026 07:03:47 +0300 Anton Gavriliuk <antosha20xx@gmail.com> wrote:
+From: Liew Rui Yan <aethernet65535@gmail.com>
 
-> > Oops...  Seems you were running next branch of damo.  There was a bug.  I
-> > reproduced it on 7.2.8 kernel, and fixed it.  The fix [1] is now pushed.  Could
-> > you pull the 'next' branch and try again?
-> 
-> Done.
-[...]
-> It looks now it keeps ~50% free numa node 0,
+Once quota set, the charge_{target,addr}_from unconditionally skips and
+resets at the last region of the tracked target, so the last region can be
+skipped even when it has not been processed.
 
-Awesome :D
+Example:
 
-[...]
-> [root@localhost ~]# /home/anton/damo/damo report damon
-> kdamond 0
->     state: on, pid: 29836
->     context 0
->         ops: paddr
-[...]
->         scheme 0
->             action: migrate_cold to node 2 per 1 s
->             target access pattern
->                 sz: [0 B, max]
->                 nr_accesses: [0 samples, 0 samples]
->                 age: [0 aggr_intervals, 184,467,440,737,095 aggr_intervals]
->             quotas
->                 0 ns / 8.000 GiB / 0 B per 1 s
->                 goal 0: metric node_mem_free_bp (nid 0) target 5,000 current 0
->                 goal tuner: temporal
+    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
+    2. Quota is configured to process only 100 bytes per window.
+    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
+       addr}_from is saved at (Target, 100).
+    4. Window 2: The loop reaches R2.  Because R2 is
+       damon_last_region(t), the old code unconditionally returns true,
+       skipping R2 entirely and resetting the charge_{target,addr}_from.
 
-Ok, the above line confirms DAMON is running with 'temporal' tuner.
+    Result: R2 is permanently skipped even though it has never been
+    processed.
 
-[...]
-> DAMON & DAMOS are very flexible, so it requires a deep understanding
-> of specific workload and how to configure memory tiering with DAMON &
-> DAMOS.
+However, it is important to note that this is a very minor issue.  This is
+because it is triggered only when the previous window saved/kept
+charge_{target,addr}_from, and in the next window, all regions except the
+last region were skipped by damos_skip_charged_region().
 
-Indeed it is.  Nonetheless, for the reason we provide DAMON modules [1] or damo
-scripts for commonly known DAMON usages.  We have DAMON_RECLAIM module [2] for
-proactive memory reclamation, and mem_tier.sh [3] for memory tiering.
+Fix this by only resetting the charge_{target,addr}_from when last region
+is reached, only skipping when it is applied or cannot split.
 
-My suggestion is to start from such examples, find what is not working and
-asking questions to me.  So you are doing all great :D
+Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org> # v5.16.x
+(cherry picked from commit b3723b596b548c837a766aae3553c14a7b15af2b)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-> 
-> So firstly I decided to make it like VMware VCF 9.1 does :-)), next I
-> will reduce the goal from 50% free to 25-25% for numa node 0.
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 32737cc5f877b..802005d9186e8 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1322,19 +1322,17 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 	struct damon_region *r = *rp;
+ 	struct damos_quota *quota = &s->quota;
+ 	unsigned long sz_to_skip;
++	bool skip = false;
+ 
+ 	/* Skip previously charged regions */
+ 	if (quota->charge_target_from) {
+ 		if (t != quota->charge_target_from)
+ 			return true;
+-		if (r == damon_last_region(t)) {
+-			quota->charge_target_from = NULL;
+-			quota->charge_addr_from = 0;
+-			return true;
+-		}
+ 		if (quota->charge_addr_from &&
+-				r->ar.end <= quota->charge_addr_from)
+-			return true;
++				r->ar.end <= quota->charge_addr_from) {
++			skip = true;
++			goto out;
++		}
+ 
+ 		if (quota->charge_addr_from && r->ar.start <
+ 				quota->charge_addr_from) {
+@@ -1348,11 +1346,15 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 			damon_split_region_at(t, r, sz_to_skip);
+ 			r = damon_next_region(r);
+ 			*rp = r;
++			skip = false;
+ 		}
++	}
++out:
++	if (r == damon_last_region(t)) {
+ 		quota->charge_target_from = NULL;
+ 		quota->charge_addr_from = 0;
+ 	}
+-	return false;
++	return skip;
+ }
+ 
+ static void damos_update_stat(struct damos *s,
+-- 
+2.47.3
 
-Sounds like a good plan.
-
-> 
-> Based on the outputs above, please let me know if other improvements
-> are required.
-
-This temporal tuner test has proved the quota system is not broken.  It implies
-the previous test resulted in migrating nearly all data to the lower tier,
-because there was no hot data to promote back to the upper tier.
-
-In many common benchmarks using zipfian-like access distribution, hot data is
-always hot, and cold data is always cold.  And usually the amount of cold data
-is much larger than hot data.  I found [4] the pattern is making evaluation of
-tiering solutions difficult, and was using artificial access pattern mixing to
-work around.
-
-My imagined real world workload is, there will be hot and cold data.  And the
-pattern will nearly always be stable.  But, occasionally there will be changes.
-Say, a chunk of data will be hot for a few hours, but suddenly be cold and keep
-being cold for a few hours, then sudenly be warm for hours, and so on.  The
-auto-tuning based DAMON tiering is designed with such workload in mind.
-
-For your testing, I think the setup is good.  I'd suggest lower target free
-memory ratio, though.  Assuming the theory (your workload has static access
-pattern of small hot data) is true, using consist tuner should also be fine.
-
-You will have more than expected data in lower tier, but if those are truly
-cold, why would we bother?  If you still want strict upper tier utilization,
-you could make the access pattern and filter condition less strict.  Ideally,
-the access pattern and filter conditions should all go away, assuming DAMON can
-find true hot and cold data.  And I believe that would be the case for
-long-running real world workloads.  Short-running test workload would show
-DAMON making wrong decisions in short term, though.
-
-If you want to make sure if my theory is true, you could also profile the
-access pattern of your test workload using DAMON.  I actually did it for my
-auto-tuned tiering test [4] to find the fact.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/design.html#special-purpose-access-aware-kernel-modules
-[2] https://origin.kernel.org/doc/html/latest/admin-guide/mm/damon/reclaim.html
-[3] https://github.com/damonitor/damo/blob/next/scripts/mem_tier.sh
-[4] https://lkml.kernel.org/r/20250420194030.75838-1-sj@kernel.org
-
-
-Thanks,
-SJ
-
-[...]
