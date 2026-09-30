@@ -1,125 +1,159 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C764941D22A;
-	Wed, 30 Sep 2026 07:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B34F33B6CC;
+	Wed, 30 Sep 2026 08:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790753086; cv=none; b=PgsPNPzai6X0eBLG5+B7FsjR7dz5ss7lVoErH9sbbZcw5C+elgwK2/C54KGywJ3Okf9D2w71uMIifa7OjSwZkmdudeiryhTHTADZ/MftFxkYtqp++n+cYhit6u3F0n4q/NoxRtws4OvPqcGcW1Xql/gZYdvJdARxmnp1qCERYi4=
+	t=1790755732; cv=none; b=W5L+MFYX55HI2mVrcTtZ/Vy2wH8LzrN3mySWQJPAgEE116rtL3vimXyDwdIXN960IzjsDzfRJ4wh3V1zqVKIv2a8upea79t2KTLPvk1dlnRjQYUOUg6sMhU8FyZq18jvR6120ZcRQ2t612xJNRQA2th56BruDwim8tVnGTRQ2uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790753086; c=relaxed/simple;
-	bh=qE3CWG0GgMClsN6LmsiKQJijbuFbmLqtvhK40Dz2ETc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pNHApv0gOgOOPnaIluB0SgOdrLjAvNMubIieUqfZpwbtRrLZ/BsifuF26UhfzzGX0cd+OZbNkns6bF4o/zwt3k1NgBkwrmKvtIhSkIghYEuhZzsr6iNcHj9MmZbK13OeujELl1z65oLm/Fc2cLHn+OANgVn3e47W/HWRsQxHyxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ULRyPEr4; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790755732; c=relaxed/simple;
+	bh=3jpX3++RlolaBIRiSpDY68a58XgumXoiTLt1jbMCgN0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UGw72l8xGqJ9EJD8++sq23XNR8bY8kej8zR3Q/tDhIhRDZfyllD9UM7dD4vk/Vxd4dAfIpVq4zmayWASw8son1n7/RFbEQlMcyVfbAk90/9OYd8nKB2MIT12YDYbohdWRyr1VnuI/Mg6Ko6eFlcTZjPeC3OdieBgyL1VYse+oVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XggV0HEx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ULRyPEr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D021F000FF;
-	Wed, 30 Sep 2026 07:24:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XggV0HEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652C11F000FF;
+	Wed, 30 Sep 2026 08:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790753085;
-	bh=KgebVyA2f8bKZ8A2l8IyTzYkpOfpYnsZpljHgtWB0X8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ULRyPEr4Z7KeKV5X8kL/73Bw64SH3O5BQ0fdHMp9zZssoAuINO2fBRC6Mx8ezHtdi
-	 st/YQSKBYBwvV7pNTM5biueFwqbhYF14uMmqDItKJR8EM/g7SJaunGrFBMcGuCNErp
-	 W5jXoriHg1IIqnrfaKtfuzIt7kGWykpzcDFH+C031fuVwaBSXE61NxQ28pS85BeT6f
-	 EmcWVaAJwy0vEkmHKKUkOygq45gQHO2WNYH2AjJtJRNVaiy3I/zVzuhMxtCyh43IFA
-	 vi4ICUYZigtim8IWF6Q2FVOEeH82CtLFbduYp/qc1uyG9gMpYHC3OQKRluRKzB1cNv
-	 DJcSR95vOoPVw==
-Date: Wed, 30 Sep 2026 09:24:38 +0200
-From: Gao Xiang <xiang@kernel.org>
-To: Muchun Song <muchun.song@linux.dev>
-Cc: Gao Xiang <xiang@kernel.org>, Jialiang Huang <huang-jl@deepseek.com>,
-	lance.yang@linux.dev, baohua@kernel.org, damon@lists.linux.dev,
-	david@kernel.org, kunwu.chan@gmail.com, lianux.mm@gmail.com,
-	linux-mm@kvack.org, mst@redhat.com, ryncsn@gmail.com, sj@kernel.org,
-	virtualization@lists.linux.dev, xueyuan.chen21@gmail.com
+	s=k20260515; t=1790755725;
+	bh=EgiI2zzwe8TB/ZW7XItAedr7ZYnB5/cnPC/QFupZv60=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=XggV0HEx4iFhJNOcs0B7+qgnbnzi6NXR5MD9WbJ7i65myhUAHSTmNy6Ac7ZhgF93d
+	 2vR5/dLU6+PjoDXGP0wPigAZTRWnD4cYe93FRgqToAC/9KtR1TRCOPpUfK1jTaFzcg
+	 3QSk8SN+ocw23C9X3rs/lQqj5dU9+xFAZcjAq0qKugUCSA5GX3Lg/OQCQNttM5ycih
+	 yIRoFMzfv495BHVUK4a4Mbe5MWHkXqbu779h24yeOclupcxVOTD6VmFgL9EsiFqOtM
+	 VrzmxBcdP4ebr6Sk9sQI/LUDhMnozE4r0E2FYr9xxMez6HkxaAA5nDEzc8expHpxR2
+	 P8GOR9B/XDPtA==
+From: SJ Park <sj@kernel.org>
+To: Lian Wang <lianux.mm@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Jialiang Huang <huang-jl@deepseek.com>,
+	lance.yang@linux.dev,
+	KunWu Chan <kunwu.chan@gmail.com>,
+	baohua@kernel.org,
+	damon@lists.linux.dev,
+	david@kernel.org,
+	linux-mm@kvack.org,
+	mst@redhat.com,
+	ryncsn@gmail.com,
+	virtualization@lists.linux.dev,
+	xueyuan.chen21@gmail.com,
+	xiang@kernel.org
 Subject: Re: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
-Message-ID: <ary5Nn9le4xG7_-N@MacBookPro>
-References: <20260925054408.10431-1-lance.yang@linux.dev>
- <20260929123241.1408414-1-huang-jl@deepseek.com>
- <aruyFPzEe3pS_Qzx@XiangdeMacBook-Pro.local>
- <AA71E56E-F29A-44B2-B5A0-7806CD684B21@linux.dev>
+Date: Wed, 30 Sep 2026 01:08:38 -0700
+Message-ID: <20260930080838.10887-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260930030747.47294-1-lianux.mm@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <AA71E56E-F29A-44B2-B5A0-7806CD684B21@linux.dev>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 30, 2026 at 11:36:23AM +0800, Muchun Song wrote:
-> 
-> 
-> > On Sep 29, 2026, at 20:41, Gao Xiang <xiang@kernel.org> wrote:
-> > 
-> > On Tue, Sep 29, 2026 at 08:32:41PM +0800, Jialiang Huang wrote:
-> >> Hi all,
-> >> 
-> >> I'm an engineer at DeepSeek. Thanks for the discussion, and thanks
-> >> to everyone working on DAMON and virtio-balloon free-page reporting.
-> >> They have been very useful for our workloads.
-> >> 
-> >> Gao Xiang wrote:
-> >>> It can cause sync 4K faults on the host in the worst case
-> >> 
-> >> This is one of our concerns with virtio-pmem as well: moving I/O onto
-> >> the page-fault path can introduce performance trade-offs. The other
-> >> concern is the substantial struct page overhead for large images.
-> >> 
-> >> For now, we enable virtio-pmem only for moderately sized, frequently
-> >> used read-only images, where there is more opportunity to share the
-> >> same host page cache across sandboxes, as Gao pointed out.
-> >> 
-> >> Muchun's vmemmap work is also interesting to us. My understanding is
-> >> that it allocates private backing for struct page metadata on demand,
-> >> which could help reduce the upfront memory overhead for large images.
-> > 
-> > Although I haven't had a chance and time to look into that, the main
-> > concern from me is that mmap() access will call
-> > "dax_fault_iter->vmemmap_materialize_page()", and malicious sandbox
-> > workloads (or not malicious, just valid mmap workloads) can cause guest
-> > memory OOMs due to "struct page balloon" for large rootfs in the worst
-> > cases and cause the follow-up mmap access failure, because the guest
-> > memory size may not even fulfill "struct page" for large rootfs.
-> 
-> I agree that this is a real issue with v1.
-> 
-> One detail is that merely establishing the mapping does not materialize
-> the metadata. Materialization happens when a fault resolves to an
-> allocated DAX extent, before its PFN is inserted into a userspace
-> mapping. However, that distinction does not remove the problem.
-> 
-> In the worst case, a workload can fault enough of the pmem range to
-> restore the full vmemmap cost, about 1.56% of the pmem size. Since v1
-> does not dematerialize private vmemmap pages, even a one-time scan can
-> retain that cost until the device is removed.
-> 
-> The follow-up mentioned in the cover letter is intended to make the
-> optimization reversible. One possible direction would be to invalidate
-> clean DAX entries under memory pressure and zap their userspace
-> mappings. Once a DAX entry has been removed and the corresponding PFNs
-> have no remaining mappings, references, or pins that require private
-> metadata, the associated vmemmap backing could be remapped to the
-> shared read-only page. A later access would fault and materialize it
-> again.
+Hi Lian,
 
-BTW, it's impossible for shared DAX entries (like the current XFS DAX
-with reflink and EROFS will support this feature later too for chunk
-memory sharing), since you cannot just use mapping and index to get
-the VMA like page cache does unless you invent another new mechanism
-for this.
+On Wed, 30 Sep 2026 11:07:29 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
 
-Reclaiming page entry mechanism seems it can be used for or overlapped
-to another types of memory (in order to save struct page memory in
-general): I'm not sure if it needs wider discussion on reclaiming
-"struct page" in general first.
+> Hi SJ,
+> 
+> On Tue, 29 Sep 2026 09:56:03 -0700 SJ Park <sj@kernel.org> wrote:
+> 
+> > I agree the reclaim-reporting granularity mismatch could be a room to improve.
+> 
+> Thanks for pointing us back to the Access/Contiguity-aware Memory
+> Autoscaling proposal. Jialiang's description gives us a useful deployment
+> context and a concrete problem to investigate.
+> 
+> The guest reclaim/reporting case and our host-side THP/tiering case are
+> different, but both raise questions about how workload behaviour and
+> monitoring granularity should guide kernel actions.
+> 
+> KunWu and I would like to help move this work forward together, alongside
+> the existing DAMON roadmap. For now, I would like to share a few possible
+> areas for discussion:
+> 
+> 1. Workloads, DAMON policies, and tiering. My current work includes
+>    improving masim-based experiments and studying TPP-inspired memory
+>    tiering. We would like to make the workloads more representative and
+>    better understand how DAMON's observations and policy settings affect
+>    placement decisions. The aim is to understand where configuration
+>    changes are sufficient and where code changes, if any, would help.
+> 
+> 2. Testing and contributing to the existing PMU work. Our initial focus
+>    would be on helping with the Arm SPE integration and testing the IBS
+>    and PEBS work on x86, in coordination with the people already working
+>    on these. The experiments could evaluate whether finer-grained
+>    sampling provides useful additional information, and at what CPU
+>    cost. We could leave huge-page-specific mechanisms for a later
+>    discussion, guided by the results.
+> 
+> 3. Following up on the DeepSeek workload. If the team is interested, we
+>    could learn more about the workloads and tuning questions they can
+>    share, and study the path from workload behaviour and monitoring
+>    parameters through reclaim and free-page reporting. Pratyush's
+>    reporting-delay suggestion adds another useful dimension. This may
+>    provide a practical starting point for revisiting parts of the
+>    access/contiguity-aware autoscaling work and evaluating their
+>    relevance to the reported workload.
+> 
+> Could we discuss whether some of these could become follow-up milestones
+> in the DAMON discussions at LPC, or here on the mailing list?
 
-Anyway, it'd be better to get some numbers with RL or agent workloads
-(especially the host memory is under reasonable pressure) before
-landing all these new infras upstream if proceeding in this way.
+Thank you for adding topics to discuss.
+
+Of course we could disucss anywhere anytime.  I think Access/Contituity-aware
+Memory Autoscaling (ACMA) could be just a parallel project.  It doens't need to
+be an extension of, or blocked by "beyond-page table access bit" project, in my
+humble opinion.
+
+ACMA is still on my TODO list.  It is mainly a matter of prioritization.  As it
+becomes clear it requires more attention, I could allocate more time for the
+project.  There was a user showing interest recently.  I'm planning to
+prioritize it more.  If DeepSeek could confirm their interest, it could help me
+prioritizing it further.
+
+As always, coding may not be that difficult and take that long time.  Testing
+might be the biggest challenge.  I don't have good test infrastructure now.
+Actually the lack of good test infrastructure is one of my biggest DAMON
+maintenance concerns nowadays.  Others' help on testing or test infra would be
+super helpful.
+
+If someone wants to implement and contribute it based on the proposed idea, it
+would also be nice.
+
+> We would be
+> happy to help organise the discussion and take on agreed pieces of
+> testing or development. We would also welcome closer collaboration with
+> DeepSeek and other interested MM developers, including Muchun, where our
+> work overlaps.
+
+Sounds great.  That would be super productive collaborations.
+
+> 
+> This is only a brief outline for now. I plan to bring the experimental
+> results and remaining questions to LPC. After discussing and aligning on
+> the details there, we plan to share a more detailed proposal with the
+> community and write up the planned work and experimental findings in
+> blog posts.
+
+We could keep discussing in mailing list, but of course in person discussions
+are always helpful.  I'm eagerly looking forward to the next week :)
+
+> 
+> I appreciate how much is already on your schedule. We hope to support
+> the existing plans and help with agreed tasks as the scope becomes
+> clearer. There is no urgency to reply; we can discuss these ideas
+> whenever it fits your schedule.
+
+Appreciate your continued and grateful contributions, Lian.
+
 
 Thanks,
-Gao Xiang
+SJ
+
+[...]
