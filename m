@@ -1,225 +1,321 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010062.outbound.protection.outlook.com [52.101.61.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f32.google.com (mail-ed2-f32.google.com [74.125.228.96])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C30B37E5DB
-	for <damon@lists.linux.dev>; Wed, 30 Sep 2026 15:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EEB511180
+	for <damon@lists.linux.dev>; Wed, 30 Sep 2026 16:26:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.96
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782132; cv=fail; b=J+krqU4MkMN+eCBSL5oNDWQYwKUI8YBqH/HyDudW4WPBw5oibesS5KCvv69PX7RsUWMr4GNVUWwOLRhI6DwSDGk2zYcHD0M+Ar44S7SVIQKhcEn2O7Y6GwxtthpA1M1R9LYQsJoYJ8xduJosi9KAqidxwXDbMI58lRqKGG8k2qo=
+	t=1790785615; cv=pass; b=Gy9dcA4A+sEUXWjWp7qdEM0pLl4sO2Pl2+fidqORb782VhxD0zPqImUQCs6Vr4705zZ5zk6LutH9nVRQ/OvtXNTvDJ5USf3eO3f/GLTa7rtaZGXCZ8HiBwUBF6m+Abg6F7rcumul4b4VmWouoQWPjvh345Z4Oc2WVz8Mu4EVHN4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782132; c=relaxed/simple;
-	bh=mrR2p5hMKgCRApuAlcdwULmrCPEieDj5CYrcRy2szig=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=gyVOhQsYU16bthjN4fJ37KiMGCDrJrt/GYuYqHWyQm/81grK0eSkZhgNU9b1NsyPawp/zM2DOAKqzBHwxFTNWvnUh2Vn9RkDHCvyrbyyLBc2RP844MzWKZft2NpenXJSPk6AClAs7MJFxL1CBzF5q1WMoDluM8xsjTDw+SXS14o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=D1N0qPH6; arc=fail smtp.client-ip=52.101.61.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1790785615; c=relaxed/simple;
+	bh=iXh6PW4CsEA7ut5UsvBrM6BlYv+oOpLj0NvON21bo2o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IrzoyRr0RH6UWhLk2+aN+05oi56MFV3AkI3B9ByOVLyaUs8rkUwRbSdnN1Cken0iFVRV61Pg56LKFqEcn1KPoT1njm2Lu3/nY6pgEpSV0UlV/QWOlyCx98jbukJjtmBBYToKhiR5U1giwi5BEybEJhykSi0YDuQ+3Zw9UcKP9Bw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EuJGJoIw; arc=pass smtp.client-ip=74.125.228.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="D1N0qPH6"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s8uTyHY6ca0S0gFpYdWeYhmt2qrfVim81f/ez5gEyTG7rnWCcA8/efKeY19pYTwnxwABRHXRKolDwQi2UhO6Qz7e2tw2LtkJhsBVye4eWtkujwDZZ27NbV2cskWBD4nzj1Dd3LmiOn4W3u3obhqoFQUlgEbfAT/rGvrdzux+FUcMcTWhIntHiV95U798sZ0k9HBVZ5bIWiu68czDL62rHBAnmeLn4IK07kBZs/ig5ErqAxPLXbvEKipxMPC6OIyzO6xtuBjjFcSmzsvMHjYPfjA5yanrW4EaKx+lblQaKX1kfhoTPznH15l3TzT35GNhWLmss4FkNHGG6SvIvUG8mQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=j8w1jBnA80+jx0tcZGoqUFaJ5onaLQirx/OFTHfw1Is=;
- b=JtWj3321OWFasox9ZMgOhmSAZPBdcjqPps/So50HJ7tSj2RIaFzWfVwmg056K6Itl7SlkJcHCMMvQbbJTMO79OGYAlUlJuGtRtdVkL6sMFAexi7rnPCZHLYdW5ylCqSCWp9Tbtmwyu09O7a/B+uMNCtRv6iEaMwjKiTLORhoRLOqV/0Taa1tt9sChnpupDPn3t2atSyDikEKWBFyLPz6ExmCk3P8/RraolNwzkaYCWDAWdQNlhDsDztRxk7p+U8gIFWQke2ge3GUrf5TMVmjVdk8i+weC5bxjqn4edtnPcOmAcvjaRYdEw7K/USJ6WkTMuC5RDb/DfHvcDWyW50Ymw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=j8w1jBnA80+jx0tcZGoqUFaJ5onaLQirx/OFTHfw1Is=;
- b=D1N0qPH6GDpjju4aIZpuxd1dhaa2+ullhx2NmCdQEzl3PVKYtQiHUacX80CpSDdjg0S1R5ugLiFraR2ypmUMTxGd3LzzhmR/rTewwQlyA92Mi3NJk3EQlxFcyrFGanZDy1OGzsQAUD7urm32U1uSNCKFWM7dEF8VvyJRYcckG81trDtDoXM+IP/gyS2UIZcfmNG4Lwk6NQHtbSLnUzilm8CMps9VuTI1+77XdaqWXsdqZUz2hwiQ3NL+9v2iT0+9kWqOl5A7DD0o3HbuAv6X5Y5zR2uE1C2tjPAIc1EOJrtUqptRVP22RCCLNS8C4ohXmhwm7eqoEgGQhlD+OCe9zQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from IA0PR12MB8374.namprd12.prod.outlook.com (2603:10b6:208:40e::7)
- by DM4PR12MB5724.namprd12.prod.outlook.com (2603:10b6:8:5f::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.451.26; Wed, 30 Sep 2026 15:27:57 +0000
-Received: from IA0PR12MB8374.namprd12.prod.outlook.com
- ([fe80::d85f:4c87:ae84:3f16]) by IA0PR12MB8374.namprd12.prod.outlook.com
- ([fe80::d85f:4c87:ae84:3f16%6]) with mapi id 15.21.0472.015; Wed, 30 Sep 2026
- 15:27:57 +0000
-From: Zi Yan <ziy@nvidia.com>
-To: Muhammad Usama Anjum <usama.anjum@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
- "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Michal Hocko <mhocko@suse.com>, Xu Xin <xu.xin16@zte.com.cn>,
- Chengming Zhou <chengming.zhou@linux.dev>, Jann Horn <jannh@google.com>,
- Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>,
- Pedro Falcato <pfalcato@suse.de>, Arnd Bergmann <arnd@arndb.de>,
- Will Deacon <will@kernel.org>, "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
- Nick Piggin <npiggin@gmail.com>, Peter Zijlstra <peterz@infradead.org>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, Rik van Riel <riel@surriel.com>,
- Harry Yoo <harry@kernel.org>, Lance Yang <lance.yang@linux.dev>,
- Chris Li <chrisl@kernel.org>, Kairui Song <kasong@tencent.com>,
- Kemeng Shi <shikemeng@huaweicloud.com>, Nhat Pham <nphamcs@gmail.com>,
- Baoquan He <baoquan.he@linux.dev>, Barry Song <baohua@kernel.org>,
- Youngjun Park <youngjun.park@lge.com>, Uladzislau Rezki <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>,
- Andrii Nakryiko <andrii@kernel.org>, Eduard Zingerman <eddyz87@gmail.com>,
- Kumar Kartikeya Dwivedi <memxor@gmail.com>,
- Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
- Yonghong Song <yonghong.song@linux.dev>, Jiri Olsa <jolsa@kernel.org>,
- Emil Tsalapatis <emil@etsalapatis.com>,
- Ihor Solodrai <ihor.solodrai@linux.dev>, Ingo Molnar <mingo@redhat.com>,
- Arnaldo Carvalho de Melo <acme@kernel.org>,
- Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Ian Rogers <irogers@google.com>, Adrian Hunter <adrian.hunter@intel.com>,
- James Clark <james.clark@linaro.org>, SJ Park <sj@kernel.org>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>,
- Jason Gunthorpe <jgg@ziepe.ca>, John Hubbard <jhubbard@nvidia.com>,
- Peter Xu <peterx@redhat.com>, Leon Romanovsky <leon@kernel.org>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>,
- Dev Jain <dev.jain@arm.com>, Usama Arif <usama.arif@linux.dev>,
- Kiryl Shutsemau <kas@kernel.org>, Andrey Ryabinin <ryabinin.a.a@gmail.com>,
- Alexander Potapenko <glider@google.com>,
- Andrey Konovalov <andreyknvl@gmail.com>, Dmitry Vyukov <dvyukov@google.com>,
- Vincenzo Frascino <vincenzo.frascino@arm.com>,
- Miaohe Lin <linmiaohe@huawei.com>, Naoya Horiguchi <nao.horiguchi@gmail.com>,
- Matthew Brost <matthew.brost@intel.com>,
- Joshua Hahn <joshua.hahnjy@gmail.com>, Rakie Kim <rakie.kim@sk.com>,
- Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
- Ying Huang <ying.huang@linux.alibaba.com>,
- Alistair Popple <apopple@nvidia.com>, Dennis Zhou <dennis@kernel.org>,
- Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>,
- Johannes Weiner <hannes@cmpxchg.org>, Qi Zheng <qi.zheng@linux.dev>,
- Shakeel Butt <shakeel.butt@linux.dev>,
- Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>,
- Wei Xu <weixugc@google.com>, Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Juergen Gross <jgross@suse.com>, Stefano Stabellini <sstabellini@kernel.org>,
- Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org,
- linux-fsdevel@vger.kernel.org, linux-arch@vger.kernel.org,
- linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org,
- linux-perf-users@vger.kernel.org, damon@lists.linux.dev,
- kasan-dev@googlegroups.com, intel-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v3 1/9] mm: introduce hw_pte_t for PTE table storage
-Date: Wed, 30 Sep 2026 11:27:53 -0400
-X-Mailer: MailMate (3.0r7032)
-Message-ID: <51D02557-E9CC-4806-917E-279C6E66AF1A@nvidia.com>
-In-Reply-To: <20260922-pte0-v3-1-5670b8cb9059@arm.com>
-References: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
- <20260922-pte0-v3-1-5670b8cb9059@arm.com>
-Content-Type: text/plain
-X-MS-Reactions: disallow
-X-ClientProxiedBy: BL1PR13CA0112.namprd13.prod.outlook.com
- (2603:10b6:208:2b9::27) To IA0PR12MB8374.namprd12.prod.outlook.com
- (2603:10b6:208:40e::7)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EuJGJoIw"
+Received: by mail-ed2-f32.google.com with SMTP id 4fb4d7f45d1cf-6acac47206aso3256465a12.1
+        for <damon@lists.linux.dev>; Wed, 30 Sep 2026 09:26:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790785603; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fkC3AiCzHYC/ry5cWOTwMdnfWavPNOhf1SobH6R+AWFh1V1bnFT6aAE7FLW9H+Qlns
+         VyWI5xuvoXMDwWWvGrvLUXluKWtUfUwwhbi9CTtNqAz9ZfEdGrEC3QQlBkw6X0BDFBO4
+         rcLap3Y2pql00XtfWkuAqDqtgFCyFvFi5p7js6akbAI227ymJV3r6XOfU0s+yicd1v01
+         lAWeMj/JPVhDmI6AdOQWNGqGGD1SyhIse0F0HxXrO3/M2yScTC7X2YcP9U4M5ZBBAvS9
+         Bsdepbv7WEhD70eZ3IiWISP413l9nSWmY3Xln/fF4mh2o66mcPOZxeVp4jjS3KNSjlMI
+         YAnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=QBDH10ijgxx37uF1q/nX4lq/8Yq5lBqCkkNGqSrZAdQ=;
+        fh=e+kRStJq+twn6rlp7glLc6kIxtYd+ofNVnbBqiY9oQA=;
+        b=qNyt3RK5+oRbJVPMUhscYAHJAhuv6bn1YNjnoVZkK8KEEk+PhKP//Nm8oP6ggvJr1E
+         tpTs2KcMTeZpD33VHqhAFdeW3189unp9IJ0WwxZejkxZbBckAImHK9Sk64GtXJdlMFxI
+         Gv7rtWA/O9EpMVcK0Rc15NRD6lvJ923hJgjDHk1VEJ2zUjHIEwYAT8fGFieP9OxF9lbh
+         on+2ycHV4DxfA5xth2zw1o4xzJ8CCVGKJ3PeKWriLmw4aiR0EM7BveXPO9hirbwoMw+M
+         eunmKAXPkVIqmF+1byOIMzhX2NGtTuIv6ZOcxrnrJki1eE6oHOQVk3puQRNrq2wm+y7V
+         HBXg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790785603; x=1791390403; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=QBDH10ijgxx37uF1q/nX4lq/8Yq5lBqCkkNGqSrZAdQ=;
+        b=EuJGJoIwpdzBj0LDTrbJVmkFt5RcTBOMoYvsEDwnOJv0uGl2JKN5BYUo0DCPXmGysJ
+         IjHymxZI0kztR57E3tG8w1tTeWBlMgMMCl5cGHRE8yd5rBhKNewfio5g4oUrLouhfi0P
+         hb+o5A1TlT5UtQ2oxAn/rX9MGUGaxmAVm0oHrhYYlU5vPMhJGpAqaJip2+cuRyr1+UQL
+         0RLUgOWMWKYXZ4+Gqy5uotAXTEGRLo+uXFkbUBcg7jMZEwDbveUiUTe4+vFeIM4e35fA
+         I2YSpu8sddRA2yc294bSjkhhR0ZeFj95lwdJhb6ILAHEZB2wVR8QKz7/zO93pIFvhGdX
+         7nBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790785603; x=1791390403;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QBDH10ijgxx37uF1q/nX4lq/8Yq5lBqCkkNGqSrZAdQ=;
+        b=xA+1u6VzWYxKSTYaBsmdnK8b1BkaeGA2MhUL0O5iw+XF7yHuKEbVq3nFygULB/AYm6
+         ulnCpvHGrVEMT2JDKqWiz62prOD6wgNlRcqZ7U/FpY34695J87OTl9d4rJz6qlaVc3eo
+         4FJxiQIQ6iCuhMSkSATYGXT4uvNPhguQZ4cJgmRY7PdnJY9XuFOuzgJKhCVDJwY67KK7
+         6rEQJrhrpYFfjltwvMK5bhcQRqtehqkTXg53kYJJnEAlc0wMtcbzaT9VQMUwVCFuZ8X6
+         uIG2V8mFJa2hWKUGaTNh440xUQDTa1pcKzLTyUkBXEcE6JmMobqZEL9Gnwm6RNPGGdk/
+         H6pA==
+X-Gm-Message-State: AFq9FYK1shKtVCkgMiW8AOy/Pihx6mhtI2E5f2/WOkQKnRKCPoNWlUqU
+	6RN9GPkmtIWuO+EBhlkQYP8XCDRohhPnTwfzEM7hqxzopKeL4ne4CZMjHHFJf4zlgs0TnchxVnK
+	fnytCsLd5cfLfbF6INg0xFvyLeZsnnbtHA6tQ
+X-Gm-Gg: AYBFou1tRiwjPNqbO6I6urud/K5H/YbEo1V1udOwvV9ScWV12CZx5Sleo3rxCJo/tO3
+	wpkRXmC0ZUrZKZ/aGqn7J68fvsNEpDwF57F4nJTJ2QVJ8L3yI2kFl2Yv5c6j5QTkwsA6ILE+45c
+	oaFNXlXgT0laeV1oZsm/Qf/2nE++0kJYRmp7pzwvFXN0PpCBQeRvAAyyvWpy040JlzN7SKXVYfx
+	N0PmCp/CDXgFqK+c/g2EO+RnEvtEISMdE4hJqvQ6sUGYN8tSZgnLdTiU8RpntapEmshsUgwBdDO
+	KLfkq315kfrJ8ycA13lnj1iiwl7A70kMq+iZswSIK/hFwyR+d3VVvc7r
+X-Received: by 2002:a05:6402:21db:b0:6ac:6b18:344e with SMTP id
+ 4fb4d7f45d1cf-6ae19864a04mr1318387a12.2.1790785602710; Wed, 30 Sep 2026
+ 09:26:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA0PR12MB8374:EE_|DM4PR12MB5724:EE_
-X-MS-Office365-Filtering-Correlation-Id: d214dff4-b381-4957-d09d-08df1f07674d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|1800799024|23010399003|366016|10067099003|4143699003|11063799006|56012099006|10063799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	NTMS7w3pkwbdyX8kXLQQPd6bmp7vgxhsw8wWUgoxv0BrTrWoioXQwXj9y2sXwxqK/qp94qzNdh/w34dJBNSvbrkk9mQbv2eUPT1dCR5tZ1ctxQM8bgU8kBHD7llfqbs2uDuPa0FCmoZMt4aJnvieWCKHKxci7qcqJAuMjkWfrFU8R5RZ0Pp+gWd6vaVst+KGOu7iQzlS6ZiiLCyEHCFhE5UTWJFFq6SPOOfeik7Z0B1OXZ2zH9V2SuK02wJNgjSYLbszkIqi50F10i5CEUJ3ZGuCkyo3DM/MwDsQAmHM8Bp6vKunIh4HqtMQOnv7zekcp+FzN5RAzsi0FWBm5ZLmamnACbJ3ID8Uhc2HbeBvXNONVsFjYpykdaOuaDLwRN1/WB3MpYmtTWpOhyqq8LIb7VFs6nvId/Ccql4GAZZPIAqWvI0kj6zudAav0tOCf5ocPxPGvqv0srNHGzljQMohQkc5knSeLiz0T7I3twibdB+LZUKnkqS4g6gZxOLx8jHHOrM7CcIMBFvSVOy124A+psloR+Sir++O4fteJpkRLIH2eo2XV3ANbGLdqlMLl7bvZevXSVQuXGwtEFUG0PQnGs49YCqwB44rR9hCbCcjSPAnPCpAXVR+pJ987rdeYw2WIN+jnl6TeeNBBReTpntyPBD6DV97FUla1GcpMqCM9h8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR12MB8374.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(23010399003)(366016)(10067099003)(4143699003)(11063799006)(56012099006)(10063799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?MXu4eQniVxMuLf/9bfDbC7QY5S/GZmk+BEhdZPsCpb2Fwvz+snepEPRv42qo?=
- =?us-ascii?Q?J+fGc6zIpN2r69MH3j1NbAw+66SPKNJSbZWhUSOYSaWDRf4WysG/w2mdz+cN?=
- =?us-ascii?Q?vp3KKbYKM8MhsCZWkFB42OashkTTgzj6OZ6vq7YylqGondij1VlWCYNmcP8S?=
- =?us-ascii?Q?6CXUVF1CZY8gLz31yQcOyjXSX5r+5W5adH8GV43S5daPLgy1FP1pch3Vqrlf?=
- =?us-ascii?Q?LydlKNFlFcd6CQvLAmRZRg5f+x5EGG7YhPBj+3BMbN4LI/lNWXYIpqiHqL7j?=
- =?us-ascii?Q?oXhMMivi1j3CAIyHtKjnBqsGsncsD9Df+DEDyitdDfZE5i1G5UrNPgcatcz/?=
- =?us-ascii?Q?mOfTjD8IZ8ZR2rMuwlWGM7cKyWdpZ5SlTiRxY5CJuWwlCSWlWhK7Mn9edgn9?=
- =?us-ascii?Q?Abtswnt7rCImfHaCNvjLM8bxzr2VL0lWfaOQoi0ZkND6Uxjx80xWYDeDdcLy?=
- =?us-ascii?Q?E2M4AQSakyvohHmvNmzUGfYvmOf5UofkU4avmkfn0FAKO3HBNZ84eu6/qB0/?=
- =?us-ascii?Q?BZkh42wfg4Tpp5AzexqE0YlzTTYdsEhTlxyMDpY0dY/493VkD3G3VmmenLvc?=
- =?us-ascii?Q?rOsNrznL3Ai/WSC9dPAJ2ZVp4YFIfEewJtaYthUYeM1mHNwkHM57C3jhqJZE?=
- =?us-ascii?Q?oE/mixWkz2wHs5AScj9awqrTKdoG+D2+UP55curGBCATRmTl/m7GNbhLI8DD?=
- =?us-ascii?Q?/LpUx+iBAnEP2/sP4eK6DpVctibX9lPiiKkUQDwfqPwHb4HWHRBFrm7hyvbb?=
- =?us-ascii?Q?1q0FRxmMe40oskj/VcMiMnLOYQolAHPLNrau928odO+HIqfP4yZRqOG4dD0h?=
- =?us-ascii?Q?PwtkEzoBxPv+ezIzGXMVj6vnzZHj9k+INQcrtqClIA1ORalRBd8jzvtlji5b?=
- =?us-ascii?Q?/2qlXjfsInReKmjefmVeIOG1K/qzZ5l/6e/Lwvopa6VTFuL+SrhYv9N/Yoc5?=
- =?us-ascii?Q?j8+pg/TPURR8FqRiO5nzmXCWudtk9pQowrK1N1/noRFW++Oxh5J6KEGxWoBg?=
- =?us-ascii?Q?bPvscNfCLhlUpVRhJ/HlU6qHXIHRVZT2ops9BEj/kj5gQGfI4gKjYUo8q2wm?=
- =?us-ascii?Q?EnQA7IeJ2rTYpUTpOztbqVoqKIAugvcp5LpMgIaQJgYyR90PdeQk8rB206pU?=
- =?us-ascii?Q?OEevidn/mt07l+4qXT8oBb9a22pTAX5Oz0iY9j1ManvQYZpzc2pC2r3XI/7w?=
- =?us-ascii?Q?yFS4ZzYI7p519xaiDGAOAL210+5azfqWPKAg6FPBqpqqUj4RH+MzvfU0VjFl?=
- =?us-ascii?Q?OmpY5RRcLDE94Cy1REYNVkR0ntXfbZovloDW2XYuRh1PRBAplbFbVz1CF6j5?=
- =?us-ascii?Q?HNbo0gHXo8t5IB4239rfrJjNIMAv2hWLBuATBn9RDSclotP3/WVbOlTrrAcA?=
- =?us-ascii?Q?alpY8++184I9GbRwPtp9oFf7AqX1so53T0aej11fWXSkDCa1pQAAGqrwk30V?=
- =?us-ascii?Q?IMeN5jH8ijdgbAThHaaerWzyh9CUxr0uM5fjHYLb6lohDLNnl+7gCzQlXXVU?=
- =?us-ascii?Q?kknZDCREfrCBcTH4jTRN6YVj+UUrdNs44QUakpZEqj9lZJvG3tCBCjQ5tiLa?=
- =?us-ascii?Q?YWv8bBtBYiNnp4zT2e28zycu04Xl/sgRPaac3E0Vo5JfjdtnbDUBYehX0WWg?=
- =?us-ascii?Q?lEcYH+QxwZlpE3cj0tzisjeSTXu2N+jw3p9Iel/2Fl9/zZx2i9uYQxMkEDjn?=
- =?us-ascii?Q?GS3vsX2AB2EzWefPjnuPPbP5XqaqtZOHwLXLZGiQl5NHkVEOqH+nMbTsJp/E?=
- =?us-ascii?Q?7DP2WO6Skg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d214dff4-b381-4957-d09d-08df1f07674d
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB8374.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 15:27:56.9730
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YLttr6nZbAZEgLwiA1BQTWtmyJC4gk3s+HBEIV2F7pIcz4C++d3nVT6aZtPTmkRN
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5724
+References: <CAAiJnjq_XJ+kvNFdbXNJUrJMVtj5BVqN+NoZ2PvxYavFjOg2fw@mail.gmail.com>
+ <20260930083552.11289-1-sj@kernel.org>
+In-Reply-To: <20260930083552.11289-1-sj@kernel.org>
+From: Anton Gavriliuk <antosha20xx@gmail.com>
+Date: Wed, 30 Sep 2026 19:26:31 +0300
+X-Gm-Features: AclHuK9v_2C_STquKkivKCPatCukMGfjHv3w3UQIA7Hme-xYlEBTwcgOamvCpQY
+Message-ID: <CAAiJnjoaaPk3CcczDtk72xfkrgwp29KDT1==PZJJGgUcBVpdjA@mail.gmail.com>
+Subject: Re: Memory tiering with DAMON/DAMOS auto-tuning
+To: SJ Park <sj@kernel.org>
+Cc: damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 22 Sep 2026, at 13:12, Muhammad Usama Anjum wrote:
+I would go back to memory tiering VCF9.1-like behavior you helped me
+configure, for new few questions:
 
-> pte_t is used both for software PTE values and for entries stored in a PTE
-> table, so pte_t * does not distinguish a pointer to a software PTE
-> value from a pointer to table storage.
->
-> Introduce hw_pte_t as the generic name for a PTE table element. Define it
-> as a macro alias of pte_t by default. When an architecture selects
-> ARCH_HAS_HW_PTE_T, define it as a structure containing a pte_t instead.
-> This preserves the representation while allowing converted architectures
-> to enforce the distinction at compile time.
->
-> Name the generic wrapper structure __hw_pte_t so architectures can
-> forward-declare it when pgtable_t must be defined before the generic
-> hw_pte_t typedef is visible. This avoids header-order dependencies.
->
-> Keep the C type definitions behind an __ASSEMBLY__ check because
-> architecture assembly sources can include this header indirectly. Include
-> asm/page.h so consumers such as linux/vmalloc.h retain the page definitions
-> they previously obtained from that header.
->
-> Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-> Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-> ---
-> Changes since v1:
-> - Name the generic wrapper structure __hw_pte_t so architectures can
->   forward-declare it, and explain why this is required.
-> - Use software PTE value terminology.
->
-> Changes since RFC v1:
-> - Add the ARCH_HAS_HW_PTE_T opt-in and generic wrapper definition.
-> - Exclude the C type definitions from assembly sources.
-> - Update the description for the new opt-in model.
-> ---
->  MAINTAINERS                   |  1 +
->  include/linux/pgtable_types.h | 17 +++++++++++++++++
->  mm/Kconfig                    |  3 +++
->  3 files changed, 21 insertions(+)
->
-LGTM.
+1.  It works with the goal of 50% free memory for numa node 0, but
+when I tried to set 25% free memory, it didn't do anything...
 
-Acked-by: Zi Yan <ziy@nvidia.com>
+[root@localhost ~]# COLUMNS=3D500 numastat -p $(pgrep valkey-server) | cat
 
-Best Regards,
-Yan, Zi
+Per-node process memory usage (in MBs) for PID 3808 (valkey-server)
+                           Node 0          Node 1          Node 2
+    Node 3           Total
+                  --------------- --------------- ---------------
+--------------- ---------------
+Huge                         0.00            0.00            0.00
+      0.00            0.00
+Heap                         0.11            0.00            0.00
+      0.00            0.11
+Stack                        0.03            0.00            0.00
+      0.00            0.03
+Private                 238356.25            2.19            3.42
+      0.00       238361.86
+----------------  --------------- --------------- ---------------
+--------------- ---------------
+Total                   238356.39            2.19            3.42
+      0.00       238362.00
+[root@localhost ~]#
+
+
+/home/anton/damo/damo start \
+        ` # A kdamond to demote cold memory from node 0 to node 2 ` \
+        --kdamond --damon_ctx --monitoring_intervals_autotune \
+                --damon_target --numa_node 0 \
+                --damos_scheme \
+                        --damos_action migrate_cold 2 \
+                        --damos_access_rate 0% 0% --damos_apply_interval 1s=
+ \
+                        ` # up to 8 GiB per second ` \
+                        --damos_quota_interval 1s --damos_quota_space 8G \
+                        ` # aiming at least 25% node 0 free memory ` \
+                        --damos_quota_goal node_mem_free_bp 25% 0 \
+                        ` # using temporal tuner ` \
+                        --damos_quota_goal_tuner temporal \
+                        --damos_filter reject young \
+        ` # A kdamond to promote hot memory from node 2 to node 0 ` \
+        --kdamond --damon_ctx --monitoring_intervals_autotune \
+                --damon_target --numa_node 2 \
+                --damos_scheme \
+                        --damos_action migrate_hot 0 \
+                        --damos_access_rate 5% max --damos_apply_interval 1=
+s \
+                        ` # up to 8 GiB per second ` \
+                        --damos_quota_interval 1s --damos_quota_space 8G \
+                        ` # aiming at least 75.3% node 0 memory utilization=
+ ` \
+                        --damos_quota_goal node_mem_used_bp 75.3% 0 \
+                        ` # using temporal tuner ` \
+                        --damos_quota_goal_tuner temporal \
+                        --damos_filter allow young \
+
+
+[root@localhost ~]# cat
+/sys/kernel/mm/damon/admin/kdamonds/0/contexts/0/schemes/0/quotas/goal_tune=
+r
+temporal
+[root@localhost ~]# cat
+/sys/kernel/mm/damon/admin/kdamonds/1/contexts/0/schemes/0/quotas/goal_tune=
+r
+temporal
+
+
+[root@localhost ~]# COLUMNS=3D500 numastat -p $(pgrep valkey-server) | cat
+
+Per-node process memory usage (in MBs) for PID 3808 (valkey-server)
+                           Node 0          Node 1          Node 2
+    Node 3           Total
+                  --------------- --------------- ---------------
+--------------- ---------------
+Huge                         0.00            0.00            0.00
+      0.00            0.00
+Heap                         0.11            0.00            0.00
+      0.00            0.11
+Stack                        0.03            0.00            0.00
+      0.00            0.03
+Private                 238356.25            2.19            3.42
+      0.00       238361.86
+----------------  --------------- --------------- ---------------
+--------------- ---------------
+Total                   238356.39            2.19            3.42
+      0.00       238362.00
+[root@localhost ~]#
+
+
+2. If there are no un-accessed pages to demote for achieving a defined
+goal, damon will demote pages with the most rare access ?
+
+Anton
+
+=D1=81=D1=80, 30 =D1=81=D0=B5=D0=BD=D1=82. 2026=E2=80=AF=D0=B3. =D0=B2 11:3=
+5, SJ Park <sj@kernel.org>:
+>
+> On Wed, 30 Sep 2026 07:03:47 +0300 Anton Gavriliuk <antosha20xx@gmail.com=
+> wrote:
+>
+> > > Oops...  Seems you were running next branch of damo.  There was a bug=
+.  I
+> > > reproduced it on 7.2.8 kernel, and fixed it.  The fix [1] is now push=
+ed.  Could
+> > > you pull the 'next' branch and try again?
+> >
+> > Done.
+> [...]
+> > It looks now it keeps ~50% free numa node 0,
+>
+> Awesome :D
+>
+> [...]
+> > [root@localhost ~]# /home/anton/damo/damo report damon
+> > kdamond 0
+> >     state: on, pid: 29836
+> >     context 0
+> >         ops: paddr
+> [...]
+> >         scheme 0
+> >             action: migrate_cold to node 2 per 1 s
+> >             target access pattern
+> >                 sz: [0 B, max]
+> >                 nr_accesses: [0 samples, 0 samples]
+> >                 age: [0 aggr_intervals, 184,467,440,737,095 aggr_interv=
+als]
+> >             quotas
+> >                 0 ns / 8.000 GiB / 0 B per 1 s
+> >                 goal 0: metric node_mem_free_bp (nid 0) target 5,000 cu=
+rrent 0
+> >                 goal tuner: temporal
+>
+> Ok, the above line confirms DAMON is running with 'temporal' tuner.
+>
+> [...]
+> > DAMON & DAMOS are very flexible, so it requires a deep understanding
+> > of specific workload and how to configure memory tiering with DAMON &
+> > DAMOS.
+>
+> Indeed it is.  Nonetheless, for the reason we provide DAMON modules [1] o=
+r damo
+> scripts for commonly known DAMON usages.  We have DAMON_RECLAIM module [2=
+] for
+> proactive memory reclamation, and mem_tier.sh [3] for memory tiering.
+>
+> My suggestion is to start from such examples, find what is not working an=
+d
+> asking questions to me.  So you are doing all great :D
+>
+> >
+> > So firstly I decided to make it like VMware VCF 9.1 does :-)), next I
+> > will reduce the goal from 50% free to 25-25% for numa node 0.
+>
+> Sounds like a good plan.
+>
+> >
+> > Based on the outputs above, please let me know if other improvements
+> > are required.
+>
+> This temporal tuner test has proved the quota system is not broken.  It i=
+mplies
+> the previous test resulted in migrating nearly all data to the lower tier=
+,
+> because there was no hot data to promote back to the upper tier.
+>
+> In many common benchmarks using zipfian-like access distribution, hot dat=
+a is
+> always hot, and cold data is always cold.  And usually the amount of cold=
+ data
+> is much larger than hot data.  I found [4] the pattern is making evaluati=
+on of
+> tiering solutions difficult, and was using artificial access pattern mixi=
+ng to
+> work around.
+>
+> My imagined real world workload is, there will be hot and cold data.  And=
+ the
+> pattern will nearly always be stable.  But, occasionally there will be ch=
+anges.
+> Say, a chunk of data will be hot for a few hours, but suddenly be cold an=
+d keep
+> being cold for a few hours, then sudenly be warm for hours, and so on.  T=
+he
+> auto-tuning based DAMON tiering is designed with such workload in mind.
+>
+> For your testing, I think the setup is good.  I'd suggest lower target fr=
+ee
+> memory ratio, though.  Assuming the theory (your workload has static acce=
+ss
+> pattern of small hot data) is true, using consist tuner should also be fi=
+ne.
+>
+> You will have more than expected data in lower tier, but if those are tru=
+ly
+> cold, why would we bother?  If you still want strict upper tier utilizati=
+on,
+> you could make the access pattern and filter condition less strict.  Idea=
+lly,
+> the access pattern and filter conditions should all go away, assuming DAM=
+ON can
+> find true hot and cold data.  And I believe that would be the case for
+> long-running real world workloads.  Short-running test workload would sho=
+w
+> DAMON making wrong decisions in short term, though.
+>
+> If you want to make sure if my theory is true, you could also profile the
+> access pattern of your test workload using DAMON.  I actually did it for =
+my
+> auto-tuned tiering test [4] to find the fact.
+>
+> [1] https://origin.kernel.org/doc/html/latest/mm/damon/design.html#specia=
+l-purpose-access-aware-kernel-modules
+> [2] https://origin.kernel.org/doc/html/latest/admin-guide/mm/damon/reclai=
+m.html
+> [3] https://github.com/damonitor/damo/blob/next/scripts/mem_tier.sh
+> [4] https://lkml.kernel.org/r/20250420194030.75838-1-sj@kernel.org
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
