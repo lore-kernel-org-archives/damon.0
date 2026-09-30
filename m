@@ -1,169 +1,150 @@
-Received: from mta1.migadu.com (out-241.mta1.migadu.com [95.215.58.241])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781793793A5
-	for <damon@lists.linux.dev>; Wed, 30 Sep 2026 09:37:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.241
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AF63E40E0;
+	Wed, 30 Sep 2026 09:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790761056; cv=none; b=pUB84i6jGaTuFPjH0YZ6z+lku2RLE94odADK9pWEhEqD8h6EbVKW799Ah2gaEgYE3xNrR9TW2OvEPXoQKHM5evBgpBY6UMwaaziNKTxJHVzVD0VE9cbJGUgMeMeNUKmHnUulDtbUv2kdFZc1uN1Mo2fB9laowRwF7yIylKBpRVg=
+	t=1790761740; cv=none; b=nACAPDWSGi5otTnuUL5JeJhva44TC+xeMBsETZqpUbqhAa0QS3fcwKQIIkP/W30OehBYywYrRcbgSJ58mmXuehon5A7Lg5S7Dz/UnkfsLjBmfQANM+ME6FEDx7yfc9cbu6P3vI2+5cKcUpUPxmNP2oHw+aSU4hqGzyX/Y83AXjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790761056; c=relaxed/simple;
-	bh=X6NhOSSQEW58fF/T8iO6Cc8WhbapIj1EK2DhImjFRYI=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Ux+R5em0sSUG6yOB2vWXXLI/93Lz06CcHxWK7TqatgT1dF4JzcvuWomp/nPUE/UIlwW/LQ/7o4G7exYxAiUgCWMVVcCiD2Otn7Ihu0GnMh0CSoPfnOU2VVrF43LRFeQJnCavDZJqi8A3dacUqR/W36UfmSuHdl3QDMT/u53iU3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=vDaXKaPx; arc=none smtp.client-ip=95.215.58.241
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790761740; c=relaxed/simple;
+	bh=SsJFafcydfK+cId6DIHrbXEjx31Yrp/pBnHbcQfg+/M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oqv0aqHQ25ucs6any7uU51Qk4P37KcCNQSiNB+K+fZgJ9o7vfhXMCP9Kxw/laRaxmngFN/RwAi8ixYDgjmaV4IGQJ8dlxGUsQX3rjB24cv64mvnRFcfhMC6hYtOgqYoRVHn/kJBhVlWPW0eYGY0/hk34hhxu1suFrFAFgEtF+tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ALC3ltrK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="vDaXKaPx"
-X-Envelope-To: damon@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=X6NhOSSQEW58fF/T8iO6Cc8WhbapIj1EK2DhImjFRYI=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790761052; v=1; x=1791365852;
- b=vDaXKaPxoHUDe6xJBYjz/b8ax5TbwYLTCOwoNEhfLYhiepxMG3G0feiagcL8gJplJONpzP6n
- 7UaYmpuzQVxXSNzMEmWt/60cDauC6JZRdlFQXy0pWDNhIoITDUu/5K5kdiqlTLeiMPzzzGnfHmb
- KW0ixfR6RPFSBS78pfS7lAKw=
-X-Envelope-To: damon@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id 2848c540328b850a;
-	Wed, 30 Sep 2026 09:37:31 +0000
-X-Mizu-Trace-ID: 2848c540328b850a
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ALC3ltrK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5563C1F000FF;
+	Wed, 30 Sep 2026 09:48:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790761738;
+	bh=Nl9MeDTY24eQyQhffUb7xAuQNY3nKyWvog2voZwmldo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=ALC3ltrKN3qos9OvyQMmGJkaw+ZmlpnFqbIdT1bYSF3Cb5SJESDXXkiJpZNOigxtI
+	 MoChgdvVQXgz6EthkGaeKysgMiPi7P+vU6bCU13PtDm4k4Fi+OV5GtnB1fcXybGEHP
+	 1PV2wiGf8yhhMkQm2UJNk6izPP7tsx9qvJSnxhWyq/xbGmC0MUHcad8P+EywX+gt1j
+	 6Hcn8c5VHWs3n0fhsWgUI+FImoPxGsnCyJ+QhRMCL41kkiazG2FzwpsYBmRDLR2+EB
+	 dVXFx5Bz8oWYwJD2C9kXtUkouL6qXsoMc6U62XO+7b6Tr2lzsdrYVmmn7LCqIh22Sz
+	 uj9OguUgr3+Lg==
+From: SJ Park <sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1.y] mm/damon/core: fix unconditionally skip last region
+Date: Wed, 30 Sep 2026 02:48:53 -0700
+Message-ID: <20260930094853.52736-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <2026092949-surpass-thimble-02a8@gregkh>
+References: <2026092949-surpass-thimble-02a8@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
-Subject: Re: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
-From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <ary5Nn9le4xG7_-N@MacBookPro>
-Date: Wed, 30 Sep 2026 17:37:11 +0800
-Cc: Jialiang Huang <huang-jl@deepseek.com>,
- lance.yang@linux.dev,
- baohua@kernel.org,
- damon@lists.linux.dev,
- david@kernel.org,
- kunwu.chan@gmail.com,
- lianux.mm@gmail.com,
- linux-mm@kvack.org,
- mst@redhat.com,
- ryncsn@gmail.com,
- sj@kernel.org,
- virtualization@lists.linux.dev,
- xueyuan.chen21@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <CEE47F27-874B-486A-995F-E223249659FE@linux.dev>
-References: <20260925054408.10431-1-lance.yang@linux.dev>
- <20260929123241.1408414-1-huang-jl@deepseek.com>
- <aruyFPzEe3pS_Qzx@XiangdeMacBook-Pro.local>
- <AA71E56E-F29A-44B2-B5A0-7806CD684B21@linux.dev>
- <ary5Nn9le4xG7_-N@MacBookPro>
-To: Gao Xiang <xiang@kernel.org>
-X-Mailer: Apple Mail (2.3901.100.1.1.11)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
+From: Liew Rui Yan <aethernet65535@gmail.com>
 
+Once quota set, the charge_{target,addr}_from unconditionally skips and
+resets at the last region of the tracked target, so the last region can be
+skipped even when it has not been processed.
 
-> On Sep 30, 2026, at 15:24, Gao Xiang <xiang@kernel.org> wrote:
-> 
-> On Wed, Sep 30, 2026 at 11:36:23AM +0800, Muchun Song wrote:
->> 
->> 
->>> On Sep 29, 2026, at 20:41, Gao Xiang <xiang@kernel.org> wrote:
->>> 
->>> On Tue, Sep 29, 2026 at 08:32:41PM +0800, Jialiang Huang wrote:
->>>> Hi all,
->>>> 
->>>> I'm an engineer at DeepSeek. Thanks for the discussion, and thanks
->>>> to everyone working on DAMON and virtio-balloon free-page reporting.
->>>> They have been very useful for our workloads.
->>>> 
->>>> Gao Xiang wrote:
->>>>> It can cause sync 4K faults on the host in the worst case
->>>> 
->>>> This is one of our concerns with virtio-pmem as well: moving I/O onto
->>>> the page-fault path can introduce performance trade-offs. The other
->>>> concern is the substantial struct page overhead for large images.
->>>> 
->>>> For now, we enable virtio-pmem only for moderately sized, frequently
->>>> used read-only images, where there is more opportunity to share the
->>>> same host page cache across sandboxes, as Gao pointed out.
->>>> 
->>>> Muchun's vmemmap work is also interesting to us. My understanding is
->>>> that it allocates private backing for struct page metadata on demand,
->>>> which could help reduce the upfront memory overhead for large images.
->>> 
->>> Although I haven't had a chance and time to look into that, the main
->>> concern from me is that mmap() access will call
->>> "dax_fault_iter->vmemmap_materialize_page()", and malicious sandbox
->>> workloads (or not malicious, just valid mmap workloads) can cause guest
->>> memory OOMs due to "struct page balloon" for large rootfs in the worst
->>> cases and cause the follow-up mmap access failure, because the guest
->>> memory size may not even fulfill "struct page" for large rootfs.
->> 
->> I agree that this is a real issue with v1.
->> 
->> One detail is that merely establishing the mapping does not materialize
->> the metadata. Materialization happens when a fault resolves to an
->> allocated DAX extent, before its PFN is inserted into a userspace
->> mapping. However, that distinction does not remove the problem.
->> 
->> In the worst case, a workload can fault enough of the pmem range to
->> restore the full vmemmap cost, about 1.56% of the pmem size. Since v1
->> does not dematerialize private vmemmap pages, even a one-time scan can
->> retain that cost until the device is removed.
->> 
->> The follow-up mentioned in the cover letter is intended to make the
->> optimization reversible. One possible direction would be to invalidate
->> clean DAX entries under memory pressure and zap their userspace
->> mappings. Once a DAX entry has been removed and the corresponding PFNs
->> have no remaining mappings, references, or pins that require private
->> metadata, the associated vmemmap backing could be remapped to the
->> shared read-only page. A later access would fault and materialize it
->> again.
-> 
-> BTW, it's impossible for shared DAX entries (like the current XFS DAX
-> with reflink and EROFS will support this feature later too for chunk
-> memory sharing), since you cannot just use mapping and index to get
-> the VMA like page cache does unless you invent another new mechanism
-> for this.
+Example:
 
-You're right. For the reflink scenario, reclamation is currently
-difficult. If we want to reclaim, it would also be in three stages:
-1) reclaim the struct page corresponding to PFNs that no longer have
-any mapping; 2) reclaim the cases where mappings exist but are not
-reflink; 3) reclaim the reflink scenario.
+    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
+    2. Quota is configured to process only 100 bytes per window.
+    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
+       addr}_from is saved at (Target, 100).
+    4. Window 2: The loop reaches R2.  Because R2 is
+       damon_last_region(t), the old code unconditionally returns true,
+       skipping R2 entirely and resetting the charge_{target,addr}_from.
 
-These three stages go from simple to difficult. Of course, I hadn't
-thought this far ahead before. So in the v1 version, not even the
-first stage was implemented. At the very least, before I act, I need
-enough planning and thought.
+    Result: R2 is permanently skipped even though it has never been
+    processed.
 
-> 
-> Reclaiming page entry mechanism seems it can be used for or overlapped
-> to another types of memory (in order to save struct page memory in
-> general): I'm not sure if it needs wider discussion on reclaiming
-> "struct page" in general first.
+However, it is important to note that this is a very minor issue.  This is
+because it is triggered only when the previous window saved/kept
+charge_{target,addr}_from, and in the next window, all regions except the
+last region were skipped by damos_skip_charged_region().
 
-Of course, I don't think struct page saving is the focus of the discussion
-here, so we can stop discussing it.
+Fix this by only resetting the charge_{target,addr}_from when last region
+is reached, only skipping when it is applied or cannot split.
 
-> 
-> Anyway, it'd be better to get some numbers with RL or agent workloads
-> (especially the host memory is under reasonable pressure) before
-> landing all these new infras upstream if proceeding in this way.
+Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org> # v5.16.x
+(cherry picked from commit b3723b596b548c837a766aae3553c14a7b15af2b)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-At least for now, as far as I'm concerned, I don't intend to land all the
-features mentioned here. The first thing I want to address is on-demand
-allocation of struct page.
-
-Thanks,
-Muchun
-
-> 
-> Thanks,
-> Gao Xiang
-
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 859a6a636ab0e..64ff03b15fdef 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -756,6 +756,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 		unsigned long sz = damon_sz_region(r);
+ 		struct timespec64 begin, end;
+ 		unsigned long sz_applied = 0;
++		bool skip = false;
+ 
+ 		if (!s->wmarks.activated)
+ 			continue;
+@@ -768,14 +769,11 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 		if (quota->charge_target_from) {
+ 			if (t != quota->charge_target_from)
+ 				continue;
+-			if (r == damon_last_region(t)) {
+-				quota->charge_target_from = NULL;
+-				quota->charge_addr_from = 0;
+-				continue;
+-			}
+ 			if (quota->charge_addr_from &&
+-					r->ar.end <= quota->charge_addr_from)
+-				continue;
++					r->ar.end <= quota->charge_addr_from) {
++				skip = true;
++				goto clean_charge_from_skip;
++			}
+ 
+ 			if (quota->charge_addr_from && r->ar.start <
+ 					quota->charge_addr_from) {
+@@ -783,17 +781,25 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 						r->ar.start, DAMON_MIN_REGION);
+ 				if (!sz) {
+ 					if (damon_sz_region(r) <=
+-					    DAMON_MIN_REGION)
+-						continue;
++					    DAMON_MIN_REGION) {
++						skip = true;
++						goto clean_charge_from_skip;
++					}
+ 					sz = DAMON_MIN_REGION;
+ 				}
+ 				damon_split_region_at(t, r, sz);
+ 				r = damon_next_region(r);
+ 				sz = damon_sz_region(r);
++				skip = false;
+ 			}
++		}
++clean_charge_from_skip:
++		if (r == damon_last_region(t)) {
+ 			quota->charge_target_from = NULL;
+ 			quota->charge_addr_from = 0;
+ 		}
++		if (skip)
++			continue;
+ 
+ 		if (!damos_valid_target(c, t, r, s))
+ 			continue;
+-- 
+2.47.3
 
