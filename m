@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A9A30DD1B;
-	Wed, 30 Sep 2026 09:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAC63793A5;
+	Wed, 30 Sep 2026 09:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790760518; cv=none; b=h2AOP2KTqU01I32edSTw01NazVe5GluviARDj4seiOXkizvyBOir/SjZdM9wI1uKvy2xXyrH8aul4i51VX7y9ZPrdKhwxOr3OZgo98tc3L1sDHyjGb7vf85dCp93pD61/hD0OUyaXOP5r1veHEeSgzMM+ojVriGIg/3HiecuL38=
+	t=1790761047; cv=none; b=KWr7OoTIwBQzabH1vQTKCiVVX05mDQK5yEGf7plZPFjpsw4S3SDtgIDJa77lovjXCxkZxunxNN27ca5PesR564ozeSQ6VL7MyNJuqOCdqq0eHMVBDOsiUX+/8T+N30zOBmoEl+WH0QDYkCY6RaEyX6pTl9yCNWzQTz/a8eBF7Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790760518; c=relaxed/simple;
-	bh=Xh9sEhecDpEPVFZGkk2gnqMsRkUSyI8LZGhckc58uIE=;
+	s=arc-20240116; t=1790761047; c=relaxed/simple;
+	bh=+EkrZEMmFnWOQsnZgC6gn1VpWaNzay67cH2YrkxYNEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tsN9TG6aiCgmrgiq40bx3Oq8gTc0+73qjcKNLtKh4+3qaoS+wylr58yKB5+YxRvJy0PnHTdr/2Xl7v52HyEqqxNHLAV4M1p8TKR4DeCvHvhCu0H5QKFZLJifG8YIyPiQkDWZTs9fjT+6suuXW4+N0WwOLtlZYLkWwz/e9SXcHWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sqsc8pRz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KJblWA+CxbQlISTl/BKO9vNXGaipMLqf+QNlx65tkJPpzG27jnnBIwJsZ0nipo7tvuZ1QSgjMw4CBfRVhirjBqc9TgCkj9z0wwewxRse5O20OKU9DrJkfe1T2aC3ZNnELr6ZO2XgYCb03Rbpy/v9gMzw0GuRJ5lYNHop2/i9Kx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPijUOYF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sqsc8pRz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883221F000FF;
-	Wed, 30 Sep 2026 09:28:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPijUOYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC7C1F000FF;
+	Wed, 30 Sep 2026 09:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790760516;
-	bh=z3aHHfyyrs0l8iPbF3zXb6TAyOINt0wayQCovhUONWk=;
+	s=k20260515; t=1790761045;
+	bh=TJhwfM7LT6ym6ruDowV8au+YTRMbhrcGdOAEosWhPaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sqsc8pRz+PJaFXnydT83DD1btS1vLMfBvBrfTKZIf5XAP2rbwBSv1Zs8wtEoH2egU
-	 E0GYb0LjkD3wggxA4GX9+/pEvOYYyWCjZI2rOB5MQRjeSbhBvFbokTYP09Ylb2Snl7
-	 OfEiAIlaJ0jVuJmPEORYd2x1WVddOJjZ/AGEJRRSJBrntbuDPmreP8V1zNgmCL9h1D
-	 XS2g9KqmDninr1CsXi+qHUMF4mkikL7DF/fIifj/tzemoiiLr5tRYs8rvYaj4lb6ym
-	 ANiM9BHylcIvJxasMbmOgrQAMEwnEZDtEYaeKm65Xhss4jlRlSpGhUUrpSE2gD/dPn
-	 Vf5RQLJtiNBgA==
+	b=gPijUOYFBY30whKuElizvUvyUjYt+04gtiid8sSvsY6VYVxmYt8e/gXTp6fRfCJcp
+	 dLuwLlA6PBNCe2OUTyDisXpCEzgvT9bzfnoAcKT1VFIYHEnoPhA7qtTUtg2bUF004z
+	 4c3hr3yfEPump9x1zWbrmuFK4lDqpArWr2vkmyMHsz20AKCsmKKTQ4xng5j3YH+Q/6
+	 fgBcDa8/0rrJdEt9qzQRcoTC6yvTinooUOkOL0IbmGLEUkmNp1CLznSyMugcZUccNm
+	 ifL94d2gY8NxjjShq627tQlNd2WWH2Ca7AfPGz+B5hRPFEmH+A0JSiD+qj7gaSZje2
+	 jKA/QHXUfzNew==
 From: SJ Park <sj@kernel.org>
 To: stable@vger.kernel.org
 Cc: damon@lists.linux.dev,
 	Liew Rui Yan <aethernet65535@gmail.com>,
 	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12.y] mm/damon/core: fix unconditionally skip last region
-Date: Wed, 30 Sep 2026 02:28:29 -0700
-Message-ID: <20260930092829.45885-1-sj@kernel.org>
+Subject: [PATCH 6.6.y] mm/damon/core: fix unconditionally skip last region
+Date: Wed, 30 Sep 2026 02:37:07 -0700
+Message-ID: <20260930093707.48739-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026092948-agency-overhand-3fd1@gregkh>
-References: <2026092948-agency-overhand-3fd1@gregkh>
+In-Reply-To: <2026092948-moonrise-persecute-3597@gregkh>
+References: <2026092948-moonrise-persecute-3597@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -87,10 +87,10 @@ Signed-off-by: SJ Park <sj@kernel.org>
  1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 32737cc5f877b..802005d9186e8 100644
+index 0713fda22682c..5ede1733369f5 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -1322,19 +1322,17 @@ static bool damos_skip_charged_region(struct damon_target *t,
+@@ -883,19 +883,17 @@ static bool damos_skip_charged_region(struct damon_target *t,
  	struct damon_region *r = *rp;
  	struct damos_quota *quota = &s->quota;
  	unsigned long sz_to_skip;
@@ -115,7 +115,7 @@ index 32737cc5f877b..802005d9186e8 100644
  
  		if (quota->charge_addr_from && r->ar.start <
  				quota->charge_addr_from) {
-@@ -1348,11 +1346,15 @@ static bool damos_skip_charged_region(struct damon_target *t,
+@@ -909,11 +907,15 @@ static bool damos_skip_charged_region(struct damon_target *t,
  			damon_split_region_at(t, r, sz_to_skip);
  			r = damon_next_region(r);
  			*rp = r;
