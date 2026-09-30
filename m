@@ -1,51 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B34F33B6CC;
-	Wed, 30 Sep 2026 08:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C3039E6CD;
+	Wed, 30 Sep 2026 08:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790755732; cv=none; b=W5L+MFYX55HI2mVrcTtZ/Vy2wH8LzrN3mySWQJPAgEE116rtL3vimXyDwdIXN960IzjsDzfRJ4wh3V1zqVKIv2a8upea79t2KTLPvk1dlnRjQYUOUg6sMhU8FyZq18jvR6120ZcRQ2t612xJNRQA2th56BruDwim8tVnGTRQ2uw=
+	t=1790755804; cv=none; b=PgzGENBudEdDxbWpQgXsCl6P0Qw/SHi2ykZX1X9KQd0AWixHlN7/CPtN6QoxzDH2vKmgs2SL/etQr0o84D2V+l3HowEpulgaZM+ppk82Q7vX++EmsN3H8uCzKjZqALDyrvDzJY488U7coJ0fIjWIX8Ht5tOkoghZq657NH6FHCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790755732; c=relaxed/simple;
-	bh=3jpX3++RlolaBIRiSpDY68a58XgumXoiTLt1jbMCgN0=;
+	s=arc-20240116; t=1790755804; c=relaxed/simple;
+	bh=5Bq7CwkwG2BbE5AbKxX+EDQD6C2iA+WQh+g+1xwTINY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGw72l8xGqJ9EJD8++sq23XNR8bY8kej8zR3Q/tDhIhRDZfyllD9UM7dD4vk/Vxd4dAfIpVq4zmayWASw8son1n7/RFbEQlMcyVfbAk90/9OYd8nKB2MIT12YDYbohdWRyr1VnuI/Mg6Ko6eFlcTZjPeC3OdieBgyL1VYse+oVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XggV0HEx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lAPExownUkUqMULhFWPWRPbr82/GDn5yndSNIQMOLKuDrjaNYjqY3SdHo9gIHZxdc830XlR8hb5D06eOzM6JuW3bqRLCHMRySpJC7hPlfpHAgv1CGOomUQ13pxmtAUKsiVPil2YgRKlFQWGOSMdu80O6FoQb2+nyFM7YDSQ/EA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hRLZ2rKB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XggV0HEx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652C11F000FF;
-	Wed, 30 Sep 2026 08:08:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hRLZ2rKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118801F000FF;
+	Wed, 30 Sep 2026 08:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790755725;
-	bh=EgiI2zzwe8TB/ZW7XItAedr7ZYnB5/cnPC/QFupZv60=;
+	s=k20260515; t=1790755802;
+	bh=8a+8qeyAxtgsnsiYexx9Bwy/G9Ju1QoC30zUIT78gOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XggV0HEx4iFhJNOcs0B7+qgnbnzi6NXR5MD9WbJ7i65myhUAHSTmNy6Ac7ZhgF93d
-	 2vR5/dLU6+PjoDXGP0wPigAZTRWnD4cYe93FRgqToAC/9KtR1TRCOPpUfK1jTaFzcg
-	 3QSk8SN+ocw23C9X3rs/lQqj5dU9+xFAZcjAq0qKugUCSA5GX3Lg/OQCQNttM5ycih
-	 yIRoFMzfv495BHVUK4a4Mbe5MWHkXqbu779h24yeOclupcxVOTD6VmFgL9EsiFqOtM
-	 VrzmxBcdP4ebr6Sk9sQI/LUDhMnozE4r0E2FYr9xxMez6HkxaAA5nDEzc8expHpxR2
-	 P8GOR9B/XDPtA==
+	b=hRLZ2rKBLZs4dXWDFiEzdoX2I+Pqhb7rLYAg1J+2wJJS4lYqk7Dor9ffFEp9H+8CC
+	 pwsDFMQCB/ZMVstTrl+Cf2OoFWMoS8iL1W5nFybeFqgJEM0RAd5YOFJOdpF9vunuJV
+	 gv5gNI34YLlORAX+/npvpZ/b5bikc5r2te+O3ogaT8tSR4QmVPGiMtXmkScTWbzrcv
+	 XlBj617e524mDLgPdP3OJUhQ064nuyh5f2X0BluzKRVLhRClYlSJXZVCY+6fsEBHop
+	 vm28sfA0mMPdP91AxmAZ9zJ/f+vJk+6fFWai7ftF0lcDna3zTNV2zO07LAkJs1YBs/
+	 /a74kw6pNYiFQ==
 From: SJ Park <sj@kernel.org>
-To: Lian Wang <lianux.mm@gmail.com>
+To: Greg KH <greg@kroah.com>
 Cc: SJ Park <sj@kernel.org>,
-	Jialiang Huang <huang-jl@deepseek.com>,
-	lance.yang@linux.dev,
-	KunWu Chan <kunwu.chan@gmail.com>,
-	baohua@kernel.org,
+	stable@vger.kernel.org,
 	damon@lists.linux.dev,
-	david@kernel.org,
-	linux-mm@kvack.org,
-	mst@redhat.com,
-	ryncsn@gmail.com,
-	virtualization@lists.linux.dev,
-	xueyuan.chen21@gmail.com,
-	xiang@kernel.org
-Subject: Re: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
-Date: Wed, 30 Sep 2026 01:08:38 -0700
-Message-ID: <20260930080838.10887-1-sj@kernel.org>
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 6.18.y 1/2] mm/damon/core: allow esz to be set to zero
+Date: Wed, 30 Sep 2026 01:09:58 -0700
+Message-ID: <20260930080958.11031-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260930030747.47294-1-lianux.mm@gmail.com>
+In-Reply-To: <2026093025-cadet-late-bf00@gregkh>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -55,105 +47,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Lian,
+On Wed, 30 Sep 2026 06:34:35 +0200 Greg KH <greg@kroah.com> wrote:
 
-On Wed, 30 Sep 2026 11:07:29 +0800 Lian Wang <lianux.mm@gmail.com> wrote:
-
-> Hi SJ,
+> On Tue, Sep 29, 2026 at 12:13:19PM -0700, SJ Park wrote:
+> > Hello stable team,
+> > 
+> > 
+> > Please don't apply this patch.
+> > 
+> > On Tue, 29 Sep 2026 10:44:55 -0700 SJ Park <sj@kernel.org> wrote:
+> > 
+> > > From: Liew Rui Yan <aethernet65535@gmail.com>
+> > > 
+> > > When the temporal quota goal tuner determines that the goal has been
+> > > achieved (score >= 10000), it sets esz_bp to zero so that the esz becomes
+> > > zero.  However, damos_set_effective_quota() clamps the esz to
+> > > min_region_sz when quota->ms is set.
+> > > 
+> > > This is a minor issue, the main problem is that it doesn't match the
+> > > description in the documentation, which state that if the goal has already
+> > > been [over-]achieved, the quota will be set to zero.
+> > > 
+> > > Fix this by set quota (esz) as minimum as possible.
+> > > 
+> > > Link: https://lore.kernel.org/20260908135413.97570-1-sj@kernel.org
+> > > Fixes: 8bbde987c2b8 ("mm/damon/core: disallow time-quota setting zero esz")
+> > 
+> > The problem happens only when there is temporal tuner.  Temporal tuner is a
+> > feature that introduced in 7.1.  Hence <7.1 stable kernels don't have the
+> > temporal tuner, and this patch shouldn't be applied.
 > 
-> On Tue, 29 Sep 2026 09:56:03 -0700 SJ Park <sj@kernel.org> wrote:
-> 
-> > I agree the reclaim-reporting granularity mismatch could be a room to improve.
-> 
-> Thanks for pointing us back to the Access/Contiguity-aware Memory
-> Autoscaling proposal. Jialiang's description gives us a useful deployment
-> context and a concrete problem to investigate.
-> 
-> The guest reclaim/reporting case and our host-side THP/tiering case are
-> different, but both raise questions about how workload behaviour and
-> monitoring granularity should guide kernel actions.
-> 
-> KunWu and I would like to help move this work forward together, alongside
-> the existing DAMON roadmap. For now, I would like to share a few possible
-> areas for discussion:
-> 
-> 1. Workloads, DAMON policies, and tiering. My current work includes
->    improving masim-based experiments and studying TPP-inspired memory
->    tiering. We would like to make the workloads more representative and
->    better understand how DAMON's observations and policy settings affect
->    placement decisions. The aim is to understand where configuration
->    changes are sufficient and where code changes, if any, would help.
-> 
-> 2. Testing and contributing to the existing PMU work. Our initial focus
->    would be on helping with the Arm SPE integration and testing the IBS
->    and PEBS work on x86, in coordination with the people already working
->    on these. The experiments could evaluate whether finer-grained
->    sampling provides useful additional information, and at what CPU
->    cost. We could leave huge-page-specific mechanisms for a later
->    discussion, guided by the results.
-> 
-> 3. Following up on the DeepSeek workload. If the team is interested, we
->    could learn more about the workloads and tuning questions they can
->    share, and study the path from workload behaviour and monitoring
->    parameters through reclaim and free-page reporting. Pratyush's
->    reporting-delay suggestion adds another useful dimension. This may
->    provide a practical starting point for revisiting parts of the
->    access/contiguity-aware autoscaling work and evaluating their
->    relevance to the reported workload.
-> 
-> Could we discuss whether some of these could become follow-up milestones
-> in the DAMON discussions at LPC, or here on the mailing list?
+> SHould we skip patch 2/2 here too?
 
-Thank you for adding topics to discuss.
-
-Of course we could disucss anywhere anytime.  I think Access/Contituity-aware
-Memory Autoscaling (ACMA) could be just a parallel project.  It doens't need to
-be an extension of, or blocked by "beyond-page table access bit" project, in my
-humble opinion.
-
-ACMA is still on my TODO list.  It is mainly a matter of prioritization.  As it
-becomes clear it requires more attention, I could allocate more time for the
-project.  There was a user showing interest recently.  I'm planning to
-prioritize it more.  If DeepSeek could confirm their interest, it could help me
-prioritizing it further.
-
-As always, coding may not be that difficult and take that long time.  Testing
-might be the biggest challenge.  I don't have good test infrastructure now.
-Actually the lack of good test infrastructure is one of my biggest DAMON
-maintenance concerns nowadays.  Others' help on testing or test infra would be
-super helpful.
-
-If someone wants to implement and contribute it based on the proposed idea, it
-would also be nice.
-
-> We would be
-> happy to help organise the discussion and take on agreed pieces of
-> testing or development. We would also welcome closer collaboration with
-> DeepSeek and other interested MM developers, including Muchun, where our
-> work overlaps.
-
-Sounds great.  That would be super productive collaborations.
-
-> 
-> This is only a brief outline for now. I plan to bring the experimental
-> results and remaining questions to LPC. After discussing and aligning on
-> the details there, we plan to share a more detailed proposal with the
-> community and write up the planned work and experimental findings in
-> blog posts.
-
-We could keep discussing in mailing list, but of course in person discussions
-are always helpful.  I'm eagerly looking forward to the next week :)
-
-> 
-> I appreciate how much is already on your schedule. We hope to support
-> the existing plans and help with agreed tasks as the scope becomes
-> clearer. There is no urgency to reply; we can discuss these ideas
-> whenever it fits your schedule.
-
-Appreciate your continued and grateful contributions, Lian.
+2/2 is good.  Sorry for not clarifying it.  Please let me know if there is
+anything I can help.
 
 
 Thanks,
 SJ
-
-[...]
