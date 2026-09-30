@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE043D6CA3
-	for <damon@lists.linux.dev>; Wed, 30 Sep 2026 10:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252FF2BEFEE
+	for <damon@lists.linux.dev>; Wed, 30 Sep 2026 10:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790764011; cv=none; b=mCgJVrLJpBV9jWmsdksqsewJJezDsfxgSERRHQIPsWaOAoEA0TEkXJO6JyxZVI8EpI3qHgJkJwxa+NQlw5AdlhFVMAVVyLYMLT+G1H6z1AHqnGQvw7rVum5z5p/asRTK0N0P9u0+nCVtCEqJq5/xOH9X51OblTlH0/iRBGFvP1A=
+	t=1790764312; cv=none; b=TZOxv6yHfbN+7RIKt2q2wGZQ4d9zzegIeooUxNTnvxR5k8x94Gl87K+Rwa09+7Krehh6lHjslo6tj+Nj8qT8KWPFqUNE857shuvOZUDZld0B+lqmDNX+vqrRkPLLohG8DXdpcxSRQwst6I5+snJhcazCEoRtyuKk3oM8UovAYJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790764011; c=relaxed/simple;
-	bh=OkiyvRBDjewhpwgfofYDbOrd2+8LW1zSa4SMF/Uduog=;
+	s=arc-20240116; t=1790764312; c=relaxed/simple;
+	bh=VuhPBuQLkpE3t3A6wjqAocrKx6FTd+DaWwW3zfPRnQM=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=diSPC4X8oRM/D1iubmEZj2sF8t+2O5Hgv4hKZP+cuY6JiW0WzAiLBoo+Y+nF74hahkjsYm1GiS3Ikfd9co7PKMSPgAMpz49GawqHT0pZGA2Ue1sRplYC1188oT37uF5FlkgJ6+VB03xH3Bc7/EAw1Bk+kU0rJu3SN/j4hxBzOSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=brH9eRb1; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=i22TAYyvyaaiWOU2535Fr7yhdpel/xwMtd3+ENAniIA2soCTkS27PGrAllH5RC2TRuXxvcoa9ufEV4DAZEbsGo77LBXJt9wro9uyBp4VsInKv00/1gS0kPJDFkEb35bnbcvpHKCts0IojhPR61U9YruSxNB+lqR2/fmRlwm76v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b+g0+hDB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="brH9eRb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2AE1F000FF;
-	Wed, 30 Sep 2026 10:26:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b+g0+hDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9890A1F000FF;
+	Wed, 30 Sep 2026 10:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790764009;
-	bh=AG0grosOKwVu2sFtSXC/TGnMF529mUaPLFHy4SAipv4=;
+	s=k20260515; t=1790764310;
+	bh=EnO0EHVX9RGEm9ImU06STtMB4J09QV1HFRRvFtEYTkM=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=brH9eRb1xapcN7bCTKkkbOOPxvqpNzgHyssDc/J1CvMYFGd/RqYtp6UQd4xy9toS3
-	 n95yYrbGZk0K2l2ykz3Ctj3pnEuNQIIOaDv6Ro8kyClwga5fVvXHxgqQYR+qAcN8pt
-	 BcuuCp18fPn3T38khWXEF3x1fNJM2iRLa0goEn2S9O2vVCpeMNaG3MIb5CAvFkKHAS
-	 fIvWAouqOYGfcWoAIa2JPb1mF5j2Zrk1TWhEh2gPzz+LcMlxd18Wa4A4FS2K/eTi5u
-	 wB2RAYXWpJWTUSXsp+crTynaO1wSKyxq/Kt5zm6iTo2IgCu0F+7qfCl/5I+TlIf4bT
-	 I0oP+mKEutSDg==
+	b=b+g0+hDBfcVwAGs0iXy5NL/pOFxEpyTnjLmYDd8RXw6NSNNFxgVdH206zs0mhrNMU
+	 75MniL4FDy29B6YKWi5OJ5jjv2jrpamHwTXLIDcF2RZjignT+2jg1tN9ZHyyFzKwQI
+	 +WvcMlYLOXiF/yVLFJKJr+maABnnkaRIQ608T02YdenKEhmtX6yAtBmDYh5906hU72
+	 8A71+oB0Zg1EXuu9DQlC2OehJuHNbQrOK8lr5mv510YWeq9uf0uZBk2Q00afFX8cRA
+	 E4F3vRk1wVwYF1f+EckXLwTG+aC1hOk6OfVNmqsdOQEYxfMyDSQujhE5wwWDzCT6/d
+	 BK98hcoG5SDsQ==
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.12.y v2] mm/damon/core: fix unconditionally skip last
+Subject: Re: [PATCH 6.6.y v2] mm/damon/core: fix unconditionally skip last
  region
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20260930101459.56041-1-sj@kernel.org>
-References: <2026092948-agency-overhand-3fd1@gregkh>
- <20260930101459.56041-1-sj@kernel.org>
+In-Reply-To: <20260930101853.58786-1-sj@kernel.org>
+References: <2026092948-moonrise-persecute-3597@gregkh>
+ <20260930101853.58786-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 30 Sep 2026 10:26:49 +0000
-Message-Id: <20260930102649.7B2AE1F000FF@smtp.kernel.org>
+Date: Wed, 30 Sep 2026 10:31:50 +0000
+Message-Id: <20260930103150.9890A1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,28 +47,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 1 potential issue(=
 s) to consider:
-- [High] mm: OOB dereference in damon_do_apply_schemes() on split failure
+- [High] mm/damon: list head type confusion and memory corruption on alloca=
+tion failure
 --
 
-commit 61e0ff2e7385bb544355d1f3aa3598f7f8e9e1d0
+commit 47762d8f5b1f74489d2b1ca149de65b77ac867a2
 Author: Liew Rui Yan <aethernet65535@gmail.com>
 
 mm/damon/core: fix unconditionally skip last region
 
-This commit changes the logic in damos_skip_charged_region() to only reset
-charge_{target,addr}_from when the last region is reached. This is intended=
- to
-ensure the last region is not skipped if it has not been fully processed.
+Once quota set, the charge_{target,addr}_from unconditionally skips and
+resets at the last region of the tracked target, so the last region can be
+skipped even when it has not been processed. Fix this by only resetting
+the charge_{target,addr}_from when last region is reached, only skipping
+when it is applied or cannot split.
 
 Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
 
 > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 32737cc5f877b..cc7250f0936af 100644
+> index 0713fda22682c..c31683c12dd48 100644
 > --- a/mm/damon/core.c
 > +++ b/mm/damon/core.c
-[ ... ]
-> @@ -1322,37 +1322,41 @@ static bool damos_skip_charged_region(struct damo=
-n_target *t,
+> @@ -883,37 +883,41 @@ static bool damos_skip_charged_region(struct damon_=
+target *t,
 >  	struct damon_region *r =3D *rp;
 >  	struct damos_quota *quota =3D &s->quota;
 >  	unsigned long sz_to_skip;
@@ -78,19 +79,9 @@ n_target *t,
 >  	if (quota->charge_target_from) {
 >  		if (t !=3D quota->charge_target_from)
 >  			return true;
-> -		if (r =3D=3D damon_last_region(t)) {
-> -			quota->charge_target_from =3D NULL;
-> -			quota->charge_addr_from =3D 0;
-> -			return true;
-> -		}
->  		if (quota->charge_addr_from &&
-> -				r->ar.end <=3D quota->charge_addr_from)
-> -			return true;
-> +				r->ar.end <=3D quota->charge_addr_from) {
-> +			skip =3D true;
-> +			goto out;
-> +		}
-> =20
+
+[ ... ]
+
 >  		if (quota->charge_addr_from && r->ar.start <
 >  				quota->charge_addr_from) {
 >  			sz_to_skip =3D ALIGN_DOWN(quota->charge_addr_from -
@@ -108,49 +99,35 @@ n_target *t,
 >  			r =3D damon_next_region(r);
 >  			*rp =3D r;
 > +			skip =3D false;
+
+[Severity: High]
+If damon_split_region_at() fails to allocate memory for the new region, it
+silently returns without splitting. When r is the last region,
+damon_next_region() wraps around to the list head, resulting in an invalid
+struct damon_region pointer. Can this cause an invalid pointer to be
+assigned to *rp?
+
 >  		}
 > +	}
 > +out:
 > +	if (r =3D=3D damon_last_region(t)) {
-
-[Severity: High]
-If damon_split_region_at() fails to allocate memory, it returns silently and
-the region remains unmodified. If r happens to be the last region in the li=
-st,
-could damon_next_region(r) evaluate past the list boundary and return an
-invalid pointer?
-
-Since this invalid pointer is assigned to *rp and the function continues to
-the out label, could it fail this (r =3D=3D damon_last_region(t)) check, by=
-pass
-the intended quota reset, and return false?
-
-If so, could the caller damon_do_apply_schemes() then receive this invalid
-pointer and pass it to damos_valid_target():
-
-mm/damon/core.c:damon_do_apply_schemes() {
-    ...
-		if (damos_skip_charged_region(t, &r, s))
-			continue;
-
-		if (!damos_valid_target(c, t, r, s))
-			continue;
-    ...
-}
-
-causing it to dereference garbage data (such as r->ar.start and r->ar.end) =
-and
-potentially lead to an out-of-bounds memory access?
-
 >  		quota->charge_target_from =3D NULL;
 >  		quota->charge_addr_from =3D 0;
 >  	}
 > -	return false;
 > +	return skip;
 >  }
-> =20
->  static void damos_update_stat(struct damos *s,
+
+[Severity: High]
+If the allocation failed and r evaluates to a bogus list head pointer, this
+check for damon_last_region() will fail. The function will then return
+skip =3D false, causing the caller in damon_do_apply_schemes() to proceed
+with the invalid pointer.
+
+Could this lead to out-of-bounds reads in damos_valid_target() and
+out-of-bounds writes in damos_apply_scheme() when the pointer is
+dereferenced?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260930101459.5604=
-1-1-sj@kernel.org?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260930101853.5878=
+6-1-sj@kernel.org?part=3D1
