@@ -1,99 +1,161 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57C2483BF1;
-	Wed, 30 Sep 2026 10:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F034B484880
+	for <damon@lists.linux.dev>; Wed, 30 Sep 2026 10:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790764421; cv=none; b=DSPpdVrA+A0DMx2jo1vsNdseFt9c5PNLqCrALUO6gth6MX1SoNGfFYDSaball48p6vn2bSyFsPoDFkngPAs3jmUAy9jQTavdL/5QJWbicH9VsU1zEbowrz5p7wzXX+w/t7MIq8vaZfH+JeP66C76ZLIhE6p4WN/XEzvR3IVxnlQ=
+	t=1790764453; cv=none; b=JzV9G80nqFOVQmDjyq+sv/nM7UxFLq1sPNoKL95uw992lPXxedhcrXwZNd3+GxrKCNBYacdfvHkqYsKU5Houvs4Fj1RqU2FoxdYL5zqlVAaH5CJB0PSToOnfvLKxR50Z9y+PYsBtOh6ZUsHZk/y0sDP3ev1WZ+sMWKl6xIYEvgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790764421; c=relaxed/simple;
-	bh=XUXsuBcRAysMuaa5IFwWmmuXxHPIpZZNg9s0slH8TlI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IPmDc+dpkTYABFtG6BJptAQJfIFrWBmdTrafSQSKB7T9GljVevogfm5sBSaWo+N3KudG1NGUCvNgEW0RGHcxOneAUVbt+tc2rGFv7d/lIIviFioQ7Y4vwZ9YhPNIDsFCHa3TUo7t4IKrVLpwf+Fq4BWfzxtJS06OXWulINgqhmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mFYtGKpD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790764453; c=relaxed/simple;
+	bh=1bfy/y/Y3gXAIrwtD28le0TM7xqg3zspbUdtaotjq5Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KXog4nuDCrLDVIPXiiqs0Kj9Ys+XK65PTxXDcISEat2tkTD0A/IvWAeThCVJGel3WgBn4XR7NsNJa5P7+Hdt4pRdkHlk7i3q6YgljwPzGCP7hOKzjUcKZtV1cunipVuZy9/npDXbflLrnxshdlzAW50Zo5DcorFbWv8ZoYk/5GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LK1VwZB6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mFYtGKpD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7321F000FF;
-	Wed, 30 Sep 2026 10:33:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LK1VwZB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADCE1F00898;
+	Wed, 30 Sep 2026 10:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790764420;
-	bh=+DHevYFtTq9LXip3P6yx2LmGPrDIe2gZf1mJcG2SySg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mFYtGKpDX0b9KjPmZS692yinOoPah6ZGGq0I1FramSDyXTiA7QYBhBVI/JblfVCfr
-	 N57pJP5APLX6fXbpxyr4r/3q72ud866zC8eDGWyH95Sy2BrvvNZpGW4WAW356UJ/JG
-	 2laHbLBfqLu/EvUNG2afTr6QYgcVIXFJbCDhQPubqAf4Xr9zPpZTfwQE0QkvsuIxxp
-	 ssMKDyL6dwhgqaxlnvnJncyNWYTqjTfBsEJt9lkDJG/HxtXSOhga4P2W0xTW9w7BHZ
-	 w8N1xYJZYAKmabHd63kHkYjxZWrJ6NxdQ2MMo6qBPV5Q2IRZSkmtg9EhMo8PyVPQcV
-	 e0e4IPAjn50vA==
-Date: Wed, 30 Sep 2026 12:33:33 +0200
-From: Gao Xiang <xiang@kernel.org>
-To: Muchun Song <muchun.song@linux.dev>
-Cc: Gao Xiang <xiang@kernel.org>, Jialiang Huang <huang-jl@deepseek.com>,
-	lance.yang@linux.dev, baohua@kernel.org, damon@lists.linux.dev,
-	david@kernel.org, kunwu.chan@gmail.com, lianux.mm@gmail.com,
-	linux-mm@kvack.org, mst@redhat.com, ryncsn@gmail.com, sj@kernel.org,
-	virtualization@lists.linux.dev, xueyuan.chen21@gmail.com,
-	Matthew Wilcox <willy@infradead.org>
-Subject: Re: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
-Message-ID: <arzlfSOgtC-CLoZt@MacBookPro>
-References: <20260925054408.10431-1-lance.yang@linux.dev>
- <20260929123241.1408414-1-huang-jl@deepseek.com>
- <aruyFPzEe3pS_Qzx@XiangdeMacBook-Pro.local>
- <AA71E56E-F29A-44B2-B5A0-7806CD684B21@linux.dev>
- <ary5Nn9le4xG7_-N@MacBookPro>
- <CEE47F27-874B-486A-995F-E223249659FE@linux.dev>
+	s=k20260515; t=1790764451;
+	bh=WBR/KGIBzWQxi5xcXFstFTTuaakmunlg5er0/H/XffY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=LK1VwZB6HLgQjNqSfMQ6tXmreJds5al0seqVPji00xN28SznEZU5uav/1o5EFPyWP
+	 qfc1zcHBCDSdyjDPXFkHp0QNIUjKGdENmk29vW90Rwfuj/qlz0mtfv8W9EtTnlZav8
+	 swhwcXucmyfLZM3eWpXOnd/WgwUnp49jvIMx3GzuKhhGJp49i+8+qIxCt5ZXmQTmKa
+	 XpCRtyP+kkFganDHWbuF9SHUeKzbComHQe4QgzE9MtifVNInF04SySK6iLDwPt/HTa
+	 TTBFY6+xrJoBZb4OoKqGEki00fVm4En6C9MDoBFhoS1+Y8PeqvMahzFlBvaIPVIMC/
+	 NQh2Uq91qWCNg==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.12.y v2] mm/damon/core: fix unconditionally skip last region
+Date: Wed, 30 Sep 2026 03:34:07 -0700
+Message-ID: <20260930103408.59035-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260930102649.7B2AE1F000FF@smtp.kernel.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CEE47F27-874B-486A-995F-E223249659FE@linux.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 30, 2026 at 05:37:11PM +0800, Muchun Song wrote:
+On Wed, 30 Sep 2026 10:26:49 +0000 sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] mm: OOB dereference in damon_do_apply_schemes() on split failure
+> --
 > 
+> commit 61e0ff2e7385bb544355d1f3aa3598f7f8e9e1d0
+> Author: Liew Rui Yan <aethernet65535@gmail.com>
+> 
+> mm/damon/core: fix unconditionally skip last region
+> 
+> This commit changes the logic in damos_skip_charged_region() to only reset
+> charge_{target,addr}_from when the last region is reached. This is intended to
+> ensure the last region is not skipped if it has not been fully processed.
+> 
+> Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 32737cc5f877b..cc7250f0936af 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> [ ... ]
+> > @@ -1322,37 +1322,41 @@ static bool damos_skip_charged_region(struct damon_target *t,
+> >  	struct damon_region *r = *rp;
+> >  	struct damos_quota *quota = &s->quota;
+> >  	unsigned long sz_to_skip;
+> > +	bool skip = false;
+> >  
+> >  	/* Skip previously charged regions */
+> >  	if (quota->charge_target_from) {
+> >  		if (t != quota->charge_target_from)
+> >  			return true;
+> > -		if (r == damon_last_region(t)) {
+> > -			quota->charge_target_from = NULL;
+> > -			quota->charge_addr_from = 0;
+> > -			return true;
+> > -		}
+> >  		if (quota->charge_addr_from &&
+> > -				r->ar.end <= quota->charge_addr_from)
+> > -			return true;
+> > +				r->ar.end <= quota->charge_addr_from) {
+> > +			skip = true;
+> > +			goto out;
+> > +		}
+> >  
+> >  		if (quota->charge_addr_from && r->ar.start <
+> >  				quota->charge_addr_from) {
+> >  			sz_to_skip = ALIGN_DOWN(quota->charge_addr_from -
+> >  					r->ar.start, DAMON_MIN_REGION);
+> >  			if (!sz_to_skip) {
+> > -				if (damon_sz_region(r) <= DAMON_MIN_REGION)
+> > -					return true;
+> > +				if (damon_sz_region(r) <= DAMON_MIN_REGION) {
+> > +					skip = true;
+> > +					goto out;
+> > +				}
+> >  				sz_to_skip = DAMON_MIN_REGION;
+> >  			}
+> >  			damon_split_region_at(t, r, sz_to_skip);
+> >  			r = damon_next_region(r);
+> >  			*rp = r;
+> > +			skip = false;
+> >  		}
+> > +	}
+> > +out:
+> > +	if (r == damon_last_region(t)) {
+> 
+> [Severity: High]
+> If damon_split_region_at() fails to allocate memory, it returns silently and
+> the region remains unmodified. If r happens to be the last region in the list,
+> could damon_next_region(r) evaluate past the list boundary and return an
+> invalid pointer?
+> 
+> Since this invalid pointer is assigned to *rp and the function continues to
+> the out label, could it fail this (r == damon_last_region(t)) check, bypass
+> the intended quota reset, and return false?
+> 
+> If so, could the caller damon_do_apply_schemes() then receive this invalid
+> pointer and pass it to damos_valid_target():
+> 
+> mm/damon/core.c:damon_do_apply_schemes() {
+>     ...
+> 		if (damos_skip_charged_region(t, &r, s))
+> 			continue;
+> 
+> 		if (!damos_valid_target(c, t, r, s))
+> 			continue;
+>     ...
+> }
+> 
+> causing it to dereference garbage data (such as r->ar.start and r->ar.end) and
+> potentially lead to an out-of-bounds memory access?
 
-...
+I will separately work on this.  Refer to my other reply to same issue report
+for details.
+
+[1] https://lore.kernel.org/20260930102333.58847-1-sj@kernel.org
 
 > 
-> > 
-> > Anyway, it'd be better to get some numbers with RL or agent workloads
-> > (especially the host memory is under reasonable pressure) before
-> > landing all these new infras upstream if proceeding in this way.
+> >  		quota->charge_target_from = NULL;
+> >  		quota->charge_addr_from = 0;
+> >  	}
+> > -	return false;
+> > +	return skip;
+> >  }
+> >  
+> >  static void damos_update_stat(struct damos *s,
 > 
-> At least for now, as far as I'm concerned, I don't intend to land all the
-> features mentioned here. The first thing I want to address is on-demand
-> allocation of struct page.
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260930101459.56041-1-sj@kernel.org?part=1
 
-From my point of view, on-demend allocation of `struct page` for FSDAX
-is indeed useful and can be landed upstream, mainly because `struct page`
-initialization takes much long time for large FSDAX devices even a small
-range is used, that impacts the guest startup time a lot.
-
-But in order to make it safe for production, I suggest reserve the
-guest memory in advance for the worst cases of `struct page` at the first
-stage, otherwise it could cause unexpected issues for many guest workloads:
-it's hard to perdict if the guest memory is still enough, it's unfriendly
-to system designers as well (that would completely based on their
-experience and hard to ensure the service quality beforehand.)
-
-Since the guest memory for `struct page` is touched on-demand, the memory
-over-committing on the host is still workable, the memory reservation
-can be removed after the reclaim path is done.
 
 Thanks,
-Gao Xiang
-
-
-> 
-> Thanks,
-> Muchun
-> 
-> > 
-> > Thanks,
-> > Gao Xiang
-> 
-> 
+SJ
