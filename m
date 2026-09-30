@@ -1,150 +1,139 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AF63E40E0;
-	Wed, 30 Sep 2026 09:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833323E7167
+	for <damon@lists.linux.dev>; Wed, 30 Sep 2026 09:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790761740; cv=none; b=nACAPDWSGi5otTnuUL5JeJhva44TC+xeMBsETZqpUbqhAa0QS3fcwKQIIkP/W30OehBYywYrRcbgSJ58mmXuehon5A7Lg5S7Dz/UnkfsLjBmfQANM+ME6FEDx7yfc9cbu6P3vI2+5cKcUpUPxmNP2oHw+aSU4hqGzyX/Y83AXjk=
+	t=1790762017; cv=none; b=ajfrlPcfcCIizd9nhP/mzSP6eD53IunRsW0h8Vd3rJ2vcGWCV/D+E1W5819ci8Da4lwTdNYxwsXTGeXRQYiqy+UFXLmFxA5BH3j9tfH+IXWQW8x1xIZdXu77fjMW2nrbGeBrMIPugMh1vwTENAGXFSNjZ3WEj86SYO+FIHHwt8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790761740; c=relaxed/simple;
-	bh=SsJFafcydfK+cId6DIHrbXEjx31Yrp/pBnHbcQfg+/M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqv0aqHQ25ucs6any7uU51Qk4P37KcCNQSiNB+K+fZgJ9o7vfhXMCP9Kxw/laRaxmngFN/RwAi8ixYDgjmaV4IGQJ8dlxGUsQX3rjB24cv64mvnRFcfhMC6hYtOgqYoRVHn/kJBhVlWPW0eYGY0/hk34hhxu1suFrFAFgEtF+tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ALC3ltrK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790762017; c=relaxed/simple;
+	bh=J9z4jtYAHW0vCKp/0q5XOG3GMECoLrjGjBleDGBz3kI=;
+	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
+	 Message-Id; b=B5nvPRNeNwuLbaBJOCXpzVXZgP3KixK6SR8JHBTfNWgAKWmyLAtiOgfJKYKcuHtITxwJwnSsKi63FUylMcZs8BHEijqx7BUkNkgwj88K1vtgoB+lyCqBSZcfB09dR73an8HOssXSN+MojZ3mgezb97ii3040/9DjJp5g0d+fvqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N/GAzfPd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ALC3ltrK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5563C1F000FF;
-	Wed, 30 Sep 2026 09:48:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N/GAzfPd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B6A1F000FF;
+	Wed, 30 Sep 2026 09:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790761738;
-	bh=Nl9MeDTY24eQyQhffUb7xAuQNY3nKyWvog2voZwmldo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ALC3ltrKN3qos9OvyQMmGJkaw+ZmlpnFqbIdT1bYSF3Cb5SJESDXXkiJpZNOigxtI
-	 MoChgdvVQXgz6EthkGaeKysgMiPi7P+vU6bCU13PtDm4k4Fi+OV5GtnB1fcXybGEHP
-	 1PV2wiGf8yhhMkQm2UJNk6izPP7tsx9qvJSnxhWyq/xbGmC0MUHcad8P+EywX+gt1j
-	 6Hcn8c5VHWs3n0fhsWgUI+FImoPxGsnCyJ+QhRMCL41kkiazG2FzwpsYBmRDLR2+EB
-	 dVXFx5Bz8oWYwJD2C9kXtUkouL6qXsoMc6U62XO+7b6Tr2lzsdrYVmmn7LCqIh22Sz
-	 uj9OguUgr3+Lg==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1.y] mm/damon/core: fix unconditionally skip last region
-Date: Wed, 30 Sep 2026 02:48:53 -0700
-Message-ID: <20260930094853.52736-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026092949-surpass-thimble-02a8@gregkh>
-References: <2026092949-surpass-thimble-02a8@gregkh>
+	s=k20260515; t=1790762015;
+	bh=lmNU7mrFL2RzJqncaEfh5yobeJ0LJSXIsGJuiHpVALM=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=N/GAzfPdeEtVrKjCg6sZVV6mLuqwfk+GTxAs7jH+iOs0nz33z/d1nMhrfmHxQ6ibE
+	 UiPu6i8YMUzLKBt0s5pWBA5T3oKyD81GxGWmSFJylUJNRNSDQ6H5txS+rxxqZ8cZkF
+	 NghKux/cFdRHIPIL2scLE3Dt9My7G12rNp0Xcr3P7vUGWVFIzRAzGZdPJSWH1d9wU+
+	 wl5v+sCjh0MCz4hrW1tGWX8HEc5w4C09oj/zqbwRB8Ko4FSeiRH3niUyx89PBQJqkh
+	 Jx0vatUcMIBHwZ3lLdxe2rPE5+r4x2FeHzPYwNSv+wJ71L4DwZxxj7QXlQfMXyz36W
+	 0fn8mZwRT6Z6g==
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.12.y] mm/damon/core: fix unconditionally skip last
+ region
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20260930092829.45885-1-sj@kernel.org>
+References: <2026092948-agency-overhand-3fd1@gregkh>
+ <20260930092829.45885-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 30 Sep 2026 09:53:34 +0000
+Message-Id: <20260930095335.05B6A1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+s) to consider:
+- [Critical] damon: OOB write and list corruption when damon_split_region_a=
+t() fails
+- [High] damon: permanent skipping of targets due to charge_target_from sta=
+te leak
+--
 
-Once quota set, the charge_{target,addr}_from unconditionally skips and
-resets at the last region of the tracked target, so the last region can be
-skipped even when it has not been processed.
+commit 035ce5241b6b256409f7ad3d4de6c01dbe7e8563
+Author: Liew Rui Yan <aethernet65535@gmail.com>
+mm/damon/core: fix unconditionally skip last region
 
-Example:
-
-    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
-    2. Quota is configured to process only 100 bytes per window.
-    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
-       addr}_from is saved at (Target, 100).
-    4. Window 2: The loop reaches R2.  Because R2 is
-       damon_last_region(t), the old code unconditionally returns true,
-       skipping R2 entirely and resetting the charge_{target,addr}_from.
-
-    Result: R2 is permanently skipped even though it has never been
-    processed.
-
-However, it is important to note that this is a very minor issue.  This is
-because it is triggered only when the previous window saved/kept
-charge_{target,addr}_from, and in the next window, all regions except the
-last region were skipped by damos_skip_charged_region().
-
-Fix this by only resetting the charge_{target,addr}_from when last region
-is reached, only skipping when it is applied or cannot split.
+This patch modifies the skip logic in DAMON to only reset the
+charge_target_from state when the last region is reached. It also updates
+the function to skip the region only if it is applied or cannot be split,
+rather than unconditionally skipping the last region.
 
 Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
-Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org> # v5.16.x
-(cherry picked from commit b3723b596b548c837a766aae3553c14a7b15af2b)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/core.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 859a6a636ab0e..64ff03b15fdef 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -756,6 +756,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		unsigned long sz = damon_sz_region(r);
- 		struct timespec64 begin, end;
- 		unsigned long sz_applied = 0;
-+		bool skip = false;
- 
- 		if (!s->wmarks.activated)
- 			continue;
-@@ -768,14 +769,11 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		if (quota->charge_target_from) {
- 			if (t != quota->charge_target_from)
- 				continue;
--			if (r == damon_last_region(t)) {
--				quota->charge_target_from = NULL;
--				quota->charge_addr_from = 0;
--				continue;
--			}
- 			if (quota->charge_addr_from &&
--					r->ar.end <= quota->charge_addr_from)
--				continue;
-+					r->ar.end <= quota->charge_addr_from) {
-+				skip = true;
-+				goto clean_charge_from_skip;
-+			}
- 
- 			if (quota->charge_addr_from && r->ar.start <
- 					quota->charge_addr_from) {
-@@ -783,17 +781,25 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 						r->ar.start, DAMON_MIN_REGION);
- 				if (!sz) {
- 					if (damon_sz_region(r) <=
--					    DAMON_MIN_REGION)
--						continue;
-+					    DAMON_MIN_REGION) {
-+						skip = true;
-+						goto clean_charge_from_skip;
-+					}
- 					sz = DAMON_MIN_REGION;
- 				}
- 				damon_split_region_at(t, r, sz);
- 				r = damon_next_region(r);
- 				sz = damon_sz_region(r);
-+				skip = false;
- 			}
-+		}
-+clean_charge_from_skip:
-+		if (r == damon_last_region(t)) {
- 			quota->charge_target_from = NULL;
- 			quota->charge_addr_from = 0;
- 		}
-+		if (skip)
-+			continue;
- 
- 		if (!damos_valid_target(c, t, r, s))
- 			continue;
--- 
-2.47.3
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 32737cc5f877b..802005d9186e8 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+[ ... ]
+> @@ -1348,11 +1346,15 @@ static bool damos_skip_charged_region(struct damo=
+n_target *t,
+>  			damon_split_region_at(t, r, sz_to_skip);
+>  			r =3D damon_next_region(r);
+>  			*rp =3D r;
 
+[Severity: Critical]
+Could this lead to out-of-bounds writes and list corruption if
+damon_split_region_at() fails?
+
+This patch removes the early exit condition for the last region, exposing it
+to damon_split_region_at(). If memory allocation fails, the split function
+returns silently without modifying the list:
+
+mm/damon/core.c:damon_split_region_at() {
+	new =3D damon_new_region(r->ar.start + sz_r, r->ar.end);
+	if (!new)
+		return;
+...
+}
+
+The pointer is then unconditionally advanced with r =3D damon_next_region(r=
+).
+If r was the last region, damon_next_region() wraps around to the list
+head (&t->regions_list), generating an invalid struct damon_region pointer
+pointing outside valid regions. Subsequent writes to this pointer will
+corrupt the target sibling list integrity.
+
+> +			skip =3D false;
+>  		}
+> +	}
+> +out:
+> +	if (r =3D=3D damon_last_region(t)) {
+
+[Severity: High]
+Does the early return inside the region size check bypass this cleanup logi=
+c?
+
+If sz_to_skip evaluates to 0 and the region size is <=3D DAMON_MIN_REGION,
+the code hits an early return:
+
+mm/damon/core.c:damos_skip_charged_region() {
+...
+		sz_to_skip =3D ALIGN_DOWN(quota->charge_addr_from -
+				r->ar.start, DAMON_MIN_REGION);
+		if (!sz_to_skip) {
+			if (damon_sz_region(r) <=3D DAMON_MIN_REGION)
+				return true;
+...
+}
+
+Because this early return bypasses the new out label,
+quota->charge_target_from remains populated if this occurs on the last
+region. For all subsequent targets, the check
+if (t !=3D quota->charge_target_from) evaluates to true and indefinitely sk=
+ips
+those regions, causing targets to be starved.
+
+>  		quota->charge_target_from =3D NULL;
+>  		quota->charge_addr_from =3D 0;
+>  	}
+> -	return false;
+> +	return skip;
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260930092829.4588=
+5-1-sj@kernel.org?part=3D1
