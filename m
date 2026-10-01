@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541002FD694;
-	Thu,  1 Oct 2026 11:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB264F68DF;
+	Thu,  1 Oct 2026 11:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790854018; cv=none; b=rjoA3MS8UBwxZYowGnPUAWOUJ1ZY0xPBO0NVt+j/PtBSVyJfVvP77IrMCIJCqwDplyMGMGxI8TCTGwtq2S5UWcWbGauhWnx7PNc1KLlAeug3JLpSHDmKLuOTUignQ6b6vzgmxvrA7tbhCdMiOJoYRCqUiyr/Sj4x9orB7SRQxlU=
+	t=1790854062; cv=none; b=h3ie6XRI4DXWzaYJ46ykPaJDMH4pbPWxsm79vs7h5MJI3QqYnv9uVPcaG4GdzdrlJbJIBz4rMuD503gklTXBGgwqi/XIuDLhHNkQ8YuB7BelN/8gKaJuBTdYLNKzJrrnb0+aOLexYuDBQo7xW3XElnm/LBMxQ+xCaPj380ob4kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790854018; c=relaxed/simple;
-	bh=3zSPq2JpA3qyQt/5l8expvyez9du3zzwq9WMhH9uzcY=;
+	s=arc-20240116; t=1790854062; c=relaxed/simple;
+	bh=53emEKbcCjNowItcHJ+rOw40sqRH3pP5yXBhZgWvwCI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tvLBnaYKxCO+ShRaVNj9CBU0zmbJcFoQDXXhkqSg7UDN1U8M4mmMx+vUYVO/bJo5oT0VVvChFOSmRXlQvpUgb0uWAQBE2qTxgOWrzQ6+w1JzDHUj5Rf/I8WzqgbIfgquk4LolraLCsDhY9zMFvjTfLapB8jztpN9UDAVpoA8HQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S+MQtz7z; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=JPLzbCB3dpn+bQGnydfr5pJzI//jhym1ehxKRC3rMwhkVqJ+EKmGszd3h2Q3bH+eVbQIXGLansPidfWaA400QnhinQ9ffOdVQmfqUDrg311nfNM5xZqiw8MxcaqBEVp3Y7hXgi/0vi3JOtAYvkkViXVwFP6pDPsPp9Zpk8bEtH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ky6X3yIy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S+MQtz7z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5706D1F00899;
-	Thu,  1 Oct 2026 11:26:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ky6X3yIy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5491F00898;
+	Thu,  1 Oct 2026 11:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790854016;
-	bh=IzfEyFhJfYK+uB46vBwebUVJX9+hiREC1XF3fSfGZUA=;
+	s=k20260515; t=1790854056;
+	bh=HRinFgClxsjCxzXrcM5ZxOKZ/5JIquj5jbimxGiUTO8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=S+MQtz7zuMo19rFCKE3ytIWk7CFynaGBS50YcTRINWTK/69FE8EU5WXwU4YLcDdeI
-	 s9Do6bZlpvwiEVwgtaj9tIS7N18dxNolZ/ZEY2StJqCPVzklnEXLteF1u8hE+6KYAs
-	 76CrhAdicKoK7qFzSQ6inMlZtqgwGpP4vuGgEKL0Y9/HGMa27vAhF4L10zPhtXLPmP
-	 at8McMfify9jFinUv+Sdadf2Usvs5QzzGKfUxkmoykUDM3RjU/7T2ETtc60aAVnyot
-	 kxZGI1ar8zfZG4KRQbayNjm74RVS+RYzqvFsjwaotkhltxiPBfCZ6WHXWFzh5Tiq2g
-	 9ag/B8Tf96Twg==
-Message-ID: <fc9919bf-b9e2-45c2-bd7c-70b37341b664@kernel.org>
-Date: Thu, 1 Oct 2026 13:26:17 +0200
+	b=Ky6X3yIyUjjGya5AZ2z0J7ES0PO1SfluuP77TdLK4cH/5tB7JmDxOx5JmHguHbTS/
+	 /b53SZAJrduEMNol+itQc4hUm3oYIqiOIaUDFLDveSfCnkYT0toHIyq63iOl1Bcr0E
+	 LFrUwvyQRwIW6C5fp8PbruCBz0hBOSrd465V01o47SLY4K58h3wExxBgZh69KYO5ZH
+	 Wu118EUYFVgD1s1YuYtEhU8Vy5dw/GT2t4WKgiJR1s7vPjJz3t/3IedQszccKYRhy2
+	 so7DKhpsR4s+A5udrWW8RI/AbcWyEkjbKrIsp9SorRGRzmZoNzvimOYRr+/vcF4jm5
+	 3ubv4o7hB0KTg==
+Message-ID: <fe7ee974-fb29-43fd-8543-3d9f4e4755fb@kernel.org>
+Date: Thu, 1 Oct 2026 13:27:04 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,7 +35,7 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/9] mm: use hw_pte_t for generic PTE table storage
+Subject: Re: [PATCH v3 4/9] mm: convert PTE table entries in ptep_get()
 To: Muhammad Usama Anjum <usama.anjum@arm.com>,
  Andrew Morton <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>,
  "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
@@ -100,7 +100,7 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  kasan-dev@googlegroups.com, intel-gfx@lists.freedesktop.org,
  dri-devel@lists.freedesktop.org, xen-devel@lists.xenproject.org
 References: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
- <20260922-pte0-v3-3-5670b8cb9059@arm.com>
+ <20260922-pte0-v3-4-5670b8cb9059@arm.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -147,32 +147,15 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260922-pte0-v3-3-5670b8cb9059@arm.com>
+In-Reply-To: <20260922-pte0-v3-4-5670b8cb9059@arm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 9/22/26 19:12, Muhammad Usama Anjum wrote:
-> Generic page-table interfaces use pte_t * for both pointers to PTE table
-> storage and pointers to software PTE values. Convert the generic
-> declarations and their MM, fs, and kernel users together so parameters,
-> return types, callbacks, and local pointers that designate table storage
-> use hw_pte_t *.
-> 
-> Include linux/pgtable_types.h from headers that expose the converted
-> interfaces. It continues to provide pgprot_t to vmalloc.h through
-> asm/page.h.
-> 
-> Keep software PTE values as pte_t and retain pte_t * for value interfaces.
-> 
-> No architecture selects ARCH_HAS_HW_PTE_T at this point, so hw_pte_t
-> remains an alias of pte_t and this changes the interface vocabulary without
-> changing representation or behavior.
-> 
-> Most of this mechanical conversion was generated with the Coccinelle script
-> included in the cover letter. The script deliberately ignores pte_t *
-> pointers named ptentp because they designate software PTE values. The
-> result was then audited, and sites the script could not convert were
-> updated by hand.
+> ptep_get() now accepts a pointer to hw_pte_t storage but must continue to
+> return a software PTE value. Add __pte_from_hw for both generic hw_pte_t
+> definitions. Read the hw_pte_t table element atomically before converting
+> it to pte_t.
 > 
 > Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 
