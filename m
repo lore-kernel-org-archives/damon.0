@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D115331E830;
-	Thu,  1 Oct 2026 11:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F148470EB1;
+	Thu,  1 Oct 2026 11:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790853798; cv=none; b=iXqrcZBCOlJEZaLD0W5rZ+nqmnqUOvtWovhLEdcvNA3Hb0uXyl0OwaclcgKYHKcmS40WwLsT2vJ1nJUzGuOe+uqkV0g3fJKxE/Ha853i/BAXowC9kbASY+/f7WrurlTubz8w/y2jCf30C7l9smpaYT4LUOkgUJwN5n5UCtA7UzA=
+	t=1790853831; cv=none; b=PMznsagOVkWiZOXJkoE3Bud/FU+sYW3lMaYOLFTQQAPWjXeTI7hDcQ7wDJ3/EkaLYeXttSu+PjwrQRISEUrgy/mF0cXZYnJkg+PYdum1yYOtgWLAwh59SN2Mo4jHONdBO0br5e+oJhL6mrLJOhwvRaH2VHZzdLnzpOzwhsvBPnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790853798; c=relaxed/simple;
-	bh=FODmZNnCWZtzguVsiXUlDavcdjsxt9ZV4axKXtg1vCM=;
+	s=arc-20240116; t=1790853831; c=relaxed/simple;
+	bh=wxKFLUtMEIYQHonKAO7uUtNvKEJFF4C9Gv2DorblE8U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LTly5uTZAyzC+u8nvFcAY9UvhpVEEMaITF+2Y2sf0JV69/4MEU4lB//sX3+pcyJ725orV+01TWyRVspZbNPZVYJyfu7VFpTsbwxKjmRiG65lRaZZH72wxkZYOQ8WgkiHyFw3IT6iXjzZT6zzNyB1o8qFIduVNj43oGH87NmpBlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hq1jxQGW; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=fT3rJcGI2KuxlSNnIAF1STo+9XoqaE4ImeevBhRG36MVBDmEXDyC91eeNRJZeNDi+X3flZqBk+2wAQw0BbvVUg2GlppFC1nAZrXN9xGY+7xI1bjFAdgpIK+xaskVJ8rxAOVRZXkSbKQ73X045A4mc+TVVytSC583dx0/MdtIEvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4CPFslt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hq1jxQGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C481F000FF;
-	Thu,  1 Oct 2026 11:22:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4CPFslt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA3E1F000FF;
+	Thu,  1 Oct 2026 11:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790853796;
-	bh=e65AJN+dizDpNgTUq4a0Cxwv8xeFTHb03ml1zIvkCoQ=;
+	s=k20260515; t=1790853829;
+	bh=kf6DGNVTAfNJlmV6n1mnXsg4ktNEvr3LbpOB3nxPaDE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=hq1jxQGWzfify63ZgZEC2/fTTtnkxCsb0bizh56Uwcr6HWZKYoDtzLAFE/he9Pr/3
-	 OBvyMZtgVbRz0AtkC8gljG+lq9UL50oTsGKJDPGHK8jZJIpT5dYB8hyBjZJXNOxLRz
-	 S1g4fJkhFx4OhWbRxwbh5UP/VmxG+SgV7NC4wNLWdSvJKJsZSB2wPLKQlnN6Pd/MOU
-	 AyvCel6IqNdq6bPj/vEEPmH4T2cCnmdvEGZQUWWySwrQ1KwV4DDeKV0/oxJqkb4dkM
-	 SU0m4lXhUuDVnTU/1yFOTftTVkqDtBxeH3Z1k8kBGVDEVovf+RLA3zW5xQqJ4ct+O6
-	 UbDMDSXAUlYtA==
-Message-ID: <2dcd9dbc-99ca-4f5e-8e25-f42977763c84@kernel.org>
-Date: Thu, 1 Oct 2026 13:19:19 +0200
+	b=h4CPFsltJBUoB1HezA4bvarNWaCYFqBa9hBNxc+xCNO9nmfmhUT/wWKO5h1TlPXIc
+	 GDcAHYvPrvXUUAdbanMCx0eH+gZVlMuBMNeu1sx6Mkedl4IpqYJoXRAvrhcsyv+r6m
+	 RMOwLgwZt2tR6GpLFOAQOaF+G9JYEPfVrthsR+29KjdXDX9BD0jIpGaVMsh4wshd8/
+	 1V9HgLQZNdCr5wRgqJ8ZKr2TgosbMOG52qE9tjBdGDKvkUBI6BT95ilyElZCxT2gq2
+	 sTZn6z41rW5NtndnGGja5mbMNd0FQbRt4rsUAYkIglECZ5nHiJQcrjE0Gm51PZvf3T
+	 wzXZdyJs8fI4A==
+Message-ID: <f61c0ee3-0eb4-47c4-ac52-66b72764e242@kernel.org>
+Date: Thu, 1 Oct 2026 13:20:13 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,7 +35,8 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/9] mm: add hw_pte_val for HW PTE storage
+Subject: Re: [PATCH v3 7/9] mm/kasan: use hw_pte_t for the early shadow PTE
+ table
 To: Muhammad Usama Anjum <usama.anjum@arm.com>,
  Andrew Morton <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>,
  "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
@@ -100,7 +101,7 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  kasan-dev@googlegroups.com, intel-gfx@lists.freedesktop.org,
  dri-devel@lists.freedesktop.org, xen-devel@lists.xenproject.org
 References: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
- <20260922-pte0-v3-6-5670b8cb9059@arm.com>
+ <20260922-pte0-v3-7-5670b8cb9059@arm.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -147,51 +148,23 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260922-pte0-v3-6-5670b8cb9059@arm.com>
+In-Reply-To: <20260922-pte0-v3-7-5670b8cb9059@arm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 9/22/26 19:12, Muhammad Usama Anjum wrote:
-> Atomic PTE updates need an lvalue for the bits stored in an HW PTE.
-> pte_val() only accepts a SW PTE value, so it cannot operate directly on
-> a distinct hw_pte_t.
+> kasan_early_shadow_pte is a complete PTE table rather than a software
+> PTE value. Declare and define its elements as hw_pte_t so the object uses
+> the PTE table storage type.
 > 
-> Add hw_pte_val() to expose the underlying pte_val() lvalue. Access the
-> wrapper's __pte member when hw_pte_t is distinct, and use pte_val()
-> directly when it remains an alias of pte_t.
+> Read the first element through ptep_get(), which returns the software PTE
+> value expected by note_page_pte(), instead of accessing hw_pte_t storage
+> directly. This also uses the accessor selected by the architecture.
+> 
+> No architecture selects ARCH_HAS_HW_PTE_T at this point, so the storage
+> representation remains unchanged.
 > 
 > Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-> ---
-> Changes in v3:
-> - Moved from the arm64 series to generic series as it makes more sense
->   to add this in generic with all other changes. Usually we only add
->   code where its get used. But this whole series wouldn't get used
->   until an arch started using HW PTEs.
-> ---
->  include/linux/pgtable_types.h | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/include/linux/pgtable_types.h b/include/linux/pgtable_types.h
-> index d6c5a7548550b..ee4eace5c3e1c 100644
-> --- a/include/linux/pgtable_types.h
-> +++ b/include/linux/pgtable_types.h
-> @@ -9,9 +9,13 @@
->  #ifdef CONFIG_ARCH_HAS_HW_PTE_T
->  typedef struct __hw_pte_t { pte_t __pte; } hw_pte_t;
->  #define __pte_from_hw(pte)	((pte).__pte)
-> +
-> +#define hw_pte_val(x)  pte_val((x).__pte)
->  #else
->  #define hw_pte_t pte_t
->  #define __pte_from_hw(pte)	(pte)
-> +
-> +#define hw_pte_val(x)  pte_val(x)
->  #endif
-
-I was just about to say: this series doesn't add any users. You should add that
-detail to the patch description: "prepare for usage in arch code" or sth like that.
-
-With that
 
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 
