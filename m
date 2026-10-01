@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E644534A9;
-	Thu,  1 Oct 2026 11:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D115331E830;
+	Thu,  1 Oct 2026 11:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790853588; cv=none; b=ghoV/XNSmMIOUo/FSNNFZm+VxF6w5XRvEVbgH9LqQ5GGTrmSxzSGfnUHtPR9MLZt44lQ99E3Ww3JM8s1GXlUcc9akwACr0p/g2Ai+n0EWF89sbq/RtJgu6zavuBUXnXONMWx4S9R6wPkGxzNi2H2fWBDYER0cQjs3eoZipyiqxM=
+	t=1790853798; cv=none; b=iXqrcZBCOlJEZaLD0W5rZ+nqmnqUOvtWovhLEdcvNA3Hb0uXyl0OwaclcgKYHKcmS40WwLsT2vJ1nJUzGuOe+uqkV0g3fJKxE/Ha853i/BAXowC9kbASY+/f7WrurlTubz8w/y2jCf30C7l9smpaYT4LUOkgUJwN5n5UCtA7UzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790853588; c=relaxed/simple;
-	bh=fSbYKr93qa7jzlMGeaLdw5Bn3RmMMNsLFooEHa/fpOo=;
+	s=arc-20240116; t=1790853798; c=relaxed/simple;
+	bh=FODmZNnCWZtzguVsiXUlDavcdjsxt9ZV4axKXtg1vCM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ky9P0y0AalwRUcyOEvY8yu4rx/VhQNUlUmGTcCOV0KbnRjE2kUfU/zRDwzsI/xEF2TkGr1bUxEZLF7dk+zHOzdGJqUxfBmF8Ot5XJm2AYHS7X5ExM+hcPrwkYbnofNihvosO8Y0F3vFp8UoauB0Ur6GH4I0Atik0WvQD5s68IWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nMbvvVKz; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=LTly5uTZAyzC+u8nvFcAY9UvhpVEEMaITF+2Y2sf0JV69/4MEU4lB//sX3+pcyJ725orV+01TWyRVspZbNPZVYJyfu7VFpTsbwxKjmRiG65lRaZZH72wxkZYOQ8WgkiHyFw3IT6iXjzZT6zzNyB1o8qFIduVNj43oGH87NmpBlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hq1jxQGW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nMbvvVKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E3D31F000FF;
-	Thu,  1 Oct 2026 11:19:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hq1jxQGW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C481F000FF;
+	Thu,  1 Oct 2026 11:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790853586;
-	bh=QFQFkWDnC7jLqttKnpyOh/RzATFY2MNc7SamlM3r9CY=;
+	s=k20260515; t=1790853796;
+	bh=e65AJN+dizDpNgTUq4a0Cxwv8xeFTHb03ml1zIvkCoQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=nMbvvVKzbLfiBDmwx5000bOF+s2wwI5IUpFYTI/iQmTRFaqEIRPkxAnIgPgtRkbJ0
-	 aqsar7aBQQWF17j7qm7re98QK2MXp/SjTXPj6Jaave3l2lYP+m0Pz8NwLOPWtJii3d
-	 +/JslHjvapBJl1QgKIGa/tDOAtKuTUTa7pAFOFLGVfS4bA6CsFZeBwjmyDK95aJdS1
-	 9ukUJ793Yc9KrIfWLnhz27LyPhzI15LRk/k7ivImSysTbIiVyAS0KMu7lJbra/Pesz
-	 pWFxc9zKJFzMFMEYqdxKzyhJGBS5wy0U/BzhIpkvR+1jEWvnD3SfLtCnn4oQTcUb0z
-	 8MuItJ69xgTaw==
-Message-ID: <e94dd0fc-3381-4545-9ede-513fcb2b8243@kernel.org>
-Date: Thu, 1 Oct 2026 13:17:18 +0200
+	b=hq1jxQGWzfify63ZgZEC2/fTTtnkxCsb0bizh56Uwcr6HWZKYoDtzLAFE/he9Pr/3
+	 OBvyMZtgVbRz0AtkC8gljG+lq9UL50oTsGKJDPGHK8jZJIpT5dYB8hyBjZJXNOxLRz
+	 S1g4fJkhFx4OhWbRxwbh5UP/VmxG+SgV7NC4wNLWdSvJKJsZSB2wPLKQlnN6Pd/MOU
+	 AyvCel6IqNdq6bPj/vEEPmH4T2cCnmdvEGZQUWWySwrQ1KwV4DDeKV0/oxJqkb4dkM
+	 SU0m4lXhUuDVnTU/1yFOTftTVkqDtBxeH3Z1k8kBGVDEVovf+RLA3zW5xQqJ4ct+O6
+	 UbDMDSXAUlYtA==
+Message-ID: <2dcd9dbc-99ca-4f5e-8e25-f42977763c84@kernel.org>
+Date: Thu, 1 Oct 2026 13:19:19 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,7 +35,7 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/9] mm: convert PTE table entry to pte
+Subject: Re: [PATCH v3 6/9] mm: add hw_pte_val for HW PTE storage
 To: Muhammad Usama Anjum <usama.anjum@arm.com>,
  Andrew Morton <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>,
  "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
@@ -100,7 +100,7 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  kasan-dev@googlegroups.com, intel-gfx@lists.freedesktop.org,
  dri-devel@lists.freedesktop.org, xen-devel@lists.xenproject.org
 References: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
- <20260922-pte0-v3-5-5670b8cb9059@arm.com>
+ <20260922-pte0-v3-6-5670b8cb9059@arm.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -147,76 +147,53 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260922-pte0-v3-5-5670b8cb9059@arm.com>
+In-Reply-To: <20260922-pte0-v3-6-5670b8cb9059@arm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 9/22/26 19:12, Muhammad Usama Anjum wrote:
-> The non-MMU stub receives hw_pte_t but returns a software PTE value. It
-> has no attached PTE that requires ptep_get(), so convert only the stored
-> entry through __pte_from_hw().
+> Atomic PTE updates need an lvalue for the bits stored in an HW PTE.
+> pte_val() only accepts a SW PTE value, so it cannot operate directly on
+> a distinct hw_pte_t.
+> 
+> Add hw_pte_val() to expose the underlying pte_val() lvalue. Access the
+> wrapper's __pte member when hw_pte_t is distinct, and use pte_val()
+> directly when it remains an alias of pte_t.
 > 
 > Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 > ---
-> Changes since v1:
-> - Explain why the NOMMU stub does not use ptep_get().
-> - Use software PTE value terminology.
+> Changes in v3:
+> - Moved from the arm64 series to generic series as it makes more sense
+>   to add this in generic with all other changes. Usually we only add
+>   code where its get used. But this whole series wouldn't get used
+>   until an arch started using HW PTEs.
 > ---
->  include/linux/hugetlb.h | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  include/linux/pgtable_types.h | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-> index 0d2101facaa50..637fc863d3687 100644
-> --- a/include/linux/hugetlb.h
-> +++ b/include/linux/hugetlb.h
-> @@ -1278,7 +1278,8 @@ static inline pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
->  #ifdef CONFIG_MMU
->  	return ptep_get(ptep);
+> diff --git a/include/linux/pgtable_types.h b/include/linux/pgtable_types.h
+> index d6c5a7548550b..ee4eace5c3e1c 100644
+> --- a/include/linux/pgtable_types.h
+> +++ b/include/linux/pgtable_types.h
+> @@ -9,9 +9,13 @@
+>  #ifdef CONFIG_ARCH_HAS_HW_PTE_T
+>  typedef struct __hw_pte_t { pte_t __pte; } hw_pte_t;
+>  #define __pte_from_hw(pte)	((pte).__pte)
+> +
+> +#define hw_pte_val(x)  pte_val((x).__pte)
 >  #else
-> -	return *ptep;
-> +	/* No attached PTE that requires ptep_get(). */
-> +	return __pte_from_hw(*ptep);
+>  #define hw_pte_t pte_t
+>  #define __pte_from_hw(pte)	(pte)
+> +
+> +#define hw_pte_val(x)  pte_val(x)
 >  #endif
->  }
->  
-> 
 
-Okay, that looks quite odd. No NOMMU code should ever be calling this helper. I
-can understand that some NOMMU code might, for some odd reason, end up including
-hguetlb.h where we have !CONFIG_HUGETLB_PAGE.
+I was just about to say: this series doesn't add any users. You should add that
+detail to the patch description: "prepare for usage in arch code" or sth like that.
 
-But let's see who actually calls huge_ptep_clear_flush():
+With that
 
-arch/arm64/mm/hugetlbpage.c: only with CONFIG_HUGETLB_PAGE
-mm/hugetlb.c: only with CONFIG_HUGETLB_PAGE
-mm/rmap.c: only after checking folio_test_hugetlb().
-
-I suspect we can simply do:
-
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index 80a5a03e9cee..8642c863c1b7 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -1268,15 +1268,8 @@ static inline void hugetlb_count_sub(long l, struct
-mm_struct *mm)
- pte_t huge_ptep_get(struct mm_struct *mm, unsigned long addr, pte_t *ptep);
- unsigned long huge_pte_dirty(pte_t pte);
-
--static inline pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
--                                         unsigned long addr, pte_t *ptep)
--{
--#ifdef CONFIG_MMU
--       return ptep_get(ptep);
--#else
--       return *ptep;
--#endif
--}
-+pte_t huge_ptep_clear_flush(struct vm_area_struct *vma, unsigned long addr,
-+               pte_t *ptep);
-
- static inline void set_huge_pte_at(struct mm_struct *mm, unsigned long addr,
-                                   pte_t *ptep, pte_t pte, unsigned long sz)
-
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 
 -- 
 Cheers,
