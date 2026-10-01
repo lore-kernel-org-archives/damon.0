@@ -1,90 +1,197 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f32.google.com (mail-ed2-f32.google.com [74.125.228.96])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379AA2BEFEF;
-	Wed, 30 Sep 2026 19:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795432; cv=none; b=LLJ6QEpgR+DpcfwH9xT0PUnuqc+l5B1AMzLFkwkbxgdsnkcZMho2TOCQ7QD7HDHKa1IGwV5sXpnVnqc3VNqJc9e4W7T+7njSR6a2d4SYAh8eQKIGD238e7nTzLQT/i4I13zS3xrnSMz2pgB+dn2LcmexHz1uzYwVy5iXohDKx/I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795432; c=relaxed/simple;
-	bh=sUQNTp4e7f4KUZW7bCs4yBW2t5rebzPP/5OYjggKXts=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zr3nTLwgmJmxCLMeNXtkWaHyBt9nOKjEAuOTbDt5ruSNvfSVbKq0Me0p67lbjh9f/UQHYz+9OA11NbV574QJyH0QA0LQ1udKOPxFtrscj439dTL6Nlgb1k8p9COYeLvobsm+m/N+4ZJj1IZYF1zD9/83lKUuVOFMCPmm4rFG/Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jryTlAE1; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928EE442FAE
+	for <damon@lists.linux.dev>; Thu,  1 Oct 2026 09:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.96
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790848734; cv=pass; b=pgieyjsJ0xyz8WhHhozIS3vthgiyASQQAbqtFbhwLDRqcaKvePQ6baF8aTlXqtykJBJvh8NNxSuo4v6A2gfzCt4bEn/c7NhgpWkmgAGhv/cAdnWWmAAvxpur0cNFvPmsi4H/qTgzKGrhlSnRvfn/lStlOzvO8aDeE95CYKhcvpc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790848734; c=relaxed/simple;
+	bh=haxDshANFQOJCeOUeegZZTb/1bt9tNaJwZPsDyZu224=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EJxBraVrtCfCJjSfnBadTGcuN51cSTMJfGj0Y+KKfpuh34qVlGjC4oP9KEtOo9HMYHnA+81EYZXDu9+rgW3+sDGiu5H+vuDppSYHst7z5VrCEUnYFmdmIHVPcSyGvLa8qd27WBDVq+ttCP2AKF5zhCiIS5mTwKOrzp4If+y95JI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B5oP1l96; arc=pass smtp.client-ip=74.125.228.96
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jryTlAE1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7437F1F000FF;
-	Wed, 30 Sep 2026 19:10:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790795431;
-	bh=JltDv8XdbdpSf/by89RR6xP1PJpm2X1XeEWjzJovhas=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jryTlAE1+zr+dk2a+fn6zp9Z9z/lRA/9fbZ8VZgRfxSj+fJ+CqLidMng10tmNNQSX
-	 iYAFCfCHEf+F27CU4Tl2ZYAgstIijr+wKO4it13eS5FogF5wdFFAP5Zq2DCGtbIb4b
-	 gk47IJMc1WlZLudHU/+fy+Q7qwwXbB3j/WIqtUSTCvIDvvnVu98S1QqOXzsuA2X6PW
-	 oxggy1/V73zYIDXSs8mpdyGWCGEn8Opu2eFQbBsQI6xaHq15RGWTHLDxEHrvj3xYdY
-	 wqISdq7usq4bjFFHFxxz+2GZBTR5c4D5Z//5vuJ5X8q7l73DgaBEHTQmztTfbB5UHt
-	 poI0r0+gHOOVA==
-From: SJ Park <sj@kernel.org>
-To: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/ops-common: fix age_in_sec overflow on 32-bit
-Date: Wed, 30 Sep 2026 12:10:25 -0700
-Message-ID: <20260930191025.63561-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260930115812.138864-1-jaeyeon.lee.dev@gmail.com>
-References: 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B5oP1l96"
+Received: by mail-ed2-f32.google.com with SMTP id 4fb4d7f45d1cf-6acbdf627ccso3354419a12.2
+        for <damon@lists.linux.dev>; Thu, 01 Oct 2026 02:58:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790848730; cv=none;
+        d=google.com; s=arc-20260327;
+        b=j/aloO6VI+3YQlB4wXqUO7Epzcm0SelSi/9Q/ynx0AEo/EZO2uubQketZ+DurUlKAK
+         BGpBYCcIxycOdGy0l0hv0cEsjI+W4UTHZX9LkIFH7qRfx1pykZH2DYNzBVHlZD6Nv7NB
+         33TQmLVBYFmIWo6zEH6PBuvToFqg5gBMyj2yR02GO/OHvw6MQCpqAuATNcUyjUif8RI7
+         8QChTF1hv2Wbi5E3IzEv3cd0lJqzuroESsZUIgDGTdafkoMTKpyrGpjBkss1PVYjWV0B
+         EcO47e3Swtt4toXLN+lrPl+3BBfnSmm84qpCwNoTW22vXn8acyIiJnp/x03+YKrtVTKS
+         p8aA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=UCRAKD4GPViS9WZk0pEH6e3kj0OPF85J7GqXdLb4FxQ=;
+        fh=e+kRStJq+twn6rlp7glLc6kIxtYd+ofNVnbBqiY9oQA=;
+        b=o0TegP7tazfKXGmwiDJzFJEsmTVOtBOjXk5BxLwQ/QWY/h34LjCkmy2WCbXHUJpiq6
+         Eq0gKSTf4nDtnyQSspO+1WJIQsF6I1smohxfu6H6I2qpD5sqHz9dk3LMsBcTVxob6XXt
+         Za88HHD+aMbojwljP1U8fsiv9IK1tRlNVCfi+UiNaaPZZuoJUYoySAPp2bmJpRYKOl/H
+         +b/yHbwErCGt/RC3YKDZBuqoSBnU9sE/827+y3La6el6sj2xQbMmuIZZPU2I4HNdwjCR
+         mlrVgBNsOGTIulHs/AxkN13l894DHM2OyHrjXWFkpW+erVdC5pANVlmId/sIQfZGKaiC
+         H4vQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790848730; x=1791453530; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=UCRAKD4GPViS9WZk0pEH6e3kj0OPF85J7GqXdLb4FxQ=;
+        b=B5oP1l96CzAjIPe7Ns0V3eGhAgQEj73rj6ThnSuOKIQ+QyNkQpux+MYoCJ0eJAWdJb
+         n1GwTUDKujePre/BL20qaMTfyRqwz0C1F/dr4758/F3+KcnLYmzGSL9Xf5yarnZaLxTD
+         x2xT7quoajxgYVjextzLjQg1ebfuVMPtZsx+nUwALmwlp9dLxZ0kAaAktI28W/j4u3KF
+         9YhaF3b8WKHrnMozCI0opkb77NiIgpots9PE5l1pBUzLZVdKSb7EYBzt7MwP9dapSZit
+         ww4bD97GYnGNS4xWA2Ic+GGounCbc5OKhwCM2Qv277VXsNS5KMJT3iUCAWs0xt1UFHq7
+         6CSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790848730; x=1791453530;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UCRAKD4GPViS9WZk0pEH6e3kj0OPF85J7GqXdLb4FxQ=;
+        b=Iha/wayoydUw63ZslBj8cZp027tPBm4r7H/F5wO8H2Kst7IR+rzdpLSopSp6pQUq2o
+         wVka3x5hb4hfeLS00TrbnnajO1ZJIxE5EF4Ts0hwc8eMnVkw5L/3EI4tuQslvUUI5/Tu
+         uRJzE0ixfFkqutcsi/Q3bMYZ95YLz7ahqC98XB9LdWllKHBQuQ9PNAjPnVHo2cfsXUj3
+         s/sM5ZzR0H5ZUemMSVbPZsfBhjmM/YGb6Mgtql/olfF4XaBXNJEEAj78nVtXXFUNH6Rz
+         93Iei6u1bWCIb21yu8Xp+tFESrW+50AOphBxhldNC05j/xEr+Xgrwmmql+/QHMgpa9k3
+         NMLA==
+X-Gm-Message-State: AFq9FYIxOUiZ26CRELcd+Bq/7ej3LP3m8L9hZyIncGtTkBdq33DppZgH
+	htxC09YSWXMGevPAeLsc9ob8hEeeNdTIfIqzrpjuvkqP+AeVRVDQFeQsGN//Vo9EbdcRsOR6Cl9
+	fo/SadZXIQtua7+NuWFUzw+aMppjAO0C0gQJp
+X-Gm-Gg: AYBFou2cNGkz3mIlnTRJmWd6pEW8t48f5PYciEkDWPqlJ3mrYXzlIrAMn4NcWImo3HX
+	zHSSRjAuN07rYuYdfFdhJJ2x1CUVo4hTIiMriPoD7lnRQPxIp40ARe3RmQkAGDxsPh5fjP++A2G
+	vMG3mVn/mzLG5I8WijHOIP6kxcqGMcVYc0nIOmrH7fsT5AJISdDx9sT2lKbYAQZEPs94p2St5k1
+	BtIxEludKHI8uqKAPiZzR6m2R1UHPcUGzKc8RGg75pWdw0LJMlYS2GBcxTNQdZzD8nP/2nuq+k8
+	m+PhMPc30qi4RwYqlQ9ghiJtazHowoAX/yCxtUc9QUGZarq/AqZsWoHJ7zOSxQYw0Y0=
+X-Received: by 2002:a05:6402:3896:b0:6ac:5e42:5b45 with SMTP id
+ 4fb4d7f45d1cf-6ae1993bc25mr3005861a12.34.1790848729775; Thu, 01 Oct 2026
+ 02:58:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAAiJnjoaaPk3CcczDtk72xfkrgwp29KDT1==PZJJGgUcBVpdjA@mail.gmail.com>
+ <20260930174314.60183-1-sj@kernel.org>
+In-Reply-To: <20260930174314.60183-1-sj@kernel.org>
+From: Anton Gavriliuk <antosha20xx@gmail.com>
+Date: Thu, 1 Oct 2026 12:58:39 +0300
+X-Gm-Features: AclHuK-d8gD3SIyXKEUf18dqnGWiAqjSiRZuQNbS5nlsBPMW3v6fy0CzENPIiY0
+Message-ID: <CAAiJnjpkSvWFu1018-wmOn963u8kjrzTWgG=NERQ3RudG1di3w@mail.gmail.com>
+Subject: Re: Memory tiering with DAMON/DAMOS auto-tuning
+To: SJ Park <sj@kernel.org>
+Cc: damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Jaeyeon,
+> So, your workload is using ~232 GiB of node 0 memory and no demotion of i=
+t is
+> occurred.  According to your original mail [1], the node 0 has ~377 GiB m=
+emory.
+> If we make 25% of it free, it means it should have 75% of it (~282 GiB) b=
+e
+> utilized.  If the node0 has only your workload, it means node 0 memory
+> utilization is still only ~61%.  In other words, 25% free memory goal is
+> already achieved.  Than DAMON wouldn't do any demotion.
 
-On Wed, 30 Sep 2026 13:58:12 +0200 Jaeyeon Lee <jaeyeon.lee.dev@gmail.com> wrote:
+OMG.... what was pretty easy.
+I feel ashamed.  My apologies.
 
-> damon_hot_score() calculates the age of a region by multiplying r->age
-> and the aggregation interval.  On 32-bit architectures, unsigned long
-> is 32 bits, so the multiplication overflows once the age exceeds about
-> 4295 seconds.  Then old regions are scored as if they were young.
-> 
-> Fix it by doing the calculation in 64-bit arithmetic using div_u64().
-> Also make age_in_sec u64, so the result is not truncated back to 32
-> bits.
+I increased Valkey memory allocation to 300 GB and it works.
 
-Looks reasonable to me.  Thank you for this patch.  I'm thinking about if there
-is a simpler and more complete way to fix whole possible 32bit overflow issues,
-but that shouldn't be a blocker of this patch.
+> No.  Because you set '--access_rate 0% 0%' for the demotion scheme, it wi=
+ll do
+> no demotion in the scenario.  You could try '--access_rate 0% max' if you=
+ want.
+> You may also need to remove '--damos_filter reject young' option from the
+> command if that is really what you want to do.
 
-> 
-> The issue was discovered [1] by Sashiko.
-> 
-> [1] https://lore.kernel.org/20260623011652.1354-1-sj@kernel.org
-> 
-> Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
-> Assisted-by: LLM
-> Signed-off-by: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>
+'--access_rate 0% max' means range 0% - 100% ?
+If yes, then I need memory management decisions based on criteria
+other than access frequency.
+Age-based filters or something else.
 
-Reviewed-by: SJ Park <sj@kernel.org>
+The idea is for achieving a defined goal - keep 25% free for new hot
+allocations in the fastest tier, if there are no un-accessed pages,
+then start demoting the most-rare access or add aga-based filters.
+Complicated but interesting, I need to think more about that.
 
-This patch is applied to damon/next [1] tree.  If this patch is not added to
-mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
-to pick this.  So, no action from your side is needed for now.  If it seems I
-also forgot doing that or you cannot wait for my action, please feel free to
-ping me or Andrew.
+Anton
 
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-
-
-Thanks,
-SJ
-
-[...]
+=D1=81=D1=80, 30 =D1=81=D0=B5=D0=BD=D1=82. 2026=E2=80=AF=D0=B3. =D0=B2 20:4=
+3, SJ Park <sj@kernel.org>:
+>
+> On Wed, 30 Sep 2026 19:26:31 +0300 Anton Gavriliuk <antosha20xx@gmail.com=
+> wrote:
+>
+> > I would go back to memory tiering VCF9.1-like behavior you helped me
+> > configure, for new few questions:
+> >
+> > 1.  It works with the goal of 50% free memory for numa node 0, but
+> > when I tried to set 25% free memory, it didn't do anything...
+> >
+> > [root@localhost ~]# COLUMNS=3D500 numastat -p $(pgrep valkey-server) | =
+cat
+> >
+> > Per-node process memory usage (in MBs) for PID 3808 (valkey-server)
+> >                            Node 0          Node 1          Node 2
+> >     Node 3           Total
+> >                   --------------- --------------- ---------------
+> > --------------- ---------------
+> > Huge                         0.00            0.00            0.00
+> >       0.00            0.00
+> > Heap                         0.11            0.00            0.00
+> >       0.00            0.11
+> > Stack                        0.03            0.00            0.00
+> >       0.00            0.03
+> > Private                 238356.25            2.19            3.42
+> >       0.00       238361.86
+> > ----------------  --------------- --------------- ---------------
+> > --------------- ---------------
+> > Total                   238356.39            2.19            3.42
+> >       0.00       238362.00
+> > [root@localhost ~]#
+>
+> So, your workload is using ~232 GiB of node 0 memory and no demotion of i=
+t is
+> occurred.  According to your original mail [1], the node 0 has ~377 GiB m=
+emory.
+> If we make 25% of it free, it means it should have 75% of it (~282 GiB) b=
+e
+> utilized.  If the node0 has only your workload, it means node 0 memory
+> utilization is still only ~61%.  In other words, 25% free memory goal is
+> already achieved.  Than DAMON wouldn't do any demotion.
+>
+> Does the theory makes sense?  Maybe you can confirm by checking the free =
+memory
+> ratio of node 0.
+>
+> [...]
+> > 2. If there are no un-accessed pages to demote for achieving a defined
+> > goal, damon will demote pages with the most rare access ?
+>
+> No.  Because you set '--access_rate 0% 0%' for the demotion scheme, it wi=
+ll do
+> no demotion in the scenario.  You could try '--access_rate 0% max' if you=
+ want.
+> You may also need to remove '--damos_filter reject young' option from the
+> command if that is really what you want to do.
+>
+> [1] https://lore.kernel.org/CAAiJnjp5F8ZuPG1gEsD_Wgs7Z+GToz67nzjr0490sz9y=
+328=3Ddg@mail.gmail.com
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
