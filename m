@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F148470EB1;
-	Thu,  1 Oct 2026 11:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DBE47D959;
+	Thu,  1 Oct 2026 11:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790853831; cv=none; b=PMznsagOVkWiZOXJkoE3Bud/FU+sYW3lMaYOLFTQQAPWjXeTI7hDcQ7wDJ3/EkaLYeXttSu+PjwrQRISEUrgy/mF0cXZYnJkg+PYdum1yYOtgWLAwh59SN2Mo4jHONdBO0br5e+oJhL6mrLJOhwvRaH2VHZzdLnzpOzwhsvBPnM=
+	t=1790853863; cv=none; b=U74Be3QeNFl2sbLm73VqK2vQsdGqXf3LsP7un8AJTclk8lXgpTkwMZbPXrL3oU9xpQNOIaKGkZA8686TPNX1mw6s1yWpg4T7u7Bh+T15QJpDuPAHSjzltk6tdOuS8qufpyYFI7EN8i9X/fjDK28VXor8ILynVlT+qYGJFGSkJXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790853831; c=relaxed/simple;
-	bh=wxKFLUtMEIYQHonKAO7uUtNvKEJFF4C9Gv2DorblE8U=;
+	s=arc-20240116; t=1790853863; c=relaxed/simple;
+	bh=lwLlMztMxCSJ0bxdv/vt47etedJjpQie0B5xaVTPv1M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fT3rJcGI2KuxlSNnIAF1STo+9XoqaE4ImeevBhRG36MVBDmEXDyC91eeNRJZeNDi+X3flZqBk+2wAQw0BbvVUg2GlppFC1nAZrXN9xGY+7xI1bjFAdgpIK+xaskVJ8rxAOVRZXkSbKQ73X045A4mc+TVVytSC583dx0/MdtIEvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4CPFslt; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=UNFi6qrOPVki92d+jOvE9ZCqr31flGbY33Xi+eYhTUKgzsctEKJWSumcnxrqOVYRG9AYN/pOEH8NEL03Bw3MUPjYwMM0Vx6DoyovHnk91hNmU8vqj5guE/9/yv2jF6W8Uk9gkA4xrw4/60QLLDY0I++N2nCVVN9jhw6/iUYaWMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iSG5PXXs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4CPFslt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA3E1F000FF;
-	Thu,  1 Oct 2026 11:23:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iSG5PXXs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9C91F000FF;
+	Thu,  1 Oct 2026 11:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790853829;
-	bh=kf6DGNVTAfNJlmV6n1mnXsg4ktNEvr3LbpOB3nxPaDE=;
+	s=k20260515; t=1790853862;
+	bh=E2dd2FaoT8IGI/PmgsNFfX51uTun/lYmybhUFgOLuQg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=h4CPFsltJBUoB1HezA4bvarNWaCYFqBa9hBNxc+xCNO9nmfmhUT/wWKO5h1TlPXIc
-	 GDcAHYvPrvXUUAdbanMCx0eH+gZVlMuBMNeu1sx6Mkedl4IpqYJoXRAvrhcsyv+r6m
-	 RMOwLgwZt2tR6GpLFOAQOaF+G9JYEPfVrthsR+29KjdXDX9BD0jIpGaVMsh4wshd8/
-	 1V9HgLQZNdCr5wRgqJ8ZKr2TgosbMOG52qE9tjBdGDKvkUBI6BT95ilyElZCxT2gq2
-	 sTZn6z41rW5NtndnGGja5mbMNd0FQbRt4rsUAYkIglECZ5nHiJQcrjE0Gm51PZvf3T
-	 wzXZdyJs8fI4A==
-Message-ID: <f61c0ee3-0eb4-47c4-ac52-66b72764e242@kernel.org>
-Date: Thu, 1 Oct 2026 13:20:13 +0200
+	b=iSG5PXXsSQzGXjfn20lgjsoWKzQYmPp7ZZXFI6SGrx91yr02VUHV298N5BBJlMHaP
+	 M9ZYf/JJLZ9V8qfBwvqO39KJ8+pNUBetBcscChkH+0df5TkZ2sUcFBudzEgRioe8yb
+	 SSkRXj8/C/QKoSKPE6PW6Q2KDh9nZ+k4kuF1lqoDkQ0AIPD3Wb5f0fv4N/DCMAQq4z
+	 R7kwBsOJxrzykRLowKMFHGd4yy52IjUUPzYvPJjS5LMo0p5dAUpW9qrXPHDQCcdIJT
+	 g69Nx3deHliOYXzfa8TMAC4jPCvHeac6QoZcwkh6WGoSh+fwx0mvq3d2tEJx9NgDLq
+	 bPMwFw16qyx8Q==
+Message-ID: <28b5590b-e2e2-4eee-ac7b-c5c402822a24@kernel.org>
+Date: Thu, 1 Oct 2026 13:21:51 +0200
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -35,8 +35,7 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/9] mm/kasan: use hw_pte_t for the early shadow PTE
- table
+Subject: Re: [PATCH v3 8/9] drm/i915: use hw_pte_t for PTE range callbacks
 To: Muhammad Usama Anjum <usama.anjum@arm.com>,
  Andrew Morton <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>,
  "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
@@ -101,7 +100,7 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  kasan-dev@googlegroups.com, intel-gfx@lists.freedesktop.org,
  dri-devel@lists.freedesktop.org, xen-devel@lists.xenproject.org
 References: <20260922-pte0-v3-0-5670b8cb9059@arm.com>
- <20260922-pte0-v3-7-5670b8cb9059@arm.com>
+ <20260922-pte0-v3-8-5670b8cb9059@arm.com>
 From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=david@kernel.org; keydata=
@@ -148,23 +147,81 @@ Autocrypt: addr=david@kernel.org; keydata=
  3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
  CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
  qIws/H2t
-In-Reply-To: <20260922-pte0-v3-7-5670b8cb9059@arm.com>
+In-Reply-To: <20260922-pte0-v3-8-5670b8cb9059@arm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 9/22/26 19:12, Muhammad Usama Anjum wrote:
-> kasan_early_shadow_pte is a complete PTE table rather than a software
-> PTE value. Declare and define its elements as hw_pte_t so the object uses
-> the PTE table storage type.
+> apply_to_page_range() now passes PTE table storage to its callback as
+> hw_pte_t *. Update the i915 remap and selftest callbacks to match the new
+> type.
 > 
-> Read the first element through ptep_get(), which returns the software PTE
-> value expected by note_page_pte(), instead of accessing hw_pte_t storage
-> directly. This also uses the accessor selected by the architecture.
-> 
-> No architecture selects ARCH_HAS_HW_PTE_T at this point, so the storage
-> representation remains unchanged.
+> Continue to use ptep_get() for software PTE values and set_pte_at() for
+> updates.
+> The type remains an alias of pte_t on x86 until that architecture opts in.
 > 
 > Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+> ---
+> Changes since v1:
+> - Use software PTE value terminology.
+> 
+> Changes since RFC v1:
+> - Clarify the effect on architectures that have not opted in.
+> ---
+>  drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c | 4 ++--
+>  drivers/gpu/drm/i915/i915_mm.c                     | 4 ++--
+>  2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> index d01acfb7d93d0..056faf4a3618b 100644
+> --- a/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> +++ b/drivers/gpu/drm/i915/gem/selftests/i915_gem_mman.c
+> @@ -1690,7 +1690,7 @@ static int igt_mmap_gpu(void *arg)
+>  	return 0;
+>  }
+>  
+> -static int check_present_pte(pte_t *pte, unsigned long addr, void *data)
+> +static int check_present_pte(hw_pte_t *pte, unsigned long addr, void *data)
+>  {
+>  	pte_t ptent = ptep_get(pte);
+>  
+> @@ -1703,7 +1703,7 @@ static int check_present_pte(pte_t *pte, unsigned long addr, void *data)
+>  	return 0;
+>  }
+>  
+> -static int check_absent_pte(pte_t *pte, unsigned long addr, void *data)
+> +static int check_absent_pte(hw_pte_t *pte, unsigned long addr, void *data)
+>  {
+>  	pte_t ptent = ptep_get(pte);
+>  
+> diff --git a/drivers/gpu/drm/i915/i915_mm.c b/drivers/gpu/drm/i915/i915_mm.c
+> index fd89e7c7d8d6f..aab88e8edf946 100644
+> --- a/drivers/gpu/drm/i915/i915_mm.c
+> +++ b/drivers/gpu/drm/i915/i915_mm.c
+> @@ -48,7 +48,7 @@ static inline unsigned long sgt_pfn(const struct remap_pfn *r)
+>  		return r->sgt.pfn + (r->sgt.curr >> PAGE_SHIFT);
+>  }
+>  
+> -static int remap_sg(pte_t *pte, unsigned long addr, void *data)
+> +static int remap_sg(hw_pte_t *pte, unsigned long addr, void *data)
+>  {
+>  	struct remap_pfn *r = data;
+>  
+> @@ -70,7 +70,7 @@ static int remap_sg(pte_t *pte, unsigned long addr, void *data)
+>  #define EXPECTED_FLAGS (VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP)
+>  
+>  #if IS_ENABLED(CONFIG_X86)
+> -static int remap_pfn(pte_t *pte, unsigned long addr, void *data)
+> +static int remap_pfn(hw_pte_t *pte, unsigned long addr, void *data)
+>  {
+>  	struct remap_pfn *r = data;
+>  
+> 
+
+We really have to get rid of apply_to_page_range(). A horrible interface for
+drivers to hack around stuff.
+
+For the time being
 
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 
