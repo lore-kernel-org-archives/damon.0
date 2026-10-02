@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33313A3E68;
-	Fri,  2 Oct 2026 18:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B899F2DFA2F;
+	Fri,  2 Oct 2026 18:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790964247; cv=none; b=lBK7jYcgWYkN8C8h+FWAwMdA/XUb2wrBa0nSytHJ0IeZxl0nzp/1twxPaZTYtMkE8mJphhk2MhNmhSmsucwktQB6A5wyPhhjYwnufNSqSklIJC767oJ5dnSOog/ILa/VLhFG8rWhAMpuuzhsUK4CNmlImmC6YTVzAePEz9xUW8k=
+	t=1790964702; cv=none; b=DaaxOs+K/MjIMCvbygf4Pff464VueFaDbmyHEoKR+/1oSN+ugnENCko/8J7973mVMf35LU0n+hi2yvtT9QiKfsQYkXHOR9mfIplhonqxulIXtfcJLDsr972ujP9W5ww+XQBYmFkG0sqbIKFpG7p1EIpBUcQaAQOEQJ6CvJi5Gjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790964247; c=relaxed/simple;
-	bh=3+5SXdVssxXYhd4bnbCmX6IVleU8DvtPyKPIN/j9SKg=;
+	s=arc-20240116; t=1790964702; c=relaxed/simple;
+	bh=KKtf8apJFKPJKWasfaHRRVzkCEmUu3Hn3/EINo4iKgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqdZ1MagKae0Iu71YLyU/BHKzjcdMaUbKDEYtkUkl3njFqN0usIywO3SfHSYOFS4T630dtMF4ec/S2q8LemmaIXgIb8g4mI5SXfON2ljiz2RBgFdUNCkWE8KeZpowg6EZ1y5JfZ1rIQbcbU0AYzilbaf/4dbSyvS3M5w7AQxYTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jUwUCsHx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PYZIF68SqkRYZjIk4gr8rOrS1Fk9AhBPDA0regvSjkk80OVOYbGNoTB6r6FI7uVq25giiC5blg6cP/Ma3pm77VGRr8Ly+079TJGsnW4UGo9mch9mcsv3hSObYHpf0SwHurEkY6qxybMDBN+vfeWvA8P5v3xeaEOL/QAqQoCbfEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EA0fQUr/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jUwUCsHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5051F000FF;
-	Fri,  2 Oct 2026 18:04:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EA0fQUr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADA71F000FF;
+	Fri,  2 Oct 2026 18:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790964244;
-	bh=KKxJu0PLcQiT2ca8a/oTPFd3rZcZIHyabzHB89pAcBw=;
+	s=k20260515; t=1790964701;
+	bh=CP0MsROgLgfuaL5H6Y5umaXQ51VIpkOCJtpOwL5TQtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jUwUCsHxH0tmJ/n8/bXkn4jMCAusMAXGEXn7NiWj5udZvvK+BziBmR5wu+Vhp+RjD
-	 nnH5vUgJ+9N7db2tuJrs75A6kpjgeh55Um92uLgSdNib9HAUJ16P90H1dOgrVYRQsK
-	 b0vCmxwI2bm0GeAujrd2SJs3NwSyxzmydDreZxJjIR9VJYP5y7Ba04T/0l65tbLzqA
-	 9D3UdUMZ9yiNAhz38q2Ow/6XQtbUwPdvmEMcMjrIaWlE5QBlVM4PBvwn45YxoCoeew
-	 3Aj/PRm1bTzFM/E65S4YuiwUhnRYL4KsaMkTxgzM7zR3QUZIA/t6SRKc0miTOvk1ar
-	 TH93VLcw5WoVw==
+	b=EA0fQUr/fj5O7sfp2orAz+pVzZcRx1HqK8p61QAJwe/iIs4PATGeitrNzt1SFHiEh
+	 BRMbUhG6d2dpPJR0HQxtNOUsCkORVI9hlYONcmzIcPAsfQUogywTIQ+qYAyRWKNBMf
+	 uspDaeKEIR4ouZ+UdqGOAS+LVfJZ9BsdjDS+OBBE5HbVJ6lX/2e1+Zfdb9QSq9Z+zd
+	 ryMHLs5zGY4u6VSXdw+gAHe2Qc3l1BvD248FjU1cd081Qw0jZTwANgFvn+M+BJNnaK
+	 W0ejJ/u2Rvn/y2MYgOUwvLsv75J7oW7F1Pyn9ucEeAY8DTQKAhiKhWdKJ6Rj0J3TFa
+	 VRG15XLDgJ63w==
 From: SJ Park <sj@kernel.org>
-To: Sasha Levin <sashal@kernel.org>
+To: "Gregory Price (Meta)" <gourry@gourry.net>
 Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Liew Rui Yan <aethernet65535@gmail.com>,
 	damon@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.6.y v2] mm/damon/core: fix unconditionally skip last region
-Date: Fri,  2 Oct 2026 11:03:59 -0700
-Message-ID: <20261002180359.46078-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	kernel-team@meta.com,
+	akpm@linux-foundation.org
+Subject: Re: [PATCH] mm/damon: use damon_get_monitor_folio() for hugetlb entries
+Date: Fri,  2 Oct 2026 11:11:35 -0700
+Message-ID: <20261002181136.46472-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <2026-10-01-1-daily-reply-0006-re-damon-skip-last-region-v2-6-6@kernel.org>
+In-Reply-To: <20261002140727.701709-1-gourry@gourry.net>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,16 +48,43 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri,  2 Oct 2026 10:19:50 -0400 Sasha Levin <sashal@kernel.org> wrote:
+Hello Gregory,
 
-> > Fix this by only resetting the charge_{target,addr}_from when last region
-> > is reached, only skipping when it is applied or cannot split.
+On Fri,  2 Oct 2026 10:07:27 -0400 "Gregory Price (Meta)" <gourry@gourry.net> wrote:
+
+> From: Gregory Price <gourry@gourry.net>
 > 
-> I'll hold this until the damon_split_region_at() failure handling fix
-> you mentioned is posted, and then take 6.12, 6.6 and 6.1 together with
-> it.
+> Hugetlb folio acquisition is open-coded in three places:
+>   - damon_hugetlb_mkold()
+>   - damon_young_hugetlb_entry()
+>   - damon_va_probe_hugetlb_entry()
+> 
+> DAMON already has damon_get_monitor_folio(), which paddr uses to
+> get monitored LRU and hugetlb folios and to filter them through
+> damon_folio_acceptable().  These paths bypass that check.
+> 
+> Use that helper in these paths too, so that DAMON acquires hugetlb
+> folios and applies its acceptance policy in one place.
+> 
+> No functional change intended. All callers reach these paths with a
+> present hugetlb PTE under the page table lock, so the folio is always
+> a mapped hugetlb folio and the helper always returns it.
 
-Makes perfect sense to me.  I will post the fix with this patch.
+Thank you for this patch, looks good to me!
+
+> 
+> Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
+
+This patch is applied to damon/next [1] tree.  If this patch is not added to
+mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
+to pick this.  So, no action from your side is needed for now.  If it seems I
+also forgot doing that or you cannot wait for my action, please feel free to
+ping me or Andrew.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
