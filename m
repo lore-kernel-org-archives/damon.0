@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27C22882AB
-	for <damon@lists.linux.dev>; Sat,  3 Oct 2026 21:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CA6444707
+	for <damon@lists.linux.dev>; Sat,  3 Oct 2026 21:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791062451; cv=none; b=GeK3Y8Qhn82yQXa0Bv2la/4LwvKuWcSGU5qVo8vr4DGABvaCdQve1Neh6TTjvTxrDdkJnJW8FFt/9VBmrtegx7iZrz3HcW2QuvnvOw4AvzQ9+RXmTjWuxR19R9OIuErZKp16UKcgGh1th+p6u4u/JrmGoxBVRkCDD10AsLXm6bA=
+	t=1791062553; cv=none; b=sf/oL7ue/MLt6X3V5cboYv5gQ+StcIbMH0OyFgzvp9VmJOduchPDymln3hGZgZqF9cDTti4VIR8wFRYvBXmg+xWwEoEa1bgjk9ZwQQUR3Gu4MWHBtLVJija4Obg6q1b6fZOg5qR+lf1UAYO34M5wOoNEMe8z60CB466kBv0vjPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791062451; c=relaxed/simple;
-	bh=abvqCZV3yHvgwOam8EycI+cyK/AaVJT//me9vdsbtZc=;
+	s=arc-20240116; t=1791062553; c=relaxed/simple;
+	bh=beE0e5VF5bYrL0x8J/aWo3xD/z4RbXbNVlAAQKjMXv4=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=sgzbv5BxV0LLUUXHQpGGVg8t5PFrYfOkA6o+JB7CWCWiSwya1TN5yEeyCHdCVJnIeTFR4sIDukJHHjcq49oCtroMlZQJY66U39BPVZxHNMJlRLYrXuwQPTxqmOqKS6fHiUycBR9WkereGfoC/qGrvgOfL2IQyg871jYHPEqLVpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IX+QBkOw; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=bpXsY2nYEesZDEfdd/l2xiX6cv31BgU3O+2UZQV8wuK0fEPTINiSf9Pzdlfp9bV3q4Jp1pMHnn5eAB1OYbwebztIUPlzdS6ojZeuoVaf7g5QZ+sgVUmMQaDwj/3jsVoF+S9hyUcPDhoV5qA43NAT12rkHzoUcAwBYAsV/52VeVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OxCbh2Az; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IX+QBkOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213C61F0089B;
-	Sat,  3 Oct 2026 21:20:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OxCbh2Az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0761F0089B;
+	Sat,  3 Oct 2026 21:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791062450;
-	bh=HBTpMySOjbdGxEjEg/B1vA7UfmiDQVKVML17NSEriwg=;
+	s=k20260515; t=1791062551;
+	bh=pXDMTnS3NhSzdxrZ3tpjR+kHHjoEV9Wng+hHx1SlNcM=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IX+QBkOwVCnMtTEnkpXM1B3qNZqdfDIbqThv04oxswRmxwkFL7GQlgCq6W7Og752k
-	 zICInzs7g32bxnvMczA+36ns+lbi3xWhh9dM5tZA2LUXQs3N56jbo6/pBwhkSirzvf
-	 9ebvENyaliTc8zjJVMvSe8IYOZrPiJCWXLI/k/ezyK3hQw/A8U9crC8YSymz8ZRM+T
-	 TU9M7lJbcFEoaYkjs7vw3FQrwYm3xzEBmsc4IYCDuNcgk+fdV3D5ZsUsmw+ZMWZB8k
-	 EmHt4aDhpTe51q7vCwMj5OJdFKBtK/KjhQjwix5iZ1P3fisynRVdn/bt1chDjqKTxj
-	 SKWPCWQUsCCVw==
+	b=OxCbh2AzGpOoOZ7jlKbDErxBGtscL6Uvv7+NlYLihcDAExcuOQj7l1sxEMEUJyA3a
+	 497h3dkwgSQ41+DIx86nuNOlH1Kk0kXkHQQA2sbPZeCgc+64XUjSs3ErAJ8e4LH3eq
+	 4T+wlyJExgoB0B6QUOiUbpveLkRKAtWcZ/df/xTHzz3nMNvSOiw5FD+x6MSlFbeu51
+	 jsirbthHP1JMrdPp7xotSqC7FDHszS3wqOX4MVGLOKYNPtAXXXXQ+KPZQT3AyTJM7C
+	 s2IxBkOQNtn5cgOHZjopF5+SMwfJhcf/CSFQ4T3JKMQNBxII5jhSKX7zrB452EUUtv
+	 G28Bjh1tdtH3A==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 9/9] mm/damon/core: allow both primitives
- disabled when a perf probe is present
+Subject: Re: [RFC PATCH v3 3/9] mm/damon: add perf-event overflow handler
+ feeding the report ring
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Ravi Jonnalagadda" <ravis.opensrc@gmail.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-9-0f00417b41bc@gmail.com>
+In-Reply-To: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-3-0f00417b41bc@gmail.com>
 References: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com>
- <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-9-0f00417b41bc@gmail.com>
+ <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-3-0f00417b41bc@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 03 Oct 2026 21:20:49 +0000
-Message-Id: <20261003212050.213C61F0089B@smtp.kernel.org>
+Date: Sat, 03 Oct 2026 21:22:31 +0000
+Message-Id: <20261003212231.7C0761F0089B@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,105 +47,104 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
 Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [High] mm: destructive silent clearing of PTE accessed bits
-- [High] mm: uninitialized sampling_addr read leads to out-of-bounds PFN lo=
-okup
+- [High] mm/damon: uninitialized memory read of data->data_src in damon_per=
+f_overflow()
+- [Medium] mm/damon: off-by-one bounds check artificially limits max probes
 --
 
-commit 73703d94b2ed32c7f44c1db6e359a4902509dc91
+commit 96712c62a34715ea96102373f3c70dda9da07873
 Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 
-mm/damon/core: allow both primitives disabled when a perf probe is present
+mm/damon: add perf-event overflow handler feeding the report ring
 
-The sample control validation requires exactly one software access check
-primitive, page_table or page_fault, to be enabled.  A context carrying a
-perf-event probe needs neither: the probe drives the access signal
-through its report ring and the drain, so region access rates and ages
-update with both primitives off.
+This commit adds a PMU-agnostic perf-event overflow handler that feeds acce=
+ss
+reports into DAMON. It runs in NMI context and translates hardware overflow
+samples into physical or virtual address reports using a per-CPU ring buffe=
+r.
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index c2c74d0daf957..04a1cccbc2f5d 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
+> diff --git a/mm/damon/perf_source.c b/mm/damon/perf_source.c
+> --- /dev/null
+> +++ b/mm/damon/perf_source.c
 
 [ ... ]
 
-> @@ -2390,6 +2387,14 @@ static int __damon_commit_ctx(struct damon_ctx *ds=
-t, struct damon_ctx *src,
-> =20
->  	if (!damon_valid_probe_params(src))
->  		return -EINVAL;
+> +static void damon_perf_overflow(struct perf_event *perf_event,
+> +				struct perf_sample_data *data,
+> +				struct pt_regs *regs)
+> +{
+
+[ ... ]
+
+> +	if (!report.paddr && !report.vaddr) {
+> +		this_cpu_inc(damon_perf_samples_filtered);
+> +		return;
+> +	}
+> +
+> +	report.is_write =3D !!(data->data_src.mem_op & PERF_MEM_OP_STORE);
+
+[Severity: High]
+Is it safe to unconditionally read data->data_src.mem_op here?
+
+The perf_sample_data structure is allocated on the stack by the PMU interru=
+pt
+handler and only partially initialized:
+
+include/linux/perf_event.h:perf_sample_data_init() {
+    ...
+    data->sample_flags =3D PERF_SAMPLE_PERIOD;
+    data->period =3D period;
+    data->dyn_size =3D 0;
+    ...
+}
+
+If the underlying PMU does not support data source tracking (i.e.
+PERF_SAMPLE_DATA_SRC is not set in data->sample_flags), data->data_src will
+contain uninitialized stack garbage.
+
+Should this read be conditionally guarded by checking if data->sample_flags=
+ &
+PERF_SAMPLE_DATA_SRC is set, to avoid feeding random access reports into
+DAMON?
+
+[ ... ]
+
+> +int damon_perf_probe_setup(struct damon_ctx *ctx,
+> +			   struct damon_probe *probe,
+> +			   struct damon_perf_probe_event *event)
+> +{
+
+[ ... ]
+
+> +	/* Compute probe_idx by walking ctx->probes list */
+> +	damon_for_each_probe(p, ctx) {
+> +		if (p =3D=3D probe)
+> +			break;
+> +		idx++;
+> +	}
 > +	/*
-> +	 * A probe-driven context needs no software primitive.  Validate this
-> +	 * before anything is committed to @dst, so a rejected configuration
-> +	 * cannot leave a live commit with its PMU events already armed.
+> +	 * Probe indices are 1-based (0 is the zero-init sentinel).
+> +	 * With DAMON_MAX_PROBES slots (0..DAMON_MAX_PROBES-1), valid probe
+> +	 * indices are 1..DAMON_MAX_PROBES-1, so the 0-based list position
+> +	 * must be < DAMON_MAX_PROBES-1.
 > +	 */
-> +	if (!damon_has_event_driven_probes(src) &&
-> +	    damon_primitives_enabled_invalid(&src->sample_control.primitives_en=
-abled))
-> +		return -EINVAL;
+> +	if (idx >=3D DAMON_MAX_PROBES - 1) {
+> +		err =3D -ENOSPC;
+> +		goto release_owner;
+> +	}
 
-[Severity: High]
-Does this short-circuiting unintentionally allow both primitives to be enab=
-led
-concurrently when a probe is present?
+[Severity: Medium]
+Does this bounds check artificially limit the maximum number of allowed pro=
+bes
+by one?
 
-Because damon_primitives_enabled_invalid() checks if both are enabled or
-both are disabled, bypassing it allows both configurations.
+The array has DAMON_MAX_PROBES elements, meaning a 1-based probe_idx can
+safely be DAMON_MAX_PROBES (which translates to array index
+DAMON_MAX_PROBES - 1).=20
 
-If both page_table and page_fault are enabled, does this permanently destroy
-system-wide page access history and break LRU memory reclaim algorithms?
-
-In kdamond_fn(), the page_fault primitive takes precedence during the check
-phase:
-
-mm/damon/core.c:kdamond_fn() {
-    ...
-		if (ctx->sample_control.primitives_enabled.page_fault)
-			max_merge_score =3D kdamond_apply_zero_access_report(ctx);
-		else if (!access_check_disabled && ctx->ops.check_accesses)
-			max_merge_score =3D ctx->ops.check_accesses(ctx);
-    ...
-}
-
-Because the 'else if' is skipped, the hardware PTE accessed bits cleared
-earlier by ctx->ops.prepare_access_checks() are never read back.
-
-[Severity: High]
-Does this relaxation also introduce an uninitialized read that leads to an
-out-of-bounds PFN lookup?
-
-If a context is configured with both primitives disabled and an event-driven
-probe with a weight of 0, damon_has_probe_weights(ctx) returns false, which
-causes access_check_disabled to evaluate to false.
-
-Because page_table is false, ctx->ops.prepare_access_checks() skips
-initialization, leaving r->sampling_addr completely uninitialized.
-
-Since both are disabled, kdamond_fn() forces the execution of the access ch=
-eck
-primitive:
-
-mm/damon/core.c:kdamond_fn() {
-    ...
-		else if (!access_check_disabled && ctx->ops.check_accesses)
-			max_merge_score =3D ctx->ops.check_accesses(ctx);
-    ...
-}
-
-This calculates a physical address from this garbage memory in
-__damon_pa_check_access():
-
-mm/damon/paddr.c:__damon_pa_check_access() {
-    ...
-	phys_addr_t sampling_addr =3D damon_pa_phys_addr(
-			r->sampling_addr, addr_unit);
-    ...
-}
-
-Can this lead to out-of-bounds PFN lookups, unpredictable behavior, and
-potential kernel crashes or information leaks?
+If a user attempts to configure exactly DAMON_MAX_PROBES probes, won't this
+check prematurely return -ENOSPC and drop the final slot?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261003-damon-perf=
--rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com?part=3D9
+-rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com?part=3D3
