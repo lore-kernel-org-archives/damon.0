@@ -1,139 +1,146 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8FC4315F
-	for <damon@lists.linux.dev>; Sat,  3 Oct 2026 21:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95ABB21D3F5
+	for <damon@lists.linux.dev>; Sat,  3 Oct 2026 21:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791062147; cv=none; b=QqMCaPaT+x4PVfrtrQUvZMxUT7jRz4ukoU3TZJ1erRA5LgFXyfrF0M1+0nqIZ5lxCFFB0zVMR6drqFhSqOv1kNx60OjLoCVwXeQNqaZDyOH2jtQxj1W0ZBsYGjBkYGfScX7j8pe/yk2AwP1WSKGYAWKj+UC+ztUpQgx1R37vPRs=
+	t=1791062258; cv=none; b=Jfrq8fGOld8CCYrg7A4k5gqf67tITZYTXxMH9Vba0AiGFC1JHytV5xiDXLNB1LwoeJLhTgpA8xZJ+5c+Yn4ZXuriJEgAKv7OZw4K8rtjiDbjmaMLOs2iXfQrIFm5g187gD5teiH466kzzafyNCn+mq7WjzmO2MpH2p+qfCfOMmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791062147; c=relaxed/simple;
-	bh=p6ylEgmz7rmGA84+dtmUg/2xfUw0LElyYb5vr8XCjvU=;
+	s=arc-20240116; t=1791062258; c=relaxed/simple;
+	bh=2ikq7HzMuUvC5I1ldxDnxumV5PAV2RONoV6nVe8Ebec=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=s0BT14B2jHxtIWYlfdsNoAnoJYJ/jbbfMoQrzTKVniajKqUGB6/Oa+4Bwh9EPUq62q3hPE4aRERrj9tRmxvOzAC7d00yCyJ2WSY0mblIkoooNSj7ONvrRm8ZnSYLAlMxPuWnWZqUziiCVX3DrrOIgDnFvm84Qkxh29/HF75F6SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bTZRE2+r; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=pbw0ee52qj1NYflFlyWtEHi56CUYTxlX1U5qv5ag67mgtgXnw3AeSmP68mEelbSeiQdGrVY9QkClCxh3XVDzSemSGqZcPFlRyWz3Q+7Z+3gIzMkOR7+k3bIpc6X26dA1hkImFizHsC0v7IQhkgtf16XVWfXRB/10tBnYOCkkhes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XSmgIn69; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bTZRE2+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D761F0089B;
-	Sat,  3 Oct 2026 21:15:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XSmgIn69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18ED81F0089B;
+	Sat,  3 Oct 2026 21:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791062145;
-	bh=7XLehgGygn4OxqqIpxJAgcpYvWA9pCzfl6ZUHsEaIFs=;
+	s=k20260515; t=1791062257;
+	bh=yT7JWip98PCafYZDiFD2FaATI1+jLcrtPZqYtt/NSwg=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=bTZRE2+rzdJ1tsVUtygvYDX5GM9exTqslSCfjB1ebrB82lr9tLNG0jjt0EbJy4zoq
-	 HvaBXtDlTt9///kejKY5ibJgbFZ8Dzg906f9R231XzRnjolgNO561yBluvQTrxO/DX
-	 2OesTNepVZ++5e8iFWsq1bci2iwRPjKPZ57eMG36DAtviXyl49BFl713g120T4bZQq
-	 NK/tw9JrIqfnZtZb5Vfgt2yJ8yQEyRx0TdhEkqrxqKyjPknAvo+71x5QbYetIdETEU
-	 prIvGK1EnLgjkrtkhB8s9lWLrFJH2qCp2O1umwgVM/Snt3V6kcx247Hx5O/YvzZU/O
-	 2fsy95xTRDBYA==
+	b=XSmgIn69G2LJu0hJLWGw+/fBQcqevZt7gMxjXTwCs/4EALhgC9Y105AhdJo0jTxug
+	 CnbGGqUrjrq7ENTYyyJEbGBpMHJaE+PQVZ3O9VjJrhNkk0Qus0Mt8JiI97mSA7VFZi
+	 7XNYULLC/tXbgzJxNhOp0o54jrGAPA4fbiOaxbqx4JyMQ6ddxjAYmZO1P5RMtcKGtD
+	 a/nypkBe6OIPBwVbtBIojk9UEzEt9Eugtaw384zV5kqK98JvPAPiksmFpDKJlQSAFm
+	 gPnnOIXZR8llVxM1T9JEqfske/pfSWc61+bv4qsOp3dBZMPv3Ksg6rWM9PBVKCFd/b
+	 gUg4P+JuHGOJw==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 4/9] mm/damon/ops-common: use probe-weighted
- score when probe weights are set
+Subject: Re: [RFC PATCH v3 7/9] mm/damon/tests/drain-kunit: kunit for report
+ rings and ring drain
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Ravi Jonnalagadda" <ravis.opensrc@gmail.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-4-0f00417b41bc@gmail.com>
+In-Reply-To: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-7-0f00417b41bc@gmail.com>
 References: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com>
- <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-4-0f00417b41bc@gmail.com>
+ <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-7-0f00417b41bc@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 03 Oct 2026 21:15:45 +0000
-Message-Id: <20261003211545.A8D761F0089B@smtp.kernel.org>
+Date: Sat, 03 Oct 2026 21:17:36 +0000
+Message-Id: <20261003211737.18ED81F0089B@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
 s) to consider:
-- [High] mm/damon: integer overflow and flawed signed cast in hotness calcu=
-lation inverts scores
-- [Medium] mm/damon: unwarranted +1 divisor guard distorts probe-based freq=
-uency subscore
+- [Medium] mm: damon: KUnit tests leak struct pid on success path
+- [Medium] mm: damon: test bsearch_unsorted_regions mistakenly creates sort=
+ed list
+- [Medium] mm: damon: memory leak of region r1 on allocation error path
 --
 
-commit 789313bd7b3378340e31414deb770dbabf9ae379
+commit 19081629f237047138afa26eda20068a417837a2
 Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Subject: mm/damon/tests/drain-kunit: kunit for report rings and ring drain
 
-mm/damon/ops-common: use probe-weighted score when probe weights are set
+This commit adds kunit test coverage for the per-context perf report rings
+and the unified paddr/vaddr report drain path.
 
-This commit updates damon_hot_score() to use probe-weighted hardware
-event counts for the frequency subscore when probe weights are configured.
-It also exports damon_has_probe_weights() and attempts to guard against
-integer overflow when calculating the new subscore.
-
-> diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-> --- a/mm/damon/ops-common.c
-> +++ b/mm/damon/ops-common.c
+> diff --git a/mm/damon/tests/drain-kunit.h b/mm/damon/tests/drain-kunit.h
+> new file mode 100644
+> index 0000000000000..8e5023ebf6df7
+> --- /dev/null
+> +++ b/mm/damon/tests/drain-kunit.h
 
 [ ... ]
 
-> @@ -172,9 +172,24 @@ int damon_hot_score(struct damon_ctx *c, struct damo=
-n_region *r,
->  	unsigned int age_weight =3D s->quota.weight_age;
->  	int hotness;
-> =20
-> -	freq_subscore =3D mult_frac(damon_nr_accesses_mvsum(r, c),
-> -			DAMON_MAX_SUBSCORE,
-> -			damon_nr_samples_per_aggr(&c->attrs));
-> +	if (damon_has_probe_weights(c)) {
-> +		unsigned int wsum =3D damon_probe_hits_wsum(r, false, true, c);
-> +
-> +		/*
-> +		 * Route perf-event hardware event counts into the score.
-> +		 * Clamp to DAMON_MAX_SUBSCORE so a large weighted-hit sum
-> +		 * cannot overflow the subscore range.
-> +		 */
-> +		freq_subscore =3D min_t(int,
-> +				mult_frac(wsum, DAMON_MAX_SUBSCORE,
+> +static void damon_test_unified_vaddr_match(struct kunit *test)
+> +{
 
-[Severity: High]
-Could this combination of mult_frac and min_t cause highly active regions
-to be scored as completely cold?=20
+[ ... ]
 
-Since wsum is an unsigned int accumulating raw hardware events from perf
-probes, it can reach very large values. The mult_frac macro uses 32-bit
-unsigned math for its internal scaling. If the intermediate result of the
-scaling exceeds the 32-bit maximum, it will silently wrap around.
-
-Furthermore, min_t forces this unsigned result into a signed 32-bit integer.
-If the wrapped intermediate result has the sign bit set, the signed cast
-produces a large negative number. Since this negative value is less than
-DAMON_MAX_SUBSCORE, min_t will incorrectly return it instead of clamping.
-This negative freq_subscore could then corrupt the subsequent hotness
-calculation, paradoxically scoring highly active regions as zero.
-
-> +					/* +1 guards divide-by-zero: samples-per-aggr can be 0 */
-> +					damon_nr_samples_per_aggr(&c->attrs) + 1),
+> +	t =3D damon_new_target();
+> +	if (!t) {
+> +		damon_destroy_ctx(ctx);
+> +		kunit_skip(test, "target alloc failed");
+> +	}
+> +	t->pid =3D get_pid(task_tgid(current));
 
 [Severity: Medium]
-Is this +1 divisor guard necessary here? The comment mentions that
-samples-per-aggr can be 0, but looking at damon_nr_samples_per_aggr(),
-it appears explicitly designed to never return 0:
+Does this code leak the struct pid reference? Because ops.cleanup_target
+is not defined for this test context, damon_destroy_ctx() won't drop the
+target's PID reference acquired by get_pid().
 
-include/linux/damon.h:damon_nr_samples_per_aggr() {
-        ...
-        return nr_samples ? : 1;
-}
+[ ... ]
 
-Because the function already guards against zero, adding 1 introduces an
-unwarranted off-by-one division error. For example, it could change a
-divisor of 1 to 2, halving the score. Could this permanently and
-disproportionately dampen the frequency subscores of probed regions
-compared to unprobed regions in the else block, mathematically distorting
-the tiering decisions?
+> +static void damon_test_unified_vaddr_tgid_mismatch(struct kunit *test)
+> +{
 
-> +				DAMON_MAX_SUBSCORE);
-> +	} else {
-> +		freq_subscore =3D mult_frac(damon_nr_accesses_mvsum(r, c),
-> +				DAMON_MAX_SUBSCORE,
-> +				damon_nr_samples_per_aggr(&c->attrs));
+[ ... ]
+
+> +	t =3D damon_new_target();
+> +	if (!t) {
+> +		damon_destroy_ctx(ctx);
+> +		kunit_skip(test, "target alloc failed");
 > +	}
-> =20
->  	age_in_sec =3D div_u64((u64)r->age * c->attrs.aggr_interval,
->  			     USEC_PER_SEC);
+> +	t->pid =3D get_pid(task_tgid(current));
+
+[Severity: Medium]
+Similarly, does this test also leak the struct pid reference on teardown
+for the same reason?
+
+[ ... ]
+
+> +static void damon_test_bsearch_unsorted_regions(struct kunit *test)
+> +{
+
+[ ... ]
+
+> +	/*
+> +	 * Insert regions in REVERSE order so the list is unsorted: r2 at lower
+> +	 * address first, r1 at higher address second.  DAMON normally inserts
+> +	 * in sorted order; we bypass that here to exercise the bsearch path
+> +	 * with unsorted input.
+> +	 */
+> +	r1 =3D damon_new_region(0x10000, 0x20000);
+> +	r2 =3D damon_new_region(0x30000, 0x40000);
+> +	if (!r1 || !r2) {
+> +		damon_free_target(t);
+> +		damon_destroy_ctx(ctx);
+> +		kunit_skip(test, "region alloc failed");
+> +	}
+
+[Severity: Medium]
+If r1 is allocated successfully but r2 fails to allocate, does this error
+path leak r1? Since r1 has not been added to the target's region list
+yet, damon_free_target() won't free it.
+
+> +	/* Add in reverse (high first) to create an unsorted list. */
+> +	list_add(&r2->list, &t->regions_list);
+> +	list_add(&r1->list, &t->regions_list);
+
+[Severity: Medium]
+Does this sequence actually create a sorted list instead of an unsorted
+one? Because list_add() prepends to the head, adding r2 (higher address)
+then r1 (lower address) places r1 before r2. This results in the regions
+being sorted in ascending order, which defeats the purpose of the test.
+
+[ ... ]
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261003-damon-perf=
--rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com?part=3D4
+-rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com?part=3D7
