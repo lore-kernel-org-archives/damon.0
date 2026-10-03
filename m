@@ -1,69 +1,69 @@
-Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
+Received: from mail-yx2-f6.google.com (mail-yx2-f6.google.com [74.125.224.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DBC37186A
-	for <damon@lists.linux.dev>; Sat,  3 Oct 2026 21:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AF03A4521
+	for <damon@lists.linux.dev>; Sat,  3 Oct 2026 21:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791061726; cv=none; b=ZtZcU1jGOXee0R698OBebM76WQ5sN07YncFldevmvN4x4d8AWZFV7IYcSvcQYrGrlijb0wAgsoKQA/X+zKZgIK6sH9sZgDOUDYiuh/XG9wdkPyy0nCNhkzkGXXjUOjb3aALmb3GkhhrUt6SgaKGVtFJXpqUUKt/kmohZulONwa0=
+	t=1791061727; cv=none; b=pmzzljdPBnuS+tXXsqp5kCQjWue9dWHUUK/BRtbo6dPeN2dNoe0zQnU0B4MPJwKLUAjj2jww7b5rX3LJ8lt9DfEUC7Wfrkc37C6Z+Jsvkt0LbjGDR88BZTUZQZN8Cy4hVwfs+oZK7533bbftsTUpvWwR6+HY9WD5WgUHxIFXa6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791061726; c=relaxed/simple;
-	bh=Gd6F6ON3yGTMjzqcwtixnePOI3psQQHWcRSQ9XoLHxE=;
+	s=arc-20240116; t=1791061727; c=relaxed/simple;
+	bh=tAIEaZy66MiqjyAhvBIqHObw90APe1vijRLdD1hBJLI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Dy+2soxbJwvsMDpwjFRXneV1IUM7KwtfRJR28eOs0gLesIuqW/rh0cxTWl5f3pddfVAmtMx4OCxUdsaIiIJv+CiKvBlGy5wE4dV0Ei9KXDKJ3pWlD7ZhkEc/bBf3LqlcGsg0nDgKizQ13PxHqyqNqQt9vw7hIheDKYLZ0VjCdGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NhQ69tFV; arc=none smtp.client-ip=209.85.128.195
+	 In-Reply-To:To:Cc; b=Gt+b1OT5dy1+MBW4yWOEa6SL9MUwJGzKP2uPJOBwkFHhozhppcBaYZ7tDWtuwf6Vlt6AiR+y4CfhZ8LZ/WwvZxuDjAseUVNBl6+wVDzXq0Z8DUE7LUq2VOCp8Vky0+do0UNhO5hvXos9S1nxVWZWvzNTUO7N1GJkzCe1dnSATtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EJjHf+Mt; arc=none smtp.client-ip=74.125.224.134
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NhQ69tFV"
-Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-8ab43af5e97so3420017b3.1
-        for <damon@lists.linux.dev>; Sat, 03 Oct 2026 14:08:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EJjHf+Mt"
+Received: by mail-yx2-f6.google.com with SMTP id 956f58d0204a3-66e61475fa7so255016d50.0
+        for <damon@lists.linux.dev>; Sat, 03 Oct 2026 14:08:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791061722; x=1791666522; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791061725; x=1791666525; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=7WdQn6f6AsaloNtXz63r2rYU9L2euT0e0WgByXQq7Q8=;
-        b=NhQ69tFVn040HTcNNcprhBSpU1nfk6aaT+K2YghKBgAsY/8Aj0+sWPGAhJzSfQLZc+
-         BgKlCyB7Fj6/1Q2v4E+jKBokkstvoLY2YkhfeGrKUwyCh8Y81Zo9NedUEU6uxnrT10bq
-         p+jIN8SYIBmFwj9pq8zZeYXKItbWnEi1HH9JDyeckAnt6/IQxXH3GLjHmkRKPmvjtf6H
-         xUJRO/Ng/KivABA8RiIDVdXd1mjHt6fR7KAK2PJTyc8L0+SldnjtLqELsPwsMpwRaav1
-         sdDooYi97PGLUWaN6jKiB8IJP0vi7o6+Z7z0TTn/GPpUpPSeYDSFImf3XDMVubFFw5ph
-         9ltQ==
+        bh=7T2njtLf+tsG9r8toysyAJNfleUrJXsFeeqkEldERK0=;
+        b=EJjHf+MtrhbqzCMuKUJXzswE8GiO3BtJ7auK0e4LhpVyjBvcShqCV4XETTEu69T5Ib
+         xXxUuneiiTmonGv72vFvlSGfzzLHSV41l0GBofOxtYPqL2WhFbPP6MPEPKDo4ZyvoSz1
+         mMqxTA8V6N1wa0JDYk02p0WiVw/NStlqoUN97rEL6nTI48iLhen4c14RbC2Msag5yl6b
+         Z4+hd+2VElAR2cYEb4qNLxFJpZCqn0UGdpe2SF0TcSpNx2ffO0Cf4jsOMHWe0ADE2+a7
+         jbqgz/OSg8exYNKr4bExrNZqUrBCEdNdd/B6/5kwB61KC3ozq8AdzRLIxAgqZiEQOSX8
+         yxAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791061722; x=1791666522;
+        d=1e100.net; s=20260707; t=1791061725; x=1791666525;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=7WdQn6f6AsaloNtXz63r2rYU9L2euT0e0WgByXQq7Q8=;
-        b=SgenyzRJ/79bfLAALxrgyue9PPkrqhkKwB5DqC59imDJBa1U3bajiCJPWGXQ7Mky9s
-         u6UzgNwd9R8Oymb56Xc1wBd9em6ZBP/bI3O0Kmv3C57Tn0VI5cW2UsAGATecwyRmhAKm
-         4UqLZN9DgZWvYuhpehcLnCag0W4iWoqRinylyoMeZOsZ/YH2JLYAC/iN7Pw00t9obo82
-         qekLJQu3iP5WS7YQfl8qg5Gr3wF3kDA0PB6CIvZSHXDUpte6+Hr06+792/0PPDT019mQ
-         SxBSYwy74jyPdgzlE6e6DSRrggK5iyDzEKrhoESuIwRSfOvBhvZHYmeNxGFRj26LEVlf
-         MvgQ==
-X-Gm-Message-State: AFq9FYKC9ZvDePsRRSLIL+u6pkDa83dKNzo6ee6S3Fl6mfWFnAikGURx
-	XQqVnrBori1H4f9GSdZPnCZ8Ayt/SwOvC5ERdV9jDhdugO1RXeXmUqc=
-X-Gm-Gg: AYBFou24fU6l0bYUJKx3cB6HXs4WcTEFj4q5vqbRbFiQyeGx9CIU7rWskjCiIWcOHLR
-	vai2lbtWqQgXF+giCz7t3nRGXnRu6H5l+GLV9qFiujY5v7avWAq/1HcSSk8V5iCL9FZAuObMgKV
-	ax8atHEeJXFsXxTfJpzP32q1A50OB3X4tyPqDknstsrxhu9uKCqZUzWU8rg4vz6MY2Xgr0X+Ime
-	mLGscOGiiAyQgVUl6YtawUyUlPAKZfrYShDRHjhx9ssCmIqB7OV7JMi9vlvuJW4m1cn6JwSuabv
-	8J23hOn7xdcdqyCKAAw3waZQLZDtukT5GDVFlbAWtd0XFXc/rxcswINH+vmf0pmJ5buChYgMk3/
-	7500Ozy98iWdkH4I6B/k3v3LTVoqBIHnjtpB5NHcduhdUh3D4kJsuVXk/IJz/R1qGajZjRCEAuZ
-	dB18/PjCkcBJejocVUXUrufMUJEvjScABvfwKEbmQKi3fl3mzzbQ/bFgnVSoJDW8X5P0LzU4vR0
-	4AaDA99wRet+G84EN6NrWe1I3elMiQzjr0s9dKV2oJ1X9NVp4KvG00zctg89pNs6ChgXdM7XNeJ
-	9N/itoYkuJwYRTBdBcTU48lfBV6o2npGmw==
-X-Received: by 2002:a05:690c:3181:b0:8ae:98ce:5497 with SMTP id 00721157ae682-8ae98ce7efemr12330927b3.0.1791061722002;
-        Sat, 03 Oct 2026 14:08:42 -0700 (PDT)
+        bh=7T2njtLf+tsG9r8toysyAJNfleUrJXsFeeqkEldERK0=;
+        b=bJPX8Bi6pbjewAsPXDbty2s+0gjIhxxfzCS+v8yLs4Td7TRkATS5b3aqsZ8xoucTe/
+         8U1UjLCTjoQ/kYr8FvvxuRWc7mn7opXKoT2WpeBpD/AQ/qu4xoWs6l+qNZRbkQLni+2J
+         yPovzlrLWudd07vIBMetRMU1S7ooW64X9PIAy1ZFZ1D7L5lD2lQlNVQM9b63mOanHtNk
+         slV/x88pCEbJNbQTegXKReBpyi8SjvYujJqxFgp1p42xn4MBp6GQnWMdlV4rkmNsBY6W
+         J9q1UMw0zGV2LpZHVSBYrj4Z4w2+nVe/eRW27ODwPf0Yf75n+pteLtBSanRlNC+yLk5h
+         h5Cg==
+X-Gm-Message-State: AFq9FYLrM5bJng0w8FbJK/4ZN4C9pcbHOERwR60+mvNd+QsTDraoPj5p
+	ljCC0j++9QEqt4GvQqlggaAEpwLpfYmeWQMEXxuv+NQafLYYOC3YUVM=
+X-Gm-Gg: AYBFou0BMel+3Ccl3D4kUcvYk3TuDgGjzJckR2q7z3Q+jNASqGtT7V2hIz6DCh3j9I/
+	iO3/Q8aqeQqjGr8Xt4gvVvQzIb+JEfATbknGwWh3iVPTorqFWztcHQikOdqB9J15DyLiduQUqFW
+	H//dwXkbSJyiAGlCFQ++7Fd42kaxT5N+nsNuMgnP/zrzBM9wj+AmdnR8ST1FwU8Vvn6fGnVR5/k
+	2xb7bvy23bdPJ8X9yAkT0x/9rMR7x126+quoifdm+GstPqMMl++7kK+IcZy1IDL9IjfPslsBuV7
+	N6fTEY1v+IsdQk8iE7mojS8dyjpuevt9b3AA2m/xxBWC7CfHvaKfoS2cEZa3wrNXw5ijmlXY3jJ
+	hwezprHKGqEjNvX4bHVWQI8L6/ws6SPZKCclpdYkOKxT+hNPoX+eJBD1XlOvUn3nxfIcXHyAsJi
+	AuJ5YQ0LlPqU2jHmRqllWs8dnMHxksZkxnPXatmsGb2kkTrY6GrCRyqyPSWGx8/SWP5sONoa7Mh
+	+Dxa9YO9ZolKu2hWHm2rTv3HJ2mZG/WsK3NS3rcWPeIdMOyx5f8yakF3lZPZV9x46ofb8NnSCsD
+	ALuAr/19qGw/g4zZZdiojFQdpkFgPw36ew==
+X-Received: by 2002:a05:690c:e3ec:b0:8a4:b0dd:c849 with SMTP id 00721157ae682-8ae3a5e66b0mr30220037b3.52.1791061724836;
+        Sat, 03 Oct 2026 14:08:44 -0700 (PDT)
 Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([2600:1700:4577:1050:550f:9551:5468:60f1])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8af0d179d3bsm743537b3.40.2026.10.03.14.08.39
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8af0d179d3bsm743537b3.40.2026.10.03.14.08.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Oct 2026 14:08:41 -0700 (PDT)
+        Sat, 03 Oct 2026 14:08:43 -0700 (PDT)
 From: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Date: Sat, 03 Oct 2026 14:08:01 -0700
-Subject: [RFC PATCH v3 8/9] mm/damon/core: cap the region merge threshold
- per target
+Date: Sat, 03 Oct 2026 14:08:02 -0700
+Subject: [RFC PATCH v3 9/9] mm/damon/core: allow both primitives disabled
+ when a perf probe is present
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -72,7 +72,7 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-8-0f00417b41bc@gmail.com>
+Message-Id: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-9-0f00417b41bc@gmail.com>
 References: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com>
 In-Reply-To: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com>
 To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
@@ -87,71 +87,113 @@ Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
  Jonathan Cameron <jic23@kernel.org>
 X-Mailer: b4 0.16.0
 
-kdamond_merge_regions() applies one context-wide threshold, the highest
-merge score across all targets divided by 10, to every target.  When a
-high-traffic target and a low-traffic target share a context, the
-high-traffic target sets a threshold permissive enough to erase the
-hot/cold boundary in the low-traffic one: a region with nr_accesses=1
-next to one with nr_accesses=0 merges because 1 <= threshold, even though
-that difference is the only signal the cold scheme has to admit it.
+The sample control validation requires exactly one software access check
+primitive, page_table or page_fault, to be enabled.  A context carrying a
+perf-event probe needs neither: the probe drives the access signal
+through its report ring and the drain, so region access rates and ages
+update with both primitives off.
 
-On the regular merge pass, cap the threshold for each target by a tenth of
-that target's own maximum merge score.  The score is the one
-damon_merge_regions_of() compares, so a probe-weighted context is capped
-by its weighted hit sums rather than by nr_accesses, which stays near zero
-when access checks are off.
+That check runs in damon_commit_sample_control(), which sees only the
+sample control and cannot tell whether the context has such a probe.
+Move it to __damon_commit_ctx(), skip it for a context with event-driven
+probes, and run it with the other validation of @src before anything is
+committed to @dst, so a rejected configuration cannot leave a live commit
+with its PMU events already armed.
 
-The passes that follow the regular one exist only to bring the region
-count under max_nr_regions by escalating the threshold.  They keep using
-the escalated threshold uncapped, so that bound still holds.
+Add damon_test_both_primitives_disabled_with_probe(), which commits a
+context with both primitives off and an event-driven probe and asserts the
+commit succeeds.
 
 Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 ---
- mm/damon/core.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ mm/damon/core.c              | 11 ++++++++---
+ mm/damon/tests/drain-kunit.h | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 3 deletions(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 1d25f820e3f9..c2c74d0daf95 100644
+index c2c74d0daf95..04a1cccbc2f5 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -4175,12 +4175,36 @@ static noinline_for_stack void kdamond_merge_regions(struct damon_ctx *c,
- 	unsigned int nr_regions;
- 	unsigned int max_thres;
- 	bool count_age = true;
-+	bool use_probe_hits = damon_has_probe_weights(c);
+@@ -2357,9 +2357,6 @@ static int damon_commit_sample_control(
+ 		struct damon_sample_control *dst,
+ 		struct damon_sample_control *src)
+ {
+-	if (damon_primitives_enabled_invalid(&src->primitives_enabled))
+-		return -EINVAL;
+-
+ 	dst->primitives_enabled = src->primitives_enabled;
+ 	return damon_commit_sample_filters(dst, src);
+ }
+@@ -2390,6 +2387,14 @@ static int __damon_commit_ctx(struct damon_ctx *dst, struct damon_ctx *src,
  
- 	max_thres = damon_nr_samples_per_aggr(&c->attrs);
- 	while (true) {
- 		nr_regions = 0;
- 		damon_for_each_target(t, c) {
--			damon_merge_regions_of(t, threshold, sz_limit, c,
-+			struct damon_region *r;
-+			unsigned int t_max = 0, t_thres = threshold;
+ 	if (!damon_valid_probe_params(src))
+ 		return -EINVAL;
++	/*
++	 * A probe-driven context needs no software primitive.  Validate this
++	 * before anything is committed to @dst, so a rejected configuration
++	 * cannot leave a live commit with its PMU events already armed.
++	 */
++	if (!damon_has_event_driven_probes(src) &&
++	    damon_primitives_enabled_invalid(&src->sample_control.primitives_enabled))
++		return -EINVAL;
+ 
+ 	err = damon_commit_schemes(dst, src);
+ 	if (err)
+diff --git a/mm/damon/tests/drain-kunit.h b/mm/damon/tests/drain-kunit.h
+index 8e5023ebf6df..be44311617fc 100644
+--- a/mm/damon/tests/drain-kunit.h
++++ b/mm/damon/tests/drain-kunit.h
+@@ -722,6 +722,42 @@ static void damon_test_bsearch_unsorted_regions(struct kunit *test)
+ 	damon_destroy_ctx(ctx);
+ }
+ 
++/*
++ * Test that damon_primitives_enabled_invalid() accepts the both-disabled
++ * configuration when an event-driven probe is present (this commit's
++ * relaxation).
++ *
++ * Before this commit this configuration was rejected (-EINVAL).  After it,
++ * it is valid: the probe drives access-rate updates directly via the report
++ * ring, so neither software primitive is required.
++ */
++static void damon_test_both_primitives_disabled_with_probe(struct kunit *test)
++{
++	struct damon_ctx *ctx;
++	int ret;
 +
-+			/*
-+			 * On the regular pass, cap the threshold by this
-+			 * target's own maximum merge score.  A high-traffic
-+			 * target in the same context must not set a threshold so
-+			 * permissive that a low-traffic target's hot/cold
-+			 * boundary merges away before the cold scheme can act on
-+			 * it.  The score is the one damon_merge_regions_of()
-+			 * compares, so probe-weighted contexts are capped by
-+			 * their weighted hit sums rather than by nr_accesses.
-+			 *
-+			 * The passes that follow exist only to bring the region
-+			 * count under max_nr_regions, so they use the escalated
-+			 * threshold as is.
-+			 */
-+			if (count_age) {
-+				damon_for_each_region(r, t)
-+					t_max = max(t_max, damon_merge_score(r,
-+							false, c, use_probe_hits));
-+				t_thres = min(threshold, t_max / 10);
-+			}
-+			damon_merge_regions_of(t, t_thres, sz_limit, c,
- 					count_age);
- 			nr_regions += damon_nr_regions(t);
- 		}
++	ctx = damon_new_ctx();
++	if (!ctx)
++		kunit_skip(test, "ctx alloc failed");
++
++	if (damon_test_attach_perf_probe(ctx)) {
++		damon_destroy_ctx(ctx);
++		kunit_skip(test, "perf probe alloc failed");
++	}
++
++	/*
++	 * Explicitly disable both primitives.  With an event-driven probe
++	 * present, damon_commit_ctx() must now succeed outright.
++	 */
++	ctx->sample_control.primitives_enabled.page_table = false;
++	ctx->sample_control.primitives_enabled.page_fault  = false;
++
++	ret = damon_commit_ctx(ctx, ctx);
++	KUNIT_EXPECT_EQ(test, ret, 0);
++
++	damon_destroy_ctx(ctx);
++}
++
+ static struct kunit_case damon_drain_test_cases[] = {
+ 	KUNIT_CASE(damon_test_unified_vaddr_match),
+ 	KUNIT_CASE(damon_test_unified_vaddr_tgid_mismatch),
+@@ -733,6 +769,7 @@ static struct kunit_case damon_drain_test_cases[] = {
+ 	KUNIT_CASE(damon_test_report_addr_space_keyed),
+ 	KUNIT_CASE(damon_test_ring_full_counter_increments),
+ 	KUNIT_CASE(damon_test_bsearch_unsorted_regions),
++	KUNIT_CASE(damon_test_both_primitives_disabled_with_probe),
+ 	{}
+ };
+ 
 
 -- 
 Git-157)
