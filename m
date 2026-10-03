@@ -1,94 +1,117 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68793B636C
-	for <damon@lists.linux.dev>; Fri,  2 Oct 2026 18:28:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6920923AB9D;
+	Sat,  3 Oct 2026 15:46:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790965740; cv=none; b=RrobthPnPD70xbTLg/lvYSRX3RdJDeImRbwlOCyY/zYHAij3gG0rJiTYRpBzrReKlck4k8NQPrYYtc0lGCdTtm+nWdO51lygCNiY49ANUMBiDs6013KN/HKQSuIXOd6OhybDEYCH522+N/yKLhIrtZxYi29SQenRGI+FXPXCRoQ=
+	t=1791042383; cv=none; b=t/cGtXpwhxcDSeQEWGaKq3484h4mlwoCyQQWZjNSBARpD+uhK2/f7nzwp/LdC2qv9WCYfNGhwcQMwvyn2SjnPpCEbJeUcFUkwlG8AFI+/FSEL5ZmD6unFikcwLQJkCwcCvqG4N7F1TVfWHMhJ1C8G2qSXXPK2FqUr3F1wbiJsmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790965740; c=relaxed/simple;
-	bh=5Sl2JcBwSl2/nHPxJT7b/cOrI1RzRK/FtdGHgb/dJBU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BvjEb9ZbUCenPyRK1nbbHnpssswZuMT5dtJl3wiR9QcmM63i0wAuOZdwavkkZa3BMruifR/lKunxspwrdUDvHJuKK/cIhNx0T7VF38mg2r5J2Y5ecgpxG6hium0OZuP/6OZetSk94WBjaEeFzIkNEHUUuM0Vy9Ib/r7pZ1NOYTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=m77IoyDD; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	s=arc-20240116; t=1791042383; c=relaxed/simple;
+	bh=dKTVdy+yCyrLn3MnTq5spw3qQpFrz79wsn1WiJm0ywM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XyG2FlogGP4++z2OhdmdrvU+e1pDU1TKXKpSk6jDr7blxtw/eB58h/xKJRj2p/pfZz6gfXxkF1oEILBqPGzJnbXrkQXeT8siP2NwX5/GlspP8dXxilrxhwvV3xdXXxxbw/ueNxeL0OyqnSc1zAE7HgfbNctLmWRrYkC2FpefAbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V8zZnkrR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="m77IoyDD"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49d05d51553so675575e9.2
-        for <damon@lists.linux.dev>; Fri, 02 Oct 2026 11:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1790965733; x=1791570533; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=yop7qOc5hOSleMKDtWQuK9wi6ARl8ykYetb7shbGu2Q=;
-        b=m77IoyDDZ/Tw3N/awUMBPFyAMmrnfJNIpGvWIuAlHUE6U0oVwq4mLpxRud3MtilR5E
-         6EhRHQzczCIiLewjnFdO26tbCVYa1lFADa0vCz7YzYXoNWRWPHWI9yyHXVFN51jJc3Hu
-         9k3h8ctEPyNYrnEHVJqd0GB16rpRUk3VO4GcmyOc/PYxKFyaPUmHs4MWUa/jQP+uOa/m
-         68ncQqSpvpB7yOLp1Bmr+vdySLaxmVCcpyFE80ZEpcLMsdMwuSRuz+rR8CoV7pYQ7tgO
-         DDOOIBs32vrxlyJNbHrZk6AjdF7RHFtNRu5mZzEgMQFB8MqGjBKa5Q+9LkjS8bbNIllK
-         Xg4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790965733; x=1791570533;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=yop7qOc5hOSleMKDtWQuK9wi6ARl8ykYetb7shbGu2Q=;
-        b=hvCYgjbXUlHPJTCeQtKGssAkrviwD3OVmq09+MrQ7kIV9JbDc6F8jyDNWl3UdBfVZ9
-         5ClEIUdqtP7ZP5MnvjLCl0eGkvfxLNFPeKofbGyYXCT3NVn5c76ip+sOiOxy3t3dABOF
-         YkoNgl+i6mHoBgshDGNtWoGdL+ww8S6gEtYw6K1shWE5Goq177loUxK/BM85AHrINuis
-         pIpg7cCOJiDl4ToCk2/bEblYCX3GfPYzxLQ7pkzxuWJvMiklgKB26fpp5SItEIVwJkx4
-         6ZHlcROmNQdnbogfGwuzwDEcK+4H/w4Nn1e6vOv7+gEa7f+pTpOtX33M57XObCoAudcx
-         40jw==
-X-Gm-Message-State: AFuF++nhPP5O1tEW/UDsxH1uXRP1VeR3eeUFkgv4bD8ue0NwP/G0eQ7r
-	fuTlmACWIBgA0ZbbZlAp0iv8DUdXnXdiD4gr9o3kljBIM8fFcm8iLcK00HS28vHDl2U=
-X-Gm-Gg: AYBFou2sPKCJSDb5M2NOgEXT4EXqo8Th7m1MJwwsMH8Fi1N5lOvpXdhDzZFwNO3SaLV
-	fXXHVXBFRfckL9CymGmDchbGbxG1RpJZpd1FVqCACx1jiqNjYqNfdhWMkAETSPega1glrB/ySjF
-	LkUO/Zmt+jkdUiw1VQJVbudT1XWorRVAEowKacg/NWuDkywcosyBOiHUz2L9RASYCyF4nFEczNy
-	3lbqtZQqEOl2vRxUscp8gPsW4/5BWaGCUzwuMvfVI9fsh14F/9fucpEh2lDmiSF71JeuXAIAIJN
-	GML+0yPkw5tmDUnIJiZEQlrwZ2JM3eNFKeDo3jX3Rk3ccnB8MgGcBJ+xO2w3fDh7Vl/M5xAJP8Y
-	uLJol5C7jOANaLCuQW2s4cV3pCy7wb8p3mZjpJ1yYgT5iEx5zODvHmC+mqPrNGFPB8adQA9XhrH
-	vlyeeKlPcYCR4oSx/TRuRBmSiOKXSKV3z+CWPc+cg6/UaqQW/weTr0ZrU2Mx8N6T59Xds=
-X-Received: by 2002:a05:600c:3c98:b0:4a0:37d:9e21 with SMTP id 5b1f17b1804b1-4a168101d2dmr5201745e9.29.1790965733358;
-        Fri, 02 Oct 2026 11:28:53 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F ([2620:10d:c092:500::7:9b19])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b380f0858sm8166687f8f.8.2026.10.02.11.28.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 11:28:52 -0700 (PDT)
-Date: Fri, 2 Oct 2026 14:28:51 -0400
-From: Gregory Price <gourry@gourry.net>
-To: SJ Park <sj@kernel.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, kernel-team@meta.com, akpm@linux-foundation.org
-Subject: Re: [PATCH] mm/damon: use damon_get_monitor_folio() for hugetlb
- entries
-Message-ID: <ar_3r2fNKNRjmzjP@gourry-fedora-PF4VCD3F>
-References: <20261002140727.701709-1-gourry@gourry.net>
- <20261002181136.46472-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V8zZnkrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A201F0089C;
+	Sat,  3 Oct 2026 15:46:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791042382;
+	bh=tkts0pDbe69YFVrBqsvwV2MRMgMY6TcvecSmyeXkG58=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=V8zZnkrRupfrBMhPYg9eyDonKWcXD+jJWnf4kZiGoM2i+R6/JQUDhbHmc+NP2pjWO
+	 ZW7iBOBhhawcGFts+pPaNNSN8sodjTIorajAIhy88uFXizKLTHqKqoE/1XrefjD/h4
+	 V1FrYy+XpU/8i/erCjFaJmvAmZuKR1Gl/DeaCqI3C6hMMe5arRQVJaAf2O1Dzxs6jm
+	 OFntH4e7dFXFmypHnmTwGVuNKFTcu8AutiMoq22eooEEDJYDsHIg/4da3kqBEu1UtY
+	 +rScgvL6S4OdzAgGIC1pQuXjq+eqvOfdhkLqBaOUGOz9ClxYEBlLs08YWrSj0OWoE+
+	 vnFZzoYsfZ+pQ==
+From: SJ Park <sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Kunwu Chan <kunwu.chan@gmail.com>
+Subject: [PATCH 6.12.y] mm/damon/core: don't skip damos_adjust_quota() while esz is not zero
+Date: Sat,  3 Oct 2026 08:46:16 -0700
+Message-ID: <20261003154616.22092-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <2026100358-repayment-destitute-a6a6@gregkh>
+References: <2026100358-repayment-destitute-a6a6@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261002181136.46472-1-sj@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 02, 2026 at 11:11:35AM -0700, SJ Park wrote:
-> Hello Gregory,
-> 
-> This patch is applied to damon/next [1] tree.  If this patch is not added to
-> mm.git in short term (~1 week?), I will ask mm.git maintainer (Andrew Morton)
-> to pick this.  So, no action from your side is needed for now.  If it seems I
-> also forgot doing that or you cannot wait for my action, please feel free to
-> ping me or Andrew.
->
+DAMOS could unexpectedly stop working when a user disables quota using the
+online parameters commit feature.  Fix it by correcting a wrong quota
+unset check in damos_adjust_quota().
 
-All good, thank you SJ!
+DAMON users could disable all quotas by unsetting time and size quotas,
+and removing all quota goals.  The intention of disabling quotas would be
+making DAMOS run at full speed.  When such quota disabled setup is
+detected, damos_adjust_quota() skips all its work.  The skipped works
+include effective size quota (damos_quota->esz) updates and charged quota
+amount (damos_quota->charged_sz) resets.  The intention is to avoid doing
+unnecessary work when quotas are disabled.
 
-~Gregory
+However, users could do the setup while effective size quota is non-zero,
+by doing the disabling with the online DAMON parameters commit feature.
+In this case, because the effective size quota exists, DAMOS will keep
+working with the quota until it is fully charged.  After the effective
+quota is fully charged, the charged quota amount (damos_quota->charged_sz)
+cannot be reset because damos_adjust_quota() skips it.  Then, DAMOS stops
+working until the quota is newly set or DAMON is entirely restarted.
+
+The problem happens because damos_adjust_quota() assumes the user setup
+for disabling quota immediately disabled it.  In reality, the quota is
+still working until the effective size quota is also updated to zero.
+Other logic for catching that uses damos_quota_is_set(), which understands
+the fact and therefore checks the effective size quota in addition to the
+user setup.  Fix the issue by using damos_quota_is_set() in
+damos_adjust_quota() to determine if its works should be skipped.
+
+The user impact is a non-deterministic and unexpected DAMOS stop behavior.
+That is, users would disable quotas using the online parameters commit
+feature, expecting DAMOS will run at full speed.  However, depending on
+the timing, the setup can be updated while the effective size quota is
+non-zero.  Due to the above mentioned internal mechanism, DAMOS stops
+working instead of running at full speed.  It is unexpected behavior.  It
+is also non-deterministic because sometimes the setup is done when the
+effective size quota is zero, depending on the timing.  It doesn't cause
+critical issues like crashes or leaks.  Users can simply set a reasonable
+quota again, or restart DAMON.  But definitely it is an unexpected and
+non-deterministic behavior that makes it difficult to reliably use.  Also
+investigating the root cause of the behavior would be quite difficult.
+
+Link: https://lore.kernel.org/20260916135020.86483-1-sj@kernel.org
+Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: <stable@vger.kernel.org> # 5.19.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 32737cc5f877..2f6d60b9ca0f 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1677,7 +1677,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 	unsigned long cumulated_sz;
+ 	unsigned int score, max_score = 0;
+ 
+-	if (!quota->ms && !quota->sz && list_empty(&quota->goals))
++	if (!quota->esz && !quota->ms && !quota->sz &&
++			list_empty(&quota->goals))
+ 		return;
+ 
+ 	/* First charge window */
+-- 
+2.47.3
 
