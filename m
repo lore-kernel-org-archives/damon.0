@@ -1,167 +1,159 @@
-Received: from relay.hostedemail.com (smtprelay0014.hostedemail.com [216.40.44.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFD5403B0A
-	for <damon@lists.linux.dev>; Sun,  4 Oct 2026 09:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F90B35E92F;
+	Sun,  4 Oct 2026 15:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791105887; cv=none; b=uTZ07l4llPycDwiCcXsMn6ulmxgBNrlJ35mZIa9QYgiEHQIz4Qjtzo5oCKYJLfSN7j6uNWbbIUvfVIA+Uia+6ZVbOmso8TmPRCUPscG1JD1mBrMgl03QxoUcMNhBIyVwxVoXQR8HRERc4vBGNzWDRKwlV9wzUi501IDs7IZSZxc=
+	t=1791127057; cv=none; b=e9mNU3L++85ouOOxBuSUHBPOmAkuG8SnTycxHYfakRY5XQydgY75+xndcEz+wSmEhJtVqqRyX7o3fCvMwQbROQkSuhGNHcRTqi1is7cLVyErjZ9J3vOautJcqHvG+bPF11ur+JxLq/mWIMpxygEICvkNykDZsuhXB40tpIBaq/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791105887; c=relaxed/simple;
-	bh=+J9cCeIO2vZjSIoP+Vt7+45zvy9SPpS6EtPIbmekiII=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mceqmRBOoxmkxmlXwINc7svAmLYduSqpakwRpAQTxXx6KoJ51eX6BXcwErSfsQBh1eWbt+mXiCVtjxmTMFKlE5AjCrTwwnLO2dnHYyIPBQQWaPCzReKQfcjvkmoF187maRxZKRlci/F1pj+NEbDwwlRogh+mPviJ1ysTNGClN2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=UaAwM2oO; arc=none smtp.client-ip=216.40.44.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1791127057; c=relaxed/simple;
+	bh=eSF+NOK5225FF8mqqhAd8WISwcF2aNfvQx+lMIgmWqk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TB4LY83K93Enh/YvFjV0/HEyGkhRjIxURsXXTjaUCl2wQofc91Z8TTvVrqAvzWjIOM17oyp8eglbxLF7tAKowJgPLtLwjMK7usieaG7n48LDIKvzHzujAzVZ3H0P3kxkxdTmf/k1JaymDXQzyNE3BJscxwOQj0jg4aPZvrD+vuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLht/tM5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="UaAwM2oO"
-Received: from omf05.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay08.hostedemail.com (Postfix) with ESMTP id 520041403DA;
-	Sun,  4 Oct 2026 09:16:40 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf05.hostedemail.com (Postfix) with ESMTPA id 952BC2000E;
-	Sun,  4 Oct 2026 09:16:35 +0000 (UTC)
-Date: Sun, 4 Oct 2026 05:16:32 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>, SJ Park <sj@kernel.org>,
- damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- linux-trace-kernel@vger.kernel.org, Masami Hiramatsu <mhiramat@kernel.org>,
- Jonathan Corbet <corbet@lwn.net>, Bijan Tabatabai <bijan311@gmail.com>,
- Ajay Joshi <ajayjoshi@micron.com>, Honggyu Kim <honggyu.kim@sk.com>,
- Yunjeong Mun <yunjeong.mun@sk.com>, Akinobu Mita <akinobu.mita@gmail.com>,
- Lian Wang <lianux.mm@gmail.com>, Kunwu Chan <kunwu.chan@linux.dev>
-Subject: Re: [PATCH] mm/damon: add damos_node_eligible_mem_bp tracepoint
-Message-ID: <20261004051632.71726836@fedora>
-In-Reply-To: <20261003202727.3673-1-ravis.opensrc@gmail.com>
-References: <20261003202727.3673-1-ravis.opensrc@gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLht/tM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489E01F000FF;
+	Sun,  4 Oct 2026 15:17:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791127056;
+	bh=XJAU8G4m6+mnNoBD5LhT4HZg8a5iTfwqXPkHr6mnUKY=;
+	h=From:To:Cc:Subject:Date;
+	b=RLht/tM5VZunK3yjbI68m9adxOl7g1umF+5+dLSoeMTpphzBWz4pSL44WjtHO6Aij
+	 P48Cd5QuYPKny0jeE6OijzrdaSlGSiVj44mmRrNYIgecknRsMaHJuc9HYZEpC4f9ue
+	 1p64Ts0DqZh33NlbjlaH4G7DeWeeYK/0RcTM/BHccnv0BHUVP1kd4HO4OoPcwdZUwQ
+	 K3/yR2g25EJTMjtf/6/X51NcYw3khqO1vc6+d3tWKR4xmh9tUA2u2ljXNxlHyk+kwD
+	 l1sjC8CCj9zerqr3oZVvhP+T+jbYlVxDnBbJcdwRIuwL3ti+1DajdbGjpsl4TUqyAR
+	 Q/ZH5Z8QNpakA==
+From: SJ Park <sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18.y v2] mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
+Date: Sun,  4 Oct 2026 08:17:30 -0700
+Message-ID: <20261004151730.4700-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 952BC2000E
-X-Stat-Signature: pdnhjatf6s6ij17ydsy69bt89bu8db99
-X-Rspamd-Server: rspamout07
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1++plVshDREp1/65N9g55w+NMnmWqeBIxk=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=pcvJ+jCMAJmM0AnDK31466hqGai5ZVEENzn8YaAuejw=; b=UaAwM2oO6Vs0SeMXPz9kGc9q2fLKlKqmTw2H6rdSRsVD7Bo3aKpXTFvZwlh8zK+OBavXEnlpEi7YD/bU73MDV7p3sQWLPNmQGBupb04v0nderDm+bKHdQrtF9R0ql3HM0DJZerIz3v2no7DchRC2AEsGq0RF9wRsTHh9R7uqfVg=
-X-HE-Tag: 1791105395-87746
-X-HE-Meta: U2FsdGVkX1/sZ6OkXRl1d895imVbao+eFLq8ZGKTfRYFYqpekrSfk5wwPwGOUTd2Evu4vjL39RNPNr1q9lyU/bShTeEnB+bay1dplCDNECqxSPE0grBiXKG6VZWzuWaKoXV8/P7qmITFW4J+8W4GZlZ6oLk1M+ke2NLS1vWCusYRRVTXHVRGKXQIV3zxlFfP22BVG7l6crUFxIQtjMIEJFOW43D9ETpxzPqLu1stTZaZSZTgbNe24ZHoL6TasLei/52xnMp3KyhxuEDDyfXrvxEM0KPXCWRZyjjLkLcMKCke0GT95/Nvuu1kU50fq5uOSfUjuVm4exp3hZAh+V7TLSl2m7tUZL4H/fw6n1YdYVSUzkLx2DqIAw==
+Content-Transfer-Encoding: 8bit
 
-On Sat,  3 Oct 2026 13:27:27 -0700
-Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+From: SeongJae Park <sj@kernel.org>
 
-> Add a tracepoint for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP quota goal
-> evaluation.  The tracepoint fires once per quota-score computation when
-> the goal metric is DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP, exposing
-> context_idx, scheme_idx, nid, target_value, and current_value.
-> current_value is reported as the quota tuning sees it, after the goal's
-> complement setting is applied.
-> 
-> The DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP metric expresses node memory
-> occupancy as basis points of eligible bytes.  This information is not
-> exposed through any existing external interface (perf stat, /proc, or
-> sysfs), so the tracepoint is the only way for userspace to observe the
-> target and current eligible-memory basis point values at quota-scoring
-> time.
-> 
-> Link: https://lore.kernel.org/linux-mm/20260428030520.701-1-ravis.opensrc@gmail.com/
-> Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-> ---
->  include/trace/events/damon.h | 31 +++++++++++++++++++++++++++++++
->  mm/damon/core.c              | 16 ++++++++++++++++
->  2 files changed, 47 insertions(+)
-> 
-> diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
-> index 8851727ae162..2c7249cc7c88 100644
-> --- a/include/trace/events/damon.h
-> +++ b/include/trace/events/damon.h
-> @@ -74,6 +74,37 @@ TRACE_EVENT(damos_esz,
->  			__entry->esz)
->  );
->  
-> +/* Per-tick DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP goal evaluation. */
-> +TRACE_EVENT(damos_node_eligible_mem_bp,
-> +
-> +	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
-> +		int nid,
-> +		unsigned long target_value, unsigned long current_value),
-> +
-> +	TP_ARGS(context_idx, scheme_idx, nid, target_value, current_value),
-> +
-> +	TP_STRUCT__entry(
-> +		__field(unsigned int, context_idx)
-> +		__field(unsigned int, scheme_idx)
-> +		__field(int, nid)
+kdamond_apply_schemes() is using damon_for_each_region_safe(), which is
+safe for deallocation of the region inside the loop.  However, the loop
+internal logic does not deallocate regions.  Hence it is only wasting the
+next pointer.  Also, it causes a problem.
 
-Can you move the nid after the two unsigned long values below. This
-creates a structure, and on 64bit machines, this adds a 4 byte padding
-in the middle of the ring buffer.
+When an address filter is applied, and there is a region that intersects
+with the filter, the filter splits the region on the filter boundary.  The
+intention is to let DAMOS apply action to only filtered-in address ranges.
+However, it is using damon_for_each_region_safe(), which sets the next
+region before the execution of the iteration.  Hence, the region that
+split and now will be next to the previous region, is simply ignored.  As
+a result, DAMOS applies the action to target regions bit slower than
+expected, when the address filter is used.  Shouldn't be a big problem but
+definitely better to be fixed.  damos_skip_charged_region() was working
+around the issue using a double pointer hack.
 
-> +		__field(unsigned long, target_value)
-> +		__field(unsigned long, current_value)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__entry->context_idx = context_idx;
-> +		__entry->scheme_idx = scheme_idx;
-> +		__entry->nid = nid;
-> +		__entry->target_value = target_value;
-> +		__entry->current_value = current_value;
-> +	),
-> +
-> +	TP_printk("ctx_idx=%u scheme_idx=%u nid=%d target_value=%lu current_value=%lu",
-> +			__entry->context_idx, __entry->scheme_idx,
-> +			__entry->nid,
-> +			__entry->target_value, __entry->current_value)
-> +);
-> +
->  TRACE_EVENT_CONDITION(damos_before_apply,
->  
->  	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index b63e60ef8990..6ddd15dc4f55 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -3294,6 +3294,22 @@ static unsigned long damos_quota_score(struct damon_ctx *c, struct damos *s)
->  		highest_score = max(highest_score,
->  				mult_frac(goal->current_value, 10000,
->  					goal->target_value));
-> +
-> +		if (goal->metric == DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP &&
-> +		    trace_damos_node_eligible_mem_bp_enabled()) {
+Use damon_for_each_region(), which is safe for this use case.  And drop
+the work around in damos_skip_charged_region().
 
-If you move the trace_damos_node_eligible_mem_bp_enabled() before the
-goal->metric check, you will save yourself a branch when tracing is
-off. As the trace_*_enabled() is a static branch (nop or jmp) it has no
-cmp branch, but the above will keep the goal->metric still exposed. By
-swapping the two compares, the goal->metric check will be hidder behind
-the 'nop' when tracing is disabled.
+Link: https://lkml.kernel.org/r/20260227170623.95384-3-sj@kernel.org
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 1745ccbd2907db2bdaa843e4abccde4fdaccbe5d)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+This patch is required to fix a bug that is introduced by commit
+500c9259f5a6, which is a backport of upstream commit b3723b596b54
+("mm/damon/core: fix unconditionally skip last region").  The backport
+allowed trying damon_split_region_at() of last region in
+damon_skip_charged_region().  If damon_split_region() fails, following
+line in damon_skip_charged_region() assigns wrong region pointer to the
+variable 'r', and propagate that via 'rp' double pointer.  As a result,
+silent memory corruption can happen.  damon_split_region_at() will fail
+only under extremem memory pressure, but still theoretically could
+happen.  This backport fix it by removing the damon_next_region() call.
 
--- Steve
+Changes from v1
+- v1: https://lore.kernel.org/20261003163101.32739-1-sj@kernel.org
+- Fix wrong return skipping cleanup in damos_skip_charge_region()
 
+ mm/damon/core.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-> +			unsigned int cidx = 0, sidx = 0;
-> +			struct damos *siter;
-> +
-> +			damon_for_each_scheme(siter, c) {
-> +				if (siter == s)
-> +					break;
-> +				sidx++;
-> +			}
-> +			trace_damos_node_eligible_mem_bp(cidx, sidx,
-> +					goal->nid,
-> +					goal->target_value,
-> +					goal->current_value);
-> +		}
->  	}
->  
->  	return highest_score;
-> 
-> base-commit: 763ad0211c7b587344f03bc4d1299810aeb736f4
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index c0dcb190b06e..02cc99aa6d3e 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1734,16 +1734,18 @@ static bool damos_valid_target(struct damon_ctx *c, struct damon_target *t,
+  * This function checks if a given region should be skipped or not for the
+  * reason.  If only the starting part of the region has previously charged,
+  * this function splits the region into two so that the second one covers the
+- * area that not charged in the previous charge widnow and saves the second
+- * region in *rp and returns false, so that the caller can apply DAMON action
+- * to the second one.
++ * area that not charged in the previous charge widnow, and return true.  The
++ * caller can see the second one on the next iteration of the region walk.
++ * Note that this means the caller should use damon_for_each_region() instead
++ * of damon_for_each_region_safe().  If damon_for_each_region_safe() is used,
++ * the second region will just be ignored.
+  *
+- * Return: true if the region should be entirely skipped, false otherwise.
++ * Return: true if the region should be skipped, false otherwise.
+  */
+ static bool damos_skip_charged_region(struct damon_target *t,
+-		struct damon_region **rp, struct damos *s, unsigned long min_sz_region)
++		struct damon_region *r, struct damos *s,
++		unsigned long min_sz_region)
+ {
+-	struct damon_region *r = *rp;
+ 	struct damos_quota *quota = &s->quota;
+ 	unsigned long sz_to_skip;
+ 	bool skip = false;
+@@ -1770,9 +1772,7 @@ static bool damos_skip_charged_region(struct damon_target *t,
+ 				sz_to_skip = min_sz_region;
+ 			}
+ 			damon_split_region_at(t, r, sz_to_skip);
+-			r = damon_next_region(r);
+-			*rp = r;
+-			skip = false;
++			skip = true;
+ 		}
+ 	}
+ out:
+@@ -2034,7 +2034,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+ 		if (quota->esz && quota->charged_sz >= quota->esz)
+ 			continue;
+ 
+-		if (damos_skip_charged_region(t, &r, s, c->min_sz_region))
++		if (damos_skip_charged_region(t, r, s, c->min_sz_region))
+ 			continue;
+ 
+ 		if (!damos_valid_target(c, t, r, s))
+@@ -2306,7 +2306,7 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ static void kdamond_apply_schemes(struct damon_ctx *c)
+ {
+ 	struct damon_target *t;
+-	struct damon_region *r, *next_r;
++	struct damon_region *r;
+ 	struct damos *s;
+ 	unsigned long sample_interval = c->attrs.sample_interval ?
+ 		c->attrs.sample_interval : 1;
+@@ -2329,7 +2329,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+ 
+ 	mutex_lock(&c->walk_control_lock);
+ 	damon_for_each_target(t, c) {
+-		damon_for_each_region_safe(r, next_r, t)
++		damon_for_each_region(r, t)
+ 			damon_do_apply_schemes(c, t, r);
+ 	}
+ 
+-- 
+2.47.3
 
