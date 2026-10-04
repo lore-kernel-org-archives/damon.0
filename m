@@ -1,165 +1,98 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978E42773F7
-	for <damon@lists.linux.dev>; Sat,  3 Oct 2026 21:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D715377A81;
+	Sun,  4 Oct 2026 08:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791062553; cv=none; b=uquQxjjXsllTT96dzqosM1/ZEq+u9/dXIJsHlNMcPk3UQPlvqcb2VzpV+ifu23tzNp1ioG1bwtfrdA6q57f35FD2frbPI0RzaY2SHi9wE6nc5AQOz8hzVZrwpEOEzbm4pK2ZPGB1LYVyrWtY83z63JhAqJQ6naoKwaFocuowCPk=
+	t=1791100878; cv=none; b=cfMdt2nPfZq6p+c77kcPBuxIbKPSRs3FLxJecftwRC64CgJ/U8QuQUtO5BT9CXUJwqMk/m36/jiphgvSyhL8hpxw5FpTilPxzaXJZJLO4jCNt2XiZ0ZFoNZk5oKAp9Fsx7LeXnS7KaBv13Ul/kjQ//QP/Hgrxv0l+4Mvos3ppjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791062553; c=relaxed/simple;
-	bh=aD6nhrseP3jOQdaJHfmb2AkleU8fnadDad06GNUDtcE=;
-	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=Ysjq2nlZMV4Gpx54SEKtg5qbfA9SV5tDpmXKQ+m6hqKWQmW5oO494sJkdD99AMec2Ivp7qrRY9Ecy/iqyXj2PLUpF9z51Rjv96TpcS5nT7Jo51q8pkWWigcBL+x2hzPCF9649xgEBeWk4GT+XJPdleYEXEYVvHQ4n5rN//zSSW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTB1O0jf; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791100878; c=relaxed/simple;
+	bh=iTOH66FzZXboDlHhAvgDRCZs+Jh0LxFBQvkk2OT22XE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AHoQHagvM5u6EdxxcA8bV+mJZROAFrnrzZ6IolvoWJpe0fj1kjBjihgaDJcK+ZabB/qvYBthqY3lOt5nFw/mReFWIkygyRTqIwxUHkdRTOXwGysU3WEpn9/Xpcrmb++Fv2wYW4NLkKekyVYXI+o891AOkUjJvGFbl2CNopWWHxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bV2Oz3wP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTB1O0jf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303EB1F0089C;
-	Sat,  3 Oct 2026 21:22:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bV2Oz3wP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D391F000FF;
+	Sun,  4 Oct 2026 08:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791062552;
-	bh=0sppXAwjuYhn6PyWkRaaRHNpGIaGw5b8MyOm5ZQW+rg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=XTB1O0jfSnoF64o3RUV5E3gYt0ojrxME4rRlrkrPoo37PSxdlUESCkypNU9nvU9Sn
-	 VrNHUuqwEdYTGbeISK4XqXYzFKS95pnzqYIFY4Sn96141CjHEPKYJtZzZ9/hzoVrvk
-	 k1Ok4rZAjCYZS8nwOiB9E+PTEe2vanYGemS15KlB9bFsSZE0mlexUhp/rfAsqdYnZB
-	 UhVyugSLQQp5yqC4OFqTsGG5Sp5VNgTfLiDE5T+C8Kx6qN37kDlGkTFabxToh9bTIk
-	 ZpWfD8Ze8IHG3Kp3Z2dSKn2ZN7J2YdDzlU1qzGrNAa68iCP20cPJvk9Qs1jQLDMMat
-	 vJ8cm0ClZBf7Q==
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v3 2/9] mm/damon/core: replace the access report
- buffer with per-context rings
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Ravi Jonnalagadda" <ravis.opensrc@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-2-0f00417b41bc@gmail.com>
-References: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com>
- <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-2-0f00417b41bc@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 03 Oct 2026 21:22:31 +0000
-Message-Id: <20261003212232.303EB1F0089C@smtp.kernel.org>
+	s=k20260515; t=1791100877;
+	bh=p0bhkDeR0q/RIGHHdpd7D589iSN3oIrJp74cDlV3Lkg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=bV2Oz3wPh9CI2vgAGfVd43hYzt6c1uvlk7ix0Dq2MmknOdhfzHxfi/W7w31THvoWE
+	 ebDtjhVfvO+acPp+9yL7RsNOL5Rnl8eTDIO+Fe1PPIQN6rHL5hOhIDu6621+gzqlv8
+	 H83jxW1Eh7YMuhBvyHR7p5n+lW2MQhJ5AQ04Ynrvyg6TVqawhuYYm2op2HCUbhR+H2
+	 ADXlY4fPPr0KuKg2w4ISnUM2WB9WJk9Mi3a4P8GEh0YgdiHnq8lPBivxcQSSUJYM1z
+	 iVyyKP1HFEX+iRR952RqoePaLSF7/UVXRTOuVV/FT7PJh4eTrM7eD2LUyNM9bh8SmF
+	 xfMmHCv1XGaSg==
+From: SJ Park <sj@kernel.org>
+To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Bijan Tabatabai <bijan311@gmail.com>,
+	Ajay Joshi <ajayjoshi@micron.com>,
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Yunjeong Mun <yunjeong.mun@sk.com>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Kunwu Chan <kunwu.chan@linux.dev>
+Subject: Re: [PATCH] mm/damon: add damos_node_eligible_mem_bp tracepoint
+Date: Sun,  4 Oct 2026 01:01:10 -0700
+Message-ID: <20261004080110.37328-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261003202727.3673-1-ravis.opensrc@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-- [High] mm: Off-by-one error drops valid reports for the maximum probe ind=
-ex
-- [High] mm: Preempt-unsafe this_cpu_inc() usage in preemptible kthread con=
-text
-- [Low] mm: Spurious target-lookup allocation failure warning when targets =
-are zero
---
+Hi Ravi,
 
-commit 8fff2ca2d88fc496c6ec48a611f9bfdad8cf1ae4
-Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+On Sat,  3 Oct 2026 13:27:27 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
-mm/damon/core: replace the access report buffer with per-context rings
+> Add a tracepoint for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP quota goal
+> evaluation.  The tracepoint fires once per quota-score computation when
+> the goal metric is DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP, exposing
+> context_idx, scheme_idx, nid, target_value, and current_value.
+> current_value is reported as the quota tuning sees it, after the goal's
+> complement setting is applied.
+> 
+> The DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP metric expresses node memory
+> occupancy as basis points of eligible bytes.  This information is not
+> exposed through any existing external interface (perf stat, /proc, or
+> sysfs), so the tracepoint is the only way for userspace to observe the
+> target and current eligible-memory basis point values at quota-scoring
+> time.
 
-This commit replaces the global access report buffer with per-context, per-=
-CPU
-SPSC rings for NMI-safe access reporting. It updates the kdamond drain logic
-to process these rings using a binary search over a per-target region snaps=
-hot.
+Thank you for this patch!
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 886e068e78447..4fd1db12bc49b 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
+We have damos_esz tracepoint.  Have you considered using it?  It doesn't expose
+the current value, though.  I thought it wouldn't be real problem in most
+cases, but I can show it could be problematic for node_eligible_mem_bp case, as
+the metric value is not straightforward to see without using DAMON.
 
-[ ... ]
+If you really need to know the current_value, I'm open to add a new tracepoint.
+But I think it has no reason to make it only eligible_mem_bp specific.  How
+about adding more general purpose tracepoint, and/or update the current_value
+file [1] under the goal sysfs directory to show the current current_value for
+all goal types?
 
-> +static void __kdamond_drain_ring(struct damon_ctx *ctx,
-> +		struct damon_target_lookup *tbl,
-> +		struct damon_report_ring __percpu *ring_pcpu,
-> +		cpumask_t *pending)
-> +{
+[1] https://origin.kernel.org/doc/html/latest/admin-guide/mm/damon/usage.html#sysfs-schemes-quota-goals
 
-[ ... ]
 
-> +		while (tail !=3D head) {
-> +			unsigned long stale_before;
-> +			int pidx;
-> +
-> +			entry =3D &ring->entries[tail];
-> +			/*
-> +			 * Use sample_interval (not aggr_interval) as the
-> +			 * staleness window: entries older than one sample
-> +			 * interval are from a previous monitoring tick and
-> +			 * should not inflate the current aggregation window.
-> +			 */
-> +			stale_before =3D jiffies -
-> +				usecs_to_jiffies(ctx->attrs.sample_interval);
-> +			if (time_before(entry->report_jiffies, stale_before)) {
-> +				this_cpu_inc(damon_samples_stale_drained);
+Thanks,
+SJ
 
-[Severity: High]
-Does this code trigger a BUG: using this_cpu_inc() in preemptible context
-warning? __kdamond_drain_ring() runs in the kdamond kernel thread, which is=
- a
-fully preemptible context, but this_cpu_inc() is preempt-unsafe without
-explicitly disabling preemption.
-
-> +				goto next;
-> +			}
-> +			pidx =3D entry->probe_idx;
-> +			/*
-> +			 * Every entry in this ring is a perf-event report
-> +			 * (probe_idx >=3D 1); damon_report_access() drops any
-> +			 * DAMON_PROBE_IDX_NONE report before it reaches a ring.
-> +			 * Reject only out-of-range indices (>=3D DAMON_MAX_PROBES)
-> +			 * and, defensively, any non-positive value.
-> +			 */
-> +			if (pidx <=3D 0 || pidx >=3D DAMON_MAX_PROBES)
-
-[Severity: High]
-Does this bounds check inadvertently discard reports for the 4th configured
-probe? The probe_idx is 1-based, meaning valid indices range from 1 to
-DAMON_MAX_PROBES (4). However, checking pidx >=3D DAMON_MAX_PROBES drops the
-report if pidx =3D=3D 4.
-
-> +				goto next;
-> +
-
-[ ... ]
-
-> +static void kdamond_check_reported_accesses(struct damon_ctx *ctx)
-> +{
-> +	struct damon_target_lookup *tbl;
-> +	unsigned int nr_targets =3D 0;
-> +
-> +	/*
-> +	 * Build the sorted region snapshot once for this drain.  If the alloc
-> +	 * fails, skip the drain this tick rather than falling back to a linear
-> +	 * scan (a missed tick self-heals; a linear scan does not).
-> +	 */
-> +	tbl =3D damon_build_target_lookup(ctx, &nr_targets);
-> +	if (!tbl) {
-> +		pr_warn_ratelimited(
-> +			"damon: target-lookup alloc failed; ring drain skipped this tick\n");
-
-[Severity: Low]
-Can this spam the kernel log with spurious warnings when 0 targets are
-configured?
-
-If a DAMON context is started with 0 targets, damon_build_target_lookup() s=
-ets
-nr_targets to 0 and correctly returns NULL if the lookup buffer was never
-previously allocated. This code misinterprets the NULL as an allocation fai=
-lure.
-
-> +		return;
-> +	}
-> +
-> +	if (damon_drains_ring_perf(ctx))
-> +		__kdamond_drain_ring(ctx, tbl, ctx->perf_rings,
-> +				&ctx->perf_pending);
-> +}
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261003-damon-perf=
--rfc-v3-send-2026-10-03-v3-0-0f00417b41bc@gmail.com?part=3D2
+[...]
