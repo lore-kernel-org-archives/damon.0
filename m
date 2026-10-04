@@ -1,222 +1,167 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay.hostedemail.com (smtprelay0014.hostedemail.com [216.40.44.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB71361DA6
-	for <damon@lists.linux.dev>; Sun,  4 Oct 2026 09:10:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFD5403B0A
+	for <damon@lists.linux.dev>; Sun,  4 Oct 2026 09:24:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791105036; cv=none; b=ciYymeF+ONMbg2cxZzBh2sAOevkmYYz/eGdJwXnx874ydWCf1wbo1cv22eoOYGBxF3aGi9mtV04xO6Awv/jcYOp3RiUtgFHhoKnmWjGtiGB42MobvT8gbqGYF7dVO8p9DLO9MdGzQicoJm7CuRcmygTeHg0vzRWZWIaoXXc/Sg8=
+	t=1791105887; cv=none; b=uTZ07l4llPycDwiCcXsMn6ulmxgBNrlJ35mZIa9QYgiEHQIz4Qjtzo5oCKYJLfSN7j6uNWbbIUvfVIA+Uia+6ZVbOmso8TmPRCUPscG1JD1mBrMgl03QxoUcMNhBIyVwxVoXQR8HRERc4vBGNzWDRKwlV9wzUi501IDs7IZSZxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791105036; c=relaxed/simple;
-	bh=z094i4HwymZDFDjVYu2c8pz9wi8tggyQHLFBSq9quEQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqO1gd2SNdv12FpzzLRVCKLq8+f3vJA1E9W/3iX1VcVw5kKOHZ+cQiiiw88w2oEvQcVWGnpnipkNjm5sPZF25GiraYnPzr9AqHoYmzqxqvAGSKoj15imqFpH3Rk3Fba8SF0EZJKLmqbHNOru0WC27NohhxFbOpqsGv69atSDSvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X0zoFdCH; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791105887; c=relaxed/simple;
+	bh=+J9cCeIO2vZjSIoP+Vt7+45zvy9SPpS6EtPIbmekiII=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mceqmRBOoxmkxmlXwINc7svAmLYduSqpakwRpAQTxXx6KoJ51eX6BXcwErSfsQBh1eWbt+mXiCVtjxmTMFKlE5AjCrTwwnLO2dnHYyIPBQQWaPCzReKQfcjvkmoF187maRxZKRlci/F1pj+NEbDwwlRogh+mPviJ1ysTNGClN2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=UaAwM2oO; arc=none smtp.client-ip=216.40.44.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X0zoFdCH"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-88b7d853b11so329271b3a.1
-        for <damon@lists.linux.dev>; Sun, 04 Oct 2026 02:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791105034; x=1791709834; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=hn1knN0Ne9g7tVudusR3tVlb1NSZVYCjpb+Hy/EfMyI=;
-        b=X0zoFdCHku9Ht2KFycC44o7gurPnNuPfyKKyqGhpBxn0UolyFpXQOQ+J8EAJGDp6O9
-         pDTPS1fUeotYtjh6A1YqPLG+gkNiQ2hh0yjmnUqlytTvzcv0gMmVQsW2QjyjYIKHdKWI
-         0ZxaOixRMxLLafcJr4IADCQUh+ubhltrFf52xelB3D3KzFjvL32NYK76m8Q+OnXEInCf
-         LnzKLZ2AngG+DdAuGM3ND5J2BcJLuRzqz/wGrALsIf2PlDF5q0iZ6RPelNwQzsRsGM8q
-         AtGVPS7dJ1WKx3yOnict+ipQ2PYwD12+7RAd/CYyKTP6Ynw6Xzn+xr2kjNW45em0b6yU
-         RgCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791105034; x=1791709834;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=hn1knN0Ne9g7tVudusR3tVlb1NSZVYCjpb+Hy/EfMyI=;
-        b=JnxI66U1fS2UIQtUtJlqbXjZj28fdNqyKtFB3oKhQowmlDXDDc8egO8qtEtFqwAHPQ
-         CH5rWu2zueFBFLq4dUcetTMcwSpA3TfBz4TwRun8OPmOPn4wCjU2QQzww8ScquVeYVP3
-         FDppYAvgNNBIfDOFcUPjekoM3/n/rs3JJye5N2YQaF6+FBSadGDro97DrxE4S+SgidGq
-         rugl0WwN9nFteqW3tKZ3nM0iovq39PzmENoVoct1LmIxWqepkE4/Ehav4mItk9P/wpdn
-         tiXzR5H4f60r71zKYdIY8jkeh8OyWOOMoK4Vzsln6lxc0yLkxV0joYpBPct9fD0tPDWo
-         9piQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzEXXg86Wr5cCBIWzWgtM6SjllRtbSv7KULTbjzsIbLlrKDpVmn//Pw7FcJZDjjMtnBSYYfsw==@lists.linux.dev
-X-Gm-Message-State: AFuF++mXa33X9H8XNR7yCaXEiZay3RVXhQoz0NPiaBMc7d9+pgFhsxsR
-	8XlotrOBpGsN1a72k+/n0xOpVfsDaKKaigTd/v+tqMkfxitBGAvguQ73
-X-Gm-Gg: AYBFou32vNd5uo+nOgJ3pRe1AwptxEcwiCQ0LpAQY6JNJN66O809E+U2cTZXvqC8eiZ
-	eu/UfCTl/4DZ66D4BmsfkmaYFhS0lS8cX5SBnl28QaFxtfSrsw44AKNOJFo273UeT/oReUaQ45t
-	4HJDUMLSVMx9xp5wsCgzgmgga90aKUs3eIdp3Xw6dLjHHJ5vfV03AMrFLKaBkf827qoSpXtGEuD
-	m0mDcpHErhduvy9i9Pix+y+BrmZ1OF+a2qzH7x3KWJhF4fywfyp0NklM+nVzuRrK3lNUmNmc0jf
-	kDXog7BJ/vCiONeXiRi8oqqSJuh3k6T5hvJBnVJUgXcJbxfr6xcEhBkPjIa/jb0YPrBXpsbVoh1
-	LWGWMIxn8cVfRsHhdk7LM2bt7TixDA5c/BHeYMqZIQG7lFZZH02AzmIlqMhu+1T1pssz3QBkQYF
-	iPsAgFxVh360jPRUlMh02LFyWYxGQ7NtW+cufmIHlLo9Tx0tFWQbiBkslR1AmAVuK8TH1g
-X-Received: by 2002:a05:6a00:14d0:b0:88b:af3d:2891 with SMTP id d2e1a72fcca58-88c628fca60mr3777134b3a.22.1791105033760;
-        Sun, 04 Oct 2026 02:10:33 -0700 (PDT)
-Received: from gmail.com ([185.220.238.43])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-88b0ca7c6b7sm2374693b3a.44.2026.10.04.02.10.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Oct 2026 02:10:32 -0700 (PDT)
-From: Kunwu Chan <kunwu.chan@gmail.com>
+	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="UaAwM2oO"
+Received: from omf05.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay08.hostedemail.com (Postfix) with ESMTP id 520041403DA;
+	Sun,  4 Oct 2026 09:16:40 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf05.hostedemail.com (Postfix) with ESMTPA id 952BC2000E;
+	Sun,  4 Oct 2026 09:16:35 +0000 (UTC)
+Date: Sun, 4 Oct 2026 05:16:32 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
 To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Cc: Kunwu Chan <kunwu.chan@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Gregory Price <gourry@gourry.net>,
-	David Rientjes <rientjes@google.com>,
-	Wei Xu <weixugc@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Bijan Tabatabai <bijan311@gmail.com>,
-	Ajay Joshi <ajayjoshi@micron.com>,
-	Honggyu Kim <honggyu.kim@sk.com>,
-	Yunjeong Mun <yunjeong.mun@sk.com>,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Lian Wang <lianux.mm@gmail.com>,
-	Kunwu Chan <kunwu.chan@linux.dev>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: Re: [RFC PATCH v3 2/9] mm/damon/core: replace the access report buffer with per-context rings
-Date: Sun,  4 Oct 2026 17:10:21 +0800
-Message-ID: <20261004091023.630362-1-kunwu.chan@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-2-0f00417b41bc@gmail.com>
-References: 
+Cc: Andrew Morton <akpm@linux-foundation.org>, SJ Park <sj@kernel.org>,
+ damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ linux-trace-kernel@vger.kernel.org, Masami Hiramatsu <mhiramat@kernel.org>,
+ Jonathan Corbet <corbet@lwn.net>, Bijan Tabatabai <bijan311@gmail.com>,
+ Ajay Joshi <ajayjoshi@micron.com>, Honggyu Kim <honggyu.kim@sk.com>,
+ Yunjeong Mun <yunjeong.mun@sk.com>, Akinobu Mita <akinobu.mita@gmail.com>,
+ Lian Wang <lianux.mm@gmail.com>, Kunwu Chan <kunwu.chan@linux.dev>
+Subject: Re: [PATCH] mm/damon: add damos_node_eligible_mem_bp tracepoint
+Message-ID: <20261004051632.71726836@fedora>
+In-Reply-To: <20261003202727.3673-1-ravis.opensrc@gmail.com>
+References: <20261003202727.3673-1-ravis.opensrc@gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 952BC2000E
+X-Stat-Signature: pdnhjatf6s6ij17ydsy69bt89bu8db99
+X-Rspamd-Server: rspamout07
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1++plVshDREp1/65N9g55w+NMnmWqeBIxk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=pcvJ+jCMAJmM0AnDK31466hqGai5ZVEENzn8YaAuejw=; b=UaAwM2oO6Vs0SeMXPz9kGc9q2fLKlKqmTw2H6rdSRsVD7Bo3aKpXTFvZwlh8zK+OBavXEnlpEi7YD/bU73MDV7p3sQWLPNmQGBupb04v0nderDm+bKHdQrtF9R0ql3HM0DJZerIz3v2no7DchRC2AEsGq0RF9wRsTHh9R7uqfVg=
+X-HE-Tag: 1791105395-87746
+X-HE-Meta: U2FsdGVkX1/sZ6OkXRl1d895imVbao+eFLq8ZGKTfRYFYqpekrSfk5wwPwGOUTd2Evu4vjL39RNPNr1q9lyU/bShTeEnB+bay1dplCDNECqxSPE0grBiXKG6VZWzuWaKoXV8/P7qmITFW4J+8W4GZlZ6oLk1M+ke2NLS1vWCusYRRVTXHVRGKXQIV3zxlFfP22BVG7l6crUFxIQtjMIEJFOW43D9ETpxzPqLu1stTZaZSZTgbNe24ZHoL6TasLei/52xnMp3KyhxuEDDyfXrvxEM0KPXCWRZyjjLkLcMKCke0GT95/Nvuu1kU50fq5uOSfUjuVm4exp3hZAh+V7TLSl2m7tUZL4H/fw6n1YdYVSUzkLx2DqIAw==
 
-On Sat, 03 Oct 2026 14:07:55 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+On Sat,  3 Oct 2026 13:27:27 -0700
+Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
-[...]
+> Add a tracepoint for DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP quota goal
+> evaluation.  The tracepoint fires once per quota-score computation when
+> the goal metric is DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP, exposing
+> context_idx, scheme_idx, nid, target_value, and current_value.
+> current_value is reported as the quota tuning sees it, after the goal's
+> complement setting is applied.
+> 
+> The DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP metric expresses node memory
+> occupancy as basis points of eligible bytes.  This information is not
+> exposed through any existing external interface (perf stat, /proc, or
+> sysfs), so the tracepoint is the only way for userspace to observe the
+> target and current eligible-memory basis point values at quota-scoring
+> time.
+> 
+> Link: https://lore.kernel.org/linux-mm/20260428030520.701-1-ravis.opensrc@gmail.com/
+> Signed-off-by: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+> ---
+>  include/trace/events/damon.h | 31 +++++++++++++++++++++++++++++++
+>  mm/damon/core.c              | 16 ++++++++++++++++
+>  2 files changed, 47 insertions(+)
+> 
+> diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
+> index 8851727ae162..2c7249cc7c88 100644
+> --- a/include/trace/events/damon.h
+> +++ b/include/trace/events/damon.h
+> @@ -74,6 +74,37 @@ TRACE_EVENT(damos_esz,
+>  			__entry->esz)
+>  );
 >  
-> @@ -2519,30 +2662,107 @@ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control)
->   * damon_report_access() - Report identified access events to DAMON.
->   * @report:	The reporting access information.
->   *
-> - * Report access events to DAMON.
-> + * Report access events to DAMON via a per-context per-CPU SPSC lockless ring
-> + * (ctx->perf_rings).  Producer is the local CPU (typically NMI from a
-> + * hardware-sampling backend); consumer is the kdamond drain in
-> + * kdamond_check_reported_accesses().
-> + *
-> + * The destination ring is selected by this_cpu_ptr(), i.e. by the CPU calling
-> + * this function, not by @report->cpu, which is sample metadata used by the
-> + * drain-side filter.  The two coincide for a sample delivered by an interrupt
-> + * on the CPU that produced it.
-> + *
-> + * A backend whose PMU writes a record stream into a memory buffer instead of
-> + * raising a per-sample interrupt, or one reading a device counter table, must
-> + * therefore decode CPU N's buffer on CPU N -- for example by queueing per-CPU
-> + * work with queue_work_on() -- rather than calling this function in a loop
-> + * from one thread.  A single-thread loop puts every report in that thread's
-> + * ring, which caps machine-wide capacity at DAMON_REPORT_RING_SIZE - 1
-> + * reports per drain regardless of the number of producing CPUs, and does not
-> + * satisfy the single-producer invariant if the thread can migrate.
-> + *
-> + * Context: any (NMI-safe).  An NMI nesting on top of a process-context
-> + * producer on the same CPU would otherwise stomp the same entries[head]
-> + * slot; the busy guard detects and drops in that case.
->   *
-> - * Context: May sleep.
-> + * If the ring is full, the sample is dropped and the per-CPU ring-full
-> + * counter incremented; a busy-guard drop increments the busy-drop counter.
->   *
-> - * NOTE: we may be able to implement this as a lockless queue, and allow any
-> - * context.  As the overhead is unknown, and region-based DAMON logics would
-> - * guarantee the reports would be not made that frequently, let's start with
-> - * this simple implementation.
-> + * Return: true if the report was queued, false if it was dropped.  A producer
-> + * holding a single report may ignore this.  A producer decoding a batch out
-> + * of a hardware buffer should stop on false and leave the remainder in that
-> + * buffer for the next round, since a report released from the buffer but not
-> + * queued here is not delivered.
->   */
-> -void damon_report_access(struct damon_access_report *report)
-> +bool damon_report_access(struct damon_access_report *report)
->  {
-> -	struct damon_access_report *dst;
-> +	/*
-> +	 * Only perf-event reports (probe_idx >= 1) have a ring to feed: the
-> +	 * global page_fault ring this dispatch also fed has been removed.
-> +	 * A probe_idx == DAMON_PROBE_IDX_NONE report has nowhere to go and is
-> +	 * dropped here rather than at each caller.
-> +	 */
-> +	struct damon_report_ring *ring;
-> +	cpumask_t *pending;
-> +	int __percpu *busy_pcpu;
-> +	unsigned int head, next;
-> +	int busy;
-> +	bool queued = false;
-> +	struct damon_ctx *pctx = report->ctx;
+> +/* Per-tick DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP goal evaluation. */
+> +TRACE_EVENT(damos_node_eligible_mem_bp,
 > +
-> +	if (report->probe_idx == DAMON_PROBE_IDX_NONE)
-> +		return false;
+> +	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
+> +		int nid,
+> +		unsigned long target_value, unsigned long current_value),
+> +
+> +	TP_ARGS(context_idx, scheme_idx, nid, target_value, current_value),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned int, context_idx)
+> +		__field(unsigned int, scheme_idx)
+> +		__field(int, nid)
+
+Can you move the nid after the two unsigned long values below. This
+creates a structure, and on 64bit machines, this adds a 4 byte padding
+in the middle of the ring buffer.
+
+> +		__field(unsigned long, target_value)
+> +		__field(unsigned long, current_value)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->context_idx = context_idx;
+> +		__entry->scheme_idx = scheme_idx;
+> +		__entry->nid = nid;
+> +		__entry->target_value = target_value;
+> +		__entry->current_value = current_value;
+> +	),
+> +
+> +	TP_printk("ctx_idx=%u scheme_idx=%u nid=%d target_value=%lu current_value=%lu",
+> +			__entry->context_idx, __entry->scheme_idx,
+> +			__entry->nid,
+> +			__entry->target_value, __entry->current_value)
+> +);
+> +
+>  TRACE_EVENT_CONDITION(damos_before_apply,
 >  
-> -	/* silently fail for races */
-> -	if (!mutex_trylock(&damon_access_reports_lock))
-> -		return;
-> -	dst = &damon_access_reports[damon_access_reports_len++];
-> -	/* just drop all existing reports in favor of simplicity. */
-> -	if (damon_access_reports_len == DAMON_ACCESS_REPORTS_CAP)
-> -		damon_access_reports_len = 0;
-> -	*dst = *report;
-> -	dst->report_jiffies = jiffies;
-> -	mutex_unlock(&damon_access_reports_lock);
-> +	/*
-> +	 * A perf report must carry its owning ctx (set by the overflow handler)
-> +	 * and that ctx must have an allocated per-ctx perf ring.  If either is
-> +	 * missing (e.g. an overflow racing teardown after the ring was freed, or
-> +	 * a report raised before the ring was allocated), drop the sample rather
-> +	 * than touch NULL/freed storage.
-> +	 */
-> +	if (!pctx || !pctx->perf_rings || !pctx->perf_ring_busy)
-> +		return false;
+>  	TP_PROTO(unsigned int context_idx, unsigned int scheme_idx,
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index b63e60ef8990..6ddd15dc4f55 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -3294,6 +3294,22 @@ static unsigned long damos_quota_score(struct damon_ctx *c, struct damos *s)
+>  		highest_score = max(highest_score,
+>  				mult_frac(goal->current_value, 10000,
+>  					goal->target_value));
 > +
-> +	/* Pin to a CPU so the SPSC invariant holds for preemptible callers. */
-> +	preempt_disable();
-> +	busy_pcpu = pctx->perf_ring_busy;
-> +	busy = this_cpu_inc_return(*busy_pcpu);
-> +	if (busy != 1) {
-> +		/* NMI nested on a process-context producer; drop. */
-> +		this_cpu_inc(damon_report_busy_drop_perf);
-> +		goto out;
-> +	}
+> +		if (goal->metric == DAMOS_QUOTA_NODE_ELIGIBLE_MEM_BP &&
+> +		    trace_damos_node_eligible_mem_bp_enabled()) {
+
+If you move the trace_damos_node_eligible_mem_bp_enabled() before the
+goal->metric check, you will save yourself a branch when tracing is
+off. As the trace_*_enabled() is a static branch (nop or jmp) it has no
+cmp branch, but the above will keep the goal->metric still exposed. By
+swapping the two compares, the goal->metric check will be hidder behind
+the 'nop' when tracing is disabled.
+
+-- Steve
+
+
+> +			unsigned int cidx = 0, sidx = 0;
+> +			struct damos *siter;
 > +
-> +	ring = this_cpu_ptr(pctx->perf_rings);
-> +	pending = &pctx->perf_pending;
-> +	head = ring->head;
-> +	next = (head + 1) & DAMON_REPORT_RING_MASK;
-> +
-> +	if (next == READ_ONCE(ring->tail)) {
-> +		this_cpu_inc(damon_report_ring_full_perf);
-> +		goto out;
-> +	}
-> +
+> +			damon_for_each_scheme(siter, c) {
+> +				if (siter == s)
+> +					break;
+> +				sidx++;
+> +			}
+> +			trace_damos_node_eligible_mem_bp(cidx, sidx,
+> +					goal->nid,
+> +					goal->target_value,
+> +					goal->current_value);
+> +		}
+>  	}
+>  
+>  	return highest_score;
+> 
+> base-commit: 763ad0211c7b587344f03bc4d1299810aeb736f4
 
-Hi Ravi,
- 
-I noticed that ring overflow drops reports and updates an
-internal counter.
-
-Since hardware sampling is used as an access observation source,
-could userspace get any indication that reports were lost during
-an aggregation window?
-
-Without such visibility, users cannot distinguish an aggregation
-result affected by report loss from one collected without loss.
-This may make it difficult to evaluate the reliability of the
-observed access information.
-
-Thanks,
-Kunwu
-
-[...]
-
-Sent using hkml (https://github.com/sjp38/hackermail)
