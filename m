@@ -1,105 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334F341A561
-	for <damon@lists.linux.dev>; Mon,  5 Oct 2026 08:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E748041B8CA
+	for <damon@lists.linux.dev>; Mon,  5 Oct 2026 08:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791190692; cv=none; b=FxHarfyDc63D9Y4SrP2VrrVuDFjNiNJ9r7AP1aiRnGtlZq7TCLsjP8aEgcpIjsIB0di5SzlFoHwLC4cf9ktSX0mOoGbYkhaGPzh/pgl1uyD8ew5A/MaVG/rH0PB+Ub/m8T4AHN8NcM4TgGPyz2ANjD2vYUKr4z+IS8w2K4/Z0Xs=
+	t=1791190723; cv=none; b=Sc65y7bwtB9W8QKT8QT/T+Ke/at9Nv3E3ygIqkAUeaUbZZqCnPBAJzvIxTTXkYw+U4jzwE0i2JNHJQFYo8dnd1bVd/9tbIMn2nQOYHd7has3u7eHGzSBV1M1zMl0UTYbl/yKMA3nSqOyVoEDa9f67vrVT/MUIODIhh1bHf3D8iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791190692; c=relaxed/simple;
-	bh=FScW0ajsS8D7AosuTqMXXj4h6Vo4HEyviBxnCGTn9kU=;
+	s=arc-20240116; t=1791190723; c=relaxed/simple;
+	bh=fNZvonwS26a+VwyUyKCjLk1yoJAe7c9/aFElKOVnHDA=;
 	h=From:Subject:To:Cc:In-Reply-To:References:Content-Type:Date:
-	 Message-Id; b=GrKCgMwjcXqNR/CPH8shUx/DUrauPAVGWN6i78zdkL+h8Z82wa69cNcaTZ3tFe67GdL1z73hpilU7g1NwyXIUJH0rtQ5vW2mm1hyBdJbN2LdF7alOUNAPK5GNGNyNhDqIHDWJuGzJH9YRXzgzL1zYqO9exYP7Hb7Ix9QUSENP5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PamO0hN+; arc=none smtp.client-ip=100.103.45.18
+	 Message-Id; b=Sa8qBwrA9FBaiwsXrNs6q+S/HyXQjpD0Wrq4oWR1uYG+bbOJbxKRQ+kaYrQRryo/g6KNxapeZ1dFk5T3a6jnHLhaiaxygOZ+PKmxS9JwUEqXYyjU2AUMtf2MvZMn27gU5L3xSsJ1FEfRS9ed+iuKxJq8OF7sQ73dPtvfb8sQw6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mV9cQBcO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PamO0hN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87BE1F000FF;
-	Mon,  5 Oct 2026 08:58:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mV9cQBcO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DAB1F000FF;
+	Mon,  5 Oct 2026 08:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791190690;
-	bh=ttMdcdU6lrbw7ocRExqqFszt9GoQBx3Z7980J6e2TKI=;
+	s=k20260515; t=1791190721;
+	bh=ctByThK1XmTZvHYQIJPD8kIZ/y0vVnDbBn0OjlCI5nc=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=PamO0hN+z6zbcXSU3hD8DQhHvOskQQh9dtxSiJwI1PQF5cAFXlWv/MsY8F2GSHhbK
-	 70FqUMwVw5OzTsOkxtYqzCmUI5gxFOHIxVZTzl7XUEVKeiyvlSrzPpkq/r6oqq+JSd
-	 fo809qjLS4LmYHfc0tKQ8DSxxBN3ChrHyClHyL65ywOVQvxDdwHHY6OCoHIL8VMq6c
-	 SVP2VA0YhzCNVJc3ABO26av/bIOhBc4dztzEa7kqGpo9GI6vOqRVc5B1+5FiHuIPkE
-	 97Q30tIeIpaQ++8vfUX9sADduE7wGkG7XiEabSQA6HUkOth4AmH7+mCI7+rtKru2AZ
-	 auepuKPWuOZNg==
+	b=mV9cQBcO3Lyx3NFq1sEtU09a7AswCPCNA2X1mkWbittPAlegXSJfE13OXiIHBShW0
+	 DFOeGTmE1DnNkV1/p6a9X/TKrCC+OOYuX+CInKxdIfxqY1ElkOKAQS5GQxe0HlAZ1K
+	 cgjsng48i/Vw/NbpbDAPKy/TsjC911ubRmMKNoaWGO7xXyYP0CWGnFisM8oM0mJCwF
+	 oCe8Qe7UNtkT2gXMoUe1X5l+v7W2kWccnReahb/tYUrpFc9Yt7aWYGZMltw07U+U0A
+	 GOFkzc3jKi65McAYM1lhx0q6TPYScciW69onOCs1B3cwK8QLCfJXMkTyqtywFsQcnU
+	 IYT2Lnl1vPgoA==
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v4 8/9] mm/damon/core: cap the region merge
- threshold per target
+Subject: Re: [RFC PATCH v4 3/9] mm/damon: add perf-event overflow handler
+ feeding the report ring
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Ravi Jonnalagadda" <ravis.opensrc@gmail.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261005-damon-perf-rfc-v3-send-2026-10-03-v4-8-b03452e137f3@gmail.com>
+In-Reply-To: <20261005-damon-perf-rfc-v3-send-2026-10-03-v4-3-b03452e137f3@gmail.com>
 References: <20261005-damon-perf-rfc-v3-send-2026-10-03-v4-0-b03452e137f3@gmail.com>
- <20261005-damon-perf-rfc-v3-send-2026-10-03-v4-8-b03452e137f3@gmail.com>
+ <20261005-damon-perf-rfc-v3-send-2026-10-03-v4-3-b03452e137f3@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 05 Oct 2026 08:58:10 +0000
-Message-Id: <20261005085810.A87BE1F000FF@smtp.kernel.org>
+Date: Mon, 05 Oct 2026 08:58:40 +0000
+Message-Id: <20261005085841.66DAB1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 
-Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+Thank you for your contribution! Sashiko AI review found 2 potential issue(=
 s) to consider:
-- [Medium] mm/damon: integer truncation in max_thres bounds calculation
+- [High] mm: damon-perf drops valid memory accesses at physical or virtual =
+page 0
+- [Medium] mm: damon-perf setup silently succeeds even if PMU event creatio=
+n fails on all CPUs
 --
 
-commit a10e8369d2fd5c44226b6327f0cddd983be70366
+commit 8f5b12d04ef4011765be3438258e3b2a5a8d8eb7
 Author: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 
-mm/damon/core: cap the region merge threshold per target
+mm/damon: add perf-event overflow handler feeding the report ring
 
-This commit modifies kdamond_merge_regions to cap the merge threshold for e=
-ach
-target individually during the regular merge pass. It also adjusts the
-maximum threshold for probe-weighted contexts to ensure escalation passes
-continue to run even when weighted hits exceed the normal maximum threshold.
+This patch adds a PMU-agnostic perf-event overflow handler for DAMON. It
+routes physical and virtual address access samples from a perf-event into
+a per-context report ring.
 
+> diff --git a/mm/damon/perf_source.c b/mm/damon/perf_source.c
+> new file mode 100644
+> index 0000000000000..65bbfe850e708
+> --- /dev/null
+> +++ b/mm/damon/perf_source.c
 [ ... ]
+> +static void damon_perf_overflow(struct perf_event *perf_event,
+> +				struct perf_sample_data *data,
+> +				struct pt_regs *regs)
+> +{
+[ ... ]
+> +	if (data->sample_flags & PERF_SAMPLE_PHYS_ADDR)
+> +		report.paddr =3D data->phys_addr & PAGE_MASK;
+> +	if (data->sample_flags & PERF_SAMPLE_ADDR)
+> +		report.vaddr =3D data->addr & PAGE_MASK;
+> +
+> +	if (!report.paddr && !report.vaddr)
+> +		return;
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index e3c29d7cff23d..7c0df07f0a908 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -4167,12 +4167,40 @@ static noinline_for_stack void kdamond_merge_regi=
-ons(struct damon_ctx *c,
->  	unsigned int nr_regions;
->  	unsigned int max_thres;
->  	bool count_age =3D true;
-> +	bool use_probe_hits =3D damon_has_probe_weights(c);
-> =20
->  	max_thres =3D damon_nr_samples_per_aggr(&c->attrs);
-> +	/* weighted scores can exceed max_thres; threshold is max score / 10 */
-> +	if (use_probe_hits)
-> +		max_thres =3D max(threshold * 10, max_thres);
+[Severity: High]
+Does this check mistakenly drop legitimate accesses to physical or virtual
+page 0? If only PERF_SAMPLE_PHYS_ADDR is requested, accesses to the first
+physical page will have report.paddr =3D=3D 0 and report.vaddr =3D=3D 0, ca=
+using
+this logic to silently discard valid memory accesses.
+
+> +
+> +	if (data->sample_flags & PERF_SAMPLE_DATA_SRC)
+[ ... ]
+> +static int damon_perf_cpu_online(unsigned int cpu, struct hlist_node *no=
+de)
+> +{
+[ ... ]
+> +	perf_event =3D perf_event_create_kernel_counter(&attr, cpu, NULL,
+> +						      damon_perf_overflow,
+> +						      event);
+> +	if (IS_ERR(perf_event)) {
+> +		pr_warn_ratelimited("damon-perf: cpu %u event create failed: %ld\n",
+> +				    cpu, PTR_ERR(perf_event));
+> +		return 0;
+> +	}
+> +	per_cpu(*perf->event, cpu) =3D perf_event;
+> +
+> +	perf_event_enable(perf_event);
+> +	return 0;
+> +}
+[ ... ]
+> +int damon_perf_probe_setup(struct damon_ctx *ctx,
+> +			   struct damon_probe *probe,
+> +			   struct damon_perf_probe_event *event)
+> +{
+[ ... ]
+> +	err =3D cpuhp_state_add_instance(damon_perf_cpuhp_state,
+> +				       &event->hlist_node);
+> +	if (err)
+> +		goto free_event;
+> +
+> +	return 0;
 
 [Severity: Medium]
-When the true maximum merge score is not a multiple of 10, does this
-calculation cause max_nr_regions to be violated?
+Could this setup silently succeed even if PMU event creation fails on all
+CPUs?
 
-Because kdamond_fn() calculates the initial threshold by dividing
-max_merge_score by 10, the remainder is discarded:
+In damon_perf_cpu_online(), when perf_event_create_kernel_counter() returns
+an error, it rightly returns 0 to avoid breaking CPU hotplug. However,
+damon_perf_probe_setup() relies on the return value of
+cpuhp_state_add_instance().
 
-mm/damon/core.c:kdamond_fn() {
-    ...
-    kdamond_merge_regions(ctx, max_merge_score / 10, sz_limit);
-    ...
-}
+If a user provides an invalid PMU configuration, event creation will fail
+everywhere, but the setup will succeed without error, leaving DAMON running
+without any armed counters. Should there be a check to verify that at least
+one counter was successfully created?
 
-When kdamond_merge_regions() attempts to restore the max_thres ceiling
-via threshold * 10, it loses the remainder (e.g., a max score of 29
-yields threshold 2, restoring a ceiling of 20 instead of 29).
-
-Will the escalation loop then terminate prematurely when it reaches 20,
-leaving regions with score differences up to 29 unmerged and the total
-region count above the configured limit?
+> +
+> +free_event:
+> +	free_percpu(perf->event);
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261005-damon-perf=
--rfc-v3-send-2026-10-03-v4-0-b03452e137f3@gmail.com?part=3D8
+-rfc-v3-send-2026-10-03-v4-0-b03452e137f3@gmail.com?part=3D3
