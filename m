@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC03737E5C7;
-	Tue,  6 Oct 2026 06:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00FB3ACA51;
+	Tue,  6 Oct 2026 06:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791269536; cv=none; b=ArFvQWQ+Wz4jhe7hMxzAzq3IbCwBGD8IVBGPQXGgYbllAXPb4e469jaCHwbUu86XxgXTJJPwMHPETqxnXlI+7K4G2MX7k6UzsOw/LarwLkl4sL5LA9bViBbIM6u6Ym2ajyUg4wMAL3Ygu0jg75vUaOg2tGARRKZFBngeYJtBjbk=
+	t=1791269538; cv=none; b=f8bevXoSOnsFPLclg9sqSlTL0D5rFAq4VFvnBe5fwB+I/CeFCP4X6Os4YmiqODL8Y5Bt5viSVFmFxEaQYeRoizQd2RUeq+THrMZprRUeUDpXsrgvVb/V1Mc2dy57pVd0mD1kpIv/PUXum9k5/veKkA/SSbdLkyUq5Vh/JOpypQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791269536; c=relaxed/simple;
-	bh=OeRalz4QFLfWg0KyCW33C6N43s4BJBow0N9XDt6oRVM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cxkaopU1oh4XUhcovjMd0W69H7nMXTIy41IiT3V39FE0asdwgUzl77DHpx1iJlo0VVJvR2fFqUQEJXaxdGun2KBoqiGeXQASSDuldvRP7vyh9YAyBfbFIl38p0CSomKr07xfuibKPSuUt9Q4Ev8pi7UPghW5nVrIsOF1BIilIqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QEPBvpoO; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791269538; c=relaxed/simple;
+	bh=rB++sMfG8AdvLUHWmvycUpdDsFbOkVhtyfCId+rg60o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fM3SfTuBF47hb+q960M8giDbRS4PHRRwXrIg9tdJjzcSKsJqA5EtujC87+cFtTZYQJPdbPqPUk8e4bnrfVfsyyffm6WrX0lBQLBBVEnHP3GvNGhUXsypih23BKyTD0WCNQ465scA/7DsWxkr4l4iANSfOodgWUoLQOz9UM+7pdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g0hXNJjQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QEPBvpoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEF41F000FF;
-	Tue,  6 Oct 2026 06:52:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g0hXNJjQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94FE1F00893;
+	Tue,  6 Oct 2026 06:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791269535;
-	bh=PSfSoVBXGadNhagMAHG18RgSe3v5QSKmmn3n3+vo4hQ=;
-	h=From:To:Cc:Subject:Date;
-	b=QEPBvpoO5O23SJSlCo7NCFJ1p2qFiGwOekB6/LxdVAI+Te7qVga4p9nzOwdL1cCqS
-	 hKzHJKtMfbFvob8z3zLFnazHpYpP6gps5GpuT/YU8OTqHPP9YvvM5kDJW5pdyFvXSV
-	 6ppbILs25XjelKJt3I9ZXhQZ85wHn8Y2zDFxupX0WTrGbujX1m0AWIW9tZoqSQj7EG
-	 BmD+jYBHW9yixEO1Po+8aSw0G0hI8jbKW+M3BosWkY3t8z1Yw7aVatNFBk6aey8X3/
-	 BOkYzKqFedEnwp8/H3ldZ6NwYRFeWUDwqxLpm6FUhvWv9oH9yQV8qSIsdckP3sQ7RR
-	 Et39CxfPESlQA==
+	s=k20260515; t=1791269537;
+	bh=QPAjnO4sadYj3FVzedyJO8iaaP+d0ImiNneHLyndDTg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=g0hXNJjQsMh8I0I/vHbkxH6f0IQX1qlcvIqS5RV/VHxlfxmv6XedtSQhZ1HVxOsnF
+	 puTIv8bE71Z77JRjEUgwZ4beFvyQu8Dt2q8HeWXiJZH2XVAx5snzwkPehZLJgwdVH3
+	 GoSdnLE1/yfi3hoGTfwNTbQt3YF4/+KNloKBs22HiKymsD9hLlbKASvgV1VUIyhZJg
+	 0zb0Hd1Go5GHMxoQA0fJLH2uy3mvvrtr5T/b3Pxev6LznQyfz2GZB4WqQ3fc9lH3Gk
+	 rLVtM2nWhdRlFr+qIF7FHHQi0Ap4afM7nJectyWb5qXlPAf01v3wRWK/X7EiTnl0s8
+	 qCmgk3VQcG6ZA==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Gregory Price <gourry@gourry.net>,
+Cc: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>,
+	SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 0/3] mm/damon: fix a minor bug, clean code, and add a test
-Date: Mon,  5 Oct 2026 23:52:04 -0700
-Message-ID: <20261006065209.41507-1-sj@kernel.org>
+Subject: [PATCH 1/3] mm/damon/ops-common: fix age_in_sec overflow on 32-bit
+Date: Mon,  5 Oct 2026 23:52:05 -0700
+Message-ID: <20261006065209.41507-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261006065209.41507-1-sj@kernel.org>
+References: <20261006065209.41507-1-sj@kernel.org>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -48,33 +47,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Patch 1 from Jaeyeon Lee fixes a minor overflow issue in DAMOS.  Patch 2
-from Gregory Price (Meta) cleans up the code for handling of hugetlb
-pages.  Patch 3 from Liew Rui Yan adds a kunit test for a recently fixed
-bug.
+From: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>
 
-Note to Andrew.  This is a batched reposting of DAMON patches that I
-reviewed and asking for merge into mm.git.  Since there are only two
-weeks before the expected opening of the next merge window, this will be
-the last mm.git merge requesting unurgent DAMON reposting until the next
-rc1.
+damon_hot_score() calculates the age of a region by multiplying r->age
+and the aggregation interval.  On 32-bit architectures, unsigned long
+is 32 bits, so the multiplication overflows once the age exceeds about
+4295 seconds.  Then old regions are scored as if they were young.
 
-Gregory Price (1):
-  mm/damon: use damon_get_monitor_folio() for hugetlb entries
+Fix it by doing the calculation in 64-bit arithmetic using div_u64().
+Also make age_in_sec u64, so the result is not truncated back to 32
+bits.
 
-Jaeyeon Lee (1):
-  mm/damon/ops-common: fix age_in_sec overflow on 32-bit
+The issue was discovered [1] by Sashiko.
 
-Liew Rui Yan (1):
-  mm/damon/tests/core-kunit: add test for unconditionally skipping the
-    last region
+[1] https://lore.kernel.org/20260623011652.1354-1-sj@kernel.org
 
- mm/damon/ops-common.c       | 11 ++++++----
- mm/damon/tests/core-kunit.h | 42 +++++++++++++++++++++++++++++++++++++
- mm/damon/vaddr.c            | 10 +++++----
- 3 files changed, 55 insertions(+), 8 deletions(-)
+Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: LLM
+Signed-off-by: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from v1
+- v1: https://lore.kernel.org/20260930115812.138864-1-jaeyeon.lee.dev@gmail.com
+- Collect R-b: from SJ.
+- Rebase to the latest mm-new.
 
+ mm/damon/ops-common.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-base-commit: 1b1d9187f46db1efb64533dab8b8d5f4f2af0eb5
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 77366f42b3e5..7a7429359dc8 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -164,7 +164,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 			struct damos *s)
+ {
+ 	int freq_subscore;
+-	unsigned int age_in_sec;
++	u64 age_in_sec;
+ 	int age_in_log, age_subscore;
+ 	unsigned int freq_weight = s->quota.weight_nr_accesses;
+ 	unsigned int age_weight = s->quota.weight_age;
+@@ -174,7 +174,8 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 			DAMON_MAX_SUBSCORE,
+ 			damon_nr_samples_per_aggr(&c->attrs));
+ 
+-	age_in_sec = (unsigned long)r->age * c->attrs.aggr_interval / 1000000;
++	age_in_sec = div_u64((u64)r->age * c->attrs.aggr_interval,
++			     USEC_PER_SEC);
+ 	if (age_in_sec)
+ 		age_in_log = min_t(int, ilog2(age_in_sec) + 1,
+ 				DAMON_MAX_AGE_IN_LOG);
 -- 
 2.47.3
