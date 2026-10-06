@@ -1,62 +1,64 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308712E737E
-	for <damon@lists.linux.dev>; Tue,  6 Oct 2026 06:17:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5705539E177
+	for <damon@lists.linux.dev>; Tue,  6 Oct 2026 06:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791267426; cv=none; b=Er5UuIGPB5XltH+f/KmQSRejOtptrLS+jss1zXyYZJub9+L72K9Vp85lgqdT4DZNf+NSfMHlTpYa8HXTOAwxl8mp+RlPDEK/+XgDrRSET5wKVpM2tV/Hqc1M0EfjWfNI9vf0HIl9wlFLQB2B9KIh4JXEWl1A0Ytq10s8AbnoJb0=
+	t=1791267430; cv=none; b=Us5x9/9FYxnuVvxlQ+J6+f9oGdhxvJaRgiztnFSKUvVdV/VVI4un6NuZPCz6fupkNqhQlpJKwu00GBH/YEJMsZ3xT2dX8xP+DnrxcXkkYTzWEdZGWoWcrZhQX26LunQoZv+edraMc07ezYjNAw/0HF9um+BD6nDqQbgvld7TENw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791267426; c=relaxed/simple;
-	bh=kxSqByyeQG8x8Q3nvxMnhN6h3epnkIv8HdewAakEGSg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=sMUicdYw+kXmcEncTLsPFA6YMDI+vl/Di+NfIk+Cw2EsxJhK6GiJnG9FT3pwVuUHH8qEHUr/dqenqBgVsWdmvz7r3AOKfDVaKZMOB4IEVDYSyBq2zVzp0rLWdvdCWTupQumO+SERA7fkBvLVVHUxQU7RIsqF7TUAXT59++6T5CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pKh8FgAJ; arc=none smtp.client-ip=209.85.215.178
+	s=arc-20240116; t=1791267430; c=relaxed/simple;
+	bh=c52s+1rtQJ0Q70cxAwYJIZomn2o6AOpxotKtFgeYSpI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Ld+qYpWB0nlUZjR8WiylI4k1QBImxCOAEGIb7fGERoYHW8HHfgZBchq7zNgVAyEzsHLR+QuvITakLBCd/Rwk+jzmPdahheXRTIiD2fnbRzzPOHamEIkJ9Jjfg1ifUiFoqu3JoHVFkNQr2GUUPIVzod7FXws7nZgKi6EuT57YAuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eVMn0c14; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pKh8FgAJ"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-cc1d57602e8so92852a12.3
-        for <damon@lists.linux.dev>; Mon, 05 Oct 2026 23:17:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eVMn0c14"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-3a7d283e017so1451354a91.3
+        for <damon@lists.linux.dev>; Mon, 05 Oct 2026 23:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791267424; x=1791872224; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3jlBcrEL7AxGWXF4qOYzXsJylUauI2sPDbkv+5OBUgw=;
-        b=pKh8FgAJny4LcLHm0q4okGYea5RzRlgrJf/llRrxUdp7Eo6J+QxNdHEXIcEVEhhgAk
-         tFE2UI8VXwKh3iCrxihnCH/aJGBM9O4sNaCGbESJwvydiFY+oh39po7XuzbdGRAHoVcQ
-         m+GfOpW9dcbIZaFqlHJ97XLivE540BCyOSZVbXFp+0dZBYzg94MQb90nc4Z5fB5x8QWB
-         kzh3CfRuJJQM2IoZIb8gE6jSiOEvqPLrCktUn5C8wMGQwWPi26iFlUrqduCCjT+qSM+Y
-         vkXF/2kYqpD6+K4mGZfonNzdDV/Rg3V2qsoAYl2mi4gSKkOvvJRp2wEDwfFvyNILNJ3q
-         T+Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791267424; x=1791872224;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1791267427; x=1791872227; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=3jlBcrEL7AxGWXF4qOYzXsJylUauI2sPDbkv+5OBUgw=;
-        b=ift5+KI4NREopyPn+Z16Ldgg8Xryy5YF11O5PUWxvjX+L5tm7NrbPuiV1v4pgRuSMH
-         tCDkX5ZuejCYjkLZbRcPpF3uw1ZMv2Zi8CspTIQZ6UyHrDw3NjRyFogTWsoBE2gmrZ4e
-         vTrIZpfejAkoCHlquZfbd49fKalQJ2hw3ZKBRzz3NOarnlf0+7cX6nycOxR1o5LO5LHS
-         Xz9fLMlULrR+rksEqxuf3lBQaQeRLO8kMM8enbPnH87q5WBk1oWIPS1DID/NaUVxJGwv
-         Z6iBwNSJ3dRnXd34heyfdg9UsS8JdJAIhb2ThitYoWe2HAaUXFznlOh2EBA5o7rFUoNk
-         tR/w==
-X-Gm-Message-State: AFq9FYL8R/ASj3cScO4f0mRGpzwxX+SgytkAIS7qdihX+xPWjGeg0xPn
-	gINkxuFXyvLHX1sV3uNNttKfLlArMVMeGevsbC2Ic+2yYyRPeKfqifLW
-X-Gm-Gg: AYBFou31nLQzK+rsSkHJLeGXit0oDqXnrI1T1Fj9PTt5td9JehJlzRDJ7Wu2EanLGtF
-	ExIh/9khCRBh+hfpmxtCiy3BxTk8XjU/aU1PmqgAUhsPBOiYSB5hZKIhMqkG30Wm6dGMTwoQwMS
-	L7XpU/ERvgUIztXuh47bAlRDqnahONcds7Ep+D9Xy5pLLC7tB5GKPVLL9m8TtPuFpW5qH5oXdQ0
-	jBqY2SzqjHEWvFkzdytf1WFtPNeOtfGQ+oLtFl4Dyq87r9taKwRFr3XJkLISchliQO+n3i6PumG
-	zbFmpMj+IZjB5nsXzaxIswgmK/fH25T9obl1qQFTEPM9JYcdE7jn9l+7gEk3SRpbydbuS+SEx/c
-	4wyKI5DvqPDsNA1MURbxo55I6hI/xvRB0XgYzW7xw8bEYfDfIIKCTN1Qv2SQRRhK9IyUKlK80Z7
-	GncZAPxjrw/2qS0SkTQoG7GTJCwY54Arl9e4dV2g60JFX3AVlX9uS+qiUxqviZp12gEht7eEzcN
-	4A5yZQ4C+YUyop1ph5AfsoAUNFSiX/oTxQVqsDyHLtQQroixZSRCT+S4Amkgu0T1z3lKSw1YMlM
-	A6iy330v843aFjcJ
-X-Received: by 2002:a17:90b:4a47:b0:3a0:9640:8043 with SMTP id 98e67ed59e1d1-3a873517b39mr304141a91.15.1791267424571;
-        Mon, 05 Oct 2026 23:17:04 -0700 (PDT)
+        bh=kXj+ppi34PaHFxHHINamngQe5IHrKp/NnyfjPYvY7jg=;
+        b=eVMn0c14V/2uJ18FbSzKjinRyPs969zN4DlnNchH+rOL5QSwzEVosNdNiqI0MN/cEg
+         LcSlysQyEiHfV3J/AbixaOCCcn6ZXbZejeN+ELSVuEiazXCL5j0t4EI+KQi4Cf55yA40
+         B4lqHR0sf3ny7JV7VHSDLn24d1DGkbkfxn8t4r2vhkQATVQlDqVJYjDedBK4WoLpIddj
+         eg6/XuvSrm1cyL91M5KFqeNmbusa1C4uhwoEkSrI+yOvzMB1q/sQNGLtXZa23gvTS186
+         qvzY8ldP7HDS1rVZWzw3B+2080Zwm50Zd07hoAVCGV+l+XrTAwyy7tEVi02N7Mweel3q
+         41pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791267427; x=1791872227;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=kXj+ppi34PaHFxHHINamngQe5IHrKp/NnyfjPYvY7jg=;
+        b=QsC6rOVEha1yQpxAk6vdgFye1bPhQJ2/Ff7hfx0ArPldabKRCUWXqZ8XsfDQaXbh6d
+         ipLmBsPbx7F5xVZC6bDNq0bfelbBFRhFMewP9HLcoIkLQWfAVmB2EGlDXadJI8HsFqPS
+         zVR+INywSiGePEoE/aKZJ4fxOMaF9CYanxTyD0OBreT2JnjE/fxCKTSPo3hAxMje+2n9
+         Pw+nLqIcje84U4poNOuzOY3RN7zRuj7rpEhpLJ7iaWcd63WeuWuY/F0w2Mey+9i2gsci
+         iRh1yzM9TUWCRC4n33xwHWC0VEh4dIgT5wFyMeqlqDj1PT11mKw42HwUFEG4U4f0IkZl
+         dU/w==
+X-Gm-Message-State: AFq9FYKoxJ1dSjm/wK6BbK8eivokdIQSmfdEHfp0GcxDU61fO3wBhFjQ
+	rSYOHWajMCO3enS87F7F1pfPAA4h7e38Yulwq+yHc0bA7f2nhzbQH2xC
+X-Gm-Gg: AYBFou2vmGnvUrJw/blrPLG/FybK7Lj3/bXUJ6F7CCEiJ1KEh1AEhT8J77ioiotmJqp
+	Sie/G/1RujPMNEplYtClKbu1Qw/gPyIG82cNFhDwgNiMgiLOYdcW9qtSVoCoxMhUlNbMquFHn7R
+	Poxj0uoszaPJNSpsxM3K433CLo/McfPfL2KhfNcc+ou0ZfbjF3RvAQ9Jydsu0cTTTUn0V1dkj8F
+	NgbSk2T57KTvryrK8Pfhgb8evGKnZJRgpJfEfkV490Hpl7qCogiebYMQDBTh0vlGn6lJatseYDG
+	GrO0LdTEh2K3zYxUWJEEE4mg7HBSN6oTt19PmGWps9fauPMOf5E8xC4LkwnnNsSD5tq0O135a9U
+	u5WV1wU+DNWyjq6xz+xLvoa2aMDB6Z1N1zvEm1YceYQAF1NHFX9ucyeJJbnTW1QnYOhT1MGxYu6
+	QvZcxNepeFAWxu7iMf93/bLafGaD8/d4EPPZSGnRL6la+yju8cCb6Aw+CsbHUeMk4PyDLGW0sbc
+	D0TAHLg27jJxbb0uoSgcCvtih0yLJJdFlNreTSDxaN8RezogVMJUXuXdxVxLKMQ6omGiCZyP8Xc
+	FGKIvCcg5JFuKTpY
+X-Received: by 2002:a17:90b:3912:b0:3a4:bc68:e867 with SMTP id 98e67ed59e1d1-3a87268878cmr360148a91.7.1791267427477;
+        Mon, 05 Oct 2026 23:17:07 -0700 (PDT)
 Received: from AHUANG12-3ZHH9X.lenovo.com (61-221-208-111.hinet-ip.hinet.net. [61.221.208.111])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a8533aba95sm3662789a91.2.2026.10.05.23.17.01
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a8533aba95sm3662789a91.2.2026.10.05.23.17.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2026 23:17:03 -0700 (PDT)
+        Mon, 05 Oct 2026 23:17:07 -0700 (PDT)
 From: "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>
 To: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
@@ -69,10 +71,12 @@ Cc: damon@lists.linux.dev,
 	Randy Dunlap <rdunlap@infradead.org>,
 	ahuang12@lenovo.com,
 	"Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>
-Subject: [PATCH 0/3] Docs/admin-guide/mm/damon: Minor fixes
-Date: Tue,  6 Oct 2026 14:15:46 +0800
-Message-Id: <20261006061549.627-1-adrianhuang0701@gmail.com>
+Subject: [PATCH 1/3] Docs/admin-guide/mm/damon: Fix various typos
+Date: Tue,  6 Oct 2026 14:15:47 +0800
+Message-Id: <20261006061549.627-2-adrianhuang0701@gmail.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20261006061549.627-1-adrianhuang0701@gmail.com>
+References: <20261006061549.627-1-adrianhuang0701@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -81,22 +85,96 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This small patch series fixes various typos, copy-paste mistakes, and an
-incorrect command syntax in the DAMON documentation files.
+Fix several spelling mistakes found while reading the DAMON
+documentation:
+  * trusworthy -> trustworthy
+  * DAMON_RCLAIM -> DAMON_RECLAIM
+  * charget -> charge
+  * hetmap -> heatmap
+  * colun -> column
+  * evelenth -> eleventh
+  * idlee -> idle
 
-Adrian Huang (Lenovo) (3):
-  Docs/admin-guide/mm/damon: Fix various typos
-  Docs/admin-guide/mm/damon/lru_sort: Fix copy-paste mistakes
-  Docs/admin-guide/mm/damon/usage: Fix incorrect option syntax in perf
-    example
-
- Documentation/admin-guide/mm/damon/lru_sort.rst | 6 +++---
+Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
+---
+ Documentation/admin-guide/mm/damon/lru_sort.rst | 2 +-
  Documentation/admin-guide/mm/damon/reclaim.rst  | 4 ++--
  Documentation/admin-guide/mm/damon/start.rst    | 6 +++---
  Documentation/admin-guide/mm/damon/stat.rst     | 2 +-
- Documentation/admin-guide/mm/damon/usage.rst    | 2 +-
- 5 files changed, 10 insertions(+), 10 deletions(-)
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
+index b93ca9b0853d..c3b688385681 100644
+--- a/Documentation/admin-guide/mm/damon/lru_sort.rst
++++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
+@@ -7,7 +7,7 @@ DAMON-based LRU-lists Sorting
+ DAMON-based LRU-lists Sorting (DAMON_LRU_SORT) is a static kernel module that
+ aimed to be used for proactive and lightweight data access pattern based
+ (de)prioritization of pages on their LRU-lists for making LRU-lists a more
+-trusworthy data access pattern source.
++trustworthy data access pattern source.
+ 
+ Where Proactive LRU-lists Sorting is Required?
+ ==============================================
+diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+index ec7e3e32b4ac..e4e2ffa52e26 100644
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -55,7 +55,7 @@ enabled
+ 
+ Enable or disable DAMON_RECLAIM.
+ 
+-You can enable DAMON_RCLAIM by setting the value of this parameter as ``Y``.
++You can enable DAMON_RECLAIM by setting the value of this parameter as ``Y``.
+ Setting it as ``N`` disables DAMON_RECLAIM.  Note that DAMON_RECLAIM could do
+ no real monitoring and reclamation due to the watermarks-based activation
+ condition.  Refer to below descriptions for the watermarks parameter for this.
+@@ -125,7 +125,7 @@ quota_reset_interval_ms
+ 
+ The time/size quota charge reset interval in milliseconds.
+ 
+-The charget reset interval for the quota of time (quota_ms) and size
++The charge reset interval for the quota of time (quota_ms) and size
+ (quota_sz).  That is, DAMON_RECLAIM does not try reclamation for more than
+ quota_ms milliseconds or quota_sz bytes within quota_reset_interval_ms
+ milliseconds.
+diff --git a/Documentation/admin-guide/mm/damon/start.rst b/Documentation/admin-guide/mm/damon/start.rst
+index ec8c34b2d32f..d98b0eb8e771 100644
+--- a/Documentation/admin-guide/mm/damon/start.rst
++++ b/Documentation/admin-guide/mm/damon/start.rst
+@@ -69,16 +69,16 @@ monitored access pattern of the process from DAMON and shows the pattern in a
+ human readable format.
+ 
+ The first line of the output shows the relative access temperature (hotness) of
+-the regions in a single row hetmap format.  Each column on the heatmap
++the regions in a single row heatmap format.  Each column on the heatmap
+ represents regions of same size on the monitored virtual address space.  The
+-position of the colun on the row and the number on the column represents the
++position of the column on the row and the number on the column represents the
+ relative location and access temperature of the region.  ``[...]`` means
+ unmapped huge regions on the virtual address spaces.  The second line shows
+ additional information for better understanding the heatmap.
+ 
+ Each line of the output from the third line shows which virtual address range
+ (``addr XX size XX``) of the process is how frequently (``access XX %``)
+-accessed for how long time (``age XX``).  For example, the evelenth region of
++accessed for how long time (``age XX``).  For example, the eleventh region of
+ ~9.5 MiB size is being most frequently accessed for last 3.7 seconds.  Finally,
+ the fourth command stops DAMON.
+ 
+diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/admin-guide/mm/damon/stat.rst
+index 46c5dd96aa2e..4a9db755a526 100644
+--- a/Documentation/admin-guide/mm/damon/stat.rst
++++ b/Documentation/admin-guide/mm/damon/stat.rst
+@@ -81,7 +81,7 @@ Per-byte idle time (milliseconds) percentiles of the system.
+ DAMON_STAT calculates how long each byte of the memory was not accessed until
+ now (idle time), based on the current DAMON results snapshot.  For regions
+ having access frequency (nr_accesses) larger than zero, how long the current
+-access frequency level was kept multiplied by ``-1`` becomes the idlee time of
++access frequency level was kept multiplied by ``-1`` becomes the idle time of
+ every byte of the region.  If a region has zero access frequency (nr_accesses),
+ how long the region was keeping the zero access frequency (age) becomes the
+ idle time of every byte of the region.  Then, DAMON_STAT exposes the
 -- 
 2.43.0
 
