@@ -1,150 +1,145 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C5C534441;
-	Wed, 14 Oct 2026 13:52:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E31384232
+	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 05:21:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791985971; cv=none; b=HaZkrkfVuDxXi7UzAZyHyKL5E3/jXc3BOoXtACc1LbkdQlgC2oe59Srox3WMFmbvDfa3ObATf+eyWLYZfp5J1YCpk4dbDab6YV7beuy4iDEBQJoBKhfhOQIr8yTN31If3NHXajubXfWA3Hjs9GCiF7DPKOT+fYgPVDDf12xPDhU=
+	t=1792041692; cv=none; b=Tu8xFAIcGAgYboB3WHd5UTPF2vYz2RfjL+OFYg1RYuIGuGi6qcWgUBG0pxJG77bsBwrP+nXGEE1ISwhalXlp57OUEXXCpli2ZgQ3xcn4W+egHp4zJF0S9v6PuhjDIA498HDUt7eXfe6PDWVPEUu4jv+bVDI72qo9jM62vINYq/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791985971; c=relaxed/simple;
-	bh=fVcfycRlOEElJyQh0w5ed2ebgn9Frj4EmHHrj7/wYFU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GeaUEJkULg4QdofnC9cYpHSVlnPE2efCzB6Zw0nFsKqxxvBWpiVlYc69yotJTQEXqBMwAIY5bL7w2IlCz0Mnl1GxbrsZROPhndF6j24P6G5T6qBI8wWEBCz4xFSEzHGBE4L8e6px8XxZyGV/itxa4MRBiKN8lH91M6rfglnaldI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WYLOKPLa; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792041692; c=relaxed/simple;
+	bh=5syrNj/JLgLqlg7IRGXpYcJyk/HNi/mWCL7GsaEOynw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rAXCX5wRwBZkOAYyovJiNVE+tmQHTbP9O2H7gQ1FV14+KKwui9Ut7Ix5pIxnC88Io6f2niefxPu0LrQ6AHD8bJ5ApSHW/ySqlQugLA3AJK3fd/uQwJzzvt5ho46YGielEgLr7DgXYzn9pnVGyNV3HKP+9JHTNXyVmt4IsF2Adow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=s-joshi.in; spf=pass smtp.mailfrom=s-joshi.in; dkim=pass (2048-bit key) header.d=s-joshi.in header.i=@s-joshi.in header.b=xCFK7NVg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XV0h6kJy; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=s-joshi.in
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=s-joshi.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WYLOKPLa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1C41F00A2F;
-	Wed, 14 Oct 2026 13:52:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791985967;
-	bh=fG9/eyKPy40SDyhi1NG0w7HlNhFj+AsuLqMKvUUaVp0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WYLOKPLa/MdYb05p7MIzhm8DPN1Fgwnkw40e7Vcv0XpzcecOvuBfoJmJJQaMhJfg+
-	 IluyIEbgm0hyTOWoLGLroYLWssx0UA+mqbOiopN0itMoaqt7pS7O/fG29bxG2exo+N
-	 dgfeKQ7BhsBwwKtkwCcaUtdYNdcKED4O387x1vtSk2ctGUWbio1z6qtAjQqFvBnG+M
-	 miDmC6C4EDRXpdP6D8ChQ+HjjbZNdo6NXJJFPHlvRqJ6Xcw5wxBSSMJjSH7kXJbq3L
-	 ro2dwVTOErDsgzlI8Z3+W4BgotVk7LyxyyK4qGMdGES8mqrxODugGCb1QM1W3HW+B3
-	 kyZN258MxGy3g==
-From: SJ Park <sj@kernel.org>
-To: Manuel Ebner <manuelebnerli@mailbox.org>
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=s-joshi.in header.i=@s-joshi.in header.b="xCFK7NVg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XV0h6kJy"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 73418EC02A0
+	for <damon@lists.linux.dev>; Thu,  8 Oct 2026 11:20:05 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 08 Oct 2026 11:20:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=s-joshi.in; h=cc
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm1; t=1791472805; x=1792336805; bh=plxy+DrT8Ze0nim79TR1y
+	OEuPaMxj6VH3O713CTbSuw=; b=xCFK7NVgs12YR5Os+1qjKUQTdSiWxqgeaTR7+
+	HdLBT2ynFVEJm65+tI5UpZUl6J0JMt6zSveTLT3+beQyDHidKSONCVRIB6X66D6e
+	nBisnKjkG+93qLtbVqS5f4PGuG50zhsBZx0wpewxgNYRa9A49UOwu4ZTgChOjBWt
+	eQwzyfjuRJUtAdbtFPWSwvOVwR+q8nkxiZLtmTwbmTLMlsNo8oK1JczusEyfiOvC
+	Nu94JXVh1cMHyT/Lfnq6geg9XdG9CAvtE1Cg6i8e0WDhc5x/5htdB4L3d6C9ewKp
+	xP7zCM+x743Aci9qlludrOMWnnYlkf1D8peD3C6PSkKoZvOnA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791472805; x=1792336805; bh=plxy+DrT8Ze0nim79TR1yOEuPaMxj6VH3O7
+	13CTbSuw=; b=XV0h6kJyywuq4uTCPPT+vlRvFV2CWZJfS5hUIci9ETpt/Inwfoh
+	JdyoUH+orjCvLwrd9cOr+roDiYqw6AYuexLOJ47Enyc8OFbnMI4xbJubSQQ12YYC
+	8EQgHYj/Q1tyY88DGZOawPirgcOfCcuQLyUnz30qooL+d0/PVXJF9nCGKnf2sbnc
+	6fU6aAA4DTuLDKg6Y2d5T3eBsWqVUA4P9mE2YrkA5zoifdFaLGM3wAap8mvvn6JY
+	NIiZM6hGl/J0UspWfU/f+25+I7EqT7b6HUqmiriGIX81h/kP9WPJxBmuhyJp4bQv
+	qXZ7sWRZ4gz2+C6PrZX/0V3nr0hxZzqh0uQ==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=sign d=s-joshi.in a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1791472805; d=s-joshi.in;
+	mf=PHN1aGFhc0BzLWpvc2hpLmluPg==;
+	rt=PGRhbW9uQGxpc3RzLmxpbnV4LmRldj4=;
+	s=fm1:rsa-sha256:RDp2lNKaFEoAPwYpBlO4+3Rl7Q12HLQWjKKcbx0NkQ+49j6
+	zzoxECCYH9OLJhFPD1KyFBEvqv9fFmjOrO6Mve9ksY8jAl7oAWVhKSNyUBvehXZR
+	AoIkR/EanwKYBcsXuM2YYH+mS19YngBvkcOIxuqAu0q0Kh17geSJ3WvSf65rhzgs
+	QCPaT5MZdtxhIN8P8ba06PxVRi2wqVsUa9VT4PHHGYzaId0MBP5wmCIhEUB6iUUL
+	VisQdJ6VuggHsMZXyIGrcK345QviGk3j1aUaeUZ8nvR/WNYKovyoHHSfzHJKY0gV
+	/ItmIVG1b5JXfaXjYmVjL2TcOw1uNFEyV7O0D4Q==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
+	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
+	action=mi-m=1; hc=9;
+	hn=cc,content-transfer-encoding,date,feedback-id,from,
+	message-id,mime-version,subject,to;
+Message-Instance: m=1; h=sha256:rf6ufOzkNZa7QhG4kTdpPLLyHMZLstPqQjFG7FSWTOc=:5syrNj/JLgLqlg7IRGXpYcJyk/HNi/mWCL7GsaEOynw=;
+X-ME-Sender: <xms:pLTHakvaYYI-n9-yyKB9pcZ3LPqDNpK-FwMA3RjbVNyLmkWVnnIQ5w>
+    <xme:pLTHaiLCnEOZoJ84DPrAJGjAF_N6eQn-KTPOCozUCoe8rakKYLMJVMcLmZOj6eijV
+    KCWrq4_XSB_JRMSXc828gbEbd5D_9H2RftZPkLWVKCkMNVH_H3iFRs_>
+X-ME-Received: <xmr:pLTHat8INlt6X0w19517Mx6gm20tn60O6Cbfw8JSQFy14iighyFvBdvl0g>
+X-ME-Proxy-Cause: dmFkZTGqxKJltKcxARJadtVktDBjtkTJW7gorgTB8Ld7pXgguWgs5hqg6/YGAbmf+3ndY6
+    LjqKDAI3EvH46oJqR0tWDuKjWnqcBAK55NEqWzEvzSxNjp+D3hNoffq1DonGlE89pCLzx7
+    fXzqKf8HtHttmd8QNutoRFIK6OEt2nz179BXmfB08wXw5RFnw+OX7Fuxqses2X8N7pM0MR
+    uix+e515sIDeirVi9i5sd9lgyNmtEz7/zoYfcBs4tM+ZskmEUvRGl4U1QHO9XkLYCMamWm
+    3NYpzIgBUJjx0iK2KXMvacFbQo+WueYCOphdPLzMH6GbuCPBxPTTQWkkPdp7XlpaUmN+Kg
+    fZmb6MQvaBT2/j3ANqZQpG7bX3bzTAz+HR674FVqrCnNETt7/fTIYJa6R2bmOeMn3xK86J
+    sNYywAhEtrC+AikraNY+CpaxZ7swDj4/y6WXHCfvw0IeAGAazvJ/krqsF/UlegqMvxZkCI
+    KB+WnPfo5WGXtdz/x/M80prHyqfZNxEuAy8aSCJlavWKyLvFqO5KU4Q7aYxSDmpzFaLF/m
+    qIuSNaP5vgZ+lygJWy5PY6YYKVreeTw8rQJv9fJvMDENRDnemN8OWF5jyduYZV4jf+SrN3
+    /24ZqrMN7P0km3ZBvU7n/ml8VJ5yRUd4TOwE5BChMTU4ral69GdY/sTnijEA
+X-ME-Proxy: <xmx:pLTHaryA20PcyxVoVyL1vFpbYtAlPaHyVAkXsfAhV0AIjiVWDGjIyw>
+    <xmx:pLTHaq4TSUMvs15Vy7RS-tkpV0k6gyPpshHqwnSQcNPruuw2gC9IrQ>
+    <xmx:pLTHai-wnORkuU6EUKfcDIWUbkOXXM7cI4rxXrHBSJQpkkpxgz1GUQ>
+    <xmx:pLTHavr74d05gvSYM-VsZ1efHAM_ybRZ2_lrBScrHQ-PMhOZF1Oe1Q>
+    <xmx:pbTHahihQO3qK4uVQ4gX6QAwMwfKoLQe4WrIpPZ9vOU_EzIwmY1xOOpA>
+Feedback-ID: ia9504abf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 Oct 2026 11:20:03 -0400 (EDT)
+From: Suhaas Joshi <suhaas@s-joshi.in>
+To: sj@kernel.org,
+	akpm@linux-foundation.org,
+	aethernet65535@gmail.com
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Docs/admin-guide/mm/damon/lru_sort: fix grammar and stlye
-Date: Wed, 14 Oct 2026 06:52:38 -0700
-Message-ID: <20261014135239.3596-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <dfa05908286b5e5684ea0002dde1ee99627154a4.camel@mailbox.org>
-References: 
+Subject: [PATCH v2 0/2] mm/damon/core: Iterate over installed probes instead of DAMON_MAX_PROBES
+Date: Thu,  8 Oct 2026 20:49:24 +0530
+Message-ID: <20261008151944.113714-1-suhaas@s-joshi.in>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 14 Oct 2026 14:34:51 +0200 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
+Hello,
 
-> Hi SJ,
-> 
-> On Tue, 2026-10-13 at 17:32 -0700, SJ Park wrote:
-> > Hi Manuel,
-> > 
-> > On Tue, 13 Oct 2026 21:13:27 +0200 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
-> > 
-> > > mention 'least-recently-used' AKA lru at the beginning
-> > 
-> > I think the readers would know what LRU means, and therefore
-> > 'least-recently-used' is not needed.
-> 
-> I'm probably one of the few that doesn't know. I didn't think of the whole picture.
-> You are right.
+This is v2 of a series [0] I sent earlier. Please find changelog below.
 
-Thank you for accepting my humble suggestion.
+There were two "todo: " items of the same nature in mm/damon/core.c. Both
+of these suggested that we should iterate over only installed probes while
+updating (last_)probe_hits[] during merging/splitting regions, instead of
+iterating over the entire array, which may have empty/unused indices.
 
-[...]
-> > > @@ -17,7 +18,7 @@ systems, LRU lists are normally not proactively sorted but partially and
-> > >  As page-granularity access checking overhead could be significant on huge
-> 
-> Is this huge as in big or huge pages. For the latter I would put it: ``huge page``-systems
-> or `huge page`-systems.
+So this patch series does exactly that. It replaces the for-loop over
+[0, DAMON_MAX_PROBES) with a damon_for_each_probe() over the probe list of
+the context.
 
-It is the former case.  "huge" as in big.
+These patches are based off mm-new. They pass all KUnit tests related to
+damon. I have boot tested (but nothing beyond) on qemu-x86_64. Please do
+let me know if I should do any specific tests and link the logs here.
 
-> 
-> > >  systems, LRU lists are normally not proactively sorted but partially and
-> > >  reactively sorted for special events including specific user requests, system
-> > >  calls and memory pressure.  As a result, LRU lists are sometimes not so
-> > >  perfectly prepared to be used as a trustworthy access pattern source for some
-> > > -situations including reclamation target pages selection under sudden memory
-> > > +situations including reclamation of target pages selection under sudden memory
-> > >  pressure.
-> > 
-> > I cannot find what's wrong with the original sentence.  Could you expalin?
-> > Also, I think the updated sentence is rather easier to misread.
-> 
-> It's two long sentences, thus (I think) hard to understand. I _rewrote_ it this way:
-> 
-> As page-granularity access checking overhead could be significant on huge systems,
-> LRU lists are normally not fully nor proactively sorted but rather partially 
-> and reactively sorted for special events.  These events include specific user requests,
-> system calls and memory pressure.  As a result, LRU lists are sometimes not
-> suitable to be used as a trustworthy access pattern source. These situations 
-> including reclamation target page selection under sudden memory pressure.
+Changes v1 -> v2:
+1. simplified commit message of patch 1 (on Liew's suggestion)
+2. wrapped all lines at 80 characters (on SJ's suggestion)
+3. added comments for new argument in function (on SJ's suggestion)
+4. added damon_ctx_destroy() in r2 failure case in damon_test_merge_two()
+   (on SJ/Sashiko/Liew suggestion)
+[0] https://lore.kernel.org/damon/20261007154851.45368-1-suhaas@s-joshi.in/
 
-I agree it is too long.  I like your suggestion, thank you.  Please ensure to
-put two spaces between sentences, though.  The last sentence has only single
-space after its former sentence.
+Regards
+Suhaas Joshi
 
-[...]
-> > > -DAMON_LRU_SORT finds hot pages (pages of memory regions that showing access
-> > > +DAMON_LRU_SORT finds hot pages (pages of memory regions that show access
-> > >  rates that higher than a user-specified threshold) and cold pages (pages of
-> > 
-> > rates that "are" higher?
-> ... that show access rates that are higher ...
-> and 
-> 
-> > 
-> > > -memory regions that showing no access for a time that longer than a
-> > > +memory regions that show no access for a time that longer than a
-> 
-> ... show no access for a duration that is longer than a 
-> 
-> Then ack.
+Suhaas Joshi (2):
+  mm/damon/core: Use only installed probe in damon_merge_two_regions()
+  mm/damon/core: Copy only installed probe in damon_split_region_at()
 
-Looks good to me.  Thank you for the nice suggestion.
-
-[...]
-> > > -Desired active to [in]active memory ratio in bp (1/10,000).
-> > > +Desired active to (in)active memory ratio in bp (1/10,000).
-> > 
-> > I think use of brackets is also fine.  Let me know if I'm missing something.
-> 
-> There is 2x (de)prioritization, 6x [de]prioritizations, 2x[in]active and a few more in the
-> file. They are all fine by themself, but not mixed. [] or ()?
-
-That makes sense.  I agree consistency matters.  Let's use ().  Also please
-don't forget explaining the rationale of the change on the commit message.
+ mm/damon/core.c             | 61 ++++++++++++++++++++-------------
+ mm/damon/tests/core-kunit.h | 68 +++++++++++++++++++++++++++++++------
+ 2 files changed, 95 insertions(+), 34 deletions(-)
 
 
-Thanks,
-SJ
+base-commit: de3c5f0e6ebc5e0885d99043e071320cbb6ffbde
+-- 
+2.55.0
 
-[...]
