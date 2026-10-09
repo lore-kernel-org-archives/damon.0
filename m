@@ -1,146 +1,62 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC8940BCC2;
-	Fri,  9 Oct 2026 12:37:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D61E3E764C
+	for <damon@lists.linux.dev>; Fri,  9 Oct 2026 12:45:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791549446; cv=none; b=jLsc2j/P61eMvWgrAt2/wDLQsIpnll2z4iiqnUewAVRdUJkquQQS9gnxgK8Vf4VkhWHKfovUfrEbUqIM7BDkbtry1qR5CifKNXSeGfq4Ga7b/mUkpPVMR9hqJH87s7OUI5D7rM8gUXF0hQ9M40mcwfzJfiT6QfHCRdNYm5lwnUk=
+	t=1791549962; cv=none; b=s53hdoFRMIRXRPTg/6H0IFFaYCVxLJhVVr3/Icy49CADV7nWUo1Nx+6qIO5RUKUGhyUSIazqMnjUn8XRD3GazQ/Edsai/PliWS0NoUVNMkmoeCBByS4qNhwttUc7I6TQloT/y/sJXBGS0SgQFmJtwBZspvo7CkLrsqoxhhiEtJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791549446; c=relaxed/simple;
-	bh=oLTZOPHJtPpdHwEOOPaJ8FrW+83hJy0razbZPF4HLBQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlqlwR8395R53NVNlqWF1zbyQYekDrCoYqoB5a7Rz7rYbBBKWsKJLjH1WZKv5I81kWFrjPwQQLUKtAUBC1UBMUp+4Rz0VTH0+reaPNkXH6Z4tumyyEIod95B11XsN/efniNt81L6h6FQ69YQvrCmSh8cy4HDdZc9fPi5hcRBb30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jYS2p4vd; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791549962; c=relaxed/simple;
+	bh=wgN5bYEWAoKe2F+VU1WwfU1v0X1eOQrIcMP5i66YyL8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uFDAQ9VsAVjn+3zfAjefVUeKwcGPe+q5uRtZjSktJ0QJ7xswiNEV57x/K74Y1yDPlH6yJ1wh5NlRy4Y8k+px/jxEiP0NOJAFJJdyWo9cGyKohknDVwRyYNY2RxYnCMkvNo/0yXuf7NvH/vG7mSH0s7DFDuoEL0LsgV99wjT07Ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=nIAKcm4E; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jYS2p4vd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED20A1F000FF;
-	Fri,  9 Oct 2026 12:37:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791549433;
-	bh=vKF10Xmi7X09NdJqSO8jkqF5VXUsp1HOtJXrwUu7nYU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jYS2p4vd0qwcBgvCmQVTUgLX+S3oQKFsrSInRUY3HMOfdx09rz9HJOOtvn7DLnV3i
-	 F8NIX75kpcAEn0bp4vkFygcZHhF2S+JAhHTcNVZSHrcdAijmMaLfYFaAVrRZwwQqZu
-	 6CD68xbzIPrOaeA8SRG9uBtMq1ftrNLu25h+VrBRv9gO1pQRt4rvYjDblArmWm5oQp
-	 P4LhxXhPymV9G3f1EtIaI4cIGOdzAt/Kmo+6SfnbLOZbvLV7HrkZ7vTNZRZbThY9OA
-	 SgSpLzR2hPefKBkYVa9JRC5bfNNv598nUaW4K0KcVR1hzaGkSIZ8KD4nlvsZ5JkhJR
-	 tKK8cfK9ywaXQ==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12.y v3 2/2] mm/damon/core: fix unconditionally skip last region
-Date: Fri,  9 Oct 2026 05:36:50 -0700
-Message-ID: <20261009123651.6585-3-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261009123651.6585-1-sj@kernel.org>
-References: <2026092948-agency-overhand-3fd1@gregkh>
- <20261009123651.6585-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="nIAKcm4E"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
+	Sender:Reply-To:Content-ID:Content-Description;
+	bh=fgixxsqwaATihbPk/CkvSOE/LALNPeYn/vk/XmJ+1xQ=; b=nIAKcm4ERKAlzvT5xAnorMTsuo
+	GHrrvWqqhnPWRcpKJtwmt/t/2to5cUNdZ56sJjxQf3V1bHv1Auoo1zszZCU3V1soLela1D/4GeDMd
+	+L65G8IDugGDzc2dsTgJs/7SIkSXJ3Rk4buktEcui7cPdwzoKSuK5CXOaVvG+ZZ6gbrUQXuOEu4NU
+	Z6bvwmTM/SL24mJ57CFVkrJZaHxwtMDcukxSIRMpYIDQZa1R2lCYwknWHVc8XZj+E5uR/NRC8+gsx
+	cos7SonUWLwg3x4qSlDohQdXnES0x5lKReCRh7tSZJOK8BvokqoFzFG+Tu+2yf+gEFw4UA6TPrJcg
+	jqvX+kvA==;
+Received: from willy by casper.infradead.org with local (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1xF9yv-0000000EmdN-1xf2;
+	Fri, 09 Oct 2026 12:45:50 +0000
+Date: Fri, 9 Oct 2026 13:45:49 +0100
+From: Matthew Wilcox <willy@infradead.org>
+To: Arnav Goel <ArnavGoel@woodstock.ac.in>
+Cc: "damon@lists.linux.dev" <damon@lists.linux.dev>,
+	"linux-mm@kvack.org" <linux-mm@kvack.org>
+Subject: Re: Research use of =?utf-8?B?RMSATU8=?= =?utf-8?Q?S?= Linear B texts
+Message-ID: <asjh_RkmMyEUZUiP@casper.infradead.org>
+References: <SI6PR06MB74745E4D61CF3341BF6958CEE7922@SI6PR06MB7474.apcprd06.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <SI6PR06MB74745E4D61CF3341BF6958CEE7922@SI6PR06MB7474.apcprd06.prod.outlook.com>
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+On Fri, Oct 09, 2026 at 05:42:41AM +0000, Arnav Goel wrote:
+> Dear DĀMOS team,
+> 
+> I am a high school student in India building a benchmark that tests decipherment methods on short-text corpora. Linear B would be an ideal real-world check, since its texts are short and its language is known.
+> 
+> I understand DĀMOS is available under CC BY-NC-SA 4.0. Is there a way to export the transliterated texts in bulk for non-commercial research use? I would cite DĀMOS fully and not redistribute the data beyond what the licence allows.
 
-Once quota set, the charge_{target,addr}_from unconditionally skips and
-resets at the last region of the tracked target, so the last region can be
-skipped even when it has not been processed.
+I'm afraid you're asking the wrong people.  This is the Linux DAMOS
+which is a Data Access Monitoring tool.  You should probably be talking
+to these people instead:
 
-Example:
-
-    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
-    2. Quota is configured to process only 100 bytes per window.
-    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
-       addr}_from is saved at (Target, 100).
-    4. Window 2: The loop reaches R2.  Because R2 is
-       damon_last_region(t), the old code unconditionally returns true,
-       skipping R2 entirely and resetting the charge_{target,addr}_from.
-
-    Result: R2 is permanently skipped even though it has never been
-    processed.
-
-However, it is important to note that this is a very minor issue.  This is
-because it is triggered only when the previous window saved/kept
-charge_{target,addr}_from, and in the next window, all regions except the
-last region were skipped by damos_skip_charged_region().
-
-Fix this by only resetting the charge_{target,addr}_from when last region
-is reached, only skipping when it is applied or cannot split.
-
-Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
-Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org> # v5.16.x
-(cherry picked from commit b3723b596b548c837a766aae3553c14a7b15af2b)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/core.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 76f23c1d2f56..dab9669de04b 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1323,36 +1323,39 @@ static bool damos_skip_charged_region(struct damon_target *t,
- {
- 	struct damos_quota *quota = &s->quota;
- 	unsigned long sz_to_skip;
-+	bool skip = false;
- 
- 	/* Skip previously charged regions */
- 	if (quota->charge_target_from) {
- 		if (t != quota->charge_target_from)
- 			return true;
--		if (r == damon_last_region(t)) {
--			quota->charge_target_from = NULL;
--			quota->charge_addr_from = 0;
--			return true;
--		}
- 		if (quota->charge_addr_from &&
--				r->ar.end <= quota->charge_addr_from)
--			return true;
-+				r->ar.end <= quota->charge_addr_from) {
-+			skip = true;
-+			goto out;
-+		}
- 
- 		if (quota->charge_addr_from && r->ar.start <
- 				quota->charge_addr_from) {
- 			sz_to_skip = ALIGN_DOWN(quota->charge_addr_from -
- 					r->ar.start, DAMON_MIN_REGION);
- 			if (!sz_to_skip) {
--				if (damon_sz_region(r) <= DAMON_MIN_REGION)
--					return true;
-+				if (damon_sz_region(r) <= DAMON_MIN_REGION) {
-+					skip = true;
-+					goto out;
-+				}
- 				sz_to_skip = DAMON_MIN_REGION;
- 			}
- 			damon_split_region_at(t, r, sz_to_skip);
--			return true;
-+			skip = true;
- 		}
-+	}
-+out:
-+	if (r == damon_last_region(t)) {
- 		quota->charge_target_from = NULL;
- 		quota->charge_addr_from = 0;
- 	}
--	return false;
-+	return skip;
- }
- 
- static void damos_update_stat(struct damos *s,
--- 
-2.47.3
+https://damos.hf.uio.no/about/content/
