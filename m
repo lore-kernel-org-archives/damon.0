@@ -1,127 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2358446AA68
-	for <damon@lists.linux.dev>; Fri,  9 Oct 2026 13:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8D04D1783;
+	Fri,  9 Oct 2026 13:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791553367; cv=none; b=Q7d49k7URGvW9Ki2uOU2gnMUwEvoWQMDxukw+uUcVXSMy/5WTa4L8OrAxh6nbR43ME11LvTdojS+Dl4MdX0qcAkNugct9r8x5tuG0frSR8ip5UhDgB/S8rYfwDW0K6Ujv3NhcafmTw5SxbSMQZalDqU/DcUsjBytAWMeVAdIHMw=
+	t=1791553804; cv=none; b=GL9fzU1Rka1xl7eJiMc1px2ga807J554cc/Sk53Oma70foU92pXxY9FJSvbyJ16mVvKCQV76waI9uJAOmnR9zLshSVKrZsJpGqWgUwmHlPbYoG7ZH8h6Y3AaYvcSmuzq75FkDcSyed655P58N1WmUy2r2Od8t7dlZCoKWsm1rl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791553367; c=relaxed/simple;
-	bh=9/r43+fKD6OuOqAFAz1S0sizcY77VyG2S9eQcolIesc=;
+	s=arc-20240116; t=1791553804; c=relaxed/simple;
+	bh=qgH/nhtiCFqz2ON6RzU2zqMmTDEZ++lrR+Yb4CBEpPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TPt11tWmNz1ASxoa84fR85eOe8IDFIgd7Z1pEAuq1CM5yFb19YQ4pjspv4oMyWlOjEAUXUKiDvuEKENDfamlVC5bvMx54ZxrxenEnD1TX6GI5SwrLtizyqjf5/snhG0RLCUoXKlp7ISf+0fvO2vuc3spPEQEnSt6QWyK6XAL2QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edy9EVUZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uUO963R88QyKmjRwNvbvL815cICs5qUmudGkAUJ6y93tiyn7MoUxhgpz3Zi2/QT73BH7l+v51S7lhakSY1x7stKgMp5yocAgxG9Ljf0hXsp0iJO2OJHTzJ1XRsGSRsaBlnhEdGswJ47fWzLWSH9GCedGK98zNEkR0ziP3YxqESM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jaOtYbWS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edy9EVUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FBB1F000FF;
-	Fri,  9 Oct 2026 13:42:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jaOtYbWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F33C1F000FF;
+	Fri,  9 Oct 2026 13:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791553364;
-	bh=XaoTeFeS0vaNk5c9UKe8uNK+zqoQnphT0y6GdFskI1k=;
+	s=k20260515; t=1791553803;
+	bh=H071Su+4anOlMSS+gUVM0N4jNV+NkmKss72WEdIivlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=edy9EVUZgY63gyGPFQXpH0z9EDOh8TzgoQfOChNacD7Bkyh5HSRX2hZEcKs3R8W40
-	 9XVjd41GEb5Jok0NbNGD11rzFo+bmKtW9mB75xpUMKu5A1N3L629LibaTaLPXqVqaK
-	 gsP8KsP6mdn7uFzyTA+KckS18b0Tk0wcfsQ8r9ffFlHWwT2QW6UR7d2JDcMfCpSCNV
-	 D/NkozA+6mZ1+dP2xTufecc+sxErQk2TQQUvI+PymBca2miKLdO5rP3WedV10zF4A0
-	 4LQAbax2C1oL1GhtMmc2OFdiyBEKmIzk9cMGpjamneMv7n6bQb7/gYswR6eL+OiPw8
-	 mTE5tj3+6384Q==
+	b=jaOtYbWSMeWlKVzUtj/mC5JhGw/eRRP8P9KPZ7ycsQyvrSjSKPXPjSB28iY/uOAUf
+	 RYAAC5Ao9A2ivu5JD+w8dayx1zgxO3ZY8oaz7hD3DHp7MiR18Cu4k6WQNcpvsrnci1
+	 kEpw7YRjqoD52RKePcVL5DnorfevK0IhATdk0sQhMWn1ixlgnvdBpguXKGP5OTtCTG
+	 QWh0BrB2T5L/v3HtdgH9PGy4Rd78axftTQNIlk3QCSj3i88YE/NIgE3+U2zE3TOcso
+	 TLOmT454SYB0b+9WxhiOOQW+NwyJoTGnv9zdum6CZFx8qdT5lh21Ti2gxPvTBg9CBX
+	 HS0FZSbklCKtQ==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.12.y v3 1/2] mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
-Date: Fri,  9 Oct 2026 06:42:40 -0700
-Message-ID: <20261009134241.7294-1-sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 6.6.y v3 0/2] mm/damon/core: fix last region handling of damos_skip_charged_regions()
+Date: Fri,  9 Oct 2026 06:49:47 -0700
+Message-ID: <20261009134949.11507-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-165573@kernel.org>
-References: 
+In-Reply-To: <2026092948-moonrise-persecute-3597@gregkh>
+References: <2026092948-moonrise-persecute-3597@gregkh>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Fri, 09 Oct 2026 12:55:36 +0000 sashiko-bot@kernel.org wrote:
+Patch 1 is a dependency of patch 2.  Without it, patch 2 introduces
+out-of-bounds memory access bug that was found by Sashiko.  Patch 2
+fixes a bug that categorized to be backported to stable@.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mm: damon: double application of DAMOS schemes due to non-safe region walk
-> --
-> 
-> commit 7c60a2f66acad38f06b09b2a9e484519168800bc
-> Author: SeongJae Park <sj@kernel.org>
-> 
-> mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
-> 
-> This commit changes kdamond_apply_schemes() to use the non-safe
-> damon_for_each_region() iterator instead of damon_for_each_region_safe().
-> It also drops the double-pointer workaround in damos_skip_charged_region()
-> to let newly split regions be seen on the next iteration of the region walk.
-> 
-> Link: https://lkml.kernel.org/r/20260227170623.95384-3-sj@kernel.org
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 32737cc5f877b..76f23c1d2f56b 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> > @@ -1749,7 +1749,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
-> >  		return;
-> >  
-> >  	damon_for_each_target(t, c) {
-> > -		damon_for_each_region_safe(r, next_r, t)
-> > +		damon_for_each_region(r, t)
-> >  			damon_do_apply_schemes(c, t, r);
-> >  	}
-> 
-> [Severity: High]
-> Does this change cause earlier schemes to double-apply their actions when a
-> subsequent scheme splits the region?
-> 
-> In kdamond_apply_schemes(), changing to the non-safe iterator means the loop
-> dynamically visits newly created fragments on the very next iteration.
-> 
-> When damon_do_apply_schemes() runs, it evaluates all schemes sequentially on
-> the region:
-> 
-> mm/damon/core.c:damon_do_apply_schemes() {
-> 	...
-> 	damon_for_each_scheme(s, c) {
-> 		...
-> 		if (damos_skip_charged_region(t, r, s))
-> 			continue;
-> 		...
-> 		damos_apply_scheme(c, t, r, s);
-> 	}
-> }
-> 
-> If an earlier scheme evaluates the region, it may apply its action and update
-> its statistics for the full size of the region.
-> 
-> If a subsequent scheme then evaluates the same region and splits it (for
-> example via damos_skip_charged_region()), it shrinks the original region and
-> inserts a new region immediately after it.
-> 
-> Because damon_for_each_region() is no longer safe against modifications to the
-> list, the next iteration of the outer loop will process the newly inserted
-> region across all schemes.
-> 
-> Since the newly inserted region retains the exact properties (age, access
-> counts) of the original region, will the earlier scheme re-evaluate it and
-> apply its action a second time, double-charging its statistics and applying
-> redundant actions to the memory?
+Changes from v2
+- v2: https://lore.kernel.org/20260930101853.58786-1-sj@kernel.org
+- Fix out-of-bounds memory access bug by adding patch 1.
+Changes from v1
+- v1: https://lore.kernel.org/20260930093707.48739-1-sj@kernel.org
+- Add missed damon_sz_region(r) <= min_region_sz case change.
 
-Good finding.  But the issue is also in the mainline.  Also, because DAMOS
-quota is a sort of best effort, the user impact is minor.  I think this is not
-a blocker of this backport patch.  I will separately work on it.
+Liew Rui Yan (1):
+  mm/damon/core: fix unconditionally skip last region
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261009123651.6585-1-sj@kernel.org?part=1
-> 
+SeongJae Park (1):
+  mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
+
+ mm/damon/core.c | 45 ++++++++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
 
-Thanks,
-SJ
+base-commit: ae7bc7c9b4336d7a8fb4bcfe0a6d8c925bde3ce9
+-- 
+2.47.3
