@@ -1,150 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814962DEA6B;
-	Fri,  9 Oct 2026 14:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32E6399CE9
+	for <damon@lists.linux.dev>; Fri,  9 Oct 2026 14:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557304; cv=none; b=AiOI/puXyHWsTpewuWa1XgU1epoatNxw3k+xQcyjxYe1DRz0VGEzphyhfE+Iyl1Ff++E0ipcWsnCBoJ4p3NJqDtgTx+fpR6XFshJ5JtsYQh273gLe72+J1fRmUnpZFdNjjquU3WuYPYIHjWWYzr1NzzYVw2cs/J0VaZLiY08PPU=
+	t=1791557818; cv=none; b=a9CzO/yA4TRddhpfDsW4GrfNaP7p3d/EDlftNfIB9oIfPx+n6qlHXiNOaqU6XbxBPU93QOryBr2eIPf+YKbA4s6jCjkZvJnUI3HCPIt83qivVxskWRb1Z9BHmPAA6yKC9kSC1HVfrS+e3Q7ya02gW8SDiIVbCypPWZSh0ji9IS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557304; c=relaxed/simple;
-	bh=2uAx7LTaA7OCPN+u8CwE9eb5yLoL9fHv7LaiKUHovok=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dzy0ixUoSIDFTexnhVqulI38OCJLFIvwlMQ2ou/EZUwUfJcz/Pyd/x/G1S2cG7u78QzxVk4dpKX0zpeh8VGTfD+6DRXclp8wVuXVQCJQBxramdINVKHuEw1TmoxupIXSqH4vOyAlC3pyraLSSC6bxraMRgxVwFLXxwIR4dL4BG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rn1rHP2s; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791557818; c=relaxed/simple;
+	bh=fUd7WIbSd8Q+vf0OHIN4AniDoYfI5yx8cZ8hASXHPOc=;
+	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
+	 Date; b=aP7BG3MTGWwo5zYcRvqBcKGn72mSOCKeJcnUBgT7/G0Uh98n0P1KbTkKfSobi2wGzJ3XpBgmvuXHr6d+aRQ36v14zgE44bu5v698sjZt6+L9AyZErzTffgJTWUrxoFEa/7ihsOJRhzat7BmsIXA6U3K3NXW4Vz0l90Q1wDRh2Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y1BeQWth; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rn1rHP2s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD491F000FF;
-	Fri,  9 Oct 2026 14:48:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y1BeQWth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EF21F000FF;
+	Fri,  9 Oct 2026 14:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791557303;
-	bh=CVT5PRt0dTyvufkIKuOFIFmWNz6TXrIoc0o4HWEvw1o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rn1rHP2sVSpjnbWJyVJgbZwvIkeCiUd8N/aLuOx4+dE/LXBPqQSAtQkESYPsXQv+J
-	 4s3DJizeXDpaRBgeGVhfrLqtMeXgrMl475JIRKwVUeT3jvW47BdcbBUJD6kR4MqjT4
-	 OlST/Y1LmAcFbNlZchUu1rWxl4E9dLFGSbwlTTAegv/hS7/+nidFxKwDx5DeP0uNbC
-	 lXzl/nC8MgRND6P2jbWOuP8J5rsgRmkKhSKqEtxaPE99U9YKZiyQk4AmjkmgI9ivmb
-	 prQ69HbD6OsQot1v0OXuSWeALIHSy7IqE9hKRTMcLqBGCRp+A/mJrZzp17m23AtAJR
-	 qrbGrlMeSaKeQ==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1.y v2 2/2] mm/damon/core: fix unconditionally skip last region
-Date: Fri,  9 Oct 2026 07:48:08 -0700
-Message-ID: <20261009144808.18317-3-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261009144808.18317-1-sj@kernel.org>
+	s=k20260515; t=1791557817;
+	bh=kcMytBa8f+aZdl9V7J+A2aWakxQUisTjsxk/DpQb6q0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Y1BeQWthGZKyXVSuEj16mm6+zo+fegWBAsAmVfUn03IQZqd2j1Flhwduqq97SgehN
+	 AGt6ljW1/TDQLeVa2U3pi/g+sCV/76gTD7hGFkfpHINe2HCTrbVrHxWphnIlxh8AoD
+	 gZMd82zm0J275O/0andoNldX+/+SVkficPLK3vuuwSnpC1XW3uVLbFPPPSQH016N1y
+	 fFzbFXdJS7uF5NHsqp21IpJmVb7VigIpuQuwsBxpioS6GwAgDLT4BD0Hm7N1i9Df6Y
+	 zOxsvkk1nzOYX51cv6Kn3W7u9TiIwEni/dpVJDcbmT5OEYfYE6u3goacGp/hSgDLsn
+	 pwbu98h13kMyg==
+Message-ID: <sashiko-outbox-165747@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.1.y v2 1/2] mm/damon/core: do non-safe region walk on
+ kdamond_apply_schemes()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261009144808.18317-2-sj@kernel.org>
 References: <2026092949-surpass-thimble-02a8@gregkh>
  <20261009144808.18317-1-sj@kernel.org>
+ <20261009144808.18317-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 09 Oct 2026 14:56:56 +0000
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Liew Rui Yan <aethernet65535@gmail.com>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] mm/damon: double processing and skipped regions due to broken back=
+port
+--
 
-Once quota set, the charge_{target,addr}_from unconditionally skips and
-resets at the last region of the tracked target, so the last region can be
-skipped even when it has not been processed.
+commit 18797502eb0b5cf3a96dbf53e3e238e6ea4158ce
+Author: SeongJae Park <sj@kernel.org>
 
-Example:
+mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
 
-    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
-    2. Quota is configured to process only 100 bytes per window.
-    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
-       addr}_from is saved at (Target, 100).
-    4. Window 2: The loop reaches R2.  Because R2 is
-       damon_last_region(t), the old code unconditionally returns true,
-       skipping R2 entirely and resetting the charge_{target,addr}_from.
+This commit replaces the damon_for_each_region_safe iterator with
+damon_for_each_region in kdamond_apply_schemes. This change ensures that
+newly split regions from address filters are properly processed during the
+iteration.
 
-    Result: R2 is permanently skipped even though it has never been
-    processed.
+Link: https://lkml.kernel.org/r/20260227170623.95384-3-sj@kernel.org
 
-However, it is important to note that this is a very minor issue.  This is
-because it is triggered only when the previous window saved/kept
-charge_{target,addr}_from, and in the next window, all regions except the
-last region were skipped by damos_skip_charged_region().
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 7afbc20833ea4..c65d2cbeea6b5 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+[ ... ]
+> @@ -912,7 +912,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
+>  	}
+> =20
+>  	damon_for_each_target(t, c) {
+> -		damon_for_each_region_safe(r, next_r, t)
+> +		damon_for_each_region(r, t)
 
-Fix this by only resetting the charge_{target,addr}_from when last region
-is reached, only skipping when it is applied or cannot split.
+[Severity: High]
+Does this change result in regions being skipped and double-processed?
 
-Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
-Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org> # v5.16.x
-(cherry picked from commit b3723b596b548c837a766aae3553c14a7b15af2b)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/core.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+The commit message mentions dropping the workaround in
+damos_skip_charged_region(), but in this stable kernel version, that helper
+does not exist yet and the workaround is still inlined in
+damon_do_apply_schemes(). Since the inline workaround wasn't removed in this
+backport, it appears to conflict with the new loop iterator.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index c65d2cbeea6b..f2f6f125c09b 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -756,6 +756,7 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		unsigned long sz = damon_sz_region(r);
- 		struct timespec64 begin, end;
- 		unsigned long sz_applied = 0;
-+		bool skip = false;
- 
- 		if (!s->wmarks.activated)
- 			continue;
-@@ -768,14 +769,11 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 		if (quota->charge_target_from) {
- 			if (t != quota->charge_target_from)
- 				continue;
--			if (r == damon_last_region(t)) {
--				quota->charge_target_from = NULL;
--				quota->charge_addr_from = 0;
--				continue;
--			}
- 			if (quota->charge_addr_from &&
--					r->ar.end <= quota->charge_addr_from)
--				continue;
-+					r->ar.end <= quota->charge_addr_from) {
-+				skip = true;
-+				goto clean_charge_from_skip;
-+			}
- 
- 			if (quota->charge_addr_from && r->ar.start <
- 					quota->charge_addr_from) {
-@@ -783,17 +781,25 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
- 						r->ar.start, DAMON_MIN_REGION);
- 				if (!sz) {
- 					if (damon_sz_region(r) <=
--					    DAMON_MIN_REGION)
--						continue;
-+					    DAMON_MIN_REGION) {
-+						skip = true;
-+						goto clean_charge_from_skip;
-+					}
- 					sz = DAMON_MIN_REGION;
- 				}
- 				damon_split_region_at(t, r, sz);
- 				r = damon_next_region(r);
- 				sz = damon_sz_region(r);
-+				skip = false;
- 			}
-+		}
-+clean_charge_from_skip:
-+		if (r == damon_last_region(t)) {
- 			quota->charge_target_from = NULL;
- 			quota->charge_addr_from = 0;
- 		}
-+		if (skip)
-+			continue;
- 
- 		if (!damos_valid_target(c, t, r, s))
- 			continue;
--- 
-2.47.3
+If a scheme's quota->charge_addr_from check triggers a region split in
+damon_do_apply_schemes(), the local pointer is advanced:
+
+mm/damon/core.c:damon_do_apply_schemes() {
+    ...
+			if (quota->charge_addr_from && r->ar.start <
+					quota->charge_addr_from) {
+				sz =3D ALIGN_DOWN(quota->charge_addr_from -
+						r->ar.start, DAMON_MIN_REGION);
+				if (!sz) {
+					if (damon_sz_region(r) <=3D
+					    DAMON_MIN_REGION)
+						continue;
+					sz =3D DAMON_MIN_REGION;
+				}
+				damon_split_region_at(t, r, sz);
+				r =3D damon_next_region(r);
+				sz =3D damon_sz_region(r);
+			}
+    ...
+}
+
+Because r is reassigned locally within the inner scheme loop, subsequent
+schemes will apply their actions to the newly created second-half region,
+completely skipping the first half.=20
+
+Then, when damon_do_apply_schemes() returns to the outer loop in
+kdamond_apply_schemes():
+
+		damon_for_each_region(r, t)
+			damon_do_apply_schemes(c, t, r);
+
+The iterator will advance naturally to the newly split second-half region.
+This causes damon_do_apply_schemes() to be called a second time on the exact
+same region, leading to DAMON actions being applied multiple times to the
+same memory, double-charged quotas, and corrupted statistics.
+
+>  			damon_do_apply_schemes(c, t, r);
+>  	}
+>  }
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261009144808.1831=
+7-1-sj@kernel.org?part=3D1
