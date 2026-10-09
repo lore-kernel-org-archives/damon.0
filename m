@@ -1,92 +1,180 @@
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EBE20ED
-	for <damon@lists.linux.dev>; Fri,  9 Oct 2026 02:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BE1345EB1;
+	Fri,  9 Oct 2026 04:07:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791514538; cv=none; b=u/AOlRepGkf8AMsIp/Tbpx8KQggGWbiHHBxAvEq54+A8ZRDj94+nPtPO9oBiFxm+OAnxFX6CZRjms2+u7ePsJs9xsqlDn8wrwF3zGBr/KoJuaj+Kh3T7M1xfcANlibb3PiR/MhAqgN7TVokdPwiEVJgR27YOT2N6xzQLW8G5cDg=
+	t=1791518849; cv=none; b=kpF0XHXdYZ0rrtEP8GvInR/pq0NO0u+OVQJ1Wciz4TKatusIqtDCLu7MWPEGB+NSvsfJsd92bW9yKDSYWly3wTLb/uAFE0mcgy9bJaYLFMtDEDBnJhvIHQYF3WzAq71uVcxMK9So71lKic9qQ1TDvWNlYb1Yg9fzK1WUNxTAPkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791514538; c=relaxed/simple;
-	bh=Ct8yNkooaldGN11vhPtna2+mcNLdqWrOnXE5QBdIt5Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F/bgur3cW+RgE14bEuEbJcZqncZ3Q7EtmEtNA2IfnFA5U40MSvli/8f4bSqTrLfoeBfuBAv30WW/EdaTsV4TvP/hBypArCrai8tMf9jtbOW2wQI6dzKqc7G0WgCP39NxUE8141XLBOBRdjUiIkfk5aBNzVxzNcsulymapiupa/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: de843150c38c11f19a56ed5b684f684d-20261009
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:df38e0fa-42d6-4b4e-b220-42dbd4841ba5,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:10
-X-CID-INFO: VERSION:1.3.19,REQID:df38e0fa-42d6-4b4e-b220-42dbd4841ba5,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
-	elease,TS:10
-X-CID-META: VersionHash:7db8b62,CLOUDID:7fa12509e2d68185632cecef8499b55a,BulkI
-	D:261009105525E3EMKDQM,BulkQuantity:0,SF:17|19|38|64|66|78|80|81|82|83|102
-	|127|841|865|898,TC:nil,Content:0|15|50|99,EDM:-3,IP:-2,URL:99|1,File:nil,
-	RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,D
-	KP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_ULS
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: de843150c38c11f19a56ed5b684f684d-20261009
-X-User: lienze@kylinos.cn
-Received: from [192.168.111.179] [(223.70.159.239)] by mailgw.kylinos.cn
-	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 138785289; Fri, 09 Oct 2026 10:55:22 +0800
-Message-ID: <da938bc5-b0fc-443a-bad4-1a6e7e1cf41d@kylinos.cn>
-Date: Fri, 9 Oct 2026 10:54:59 +0800
+	s=arc-20240116; t=1791518849; c=relaxed/simple;
+	bh=KNNMfOfVsnDaclgG5s2TFg+2tuPZm5iOCzucHJxLHbM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K7Lz0JzIXcL0bVYa6o9gLbHFwLfkPdFP0TDPMe9bszzLbOebvZi5CULjwKTMt8lvsLiPSCqpznK8Byl2zqZeq5ChrS7Cfkye6pTGmwPx5TL423tR0AT4ibO8WlfTzuDlz4zMrjp5pSedUQZt6X67L1P9BavzXfZTtQsfBt924qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cj2zbom3; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cj2zbom3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791518846; x=1823054846;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=KNNMfOfVsnDaclgG5s2TFg+2tuPZm5iOCzucHJxLHbM=;
+  b=cj2zbom3utWNakaMXZJQQKDFg0nwnVyB7fTU7pdsZgxNnRoZAxTJkIh9
+   gwz89rJj/cKcpWoBxd+7DZthga/OVMaXGuNrKasDMGGCeUerV9MNzwEiy
+   s4LFtlJ94J1cpqABe1VcLPuPkntYxD6KHgEly8qoYMEUfmFcplP4btJ5Z
+   rO2eZn3uYFLODMa0rh3rPA+EqMLkWr3t3yqEMIHG/rkbJioF57hZQvdtX
+   XGSsoBMSb0YYiKqJGFWrrVrsG3NM1LnLH3doGtOg9UBwIFyHHxjOoDaqi
+   qJrmwtztzy70SRGAGlJLqNJ0GRmIXUb4X64ABvRLYMbrIH3jWhh28N6yu
+   Q==;
+X-CSE-ConnectionGUID: yIM4bZXkRja3FFJ7ooeoHw==
+X-CSE-MsgGUID: +UuAKNGPTpi9jdewtssQaA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11929"; a="200673"
+X-IronPort-AV: E=Sophos;i="6.27,147,1787036400"; 
+   d="scan'208";a="200673"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2026 21:07:24 -0700
+X-CSE-ConnectionGUID: cxo1EygpTRm9NADGPwp6FA==
+X-CSE-MsgGUID: 2tTWJiAjRY+qp0jFQq+hTA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,147,1787036400"; 
+   d="scan'208";a="538169"
+Received: from lkp-server01.sh.intel.com (HELO 0caa9d2d175c) ([10.239.97.150])
+  by fmviesa006.fm.intel.com with ESMTP; 08 Oct 2026 21:07:21 -0700
+Received: from kbuild by 0caa9d2d175c with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1xF1t8-000000005He-3wPS;
+	Fri, 09 Oct 2026 04:07:18 +0000
+Date: Fri, 9 Oct 2026 12:06:23 +0800
+From: kernel test robot <lkp@intel.com>
+To: Suhaas Joshi <suhaas@s-joshi.in>, sj@kernel.org,
+	akpm@linux-foundation.org, aethernet65535@gmail.com
+Cc: oe-kbuild-all@lists.linux.dev, damon@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] mm/damon/core: Copy only installed probe in
+ damon_split_region_at()
+Message-ID: <202610091227.PIPVB0PW-lkp@intel.com>
+References: <20261008151944.113714-3-suhaas@s-joshi.in>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/damon: fix typo and grammar
-To: Manuel Ebner <manuelebnerli@mailbox.org>, SJ Park <sj@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>
-Cc: "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>,
- damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org
-References: <20261008162010.4010682-2-manuelebnerli@mailbox.org>
-Content-Language: en-US
-From: Enze Li <lienze@kylinos.cn>
-In-Reply-To: <20261008162010.4010682-2-manuelebnerli@mailbox.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261008151944.113714-3-suhaas@s-joshi.in>
 
-Hi Manuel,
+Hi Suhaas,
 
-On 10/9/26 12:20 AM, Manuel Ebner wrote:
-> DAMON_RCLAIM -> DAMON_RECLAIM
-> set as -> set to
-> 
-> Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
-> CC: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
-> ---
-> I hope I got the right git-tree. somehow there's 'damon/next'
-> and 'damon/next/damon/next'
-> The other patches will take a couple more days.
+kernel test robot noticed the following build errors:
 
-Thanks for fixing these, Manuel!
+[auto build test ERROR on akpm-mm/mm-everything]
 
-Your patch applies cleanly on top of the mm-new branch, so the git-tree
-is fine for this one.  For future DAMON patches, please base them on
-Andrew Morton's mm-new branch:
+url:    https://github.com/intel-lab-lkp/linux/commits/Suhaas-Joshi/mm-damon-core-Copy-only-installed-probe-in-damon_split_region_at/20261008-204926
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
+patch link:    https://lore.kernel.org/r/20261008151944.113714-3-suhaas%40s-joshi.in
+patch subject: [PATCH v2 2/2] mm/damon/core: Copy only installed probe in damon_split_region_at()
+config: x86_64-randconfig-1000-20261009 (https://download.01.org/0day-ci/archive/20261009/202610091227.PIPVB0PW-lkp@intel.com/config)
+compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20261009/202610091227.PIPVB0PW-lkp@intel.com/reproduce)
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git (mm-new)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202610091227.PIPVB0PW-lkp@intel.com/
 
-For more details, see here [1].
+All errors (new ones prefixed by >>):
 
-[1]
-https://www.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#damon-maintainer-entry-profile
+   In file included from mm/damon/core.c:4295:
+   mm/damon/tests/core-kunit.h: In function 'damon_test_last_region_quota_reset':
+   mm/damon/tests/core-kunit.h:2519:45: error: passing argument 1 of 'damos_skip_charged_region' from incompatible pointer type [-Wincompatible-pointer-types]
+    2519 |         skipped = damos_skip_charged_region(t, r2, &s, min_region_sz);
+         |                                             ^
+         |                                             |
+         |                                             struct damon_target *
+   mm/damon/core.c:2500:57: note: expected 'struct damon_ctx *' but argument is of type 'struct damon_target *'
+    2500 | static bool damos_skip_charged_region(struct damon_ctx *ctx,
+         |                                       ~~~~~~~~~~~~~~~~~~^~~
+   mm/damon/tests/core-kunit.h:2519:48: error: passing argument 2 of 'damos_skip_charged_region' from incompatible pointer type [-Wincompatible-pointer-types]
+    2519 |         skipped = damos_skip_charged_region(t, r2, &s, min_region_sz);
+         |                                                ^~
+         |                                                |
+         |                                                struct damon_region *
+   mm/damon/core.c:2501:60: note: expected 'struct damon_target *' but argument is of type 'struct damon_region *'
+    2501 |                                       struct damon_target *t,
+         |                                       ~~~~~~~~~~~~~~~~~~~~~^
+   mm/damon/tests/core-kunit.h:2519:52: error: passing argument 3 of 'damos_skip_charged_region' from incompatible pointer type [-Wincompatible-pointer-types]
+    2519 |         skipped = damos_skip_charged_region(t, r2, &s, min_region_sz);
+         |                                                    ^~
+         |                                                    |
+         |                                                    struct damos *
+   mm/damon/core.c:2502:60: note: expected 'struct damon_region *' but argument is of type 'struct damos *'
+    2502 |                                       struct damon_region *r, struct damos *s,
+         |                                       ~~~~~~~~~~~~~~~~~~~~~^
+>> mm/damon/tests/core-kunit.h:2519:56: error: passing argument 4 of 'damos_skip_charged_region' makes pointer from integer without a cast [-Wint-conversion]
+    2519 |         skipped = damos_skip_charged_region(t, r2, &s, min_region_sz);
+         |                                                        ^~~~~~~~~~~~~
+         |                                                        |
+         |                                                        long unsigned int
+   mm/damon/core.c:2502:77: note: expected 'struct damos *' but argument is of type 'long unsigned int'
+    2502 |                                       struct damon_region *r, struct damos *s,
+         |                                                               ~~~~~~~~~~~~~~^
+   mm/damon/tests/core-kunit.h:2519:19: error: too few arguments to function 'damos_skip_charged_region'
+    2519 |         skipped = damos_skip_charged_region(t, r2, &s, min_region_sz);
+         |                   ^~~~~~~~~~~~~~~~~~~~~~~~~
+   mm/damon/core.c:2500:13: note: declared here
+    2500 | static bool damos_skip_charged_region(struct damon_ctx *ctx,
+         |             ^~~~~~~~~~~~~~~~~~~~~~~~~
 
-Reviewed-by: Enze Li <lienze@kylinos.cn>
 
-Thanks,
-Enze
+vim +/damos_skip_charged_region +2519 mm/damon/tests/core-kunit.h
 
-<..>
+79500f5843f453 Donggeun Yoo 2026-09-28  2489  
+18793c04abe665 Liew Rui Yan 2026-10-05  2490  static void damon_test_last_region_quota_reset(struct kunit *test)
+18793c04abe665 Liew Rui Yan 2026-10-05  2491  {
+18793c04abe665 Liew Rui Yan 2026-10-05  2492  	struct damos s = {0};
+18793c04abe665 Liew Rui Yan 2026-10-05  2493  	struct damon_target *t;
+18793c04abe665 Liew Rui Yan 2026-10-05  2494  	struct damon_region *r1, *r2;
+18793c04abe665 Liew Rui Yan 2026-10-05  2495  	unsigned long min_region_sz = 1;
+18793c04abe665 Liew Rui Yan 2026-10-05  2496  	bool skipped;
+18793c04abe665 Liew Rui Yan 2026-10-05  2497  
+18793c04abe665 Liew Rui Yan 2026-10-05  2498  	t = damon_new_target();
+18793c04abe665 Liew Rui Yan 2026-10-05  2499  	if (!t)
+18793c04abe665 Liew Rui Yan 2026-10-05  2500  		kunit_skip(test, "target alloc fail");
+18793c04abe665 Liew Rui Yan 2026-10-05  2501  
+18793c04abe665 Liew Rui Yan 2026-10-05  2502  	r1 = damon_new_region(0, 100);
+18793c04abe665 Liew Rui Yan 2026-10-05  2503  	if (!r1) {
+18793c04abe665 Liew Rui Yan 2026-10-05  2504  		damon_free_target(t);
+18793c04abe665 Liew Rui Yan 2026-10-05  2505  		kunit_skip(test, "region 1 alloc fail");
+18793c04abe665 Liew Rui Yan 2026-10-05  2506  	}
+18793c04abe665 Liew Rui Yan 2026-10-05  2507  	damon_add_region(r1, t);
+18793c04abe665 Liew Rui Yan 2026-10-05  2508  
+18793c04abe665 Liew Rui Yan 2026-10-05  2509  	r2 = damon_new_region(100, 200);
+18793c04abe665 Liew Rui Yan 2026-10-05  2510  	if (!r2) {
+18793c04abe665 Liew Rui Yan 2026-10-05  2511  		damon_free_target(t);
+18793c04abe665 Liew Rui Yan 2026-10-05  2512  		kunit_skip(test, "region 2 alloc fail");
+18793c04abe665 Liew Rui Yan 2026-10-05  2513  	}
+18793c04abe665 Liew Rui Yan 2026-10-05  2514  	damon_add_region(r2, t);
+18793c04abe665 Liew Rui Yan 2026-10-05  2515  
+18793c04abe665 Liew Rui Yan 2026-10-05  2516  	s.quota.charge_target_from = t;
+18793c04abe665 Liew Rui Yan 2026-10-05  2517  	s.quota.charge_addr_from = r1->ar.end;
+18793c04abe665 Liew Rui Yan 2026-10-05  2518  
+18793c04abe665 Liew Rui Yan 2026-10-05 @2519  	skipped = damos_skip_charged_region(t, r2, &s, min_region_sz);
+18793c04abe665 Liew Rui Yan 2026-10-05  2520  
+18793c04abe665 Liew Rui Yan 2026-10-05  2521  	/* 'r2' is not processed, it should not skip */
+18793c04abe665 Liew Rui Yan 2026-10-05  2522  	KUNIT_EXPECT_EQ(test, skipped, false);
+18793c04abe665 Liew Rui Yan 2026-10-05  2523  
+18793c04abe665 Liew Rui Yan 2026-10-05  2524  	/* 'r2' is last region, it should reset charge_{target,addr}_from */
+18793c04abe665 Liew Rui Yan 2026-10-05  2525  	KUNIT_EXPECT_PTR_EQ(test, s.quota.charge_target_from, NULL);
+18793c04abe665 Liew Rui Yan 2026-10-05  2526  	KUNIT_EXPECT_EQ(test, s.quota.charge_addr_from, 0);
+18793c04abe665 Liew Rui Yan 2026-10-05  2527  
+18793c04abe665 Liew Rui Yan 2026-10-05  2528  	damon_free_target(t);
+18793c04abe665 Liew Rui Yan 2026-10-05  2529  }
+18793c04abe665 Liew Rui Yan 2026-10-05  2530  
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
