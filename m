@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF94823BD06
-	for <damon@lists.linux.dev>; Sat, 10 Oct 2026 07:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534E71EB5CE
+	for <damon@lists.linux.dev>; Sat, 10 Oct 2026 07:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791616288; cv=none; b=P6C/7BtJGcFmCze4JKgaDGs92A7qmZm7ekslh8Is4K0uu/JWer+ys1jGHO7P+fnnB6XN6+km2T0zoOemHvppRYwDnvaNkh2soSqhDGMsvxFDnrNCmzccfmDh2K+HnrdW5eyYwnPodK2nZYhdW9lFJHrpIgnR9DOJjN6S+YNbBTY=
+	t=1791616359; cv=none; b=Nv7D7ETxcjKqUu4UGCoWQ4OxPPhlGhOy4UPO7LpFwsEypwgS2dGRtq3l8JA0uRIZLuIMkbuXvyX5X6zEvA6MjBn/676GPe0Nsf9OqoO9Dj4E4E5b4J31nAGHUiXqTaVeg2h3Rgt4YUmi2VoYfWCgdLkoKPyFg2SYOcbheFr1whA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791616288; c=relaxed/simple;
-	bh=D1lIiaBjrie0g8jwQfJgmIm3p22u196WzRz4Mhl2FW8=;
+	s=arc-20240116; t=1791616359; c=relaxed/simple;
+	bh=92cJgH57l6KPANafQRhoaj7cGqPWCyyTk/4yckUA9V4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OgdJTHGEEY2P8V18jp9EHu9STZ/bo/1U4F7DF3ROnWDXir29AP7SOKf0Q8dfTCq6vxFwxNdUBf6q+0S4u8hG0zSkjxYcGUwATT4mS6gYUr7pBUGogev8ROBnZWFp865Fc0Jat5P03gTP6Vz3Bcm0BB6z2z4UXvwCFuqtvvTiwJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NMyHzWNi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=H23p4IBrGmpaQIhqZ+lHAsVZZzHftcV5UvoShB/NZmWb/U8ItpQOQrmfk7CLvE0lnouPz+/Zpn9vYkj1I8XvYQtsxOBLqRfoJfR5SP0XFl/pBnID5QtRBCUNH+/80h/sqh85V3ONXCCm74Z6reKmo55AIAh1J/taE2zg9ve0w5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HYKKSAME; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NMyHzWNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931111F000FF;
-	Sat, 10 Oct 2026 07:11:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HYKKSAME"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90D41F000FF;
+	Sat, 10 Oct 2026 07:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791616287;
-	bh=54Iga7RbTyQC6zCYPbyxR1EkDF3phc/ZaHrZE6sQ32c=;
+	s=k20260515; t=1791616357;
+	bh=2uvZqISOIdtwlRbYj1HEXEe8sJv31Xpvqd8kRSBYyH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NMyHzWNikk5Bgl2aj7prgmLfmald+a2O0JJAC9F+4eDVRllvz5k33bWKyQ6vwyyDR
-	 C2KC0T1Vv2rcM0TFJW1rTrzXVvSQyrLioHE23lMXMzvyA5zr5Ax4Lmd0cT1dM1B7t0
-	 q+l+ffZGXJ14pBKBKEiDas/Yl6aTGAzza58wVrqDBKt1pfoWEYTFh9K9ejTrR75Ji4
-	 kusNIVSuigFtcF/b6NyZUNgrcBoCk+PGb5SyM6E3/EV/GDaCzZW9NoKm36YbjsAl1f
-	 6TUuUvJLE48umn+GtkHAVIzxvJSRMTiUFc5vp/xQOB46VNLp2XUcoOjVYASJ+I/jQ+
-	 sPMc+cMTz71QA==
+	b=HYKKSAMEYr4TQxPP1Zzx4RUiCT9S33v7h1lpCYKeEO8sYRBFdtiCJfxA+3UCtdUq3
+	 nMXLOmnQm+JR5NjUjElQ9P4oyiKuuEgGwIhVzniWAQgePJSqpx9dXsnbB/z2bd5X1t
+	 EUdEaunBlQXDPr2bChI5tNwJyv++AIrC3fef3JwDwKIvaTBRwWDgLWoprY2i1NoicB
+	 0bbZw/+WObksVELCYwIWWsGkjk35wkNIorGFOxJElYN4okyE1dTGxFQ0LHmU0tCDwn
+	 LifOqx73pgwu89lEv6iJ8AMcSwhXrw9seP3SfMH7n+Jc0AqHJzA2z7jS9ltfnp208x
+	 Dioo9TqJxkuUA==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev
-Subject: Re: [PATCH 6.1.y v3 1/2] mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
-Date: Sat, 10 Oct 2026 00:11:22 -0700
-Message-ID: <20261010071123.8894-1-sj@kernel.org>
+Subject: Re: [PATCH 6.1.y v3 2/2] mm/damon/core: fix unconditionally skip last region
+Date: Sat, 10 Oct 2026 00:12:33 -0700
+Message-ID: <20261010071234.9041-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-166283@kernel.org>
+In-Reply-To: <sashiko-outbox-166285@kernel.org>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -45,67 +45,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 10 Oct 2026 06:41:56 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 10 Oct 2026 06:46:00 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mm/damon: double-application of earlier schemes to newly split regions
+> - [High] mm: damon: use-after-free and permanent scheme disablement on target destroy
 > --
 > 
-> commit 01d768c4d318527360ef5913771d20f22a99984a
-> Author: SeongJae Park <sj@kernel.org>
+> commit c97d3ff78284ee81310d99deee85b79f32b561d5
+> Author: Liew Rui Yan <aethernet65535@gmail.com>
 > 
-> mm/damon/core: do non-safe region walk on kdamond_apply_schemes()
+> mm/damon/core: fix unconditionally skip last region
 > 
-> kdamond_apply_schemes() is using damon_for_each_region_safe(), which is
-> safe for deallocation of the region inside the loop. However, the loop
-> internal logic does not deallocate regions. Hence it is only wasting the
-> next pointer.
+> Once quota set, the charge_{target,addr}_from unconditionally skips and
+> resets at the last region of the tracked target, so the last region can be
+> skipped even when it has not been processed.
 > 
-> Link: https://lkml.kernel.org/r/20260227170623.95384-3-sj@kernel.org
+> Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 7afbc20833ea4..b5c85e6488596 100644
+> > index b5c85e6488596..1b9fb00405cfb 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -912,7 +911,7 @@ static void kdamond_apply_schemes(struct damon_ctx *c)
-> >  	}
-> >  
-> >  	damon_for_each_target(t, c) {
-> > -		damon_for_each_region_safe(r, next_r, t)
-> > +		damon_for_each_region(r, t)
-> >  			damon_do_apply_schemes(c, t, r);
+> > @@ -768,14 +769,11 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
+> >  		if (quota->charge_target_from) {
+> >  			if (t != quota->charge_target_from)
+> >  				continue;
 > 
 > [Severity: High]
-> Does this code cause earlier schemes to be applied twice to newly split
-> regions?
+> Does this code have a use-after-free and permanent scheme disablement issue
+> when a target is destroyed?
 > 
-> If multiple schemes are configured, an earlier scheme (e.g. Scheme 0) might
-> apply its action to a full, un-split region. If a later scheme (e.g.
-> Scheme 1) then decides to split the region, damon_split_region_at() inserts
-> the newly split part into the list immediately after the current region.
+> If the user dynamically removes a target via sysfs, damon_sysfs_set_targets()
+> calls damon_destroy_target() which frees the target memory:
 > 
-> Because this loop in kdamond_apply_schemes() now uses
-> damon_for_each_region() instead of the safe variant, the outer loop will
-> advance to this newly split region and call damon_do_apply_schemes() on it
-> again.
+> mm/damon/sysfs.c:damon_sysfs_set_targets() {
+>         ...
+> 		} else {
+> 			if (damon_target_has_pid(ctx))
+> 				put_pid(t->pid);
+> 			damon_destroy_target(t);
+> 		}
+>         ...
+> }
 > 
-> Will this cause damon_do_apply_schemes() to evaluate the new region from
-> the beginning of the scheme list, resulting in Scheme 0 executing its
-> memory management actions (like madvise) and counting statistics a second
-> time on the same memory range?
+> mm/damon/core.c:damon_destroy_target() {
+> 	damon_del_target(t);
+> 	damon_free_target(t);
+> }
+> 
+> Existing schemes are updated in-place via damon_sysfs_update_scheme(), which
+> does not clear the charge_target_from pointer, leaving a dangling pointer in
+> the scheme.
+> 
+> Immediately after, when kdamond_apply_schemes() runs in the same thread,
+> damon_do_apply_schemes() compares the valid remaining targets against this
+> dangling pointer (if (t != quota->charge_target_from)). Since it does not
+> match the remaining targets, it unconditionally executes continue, skipping
+> the scheme for all regions.
+> 
+> Because a matching target is never reached, the pointer is never reset (the
+> code cannot reach the clean_charge_from_skip label). This results in
+> permanent disablement of the scheme and persistent use-after-free comparisons
+> against the dangling pointer.
 
-The same issue exists in the mainline.  The user impact is minor.  No blocker
-of this patch in my opinion.  I will separately work on it.
+This is a pre-existing issue that also exists in the mainline.  I will
+separately work on this.
 
 > 
-> >  	}
-> >  }
+> > -			if (r == damon_last_region(t)) {
+> > -				quota->charge_target_from = NULL;
+> > -				quota->charge_addr_from = 0;
+> > -				continue;
+> > -			}
+> >  			if (quota->charge_addr_from &&
+> > -					r->ar.end <= quota->charge_addr_from)
+> > -				continue;
+> > +					r->ar.end <= quota->charge_addr_from) {
+> > +				skip = true;
+> > +				goto clean_charge_from_skip;
+> > +			}
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261010063042.8611-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261010063042.8611-1-sj@kernel.org?part=2
 
 
 Thanks,
