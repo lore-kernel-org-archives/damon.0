@@ -1,98 +1,58 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E31384232
-	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 05:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE7B331A43
+	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 07:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792041692; cv=none; b=Tu8xFAIcGAgYboB3WHd5UTPF2vYz2RfjL+OFYg1RYuIGuGi6qcWgUBG0pxJG77bsBwrP+nXGEE1ISwhalXlp57OUEXXCpli2ZgQ3xcn4W+egHp4zJF0S9v6PuhjDIA498HDUt7eXfe6PDWVPEUu4jv+bVDI72qo9jM62vINYq/M=
+	t=1792049665; cv=none; b=FDbtj7JsIN92ylbVPW7ccJXqtk+j+T6uNaDIy4HTUbny+VLisTJzvCc+KSnPfG1O41qRJHkETIh2ttrrusYKZQuQi694KQC5EhTWe+WpeD3+/FlZoI2BbW3+B1dhOqe615YCplTw50QFrt0N4dsku0ahhoo2xeVhp17etRanFAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792041692; c=relaxed/simple;
-	bh=5syrNj/JLgLqlg7IRGXpYcJyk/HNi/mWCL7GsaEOynw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rAXCX5wRwBZkOAYyovJiNVE+tmQHTbP9O2H7gQ1FV14+KKwui9Ut7Ix5pIxnC88Io6f2niefxPu0LrQ6AHD8bJ5ApSHW/ySqlQugLA3AJK3fd/uQwJzzvt5ho46YGielEgLr7DgXYzn9pnVGyNV3HKP+9JHTNXyVmt4IsF2Adow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=s-joshi.in; spf=pass smtp.mailfrom=s-joshi.in; dkim=pass (2048-bit key) header.d=s-joshi.in header.i=@s-joshi.in header.b=xCFK7NVg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XV0h6kJy; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=s-joshi.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=s-joshi.in
+	s=arc-20240116; t=1792049665; c=relaxed/simple;
+	bh=LrBrSJmD/UxphG9gvZu2dp5jVZSeM0Sig/nKKcgBgTI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZUBdM/NBAp0YGyi3zSseOBmtwrHa65nY3Hca8lM5CJjQ2+Atw/XUxlkR6fXcZ4ESvPDCcno+aCkCcwG7VHs2P5kR3sKYArcwrv9zB6cT6pDz8GhlvADnwmGmhMhNiTaUrG6z70M2vWWQ5v3aXiZqoI1dNLWPkvkMgbEcROOx1bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=WJ0cVWt0; arc=none smtp.client-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=s-joshi.in header.i=@s-joshi.in header.b="xCFK7NVg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XV0h6kJy"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 73418EC02A0
-	for <damon@lists.linux.dev>; Thu,  8 Oct 2026 11:20:05 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 08 Oct 2026 11:20:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=s-joshi.in; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm1; t=1791472805; x=1792336805; bh=plxy+DrT8Ze0nim79TR1y
-	OEuPaMxj6VH3O713CTbSuw=; b=xCFK7NVgs12YR5Os+1qjKUQTdSiWxqgeaTR7+
-	HdLBT2ynFVEJm65+tI5UpZUl6J0JMt6zSveTLT3+beQyDHidKSONCVRIB6X66D6e
-	nBisnKjkG+93qLtbVqS5f4PGuG50zhsBZx0wpewxgNYRa9A49UOwu4ZTgChOjBWt
-	eQwzyfjuRJUtAdbtFPWSwvOVwR+q8nkxiZLtmTwbmTLMlsNo8oK1JczusEyfiOvC
-	Nu94JXVh1cMHyT/Lfnq6geg9XdG9CAvtE1Cg6i8e0WDhc5x/5htdB4L3d6C9ewKp
-	xP7zCM+x743Aci9qlludrOMWnnYlkf1D8peD3C6PSkKoZvOnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791472805; x=1792336805; bh=plxy+DrT8Ze0nim79TR1yOEuPaMxj6VH3O7
-	13CTbSuw=; b=XV0h6kJyywuq4uTCPPT+vlRvFV2CWZJfS5hUIci9ETpt/Inwfoh
-	JdyoUH+orjCvLwrd9cOr+roDiYqw6AYuexLOJ47Enyc8OFbnMI4xbJubSQQ12YYC
-	8EQgHYj/Q1tyY88DGZOawPirgcOfCcuQLyUnz30qooL+d0/PVXJF9nCGKnf2sbnc
-	6fU6aAA4DTuLDKg6Y2d5T3eBsWqVUA4P9mE2YrkA5zoifdFaLGM3wAap8mvvn6JY
-	NIiZM6hGl/J0UspWfU/f+25+I7EqT7b6HUqmiriGIX81h/kP9WPJxBmuhyJp4bQv
-	qXZ7sWRZ4gz2+C6PrZX/0V3nr0hxZzqh0uQ==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=s-joshi.in a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791472805; d=s-joshi.in;
-	mf=PHN1aGFhc0BzLWpvc2hpLmluPg==;
-	rt=PGRhbW9uQGxpc3RzLmxpbnV4LmRldj4=;
-	s=fm1:rsa-sha256:RDp2lNKaFEoAPwYpBlO4+3Rl7Q12HLQWjKKcbx0NkQ+49j6
-	zzoxECCYH9OLJhFPD1KyFBEvqv9fFmjOrO6Mve9ksY8jAl7oAWVhKSNyUBvehXZR
-	AoIkR/EanwKYBcsXuM2YYH+mS19YngBvkcOIxuqAu0q0Kh17geSJ3WvSf65rhzgs
-	QCPaT5MZdtxhIN8P8ba06PxVRi2wqVsUa9VT4PHHGYzaId0MBP5wmCIhEUB6iUUL
-	VisQdJ6VuggHsMZXyIGrcK345QviGk3j1aUaeUZ8nvR/WNYKovyoHHSfzHJKY0gV
-	/ItmIVG1b5JXfaXjYmVjL2TcOw1uNFEyV7O0D4Q==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=9;
-	hn=cc,content-transfer-encoding,date,feedback-id,from,
-	message-id,mime-version,subject,to;
-Message-Instance: m=1; h=sha256:rf6ufOzkNZa7QhG4kTdpPLLyHMZLstPqQjFG7FSWTOc=:5syrNj/JLgLqlg7IRGXpYcJyk/HNi/mWCL7GsaEOynw=;
-X-ME-Sender: <xms:pLTHakvaYYI-n9-yyKB9pcZ3LPqDNpK-FwMA3RjbVNyLmkWVnnIQ5w>
-    <xme:pLTHaiLCnEOZoJ84DPrAJGjAF_N6eQn-KTPOCozUCoe8rakKYLMJVMcLmZOj6eijV
-    KCWrq4_XSB_JRMSXc828gbEbd5D_9H2RftZPkLWVKCkMNVH_H3iFRs_>
-X-ME-Received: <xmr:pLTHat8INlt6X0w19517Mx6gm20tn60O6Cbfw8JSQFy14iighyFvBdvl0g>
-X-ME-Proxy-Cause: dmFkZTGqxKJltKcxARJadtVktDBjtkTJW7gorgTB8Ld7pXgguWgs5hqg6/YGAbmf+3ndY6
-    LjqKDAI3EvH46oJqR0tWDuKjWnqcBAK55NEqWzEvzSxNjp+D3hNoffq1DonGlE89pCLzx7
-    fXzqKf8HtHttmd8QNutoRFIK6OEt2nz179BXmfB08wXw5RFnw+OX7Fuxqses2X8N7pM0MR
-    uix+e515sIDeirVi9i5sd9lgyNmtEz7/zoYfcBs4tM+ZskmEUvRGl4U1QHO9XkLYCMamWm
-    3NYpzIgBUJjx0iK2KXMvacFbQo+WueYCOphdPLzMH6GbuCPBxPTTQWkkPdp7XlpaUmN+Kg
-    fZmb6MQvaBT2/j3ANqZQpG7bX3bzTAz+HR674FVqrCnNETt7/fTIYJa6R2bmOeMn3xK86J
-    sNYywAhEtrC+AikraNY+CpaxZ7swDj4/y6WXHCfvw0IeAGAazvJ/krqsF/UlegqMvxZkCI
-    KB+WnPfo5WGXtdz/x/M80prHyqfZNxEuAy8aSCJlavWKyLvFqO5KU4Q7aYxSDmpzFaLF/m
-    qIuSNaP5vgZ+lygJWy5PY6YYKVreeTw8rQJv9fJvMDENRDnemN8OWF5jyduYZV4jf+SrN3
-    /24ZqrMN7P0km3ZBvU7n/ml8VJ5yRUd4TOwE5BChMTU4ral69GdY/sTnijEA
-X-ME-Proxy: <xmx:pLTHaryA20PcyxVoVyL1vFpbYtAlPaHyVAkXsfAhV0AIjiVWDGjIyw>
-    <xmx:pLTHaq4TSUMvs15Vy7RS-tkpV0k6gyPpshHqwnSQcNPruuw2gC9IrQ>
-    <xmx:pLTHai-wnORkuU6EUKfcDIWUbkOXXM7cI4rxXrHBSJQpkkpxgz1GUQ>
-    <xmx:pLTHavr74d05gvSYM-VsZ1efHAM_ybRZ2_lrBScrHQ-PMhOZF1Oe1Q>
-    <xmx:pbTHahihQO3qK4uVQ4gX6QAwMwfKoLQe4WrIpPZ9vOU_EzIwmY1xOOpA>
-Feedback-ID: ia9504abf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 11:20:03 -0400 (EDT)
-From: Suhaas Joshi <suhaas@s-joshi.in>
-To: sj@kernel.org,
-	akpm@linux-foundation.org,
-	aethernet65535@gmail.com
-Cc: damon@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="WJ0cVWt0"
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4j50FP0Y2WzKnNf;
+	Thu, 15 Oct 2026 09:34:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1792049657;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=5BbSMtY+9Kbz5WrucAlpB74oey3pZ7xFI2/f3PZfg8I=;
+	b=WJ0cVWt0CO90YoIk8WOSdU9JWWqR/gk+s+jOZKKuzmyqLpiPgHHEqZ6T0iecGzqaJSnhvR
+	DopRTNElY6VV6Ad0nF4dK1C/hd7A5GHPZrWTCT8AhnzLPEGPa2AJf9j2vMW+LhmSQiY27s
+	3OHQabVF4eNuGaaMUbvFxNTjhZR+zg8S1iXpnQ0aAzTQVu++CVXTkNX/LCXQ/InygRbAe1
+	A9Bvou1y1Erdo7j7tTSXaY5pc15GPe3UE86RYEv3kC4EcvLL47m94tlG6UUkrBR6qK9uK0
+	jQM7WQ/cgJJKOSQ6zs0oh4OVnESTwS+H4PtZf1354rmuji+E6HyvrxFnpze7SQ==
+From: Manuel Ebner <manuelebnerli@mailbox.org>
+To: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>
+Cc: Manuel Ebner <manuelebnerli@mailbox.org>,
+	damon@lists.linux.dev,
 	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 0/2] mm/damon/core: Iterate over installed probes instead of DAMON_MAX_PROBES
-Date: Thu,  8 Oct 2026 20:49:24 +0530
-Message-ID: <20261008151944.113714-1-suhaas@s-joshi.in>
+Subject: [PATCH v2] mm/damon/lru_sort: fix grammar and stlye
+Date: Thu, 15 Oct 2026 09:29:47 +0200
+Message-ID: <20261015072947.802821-2-manuelebnerli@mailbox.org>
 X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -101,45 +61,180 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-MBO-RS-META: idn3gxtcdjt6emcbahy53p5jocy9zney
+X-MBO-RS-ID: 344519cfb3155f51206
 
-Hello,
+Fix tenses. Split long sentences thereby imporove readability.
+Replace 'set as' with 'set to'. Replace [] with () to make the file uniform.
 
-This is v2 of a series [0] I sent earlier. Please find changelog below.
+Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
+---
+ .../admin-guide/mm/damon/lru_sort.rst         | 61 +++++++++----------
+ 1 file changed, 30 insertions(+), 31 deletions(-)
 
-There were two "todo: " items of the same nature in mm/damon/core.c. Both
-of these suggested that we should iterate over only installed probes while
-updating (last_)probe_hits[] during merging/splitting regions, instead of
-iterating over the entire array, which may have empty/unused indices.
-
-So this patch series does exactly that. It replaces the for-loop over
-[0, DAMON_MAX_PROBES) with a damon_for_each_probe() over the probe list of
-the context.
-
-These patches are based off mm-new. They pass all KUnit tests related to
-damon. I have boot tested (but nothing beyond) on qemu-x86_64. Please do
-let me know if I should do any specific tests and link the logs here.
-
-Changes v1 -> v2:
-1. simplified commit message of patch 1 (on Liew's suggestion)
-2. wrapped all lines at 80 characters (on SJ's suggestion)
-3. added comments for new argument in function (on SJ's suggestion)
-4. added damon_ctx_destroy() in r2 failure case in damon_test_merge_two()
-   (on SJ/Sashiko/Liew suggestion)
-[0] https://lore.kernel.org/damon/20261007154851.45368-1-suhaas@s-joshi.in/
-
-Regards
-Suhaas Joshi
-
-Suhaas Joshi (2):
-  mm/damon/core: Use only installed probe in damon_merge_two_regions()
-  mm/damon/core: Copy only installed probe in damon_split_region_at()
-
- mm/damon/core.c             | 61 ++++++++++++++++++++-------------
- mm/damon/tests/core-kunit.h | 68 +++++++++++++++++++++++++++++++------
- 2 files changed, 95 insertions(+), 34 deletions(-)
-
-
-base-commit: de3c5f0e6ebc5e0885d99043e071320cbb6ffbde
+diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
+index 0c04d238ed..aa4cc90ca5 100644
+--- a/Documentation/admin-guide/mm/damon/lru_sort.rst
++++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
+@@ -5,20 +5,19 @@ DAMON-based LRU-lists Sorting
+ =============================
+ 
+ DAMON-based LRU-lists Sorting (DAMON_LRU_SORT) is a static kernel module that
+-aimed to be used for proactive and lightweight data access pattern based
++aims to be used for proactive and lightweight data access pattern based
+ (de)prioritization of pages on their LRU-lists for making LRU-lists a more
+ trustworthy data access pattern source.
+ 
+ Where Proactive LRU-lists Sorting is Required?
+ ==============================================
+ 
+-As page-granularity access checking overhead could be significant on huge
+-systems, LRU lists are normally not proactively sorted but partially and
+-reactively sorted for special events including specific user requests, system
+-calls and memory pressure.  As a result, LRU lists are sometimes not so
+-perfectly prepared to be used as a trustworthy access pattern source for some
+-situations including reclamation target pages selection under sudden memory
+-pressure.
++As page-granularity access checking overhead could be significant on huge systems,
++LRU lists are normally not fully nor proactively sorted but rather partially
++and reactively sorted for special events.  These events include specific user requests,
++system calls and memory pressure.  As a result, LRU lists are sometimes not
++suitable to be used as a trustworthy access pattern source.  These situations
++including reclamation target page selection under sudden memory pressure.
+ 
+ Because DAMON can identify access patterns of best-effort accuracy while
+ inducing only user-specified range of overhead, proactively running
+@@ -28,9 +27,9 @@ pattern source with low and controlled overhead.
+ How It Works?
+ =============
+ 
+-DAMON_LRU_SORT finds hot pages (pages of memory regions that showing access
+-rates that higher than a user-specified threshold) and cold pages (pages of
+-memory regions that showing no access for a time that longer than a
++DAMON_LRU_SORT finds hot pages (pages of memory regions that show access
++rates that are higher than a user-specified threshold) and cold pages (pages of
++memory regions that show no access for a duration that is longer than a
+ user-specified threshold) using DAMON, and prioritizes hot pages while
+ deprioritizing cold pages on their LRU-lists.  To avoid it consuming too much
+ CPU for the prioritizations, a CPU time usage limit can be configured.  Under
+@@ -63,10 +62,10 @@ enabled
+ 
+ Enable or disable DAMON_LRU_SORT.
+ 
+-You can enable DAMON_LRU_SORT by setting the value of this parameter as ``Y``.
+-Setting it as ``N`` disables DAMON_LRU_SORT.  Note that DAMON_LRU_SORT could do
++You can enable DAMON_LRU_SORT by setting the value of this parameter to ``Y``.
++Setting it to ``N`` disables DAMON_LRU_SORT.  Note that DAMON_LRU_SORT could do
+ no real monitoring and LRU-lists sorting due to the watermarks-based activation
+-condition.  Refer to below descriptions for the watermarks parameter for this.
++condition.  Refer to below descriptions of the watermarks parameter for this.
+ 
+ commit_inputs
+ -------------
+@@ -74,9 +73,9 @@ commit_inputs
+ Make DAMON_LRU_SORT reads the input parameters again, except ``enabled``.
+ 
+ Input parameters that updated while DAMON_LRU_SORT is running are not applied
+-by default.  Once this parameter is set as ``Y``, DAMON_LRU_SORT reads values
++by default.  Once this parameter is set to ``Y``, DAMON_LRU_SORT reads values
+ of parameters except ``enabled`` again.  Once the re-reading is done, this
+-parameter is set as ``N``.  If invalid parameters are found while the
++parameter is set to ``N``.  If invalid parameters are found while the
+ re-reading, DAMON_LRU_SORT will be disabled.
+ 
+ Once ``Y`` is written to this parameter, the user must not write to any
+@@ -86,37 +85,37 @@ violate this rule, the kernel may exhibit undefined behavior.
+ active_mem_bp
+ -------------
+ 
+-Desired active to [in]active memory ratio in bp (1/10,000).
++Desired active to (in)active memory ratio in bp (1/10,000).
+ 
+ While keeping the caps that set by other quotas, DAMON_LRU_SORT automatically
+ increases and decreases the effective level of the quota aiming the LRU
+-[de]prioritizations of the hot and cold memory resulting in this active to
+-[in]active memory ratio.  Value zero means disabling this auto-tuning feature.
++(de)prioritizations of the hot and cold memory resulting in this active to
++(in)active memory ratio.  Value zero means disabling this auto-tuning feature.
+ 
+ Disabled by default.
+ 
+ autotune_monitoring_intervals
+ -----------------------------
+ 
+-If this parameter is set as ``Y``, DAMON_LRU_SORT automatically tunes DAMON's
++If this parameter is set to ``Y``, DAMON_LRU_SORT automatically tunes DAMON's
+ sampling and aggregation intervals.  The auto-tuning aims to capture meaningful
+ amount of access events in each DAMON-snapshot, while keeping the sampling
+-interval 5 milliseconds in minimum, and 10 seconds in maximum.  Setting this as
+-``N`` disables the auto-tuning.
++interval to 5 milliseconds in minimum, and to 10 seconds in maximum.  Setting this
++to ``N`` disables the auto-tuning.
+ 
+ Disabled by default.
+ 
+ filter_young_pages
+ ------------------
+ 
+-Filter [non-]young pages accordingly for LRU [de]prioritizations.
++Filter (non-)young pages accordingly for LRU (de)prioritizations.
+ 
+ If this is set, check page level access (youngness) once again before each
+-LRU [de]prioritization operation.  LRU prioritization operation is skipped
++LRU (de)prioritization operation.  LRU prioritization operation is skipped
+ if the page has not accessed since the last check (not young).  LRU
+ deprioritization operation is skipped if the page has accessed since the
+ last check (young).  The feature is enabled or disabled if this parameter is
+-set as ``Y`` or ``N``, respectively.
++set to ``Y`` or ``N``, respectively.
+ 
+ Disabled by default.
+ 
+@@ -235,7 +234,7 @@ max_nr_regions
+ Maximum number of monitoring regions.
+ 
+ The maximum number of monitoring regions of DAMON for the cold memory
+-monitoring.  This can be used to set upper-bound of the monitoring overhead.
++monitoring.  This can be used to set the upper-bound of the monitoring overhead.
+ However, setting this too low could result in bad monitoring quality.  Please
+ refer to the DAMON documentation (:doc:`usage`) for more detail.  1000 by
+ defaults.
+@@ -268,7 +267,7 @@ This parameter is for setting and getting the :ref:`address unit
+ 
+ ``monitor_region_start`` and ``monitor_region_end`` should be provided in this
+ unit.  For example, let's suppose ``addr_unit``, ``monitor_region_start`` and
+-``monitor_region_end`` are set as ``1024``, ``0`` and ``10``, respectively.
++``monitor_region_end`` are set to ``1024``, ``0`` and ``10``, respectively.
+ Then DAMON_LRU_SORT will work for 10 KiB length of physical address range that
+ starts from address zero (``[0 * 1024, 10 * 1024)`` in bytes).
+ 
+@@ -291,22 +290,22 @@ If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.  Else,
+ nr_lru_sort_tried_hot_regions
+ -----------------------------
+ 
+-Number of hot memory regions that tried to be LRU-sorted.
++Number of hot memory regions that were tried to be LRU-sorted.
+ 
+ bytes_lru_sort_tried_hot_regions
+ --------------------------------
+ 
+-Total bytes of hot memory regions that tried to be LRU-sorted.
++Total bytes of hot memory regions that were tried to be LRU-sorted.
+ 
+ nr_lru_sorted_hot_regions
+ -------------------------
+ 
+-Number of hot memory regions that successfully be LRU-sorted.
++Number of hot memory regions that were successfully LRU-sorted.
+ 
+ bytes_lru_sorted_hot_regions
+ ----------------------------
+ 
+-Total bytes of hot memory regions that successfully be LRU-sorted.
++Total bytes of hot memory regions that were successfully LRU-sorted.
+ 
+ nr_hot_quota_exceeds
+ --------------------
 -- 
 2.55.0
 
