@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACAD284693;
-	Thu, 15 Oct 2026 14:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8694F7CAE;
+	Thu, 15 Oct 2026 14:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792073608; cv=none; b=m8U6xYJBL4wKeyMP13OLKY6+tiqPOSINNQtOJbAZDk4U2k8Wz+M253AzFqjHmpmNBEma2cenHYaSNHhEMEMw0NQyYET19ovycWTUUnc8mh3yuXS/iuxhdMQ81BLcvoP3sHeiIHxQHNc9Xlt+j4Xah9Z7gxu0hgVXBxFWfY2oAy8=
+	t=1792073690; cv=none; b=qGfPcIhpw93qqCy+iJb9BhW56evcuY2a9BI3PnwPjNs6sg8ga95irWW488SOwIszFurpKQwh1Js9IMzdjIAAuxjvldtQIy/reicA7rGZabhGNEu4qvuTPYe8+FoNnjvgoB5H4syv7sR76rZC58zo+sqXusaesxBd6ZrbNhpgtzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792073608; c=relaxed/simple;
-	bh=qk7EObw9jegCCoMHdhDr7g/VY2GLHs0vSQ3vyS3zVUI=;
+	s=arc-20240116; t=1792073690; c=relaxed/simple;
+	bh=BVD1Vz+UeJLrV2fGsYYdBVUZNTV2X12KZNuySUMivPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMomYeD51XWh9pn8zYmVP211NNzTkeuaaa3wV19P/6nRqqo8eUwxchGCsQ8gwT7m++NqA/2BCFIl1ygd/EOq//HFVtifwjId+E1bYz1Hw2Omo24hrTDfQpManPzlrBEos29s1WGTBytHUQT0wOU7A1py84Z0m1x1viMQneI22XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VK2jk6qM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zy4bzbxgSaSeBDyyFvq9V8owZXDGyqsCjghIBKH2U1eAwua9rHilW34P3k6cfs5BpuwtT24si5S3+NEZC3gistG+3XKe0qnN8qKbCMngsSpfduc1lxEHH88N8UHLUtKzdforruw23Ks32s8CNgVpVcsks69B5A/CnkHaITz44eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U7oT4j2M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VK2jk6qM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C5F1F000C4;
-	Thu, 15 Oct 2026 14:13:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U7oT4j2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AAB1F000C4;
+	Thu, 15 Oct 2026 14:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792073606;
-	bh=vSbVaC0f2gNWsRFqnc1zPjJqFLHG96Rj4dv0cQbpqHk=;
+	s=k20260515; t=1792073688;
+	bh=dEbkmTWrpR6q9/sWzznVAOdz9b4w+GRgYvyg0dkV3XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VK2jk6qMdVNH/RTkBn4PiZI8l5MImtqd3I3/rcyPP3Z0H9vIq89Aqw22/KwApHpvq
-	 sq8EsJleJfgC6Cjn62uzJ0PV5sSqtxM5ZHTry/w8PU8mlXfWxmH9jGrONj71JsufQn
-	 BdVquPDJF368SCGof+kurkib3QSmOjvG/gWWEwXssUECfiN/Re+GlMjz62a1bxPFDV
-	 XgCdx/GqOrPGwHc8J29qkAlYhs9rU6NH0I4eWzlJw1qNGsNbubg51pUq0zBCzySD1j
-	 R16wu5PI+4GtNFfiN9cHyLrRR1T1D7o65TYAd88FFUWkm5QxeduSsN9z66q/PyV3jm
-	 32hAyDmOWkq1w==
+	b=U7oT4j2M/dxRJ5UNhePstb/qD65RJhAQPsJrp+OXO3aFNyn0N4VRuUNGOX8hLBunf
+	 UyM7SVGnVPwsvtkw0f3lrVZT4exY43JBzW0zo6cW/wXCLEUThDQZpWnUiftQ/ysYb5
+	 Wqhz5xrSpYdlnU63hDvFwcLOoBKxQ18mkZMNRq4ZQGPWR9nlaohdt3b7nKzihXv+OQ
+	 8Yzi8UIkB/f+hMP9lgRzHgEx2fCTSlvK9Tvzlj9S9rwiJpyboAwbvE0ZebUUXTb3Jd
+	 ukYMmmSomSgg/NxQSSqymmh8CC8QrQ3oNjoxhLcASqIhKEeTByRiBwDmlz7MvTVXTD
+	 mAfZLXzrwXufg==
 From: SJ Park <sj@kernel.org>
 To: Aveline Noir <jm5905938@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
@@ -33,11 +33,11 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [BUG] DAMON_STAT: idle percentiles out of order on 32-bit
-Date: Thu, 15 Oct 2026 07:13:19 -0700
-Message-ID: <20261015141319.88393-1-sj@kernel.org>
+Subject: Re: [BUG] DAMON_STAT: 32-bit overflow reports wrong estimated bandwidth
+Date: Thu, 15 Oct 2026 07:14:41 -0700
+Message-ID: <20261015141442.88741-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CANOyQmHad1vamnZT12M5yPrJ69==Pt1U0+MGw6u0MuNtr-DRCw@mail.gmail.com>
+In-Reply-To: <CANOyQmFPJt=-=hJh9Gt-FPG6YiyeidyfUbnW0mF5bSmJ0m7P0w@mail.gmail.com>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,47 +47,46 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Avelin,
+Hi Aveline,
 
-On Thu, 15 Oct 2026 04:24:12 -0700 Aveline Noir <jm5905938@gmail.com> wrote:
+On Thu, 15 Oct 2026 04:24:19 -0700 Aveline Noir <jm5905938@gmail.com> wrote:
 
 > Hi,
 > 
-> In an i386 QEMU guest built from mm-new commit ad9f2d463666,
-> DAMON_STAT reported these memory_idle_ms_percentiles values after a
-> statistics update:
+> On an unmodified i386 QEMU kernel at mm-new commit ad9f2d463666,
+> DAMON_STAT reported an incorrect estimated_memory_bandwidth value.
+> CONFIG_DAMON_STAT=y and CONFIG_DAMON_STAT_ENABLED_DEFAULT=y were set.
+> The guest continuously wrote one byte per page across a 32 MiB mapping.
+> I used QEMU's GDB stub and the matching vmlinux to stop just after
+> damon_stat_set_estimated_memory_bandwidth() stored its result.  At each
+> stop, I traversed the same target's regions separately and recomputed
+> access_bytes with full-width integers.
 > 
->   guest uptime:       22.51 s
->   aggr_interval_us:   3200000
->   percentile 0:      19200 ms
->   percentile 50:         0 ms
->   percentile 100:        0 ms
+> Three nonzero callbacks, all with aggr_interval=100000 us, showed:
 > 
-> The 0th percentile is greater than the 50th and 100th.  The guest had
-> 256 MiB of RAM (MemTotal: 254216 kB), a running kdamond,
-> CONFIG_X86_32=y, CONFIG_DAMON_STAT=y,
-> CONFIG_DAMON_STAT_ENABLED_DEFAULT=y, and CONFIG_COMPAT_32BIT_TIME=y.
-> aggr_interval_us changed from 0 to 1600000 and then 3200000, showing
-> that statistics updates ran before the final read.
+>   access_bytes   independent sum   stored B/s   full-width B/s
+>       33357824          33357824        31079        333578240
+>       65200128          65200128        25244        652001280
+>       41152512          41152512        24303        411525120
 > 
-> In damon_stat_set_idletime_percentiles(), the loop compares
+> The final sysfs read was estimated_memory_bandwidth=24303, matching the
+> last stored value.  The independent region sum matched the kernel's
+> access_bytes in every callback, so the sum had not overflowed.  Each
+> full-width result fits a 32-bit unsigned long.
 > 
->   next_percentile <= accounted_bytes * 100 / total_sz
+> In mm/damon/stat.c, the expression multiplies the unsigned long
+> access_bytes by 1000000 before dividing by the aggregation interval.
+> On i386 the product wraps.  In the first row it becomes 3107979264;
+> dividing by 100000 gives the stored value, 31079.  Full-width arithmetic
+> gives 333578240 B/s from the same inputs.  The other two rows show the
+> same problem at the callback site.
 > 
-> where accounted_bytes and total_sz are unsigned long.  On 32-bit, when
-> total_sz exceeds 42,949,672 bytes, the wrapped product cannot yield
-> 100%, even after all bytes are accounted for.  Upper entries in
-> memory_idle_ms_percentiles then retain an earlier value or remain zero
-> on first use.  DAMON_STAT monitors the system RAM address range, which
-> exceeds that threshold in this guest.  I did not capture a per-region
-> trace in this run.
-> 
-> The guest init read the module parameters after 22 seconds of uptime;
-> it did not write to them.  The i386 config, guest init, serial log, and
-> build/run steps:
+> The workload is synthetic; the test checks DAMON_STAT's arithmetic, not
+> the accuracy of its traffic estimate.  The i386 config, guest init,
+> disassembly, GDB probe, logs, and build/run steps are here:
 
-Could you share more details about your real use case that require the setup
-and how this becomes a real problem?
+Could you share more details about your use case that require this setup, and
+how this becomes a problem?
 
 
 Thanks,
