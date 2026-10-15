@@ -1,133 +1,102 @@
-Received: from mail-oi2-f9.google.com (mail-oi2-f9.google.com [74.125.231.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F51A4C9E01
-	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 11:24:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792063463; cv=pass; b=DgRim58tej1M88pvPU5Rch52gw2oUab0egYdQor7JuwNXw7qNS7Ard1fRU7a1+HPfEFTJvjsYvIMytPqYgexxjogez+p+4cfbjsmjCiEXc3kGGU7HPck3EaM+/N8dZ3+1n9PO/GNP57sL/PMoE3lgMvXXCLBO+dSE1V+tRP9PaQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792063463; c=relaxed/simple;
-	bh=XVMTbGI24hbajbBIxXy0Jvn5BAj5rjBFBQOCI/BpQ+U=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=fyjO67jRAa0ruUUaVMXtktpx5/K1z0qjhWmFyGh0FjSPAbFbzVIYuVBqRFJw7IiSeeVZFBRRvDI3BYf0nLGko6RwvV7mG+zvYAcZ+/9HKLm3bj2qUMl3VpbKJSSxkPE5qLGWoxodJ0hkxUx7cE2MroV5Dm6k1xX/iVxNxaO1TGA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nd2tUWmQ; arc=pass smtp.client-ip=74.125.231.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD5F527589;
+	Thu, 15 Oct 2026 13:50:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792072255; cv=none; b=ZzMHQt5Z/TABHTGlJhVzkphuHq2huE/1JbpCNhbIWuWtyU/If2nqNgd4+rZFvHY5WViD7fE0H24JEtIOcpP5buu2MHJqrgnP3Rm5SpI3p3Dqy+T54b5QZvvnuc8D9gdadTEiVQ54iBzEOj9+vMcC+lsixpIgoy3Lq28kFvr2p5U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792072255; c=relaxed/simple;
+	bh=MUa9Dsa5psOCFn2+tB4jgmF7IVY2/hrNYnc8LGJu7Ho=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JkqXU7FSRywXJNJd66brajdGbb+UfHqZZKqBO5qWFfH5D7C1GOHxdSDvGMbKvpSKvl4icU34rfwEPNVA/D0Dqx9k1uCrnrdjva+WntVv7Kye/9fmraHxDXsSczgLYKJv5QwHg4/BOUlpxeXiN4eIs5GkvP4UsksTJoc7B4ayNu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eep/pvRW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nd2tUWmQ"
-Received: by mail-oi2-f9.google.com with SMTP id 5614622812f47-4f4f77e92eeso733921b6e.1
-        for <damon@lists.linux.dev>; Thu, 15 Oct 2026 04:24:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792063461; cv=none;
-        d=google.com; s=arc-20260327;
-        b=KygYsQ6neohRRWnV01EtQ4Gv529QnIuADuFksN4Qmnv9XrEBcfNDPbtEVlrQtubMuf
-         mk7z3nwPFOgJd4q3nUXYMYxKKcS3elrlneUhBpLv4/jDll0K8K3KnRj28gs3TsIS1qqM
-         /qxzeJfmhjOlSadmbcYvtR1AJsIq8dOCCBYZytF/wWpaWGiBcwfHqLUmQLPsXCjqLuNN
-         Sck5j44Q4bZ+MdsCZR4IZpcwcYBRkGiZCBTNM6tWf5TEbTYP8HCH7d/692LgcK+xDXbJ
-         COwkVybn2HH2jpYGpi8VOGJ0p1Vkf2MsK7qkrYK9dPxYyHYL6pGRHxofFtm3p/HqpRb3
-         4xTw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=toN6NfvRkfvzS3ZSAY9pfVPprxB1LDrTzbA57aszDio=;
-        fh=r142B9S1PknqgC2h5MW8zIFXCetCva286MzpouUXBL4=;
-        b=SLgLfpkT9js8BvYQKa2rElW2A62cr260a7/BBJ86OriACtwD//AaRrp/qZXykcjfeC
-         iBL6Kp3enJu81oMJ9LLe9JB/xXM2VdhbBfn5C7JFQPl4DtHBJUkm+gLMn/bDi0kW1fkk
-         M5cahbbDTxU0Tba067uSWz0/gSnvE61taix+H49FuluQ/jS6O9S/7ePrI5Ky5r76t0A/
-         y2J4XoXcwOjt5nM2SQDKOKpvdI4LwX7Z0Cp8Llkq5CDxQ4biLz/aUOjhkRqONw0/91yI
-         pYDhzVEjgHja4bnWsMjFkcE7tQef3zxvJx4qC4Ecz9AgJ54xW7KzuaVwJJs7WwZy/0ws
-         UbWQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792063461; x=1792668261; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=toN6NfvRkfvzS3ZSAY9pfVPprxB1LDrTzbA57aszDio=;
-        b=nd2tUWmQ9HotHTlcTbNuwXvaxo+L1YZ6ZELXcrxgzz8SUKTQ71RPd5F3PiZOgkMY2Q
-         DbzTjE6vvkEpP0tjkH2po23iaWzMZ4sm7VjbzkvZQwqv+WTX/dgMtwtrEuMmy4d+KG+Q
-         vY7BUGFOis7y6U+48qaHUCzo84dFwyyYBcVwxk2eAX42kOIOpr8XkXFlHgtKWPsAJfYq
-         OcNvQNGsTyQhW7Ys82OPAM/tYvW3n3cNALA+8yyuDiQlVf5zwgAZOg49yVkm+rEPRw6t
-         w/5cbeKfw+pc8dLD3Q4c2yLNHfNXInxbFEa58huAXjX0QU0mayI6ShmPd+xy1mqIV8FU
-         B8gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792063461; x=1792668261;
-        h=content-type:cc:to:subject:message-id:date:from:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=toN6NfvRkfvzS3ZSAY9pfVPprxB1LDrTzbA57aszDio=;
-        b=K/kInbBncKaYLer1+Wdw+8QQJm2KIr5anmlz59NVQvYq6aRk1PRsM4A+2grkxQB0sy
-         24HFiYGcyWEKiD0JAlZjL6wiQK7usHqXT2oidZjpKHCZ5tAIMRT0AG6D2ZHIEWoyIiWH
-         NuiHdZh/oUEihHgsLnn8ArVZQsu8DlN6zm3M48+UWEC4C1ngSavaAlaYexVlb9SNiZEh
-         GXTd445ALzJE7VlMqmpA1EX9IfIoFEvnYTs5HAnOzev+fmXgRI8k7JgeYWk4bsdvwvij
-         MQknM7+mClx3v35adqkPwCc4yzl+joribqQSu1RFTCAgDhEcAPcQqdu359pR2LyoZezp
-         sskw==
-X-Forwarded-Encrypted: i=1; AKwUvBwv4vlCFYQz4n3NE0Ogq808mhzAgCHHUldNb+/W6ZDCvktcDsUZzm2rEb8yQrvw/yjcUwluEQ==@lists.linux.dev
-X-Gm-Message-State: AFq9FYJaeiVaxPXCDwePJO61qqyonaS0k1vYEXgXyFTQ/KPpEwleC9nG
-	BccuwkCq28j0zM3bI76c4qMABdyZGlGt4OlrUjLdY5oXSEEMAXNZB7QGgx07N+S5bsLE7VXqlt0
-	LSeJU3ITxIC2wqwVywcEIqVWV3ZZSJLg=
-X-Gm-Gg: AYBFou0CZy84eavQHtPCz7R+73zYjdV3W06EwSW6uj10jOaCbroCncV3qtYkrr4M7qx
-	BBXnAmogneI/amRg/d5eIBJUTowwIOYQlb0OAME14n1DWH0od9jBEdVxPdZxR5upAe4HuFd9ruf
-	z5zqAGjGHjy01wjI4vI6I4LF+3bI23b+WPihSKt6NwhkKCRyJ/21hayQpd1/txRkPCuo9tplBwN
-	cN8ek3ZtKFlYASmd4MtEmmMA+EpmtpBBlpW7bUXG8VKbJMpljVDmnidHoAFCjeoO5YibHlYshl+
-	9Y58/RtYoZTr7Rtx+ne2Ge5QIl19vA2GAvkWJalv8S9xpovLe+p6hbHEo4jx+uXyw0lIjKTZdBU
-	EivuWLBCrZw==
-X-Received: by 2002:a05:6808:4fde:b0:4fb:a7f3:420d with SMTP id
- 5614622812f47-50c57696145mr17825753b6e.48.1792063461122; Thu, 15 Oct 2026
- 04:24:21 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Thu, 15 Oct 2026 04:24:19 -0700
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Thu, 15 Oct 2026 06:06:51 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eep/pvRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EA41F000C4;
+	Thu, 15 Oct 2026 13:50:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792072254;
+	bh=Uky4LxVMuNdxzqnRXqwRhSpdCLtiXE4d97pVcYf0z28=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=eep/pvRWLeP7LUG6Llnfw1tNk6uZtNkk3PWjmeLelCpsn1VwxSQQqGifW+Owm3H68
+	 O44r3hiFFVgv4vpz6w+heQRlMkDt5Zj6cqprL6FuxEy9maxJD8tFIUquiUdSOIkrnL
+	 T+crrUqoslxVDIUyk6OPWTDrGs5YuMWlDbxhPO1Q95NT9LqXXVqM8Ahlhcex8ZFy8I
+	 2lBEcO/zPkNSqULwIdy9zQQZq2C1pzRXAJ2H6vQDtd9Ihbgp4Qucoqv4ZeDbOn35AY
+	 BX/hdcdohYwq9MHltL8ShzcHFu8YAJyO3H20ZhCKt0lyqDzyq7LdcwnHSpw0WJS+Rg
+	 BTHUVNoYXbkQg==
+From: SJ Park <sj@kernel.org>
+To: Manuel Ebner <manuelebnerli@mailbox.org>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] mm/damon/lru_sort: fix grammar and stlye
+Date: Thu, 15 Oct 2026 06:50:46 -0700
+Message-ID: <20261015135047.87355-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261015072947.802821-2-manuelebnerli@mailbox.org>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Thu, 15 Oct 2026 04:24:19 -0700
-X-Gm-Features: AclHuK-608mCEKwpz-MUlsDmIU9QQ8jGf8QLRe02ypGSFraehbwNM8aN2ipTdn4
-Message-ID: <CANOyQmFPJt=-=hJh9Gt-FPG6YiyeidyfUbnW0mF5bSmJ0m7P0w@mail.gmail.com>
-Subject: [BUG] DAMON_STAT: 32-bit overflow reports wrong estimated bandwidth
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hi,
+On Thu, 15 Oct 2026 09:29:47 +0200 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
 
-On an unmodified i386 QEMU kernel at mm-new commit ad9f2d463666,
-DAMON_STAT reported an incorrect estimated_memory_bandwidth value.
-CONFIG_DAMON_STAT=y and CONFIG_DAMON_STAT_ENABLED_DEFAULT=y were set.
-The guest continuously wrote one byte per page across a 32 MiB mapping.
-I used QEMU's GDB stub and the matching vmlinux to stop just after
-damon_stat_set_estimated_memory_bandwidth() stored its result.  At each
-stop, I traversed the same target's regions separately and recomputed
-access_bytes with full-width integers.
+> Fix tenses. Split long sentences thereby imporove readability.
+> Replace 'set as' with 'set to'. Replace [] with () to make the file uniform.
 
-Three nonzero callbacks, all with aggr_interval=100000 us, showed:
+checkpatch.pl warns as below.
 
-  access_bytes   independent sum   stored B/s   full-width B/s
-      33357824          33357824        31079        333578240
-      65200128          65200128        25244        652001280
-      41152512          41152512        24303        411525120
+    WARNING: Prefer a maximum 75 chars per line (possible unwrapped commit description?)
+    #10:
+    Replace 'set as' with 'set to'. Replace [] with () to make the file uniform.
 
-The final sysfs read was estimated_memory_bandwidth=24303, matching the
-last stored value.  The independent region sum matched the kernel's
-access_bytes in every callback, so the sum had not overflowed.  Each
-full-width result fits a 32-bit unsigned long.
+If you don't mind, I will fix this on my end.
 
-In mm/damon/stat.c, the expression multiplies the unsigned long
-access_bytes by 1000000 before dividing by the aggregation interval.
-On i386 the product wraps.  In the first row it becomes 3107979264;
-dividing by 100000 gives the stored value, 31079.  Full-width arithmetic
-gives 333578240 B/s from the same inputs.  The other two rows show the
-same problem at the callback site.
+> 
+> Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
 
-The workload is synthetic; the test checks DAMON_STAT's arithmetic, not
-the accuracy of its traffic estimate.  The i386 config, guest init,
-disassembly, GDB probe, logs, and build/run steps are here:
+Assuming you don't mind me fixing the 75 columns warning on my end,
 
-  https://github.com/jm5905938/kernel-mail/tree/195d7017352a3d0f4a0475b98f3b03650f5c14ea/cases/2026/damon/2026-10-15-bug-reports/04-stat-bandwidth-32bit-overflow
+Reviewed-by: SJ Park <sj@kernel.org>
+
+I applied  this patch to damon/next [1] tree with the above mentioned commit
+message line length fix.  We are now quite close to next merge window.  It may
+better to focus on making mm.git more stabilized and therefore ready for the
+next merge window, rather than adding more changes that are not really urgent.
+I understand this series is not really urgent.  Hence, Andrew might not add
+this patch until next -rc1 release.  In the case, I will request adding this to
+mm.git after next -rc1 release.  So, no action from your side is needed for
+now.  Let me know if you think this is really  urgent.
+
+> ---
+
+Please add changelog on the commentary area [2], with links to the previous
+revisions, from the next time.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+[2] https://docs.kernel.org/process/submitting-patches.html#commentary
+
 
 Thanks,
-Aveline Noir
+SJ
+
+[...]
