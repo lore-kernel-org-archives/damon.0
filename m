@@ -1,85 +1,85 @@
-Received: from mail-pj2-f8.google.com (mail-pj2-f8.google.com [74.125.227.136])
+Received: from mail-pj2-f10.google.com (mail-pj2-f10.google.com [74.125.227.138])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230565427F8
-	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 15:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A023B7B70
+	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 15:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.138
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792077879; cv=pass; b=r6yZru/cuhAtHZVftUcaCaSopPTWH+7tf2fb1lKZrp2q5wSLzJ8qylqYIBXpzaR10cFmFexNjGuBsB8fRmYIItLa/BLah9Y+9+bH48nqz1DO55mLVxOGt0PCmADJXT6yGoeRNLIUTpFyBuT32GofEbeBiPQMUlGCluhwMUsVIz0=
+	t=1792078628; cv=pass; b=Ar/mCB7O98VKn0K/qnxKjbMR7rGNTvWB5x6vtiM4fpr/jmBY/oq+5whlMbztc+j5H5P12iZT4+sqOeWpDMRuYfQKtqstvxf29kid7Sjq9yK4iwSV6Zpi17PVEb0Gbj0RrLdXvcktx+5+XfN02cQV9tkpX+vhiFyE5CESJz8Hohw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792077879; c=relaxed/simple;
-	bh=kxnCtFMlKaIT7SBEfLNeNNflUjSOXev1aVTpw3wxrSk=;
+	s=arc-20240116; t=1792078628; c=relaxed/simple;
+	bh=Mc8x6I4IlZLfP7Amk33bJSUN5CAY/VzVUFgnji/NKdU=;
 	h=MIME-Version:From:In-Reply-To:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oy7kgVliLMG47kC+CTBYyAEBrrP51GOWFnQ4f/PuUuuoeaq3h5FoUhGzUNmUdCUdbkcBJ0/nhXffH5wIryRqvESlJ1c9bwULBBGvPIw/fa6a72g2gnwvIFA62ZdXx4DKoZ6W5Kq353rC8nxI1a89g/6bRYIpqpN8irLMb+i/alI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FgTtlF8O; arc=pass smtp.client-ip=74.125.227.136
+	 To:Cc:Content-Type; b=nN0RCO1hzSoWOCRwyqfc/HM6gbCeUgTpHM35fQBVhz2ikAyR60ZTH83VSGaiP0sUBlkpzIuvsavRjABx4A30v37wWIs2WhWyaOxPfk8+JAW+u8vnaurwPh9seFHe9xhd1qWmGAgOw+pTh3M+2MZnazJK7ZJvRPb092OOvv7bkcA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tMPx1qxH; arc=pass smtp.client-ip=74.125.227.138
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FgTtlF8O"
-Received: by mail-pj2-f8.google.com with SMTP id 98e67ed59e1d1-3ac749e0719so454800a91.0
-        for <damon@lists.linux.dev>; Thu, 15 Oct 2026 08:24:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792077872; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tMPx1qxH"
+Received: by mail-pj2-f10.google.com with SMTP id d9443c01a7336-2e934c6c1c8so6207175ad.0
+        for <damon@lists.linux.dev>; Thu, 15 Oct 2026 08:36:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792078617; cv=none;
         d=google.com; s=arc-20260327;
-        b=rw7RbdsvtdIgZo4QwKP12yznp61g8JG2RVqg6kPIfS3Rf4Lu91XY1158Vyiqg/JEUN
-         WcbRFMk8Ra+NTvBZF/o04bgekq85VxrSb0Sq8BTAyccREQxEfmpMf7fraDDY/hrOlTNK
-         kl5k8Tt0u03yChI/A7Kh4st8gfkTNcuUcXNIgxaaVArpxzhu6KsvQc+1e3P8a028Yru7
-         m2dNVDqtcM1V9saqlJHO/ZCD8AentYdFksZltCw/Sd/FdM5lhnMNwxBef1JX+pgdsrly
-         Nfwbg0L1INQCaI84O2ocT5T/2gzwiHNQrSgqFHdlqBFCtaOUJesOSjvkKoR/kL2VFaDI
-         tsGg==
+        b=YAfrgfoKclN1n2JlAg/Fl7SK2oaCOKJRpmtvy+xarCNlBvZmVcesQ0F+lxZ8Lb0Xza
+         mNr3NlTm70yDoicNafKgHcorfYdUapLNN6w8iDm4H84JK46dPZjKGNszSMsPcZl38NGp
+         M5vUCUV/mGlpz0wsSZmeiTOkTuAXYsMNsVBub8LXAFYAKn6Jt1FD/13XBK3kNVoDMPc6
+         XxbnwSScPXNDpvNLPR7++NT0knkniSFnyZhu3vj3+hAqPiew20pp1wzFNhWFu++lzMQ6
+         OcCdBC4wennISnj/o+TMrI4OHE/c91bhwZS9EoY6AdapkQeNDitYXKBsk8O+f2CI/1w8
+         v7jQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=cc:to:subject:message-id:date:references:in-reply-to:from
          :mime-version:dkim-signature;
-        bh=YD6S+6u+gzgwuU4ceon9d+8HFftoXU9zg34ox/v9I5o=;
-        fh=D+stXT4eD7OOdb3JUV1tzHkRBHj75spXJKf/uRtaIsU=;
-        b=GCxrFNdkoLSuf485hzTNRA4LBKo7AD1zkJUjE5Qeo0d3ba5xQHF3hU5PDuPkGdafni
-         e8ePyOxMx9MoVqPpDfVx/DW0VXOdCXc1lDTZVvLqEvPwdL8dMM1ZkXHDC0x4uZSafTYG
-         6/H8MbCzolqX1zhuZknJ7T68rscdpTAkKyj2N5sElR05fKru8+wBeJxVcqFpas+UMmFE
-         +ZjLlMI5V6PSK8gV3gmtO/eUOl46ECmljNgFsCxLfAf+LXhJXMbMKtOhUyEIpqDGn1ku
-         VY+qFoNSJV/U8s5lFFHkNNGndvRH4hZQ9y37xxs07cllbjCFNBA6SA81UZBzPHjs43UX
-         Xd4w==;
+        bh=eNC0Fd3BGqN5rK2299oerWY4FCk3NDBRR5bAXp6FoIg=;
+        fh=MxAKK0w5m2h45oO//TdIs69z0aNKbiyCONfEK6VXxLg=;
+        b=qXEmIeux3mhCuYNCpydowZpQGDtESWn4GaUMkyZy7+h1H6c7Fgs5BJoEFxrekk+sft
+         QGnA8FwNvR6QWP4XWWgkMlXjquHVYvtLzZah3GnJ5y7zA0XIZqkSzxRKsGOrkNEnxeRB
+         vAXAq83+BvPzZHLOz8EvumHL2diWTLbBtMbL5AaTYzPwon5aWhDE5SQC7ioiwkxkZt6d
+         u/vtoQd6/EMaEm8MrZahkGbOdceVRm0p9aWBtRK5dPVsPJso84LYltTqBfw5r8TXJH9e
+         SBuRsr6WcXfiqQ9d7TVGkwuxDETmI6IRdNV2aP8D0zHrivH8LhCiiLndfLWR2WM7gtoT
+         J5xw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792077872; x=1792682672; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792078617; x=1792683417; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:references:in-reply-to
          :from:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=YD6S+6u+gzgwuU4ceon9d+8HFftoXU9zg34ox/v9I5o=;
-        b=FgTtlF8O56lx2FlSrhYlAuMgo7MpHdboCGqrGV/2WiFQe6LlHsNLVnv33QJEQPxeEH
-         f14dGmAHuwIljs7cqo7uUQs6qyjPHio/Pz8Rwv85DCNIA6EhMzp9vXrtfLAQ/tU4JW8m
-         7D+a/BuMVFEEVUUIuS6IK4foc7ImFaS7MktXX/okQeEwg/UlRyOZdAYu8QLD/MkOoghZ
-         WsIIsTSEbNDc8lIL7U0pXJ/s9ozJlPOldh6Gu4GBAvLJkNe64Y5ImGnLbSXEnuW//Oku
-         TFZLzkjXkGbK0FZzVOCUWbYaLRny03sKWsWtOnR8uurh7kJYM86jCk09bF1n4JELfUA1
-         3ikw==
+        bh=eNC0Fd3BGqN5rK2299oerWY4FCk3NDBRR5bAXp6FoIg=;
+        b=tMPx1qxHS9Bw/DKeCFxKUttUGzXbmvG4LSUZqmdpNBTJEDPTK7U6vfL3owBlYCSvOc
+         T6XDUmjr16ValJI0J+w5zOPoUsJA2dVG+8yd8Wrqbkl2K5Bnv2sh6SbwKPINEuDxjUUc
+         rxYGPndXvnngbEc7Hx8VkUh2f47dkGrrc49D/zQMa3C8Z/jE8QULqS+FyFAKvPGWpQ3F
+         9tNcDkV9RlJzOFAauEjZmUuMox4MI3ySrlYZMk1+MFJSyjoqkAO3ILsB3noSHy1qSMTA
+         EuLgOVzMt3DZG05WiPL29uIfOdTX4eFKZobEeF7Szxsln/ZxHOlbvSyhjrbzuYb9t3sU
+         qfuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792077872; x=1792682672;
+        d=1e100.net; s=20260707; t=1792078617; x=1792683417;
         h=content-type:cc:to:subject:message-id:date:references:in-reply-to
          :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=YD6S+6u+gzgwuU4ceon9d+8HFftoXU9zg34ox/v9I5o=;
-        b=Cxkbw863UjCiMdiRXYbCQzhRWSxfrRf32ydRgc8Y96igf2GSl//Kl0aDw7xYvCQY4J
-         TZB37ICFXJRVBPN/D6RZJuqcwhEv5WI3r47RiILB7QgXcI59rWoGDcgcLBh91CRvZhVJ
-         A1Ra5bkIuTaK1iTPR1QXgUZIDGxiL8wLH15zraz8oy+O1h1WQfnuxWxkBZ/GXclR1V2N
-         I7Z+8PRMotvN7X9yCUh8EMoytySs+RDihGX4XxNTSx1p84z36IRQXBoq5jKUaAvOujzl
-         OxL4JQNSutWhaJyIjn16MF5sSKnZAYZB8LcX4Y1WuiB8v21rpYnUy76a+crAZlt2KnIs
-         CTdA==
-X-Forwarded-Encrypted: i=1; AKwUvBzyA6p9iBSfdt2Zu2xfsdhgtovSkfL4pP2zMLfREPM0k4AMHVG5gzmUiNjhg8xUZHsC0TPNrA==@lists.linux.dev
-X-Gm-Message-State: AFq9FYKRTfbFPTAaYkYLUXHQGpKdjXJ741C1dA6WGQw6yd3Q/MW9hhoM
-	+8O8gzNYEgywYREaDuhZpFK2bAPgIPVVc/RKa30mYeMWpX0QKk3RTU3r90K9+Xwj0yGGeoBl2sY
-	2wlgGfrfe7IWzGDWj7ZEHqST2IkL3ILC3WkVr8Guf0w==
-X-Gm-Gg: AYBFou1jA9vuOLOiKGGIIag3mq6NmU1pvOtpwnT+LWEFy8XUI9Q+JY/YX9bw8fTQmSk
-	r9KJ1KYhD5Ke9SOtP3obqxPvXqAjyXvG7IHBEOTIzOE3BybOn9ncI9Nm0rXURcnwz6rV5mw+v6A
-	Oke0oyRz86TxmspdL0bbfEtVCk0rVTlksAetQ6BqGuxxWycWqo9v384tSB/Pv8+ocw3QBTS37qx
-	JopbtfDXTM8U5/U70NvkKArhYFFDu1agl6YoCISTv9W957t8SF6liriS8JCZdSWMdujmgAQy57D
-	AOEJCpDSK9G+aTV5Amx/VAbFg7haYEEZ71om9DUGhOEAKzLGjZ1i1SHEFmrcU40erA0NpRRqhpJ
-	YjyFfcj4=
-X-Received: by 2002:a05:6a20:d4c:b0:3e1:d80e:c960 with SMTP id
- adf61e73a8af0-3e1d80ecaa1mr4599730637.1.1792077872127; Thu, 15 Oct 2026
- 08:24:32 -0700 (PDT)
+        bh=eNC0Fd3BGqN5rK2299oerWY4FCk3NDBRR5bAXp6FoIg=;
+        b=jXAy9sN/v8pywsssFlG2v9GTsgPtdds35GhKxHF5qQIVVXCPofpU520VIbA41yBQ5H
+         7Gs358iWYdye4rot0g3j5GZufb8qnWitGsw3HVLw+wXzIoqglb3Pp6eqmeVhUvMHijpn
+         /bx3w/i7PWMChitop/fK8rx9NJoqoyFnStpAEshVDmjrdItFejjmJh46pKXnHHSeeGjN
+         JNzHSRxQ1dbMb6MHxR/P2MIwFgQEncz+6fCRTzIWHe5RYzLz1AwN29rv0O3ghimbvQ+a
+         3zSxi89zGNtTBp1/qvxlH1C6wcjPCEgbRRMAvVKH0ECnfeI9F68NDLrt/IDv6K486PE5
+         JT5A==
+X-Forwarded-Encrypted: i=1; AKwUvBxVL1YM8ZDEjiT3Xw1sGUt/6L3auZxFtodcoBXs2NDg6B3Hmqlnr5e418L5XEuG5NdEjToJ0g==@lists.linux.dev
+X-Gm-Message-State: AFq9FYIryMWulT2YGZ4YwcB6Vp4SPdCQx2TuFU2Zyv5tmbXbrn/cynqo
+	90mdkyCq3wldsawsv3l2dxxZLzpXRjEyqR57cM+uXfG11d37mUIsSDC24J3s8lrJzKfxv4sfTiB
+	0N+7xcQKs+n4vAbYn1bnqKsmoZ9mtcjQ=
+X-Gm-Gg: AYBFou1XSzJzlIXQRCMzOB69YfGPGgI+tyfEaslnqXmCbt9NTxg7OvtX8o6wbVX3BLz
+	hoen+AY6tjC36X/A3lBzwonWz08jKshB/Ja6PJWBg7NxDUHJBq9isCBBOwx86Zo1G2BRCTiZJbC
+	h+rx6/Lc8uz1Rv1yunlw2dX+W98I7sb7txQ8c2lszFtWHLtUGr/8K29NsgqTMu4WZUvWNlmDBI9
+	ER5nfp0JhDvwPrElvjqwkxMmczPjN0Ndse3gEJ76NAbhFPphGcJ01wH4jJiFnHMs9raitiZkzrT
+	cySlsAk/MVNnRAADd/J6z9oR/H/AKHHP0TdvPM9pgVXfpnh8NV/7j8vjJP3QzI8xATP7VCkHf3f
+	rght4Khc=
+X-Received: by 2002:a05:6a20:244e:b0:3e1:549c:deac with SMTP id
+ adf61e73a8af0-3e16b787a51mr17302180637.0.1792078617372; Thu, 15 Oct 2026
+ 08:36:57 -0700 (PDT)
 Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Thu, 15 Oct 2026 11:24:30 -0400
+ Thu, 15 Oct 2026 08:36:56 -0700
 Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Thu, 15 Oct 2026 11:24:30 -0400
+ Thu, 15 Oct 2026 08:36:56 -0700
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -87,12 +87,12 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 From: Aveline Noir <jm5905938@gmail.com>
-In-Reply-To: <20261015141442.88741-1-sj@kernel.org>
-References: <20261015141442.88741-1-sj@kernel.org>
-Date: Thu, 15 Oct 2026 11:24:30 -0400
-X-Gm-Features: AclHuK9j35VyoW4Zsj0WfuB6VFfItZnWYUAYwwxvoEyaCDxY4Cay-VoxbSK8Zf4
-Message-ID: <CANOyQmG9Cw5wtv_XHzOPa7o+rWcDn6R0WQLpeFUc1uK=e94ARQ@mail.gmail.com>
-Subject: Re: [BUG] DAMON_STAT: 32-bit overflow reports wrong estimated bandwidth
+In-Reply-To: <20261015141027.88149-1-sj@kernel.org>
+References: <20261015141027.88149-1-sj@kernel.org>
+Date: Thu, 15 Oct 2026 08:36:56 -0700
+X-Gm-Features: AclHuK85ky1hJxxDTCm3lZUrv5F8rUf3dKyeQBVHR1L5-9dl9c9590Lj6JmwJJI
+Message-ID: <CANOyQmF+nwNyGHptBJhT2iVDV6cmBMYY8rqgXnqg7GCDfFy_ow@mail.gmail.com>
+Subject: Re: [BUG] DAMON: 32-bit overflow selects wrong sampling interval
 To: SJ Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
 	linux-kernel@vger.kernel.org
@@ -101,60 +101,67 @@ Content-Type: text/plain; charset="UTF-8"
 Hi SJ,
 
 I haven't seen this affect a real workload. I found it while testing
-DAMON_STAT on 32-bit.
+interval tuning on 32-bit.
 
-I used a 32 MiB page-touching workload to get nonzero samples and GDB
-to check the calculation. For one sample, the kernel reported 31079 B/s,
-while full-width arithmetic gives 333578240 B/s from the same inputs.
+I set min_sample_us=2500 to make the difference visible. The default
+5000 us minimum hides it in this case. With the captured inputs, the
+kernel picks 2500 us, while full-width arithmetic gives 2812 us.
 
-A tool using this estimate to compare memory access intensity could
-get the wrong picture.
+The shorter interval could increase sampling overhead. I haven't
+measured that overhead; the observed issue is the wrong tuning result.
 
 Thanks,
 Aveline Noir
 
 
-On Thu, 15 Oct 2026 07:14:41 -0700, SJ Park <sj@kernel.org> wrote:
-> Hi Aveline,
+On Thu, 15 Oct 2026 07:10:26 -0700, SJ Park <sj@kernel.org> wrote:
+> Hi Avelin,
 >
-> On Thu, 15 Oct 2026 04:24:19 -0700 Aveline Noir <jm5905938@gmail.com> wrote:
+> On Thu, 15 Oct 2026 07:24:08 -0400 Aveline Noir <jm5905938@gmail.com> wrote:
 >
 > > Hi,
 > >
-> > On an unmodified i386 QEMU kernel at mm-new commit ad9f2d463666,
-> > DAMON_STAT reported an incorrect estimated_memory_bandwidth value.
-> > CONFIG_DAMON_STAT=y and CONFIG_DAMON_STAT_ENABLED_DEFAULT=y were set.
-> > The guest continuously wrote one byte per page across a 32 MiB mapping.
-> > I used QEMU's GDB stub and the matching vmlinux to stop just after
-> > damon_stat_set_estimated_memory_bandwidth() stored its result.  At each
-> > stop, I traversed the same target's regions separately and recomputed
-> > access_bytes with full-width integers.
+> > In an unmodified i386 QEMU kernel built from mm-new commit
+> > ad9f2d463666, an intervals goal selected a 2500 us sampling interval
+> > after the first aggregation.  The same trace inputs give 2812 us with
+> > full-width arithmetic.
 > >
-> > Three nonzero callbacks, all with aggr_interval=100000 us, showed:
+> > The kernel has CONFIG_DAMON_VADDR, CONFIG_DAMON_SYSFS, and tracing
+> > enabled.  The guest monitored a 1 MiB VADDR range as four contiguous
+> > 256 KiB regions, with sample_us=5000, aggr_us=100000, access_bp=400,
+> > aggrs=1, and min_sample_us=2500.  The default minimum of 5000 us would
+> > hide the difference.
 > >
-> >   access_bytes   independent sum   stored B/s   full-width B/s
-> >       33357824          33357824        31079        333578240
-> >       65200128          65200128        25244        652001280
-> >       41152512          41152512        24303        411525120
+> > At the first aggregation boundary, the four damos_before_apply records
+> > for kdamond.0 showed nr_accesses=1,1,1,3.  The next
+> > damon_monitor_intervals_tune record showed sample_us=2500; sysfs then
+> > reported sample_us=2500 and aggr_us=50000.  The records cover the same
+> > four 262144-byte regions before the first tune.
 > >
-> > The final sysfs read was estimated_memory_bandwidth=24303, matching the
-> > last stored value.  The independent region sum matched the kernel's
-> > access_bytes in every callback, so the sum had not overflowed.  Each
-> > full-width result fits a 32-bit unsigned long.
+> > For that aggregation, the inputs to damon_get_intervals_score() are:
 > >
-> > In mm/damon/stat.c, the expression multiplies the unsigned long
-> > access_bytes by 1000000 before dividing by the aggregation interval.
-> > On i386 the product wraps.  In the first row it becomes 3107979264;
-> > dividing by 100000 gives the stored value, 31079.  Full-width arithmetic
-> > gives 333578240 B/s from the same inputs.  The other two rows show the
-> > same problem at the callback site.
+> >   max_access_events = 4 * 262144 * 20 = 20971520
+> >   access_events     = (1 + 1 + 1 + 3) * 262144 = 1572864
 > >
-> > The workload is synthetic; the test checks DAMON_STAT's arithmetic, not
-> > the accuracy of its traffic estimate.  The i386 config, guest init,
-> > disassembly, GDB probe, logs, and build/run steps are here:
+> > On 32-bit unsigned long, max_access_events * access_bp wraps before
+> > division by 10000.  This gives a target of 409364, a score of 38422 bp,
+> > and the observed interval of 2500 us.  With full-width arithmetic, the
+> > target is 838860, the score is 18750 bp, and the interval is 2812 us.
+> > The later mult_frac() remainder multiplication does not overflow in the
+> > observed 32-bit path, so the difference here comes from the target
+> > multiplication.
+> >
+> > The affected expression is in mm/damon/core.c.  Widening only the
+> > target product would make the later 32-bit mult_frac() remainder
+> > multiplication overflow for these same inputs.  The 2812 us result
+> > requires sufficient width throughout the score calculation.
+> >
+> > The 2500 us interval was measured on the unmodified kernel.  I
+> > calculated 2812 us from the trace; I have not tested a patched kernel.
+> > The i386 config, guest init, serial/trace log, and build/run steps:
 >
-> Could you share more details about your use case that require this setup, and
-> how this becomes a problem?
+> Could you share more details of your use case that this setup is needed and the
+> overflow becomes a problem?
 >
 >
 > Thanks,
