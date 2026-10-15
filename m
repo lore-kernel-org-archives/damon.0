@@ -1,170 +1,100 @@
-Received: from mail-pj2-f10.google.com (mail-pj2-f10.google.com [74.125.227.138])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A023B7B70
-	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 15:36:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.138
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792078628; cv=pass; b=Ar/mCB7O98VKn0K/qnxKjbMR7rGNTvWB5x6vtiM4fpr/jmBY/oq+5whlMbztc+j5H5P12iZT4+sqOeWpDMRuYfQKtqstvxf29kid7Sjq9yK4iwSV6Zpi17PVEb0Gbj0RrLdXvcktx+5+XfN02cQV9tkpX+vhiFyE5CESJz8Hohw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792078628; c=relaxed/simple;
-	bh=Mc8x6I4IlZLfP7Amk33bJSUN5CAY/VzVUFgnji/NKdU=;
-	h=MIME-Version:From:In-Reply-To:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nN0RCO1hzSoWOCRwyqfc/HM6gbCeUgTpHM35fQBVhz2ikAyR60ZTH83VSGaiP0sUBlkpzIuvsavRjABx4A30v37wWIs2WhWyaOxPfk8+JAW+u8vnaurwPh9seFHe9xhd1qWmGAgOw+pTh3M+2MZnazJK7ZJvRPb092OOvv7bkcA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tMPx1qxH; arc=pass smtp.client-ip=74.125.227.138
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F75401A3B;
+	Thu, 15 Oct 2026 16:32:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792081934; cv=none; b=icYV27Rch0tKJsKFFvsscjPWLpqRzoTdxCyWtoDYdt7Kq3nGfsbKJb6OkA4Yr/M414Hnj15XDMBUX0c2FxKubxznVrAZF1Gxb19WHjMzdyHeZrgkNqxJj4Ba9thxye+r403hosvpZesZEqXv+TsA7D9aPNt0Y3AHxJs8K82paaw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792081934; c=relaxed/simple;
+	bh=iwAp1WxneTu40UtJSubGmq22Cuaf2WoUTUwAQPE2bjw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DSr07EBT7/LXA8pYYq+zlASu7KTN+cOshlVAPbK3LBKx8l9ydqQYKL1zQIh3/UBiNPSKZlSbXMT9eHF5KhxdoujbjzTbbmPn51Teq3wCeZvyryImFhHFPawjU6vR0w7j6UzaHD6rQKvUiuM333GdXOubmrptISBXn7/4eWZ6qDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AKtG+cuE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tMPx1qxH"
-Received: by mail-pj2-f10.google.com with SMTP id d9443c01a7336-2e934c6c1c8so6207175ad.0
-        for <damon@lists.linux.dev>; Thu, 15 Oct 2026 08:36:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792078617; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YAfrgfoKclN1n2JlAg/Fl7SK2oaCOKJRpmtvy+xarCNlBvZmVcesQ0F+lxZ8Lb0Xza
-         mNr3NlTm70yDoicNafKgHcorfYdUapLNN6w8iDm4H84JK46dPZjKGNszSMsPcZl38NGp
-         M5vUCUV/mGlpz0wsSZmeiTOkTuAXYsMNsVBub8LXAFYAKn6Jt1FD/13XBK3kNVoDMPc6
-         XxbnwSScPXNDpvNLPR7++NT0knkniSFnyZhu3vj3+hAqPiew20pp1wzFNhWFu++lzMQ6
-         OcCdBC4wennISnj/o+TMrI4OHE/c91bhwZS9EoY6AdapkQeNDitYXKBsk8O+f2CI/1w8
-         v7jQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:references:in-reply-to:from
-         :mime-version:dkim-signature;
-        bh=eNC0Fd3BGqN5rK2299oerWY4FCk3NDBRR5bAXp6FoIg=;
-        fh=MxAKK0w5m2h45oO//TdIs69z0aNKbiyCONfEK6VXxLg=;
-        b=qXEmIeux3mhCuYNCpydowZpQGDtESWn4GaUMkyZy7+h1H6c7Fgs5BJoEFxrekk+sft
-         QGnA8FwNvR6QWP4XWWgkMlXjquHVYvtLzZah3GnJ5y7zA0XIZqkSzxRKsGOrkNEnxeRB
-         vAXAq83+BvPzZHLOz8EvumHL2diWTLbBtMbL5AaTYzPwon5aWhDE5SQC7ioiwkxkZt6d
-         u/vtoQd6/EMaEm8MrZahkGbOdceVRm0p9aWBtRK5dPVsPJso84LYltTqBfw5r8TXJH9e
-         SBuRsr6WcXfiqQ9d7TVGkwuxDETmI6IRdNV2aP8D0zHrivH8LhCiiLndfLWR2WM7gtoT
-         J5xw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792078617; x=1792683417; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:references:in-reply-to
-         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=eNC0Fd3BGqN5rK2299oerWY4FCk3NDBRR5bAXp6FoIg=;
-        b=tMPx1qxHS9Bw/DKeCFxKUttUGzXbmvG4LSUZqmdpNBTJEDPTK7U6vfL3owBlYCSvOc
-         T6XDUmjr16ValJI0J+w5zOPoUsJA2dVG+8yd8Wrqbkl2K5Bnv2sh6SbwKPINEuDxjUUc
-         rxYGPndXvnngbEc7Hx8VkUh2f47dkGrrc49D/zQMa3C8Z/jE8QULqS+FyFAKvPGWpQ3F
-         9tNcDkV9RlJzOFAauEjZmUuMox4MI3ySrlYZMk1+MFJSyjoqkAO3ILsB3noSHy1qSMTA
-         EuLgOVzMt3DZG05WiPL29uIfOdTX4eFKZobEeF7Szxsln/ZxHOlbvSyhjrbzuYb9t3sU
-         qfuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792078617; x=1792683417;
-        h=content-type:cc:to:subject:message-id:date:references:in-reply-to
-         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=eNC0Fd3BGqN5rK2299oerWY4FCk3NDBRR5bAXp6FoIg=;
-        b=jXAy9sN/v8pywsssFlG2v9GTsgPtdds35GhKxHF5qQIVVXCPofpU520VIbA41yBQ5H
-         7Gs358iWYdye4rot0g3j5GZufb8qnWitGsw3HVLw+wXzIoqglb3Pp6eqmeVhUvMHijpn
-         /bx3w/i7PWMChitop/fK8rx9NJoqoyFnStpAEshVDmjrdItFejjmJh46pKXnHHSeeGjN
-         JNzHSRxQ1dbMb6MHxR/P2MIwFgQEncz+6fCRTzIWHe5RYzLz1AwN29rv0O3ghimbvQ+a
-         3zSxi89zGNtTBp1/qvxlH1C6wcjPCEgbRRMAvVKH0ECnfeI9F68NDLrt/IDv6K486PE5
-         JT5A==
-X-Forwarded-Encrypted: i=1; AKwUvBxVL1YM8ZDEjiT3Xw1sGUt/6L3auZxFtodcoBXs2NDg6B3Hmqlnr5e418L5XEuG5NdEjToJ0g==@lists.linux.dev
-X-Gm-Message-State: AFq9FYIryMWulT2YGZ4YwcB6Vp4SPdCQx2TuFU2Zyv5tmbXbrn/cynqo
-	90mdkyCq3wldsawsv3l2dxxZLzpXRjEyqR57cM+uXfG11d37mUIsSDC24J3s8lrJzKfxv4sfTiB
-	0N+7xcQKs+n4vAbYn1bnqKsmoZ9mtcjQ=
-X-Gm-Gg: AYBFou1XSzJzlIXQRCMzOB69YfGPGgI+tyfEaslnqXmCbt9NTxg7OvtX8o6wbVX3BLz
-	hoen+AY6tjC36X/A3lBzwonWz08jKshB/Ja6PJWBg7NxDUHJBq9isCBBOwx86Zo1G2BRCTiZJbC
-	h+rx6/Lc8uz1Rv1yunlw2dX+W98I7sb7txQ8c2lszFtWHLtUGr/8K29NsgqTMu4WZUvWNlmDBI9
-	ER5nfp0JhDvwPrElvjqwkxMmczPjN0Ndse3gEJ76NAbhFPphGcJ01wH4jJiFnHMs9raitiZkzrT
-	cySlsAk/MVNnRAADd/J6z9oR/H/AKHHP0TdvPM9pgVXfpnh8NV/7j8vjJP3QzI8xATP7VCkHf3f
-	rght4Khc=
-X-Received: by 2002:a05:6a20:244e:b0:3e1:549c:deac with SMTP id
- adf61e73a8af0-3e16b787a51mr17302180637.0.1792078617372; Thu, 15 Oct 2026
- 08:36:57 -0700 (PDT)
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Thu, 15 Oct 2026 08:36:56 -0700
-Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
- Thu, 15 Oct 2026 08:36:56 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AKtG+cuE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDA51F000C4;
+	Thu, 15 Oct 2026 16:31:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792081922;
+	bh=5UDMqtw54d6/qy4Jttb/86PiM7pxwIVD6wfg8FpzVr4=;
+	h=From:Date:Subject:To:Cc;
+	b=AKtG+cuEdRdcHnI2bC9bkgGF3tcrhkLVvjO7KAu+Mvox/wFJrc08B+bbuDtA+pSYu
+	 w547Fh20Y0EEBt80AcvTVFG2SRwxL8vZ6ezaZiy/Tbaa7inRyOaJjNFIFjnkruMBqG
+	 IgTRdEEyhXLG6xYY02WY37Yr8eEQ4XcLNetTuPAJUfbW3DfcurY3yoWv9zu3s1H8Ft
+	 gXRsrGh6y3KJkDTNHbxd2T5uPaIGn/EuiJATuxCXERky+Jx6s1evOe2asYn/mnyPin
+	 WRRZytq7GvUNYB6pz0doME6W1qYeU5BV9Y/pX/dXQb1tEO8Oen9CpHZmDN/8EmL4Id
+	 vyQE627BQ5kcQ==
+From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Date: Thu, 15 Oct 2026 18:31:46 +0200
+Subject: [PATCH] MAINTAINERS: exclude DAMON docs from MEMORY MANAGEMENT -
+ MISC
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: Aveline Noir <jm5905938@gmail.com>
-In-Reply-To: <20261015141027.88149-1-sj@kernel.org>
-References: <20261015141027.88149-1-sj@kernel.org>
-Date: Thu, 15 Oct 2026 08:36:56 -0700
-X-Gm-Features: AclHuK85ky1hJxxDTCm3lZUrv5F8rUf3dKyeQBVHR1L5-9dl9c9590Lj6JmwJJI
-Message-ID: <CANOyQmF+nwNyGHptBJhT2iVDV6cmBMYY8rqgXnqg7GCDfFy_ow@mail.gmail.com>
-Subject: Re: [BUG] DAMON: 32-bit overflow selects wrong sampling interval
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261015-maint-mm-core-x-doc-damon-v1-1-226decb5cd0d@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAPH/0GoC/yXMQQrCMBBG4auUWTvQBFJKr1JcxMyvTiGJJLUUS
+ u9u1OW3eO+giqKoNHUHFWxaNacGc+koPH16gFWayfZ2ML1xHL2mlWPkkAt4Z8mBxcecWKx4Nwg
+ cMFLrXwV33X/v+fp3fd8WhPU7pPP8AIeilvt9AAAA
+X-Change-ID: 20261015-maint-mm-core-x-doc-damon-d2da56de5ee8
+To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+ David Hildenbrand <david@kernel.org>, Jonathan Corbet <corbet@lwn.net>
+Cc: Lorenzo Stoakes <ljs@kernel.org>, 
+ "Liam R. Howlett" <liam@infradead.org>, Mike Rapoport <rppt@kernel.org>, 
+ Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+ Shuah Khan <skhan@linuxfoundation.org>, 
+ Randy Dunlap <rdunlap@infradead.org>, damon@lists.linux.dev, 
+ linux-mm@kvack.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1187; i=vbabka@kernel.org;
+ h=from:subject:message-id; bh=iwAp1WxneTu40UtJSubGmq22Cuaf2WoUTUwAQPE2bjw=;
+ b=owGbwMvMwMG4+8GG0kuuHbMYT6slMWRd+P/71SZvpcea//dwy298qs6+es2+psN/ZEw3vmHXM
+ cm8kRSc2Mnoz8LAyMFgKabIUr37hKPoTGWPaR6+H2EGsTKBTJEWaWAAAhYGvtzEvFIjHSM9U21D
+ PUMgQ8eIgYtTAKba4yT7P+OjOjsM5SK3a11V08sQ0G6J3VFmcCJk52fzjNM+uVaHvD+lnll6YIt
+ 1TdVLj02n3sq9rNub3L3fPej74Sjl4Nj1BndYDbfpML1Z/dKdy+HGS8+Y1XkfFmkkH0lI3/po+p
+ wT3yNcOS3evTu+Jqox9KtYvYjMnhJHz7nVmyYVs+zax1KtUXW0KUfQOtslbce8ih/Lpsb8K92QO
+ iFi49s/qyruHHu27Zs/A+sWd6XQNZ+0snSbFT9Gxt9vvem8WO90Xvb6WQ4fLX8Jf12mk5i9JCvN
+ Jcne+ReH8zzdbpNgnvmPxH1M1aSid8jIsfEu7T6/3VLZ+P+s0G63Jc4m00Jvp+30u3whdcbar5r
+ pK2dYAwA=
+X-Developer-Key: i=vbabka@kernel.org; a=openpgp;
+ fpr=A940D434992C2E8E99103D50224FA7E7CC82A664
 
-Hi SJ,
+MEMORY MANAGEMENT - MISC is a list of misc mm sources and also acts as
+catch-all for the mm Documentation subdirectories. Documentation for
+DAMON is well maintained within its own subsystem and also actively
+updated, so there's no need to Cc all MISC maintainers for them as well.
+Thus add exclusion entries for them.
 
-I haven't seen this affect a real workload. I found it while testing
-interval tuning on 32-bit.
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+---
+I'd love to have the time to check the DAMON documentation changes, but
+it's simply not happening, so this will save some mail traffic for me,
+if others agree.
+---
+ MAINTAINERS | 2 ++
+ 1 file changed, 2 insertions(+)
 
-I set min_sample_us=2500 to make the difference visible. The default
-5000 us minimum hides it in this case. With the captured inputs, the
-kernel picks 2500 us, while full-width arithmetic gives 2812 us.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f53047aa8d3c..cbe565b353d1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -17269,6 +17269,8 @@ F:	Documentation/ABI/testing/sysfs-kernel-mm-cma
+ F:	Documentation/ABI/testing/sysfs-kernel-mm-numa
+ F:	Documentation/admin-guide/mm/
+ F:	Documentation/mm/
++X:	Documentation/admin-guide/mm/damon/
++X:	Documentation/mm/damon/
+ F:	drivers/char/mem.c
+ F:	include/linux/cma.h
+ F:	include/linux/dmapool.h
 
-The shorter interval could increase sampling overhead. I haven't
-measured that overhead; the observed issue is the wrong tuning result.
+---
+base-commit: d6d3455d8751854e0d1820f14184682e23ac4475
+change-id: 20261015-maint-mm-core-x-doc-damon-d2da56de5ee8
 
-Thanks,
-Aveline Noir
-
-
-On Thu, 15 Oct 2026 07:10:26 -0700, SJ Park <sj@kernel.org> wrote:
-> Hi Avelin,
->
-> On Thu, 15 Oct 2026 07:24:08 -0400 Aveline Noir <jm5905938@gmail.com> wrote:
->
-> > Hi,
-> >
-> > In an unmodified i386 QEMU kernel built from mm-new commit
-> > ad9f2d463666, an intervals goal selected a 2500 us sampling interval
-> > after the first aggregation.  The same trace inputs give 2812 us with
-> > full-width arithmetic.
-> >
-> > The kernel has CONFIG_DAMON_VADDR, CONFIG_DAMON_SYSFS, and tracing
-> > enabled.  The guest monitored a 1 MiB VADDR range as four contiguous
-> > 256 KiB regions, with sample_us=5000, aggr_us=100000, access_bp=400,
-> > aggrs=1, and min_sample_us=2500.  The default minimum of 5000 us would
-> > hide the difference.
-> >
-> > At the first aggregation boundary, the four damos_before_apply records
-> > for kdamond.0 showed nr_accesses=1,1,1,3.  The next
-> > damon_monitor_intervals_tune record showed sample_us=2500; sysfs then
-> > reported sample_us=2500 and aggr_us=50000.  The records cover the same
-> > four 262144-byte regions before the first tune.
-> >
-> > For that aggregation, the inputs to damon_get_intervals_score() are:
-> >
-> >   max_access_events = 4 * 262144 * 20 = 20971520
-> >   access_events     = (1 + 1 + 1 + 3) * 262144 = 1572864
-> >
-> > On 32-bit unsigned long, max_access_events * access_bp wraps before
-> > division by 10000.  This gives a target of 409364, a score of 38422 bp,
-> > and the observed interval of 2500 us.  With full-width arithmetic, the
-> > target is 838860, the score is 18750 bp, and the interval is 2812 us.
-> > The later mult_frac() remainder multiplication does not overflow in the
-> > observed 32-bit path, so the difference here comes from the target
-> > multiplication.
-> >
-> > The affected expression is in mm/damon/core.c.  Widening only the
-> > target product would make the later 32-bit mult_frac() remainder
-> > multiplication overflow for these same inputs.  The 2812 us result
-> > requires sufficient width throughout the score calculation.
-> >
-> > The 2500 us interval was measured on the unmodified kernel.  I
-> > calculated 2812 us from the trace; I have not tested a patched kernel.
-> > The i386 config, guest init, serial/trace log, and build/run steps:
->
-> Could you share more details of your use case that this setup is needed and the
-> overflow becomes a problem?
->
->
-> Thanks,
-> SJ
->
-> [...]
