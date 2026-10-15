@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3957C5304C3;
-	Thu, 15 Oct 2026 14:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F02853CA62;
+	Thu, 15 Oct 2026 14:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792074360; cv=none; b=AqvYRsrg6lDLwgzmAusGNe4kbH33s/faol1lPjpysuJnpEZZ+L+iYWYk3CKxFlmSpNcIFm27NBJXT+EF00KNVXgIyfHUrf0jxrcGfPY1BMPIlDFJAr6hyaoAguIiKO8tHT6dYNodZFwZJE2ytp7cVfi6Tvq4Hc99RpbtbwGsHzg=
+	t=1792074581; cv=none; b=QgWHmFb0HNZbFKS+2qbjd6GO/ffDrEk22lRpsga9rcsO+gmSWiIjlJoBxvGDypoPyunk3P3jIgCSNj+vYkO9O7dI63fW/0Mfqbp38ip8+lN2s/u2fJLP/R0DUzVnb+8H3phdRMEhD0WLA0kf9/0iLlbv4vvKFC+1mfzmzW09DQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792074360; c=relaxed/simple;
-	bh=TCnKJL/cmfCg3+qnk6+F/sWRoG4MSvzL+K6GXfYYyBw=;
+	s=arc-20240116; t=1792074581; c=relaxed/simple;
+	bh=VN4DQTig9qciisvZLkjKSLInD+6EeDGJGqhzQ5t7log=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oa009iiVDA34G8q9SBNEunhEKGD3Mmz8/uxpIuRNNI0m/X6b0/8qLFyBvws+Xd25nqnxDbSCRHtW88550vXV6NX08m8HcqMMi9GL1CpqaVeKjLQ08Ns0pi10nS69wu1V/6WLJ+7I3x5GHvdmze8SZStJUcT+WbEFDhYYnEOoNNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ifOWUm4c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aPqRxKbUGirvzBRkh2mSTnmT0RQalmcLEw+tnxvOhfoWhoMyyU21Sg+m/h3jztiA5Kk9CXeh7xdCIMvZjxknEZBe71Hjy5rNjpv8KolMooKeHbmD3fhuUSEAqt2Vn4htarnvcmlqzXAZDRR+d7v03mxz8s0nL2Ou7Ko9YJa2L8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RYKJd47h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ifOWUm4c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58421F000C4;
-	Thu, 15 Oct 2026 14:25:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RYKJd47h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063BB1F000C4;
+	Thu, 15 Oct 2026 14:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792074359;
-	bh=MK9QpizG4Ez/xmCFB+Kev+kIplhhTdrrGQvFvPcmbYM=;
+	s=k20260515; t=1792074580;
+	bh=SPAts+uUcTI+ZJqIZJfnKHgPxPJV/e6f95NzFOwiLqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ifOWUm4c/UtZ6cHt8h+s0NRcM/TO90Uv4HYt4iBWL8yiHHGfbev3In/FHJWhhIyu9
-	 HFS8IzLjMm45YjEPU8xUgFseEBAG2L0VWaKnTzuUlzoav3LC4sMZiD7vVGtfiFuSKJ
-	 U8r+YNN07yPz5jZKhKrVujrhGEudOIyL7SCCEw2lgl5oCL1MLqCVwR1mDbA2Il6oVX
-	 G3KV21ojGD1QYI1f+34SGmQITmpfZNU8dhTZISmkmdkr0TippmeK13a80f/6EwFAYa
-	 c2af4nUA2ctsH24L2uPZsus5bqfF2EHejdEnGNZMfCWo3NJ22CPeG+9cGfRaNekvWL
-	 RSzMKEk/LBvAg==
+	b=RYKJd47hiyUzqHs8MMIh9FIivuj2meXfyydKxLinzssikP8bqOVeKCS4lU/mRu/RB
+	 KBQfnN6Z18soRyxT9PwnIE5wwaZWphUveb5UbF2SjwrWof6w9q1s6oVSl4Jr6ZV22c
+	 GRIqqPKGakOgl9e5VKAsjea+t/FpSdwk1AhptsS+B1VFYStzCxA+NS3CnjZME2lLK1
+	 UqcVxkfY5yLi2AFeosxtglgQtz4eDph7AkPwgzVqsIq0jKc7y1dWKmAS7JHh5+etdP
+	 guqtz9p9yUWFy+YCjNBoiQ3hUtUhDTcbZoLNQ0VIOr4p9AMCHowrh6wok5eERQkF6g
+	 TuFMG89luTMkA==
 From: SJ Park <sj@kernel.org>
 To: Suhaas Joshi <suhaas@s-joshi.in>
 Cc: SJ Park <sj@kernel.org>,
@@ -33,11 +33,11 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] mm/damon/core: Copy only installed probe in damon_split_region_at()
-Date: Thu, 15 Oct 2026 07:25:51 -0700
-Message-ID: <20261015142552.104856-1-sj@kernel.org>
+Subject: Re: [PATCH v4 0/2] mm/damon/core: Iterate over installed probes instead of DAMON_MAX_PROBES
+Date: Thu, 15 Oct 2026 07:29:32 -0700
+Message-ID: <20261015142933.105760-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261015135801.19326-2-suhaas@s-joshi.in>
+In-Reply-To: <20261015135533.18761-1-suhaas@s-joshi.in>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,26 +47,32 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 15 Oct 2026 19:27:54 +0530 Suhaas Joshi <suhaas@s-joshi.in> wrote:
+On Thu, 15 Oct 2026 19:25:23 +0530 Suhaas Joshi <suhaas@s-joshi.in> wrote:
 
-> In damon_split_region_at(), we copy the entire probe_hits[] and
-> last_probe_hits[] arrays of DAMON_MAX_PROBES size. However it is possible
-> that the number of probes installed is less than DAMON_MAX_PROBES, in which
-> case one or more iterations is/are redundant. To remedy this, iterate over
-> only as many times as the number of installed probes. To do so, accept a
-> struct damon_ctx pointer in damon_split_region_at(), and update all
-> invocations of the function to pass the new argument.
+> Hello,
 > 
-> Also update damon_test_split_at() and damos_test_filter_out() in
-> core-kunit.h to supply a context to function paths that call
-> damon_split_region_at().
-
-Looks good to me.  Thank you for this patch.
-
+> This is v4 of a series I sent earlier. Please find changelog below.
 > 
-> Signed-off-by: Suhaas Joshi <suhaas@s-joshi.in>
+> There were two "todo: " items of the same nature in mm/damon/core.c. Both
+> of these suggested that we should iterate over only installed probes while
+> updating (last_)probe_hits[] during merging/splitting regions, instead of
+> iterating over the entire array, which may have empty/unused indices.
+> 
+> So this patch series does exactly that. It replaces the for-loop over
+> [0, DAMON_MAX_PROBES) with a damon_for_each_probe() over the probe list of
+> the context.
 
-Reviewed-by: SJ Park <sj@kernel.org>
+Looks good to me, thank you.
+
+I applied  this series to damon/next [1] tree.  We are now quite close to next
+merge window.  It may better to focus on making mm.git more stabilized and
+therefore ready for the next merge window, rather than adding more changes that
+are not really urgent.  I understand this series is not really urgent.  Hence,
+Andrew might not add this patch until next -rc1 release.  In the case, I will
+request adding this to mm.git after next -rc1 release.  So, no action from your
+side is needed for now.  Let me know if you think this is really  urgent.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
