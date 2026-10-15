@@ -1,146 +1,140 @@
-Received: from flow-a5-smtp.messagingengine.com (flow-a5-smtp.messagingengine.com [103.168.172.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi2-f7.google.com (mail-oi2-f7.google.com [74.125.231.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97ED953C3B8
-	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 15:15:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.140
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792077361; cv=none; b=V/sA9AlyAxDOpAsU/D5aGEMXEXB7+gZv1wxgV34htbIUIwZtApGNLybHNjUzDCxxtrjpi9wmondqDcavuyWovDHp4M8Bz1zix5okOkvpqlRp6wljTlVprIdSKuyOz247LAiycXwUwQ0RwQhKfJBYL8f0yfy1/Ifk7fhz1a0KAy8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792077361; c=relaxed/simple;
-	bh=dyEcVD1Y3vcGMbvRYZPMcBuG39NEenS/76iBFF46FXI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZPDZnAU/m3ICYmrPAXlM3HKwU8JOXqlSxmKFRfE5u2pWXyRTIVXh7Wo5FbUQhUpk902YnDi6feisSxUoPPcepgpYP4g/iy0NEq7UlJCA5QsmJ04xUBRowYvCPwLjCcl+i8jl8Y4Mw6voz63+vpWvXuXwENrDWcuMFQXZw/WPjP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=s-joshi.in; spf=pass smtp.mailfrom=s-joshi.in; dkim=pass (2048-bit key) header.d=s-joshi.in header.i=@s-joshi.in header.b=UFTYFfoG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UFYxFynu; arc=none smtp.client-ip=103.168.172.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=s-joshi.in
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=s-joshi.in
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2445E53D0A4
+	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 15:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.199
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792077430; cv=pass; b=jFMrZrRNPfiQAnLrizjAvmtzEDX+ACaPmLuatdCR6A0y5FrvlTddRgi8fMv9hLohnHERQ9z9ZQXESrCm9wXAYXf7WobuzxBHKudRwsm9rxi3xS9HH2fs6ePgJWqdlD2+TCQFPXHhXskJ5HTqrtYXieKqhvsnG1Qk28K8VwdTPds=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792077430; c=relaxed/simple;
+	bh=uoPPaZGYiQ7utfzHBxmkQ/zq1fN33eNhuTE+ayh5TfE=;
+	h=MIME-Version:From:In-Reply-To:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XorI3LMyB7ECMdPxe9VgPm6YmTQQWYuzQ3YOysrfVPPj5k+blOUPjXbKel82LRzL9SkcmDwsQDWtfAeJ3rpRSeafatgET2rlu7dI7uU7alHEhQW9oCkHOGN40RXi5yJ2eGLoZrblRkw8QJEvlv3AbsYd4DBp8Xv3inajwKGsNQM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LMLppQmf; arc=pass smtp.client-ip=74.125.231.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=s-joshi.in header.i=@s-joshi.in header.b="UFTYFfoG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UFYxFynu"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailflow.phl.internal (Postfix) with ESMTP id C58F213800E8
-	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 11:15:58 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Thu, 15 Oct 2026 11:15:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=s-joshi.in; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1792077358; x=1792080958; bh=rwP/VSpgER
-	uSmU7CAJ/qc9G4ynusNvA0TtZXr7xxgio=; b=UFTYFfoGhsTq8HiIpIXIpNZPm6
-	7iA74E0cc8cA2Oj+QhqNCvF4FgW+iDBAw3s9cicX/vB2wMODmrZoeWBNT1iYzOPA
-	WMTDLuw5VncYTEPnlWYi7YHOkuTgVbug+4iPJIQgTKryfSwXd3sTRQomQ8NXqTnF
-	WFNKWF6sYeTs3fP72BHvtyHsnJ7dfe9nud2bkSrEsGbj9S8CEAPaNb3h88vivQ3m
-	8y/4vE1zUCRBus5Ch+I5kpg6/Z+QE1sGUw3g1z9DB5TDlYI0cAUVCZM9Ukaz25dY
-	AK7hMO7pTukGScpL3v/MAP+GnIn5PDpfKzDYY4vuQGFHOh/NbcbMaaN/V2yw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1792077358; x=1792080958; bh=rwP/VSpgERuSmU7CAJ/qc9G4ynusNvA0TtZ
-	Xr7xxgio=; b=UFYxFynuS5VFEDgpEddigeyPZgsp3YlH2/EPWt8kF8H+mtJzeMp
-	V5bNAl4mDNCk98UOmR+dbTa+UU0BwofacpEXfECrfeWf0DXafZkeeySWmRT1Y/VF
-	c7/KUMRJ+rAaFQWI6/S+QVwPGIU1gCjQ/WbwH2ARxfxDuswpOoq28E6fEm0MTaaI
-	1cDlUXXVz34/yQ/w8PgGna0uMEgFe/yuP951VvIWiNKS956zCZ++0/c+Ly51R7n6
-	m3LbLQVsSU2IYLBl9k9P9h75MG2rXIfBYb+zhDaP7mHPJ9jkl4HTJdpPUf2BS7bv
-	ijFINFebCHny/68yn3AHSa3Eo7JRmPNG8Kg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=s-joshi.in a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792077358; d=s-joshi.in;
-	mf=PHN1aGFhc0BzLWpvc2hpLmluPg==;
-	rt=PGRhbW9uQGxpc3RzLmxpbnV4LmRldj4=;
-	s=fm1:rsa-sha256:dNUNCTChNrrHaQWwITgtQ/l+lbM8bP+MwS8eba1jKybAu+A
-	paj81OMVpZVHaI4G83DHBKcgrBwgaxqpzTlHs8ASEBodpzwVvDvO4gtiHImUVJ8b
-	l7Tj+bGhDmFZihMrIPfMmInW9xU+on61JcdIa2EkkJ6P0fIu4t+7s/uye90k4iRG
-	Wa8PLaT+VLav8PBWl/KwCny/VEmW0+T9AJpsXPIhoSjEQ2kjGDOPdXOKKC8qxcAB
-	4DVwwbsZF92irFAYiAbz/bQd774d1ot1xTlSiW4XkoEilFDLPHWi4Mbdkr6c0W3l
-	FXWy73oZ71DkrLx/kngMxen5NWuFcX58uZG15qQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=12;
-	hn=cc,content-disposition,content-type,date,feedback-id,from,
-	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:LevM5tzYYaumburSvV64b0N1TAhZSGBxVKsiouv4ydQ=:dyEcVD1Y3vcGMbvRYZPMcBuG39NEenS/76iBFF46FXI=;
-X-ME-Sender: <xms:Lu7QahPSbuoSEa55WNF0bRmYpBOR56OACjbIEWk3JNCTKXr8S0dUHg>
-    <xme:Lu7QatTzXWkm548AYtQ7k520gnsMpGDOvcTx_I_QcLOtHaNftYaxBmwakPDW73-u9
-    BEyGgAvDIBt2WxZn4iiNtafI9vClk7WhgFP6Bgh1sDyWgIHAaDhUjQj>
-X-ME-Received: <xmr:Lu7QangY90ueWEFwxkeM7vD86KwGJvyb3mjSEBJtLDvDuvktgtHGf6KFCg>
-X-ME-Proxy-Cause: dmFkZTEV6GHuCH6/QILcFaKhduef3gBBREJE1psiKhqNhihAbWJpVZhLJ+hjcHxwMmFgu1
-    1ywxKhp44j4XcoW/5YOxKZnHloAZ6M8EZwTLdraBuWX2IMO5Y6TSrd6AfBpXSCzQKx0D20
-    mwzR80Oay3a5lk+she7Gco8OasTS0vQFqoFCydIfg8lChTL3uvKIEoEIPz1LUoznhNFGPi
-    euXxgmiGPs/xOF9xmJXkNWGmwuXMXr6Jl1lUTmw1dSQTE0IhQhP4dm2absUAt/BJ8VMv+G
-    drJAHy/HDfSKXmi6mvi/gRtLW+8vgafJVm7rABfv1x4e7cGTnMUk/dq+zXc75QDcbOS1Mr
-    o3pOAy7W9oVK+dD+zGy9o7hKIHamLw4WlZLV+O9MMoVwW9+QQ0Evih45zy4quxiSBKObu+
-    FuXs/cmZyu0fhmOTivf/u6OOA0Q0g/ZkmOhspMMwstiZUcMc29sU9OMnZlKn+l5UkiQaIi
-    27bQ6K0rcuO0QbDmGHGDZiGg/iCM96A1d04T5LS9lXXuflz5/V1u3EeVLdyCXR1KxZTgNX
-    dJ/2e4O2SFGRnXxfBxagMFtS/9USPCQGXjM22CKQ9IkJakcNVYld+tfBESGTw+b3sPCLyb
-    rTnrQD0L6pRndK3SbZnuEGyiA3aRAsIZ7CqPryk2YBmZA4vMrZLXABubd8eQ
-X-ME-Proxy: <xmx:Lu7Qau9ZAYYCGJwm5unJr0RsqICmZMM7FkyyszqFnXcKdVGHfSpBWQ>
-    <xmx:Lu7QamF7vH0XnEWYj2C3XXfw34gVVfP5ie2vK5e4F8amLVaUxX-56Q>
-    <xmx:Lu7QapmyU7qgp08NfXPvci4TUSvinip5aAploGIzhkXltUA9-mVpHA>
-    <xmx:Lu7QaiZdaMYjNtNKqYUbs0njf4nW1nVERxBWBaavg-O-4LriBmrdig>
-    <xmx:Lu7Qasn1_OxzwpJGarX3m-fKGxT_WOlJ-T9a131aPlVJUMF60VIS7-Mn>
-Feedback-ID: ia9504abf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Oct 2026 11:15:56 -0400 (EDT)
-Date: Thu, 15 Oct 2026 20:45:48 +0530
-From: Suhaas Joshi <suhaas@s-joshi.in>
-To: SJ Park <sj@kernel.org>
-Cc: akpm@linux-foundation.org, damon@lists.linux.dev, linux-mm@kvack.org, 
-	linux-kernel@vger.kernel.org, aethernet65535@gmail.com
-Subject: Re: [PATCH v4 0/2] mm/damon/core: Iterate over installed probes
- instead of DAMON_MAX_PROBES
-Message-ID: <atDtNpEiy96Lbna7@fedora>
-References: <20261015135533.18761-1-suhaas@s-joshi.in>
- <20261015142933.105760-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LMLppQmf"
+Received: by mail-oi2-f7.google.com with SMTP id 5614622812f47-4b39374fab5so2147612b6e.1
+        for <damon@lists.linux.dev>; Thu, 15 Oct 2026 08:17:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792077428; cv=none;
+        d=google.com; s=arc-20260327;
+        b=HxeNdueZ5muGvbZKYx7ktSwKNdHsV7jh0ZBkvC/2z2uvBti74sh4nzl2pdnAySnQ1a
+         Eij8LdFy1+GhUWIuoLfARusomZZajk0J6GNq+vktZeDo+wL9zG+uUKm4UQndS1aTf6Lv
+         6LpvVCagZPakvqkR8wuDHmaBTp5VfcLbJlx9wEJ/IjB8HhwjD8Pqi6Yra4BWJ+GIp19r
+         jYhTJ35Vfr5L7KcJk5AhxnABDfMn2Lo6DzroAn87ugi0YiEXZCtw8NVm/4g6xd8jnHKe
+         u4p/Qd5IbBA7JHEutSd7Q6LIsmB5HYe24A57MCpKxddc1KuQMVyFEJYb+C8qqeiH6cZu
+         TX9w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:references:in-reply-to:from
+         :mime-version:dkim-signature;
+        bh=OeZR/JOPa/KrDeQOVwy6UcwSPvI8j2bKhcX8zNJ+XWU=;
+        fh=wypHHdzHa+0mXiCZClWh1P6Vx2igTCXOXczymGzkmRU=;
+        b=Uyd4zfkb6YqkROpJI/+mUzJ2z4tjN6Ga18c0nLauSmoOCudknDru+Zg877Tus+jJ7h
+         OMdqTBmkxXapc0gWXj1Zar/PGmsFVVIYRVlpv3NyB0HLPKRukds9w8D/AaOczsLfUP9m
+         ooyVFg9cM8z6/EmpFNmhZmBlAsbnDTmN8nWIBDvYoiBl6rgbL2s25fh7j9JcBvYxe4Fd
+         l7UawxP48ASjQj6mfhrSg0hGqdUjZv9oaRVN6EdLUlza8y8yWcp9ljcSNz0/lVQ+cDc5
+         chJPwE+ZDDL7CBnpnVBPXuEVrTQ1voc8i38mkadmbpgaaNByvwtd5m4iDFEyBr1Jdogo
+         5+nQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792077428; x=1792682228; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:references:in-reply-to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OeZR/JOPa/KrDeQOVwy6UcwSPvI8j2bKhcX8zNJ+XWU=;
+        b=LMLppQmfgfiNhWh79XRdsQ+zH4GPqAPTwAQEw36oFtM6izzUBtTaUhinDYNG0fP9DT
+         YsP8ZkYXeArbRiWPkltpg6uyF9l4jJK9emw4xnPGVSZQFVMU5Dox8IqWIzVrYweT7etg
+         /yUSh4kGy1+qLz14jtwREZzhfeG8nrGuiB6BXpm04DXJKo1rMyBTAxlmjfsvq5akZHzD
+         P2V1j+3nL1hmwCX7ayAffZ94j5ZjT2WKb+MtSQ1zlHtlEyrCGPBdOyvl80ciD3EFcdgE
+         WkwTQBkl2lGN8NGPxShy6RjtMYsCHON2a33ujd6IB2Zxe6hL48aiX5WL7kPIN6oYsVJJ
+         a8PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792077428; x=1792682228;
+        h=content-type:cc:to:subject:message-id:date:references:in-reply-to
+         :from:mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=OeZR/JOPa/KrDeQOVwy6UcwSPvI8j2bKhcX8zNJ+XWU=;
+        b=cc5/KAyAv5AZR70ZYpTkjmTV7si26T7YUCEPbbs1TgwKWUGc5YhFyzmaCbeuSkzI1g
+         1hlTxa+ix5GVJVxUSFf7NXojUQ9GWrxzf4DjQ2beLIQ+C90Ys4N3Ni7dGGtpXTQWIO7M
+         waSJSSyOoa5FCN/KxHE9bBRXFUBP06cofhXRmgvclqya4qDO9kuVCt+dmFJH2iRodYNC
+         A64eC566zI808Iu999tDD5xkpR55WnaddX5ZnwOu7jmz2a19TRiTAb/gtj3G4pRMuzlx
+         BUU4lF8wVeU/CzWo8GFXoi8ep0EaXQh/yCcp2Gr66oS08T/vr11RW7jmdDPqH7wFFWoi
+         TD8A==
+X-Forwarded-Encrypted: i=1; AKwUvBybkV5amYz/nD4THqWID3Y8nZaIsTbNr6XYAVnAFNAjC2yZo8hurhmmOjQOvG6HXSgHrKyZxA==@lists.linux.dev
+X-Gm-Message-State: AFq9FYKHTwaTp7fVDAB9A3QU+qzrHceLe4MyRT0YPemJivRCsZo4U3YP
+	L6Dc7s+10jtrrlNXElz7sIsfe8asSM2zeAgwBegG0VQsiXeo20mkXqUI7Ec4B/EAVxQnemRsoSu
+	WcfFs4hqtSvtUYInJp7K/s08UBj1j1q4=
+X-Gm-Gg: AYBFou3KoP1moV/qV1YeidtW2MDD75CIMkd8WMly9VM2Xjz/s3BL5NBMEYdi5cIVKM2
+	oYKXamGYzFgD+eV7hMINTcIGVxEiQqoKz49/vpmbRI4GrqeCg98MmjSnJ5m6PqSU0bUog+x/Jdw
+	ss9Vvt4R0YiBqhzxkHuan83gbGZeOFgF/uhjoqsPgiq678EGFjsQHjOAkiFr+b4JlroQ9TmA+2z
+	5IcXTxU1ebBHniw7sv0yDwiXsloF83zIYG0TwHxgZcoeKI476w45L3fCDL7Ou4EudjrRQMyo8Fu
+	a1xJCrxRDn19LnXwKFGe7gFeU7f9Phl8f7SWDBhww+qJsLnL2UhTIRhKPZp48AQi5xLjlwhZKOX
+	cak4/sxw=
+X-Received: by 2002:a05:6808:50a4:b0:4d3:6be7:c5e9 with SMTP id
+ 5614622812f47-50c4e67b316mr20247148b6e.24.1792077427501; Thu, 15 Oct 2026
+ 08:17:07 -0700 (PDT)
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
+ Thu, 15 Oct 2026 10:17:05 -0500
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
+ Thu, 15 Oct 2026 10:17:05 -0500
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261015142933.105760-1-sj@kernel.org>
+From: Aveline Noir <jm5905938@gmail.com>
+In-Reply-To: <20261015140502.87975-1-sj@kernel.org>
+References: <20261015140502.87975-1-sj@kernel.org>
+Date: Thu, 15 Oct 2026 10:17:05 -0500
+X-Gm-Features: AclHuK_GMaQKMIsKIixwyygc0aElEhr0PiYnJJZwMfa1CmbK4jR8xC8YVujhE6k
+Message-ID: <CANOyQmHhCJEbHpHUZ2P0hui+We7wxWkEde-Vh4k2rRXWovRYrQ@mail.gmail.com>
+Subject: Re: [BUG] DAMON sysfs: failed update clears tried_regions snapshot
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Oct 15, 2026 at 07:29:32AM -0700, SJ Park wrote:
-> On Thu, 15 Oct 2026 19:25:23 +0530 Suhaas Joshi <suhaas@s-joshi.in> wrote:
-> 
-> > Hello,
-> > 
-> > This is v4 of a series I sent earlier. Please find changelog below.
-> > 
-> > There were two "todo: " items of the same nature in mm/damon/core.c. Both
-> > of these suggested that we should iterate over only installed probes while
-> > updating (last_)probe_hits[] during merging/splitting regions, instead of
-> > iterating over the entire array, which may have empty/unused indices.
-> > 
-> > So this patch series does exactly that. It replaces the for-loop over
-> > [0, DAMON_MAX_PROBES) with a damon_for_each_probe() over the probe list of
-> > the context.
-> 
-> Looks good to me, thank you.
-> 
-> I applied  this series to damon/next [1] tree.  We are now quite close to next
-> merge window.  It may better to focus on making mm.git more stabilized and
-> therefore ready for the next merge window, rather than adding more changes that
-> are not really urgent.  I understand this series is not really urgent.  Hence,
-> Andrew might not add this patch until next -rc1 release.  In the case, I will
-> request adding this to mm.git after next -rc1 release.  So, no action from your
-> side is needed for now.  Let me know if you think this is really  urgent.
+Hi SJ,
 
-No, its not urgent at all. We can wait until after -rc1 indeed.
+I haven't seen this affect a real workload. I found it while testing
+the DAMON sysfs interface.
 
-Thanks a lot to you and Liew for the reviews! :)
+If a tool tries to refresh after monitoring stops, the failed request
+can delete the last snapshot. The tool then has no previous result to
+fall back to.
 
-Regards
-Suhaas
-> 
-> [1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-> 
-> 
-> Thanks,
+I built and tested 66178e4ec30a and its parent cce0b334c310 with the
+same config and reproducer. In three runs each, the parent kept the
+4 MiB snapshot after rejecting the refresh; 66178e4ec30a cleared it.
+Both returned -EINVAL.
+
+Thanks,
+Aveline Noir
+
+
+On Thu, 15 Oct 2026 07:05:01 -0700, SJ Park <sj@kernel.org> wrote:
+> Hi Avelin,
+>
+> On Thu, 15 Oct 2026 07:22:38 -0400 Aveline Noir <jm5905938@gmail.com> wrote:
+>
+> > Hi,
+> >
+> > On mm-new commit ad9f2d463666, requesting
+> > update_schemes_tried_regions after stopping a kdamond returns
+> > -ECANCELED and clears the previous tried_regions snapshot.  The final
+> > result collected before "off" is then lost.
+>
+> Could you further share your use case that this behavior becomes a real
+> problem?  Also, have you tried bisecting this to find from when this behavior
+> was introduced?  If so, could you share the commit that introduced this
+> behavior?
+>
+>
+> THanks,
 > SJ
-> 
+>
 > [...]
