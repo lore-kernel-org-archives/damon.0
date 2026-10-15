@@ -1,205 +1,150 @@
-Received: from mout-p-202.mailbox.org (mout-p-202.mailbox.org [80.241.56.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi2-f8.google.com (mail-oi2-f8.google.com [74.125.231.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130F1499F00
-	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 08:10:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792051824; cv=none; b=QCrSA5cpGEAi1k+zqCsoh6x+YtZyZ/eJ1Xgp8avTOOPDQQkWvtf51DltltdE/xkwPoCsllHklsaMPO4SVzYZYpp4mLfbmuRMpySk2CqV2m1xZOANV8+3t74FrAJ60xEKW8TNnz9P6fPAXMlahjDVW7GPXTNLj04oymYABbO4Ugc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792051824; c=relaxed/simple;
-	bh=6H3gwsJhntJXJThwDhnaQMwt5chRY+N2oVYDT+NOxFs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZcmqYKz270AiMeQKCETb/RgjB/PfevYJQeiy3pXitnVnFG0VZJoVWUGGmEyzDRo/l9aI4SAatnqaKcK/TP31dPuFeAbyGoWPMj97nmi0WeFMqH3bBTbB+xC+iHW6bGClhDfoAPB80E4FOuslTB4t7qZva/4vmdp0tG9CmRBxUmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=OIib8AXI; arc=none smtp.client-ip=80.241.56.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205EE50276A
+	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 11:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.200
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792063363; cv=pass; b=JD54afADs3unolR4efZADIEmH2VG4PdW/w6EJLkkOSRm83JzAf11eu/9WVBRzHTgvfp/cFI4cmAHi4NwcVUdJh62Lq696+Y4MvSr+xThMplUmp1IcqlFys8SH00Uxnbc1jy/VomCopvvXvmTlVrDtOBDA8RmD3JSLYt61bfihMo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792063363; c=relaxed/simple;
+	bh=4ronku3FgG/grdupmxyuT7bUinJ8usDzhzYo0Yc2sn4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=WxHj3ZWtRvzJd/73xeAdxlTmJdBvaDrPTt++052ORqD8xD2WJuTfiSyFM7WzOUyzpPbT+nVCYq+hRMFWTVs7VwcIgKFd2O8mY7/pskv1lDriyotXQupG6lYC7/WdtsOyYCioU3c8SZzzLDpFS2mm9SBVgcHInmmnR/2OCtrI40U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HdeCHXRj; arc=pass smtp.client-ip=74.125.231.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="OIib8AXI"
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-202.mailbox.org (Postfix) with ESMTPS id 4j512y0XQszMldw;
-	Thu, 15 Oct 2026 10:10:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1792051818;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=rGIxBYcjL8R8PIe1O4VWCK/MKqmva9CjteD/loE46rs=;
-	b=OIib8AXI33k88tPlZC4f3msQCy8sLnN/bj07SVtZH5FsvqcXvE+GFqzEXdYIwCsxivsOsn
-	19fAdPF4EsOm9iriFR79E/VUpFeWYF1xA7MqALjHfhz60bpGVELBxItb89JRda1lFJ/h0I
-	UngNBU75vd5iFgNMaXykL1sAKfi1PgLFdJ0K+VevQifMZc99Ge3B74t/dnHcNAbLCvE2OY
-	x+SY0rLyDKI3U0isJC4wB9Ouj73exn7d/yuT5TLth9RVWZWvve0/LxIrduEpOgM8YX2SXp
-	n3azhQxbXEmniiRaE7ElUwSkCiseXubvbWriTi2GxI5EAD4gUw3xwUc224VWhA==
-From: Manuel Ebner <manuelebnerli@mailbox.org>
-To: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Cc: Manuel Ebner <manuelebnerli@mailbox.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] mm/damon/reclaim: improve grammar and style
-Date: Thu, 15 Oct 2026 10:06:23 +0200
-Message-ID: <20261015080623.808458-2-manuelebnerli@mailbox.org>
-X-Mailer: git-send-email 2.55.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HdeCHXRj"
+Received: by mail-oi2-f8.google.com with SMTP id 5614622812f47-51cddc2451aso1404488b6e.0
+        for <damon@lists.linux.dev>; Thu, 15 Oct 2026 04:22:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792063358; cv=none;
+        d=google.com; s=arc-20260327;
+        b=etJbnB7OfdshmLSVjfwUh5sGdrL4yrAjneVno9B/GgwoOBVfGXq2YXD/P3hRpQrTcL
+         el9ghLHQFPhhtgheDXZnJCnf2SBlLhfJ8O++ePXCuWJmi1oxpQafmT7FVj4U15BVm47p
+         LM6IdqWIStRINEuCAX5hodSQMHgP0PeMCGqUhKmqVmpKiAoS/b8i4FvRNnhJqeUYI/tf
+         OyBLwmGPD/y+a7gCHCC10bdFNC0yfmDYEflGhLlUN3ci4Z2H5ywf4Sf+r/uHqdOGLe4c
+         zK7NvM61TDqReCgpwQ5m4EK73nWM2YQjSZOXTm2WJJnwzk4TLdaVcneCO+gdMx6zS9Jy
+         /hLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=+KhDh+DCKXNAlBFw3mfZ5XMbYKVN/XAmTIjiDnW60pk=;
+        fh=GXlUB2kcEueA+23DXXpYOmssRpFH/i7RLbj9yljirdk=;
+        b=XfsK1oFtMiotBJK7rAoRyWDcFr9swkkwYYtrsYCgRriolRtoD3/GYhrXfwIC/ADfMv
+         mJi6SOcNWoX+J8Ww7Obl/a1Jpt1qiZtUkwnSRBxLDhOzwNFv+wP6qr18OYTymEIsO9rM
+         4I/3gNSWnP9qNgJWV5mg6oKPJnOzdviibR3Y4qdpJ2byUv6ugJCf/Y9pAcmP7F1MnR1I
+         Tq5IdT5j+cgKqOdP2tqcgdJuSwVFm3vIJeFZOtxhPxfmWGw7alVDILAeXj4ngKU/lsA7
+         RGMyaScD8ae4qebjWFUUz+aB3utJNcP1hnyxPsubsjmlYWcCkhlE/EWSJU8JQhnCfsfc
+         73Uw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792063358; x=1792668158; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+KhDh+DCKXNAlBFw3mfZ5XMbYKVN/XAmTIjiDnW60pk=;
+        b=HdeCHXRjqDorAq0sL5z/vqOn/pcedJhaoVVlc2e3ZVDUe3D0hp4bhvIbmV+Ej6E3Be
+         0xJiDkOCFQo3Z4DiffsBLXoZMVmPVHm1hVL2FRD2ia8w9UyCKjuw+L7uLHE9ILTAtGbq
+         eO9jgmUCegbxWPlK2jdP1BQtVzSti16sWVO3/GuC8GsAzwUrjh5GkxZexGM2CmsvDjIl
+         ya4TkEdPpw3pnDDNhisncekybNGtYivaXGJczkgULA+O/2af+S3I77npZOgsKPzmM3KK
+         9Y8kKapwVW7zsmlxAFSjLpOQ1cBZuJKtMNPugjCMIWkBHiZVFUH/88n1Al6S2+rasyuW
+         BjNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792063358; x=1792668158;
+        h=content-type:cc:to:subject:message-id:date:from:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=+KhDh+DCKXNAlBFw3mfZ5XMbYKVN/XAmTIjiDnW60pk=;
+        b=HUWo6JPJRQZ0UDZwT6T4qN2w3TmGpxdr4mwX9ycdrk2CLM014Z9/KZ2ZTD8KnycOqJ
+         bnGs2AupGm4Yq2t0FOBnWQ5zqEfU75hIdIXJxqCqW5N/R4+3rsUlGt+YtJCQ8OOJAJTH
+         Q63mrVKa6991B5jFY8jXFgF42CPzuM1ht09xODbdmZZdlzow4LZqptlyiAH8cc0QEQ/P
+         dPXVPN+LsLYNb2T8irJ0FvbTT1rzSXrb8jQ1CJn2Q4xD8Pc92qd8gl7zj4BXI9a90DPE
+         8pnkiXNN0jLzIxJczkKuIwa3Ezgpb0aOJbclkWY4lZyobvhbzUJY0BC7CQBOTdMIrqBI
+         jpeQ==
+X-Forwarded-Encrypted: i=1; AKwUvBzWQEO2Dn2Qo+1PIN/ym5vJ9avhT/7PaCKXdy2YtFoP8GLUb2lZ0NPfG8xZQzw1eHE/gj3Dzg==@lists.linux.dev
+X-Gm-Message-State: AFq9FYLRMhLwUp4FEGx0csxiInKbS6in0kUF2taMESTXuX0P20tx2MbQ
+	4sUrI3Rf/+xL2iA+v00zKCQirtnZDi7VgKu07X6Gx58/d7jp0C6mBsqkT9H8DPTsDAY0wWSk8iE
+	Rad3ZMNQzXy7HiZJhjBKAxHGvxh6qmhvBffT2tqxrY15U
+X-Gm-Gg: AYBFou2tEWuRrcl0vl7fU9QcVhjSLxK+DBNYhbeDrUEc5YmrqFGiVI3LujKI/psOPIw
+	OJ9ZxQbBlGgqQyvmH5NCPq1svl9tXD6Lr14FyVQtSToLJ0uvbXOUoVwXVsN2Xw/k3HncH3OPz6G
+	IiKrNQyAMkWfKmu/nKWAo2/G12LdmT2We2RATkhAxlkUEi3QkY41QilqLwRYAVZqzg35m0sKsFk
+	1De5FdCRFhQwyAogpk4uM+7bW+W/pt2Q2UvJM9o4zDFA7EjqfLfuSdvJeGDQvcu42woRC0qN3B9
+	hVkKueXGKf/gfD4NgQ6MdTrs0XoV6L4EkAiKe5EkjmVA/EG3vT+MXYC1oDE7rOKPNoAL+EeH5iV
+	oeNhXDpjYqw==
+X-Received: by 2002:a05:6808:5028:b0:4bd:c8be:1e00 with SMTP id
+ 5614622812f47-50c532f8a99mr18667751b6e.13.1792063358543; Thu, 15 Oct 2026
+ 04:22:38 -0700 (PDT)
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
+ Thu, 15 Oct 2026 07:22:38 -0400
+Received: from 77377267392 named unknown by gmailapi.google.com with HTTPREST;
+ Thu, 15 Oct 2026 06:06:11 -0500
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: c6aoxm8ipxdy74wo7dcayh8ap6qwsbmx
-X-MBO-RS-ID: 19c5c96c5337cf8f5bf
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Thu, 15 Oct 2026 07:22:38 -0400
+X-Gm-Features: AclHuK8pqRoiNT7w7U-dNf7fj0OwyC4V2V6EvhaoiQUtuVnZ8GqlxF2C2ivtqcY
+Message-ID: <CANOyQmHo94dwHVMWeUfQsks0b30uZT0wuV8mDQ9MjB-HL0yVnA@mail.gmail.com>
+Subject: [BUG] DAMON sysfs: failed update clears tried_regions snapshot
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Fix tenses. Replace 'set as' with 'set to'.
-Rewrite complex sentences.
+Hi,
 
-Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
----
-@@ -113,8 +113,8 and
-@@ -125,19 +125,19
-This sentence was difficult to read for me. I don't know if I
-improved it. Please advice.
----
- .../admin-guide/mm/damon/reclaim.rst          | 40 +++++++++----------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+On mm-new commit ad9f2d463666, requesting
+update_schemes_tried_regions after stopping a kdamond returns
+-ECANCELED and clears the previous tried_regions snapshot.  The final
+result collected before "off" is then lost.
 
-diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-index e4e2ffa52e..d521563633 100644
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -4,7 +4,7 @@
- DAMON-based Reclamation
- =======================
- 
--DAMON-based Reclamation (DAMON_RECLAIM) is a static kernel module that aimed to
-+DAMON-based Reclamation (DAMON_RECLAIM) is a static kernel module that aims to
- be used for proactive and lightweight reclamation under light memory pressure.
- It doesn't aim to replace the LRU-list based page_granularity reclamation, but
- to be selectively used for different level of memory pressure and requirements.
-@@ -30,12 +30,12 @@ guests could mitigate this problem.
- How It Works?
- =============
- 
--DAMON_RECLAIM finds memory regions that didn't accessed for specific time
-+DAMON_RECLAIM finds memory regions that weren't accessed for specific time
- duration and page out.  To avoid it consuming too much CPU for the paging out
- operation, a speed limit can be configured.  Under the speed limit, it pages
--out memory regions that didn't accessed longer time first.  System
-+out memory regions that weren't accessed longer time first.  System
- administrators can also configure under what situation this scheme should
--automatically activated and deactivated with three memory pressure watermarks.
-+automatically be activated and deactivated with three memory pressure watermarks.
- 
- Interface: Module Parameters
- ============================
-@@ -55,10 +55,10 @@ enabled
- 
- Enable or disable DAMON_RECLAIM.
- 
--You can enable DAMON_RECLAIM by setting the value of this parameter as ``Y``.
--Setting it as ``N`` disables DAMON_RECLAIM.  Note that DAMON_RECLAIM could do
-+You can enable DAMON_RECLAIM by setting the value of this parameter to ``Y``.
-+Setting it to ``N`` disables DAMON_RECLAIM.  Note that DAMON_RECLAIM could do
- no real monitoring and reclamation due to the watermarks-based activation
--condition.  Refer to below descriptions for the watermarks parameter for this.
-+condition.  Refer to below descriptions of the watermarks parameter for this.
- 
- commit_inputs
- -------------
-@@ -66,9 +66,9 @@ commit_inputs
- Make DAMON_RECLAIM reads the input parameters again, except ``enabled``.
- 
- Input parameters that updated while DAMON_RECLAIM is running are not applied
--by default.  Once this parameter is set as ``Y``, DAMON_RECLAIM reads values
-+by default.  Once this parameter is set to ``Y``, DAMON_RECLAIM reads values
- of parameters except ``enabled`` again.  Once the re-reading is done, this
--parameter is set as ``N``.  If invalid parameters are found while the
-+parameter is set to ``N``.  If invalid parameters are found while the
- re-reading, DAMON_RECLAIM will be disabled.
- 
- Once ``Y`` is written to this parameter, the user must not write to any
-@@ -88,11 +88,11 @@ identifies the region as cold, and reclaims it.
- autotune_monitoring_intervals
- -----------------------------
- 
--If this parameter is set as ``Y``, DAMON_RECLAIM automatically tunes DAMON's
-+If this parameter is set to ``Y``, DAMON_RECLAIM automatically tunes DAMON's
- sampling and aggregation intervals.  The auto-tuning aims to capture meaningful
- amount of access events in each DAMON-snapshot, while keeping the sampling
--interval 5 milliseconds in minimum, and 10 seconds in maximum.  Setting this as
--``N`` disables the auto-tuning.
-+interval to 5 milliseconds in minimum, and to 10 seconds in maximum.  Setting this
-+to ``N`` disables the auto-tuning.
- 
- Disabled by default.
- 
-@@ -113,8 +113,8 @@ quota_sz
- 
- Limit of size of memory for the reclamation in bytes.
- 
--DAMON_RECLAIM charges amount of memory which it tried to reclaim within a time
--window (quota_reset_interval_ms) and makes no more than this limit is tried.
-+DAMON_RECLAIM recordes the amount of memory which it tried to reclaim within a time
-+window (quota_reset_interval_ms) and stops when this memory limit is reached.
- This can be used for limiting consumption of CPU and IO.  If this value is
- zero, the limit is disabled.
- 
-@@ -125,19 +125,19 @@ quota_reset_interval_ms
- 
- The time/size quota charge reset interval in milliseconds.
- 
--The charge reset interval for the quota of time (quota_ms) and size
--(quota_sz).  That is, DAMON_RECLAIM does not try reclamation for more than
-+The quota reset interval of time is quota_ms and of size is
-+quota_sz.  That is, DAMON_RECLAIM does not try reclamation for more than
- quota_ms milliseconds or quota_sz bytes within quota_reset_interval_ms
- milliseconds.
- 
--1 second by default.
-+1000 (1 second) by default.
- 
- quota_mem_pressure_us
- ---------------------
- 
- Desired level of memory pressure-stall time in microseconds.
- 
--While keeping the caps that set by other quotas, DAMON_RECLAIM automatically
-+While keeping the caps set by other quotas, DAMON_RECLAIM automatically
- increases and decreases the effective level of the quota aiming this level of
- memory pressure is incurred.  System-wide ``some`` memory PSI in microseconds
- per quota reset interval (``quota_reset_interval_ms``) is collected and
-@@ -263,7 +263,7 @@ This parameter is for setting and getting the :ref:`address unit
- 
- ``monitor_region_start`` and ``monitor_region_end`` should be provided in this
- unit.  For example, let's suppose ``addr_unit``, ``monitor_region_start`` and
--``monitor_region_end`` are set as ``1024``, ``0`` and ``10``, respectively.
-+``monitor_region_end`` are set to ``1024``, ``0`` and ``10``, respectively.
- Then DAMON_RECLAIM will work for 10 KiB length of physical address range that
- starts from address zero (``[0 * 1024, 10 * 1024)`` in bytes).
- 
-@@ -280,7 +280,7 @@ skip_anon
- 
- Skip anonymous pages reclamation.
- 
--If this parameter is set as ``Y``, DAMON_RECLAIM does not reclaim anonymous
-+If this parameter is set to ``Y``, DAMON_RECLAIM does not reclaim anonymous
- pages.  By default, ``N``.
- 
- 
--- 
-2.55.0
+I reproduced this in an x86_64 QEMU guest running
+7.3.0-rc5-1485016-gad9f2d463666.  It used one PADDR context over
+[0x400000, 0x800000) and one default stat scheme.  The paths below are
+relative to /sys/kernel/mm/damon/admin/kdamonds/0/:
 
+  ../nr_kdamonds = 1
+  contexts/nr_contexts = 1
+  contexts/0/operations = paddr
+  contexts/0/targets/nr_targets = 1
+  contexts/0/targets/0/regions/nr_regions = 1
+  contexts/0/targets/0/regions/0/start = 4194304
+  contexts/0/targets/0/regions/0/end = 8388608
+  contexts/0/schemes/nr_schemes = 1
+  contexts/0/schemes/0/access_pattern/{sz,nr_accesses,age}/max =
+      4294967295 for each file
+
+The reproducer then:
+
+  1. Wrote "on" and "update_schemes_tried_regions" to state.
+  2. Read contexts/0/schemes/0/tried_regions/total_bytes and counted
+     the region directories there.
+  3. Wrote "off" to state, then requested
+     "update_schemes_tried_regions" again and read the same results.
+
+The guest output was:
+
+  BEFORE_OFF bytes=4194304 dirs=10
+  STATE_OFF bytes=4194304 dirs=10
+  FAILED_UPDATE ret=-1 errno=125 bytes_after=0 dirs_after=0
+
+errno 125 is ECANCELED.  The snapshot survives "off", but the failed
+update removes all 10 directories and resets total_bytes.  There is a
+separate clear_schemes_tried_regions command for clearing a snapshot;
+a failed update should leave the last successful one available.
+
+damon_sysfs_turn_damon_off() retains damon_ctx for final results.  But
+damon_sysfs_update_schemes_tried_regions() calls
+damon_sysfs_schemes_clear_regions() before damos_walk().  Once the
+context is stopped, damos_walk() returns -ECANCELED because its walk
+control is obsolete, leaving the sysfs results cleared.
+
+The guest completed with RESULT exit=0.  Reproducer, kernel config,
+serial log, and build/run steps:
+
+  https://github.com/jm5905938/kernel-mail/tree/195d7017352a3d0f4a0475b98f3b03650f5c14ea/cases/2026/damon/2026-10-15-bug-reports/01-sysfs-tried-regions-snapshot
+
+Thanks,
+Aveline Noir
