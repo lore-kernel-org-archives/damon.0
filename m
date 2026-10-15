@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D8656E061;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1036956E071;
 	Thu, 15 Oct 2026 18:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792088156; cv=none; b=GKsDh8Lq1nQxWxWLaF4QFGOjCPm5YDuuer1C2EDZs7csfwAGubQaKYmu3tpunG8PzIi/wWNWaQucDra30d3141KEluI3sU405SX83uSxthipr8NXit83k02rC3FC2SU+pkoI4fsYxGjuTzC6etzDPHkS/S1YdEqUJNZrxiPo7os=
+	t=1792088156; cv=none; b=qSLbKwvPtdN1/ryxTm8ZVjbvyfmb+ONKnmJBUEJpRBiwWzRQKWWFOf4Zvtpwmn58tcB1/AxgjQwp8GhM0vpvOMj5dyz3QfZC4U8fFMKjWPM9bmqGkziZCZ5AIQpRSkIRZlRNndqadYBV7n7qut9tvfDkY9+GWxrcOf3MGckYPIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1792088156; c=relaxed/simple;
-	bh=AM2uStnUk0NEZ/O+itnfOOVfuh8FaYObL72VxiLWM2g=;
+	bh=EtFdBNMl7rTc3+2KnBe5NCt6EPdFW/oy5PCsxQTtGYg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XFHzIIbpYtTOf3hqzGxlszxwKF8xJ1b8ofLKqk+Q3HXa1Y7UxD45YbeIlityjV2BklTrRMiuUXZBt4WzW8RD3X57SdhVkk6xBUkIVbhy5yClFeOV/4uVm1HVl/2bAOeYr9z5x5kPv8M6djsKk0Xd8Rx4RS1cJJu5U2cEmr0FTa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cqJ2FaDl; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=cXdrKifgvAUes2FjPQrDfykuBpnUOvnHnXpLy0L1908X1bcjdn5zv5ff1DjaW6qzB/cMGZ5bhK3pRpfkjQ4V6/BipguGNYkTIixGaBnsVgUBpimd2IkBBSJxKJ/NT4GoVvwdmnoasPmyPkovmhT2WR12xOvxCi4W5E/bcMWrYwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kb391yTr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cqJ2FaDl"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4390BC2BCF5;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kb391yTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 780E4C2BD05;
 	Thu, 15 Oct 2026 18:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1792088155;
-	bh=AM2uStnUk0NEZ/O+itnfOOVfuh8FaYObL72VxiLWM2g=;
+	bh=EtFdBNMl7rTc3+2KnBe5NCt6EPdFW/oy5PCsxQTtGYg=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=cqJ2FaDlOWJdmIDBul6wap+f+Iugq1YeiaMmM4fm0iXIZ5PTWKKSILnUkR3DLSeJ+
-	 d6y3G4cDyxfg4q12eTzdJHyX31ysfc4HQL5UMKnI6WsTeGrhVGq6Lau8NWsJsno2bW
-	 mCvGZ3glHK+7IDPoCmLWxgZX624LAtzzL3z6grbeYogBR4FirMcmwGSkZZ+dJ2zoe1
-	 wx7bxALT9ppqmNzcuOE07Pd7OAaDDDDNzJW3XtanlrYUvFNOj70U6cnALQf0d1CMIA
-	 bM4jHXw4WwnVfbBlle86zAmXCXEA/YYOQZeEvQ6luQkEL1e2zX1nuXiWlEYA4dOnTh
-	 JUC5SUhTwbF0g==
+	b=Kb391yTrlC4wqc+SJNZmT89MRNc9OEN475jtNUimO8h5z4RHUz40UWiwBPKlRYi4b
+	 BRcSx6NPvAB8Bhlt5ggeFbJd3xK9L38LUm4G4HTyfSR/w68wtAyoQN2MQGcX8Sx5yM
+	 0Tzhe6wjKtfLxIypH+atxvRH+FYhV4bwU5QatUIhLIIkJaFBuwp7kU8xv2syKolgMA
+	 nBpz1R42+F81MXByxQdA0syxQg+mRfgQUnPpXHVpWwkEnqKyALvYHQyt07h/myF/Hl
+	 GOXL+pwGG/dQ/W4Zt8jnBZAIU2bzt2POm4pm7L3eZA2X6Ex92zDcXWf6+lAPZcJnr6
+	 AuYFDuEDuTu0A==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 227EACCA466;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61F7FCCA469;
 	Thu, 15 Oct 2026 18:15:55 +0000 (UTC)
 From: Kairui Song via B4 Relay <devnull+kasong.tencent.com@kernel.org>
-Date: Fri, 16 Oct 2026 02:15:51 +0800
-Subject: [PATCH v4 02/17] mm/mglru: make generation page counters atomic
+Date: Fri, 16 Oct 2026 02:15:54 +0800
+Subject: [PATCH v4 05/17] mm/mglru: make folio lru referenced times count a
+ generic API
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -40,7 +41,7 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261016-mglru-fg-v4-2-2106750c0bfa@tencent.com>
+Message-Id: <20261016-mglru-fg-v4-5-2106750c0bfa@tencent.com>
 References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com>
 In-Reply-To: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com>
 To: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, 
@@ -73,11 +74,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
  linux-kernel@vger.kernel.org, cgroups@vger.kernel.org, 
  damon@lists.linux.dev, Kairui Song <kasong@tencent.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792088152; l=5705;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792088152; l=4691;
  i=kasong@tencent.com; s=kasong-sign-tencent; h=from:subject:message-id;
- bh=0WiOWnqNr4HX6xukU5Z7iG/633RjVbvVUBflEj8zKv0=;
- b=GzIQnMCGGFBJ8rRg+psg68PBeye+76F28QDmanvToZ/WFpaDmG5dUrzTfJvb8a4MA/FisZGJH
- oLRudWip/H5CxKK6A0GNSogsnT6xzOKiGpswm4d6g0s+I1LjILlAP9T
+ bh=pnvvt+TNjTFasMrCaGELLai88pW+DMjr8ivb+8icxYs=;
+ b=2pYnsvVBeywNZk/IqxKSwnVGHLJe4YzTLE0xzeBV928nbdHQBo8JVn3nfsIV5SXIAHdB9m5pu
+ um1VbmccsnbBUOWooMumSGVyWRDol3yYP5jq8lKdlkvTeYic/0Sa+u4
 X-Developer-Key: i=kasong@tencent.com; a=ed25519;
  pk=kCdoBuwrYph+KrkJnrr7Sm1pwwhGDdZKcKrqiK8Y1mI=
 X-Endpoint-Received: by B4 Relay for kasong@tencent.com/kasong-sign-tencent
@@ -87,130 +88,140 @@ Reply-To: kasong@tencent.com
 
 From: Kairui Song <kasong@tencent.com>
 
-No feature change, convert them to atomic so we can update them without
-holding the LRU lock. There is no risk of overflow. The reader always
-compares and uses zero instead if the counter values are negative. It
-follows final consistency.
+Pure code shuffle, no behavior change.
+
+Make the folio LRU refs helpers available regardless of CONFIG_LRU_GEN.
+Without MGLRU the refs bits are never set, so they are inert.  Move the
+lru_gen_* helpers into the CONFIG_LRU_GEN section.  This prepares for
+unifying the API for checking folio referenced and workingset status.
+
+folio_migrate_lru_refs() now migrates the complete refs count,
+including PG_workingset (bit 1 of the encoding), bitwise identical to
+the direct copy dropped from folio_migrate_flags().
+
+lru_set_refs_flags() skips the nonexistent mask bits when
+LRU_REFS_WIDTH collapses to 0, keeping the generic helpers inert for
+!CONFIG_LRU_GEN builds.
 
 Tested-by: zhaozhengzhuo <zhaozhengzhuo@uniontech.com>
 Signed-off-by: Kairui Song <kasong@tencent.com>
 ---
- include/linux/mm_inline.h |  6 ++----
- include/linux/mmzone.h    |  2 +-
- mm/vmscan.c               | 27 ++++++++++++---------------
- 3 files changed, 15 insertions(+), 20 deletions(-)
+ include/linux/mm_inline.h | 55 ++++++++++++++++++++++++-----------------------
+ mm/migrate.c              |  2 --
+ 2 files changed, 28 insertions(+), 29 deletions(-)
 
 diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-index 597f013c8e04..f52f02e8e5be 100644
+index 74d1b7a04ca1..cfcbe4a9aa85 100644
 --- a/include/linux/mm_inline.h
 +++ b/include/linux/mm_inline.h
-@@ -265,11 +265,9 @@ static inline void lru_gen_update_size(struct lruvec *lruvec, struct folio *foli
- 	VM_WARN_ON_ONCE(old_gen == -1 && new_gen == -1);
+@@ -183,6 +183,12 @@ static inline int lru_get_gen_flags(unsigned long flags)
+ 	return gen;
+ }
  
- 	if (old_gen >= 0)
--		WRITE_ONCE(lrugen->nr_pages[old_gen][type][zone],
--			   lrugen->nr_pages[old_gen][type][zone] - delta);
-+		atomic_long_sub(delta, &lrugen->nr_pages[old_gen][type][zone]);
- 	if (new_gen >= 0)
--		WRITE_ONCE(lrugen->nr_pages[new_gen][type][zone],
--			   lrugen->nr_pages[new_gen][type][zone] + delta);
-+		atomic_long_add(delta, &lrugen->nr_pages[new_gen][type][zone]);
++static inline int folio_lru_gen(const struct folio *folio)
++{
++	return lru_get_gen_flags(READ_ONCE(*const_folio_flags(folio, 0)));
++}
++#endif
++
+ /**
+  * lru_set_refs_flags - Set the LRU referenced count to folio flags.
+  * @flags: pointer to the folio flags
+@@ -205,7 +211,8 @@ static inline void lru_set_refs_flags(unsigned long *flags, unsigned int refs)
+ 		*flags |= BIT(PG_referenced);
+ 	if (refs & BIT(1))
+ 		*flags |= BIT(PG_workingset);
+-	*flags |= ((unsigned long)refs >> 2) << LRU_REFS_PGOFF;
++	if (LRU_REFS_WIDTH)
++		*flags |= ((unsigned long)refs >> 2) << LRU_REFS_PGOFF;
+ }
  
- 	/* addition */
- 	if (old_gen < 0) {
-diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 3b96d6c7123b..09ce82fa841a 100644
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -554,7 +554,7 @@ struct lru_gen_folio {
- 	/* the multi-gen LRU lists, lazily sorted on eviction */
- 	struct list_head folios[MAX_NR_GENS][ANON_AND_FILE][MAX_NR_ZONES];
- 	/* the multi-gen LRU sizes, eventually consistent */
--	long nr_pages[MAX_NR_GENS][ANON_AND_FILE][MAX_NR_ZONES];
-+	atomic_long_t nr_pages[MAX_NR_GENS][ANON_AND_FILE][MAX_NR_ZONES];
- 	/* the exponential moving average of refaulted */
- 	unsigned long avg_refaulted[ANON_AND_FILE][MAX_NR_TIERS];
- 	/* the exponential moving average of evicted+protected */
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index daa7e37c2236..cab3ba14d20c 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3495,8 +3495,7 @@ static void reset_batch_size(struct lru_gen_mm_walk *walk)
- 			continue;
+ /**
+@@ -240,13 +247,31 @@ static inline void folio_set_lru_refs(struct folio *folio, unsigned int refs)
+ 	} while (!try_cmpxchg(folio_flags(folio, 0), &old_flags, new_flags));
+ }
  
- 		walk->nr_pages[gen][type][zone] = 0;
--		WRITE_ONCE(lrugen->nr_pages[gen][type][zone],
--			   lrugen->nr_pages[gen][type][zone] + delta);
-+		atomic_long_add(delta, &lrugen->nr_pages[gen][type][zone]);
++#ifdef CONFIG_LRU_GEN
+ void folio_inc_lru_refs(struct folio *folio, unsigned int flags);
++#else
++static inline void folio_inc_lru_refs(struct folio *folio, unsigned int flags)
++{
++	/* Should not be called with !CONFIG_LRU_GEN */
++	WARN_ON_ONCE(1);
++}
++#endif
  
- 		if (lru_gen_is_active(lruvec, gen))
- 			lru += LRU_ACTIVE;
-@@ -4116,11 +4115,8 @@ static bool inc_min_seq(struct lruvec *lruvec, int type, int swappiness)
- 				break;
- 		}
- 		flush_lru_batch(head, &batch_end, target_list);
+-static inline int folio_lru_gen(const struct folio *folio)
++/**
++ * folio_migrate_lru_refs - copy the reference state to a new folio
++ * @new: the destination folio
++ * @old: the source folio
++ *
++ * Transfer the reference state to @new during migration: the MGLRU
++ * refs count, or PG_referenced and PG_workingset (bits 0-1 of the
++ * encoding) for the active/inactive LRU.
++ */
++static inline void folio_migrate_lru_refs(struct folio *new, const struct folio *old)
+ {
+-	return lru_get_gen_flags(READ_ONCE(*const_folio_flags(folio, 0)));
++	folio_set_lru_refs(new, folio_lru_refs(old));
+ }
+ 
++#ifdef CONFIG_LRU_GEN
+ static inline bool lru_gen_at_tail(struct lruvec *lruvec, int type, int gen)
+ {
+ 	unsigned long min_seq = READ_ONCE(lruvec->lrugen.min_seq[type]);
+@@ -401,20 +426,6 @@ static inline bool lru_gen_del_folio(struct lruvec *lruvec, struct folio *folio,
+ 
+ 	return true;
+ }
 -
--		WRITE_ONCE(lrugen->nr_pages[old_gen][type][zone],
--			   lrugen->nr_pages[old_gen][type][zone] - delta);
--		WRITE_ONCE(lrugen->nr_pages[target_gen][type][zone],
--			   lrugen->nr_pages[target_gen][type][zone] + delta);
-+		atomic_long_sub(delta, &lrugen->nr_pages[old_gen][type][zone]);
-+		atomic_long_add(delta, &lrugen->nr_pages[target_gen][type][zone]);
- 		if (!remaining)
- 			return false;
- 	}
-@@ -4225,8 +4221,8 @@ static bool inc_max_seq(struct lruvec *lruvec, unsigned long seq, int swappiness
- 	for (type = 0; type < ANON_AND_FILE; type++) {
- 		for (zone = 0; zone < MAX_NR_ZONES; zone++) {
- 			enum lru_list lru = type * LRU_INACTIVE_FILE;
--			long delta = lrugen->nr_pages[prev][type][zone] -
--				     lrugen->nr_pages[next][type][zone];
-+			long delta = atomic_long_read(&lrugen->nr_pages[prev][type][zone]) -
-+				     atomic_long_read(&lrugen->nr_pages[next][type][zone]);
+-/**
+- * folio_migrate_lru_refs - copy the reference state to a new folio
+- * @new: the destination folio
+- * @old: the source folio
+- *
+- * Transfer the reference state to @new during migration: the MGLRU
+- * refs count, including PG_referenced, or just PG_referenced for the
+- * active/inactive LRU.
+- */
+-static inline void folio_migrate_lru_refs(struct folio *new, const struct folio *old)
+-{
+-	folio_set_lru_refs(new, folio_lru_refs(old));
+-}
+ #else /* !CONFIG_LRU_GEN */
  
- 			if (!delta)
- 				continue;
-@@ -4344,7 +4340,8 @@ static unsigned long lruvec_evictable_size(struct lruvec *lruvec, int swappiness
- 		for (seq = min_seq[type]; seq <= max_seq; seq++) {
- 			gen = lru_gen_from_seq(seq);
- 			for (zone = 0; zone < MAX_NR_ZONES; zone++)
--				total += max(READ_ONCE(lrugen->nr_pages[gen][type][zone]), 0L);
-+				total += max(atomic_long_read(&lrugen->nr_pages[gen][type][zone]),
-+					     0L);
- 		}
- 	}
+ static inline bool lru_gen_enabled(void)
+@@ -441,16 +452,6 @@ static inline bool lru_gen_del_folio(struct lruvec *lruvec, struct folio *folio,
+ {
+ 	return false;
+ }
+-
+-static inline void folio_inc_lru_refs(struct folio *folio, unsigned int flags)
+-{
+-}
+-
+-static inline void folio_migrate_lru_refs(struct folio *new, const struct folio *old)
+-{
+-	if (folio_test_referenced(old))
+-		folio_set_referenced(new);
+-}
+ #endif /* CONFIG_LRU_GEN */
  
-@@ -4764,7 +4761,7 @@ static void __lru_gen_reparent_memcg(struct lruvec *child_lruvec, struct lruvec
- 
- 	for (i = 0; i < get_nr_gens(child_lruvec, type); i++) {
- 		int gen = lru_gen_from_seq(child_lrugen->max_seq - i);
--		long nr_pages = child_lrugen->nr_pages[gen][type][zone];
-+		long nr_pages = atomic_long_read(&child_lrugen->nr_pages[gen][type][zone]);
- 		int child_lru_active = lru_gen_is_active(child_lruvec, gen) ? LRU_ACTIVE : 0;
- 		int parent_lru_active = lru_gen_is_active(parent_lruvec, gen) ? LRU_ACTIVE : 0;
- 
-@@ -4772,9 +4769,8 @@ static void __lru_gen_reparent_memcg(struct lruvec *child_lruvec, struct lruvec
- 		list_splice_tail_init(&child_lrugen->folios[gen][type][zone],
- 				      &parent_lrugen->folios[gen][type][zone]);
- 
--		WRITE_ONCE(child_lrugen->nr_pages[gen][type][zone], 0);
--		WRITE_ONCE(parent_lrugen->nr_pages[gen][type][zone],
--			   parent_lrugen->nr_pages[gen][type][zone] + nr_pages);
-+		atomic_long_set(&child_lrugen->nr_pages[gen][type][zone], 0);
-+		atomic_long_add(nr_pages, &parent_lrugen->nr_pages[gen][type][zone]);
- 
- 		if (lru_gen_is_active(child_lruvec, gen) != lru_gen_is_active(parent_lruvec, gen)) {
- 			__update_lru_size(child_lruvec, lru + child_lru_active, zone, -nr_pages);
-@@ -5859,7 +5855,8 @@ static int lru_gen_seq_show(struct seq_file *m, void *v)
- 			char mark = full && seq < min_seq[type] ? 'x' : ' ';
- 
- 			for (zone = 0; zone < MAX_NR_ZONES; zone++)
--				size += max(READ_ONCE(lrugen->nr_pages[gen][type][zone]), 0L);
-+				size += max(atomic_long_read(&lrugen->nr_pages[gen][type][zone]),
-+					    0L);
- 
- 			seq_printf(m, " %10lu%c", size, mark);
- 		}
+ static __always_inline
+diff --git a/mm/migrate.c b/mm/migrate.c
+index 7bdcdb57652f..5eefd8547f70 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -786,8 +786,6 @@ void folio_migrate_flags(struct folio *newfolio, struct folio *folio)
+ 		folio_set_active(newfolio);
+ 	} else if (folio_test_clear_unevictable(folio))
+ 		folio_set_unevictable(newfolio);
+-	if (folio_test_workingset(folio))
+-		folio_set_workingset(newfolio);
+ 	if (folio_test_checked(folio))
+ 		folio_set_checked(newfolio);
+ 	/*
 
 -- 
 2.56.0
