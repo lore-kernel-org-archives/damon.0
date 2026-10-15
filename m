@@ -1,68 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AD8439F75
-	for <damon@lists.linux.dev>; Thu, 15 Oct 2026 14:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACAD284693;
+	Thu, 15 Oct 2026 14:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792073531; cv=none; b=DkB56QTYI8JJP/tO1LYBd93/2TBstpvOgA8a1AUiWRZImyltNPdzO2QhQrrLhiwgKURU61uMrHDljQBU6F0Vkhwa62L5bB7rhX6hri4NCbRtwWxP1TQfTdgiU+4mVCUgmVybrXmQ+YdfHHxuT5JF6sE6WmuQ1Bn8yutTtnZhQLE=
+	t=1792073608; cv=none; b=m8U6xYJBL4wKeyMP13OLKY6+tiqPOSINNQtOJbAZDk4U2k8Wz+M253AzFqjHmpmNBEma2cenHYaSNHhEMEMw0NQyYET19ovycWTUUnc8mh3yuXS/iuxhdMQ81BLcvoP3sHeiIHxQHNc9Xlt+j4Xah9Z7gxu0hgVXBxFWfY2oAy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792073531; c=relaxed/simple;
-	bh=bHMrskOyywW2Myi5FuA8avW/y8SRi0WGeJJDPe/BKXA=;
-	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=hcWtoZNAJCbS6zZLos+KjXUw64pzJ4C5skNqBhsJL+a0NIoCv4Y+mPIbajFjKox7GcyFiPaLUnPXkHSnB4OFizhfqr4WnbjNL3Ni/o58odpkh1+a3UkTKlyaR9CmAWRz7JEM0DJwQCUDhw9cEQ88uWO97M37i+MPdarJoVJyLQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LuTi6Ghf; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792073608; c=relaxed/simple;
+	bh=qk7EObw9jegCCoMHdhDr7g/VY2GLHs0vSQ3vyS3zVUI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rMomYeD51XWh9pn8zYmVP211NNzTkeuaaa3wV19P/6nRqqo8eUwxchGCsQ8gwT7m++NqA/2BCFIl1ygd/EOq//HFVtifwjId+E1bYz1Hw2Omo24hrTDfQpManPzlrBEos29s1WGTBytHUQT0wOU7A1py84Z0m1x1viMQneI22XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VK2jk6qM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LuTi6Ghf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E70D1F000C4;
-	Thu, 15 Oct 2026 14:12:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VK2jk6qM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C5F1F000C4;
+	Thu, 15 Oct 2026 14:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792073530;
-	bh=bHMrskOyywW2Myi5FuA8avW/y8SRi0WGeJJDPe/BKXA=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=LuTi6GhfyXOPvB1lz/hxuAeroHdUMWJTWGkq5rrb8SzIiDkiakbHeRYSUig2e5x6e
-	 WnHlQ8Vy+DvqpzgLiDRBylBBwZdJJ1WqofgJwSYwCjpyK7V3vL6q8QspF6yGPHp6b5
-	 47QvT4sGMZ4YznHG1CtrLicaqJ4VSDaw8rqw6vM3ph3d0PwVRuzVrqj2o3HFsCSO6u
-	 uRqs50yK3/aAEVvTWIWmpFpe4vW7iK82oLTq5IAogs8ntSRY5Pu8IQVYGNMbig8xnA
-	 kMtKrQQjfvBxxEkWEFMsEAusAH3uiSk6lFl80MFBei48aj34WBpiDX+07sgkaFcTPM
-	 hAQWbNgRlVkAQ==
-Message-ID: <sashiko-outbox-172953@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v4 2/2] mm/damon/core: Copy only installed probe in
- damon_split_region_at()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Suhaas Joshi" <suhaas@s-joshi.in>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261015135801.19326-2-suhaas@s-joshi.in>
-References: <20261015135533.18761-1-suhaas@s-joshi.in>
- <20261015135801.19326-2-suhaas@s-joshi.in>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 15 Oct 2026 14:12:09 +0000
+	s=k20260515; t=1792073606;
+	bh=vSbVaC0f2gNWsRFqnc1zPjJqFLHG96Rj4dv0cQbpqHk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=VK2jk6qMdVNH/RTkBn4PiZI8l5MImtqd3I3/rcyPP3Z0H9vIq89Aqw22/KwApHpvq
+	 sq8EsJleJfgC6Cjn62uzJ0PV5sSqtxM5ZHTry/w8PU8mlXfWxmH9jGrONj71JsufQn
+	 BdVquPDJF368SCGof+kurkib3QSmOjvG/gWWEwXssUECfiN/Re+GlMjz62a1bxPFDV
+	 XgCdx/GqOrPGwHc8J29qkAlYhs9rU6NH0I4eWzlJw1qNGsNbubg51pUq0zBCzySD1j
+	 R16wu5PI+4GtNFfiN9cHyLrRR1T1D7o65TYAd88FFUWkm5QxeduSsN9z66q/PyV3jm
+	 32hAyDmOWkq1w==
+From: SJ Park <sj@kernel.org>
+To: Aveline Noir <jm5905938@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [BUG] DAMON_STAT: idle percentiles out of order on 32-bit
+Date: Thu, 15 Oct 2026 07:13:19 -0700
+Message-ID: <20261015141319.88393-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <CANOyQmHad1vamnZT12M5yPrJ69==Pt1U0+MGw6u0MuNtr-DRCw@mail.gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> In damon_split_region_at(), we copy the entire probe_hits[] and
-> last_probe_hits[] arrays of DAMON_MAX_PROBES size. However it is possible
-> that the number of probes installed is less than DAMON_MAX_PROBES, in whi=
-ch
-> case one or more iterations is/are redundant. To remedy this, iterate over
-> only as many times as the number of installed probes. To do so, accept a
-> struct damon_ctx pointer in damon_split_region_at(), and update all
-> invocations of the function to pass the new argument.
->=20
-> Also update damon_test_split_at() and damos_test_filter_out() in
-> core-kunit.h to supply a context to function paths that call
-> damon_split_region_at().
->=20
-> Signed-off-by: Suhaas Joshi <suhaas@s-joshi.in>
+Hi Avelin,
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+On Thu, 15 Oct 2026 04:24:12 -0700 Aveline Noir <jm5905938@gmail.com> wrote:
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261015135533.1876=
-1-1-suhaas@s-joshi.in?part=3D2
+> Hi,
+> 
+> In an i386 QEMU guest built from mm-new commit ad9f2d463666,
+> DAMON_STAT reported these memory_idle_ms_percentiles values after a
+> statistics update:
+> 
+>   guest uptime:       22.51 s
+>   aggr_interval_us:   3200000
+>   percentile 0:      19200 ms
+>   percentile 50:         0 ms
+>   percentile 100:        0 ms
+> 
+> The 0th percentile is greater than the 50th and 100th.  The guest had
+> 256 MiB of RAM (MemTotal: 254216 kB), a running kdamond,
+> CONFIG_X86_32=y, CONFIG_DAMON_STAT=y,
+> CONFIG_DAMON_STAT_ENABLED_DEFAULT=y, and CONFIG_COMPAT_32BIT_TIME=y.
+> aggr_interval_us changed from 0 to 1600000 and then 3200000, showing
+> that statistics updates ran before the final read.
+> 
+> In damon_stat_set_idletime_percentiles(), the loop compares
+> 
+>   next_percentile <= accounted_bytes * 100 / total_sz
+> 
+> where accounted_bytes and total_sz are unsigned long.  On 32-bit, when
+> total_sz exceeds 42,949,672 bytes, the wrapped product cannot yield
+> 100%, even after all bytes are accounted for.  Upper entries in
+> memory_idle_ms_percentiles then retain an earlier value or remain zero
+> on first use.  DAMON_STAT monitors the system RAM address range, which
+> exceeds that threshold in this guest.  I did not capture a per-region
+> trace in this run.
+> 
+> The guest init read the module parameters after 22 seconds of uptime;
+> it did not write to them.  The i386 config, guest init, serial log, and
+> build/run steps:
 
+Could you share more details about your real use case that require the setup
+and how this becomes a real problem?
+
+
+Thanks,
+SJ
+
+[...]
