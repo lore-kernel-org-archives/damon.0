@@ -1,43 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046F1349CDD;
-	Fri, 16 Oct 2026 14:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2F6379ECF;
+	Fri, 16 Oct 2026 14:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792160225; cv=none; b=Rtis5hvRNTobV5lOLJ6kVc32uXD1tbttFqcCbyk8sIPggX0MyIAGQslbiOsfk8ZOGNDQS+w4el4TpPAaZ4hORIoBdLsR8itKNuLcyEBixs/EpGxC/dxrfoPD551du1LF/Xr26gCnasIqGHB/w+ZfsxzmTqoz8OKFTij4N8o1vm4=
+	t=1792160971; cv=none; b=QNgFU4Dlv5J2EBcnqhgYqBCLrvDy8wvl15eLd4m6Xspp3ssNysJFMNkYIl+3yp1OmyVuoneqVvi5mg9qYCtxV4EsreAwKpiGG8zjsWGjvEOJQhxd/Aufds5LgSlSAy/pCTxA/LcN8eQbhaJMd35QWyQjfFm0rJG9i4Ju4jzZVN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792160225; c=relaxed/simple;
-	bh=SKTWk7HvFFA67Ryywjtu3nHcNULy8QYaQlDa3i0A0v4=;
+	s=arc-20240116; t=1792160971; c=relaxed/simple;
+	bh=x3joWeRhn7XYuzLPg6BaRvt7XsMU+dTn8qrU6AyZcwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bd772FEScPTa3WFQEXg6xmW5IYtt9BkryKxlpczXpA44wvK7aDILNu+zUIj5lK9RJRGcBxfwJDKnHtwRdMTZmn2mcs77HQTymM8FTRS6FpN8uwgSI72pFSbeOTmNBmr9TJoQ75GEhYWgKW/VN1tERkEfNQKchpsF8s/74AHLTEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EAXAfP9E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DAQvyjGNUeWfqAX4oS6IibZ+qo1K37FaBa+6K3qFuGNYbzIiTe4d+pPCoKqcpCGmOF1l2PhnmTzmFM7RR1H4pv6l8JCq1BFe+2omD1OLS9XCPGKW+3B2NtEI7MTMWgFWz6pkwtCwyE5QyGyh95Ykvafzip6nXnP/IHEkgDXidd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q65In81g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EAXAfP9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE571F000C5;
-	Fri, 16 Oct 2026 14:17:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q65In81g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62371F000C4;
+	Fri, 16 Oct 2026 14:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792160223;
-	bh=b2VQkAftmXnblL7IeVaeDeAnYYS9mQ6ICu4SlOn3GcU=;
+	s=k20260515; t=1792160969;
+	bh=5HSzrUk8F8TN6B6+DOgVOUSWwHPV0RhSwS1OfeQB0K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EAXAfP9EuBjp2chpB8buw2ql+T/nNSCBvWeodlkEX1c0xKLO05HH6nVmzSZ0ckXoM
-	 7ixtf6cBxqV2F4XjtO0nDq/LrOwREGst5oNVKujYyBK4o80v6zXeCd0WrgXKAlB3wG
-	 U9DkTHD7hz/Us3hNuORN3cJghgiZad8Z2kzh+O5x/EQApZKqUnAyTkx+Xgm9lDuT6v
-	 jI9e0dqvrE9gLdxD6l7wIxWn48RqlU+RVGqx7PwMRC/nR1JdIDSzApL71IedVSk9HV
-	 9uU9wfiboBGpPHijAN2efJK2CoiW8+4S8lHJeC7HrAuR5Lb5sitBRIKPjzRgEEcESu
-	 5CYoHfhgUE8jQ==
+	b=Q65In81gZDrVrtW5aeohcJVJLJobQ9C8yQuS2wcMlNBqD1FSgQ5ZjZswj5VFjEIhV
+	 Uj3NJt5OF30kEGcVXt3+OijWD8/DJBwmwsVbLwDKW2TF8NWbmYfIBEKbj2O7sejVvG
+	 +RSSLoAh3RIWYDA7pX6RCZ53f38uknskqpEXSpGwbaojB979hqlX4WK1wHRTxDeUjl
+	 fCkunetpfr9SnSdoWyXIUOzbMYjOtJCc8R2NDlPyY2OOn8tBJwwHR+YgK8IZBflwOS
+	 yHACdqKGG/K2PLFWfm9XS3S4Anf7UblSAKrhhiULhHwKm2lUEGosBhMHe5l3FqY53c
+	 iJC2HQzQ0cVqA==
 From: SJ Park <sj@kernel.org>
 To: Aveline Noir <jm5905938@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
+	Manuel Ebner <manuelebnerli@mailbox.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/stat: avoid 32-bit overflow in idle percentiles
-Date: Fri, 16 Oct 2026 07:16:56 -0700
-Message-ID: <20261016141656.126278-1-sj@kernel.org>
+Subject: Re: [PATCH] mm/damon/reclaim: improve grammar and style
+Date: Fri, 16 Oct 2026 07:29:21 -0700
+Message-ID: <20261016142921.126622-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <179207592479.3.11595453180868898703@gmail.com>
+In-Reply-To: <179215409165.864368.11903228864381211337.b4-reply@b4>
 References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
@@ -47,57 +59,85 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 15 Oct 2026 22:52:04 +0800 Aveline Noir <jm5905938@gmail.com> wrote:
+On Fri, 16 Oct 2026 20:34:51 +0800 Aveline Noir <jm5905938@gmail.com> wrote:
 
-> On 32-bit, accounted_bytes * 100 can wrap before division by total_sz.
-> Some entries in memory_idle_ms_percentiles then keep their old values
-> instead of being updated.
+> Hi Manuel,
 > 
-> For example, a 256 MiB i386 QEMU guest reported p0=19200 ms, but p50 and
-> p100 were both zero.
+> A few suggestions from my view for you here :)
 > 
-> Cast accounted_bytes to u64 before multiplying and use div64_ul() for
-> the division. Compute the percentage once per region.
+> On Thu, 15 Oct 2026 10:06:23 +0200, Manuel Ebner wrote:
 > 
-> Link: https://lore.kernel.org/r/CANOyQmHad1vamnZT12M5yPrJ69==Pt1U0+MGw6u0MuNtr-DRCw@mail.gmail.com
-
-From the next time, please give context about what the link is.
-
-> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
-
-Reviewed-by: SJ Park <sj@kernel.org>
-
-I applied  this patch to damon/next [1] tree, after slightly modifying the
-commit message for the abovely mentioned small thing.  We are now quite close
-to next merge window.  It may better to focus on making mm.git more stabilized
-and therefore ready for the next merge window, rather than adding more changes
-that are not really urgent.  I understand this series is not really urgent.
-Hence, Andrew might not add this patch until next -rc1 release.  In the case, I
-will request adding this to mm.git after next -rc1 release.  So, no action from
-your side is needed for now.  Let me know if you think this is really  urgent.
-
-> ---
-> This is against mm-new ad9f2d463666. With the fix, the original test
-> reports p0=p50=p100=19200 ms. The i386 kernel build, x86_64 W=1 stat.o
-> build and external arithmetic checks passed.
+> > @@ -30,12 +30,12 @@ guests could mitigate this problem.
+> > -DAMON_RECLAIM finds memory regions that didn't accessed for specific time
+> > +DAMON_RECLAIM finds memory regions that weren't accessed for specific time
+> >  duration and page out. To avoid it consuming too much CPU for the paging out
 > 
-> I also ran 38 before/after VM tests and 20 same-image controls. Throughput
-> was close overall, but median kdamond CPU rose by 0.0053 and 0.0221
-> percentage points of one guest CPU for stream and sparse, respectively.
-> Some pairs had 5.91% lower throughput or 15.49% higher scan P99. So I can't
-> yet tell whether these differences come from the patch.
-> 
-> 
->  mm/damon/stat.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+> "weren't accessed" fixes the grammar, but "page out" still doesn't
+> agree with the subject. How about "DAMON_RECLAIM identifies memory
+> regions that have not been accessed for a specified period and
+> attempts to reclaim their pages.".
 
-The above empty space before 'diff --git' line was making 'git am' of this
-patch fails.  I manually fixed it.  Please do not add such empty space or
-something that could make 'git am' fails, from the next time.
+That's entire sentence rewriting.  We could consider doing that, but maybe
+that's better to be done via another patch.  Let's focus on simple grammar and
+style in this patch.
 
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+How about simply 's/page out/pages out those/'?
+
+> 
+> >  operation, a speed limit can be configured. Under the speed limit, it pages
+> > -out memory regions that didn't accessed longer time first. System
+> > +out memory regions that weren't accessed longer time first. System
+> >  administrators can also configure under what situation this scheme should
+> 
+> "weren't accessed longer time first" sounds a little strange to me.
+> Maybe "Within the configured speed limit, it prioritizes regions
+> that have been idle longer for reclamation." would read better?
+
+Let's do such rewriting with another patch.
+
+> 
+> > @@ -88,11 +88,11 @@ identifies the region as cold, and reclaims it.
+> >  sampling and aggregation intervals. The auto-tuning aims to capture meaningful
+> >  amount of access events in each DAMON-snapshot, while keeping the sampling
+> > -interval 5 milliseconds in minimum, and 10 seconds in maximum. Setting this as
+> > -``N`` disables the auto-tuning.
+> > +interval to 5 milliseconds in minimum, and to 10 seconds in maximum. Setting this
+> > +to ``N`` disables the auto-tuning.
+> 
+> Maybe "between 5 milliseconds and 10 seconds" would read more
+> naturally here.
+
+I concern if readers could confuse if the range is inclusive or exclusive.  I'd
+prefer the current sentence.
+
+> 
+> > @@ -113,8 +113,8 @@ quota_sz
+> >  Limit of size of memory for the reclamation in bytes.
+> >
+> > -DAMON_RECLAIM charges amount of memory which it tried to reclaim within a time
+> > -window (quota_reset_interval_ms) and makes no more than this limit is tried.
+> > +DAMON_RECLAIM recordes the amount of memory which it tried to reclaim within a time
+> > +window (quota_reset_interval_ms) and stops when this memory limit is reached.
+> 
+> Agree with SJ that "charges" fits better here, since this is quota
+> accounting. 
+
+Makes sense to me.  What do you think, Manuel?
+
+> 
+> > -While keeping the caps that set by other quotas, DAMON_RECLAIM automatically
+> > +While keeping the caps set by other quotas, DAMON_RECLAIM automatically
+> >  increases and decreases the effective level of the quota aiming this level of
+> >  memory pressure is incurred.
+> 
+> Maybe "While respecting the limits imposed by other quotas," would
+> be another option I think.
+
+I feel like that's out of the scope of this patch.
+
+If both of you agree to my abovely suggested/agreed changes ('s/page out/ pages
+out those/' and 's/records/charges/'), I will update this patch in damon/next
+tree with those changes.
 
 
 Thanks,
