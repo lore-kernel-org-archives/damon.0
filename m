@@ -1,63 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD3236E470
-	for <damon@lists.linux.dev>; Fri, 16 Oct 2026 14:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB3D4A8FD1;
+	Fri, 16 Oct 2026 15:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792161811; cv=none; b=m+qCk26ldkMrpzVVneJcUTEhVbrkJqy02E/2ZhpPT6xvtt6eE5zSBk4bqUT1qRiLT0yI9X+eJBnmXn8SsG5Yg9dRglYXRdtbaS/c0dQHuN0GYgV8o0xN2VnQQ01xpwg/0sJ77k+CEYY6nMbcre7HNtEdar/yj7fDIPUOBv1D9BM=
+	t=1792163298; cv=none; b=Usql3l1zbTsD5qGaJ/U8lFAJZa22EbYkkdIHeldN5OfrP8u4WEkxb7pLaoJkftoPae0nt9nSKFZFMnbJYaBZK6Rmmv+lM+c4TvLQKWVGHogn3nxwuYbgtJbaDl83AEaLZoeaS7qyfo5r7R6oOwSPZQk6yC7rR0n0jLN/bmlWrI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792161811; c=relaxed/simple;
-	bh=FEpOej85a0YwOHzzsWrsCPJAkWEyE6LeK8ybAsVp6kQ=;
-	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
-	 Date; b=eVKytQUV5LZjhhbdG9aBex9MCjd2L8KLll6mqMSOgISq2ZIPnW9S09g/+k33yJuIkiBxlsIh4B3TyCMs32f2xb+wT8Ztt1VFwEfztMUo9Bs27D3mrDuonTpqr4CCOSq27/55RZ69MjHJbk3boKTnfcUsEB4aqpENHTdxz+wjqDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OXKsSMVk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792163298; c=relaxed/simple;
+	bh=f5nklyBFzeuSBEmK+uzl03MFDh3bWmGJVnhn9hpoSPw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TkAVBy5A7rlg9KdNck0X5o48F34salkZS7skGQKVvptqBTA4ONWISSOHj5euRH9/BI0cYdKSIHqxTOpMHVNjrHoX9jsYYz2HvxFo0gNX9c2I179hscCALDqSHFG9DcE18WEp6xQI58kji0UVuGpElf19+dGWFjby8sqSj/OnOLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwMOGeKB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OXKsSMVk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4961F000C4;
-	Fri, 16 Oct 2026 14:43:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwMOGeKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA7E1F000C4;
+	Fri, 16 Oct 2026 15:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792161810;
-	bh=FEpOej85a0YwOHzzsWrsCPJAkWEyE6LeK8ybAsVp6kQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OXKsSMVkKRrkAyGZPut/kOZeBahN8O48YIH40jWWvcbSZpGNKi9umrKxfK9rga0C8
-	 5F1i5iK8QvwL4EjlBgGpMZ9b+/IDJff9/8gVij+VGUxTKTs5/OEIYqgbWUCL6xefZW
-	 QLGCwfj03WtqpWsAfswqw9YhqlZT7fzZ+IFchF5fnQbdynxdV95Qkvreke9clf1nor
-	 FOCQ67j/crPPf0r5hAH5s4LHxDRoosOQ1+HXeYyDSgvPvnDgc8LZWgBDvdeW+qzodW
-	 +D9UKGpYKAM3xA0iRX+VitGGeK34OTup1HIt3eISabzVur9dLOFa2sLwnC6zzTowVw
-	 8aInXYBi6bVbw==
-Message-ID: <sashiko-outbox-174473@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/1] mm/damon/core: Remove unnecessary
- zero-initialization in damon_new_ctx()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: =?utf-8?b?QWRyaWFuIEh1YW5nIChMZW5vdm8p?= <adrianhuang0701@gmail.com>
-Cc: damon@lists.linux.dev
+	s=k20260515; t=1792163296;
+	bh=9GaGFNgl1GBFYDagkb0NG6gNUC4bplBfbJ7IM8ysGNo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=bwMOGeKBmDDimGvJ6avqsU4zzJU6oWHAMnplPaUKcB5a+3D2eBDGJJHM7kcMRy0jH
+	 YStCKJccgkyStEtEmklxkcSls2oWI1cH8MRk3TBwKxeuZdAfztE6/G0kfQQvJY/w6n
+	 OOWz7ELc2KTC+Joy4OR3JHx0KEWw2Ox63TAH+TflmLFmOe7u46nzphV4K+jArOS7PR
+	 KY82tGQhzfpp0o4wZgNT12wN64DSZY6iH9uP4x8Bp7qcYhTcbLzmeJseGuGDkeI/MW
+	 oDPO77sWv/FyP3H/eTO+1EQwQSSHj2vJ/DOb7WfCe+xr+/7ZHmPZclFCaHVQqwZjgm
+	 VxZKJRhu4KoMw==
+From: SJ Park <sj@kernel.org>
+To: "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	ahuang12@lenovo.com
+Subject: Re: [PATCH 1/1] mm/damon/core: Remove unnecessary zero-initialization in damon_new_ctx()
+Date: Fri, 16 Oct 2026 08:08:09 -0700
+Message-ID: <20261016150809.92159-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261016143733.320-1-adrianhuang0701@gmail.com>
-References: <20261016143733.320-1-adrianhuang0701@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 16 Oct 2026 14:43:30 +0000
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+Hello Adrian,
+
+
+Let's use lowercase for the first word of the subject (s/Remove/remove/), as
+that's the convention in mm.
+
+On Fri, 16 Oct 2026 22:37:33 +0800 "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com> wrote:
 
 > damon_new_ctx() allocates the context structure using kzalloc(),
 > which already initializes all fields to zero.
->=20
+> 
 > The explicit initialization of passed_sample_intervals,
 > next_aggregation_sis, and next_ops_update_sis is therefore redundant.
 > In addition, they are later initialized by kdamond_init_ctx() before use.
->=20
+> 
 > Remove the unnecessary assignments to simplify the code.
->=20
+
+Makes sense, thank you for this patch.
+
+> 
 > Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
 
-Sashiko has reviewed this patch and found no issues. It looks great!
+Reviewed-by: SJ Park <sj@kernel.org>
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261016143733.320-=
-1-adrianhuang0701@gmail.com?part=3D1
+I applied  this patch to damon/next [1] tree after adjusting the subject as I
+abovely mentioned.  Let me know if you dislike the change.  We are now quite
+close to next merge window.  It may better to focus on making mm.git more
+stabilized and therefore ready for the next merge window, rather than adding
+more changes that are not really urgent.  I understand this series is not
+really urgent.  Hence, Andrew might not add this patch until next -rc1 release.
+In the case, I will request adding this to mm.git after next -rc1 release.  So,
+no action from your side is needed for now.  Let me know if you think this is
+really  urgent.
 
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+
+
+Thanks,
+SJ
+
+[...]
