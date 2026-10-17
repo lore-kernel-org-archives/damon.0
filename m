@@ -1,260 +1,181 @@
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411623CCA02
-	for <damon@lists.linux.dev>; Sat, 17 Oct 2026 08:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8E146DFE4
+	for <damon@lists.linux.dev>; Sat, 17 Oct 2026 09:18:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792226205; cv=none; b=PpAXkcWwWeDc3zsqdNAHGLXi/EJNCLxKSFmLbHwSeFxP+eyd05BLFsXiQXks/d4KwtGKwz5dYGl2q7NbzTZKiaIUCoW3MjX1Fc6bZbClEx1yU78WLPcP6RTBNdDlxw8Ga2Njv/wHyaMJ91Wmcm0MRyVDAt7RRB0fRgCALAdENU4=
+	t=1792228723; cv=none; b=tVnKx31575MH8RUgExXJQC3DUzH0oroWNIS4i/UJDclMTkkdjxA6ybGM1NEVwz4W8LPLtHobThroaMnGocTI45mNWCmYyLbScoWKrCZyOMC8RLCiPoydMGmaVq5xB5WS2mk+axyHJMjpoLCCQJnNH+ESW3PrLNKj+lSzojxA/lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792226205; c=relaxed/simple;
-	bh=6SeJ4Hl24zyy4exhjtnlHcNJJiQVuN0BNii3iL9g0qw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iHJH1KkbkaX7cy/X+Vv/fDBkm3HDuYczA+vQcYN5/ftCCvLLA8zKDDoe8W5ciNZEp/9xeTJOvO9+V3bSla4WSmkvSsQ7sOSzyDbEToM+cHe86vP2Euk1t6MHistkDnH+MJkehpVbhk3u9URUzUxM6cFghCB26yHzZKaECxOr29o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=Dc2HkLmZ; arc=none smtp.client-ip=80.241.56.151
+	s=arc-20240116; t=1792228723; c=relaxed/simple;
+	bh=AJNqfW0ioAwXAyHgrrMYr3i85p2JVBdKUXfKlT6Pido=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Dg7XDm07USmyNkybwGc+GKN+fE1PPPnrjEo1oDDaOEoRMoFDVDRlELFk130vhCapCxQAFxtB6I60TkF+ZKMiiCyC0R/2ZbYiG0elpd1kCPvkKb/W/clrbAyQLkB2H8l3sezx465hrCNrf3s5uKnosx0f6nrVWbYuZH45X02z+rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=UqxkiEmf; arc=none smtp.client-ip=80.241.56.161
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="Dc2HkLmZ"
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="UqxkiEmf"
 Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4j6FXQ0pgcz8t2h;
-	Sat, 17 Oct 2026 10:36:38 +0200 (CEST)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4j6GSs6Ct8zKnTY;
+	Sat, 17 Oct 2026 11:18:37 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1792226198;
+	t=1792228717;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=daD3WZTzmfa4KXrJR0YhoGudN1Nbz0tk7iqpRXDolW0=;
-	b=Dc2HkLmZUEX3jqyRHuvtVm5AB1f9xOguV/lBqT3hQMxeFhxoUQjObGYfhcBFI96gpaaq3I
-	dpCv26hfqDcV14U/hRPNyIlUaOiLRMv1EBnMWhHDnVZqZJJ25TRQStQXeQQcUUvlZiW4or
-	TxMnv21HtuoGkcBnLmCp4wP1zkrPlKvsDRKfkNZjuaCtZUl1wrFlg7TnLI6Tm6t1LGyd5J
-	eAns+A86qi+NyaPvsx+CowrB/CWsQjD3ZjwXm9+mSsuk7VPq2P0IFPG1KJfRZ/VbupYuu/
-	/KVSL0wZlhI674swou5UZPy/dHLjbV31mZuGmXMjkj3fnzERX7dMnjwg8W/4PA==
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=AJNqfW0ioAwXAyHgrrMYr3i85p2JVBdKUXfKlT6Pido=;
+	b=UqxkiEmf8ArLdQmOp8pJzr16B+51FF6wd4VGNwPO/FNzS9wMD4L7/Bw1W9+HrxX4DFJBCi
+	KqL8s8ND8VeJOTdFwRlJFsG5Ixw6fkR9jChBnm7cE/8TwGKdjtyzWSJ2F5xskI94RkLHjJ
+	DD942aHIEMFTwtPKU6CmFWoWSUvbQH/cBml5Ja36Nigncb2r92fmRxBQRlNl4+QwSPe8+G
+	MK/DhOJEWw2tK3SL0FvP3hyxhKOSu+O20vHcHkEw+LrfF7hoW+K4KFha1rIHQpt0FHfmkk
+	c3kRrkpvLs89UAhUewPF+EFadAunu790rbD7e9wWaNL5R7PWwZ7DR0zUGEPt2Q==
+Message-ID: <c575314d3e52d5fcff3d6fc47d12dc118a24bd63.camel@mailbox.org>
+Subject: Re: [PATCH] mm/damon/reclaim: improve grammar and style
 From: Manuel Ebner <manuelebnerli@mailbox.org>
-To: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Cc: Manuel Ebner <manuelebnerli@mailbox.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v3] Docs/admin-guide/mm/damon/lru_sort: fix grammar and stlye
-Date: Sat, 17 Oct 2026 10:35:34 +0200
-Message-ID: <20261017083535.1261388-2-manuelebnerli@mailbox.org>
-X-Mailer: git-send-email 2.55.0
+To: SJ Park <sj@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan
+ <skhan@linuxfoundation.org>,  Randy Dunlap <rdunlap@infradead.org>,
+ damon@lists.linux.dev, linux-mm@kvack.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Aveline Noir <jm5905938@gmail.com>
+Date: Sat, 17 Oct 2026 11:18:34 +0200
+In-Reply-To: <20261015140122.87808-1-sj@kernel.org>
+References: <20261015140122.87808-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: 5d8c7knged71kbud9uke1omjmz5jwanr
-X-MBO-RS-ID: 1717f57581f65708ba3
+X-MBO-RS-META: 1hapjjy6635khx6ean1i9pxm4mypfzp9
+X-MBO-RS-ID: 3cc1a3b206adc544abb
 
-Fix tenses. Split long sentences thereby imporove readability.  Replace
-'set as' with 'set to'. Replace [] with () to make the file uniform.
+Hi SJ,
 
-Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
-Reviewed-by: SJ Park <sj@kernel.org>
----
-SJ, could you please replace 38b3709936fa ([v2] 'mm/damon/lru_sort: fix
-grammar and stlye') with this patch? I messed up the path in the subject line.
-Thanks
+On Thu, 2026-10-15 at 07:01 -0700, SJ Park wrote:
+> On Thu, 15 Oct 2026 10:06:23 +0200 Manuel Ebner <manuelebnerli@mailbox.or=
+g> wrote:
+>=20
+> > Fix tenses. Replace 'set as' with 'set to'.
+> > Rewrite complex sentences.
+>=20
+> Let's put two sentences in one line, while breaking it for the 75 column =
+limit.
+
+Will do.
+>=20
+> [...]
+> > @@ -113,8 +113,8 @@ quota_sz
+> > =C2=A0
+> > =C2=A0Limit of size of memory for the reclamation in bytes.
+> > =C2=A0
+> > -DAMON_RECLAIM charges amount of memory which it tried to reclaim withi=
+n a time
+> > -window (quota_reset_interval_ms) and makes no more than this limit is =
+tried.
+> > +DAMON_RECLAIM recordes the amount of memory which it tried to reclaim =
+within a time
+>=20
+> s/recordes/charges/=C2=A0 or s/recordes/records/ ?
+
+For me charge is such a weird word exepct in 'charge a battery' or 'charge =
+a fee'. And
+'recordes' is a typo. Does this work:
+
+DAMON_RECLAIM records the amount of memory which it tried to reclaim within=
+ a time
+
+I could do this in a second patch aswell.
+
+>=20
+> I'd prefer charges, but my English is definitely bad, so looking for your
+> suggestion.
+>=20
+> > +window (quota_reset_interval_ms) and stops when this memory limit is r=
+eached.
+>=20
+> I feel like readers might wonder what is stopped.=C2=A0 How about "stops =
+trying
+> reclaiming memory when ..." ?
+
+window (quota_reset_interval_ms) and stops trying to reclaim memory when th=
+is limit is reached.
+
+>=20
+> > =C2=A0This can be used for limiting consumption of CPU and IO.=C2=A0 If=
+ this value is
+> > =C2=A0zero, the limit is disabled.
+> > =C2=A0
+> > @@ -125,19 +125,19 @@ quota_reset_interval_ms
+> > =C2=A0
+> > =C2=A0The time/size quota charge reset interval in milliseconds.
+> > =C2=A0
+> > -The charge reset interval for the quota of time (quota_ms) and size
+> > -(quota_sz).=C2=A0 That is, DAMON_RECLAIM does not try reclamation for =
+more than
+> > +The quota reset interval of time is quota_ms and of size is
+> > +quota_sz.=C2=A0 That is, DAMON_RECLAIM does not try reclamation for mo=
+re than
+>=20
+> I think this change is just wrong?=C2=A0 quota_ms is not quota reset inte=
+rval of
+> time.=C2=A0 Which part of the original sentence was difficult to read?
+
+'charge' again, and I think there is the verb is missing.
+
+>=20
+> > =C2=A0quota_ms milliseconds or quota_sz bytes within quota_reset_interv=
+al_ms
+> > =C2=A0milliseconds.
+> > =C2=A0
+> > -1 second by default.
+> > +1000 (1 second) by default.
+>=20
+> Isn't this (1 second in milliseconds is 1,000) easy enough to infer for
+> readers?
+
+Ok.
+
+> > =C2=A0
+> > =C2=A0quota_mem_pressure_us
+> > =C2=A0---------------------
+> > =C2=A0
+> > =C2=A0Desired level of memory pressure-stall time in microseconds.
+> > =C2=A0
+> > -While keeping the caps that set by other quotas, DAMON_RECLAIM automat=
+ically
+> > +While keeping the caps set by other quotas, DAMON_RECLAIM automaticall=
+y
+>=20
+> How about "caps that are set by ..." ?
+
+Yes, this was my second choice.
+
+>=20
+> > =C2=A0increases and decreases the effective level of the quota aiming t=
+his level of
+> > =C2=A0memory pressure is incurred.=C2=A0 System-wide ``some`` memory PS=
+I in microseconds
+> > =C2=A0per quota reset interval (``quota_reset_interval_ms``) is collect=
+ed and
+>=20
+>=20
+> Thanks,
+> SJ
+
+I messed up the subject line, should be:
+Docs/admin-guide/mm/damon/reclaim: improve grammar and style
+
+I'll follow up with a [v2], including Aveline suggestions.
+
+Thanks,
  Manuel
-
-[v3]
- Split long line
- Fix path in subject / One-line summary
-
-[v2]
- https://lore.kernel.org/20261015072947.802821-2-manuelebnerli@mailbox.org
- Collect R-b: from SJ.
-
-[v1]
- https://lore.kernel.org/20261013191327.663331-2-manuelebnerli@mailbox.org
- Wordsmith commit message.
- Fixup a few trivial wording.
-
-
- .../admin-guide/mm/damon/lru_sort.rst         | 61 +++++++++----------
- 1 file changed, 30 insertions(+), 31 deletions(-)
-
-diff --git a/Documentation/admin-guide/mm/damon/lru_sort.rst b/Documentation/admin-guide/mm/damon/lru_sort.rst
-index 0c04d238ed..aa4cc90ca5 100644
---- a/Documentation/admin-guide/mm/damon/lru_sort.rst
-+++ b/Documentation/admin-guide/mm/damon/lru_sort.rst
-@@ -5,20 +5,19 @@ DAMON-based LRU-lists Sorting
- =============================
- 
- DAMON-based LRU-lists Sorting (DAMON_LRU_SORT) is a static kernel module that
--aimed to be used for proactive and lightweight data access pattern based
-+aims to be used for proactive and lightweight data access pattern based
- (de)prioritization of pages on their LRU-lists for making LRU-lists a more
- trustworthy data access pattern source.
- 
- Where Proactive LRU-lists Sorting is Required?
- ==============================================
- 
--As page-granularity access checking overhead could be significant on huge
--systems, LRU lists are normally not proactively sorted but partially and
--reactively sorted for special events including specific user requests, system
--calls and memory pressure.  As a result, LRU lists are sometimes not so
--perfectly prepared to be used as a trustworthy access pattern source for some
--situations including reclamation target pages selection under sudden memory
--pressure.
-+As page-granularity access checking overhead could be significant on huge systems,
-+LRU lists are normally not fully nor proactively sorted but rather partially
-+and reactively sorted for special events.  These events include specific user requests,
-+system calls and memory pressure.  As a result, LRU lists are sometimes not
-+suitable to be used as a trustworthy access pattern source.  These situations
-+including reclamation target page selection under sudden memory pressure.
- 
- Because DAMON can identify access patterns of best-effort accuracy while
- inducing only user-specified range of overhead, proactively running
-@@ -28,9 +27,9 @@ pattern source with low and controlled overhead.
- How It Works?
- =============
- 
--DAMON_LRU_SORT finds hot pages (pages of memory regions that showing access
--rates that higher than a user-specified threshold) and cold pages (pages of
--memory regions that showing no access for a time that longer than a
-+DAMON_LRU_SORT finds hot pages (pages of memory regions that show access
-+rates that are higher than a user-specified threshold) and cold pages (pages of
-+memory regions that show no access for a duration that is longer than a
- user-specified threshold) using DAMON, and prioritizes hot pages while
- deprioritizing cold pages on their LRU-lists.  To avoid it consuming too much
- CPU for the prioritizations, a CPU time usage limit can be configured.  Under
-@@ -63,10 +62,10 @@ enabled
- 
- Enable or disable DAMON_LRU_SORT.
- 
--You can enable DAMON_LRU_SORT by setting the value of this parameter as ``Y``.
--Setting it as ``N`` disables DAMON_LRU_SORT.  Note that DAMON_LRU_SORT could do
-+You can enable DAMON_LRU_SORT by setting the value of this parameter to ``Y``.
-+Setting it to ``N`` disables DAMON_LRU_SORT.  Note that DAMON_LRU_SORT could do
- no real monitoring and LRU-lists sorting due to the watermarks-based activation
--condition.  Refer to below descriptions for the watermarks parameter for this.
-+condition.  Refer to below descriptions of the watermarks parameter for this.
- 
- commit_inputs
- -------------
-@@ -74,9 +73,9 @@ commit_inputs
- Make DAMON_LRU_SORT reads the input parameters again, except ``enabled``.
- 
- Input parameters that updated while DAMON_LRU_SORT is running are not applied
--by default.  Once this parameter is set as ``Y``, DAMON_LRU_SORT reads values
-+by default.  Once this parameter is set to ``Y``, DAMON_LRU_SORT reads values
- of parameters except ``enabled`` again.  Once the re-reading is done, this
--parameter is set as ``N``.  If invalid parameters are found while the
-+parameter is set to ``N``.  If invalid parameters are found while the
- re-reading, DAMON_LRU_SORT will be disabled.
- 
- Once ``Y`` is written to this parameter, the user must not write to any
-@@ -86,37 +85,37 @@ violate this rule, the kernel may exhibit undefined behavior.
- active_mem_bp
- -------------
- 
--Desired active to [in]active memory ratio in bp (1/10,000).
-+Desired active to (in)active memory ratio in bp (1/10,000).
- 
- While keeping the caps that set by other quotas, DAMON_LRU_SORT automatically
- increases and decreases the effective level of the quota aiming the LRU
--[de]prioritizations of the hot and cold memory resulting in this active to
--[in]active memory ratio.  Value zero means disabling this auto-tuning feature.
-+(de)prioritizations of the hot and cold memory resulting in this active to
-+(in)active memory ratio.  Value zero means disabling this auto-tuning feature.
- 
- Disabled by default.
- 
- autotune_monitoring_intervals
- -----------------------------
- 
--If this parameter is set as ``Y``, DAMON_LRU_SORT automatically tunes DAMON's
-+If this parameter is set to ``Y``, DAMON_LRU_SORT automatically tunes DAMON's
- sampling and aggregation intervals.  The auto-tuning aims to capture meaningful
- amount of access events in each DAMON-snapshot, while keeping the sampling
--interval 5 milliseconds in minimum, and 10 seconds in maximum.  Setting this as
--``N`` disables the auto-tuning.
-+interval to 5 milliseconds in minimum, and to 10 seconds in maximum.  Setting this
-+to ``N`` disables the auto-tuning.
- 
- Disabled by default.
- 
- filter_young_pages
- ------------------
- 
--Filter [non-]young pages accordingly for LRU [de]prioritizations.
-+Filter (non-)young pages accordingly for LRU (de)prioritizations.
- 
- If this is set, check page level access (youngness) once again before each
--LRU [de]prioritization operation.  LRU prioritization operation is skipped
-+LRU (de)prioritization operation.  LRU prioritization operation is skipped
- if the page has not accessed since the last check (not young).  LRU
- deprioritization operation is skipped if the page has accessed since the
- last check (young).  The feature is enabled or disabled if this parameter is
--set as ``Y`` or ``N``, respectively.
-+set to ``Y`` or ``N``, respectively.
- 
- Disabled by default.
- 
-@@ -235,7 +234,7 @@ max_nr_regions
- Maximum number of monitoring regions.
- 
- The maximum number of monitoring regions of DAMON for the cold memory
--monitoring.  This can be used to set upper-bound of the monitoring overhead.
-+monitoring.  This can be used to set the upper-bound of the monitoring overhead.
- However, setting this too low could result in bad monitoring quality.  Please
- refer to the DAMON documentation (:doc:`usage`) for more detail.  1000 by
- defaults.
-@@ -268,7 +267,7 @@ This parameter is for setting and getting the :ref:`address unit
- 
- ``monitor_region_start`` and ``monitor_region_end`` should be provided in this
- unit.  For example, let's suppose ``addr_unit``, ``monitor_region_start`` and
--``monitor_region_end`` are set as ``1024``, ``0`` and ``10``, respectively.
-+``monitor_region_end`` are set to ``1024``, ``0`` and ``10``, respectively.
- Then DAMON_LRU_SORT will work for 10 KiB length of physical address range that
- starts from address zero (``[0 * 1024, 10 * 1024)`` in bytes).
- 
-@@ -291,22 +290,22 @@ If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.  Else,
- nr_lru_sort_tried_hot_regions
- -----------------------------
- 
--Number of hot memory regions that tried to be LRU-sorted.
-+Number of hot memory regions that were tried to be LRU-sorted.
- 
- bytes_lru_sort_tried_hot_regions
- --------------------------------
- 
--Total bytes of hot memory regions that tried to be LRU-sorted.
-+Total bytes of hot memory regions that were tried to be LRU-sorted.
- 
- nr_lru_sorted_hot_regions
- -------------------------
- 
--Number of hot memory regions that successfully be LRU-sorted.
-+Number of hot memory regions that were successfully LRU-sorted.
- 
- bytes_lru_sorted_hot_regions
- ----------------------------
- 
--Total bytes of hot memory regions that successfully be LRU-sorted.
-+Total bytes of hot memory regions that were successfully LRU-sorted.
- 
- nr_hot_quota_exceeds
- --------------------
--- 
-2.55.0
-
+>=20
+> [...]
