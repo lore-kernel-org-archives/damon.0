@@ -1,44 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE10C391E51;
-	Sat, 17 Oct 2026 19:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C15C64A8C
+	for <damon@lists.linux.dev>; Sat, 17 Oct 2026 21:16:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792267078; cv=none; b=iAIkpsvbPA5WDgI31AEc/Q1v0LgFbCsGtxlqsNvuiEm+v/QED3XQiIhKh8uzUsx4GAFMiy0/k+MW/XnxEr8bH0BGGsq3bp0rxz7uytwHOVzpiLXiRF2fFvE0RGVLs7IUex7j7aogsYcj3pv3YjDYX1/zDhsW9FRvO3XUYMxjWA0=
+	t=1792271793; cv=none; b=cX2wnUvPW9ivXLzFxbcmVYsr9u5oCCkjrZ/BZEuABBYSFo+XlxsLhWlqR4Pttiyv7lM8PyPnMIuHGtU7nkTpkSobh6BV4rNkXA6QDQVScwzPbAYhNjXdfCnoh8Uf/vAGCwxosKEaa2XgNmGydrImeKTfYxgeblS5mG4sOOGRV1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792267078; c=relaxed/simple;
-	bh=ngT9CW6ATjwRZ78Dua5Ai4cubz3BDjpMM/lBP7wbMnU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NCs7Q7vBAlcHE+vIwF8JWLaXw7L1RZHUE+HKNaqaFyvRPO1Zm2q2byyB5MlkULtoYw5yVgSSXOWDbXJrck15f8YQXC+BJJ1WYxXXR8GHZsMsryVYikmkY0yGwVZtXBiwdQUyB5VPj2nTdwVxaebN/JKpW9L6e8bAKOEzzoe8mgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OAT9mExM; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792271793; c=relaxed/simple;
+	bh=9Hg3Lo4OE34WZ3L+lqPVx5wzeuuEdjB2rFEKAK7xRds=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GJFtfNb2JNMl4/x0lyJLG5dKCnUGLMeWO21WOJzdkMxFrlZ2dBWgpJzFCoV7FaPbOkA+H4QzuVxK9wUSY19+cOa285f47KuzcYSLlnKSBBYZHApvbnlxRFHP4NaiTy44eDzF8oUcG+wv83wWMskiULHrGOnPAJh4oOJMlAkwDEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HbyRvRbF; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OAT9mExM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478AC1F000C4;
-	Sat, 17 Oct 2026 19:57:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792267076;
-	bh=nOAWu4jgToYD6PgI6zHtuU24uPZsxbnLY8EkUxNpZ08=;
-	h=From:To:Cc:Subject:Date;
-	b=OAT9mExMcAsH9A03H+uqHOHGRrErNT9JglY8WLHBEOMAsVM7+9hyfYOyFuCPP6rA3
-	 XI94TuJWLQNDPYo3WPzZhD9y3jvHCRSI7yJGMa5tF8Qf+CAAD4WkdQISyuaI5dVvUF
-	 cNH4pqDWMW98r8IUx0G9NLBp6UJ3OWeULU7qGqGWZJsIGLJfLUZWRvRHcoUnYQJTvC
-	 bZ6nWok9uPD48Mo0LkqskZE0VFtDTSbbR4bOjePimVqZL9FyrKIR/Cq4O1GWRVxNyn
-	 3mYsPzvO/tbP7NEytc/CDuWFgUIeAXMUf4/d8smoKL2+9+zjLOsyCq/RL+TenDWN9y
-	 ytlYDWDs3w5Vw==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbyRvRbF"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8a058f74a54so93767b3a.1
+        for <damon@lists.linux.dev>; Sat, 17 Oct 2026 14:16:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792271791; x=1792876591; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qguhYArQk/KW+dhlWzdBW+K99B5MVDRdS3H3exN/DQM=;
+        b=HbyRvRbFvx93cqgaVsDzrfxULlq++v0JGYP3zZaJ94riCHm2ejDTZGwS8xC4RxUBmT
+         6uFDjdRNTavNL6DiNqOPtF/CRhKxbeSsQY4LIsXOS3VC4FT+cPKqx+lQkAPT6Cq+4IzK
+         brxnsJrUnXYqQEYOwUtM+TbenWjahhMtlgumcRBXtkDeAjlHd5hvJKF+TFAHBkxxP088
+         HXSJtggOsAyEbEFxFIV0kXzKaYBtkQfE/bscDOTnhuez3BoILAn6m8t66Mmc66Hg/x/D
+         GhgOggcbuigTUT3HKyG5NQAUNz/bEGr0GbQTwhEmr33B9hzAyDGWF52Vx8dUP0bGd6kU
+         Iwlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792271791; x=1792876591;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qguhYArQk/KW+dhlWzdBW+K99B5MVDRdS3H3exN/DQM=;
+        b=p522DY+Yo2j2hhuHmAE00Ua4F/cabWxC5ABNbxy+P3AD2J1bY/2AxRp95nNE4yknhJ
+         vSvvE6vTfYhfVW5SMYRgoxq2ShZTE1bhVDPZ7hJDB5CgTqhHnufEM3YIzQAOwhU6Z0yI
+         JImrIBxcZ7izxxszp8y1l6inm61oiy8V168QG0KFdILExIGcqAA4kBebml577c1ONw2v
+         s7Vzc6gI/rXhhoygzQziZWthXcBRpfhoc6yMiBluPfyhhoRKUTMpydmYsJ/98M9i2DC5
+         qBx7pRHRHWVNmicSSbQAuMC2SHj0BtoKPU1pzlev443OAqFCHJJVNiAxyh0ePEhIHvqK
+         4RVw==
+X-Forwarded-Encrypted: i=1; AKwUvBx51BmuTgD+I8m2Zrz8fpIeZEyFRafBo24AOktAXAwiSHR93wah1B3FpCbiWW6zl2xySRWgPw==@lists.linux.dev
+X-Gm-Message-State: AFq9FYK5DpQ74e2bqkz/wnqj4C2mpk001c4oJasWgezv0atSSsz924u3
+	YK0ExQfUoAgxxkPIOU6eSd+lAffL/QOwf15V7Ezg3S0JCLn2FZmhA65W
+X-Gm-Gg: AYBFou0a3oY1AeSsCJmGQGbn2AG7Bd/fE2OZfxAxEclC9XSfuJ4ff+INmisp9eVoq86
+	QUJZEgGYpI0y77J3pm6puFEoNhKM5a/sXWghpvaO8CBSYOsOwUg21SNnxo7Ebyrr+9W0Web7uJ/
+	TvGbZ96hFeDGaqlyjLYIe9NuNPr0g/6HM5p80SCrI8AoLNE9J65qJrP5a33bhpwAPlaP5DU7/Fx
+	otFgziD1srmRi2NRyJh6DotZFBWWQERmZOYL7Q2UrgSU18l+IZzJktPdMc60mqsU7zDs2GlA64a
+	J4NAy+qTDuax3/nJvYgcXo9Q3521JukAineQpnAuQQGeg9jXBW3oeB4Yg6+U9pEhaCy5Jkl7QRa
+	yIaUYSzY2Dzo2JZwo4RVniz4R/NjPVZ6Nwm5jMqYeYRyRE5JbHI8voEv0IfbjqhLDLczzlUmZR9
+	Tl4A54zN6drb92iAT0Rq7c9MHFuOzfthaXWsvPkVe8cBJwE58sA1NpZPpnnVNCNUy5OijSXHYP+
+	3cnmHCkB2dcYs5qpoX0i3eGhg==
+X-Received: by 2002:a05:6a00:1394:b0:898:9b2:605b with SMTP id d2e1a72fcca58-8a04d23d89amr2331468b3a.56.1792271791111;
+        Sat, 17 Oct 2026 14:16:31 -0700 (PDT)
+Received: from celestia.taila51cc2.ts.net ([2402:1980:8954:498:18c1:c1ef:4268:7168])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-89f56c8b922sm2460239b3a.11.2026.10.17.14.16.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Oct 2026 14:16:30 -0700 (PDT)
+From: Liew Rui Yan <aethernet65535@gmail.com>
+To: Liew Rui Yan <aethernet65535@gmail.com>,
+	Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Cc: Ajay Joshi <ajayjoshi@micron.com>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Bijan Tabatabai <bijan311@gmail.com>,
 	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
+	Gregory Price <gourry@gourry.net>,
+	Honggyu Kim <honggyu.kim@sk.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Kunwu Chan <kunwu.chan@linux.dev>,
+	Lian Wang <lianux.mm@gmail.com>,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v0] Docs/mm/damon/design: document data attributes report infra design (beyond page table accessed-bit milestone 2)
-Date: Sat, 17 Oct 2026 12:57:45 -0700
-Message-ID: <20261017195747.89961-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	linux-mm@kvack.org,
+	David Rientjes <rientjes@google.com>,
+	SJ Park <sj@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yunjeong Mun <yunjeong.mun@sk.com>
+Subject: [RFC PATCH v4 0/9] mm/damon: hardware-sampled access reports
+Date: Sun, 18 Oct 2026 05:16:13 +0800
+Message-ID: <20261017211613.16456-2-aethernet65535@gmail.com>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261017071120.4628-1-aethernet65535@gmail.com>
+References: <20261017071120.4628-1-aethernet65535@gmail.com>
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -47,108 +93,228 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The "beyond page table accessed-bit DAMON extension" project [1]
-milestone 2 is for building the basic infrastructure for continued
-extension.  After starting it, I studied perf event little and found a
-few demons in details.  I therefore spent time on high level design.  As
-it started looks like making sense to me, I'd like to share the humble
-design first and get feedback from more eyeballs.
+On Sat, 17 Oct 2026 15:11:18 +0800 Liew Rui Yan <aethernet65535@gmail.com> wrote:
 
-Add a blueprint of the milestone 2 as a high level design document.
-Describe the API and ABI of data attribute report infrastructure, and an
-example use case of it for per-CPUs write-only monitoring.  The API and
-ABI will later be extended for more data attributes reporters utilizing
-AMD IBS, Intel PEBS, Arm SPEs like h/w features and any possible
-DAMON-external reporter kernel components.
+> Hi Ravi,
+> 
+> 
+> TLDR
+> ====
+> 
+> I have noticed that there might have an issue with this patch or my CPU.
+> I am not sure.  I have provided some details below.
+> 
+> On Mon, 05 Oct 2026 01:46:44 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+> 
+> > This series lets DAMON monitor a hardware-sampled data attribute -- the
+> > addresses a PMU saw accessed -- through the data attributes monitoring
+> > (probe) interface, and run DAMOS schemes on it in data attributes-only
+> > mode.  Patches 3, 5, and 6 are co-developed with Akinobu Mita, building
+> > on his earlier perf-event proposal [3].
+> > 
+> 
+> I expected it to monitor regions in the same way as PTE sampling, that
+> is, if the system has hot memory, DAMON should be able to detect it, or
+> at least with some probability.  However, it is not always work like
+> that.  After I starting DAMON about 10 minutes, the DAMON cannot found
+> any hot page, even when I am running 'stress-ng --vm 6 --vm-bytes 6G':
+> 
+>     snapshot time: [0 ns, 100 ms] (100 ms)
+>     |0000000000000000000000000000000000000000| size 1.461 GiB   access 0      age 3 m 3.200 s  
+>                                    |000000000| size 1.465 GiB   access 0      age 3 m 1 s      
+>                                           |00| size 2.922 GiB   access 0      age 3 m 0.500 s  
+>                          |0000000000000000000| size 1.471 GiB   access 0      age 3 m 1.700 s  
+>                     |000000000000000000000000| size 1.462 GiB   access 0      age 3 m 2.100 s  
+>                                           |00| size 1.470 GiB   access 0      age 3 m 0.500 s  
+>                                            |0| size 2.926 GiB   access 0      age 3 m 0.400 s  
+>                                           |00| size 1.544 GiB   access 0      age 3 m 0.500 s  
+>     memory bw estimate: 0 B per second
+>     total size: 14.722 GiB
+>     record DAMON intervals: sample 5 ms, aggr 100 ms
+> 
+>     Note that this is my own fork of damo [1].
+> 
+> To ensure this was not a bug in my damo fork [1], I adding a tracing
+> statistic [2] to DAMON to confirm whether this was indeed a DAMON issue.
+> 
+> TLDR for new tracing statsistic: 'seen' means how many times
+> damon_perf_overflow() was called.
+> 
+> Later, I noticed that about 10 minutes after starting DAMON, the 'seen'
+> stopped increasing:
+> 
+>     I am running 'stress-ng --vm 6 --vm-bytes 6G' during recording this
+>     statistic.
+> 
+>     Start Time: 19:25:42 | End Time: 19:42:18
+>     Time Unit: 1 step = 1.81 minutes
+> 
+>        Seen (Delta)
+>             ^
+>             |
+>       100k  |  *
+>       36k   |      *
+>       18k   |                      *           *
+>       17k   |          *
+>       15k   |                  *
+>       4k    |                          *
+>       453   |                              *
+>       106   |              *
+>         0   |                                      *
+>             +--+---+---+---+---+---+---+---+---+---+---> Step
+>                1   2   3   4   5   6   7   8   9   10
+> 
+>     Note: Zero delta from 19:42:18 (step 10) till 20:00:00 (I close my
+>     machine after that).
+> 
+> My DAMON Perf Config
+> ====================
+> 
+>     K=/sys/kernel/mm/damon/admin/kdamonds/0
+>     C=$K/contexts/0
+>     P=$C/monitoring_attrs/probes
+> 
+>     echo 1 > $P/0/preps/nr_preps
+>     echo perf_event > $P/0/preps/0/prep_action
+>     cat /sys/bus/event_source/devices/ibs_op/type > $P/0/preps/0/type
+>     echo 0 > $P/0/preps/0/config
+>     echo 0 > $P/0/preps/0/config2
+>     echo 0 > $P/0/preps/0/sample_freq
+>     echo 100000 > $P/0/preps/0/sample_period
+>     echo 1 > $P/0/preps/0/sample_phys_addr
+>     echo 0 > $P/0/preps/0/exclude_kernel
+>     echo 0 > $P/0/preps/0/exclude_hv
+>     echo 1 > $P/0/weight
+> 
+>     Note that this issue can also reproduce even when
+>     'kernel.perf_cpu_time_max_percent=100'.
+> 
+> My CPU Specification
+> ====================
+> 
+>     CPU(s):                                  12
+>     On-line CPU(s) list:                     0-11
+>     Vendor ID:                               AuthenticAMD
+>     Model name:                              AMD Ryzen 5 5600H with Radeon Graphics
+>     CPU family:                              25
+>     Model:                                   80
+>     Thread(s) per core:                      2
+>     Core(s) per socket:                      6
+>     Socket(s):                               1
+>     Stepping:                                0
+>     Microcode version:                       0xa500012
+>     Frequency boost:                         enabled
+>     CPU(s) scaling MHz:                      48%
+>     CPU max MHz:                             4280.9849
+>     CPU min MHz:                             412.6250
+>     BogoMIPS:                                6587.34
+> 
+> I am trying to figure out if this is a CPU issue, or if there is an
+> issue with this patch.  I would be happy to provide more information.
+> 
+> [...]
+> 
+> [1] https://github.com/aethernet65535/damo/tree/probe
+> [2] Trace patch diff
+> '''
+> diff --git a/include/trace/events/damon.h b/include/trace/events/damon.h
+> index 4dfc9467ea4b..290d3ee2d836 100644
+> --- a/include/trace/events/damon.h
+> +++ b/include/trace/events/damon.h
+> @@ -199,6 +199,23 @@ TRACE_EVENT(damon_aggregated,
+>  			__entry->nr_accesses, __entry->age)
+>  );
+>  
+> +TRACE_EVENT(damon_perf_source_stats,
+> +
+> +	TP_PROTO(unsigned long seen),
+> +
+> +	TP_ARGS(seen),
+> +
+> +	TP_STRUCT__entry(
+> +		__field(unsigned long, seen)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__entry->seen = seen;
+> +	),
+> +
+> +	TP_printk("seen=%lu", __entry->seen)
+> +)
+> +
+>  #endif /* _TRACE_DAMON_H */
+>  
+>  /* This part must be outside protection */
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index bae4569f0ab3..73988ce82b1a 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -4927,6 +4927,8 @@ static void kdamond_check_reported_accesses(struct damon_ctx *ctx)
+>  	if (damon_drains_ring_perf(ctx))
+>  		__kdamond_drain_ring(ctx, tbl, ctx->perf_rings,
+>  				&ctx->perf_pending);
+> +
+> +	trace_damon_perf_source_stats(damon_get_perf_seen());
+>  }
+>  
+>  /*
+> diff --git a/mm/damon/perf_source.c b/mm/damon/perf_source.c
+> index 4baa8aebcfa8..e8365dbe1744 100644
+> --- a/mm/damon/perf_source.c
+> +++ b/mm/damon/perf_source.c
+> @@ -27,6 +27,8 @@ struct damon_perf_probe_state {
+>  	struct perf_event *single_event;
+>  };
+>  
+> +static DEFINE_PER_CPU(unsigned long, damon_perf_seen);
+> +
+>  static void damon_perf_overflow(struct perf_event *perf_event,
+>  				struct perf_sample_data *data,
+>  				struct pt_regs *regs)
+> @@ -40,6 +42,8 @@ static void damon_perf_overflow(struct perf_event *perf_event,
+>  		.cpu = smp_processor_id(),
+>  	};
+>  
+> +	this_cpu_inc(damon_perf_seen);
+> +
+>  	/*
+>  	 * Teardown NULLs event->ctx (with a release barrier) before releasing
+>  	 * the per-CPU perf events, so an in-flight overflow racing the
+> @@ -84,6 +88,16 @@ static void damon_perf_overflow(struct perf_event *perf_event,
+>  	damon_report_access(&report);
+>  }
+>  
+> +unsigned long damon_get_perf_seen(void)
+> +{
+> +	unsigned long sum = 0;
+> +	int cpu;
+> +
+> +	for_each_possible_cpu(cpu)
+> +		sum += per_cpu(damon_perf_seen, cpu);
+> +	return sum;
+> +}
+> +
+>  static enum cpuhp_state damon_perf_cpuhp_state;
+>  
+>  /*
+> diff --git a/mm/damon/perf_source.h b/mm/damon/perf_source.h
+> index 12ca61be7243..49beca6e3189 100644
+> --- a/mm/damon/perf_source.h
+> +++ b/mm/damon/perf_source.h
+> @@ -50,6 +50,7 @@ int damon_perf_probe_setup(struct damon_ctx *ctx,
+>  			   struct damon_perf_probe_event *event);
+>  void damon_perf_probe_teardown(struct damon_ctx *ctx,
+>  			       struct damon_perf_probe_event *event);
+> +unsigned long damon_get_perf_seen(void);
+>  
+>  #endif /* CONFIG_DAMON_PERF_SOURCE */
+>  #endif /* _DAMON_PERF_SOURCE_H */
+> '''
 
-Request for comments
-====================
+I found that if I enable the kernel NMI watchdog, this issue can be
+fixed.  So I think this is not issue of this patch.  What do you think?
 
-This is an RFC for high level design discussion, so no implementation is
-provided.  Comments I want to receive include but not limited to below.
+[...]
 
-Does the idea for perf CPU cycle sampling based access monitoring makes
-sense?
-
-Does the design provides clear idea about how it can be extended for the
-future extensions that already scoped for milestone 3 (AMD IBS, Intel
-PEBS, Arm SPE)?
-
-For the foreseeable extensions (AMD IBS, Intel PEBS, Arm SPE), would the
-required change minimum and maintainable?
-
-Next steps
-==========
-
-I will start implementing the infrastructure and perf CPU cycle sampling
-based access monitoring as described in this patch.  It will go through
-the normal development process.  Delivery of it will be the completion
-of the milestone 2.  As set on the initial roadmap [1], ETA of the
-delivery is LSFMMBPF'27.  No delay is expected so far.
-
-[1] https://lore.kernel.org/all/20260525225208.1179-1-sj@kernel.org/
-
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/mm/damon/design.rst | 44 +++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
-
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index a465e34bb1d9c..1e699e3f8a496 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -433,6 +433,50 @@ monitoring.
- Refer to the :ref:`admin guide <damon_usage_sysfs_probes>` to know how users
- can use the mode.
- 
-+Data Attributes Reporting
-+~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+Infrastructure for receiving attribute information from DAMON-external kernel
-+components.
-+
-+Because DAMON is not hooked in every place but runs in its own worker thread,
-+it cannot retrieve some types of data attribute information by itself.  Many of
-+those are available to DAMON-external kernel components such as perf event
-+callbacks and page fault handler.  For such cases, DAMON provides attributes
-+reporting infrastructure.  Using its API, any kernel components can report
-+their finding to DAMON.
-+
-+The API for doing the report is a function, damon_report_attrs().  The function
-+receives the attribute information and saves it in DAMON's internal buffer.
-+The function is safe to be called in any context including NMI.  The internal
-+buffer has a fixed size and keeps only latest reports of the size.  Because one
-+buffer size doesn't fit all, multiple report buffers of different size and
-+rules can be generated and shared by multiple reporters.  DAMON provides API
-+for such management of report buffers.  damon_report_attrs() can specify into
-+which buffer the report should be saved.  DAMON user interface (ABI) for doing
-+the buffer setup, and enable/disable reports of supported types is also
-+supported.
-+
-+The data attribute probe supports the reports.  The probes can be configured to
-+hit for a given memory region depending on the existence of specific types of
-+reports that associated with the memory region in given report buffers.
-+
-+For example, per-CPUs write-only monitoring can be configured using this
-+infrastructure like below.
-+
-+The user sets a report buffer and enable CPU instruction sampling report for
-+the buffer.  DAMON will enable perf event counter for CPU cycles sampling.  The
-+sampling callback will save the sampling time CPU instruction and the id of the
-+CPU that was executing it, into the DAMON report buffer, using
-+damon_report_attrs().  DAMON can automatically adjust the perf event sampling
-+frequency to minimize old report drops due to the buffer size limit.
-+
-+The user further sets a DAMON probe.  The probe hits for a given DAMON region
-+if a store instruction for a memory in the region that was executed from a
-+given CPUs group exists in the report buffer.  As a result, the probe hit
-+counts represent relative frequency of writes from a given CPUs group to a
-+given memory region.
-+
- Dynamic Target Space Updates Handling
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-
-base-commit: 366c6418699768dba5826d412700a29d562ca039
--- 
-2.47.3
+Best regards,
+Rui Yan
