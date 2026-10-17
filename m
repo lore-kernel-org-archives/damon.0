@@ -1,73 +1,67 @@
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9623D392C27
-	for <damon@lists.linux.dev>; Sat, 17 Oct 2026 15:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBFE3A48E3;
+	Sat, 17 Oct 2026 16:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792251182; cv=none; b=fY1ii6NzmPLMT8eueUSjvcH2F2oYUKy1vZWjNf7D8apioZoLiaCyHmhrcQkCnvqw02lJpv9lgNzh8kS2sbfC2aT8kINnzSFUlt9nSs+hfId5odwyvDycAayNJ6LozbmKopDUATG7dpELD5Nh8FoY2+mVCuF8hMcl0aIvBtCGRfw=
+	t=1792252912; cv=none; b=CNLbZ7p2BAl+QlH0xI8NFj1GY+cEUCzo6uzalNygbjZ3UV1xOkhi4alu5ILoBfg0Dgii8BdMtw/MfKI7RRk0toTt+LHqHtmIM579ENVDluinruxlwr7br0hk8tK0Afv4MyTn+809voLMhQxEO1M+Ibpmcot2wAFaAiYrJRacneo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792251182; c=relaxed/simple;
-	bh=awm/5T3OP8nOySmaCCffHZ2HNGXR56c+zXIdHAAIc7o=;
-	h=Message-ID:Subject:From:To:Cc:Date:Content-Type:MIME-Version; b=RieBkW3BBd2RmtACdzyQ8+x82160+2Rex3hek99lTNr9KrEPZ8+rPRbaLay/2ci1raxzt8293zuwHEvJbi6bmt29e/Csr7qxmATCPNk5dvmOR0ss3O1GQ3aUVtkuEXyFxf3ZL9JIc8OYKdsQezB6XadKTgM8KbQ3GD6tbaVSBwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=i+vP8gz/; arc=none smtp.client-ip=80.241.56.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	s=arc-20240116; t=1792252912; c=relaxed/simple;
+	bh=cOuSe420SaYgq2rR7/1HrW8gJGG8cHX8haJr9RrZHcY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UuWxGhL3oL9akTSThesTOW4H9DOOI9GIaieGXMMANyFdX0F45pOdfr4jbsSynFkTEUE0xBIQvj/PUO5jLkoKU8lZaIiVdFoHXgqPN/vIuZRxzonieEp+0VRWoAFXDneXBf9Gr+E+EV+JTNRItf53FXRYyGO0SEkBwxpcKOMQSpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ozF/zla8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="i+vP8gz/"
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4j6Qmg4SVdzKmwd;
-	Sat, 17 Oct 2026 17:32:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1792251171;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=awm/5T3OP8nOySmaCCffHZ2HNGXR56c+zXIdHAAIc7o=;
-	b=i+vP8gz/PgzUMFCTE97ScuteN1psg6DccE5r+va7MmD0Nlx01PCH3SHzKQlFjfs9hMkE5k
-	EABtAgU22fv3uacWuuyTANWTDzGF2QrNnOiysHqAzlx+njp4+LNwPWs/xyS/Mf0ntZHDQp
-	IzXaaw4Tg3QOmfAqOD8ZayjGzzuabgBnnNW5JEXdh8GdlmcTAW3QqSVgcLQsY3dmMUK4GP
-	Jv6vFHx2gSJyginlU7cC8azrv5TNZeQn6h9b6jymJH0FVbpCEDOPhLP8w2OFWPVgaN2nj0
-	t/8uW6LCaoXbW1n9qyyHLZa1LQZc4nWbTWkiahoFpt84hU5HSS2pQ2Njto+Z1g==
-Message-ID: <1061edcf257c9e625efe5f6f000013e9b2d4c650.camel@mailbox.org>
-Subject: [Duplicate Text] in mm/damon/ and Doc/admin-guide/mm/damon/
-From: Manuel Ebner <manuelebnerli@mailbox.org>
-To: SJ Park <sj@kernel.org>, damon@lists.linux.dev
-Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan
- <skhan@linuxfoundation.org>,  Randy Dunlap <rdunlap@infradead.org>,
- linux-mm@kvack.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Aveline Noir <jm5905938@gmail.com>, "Adrian
- Huang (Lenovo)" <adrianhuang0701@gmail.com>
-Date: Sat, 17 Oct 2026 17:32:47 +0200
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ozF/zla8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560211F000C4;
+	Sat, 17 Oct 2026 16:01:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792252910;
+	bh=eZnlanUf64i7B1h2EayrDWaBYC02Orq3PWtev+6wUVU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=ozF/zla8N+wuHiDl4LAVU1crVf3wQFOQwFfB7d0lA2Y5HvxfNab2pvaTKfbhmJdSU
+	 W6bK4+w1kEH4ciueTBuxkMOPHOghVgcAzq+7ZQg1wL0VxEuITSUlZZHORVNV0vTiDN
+	 sN8ju76U+QIKAtJK8QLfPlV7Zb84jeJbIEc1XrNrbpEjG5sl93aI+ez+Nn9XIHnLtT
+	 UN4Vy5PiPDTRbb4xv2JtC3EjSvMCfAcIgej5XhAP6rqMXIvG+ybAfZrLKOfWMHNRXu
+	 VE2lbRaq5Iw/WOVyi4W2HPZSgxPpX0DRWQuW4G0brI5l449KhubASY1Dx1dbmDSRbT
+	 u4ZSvSGXkuapg==
+From: SJ Park <sj@kernel.org>
+To: Karthikeyan KS <karthiproffesional@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/sysfs: make next_update_jiffies per-kdamond
+Date: Sat, 17 Oct 2026 09:01:42 -0700
+Message-ID: <20261017160143.102364-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261017063152.994182-1-karthiproffesional@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MBO-RS-ID: f1c05a7b6cbdf6f28a8
-X-MBO-RS-META: 5enp6ifq9dbwkjns356ocpn3tbqsbwnj
+Content-Transfer-Encoding: 8bit
 
-Hi SJ,
+Hi Karthikeyan,
 
-there is a lot of duplicated text in these directories. Diff doesn't show
-any because in mm/damon/ the text is a multi-line comment.
+On Sat, 17 Oct 2026 06:31:52 +0000 Karthikeyan KS <karthiproffesional@gmail.com> wrote:
 
-~40 Lines in lru_sort.c and lru_sort.rst,
-~50 Lines in reclaim.c and reclaim.rst and
-a few Lines in stat.c and stat.rst.
+> damon_sysfs_next_update_jiffies was a single static variable shared by
+> all kdamonds, so with two or more kdamonds using refresh_ms their
+> threads race on it in damon_sysfs_repeat_call_fn().
 
-I think it's important to decide on how to handle the duplication before
-patching.
+Thank you for this patch.  However, I think the same issue is already fixed by
+another patch [1].  Could you please check?
 
-Delete one set, keep (and fix) both or add a reference in one place to
-the other? Could sphinx do the duplication?
+[1] https://lore.kernel.org/20260902002725.108635-5-sj@kernel.org
 
-Thanks
- Manuel=20
+
+Thanks,
+SJ
+
+[...]
