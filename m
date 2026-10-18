@@ -1,93 +1,143 @@
-Received: from mail-pj2-f6.google.com (mail-pj2-f6.google.com [74.125.227.134])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0589B3CFF79
-	for <damon@lists.linux.dev>; Sun, 18 Oct 2026 17:09:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6482B361952
+	for <damon@lists.linux.dev>; Sun, 18 Oct 2026 19:58:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792343401; cv=none; b=q2l7h5qD2nfiAmATI83ZYMf8LMvNZAPzGMvI2kVW6cZW4SGzgJoar/MZJIHemHh0VsYVdnUMgmc0FzSH6MkXOWVRwhtWs4+rwfrXWpXeJo9k/WJCDOGgoSxWKSaBnOECHkm74Dq+8X8MOEJ7ChmxFczm0Nz1lQyQ7M7TD2bQsJg=
+	t=1792353483; cv=none; b=Y8K5zdOhgBPh5/OYfF1nwmkNbNmrcDep4zts/Q/oHd42no29Ur98ugyu0kNKGfeFpze/YrSp3MvARBd3RlM8GOyLOcHLsGiKg4UvekmP4y/VvhVyMn5+A7RF71XoDaJDEq0lLCGvsQqgnV/HfLoUwTo120qVxe7a7DJojfTUd8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792343401; c=relaxed/simple;
-	bh=+WJ/hu/3Wga52spo7IQdSXB7WSieQhEpzGVW/oaXQhc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:MIME-Version:
-	 Content-Type:Date:Message-ID; b=HGttIJeZhHsYCAJNm72fGpUqIhsfEQVGT1s4YWQ3rkjydr42SSs9B67UrFEALPrw/WUEsi+AD9pkp9OecuEFkyTrxIQWUTBcvRjoWgExSRAOIojBSzef80gFi2vGoxDccx5KdDlk4HWuAOr2I4Hyni8nhlsX97aZhIAK9oM0Zt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JLZ5fybS; arc=none smtp.client-ip=74.125.227.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792353483; c=relaxed/simple;
+	bh=n5dEWTCvml8selQ8PakWTHsJbUmgO1h/ViaGqSbGiSo=;
+	h=Message-ID:From:Subject:To:Cc:In-Reply-To:References:Content-Type:
+	 Date; b=HxXzaLN/mo6mKYEtUCLYTY0Z708bkIFjhspRLcdM6v8EFvoo0pcOZdi+VxmXn4V7NmM2K77KPTUKKoEOsx1P9X8dToM+IfVwwIi0HBZ8aRArGWEt8e842z+Rkam8iL8Y0mq7/23AqyVKANW9NnB1DoYR0XMVRrbWTROU4+iradY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A9hcXXIO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JLZ5fybS"
-Received: by mail-pj2-f6.google.com with SMTP id 98e67ed59e1d1-3ad211ad92bso233111a91.1
-        for <damon@lists.linux.dev>; Sun, 18 Oct 2026 10:09:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792343399; x=1792948199; darn=lists.linux.dev;
-        h=message-id:date:content-transfer-encoding:content-type:mime-version
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+WJ/hu/3Wga52spo7IQdSXB7WSieQhEpzGVW/oaXQhc=;
-        b=JLZ5fybSs4doB6bMRXOA/O9F70M9BJNVL5KibEsZiK9iV0xs6tRaqKXSmp1N/Ng3NC
-         A1PXy+yYep4xLyew7p31mmux5bb/FW0bo5TPFwGHzuG4xi0u33FkhdfNOQJIBQuoPMra
-         4NGEf9eJ/QIX+/gLqi3+ptSTX30ChyDOFAGUpLgcHCMHM7yB6uN++RYpC+tPSLT73PjM
-         3YWBxNY97qj9J0c8Hwh7Ss7mVRqiokS8IoFUYi0ENZERn665GtMHPp3T6s8nlyC28QSD
-         mhxr5eE/nT75LxpxS7vLHnpGdMRfmEMpJjXciN2TscEP8236175aFcL5XGj+sOrDiMop
-         hlhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792343399; x=1792948199;
-        h=message-id:date:content-transfer-encoding:content-type:mime-version
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=+WJ/hu/3Wga52spo7IQdSXB7WSieQhEpzGVW/oaXQhc=;
-        b=eRmgONS3r9WyC7UOSzzDi3brs6qsLlWWPq6ZxkAUgo2Kp8jb/gY4nJl/k94m9TXOpD
-         6QO+2dfuuheY87zXNBkIwAhHXRhK6rDPYM/RTnJRkslTTpG8Qb1EOS5d4iwayv9hTAHA
-         xss1/2ZO5DENuERcjl55cQkWZ1V+sYJbLu9pk4dP6nbV21eNXyDn2igEMGeHG08Q8EoY
-         Yrcjlnp7DKQ/ZBw6sYa4HTzwJBfUric7LkM+y1h9AEl/XJcxhESmJOK73TTj90Evb2x9
-         Da4aPYtL/JIWaiZ/LL30RpTDe6BunOt6jiUJvi4XRTrOY7rywhl03Wvvd7zYW5Ldem/K
-         DvZA==
-X-Forwarded-Encrypted: i=1; AKwUvByTigi2TpiEiqh37kIDOO4BQ4tvbF+Uz5DU2EtFGwMdcXJsZwr5QT9/m1s5SIaLDyCKl40m3g==@lists.linux.dev
-X-Gm-Message-State: AFq9FYIpfAheqnScS7mr62wGrobPzUf0uJKSUZ5LJOp7/5wEpd3X5X/i
-	YOdAuWH9B6cqamSgZCESgusZ7PEXq50gGV+Yypb9NnF8A+jW5+mu5AMiCa8oIA1uQTYguCbX
-X-Gm-Gg: AYBFou3gMoG98E5eo+Wz222Djo8VbWglcftJBnY2Ni8xS+lu3zZUHLX/qR3QtzvrDEU
-	JwKviRECSUQ2Dyr3bVIOUsAgO0zCb1ZRp1rUtDwcuA1HN4znAk3dVXAyXt+XfZ2wIUh6FDrFVD6
-	Jhk4x2O9aZJXINM5jCCGODIdp/hgcsvjafmqyxvWINmNVs6vhtNTGf+yuh2CYa8p5/2AyAiXffZ
-	XCpaRzvEYs1IU0E5p4IPbr6WfsG7ku7Nd6//fY4Oxz29xbCcu7QpJjC01LrWnUL2q+8ohiGdAJL
-	616QCgHiHqPqwN2yt2OVp7GtFDSxFPNPUWmdOuhWntPV0c+VGr3tBcpN4hHKp0nRd/2x/Tag2ET
-	Yr8bZXTPenQvnqkr5gMh+/1hoSIHmDwj/6AUE6OfpnAisPTIpR/9CdYpIFjn4q95b7Ywx6KHG7G
-	0UwurWX0dgeYfDToPKiqz8P3S7sqysi3jjstJA5+tjV1M4nk4CYCRHpWWCoBqosL5gmhMNe5m31
-	8EPZKenEVkk2N0XI04tjH707XHfNoW+DWWPvsHBEjam/hppja8KjmkdUm11qvwPCkUdCgCdAeAZ
-	W+I=
-X-Received: by 2002:a17:90b:57c3:b0:3ac:8ee5:e007 with SMTP id 98e67ed59e1d1-3aceec24801mr4102774a91.20.1792343399360;
-        Sun, 18 Oct 2026 10:09:59 -0700 (PDT)
-Received: from [10.20.15.86] (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ac94798212sm17396301a91.14.2026.10.18.10.09.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Oct 2026 10:09:59 -0700 (PDT)
-From: Aveline Noir <jm5905938@gmail.com>
-To: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>
-Cc: SJ Park <sj@kernel.org>, Shuah Khan <shuah@kernel.org>,
- damon@lists.linux.dev, linux-mm@kvack.org, linux-kselftest@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] selftests/damon/sysfs.py: stop obsolete_target shells
- hanging the test
-In-Reply-To: <20261018020415.35567-1-jaeyeon.lee.dev@gmail.com>
-References: <20261018020415.35567-1-jaeyeon.lee.dev@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A9hcXXIO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7671F000C4;
+	Sun, 18 Oct 2026 19:58:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792353482;
+	bh=AIOucBP32EXAvdFmVl9jGmz89VxayFbvcT9hhk5+fL8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=A9hcXXIOPAqR1GxiAtBM2jlUUcTs39/OiWT8IquTXexRzR3ymYoeH/+spx2HABzRv
+	 LvpkDUfyZcdQ9DuVW1MOAKUMA05PyAXOzr1njtEIq4nSl4+g5jkhAF0U+Ya9/GkfiQ
+	 SHGL5PaRYeWaa/7lEHQUBGnb0MabnIPjTQN2fy/JHacWtKCV4Y69f6F8ErDFc5yVm5
+	 1DCQG7yXg3ys0rB3c6gaTHRKEk8YW5HZjF5GQzeszPASD1ECnZwSTCP2RXjMValyhp
+	 10r37YsWRvn/TC0lniRIrZof/8ldtXNdmpviaEA2nsF2tLPLfilcDvEvFIkuzycUOh
+	 v6GyxwyMH4Y7g==
+Message-ID: <sashiko-outbox-176355@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v0] Docs/mm/damon/design: document data attributes
+ report infra design (beyond page table accessed-bit milestone 2)
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: "Jonathan Corbet" <corbet@lwn.net>, "Randy Dunlap" <rdunlap@infradead.org>, "Shuah
+ Khan" <skhan@linuxfoundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
+In-Reply-To: <20261017195747.89961-1-sj@kernel.org>
+References: <20261017195747.89961-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 18 Oct 2026 19:58:01 +0000
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Date: Mon, 19 Oct 2026 01:09:02 +0800
-Message-ID: <179234334286.2.7819752603607417566.damon-sysfs-tested@gmail.com>
 
-Hi Jaeyeon,
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] Docs/mm/damon: CPU cycle instruction sampling lacks target memor=
+y address
+--
 
-> Fix this by passing stdin=subprocess.PIPE when spawning the processes.
+commit a164f9ff38c8cd1963db3e0c7ea062dbc93135a3
+Author: SJ Park <sj@kernel.org>
 
-Tested on x86-64 KVM, works fine.
+Docs/mm/damon/design: document data attributes report infra design (beyond =
+page table accessed-bit milestone 2)
 
-Tested-by: Aveline Noir <jm5905938@gmail.com>
+This patch documents the high-level design for DAMON's data attributes
+reporting infrastructure, including the damon_report_attrs() API and an
+example use case for per-CPU write-only monitoring using perf CPU cycles
+sampling.
 
-Thanks,
-Aveline Noir
+> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/d=
+esign.rst
+> index a465e34bb1d9c..1e699e3f8a496 100644
+> --- a/Documentation/mm/damon/design.rst
+> +++ b/Documentation/mm/damon/design.rst
+> @@ -433,6 +433,50 @@ monitoring.
+>  Refer to the :ref:`admin guide <damon_usage_sysfs_probes>` to know how u=
+sers
+>  can use the mode.
+> =20
+> +Data Attributes Reporting
+> +~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[ ... ]
+
+> +For example, per-CPUs write-only monitoring can be configured using this
+> +infrastructure like below.
+> +
+> +The user sets a report buffer and enable CPU instruction sampling report=
+ for
+> +the buffer.  DAMON will enable perf event counter for CPU cycles samplin=
+g.  The
+> +sampling callback will save the sampling time CPU instruction and the id=
+ of the
+> +CPU that was executing it, into the DAMON report buffer, using
+> +damon_report_attrs().  DAMON can automatically adjust the perf event sam=
+pling
+> +frequency to minimize old report drops due to the buffer size limit.
+> +
+> +The user further sets a DAMON probe.  The probe hits for a given DAMON r=
+egion
+> +if a store instruction for a memory in the region that was executed from=
+ a
+> +given CPUs group exists in the report buffer.  As a result, the probe hit
+> +counts represent relative frequency of writes from a given CPUs group to=
+ a
+> +given memory region.
+
+[Severity: Medium]
+In the Data Attributes Reporting section of Documentation/mm/damon/design.r=
+st,
+how can the DAMON probe determine whether a sampled store instruction targe=
+ted
+a given DAMON memory region if the callback only saves the CPU instruction =
+and
+CPU ID from a generic CPU cycles counter?
+
+A sampled instruction (or instruction pointer) only encodes the opcode and
+register operands, not the effective virtual or physical data address being
+written. Saving only the instruction and executing CPU ID via
+damon_report_attrs() does not appear to provide the target memory address
+needed to match against a DAMON region when the probe inspects the buffer.
+
+Even if the perf overflow callback attempted to resolve the target data
+address at NMI time, generic CPU cycle counter interrupts
+(PERF_COUNT_HW_CPU_CYCLES) are non-precise on out-of-order CPUs and suffer
+from skid. At NMI time, regs->ip typically points to a subsequent instructi=
+on
+rather than the instruction that caused the overflow, and the register valu=
+es
+in struct pt_regs may already have been modified.
+
+Furthermore, without hardware data-address sampling features (such as Intel
+PEBS, AMD IBS, or Arm SPE populating perf_sample_data->addr or phys_addr,
+which are scoped for Milestone 3), resolving the effective address from a r=
+aw
+instruction would require fetching instruction bytes in NMI context, running
+an architecture-specific instruction decoder and address-calculation emulat=
+or,
+and translating virtual addresses to physical addresses for paddr monitorin=
+g.
+
+How is the target memory address intended to be obtained and matched to DAM=
+ON
+regions in Milestone 2 with generic CPU cycle sampling?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261017195747.8996=
+1-1-sj@kernel.org?part=3D1
