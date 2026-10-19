@@ -1,89 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAC4552EDA;
-	Mon, 19 Oct 2026 14:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8F0582786;
+	Mon, 19 Oct 2026 14:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792419267; cv=none; b=JnlH2SyNCf2dNSQ2A67dAzGePC9XqFwAXIIaOXKK5C70/bAv3akDqWrMK6ho2VFdfhhDa3HIkN8DJSVOMTmVI/B4zf/5yHOI7/P6ZFyteAJGDlwnf9nq5Tczk6sQAO56tc0W84dLL9VpenD5Xq0ejNR6mC5QzN6xOath+4wIBQ0=
+	t=1792420642; cv=none; b=h0bf3c+43hSBC05sEyzfx5QZ7S5WBSvofa7pLSuwhYCavYdodOKVNLbrILalfCurMjZslDgmOz8EsE/EUpT0CCFl+TyUHyIGUZxj+g0XH6rki/lLT0CB3cXPPRGcWhixpfACoUy111wJi19GI4RLnNrktuXwwffEQhjTLRzwrFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792419267; c=relaxed/simple;
-	bh=Ch7QAVs8y9P8kRkbNHCRoG1DNBpeV7Gdzcud7UUXypM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NH8tBZjKVRRnKEqXWfDl0jlNvZGAMXLh0QY+ul2iEixfFyr7zFMjOX9A0EScP+S+z2lKSs5M3ngUScPDxXKqO6jSWTqTXZcRsRUhjXDWmQUNNTQxA/zvbvCz2mli1/0SLpYRQC5MncIKgNcAFfTfjTN2vP76BnmZwaquphkCF30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mkgx2V7u; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792420642; c=relaxed/simple;
+	bh=JFmI1SBHRcxfApXkuvNRk973kers9bQhwnFxlSmQ/m8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hvBzpQx7IrREcFGivOuqIWHHUNOvBWZchV1tTsRMrl6FNxIdyF5dVeYb8sIh11HlWOYYH6K/yKNobfZP/aeSdxtnt2fUgTdEKCkXuz3pofnToZeiNG1IOMLylwBP2+EOt77TJredPiklxY2IgkrwNmgoZHTuJIUwhStRpzN/+gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eCCFjJ4m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mkgx2V7u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE961F000C5;
-	Mon, 19 Oct 2026 14:14:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eCCFjJ4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9734B1F000C4;
+	Mon, 19 Oct 2026 14:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792419266;
-	bh=7796Na8Lv8R+oexI0qKXaPmDdfsdOtZrwkjrcnP6R9E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mkgx2V7ufsKA0GuRgq4ukenZFT+R1sPN2WiOnCwsZ/VP3g3lmzZfDm00z3z2CAUIe
-	 bTsfFvc2uuNXx8Vn8tZJie9CLGIPGzCOdZESkWLvl+e9muw7OpPOneBngK77eyLYhh
-	 iJW5czRYIGrxsC3vz8IKHLDEW/zhdxem0GA/fbsfloeVeOgdG55um9Cwciq0sFqLzF
-	 oeHvQaHqwL3bkMdwFC0FWUFJPwB7NXmAjV3n9cdCvXGe7NRh0XNwytR8/Y98qnyWsT
-	 xEhkC6KUJ3LZWsgzN0j+/pK+hjnDgOLp+be77PjVvfihIacChpxEfBApH6ELx+aVCG
-	 UbzM5bsEfOTzw==
-Date: Mon, 19 Oct 2026 15:14:24 +0100
-From: Harry Yoo <harry@kernel.org>
-To: Kairui Song <ryncsn@gmail.com>
-Cc: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, 
-	SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
-	Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
-	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
-	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>, 
-	Lorenzo Stoakes <ljs@kernel.org>, Barry Song <baohua@kernel.org>, 
-	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, 
-	Vlastimil Babka <vbabka@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	Kemeng Shi <shikemeng@huaweicloud.com>, Nhat Pham <nphamcs@gmail.com>, 
-	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, Gregory Price <gourry@gourry.net>, 
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, 
-	Hugh Dickins <hughd@google.com>, David Rientjes <rientjes@google.com>, 
-	Yu Zhao <yuzhao@google.com>, Vernon Yang <vernon2gm@gmail.com>, 
-	Zicheng Wang <wangzicheng@honor.com>, Chen Ridong <chenridong@xiaomi.com>, 
-	Tal Zussman <tz2294@columbia.edu>, Xiang Liu <liuxiang.277@bytedance.com>, 
-	Ehab Ababneh <ehab.ababneh@intel.com>, zhaozhengzhuo <zhaozhengzhuo@uniontech.com>, 
-	Lian Wang <lianux.mm@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>, linux-kernel@vger.kernel.org, 
-	cgroups@vger.kernel.org, damon@lists.linux.dev
-Subject: Re: [PATCH v4 03/17] mm/memcg: add folio-based lruvec live helper
-Message-ID: <atYgxto1RXZyZtLB@thinkstation>
-References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com>
- <20261016-mglru-fg-v4-3-2106750c0bfa@tencent.com>
- <atEkfmRFgXJCbJuK@thinkstation>
- <CAMgjq7A6Yom=dHDMXk+mpYm3dotgOaVRjPHgUsOryjJ1VjPC6Q@mail.gmail.com>
- <atYdi3O77m6XzaKu@thinkstation>
+	s=k20260515; t=1792420640;
+	bh=TzeUsHBgfXPKsjgzoOJjZ/KqkTpciOqCZplZVywH5gw=;
+	h=From:To:Cc:Subject:Date;
+	b=eCCFjJ4myRysM70jqHB5+xC6TSc+ICnmeZSx22kHDNs7zQrWNfZNIOZzdLJbZEEkL
+	 CK/WsOIJ3oF8UUhX+JBSvcYiED/f8QsVo7/qfzBG3mIo27fL2NwSpQ//eVqCJTGmm7
+	 vkzGWzZO94a3uRDM8ofv4j2dElI2vPlhGFdYt6/70uC2YUFr6Muezo8/CDIeI9OpQI
+	 zqzQyr4ydLMTTuNOliHnz8+PDdutxtxb20jDTmcmTugK39k7sCROq/IJA4pT1A1IQs
+	 Z4lpEe1Y5vLb33MMnBAT2eG8nqZEggI3vPJOZX2X64kWHKtdTqGSJt8qDNNGAAKU/a
+	 JqKKnDBLlZhfQ==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH] mm/damon/core: remove unreachable damos charge_{target,addr}_from
+Date: Mon, 19 Oct 2026 07:37:11 -0700
+Message-ID: <20261019143713.98610-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <atYdi3O77m6XzaKu@thinkstation>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 19, 2026 at 02:46:37PM +0100, Harry Yoo wrote:
-> In the function, RCU is the only mechanism that prevents release of
-> the memcg
+damos_quota->charge_{target,addr}_from saves the target and region the
+scheme's quota limit is reached.  damos_skip_charged_region() skips the
+target and regions before the point.  The target that was assigned to
+charge_target_from could be dynamically removed from the context by the
+runtime parameters update (aka commit) feature.  In this case,
+damos_skip_charged_region() cannot find if the point is passed or not,
+so the scheme is effectively disabled.
 
-Uh, no. looking at the code again I might have been confused!
+Similarly, the user could also remove all the regions of the target
+using the runtime parameters update feature.  It would be uncommon to do
+that, but it is a supported feature.  Because the skip pointer detection
+logic (damos_skip_charged_region()) works for each region of targets,
+this result in the logic is entirely skipped and the scheme is
+effectively disabled again.
 
-The caller is expected to have either 1) acquired RCU read lock,
-or 2) have a reference to the cgroup.
+The user impact is that the DAMOS scheme could suddenly stop working
+under certain uses of the runtime parameters update feature.  It could
+surprise users. No crash or leak happens though.  Users could also
+simply work around by re-installing the scheme.
 
-I see a bunch of callers that acquires rcu_read_lock() before reading
-memcg/lruvec from folio and passing it to mod_lruvec_state() (and then
-get_non_dying_memcg_start()/end().
+Catch the corner cases in damos_adjust_quota() and reset the pointers.
 
-Callers like reclaim e.g.) mem_cgroup_iter() hold a reference to the
-cgroup...
+Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+Cc: <stable@vger.kernel.org> # 5.19.x
+Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c49b8
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 479169dc9ac75..eb1fcdabc0075 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3383,6 +3383,26 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
+ 	trace_damos_esz(cidx, sidx, quota->esz);
+ }
+ 
++static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
++		struct damos *s)
++{
++	struct damos_quota *quota;
++	struct damon_target *t;
++
++	quota = &s->quota;
++	if (!quota->charge_target_from)
++		return;
++	damon_for_each_target(t, c) {
++		if (t == quota->charge_target_from) {
++			if (damon_nr_regions(t) > 0)
++				return;
++			break;
++		}
++	}
++	quota->charge_target_from = NULL;
++	quota->charge_addr_from = 0;
++}
++
+ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ {
+ 	struct damos_quota *quota = &s->quota;
+@@ -3418,6 +3438,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+ 			damos_trace_esz(c, s, quota);
+ 	}
+ 
++	damos_fix_stale_charge_pointers(c, s);
++
+ 	if (damos_quota_is_full(quota, c->min_region_sz))
+ 		return;
+ 	if (!c->ops.get_scheme_score)
+
+base-commit: 46165457cd36362f10fb784de8ce4925d6dde119
 -- 
-Cheers,
-Harry / Hyeonggon
+2.47.3
