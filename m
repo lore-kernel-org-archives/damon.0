@@ -1,121 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792424193;
+	b=nPzyWObUgW2aeQfynAulb1tt/pI1SrK3h74DqVHlBjrTdARMNxg13pvlf0u1sMa0P7T5
+	 fCAAXfJM5ZkeGXVKeuhq+u6UlRMGq9Szeic7ftOvzOXxicVw1UlBCr2oXVOUWXXGK7YBW
+	 VlrVCHci6OhUMhIRym4sh7VQw6iU86Yq5/dvZeTgrWC+ZZGfe2oMJ88hoHqgx+bODqunR
+	 1JcNdb2ls30Rod8OhVV3lGO1wa6/udT6bJkVV6+weZ1x7Mix8KipbvrelaKbzsE+qTfy0
+	 MDWzXqoGgKaaZ+oYU7CAHne3VIgYwswwBgvWig7DesiJoEOXRfh0NbcRgUCxredogcA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792424193;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=/+ek51YRgszwIPOcVnLQdglqQ5oAAxgeXhb6CBw1CBc=;
+	b=ua9BLYrdRtnRnlsVE9UzdheAC/A/WHiVfGdcCegatS0gkA1YgMzMvvLoyDmVcYyHwMIF
+	 Dy3x9KkQ/4hQT3a1F7Z0ZB8OUSXh7yL8RA7s+TPgVbCfzYZ4IKXIgXg33Ex9omovZgNv8
+	 VedOgkiFwdGcfPUm3gwIrfzcgqFYXue0VqYGR8st59cN0brvYNcdLijGgoxPorn6p6qdx
+	 wYjnOPcL+sMm9qOU8Ushp7UsxknGh/TmP/ETYuusFsrVammVkh6FGnGtFwoXnkG8Wgj8a
+	 gOogLjOCjPXtwc2HIl2ZuqaGIZfBFFMUbV/nZW/GYcOBKu2g8OBTrTMTaOgbN4c1XVw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NNIiZwzn;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8F0582786;
-	Mon, 19 Oct 2026 14:37:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792420642; cv=none; b=h0bf3c+43hSBC05sEyzfx5QZ7S5WBSvofa7pLSuwhYCavYdodOKVNLbrILalfCurMjZslDgmOz8EsE/EUpT0CCFl+TyUHyIGUZxj+g0XH6rki/lLT0CB3cXPPRGcWhixpfACoUy111wJi19GI4RLnNrktuXwwffEQhjTLRzwrFU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792420642; c=relaxed/simple;
-	bh=JFmI1SBHRcxfApXkuvNRk973kers9bQhwnFxlSmQ/m8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hvBzpQx7IrREcFGivOuqIWHHUNOvBWZchV1tTsRMrl6FNxIdyF5dVeYb8sIh11HlWOYYH6K/yKNobfZP/aeSdxtnt2fUgTdEKCkXuz3pofnToZeiNG1IOMLylwBP2+EOt77TJredPiklxY2IgkrwNmgoZHTuJIUwhStRpzN/+gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eCCFjJ4m; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA6A606C15F
+	for <damon@lists.linux.dev>; Mon, 19 Oct 2026 15:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eCCFjJ4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9734B1F000C4;
-	Mon, 19 Oct 2026 14:37:20 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NNIiZwzn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FA21F000C4;
+	Mon, 19 Oct 2026 15:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792420640;
-	bh=TzeUsHBgfXPKsjgzoOJjZ/KqkTpciOqCZplZVywH5gw=;
-	h=From:To:Cc:Subject:Date;
-	b=eCCFjJ4myRysM70jqHB5+xC6TSc+ICnmeZSx22kHDNs7zQrWNfZNIOZzdLJbZEEkL
-	 CK/WsOIJ3oF8UUhX+JBSvcYiED/f8QsVo7/qfzBG3mIo27fL2NwSpQ//eVqCJTGmm7
-	 vkzGWzZO94a3uRDM8ofv4j2dElI2vPlhGFdYt6/70uC2YUFr6Muezo8/CDIeI9OpQI
-	 zqzQyr4ydLMTTuNOliHnz8+PDdutxtxb20jDTmcmTugK39k7sCROq/IJA4pT1A1IQs
-	 Z4lpEe1Y5vLb33MMnBAT2eG8nqZEggI3vPJOZX2X64kWHKtdTqGSJt8qDNNGAAKU/a
-	 JqKKnDBLlZhfQ==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH] mm/damon/core: remove unreachable damos charge_{target,addr}_from
-Date: Mon, 19 Oct 2026 07:37:11 -0700
-Message-ID: <20261019143713.98610-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-Precedence: bulk
+	s=k20260515; t=1792424192;
+	bh=/+ek51YRgszwIPOcVnLQdglqQ5oAAxgeXhb6CBw1CBc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=NNIiZwznaGgkGo5Dkrzp8SjpBS+gnYZGXCZC0dJHOdP2zYKDNpBcxQ+ZA8IPlvSsa
+	 Jp1vuDxBKgk2WAuTR7LXMYdydAcc5i9varmaCFe0cFNsfGPO4BWAXXUURdlEnFaXqV
+	 TCBApvS23SuhmHUvG7bKiq2stPWOfPDInrxCrwQC6O7a6K8L2UKNYuMUCMvPdd7nMt
+	 CkYnyop6Tramr1DoNA1QsRcydw0HMTrVbrIaFScDLLj9mTk504c/OBWMTMMGE/aY2T
+	 VSLnUdwhOblC6iLZnEhKBFZpWcpSnsFstXvDn9sFZiXBAhL2menBoJT+YRVsjX2a0l
+	 3bFtoqlBFZHoQ==
+Message-ID: <sashiko-outbox-177767@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH] mm/damon/core: remove unreachable damos
+ charge_{target,addr}_from
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261019143713.98610-1-sj@kernel.org>
+References: <20261019143713.98610-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 19 Oct 2026 15:36:31 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
+List-Post: <mailto:damon@lists.linux.dev>
+List-Help: <mailto:damon+help@lists.linux.dev>
 List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+List-Owner: <mailto:damon+owner@lists.linux.dev>
+Precedence: list
 
-damos_quota->charge_{target,addr}_from saves the target and region the
-scheme's quota limit is reached.  damos_skip_charged_region() skips the
-target and regions before the point.  The target that was assigned to
-charge_target_from could be dynamically removed from the context by the
-runtime parameters update (aka commit) feature.  In this case,
-damos_skip_charged_region() cannot find if the point is passed or not,
-so the scheme is effectively disabled.
+> damos_quota->charge_{target,addr}_from saves the target and region the
+> scheme's quota limit is reached.  damos_skip_charged_region() skips the
+> target and regions before the point.  The target that was assigned to
+> charge_target_from could be dynamically removed from the context by the
+> runtime parameters update (aka commit) feature.  In this case,
+> damos_skip_charged_region() cannot find if the point is passed or not,
+> so the scheme is effectively disabled.
+>=20
+> Similarly, the user could also remove all the regions of the target
+> using the runtime parameters update feature.  It would be uncommon to do
+> that, but it is a supported feature.  Because the skip pointer detection
+> logic (damos_skip_charged_region()) works for each region of targets,
+> this result in the logic is entirely skipped and the scheme is
+> effectively disabled again.
+>=20
+> The user impact is that the DAMOS scheme could suddenly stop working
+> under certain uses of the runtime parameters update feature.  It could
+> surprise users. No crash or leak happens though.  Users could also
+> simply work around by re-installing the scheme.
+>=20
+> Catch the corner cases in damos_adjust_quota() and reset the pointers.
+>=20
+> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+> Cc: <stable@vger.kernel.org> # 5.19.x
+> Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c4=
+9b8
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Similarly, the user could also remove all the regions of the target
-using the runtime parameters update feature.  It would be uncommon to do
-that, but it is a supported feature.  Because the skip pointer detection
-logic (damos_skip_charged_region()) works for each region of targets,
-this result in the logic is entirely skipped and the scheme is
-effectively disabled again.
+Sashiko has reviewed this patch and found no issues.
 
-The user impact is that the DAMOS scheme could suddenly stop working
-under certain uses of the runtime parameters update feature.  It could
-surprise users. No crash or leak happens though.  Users could also
-simply work around by re-installing the scheme.
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261019143713.9861=
+0-1-sj@kernel.org?part=3D1
 
-Catch the corner cases in damos_adjust_quota() and reset the pointers.
-
-Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-Cc: <stable@vger.kernel.org> # 5.19.x
-Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c49b8
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/core.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 479169dc9ac75..eb1fcdabc0075 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3383,6 +3383,26 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
- 	trace_damos_esz(cidx, sidx, quota->esz);
- }
- 
-+static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
-+		struct damos *s)
-+{
-+	struct damos_quota *quota;
-+	struct damon_target *t;
-+
-+	quota = &s->quota;
-+	if (!quota->charge_target_from)
-+		return;
-+	damon_for_each_target(t, c) {
-+		if (t == quota->charge_target_from) {
-+			if (damon_nr_regions(t) > 0)
-+				return;
-+			break;
-+		}
-+	}
-+	quota->charge_target_from = NULL;
-+	quota->charge_addr_from = 0;
-+}
-+
- static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- {
- 	struct damos_quota *quota = &s->quota;
-@@ -3418,6 +3438,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 			damos_trace_esz(c, s, quota);
- 	}
- 
-+	damos_fix_stale_charge_pointers(c, s);
-+
- 	if (damos_quota_is_full(quota, c->min_region_sz))
- 		return;
- 	if (!c->ops.get_scheme_score)
-
-base-commit: 46165457cd36362f10fb784de8ce4925d6dde119
--- 
-2.47.3
