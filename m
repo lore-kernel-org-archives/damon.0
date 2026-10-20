@@ -1,96 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.136
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.134
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792512632;
-	b=XAwZ80iD5TCdoLzN7CFoQWFx79Zp9xK2E+f5Nbqy7KzzqPziR852c2Ebwv/eYP/b6NLi
-	 LEXvvfSJog3Zv605GJetm3UTFfyNT9djHI2mhmXDXLCSV6Rx9fUugwhrhLAsIuUCaQaoT
-	 rE1vtOxxLHAN1ZQEHdrWUxLmFr+TwfnSGcwysfeLYE5YTyDqBSOJr3gBmJua34pjlR7Tv
-	 iOfo/B2RHQotWnAYqCigomPkdhGvtC711t4bOFU3F4NcDqEq/hk71f0J2IZjq+1MBt/yU
-	 VLhsiVlXEqDvZ3MlOaBwEjgU6Nbbr4oUGb8dq9C1mkLO5an+eg7Q8UK95J+x6nkHxgg==
+	t=1792512683;
+	b=UYNoWBAlilB03XDXqVCXLyQEme4tvJy32FRDZG0a+f1MVv/ux1hu7Cqcrj7QfTFzMet/
+	 N4HqMLlvrEgAkKw5FnqWXznsWA5aBuCsT4i/ajUAvZRX5dhcaE2gRBmwAjuzCLg3OJuz9
+	 pBzooC9jNJNStiMitVnW9HKh0uUA2jTceKDz2N2kCqmT6xFzTVejuq50Uf9qvlY/O2vio
+	 Sp8HtNy2K7qWRdvxK2Uy0dbPs2V8lIC8S8pGtpp9Iyfj5IbGRB4TAAEAGycEjxGiTFLNs
+	 OTqnO2v1fLP5u+iM2+PxWJH7fBC6FymO3ZO3FW2ESw9MUsKKAegI5MaZdS3UDjb6voA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792512632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792512683;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Message-ID:Subject:In-Reply-To:References:MIME-Version:
 	 Date:Content-Type:Content-Transfer-Encoding;
-	bh=c4lo9c1DzgFzppkuIe3m48wNpvzpTiu2Q7BfuVscJUc=;
-	b=2+CmxsVADqa6rhjHnlK8BV9I/B/5wb/RAa6yTrOU+f3TXuILmpLhPZYoR0qJslDRytVX
-	 D46tomxHNmPQPJlWfZXuN84jlYQVkwZbvoG9jHv+2/bGwpXaZL29Cq5E8KIlktdD3IlY3
-	 1aY8WPQdu+GWQT0RP78rVwImpPcptusLIU38WMbGGX5g3ucX9d7aH3+12ZOiWPSE4oYXN
-	 mi8ntZ13QuIg5RQPxqav9zC1w0Nr7Hnbx6aRGI46fsVhwUWh1k+jOL6fxnoFSEYiv5r55
-	 dkP5f9eJBVvt9+Kzkgb8KVMfK2Lf7dNMGrntedQLxFSKuzfiOd3+DWO3GUFF3Oy9N4A==
+	bh=FdKpeXgyqOVEtVxGXAfcleh4j7jtKB2IC4Gxgl29KOA=;
+	b=nUwTkJKqeXbj2W2uaq4AMKJ1mA3K6SVFWcCRUmgAf+0ZS4pZ5QjoHlJDM0ZQ8QXGq2Q5
+	 BImIrw7tkUGuPLOJQLeIar363elLvg/HtyoOpcJpkgf2Ws3gqt+atOxka8yoP/fBkKYNP
+	 nyX+1Jd+VAgiuQ3GHkVKv140IhvF7IUhH1IXof60mDSHpB5eYHcZ6f8Bnrzx9VXzEPJud
+	 SVG/bkZqNyUvy3fpCUiPBB+nKtyV9rGXM0xol5JSXtZY1AJeG1j+uAD8xyhvn/K7JIONO
+	 uSZ11ousdZ8RAnmn8AFpHQM4o6TkDEEcUYFY5mcyzADW4pXJsdMHgpmSXj9pk+cWLUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=EZzE6woS;
-	arc=none smtp.remote-ip=74.125.227.136
-Received: from mail-pj2-f8.google.com (mail-pj2-f8.google.com [74.125.227.136])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fEBT4xzS;
+	arc=none smtp.remote-ip=74.125.227.134
+Received: from mail-pj2-f6.google.com (mail-pj2-f6.google.com [74.125.227.134])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A517D606A324
-	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 16:10:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A517D606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D9F606A331
+	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 16:11:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58D9F606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=EZzE6woS
-Received: by mail-pj2-f8.google.com with SMTP id 98e67ed59e1d1-3ac749e0719so953971a91.0
-        for <damon@lists.linux.dev>; Tue, 20 Oct 2026 09:10:31 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=fEBT4xzS
+Received: by mail-pj2-f6.google.com with SMTP id 98e67ed59e1d1-3ad41b6b2ebso268254a91.1
+        for <damon@lists.linux.dev>; Tue, 20 Oct 2026 09:11:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792512631; x=1793117431; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792512683; x=1793117483; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:date:mime-version:references
          :in-reply-to:subject:message-id:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=c4lo9c1DzgFzppkuIe3m48wNpvzpTiu2Q7BfuVscJUc=;
-        b=EZzE6woSlsmzUIfO6lVfRdOg7P2ZJrOZTvGpUOhTp17mdckoaFgBy769Ka7lx1SyYe
-         Q06oCtOThKDMgwILVcrXaQm6mDjLeUIu0J/aSoWAmpN+LIFrsSwgalQH8Ge9mGUX1DUn
-         NCJ1icMcM7k8J1QcSDpCF/AO5cJ6KxAgYeUvaKs3YWM55ZHb0FGVW3jdkQlLtLxk2jzP
-         8RwP5/Sp4U44/xpg5qxCVki1TBGSMYZZFlpd/UgL1ViBt5Svvf6sy+s9vjjqM60hErH8
-         LqIvAwJoRf0e5NMs0U28Ne/C3sNbfagd43dvOwXN9+03bDHgC+hi2D2YVf97Eg407rYh
-         cfvA==
+        bh=FdKpeXgyqOVEtVxGXAfcleh4j7jtKB2IC4Gxgl29KOA=;
+        b=fEBT4xzSE8EAw0lhYVwQ48RUMVU98owBBZhvUQkDLRK7jf3QbPIHCzVA5YqA8jovHE
+         rQVp8aEJxKEdCDnEMmVyV4dd8zhTmoV2n6NRb7bHPcyzW+vIgxJM5GMuBqxJNYOrU5e1
+         //fxMbgRfm8vCfXGCy+uKLZDAWlKqhynP+lHWtcjEKUck5zxzIgwhJT0BueBKlrN7RTU
+         a19F3fzj4w3UA6Pxy4vJS61q6Cexr8j4ChFS7U71qgL0s3kkPKHJs7CAw5L1cXRhPRb1
+         InFzV0oZYL+coqU0Z2iBTJt+KdXq+qfgK16GMqyG1ZOGYFyHO0cPYOsrvVnvAICyVukM
+         ce9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792512631; x=1793117431;
+        d=1e100.net; s=20260707; t=1792512683; x=1793117483;
         h=content-transfer-encoding:content-type:date:mime-version:references
          :in-reply-to:subject:message-id:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=c4lo9c1DzgFzppkuIe3m48wNpvzpTiu2Q7BfuVscJUc=;
-        b=CjQ/Kq2l0NY+x6pq0+Cm79RvqjcXp3f3+JvlUT2fWU1lMwNms37SCMqpeprb1N8c5Y
-         /zGTiEsq0sqD1p/PsVTJL/IhbxY7vSl8SScd8QZ9m7r5It1wnoLgtcCx2Y07mlQDY98b
-         x4LD7HR+G8+OVK2BQIddStQZ1NHmbslXFbDu8ZlJcK+VBFdKsiDfVDgkpIS6yBN5EV9f
-         KpJC5DPsGo50ZML+PPlx7nKKIbV69jxf4PWrLRBKV/21S6I+cuPMq0AhUmVwWmKk2iXz
-         P8xXtiRTb8PzhTcGh/PQ9KjE450vXh9Ns+gr+guKcpBOGC7jLSkQUtD+WlsCz4LC3Nvn
-         FKWQ==
-X-Forwarded-Encrypted: i=1; AKwUvByfBepx0kdwp25q8WqvZ61uFf9xDnBAB8PiTnig9lPodpeRfaZUU/y1Q75O/gH1Fe6VGk8CAQ==@lists.linux.dev
-X-Gm-Message-State: AFq9FYL/BoVY+aj7UjlV/8g+nauMjWsq4RmhDRF/vScOL+j++KoxiX7X
-	wVj82IW07RH1KSI5KTbA6twA4Zs+C4bBC3NJvW0vROvIf75pk/ojUL5P
-X-Gm-Gg: AYBFou1eulUo6I3uFuf4wN9hninvFdRqVFk6UQpu5gGpQiJzletGyDQwCwU2bVPPqqa
-	FWSZDESek5OxxFg7nW1E4ZwsOgQpkG6sLuWHBv5U8hNCt//QsNbThQbC+9IV6PeveTlOijxl2Gj
-	L7dV1z1LBycBRxqCy3pZ2/WQZAK4iEv8poZxR+TAOn9/mQBuqeX039WANgjH/2kEeQmEmgL0XRK
-	FT3zpreXHmHERmWM+hLHwTRXnBBN39y0jQ4+Lfvvwr8jNqQT+XQsuT8meJS2nDrQH5LhcCrMDtC
-	wWSveuHenlTki8NFvgdfIJBdSuwrGrs3MfBLxD+Snyz6Wr5dadH6nysNQ5KlhNx1DGOjzSr+355
-	C0giJpI+fwd8Ko5V0A5hdHKEwGQKDV3TxATRSweV2T8xtnxIddHyDlj2JBooU4KSzGrbIJRoEwv
-	efEbRadeJ1bkO8S9WShVP3GmBQNCuQwCSqdNQoU9a3JTRIz8X1XcdINjJfsbJHtjVRCETbom5no
-	GwpObH29fa8eXNjDJSkglU8SHjY19anwUCmlPeH6j7rxJTtIAQqi10yF3IZxwnIah7/5Ok=
-X-Received: by 2002:a17:90b:5112:b0:3ab:c80:9365 with SMTP id 98e67ed59e1d1-3acef0f47a8mr9810302a91.42.1792512630823;
-        Tue, 20 Oct 2026 09:10:30 -0700 (PDT)
+        bh=FdKpeXgyqOVEtVxGXAfcleh4j7jtKB2IC4Gxgl29KOA=;
+        b=FIIJzLCqE3GBrleYfaHrOZYt5Z3FtxubkPWAbxjKDmxgZIvj3MrHV67J1f9UN9BxU/
+         6rywqGSYsYQKfp+VjTcCt61mICyw+9g1TRLz7Bn5aJjpOKcyb3uirEWIAf12U65BNggj
+         nDaw5TxQ6pSSOJLKjKY3k/vooHkFWU2agtXqwicUGGej/IkfFsDxJICPM2rL7uIYNPVr
+         brWGkn28P7C/gEQasSezzbHXEEmLx5zQLSwuUMujXvW3hJZIVqaKMSWQ92ry4qELDSFq
+         Kc6Yfmgabc/3oCl32ghCystE+R+iqKsdwSeDNbykSasgKg/gOYmIoff27P85227mrZYc
+         q6AA==
+X-Forwarded-Encrypted: i=1; AKwUvBwooZbq8x6UqmPf1xH7XbnbdSsbN/fNfxbAJKu3e0xMociswuNkZOa2ZhWgiaF4K0aFAhrQlA==@lists.linux.dev
+X-Gm-Message-State: AFq9FYKdevRbmuGzLCz92HmdrjRG/OlVpIdPfKDlDny6d6UB7OrZgvG2
+	2KT3dPzYZ/vGk8GlxKaWmJTRff/USJbiKJX64znrdL2ar9KUOq8bDFHf
+X-Gm-Gg: AYBFou1wSK6KVQuKNJrUTZFP8IghaRJ2ZkXe3NJJdOXm7/lm7BiX0wZE0wq+rxBKhPB
+	kr6R70aWwrtjJ4T9hSIdgAYnVGTepBs1G5g0EJg3UfomenTpWe0BzTjB9oZnzsl9VOlp74lMTVj
+	RM7mjWHL8SmvM4hJ+V8JynhYutDvxqhrkU+K25brEAo1FRCN0QaVZ/v1lOAf2f1Ju4UEk9cIKt0
+	yXBs2LkVRXOfrdYPSH1ZTGRxPpiYkzsBsxFqPFHnyfyJyr4WSMc3VGse/25k5x+aTT/gQBdjYH/
+	Z8B6qahwbp9FIUAWUQ9LqjpmJ1cIEQ4Skkgz9edCRkwxb+0VQD3yYy/FfpTOyTZLTAiWXe3Hlg4
+	+IiVZKOULSEcLwbgHQizdTEASdYzYdPclPRd2YrTX5spa7349VpILunVSXs7U+j5UZKW3+at97x
+	fCHgoridd1GBH7unafXko4xY7HaLT2DFbNqzBSKql/Hc063onXwGIOcgzkR6VxJxEEA8ZVvdeQb
+	pcPhzD+7mfAcmshdkoKpwGrKCNokIO0P3fRl3UVz+rH9SDtTSYgmvr0uMwKYw+n3a9kbZMW
+X-Received: by 2002:a17:90b:5345:b0:3ab:be66:ddd3 with SMTP id 98e67ed59e1d1-3ad64bd668amr1739707a91.32.1792512682581;
+        Tue, 20 Oct 2026 09:11:22 -0700 (PDT)
 Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ad80cbe295sm87743a91.5.2026.10.20.09.10.16
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3acc9942956sm8903911a91.1.2026.10.20.09.11.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 09:10:29 -0700 (PDT)
+        Tue, 20 Oct 2026 09:11:22 -0700 (PDT)
 From: Aveline Noir <jm5905938@gmail.com>
-To: SJ Park <sj@kernel.org>, Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: akpm@linux-foundation.org, david@kernel.org, ljs@kernel.org,
- liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, surenb@google.com,
- mhocko@suse.com, corbet@lwn.net, skhan@linuxfoundation.org,
- rdunlap@infradead.org, damon@lists.linux.dev, linux-mm@kvack.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org
-Message-ID: <179251032453.2.6166799753856435091.damon-watermarks@gmail.com>
-Subject: Re: [RFC PATCH] mm/damon/reclaim: allow disabling watermarks to force
- reclaim of cold pages
-In-Reply-To: <20261020135822.85334-1-sj@kernel.org>
-References: <20261020133233.3920818-1-ruanjinjie@huawei.com>
- <20261020135822.85334-1-sj@kernel.org>
+To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org, damon@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org
+Message-ID: <179251032453.2.9019098760697634552.damon-quota@gmail.com>
+Subject:
+ Re: [PATCH] mm/damon/core: remove unreachable damos charge_{target,addr}_from
+In-Reply-To: <20261020023958.108276-1-sj@kernel.org>
+References: <20261020023958.108276-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -106,11 +102,14 @@ Content-Transfer-Encoding: 7bit
 
 Hi SJ,
 
-> setting wmarks_high, wmarks_mid and wmarks_low to 100%, 100% and 0%
-> effectively disable watermarks? Have you tried that?
+> Catch the corner cases in damos_adjust_quota() and reset the pointers.
 
-That worked in my test with swap enabled. Agree that documenting this
-combination might be useful.
+
+The patch looks good to me. I tested DAMON_RECLAIM stop/start after
+filling the quota on x86-64 KVM and everything goes well :)
+
+Reviewed-by: Aveline Noir <jm5905938@gmail.com>
+Tested-by: Aveline Noir <jm5905938@gmail.com>
 
 Thanks,
 Aveline Noir
