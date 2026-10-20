@@ -1,100 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792478805;
-	b=VNElCdmVyrJqrXBJMiiN2qKMBjSkCIq7+gdr1sIWRSRbLrEU4hQIBELOZ/JIRfQ6XyCl
-	 pkoy46JX0uDa9mkqovCM0B2qZz8HH+X9ZKlXE5R9e6Jqz8lecZeTanVPV//W3J9NVQHIh
-	 +02cpRsHjtkhgsiHeW6VFq4Pmf0WChEGLpPFw9sMgIBHz0xizyBm9oUjH8pmF7ABuVBb2
-	 S0QFbq3UziQfsMIl/Ln7cIF/e4YJbqyNihR6EQBaskbyMG5ha7GCjpoNVNVwy0KXmhtVq
-	 5sWbCgkK99opuoUg7CTzVPU0TJsACVK5JVzPejv1Mo2tBpgm+AyFhqPiztgd7qAXekw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792478805;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=Gp9kC/jyVCXmnkxT8i7jFkbo//t/pF13KkkUzx3tMqA=;
-	b=ivFGZHvgwsAKpUI/r5v4aWiRCntRhFPGJ6zB9yBEet4UiHPOXF/opefeKsNd35Vqgq2R
-	 MsOdwaIMkOd4bG9yt43odUkIsJC6ppZHLiKgLWwCadamP5hbdk750ED5BnPMXvowIb86L
-	 qUqEIERzIpwPYzpGmGmEQquqHoDJa8zP2MaTREKhVp8Eyeir+B5QHApr+61MV26I1d0+O
-	 o4u438/AH+TmK6OCRDx9x2bes9jqRFLXlN5IXuTy2htHV0N+ytc2NaX/tl7pY0PCM/Kx+
-	 F+nCSC6/5iDB1Z/XntnvxZzLIu/gWoXt/OUYGtx0QVuqhfU78/mWhyVnPBBEQOTUwFQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=cZN+00Tz;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792483435;
+	b=Y+gyForBDiujpxJ5s/ucJBhvo07fvA0wlxuJQAGyN6pPgR+e4wLb+BIEd/VKYRPrf7mU
+	 nnmxwZpWPqln2N0YIrO3IcjpFYWCBTTuoT3Y0xLrcUEWWjKYsK73+N35sbUhhRtJxRTuO
+	 EsKx4GoH6NBNoh92YpWEs+qeccW3hqEIZyJ9HD97HQcUXdz1K5krDRVU7GSercyh9An0y
+	 o4ydKbXJK5K6b2nSyHF9dt7JWaakCbwmmdFwIouCjRNfXEfC1Aofe7tFEsO//PpO8Lg5C
+	 8cBueWIi4iwcSumUDQGjJeYUmVLqxBFPY9bgiLjjKKKRoL4XTA1g+7DBd3mQ45WtQMw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792483435;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=L6WY9rgPVusNXJvy1MtCG7eHkaFCa8LJ1hX2y8nE4Hc=;
+	b=CRTmU/tK102Yo7WcuwwLuMzbB6o/+AIjciszWH5ZE8FIPuhMoLyehK56VMVvn1DsOpaM
+	 dQ5wsX4+uML5r6w3Kjf2Hk1JM/LjbfqPICOdBj5LTjIudQLUoFLuEEowgsV5dm6pAh9Wa
+	 /T/lIs7PPSS5PQBPgz36wVOqwUCdicUNslvo3qGzT50JT7ydzZX58SnlzznCJymwouPJT
+	 wNu1UQSRPmYmiDhV0XxVaOUWevscKOQKIqV2i7wu8LhYo8uuq2jShn2v5xXaLtuh+ytQi
+	 ynfq3CUSlbllh3SwN7iLHItPWjr13DRVQzOcYWTRL5l+e2tafk9/ajHMxPFVhuisJYQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CSRvcaWE;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B26606A31B
-	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 06:46:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 06B26606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0F7606A325
+	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 08:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=cZN+00Tz
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a1e477fe16so13342195e9.1
-        for <damon@lists.linux.dev>; Mon, 19 Oct 2026 23:46:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792478803; cv=none;
-        d=google.com; s=arc-20260327;
-        b=K7a28HtOBV7cxMyUlWXgy5Nmvy1dfi4TGiB8anSS5ImX8Cmzpf4+cIwR0MdQBkxaiC
-         EAhRifLk5AUlbxwMo4v7xD158D5+VXA99wD3tLJD4IZJMIIH+ETUEvBHS1Rbx9EKnFn6
-         9nUu9pEGFCMqHYLwwWspRVmXpjCPn49KqAfipcgSxtJDLdHJxm5dgh7VjJMzg2fb4HQ9
-         HAYmE2tYwNAwc/M+ML7dVEtBzu1xyUYOBTRjUYD2Px5+SKKULYHqFjukJyZL6eNBeuA8
-         MqRA06RAJB24j7motcsEbJm7l9612odp1ikLVUZAy11/0PTOds3pnPprQZ4dyzQ6P1Zi
-         5JfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Gp9kC/jyVCXmnkxT8i7jFkbo//t/pF13KkkUzx3tMqA=;
-        fh=TNkKu0yadbFraL5pY96JZ8cSuuR631erw6u0xYp18t8=;
-        b=N5qpRSuvyEJ0SXLqWaTorZ0E+WuzI0dHzQivbrHpvvSKNgQ+MRdYA+z+dUD1z/bVN/
-         qFxdyLaxbY1Op3riShIUJ8fuTm4DPNiMa+Moa4jzXekAxySpcPw4TELy6SJM5y3O56RL
-         hJJ/tHhjXx+acP/rn8bJsCH7LWQaUvvjH98TuJ9VKRFWf0I39+/aH4j7zb3o38KFEQxZ
-         HBlvRz3BbfUMeCLEtPrUb5q81m8JfkUhp+32/3/X5qLA/gyiBCoOf6buTVJH4q0coaGN
-         JXhLEfu3eZs3d7HK2N3Z6H7dsgib69e9YkVmcycHag9m1Pb01car8VxZxSHCf7POrtUX
-         n45w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792478803; x=1793083603; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Gp9kC/jyVCXmnkxT8i7jFkbo//t/pF13KkkUzx3tMqA=;
-        b=cZN+00Tz24YwfQOFiY2SCxUB+HIBGxfNEBV0KXgshZEpmdaY4QI13gJFGtCy0OEaj/
-         YNcQg6oKIl52DkyjOebaYz2KjaQ+9wUVkEf0+7RTHj8OhpaSd8BeBbaFTZ4E/9p904vr
-         NulHNg89ppkEgcUqE1aHgaeeAGtT4UoPC8Cck3ycd8ZINQS+fNWdABy6isa4PsOBmfqz
-         h3wbOY605qXU0eric91Sq7/sS04hw4Ayp30F7lfyBJ4muthonsncgSHaqJNE3/6RfBWt
-         L0dAbKIT0ZgKbbWgsrvBiNbWr380GkJ5pu3gCU3TXBopQKmDH22CSk0hZaopSJMtvsx6
-         r7Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792478803; x=1793083603;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Gp9kC/jyVCXmnkxT8i7jFkbo//t/pF13KkkUzx3tMqA=;
-        b=WozJ9rsh2r8W8O4KSd6thZXW5yBhaRsuGw0gbAptKl3f8QacGbCyoDXr1qO8RiQ4Dq
-         Da1HsLbt5aCvtv1E+v9mRSDuyV1lbqi0eNz91/KcJgxoqMMqCN50fhe6ejHvRSHLVzSK
-         Vf3VKt4tiL1n+2+/cej7vChHwVaS1LGw6LI6MfsGHr9lt5uxyETOCRF+1DxjZa5SxVVB
-         7R4MAJjgu1JGeBnQ4tEiRj8TWbxaX4EKPvH5psTJoDns2rQaaFrKyhlPV0CA6Pt/jv82
-         5zDgAn1kctIjK8OKmVfPfAMcyaOSGyvgkEdIsevYFfnQ3vhQ0wRiQ+ardeqZiBk7201t
-         mQxQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwD6iFNLailzh7ZMLH3RUQQJF2c2PoAxQaiPOHgyCl6g3B4CT7bCC1Dd0qUPAIR4u0ZN5I5ww==@lists.linux.dev
-X-Gm-Message-State: AFq9FYISwzwuaxBqOmi4zprJhXdsubtuss3zZJOIPtoUHGkqbedJj2pq
-	/bvNI6P5ljduF3Z307OCoI1QyuN6KrAcOQN4ylsO9bVQJrwWwwMD59b3S10YAk6nQi+q+6VYlz5
-	+kaNzH6ixNDiQldyyj+aA1uzrPI642Y8=
-X-Gm-Gg: AYBFou2YQzxdTwe3M9v8x3Wf5G3TaUhshnpORkXMINVdob/ugsslFlqakKa462cj0L9
-	ZwtTv1T9gCuCkvveF/GqN/I2Sv4ZwvE8hvibIkMmBHGSfslUxsYUkGLX+IVpvUOmFUJdc7L8ly3
-	ngo2Ni/XRPO7FcJrUhPWk2ucrgNQS6l6Rm43qADgrYKroncDpMsGXuuzofvcP/AYmgfPBwybL9F
-	TVmruLxRPCukDDQG1G6v1Kw+HJFy2SCorLptfuuwP62qlNaOzdSW8mWDvUjSlHMq4dTElbem1Jh
-	LkSwFufatExnAHxMu/PsBBT271dPEpIs4AjBAAknEG3ePzi0ih4zOJqEVVyavTKTuhm7zZ9NMLI
-	GKnDXSgfy8bl70A==
-X-Received: by 2002:a05:600c:1d05:b0:4a1:bd69:526f with SMTP id
- 5b1f17b1804b1-4a1d75ab235mr196204085e9.4.1792478803164; Mon, 19 Oct 2026
- 23:46:43 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CSRvcaWE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE0C1F000C4;
+	Tue, 20 Oct 2026 08:03:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792483434;
+	bh=L6WY9rgPVusNXJvy1MtCG7eHkaFCa8LJ1hX2y8nE4Hc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=CSRvcaWEqPi9nF/5NLNTqeW856hXiYzQmIOV+jd+gEjRhz8mxLbRQouSgMgEViD6j
+	 KlUMRi5w/4cMDnTSxntua1AZplFtQDBIKoRmE6N79ci9PjK3iMLPO609tMa6VGfKY1
+	 Q4d7BLx5wKF23t3bObL/zrwGPLl9kcSGis+tY9nZ8mNQlBfQZM+jD+eFZjlhF6SZrA
+	 e7wyx9hes9EDGYS597aPHBbZqvgdvMRh4hidMvExdO5u5Fuag80UBGquEfBdgNx8Do
+	 Upro+2ZOc347noYyIUrP0dM/dmrtlxNLuCLxr8NSC6sUE/7mu3wGFTlWiGiAc2sS6S
+	 zdgzfCE1UrzRw==
+Message-ID: <sashiko-outbox-178473@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH] mm/damon/core: remove unreachable damos
+ charge_{target,addr}_from
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261020023958.108276-1-sj@kernel.org>
+References: <20261020023958.108276-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 20 Oct 2026 08:03:53 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -103,90 +59,38 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-2-0f00417b41bc@gmail.com>
- <20261004091023.630362-1-kunwu.chan@gmail.com> <CALa+Y14isN3HmsY9Mgtdi3O3zxOH33uTtajSbJcxm9FO4Uon=g@mail.gmail.com>
-In-Reply-To: <CALa+Y14isN3HmsY9Mgtdi3O3zxOH33uTtajSbJcxm9FO4Uon=g@mail.gmail.com>
-From: KunWu Chan <kunwu.chan@gmail.com>
-Date: Tue, 20 Oct 2026 14:46:32 +0800
-X-Gm-Features: AclHuK_-zTMbJ1JCgYu1ZQ2d8ma027-PdiCf5iSRex2YzMdvVgiIPMhM3aQsSmk
-Message-ID: <CAN_Opa_LJNTL5VwjxvWfFuC1dqNa935Aqu9fEmkCJxwOx5oNKA@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 2/9] mm/damon/core: replace the access report
- buffer with per-context rings
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
-Cc: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
-	Gregory Price <gourry@gourry.net>, David Rientjes <rientjes@google.com>, Wei Xu <weixugc@google.com>, 
-	Jonathan Corbet <corbet@lwn.net>, Bijan Tabatabai <bijan311@gmail.com>, Ajay Joshi <ajayjoshi@micron.com>, 
-	Honggyu Kim <honggyu.kim@sk.com>, Yunjeong Mun <yunjeong.mun@sk.com>, 
-	Akinobu Mita <akinobu.mita@gmail.com>, Lian Wang <lianux.mm@gmail.com>, 
-	Kunwu Chan <kunwu.chan@linux.dev>, Jonathan Cameron <jic23@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 5, 2026 at 5:11=E2=80=AFPM Ravi Jonnalagadda
-<ravis.opensrc@gmail.com> wrote:
->
-> >
-> > Hi Ravi,
-> >
-> > I noticed that ring overflow drops reports and updates an
-> > internal counter.
-> >
-> > Since hardware sampling is used as an access observation source,
-> > could userspace get any indication that reports were lost during
-> > an aggregation window?
->
-> Hi Kunwu,
->
-> Not in this RFC.  While developing the series, I used a developer-only
-> commit that exposed these counters through debugfs, purely for my own
-> testing; it was never meant for upstream, so the RFC keeps only the
-> in-kernel accessors that the kunit tests use.  v4 [1] is the same in
-> this respect.
->
-> > Without such visibility, users cannot distinguish an aggregation
-> > result affected by report loss from one collected without loss.
-> > This may make it difficult to evaluate the reliability of the
-> > observed access information.
->
-> I agree that userspace should be able to see dropped reports.  Two
-> things to note before exposing them: the counters are global per-CPU
-> counters today, not per context, so a per-context interface needs
-> per-context accounting first; and when perf throttles a source,
-> samples are lost without any drop being counted.
->
-> I see two options:
->
-> a) a read-only file under the context or probe sysfs directory, once
->    the counters are per context, or
-> b) the drop counts through a tracepoint, per aggregation window.
->
-> Your PMU-agnostic observability series may be a natural home for (b).
-> What do you think?
->
+> damos_quota->charge_{target,addr}_from saves the target and region the
+> scheme's quota limit is reached.  damos_skip_charged_region() skips the
+> target and regions before the point.  The target that was assigned to
+> charge_target_from could be dynamically removed from the context by the
+> runtime parameters update (aka commit) feature.  In this case,
+> damos_skip_charged_region() cannot find if the point is passed or not,
+> so the scheme is effectively disabled.
+>=20
+> Similarly, the user could also remove all the regions of the target
+> using the runtime parameters update feature.  It would be uncommon to do
+> that, but it is a supported feature.  Because the skip pointer detection
+> logic (damos_skip_charged_region()) works for each region of targets,
+> this result in the logic is entirely skipped and the scheme is
+> effectively disabled again.
+>=20
+> The user impact is that the DAMOS scheme could suddenly stop working
+> under certain uses of the runtime parameters update feature.  It could
+> surprise users. No crash or leak happens though.  Users could also
+> simply work around by re-installing the scheme.
+>=20
+> Catch the corner cases in damos_adjust_quota() and reset the pointers.
+>=20
+> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+> Cc: <stable@vger.kernel.org> # 5.19.x
+> Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c4=
+9b8
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Thanks, Ravi. Are you referring to my earlier
-'mm/damon/perf: observability framework for hardware-sampled access reports=
-'
-series [1]?
-[1] https://lore.kernel.org/all/20260818061031.827057-1-kunwu.chan@linux.de=
-v/
+Sashiko has reviewed this patch and found no issues.
 
-I developed this framework and shared it in case it might be useful to othe=
-rs,
-though I'm not sure whether it will eventually be merged.
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261020023958.1082=
+76-1-sj@kernel.org?part=3D1
 
-The tracepoint option seems like a good fit for that work. I'll think
-about it and share
-any ideas I come up with.
-
-Thanks,
-Kunwu
-
-
-> [1] https://lore.kernel.org/all/20261005-damon-perf-rfc-v3-send-2026-10-0=
-3-v4-0-b03452e137f3@gmail.com/
->
-> Thanks,
-> Ravi
