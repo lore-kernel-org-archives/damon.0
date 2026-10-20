@@ -1,56 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.219
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792483435;
-	b=Y+gyForBDiujpxJ5s/ucJBhvo07fvA0wlxuJQAGyN6pPgR+e4wLb+BIEd/VKYRPrf7mU
-	 nnmxwZpWPqln2N0YIrO3IcjpFYWCBTTuoT3Y0xLrcUEWWjKYsK73+N35sbUhhRtJxRTuO
-	 EsKx4GoH6NBNoh92YpWEs+qeccW3hqEIZyJ9HD97HQcUXdz1K5krDRVU7GSercyh9An0y
-	 o4ydKbXJK5K6b2nSyHF9dt7JWaakCbwmmdFwIouCjRNfXEfC1Aofe7tFEsO//PpO8Lg5C
-	 8cBueWIi4iwcSumUDQGjJeYUmVLqxBFPY9bgiLjjKKKRoL4XTA1g+7DBd3mQ45WtQMw==
+	t=1792503196;
+	b=D15F5Y0l9FquMQDS3QBp7d1BOWIyfFFfmZvYMpzFJaT8GvetzmMx5d97Qq4Hg6pd/zfh
+	 8QK0az8TFGqiFbdoirRSsXrd8KAXY4eY3/KzZRpfieskoEW8gnnse3erzM9+Kdv2wd+SZ
+	 qfYUVQisTKxWuQj4QwzcypdRP8VXj70mJo/43B07TayVPESvlehBleKYKF13sZoJ1NqM6
+	 o+V62nxKHNDRmRrqZxHk2yRozHGi6Iz+CFZimi9UcgE7syrV2+Ex9Tp/wP2aH9Kj6anb5
+	 b8WWLL1X6yd3elOQXPOxkEGvxjhBTWgzgDw3kjx/BN1DXzm3smz55s9zgzWxGvpNwhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792483435;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=L6WY9rgPVusNXJvy1MtCG7eHkaFCa8LJ1hX2y8nE4Hc=;
-	b=CRTmU/tK102Yo7WcuwwLuMzbB6o/+AIjciszWH5ZE8FIPuhMoLyehK56VMVvn1DsOpaM
-	 dQ5wsX4+uML5r6w3Kjf2Hk1JM/LjbfqPICOdBj5LTjIudQLUoFLuEEowgsV5dm6pAh9Wa
-	 /T/lIs7PPSS5PQBPgz36wVOqwUCdicUNslvo3qGzT50JT7ydzZX58SnlzznCJymwouPJT
-	 wNu1UQSRPmYmiDhV0XxVaOUWevscKOQKIqV2i7wu8LhYo8uuq2jShn2v5xXaLtuh+ytQi
-	 ynfq3CUSlbllh3SwN7iLHItPWjr13DRVQzOcYWTRL5l+e2tafk9/ajHMxPFVhuisJYQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792503196;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:From:To:CC:
+	 Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:X-Originating-IP:
+	 X-ClientProxiedBy;
+	bh=CGrzPuac4BCqviRdihOooPny/4+gPoANGJ4ge/fXpto=;
+	b=HWVeOX1PWg31e45TVTSgBWmrgwjxKezj6DkuKtGwe2RkbdjJvAqTy3tCvWKsN3EW09Lv
+	 rl7d/LKhGxndw5xpdlfFxvsgSrBNDZiRj43/zRZ3sxREkVcLzA5RCvkJtrgqt35i83aO4
+	 la15vdj11jBN8M02wBkuRQ3prDfHQhCfqvVe0kiSRXUHlW2elgwenGpaFSLIk9b2VNxMS
+	 dvghduEGTa3w1rBxtCH8lT9ZxlOup7tS8+vJmjNSYzjQT10UcaQZFGrw6r0aFr2LsQ+X8
+	 poSa7xIQHua1Umr82pgvCXj4DhFxSmExUqeySp84eB92kIwD3GwZ5CfKWstOAucKZVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CSRvcaWE;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=SYMhujjY;
+	arc=none smtp.remote-ip=113.46.200.219
+Received: from canpmsgout04.his.huawei.com (canpmsgout04.his.huawei.com [113.46.200.219])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0F7606A325
-	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 08:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2186F606A327
+	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 13:33:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2186F606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CSRvcaWE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE0C1F000C4;
-	Tue, 20 Oct 2026 08:03:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792483434;
-	bh=L6WY9rgPVusNXJvy1MtCG7eHkaFCa8LJ1hX2y8nE4Hc=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=CSRvcaWEqPi9nF/5NLNTqeW856hXiYzQmIOV+jd+gEjRhz8mxLbRQouSgMgEViD6j
-	 KlUMRi5w/4cMDnTSxntua1AZplFtQDBIKoRmE6N79ci9PjK3iMLPO609tMa6VGfKY1
-	 Q4d7BLx5wKF23t3bObL/zrwGPLl9kcSGis+tY9nZ8mNQlBfQZM+jD+eFZjlhF6SZrA
-	 e7wyx9hes9EDGYS597aPHBbZqvgdvMRh4hidMvExdO5u5Fuag80UBGquEfBdgNx8Do
-	 Upro+2ZOc347noYyIUrP0dM/dmrtlxNLuCLxr8NSC6sUE/7mu3wGFTlWiGiAc2sS6S
-	 zdgzfCE1UrzRw==
-Message-ID: <sashiko-outbox-178473@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] mm/damon/core: remove unreachable damos
- charge_{target,addr}_from
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261020023958.108276-1-sj@kernel.org>
-References: <20261020023958.108276-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 20 Oct 2026 08:03:53 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=SYMhujjY
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=CGrzPuac4BCqviRdihOooPny/4+gPoANGJ4ge/fXpto=;
+	b=SYMhujjYXT7SQgfydoLP1stjj1ocdmWvEW6oVNA6z65TUczBhtqvsIDYw6fnaZFmNwq9YVzzR
+	pI5s3Ne8X+PS8UJeMYG3QinHxAbWXPYlAKfX+wZL87XDZaI3OEQ7SjPbNVItz1TAozqQJFB5ReY
+	rWrEEmbxVFBDIFYaonvC56U=
+Received: from mail.maildlp.com (unknown [172.19.162.144])
+	by canpmsgout04.his.huawei.com (SkyGuard) with ESMTPS id 4j8Cz11mS6z1prKf;
+	Tue, 20 Oct 2026 21:33:01 +0800 (CST)
+Received: from kwepemk200008.china.huawei.com (unknown [7.202.194.74])
+	by mail.maildlp.com (Postfix) with ESMTPS id A9A684056D;
+	Tue, 20 Oct 2026 21:33:04 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by kwepemk200008.china.huawei.com
+ (7.202.194.74) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 20 Oct
+ 2026 21:33:03 +0800
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+To: <sj@kernel.org>, <akpm@linux-foundation.org>, <david@kernel.org>,
+	<ljs@kernel.org>, <liam@infradead.org>, <vbabka@kernel.org>,
+	<rppt@kernel.org>, <surenb@google.com>, <mhocko@suse.com>, <corbet@lwn.net>,
+	<skhan@linuxfoundation.org>, <rdunlap@infradead.org>,
+	<damon@lists.linux.dev>, <linux-mm@kvack.org>, <linux-doc@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [RFC PATCH] mm/damon/reclaim: allow disabling watermarks to force reclaim of cold pages
+Date: Tue, 20 Oct 2026 21:32:33 +0800
+Message-ID: <20261020133233.3920818-1-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,38 +71,94 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
+ kwepemk200008.china.huawei.com (7.202.194.74)
 
-> damos_quota->charge_{target,addr}_from saves the target and region the
-> scheme's quota limit is reached.  damos_skip_charged_region() skips the
-> target and regions before the point.  The target that was assigned to
-> charge_target_from could be dynamically removed from the context by the
-> runtime parameters update (aka commit) feature.  In this case,
-> damos_skip_charged_region() cannot find if the point is passed or not,
-> so the scheme is effectively disabled.
->=20
-> Similarly, the user could also remove all the regions of the target
-> using the runtime parameters update feature.  It would be uncommon to do
-> that, but it is a supported feature.  Because the skip pointer detection
-> logic (damos_skip_charged_region()) works for each region of targets,
-> this result in the logic is entirely skipped and the scheme is
-> effectively disabled again.
->=20
-> The user impact is that the DAMOS scheme could suddenly stop working
-> under certain uses of the runtime parameters update feature.  It could
-> surprise users. No crash or leak happens though.  Users could also
-> simply work around by re-installing the scheme.
->=20
-> Catch the corner cases in damos_adjust_quota() and reset the pointers.
->=20
-> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-> Cc: <stable@vger.kernel.org> # 5.19.x
-> Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c4=
-9b8
-> Signed-off-by: SJ Park <sj@kernel.org>
+DAMON_RECLAIM runs its scheme only while the free memory rate is in
+[wmarks_low, wmarks_mid].  Reclaiming cold pages raises the rate, so the
+scheme self-stops as soon as memory looks plentiful again, which is wrong
+for a VMM parking an idle sandbox that wants cold anonymous pages
+reclaimed immediately.
 
-Sashiko has reviewed this patch and found no issues.
+So add an ignore_wmarks module parameter. When set, the scheme uses
+DAMOS_WMARK_NONE, so damos_wmark_wait_us() always returns zero and the
+scheme stays active, bounded only by min_age and the quota.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261020023958.1082=
-76-1-sj@kernel.org?part=3D1
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+---
+ .../admin-guide/mm/damon/reclaim.rst          | 17 ++++++++++++++++
+ mm/damon/reclaim.c                            | 20 +++++++++++++++++++
+ 2 files changed, 37 insertions(+)
+
+diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+index ec7e3e32b4ac..ef57f60a9105 100644
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -159,6 +159,23 @@ this auto-tuning feature.
+ 
+ Disabled by default.
+ 
++ignore_wmarks
++-------------
++
++Ignore the watermarks-based scheme activation condition.
++
++If set to ``Y``, DAMON_RECLAIM runs its scheme regardless of the system's
++free memory rate, so the reclaim is bounded only by ``min_age`` and the
++quota.  This is useful when cold pages should be reclaimed even while the
++system still has free memory, e.g. to squeeze the cold anonymous pages of a
++just-parked virtual machine out immediately.
++
++By default, ``N``, so the scheme is activated based on the system's free
++memory rate, as described for the watermarks below.
++
++Changes take effect when the scheme is rebuilt, i.e. on the next ``enabled``
++``0 -> 1`` transition, like the other DAMON_RECLAIM parameters.
++
+ wmarks_interval
+ ---------------
+ 
+diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
+index 45d5557cc575..03b9a57694a6 100644
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -112,6 +112,23 @@ static struct damos_watermarks damon_reclaim_wmarks = {
+ };
+ DEFINE_DAMON_MODULES_WMARKS_PARAMS(damon_reclaim_wmarks);
+ 
++/*
++ * Ignore the watermarks-based scheme activation condition.
++ *
++ * With the default ``N``, DAMON_RECLAIM runs its scheme only while the
++ * system's free memory rate is inside [wmarks_low, wmarks_mid].
++ * Reclaiming cold pages itself raises the free rate, so the scheme
++ * deactivates as soon as memory looks plentiful again.  For a VMM parking
++ * an idle sandbox, cold anonymous pages should be reclaimed immediately
++ * even while the host still has plenty of free memory; setting this ``Y``
++ * makes the scheme ignore the watermarks, so the reclaim is bounded only
++ * by min_age and the quota.
++ */
++static bool ignore_wmarks __read_mostly;
++module_param(ignore_wmarks, bool, 0600);
++MODULE_PARM_DESC(ignore_wmarks,
++	"Ignore watermarks: reclaim cold pages even while free memory is plentiful (default: false)");
++
+ static struct damon_attrs damon_reclaim_mon_attrs = {
+ 	.sample_interval = 5000,	/* 5 ms */
+ 	.aggr_interval = 100000,	/* 100 ms */
+@@ -226,6 +243,9 @@ static int damon_reclaim_apply_parameters(void)
+ 	if (err)
+ 		goto out;
+ 
++	damon_reclaim_wmarks.metric = ignore_wmarks ?
++			DAMOS_WMARK_NONE : DAMOS_WMARK_FREE_MEM_RATE;
++
+ 	err = -ENOMEM;
+ 	scheme = damon_reclaim_new_scheme(attrs.aggr_interval);
+ 	if (!scheme)
+-- 
+2.53.0
 
