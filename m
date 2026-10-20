@@ -1,57 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.136
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792508705;
-	b=G9d5LdL2yvtw4Sf50sC0l24befjyERhsc/KN8K+VtVPnR2N0pf+5E5TuZTHzGmM91Z3r
-	 hmw43MexgbiQce4CjI2A3mkYrWQ2l+8KTdGMtqw4WDqFeoRQya5A4Ovn1Frv6l2tsxyzl
-	 xl2oewya+eNTjABgA3ebumoZtYDsNRuQxzP6PRA17eSxaIHNuIA8uOIAvDzooWRiWrdes
-	 7zhMabszHvvsYpHOn5V7avMcis3DoC2S4su53H5Vd3BfLcoHL9GiONEr5e9ZNFrLxRyLi
-	 kucC6X5xU0/tFR/hy0IMJ56PO3H22HpXcrKYOBdVfYgjeqR1L0hdIhcDbN7goB3e9Rg==
+	t=1792512632;
+	b=XAwZ80iD5TCdoLzN7CFoQWFx79Zp9xK2E+f5Nbqy7KzzqPziR852c2Ebwv/eYP/b6NLi
+	 LEXvvfSJog3Zv605GJetm3UTFfyNT9djHI2mhmXDXLCSV6Rx9fUugwhrhLAsIuUCaQaoT
+	 rE1vtOxxLHAN1ZQEHdrWUxLmFr+TwfnSGcwysfeLYE5YTyDqBSOJr3gBmJua34pjlR7Tv
+	 iOfo/B2RHQotWnAYqCigomPkdhGvtC711t4bOFU3F4NcDqEq/hk71f0J2IZjq+1MBt/yU
+	 VLhsiVlXEqDvZ3MlOaBwEjgU6Nbbr4oUGb8dq9C1mkLO5an+eg7Q8UK95J+x6nkHxgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792508705;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=IeTkxtK9f/H2exSxElwuEwWkTqWW/9vOEjR8TQV4/fQ=;
-	b=u/3eDUQHELuoVyxzc84r9DsUUjgw3ok7uUQPXVLpfN4SkfbRlcU1TO7TerZhqgSLnMDY
-	 lq7GCKLuFxHmk0BQVIjOXew/pakGKbvPlh5RFgk5zRi1HYdObrpICQHG3qo2JGdQykXKT
-	 ED3DQwtDJaaGzbBZmDgsL6mYBh6nK6gr4zlk93DQpGHvb9a2dnzajV2RT9VRXqCIDcEdb
-	 T4ojiYRhbYkhbo5x83SKiVIjXIl8cDqTPwPE9YzMLNuhnaszZf0fxGHXMvY1XVJ/D5eVS
-	 HlGkUmYVG41pqpMboApCtzLzCL+ODN3qSU4DnbDRydG+FGyyq0hJVkPTEMJSZ9qipcw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792512632;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Message-ID:Subject:In-Reply-To:References:MIME-Version:
+	 Date:Content-Type:Content-Transfer-Encoding;
+	bh=c4lo9c1DzgFzppkuIe3m48wNpvzpTiu2Q7BfuVscJUc=;
+	b=2+CmxsVADqa6rhjHnlK8BV9I/B/5wb/RAa6yTrOU+f3TXuILmpLhPZYoR0qJslDRytVX
+	 D46tomxHNmPQPJlWfZXuN84jlYQVkwZbvoG9jHv+2/bGwpXaZL29Cq5E8KIlktdD3IlY3
+	 1aY8WPQdu+GWQT0RP78rVwImpPcptusLIU38WMbGGX5g3ucX9d7aH3+12ZOiWPSE4oYXN
+	 mi8ntZ13QuIg5RQPxqav9zC1w0Nr7Hnbx6aRGI46fsVhwUWh1k+jOL6fxnoFSEYiv5r55
+	 dkP5f9eJBVvt9+Kzkgb8KVMfK2Lf7dNMGrntedQLxFSKuzfiOd3+DWO3GUFF3Oy9N4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kXXraiGt;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=EZzE6woS;
+	arc=none smtp.remote-ip=74.125.227.136
+Received: from mail-pj2-f8.google.com (mail-pj2-f8.google.com [74.125.227.136])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A5D606A31B
-	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 15:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A517D606A324
+	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 16:10:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A517D606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kXXraiGt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7102A1F000C5;
-	Tue, 20 Oct 2026 15:05:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792508704;
-	bh=IeTkxtK9f/H2exSxElwuEwWkTqWW/9vOEjR8TQV4/fQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kXXraiGtzkkqFew9mZGiB5EamfG90+9VavaSRrk2C5yA/eLSi9D1r7mXgjIGbh+Pq
-	 crjXDLCNBs5QS3S2KLPAxcw2ELXRmfDMhGOgJwbkihP9f5bk2xJ3T5bzxK4WVGTk+H
-	 ER6NokF7DaeYbrk0sbYUrYJtoRibKKYHZVr8dm4PZRoKbWOMqnWCptR/k/hUvUHRel
-	 +Ook3S6Z9VipyOPJXNssV2PnT+vvinXEAB281X5XfMXp1I1IN6Z+bgP0bMO0mz3d2D
-	 AnQp7b3QSdqO8FFqJZ+SwiEpROaYdrziKh5MvCljvjnN6wHKvWJyvjrg+Uo6nWie1O
-	 rOLuGhvJlSpvQ==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon/sysfs-schemes: hold damon_sysfs_lock in target_value_store()
-Date: Tue, 20 Oct 2026 08:04:56 -0700
-Message-ID: <20261020150457.89830-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-179201@kernel.org>
-References: 
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=EZzE6woS
+Received: by mail-pj2-f8.google.com with SMTP id 98e67ed59e1d1-3ac749e0719so953971a91.0
+        for <damon@lists.linux.dev>; Tue, 20 Oct 2026 09:10:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792512631; x=1793117431; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:date:mime-version:references
+         :in-reply-to:subject:message-id:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=c4lo9c1DzgFzppkuIe3m48wNpvzpTiu2Q7BfuVscJUc=;
+        b=EZzE6woSlsmzUIfO6lVfRdOg7P2ZJrOZTvGpUOhTp17mdckoaFgBy769Ka7lx1SyYe
+         Q06oCtOThKDMgwILVcrXaQm6mDjLeUIu0J/aSoWAmpN+LIFrsSwgalQH8Ge9mGUX1DUn
+         NCJ1icMcM7k8J1QcSDpCF/AO5cJ6KxAgYeUvaKs3YWM55ZHb0FGVW3jdkQlLtLxk2jzP
+         8RwP5/Sp4U44/xpg5qxCVki1TBGSMYZZFlpd/UgL1ViBt5Svvf6sy+s9vjjqM60hErH8
+         LqIvAwJoRf0e5NMs0U28Ne/C3sNbfagd43dvOwXN9+03bDHgC+hi2D2YVf97Eg407rYh
+         cfvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792512631; x=1793117431;
+        h=content-transfer-encoding:content-type:date:mime-version:references
+         :in-reply-to:subject:message-id:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=c4lo9c1DzgFzppkuIe3m48wNpvzpTiu2Q7BfuVscJUc=;
+        b=CjQ/Kq2l0NY+x6pq0+Cm79RvqjcXp3f3+JvlUT2fWU1lMwNms37SCMqpeprb1N8c5Y
+         /zGTiEsq0sqD1p/PsVTJL/IhbxY7vSl8SScd8QZ9m7r5It1wnoLgtcCx2Y07mlQDY98b
+         x4LD7HR+G8+OVK2BQIddStQZ1NHmbslXFbDu8ZlJcK+VBFdKsiDfVDgkpIS6yBN5EV9f
+         KpJC5DPsGo50ZML+PPlx7nKKIbV69jxf4PWrLRBKV/21S6I+cuPMq0AhUmVwWmKk2iXz
+         P8xXtiRTb8PzhTcGh/PQ9KjE450vXh9Ns+gr+guKcpBOGC7jLSkQUtD+WlsCz4LC3Nvn
+         FKWQ==
+X-Forwarded-Encrypted: i=1; AKwUvByfBepx0kdwp25q8WqvZ61uFf9xDnBAB8PiTnig9lPodpeRfaZUU/y1Q75O/gH1Fe6VGk8CAQ==@lists.linux.dev
+X-Gm-Message-State: AFq9FYL/BoVY+aj7UjlV/8g+nauMjWsq4RmhDRF/vScOL+j++KoxiX7X
+	wVj82IW07RH1KSI5KTbA6twA4Zs+C4bBC3NJvW0vROvIf75pk/ojUL5P
+X-Gm-Gg: AYBFou1eulUo6I3uFuf4wN9hninvFdRqVFk6UQpu5gGpQiJzletGyDQwCwU2bVPPqqa
+	FWSZDESek5OxxFg7nW1E4ZwsOgQpkG6sLuWHBv5U8hNCt//QsNbThQbC+9IV6PeveTlOijxl2Gj
+	L7dV1z1LBycBRxqCy3pZ2/WQZAK4iEv8poZxR+TAOn9/mQBuqeX039WANgjH/2kEeQmEmgL0XRK
+	FT3zpreXHmHERmWM+hLHwTRXnBBN39y0jQ4+Lfvvwr8jNqQT+XQsuT8meJS2nDrQH5LhcCrMDtC
+	wWSveuHenlTki8NFvgdfIJBdSuwrGrs3MfBLxD+Snyz6Wr5dadH6nysNQ5KlhNx1DGOjzSr+355
+	C0giJpI+fwd8Ko5V0A5hdHKEwGQKDV3TxATRSweV2T8xtnxIddHyDlj2JBooU4KSzGrbIJRoEwv
+	efEbRadeJ1bkO8S9WShVP3GmBQNCuQwCSqdNQoU9a3JTRIz8X1XcdINjJfsbJHtjVRCETbom5no
+	GwpObH29fa8eXNjDJSkglU8SHjY19anwUCmlPeH6j7rxJTtIAQqi10yF3IZxwnIah7/5Ok=
+X-Received: by 2002:a17:90b:5112:b0:3ab:c80:9365 with SMTP id 98e67ed59e1d1-3acef0f47a8mr9810302a91.42.1792512630823;
+        Tue, 20 Oct 2026 09:10:30 -0700 (PDT)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ad80cbe295sm87743a91.5.2026.10.20.09.10.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 09:10:29 -0700 (PDT)
+From: Aveline Noir <jm5905938@gmail.com>
+To: SJ Park <sj@kernel.org>, Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: akpm@linux-foundation.org, david@kernel.org, ljs@kernel.org,
+ liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, surenb@google.com,
+ mhocko@suse.com, corbet@lwn.net, skhan@linuxfoundation.org,
+ rdunlap@infradead.org, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-ID: <179251032453.2.6166799753856435091.damon-watermarks@gmail.com>
+Subject: Re: [RFC PATCH] mm/damon/reclaim: allow disabling watermarks to force
+ reclaim of cold pages
+In-Reply-To: <20261020135822.85334-1-sj@kernel.org>
+References: <20261020133233.3920818-1-ruanjinjie@huawei.com>
+ <20261020135822.85334-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,64 +100,17 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 21 Oct 2026 00:07:00 +0800
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-On Tue, 20 Oct 2026 14:54:16 +0000 sashiko-bot@kernel.org wrote:
+Hi SJ,
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mm/damon/sysfs-schemes: uninitialized stack read in target_value_store()
-> --
-> 
-> commit f43fea0015fcb1917385f72d150c59603a9ae43c
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/sysfs-schemes: hold damon_sysfs_lock in target_value_store()
-> 
-> This commit holds damon_sysfs_lock in target_value_store() while updating
-> goal->target_value to prevent a time-of-check-to-time-of-use race with
-> damon_sysfs_add_quota_score() that could result in a divide-by-zero.
-> 
-> > diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-> > index 8f083611741fd..55298a17b653a 100644
-> > --- a/mm/damon/sysfs-schemes.c
-> > +++ b/mm/damon/sysfs-schemes.c
-> > @@ -1355,7 +1355,13 @@ static ssize_t target_value_store(struct kobject *kobj,
-> >  {
-> >  	struct damos_sysfs_quota_goal *goal = container_of(kobj, struct
-> >  			damos_sysfs_quota_goal, kobj);
-> > -	int err = kstrtoul(buf, 0, &goal->target_value);
-> > +	unsigned long target_value;
-> > +	int err = kstrtoul(buf, 0, &target_value);
-> > +
-> > +	if (!mutex_trylock(&damon_sysfs_lock))
-> > +		return -EBUSY;
-> > +	goal->target_value = target_value;
-> > +	mutex_unlock(&damon_sysfs_lock);
-> >  
-> >  	return err ? err : count;
-> >  }
-> 
-> [Severity: High]
-> What happens in target_value_store() if kstrtoul() fails (for example,
-> returning -EINVAL or -ERANGE on malformed input) while damon_sysfs_lock is
-> not contended?
-> 
-> Since kstrtoul() leaves target_value untouched on error and err is not
-> checked before acquiring the lock, wouldn't this overwrite
-> goal->target_value with an uninitialized stack value (which could also be
-> read back via target_value_show())? Should err be checked and returned
-> immediately after kstrtoul()?
+> setting wmarks_high, wmarks_mid and wmarks_low to 100%, 100% and 0%
+> effectively disable watermarks? Have you tried that?
 
-Good catch.  I will check kstrtorul() error and return -EINVAL in the next
-version.
-
-> 
-> []
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261020144726.88978-1-sj@kernel.org?part=1
-
+That worked in my test with swap enabled. Agree that documenting this
+combination might be useful.
 
 Thanks,
-SJ
+Aveline Noir
