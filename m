@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792507657;
-	b=PhnK5hjnMGeMUQSSSH0Lt8hWspdGi+4uzDN6quyGZLHdo9ET1h3vqICDIYHrD9XhIpr5
-	 ZhQ2Mu1aBdY0nkhvzEY5LDlWw27tvXPmL+X/HByyRdtsTvE9LPZrGTG214YQKPnBQd3E8
-	 5+INYuNrbIJrrwpYAx7gWOF7sZr8IfdLyaeXs10Phjhh3YDom5+klyLWtmWQ/Tt1xMQyv
-	 zbmmiK1cFMAcMYgNRqM/+PtLX2AreSj4PoVXd1A41ukGdj/kBFYLyGg8LvxbbLJ3Nv3uF
-	 9SqqumoHVr0jUIoCHRjpcL7CQxMBdyte7E9eVW9eVBl7Hx9DXisnyUpRC9t0yj6DpOw==
+	t=1792508059;
+	b=YTJFni4JIdoDZu3ULBqnf4BVozMLmJUbFzC9FerQ+A9O06m1Or2uSpavOGYrzTYQGbLM
+	 PwTMXga6UwAl5msWqYDIz+6fdDh+zfMY3Z1XfGhA/cQIni6EWQ+8wooDvX6QI4Uv9i526
+	 2IMY4VNBnl+mU8zxfsuS/WalhRmA+LHH2Le1yWxQcO7QNRAMD85Zvg80DKl5oiXxifUss
+	 4qb4mG8PFwiS+XG4U4ECPlVQTeMXyV4F7vTJH4dhP5eI86kHDlArHC2BHtcEnch9S/Nsc
+	 V69HpK7JRfv0r2+HPhftWT4LT2OBNeP0k8O5vxZXgZTs+wNM52w6t9DbkpotBdIsrtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792507657;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=8KLZGYnTaZZfWo0UwCu1ph7Ozc8pVIN7vRMc1zsSV1g=;
-	b=xwJj61EIAutixGwMppkUANHBVXYDrprBhBe+5ljsOXwS0sXZ4Usb1KssKOQXR83nz+qX
-	 jMJO4nLZ8GQGhqX/U667PsD9O7i6mkgTN7mx5hjw4DKSxCo4D5Qg8b3Mj4l7PAs1JMxuJ
-	 5BrEGg2oX26qCDYYtfm7JS9LhlAj2tVxEAsQ9JHxISPBX4walxQF/uL/M7gQ7RfQREjQg
-	 j/fmswSHgJ5VMgdFVCb5mtRdHcijzyHITfLBRQZ9PKTtlMz2YgHMYksy/GOysUrMldyeR
-	 1eB5PFZmZEKwvURPybhFttdsTgs3KGSmb2hYnXvBmz+qvNOkRrseqQHxpP+RmZMR6Tw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792508059;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=J5ivZiRDgZARjIXxCwRmMWEsN/ju1KWgpHJDr2xQTh4=;
+	b=ln3xmPdPnh5XMz32cDF2gfrsHVBaRE95CPuDm6nMl9wWsVTMBiiFmUYqpCc4aLQar7It
+	 4t++ur3htV6Qtk6h8eOVvI86fe9GAYvfiKJgSfm0/ZO1JLbLkVi7c3ma9AMYEun6+2Z5B
+	 AjcCbX1sAoCbo5btIA6Hlh+oEnvID/fbW0qtqH5opxWPRerDfbuC6VQJ9pEC5t9Psz16R
+	 qvjQpzRJHxO/uwCWENoUKtEPNQEqTH2oZ+Qr68H59v5J8l6XwsnYqcDNJI7zKgU+YtaLL
+	 gG9tRTFlIudlScaefZBMozDYq2wno1uTGa7vCQgKi66RIrAoCrw+7OraDmq6NBSiy8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="D4MT/KgP";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jRdYyCQI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81181606A319;
-	Tue, 20 Oct 2026 14:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4395606A319
+	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 14:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=D4MT/KgP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48FA1F000C4;
-	Tue, 20 Oct 2026 14:47:36 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jRdYyCQI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1E21F000C6;
+	Tue, 20 Oct 2026 14:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792507657;
-	bh=8KLZGYnTaZZfWo0UwCu1ph7Ozc8pVIN7vRMc1zsSV1g=;
-	h=From:To:Cc:Subject:Date;
-	b=D4MT/KgPVeIyRqW9ieO8UoVRz48J1VsRFefiD3x9nDNdAu62Mkrvbh9F4WY8uzk1L
-	 t+zUAqjuIjRc8S4m425jmJFCAUoXO10wl8OCTqVtBc5LE7WvffRUYcLQwFwBMKaoZx
-	 1QIzJx7T1LS5Jq9dWWJO3igUYuhuFvob6iZ6y+EJa7Wwgaxi9RDKsv/f2xDWbmaEkI
-	 1AIkuUwrmE9zqQHCQboXcQ8ic2izEQoKZB99XWR/yfXW0Ny8Yzvbt6nKL5fLRjJsdl
-	 +JyjHbO7FAA+nFX+djkxpiYKUjzE5C0Jck79FdHXf2VEXBo9svXkGJDY7mXLdbbM+N
-	 daaI6ENhhxiPA==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH] mm/damon/sysfs-schemes: hold damon_sysfs_lock in target_value_store()
-Date: Tue, 20 Oct 2026 07:47:25 -0700
-Message-ID: <20261020144726.88978-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	s=k20260515; t=1792508058;
+	bh=J5ivZiRDgZARjIXxCwRmMWEsN/ju1KWgpHJDr2xQTh4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=jRdYyCQIPrzoWk3yqSvHINHIOMhOzE/LSwUZLhN2DE2134XoUqzMFueQqbtvZBH6B
+	 +iekQ/ECNmAeiMGoBR4YZUYTIcLgntXbB7ISOet5AoaaWJUVHZCUEZ7O5aOB/gC0Ii
+	 oq/qONExx7g9NFJkfnbOXdwwXP37Im9Hc3DjoFexlgTto+AXXPxvbZMj+BEq7PL9YH
+	 JHdmskSuwhpuPSPyd/3P7FTD6YK22xFDhWo6t6UkQVR5ZVfGU4uCv+IzHprJNx22QL
+	 zOsb37fSQfsKj1GBoIMilY/fk+KQ56JCEeEWCEl9LjIiIPB3O2Hor/VlPJ1ZQZcyhG
+	 1BUprXTYfcgNA==
+Message-ID: <sashiko-outbox-179201@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH] mm/damon/sysfs-schemes: hold damon_sysfs_lock in
+ target_value_store()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
+In-Reply-To: <20261020144726.88978-1-sj@kernel.org>
+References: <20261020144726.88978-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 20 Oct 2026 14:54:16 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,71 +59,56 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Remove a race condition under certain use cases that can trigger
-divide-by-zero.
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] mm/damon/sysfs-schemes: uninitialized stack read in target_value_s=
+tore()
+--
 
-damon_sysfs_add_quota_score() setup damos quota goal as user configured
-and pass to the core layer.  Because it could have a race with
-damos_sysfs_quota_goals_rm_dirs(), which destructs the files that carry
-user configuration, both are called under damon_sysfs_lock protection.
+commit f43fea0015fcb1917385f72d150c59603a9ae43c
+Author: SJ Park <sj@kernel.org>
 
-The damos quota goal setup disallows zero target_value parameter because
-it can be used as a denominator later in the core layer function,
-damos_quota_score().  Otherwise, divide-by-zero can happen.
+mm/damon/sysfs-schemes: hold damon_sysfs_lock in target_value_store()
 
-For the zero value check and final assignment,
-damon_sysfs_add_quota_score() reads damos_sysfs_quota_goal->target_value
-twice.  And user can update damos_sysfs_quota_goal->target_value via
-target_value_store(), which doesn't hold damon_sysfs_lock.  As a result,
-a time-of-check-to time-of-use (toctou) race can happen.  If the user
-sets the value to zero between the zero value check and final
-target_value assignment, zero target_value is passed to the core layer
-and results in divide-by-zero.
+This commit holds damon_sysfs_lock in target_value_store() while updating
+goal->target_value to prevent a time-of-check-to-time-of-use race with
+damon_sysfs_add_quota_score() that could result in a divide-by-zero.
 
-Fix by holding damon_sysfs_lock in target_value_store() while saving the
-value.  The read side, damon_sysfs_add_quota_score(), is already called
-while holding the same mutex lock, so it avoids the race.
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 8f083611741fd..55298a17b653a 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
+> @@ -1355,7 +1355,13 @@ static ssize_t target_value_store(struct kobject *=
+kobj,
+>  {
+>  	struct damos_sysfs_quota_goal *goal =3D container_of(kobj, struct
+>  			damos_sysfs_quota_goal, kobj);
+> -	int err =3D kstrtoul(buf, 0, &goal->target_value);
+> +	unsigned long target_value;
+> +	int err =3D kstrtoul(buf, 0, &target_value);
+> +
+> +	if (!mutex_trylock(&damon_sysfs_lock))
+> +		return -EBUSY;
+> +	goal->target_value =3D target_value;
+> +	mutex_unlock(&damon_sysfs_lock);
+> =20
+>  	return err ? err : count;
+>  }
 
-Users could reproduce the race by writing zero to the target_value sysfs
-file while DAMON is starting, or online parameters update is ongoing.
-The issue will only rarely happen in the real use cases.  It requires
-sysfs write permission.  The race window is short.  Sane users wouldn't
-write zero target_value.  Especially, they wouldn't do that while DAMON
-enablement and/or online parameters update is ongoing.  That said, the
-probability is not zero, and the consequence (divide-by-zero) is quite
-bad.
+[Severity: High]
+What happens in target_value_store() if kstrtoul() fails (for example,
+returning -EINVAL or -ERANGE on malformed input) while damon_sysfs_lock is
+not contended?
 
-Closes: https://sashiko.dev/#/bug/linux-7f814c9a-986f-4103-a55a-ef9537dcf62b
-Fixes: 8b549a4fd3c5 ("mm/damon/sysfs-schemes: commit damos quota goals user input to DAMOS")
-Cc: <stable@vger.kernel.org> # 6.8.x
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/sysfs-schemes.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Since kstrtoul() leaves target_value untouched on error and err is not
+checked before acquiring the lock, wouldn't this overwrite
+goal->target_value with an uninitialized stack value (which could also be
+read back via target_value_show())? Should err be checked and returned
+immediately after kstrtoul()?
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index 8f083611741fd..55298a17b653a 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -1355,7 +1355,13 @@ static ssize_t target_value_store(struct kobject *kobj,
- {
- 	struct damos_sysfs_quota_goal *goal = container_of(kobj, struct
- 			damos_sysfs_quota_goal, kobj);
--	int err = kstrtoul(buf, 0, &goal->target_value);
-+	unsigned long target_value;
-+	int err = kstrtoul(buf, 0, &target_value);
-+
-+	if (!mutex_trylock(&damon_sysfs_lock))
-+		return -EBUSY;
-+	goal->target_value = target_value;
-+	mutex_unlock(&damon_sysfs_lock);
- 
- 	return err ? err : count;
- }
+[]
 
-base-commit: 33560dfbb2df9b2d1525fd51ceeca3c1167431e3
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261020144726.8897=
+8-1-sj@kernel.org?part=3D1
