@@ -1,93 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.136
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792512742;
-	b=GHYbrS+M4ONtTy6c5evJ16YtyHIRD+M2Jahv/1dBh4692i3DftETlHY8LLNB01Hwkkf7
-	 KJHg9Gc2qtQBkBVaYbug7BwP0yxLxiAyplmb9HKZ96O5sSZb9VrhHo6YJNc0nk/lc10ql
-	 Z3VOvpHpareGD7QZSMHzsf67fES//d1iNw1YRuqiebgx+ZAlWcU8O6xu6vnUuCRea389I
-	 9nOUB7R4wM27sg0ntm3MhDooRwWa9F7K3ADPLQBQHYwJTaOO4SA+LefznOKWyCyMruA1y
-	 KtEs+7fta/VvGuFoAyrkdxPFtvVgY/BMQQWFd/VwuHLdaj+y8n99wUv+BaPNwC723cg==
+	t=1792529255;
+	b=5JN6zwq6NTGgx1edPForBkAMy0Hk/WmzJIfVSocsijZ56DvYXnWagoj4VUUXa8I85r3z
+	 gvwUoQUT/lmNWWj44n+CDopP8jafc+tcTHnxhV86geIaTvGFBxaO9EVR8sRMDgycjvfg8
+	 hMpSDcHX5emy0EeSSLVrsTGKEYgw5ICKYd42n5GZsl4FNa+QCOKL8K/in9ZN0KARvj4ZK
+	 ne6YLApXlB1JMVpG3MGFOhBMGi5jEv+RUUd6q2mxBLg/f+o4XSfcmqcFm8LjwK75ZD7pT
+	 vyu7AvKulCMbm+ymW+EeHNn14Riy53H5HJ9isgb105mxKOTuILetwaApUqDJf4MDCFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792512742;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Message-ID:Subject:In-Reply-To:References:MIME-Version:
-	 Date:Content-Type:Content-Transfer-Encoding;
-	bh=Ud9ISIbyr7bf+XRYkVCQzyTUHoKhr948RmgOVkz5o0U=;
-	b=e6V/VVoWS2W9yL5pMQ6A/+53XMolOFEc9eIWlJyqnn5WeumACn8gyRr7jsjPxLBOsy6X
-	 qmkj0ShmU4wJXdQnA4pVCKPbkYAFVhqHGy2FaqREnj8XRIjawsOgvMkny6KwZnP9BrQfQ
-	 A8oXJLH4cIyRYTsBZPqF/jxeWbuBLEylf+xtfxaELUhLtmfcukXSuefJ5ONyArK6T9KSg
-	 A1L0BGnGun8/fM9x9vePe8idCUGchFfaNBYxwWTXVlvqqtfwkIGxTVuS+coJTmKBIt4e/
-	 cYjYgnhfCgkFWI5l4cUQH4buEC7kLN+4qFTZf8ypClwaHSLkQtbi0hbmecFa9lft8Ew==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792529255;
+	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=xQwGSvzYOohT9kUoKDV9cqE99QB5OZ5zFZdvCKpT658=;
+	b=EglzV0J8uzZNTji7rzblTUV1GMRKuDPzEeWrwXHEq7Uy9aXZNxgN4LWPmQXaDdyKD37r
+	 hIwMOnQ4P1MD8CNnD2mM1BhBVGye2rJ5r4LzZ3lxDdWHUthvmhm4g2hOZISL2h3FjwfmM
+	 BtTEzyeVZ6uJxsLdtuveC6NmH5y0nzYirHxayKdLZOBhHeuGxEXnCAX2z3kNZBNUnnm6y
+	 P8VGgIoT5PhtzauJOJnfDCFFzwiBF8n4vD3KD4l6/9C/n70c5aXi1BrTXlDpOM4Xo02MI
+	 cFxXjuPfHsPTg2hOjLqo0oD3tUdskqdj2BWA7ZbAr+TTEOr3dV9HmOioD/QSMZSC98A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WdNo2QvM;
-	arc=none smtp.remote-ip=74.125.227.136
-Received: from mail-pj2-f8.google.com (mail-pj2-f8.google.com [74.125.227.136])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=H5o3lkKZ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B55606A322
-	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 16:12:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 68B55606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6A8606A328
+	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 20:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WdNo2QvM
-Received: by mail-pj2-f8.google.com with SMTP id 98e67ed59e1d1-3ac6fe4aff0so2118693a91.0
-        for <damon@lists.linux.dev>; Tue, 20 Oct 2026 09:12:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792512742; x=1793117542; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:date:mime-version:references
-         :in-reply-to:subject:message-id:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Ud9ISIbyr7bf+XRYkVCQzyTUHoKhr948RmgOVkz5o0U=;
-        b=WdNo2QvMSe0zQs3DThPPOG893YhgNC0b+O6y8NnlQDuSZye9qQwdAOe2iFV8T8tzvl
-         UQsU+sBYN6qxiL0MhHCKx77iJDX/2ckxN9+JjocXDExal+5rqYy8Z80fkkvvRQtQ/imE
-         QBxUR7biE9VI2QxKJGtlcFKwfJ7HzDRsQ1ogegzwkeUdwHAkLXCzRVZW0/IB5RrMtVFK
-         9+qDGLxGUAQuR4XsQEj+9z1slxhZOlsXzmjjUUZuk53cenP5J8X2iVcD+MZoBe3436UL
-         LVCznlRjuLxZfe4QqPwL0KzdfwzpMJ0HdGxg2/IM9F3Q7hmIcEvxnj5yJwKg31QtH1hk
-         f3tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792512742; x=1793117542;
-        h=content-transfer-encoding:content-type:date:mime-version:references
-         :in-reply-to:subject:message-id:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ud9ISIbyr7bf+XRYkVCQzyTUHoKhr948RmgOVkz5o0U=;
-        b=QDhenvvbeiQIMHjkMx7F00bBzcWfKs7p54qOOZUcp52sjNr3ps56lqFRJNsSMHuQlK
-         T6P0sXqs/N6e9joXkUmKNM72AoBpp0YnnZaZR1ursP2dGgMruGmL7Hf1jIVHcn7SKY+Q
-         sbR8F8SuxjM4N7Tmq7BYUIccoBtE+alXPBcnd4eu93/XhimxXn7dX/rFxn+uY+CnDrm4
-         SktMcDa24IDGFoYym9VodtwR3rJu/OrcybfbirT7K7CE892BNuROjJc8LOfSMZU3O7eE
-         xYuhUjk6XWzRlnePhKfdcerPRWdHwGzdmzXrsq0L7xdQRsrvSu3rTbWK6RF3nAwDdIt6
-         6CNQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxJ8048Dmv/w7LhzrbztLOSO+e+mywbrVk9PUkih6WY0jbkAHDNKC5//BhOaZcRNjN3msbX0A==@lists.linux.dev
-X-Gm-Message-State: AFq9FYL2Tevjc3FyQn+qdwC/zuynXbtlZ8NxF1THji2huxn5cUX3ocxS
-	QDeNikGl+apta69ydgOLsiAJDqkJT39pX4QtrbebAZ10EFOIm/juW1Xj
-X-Gm-Gg: AYBFou2C2iUoUo384QAoKTfxdkFP/5/89wBZH7cwGhZIpwRS6FLlWSzrU/hVAq79UeR
-	dW0LhblBF79mvBKdXY/Zaox+PJZmXIV02BhB6HFOFZNGhNpKekTVk4dFJaL2z/0KE9hY9rrsyIp
-	z3WjuOnf4tb9e1C33NBTc998ynxuXaIx6VGb9ZicvdKNT9WgNK9Hzhp6zXA84zVJXmrWqozEHaO
-	tCMo4HUXkweyfJyjAX6nEGYT3yiFUyyeYqjp3K2d4bmLUdyxJUsUDtHAsuFIZQE3SZ+dKHUCbgY
-	MsnjS2xE6R7bJgDvjUAcfOjQofkuI1pYvPZ6V3Ddk0yjR6r+V25+TTcXBKl6F5gRuuwoszgH6b2
-	21UHPuFvvSJgoEYRPL78CTvilITrcbjqIz/idpitms7BHBjqal9X0VPbuad3wrS3tASzXuoLati
-	sTJ6y4pJiPoRqqw8g3pEJOC0vuWDojt3yPJNDtZ2Oano5jjNW8NnKzmUP+tq+xHgc7E7bMlWGSj
-	/GtqOa3EwEyVQLNFn8EeidkD091U8FddMUbr6ClOuCO1X1/o5IOeioJ1/Yx/P7fNQI1OqLcP9nO
-	5bEpiSA=
-X-Received: by 2002:a17:90b:51c2:b0:3a4:f75d:d1a3 with SMTP id 98e67ed59e1d1-3acef0c891cmr10365935a91.32.1792512741637;
-        Tue, 20 Oct 2026 09:12:21 -0700 (PDT)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ad80219f83sm240190a91.6.2026.10.20.09.12.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 09:12:21 -0700 (PDT)
-From: Aveline Noir <jm5905938@gmail.com>
-To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
-Cc: stable@vger.kernel.org, damon@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org
-Message-ID: <179251038772.2.11838017412675823324.damon-filter@gmail.com>
-Subject: Re: [PATCH] mm/damon/core: filter out damos address filter-split
- failed region
-In-Reply-To: <20261020004119.106690-1-sj@kernel.org>
-References: <20261020004119.106690-1-sj@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=H5o3lkKZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7C41F000CD
+	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 20:47:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792529255;
+	bh=xQwGSvzYOohT9kUoKDV9cqE99QB5OZ5zFZdvCKpT658=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=H5o3lkKZtcjIhxg1Jgv4YSB4NydIvtuc83psyEK5vHeRwE5AllHqOE+kagT49yEZe
+	 zwV71Bqz3Fbr0bOUAQrGu+BejHU33ufiDBEFwR7lEyUo+r+6IlnvxT6EHL5YegDHsP
+	 W6Xl4C2XARRVmAJ8dlVmPzEL5+kTLphtPUPtxZrVrGcSEEuvZh5EVGcRSQ0kZkWTTE
+	 tAbvtvgmiHXSwfGCFrH2dV9vL+iwUIGZcatOfzrqr5sJHdvW1pnewqB0paRiHoU0eT
+	 KEycgEnnFkMimB8kxFQrVRjdJfGFpDVHp+YfD2lb/9y+m2K62825e2pUfFr/sRu60/
+	 RATdnq8u2bQYw==
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-5364c951da4so899651cf.1
+        for <damon@lists.linux.dev>; Tue, 20 Oct 2026 13:47:35 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBz7bajPa8ndYXe65C+mD3lyTET9x8352ctUXcTUuP/qLdHsi+vwrDw0mDtD2XMLtmg4c8qfbg==@lists.linux.dev
+X-Gm-Message-State: AFq9FYLjtWtbhyGKbcbWasVtuSaQTXmFoVvpgtJ2WKU3/wFP0Rz4V+Ur
+	g0HqD3UTE6EhPEdmrJAMfHMZDntJdDx2fjlqjx/sRlVR/w5CVxTGeokjM4T9EvN+26N+UD/kaix
+	8zkzg09TSAPHynO2+mTvNAUHwrcgxM4s=
+X-Received: by 2002:a05:620a:171e:b0:93e:c12c:9dd2 with SMTP id
+ af79cd13be357-93f57f7a370mr81878885a.82.1792529254015; Tue, 20 Oct 2026
+ 13:47:34 -0700 (PDT)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -97,20 +59,86 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Date: Wed, 21 Oct 2026 00:07:00 +0800
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com>
+ <20261016084256.12955-1-baohua@kernel.org> <CAMgjq7AtuK22FsuqvGRLVZ2eWrp-N4qQ_MHoXsXDkVBprekdDA@mail.gmail.com>
+In-Reply-To: <CAMgjq7AtuK22FsuqvGRLVZ2eWrp-N4qQ_MHoXsXDkVBprekdDA@mail.gmail.com>
+From: Barry Song <baohua@kernel.org>
+Date: Wed, 21 Oct 2026 04:47:21 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4yfX-__y0f5_od7r+j=Hqz2YAGzFDRyVP4s-6t8dh0_rA@mail.gmail.com>
+X-Gm-Features: AclHuK_6OQJo2WkKc2jeoR4HdJ1oLezMrDS6BoCD9oiiIL1tyFrKMHixg8usnik
+Message-ID: <CAGsJ_4yfX-__y0f5_od7r+j=Hqz2YAGzFDRyVP4s-6t8dh0_rA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/17] mm/mglru: frequency guided promotion (MGLRU-FG)
+ and flag cleanup
+To: Kairui Song <ryncsn@gmail.com>
+Cc: devnull+kasong.tencent.com@kernel.org, akpm@linux-foundation.org, 
+	axelrasmussen@google.com, baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, 
+	cgroups@vger.kernel.org, chenridong@xiaomi.com, chrisl@kernel.org, 
+	damon@lists.linux.dev, david@kernel.org, dev.jain@arm.com, 
+	ehab.ababneh@intel.com, gourry@gourry.net, hannes@cmpxchg.org, 
+	hughd@google.com, kunwu.chan@gmail.com, lance.yang@linux.dev, 
+	liam@infradead.org, lianux.mm@gmail.com, linux-kernel@vger.kernel.org, 
+	linux-mm@kvack.org, liuxiang.277@bytedance.com, ljs@kernel.org, 
+	mhocko@kernel.org, muchun.song@linux.dev, nico.pache@linux.dev, 
+	nphamcs@gmail.com, qi.zheng@linux.dev, rientjes@google.com, 
+	roman.gushchin@linux.dev, ryan.roberts@arm.com, shakeel.butt@linux.dev, 
+	shikemeng@huaweicloud.com, sj@kernel.org, surenb@google.com, 
+	tz2294@columbia.edu, usama.arif@linux.dev, vbabka@kernel.org, 
+	vernon2gm@gmail.com, wangzicheng@honor.com, weixugc@google.com, 
+	willy@infradead.org, ying.huang@linux.alibaba.com, youngjun.park@lge.com, 
+	yuanchu@google.com, yuzhao@google.com, zhaozhengzhuo@uniontech.com, 
+	ziy@nvidia.com, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi SJ,
+On Fri, Oct 16, 2026 at 7:44=E2=80=AFPM Kairui Song <ryncsn@gmail.com> wrot=
+e:
+>
+> On Fri, Oct 16, 2026 at 4:43=E2=80=AFPM Barry Song (Xiaomi) <baohua@kerne=
+l.org> wrote:
+> >
+> > On Fri, Oct 16, 2026 at 2:15=E2=80=AFAM Kairui Song via B4 Relay <devnu=
+ll+kasong.tencent.com@kernel.org> wrote:
+> > [...]
+> This is a nice change, but meanwhile the LevelDB and cerain workload
+> gain are gone too, we will again have a ~40% regression for similiar
+> workloads, I just double checked it. But that's fine, though, it was
+> never meant to be optimized that way, and the long-term fix can be
+> done later.
+>
+> A quick test on another of my test machine using Tal's LevelDB test case:
+>
+> CLRU: 3098 ops/s
+> MGLRU mainline: 3035 ops/s
+> MGLRU-FG: 3233 ops/s
+> MGLRU with this patch: 2194 ops/sec (should be same result with
+> reverting 6cbdd9726fb5)
 
-> Filter out the entire region if the split is failed.
+Sashiko is raising serious concerns about this approach, so I'm
+really considering reverting the commit. The downside is that
+the revert would also regress some workloads, such as kernel
+builds and LevelDB Scan/Get.
 
-The Patch looks good to me. I injected -ENOMEM at both address-boundary
-splits on x86-64 KVM and checked that no action was applied.
-Normal-split and filter-order controls also passed.
+Before we have to revert it, I'm wondering if the one-line
+change below could fix the SQLite scan and lookup regressions:
 
-Reviewed-by: Aveline Noir <jm5905938@gmail.com>
-Tested-by: Aveline Noir <jm5905938@gmail.com>
+diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
+index ab69b9930893..a3a894aae10b 100644
+--- a/include/linux/mm_inline.h
++++ b/include/linux/mm_inline.h
+@@ -327,7 +327,7 @@ static inline unsigned long
+lru_gen_folio_seq(const struct lruvec *lruvec,
+                  (folio_test_dirty(folio) || folio_test_writeback(folio)))=
+)
+                gen =3D MIN_NR_GENS;
+        else
+-               gen =3D MAX_NR_GENS - (folio_test_workingset(folio) ||
+folio_test_referenced(folio));
++               gen =3D MAX_NR_GENS - (folio_test_workingset(folio) ||
+folio_lru_refs(folio) > 1);
 
-Thanks,
-Aveline Noir
+        return max(READ_ONCE(lrugen->max_seq) - gen + 1,
+READ_ONCE(lrugen->min_seq[type]));
+ }
+
+If it works, It should be entirely thanks to the inspiration from your MGLR=
+U-FG.
