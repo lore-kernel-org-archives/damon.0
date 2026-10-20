@@ -1,55 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792464007;
-	b=mgklfd6MnApyRJTGmSGELXe4NAYz6OqZtbdFVY7oM521JUt8l6ViM22OgCi7Mc1Nrbtb
-	 iiEaSe3UZFc62ZyYwM1IfwOftfxs1JvD27M+Y+0gVfyCgR6ZYFoQHzwj0FtJtsi9R5S55
-	 +JAQe8m0GxNKRBVQ+ZmhIKM2szgnnUCMD2f2X4DPZbF/h2no+uqC2649E8W9OvEhsKM/q
-	 3bfcZ7ErMF5+8xX4F9soilOSG8fY4UqI2wndfWoSN0DO1ZnEmW4cNrSLXblraI5wSBZuF
-	 mryCceYh0W2uLtpc/AYv/5FllHRs4Ty4zmRA5RY9EwLQkrGUkD+6sqdi/iftBh8GYYw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792464007;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=60QPBhNMCngRfmcAjrxpcv4Imf6U8Bv5IKWR7KuqOvs=;
-	b=eeAN0awRuJJ6mvSlK9aTCHAtizQSoCyH1ONvc73U9IrX6YWjxmE8otqr4klv7eT7rUSo
-	 xqyMJgxk8zjDgLybn6WnjmeOc9g2KuboLnMGu4IRoJh+9OjhPsWxc9YcNcYXANxHAJA8Z
-	 Vy7SWI+Sv4LQr1oZ03umTz1Cv9DAsk7tXyxDbLTk9n2QvRQSvw9CZJHmC1wna5JYvBmmj
-	 5uHTkmCQfY3XVUsT6C+sR5oF5hmxZmdyAHK/6X4c7s4qUIBrIZp/hI5GNfl5kRlw75+ZF
-	 I6zZ244dTbGc0U1+qxFbFzTdt+VEh38gcisPP3UmCe6EkG7eyo0e1qQO8u33q7W7TGQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xyqgyjm5;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.42
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792466532;
+	b=rUXDyIyvCns0uAm+TTJL+fpC/LwXXmETzponc8y8hw1cy8XTYc3J7f33FPer47mg8ieb
+	 bmzQKqk7Ztxxwk/xc4bgBxuOJDV5bQwbkH1VihMT0ox6uAALUZKG8053uRj8Jvn0J7Fyh
+	 tSBH6tC9Zc7ueCKqv9RJNq8DwvqswypN00Vqk9pBaUH7CYSlSp4suwe3SlLhtb8ERKrDD
+	 He5q/Ye8lwZ+I39CU2+PEqxDDXj7Mh9uwV1HxKGH0g3kQmBJ61J6d0GLJeDYYl9w4A6Cw
+	 fRpIsIYG+nAS/h7JmqLSr+j6fVhx+5RPbLE3g1dIGK6cp9mSN+LIDSY0Rq1UtwubEoQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792466532;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=GJ0jzd45ePDV29eKZJ4sBGXJjhUAwze4eIfc7K86wG8=;
+	b=O3U9LgxiFzL8UWQkgrvRdGdbGZicL64L21GsN7lP5kUomdOMmr+IHrygSbbgVy59AVq8
+	 cqrX46OHPfLqfmUC9HyeMxpx107znYNsqbqh9SGyGCaQ+D3ETvDzK2d/Ihewr93X/aHAF
+	 Dogd1RkKtQzqz/eJvpwravo38LjDpCDiNkjQe9XiSmxaqGrk/RqrvoOW0q/UBndIISnwR
+	 ALlsK5Zg8F9BMoWaijei0neNJltw8asFee0Z73JVZlT59I5L4HJpvfeQ4XloYj5/gzDhR
+	 31i91M4THjDZjSxWwES5NCWUWX6wHrTJNZ8bCF/e4Lyc93kypaPSkrc8qZRwZ39iSYw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FwLNgaOG;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.42
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84A8606A319;
-	Tue, 20 Oct 2026 02:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CFE606A319
+	for <damon@lists.linux.dev>; Tue, 20 Oct 2026 03:22:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1CFE606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xyqgyjm5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9241F000C4;
-	Tue, 20 Oct 2026 02:40:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792464006;
-	bh=60QPBhNMCngRfmcAjrxpcv4Imf6U8Bv5IKWR7KuqOvs=;
-	h=From:To:Cc:Subject:Date;
-	b=Xyqgyjm5aAEUx7O1C9+9sZ9HoyLu1TowKrpLnSkIE2mnYWjuicwO9PecBk4neY/QR
-	 qOEt0O820lHWWZw3hrx+f6My1KevhlIB/FNNOapdeq8Uub3voWMxb2nb4Sc5p+QgMB
-	 hncjtTQ25QsrGw6AmtFQKsg4WlFMZsuz0ekg82bW9XeertI7dDcyOhKPjRqT0vbvqU
-	 eGdfGNIsslgL/v044qhPF79CYZ+XN03Gbjj8gygXSkwtNGkAyAiXvg8GcgzJb4m1yz
-	 qyhk3F4OfK1NbUu5zoNOmc2UuwaXjO8xZTM4+7XL7MF6zv+DSxIYaU908k6iF2gqTW
-	 4cycCLMbtUWnw==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH] mm/damon/core: remove unreachable damos charge_{target,addr}_from
-Date: Mon, 19 Oct 2026 19:39:56 -0700
-Message-ID: <20261020023958.108276-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FwLNgaOG
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a1ec92f655so2400625e9.0
+        for <damon@lists.linux.dev>; Mon, 19 Oct 2026 20:22:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792466530; cv=none;
+        d=google.com; s=arc-20260327;
+        b=JAIusRM5jJdeQ65zSwUujlIOrbNHQI9KCxEUCgYIMFa/I5Dhx09+W42BbiPBZ+7pvF
+         hCZoXwwKCa/r9d8qo6xQqcgG4GmiIMP9aIzIkRfRru9UNqGTf7CZpJ5Nzd/ShS7Qbbxt
+         sh5t0x5jJRPAXIDguTTZQXXdmW5cWyC0Hb3KNxqgk2IyQ5CKRluQnTCv9gFx5pmdO8DC
+         qaUGI3nv5BtuJcJrYQ+5BrdUL9cDx27YBvg70hP1eSpGJjAeTAEh0j4/w4EJ763k8mNp
+         ZleMgqnCR8ENmMxvxhnKoxa//5bZXuWKyDtoJlhNjQ/2G2jaoLUCugvONS/hzQqXI7KO
+         dUKg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=GJ0jzd45ePDV29eKZJ4sBGXJjhUAwze4eIfc7K86wG8=;
+        fh=4W9BZJvYS5vQwEIkVP16JXA5S+Wl2hO71CmQPtUwnxU=;
+        b=iTKmI29sI0XlHQ7bDdVg8PZT6PgqRBqu3884PjnT/i4q22Zgojj9VS+af+F41GPNLs
+         nbXmzdeWh3ACcOQIzqS4As4YPLzm4eEPwHeRQ6MAn9TXvxKbjFLyLVIJJ6QfLhYq36e4
+         vcJwyWXIBKwoW67UwXRZeE1fH325SLJ+xsZHkexhP4aeTLoyiP6WCEaS7zPRxx7RaMqB
+         YIiYm5EbgFsHV0SDhefpC9lUizTt0YtTX5JnfKcN3hTV/QD7rVF/KTRddkXzyNvd/imn
+         PTQGjNPeo6X+/GPyjvFCLB6U+03g1+/Ia5808cvmK6aXxAcclANCi+lXG1sXkeg6spE0
+         Wldg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792466530; x=1793071330; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=GJ0jzd45ePDV29eKZJ4sBGXJjhUAwze4eIfc7K86wG8=;
+        b=FwLNgaOGQ8zJZ3dJGNUUiaFB8TX+iYGm8wUYMOeJw9kc9LqFJDh+bt9A8RDsiDD0Pz
+         diuXBhBJ0dTr0+opoMaWT8h95wwBks5tJDlWR2rw6PFfNlV7xKZQACx52qqKjYQkFjV7
+         W+ScM6UbLm2o7wPkfJLo5GmH34veM4IbMTGL36vIKX4cTlIZIHF+so4UJsl8oTqO/1Jx
+         lw11nkE6Qoq9f4R6TaYgtxHIgCOwEIYerFRx/ERJGf7TXSxpj+ScBH9MJ2SKg6bnsdo9
+         pjTxYibXzW/0fTRk+JTCgQ3vVB8APtxqR4KYcfrxmSS72KA+0HlTkJ2W7s0Lx3o7Jll0
+         v3CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792466530; x=1793071330;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GJ0jzd45ePDV29eKZJ4sBGXJjhUAwze4eIfc7K86wG8=;
+        b=PTjKJe0zdbcGfTxs4FsG/biDcjB5LzXMa+MEqkdja4R3TuzNp+uXXjx5K0GvlXCQWH
+         sV0gPgoHwgmlcbdOKszGnjXKW5hEOrVHBsLd1ceI4oHowgvbVJnR8IGCZVQlNXoTc6bn
+         /5TCc4dBI3WHRS2zJGdLQgIUWoNGK5/mwVlPDf4sZ0xxae4vy356EBFwLiBYFAXL3BpQ
+         Tc5AmfgJIMvD9eQ+YHwZBAUlXte+d2mbTqhE3auFUv1d+YCc8ZKqGljx0fjXyFyTrCO+
+         gNFnS8C6QorV29TP6mt4PkNJzw2SpantkkWqwwam20ZCQ/Cc7WuLIy1kc7cPt3MEKBz2
+         oqvQ==
+X-Forwarded-Encrypted: i=1; AKwUvBwWIzWoH7pXEiUakSAZTbZ6FJcrXjc2bxHSp8UvSlrbO7ZxILlAOO1qLqlpMYbj6xhORXrn+A==@lists.linux.dev
+X-Gm-Message-State: AFq9FYLpqBzufQ3pXe/MaDHw6LB9BEiKJ3naSWfeGhjT3XgxTXzZvKgJ
+	RXZoUgMU/w2oFgzSBJymF49O4B5vJnReHzrXQmJ2YZXdqwKJGeAedPZp7hCXfy5fWkP4ofgdZR4
+	weCuf3kMSn5M57CFX2bfrcyFQEkXOqBI=
+X-Gm-Gg: AYBFou1CyYQe0+3/JYIye1A05sJ9h2ZYogKmolTV8LMOlJZUbGRzR+YzqNJAyDnj+yR
+	f9kCptXmcvJRuO9lJIS0yCGnjB8ATJoBx6l6u+dTsgyMVg1noqDpO70F4bgSKzJ1JAunY9KYZ9W
+	O/F4klmxSzPrStJHtq5YMmOnDTbnW0h16AIkO7UhUxCeV1ts5L/mKMJHjMteYrwhSWLvp8STRSP
+	mHPiXpKRGGkZisQXMfukTtlOkJ1wQTAWT5LbazH7MOujXHebroHVMjGKV2jG6Os+9O7D88sOXod
+	HNPhXL8aIyWeddzz5NlPn7J4m6dy6Q0mcPjjxJSI4HYeFWDDmz195iTIDD38Oqmp/Iu6bHMJxo4
+	kEGy24DXiKo13
+X-Received: by 2002:a05:600c:4455:b0:4a1:c6f5:2450 with SMTP id
+ 5b1f17b1804b1-4a1f50a260amr15362205e9.17.1792466529668; Mon, 19 Oct 2026
+ 20:22:09 -0700 (PDT)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,83 +104,37 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261003-damon-perf-rfc-v3-send-2026-10-03-v3-2-0f00417b41bc@gmail.com>
+ <20261004083036.613169-1-kunwu.chan@gmail.com> <CALa+Y17BOR0DBLS9-vns2SQfRhCueT0f82XCVojHhg9uacOX+w@mail.gmail.com>
+In-Reply-To: <CALa+Y17BOR0DBLS9-vns2SQfRhCueT0f82XCVojHhg9uacOX+w@mail.gmail.com>
+From: KunWu Chan <kunwu.chan@gmail.com>
+Date: Tue, 20 Oct 2026 11:21:58 +0800
+X-Gm-Features: AclHuK8qSfFyajdptQhJ0NGpKFtfIDqK4tiHr-fgZMp9gM24ujXx87HbJLiQhf8
+Message-ID: <CAN_Opa9=5dqD7CUpczUAz67HjmvUYE5vLMSgSVqzcKLAcjVxng@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 2/9] mm/damon/core: replace the access report
+ buffer with per-context rings
+To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+Cc: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
+	Gregory Price <gourry@gourry.net>, David Rientjes <rientjes@google.com>, Wei Xu <weixugc@google.com>, 
+	Jonathan Corbet <corbet@lwn.net>, Bijan Tabatabai <bijan311@gmail.com>, Ajay Joshi <ajayjoshi@micron.com>, 
+	Honggyu Kim <honggyu.kim@sk.com>, Yunjeong Mun <yunjeong.mun@sk.com>, 
+	Akinobu Mita <akinobu.mita@gmail.com>, Lian Wang <lianux.mm@gmail.com>, 
+	Kunwu Chan <kunwu.chan@linux.dev>, Jonathan Cameron <jic23@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-damos_quota->charge_{target,addr}_from saves the target and region the
-scheme's quota limit is reached.  damos_skip_charged_region() skips the
-target and regions before the point.  The target that was assigned to
-charge_target_from could be dynamically removed from the context by the
-runtime parameters update (aka commit) feature.  In this case,
-damos_skip_charged_region() cannot find if the point is passed or not,
-so the scheme is effectively disabled.
+[...]
+>
+> So in v4 [1] the drain no longer touches nr_accesses at all; its scale
+> stays with the access check primitives, independent of the PMU and its
+> sampling settings.  A sample instead raises the region's probe_hits[]
 
-Similarly, the user could also remove all the regions of the target
-using the runtime parameters update feature.  It would be uncommon to do
-that, but it is a supported feature.  Because the skip pointer detection
-logic (damos_skip_charged_region()) works for each region of targets,
-this result in the logic is entirely skipped and the scheme is
-effectively disabled again.
+Thanks, Ravi. Separating PMU samples from nr_accesses sounds reasonable.
+I haven=E2=80=99t had a chance to review v4 yet, but I=E2=80=99ll take a cl=
+oser look when I get
+some time.
 
-The user impact is that the DAMOS scheme could suddenly stop working
-under certain uses of the runtime parameters update feature.  It could
-surprise users. No crash or leak happens though.  Users could also
-simply work around by re-installing the scheme.
-
-Catch the corner cases in damos_adjust_quota() and reset the pointers.
-
-Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-Cc: <stable@vger.kernel.org> # 5.19.x
-Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c49b8
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from RFC
-- RFC: https://lore.kernel.org/20261019143713.98610-1-sj@kernel.org
-- Drop RFC tag.
-
- mm/damon/core.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 479169dc9ac75..eb1fcdabc0075 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3383,6 +3383,26 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
- 	trace_damos_esz(cidx, sidx, quota->esz);
- }
- 
-+static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
-+		struct damos *s)
-+{
-+	struct damos_quota *quota;
-+	struct damon_target *t;
-+
-+	quota = &s->quota;
-+	if (!quota->charge_target_from)
-+		return;
-+	damon_for_each_target(t, c) {
-+		if (t == quota->charge_target_from) {
-+			if (damon_nr_regions(t) > 0)
-+				return;
-+			break;
-+		}
-+	}
-+	quota->charge_target_from = NULL;
-+	quota->charge_addr_from = 0;
-+}
-+
- static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- {
- 	struct damos_quota *quota = &s->quota;
-@@ -3418,6 +3438,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 			damos_trace_esz(c, s, quota);
- 	}
- 
-+	damos_fix_stale_charge_pointers(c, s);
-+
- 	if (damos_quota_is_full(quota, c->min_region_sz))
- 		return;
- 	if (!c->ops.get_scheme_score)
-
-base-commit: e558ba2a16a47baf6b8e76bb11e92eb92a491e3a
--- 
-2.47.3
+Thanks,
+Kunwu
+[...]
