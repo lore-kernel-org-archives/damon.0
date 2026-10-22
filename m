@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792544551;
-	b=AN+E7LCSSfFTsRiuD5g22CEzniH8KkviWT7EURMJmIfU8BR0Tlb5TRgxcyOjjLHDjajb
-	 myBsedjG/Ut17ZzFkZbstHhiGqr8SdpXobiWb4Nvofz12LwrlhXHbya016EuQNKhMDhCU
-	 sh7ecFtfGgKnrRVpoMw88riawSs7UTnUL1Ix6+NZzP8ebpumW+3SnZCjiG9KlY/+xeep8
-	 dkbnSxs/tuncAZhnHDkIUu9j6mFeJx1ysPpsDmK4TQKH74rDnZJ1T5jl3PFj6u5pfV9Ud
-	 Kn2d70E7yDtj3jIy0enqIJRlQjQn+uoMhiETf/G6z5pCv6WC6hD0INvxQykDaJ5h10w==
+	t=1792628438;
+	b=OmHhz4IhHsIKrV5P4eSrj2SA40dG+4RTOh2EFu8JZdMlL9zYl21B3Y54maWthiiBZeme
+	 122uhtdMzadfcqhWQTYOGpP3PniGSTk5wmAxauSzBq9k6jDoqpGSizaA7EDP1534EWjVT
+	 90Ux7QJHwWAxV1O7qpR2+XT5N/fKUZ4sjIrsTkqWKik5neDVEzseQl6iKi+mmmya6OC7g
+	 Kbyjlf/YDG7/PohCmEdQqq1DQ8adn/KRU0TY0HfQujM9ASlZ0PiypE0sPpYf+CeorFOxA
+	 vdANX7Ik2n21oVwrS+reZoL0LsC4h5la7AkZos6X4rrUblrrkEQotZGJ/4JOQ0LzeYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792544551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792628438;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=dxapBMnN2fMQ/g84o5Y9DlnPN8flfC6uQghMcWIgUyI=;
-	b=nHBR+L6wZyMmqzRZmeyy+h00gf/vfAJ5eAAMIEnOFrf0Nh68sT0whJ6un9tRp+BRqOV1
-	 EYMOxS2UxPd5jHacKwVX+aZQu6eg5HPnGdcogCCEzeCIykq517i6yGHw0vqN1FB8smacQ
-	 W+fKkKm++vnJWPl4FP/qgNeeqfxaUndRTImqTDLJJwuyYpoB+AnYQK4CtN7F9hRqWL81t
-	 YSuh2e7S3SLw9C2oBSYp1KVdVQ512iVv96cUXa+Hn4UqTC4Xbr4PLIG3pG5/Qo1yqEqWc
-	 HJD0Ar3xQlpMNexoyRZLa0pgA3mrfFt4NBp8CRfS5LCw8dJDE3SB1g/gvtYx+2Ob2bg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=U160OhCDm3caKtoLaOhiSMfGfQJGF31Y72hqDHrZ/jc=;
+	b=OQiaTKTPyaWrAY5KQaKU6wjkPUZrwdS/gNchvOeMGdJ7C56NtQcZnjCmkpCSjF0vPjv4
+	 u98uVTv740DFrksJgZZpJNiK4Pp8BKLQTfipB9pSeHoTYL2y4YQbNATT/AhouVghTK58I
+	 PhIFp20+8it/H9zWUtUVPyO+h60gHDSF8EcYPjI6lw7j72N3CYMraTQ1EDJ/R7p0payYS
+	 uiBPIKmhmZuz/hFNNMz5+s9OS/Mv509S7jcgZbTcKqXWlowBI78n5qmjLbB9MZ6iRI3tE
+	 ivPE4uQLGy3NyWEUubzDne55BRzOSsR+3Ofm1C552Q5/HSPX0+aawkaHEA85rgkz7cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hr1WboyO;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=llNDq7wr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5014606A319;
-	Wed, 21 Oct 2026 01:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6E9606A319;
+	Thu, 22 Oct 2026 00:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hr1WboyO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3D51F000C9;
-	Wed, 21 Oct 2026 01:02:30 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=llNDq7wr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4D11F000C1;
+	Thu, 22 Oct 2026 00:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792544550;
-	bh=dxapBMnN2fMQ/g84o5Y9DlnPN8flfC6uQghMcWIgUyI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hr1WboyOwa1TDkH2A6h52vTFk8H0+YRNy4ydhMRTZDK9IiMqrH+yJHcLyTXUUQ6Pi
-	 oKyXI26fWhMrTgxA6rH8IqA2LuKtXx93v/3BPgwfKy+z3sWP5ZGlK3lLMrmZzO7O38
-	 dHsC75sTYd7Z6Q2tx+Fptm6AcQx88Q1Kfx3CRIsQ/uzwlNIth6z+tb8Q07BJa0wEm7
-	 nHG90GkwavFP36Y2FkUBIThyxOBUsSFX1VOEVTrLbwT9BlpG0GlGnrES+fxDyWYkEn
-	 gGH/7O1B5hJWAJfZgfcGnGwgIbFJjN+4/H6ZPCRhsCuImNEXHlo/skf1b6wPzo3sjX
-	 7UgZDEiXBEqcA==
+	s=k20260515; t=1792628438;
+	bh=U160OhCDm3caKtoLaOhiSMfGfQJGF31Y72hqDHrZ/jc=;
+	h=From:To:Cc:Subject:Date;
+	b=llNDq7wrV6MxufRqHZpgUFgyLDnog42KLTCk+myzhfYCnHp0LR9CjOgCSrogX1yiv
+	 EieROOVa3zg7L0SXKg2k7tPgkOleIWBTfCF/HOfr6HEMwEofE9KNVSxNGV7XqIUR5N
+	 Ph8dL/khLeSJQ9cUhNM5YSErZlyDlttsvNhjakXtefmGHbgr6aEQuGBDOD4FWqkjz+
+	 rmD99yYhCJwSHjSITfzzx4ELi6T3o6wxeWML8OSwvG7kNUxdn1aUdammBt9NopKs9r
+	 cOadhxhASA81GZxjsZXhlLf/qCZlouu+EQu6TmL0DqfEVWswxtFrpf0iOUq6PsH0V3
+	 10eEBEMrZ7iiA==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH] mm/damon/sysfs-schemes: hold damon_sysfs_lock in target_value_store()
-Date: Tue, 20 Oct 2026 18:02:22 -0700
-Message-ID: <20261021010223.94305-1-sj@kernel.org>
+To: damon@lists.linux.dev
+Cc: SJ Park <sj@kernel.org>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-10-26
+Date: Wed, 21 Oct 2026 17:20:30 -0700
+Message-ID: <20261022002031.87137-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261021005234.94107-1-sj@kernel.org>
-References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,44 +59,36 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 20 Oct 2026 17:52:33 -0700 SJ Park <sj@kernel.org> wrote:
+Hello,
 
-> On Tue, 20 Oct 2026 07:47:25 -0700 SJ Park <sj@kernel.org> wrote:
-> 
-> > Remove a race condition under certain use cases that can trigger
-> > divide-by-zero.
-> > 
-> > damon_sysfs_add_quota_score() setup damos quota goal as user configured
-> > and pass to the core layer.  Because it could have a race with
-> > damos_sysfs_quota_goals_rm_dirs(), which destructs the files that carry
-> > user configuration, both are called under damon_sysfs_lock protection.
-> > 
-> > The damos quota goal setup disallows zero target_value parameter because
-> > it can be used as a denominator later in the core layer function,
-> > damos_quota_score().  Otherwise, divide-by-zero can happen.
-> 
-> This is no more true due to another patch [1].  The patch added the zero
-> target_value case in the core layer central validation pass.  But it forgot
-> removing the redundant check in sysfs.
-> 
-> > 
-> > For the zero value check and final assignment,
-> > damon_sysfs_add_quota_score() reads damos_sysfs_quota_goal->target_value
-> > twice.  And user can update damos_sysfs_quota_goal->target_value via
-> > target_value_store(), which doesn't hold damon_sysfs_lock.  As a result,
-> > a time-of-check-to time-of-use (toctou) race can happen.  If the user
-> > sets the value to zero between the zero value check and final
-> > target_value assignment, zero target_value is passed to the core layer
-> > and results in divide-by-zero.
-> 
-> So toctou race exists, but it cannot result in divide-by-zero.
 
-And the toctou doesn't matter because the final value based same check will be
-made in the core layer.  But the toctou makes readers easy to be confused.  I
-will post another patch removing the unnecessary zero value check.
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2026-10-26.
+
+As usual, we have two time slots for meetings in the week.  Next six time slots
+are as below.
+
+2026-10-26 (Mon) 18:00 PT (not yet reserved)
+2026-10-27 (Tue) 09:30 PT (not yet reserved)
+2026-11-09 (Mon) 18:00 PT (not yet reserved)
+2026-11-10 (Tue) 09:30 PT (not yet reserved)
+2026-11-23 (Mon) 18:00 PT (not yet reserved)
+2026-11-24 (Tue) 09:30 PT (not yet reserved)
+
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
+
+Please note that other time slots are also available on demands.
+
+Shared Calendar
+---------------
+
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
 
 
 Thanks,
 SJ
-
-[...]
