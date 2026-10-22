@@ -1,52 +1,63 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=62.72.0.81
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792651613;
-	b=OKl9T2DeUOuSNB3T9WfvQ/+1mQhD2Al6tFSbkX8VvXy+1kR14OjXjLFnWtKT858WsQwX
-	 mm2K7bI+IvwFDjhRzO6h4XrgEx7a8cYv5aTAzWiWgxEe5Rgf58nnephdthbofrbmFGYI7
-	 CoqVjLVMbHe+7r5Gx1mccnh9LzO65evewCU3Yb5ok19K+BLu1B+pLPIJNMCq++jHx49Q8
-	 26zCRUtAKqF5OE9xavU1kK8w0AyqQmyBRtkLZfSkQA6zW+LJuCdq06ucxjAUwU2SnNl9C
-	 S6l/1gb8UnIa4WbKObEzetVaf+A1sanyc7LHksalh3K8poKR5ZMRa+6xkkI0cgqR78A==
+	t=1792677760;
+	b=VdN9OG4qLoHDMEo4sS59QisVsD26TxMQOBfrA+Qriww1xVkfAw7ItnhSKizxT2ie3DVV
+	 kRepCIMfrMncT7w61im0hZG7PjN7tSBphiWrTzaCCLiWSq0tFO3i02nOEF8gpIa4hW/tN
+	 ZLTXoWHjje2zEa2OejZb8nSpItS+lJn+sCs3PJNzLIbRJAcPi/Jar218vjq/NaB+y1fPU
+	 4m5JQrGPwSj6IQpVSCvCO+vscBZlSLmzibO0iw4kqtqQxykWJorFLX0DtHWNn5yaO/nAc
+	 +ZmV5UOCQo5IdvyGWHDiX8kVtmmcctkUMmDr4J5TnN+30VOhCJkBTlwn3TSQxXUGuyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792651613;
-	h=DMARC-Filter:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Message-Id:X-B4-Tracking:
-	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=pLH6Qdvd1b3FuoOMzQUoR0sieayKiNlgZnbtx7OcG3Q=;
-	b=X5/w1Fq1GIh55G/qcjor0sCspgjh0kMIYEyfNRV7uUVpXwqcI+IVfIdfPlvwPEV/uBhr
-	 DO1W1uFI0i/rfYEDfRycebChTIni1qmGpmR0sPZmrDrg9s065YUQXfvg6WgFch/5cVcEY
-	 85sBeyUIpmaH7TYGg02ZuDAPuQ4r0VRWFFH0VIXmqGkgR4NA98wYT7VdXQ1La6NyRVjsN
-	 ioCYMSH690aCGfv9f7YBmVag33x03lnKOexehB3Hjk1/ez9zu5k+AO22fZpb80pTM1jdE
-	 X7RwdUV0AQIcBpSR66tSZJ6isl6cMYrIugb4lSlYXG/rb2+ceIZy//QpZRiZTmvYOGg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792677760;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=sbNemcwZ2jC1Uc7605k/VmRdjgt1QXoYjX9veU4w4sg=;
+	b=gc8SruVPjndOIRZqAR+TI47BSQGFYiP9hVH6h550vLnIF2HTPcz6UtmD0Ncd58i6bzs1
+	 JqhZTUPC+cH6pYrZadhyHmkMkL5lQFXjDyYYlbHsu7wd8SXIambEcJeIGbUToru6kMuPU
+	 zYWhYYa0gFkFEsOSc46JJpHNFHtMFvJBZTI7ohx4g7UtBEh/4GTry3VtV+F0PAnnHu16Q
+	 19IahklgPOa7ukU6MLDLQ0r811NjFwCvBdbCH5s1vesQqjs7jNXo4ZnbNrQNZUtMmNX6I
+	 81+/jIQzSZL/08hLafoI8jUuEgoK20bmVCwnqATvSWG0Gpjq19MhNhA8XH8i/eDplIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gentwo.org;
-	spf=pass smtp.mailfrom=gentwo.org;
-	dkim=pass header.d=gentwo.org header.i=@gentwo.org header.a=rsa-sha256 header.s=default header.b=b2cnkebq;
-	arc=none smtp.remote-ip=62.72.0.81
-Received: from gentwo.org (gentwo.org [62.72.0.81])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AmZMQS6I;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5190606A333
-	for <damon@lists.linux.dev>; Thu, 22 Oct 2026 06:46:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C5190606A333
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentwo.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC4D606A31A;
+	Thu, 22 Oct 2026 14:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=gentwo.org header.i=@gentwo.org header.a=rsa-sha256 header.s=default header.b=b2cnkebq
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gentwo.org;
-	s=default; t=1792650987;
-	bh=fYjhazpEBlwVy5VKWAIlQqmd3ajCfxb+TAv31L0DTU8=;
-	h=From:Date:Subject:To:Cc:From;
-	b=b2cnkebqTtrGA61q++7aBVW98HIpNhjojmw2R8y4prNqHRHcQtWHnAB83q5b6wXva
-	 TAXrDevp06k6JaLYdGBKq1OV33MBzEJbUUXcHgQjlGuC1LYGBoD2ID5cOsa//wPnOR
-	 VZ/cAOIdNUOdORXFJ7S6D/7kTX8JJjf7DMA13YmY=
-Received: from sut02sys-r112.scc-lab.amperecomputing.com (localhost [127.0.0.1])
-	by gentwo.org (Postfix) with ESMTPS id 2861B4014B;
-	Wed, 21 Oct 2026 23:36:27 -0700 (PDT)
-From: "Shubhang Kaushik (Ampere)" <sh@gentwo.org>
-Date: Wed, 21 Oct 2026 23:36:19 -0700
-Subject: [PATCH] mm/damon: align MMU notifier range when clearing PTE young
- bit
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AmZMQS6I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EB21F000C1;
+	Thu, 22 Oct 2026 14:02:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792677759;
+	bh=sbNemcwZ2jC1Uc7605k/VmRdjgt1QXoYjX9veU4w4sg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=AmZMQS6IkrbnfBT7rmh94KaapbRI+T4bPXW5CLrWD95W9hDFLpbSOXSkpw3xXQo/Q
+	 JYxbCN3+IRkhfvwGbKgCVvGpsM9JFe3wWNJGlkRGMQA8ANaf9+k/k8xlBIbAcWnzPp
+	 Gu/m6krdg/kpRdIkq5YulAXt+UH8IoI0/ZzjF63qWP73OIbZYob0g17timLVgd5BY9
+	 qL1SDa2n9NHAzqyNmZU3icOaKvdcHz1y30fvMGOMzo/Hy1SlheQVwh6rxzfGOQ5vtU
+	 IaQ5DJGIKcl9/aAKwhsqjbLGlEgU37FyaIqXZWnYggqAyaYAm21ybJnZiBUcAHUWfa
+	 UUVl8+gih695A==
+From: SJ Park <sj@kernel.org>
+To: "Shubhang Kaushik (Ampere)" <sh@gentwo.org>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	SeongJae Park <sjpark@amazon.de>,
+	Leonard Foerster <foersleo@amazon.de>,
+	Shubhang Kaushik <shubhang@os.amperecomputing.com>,
+	"Christoph Lameter (Ampere)" <cl@gentwo.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon: align MMU notifier range when clearing PTE young bit
+Date: Thu, 22 Oct 2026 07:02:31 -0700
+Message-ID: <20261022140232.93962-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261021-damon-align-pte-young-notifier-v1-1-d0365ac45b66@gentwo.org>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -56,76 +67,48 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261021-damon-align-pte-young-notifier-v1-1-d0365ac45b66@gentwo.org>
-X-B4-Tracking: v=1; b=H4sIAOKu2WoC/x3NQQqDMBBG4avIrB1IQiu2Vykugv6JA3YiiZYW8
- e4NLr/NewcVZEGhZ3NQxkeKJK2wbUPj7DWCZaomZ1xnjbM8+XdS9otE5XUD/9KukTVtEgSZ0Qf
- 7gEF/G+9UI2tGkO81eA3n+QfcHCE9cAAAAA==
-X-Change-ID: 20261021-damon-align-pte-young-notifier-e8f19e0e84c5
-To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
- Fernand Sieber <sieberf@amazon.com>, Shakeel Butt <shakeel.butt@linux.dev>, 
- SeongJae Park <sjpark@amazon.de>, Leonard Foerster <foersleo@amazon.de>, 
- Shubhang Kaushik <shubhang@os.amperecomputing.com>, 
- "Christoph Lameter (Ampere)" <cl@gentwo.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
- "Shubhang Kaushik (Ampere)" <sh@gentwo.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792650987; l=1929;
- i=sh@gentwo.org; s=20251010; h=from:subject:message-id;
- bh=fYjhazpEBlwVy5VKWAIlQqmd3ajCfxb+TAv31L0DTU8=;
- b=9AcM83hLd7/2h4L5Mf1b9QDePmOKX6eHev2pmDfbiGeFBEiRY8bhh6P8HWzNioPWEW7BE34m8
- jhZGCOqfAiMCn0Lqc/6udvqeaAZKUysZ2rKn/cvSY001uqNJXnPRgZ4
-X-Developer-Key: i=sh@gentwo.org; a=ed25519;
- pk=jc8YIRvxPSyJaBRe5y+a4N0RXKBUEcAh8+OFhlROXPY=
+Content-Transfer-Encoding: 8bit
 
-DAMON selects a byte-granular sampling address.  damon_ptep_mkold()
-clears the young bit of the PTE covering that address, but passes the
-unaligned range [addr, addr + PAGE_SIZE) to MMU notifiers.
+Hello Shubhang,
 
-For an unaligned address, that range extends into the following page.
-KVM ages every guest page intersecting the notifier range, so it can age
-a secondary mapping for the following page although DAMON cleared only
-the sampled page's primary PTE.
+On Wed, 21 Oct 2026 23:36:19 -0700 "Shubhang Kaushik (Ampere)" <sh@gentwo.org> wrote:
 
-Align the address before both the primary PTE operation and the
-MMU notifier call so that they cover the same page.
+> DAMON selects a byte-granular sampling address.  damon_ptep_mkold()
+> clears the young bit of the PTE covering that address, but passes the
+> unaligned range [addr, addr + PAGE_SIZE) to MMU notifiers.
+> 
+> For an unaligned address, that range extends into the following page.
+> KVM ages every guest page intersecting the notifier range, so it can age
+> a secondary mapping for the following page although DAMON cleared only
+> the sampled page's primary PTE.
+> 
+> Align the address before both the primary PTE operation and the
+> MMU notifier call so that they cover the same page.
 
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-Signed-off-by: Shubhang Kaushik (Ampere) <sh@gentwo.org>
----
- mm/damon/ops-common.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Thank you for finding and fixing this!
 
-diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index 8fc61d06d358597c4b8eec9523865f43496298d1..848c327f231e722499b9aac2c041b3aa84061d56 100644
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -46,6 +46,8 @@ void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr
- 	bool young = false;
- 	unsigned long pfn;
- 
-+	addr = PAGE_ALIGN_DOWN(addr);
-+
- 	if (likely(pte_present(pteval)))
- 		pfn = pte_pfn(pteval);
- 	else
-@@ -65,8 +67,7 @@ void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr
- 		 * Arch implementation of ptep_test_and_clear_young() may
- 		 * require aligned @addr
- 		 */
--		young |= ptep_test_and_clear_young(vma, PAGE_ALIGN_DOWN(addr),
--				pte);
-+		young |= ptep_test_and_clear_young(vma, addr, pte);
- 	young |= mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE);
- 	if (young)
- 		folio_set_young(folio);
+> 
+> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
 
----
-base-commit: 4403278e4ea2f654f8130a5c03eb8b4516a0f201
-change-id: 20261021-damon-align-pte-young-notifier-e8f19e0e84c5
+I once thought if we need to Cc: stable@.  Because this is only for monitoring
+accruacy improvement and DAMON is only beest-effort, I think we don't need to.
 
-Best regards,
--- 
-Shubhang Kaushik (Ampere) <sh@gentwo.org>
+> Signed-off-by: Shubhang Kaushik (Ampere) <sh@gentwo.org>
 
+Reviewed-by: SJ Park <sj@kernel.org>
+
+I applied  this patch to damon/next [1] tree.  We are now in the middle of the
+merge window.  It may better to focus on making mm.git changes pulled into the
+mainline, rather than adding more changes that are not really urgent.  I
+understand this series is not really urgent.  Hence, Andrew might not add this
+patch until next -rc1 release.  In the case, I will request adding this to
+mm.git after next -rc1 release.  So, no action from your side is needed for
+now.  Let me know if you think this is really urgent.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+
+
+Thanks,
+SJ
+
+[...]
