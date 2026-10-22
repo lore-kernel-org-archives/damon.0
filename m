@@ -1,101 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.6
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.7
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792680147;
-	b=YMVAo8LwvtOEQLRLambzm7IiCpTsqb5Fs3kJgWU1wlqzEItqj0/P7zuWVrWdctGq4zvZ
-	 iMmNVm7BudTtT8RElLEnq+z9kA/3DRrTqL6idrYx26bHfQ9ni40AZXb5xr4BSF8H+VXEl
-	 2bVuR1dK/w4Kpv4qN2wKKc0ulWfYkUegoEGsGL97EczqO+nFsqvrTSsyy5gnKEbcUFGmC
-	 pX17xwTuDTxK7ahEpVEEZBnDCW//lVu/6jJid4yUnKL+JZHw3n8s2LOZIEFuThJp6NfRb
-	 4otnwtkDXjomWQdtntZQ+saZYRv+IYDxUNoWa3XP8XmoZh7RUgKKTD3b/hkdc76dHOg==
+	t=1792681469;
+	b=VZHOVC1BHc4sNHhp8pu0OHgz+62dAElnxdWVmc0IyNsHfE5jhKpVb1n+3/YoMj8FkgUi
+	 p3IL4d1XVf//X1cM8/AS58wVVRaJ0UqVypoh1+D5I0ZQT7qEiD9A3ujbsFkOubG9OyUFr
+	 7TYBcmgN3IsIHuWAJuheL88CIb5SEpb8Q7FqpBGrVnlKFlMRf606E9Wqmh3c6ElKmYbqk
+	 R2b9zUh225lof+DpjLrlHLacA0VF4vCLEsTfS0kBLL4eMGg/fQ9pqNWP6yPphjn+G/d90
+	 Uwk7GFWehWBbo71YrrULjDoMWNzy3ttJL7v35KOiXRnTsVOLxIFZmOnPnIqhQITwoBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792680147;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792681469;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Date:
-	 Message-ID:Subject:In-Reply-To:References:MIME-Version:Content-Type:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Date:Message-ID:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=Y2wfDpQE4IPV/6hlJzWhRkXMd2sbxqFFifw6+/5xT4w=;
-	b=GuN5awbcpjSTZBCLCkeFoik0/SYRFIm0KceZJdpaBuPZHrPsGIsZ1BdLEkflMoHj+SD4
-	 3SdpSBZ5B6cQkDcrMHtnNn3qd0pmMXcIHx3An46uP2c/210PEM2B6BR9v1Um/UNX/bNUW
-	 wltUHI6wMqEbLrxcarrVPzVvnGl6vcjNs6cmyTOsGNPo8bk/Fhhbi/Ywpwh6KNDaKKn8s
-	 kKTWcQ/9FPmg5Gh8DdQYJQm9Sug9rIq/uXXX/EiCgxNEwsGVXyN8t0hVhzqKVy7Ozx67r
-	 +rGMhJ/zvPJjhCaVRsjrMF5Q3SNgrBGCRIANPWRTtLeEurv/uGfm42sxjv1Bmh8KlMQ==
+	bh=zKV5mVym2fjfNhUm4DLdJcnKPJbD3s5y+KWCBn/6kOQ=;
+	b=IiOLyGbZdYLfmf7ZWvgx31AXJFp3hkfknXMMef3MHZioX22VYXg/WWdBnMEq2x8x+ED6
+	 5hQLhgA3yKJu4b+Li5EUR/LYpHvqLMiOrwVQgrc64QNsIalGiE5XuXlLfGhy48PORNfEK
+	 xrWrxBtsSxEAEJDi0iFqRuPIkSiQ0me9bdht/FFPYtd5Y6l8Rv/Fuxi543M74uGn7l+aK
+	 keT7dAVwxI4OgZQ8ABEvsr+G8TlpD63A2G2T8qjjROq/t0BmE5iYhfZRiS1cbojX2lmY7
+	 6cXsh+Q3fBHsk32uYCYh9rDoB0Bj5Y6zdz9ueiRVZdBjr5rBVMDeQIshe9sy59OnByw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SFGi6vTu;
-	arc=none smtp.remote-ip=74.125.229.6
-Received: from mail-dy2-f6.google.com (mail-dy2-f6.google.com [74.125.229.6])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=UKRtIlqj;
+	arc=none smtp.remote-ip=74.125.229.7
+Received: from mail-dy2-f7.google.com (mail-dy2-f7.google.com [74.125.229.7])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CE3606A31A
-	for <damon@lists.linux.dev>; Thu, 22 Oct 2026 14:42:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 23CE3606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC14606A331
+	for <damon@lists.linux.dev>; Thu, 22 Oct 2026 15:04:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2DC14606A331
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=SFGi6vTu
-Received: by mail-dy2-f6.google.com with SMTP id 5a478bee46e88-35adc681e1aso2786749eec.0
-        for <damon@lists.linux.dev>; Thu, 22 Oct 2026 07:42:26 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=UKRtIlqj
+Received: by mail-dy2-f7.google.com with SMTP id 5a478bee46e88-36758ba1f01so921182eec.1
+        for <damon@lists.linux.dev>; Thu, 22 Oct 2026 08:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792680146; x=1793284946; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:subject:message-id:date:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Y2wfDpQE4IPV/6hlJzWhRkXMd2sbxqFFifw6+/5xT4w=;
-        b=SFGi6vTuv4H1BQaoJ/Eb722iVoubKA39raSqZf7xjLqyGGDljT+uuF2gftnUhf5YzD
-         KVF4H9hUXvqpZOe9DNqrfCOFQAl8JaoGxtRRA0kHsvBINsbdrwyfOeVz9IUyzWENtTMR
-         +CIXM8Css7QTsVUeKw0taq2qALsUwZzb9Ok/oa3FoWz/QRYxi8TFSLK5HWu6qGrzg6pQ
-         +ECAYDbPc+puHXiA4mC4bbkYEcdfTiMXjNG199N91v5AFBIvvb8d1nKwqOWUWax0B96T
-         RmT8JbILUQwgyxzPHcxnDQdF2teWTgnGRVsmp0EmTr28MpUybir0OxaxVTaeHFMLd85T
-         pLxg==
+        d=gmail.com; s=20251104; t=1792681468; x=1793286268; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:subject
+         :message-id:date:cc:to:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=zKV5mVym2fjfNhUm4DLdJcnKPJbD3s5y+KWCBn/6kOQ=;
+        b=UKRtIlqj2ws/we2VXPq3KkqV0ZmnE09+cUbFUzhmHcQc0jC0xwfuY5pqboEgMzcSI0
+         KzrejSKLoXxopQ2WcWb12CZ0lKkWtJZTKFobDmORshvxzWu7GQiiQ91oBNzatLXGpVT0
+         uxN/tvtgXah3Jz07tJtwthim30q2Eedb2YZ191y4qFhkGda2/+YL0i3IcLP1nhOATAmw
+         MkWnSvQl9cy4GaqEEYd7mYwmVJ075IA0ZdsIBwWu6Vl9EyrCKDNwxy5aP5BeD0E4dphB
+         AWgSawiAczZo4ENvy4i1o23n+EJbFFr1QIjLmjDkO6Jk+9v0fBWrL8w43REB/f6+L+mz
+         3vQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792680146; x=1793284946;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:subject:message-id:date:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Y2wfDpQE4IPV/6hlJzWhRkXMd2sbxqFFifw6+/5xT4w=;
-        b=OUzDJmm1IsXSTUXZ3VV88XZJQMfSbUs1CVZrlR4jXKR6fHlA0JseKyQC8FQsbTyTHE
-         xWQnLYCvcXw268/GzgkT3ZCECVIru8oASNn5GXb+/eNOJnmsYVHxycyS912B4zQEzuE9
-         5FwYQ7rtamyDEXDZ1GLKeqrnT7MyMqRH2TXs1GVYiaXkTYaxAw5KhFZHs3vkBoAF3Kuz
-         ma8KE2K+TbQmlma7wRutC8XDxG6za04tlbtcD107esV5FpkPytrg3otFkccUAHVSgkj+
-         FaW7dpKG/qL8i7dSxttvfYJNCgU416R/TGJUe7r4VUrZqxlxfvCmz+mXCt4c+f6K69tA
-         nlcg==
-X-Gm-Message-State: AFq9FYK+4SrXVNE0UvUBJMCvoYwvS99a8iln0NKcARHqDjmWFJtOqHAH
-	WdSlUZJrPw/8jSJGgd59tDEgYHnTTkT8HOzQeNT6NxIQfQ0tPiDY2oVU
-X-Gm-Gg: AYBFou3xyVRS3U4uOB5Q49fxKaaoJ2vx7MVCZVDMF37Bn0gGFpSl1ZkiN29jiiBFucD
-	I+N4ytXKUs+2VHylyphSV9rVtMut6szhlcwk3v2UhtF+l9sjE9EwsHHZdUwQQPy4HZVD5xxVR3j
-	hG4WzjU6+2nvR7LEE7x+9cYdwLae1P1GAGz9etov6bSwsnMW2OTB/o+IzU/Tuf0r0POKEg7q/5o
-	xE/4quxcV7Pk6n99us+mrE8ZJT/ry2XgBGToJ4FQY/9qK+VUh/hPg1A12RWwu+tmB5TGfa+uEFr
-	dToDGl1vFw0HBzpE5Qfk6BKJafSGfazyOVkLcsFT1vKKAm4ZWaqEXMyL3r5EX98BhGcra5vBPEq
-	Gg+q/Bhi6XsU3/fJTkk5PS8ODF9/ccwqZnA3djIRhwNXTRBj+74O13oSYAmECX+HSBL7NNgX354
-	M5hpcfPE72ZCGsHlW2tyBxMVhqc7NxtpGCGUhe9jKehkx7WWOyqOaDsyI+CvLa7XqiBOoSkLYiS
-	0/eqmOrzPwRFGrsgxMylJ7ZQm7XQ3IJgh0zVPv4kWdiijIM6Gvuj+SAzehfAC7qPyr+eqtNfStx
-	fJb94j7hRASpu96/uvH8r/eUq21TdPMZlh3bXitUcvEQBI0yS7dlS5esKYzJc5y8vRLB7JUCke8
-	=
-X-Received: by 2002:a05:693c:638c:10b0:368:72f0:353a with SMTP id 5a478bee46e88-36872f035d6mr4190014eec.38.1792680145876;
-        Thu, 22 Oct 2026 07:42:25 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792681468; x=1793286268;
+        h=content-transfer-encoding:content-type:mime-version:subject
+         :message-id:date:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=zKV5mVym2fjfNhUm4DLdJcnKPJbD3s5y+KWCBn/6kOQ=;
+        b=pBlW6xKmVPORISDH3VP7gz2ACEUrzfRD1pBppbTlYmnY8+m/8Q3fUUaK5cx65+NSIq
+         lf8izbLvCxsoTYtAvCX2UCriea7xcPPwwc6UuJEYMBP+bBUvGbhPkbiUiz6brNjEi1We
+         RHiIdsQHAS0EF1pYUaHpPH6J9Law8dXC5oJKsWycCRW0DU6+LxM4zx5am9xFovdPTeyE
+         zo35H/VbJyaADSo4QWSVOsDfKiq2icBt8I2SlWHRYDlok6bHiiRgxPwG+1uCEbKqwmHu
+         52Nrpw8XYRGf5a6NCVhX7ufZ5Zr0Zqbeu3gRSxzwAWiedpKJjAb7auAomAKwvOrKVfmI
+         kcGw==
+X-Forwarded-Encrypted: i=1; AKwUvByxEjXA3c410QxqsTO/Ox6Nmy0F673hNPB7d9x4T6u/wKwv0vETMZVTKDgLssERlKcsxwa+3w==@lists.linux.dev
+X-Gm-Message-State: AFq9FYJKGkS56wMSt0yH+eHL1Nyk0nZrj6HE6FaIbCmksjVYVokT5TJ1
+	nJ7EXwA5+X70kEyQEi+oVaKFfFnPaYIw9x0xsssCc5NjzexlHgihPMCD
+X-Gm-Gg: AYBFou2ZOTDfQWxSYBigmotabBDdCzC6t55COGQCHZLEKLq/OQwT1UXbW7asZFD/ka0
+	MWJACeYEYHsepZbARnumk7bssim4E/xhjRRmDQsYyr6jlAyb+DwcecI5jzBxiBpxdQfM7mMoKvn
+	MqmuJc6Apb+khmd6osuElW/f85c3jK8iDMe13lreub+JGgMSwOw+Qi/hLPyp6ER3vrEdyKlOEBL
+	WvPrFm9AVrJB3lVy0DLGcvPzumpP1fBbVdEvy0sNF7gvXKYVmCX+vTfjJq8GieqyF9Xb8ekKgC0
+	qjxAgvPD+ToCRbr1a1UVVdKVN8nuzF0Jvs0Jfx+TxwIKhIJde5rz7FykJReYe5/g/SOD9zj05SO
+	klyMINJOuKboZ8n7YQ5VFircgHfrN7ltYnOL8OtAOcLdzhOgXNDHOAM5Ps29K7gtpWkvxZLPmh+
+	/iLwE+jwAy+fFOfX4uJcTd7tVPjYUfpIEH2SpfCulwn118qm6Ki2PMhfrD/qSWEK1Gwml0ODRM+
+	9q3yJ4NUZJz87tQHrUwRPK3Xncwygz+Zmauyh2j1nKjuoNYqQdXtzHGSEA+09kkpmwuMWLGmXO9
+	gbCOJMpJFRTE91RRN741x30ExEvGuuYjK/L3CJNSZALCwHq7VWWmHg==
+X-Received: by 2002:a05:701b:2313:b0:148:722b:7cbc with SMTP id a92af1059eb24-190a55c1a5bmr6422063c88.14.1792681467862;
+        Thu, 22 Oct 2026 08:04:27 -0700 (PDT)
 Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3674198e2d6sm15218724eec.22.2026.10.22.07.42.16
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1903a180ca2sm13886422c88.6.2026.10.22.08.04.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 07:42:25 -0700 (PDT)
+        Thu, 22 Oct 2026 08:04:27 -0700 (PDT)
 From: Aveline Noir <jm5905938@gmail.com>
-To: "Shubhang Kaushik (Ampere)" <sh@gentwo.org>, SJ Park <sj@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>,
- Fernand Sieber <sieberf@amazon.com>, Shakeel Butt <shakeel.butt@linux.dev>,
- SeongJae Park <sjpark@amazon.de>, Leonard Foerster <foersleo@amazon.de>,
- Shubhang Kaushik <shubhang@os.amperecomputing.com>,
- "Christoph Lameter (Ampere)" <cl@gentwo.org>
-Cc: damon@lists.linux.dev, linux-mm@kvack.org, linux-kernel@vger.kernel.org
-Date: Thu, 22 Oct 2026 22:41:50 +0800
+To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+Cc: Shubhang Kaushik (Ampere) <sh@gentwo.org>, damon@lists.linux.dev,
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org
+Date: Thu, 22 Oct 2026 22:26:08 +0800
 Message-ID:
- <179267916870.2.6178717610514277514.damon-pte-review-draft@gmail.com>
+ <179267916870.2.5637290691657871645.damon-pmd-align-draft@gmail.com>
 Subject:
- Re: [PATCH] mm/damon: align MMU notifier range when clearing PTE young bit
-In-Reply-To:
- <20261021-damon-align-pte-young-notifier-v1-1-d0365ac45b66@gentwo.org>
-References:
- <20261021-damon-align-pte-young-notifier-v1-1-d0365ac45b66@gentwo.org>
+ [PATCH] mm/damon: align MMU notifier range when clearing PMD young bit
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -108,17 +99,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
-Hi Shubhang,
+damon_pmdp_mkold() clears the young bit of a PMD but notifies
+[addr, addr + HPAGE_PMD_SIZE), where addr can be an unaligned sampling
+address. This can miss part of the sampled huge page and age secondary
+mappings in the next one.
 
-> Align the address before both the primary PTE operation and the
-> MMU notifier call so that they cover the same page.
+Align addr to HPAGE_PMD_MASK so both operations cover the same huge page.
 
-Looks good to me. Tested in an x86-64 KVM guest.
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Link: https://lore.kernel.org/r/20261021-damon-align-pte-young-notifier-v1-1-d0365ac45b66@gentwo.org/
+Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+---
+Tested both aligned and unaligned addresses on 2 MiB THPs in an x86-64 KVM
+guest with a recording MMU notifier; all ranges matched the sampled PMD.
+DAMON KUnit: 37 passed; selftests: 13 passed, 2 skipped.
 
-Reviewed-by: Aveline Noir <jm5905938@gmail.com>
-Tested-by: Aveline Noir <jm5905938@gmail.com>
 
-The PMD path has the same issue. I will send a patch for that.
+ mm/damon/ops-common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Thanks,
-Aveline Noir
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 8fc61d0..3b7519b 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -83,6 +83,8 @@ void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr
+ 	bool young = false;
+ 	unsigned long pfn;
+ 
++	addr &= HPAGE_PMD_MASK;
++
+ 	if (likely(pmd_present(pmdval)))
+ 		pfn = pmd_pfn(pmdval);
+ 	else
+-- 
+2.56.0
