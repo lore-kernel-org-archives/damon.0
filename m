@@ -1,62 +1,104 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792714827;
-	b=PSc6BdaMRTu6Q0X5t41flSc+MCstpxjNfhwfvZo6HkxnGSVaOzBmJFHGKQzRBhYO9Kx8
-	 2p9Sta4JduySn02ESbNXAi71DciSYZBI3YuVPcxC4HmVUutZRdFwDAsHqJTdXijtI7U3A
-	 VG4KO7uaXfiragenRqlajT41sE7wHDnzSX5OlSDZB5oLaaB094hAKQLxAxPP1HSxrsSRu
-	 /e50kJdTLNfceoeeiQcbDFJ5Tea2gHFtPK2+FsZIytK8VXTYqqG9m693rPZFi8JnUM1x5
-	 /HxdXrd3nT5PgNUcltxnFOxunBuStChzNOmTXHiNdDbz+MB9QmkFvXK0CjVU9miSLhA==
+	t=1792768970;
+	b=oLCLM6XH8Prtyky+KSYDanOnUP8DdL/fA4Dl2hz7S4/74sb6ZIDM2G2rHs/S0IZgDMDt
+	 EAoJME0jxjJP3o0a7c2S/krYbp57aJgNWhYq8We1P+mrp6oD4LSQsrCZxcAnRbyiSm1J5
+	 chNrpKHNCz3JO5Md/7MHvtBF9nLhqvpqBLvj+u+ZVHpBZKQXZdZ9ATLdmM5BBY4wY7JOW
+	 Pl9aJKOBGF0deGC5uveM4XApLDnkVPRJVFLq+2s6fd4h4taT3NkO9EX12aZXT/o0HpHKe
+	 7swcmqGhyTQEilTCpdsdNbVJiOZIPwXGBqrTWM2C9i6LhX5GOTFhgdtv+dXl8lpKjNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792714827;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=2Mka4FJTWospogWieZvcESfWOWskKq6CXHFagjEX/04=;
-	b=QKMQTbi26UZtsp7LLSA9HGACYmGF1sXOrWPX38Q3UWjx5mSNJbOillDOWwEayprsf69l
-	 vZn1VkECsZ3nRAHPz+t7e/j8NYAVU1tRYqP+a0AaltWki5OS5VmRO8/gGzFfwEa5r4Q1S
-	 Kw4zaOtOOTNipabsOCXStAR9YCsWK3Gp2Y4Twj7vf5gGltf3/rVQaEzBIbk3pLh630weE
-	 tBkU2FQI7PHsbdLzglDiIVnGDqdTk3WcPN+JrC3ksNFiHQgVwHZuF8/yaF87qb5Df+cA7
-	 XT6k2ohVOvD36duVCtMh5zqXA3w/mMsPU+x9gBjvue6NDgE92ooWja7Sb+EEsimG3BA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792768970;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:Content-Transfer-Encoding:MIME-Version;
+	bh=v4diYte8A4U+5YdamvmyB/opU496/bYf8sQxy/1ok8Q=;
+	b=H6oHfriqQr0NgSPhjWWg5kd1iQugkKKRbw+Q73sz5njzJKDGPUNPJ61GtX/XFVX0p65r
+	 gwfDXCcThkTzPW/k7zahu4XtbJ0RcW4u+9rZ3kadwLX8AElMUctk8yqo/BoEKsiVySRVN
+	 TqvBr2zIg32YdwKJh73757taDOJhNv3cSXu8Edkx/BXJRAncb7Brd4kpJ9HAPfNteTIYX
+	 ZulmmvR+5br74rVYwhq8hns3MTW+xB8XfJZJKXbm9LHUPcT7OTR8cj1Dn3+4C0VN0WyGa
+	 O1PKaY2j2eWC0o7mfQiqh7muq+8nylNeCLxeggnQVxFIQYTJcFH9ylcCB49vB/tJAxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bAv6N4Jl;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Rfe2mDy2;
+	arc=none smtp.remote-ip=74.125.227.131
+Received: from mail-pj2-f3.google.com (mail-pj2-f3.google.com [74.125.227.131])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2536606A319;
-	Fri, 23 Oct 2026 00:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AA0606A31B
+	for <damon@lists.linux.dev>; Fri, 23 Oct 2026 15:22:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E1AA0606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bAv6N4Jl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6521F01825;
-	Fri, 23 Oct 2026 00:20:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792714826;
-	bh=2Mka4FJTWospogWieZvcESfWOWskKq6CXHFagjEX/04=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bAv6N4Jls47eUd+FtgHxBHbbtejWHerLskLx7/lOaw2DPB3dm4hyKaLLHl/ILiOMB
-	 k8sUkkbwQyxWOaKalKneL2hPpcsx5nW6TqUjebP4TdaJ07z5iO3UIWbHFgc/byVPOb
-	 CpqhudB+SWrvc4ryM0nDgcBTO1eVypQJ0Q6zakeSbI9OY4dzW7hCnhehys7PQlBnoV
-	 99lBqYevUHVghak2+8QZQsQ9s+KIU2sKPPsjVucJzBdKG4o14vfZGnmej9MhALx8al
-	 tNRWi/eZNv4efnx83cCGasmpO2eixfnQv03QfFlDJVOeCD8cpt7ExUxZtO/LEhq811
-	 vFmbLKMOe78oQ==
-From: SJ Park <sj@kernel.org>
-To: Aveline Noir <jm5905938@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shubhang Kaushik <sh@gentwo.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Fernand Sieber <sieberf@amazon.com>,
-	Leonard Foerster <foersleo@amazon.de>,
-	SeongJae Park <sjpark@amazon.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>
-Subject: Re: [PATCH] mm/damon: align MMU notifier range when clearing PMD young bit
-Date: Thu, 22 Oct 2026 17:20:17 -0700
-Message-ID: <20261023002018.102560-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To:  <179267916870.2.5637290691657871645.damon-pmd-align-draft@gmail.com>
-References: 
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Rfe2mDy2
+Received: by mail-pj2-f3.google.com with SMTP id d9443c01a7336-2e831901331so6690115ad.1
+        for <damon@lists.linux.dev>; Fri, 23 Oct 2026 08:22:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792768969; x=1793373769; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=v4diYte8A4U+5YdamvmyB/opU496/bYf8sQxy/1ok8Q=;
+        b=Rfe2mDy2wnr8mHr5ESre0VXpMqTykAKjZwkVzTAmZh5d1DiNOs8sBd6bWcpoqh+xz0
+         j5NvcFoV9Z1GpuPsfDF/Czd6QfxstjVOqttu/A/kTcwYi3xSghXay1g2QbUqz8Nwptv3
+         knxiRRWmfy1Y9OYA2qt8ucV9eTSx+VVByjdppqp8oBak2UWXXxMArNVarX4+DJdGVlLz
+         TLCgaHgZWKRT4XGKOQcnPRlPPPPcXJgyS8h7tnO7pUwNcsxTUu/XY3Ym5H3+lRgfj3/6
+         H7IVHscqmQl26xiZ6aT5edjzIafU4EJrFl9BdyaFm1+G9yOMSrDc3UTc3FzbzKCtjpxU
+         m6Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792768969; x=1793373769;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=v4diYte8A4U+5YdamvmyB/opU496/bYf8sQxy/1ok8Q=;
+        b=lMQ8+fCFRU2+QAbZACGZ26ofrBVoNm5sjmP7Lic+kGzi0zTb6U4elskTmNgAjNbEgZ
+         H6q3tjFEC763YTzDeV8JeahJcjxtxle0CwdjieWAwDcJ7gn+kO4S5L9zosrWU190bQ/p
+         ccwe2vzBHdKgdBAX7CGKIBjyXcqD4UdOFneWPSx4RpLfoonQxuj5J2Ei5QO/ML09a/ui
+         QS1/TY3qMq1aFVvAs9lSN+EHrxalEEkg42HwXdfGA9Ysmx9eQd4sCJfzzch3ObrZ4q8M
+         /zHfSHoAD96G89/Gv7YXqQ5N7WgWrcgHPduQvdkCV4J0LJ2VIhmlHXxOSnMWiRi2u8oV
+         3cVg==
+X-Forwarded-Encrypted: i=1; AKwUvBz66lLHtb2IA19/+9SAjBxM/NzpkH488Hsq//5bGXW7NcjpRZfsqlFhLaxWd17lXXUDEgFQ7Q==@lists.linux.dev
+X-Gm-Message-State: AFq9FYK/W84ZK5x+mxowYZbbslDXuOLdPPzcVZCQVBOMrkLYrDiOGOqS
+	ivxPEUsUX/3mEa2V8XIkgbl2H6kRBPrIAnzkZuZ0ACfa20iKF3EJjYYP
+X-Gm-Gg: AYBFou0YFgtKt5edii1q55GXWanoTpxhVez/eKyris24BXK5u+SDSNtwl1WU2c5d0D6
+	Vw5hgtKKaQm+UhZeL1WVPbIm1U1v/16q0bTIKL+Qvoy/uQOpFYMUXlNe4WechR5v4t1z/YA1s5h
+	LvsaDm/BocSikMXnMaQ3LpBMpHtcWzwEdPCtr7sDOQ5wz3aflNB3UvDSzbAtMzqF2da7KZ7Rv4z
+	GF2CjHvQhvL6ecYR3G7264wK9O2AGcpZUjr/ipCTb+sIiBlmSAM6V9LhfV0P+CRlZxez+E80Bpr
+	Nv4q9ELsDxmmfzMRc+eWvwT0lPMWqktY1wCOY7BJWilry0mtibVTno/oifm6Wrgud9v2MixhFro
+	BofjKpFqy22eZer6lUNtQ4AxxeE3J8mo4u0obZKbOVe0aeZPdaVqeIzhte7b9u3AX899gv44Wb+
+	0MZjsPA5DQ8xLzE63Z25l7yK8t4eALRhu3lMhvZwpSP56/8CR6JkxaACttnKd1g4mv7CzJuOHf1
+	/AO4BofNW3+alTqOcwu0e0BHqq8mt8jmnhymYG6i64YL8mLcXV5s09vexIkt9Er2k6PRm81D1co
+	qKz9hZCn9HYPvoeRuqwDmIcZbj8yJqO6qg0qRNWjhCAsRSOOVTKo
+X-Received: by 2002:a17:903:1585:b0:2ea:1b9b:b946 with SMTP id d9443c01a7336-2ea7d09d3bdmr25679205ad.14.1792768969109;
+        Fri, 23 Oct 2026 08:22:49 -0700 (PDT)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea9476f72csm1528235ad.43.2026.10.23.08.22.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2026 08:22:48 -0700 (PDT)
+From: Aveline Noir <jm5905938@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Shubhang Kaushik <sh@gentwo.org>, damon@lists.linux.dev, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, Fernand Sieber <sieberf@amazon.com>,
+ Leonard Foerster <foersleo@amazon.de>, SeongJae Park <sjpark@amazon.de>,
+ Shakeel Butt <shakeel.butt@linux.dev>,
+ Shubhang Kaushik <shubhang@os.amperecomputing.com>,
+ Christoph Lameter (Ampere) <cl@gentwo.org>
+Subject:
+ Re: [PATCH] mm/damon: align MMU notifier range when clearing PMD young bit
+Date: Fri, 23 Oct 2026 13:01:31 +0800
+Message-ID:
+ <179273169185.2.1655708299473876346.damon-pmd-kvm-reply-draft@gmail.com>
+In-Reply-To: <20261023002018.102560-1-sj@kernel.org>
+References:
+ <179267916870.2.5637290691657871645.damon-pmd-align-draft@gmail.com>
+ <20261023002018.102560-1-sj@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -66,74 +108,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Hello Aveline,
+Hi SJ,
 
+On Thu, 22 Oct 2026 17:20:17 -0700 SJ Park <sj@kernel.org> wrote:
+> I Cc-ed them.  Please Cc all
+> recipients who get_maitnainer.pl is recommending, from the next time.
 
-'hkml patch check' [1] says you forgot Cc-ing below people who are recommended
-by get_maintainer.pl.  I Cc-ed them.  Please Cc all recipients who
-get_maitnainer.pl is recommending, from the next time.  'hkml patch format' [2]
-could also help you doing so.
+Sorry for that. Maybe I will use b4 next time :)
 
-- Fernand Sieber <sieberf@amazon.com>
-- Leonard Foerster <foersleo@amazon.de>
-- SeongJae Park <sjpark@amazon.de>
-- Shakeel Butt <shakeel.butt@linux.dev>
+> However, I think this patch explains its context very well, and therefore
+> this link is not needed.
 
-On Thu, 22 Oct 2026 22:26:08 +0800 Aveline Noir <jm5905938@gmail.com> wrote:
+Sure , That make sense.
 
-> damon_pmdp_mkold() clears the young bit of a PMD but notifies
-> [addr, addr + HPAGE_PMD_SIZE), where addr can be an unaligned sampling
-> address. This can miss part of the sampled huge page and age secondary
-> mappings in the next one.
-> 
-> Align addr to HPAGE_PMD_MASK so both operations cover the same huge page.
+> Were you also able to confirm the expected wrong behavior (missing part
+> of the sampled huge page and age secondary mapping), too?
 
-Looks good to me.  Thank you for fixing.
-
-> 
-> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-
-This is an improvement of monitoring accuracy that DAMON provide only best
-effort.  So not Cc-ing stable@ makes sense to me.
-
-> Link: https://lore.kernel.org/r/20261021-damon-align-pte-young-notifier-v1-1-d0365ac45b66@gentwo.org/
-
-The is a link to Shubhang's pte_mkold() patch.  When you add Link: to your
-patch, please add a context on the commit message, from the next time.
-
-I assume you added this link because you mentioned you will send this patch on
-the thread, with your nice review of the patch.  However, I think this patch
-explains its context very well, and therefore this link is not needed.
-
-> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
-
-Reviewed-by: SJ Park <sj@kernel.org>
-
-I applied this patch to damon/next [3] tree after dropping the Link: tag.  We
-are now in the middle of the merge window.  It may be better to give mm.git
-maintainer (Andrew Morton) time to work on pull request, rather than adding
-more changes that are not really urgent.  I understand this series is not
-really urgent.  Hence, Andrew might not add this patch until next -rc1 release.
-In the case, I will request adding this to mm.git after next -rc1 release.  Let
-me know if you think this is really urgent or the Link: tag should be kept.  If
-not, no action from your side is needed for now.
-
-> ---
-> Tested both aligned and unaligned addresses on 2 MiB THPs in an x86-64 KVM
-> guest with a recording MMU notifier; all ranges matched the sampled PMD.
-
-Thank you for doing the test and sharing the results.  Were you also able to
-confirm the expected wrong behavior (missing part of the sampled huge page and
-age secondary mapping), too?
-
-[1] https://github.com/sjp38/hackermail/blob/master/USAGE.md#checking-patches
-[2] https://github.com/sjp38/hackermail/blob/master/USAGE.md#formatting-patches
-[3] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-
+Yes. A test with nested x86-64 KVM confirmed both effects. With
+4 KiB EPT mappings, a midpoint PMD sample left the first 1 MiB young and
+aged the next THP's first 1 MiB. With 2 MiB EPT mappings, both whole THPs
+were aged. After the fix, only the sampled THP was aged in both cases.
 
 Thanks,
-SJ
-
-[...]
+Aveline Noir
