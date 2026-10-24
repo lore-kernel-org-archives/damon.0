@@ -1,59 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792802580;
-	b=CHA3JxroNSW//DK3ujLtND9zjw9mSHNnkJRT9OeSIcv2I0q9Id1n6wy2VmeLC/XgWh0E
-	 6viw7pm82zDcRxDwm1Zn+mJrDmfAQMJklu2UpszLpwk1aRxl3Zv2VzGNNNMMXjLKCscSZ
-	 Z/vNLkUCa7ZmOe0raK2ReBAQhwDKQZZ2CHEN8nzqo7yvaCOyAgwM9/zK4XHsMAPevfkhC
-	 IeE0kDB801hIUtMrSJbUnYuWmqGDcTaG2fxaQd3emPzqYAG91zzeoxdygmwoZsXDkq6jT
-	 4DkbdyeW6JPI4gBXYE3p5DBxozNcbAD3JFqbV7TjDkzaI+3RKRG/mqyUdw9qJGHkhAw==
+	t=1792802967;
+	b=R+qgZviM1EP8obuVm+jmPozPiwvDVU87ASjnQn6IWQKgrXAqCo5ldwy1fqcTl4ggPjnT
+	 +dPWnA3fMUfA5dc27i7CYWcpura1tO+bVzsslWtAi3sIQKNTrwjghD2QJPzq0VU+0BDWz
+	 ouwxdoNEtCAfXqaix2NQpWxQNXq8Cj0pAmPTVOZscavZ4hre8C5N0vFxuPyk7GfJSmrkN
+	 tbR8Zziyj7NDuHK/6WG1BwApEUfOKlJsYa8oSvFBoSwGyMdn6fVrsndbCN0n5eSNiMIzL
+	 aUgAGfPOxyPvaW6Bd6mk+ShJsUuQXqVWkufm4UkYrAvFOdKUhMZjUP84GBgEVODeqfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792802580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792802967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=80H2lZ/+xPdhTPazfU9LTQ5TA67GAupaXXZBnmrhJik=;
-	b=5B05u6DaBUxdtL6DbpEBIxtriSCG6jBsNz/yemJ4Isa0qetbdkUllyvd7eZwVWWvqIYb
-	 G0TktoUU/vTtdWLNimmmqgRWyAQXOrOERRPp97RTSuqA11WbK6wHiIUuiK4xW9lrPM+aS
-	 b/ZaqAH4PNjLG5R7TD13/FsqAWmxikbb9aKc5gij1VTZ6VFC8/k76/jdlu3DZoYHlH9B+
-	 E1jvwL1+jDqwsAzpgCCVduqbmejIcjJ7+ujB4I2OzPUwFa4/eGgA+1CK5soOkWpMhhZDA
-	 CjRY4jAMUTnEMx/RQOeU4DAKMqRuLgzavAM5xDX8kDmB5BO150HLlKVXqI010RmnLLg==
+	bh=hRNeFuA2pYlESeNLcoEeMIof/8ARD78QxbjEPZKg0Yw=;
+	b=k2xLtaQJAdg/P5dU1BblDmxykWUzErsvWgkA9WVJtGS61pDbbzONSSb62mnuBl3zNuXC
+	 EtttEkRlTtmcjiFT6VEJREIPfziRWhIaBscpmWQ/noFEz5DVI/5QfBCqvNTczqtYRQewd
+	 EtQllJtwF+czq34WiCL1QdEu75l0X4FIMzfvmHuZOQ4/yWPlTI9adAhSF9iAvB58h0vMQ
+	 7im4MhFN3InzxVy1MtoP5ZO6KV7ajYSoj6n/VJlwQN9oPUwP9SJOVKH2hGHp29yEVruXm
+	 6qeoiQ7cgjgBssG5Hj7/cC0E5cP8brnWC2vDYGiTVKQbNE712haYTXBzlFapcWYVk1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CLNCM00C;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="TQRlw/Ke";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB45606A31A;
-	Sat, 24 Oct 2026 00:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047D6606A31A
+	for <damon@lists.linux.dev>; Sat, 24 Oct 2026 00:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CLNCM00C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8E31F01825;
-	Sat, 24 Oct 2026 00:42:58 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TQRlw/Ke
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430521F01825;
+	Sat, 24 Oct 2026 00:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792802579;
-	bh=80H2lZ/+xPdhTPazfU9LTQ5TA67GAupaXXZBnmrhJik=;
+	s=k20260515; t=1792802966;
+	bh=hRNeFuA2pYlESeNLcoEeMIof/8ARD78QxbjEPZKg0Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CLNCM00Cgw3YHxikMpZ2wacAXPGQowY94cvy7BRdu1M5I1GGPmhVpvy+FkBA/VWJ2
-	 Qq9hXIMXkNmmDr80GccmDklzMalTR2UTrVHZcqpi38PlXQEoFZtK8AEtmt0IgvkB8D
-	 Oy5ahhndGyQbSy3OOcQjRgmZt/z1BypSPvpu4hEy5CHmjyFM1bwXLJdjk7Gd9wTDOi
-	 FyMnfBDGLgzRxHPhrSPwh0+Ajuuj7cXyeD47NkOGFeLeMyoYZsLOLwH8gzjsfn7Hs0
-	 A7vOD8d/6zLSxDl+fM3AoufwoVAXRoMvY1kIVZgPQ3cOchRv48ZhINyAMDLzZdtAUm
-	 dKbVN3IFCTMhA==
+	b=TQRlw/KeCb5kMLBUqrRLMMTLQrtP8H4BL3lQkQcIwCo4zXYavKcdn+E8vm0sNYmzk
+	 ksGeI553hbHyUwhF48+d1cfPFHMgrnScs+TB5f0qIjpP8ZIIqLrEiRK5XR0+w/pIKq
+	 molVmRhl2eE3F93jy7Q2o7QT1Nv5FFOQAjXdC3O4j5gO2i4Y9CWtrc2KFE7akRTfcZ
+	 gD9U6CBzeeEz9Km6ZvCcoOI5hG7OALYWCAAu4dxv0BjRJdnQJUSHIpnsmLXTdvRVmf
+	 P0KrtX8XIIJsshW0xmyj5yBB1O9XfMuHfq9LGtwitbTUDNOalrN8PYWowr+2Us4+Is
+	 auGefqa302zZA==
 From: SJ Park <sj@kernel.org>
 To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
 	corbet@lwn.net,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
 	rdunlap@infradead.org,
+	sashiko-bot@kernel.org,
 	skhan@linuxfoundation.org
 Subject: Re: [RFC PATCH v0] Docs/mm/damon/design: document data attributes report infra design (beyond page table accessed-bit milestone 2)
-Date: Fri, 23 Oct 2026 17:42:51 -0700
-Message-ID: <20261024004252.87352-1-sj@kernel.org>
+Date: Fri, 23 Oct 2026 17:49:14 -0700
+Message-ID: <20261024004914.87522-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261023195122.2481-1-ravis.opensrc@gmail.com>
+In-Reply-To: <20261023194848.2449-1-ravis.opensrc@gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -66,130 +65,87 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 23 Oct 2026 12:51:22 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+On Fri, 23 Oct 2026 12:48:48 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 
 > Hi SJ,
 > 
-> On Wed, 21 Oct 2026 22:29:12 -0700 SJ Park <sj@kernel.org> wrote:
+> On Wed, 21 Oct 2026 22:32:26 -0700 SJ Park <sj@kernel.org> wrote:
 > 
-> > Hi Ravi,
-> >
-> > On Wed, 21 Oct 2026 21:17:24 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+> > On Wed, 21 Oct 2026 21:17:08 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
 > >
 > [...]
-> >
-> > Thank you for your detailed review and testing of the first design!  I'd still
-> > like to try decoding idea first, mainly for quick prototyping.
-> 
-> Sounds good.  Starting with decode makes sense, especially for VMs
-> where hardware address-sampling PMUs are often unavailable; some tips
-> for the prototype are in the other reply [1].
-
-Thank you for confirming and the tips!
-
-> 
+> > > PEBS saves registers just after the instruction retires, so a load that
+> > > overwrites its base register defeats decode.  IBS saves no general
+> > > registers (perf reports the registers at the NMI), so decode is not
+> > > reliable on AMD.  Decode in kdamond must also survive exec, munmap, exit
+> > > and pid reuse.  These are synthetic loops chosen to separate the cases;
+> > > how often real code hits the failing case is not measured.
 > [...]
-> > > Yes, if the report has an address field with a validity bit and carries
-> > > the producing report-type (attr) id.  Then IBS, PEBS, Arm SPE (through
-> > > an adapter, since SPE uses the perf AUX buffer) and device-side
-> > > monitors all produce the same report, into the same queues and probes.
 > >
-> > Thank you for confirming.  And yes, I think we can add more (union) fields to
-> > the report structure.
+> > Thank you for these testing, Ravi.  Unfortunately I'm still learning perf event
+> > and therefore not yet fully understanding these tests.  I will revisit after
+> > gaining more understanding.
 > >
-> > However, could you further clarify what are the validity bit and attr id, and
-> > why those are needed?  I'm still newbie to perf event, please bear in mind with
-> > me.
-> 
-> Neither is perf-specific:
-> 
-> - Validity bit (or union tag): a way to tell whether a report carries a
->   virtual address, a physical address, or both.  For example, a decoded
->   sample has no physical address if the page is not mapped.  If you use
->   a union with a type field, that already covers it.
-
-Thank you for clarifying.  Yes, it may have a union with a type field.
-
-> 
-> - Attr id: an id of the producer (report type) that made the report.  If
->   several producers later feed one queue (e.g. perf sampling and a
->   device-side monitor), a probe can filter on, or weigh, reports by
->   their source.  If each queue only ever has one producer, the queue
->   already identifies it, and the field is not needed.
-
-Thank you for clarifying.  I agree this kind of information will be needed, and
-I will make sure it is in the report struct.
-
-> 
-> [...]
-> > > 4. Binary search over a sorted region snapshot (your todo in
-> > >    kdamond_apply_access_report()) beats a linear walk from about 2
-> > >    reports per interval for 1,000 regions (a model, to be measured).
+> > > So the suggestion is for the first report type to use the PMU-captured
+> > > address and load/store flag (AMD cpu-cycles:p; on Intel, the PEBS
+> > > memory events, which moves them into milestone 2).  Your call, of
+> > > course.
 > >
-> > Yes, this efficient region-report matching would be important.  We could also
-> > consider starting with linear walk and later optimize, though.
+> > Meanwhile, I will start with the current plan (capture register contents in NMI
+> > and decode in kdamond) if you don't have strong concern.
 > 
-> Agreed; starting with a linear walk for the prototype is fine, and once
-> it is out, happy to measure where binary search starts to matter.
+> No strong concern.  Starting with decode makes sense, and VMs are a
+> good reason for it: in the KVM setups tried on Intel and AMD hosts, no
+> guest got a data address from the PMU, whereas every guest had a
+> software CPU clock (PERF_COUNT_SW_CPU_CLOCK) or basic hardware cycle
+> counter (PERF_COUNT_HW_CPU_CYCLES).
+> 
+> As quick background on why those earlier test tables brought up PEBS
+> and IBS: in perf_event, sampling CPU cycles has two modes, selected by
+> attr.precise_ip (the :p suffix in perf record):
+> 
+>   - Plain cycle or timer sampling (attr.precise_ip = 0, the default):
+>     a counter overflows and raises a normal interrupt/NMI.  The
+>     hardware does not record a data address; the handler just sees
+>     pt_regs where the CPU stopped between instructions.  Even though
+>     the interrupt lands a few instructions after the overflow ("skid"),
+>     regs->ip is the next instruction about to run and pt_regs holds
+>     its untouched input registers -- so decoding regs->ip gives the
+>     address it is about to access.
+> 
+>   - Hardware "precise" sampling (attr.precise_ip > 0, which routes to
+>     Intel PEBS or AMD IBS): the PMU hardware itself snapshots the
+>     instruction and, on supported events, the data address it touched.
+>     My earlier tables tested this mode.  Because PEBS records registers
+>     after the instruction retires (when a load into its own base
+>     register has already overwritten it) and IBS does not capture
+>     general registers, software decode breaks there -- which is fine,
+>     since in that mode you use the hardware-captured address instead
+>     (your Milestone 3).
+> 
+> So there is no need to revisit those earlier test tables for your
+> Milestone 2 prototype.
+> 
+> Two small tips for the prototype:
+> 
+>   - use PERF_COUNT_HW_CPU_CYCLES (or PERF_COUNT_SW_CPU_CLOCK in VMs
+>     without a virtual PMU) with the default attr.precise_ip = 0;
+>   - skip, and count, samples whose instruction does not access memory;
+>     in typical programs, only ~15-60% of cycle samples land on a load
+>     or store.
+> 
+> If you want to inspect what those samples look like from user space on
+> a program:
+> 
+>   R=AX,BX,CX,DX,SI,DI,BP,SP,IP,R8,R9,R10,R11,R12,R13,R14,R15
+>   perf record -c 2000003 -e cycles:u --intr-regs=$R -- <program>
+>   perf script -F ip,iregs,insn
+> 
+> (In a guest without hardware cycle counters, use -e cpu-clock:u
+> instead.)  Each sample shows the IP, the registers and the instruction
+> bytes to decode.
 
-Cool!
-
-> 
-> [...]
-> > > 5. Samplers can stop silently: in a report on the v4 thread [1], IBS
-> [...]
-> > Unfortunately my understanding of perf event is not yet good enough to
-> > understand this in depth.  I will revisit this after starting implementation.
-> 
-> Sure.  The one part worth keeping in mind from the start: a sampler can
-> stop without any error, so a counter of reports received and dropped
-> helps tell "no accesses" from "no samples".
-
-Good point.  I will try to make it at least easy to debug.
-
-> 
-> [...]
-> > >   - The queue: the per-CPU seqcount design in note 2 (suggested), or
-> > >     ftrace's ring buffer with one iterator per reader.
-> >
-> > My current plan is to use DAMON's original simple lockless and global queue per
-> > report queue.  Let me know if the report queue design is not clearly explaining
-> > what it would look like, or there is a clear problem.
-> 
-> A global queue is fine to start with, and the design is clear.  One
-> thing to keep in mind: perf writers run in interrupt or NMI context on
-> all CPUs at once, and an NMI can arrive in the middle of another write.
-> So reserving a slot needs to be lock-free, and a reader should not see
-> a half-written report.  If the design already covers that, there is
-> nothing to add.
-
-Design is still in progress, but definitely this should be covered.  Thank you
-for calling out!
-
-> 
-> [...]
-> > As soon as this design discussion is completed, I will start prototype
-> > implementation and share it as the next RFC version, as soon as possible.  Your
-> > review and test of the version will be super helpful.  I may also ask you some
-> > questions for perf event and your prototypes.  Thanks in advance for your help.
-> >
-> > There are competing works, though.  It would take time.  I expect about one
-> > month at minimum.  It might take longer; Thanksgiving holidays could be helpful
-> > to give me a time to concentrate.  Please bear in mind.  But once the initial
-> > prototype is implemented, I believe we could quickly iterate and meet the ETA
-> > (LSFMMBPF'27).
-> 
-> No rush on the timeline; that plan sounds good.  Please feel free to
-> ask any time, and I will be happy to share the test programs and review
-> and test the prototype when it is out.
-
-Appreciate your continued support, that will be super helpful!
-
-> 
-> Thanks,
-> Ravi
-> 
-> [1] https://lore.kernel.org/r/20261023194848.2449-1-ravis.opensrc@gmail.com
+Thank you for these useful information an tips!
 
 
 Thanks,
