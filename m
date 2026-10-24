@@ -1,58 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792802967;
-	b=R+qgZviM1EP8obuVm+jmPozPiwvDVU87ASjnQn6IWQKgrXAqCo5ldwy1fqcTl4ggPjnT
-	 +dPWnA3fMUfA5dc27i7CYWcpura1tO+bVzsslWtAi3sIQKNTrwjghD2QJPzq0VU+0BDWz
-	 ouwxdoNEtCAfXqaix2NQpWxQNXq8Cj0pAmPTVOZscavZ4hre8C5N0vFxuPyk7GfJSmrkN
-	 tbR8Zziyj7NDuHK/6WG1BwApEUfOKlJsYa8oSvFBoSwGyMdn6fVrsndbCN0n5eSNiMIzL
-	 aUgAGfPOxyPvaW6Bd6mk+ShJsUuQXqVWkufm4UkYrAvFOdKUhMZjUP84GBgEVODeqfw==
+	t=1792804956;
+	b=CHbAIX5cZhE6E3lUwG30do0B3dvlikKAmxKaVRbHqCpDMnu7wtl0d1sUKahJevNgFOdh
+	 oWWOk7NQJViH5WkHobIK01eJot8YTxZ8Yu8I7bfaTg/K5qIW8+YpzvLLkaRVJPOLnpW9g
+	 dT4iIcQEH8G5+Cp57+7fm0FXcKOxZKMnaX1tsebsITTkfbyjbdLVJft6xrJIGJpf7oHPw
+	 AoR++p5528SfcntTPeFZKQz+3QHCIt+4n9FIBEE5f5hFaY3YPH6uG1Qs2dnTos1/Ihom4
+	 Z+c5FgKRG1tVteIwjJNJMo7AbtU7JapYLG0CF4KaQLj+RdTOKjKyRd5q4kZO+FvBoqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792802967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792804956;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=hRNeFuA2pYlESeNLcoEeMIof/8ARD78QxbjEPZKg0Yw=;
-	b=k2xLtaQJAdg/P5dU1BblDmxykWUzErsvWgkA9WVJtGS61pDbbzONSSb62mnuBl3zNuXC
-	 EtttEkRlTtmcjiFT6VEJREIPfziRWhIaBscpmWQ/noFEz5DVI/5QfBCqvNTczqtYRQewd
-	 EtQllJtwF+czq34WiCL1QdEu75l0X4FIMzfvmHuZOQ4/yWPlTI9adAhSF9iAvB58h0vMQ
-	 7im4MhFN3InzxVy1MtoP5ZO6KV7ajYSoj6n/VJlwQN9oPUwP9SJOVKH2hGHp29yEVruXm
-	 6qeoiQ7cgjgBssG5Hj7/cC0E5cP8brnWC2vDYGiTVKQbNE712haYTXBzlFapcWYVk1Q==
+	bh=wYR2M2iVhPBLmlpr1xOyUZypnHKQt/AYQu7IBgbQBZU=;
+	b=HEtCKC/x0jr7Drr0mRoa00yBBYCEB++RnxDA0lZmX+pWyu6+YqDKcxbVMcsbwZLqRGfB
+	 CjL6+OM1QoGU3zsaXJWTrJBtZjmO1rOHRc4cR0mCSl/T9a2E8+dRIg4GsWv8Moc5XMoOL
+	 gKwL6Uor3BpEaYPB8ZIskd6xh/CsOlL4D+1+5K24fkeCMQVcKqBWznv4YoVvIC3dY86ZO
+	 OJUBZCAJIDG4BARAwfc35hNcsNPLISjg1jJM57i2ra55BpqW9vboofVVh04f0cQ5wYGoF
+	 SPubuGZDC9x2lNJ/jL0yE1ND21IcfGJGu+KN3eJCYwu7GJ0aVEfYQvNT8aqy/dkfzJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="TQRlw/Ke";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=B025dT8I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047D6606A31A
-	for <damon@lists.linux.dev>; Sat, 24 Oct 2026 00:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D645C606A31A;
+	Sat, 24 Oct 2026 01:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TQRlw/Ke
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430521F01825;
-	Sat, 24 Oct 2026 00:49:26 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=B025dT8I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC7C1F01825;
+	Sat, 24 Oct 2026 01:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792802966;
-	bh=hRNeFuA2pYlESeNLcoEeMIof/8ARD78QxbjEPZKg0Yw=;
+	s=k20260515; t=1792804955;
+	bh=wYR2M2iVhPBLmlpr1xOyUZypnHKQt/AYQu7IBgbQBZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TQRlw/KeCb5kMLBUqrRLMMTLQrtP8H4BL3lQkQcIwCo4zXYavKcdn+E8vm0sNYmzk
-	 ksGeI553hbHyUwhF48+d1cfPFHMgrnScs+TB5f0qIjpP8ZIIqLrEiRK5XR0+w/pIKq
-	 molVmRhl2eE3F93jy7Q2o7QT1Nv5FFOQAjXdC3O4j5gO2i4Y9CWtrc2KFE7akRTfcZ
-	 gD9U6CBzeeEz9Km6ZvCcoOI5hG7OALYWCAAu4dxv0BjRJdnQJUSHIpnsmLXTdvRVmf
-	 P0KrtX8XIIJsshW0xmyj5yBB1O9XfMuHfq9LGtwitbTUDNOalrN8PYWowr+2Us4+Is
-	 auGefqa302zZA==
+	b=B025dT8IqnKo9J9ah00/inNxyi1JmmsDJJJ84SWS51C1yg2CHTP2TJ9S3DJ9/6Vn/
+	 RQmLnqeHRn1yeUpspA5wQAgRVT9y1tNjL1JUW8CuEDzDK/JROD6+0inGu7yUMuiuFg
+	 uk2qy+x7R2Y9P0ug92ptKFpmEd1YiZNGS2cCJ9qpN7oAo4G/+S6opzTkpb6ho7bnpa
+	 A+mwAdsN1WsteR72rOzaIFWayrfMoQntkqSDKZLoQTgRxNAu/b3lAzylySiKi7+bB/
+	 mPRUP/sbknkQuYdtSxDm3xpAyGogKgZ4KZDnZ5aIf39MgYzeOyawsS0CXYX6h2dNOH
+	 A46vVSWT75AXg==
 From: SJ Park <sj@kernel.org>
-To: Ravi Jonnalagadda <ravis.opensrc@gmail.com>
+To: Aveline Noir <jm5905938@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	corbet@lwn.net,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	rdunlap@infradead.org,
-	sashiko-bot@kernel.org,
-	skhan@linuxfoundation.org
-Subject: Re: [RFC PATCH v0] Docs/mm/damon/design: document data attributes report infra design (beyond page table accessed-bit milestone 2)
-Date: Fri, 23 Oct 2026 17:49:14 -0700
-Message-ID: <20261024004914.87522-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/core: reset watermark wait state on each iteration
+Date: Fri, 23 Oct 2026 18:22:27 -0700
+Message-ID: <20261024012228.88920-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261023194848.2449-1-ravis.opensrc@gmail.com>
+In-Reply-To: <179277129124.2.16132047926074873101.damon-empty-schemes@gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -65,88 +64,93 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 23 Oct 2026 12:48:48 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
+On Sat, 24 Oct 2026 00:01:31 +0800 Aveline Noir <jm5905938@gmail.com> wrote:
 
-> Hi SJ,
+> Found while reviewing the DAMON source code that if an online commit 
+> removes all schemes while kdamond is waiting for watermark activation,
+> the scheme loop becomes empty but min_wait_time keeps the previous 
+> positive value.  kdamond then keeps sleeping instead of resuming 
+> monitoring without schemes.
 > 
-> On Wed, 21 Oct 2026 22:32:26 -0700 SJ Park <sj@kernel.org> wrote:
-> 
-> > On Wed, 21 Oct 2026 21:17:08 -0700 Ravi Jonnalagadda <ravis.opensrc@gmail.com> wrote:
-> >
-> [...]
-> > > PEBS saves registers just after the instruction retires, so a load that
-> > > overwrites its base register defeats decode.  IBS saves no general
-> > > registers (perf reports the registers at the NMI), so decode is not
-> > > reliable on AMD.  Decode in kdamond must also survive exec, munmap, exit
-> > > and pid reuse.  These are synthetic loops chosen to separate the cases;
-> > > how often real code hits the failing case is not measured.
-> [...]
-> >
-> > Thank you for these testing, Ravi.  Unfortunately I'm still learning perf event
-> > and therefore not yet fully understanding these tests.  I will revisit after
-> > gaining more understanding.
-> >
-> > > So the suggestion is for the first report type to use the PMU-captured
-> > > address and load/store flag (AMD cpu-cycles:p; on Intel, the PEBS
-> > > memory events, which moves them into milestone 2).  Your call, of
-> > > course.
-> >
-> > Meanwhile, I will start with the current plan (capture register contents in NMI
-> > and decode in kdamond) if you don't have strong concern.
-> 
-> No strong concern.  Starting with decode makes sense, and VMs are a
-> good reason for it: in the KVM setups tried on Intel and AMD hosts, no
-> guest got a data address from the PMU, whereas every guest had a
-> software CPU clock (PERF_COUNT_SW_CPU_CLOCK) or basic hardware cycle
-> counter (PERF_COUNT_HW_CPU_CYCLES).
-> 
-> As quick background on why those earlier test tables brought up PEBS
-> and IBS: in perf_event, sampling CPU cycles has two modes, selected by
-> attr.precise_ip (the :p suffix in perf record):
-> 
->   - Plain cycle or timer sampling (attr.precise_ip = 0, the default):
->     a counter overflows and raises a normal interrupt/NMI.  The
->     hardware does not record a data address; the handler just sees
->     pt_regs where the CPU stopped between instructions.  Even though
->     the interrupt lands a few instructions after the overflow ("skid"),
->     regs->ip is the next instruction about to run and pt_regs holds
->     its untouched input registers -- so decoding regs->ip gives the
->     address it is about to access.
-> 
->   - Hardware "precise" sampling (attr.precise_ip > 0, which routes to
->     Intel PEBS or AMD IBS): the PMU hardware itself snapshots the
->     instruction and, on supported events, the data address it touched.
->     My earlier tables tested this mode.  Because PEBS records registers
->     after the instruction retires (when a load into its own base
->     register has already overwritten it) and IBS does not capture
->     general registers, software decode breaks there -- which is fine,
->     since in that mode you use the hardware-captured address instead
->     (your Milestone 3).
-> 
-> So there is no need to revisit those earlier test tables for your
-> Milestone 2 prototype.
-> 
-> Two small tips for the prototype:
-> 
->   - use PERF_COUNT_HW_CPU_CYCLES (or PERF_COUNT_SW_CPU_CLOCK in VMs
->     without a virtual PMU) with the default attr.precise_ip = 0;
->   - skip, and count, samples whose instruction does not access memory;
->     in typical programs, only ~15-60% of cycle samples land on a load
->     or store.
-> 
-> If you want to inspect what those samples look like from user space on
-> a program:
-> 
->   R=AX,BX,CX,DX,SI,DI,BP,SP,IP,R8,R9,R10,R11,R12,R13,R14,R15
->   perf record -c 2000003 -e cycles:u --intr-regs=$R -- <program>
->   perf script -F ip,iregs,insn
-> 
-> (In a guest without hardware cycle counters, use -e cpu-clock:u
-> instead.)  Each sample shows the IP, the registers and the instruction
-> bytes to decode.
+> Initialize min_wait_time and init_wait_time on each loop iteration so
+> the wait is calculated from the current schemes and an empty scheme
+> list resumes monitoring.
 
-Thank you for these useful information an tips!
+Nice catch and fix, thank you Aveline!
+
+> 
+> Fixes: 6e74d2bf5a26 ("mm/damon/core: add a new callback for watermarks checks")
+
+But, this is a preparational patch for online commit support, right?  Shouldn't
+the Fixes: be the commit that enabled online commit?
+
+Also, this bug seems nasty to me.  Users could work around the issue without
+restarting DAMON only by installing a scheme that has watermarks that activates
+DAMON again, and then removing the scheme again.  I think it deserves to add
+this to commit message and Cc stable@.
+
+Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+Cc: <stable@vger.kernel.org> # 5.19.x
+
+> Assisted-by: LLM
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
+> ---
+> An x86-64 KVM test using free-memory watermarks reproduced the stall
+> with nr_schemes=0 followed by commit.  The same test resumed monitoring
+> with this fix.  DAMON KUnit and selftests all passed.
+
+Thank you for keep adding this useful test results.
+
+Assuming you agree to above suggestions, I applied  this patch to
+damon/next [1] tree after applying my suggestions like below.  We are in the
+middle of the merge window.
+It may better to let mm.git maintainer (Andrew Morton) take time for pull
+request works, rather than adding more changes that are not really urgent.  I
+understand this series is not really urgent.  Hence, Andrew might not add this
+patch until next -rc1 release.  In the case, I will request adding this to
+mm.git after the next -rc1 release.  So, no action from your side is needed for
+now.  Let me know if you find anything I missed, or disagree to the suggestions
+or the urgency judgement.
+
+Changes to the patch file that I made:
+
+'''
+@@ -8,6 +8,10 @@ the scheme loop becomes empty but min_wait_time keeps the previous
+ positive value.  kdamond then keeps sleeping instead of resuming
+ monitoring without schemes.
+
++The way to wake up the kdamond again without DAMON is bit complicated.
++Install a scheme having watermarks that can activate the kdamond again,
++and remove the scheme again.  Doable but cumbersome and complicated.
++
+ Initialize min_wait_time and init_wait_time on each loop iteration so
+ the wait is calculated from the current schemes and an empty scheme
+ list resumes monitoring.
+@@ -15,11 +19,15 @@ list resumes monitoring.
+ /* TODO: move below to commentary */
+ Changes from v1
+ - v1: https://lore.kernel.org/179277129124.2.16132047926074873101.damon-empty-schemes@gmail.com
+-- None.
++- Collect R-b: from SJ.
++- Add how to work around the problem.
++- Update Fixes: and add Cc: stable@.
+
+-Fixes: 6e74d2bf5a26 ("mm/damon/core: add a new callback for watermarks checks")
++Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
++Cc: <stable@vger.kernel.org> # 5.19.x
+ Assisted-by: LLM
+ Signed-off-by: Aveline Noir <jm5905938@gmail.com>
++Reviewed-by: SJ Park <sj@kernel.org>
+ Signed-off-by: SJ Park <sj@kernel.org>
+'''
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
 SJ
+
+[...]
