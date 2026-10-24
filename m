@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792871567;
-	b=KUZhS/5njHlZ5+JbE4et/Lk8pS5SlKTl5CaIv+3OcySYMIXNFeVluTJf9C/rIwqMXhLa
-	 Fhoi+cFFWFN2ozj7Z4x/+yi/XE77hTBuptQ03krA8eNcyqCWtjw0anV5ryRN/zj4EW8fF
-	 T4fS4ithfXINc3lH0olBbwZxDasR7gQ0kwvgjQoOOJYFaHUqJSD4LbOUTMee3Aa/zKxff
-	 ZeSagY7L5Gqqy8wnCWcE5WnV9GCEYYyFl4hRiP6Ehs9GItPmeLjlIw1DgX066ubbmfhtn
-	 PEavNgywkJsHVuTT4WVrSLuvghMSYCRp+0eUrN+QML9F+Tnt/VTmZvnswyGsumOVESQ==
+	t=1792875962;
+	b=vtMyGCpJcclxlZpcP64KZoyWwF3cCARL0Dus6ng7gs0QEhFt44/qdMbQGJS3OP9ufIWL
+	 mKfpO5MpFgnRYfW2VcbEBBbn0gfC2MjXCFcVuQXOXzaSNcimfenwiSgM1FauBO06D+YPm
+	 5oTI+OMnBIc3zDYcasf3oxycbQwV6Q8rwNoJ2M5fHF0lbh8Y+d+v3jvpoXPPkSEFY68TY
+	 lReIW9EMCgdzBXIt1Vy864GVx1e1RGjlXbsCUuGPxcwqOYq25nQ6AX+b7kkC2+aazygCx
+	 EPgrs7TT1U6pV/tEtRZJD+GGCq4rx+d8xzl0cDKKvc12CSMh8BLyOw14YW8XwT0uMew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792871567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792875962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=fbMLNJ8GIZwcr4gCLnTsgDF+nSjrSwkPflLsa6GOuwI=;
-	b=eqxSDyK2CSLKaQrSdLn+IXHOuvLrfNthou+lcoaxE2qg6qShKW0z+ZDzZ3v1Bke8OrEw
-	 5yyP9bCkM+p798+55Wa+Si4sAVCfLRhykFeu7mFdE7J0kr+p/76HzBYaCEEwdDfcBvMUV
-	 alS72KKhqvqZZOJ9nstvTN2H7NE3MqdB5P6EKcAymOQDt/XKI4Sx7vc2G8J3oz5OkG2Wv
-	 dxzwOnPGb4TIgvYRp2w59iCRoGoDMNMTz0XaDc3EWQ9ABe+mkGSgzvZ0AozvM1In6N1/5
-	 Yj8I47noD1daWJmZhrCtDWGxgv3iNsyUNi5DuTrqtdGsGG4RnDVEWCVmQwtyLT7QUvQ==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=DEsKqDozT8n8jNTNyGDSZhCKcPX9RBFL/scJ3pbGQhs=;
+	b=FBlPE02PsvxguOP5Y9GfDbnEcjlvGFJxqqa+E1TAdz6fH5yQRTM3Vft+8HXjSK93bs3v
+	 B9eKb7Yzv9nxRe29U+yaQTB158R2neyiy8BlRVvtYEIGoU2sq/K3+rbFPGRDhsTRaiVyb
+	 WQBHVuXqcRgk0wf2WIFxnGXuWJD44jgbnnKiFJcPcYUX7R3F4B3hFwQnXOWR4cWYMtugl
+	 yXNfI1epDzAVmW5twIIitL32IWmX4+cIKwn36a2ylvTosvxauCOaxY3Aemnmav5ejrFxE
+	 B7nOF4D0F+vcE2ynZifVCI6ywaun79HgQBR6Y/q243FFkesG/ZIPpZB+oI65W/koonA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ObX6vXqH;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ezNgzsb8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677FD606A31A
-	for <damon@lists.linux.dev>; Sat, 24 Oct 2026 19:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEB7606A31A
+	for <damon@lists.linux.dev>; Sat, 24 Oct 2026 21:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ObX6vXqH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8341F01825;
-	Sat, 24 Oct 2026 19:52:46 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ezNgzsb8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387621F01825;
+	Sat, 24 Oct 2026 21:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792871567;
-	bh=fbMLNJ8GIZwcr4gCLnTsgDF+nSjrSwkPflLsa6GOuwI=;
-	h=From:To:Cc:Subject:Date;
-	b=ObX6vXqHg2s/zpUMl4hT+88FaOjdgvQWczA4+X7qW6F7ts1fJSJsiw8lBh9Z5TYI3
-	 dcudk6MsM3OxKWWOLm7ETBMEfOSdaz0pEfEzGwtyngFCCmgv5Mr8PUe5Zn9+g2NBdq
-	 hnBQcNuqO203gt727JNxTYqikWTiOthGoBR1sSDOkFhyUEb22A1fSlMtCq0VTe5WZJ
-	 0EmccuP7/Xyfq2umGhXzIXiXDGQc9KpHL25IaLLfsUy1VcFuWaynsrYeOPIaBzGBRy
-	 8g33+tXm3BNslxfou1JVlvwVhbplzjekbe0t1vWoimudekJ3WxDMtu17IZSrr6wGg/
-	 ElDBN8+R8te7Q==
+	s=k20260515; t=1792875961;
+	bh=DEsKqDozT8n8jNTNyGDSZhCKcPX9RBFL/scJ3pbGQhs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=ezNgzsb85kahEwcwhrlzwf36YMCMkDLQZRknAlrRVmPpefT08RBhYoq+eB7DeCkZw
+	 V1wdd0+bOhX3JCa2Wt5676K40aDQ+Stkvx8K7oKHHh9GkNL6Kf9Z8tKhxeu4Z31o2c
+	 Qz/WwwwHtpF8h7F4Iq+LxSzlGyl76BRFtaJZW+Kw7BU31QD2FQCD4XRGKsNX5DquUG
+	 062Kud6LwX+ltIYp+H4IaWL4qmyHdmLiWySvk5JkI8LV2x8PK2YB/1ToQYe/kHU9GX
+	 fr7pMCoH0kRc5FOT3oqelD/9Sd3E5jm2GLYqp2gPWqXY+PbQOFzsVmTL9PY3WwNfOw
+	 Zm1+7ZMcmCpyQ==
 From: SJ Park <sj@kernel.org>
-To: damon@lists.linux.dev
-Cc: SJ Park <sj@kernel.org>
-Subject: [False Bug] mm/damon/core: uninitialized boolean fields in damon_new_scheme()
-Date: Sat, 24 Oct 2026 12:52:39 -0700
-Message-ID: <20261024195239.87431-1-sj@kernel.org>
+To: SJ Park <sj@kernel.org>
+Cc: damon@lists.linux.dev
+Subject: Ways to handle Sashiko bug reports for DAMON (was "Re: [False Bug] mm/damon/core: uninitialized boolean fields in damon_new_scheme()")
+Date: Sat, 24 Oct 2026 14:05:53 -0700
+Message-ID: <20261024210554.88440-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261024195239.87431-1-sj@kernel.org>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -57,64 +59,29 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+On Sat, 24 Oct 2026 12:52:39 -0700 SJ Park <sj@kernel.org> wrote:
 
-
-Sashiko reported a bug that I believe a false positive.  Sharing the report and
-why I think it is false in usual mail format, to get help from more eyeballs.
-
-Sashiko report:
-https://sashiko.dev/#/bug/linux-b6222b1f-1973-4211-b3cc-048298d29abe
-
-> In damon_new_scheme(), allocating a new Data Access Monitor (DAMON) scheme
-> object without zero-initializing memory leaves the boolean control fields
-> core_filters_allowed, core_filters_default_reject, and
-> ops_filters_default_reject uninitialized.
+> Hello,
 > 
-> Because the underlying allocator (via kmalloc_obj) does not clear memory,
-> the allocated struct damos contains garbage values for any field not
-> explicitly set. While most fields are initialized during creation, these
-> three control fields are missed. Although they are typically populated
-> later during kdamond startup,
-
-So, no issue is really happening.
-
-> leaving them uninitialized creates a window
-> where early access through sysfs or debugfs inspection interfaces evaluates
-> indeterminate state. This results in incorrect state exposure or unintended
-> DAMON filtering logic if evaluated before the daemon fully initializes them.
-
-I understand this is not a report for a real bug, but a recommendation to
-initialize those fields to prevent possible future bugs.  I don't really feel
-needs to do that for now.  In my opinion, doing something that not really
-necessary in favor of preventing something could only confuse code readers and
-hide real bugs.  We can revisit if any real bug happens.
-
 > 
-> // mm/damon/core.c:689-728
-> struct damos *damon_new_scheme(struct damos_access_pattern *pattern,
-> 			enum damos_action action,
-> 			unsigned long apply_interval_us,
-> 			struct damos_quota *quota,
-> 			struct damos_watermarks *wmarks,
-> 			int target_nid)
-> {
-> 	struct damos *scheme;
-> 
-> 	scheme = kmalloc_obj(*scheme);
-> 	if (!scheme)
-> 		return NULL;
-> 	scheme->pattern = *pattern;
-> 	< ... >
-> 	INIT_LIST_HEAD(&scheme->core_filters);
-> 	INIT_LIST_HEAD(&scheme->ops_filters);
-> 	scheme->stat = (struct damos_stat){};
-> 	< ... >
-> 	scheme->migrate_dests = (struct damos_migrate_dests){};
-> 	scheme->target_nid = target_nid;
-> 
-> 	return scheme;
-> }
+> Sashiko reported a bug that I believe a false positive.  Sharing the report and
+> why I think it is false in usual mail format, to get help from more eyeballs.
+
+I was about to keep doing this for all false positive reports.  I added a
+comment on the Sashiko web ui for this report, closed it, and opened another
+report that I think a false positive.  And I realized this is tedious and not
+sustainable.
+
+Actually nowadays I was taking time to think about more options.  Those include
+but not limited to making more tooling and just sharing everything on the
+mailing list and forget about the database.  I still find no best option.  And
+I feel like I might spending too much time on this.
+
+Maybe I'm thinking too much.  I will just do whatever I feel better to do at
+the moment.  So I might share some Sashiko reports on mailing list or not.
+Maybe I will start from just not sharing Sashiko reports on mailing list except
+mentioning those on relevant patch descriptions including Closes: tag.  Please
+don't expect any consistency in my way of Sashiko reports handling for now.
 
 
 Thanks,
