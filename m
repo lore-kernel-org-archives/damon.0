@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792949683;
-	b=nqzjO71++f8DBogAwQ8hx4dtjOwvt6Of9jLvDNmfPcPCleGoJj1z34CtDcbJ7IGiZsry
-	 oBnKb04liZLCb/W0lM0Sq8RaO1pb7ancdEnDCbPv+WDdEIP6KyV40diPeflj85+DAhYgB
-	 60ZfKKCCfhnJ3NMOey74okkW5KJyJgjeEDyhSqyHzJL/pJx9o8LM2q7aDimwAPVGGenoX
-	 z3g9C1R9lYwdVwRmkY+hg7WS3vuRUMRyoTIiTT7IUrjtqO9DN0ZWFmAEfjHOcaIi5FqaW
-	 X8dmZ+uZduesCTJmxmphbZbTHKyxm+nH3r7O6aCVy4hdW8lddALBDkmVENFtfJSXpGw==
+	t=1792949876;
+	b=cSH/ecarkDNcgL4ndDjmGUAS8oBofI/ZnzomDH4JICByrtTDkxNYmOKkL00c4gFLDHdK
+	 8hXk4Gx9JbGNt5Y0QfE1SzPAIqim2aHIfw6dOErInjPYHmG62Z96X8EFvMHjhD34xu9lC
+	 +wxqHpupcwohNDCjvYgmQb0XcGYihEx/q3FPnzTKMmGW9xBYRWO/dlK3+xiAZIT6QVELe
+	 ROdh+aNtwIjoE/GhL63hW5Lc3oUDeLV0ZJHjsHaplkVlHazO+YCyPFV9UzKaru0HxiX47
+	 3Qg0wXoRXRdni0yPSex+Ee7dVr7HGVNQ/+g0O4z2nODwthSf7cQcfAH7YIhVTTaNw0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792949683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792949876;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=vVdLF3rSRfIbQqqzW5CTin+AfzdEC4jqWC2LKvMv3no=;
-	b=v7hVqBlIyBsMND0zbY4NEvZwLr8nTyxG2Iu+a8Zf94fxPTou+wJWE+yJOuxBu9Hw1quM
-	 8aC2uJJ8TrIgN/Jt4D8E0lHUmv5EoHd35YNWX5Qf2AtUum15wL9wtLijkxEYmeqDuyS14
-	 Tv9HPkcnXnGVoICo5QWtjfNPzX8lGiiDg2K2BKb758vKrvX2fBhSpRsPIeuyFubOvCnv+
-	 jMRkFlnFhrd4BWnIw9+I9Su3ZtGNJ0DjtayCFy3oc2me6zpo8eNuBLPUHy2ND/cifmY8w
-	 n2gqhDLfZGYPlKJl419c3CSa2r5rVIJwa7YTkcfdPylgwVCfsWNmpsaTF6BGpn9Pjvw==
+	bh=L6YdtImNwe6af5qwib8NpoZYdrawK3T+YWHepB8B6hA=;
+	b=bdRGWWtRn4rrBji18cGKMOEjMERwgbTGbZ+fLZ+6DKYq+8opjfxMzNKmx24rTFmzAGjV
+	 cBnXBhWcjapbjt3zWsRqA+2+S4OTGfWW6jJPNE8srfbX5EkFw+aNY4biVnRGuL7eo4ezd
+	 O1CafPr//kRCpqwOjqMidfpBzohbkyMascFbeHIk11G2815q7zHkH/PO0rRXoYyqtpuAV
+	 0R5uC/QOhKA76CNPEwqnuVkh2pLKs77FmAM/+BWYoq3uurpL0aJZZwCMXAiD+ymJJ0nWn
+	 zNp866/bgKnWbbmS0N4mGOG5UaskqUoXrBHxdvWay8oT0kApbUF5Hb66mQVfEMX2EgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=c5rQDZit;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZvSwpLKd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02485606A31A
-	for <damon@lists.linux.dev>; Sun, 25 Oct 2026 17:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0A5606A31A
+	for <damon@lists.linux.dev>; Sun, 25 Oct 2026 17:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=c5rQDZit
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A991B1F01825;
-	Sun, 25 Oct 2026 17:34:42 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZvSwpLKd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B051F01825;
+	Sun, 25 Oct 2026 17:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792949682;
-	bh=vVdLF3rSRfIbQqqzW5CTin+AfzdEC4jqWC2LKvMv3no=;
+	s=k20260515; t=1792949876;
+	bh=L6YdtImNwe6af5qwib8NpoZYdrawK3T+YWHepB8B6hA=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=c5rQDZitzlkLzCEwsZ2iQ+XdtmdxOAz0mFiqdq7wx03EWzZ9P5v0uKaFv2PNWuzP2
-	 BvodoDK4hFYHwY1L2H/mQfOCj0ICl2AqF9bGii6q7lnA+gR5lqsg/indyLkpDzX0u/
-	 LlBDnzyMG0DIg+NCARuF9W0a/poRuNae+B/EUIWCM2fbQLQITZO9NlJm5vTJpOmchc
-	 +IOVtsrahDcTu6xVEijHGGWpeyIL+XMwHoN5d4BcT6dckVx5J4yT95iKlpIpIX4trX
-	 jk4XO+HWmEBpw8ESL+/HM09bxrBOdd0s8p4IpYuGHAmIIXj9I17zK9+3ptpfq6MkIC
-	 jrbb/9wWzwOdA==
-Message-ID: <sashiko-outbox-184294@kernel.org>
+	b=ZvSwpLKdpmXM4OGa3XU/WiJXNtDxhRf07xDXwNKY8SA8kvtKYF4tTY+yw/4qi9L7x
+	 emB68p76EnJS1sj9+fxWOTHn4aAuqRH43Qv6FQ/Pvdq0BtNb3pcJuOTUKByTeBAC+z
+	 ODahYiDYXiqNjhuQF3tSphWkTD2zO2qsLpWc/PvDGO+eNIz2IDjz+fRi3Rszj4hDHo
+	 vhXvryjnYtgAA6ebryijaAnW0YeGeWwKlcAgOltqJo27FCjn0P0IhfgaK44dVgwYUH
+	 4ZKA7nElFPnD2/DCW66+kO9LFiHtTGA+Ghip3Dx/qRsz0L4SfBMcc1x8VEM+0YdAW3
+	 2kwRbtSY9c3Ng==
+Message-ID: <sashiko-outbox-184295@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 7.2.y] mm/damon/core: error
+Subject: Re: [RFC PATCH 6.18.y] mm/damon/core: error
  damos_commit_quota_goal() for zero target_value
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261025172434.161597-1-sj@kernel.org>
-References: <20261025172434.161597-1-sj@kernel.org>
+Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
+In-Reply-To: <20261025172712.164385-1-sj@kernel.org>
+References: <20261025172712.164385-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 25 Oct 2026 17:34:42 +0000
+Date: Sun, 25 Oct 2026 17:37:55 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,31 +60,110 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> Patch series "mm/damon: move zero damos quota target_value handling to the
-> core layer".
->=20
-> Having zero DAMOS quota target value can cause division by zero.  DAMON
-> API callers are checking the target value parameters to avoid that.  It is
-> easy to make mistakes in some of the multiple API callers.  Move that to
-> the core layer.
->=20
-> Patch 1 adds the corner case handling into the core layer DAMON parameters
-> validation logic.  Patches 2 and 3 remove no more needed DAMON API callers
-> side handling of the corner case in DAMON_LRU_SORT and DMON_SAMPLIE_MTIER,
-> respectively.
->=20
-> This patch (of 3):
->=20
-> [ ... ]
-> Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org [1]
-> Signed-off-by: SJ Park <sj@kernel.org>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> (cherry picked from commit 610c4438fb66e06d9e693c0ad3b2c1be54c0d61f)
-> Signed-off-by: SJ Park <sj@kernel.org>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [High] mm/damon: incomplete zero target_value check in damos_commit_quota=
+_goal()
+--
 
-Sashiko has reviewed this patch and found no issues.
+commit ea716ea29282ef733822096401c5c8d92eaaef58
+Author: SJ Park <sj@kernel.org>
+
+mm/damon/core: error damos_commit_quota_goal() for zero target_value
+
+This commit validates that a DAMOS quota goal's target_value is non-zero in
+damos_commit_quota_goal(), returning -EINVAL and propagating the error thro=
+ugh
+damos_commit_quota_goals() to prevent a division-by-zero in
+damos_quota_score().
+
+Link: https://lore.kernel.org/20260903010722.94244-1-sj@kernel.org
+Link: https://lore.kernel.org/20260903010722.94244-2-sj@kernel.org
+Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org [1]
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 4e6e3d7d0a5c0..8fa788b0d709c 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -807,15 +807,18 @@ static void damos_commit_quota_goal_union(
+>  	}
+>  }
+> =20
+> -static void damos_commit_quota_goal(
+> +static int damos_commit_quota_goal(
+>  		struct damos_quota_goal *dst, struct damos_quota_goal *src)
+>  {
+> +	if (!src->target_value)
+> +		return  -EINVAL;
+
+[Severity: High]
+Does checking for a zero target_value only in damos_commit_quota_goal() cov=
+er
+the path where DAMON is started via sysfs in this stable tree?
+
+In mm/damon/sysfs-schemes.c, target_value_store() updates goal->target_value
+without holding damon_sysfs_lock:
+
+mm/damon/sysfs-schemes.c:target_value_store() {
+	struct damos_sysfs_quota_goal *goal =3D container_of(kobj, struct
+			damos_sysfs_quota_goal, kobj);
+	int err =3D kstrtoul(buf, 0, &goal->target_value);
+
+	return err ? err : count;
+}
+
+Meanwhile, damos_sysfs_add_quota_score() reads sysfs_goal->target_value twi=
+ce
+without synchronization against target_value_store():
+
+mm/damon/sysfs-schemes.c:damos_sysfs_add_quota_score() {
+		if (!sysfs_goal->target_value)
+			continue;
+
+		goal =3D damos_new_quota_goal(sysfs_goal->metric,
+				sysfs_goal->target_value);
+		...
+		damos_add_quota_goal(quota, goal);
+}
+
+If target_value_store() writes 0 between those two reads,
+damos_new_quota_goal() allocates a goal with target_value =3D=3D 0 and atta=
+ches it
+to quota->goals.
+
+When starting DAMON via state_store() -> damon_sysfs_cmd_request_callback()=
+ ->
+damon_sysfs_handle_cmd() -> damon_sysfs_turn_damon_on(), this branch builds
+the context and starts kdamond directly without calling damon_commit_ctx() =
+or
+damos_commit_quota_goals():
+
+mm/damon/sysfs.c:damon_sysfs_turn_damon_on() {
+	ctx =3D damon_sysfs_build_ctx(kdamond->contexts->contexts_arr[0]);
+	if (IS_ERR(ctx)) {
+		kfree(repeat_call_control);
+		return PTR_ERR(ctx);
+	}
+	err =3D damon_start(&ctx, 1, false);
+}
+
+Here damon_sysfs_build_ctx() populates scheme->quota.goals via
+damon_sysfs_apply_inputs() -> damon_sysfs_add_schemes() ->
+damon_sysfs_mk_scheme() -> damos_sysfs_add_quota_score(), bypassing
+damos_commit_quota_goal() entirely.
+
+When kdamond subsequently runs kdamond_fn() -> kdamond_apply_schemes() ->
+damos_adjust_quota() -> damos_set_effective_quota() -> damos_quota_score():
+
+mm/damon/core.c:damos_quota_score() {
+		highest_score =3D max(highest_score,
+				goal->current_value * 10000 /
+				goal->target_value);
+}
+
+can this still divide by zero if the race occurs during
+damon_sysfs_turn_damon_on()?
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261025172434.1615=
-97-1-sj@kernel.org?part=3D1
-
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261025172712.1643=
+85-1-sj@kernel.org?part=3D1
