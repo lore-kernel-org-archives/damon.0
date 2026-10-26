@@ -1,70 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793037108;
-	b=q6s35JLCfWbKQ7RQJLLDq128T0I0VHMh+4Azc6O/n+qS6jpS2cag8QD/eY1gVaKLGz7E
-	 yMTPvPeNm79BEIWQpez4o2cL8D6rLcHNcpilAdyUC7S+fsbH75E3ZSD0qlma6i9rpq6xm
-	 4wEch1HzUt60MfVK/bYqApsW82a4H7R7o0f4BxCliO70bEaYqu+2YfIOQgXha0PH0nKRS
-	 WjxLEwhNMUz1QVGnWDeD0dhUCeCur4/u1qK4h9xJBnHurF6VIeTOKK/RlDJbZuaYV0Z2A
-	 hRk8RLFsOffZXVpTogrj1eJ6MvSXBuAnTNMaYa+WslusIFBq6NPpTo9EgZNDzZlrayQ==
+	t=1793054088;
+	b=Pe2qbeFz0y5oBREklPY941TXqzbH9JTZt85zqxQRkNEZppk/Dw2PA6cxbA+ZQXKFaSnf
+	 p8NoNhhCL2jATaZhViAjrqJe1JsIB7MH3ab6QkjiM9xVLWezD2dr6M2se1kOEmeoEJqEk
+	 CLZJMODIizc+29G+ciApCglajNS2KNkQMSkXlqkoLzhNJ3AMQQzOIOBieipWbb7XxnQY9
+	 JESri0Hf2UbW6eLYHe0VPxxOC+D7sotsD/xJMHWC7zZi15Au8/uuSn25RBr0umcryjSuu
+	 RxqXr5yZHOOjviYt8BiBHyFpQf6nIXcooCorKQPvAxN45ISfeTxrLUM1LoDceoizEQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793037108;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Subject:From:To:Cc:
-	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
-	 User-Agent:MIME-Version:X-MBO-RS-META:X-MBO-RS-ID;
-	bh=+zE9kVNs5C7sYZHMxAgpjn8fTZT69NqSWFunM32ji+Q=;
-	b=ReAAbhnTu3udEMxD92m4isvhcOUX56yQyq8SYyG1zXAfJkIi3JffQPS9QN9EnK9F/vwP
-	 F2MMWTZiw+43Kkg1N7B4U3bi9mFKZKmfbndhbyEYJSynF9ssh52t07AygpWIbST/9ktcI
-	 fVFbiKFC86DZP25DzrKybSTUCjoowHebTeSm1KvOtNPFKdq7EMeyae80vKVm553vO6p5q
-	 BNhfSRkhoq6UHDl80CDndbttBBdwudmXaPx14Nq6TGE0UYkqBGdd7+AND7ylB0RllfZW6
-	 pU7KWi9JHmere+5hP4zNqqfJHMpQhO3yTatGBAs/CEYJUpiKXiXxhoIt/ysj3H1oXTA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793054088;
+	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=HcaAjZorHHb3l5RdR8AVzhqeikVAxrwM1RaByGmw9Yc=;
+	b=PCs01Ll6bRrrh5kePZlgCNpzUec+XkK0N6PFWLw44aPZb9kXTtnQrctTr1AorRe66sc1
+	 LTdI8YXkrXX2m3OSFv7nfsjBYQlknTLMJfZR+1o48167nNMDepeLmGgrN+0bwHtcmmchR
+	 Q0kyV+f+vAQZU+0vXDnwIEM1lxIkVMZ1j1x8sZKwmipB5NbTCWxs/KRhff2ceM4twKbXA
+	 NXFX0zb0AFCGGBcliwvOYsBKi/+cAncMlZwwZlUbszNeljYQ1xl//As7KXTUUTntN94ZL
+	 abS3wJlLuiiPTGLO552eUqpOhXr2Jm5sYJJRyAImp5Us6o3cxBNAqG/yPNXPkYUagJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mailbox.org;
-	spf=pass smtp.mailfrom=mailbox.org;
-	dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=vfM+xgkT;
-	arc=none smtp.remote-ip=80.241.56.152
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jtr2b4rd;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200F9606A31A
-	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 17:51:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 200F9606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EBE606A31D
+	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 22:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=vfM+xgkT
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4jD1Ql1YcdzKp50;
-	Mon, 26 Oct 2026 18:51:43 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1793037103;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+zE9kVNs5C7sYZHMxAgpjn8fTZT69NqSWFunM32ji+Q=;
-	b=vfM+xgkTeSHFp0dpRFW5mvDxLWynvaYYd1UZ+0M8/RjdK3Y/o+kfyc5kjAwpXTIZsr9Eu6
-	iExYX6fI/vZP81wbfVGzOl1iJoKCqxBJmoBTf7rDmFgc7GkX9+CIvi72yb/ZgfofHKatWm
-	CEhmHoyYhPPpDYIG2BX/PYZg6euQ1DnaSJdvglOUm5V7jnR3pJMr3adsVPyyWfe80IThes
-	PV1MfXTDdgA2dDMotzgnU6/3lFKeT8b0eHT0SY7mfG9tZzTHCgiEdq+PwAAqfMMCzCGB+q
-	5PjQz2AM722OC6zZ3Ral0YnsHFgnv2G3dPDeGPmex+WvUtmaIsXIBJ5iXOlHYg==
-Message-ID: <72437017a038310cad48a5ff488377a9f8eb89f1.camel@mailbox.org>
-Subject: Re: [PATCH] mm/damon/reclaim: improve grammar and style
-From: Manuel Ebner <manuelebnerli@mailbox.org>
-To: SJ Park <sj@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan
- <skhan@linuxfoundation.org>,  Randy Dunlap <rdunlap@infradead.org>,
- damon@lists.linux.dev, linux-mm@kvack.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Aveline Noir <jm5905938@gmail.com>
-Date: Mon, 26 Oct 2026 18:51:40 +0100
-In-Reply-To: <20261017162706.103996-1-sj@kernel.org>
-References: <20261017162706.103996-1-sj@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jtr2b4rd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92161F031EA
+	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 22:34:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793054088;
+	bh=HcaAjZorHHb3l5RdR8AVzhqeikVAxrwM1RaByGmw9Yc=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=jtr2b4rdy80J8VXiCReV1XjeedXzj0+9hEEOpA7+ZGMMVLgPlChKO1fo5Lyn1x65K
+	 Y+fRecewIzI7QuNArsdnvpTGEuYMCdvJ9m0cWaclc/G0sHFNg1Kc1lu8NYkBrDVgqj
+	 CndmPLaoJLrX5U8Fr1HpinhseNWZwhMw7sBfT19ArnOsZ9SJGoG90qPMdrK74joRd0
+	 fqQTk//dULfyDjSl56Gk8MgXDFQ9PzcCPft5XPGrZe8MmGfiX7WK8UycxRY+ml9hfe
+	 wMCeQi5vIFFnZxmzk48UtEfPEHL7heI9ePDOEAwqrx7pn33V2Eql5FnZar1giwgXlx
+	 2u9A62QSAd4ww==
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-5365d26ccbdso40825151cf.0
+        for <damon@lists.linux.dev>; Mon, 26 Oct 2026 15:34:47 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBy7gO7QhILqdLnd4VWyUHj9DGPhszMdlf7sx+wABJQBW/4MHhBnccuih+bJ5aeR8sUJiQyLJQ==@lists.linux.dev
+X-Gm-Message-State: AFq9FYKqXoceJNmaUfyMXe7VVhObBMz1XZ7Fl7O9rW6aMBgzc27rUCpQ
+	hxucMUDUO9PbKwSf98EtRcWHbv2Nn2lBNoNbYXWp7aC3hB4UhBvXs5XnSsblgXVAC5x3g2ywnZq
+	QRAtykcMRdC019xDh45Sok44bPI1mBus=
+X-Received: by 2002:a05:620a:4487:b0:93f:22ae:f8ff with SMTP id
+ af79cd13be357-940ef8ea2a0mr1252625785a.46.1793054086667; Mon, 26 Oct 2026
+ 15:34:46 -0700 (PDT)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -74,207 +59,431 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MBO-RS-META: 5bdyhnnc1mx585ghi5jiq6o1fnqt5y33
-X-MBO-RS-ID: 6365762b24dbd342937
+References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com>
+ <20261016-mglru-fg-v4-4-2106750c0bfa@tencent.com> <CAGsJ_4z3q_q-qyWdj85ZkMZvKOsXu7eO6qkiuQcppnd2oE3dTQ@mail.gmail.com>
+ <CAMgjq7Dqa5Thm+tXUMrg5D1oSJxwyuJR5UOU+w33OgiebGvcJw@mail.gmail.com>
+In-Reply-To: <CAMgjq7Dqa5Thm+tXUMrg5D1oSJxwyuJR5UOU+w33OgiebGvcJw@mail.gmail.com>
+From: Barry Song <baohua@kernel.org>
+Date: Tue, 27 Oct 2026 06:34:35 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4yOtb+qaDtLAEC9-JEGp=1nSE7EVAExusKpuLX=Jy9t0g@mail.gmail.com>
+X-Gm-Features: AclHuK_EgWblfKLU5vwI51ApCslBvbMrsiLYxVpzxVXvBo33Mt1M-XVAW31COos
+Message-ID: <CAGsJ_4yOtb+qaDtLAEC9-JEGp=1nSE7EVAExusKpuLX=Jy9t0g@mail.gmail.com>
+Subject: Re: [PATCH v4 04/17] mm/mglru: frequency guided workingset promotion (MGLRU-FG)
+To: Kairui Song <ryncsn@gmail.com>
+Cc: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, SJ Park <sj@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>, 
+	Muchun Song <muchun.song@linux.dev>, Qi Zheng <qi.zheng@linux.dev>, 
+	Ying Huang <ying.huang@linux.alibaba.com>, Chris Li <chrisl@kernel.org>, 
+	Baoquan He <baoquan.he@linux.dev>, Nico Pache <nico.pache@linux.dev>, 
+	Usama Arif <usama.arif@linux.dev>, Michal Hocko <mhocko@kernel.org>, 
+	Roman Gushchin <roman.gushchin@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, 
+	David Hildenbrand <david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>, 
+	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
+	Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Kemeng Shi <shikemeng@huaweicloud.com>, 
+	Nhat Pham <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, 
+	Gregory Price <gourry@gourry.net>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, 
+	Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
+	David Rientjes <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, 
+	Vernon Yang <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, 
+	Chen Ridong <chenridong@xiaomi.com>, Tal Zussman <tz2294@columbia.edu>, 
+	Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh <ehab.ababneh@intel.com>, 
+	zhaozhengzhuo <zhaozhengzhuo@uniontech.com>, Lian Wang <lianux.mm@gmail.com>, 
+	Kunwu Chan <kunwu.chan@gmail.com>, linux-kernel@vger.kernel.org, 
+	cgroups@vger.kernel.org, damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Mon, Oct 19, 2026 at 8:09=E2=80=AFPM Kairui Song <ryncsn@gmail.com> wrot=
+e:
+>
+> On Mon, Oct 19, 2026 at 6:10=E2=80=AFPM Barry Song <baohua@kernel.org> wr=
+ote:
+> >
+[...]
+> >
+> > So this is the main course, with the earlier ones as appetizers and
+> > the later ones as desserts?
+> > Overall, this dish looks very delicious to me.
+> >
+> > I ran kernel build on my machine, the result is quite similar with[1].
+> >
+> > W/o patch:
+> >
+> > eal    1m49.094s
+> > user    25m31.484s
+> > sys     3m40.959s
+> > pswpin: 662112
+> > pswpout: 2504415
+> > pgpgin: 4424336
+> > pgpgout: 10355273
+> > refault_file: 359626
+> > refault_anon: 670724
+> >
+> > W/ patch:
+> >
+> > real 1m48.944s
+> > user 25m30.987s
+> > sys 3m34.605s
+> > pswpin: 467952
+> > pswpout: 2319080
+> > pgpgin: 3481187
+> > pgpgout: 9603332
+> > swpout_zero: 602042
+> > swpin_zero: 6250
+> > refault_file: 310538
+> > refault_anon: 474154
+> >
+> > But it behaves in a much more sensible way.
+>
+> Hi Barry,
+>
+> Thanks for the review and testing. Glad to see it worked for you.
+>
+> >
+> > I've had a preliminary look, but haven't reviewed it in detail yet.
+> > I have a few comments.
+> >
+> > [1] https://lore.kernel.org/linux-mm/20261016213115.70515-1-baohua@kern=
+el.org/
+>
+> Right there could be some similarities, and some differences, e.g. no
+> more lru_gen_in_fault hanlding here, or difference between anon /
+> file. BTW did you test the whole series or just this patch? This patch
 
-took me some time to respond because of the procrastinations.
+I tested the whole series rather than this patch in isolation.
 
-On Sat, 2026-10-17 at 09:27 -0700, SJ Park wrote:
-> On Sat, 17 Oct 2026 11:18:34 +0200 Manuel Ebner <manuelebnerli@mailbox.or=
-g> wrote:
->=20
-> > Hi SJ,
-> >=20
-> > On Thu, 2026-10-15 at 07:01 -0700, SJ Park wrote:
-> > > On Thu, 15 Oct 2026 10:06:23 +0200 Manuel Ebner <manuelebnerli@mailbo=
-x.org> wrote:
-> > >=20
-> > > > Fix tenses. Replace 'set as' with 'set to'.
-> > > > Rewrite complex sentences.
-> > >=20
-> > > Let's put two sentences in one line, while breaking it for the 75 col=
-umn limit.
-> >=20
-> > Will do.
-> > >=20
-> > > [...]
-> > > > @@ -113,8 +113,8 @@ quota_sz
-> > > > =C2=A0
-> > > > =C2=A0Limit of size of memory for the reclamation in bytes.
-> > > > =C2=A0
-> > > > -DAMON_RECLAIM charges amount of memory which it tried to reclaim w=
-ithin a time
-> > > > -window (quota_reset_interval_ms) and makes no more than this limit=
- is tried.
-> > > > +DAMON_RECLAIM recordes the amount of memory which it tried to recl=
-aim within a time
-> > >=20
-> > > s/recordes/charges/=C2=A0 or s/recordes/records/ ?
-> >=20
-> > For me charge is such a weird word exepct in 'charge a battery' or 'cha=
-rge a fee'. And
-> > 'recordes' is a typo. Does this work:
->=20
-> 'charge' in this sentence is somewhat like 'charge a fee'.=C2=A0 I person=
-ally don't
-> feel it is weird.=C2=A0 But 'record' also work for me.
+[...]
 
-I will keep 'charge' at the later mention in the file.
+> > Could we use the following instead? Coming from a hardware register bac=
+kground,
+> > this looks more like register encoding to me:
+> >
+> > static inline int lru_get_refs_flags(unsigned long flags)
+> > {
+> >     int refs;
+> >
+> >     refs  =3D !!(flags & BIT(PG_referenced));
+> >     refs |=3D !!(flags & BIT(PG_workingset)) << 1;
+> >     refs |=3D ((flags & LRU_REFS_MASK) >> LRU_REFS_PGOFF) << 2;
+> >     return refs;
+> > }
+>
+> No problem; it means the same thing and looks better indeed. I think I
+> better change the return type to unsigned too, refs can never be
+> negative (gen could be though, as a reserved value).
 
->=20
-> > DAMON_RECLAIM records the amount of memory which it tried to reclaim wi=
-thin a time
->=20
-> So this looks good to me, too.
+make sense to me. lru_get_refs_flags() is impossible to be negative.
 
-Will do.
+>
+> >
+> > >
+> > >  static inline int folio_lru_refs(const struct folio *folio)
+> > > @@ -236,14 +240,29 @@ static inline void folio_set_lru_refs(struct fo=
+lio *folio, unsigned int refs)
+> > >         } while (!try_cmpxchg(folio_flags(folio, 0), &old_flags, new_=
+flags));
+> > >  }
+> > >
+> > > +void folio_inc_lru_refs(struct folio *folio, unsigned int flags);
+> > > +
+> > >  static inline int folio_lru_gen(const struct folio *folio)
+> > >  {
+> > >         return lru_get_gen_flags(READ_ONCE(*const_folio_flags(folio, =
+0)));
+> > >  }
+> > >
+> > > +static inline bool lru_gen_at_tail(struct lruvec *lruvec, int type, =
+int gen)
+> > > +{
+> > > +       unsigned long min_seq =3D READ_ONCE(lruvec->lrugen.min_seq[ty=
+pe]);
+> > > +
+> > > +       /*
+> > > +        * Consider a folio is at the tail of its LRU when it is with=
+in
+> > > +        * MIN_NR_GENS of the oldest generation of its own type
+> > > +        */
+> > > +       BUILD_BUG_ON(MIN_NR_GENS !=3D 2);
+> > > +       return gen =3D=3D lru_gen_from_seq(min_seq) ||
+> > > +              gen =3D=3D lru_gen_from_seq(min_seq + 1);
+> > > +}
+> >
+> > If only two generations remain, should both be considered hot?
+> > If three generations remain, is only the oldest generation old?
+> >
+> > Also, the name is a bit confusing, as "tail" usually refers
+> > to a list. Could we rename it to one of the following?
+> >
+> > lru_gen_is_old()
+> > or
+> > lru_gen_is_near_oldest()
+>
+> Right, I wanted to introduce an idea of something called tailing gens
+> (e.g. 8 tailing gens when there are 64 gens in total, folios in
+> tailing gens are promoted on each access instead of multiple access,
+> this works really well for fine grained hotness detection, and avoids
+> over protection too). But for now this helper is just meant to tell
+> the caller if the folio is close to be evicted or not, checking
+> min_seq only could easily fall into a pitfall where the oldest gen is
+> very short.
+>
+> Maybe lru_gen_at_expiry? Or lru_gen_at_salvage?
+>
 
->=20
-> >=20
-> > I could do this in a second patch aswell.
-> >=20
-> > >=20
-> > > I'd prefer charges, but my English is definitely bad, so looking for =
-your
-> > > suggestion.
-> > >=20
-> > > > +window (quota_reset_interval_ms) and stops when this memory limit =
-is reached.
-> > >=20
-> > > I feel like readers might wonder what is stopped.=C2=A0 How about "st=
-ops trying
-> > > reclaiming memory when ..." ?
-> >=20
-> > window (quota_reset_interval_ms) and stops trying to reclaim memory whe=
-n this limit is reached.
->=20
-> Looks good.
+at_expiry gives the impression that a timer is involved in
+triggering a timeout, while at_salvage is not very intuitive
+for non-native English speakers.
 
-Ack.
+I'd still prefer lru_gen_is_old(); it's simpler and easier to understand.
 
->=20
-> >=20
-> > >=20
-> > > > =C2=A0This can be used for limiting consumption of CPU and IO.=C2=
-=A0 If this value is
-> > > > =C2=A0zero, the limit is disabled.
-> > > > =C2=A0
-> > > > @@ -125,19 +125,19 @@ quota_reset_interval_ms
-> > > > =C2=A0
-> > > > =C2=A0The time/size quota charge reset interval in milliseconds.
-> > > > =C2=A0
-> > > > -The charge reset interval for the quota of time (quota_ms) and siz=
-e
-> > > > -(quota_sz).=C2=A0 That is, DAMON_RECLAIM does not try reclamation =
-for more than
-> > > > +The quota reset interval of time is quota_ms and of size is
-> > > > +quota_sz.=C2=A0 That is, DAMON_RECLAIM does not try reclamation fo=
-r more than
-> > >=20
-> > > I think this change is just wrong?=C2=A0 quota_ms is not quota reset =
-interval of
-> > > time.=C2=A0 Which part of the original sentence was difficult to read=
-?
-> >=20
-> > 'charge' again, and I think there is the verb is missing.
->=20
-> If use of the term 'charge' is really making reading difficult, we could =
-add a
-> short definition of 'charge' as a separate patch.
+> BTW the whole picture involves three kinds of gens:
+> {tailing/expiry/salvage} gens (promote by one gen on each one FD
+> access), frequency gens (promote by one gen on multiple FD access),
+> times gens (promote to latest gen on PTE access); We now only have
+> expiry gens and frequency gens, timed gens are extensions for the
+> workingset report or pghot design. e.g we have 64 gens, then 8 tailing
+> gens are expiry gens, 16 frequency gens, and 48 newest gens are timed
+> gens.
+> https://lwn.net/Articles/976985/
+>
+> I mentioned this in the cover letter that the "climbing of the file
+> cache" will stop at 8 gens or 16 gens, this is the whole story, there
+> is a lot of context and plan so I trimed them off to focus on the FG
+> improvement first..
+>
+[...]
+> > >         if (folio_test_active(folio))
+> > > -               gen =3D MIN_NR_GENS - folio_test_workingset(folio);
+> > > +               gen =3D MIN_NR_GENS - (refs >=3D LRU_REFS_WORKINGSET)=
+;
+> >
+> > Could we define the "workingset" variant earlier so we can reuse it her=
+e?
+> >
+> > workingset =3D refs >=3D LRU_REFS_WORKINGSET;
+>
+> Looks good, will do.
 
-I think it's not necessary, it's probably me.=20
->=20
-> E.g.,=20
->=20
-> '''
-> --- a/Documentation/mm/damon/design.rst
-> +++ b/Documentation/mm/damon/design.rst
-> @@ -695,7 +695,9 @@ dynamic.
-> =C2=A0To mitigate that situation, DAMOS provides an upper-bound overhead =
-control
-> =C2=A0feature called quotas.=C2=A0 It lets users specify an upper limit o=
-f time that DAMOS
-> =C2=A0can use for applying the action, and/or a maximum bytes of memory r=
-egions that
-> -the action can be applied within a user-specified time duration.
-> +the action can be applied within a user-specified time duration.=C2=A0 D=
-AMOS tracks
-> +(charge) the amount of memory that the action is applied, and stops appl=
-ying
-> +the action once the limit is reached.
->=20
-> =C2=A0To know how user-space can set the basic quotas via :ref:`DAMON sys=
-fs interface
-> =C2=A0<sysfs_interface>`, refer to :ref:`quotas <sysfs_quotas>` part of t=
-he
-> '''
->=20
-> Please let me know if you'd like to send such a patch.
+thanks!
 
-No need.
 
->=20
-> >=20
-> > >=20
-> > > > =C2=A0quota_ms milliseconds or quota_sz bytes within quota_reset_in=
-terval_ms
-> > > > =C2=A0milliseconds.
-> > > > =C2=A0
-> > > > -1 second by default.
-> > > > +1000 (1 second) by default.
-> > >=20
-> > > Isn't this (1 second in milliseconds is 1,000) easy enough to infer f=
-or
-> > > readers?
-> >=20
-> > Ok.
-> >=20
-> > > > =C2=A0
-> > > > =C2=A0quota_mem_pressure_us
-> > > > =C2=A0---------------------
-> > > > =C2=A0
-> > > > =C2=A0Desired level of memory pressure-stall time in microseconds.
-> > > > =C2=A0
-> > > > -While keeping the caps that set by other quotas, DAMON_RECLAIM aut=
-omatically
-> > > > +While keeping the caps set by other quotas, DAMON_RECLAIM automati=
-cally
-> > >=20
-> > > How about "caps that are set by ..." ?
-> >=20
-> > Yes, this was my second choice.
-> >=20
-> > >=20
-> > > > =C2=A0increases and decreases the effective level of the quota aimi=
-ng this level of
-> > > > =C2=A0memory pressure is incurred.=C2=A0 System-wide ``some`` memor=
-y PSI in microseconds
-> > > > =C2=A0per quota reset interval (``quota_reset_interval_ms``) is col=
-lected and
-> > >=20
-> > >=20
-> > > Thanks,
-> > > SJ
-> >=20
-> > I messed up the subject line, should be:
-> > Docs/admin-guide/mm/damon/reclaim: improve grammar and style
-> >=20
-> > I'll follow up with a [v2], including Aveline suggestions.
->=20
-> Sounds good.=C2=A0 But let's finish the discussion about use of the term,=
- 'charge'
-> before posting v2.
+>
+> > > +/*
+> > > + * Update the folio's lru refs indicator. The caller doesn't need to=
+ hold
+> > > + * the folio lock, isolate the folio, or hold the lruvec lock. Used =
+by both
+> > > + * cache access (flags =3D=3D 0) and page table access (LRU_REF_MAPP=
+ED,
+> > > + * optionally with LRU_REF_EXEC).
+> > > + */
+> > > +void folio_inc_lru_refs(struct folio *folio, unsigned int flags)
+> > > +{
+> > > +       int max_gen;
+> > > +       int type, refs, old_gen, gen;
+> > > +       unsigned long new_flags, old_flags, max_seq;
+> > > +       struct lru_gen_folio *lrugen;
+> > > +       struct lruvec *lruvec =3D NULL;
+> > > +
+> > > +       type =3D folio_is_file_lru(folio);
+> > > +       old_flags =3D READ_ONCE(*folio_flags(folio, 0));
+> > > +       do {
+> > > +               new_flags =3D old_flags;
+> > > +               old_gen =3D lru_get_gen_flags(old_flags);
+> > > +               refs =3D lru_get_refs_flags(old_flags) + 1;
+> > > +               gen =3D old_gen;
+> > > +               if (old_gen < 0)
+> > > +                       goto out;
+> > > +               /*
+> > > +                * Lock the lruvec if the folio is on-list. We are al=
+ready
+> > > +                * doing lazy promotion so in theory we don't need th=
+is,
+> > > +                * but for now, concurrent aging would still corrupt =
+the
+> > > +                * size counters.  This is a temporary limitation and
+> > > +                * will be lifted very soon, so the lock here is not =
+a
+> > > +                * performance concern.
+> > > +                */
+> > > +               if (!lruvec) {
+> > > +                       lruvec =3D lruvec_live_lock_irq(folio_lruvec(=
+folio));
+> > > +                       lrugen =3D &lruvec->lrugen;
+> > >                 }
+> > > +               max_seq =3D READ_ONCE(lrugen->max_seq);
+> > > +               max_gen =3D lru_gen_from_seq(max_seq);
+> > > +               if (old_gen =3D=3D max_gen)
+> > > +                       goto out;
+> > >
+> > > -               folio_set_lru_refs(folio, 1);
+> > > -               return false;
+> > > -       }
+> > > +               if (flags & (LRU_REF_MAPPED | LRU_REF_EXEC)) {
+> > > +                       /* Promote second page table access or execut=
+able */
+> > > +                       if (refs > LRU_REFS_REFERENCED || flags & LRU=
+_REF_EXEC)
+> > > +                               gen =3D max_gen;
+> >
+> > This looks a bit odd to me. Could we handle LRU_REF_EXEC in a
+> > separate branch instead of mixing it with refs > LRU_REFS_REFERENCED?
+>
+> Not sure how? They seem to want the same thing: promote the folio.
 
-Then I'll head to [v2] and make it a 2 part series.
+I mean we could have a separate branch for LRU_REF_EXEC | LRU_REF_FORCE:
 
->=20
->=20
-> Thanks,
-> SJ
+                if (flags & (LRU_REF_EXEC | LRU_REF_FORCE)) {
+                        gen =3D max_gen;
+                        refs =3D min(refs, LRU_REFS_PROTECTED);
+                } else if (flags & LRU_REF_MAPPED) {
+                        if (refs > LRU_REFS_REFERENCED)
+                                gen =3D max_gen;
+                        /* First access only defers eviction of a tail gen =
+*/
+                        else if (lru_gen_at_tail(lruvec, file, old_gen))
+                                gen =3D (old_gen + 1) % MAX_NR_GENS;
+                        refs =3D min(refs, LRU_REFS_PROTECTED);
+                } else if (refs > LRU_REFS_MAX) {
+
+
+right now, it is:
+
+                if (flags & (LRU_REF_MAPPED | LRU_REF_EXEC | LRU_REF_FORCE)=
+) {
+                        if (refs > LRU_REFS_REFERENCED ||
+                            flags & (LRU_REF_EXEC | LRU_REF_FORCE))
+                                gen =3D max_gen;
+                        /* First access only defers eviction of a tail gen =
+*/
+                        else if (lru_gen_at_tail(lruvec, file, old_gen))
+                                gen =3D (old_gen + 1) % MAX_NR_GENS;
+                        refs =3D min(refs, LRU_REFS_PROTECTED);
+                } else if (refs > LRU_REFS_MAX) {
+
+a bit hard to follow.
+
+>
+> > > +                       /* First access only defers eviction of a tai=
+l gen */
+> > > +                       else if (lru_gen_at_tail(lruvec, type, old_ge=
+n))
+> > > +                               gen =3D (old_gen + 1) % MAX_NR_GENS;
+> >
+> > The logic makes a lot of sense to me. It should be able to
+> > differentiate readahead folios from those that are actually mapped
+> > and likely to be accessed more than once.
+> >
+> > If we allow two generations to remain, this could be a problem
+> > because old_gen + 1 would overflow. Maybe add a
+> > VM_WARN_ON() to guard against this case?
+>
+> We just checked if (old_gen =3D=3D max_gen), so this should be fine? I
+> mean overflow and the mod MAX_NR_GENS is also part of the sliding
+> window logic.
+
+Yep, I missed your check:
+
+                if (old_gen =3D=3D max_gen)
+                        goto out;
+
+[...]
+> > Sometimes you use >=3D LRU_REFS_WORKINGSET, while elsewhere
+> > you use refs > LRU_REFS_REFERENCED. Can we unify these
+> > checks or define a workingset variant?
+>
+> No problem; I can use a macro for that, as they mean the same thing.
+
+right, thanks!
+
+>
+> > > +/*
+> > > + * Update the lru refs indicator of an isolated folio, only used on
+> > > + * mapped folios upon the final eviction.
+> > > + *
+> > > + * Increments the refs count (capped at LRU_REFS_PROTECTED, evict_fo=
+lios()
+> > > + * then caps it at LRU_REFS_WORKINGSET).  Returns true if the caller=
+ should
+> > > + * activate the folio (second access or executable), false to put it=
+ back
+> > > + * for a second chance.
+> > > + */
+> > > +static bool folio_inc_lru_refs_isolated(struct folio *folio, const v=
+ma_flags_t *vma_flags)
+> > > +{
+> > > +       unsigned long new_flags, old_flags =3D READ_ONCE(*folio_flags=
+(folio, 0));
+> > > +       int refs;
+> > > +
+> > > +       do {
+> > > +               new_flags =3D old_flags;
+> > > +               refs =3D lru_get_refs_flags(old_flags) + 1;
+> > > +               lru_set_refs_flags(&new_flags, min(refs, LRU_REFS_PRO=
+TECTED));
+> >
+> > I'm having a hard time understanding why an activated folio
+> > still keeps LRU_REFS_PROTECTED, since it will be promoted
+> > to the active list anyway :-)
+>
+> Right the FG idea is to always retain the frequency counts, instead of
+> resetting them to 0, so folio_inc_lru_refs can promote FD accessed
+> folios much more proactively, when a folio reaches LRU_REFS_MAX it
+> will be promoted by one gen.
+>
+
+folio_inc_lru_refs_isolated() is only called when
+referenced_ptes is true, so these should always be mapped
+folios:
+
+if (lru_gen_enabled() && !lru_gen_switching()) {
+      if (!referenced_ptes)
+             return FOLIOREF_RECLAIM;
+
+      return folio_inc_lru_refs_isolated(folio, &vma_flags) ?
+        FOLIOREF_ACTIVATE : FOLIOREF_KEEP;
+}
+
+When you say "FD-accessed folios" here, do you mean that
+these mapped folios can also be accessed through syscalls,
+and that you keep the refs to detect further FD accesses?
+
+> I did a in depth analyze of runtime distribution, with this, we can
+> see very hot folio being promoted from max_seq - 1 to max_seq, and
+> after aging, the hotness info is still kept and workingset stay stable
+> and accurate (it's like the global aging of traditional LFU, which is
+> obsoluted in upstream due to overhead despite having better accuracy,
+> but now it comes with almost zero cost).
+>
+> >
+> > Later, I see that you set it to LRU_REFS_WORKINGSET in
+> > evict_folios():
+> >
+> > folio_set_lru_refs(folio, min(folio_lru_refs(folio), LRU_REFS_WORKINGSE=
+T));
+>
+> Right that part is meant for aging the older folios and PID controller
+> though. LRU_REFS_WORKINGSET could means historical workingset, and
+> LRU_REFS_PROTECTED means folios being currently actively protected.
+>
+
+folio_inc_lru_refs_isolated() is called from the eviction path.
+Folios that are not reclaimed will go through:
+
+__folio_set_lru_refs(folio, min(folio_lru_refs(folio), LRU_REFS_WORKINGSET)=
+);
+
+in evict_folios().
+
+So LRU_REFS_PROTECTED eventually becomes
+LRU_REFS_WORKINGSET(or 0, 1).
+
+I'm still struggling to understand why we need a transition
+from LRU_REFS_PROTECTED to LRU_REFS_WORKINGSET (or 0/1 if
+folio_lru_refs() < LRU_REFS_WORKINGSET), since those folios
+will always end up in LRU_REFS_WORKINGSET (or 0/1) anyway.
 
 Thanks
- Manuel=20
->=20
-> [...]
+Barry
