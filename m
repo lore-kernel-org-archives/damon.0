@@ -1,57 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.139
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793027312;
-	b=NYlnp29FH5cy1uY2YlA1CaQ0FXlY3YfSFIPMYkj9pa+0jiubFMDfbX1SJBAX9I49lgpA
-	 WW25bjmpPd/Yq4W+kSToPHTG2DQpSu72gG4WPvSLJwQgyy6LIuhnMhQVLrjCSw1+SRUD6
-	 6wbrPAaZdjh3dzN3ByKfelnrZxLk3lI9B3Cxn8iYofO4fFyKjxdsIrl3zMrhODnMRJfvS
-	 Pf/MjRm3Kplwa/QikG2rl3vNHNatdXXPa8E2OmNzBVtcGZ3bKeAHp+7QKEZznkb4hl3NS
-	 YFDp48pkW5tsIN7FgUmsg3+ie7njdaTMJnl9X4dS7bLtAn+BsBWWxJL4U26pwiU52uA==
+	t=1793029945;
+	b=GjV1Hpg5sudtUqDLmQXAGXyDZeUCv+N7hGFdfOrKd+MiEeggWXAZoignX7Z3RmS467XM
+	 uZsDZxONicrn/pB0id8qo9DUKcguLXhevE+ZF3TBCHZ8BmC5OPtX+WQn0lMfNJcQGiyMJ
+	 UAuASzMC2c2B5AeFNI58DHay6aJjjx6OZ0WsgW6Xb226rBvrpoqH7oX/70lRmSKFUdxdd
+	 hItN8895xn0akYT/uEnTPbhDvpMxzZZ+IbFYr5IxFPtrvBJ4bEonofPY69EjT7sUWNbgZ
+	 /HfI7z0aCir+CkbvYn5RrAQAqpEL4Qh4nDNQS+2u0nny5w2dmdeJNQ9JkfN/b5SFBqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793027312;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=nNXUTVFn4ste1wqd8vmAxSpwftg5otrNRXmIT6BWIlw=;
-	b=eQ1dRY7Z2krgbsFbXTC+YuguagmvBsQ6AUcIQJx+2T2OAUBj9IYCbMDLBrfYFE54RzLV
-	 L4zfvGPphMtk8aUYLISMtvmQOIrnyoSmvvUDw5jYUgrqQ+6/e0n5QM9DJoGLAPHeyPGEu
-	 pflF/y9TrF84lkYCrOQ3X7KtsS2+Bu88YxnmzLTJDNv/s23xdDBYTmHptGdQJ7vz9OWE6
-	 2a5I2nNEsGKuYeKqaGa+NP6RKaDSCv9TpBnmIJsc+u4hu/hNBsgLTsKX6yBzrpX2UXH2R
-	 2jfbpTFr/E0B4rwhLmFeQhZAh0T9PxIwm3ouyM4mQdkQ7E3PCiHBTzk/XbaECkVwY9g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793029945;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:Date:Message-ID;
+	bh=VaQMEbNe6iILjWkN+oLQ9JFAOPWDJQN9tfc/T2bNOlo=;
+	b=wm/vtECauUAB5iTi6fVe5tV4rXuKA+n/Y6zGrmb4yNwYwY1s65ryq/5IWJCDk8HnyvJe
+	 7w2YLUanfGb9E9sfMSvaRwMP5YeSK2s5nAJlcSo9jwU1myqYGSK7KWFMhZNuKRCO8nc7Z
+	 8o3nVCr8GYWV3Jk3f1Z2opOQ3RqaJANLW3ba1R585Auox85C79mv3nCLlVeis6EEYh8Aw
+	 uesa4jHQR820TClp8OOkCwOz3/4OONCs2C6x09gZaqGgn95y6AvRWD/3/TldPnnZQQx0C
+	 c3Cdgz49GalwT3woeobmlQ3njuOqwZil/PYsAmZR8aY96h85ygVBs+tAv57wu2igfYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NCcwr8l9;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=KHm9OB4j;
+	arc=none smtp.remote-ip=74.125.227.139
+Received: from mail-pj2-f11.google.com (mail-pj2-f11.google.com [74.125.227.139])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963F8606A31E
-	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 15:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B21E606A324
+	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 15:52:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9B21E606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NCcwr8l9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8731F01825;
-	Mon, 26 Oct 2026 15:08:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793027312;
-	bh=nNXUTVFn4ste1wqd8vmAxSpwftg5otrNRXmIT6BWIlw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NCcwr8l9A+OwZ3fur1MZwljx7AVLXFA8Jfla3QPDnCJBLp8cBIjtUBqz0sgPoIok9
-	 YVW9ArL+npfG9DTPxSueUFV2wDO8Xsdvrxs2Bfa60xo8ZvzsAmucH++Aww1gOXNO2g
-	 0Ciz21JONsjlHYm/Hw9K1/ctQZElaFVhE7IuHUy+ch43+el9b2pQs6YIFT7kLdFQYy
-	 jZOf/QmOA4Ut1EEVxouaHofHQWqOCkP+zqEJDk8cXVq03OOY/p3Jq++BPAD2DdiCyk
-	 FlftrmtrdN+TUQqa0ndaC8LvYiwtzKVFAXuT0uNIbLLpiiTSH9rB18Sfe4eZZoO4Sg
-	 bWEnz3BRSvR/g==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 6.12.y v2] mm/damon/core: error damos_commit_quota_goal() for zero target_value
-Date: Mon, 26 Oct 2026 08:08:23 -0700
-Message-ID: <20261026150825.152576-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-185379@kernel.org>
-References: 
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=KHm9OB4j
+Received: by mail-pj2-f11.google.com with SMTP id 98e67ed59e1d1-3ae1dca6bc0so736929a91.1
+        for <damon@lists.linux.dev>; Mon, 26 Oct 2026 08:52:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793029944; x=1793634744; darn=lists.linux.dev;
+        h=message-id:date:mime-version:content-transfer-encoding:content-type
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=VaQMEbNe6iILjWkN+oLQ9JFAOPWDJQN9tfc/T2bNOlo=;
+        b=KHm9OB4jEsyS0T9Mgv3HaIAuzfPTSiUpPE3ZGkd0BT+d8TO+1/tq7a2jZtwVdE9oHX
+         /2O/nbl3vBxHZqRTlcIyxbupToSwLwW77YYGMH22NtOqaanAlGLuEue3XqRJCKywBwFw
+         dWBzFlfKYaz2qU4YzdxbjSyqCyG+KGisWZEPAqMkyLb5iqLIt5yvKgE4EYFj/PE6Bgcz
+         kkl5SkmL204vtqxDwJogD+18pAEOtJffzqaljC3WRdBtZMe6/+hk3GxSShIG21Ogj/+c
+         hZOi5VSOzZETRVK2GsborE9MoSk4gU3Ih8Udr998N/Opqm3naOJVAq9dx646ltz88zID
+         z4VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793029944; x=1793634744;
+        h=message-id:date:mime-version:content-transfer-encoding:content-type
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=VaQMEbNe6iILjWkN+oLQ9JFAOPWDJQN9tfc/T2bNOlo=;
+        b=T6rpWogy3Xj0hNFGIJAjMC5CLaC0ym+7EA7utyVrrWx6oF2H/mNMAeUxRl4kqA3kNg
+         qh4rJ+N0VsIDsKwEGHmjy1MGE5SdDz/Ug7PhJsWHBl2CSeTraE5E4BHntCHKBP/zgGJl
+         TlkSYZ4lG2BNoaaGyKNnjs9xnTm+BHECHPYTGHiiRsFq1+OyvGmR4s5Zy6g77QxWQaeW
+         P6ntSGDwBvP6VZpDnqwFsDNSbg+8hFmdVgKJxj8cVRfEG7Vlm5e2dz+pOvgeKYw2I6hS
+         J5G8FV3eB0pGG2tvEGSAuaOWjj8FaSwS45q5zyXUm9BcHG7N8j6qbzvdXQXN9GZpZ/H1
+         RGqw==
+X-Forwarded-Encrypted: i=1; AKwUvBwecdvknnK8GEal9tA9yGmDMeaJx+Wclm+hLMDk72O5xqJarnFLdXxjazNHcNvN6Z1vE9mhVQ==@lists.linux.dev
+X-Gm-Message-State: AFq9FYIfraS9jioTslWGx7HY2bUY4ZaVG5RKcs+D7xjb41XHmxl1SEPT
+	uKLqQnDiW3Uk8I81EiZk4Wdyr8jAdtrn5SSFKma8FRFjQVvx/qTTerL8
+X-Gm-Gg: AYBFou3F/P/Fz0tluatIx806SAMjPGrFFPrD/+kjqJTooYznZf8m/B9eJpsIFMxUtsc
+	r5w6Ou++cDXSdK4t5RHDtRLKFKmFYqBl38cvFqldomQRt+tkBE/WOgBB0nAqGYlncxSyX6e4dvD
+	vhObpETliWcQZ0x8Q26PM0/HN1/mNyEZmvHlhmp9SNXeh/geeSp1cvL/cLAUHC34lXpbZMt5w5X
+	GdUdQ9l956uiaINNnlS0eHKmxn5rVlGLNnqaS6PVx/FUDZJVNBObLZgAsFubIlyMMh3zz9BYddN
+	c7GN9jnzKAU/UGmTmJ0EFdtk8jfqXIQAO9vBY5FuGY25t7nHtLIPkSmL1rGsY0x7ZM3M5+H+Evw
+	vVXFyai7cZ1afQI2jswciqfylcsOdJFyLNGKkaPk//RvO2AabFilkdbXAnyNRqF+N5IbryTOmha
+	mWg4KJ/yVQ73ZdBPEGUUkjSCwtpp0kgs4UFn8bnMcPdF0EWoCE7l+m4X1cY988njTfrMy9dYKLQ
+	Pw2zD1pUoM/ReFza0kNOF4pmH1CwS11dbQwQQcKaWN/18BPA42dHWW3440rqOFh4z2KIBwgKbAi
+	3c2dnGMPExZgETDsWfwXgRGiA2Zxo7YSPUEYk1GBkQ6xVZfB3LNtvA==
+X-Received: by 2002:a17:90b:55ce:b0:3a8:185:cf40 with SMTP id 98e67ed59e1d1-3adead57ccdmr6255798a91.10.1793029943804;
+        Mon, 26 Oct 2026 08:52:23 -0700 (PDT)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae40427782sm48676a91.4.2026.10.26.08.52.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2026 08:52:23 -0700 (PDT)
+From: Aveline Noir <jm5905938@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Manuel Ebner <manuelebnerli@mailbox.org>, Jonathan Corbet <corbet@lwn.net>,
+ Shuah Khan <skhan@linuxfoundation.org>, Randy Dunlap <rdunlap@infradead.org>,
+ damon@lists.linux.dev, linux-mm@kvack.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/8] Docs/admin-guide/mm/damon/start: fix grammar
+In-Reply-To: <20261026142927.149910-1-sj@kernel.org>
+References: <b0d8d0ceda82e303262c0f61324fe8a84fd9f745.camel@mailbox.org>
+ <20261026142927.149910-1-sj@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,126 +100,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Tue, 27 Oct 2026 02:50:54 +1100
+Message-ID: <179302985413.2.2084375678408090049.damon-docs-reply-01-start@gmail.com>
 
-On Mon, 26 Oct 2026 14:11:30 +0000 sashiko-bot@kernel.org wrote:
+Hi SJ and Manuel,
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] mm/damon/sysfs: pid leak in damon_sysfs_turn_damon_on() on invalid start ctx
-> --
-> 
-> commit dc23c827b1a01b5ed768b0a218bb6a67def40106
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: error damos_commit_quota_goal() for zero target_value
-> 
-> This commit validates that DAMOS quota goal target_value is non-zero in
-> damos_commit_quota_goal() and damos_commit_quota_goals() to prevent a
-> division-by-zero error. For the stable backport, it also adds
-> damon_sysfs_valid_start_ctx() to reject zero target_value before starting
-> DAMON in damon_sysfs_turn_damon_on().
-> 
-> Link: https://lore.kernel.org/20260903010722.94244-1-sj@kernel.org
-> Link: https://lore.kernel.org/20260903010722.94244-2-sj@kernel.org
-> Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org [1]
-> 
-> > diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> > index 5aa23c6545cb8..2c8749b62c621 100644
-> > --- a/mm/damon/sysfs.c
-> > +++ b/mm/damon/sysfs.c
-> > @@ -1497,6 +1497,20 @@ static struct damon_ctx *damon_sysfs_build_ctx(
-> >  	return ctx;
-> >  }
-> >  
-> > +static bool damon_sysfs_valid_start_ctx(struct damon_ctx *ctx)
-> > +{
-> > +	struct damos *s;
-> > +	struct damos_quota_goal *g;
-> > +
-> > +	damon_for_each_scheme(s, ctx) {
-> > +		damos_for_each_quota_goal(g, (&s->quota)) {
-> > +			if (!g->target_value)
-> > +				return false;
-> > +		}
-> > +	}
-> > +	return true;
-> > +}
-> > +
-> >  static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
-> >  {
-> >  	struct damon_ctx *ctx;
-> > @@ -1517,6 +1531,10 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
-> >  	ctx = damon_sysfs_build_ctx(kdamond->contexts->contexts_arr[0]);
-> >  	if (IS_ERR(ctx))
-> >  		return PTR_ERR(ctx);
-> > +	if (!damon_sysfs_valid_start_ctx(ctx)) {
-> > +		damon_destroy_ctx(ctx);
-> > +		return -EINVAL;
-> > +	}
-> 
-> [Severity: Medium]
-> Does this error path leak the target struct pid references (t->pid) when
-> damon_target_has_pid(ctx) is true?
-> 
-> When damon_sysfs_build_ctx() constructs ctx via damon_sysfs_apply_inputs() ->
-> damon_sysfs_add_targets() -> damon_sysfs_add_target(), it acquires a struct
-> pid reference for each target:
-> 
-> mm/damon/sysfs.c:damon_sysfs_add_target() {
-> 	...
-> 	if (damon_target_has_pid(ctx)) {
-> 		t->pid = find_get_pid(sys_target->pid);
-> 		if (!t->pid)
-> 			goto destroy_targets_out;
-> 	}
-> 	...
-> }
-> 
-> Because damon_sysfs_valid_start_ctx(ctx) fails before damon_start() is
-> called, kdamond never runs and ctx->callback.before_terminate
-> (damon_sysfs_before_terminate()) is never invoked to release those
-> references. Calling damon_destroy_ctx(ctx) invokes damon_destroy_targets(ctx),
-> which frees each target without calling put_pid(t->pid):
-> 
-> mm/damon/core.c:damon_destroy_targets() {
-> 	struct damon_target *t, *next_t;
-> 
-> 	if (ctx->ops.cleanup) {
-> 		ctx->ops.cleanup(ctx);
-> 		return;
-> 	}
-> 
-> 	damon_for_each_target_safe(t, next_t, ctx)
-> 		damon_destroy_target(t);
-> }
-> 
-> In comparison, damon_sysfs_commit_input() cleans up an unstarted context from
-> damon_sysfs_build_ctx() by calling damon_sysfs_destroy_targets() before
-> damon_destroy_ctx():
-> 
-> mm/damon/sysfs.c:damon_sysfs_commit_input() {
-> 	...
-> 	err = damon_commit_ctx(kdamond->damon_ctx, param_ctx);
-> 	damon_sysfs_destroy_targets(param_ctx);
-> 	damon_destroy_ctx(param_ctx);
-> 	return err;
-> }
-> 
-> Should damon_sysfs_turn_damon_on() also call damon_sysfs_destroy_targets(ctx)
-> before damon_destroy_ctx(ctx) here?
+On Mon, 26 Oct 2026 07:29:26 -0700, SJ Park wrote:
 
-Nice catch.  I will fix this in the next revision.
+> My intention was saying DAMO is commanding DAMON to monitor the process.
+> So I find Aveline's version is slightly better.
 
-FYI, this patch for 6.18 and later kernels doesn't have this problem, since
-they have commit 7114bc5e01cf ("mm/damon/core: add cleanup_target() ops
-callback").  The commit made damon_destroy_ctx() to do the pid reference drop
-by itself, and merged into 6.17.
+Agreed. Both "start" and "make" depend on "asks DAMO to", so I'd keep
+"make" here.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261026135555.149244-1-sj@kernel.org?part=1
+> Looks good.  Unless Aveline objects or do this by themselves with
+> revisioning, I will add this change when I apply this patch to
+> damon/next.
 
+Those two fixes look good to me too. Please include them when
+applying, SJ. Thank you both for reviewing.
 
 Thanks,
-SJ
+Aveline Noir
