@@ -1,69 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.151
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.161
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793018499;
-	b=ot2iGg79FQiTSARctnhbgpa2qLPIBykb/67zXYFsdYKELdFWqYyrSTWSbPf1GxT4VHak
-	 sKSxpiHhhYpHdOn8HDTWnI4P3MRQcleiP3gxCqMAAfjevwOW1z+p9noStTg7+BmVGoiG8
-	 EYpaXfUacoASg0DsdTvv69MriZuqTrB8EKANJt2025Cx5RO7RDQ/+iuIWV3uZ83jAsqvZ
-	 J94KnpVzZJJGkS51z7vswp9n2Mv+qRHZcfDxJ7bOqJUhdI14AlowOzjP0aELEP2/ldbjp
-	 i18WHclIJK6xN8OYoe5X5dQomiRZY0AnMWSEjKADp7gk5FEXATSSS8ZjFFykrX683Ig==
+	t=1793018707;
+	b=BhfnnbwtYaY4Q4uNxSWeC03VHPx/YL3AlGLI2pBPcggvfB4UtxMxZgsGiP6gDrrgGtEw
+	 PMTO7exs6RWroAmClit9cRTretLq5mi8AIBaxR8rqmOqepq1cPuXWKYC1aVk+xYhd1pmC
+	 U1f3MMpO/7oQKMgUR7fbYI8h8rPt4ykWdlbTjMiW8R2+6X5lKPeiXYKRLoLzWcsWKoaOG
+	 lu0BYsYlzpEfVBZ2JdbpiHRJAaxli6b+JjNmrV48pKygpKA/boKIYP3XbvZ1wIqFsK+/r
+	 nxz82MoL0AoquWR8+9KXs5bktL4Hm6xDZLQnhqAEfrFva8cJVZ0JNGGaCDxybcRQwwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793018499;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793018707;
 	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Subject:From:To:Cc:
 	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
 	 User-Agent:MIME-Version:X-MBO-RS-META:X-MBO-RS-ID;
-	bh=rSbZwM6ArFWnjmuYAFuqV0i8s7gBfvuVh2SoTZC+x8A=;
-	b=yjtdbyc2GjTgPPpCp+gJnR3nPPFJtjE0ypJJW4GASJhcAU9WyfVMxYdZKWhAb/N0aA0i
-	 EOX+tyAQQ/ijk9QR7fbyfAnPkdgv5KDaCVO/2r5+aSsLnDQo/v3OW7561NmP6b5fEyUNB
-	 Z45EPj7XPL6NGK7psTQObtIqIgImKjqPTQHlqCqnG+8pYUeI7C3gW8rXzTf0SYI6YYTZj
-	 PKoBKKgnOqaAox+3VwPOIKyIJDTZsYyjzetU05VDpilVlO2+/ANzG/wM5R8z2ZKHYQqnr
-	 GZaNr7yeFhjKFPt3i2DNA+jwHvzErZFKSB7Mv80BQd0YCLZBSxjDsWkS84oEGmfVoSw==
+	bh=gNSvfMB+KSu6h3D0gLvM2K+YtllhQPeCS/Txg2cf7IA=;
+	b=1l/CCZSUXLO0iMX69MW0ugTaf4obBNe3Q+KJ2YeJuSFfNNZA2qRgPVwQnplpmCwuh9JL
+	 +xTlSvXsO0vaI4eXbUo2A8VIcKMD/a+D29ZgNejOJkZdGjKFT3xNpHKUW5ftuxVTQQLdn
+	 SukkM23BYWhljWdLJh3Q9A84S0rLEaphiLgPz0o8/htsRvAgcu4kxk95yJ4JEjkpw7W38
+	 RuGtBGvLDZ/r7miMg1xzVJB30Sxuk+e53NuFuxDgVnbTHwvGlfv6Zl2JAVhUTiz0jqSBp
+	 YbjMCFQ+0MHSK1aqvF6vyUvkvm1H5YKog5Y+MrAShXBKNOVTdTgq6QjAUq7oql9wMAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=mailbox.org;
 	spf=pass smtp.mailfrom=mailbox.org;
-	dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=fiQPD5+F;
-	arc=none smtp.remote-ip=80.241.56.151
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+	dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=tYzOSWiM;
+	arc=none smtp.remote-ip=80.241.56.161
+Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F56606A31E
-	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 12:41:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64F56606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A83606A31F
+	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 12:45:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81A83606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=fiQPD5+F
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+	dkim=pass (2048-bit key, unprotected) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=tYzOSWiM
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4jCtXt5zckz8tdk;
-	Mon, 26 Oct 2026 13:41:34 +0100 (CET)
+	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4jCtcn62WTzKm5M;
+	Mon, 26 Oct 2026 13:44:57 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1793018494;
+	t=1793018697;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=rSbZwM6ArFWnjmuYAFuqV0i8s7gBfvuVh2SoTZC+x8A=;
-	b=fiQPD5+FuSpQJSMpZyF6nTiKVYDjeyTmcs7Cu5S+MsGVtGAI/MMb1z7ywb8u720v78tsav
-	zb04/v/nC25BBabOPHqTyjvDYtHWyp5U/xpbb3CJq6Zn6csh/9GNbyhnk6FC+For3REk/g
-	GHu5Ses02GQywNtmwY/u+AFbZG1xM6uEQbLTRfXVuqmTF/Oi4MXBDlbkN1HbtIeoXfg8e7
-	362pw7UP/rggRrs2Bfw1Xm97vOrqi/WUtsfcPEwBB3Ck6lZaRgmJkKP2QXS3EsjC+XAqKh
-	KsQFGWn+mdZu/oSVUrXQI5tZzZdaCrvgwclzxpAEwgB0kXXhPBITAd/MtzeJGg==
-Message-ID: <b0d8d0ceda82e303262c0f61324fe8a84fd9f745.camel@mailbox.org>
-Subject: Re: [PATCH 1/8] Docs/admin-guide/mm/damon/start: fix grammar
+	bh=gNSvfMB+KSu6h3D0gLvM2K+YtllhQPeCS/Txg2cf7IA=;
+	b=tYzOSWiMgAO6iqMmGbzPgi7ambZF9u29A0182Egf/5Y8KqLX/99xqmrfu+u0IIVVZtVU6w
+	YNU3sj7Q11Xdyq6RU6XsdvmYlmAn8uwxk5YKI0J+CLEO2Yv6t231xxmAXWJAMQK//DxFCz
+	c/kvG6zon4JtTiOX22JjdxDJiH7mN19P+65Y1AAFqK7DjGuqBSNrAB54f+SOpXBrufwfOK
+	GZzlmCCcsdj+QxmIR+i6V8RWzl7FNa+PPnQZ2OXfy81KLTc+y72RVBCGyF6YbD79J3MZO+
+	Fk4jtdS3iAhHL29UUmHx0Smk8Q1Lwse2FLBYu1vXJYkJc3RWfyjOcLXQ0pX/cQ==
+Message-ID: <203ef50d11ae600ab06546d73a2290f291381551.camel@mailbox.org>
+Subject: Re: [PATCH 2/8] Docs/admin-guide/mm/damon/stat: fix pronoun
+ agreement
 From: Manuel Ebner <manuelebnerli@mailbox.org>
 To: Aveline Noir <jm5905938@gmail.com>, SJ Park <sj@kernel.org>
 Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan
  <skhan@linuxfoundation.org>,  Randy Dunlap <rdunlap@infradead.org>,
  damon@lists.linux.dev, linux-mm@kvack.org, linux-doc@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Date: Mon, 26 Oct 2026 13:41:32 +0100
-In-Reply-To: <179301327249.2.1796164575094900927.damon-docs-grammar-1@gmail.com>
+Date: Mon, 26 Oct 2026 13:44:55 +0100
+In-Reply-To: <179301327249.2.17530814278215474568.damon-docs-grammar-2@gmail.com>
 References: 
 	<179301327249.2.4690198998605536207.damon-docs-grammar-0@gmail.com>
-	 <179301327249.2.1796164575094900927.damon-docs-grammar-1@gmail.com>
+	 <179301327249.2.17530814278215474568.damon-docs-grammar-2@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
@@ -76,88 +77,61 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MBO-RS-META: oduzt75dmocrdjqeru19648ieiwqcoim
-X-MBO-RS-ID: bcd2318e5fcca3399dd
+X-MBO-RS-META: mkyds7qstpeqe1s9cnddd6e1xznqfuib
+X-MBO-RS-ID: 34eaf3e72545e878961
+
+Hi Aveline,
 
 On Mon, 2026-10-26 at 22:14 +1100, Aveline Noir wrote:
-> Fix a few grammar slips in the getting-started guide, like "make DAMON
-> monitors" and a region "that has not accessed".
->=20
-> "The line of the commands" used to be "The first two lines".=C2=A0 With o=
-nly
-> one masim line left, I make it "The first line".=20
+> "converts it" refers to the access events, so I think it should be
+> "them".=C2=A0 Rewrap the paragraph while at it.
 >=20
 > Signed-off-by: Aveline Noir <jm5905938@gmail.com>
 > ---
-> =C2=A0Documentation/admin-guide/mm/damon/start.rst | 10 +++++-----
-> =C2=A01 file changed, 5 insertions(+), 5 deletions(-)
+> =C2=A0Documentation/admin-guide/mm/damon/stat.rst | 8 ++++----
+> =C2=A01 file changed, 4 insertions(+), 4 deletions(-)
 >=20
-> diff --git a/Documentation/admin-guide/mm/damon/start.rst b/Documentation=
-/admin-guide/mm/damon/start.rst
-> index d98b0eb8e771..a83fcc2265bd 100644
-> --- a/Documentation/admin-guide/mm/damon/start.rst
-> +++ b/Documentation/admin-guide/mm/damon/start.rst
-> @@ -63,7 +63,7 @@ the execution. ::
-> =C2=A0
-> =C2=A0The first command of the above example downloads and builds an arti=
-ficial
-> =C2=A0memory access generator program called ``masim``.=C2=A0 The second =
-command asks DAMO
-> -to start the program via the given command and make DAMON monitors the n=
-ewly
-> +to start the program via the given command and make DAMON monitor the ne=
-wly
+> diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/=
+admin-guide/mm/damon/stat.rst
+> index 4a9db755a526..a93609649a5f 100644
+> --- a/Documentation/admin-guide/mm/damon/stat.rst
+> +++ b/Documentation/admin-guide/mm/damon/stat.rst
 
-'The second command asks ... and makes ...' Thus:
-
-+to start the program via the given command and makes DAMON monitor the new=
-ly
-
-> =C2=A0started process.=C2=A0 The third command retrieves the current snap=
-shot of the
-> =C2=A0monitored access pattern of the process from DAMON and shows the pa=
-ttern in a
-> =C2=A0human readable format.
-> @@ -71,7 +71,7 @@ human readable format.
-> =C2=A0The first line of the output shows the relative access temperature =
-(hotness) of
-> =C2=A0the regions in a single row heatmap format.=C2=A0 Each column on th=
-e heatmap
-> =C2=A0represents regions of same size on the monitored virtual address sp=
-ace.=C2=A0 The
-> -position of the column on the row and the number on the column represent=
-s the
-> +position of the column on the row and the number on the column represent=
- the
-> =C2=A0relative location and access temperature of the region.=C2=A0 ``[..=
-.]`` means
-> =C2=A0unmapped huge regions on the virtual address spaces.=C2=A0 The seco=
-nd line shows
-> =C2=A0additional information for better understanding the heatmap.
-
-I have read the damon directory aswell but I didn't find enought to send a =
-patch yet.
-But I found this, could you add it to your patch?
-
-@@ -78,8 +78,8 @@ additional information for better understanding the heatm=
-ap.
+Here I found this one:
+@@ -41,8 +41,8 @@ enabled
 =20
- Each line of the output from the third line shows which virtual address ra=
-nge
- (``addr XX size XX``) of the process is how frequently (``access XX %``)
--accessed for how long time (``age XX``).  For example, the eleventh region=
- of
--~9.5 MiB size is being most frequently accessed for last 3.7 seconds.  Fin=
-ally,
-+accessed for how long (``age XX``).  For example, the eleventh region of
-+~9.5 MiB size is being most frequently accessed for the last 3.7 seconds. =
- Finally,
- the fourth command stops DAMON.
+ Enable or disable DAMON_STAT.
+=20
+-You can enable DAMON_STAT by setting the value of this parameter as ``Y``.
+-Setting it as ``N`` disables DAMON_STAT.  The default value is set by
++You can enable DAMON_STAT by setting the value of this parameter to ``Y``.
++Setting it to ``N`` disables DAMON_STAT.  The default value is set by
+ ``CONFIG_DAMON_STAT_ENABLED_DEFAULT`` build config option.
+=20
+> @@ -68,10 +68,10 @@ estimated_memory_bandwidth
+> =C2=A0Estimated memory bandwidth consumption (bytes per second) of the sy=
+stem.
+> =C2=A0
+> =C2=A0DAMON_STAT reads observed access events on the current DAMON result=
+s snapshot
+> -and converts it to memory bandwidth consumption estimation in bytes per =
+second.
+> -The resulting metric is exposed to user via this read-only parameter.=C2=
+=A0 Because
+> -DAMON uses sampling, this is only an estimation of the access intensity =
+rather
+> -than accurate memory bandwidth.
+> +and converts them to memory bandwidth consumption estimation in bytes pe=
+r
+> +second.=C2=A0 The resulting metric is exposed to user via this read-only=
+ parameter.
+> +Because DAMON uses sampling, this is only an estimation of the access in=
+tensity
+> +rather than accurate memory bandwidth.
+> =C2=A0
+> =C2=A0memory_idle_ms_percentiles
+> =C2=A0--------------------------
 
-Rest looks good to me:
 
+Thanks,
 Reviewed-by: Manuel Ebner <manuelebnerli@mailbox.org>
-
-Thanks
-
-> ...
