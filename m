@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793021610;
-	b=rtBBBlSoYkOaBYSMQmSdgNREMx5TkicOBGSf7r2nrJ9v6tbDb1WYHC52Pcuo4OvZczee
-	 txZrezPpId5R4PezGMVs7LjsX4aPFv9HDBn4zFZwXQfn5dPeMPHJKnnqo50LqF2doL5ZW
-	 JMBgnJXJ8SaR9dVhmIYupEzGP71xCLClkZhLc46IWIl84YSDA7CSYDwoyNYVXcXtGNb+Q
-	 /kDg4uco9pJf+JNSV269L4MHZomJQQq1mSOk9G3MA9A6kZtHkEC/U6QoTeMz2lSsXq2bb
-	 Kgk3iSKpOht/dmrCpHiJSmfeirCbAqn0foX3+GseE99ommGgxEj6ZvQnpSN8PItkr5A==
+	t=1793021814;
+	b=46t/PjrSS6ob5SsyE1rZeT3ADhmXXzrU8GNQraoe52JqOpIP+8Z9lpjl+zOP2A9qW+Wv
+	 DS+CRNx6oYpd0AGniZc/lOnkfDw2A2Nr/Jm3BpPdkni//g6KY5xNjp56voXaw5kbkK2oJ
+	 ij/6iqhyxijPZ86OySRu//ldP5iKsHjgC1qR6/wXusceZPvhL6EV4VxpnPXaKz4NFHrUK
+	 qJYGUpzGpBWSEhUFBLLX/vlp9DDsA4q8pfz6bgYLSGi7pkkxze8c4a357kPZSW+L9SGPd
+	 NdYn4QidGGjp6h1ycw45uTz9LVX3/uQynfvA/gwvqb5JsCT61U0ioMrmYSgOp1DQ49Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793021610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793021814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3QJjgBNhhMcU2h8ryMvyVAOJo+FmKjFcCzZY6PKW7M8=;
-	b=FKz3SZcLF6d6fgxtF7czBHL/UUc2pm8GsTLTOC5Qg60XsUmuaxXg+6121d8wpQjyLS3a
-	 m7AvWfHxHNUwKfH9MrjE495YbQ41aE8iY8pAx23gX3mlK2nDMzTL/hQEZOXqEJwpJ+YRO
-	 uawo40HMfmjwpgnpVlXVXgNhC8JegmjF1rbs6HfrJl3UImjUgUDt7WcQZgSWfYLJITBPp
-	 QsTLXaQ2RJvThhENeH+Hci1ej4dwzWpEfcIQEUaTd5I3iiZEApvqS4fyfdmTZ3NVlrzir
-	 SgammXmqXzKmsSpD6L3ZUCNzaUOcjinU4pb3WbfjXf0S5vZasCs3IwEOL8KYJxG4TRg==
+	bh=QYZ0XMP0Wi8hecXFzBwOfGQ9AN/zBa/t/RaItnxb0wg=;
+	b=SJkeHy0X0DtSU9dpnm6Xr0xRWSIOHwWPJEyzT9PgXUG9eyh73So/UUt9kkPwZSTCfrZI
+	 +fTLrJzQjHEUFJf5AgkbudvDastR5qeuI9k4cFsxQCewgYhtWRujejJVvNuNI1Uw3OWzN
+	 I3BvrkyVMFQbE4dB9PX7weHgRDAFuRHAQlF80CtYbS09gXyCXPBWWJY28cl/Qg2511ouT
+	 v749kLs62pDdGLDUI843YdbliIOSSYjtYdAMpmuAaXvMMQ8eX6ThnUFxz2Q8vxtU2M08P
+	 u1ngjVJDkKHKu8qdte04nPxHScYUxO1P1env/Q/TyAdaUx5qVdT4KTIKOs7wJGmKIYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=d8gwXBfE;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Nk/QG8F8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E099B606A31A;
-	Mon, 26 Oct 2026 13:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EED606A31B;
+	Mon, 26 Oct 2026 13:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=d8gwXBfE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1CE1F01825;
-	Mon, 26 Oct 2026 13:33:29 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Nk/QG8F8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431841F01825;
+	Mon, 26 Oct 2026 13:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793021609;
-	bh=3QJjgBNhhMcU2h8ryMvyVAOJo+FmKjFcCzZY6PKW7M8=;
+	s=k20260515; t=1793021813;
+	bh=QYZ0XMP0Wi8hecXFzBwOfGQ9AN/zBa/t/RaItnxb0wg=;
 	h=From:To:Cc:Subject:Date;
-	b=d8gwXBfEJjO1rmMFiYe3Ur+g7oPaJCfSXRVjqlORKGG4scOzcIY9NsU46uIErcxZP
-	 nIXuqF7X/B78sTjJdf0FDC3r4xDSAp7rFeQsbBtQzCeToh74fGL2UHzvv/4uk3v5Fz
-	 Ub0Pbei+dlTqQ0wNVDPmggdAPCto0QzjDesvuS5+rNk5mmgyMVTd8PbqAjBVOpe881
-	 JCHNQvKyRtsz0/IMKprpdc9rVIJeU7Z8y/a2f0meIXaT6pDjYP9FK3ZtrXOwMKLHWm
-	 k+LPldK9/bEqSHejvXSogwMO2m3PsAbAYtNNuRLYr0OUGJeB0hJSxKEd7aWIoFGSmt
-	 A4Vxra7J4HCuQ==
+	b=Nk/QG8F87cBP4iJGeTUTM8JjtvVnB52rR0VsL7gkPmHXSjlReJAJfz4uTnoMucvw9
+	 ArjLJKQ6q5JP7JsQvMebOc1oI+NgAFJkpEL3XUQPA4sQZgMMYNjMBVAjKqJ4A6Q3S7
+	 CEGZ9GFnUYrZT1cYNkE27HeTrAJypC7Ty40woI474vn37WU3XtNgpiQg1RB8JYLLE4
+	 NQROOXGsCoO0oIHfTvibdAlt+ckfQytLwm+lVSFWbYBOYQJLB6yF7DDVAsX5T4DqAc
+	 06NrMSxu5RwO5h4/lOuNP6htVihjZwB0q3HAYTjeqiGzKcIgb6v69dQks39XMWvUNK
+	 LQ5XWOzmWxT9Q==
 From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
+To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 7.3.y] mm/damon/core: error damos_commit_quota_goal() for zero target_value
-Date: Mon, 26 Oct 2026 06:33:16 -0700
-Message-ID: <20261026133320.68445-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	stable@vger.kernel.org
+Subject: [RFC PATCH 7.2.y v2] mm/damon/core: error damos_commit_quota_goal() for zero target_value
+Date: Mon, 26 Oct 2026 06:36:43 -0700
+Message-ID: <20261026133645.119485-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -103,6 +104,12 @@ Reproducing the issue requires sysfs write permission, certain DAMON ABI
 usages that are supposed to be uncommon, and a rare race timing, though.
 The issue was discovered [2] by Sashiko as a part [3] of its bug report.
 
+Also, the upstream commit on this stable kernel can fix the issue for
+parameters commit paths but DAMON start path.  That's because DAMON
+start path does not invoke damon_commit_quota_goals().  To fix the path
+with minimum change, add a new small validation of quota goal target
+value before damon_start() call.
+
 [2] https://sashiko.dev/#/bug/linux-7f814c9a-986f-4103-a55a-ef9537dcf62b
 [3] https://lore.kernel.org/20261021005234.94107-1-sj@kernel.org
 
@@ -115,17 +122,18 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
 Changes from RFC
-- RFC: https://lore.kernel.org/20261025171526.157414-1-sj@kernel.org
-- Drop RFC tag.
+- RFC: https://lore.kernel.org/20261025172434.161597-1-sj@kernel.org
+- Add a validation for damon_start() path.
 
- mm/damon/core.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ mm/damon/core.c  | 22 ++++++++++++++++------
+ mm/damon/sysfs.c | 19 +++++++++++++++++++
+ 2 files changed, 35 insertions(+), 6 deletions(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index ab3c4d7549644..74d22a596fc13 100644
+index 40714c69d1b18..0aefaef46d655 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -1136,15 +1136,18 @@ static void damos_commit_quota_goal_union(
+@@ -999,15 +999,18 @@ static void damos_commit_quota_goal_union(
  	}
  }
  
@@ -145,7 +153,7 @@ index ab3c4d7549644..74d22a596fc13 100644
  }
  
  /**
-@@ -1162,14 +1165,17 @@ static void damos_commit_quota_goal(
+@@ -1025,14 +1028,17 @@ static void damos_commit_quota_goal(
  int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
  {
  	struct damos_quota_goal *dst_goal, *next, *src_goal, *new_goal;
@@ -167,7 +175,7 @@ index ab3c4d7549644..74d22a596fc13 100644
  	}
  	damos_for_each_quota_goal_safe(src_goal, next, src) {
  		if (j++ < i)
-@@ -1178,7 +1184,11 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
+@@ -1041,7 +1047,11 @@ int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
  				src_goal->metric, src_goal->target_value);
  		if (!new_goal)
  			return -ENOMEM;
@@ -180,7 +188,44 @@ index ab3c4d7549644..74d22a596fc13 100644
  		damos_add_quota_goal(dst, new_goal);
  	}
  	return 0;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 26cdad603ad06..9c7e34f18b28f 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2226,6 +2226,20 @@ static int damon_sysfs_repeat_call_fn(void *data)
+ 	return 0;
+ }
+ 
++static bool damon_sysfs_valid_start_ctx(struct damon_ctx *ctx)
++{
++	struct damos *s;
++	struct damos_quota_goal *g;
++
++	damon_for_each_scheme(s, ctx) {
++		damos_for_each_quota_goal(g, &s->quota) {
++			if (!g->target_value)
++				return false;
++		}
++	}
++	return true;
++}
++
+ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+ {
+ 	struct damon_ctx *ctx;
+@@ -2251,6 +2265,11 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
+ 		kfree(repeat_call_control);
+ 		return PTR_ERR(ctx);
+ 	}
++	if (!damon_sysfs_valid_start_ctx(ctx)) {
++		kfree(repeat_call_control);
++		damon_destroy_ctx(ctx);
++		return -EINVAL;
++	}
+ 	err = damon_start(&ctx, 1, false);
+ 	if (err) {
+ 		kfree(repeat_call_control);
 
-base-commit: c03c1a14507dfaf8b856c2608f9ac216021fc222
+base-commit: cc9de5d4b5ab6459f5774946aa3195ad51236fa8
 -- 
 2.47.3
