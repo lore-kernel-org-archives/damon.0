@@ -1,96 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.35
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793011115;
-	b=yWMJN0F7apIVGwdpZF1ZR6+PbaAkV6I2PWs9av0CdS8KITAZedNOGzt3jJHTFKJhKp0p
-	 s8v+fLZ+xy8No0OK71BOcd/qZe3Ch1wuvxuLE38UYVNQiCFsyZv9ArLIUba8yqwPDBemI
-	 IQcmbXS37u+TYX+lntxXv8C+31EnycG55Bu6tHLfy0Ew7SBMWQ/n1ghdeJxAjN3gkXk+U
-	 mpntBEs9rw3xLsDBLQeHtut6Q2EwxYLzCpAWW9IoYLbz/OWKmk53KoO0OXZefZ6QC56lM
-	 gm78JkIbpIi7XtFrnC184zph/sSfm4yxHvwEE9RVLnNGdiPr2EMPkd+GIyQUhBB69iQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793011115;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-ID:References:In-Reply-To:To:CC:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Originating-IP:
-	 X-ClientProxiedBy:X-EOPAttributedMessage:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=C69q8YVfbq6Wnj5phIjJy8NVq8cn1ZrzPW8sluVzesI=;
-	b=UOJGcT3aAfEOykM/lz1bCc0CCQ3t0RJF2+8WzBluFeiFfrsd9DFdCOkYlQyauCGM3Ae5
-	 6JoNnyCBYv2U+DIq5f1swn4/INBSjwUbjpW2szBC4YJb4kZgr3VzTua30F4NVOgFR/yJD
-	 VYTz0L4eTvUYbBTyNz2eX/n7bg2x2vbeqImUbAvKECFGO3AuRn8GIc5HoayO50s3cDhcT
-	 LpUj0dcXZXLob24y3PZK6FPLsOkseS6sUSrkkYa42nYwFfOnW0XLzSdEOeFLdnq3OLTi4
-	 ImZwoILwNl8RXdNvDhMTOXLu6KllTXXmQTq4rBnHUNzlvDZdFDvbI3lc1YDz6PivZIQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=NcTNMk3M;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.35
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012035.outbound.protection.outlook.com [52.101.48.35])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793012349;
+	b=0KEn65bhzx/FLkrvCFky6r0LOHZCUobxY+h4+sQ3enuRIEzpDYZ0gkfqVTDN2Ouv0NBE
+	 ehB/NvI7N0N4NZnDeuA7uD3Ggsmxwm3yiSus4yilh90ZoC8sg/XHO21OI1adJo5u+lHSi
+	 DFKXHkwXingt4oVgOjSK72kA2t17ekBz5/7nU2BIV7zb8wB5udep1/eMNUYSLOkmNZTUR
+	 EI54wwlhv3VDXOQ7Zak6jQUQFdhTGb7wDzSDGannxOSOriSC5zw03degQECY8rZI7FTre
+	 sRqXRrSXDcjBKWbubJ8IM2Pqpzq/5Fp+ofITe0XzfVYuKMKnRJbdCWIVHUkCrEdq3oA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793012349;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=Xro5bAWcQ7J+wUjAxpsNwmybiIrFkyfAvaD7dSESW/k=;
+	b=ADDT6MHYnJDStQAtxNBbbJZmnWWzt+Y72g02ZRox/6PN3hzG2v/6sdq3whbkImAm4cMo
+	 kJGl8XDh0gexFiXIXPVASfZqNd3T02gSLJuJxijCb/4spSFsY4o/ryRTXt2migxcrP/Qv
+	 V/sj4b9W8Xl49pcIo14ub2FK4y8QEcM1Bv11M+nMYwOwJC9vV2MiaPYbd6a8ivVVbLqV4
+	 bXaABGyRR1wo8e1INN3LPn/qLnHgEdKvb/CDTM3IcDFMkhUTkd4Zu0bNmk1BtGthZZajo
+	 1gDO6xuhM2LTT2xjO7ScHa8FQfLP7rRaK1jNO3BkoDWox/ovmlYH7NDHDe/CuKeeStg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mpfl78Cf;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8D0606A31A
-	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 10:38:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D8D0606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B73606A326
+	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 10:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=NcTNMk3M
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Bp8KxC0s/dX3bLxUPaiuAmGf3y+ztkN63c2rAir0DKn6xpgroyLGAV4YS1FpsBSZ6OeN3K/s52RjzELNIr3GiFMTCvZxTKVfwaq74uXB3F0CcJqSzwrLNrk0T1wsvTJek+9TYsdH8FhAlIEKrhovUOE/yKtw8bPZSvmWXwj1XzL0aNjRP2nqagmjXrjHIy5sGxa0yiDx0r0vondw7ncNhf0PHvqYVC4iG+E+m3L36673O/LugMQWWw7cqVabWoC3VqGALSFn5ikl6olKA+6LijOvSoFxR035xrBBurt9dCMfKGCBkKfjl+F7OWKG2h7u3zcfTMgsnpro8gyo5AqOXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=C69q8YVfbq6Wnj5phIjJy8NVq8cn1ZrzPW8sluVzesI=;
- b=Yr1cnY/5uUm0UnR9vFTrcta+0OzzLHaMV73d7ov5YTpp9b4AFzQ+mOEWCAbLngCHJMXsz9+et21LkvcBtlsn+sJbZMFJvpeT4MSe2NyLv/TTPKnE60rmbKwAYrmXuuIlwqdllKh472CXJHtf3QthtTQK+nZ7fQaZYOx4sZmQrzCcRLPVlkdaK/3GQcvEK4I+F8UrMxwlP7Qy33E11c/EUGSBSIKihfEyXmF6pXPVl4GRpvGgA5X7+NIJ4g7vS8YKAO0hsu7cm/KxlOCk9AvmLuJ783KpRKNzDFPujbat33GAXWbB1YJJ8X/TXuNFm8wk2NzaOXcK5ebkmJSxFZ6N6w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=infradead.org smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=C69q8YVfbq6Wnj5phIjJy8NVq8cn1ZrzPW8sluVzesI=;
- b=NcTNMk3MpoZKXq5C30SkCEPBnaj8fbFt8z3yR94iytzk33Z1b0cLJGrcYqWPSxB0Bn0+0zQpsiq6bsonwh7qPIvNLzJfycrPQ3ztsItOZ4TKcKZjESE2d3fVeRSCOW2FKelqbuEsTQiIjALWw79utPWfydHThwY7D7S9gemj63A=
-Received: from YT3PR01CA0029.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:86::35)
- by BY5PR12MB4162.namprd12.prod.outlook.com (2603:10b6:a03:201::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
- 2026 10:32:38 +0000
-Received: from BL6PEPF0006C3DD.namprd02.prod.outlook.com
- (2603:10b6:b01:86:cafe::6e) by YT3PR01CA0029.outlook.office365.com
- (2603:10b6:b01:86::35) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.22 via Frontend Transport; Mon,
- 26 Oct 2026 10:32:37 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BL6PEPF0006C3DD.mail.protection.outlook.com (10.167.249.232) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.569.4 via Frontend Transport; Mon, 26 Oct 2026 10:32:37 +0000
-Received: from [127.0.1.1] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Mon, 26 Oct
- 2026 05:32:25 -0500
-From: Shivank Garg <shivankg@amd.com>
-Date: Mon, 26 Oct 2026 10:30:35 +0000
-Subject: [PATCH 7/8] mm/zsmalloc: remove unused zpdesc_lock()
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mpfl78Cf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660491F031E4;
+	Mon, 26 Oct 2026 10:59:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793012348;
+	bh=Xro5bAWcQ7J+wUjAxpsNwmybiIrFkyfAvaD7dSESW/k=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=mpfl78CfEK3Yzz0Rk0owuee84I/e0fjjMuW2FlX8V/Es8Hiv5joE87sYmIbrLwNde
+	 Q4e55OKpzJ0PwvttfxzqFEbxPwKliAtj9k+yVJ3WU4wN4zc9Nm5yR8xrdUagq8aZSj
+	 DSaP+VBI3qLlMB9glbsUQBPGWtn6kkZq2KJJrapXILvHUdOAVzpmS+nHTfLUDWSccY
+	 a1fR+j0Bt0bTU02B0qvAHRisTI5DEHq5IkFhGnsUnoQVplPdbtzjpyvh04kZP7pYul
+	 ZnJzIcjuhrI3JRWC67fZiB1bXN1l+aRWP9471fjMo6iJH4Y5svtrawCEDb9xuantSG
+	 eB9qFWQt7TFcg==
+Message-ID: <sashiko-outbox-185035@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/8] mm/vmstat: remove unused folio stat helpers
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Shivank Garg" <shivankg@amd.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261026-unused-sym-v1-1-82ca2dceabe1@amd.com>
+References: <20261026-unused-sym-v1-0-82ca2dceabe1@amd.com>
+ <20261026-unused-sym-v1-1-82ca2dceabe1@amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 26 Oct 2026 10:59:08 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -99,100 +59,17 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20261026-unused-sym-v1-7-82ca2dceabe1@amd.com>
-References: <20261026-unused-sym-v1-0-82ca2dceabe1@amd.com>
-In-Reply-To: <20261026-unused-sym-v1-0-82ca2dceabe1@amd.com>
-To: Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand
-	<david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett"
-	<liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, Mike Rapoport
-	<rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko
-	<mhocko@suse.com>, Kairui Song <kasong@tencent.com>, Qi Zheng
-	<qi.zheng@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, Barry Song
-	<baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie
-	<yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He
-	<baoquan.he@linux.dev>, Baolin Wang <baolin.wang@linux.alibaba.com>, "Matthew
- Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Hugh Dickins
-	<hughd@google.com>, Rik van Riel <riel@surriel.com>, Harry Yoo
-	<harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang
-	<lance.yang@linux.dev>, Chris Li <chrisl@kernel.org>, Kemeng Shi
-	<shikemeng@huaweicloud.com>, Nhat Pham <nphamcs@gmail.com>, Youngjun Park
-	<youngjun.park@lge.com>, Jonathan Corbet <corbet@lwn.net>, Shuah Khan
-	<skhan@linuxfoundation.org>, Johannes Weiner <hannes@cmpxchg.org>, "Michal
- Hocko" <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>,
-	"Muchun Song" <muchun.song@linux.dev>, Uladzislau Rezki <urezki@gmail.com>,
-	SJ Park <sj@kernel.org>, Minchan Kim <minchan@kernel.org>, Sergey Senozhatsky
-	<senozhatsky@chromium.org>, Alexander Potapenko <glider@google.com>, "Marco
- Elver" <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>, Pedro Falcato
-	<pfalcato@suse.de>, Bharata B Rao <bharata@amd.com>
-CC: <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>,
-	<linux-fsdevel@vger.kernel.org>, <cgroups@vger.kernel.org>,
-	<bpf@vger.kernel.org>, <damon@lists.linux.dev>, <kasan-dev@googlegroups.com>,
-	Shivank Garg <shivankg@amd.com>
-X-Mailer: b4 0.15-dev-47d62
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793010663; l=774;
- i=shivankg@amd.com; s=20260518; h=from:subject:message-id;
- bh=pV2CJt/tj69awn4Duh9GB/gFNsS3CYaXfVzki/FvS/w=;
- b=cfJct9dDG3Rb4zakj5xPViULlOXvo8YGBrJPsYr/lIe1RkOegXg5a8F3i3XZyz+fOedVV6alz
- Oos4EYAz7F1DyTt9/HV0FY7mGL8KBTvvUaX6tv6T54iv10eMEIUjaUf
-X-Developer-Key: i=shivankg@amd.com; a=ed25519;
- pk=2l2QGTeXuGkZTtfmx0nPQU8iFZfjYmX/ymMojitevx4=
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0006C3DD:EE_|BY5PR12MB4162:EE_
-X-MS-Office365-Filtering-Correlation-Id: 78c1434a-339c-46a3-0826-08df334c747d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|23010399003|376014|7416014|82310400026|1800799024|261021123027099003|10067099003|56012099006|22082099003|18002099003|921020|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	VfIRwhjfUx/TB96SXFH8IUtYbnJkZkZiCyC/aeGisK3Rh3XTJJzfIjsCG9RnotSASRztCJXPNr9qvrb2TNb8UTh7fc0zJ0V6URWJhNYAVtQuhqPfTcWNo3W4mylqiFn14/D3ysggLpX6sPdj+/na7pm4DQnmq69aKdsLOzNir0f1S9+TxENtE++jsSUlFUARRGHr5ugKAIyRIgqbNBi12NxQPLtfBBZpX2bKs4n5Krdgq22RWOVixNjpKPywS3GNsBIXzBi5Qj2eqBxvB4PL7rSmby/2rD5Cx0SIXRhtPPwjuFx/iYqlZ5ccP5GGqCl3aJo1lS8QdrW6GarFX0Ti6BzHbcEyATRIyPh5ricOwmlbul5UQe0WTSVPMVAR4ZQynfYvocelsCKyHHcSkg1sVNtrYEkcQn+mEDseQ5jbFX5e5dE/5ZLrp2DVXfstJpaWNHMzPscwx+u1Z9O7y8vtz79wMNleEN7NhNDTU3dkVgr4KM8fJV2sI9fjhcTK9hArws6dgR9pvMfSL6y1vcr8WUdBTusceHYHzquWqeX+epDnDQuE7EK9dzL5EgoB7yhWLyfY7KeHR/By1Zj8+uBnJHS/S7o1GTr3WuzksXWoRMAQITnUGq4TYI1Jl0oLHEPaYrDDci7tclYfHrgDEqMDb0uthh5muBDGie2qu4lQg7usCTYOy4M1UI7XL1uqHSEk/7+6Iz5i2WfUwwWl+WrjVS5L8t/cTlHWshNeBJIEJnltPd6/Aebn/wUCNQRw1dqf
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(376014)(7416014)(82310400026)(1800799024)(261021123027099003)(10067099003)(56012099006)(22082099003)(18002099003)(921020)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	XscwIhuvR9Q5CdmVBAN3VKSqRX5Nbyapr/3n8wlBJbzPHqzfDla3xIC8p1zaQRzi+kKO8cIrhyfslyY0J9XQ4sIeozbkiMu5wuNZ6xKZC3G5MqIOd/WVtSGMcB+uIBvOx2K9nVUHJpVjhi+0HoEDNPVFB+IKhZpZLj5rX67Wsp2VFKNb1oJnsXEcKmNC81ku3IsPiUc8jphyChFQuM8a3i3NE6nCHMjdeYZqMuTNOjfR1dR8/osC6RpByzFz0NqPyfmHD1NYD4GQ6znCv5yCfbV5pft/aWr4fs4ZiOrOKA3l+Viul4VPKG1EhwsFo6VPjd26O8NHt9t8PNu622I6FmHNu0KDSFRqEHS3pybAVcyFW1JOuNYeQT9Wf/44jQM+5Tsm2NqGPRe7UtoaizdNCdZYaZ6pgaGxDgyoDkoSXGAesd1tX5zYel8W+0ToBxZe
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 10:32:37.4343
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 78c1434a-339c-46a3-0826-08df334c747d
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL6PEPF0006C3DD.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4162
 
-It was added in commit c1b3bb73d55e ("mm/zsmalloc: use zpdesc in
-trylock_zspage()/lock_zspage()") but has never had a caller.
+> __zone_stat_add_folio(), __zone_stat_sub_folio(), zone_stat_add_folio(),
+> zone_stat_sub_folio(), __node_stat_add_folio() and __node_stat_sub_folio()
+> have no callers.  The last zone_stat_sub_folio() user was removed in
+> commit f1ee018baee9 ("mm: use __page_cache_release() in folios_put()").
+>=20
+> Signed-off-by: Shivank Garg <shivankg@amd.com>
 
-Signed-off-by: Shivank Garg <shivankg@amd.com>
----
- mm/zpdesc.h | 5 -----
- 1 file changed, 5 deletions(-)
+Sashiko has reviewed this patch and found no issues.
 
-diff --git a/mm/zpdesc.h b/mm/zpdesc.h
-index 4fd81c2e8076..aaab5f1bfb52 100644
---- a/mm/zpdesc.h
-+++ b/mm/zpdesc.h
-@@ -107,11 +107,6 @@ static_assert(sizeof(struct zpdesc) <= sizeof(struct page));
- 	const struct page *:		(const struct zpdesc *)(p),	\
- 	struct page *:			(struct zpdesc *)(p)))
- 
--static inline void zpdesc_lock(struct zpdesc *zpdesc)
--{
--	folio_lock(zpdesc_folio(zpdesc));
--}
--
- static inline bool zpdesc_trylock(struct zpdesc *zpdesc)
- {
- 	return folio_trylock(zpdesc_folio(zpdesc));
-
--- 
-2.53.0
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261026-unused-sym=
+-v1-0-82ca2dceabe1@amd.com?part=3D1
 
