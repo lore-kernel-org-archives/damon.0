@@ -1,73 +1,64 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.161
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793018707;
-	b=BhfnnbwtYaY4Q4uNxSWeC03VHPx/YL3AlGLI2pBPcggvfB4UtxMxZgsGiP6gDrrgGtEw
-	 PMTO7exs6RWroAmClit9cRTretLq5mi8AIBaxR8rqmOqepq1cPuXWKYC1aVk+xYhd1pmC
-	 U1f3MMpO/7oQKMgUR7fbYI8h8rPt4ykWdlbTjMiW8R2+6X5lKPeiXYKRLoLzWcsWKoaOG
-	 lu0BYsYlzpEfVBZ2JdbpiHRJAaxli6b+JjNmrV48pKygpKA/boKIYP3XbvZ1wIqFsK+/r
-	 nxz82MoL0AoquWR8+9KXs5bktL4Hm6xDZLQnhqAEfrFva8cJVZ0JNGGaCDxybcRQwwQ==
+	t=1793018832;
+	b=Z71QbO4BeymBqwprl2zdg9xzcPL3RyPI3E8CJMvEOHjwVBsBsguae5xFjLKZIXwG7EDg
+	 ERuLfe9XZCpDt3VlN2iXmn3GjKs4DgG3LNHvKh/1hyOE7kc8WLZUW0b6mIWioqzLM4AM3
+	 nSlVWHfGdkErmMDV4JO/E+xayMa2dQCsPBhLL4xTG3QVsMWmeJDVMYP/dHP9jZwhSnlU7
+	 6qxagMD2yoK0D9s9XOikUVqmG5u3n1D66diucfdSvlgYZ0YWtl3uPFUhoTCr1pDxiS7Qf
+	 vof0aMGBm27QKj62yGmxF0YWBStk3ZUJ1XwKu11v7NzhaA+16e5xb4b9B4tY+Th5skA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793018707;
-	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Subject:From:To:Cc:
-	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
-	 User-Agent:MIME-Version:X-MBO-RS-META:X-MBO-RS-ID;
-	bh=gNSvfMB+KSu6h3D0gLvM2K+YtllhQPeCS/Txg2cf7IA=;
-	b=1l/CCZSUXLO0iMX69MW0ugTaf4obBNe3Q+KJ2YeJuSFfNNZA2qRgPVwQnplpmCwuh9JL
-	 +xTlSvXsO0vaI4eXbUo2A8VIcKMD/a+D29ZgNejOJkZdGjKFT3xNpHKUW5ftuxVTQQLdn
-	 SukkM23BYWhljWdLJh3Q9A84S0rLEaphiLgPz0o8/htsRvAgcu4kxk95yJ4JEjkpw7W38
-	 RuGtBGvLDZ/r7miMg1xzVJB30Sxuk+e53NuFuxDgVnbTHwvGlfv6Zl2JAVhUTiz0jqSBp
-	 YbjMCFQ+0MHSK1aqvF6vyUvkvm1H5YKog5Y+MrAShXBKNOVTdTgq6QjAUq7oql9wMAQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793018832;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=MY2/oE50ls4sLwiugB1GPOFn3VQZXmVjO2YcQdI0xoI=;
+	b=jBtT7cwOnkWKMlxWh/VzC6hpqwZZyg8e6jrtJeMTbV+1eUid0fPXzs5DfgrXoc7Frs4z
+	 S6Vcy4Pu8aXgM6LVSM6EjGlCMJ9GFsgL9zGbixAbh8UOewd/kQVI5P67Z5oMOBM1tkiNb
+	 fYd0sxUM+Ju2PDDyvk4HFJIxV8+jQHnACr2JbrhN7yH9cn0Pp0N0yz48VOZTuWAKqFq7o
+	 cSHTT4j15hg39lAmBy57JU1dWLHk9QDs3zPuph4SPnLExnw2VEBob9k4gfVJ2ZonVpoyB
+	 QhF5bZ+k5Md1VKBqAc4qNuuBgDOrxXkM9sR178vZYalT0dCHJ1kXbNhJIjV/TGBzuBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mailbox.org;
-	spf=pass smtp.mailfrom=mailbox.org;
-	dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=tYzOSWiM;
-	arc=none smtp.remote-ip=80.241.56.161
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dletiwOF;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A83606A31F
-	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 12:45:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 81A83606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60303606A31A;
+	Mon, 26 Oct 2026 12:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=tYzOSWiM
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4jCtcn62WTzKm5M;
-	Mon, 26 Oct 2026 13:44:57 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1793018697;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=gNSvfMB+KSu6h3D0gLvM2K+YtllhQPeCS/Txg2cf7IA=;
-	b=tYzOSWiMgAO6iqMmGbzPgi7ambZF9u29A0182Egf/5Y8KqLX/99xqmrfu+u0IIVVZtVU6w
-	YNU3sj7Q11Xdyq6RU6XsdvmYlmAn8uwxk5YKI0J+CLEO2Yv6t231xxmAXWJAMQK//DxFCz
-	c/kvG6zon4JtTiOX22JjdxDJiH7mN19P+65Y1AAFqK7DjGuqBSNrAB54f+SOpXBrufwfOK
-	GZzlmCCcsdj+QxmIR+i6V8RWzl7FNa+PPnQZ2OXfy81KLTc+y72RVBCGyF6YbD79J3MZO+
-	Fk4jtdS3iAhHL29UUmHx0Smk8Q1Lwse2FLBYu1vXJYkJc3RWfyjOcLXQ0pX/cQ==
-Message-ID: <203ef50d11ae600ab06546d73a2290f291381551.camel@mailbox.org>
-Subject: Re: [PATCH 2/8] Docs/admin-guide/mm/damon/stat: fix pronoun
- agreement
-From: Manuel Ebner <manuelebnerli@mailbox.org>
-To: Aveline Noir <jm5905938@gmail.com>, SJ Park <sj@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan
- <skhan@linuxfoundation.org>,  Randy Dunlap <rdunlap@infradead.org>,
- damon@lists.linux.dev, linux-mm@kvack.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Date: Mon, 26 Oct 2026 13:44:55 +0100
-In-Reply-To: <179301327249.2.17530814278215474568.damon-docs-grammar-2@gmail.com>
-References: 
-	<179301327249.2.4690198998605536207.damon-docs-grammar-0@gmail.com>
-	 <179301327249.2.17530814278215474568.damon-docs-grammar-2@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dletiwOF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827C71F01825;
+	Mon, 26 Oct 2026 12:47:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793018832;
+	bh=MY2/oE50ls4sLwiugB1GPOFn3VQZXmVjO2YcQdI0xoI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=dletiwOFnOAhUfZUv/7sYjo6kF9eaUxqjsksJHXSMeKqcpQWaT0h1QOTA0PmDAcWo
+	 AvMFrGqvq0Dj0apCyec6s3Ke0TvPipmjBslg3NkwHFrqXqOnY0poDJ1Irs51nNWRPn
+	 H6Ep82aiaisWDf1WCH9j2UyTBkD28NJxUDvvkJ9oYn0cCTQD9v2T0/EZUTYWTSgNuz
+	 JeCWEW//Jfl5osw6NZssDeV9zDDCpYXpMvL1YORr01lHhsdjsR1OcyQKXhox4us3XP
+	 xbPAQ5qS87JrgMvFMZ+/Clu1YRDV3mcYpkiUZghMK9W9bAeGEFzZ+vYqDDcdE6mKM5
+	 4L5HTBHkBWNNw==
+Date: Mon, 26 Oct 2026 13:47:04 +0100
+From: Gao Xiang <xiang@kernel.org>
+To: "Gupta, Pankaj" <pankaj.gupta@amd.com>
+Cc: Gao Xiang <xiang@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+	Jialiang Huang <huang-jl@deepseek.com>, lance.yang@linux.dev,
+	baohua@kernel.org, damon@lists.linux.dev, david@kernel.org,
+	kunwu.chan@gmail.com, lianux.mm@gmail.com, linux-mm@kvack.org,
+	mst@redhat.com, ryncsn@gmail.com, sj@kernel.org,
+	virtualization@lists.linux.dev, xueyuan.chen21@gmail.com,
+	Matthew Wilcox <willy@infradead.org>
+Subject: Re: [FYI] DAMON and virtio-balloon in DeepSeek's DSec paper
+Message-ID: <at9LyF8xIIPKcLSD@MacBookPro>
+References: <20260925054408.10431-1-lance.yang@linux.dev>
+ <20260929123241.1408414-1-huang-jl@deepseek.com>
+ <aruyFPzEe3pS_Qzx@XiangdeMacBook-Pro.local>
+ <AA71E56E-F29A-44B2-B5A0-7806CD684B21@linux.dev>
+ <ary5Nn9le4xG7_-N@MacBookPro>
+ <CEE47F27-874B-486A-995F-E223249659FE@linux.dev>
+ <arzlfSOgtC-CLoZt@MacBookPro>
+ <8839b7e4-a830-4c88-9e7d-dd35757c5167@amd.com>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -77,61 +68,68 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MBO-RS-META: mkyds7qstpeqe1s9cnddd6e1xznqfuib
-X-MBO-RS-ID: 34eaf3e72545e878961
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8839b7e4-a830-4c88-9e7d-dd35757c5167@amd.com>
 
-Hi Aveline,
+On Mon, Oct 26, 2026 at 01:35:44PM +0100, Gupta, Pankaj wrote:
+> 
+> > > > Anyway, it'd be better to get some numbers with RL or agent workloads
+> > > > (especially the host memory is under reasonable pressure) before
+> > > > landing all these new infras upstream if proceeding in this way.
+> > > At least for now, as far as I'm concerned, I don't intend to land all the
+> > > features mentioned here. The first thing I want to address is on-demand
+> > > allocation of struct page.
+> >  From my point of view, on-demend allocation of `struct page` for FSDAX
+> > is indeed useful and can be landed upstream, mainly because `struct page`
+> > initialization takes much long time for large FSDAX devices even a small
+> > range is used, that impacts the guest startup time a lot.
+> 
+> Would on-demand allocation of 'struct page' from the device itself (a
+> variant of the altmap case) solve this problem?
+> 
+> For virtio-pmem, since device memory is backed by host page cache. So, in
+> the worst case host will provide memory for all the 'struct pages', but the
+> guest itself won't OOM.
+> 
+> Just sharing this idea. Anything I am missing? It could be another
+> optimization on top of Muchun's work.
 
-On Mon, 2026-10-26 at 22:14 +1100, Aveline Noir wrote:
-> "converts it" refers to the access events, so I think it should be
-> "them".=C2=A0 Rewrap the paragraph while at it.
->=20
-> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
-> ---
-> =C2=A0Documentation/admin-guide/mm/damon/stat.rst | 8 ++++----
-> =C2=A01 file changed, 4 insertions(+), 4 deletions(-)
->=20
-> diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/=
-admin-guide/mm/damon/stat.rst
-> index 4a9db755a526..a93609649a5f 100644
-> --- a/Documentation/admin-guide/mm/damon/stat.rst
-> +++ b/Documentation/admin-guide/mm/damon/stat.rst
+I know virtio-pmem struct page can be allocated from the device itself.
 
-Here I found this one:
-@@ -41,8 +41,8 @@ enabled
-=20
- Enable or disable DAMON_STAT.
-=20
--You can enable DAMON_STAT by setting the value of this parameter as ``Y``.
--Setting it as ``N`` disables DAMON_STAT.  The default value is set by
-+You can enable DAMON_STAT by setting the value of this parameter to ``Y``.
-+Setting it to ``N`` disables DAMON_STAT.  The default value is set by
- ``CONFIG_DAMON_STAT_ENABLED_DEFAULT`` build config option.
-=20
-> @@ -68,10 +68,10 @@ estimated_memory_bandwidth
-> =C2=A0Estimated memory bandwidth consumption (bytes per second) of the sy=
-stem.
-> =C2=A0
-> =C2=A0DAMON_STAT reads observed access events on the current DAMON result=
-s snapshot
-> -and converts it to memory bandwidth consumption estimation in bytes per =
-second.
-> -The resulting metric is exposed to user via this read-only parameter.=C2=
-=A0 Because
-> -DAMON uses sampling, this is only an estimation of the access intensity =
-rather
-> -than accurate memory bandwidth.
-> +and converts them to memory bandwidth consumption estimation in bytes pe=
-r
-> +second.=C2=A0 The resulting metric is exposed to user via this read-only=
- parameter.
-> +Because DAMON uses sampling, this is only an estimation of the access in=
-tensity
-> +rather than accurate memory bandwidth.
-> =C2=A0
-> =C2=A0memory_idle_ms_percentiles
-> =C2=A0--------------------------
+But I don't think it changes too much, since guest kernel implementation
+shouldn't imply anything of the host. So that the pmem and struct page
+can be backed by anonymous memory or other types of memory, and it can
+still cause unexpected large amount of memory on the host instead. But
+allocating on the device is sightly better than allocate struct page in
+the guest.
 
+The problem is it's hard to make sure the on-demand allocation is always
+successful since the guest knows nothing from the host, so that it
+exposes security risks like denial-of-service or more.
+
+If this security concern is not resolved (e.g. implement a reclaim path),
+my thought is I think we shouldn't overcommit the struct page since it's
+a functional defect if virtio-pmem is reasonably large.
 
 Thanks,
-Reviewed-by: Manuel Ebner <manuelebnerli@mailbox.org>
+Gao Xiang
+
+
+> 
+> Thanks,
+> 
+> Pankaj
+> 
+> > 
+> > But in order to make it safe for production, I suggest reserve the
+> > guest memory in advance for the worst cases of `struct page` at the first
+> > stage, otherwise it could cause unexpected issues for many guest workloads:
+> > it's hard to perdict if the guest memory is still enough, it's unfriendly
+> > to system designers as well (that would completely based on their
+> > experience and hard to ensure the service quality beforehand.)
+> > 
+> > Since the guest memory for `struct page` is touched on-demand, the memory
+> > over-committing on the host is still workable, the memory reservation
+> > can be removed after the reclaim path is done.
+> 
