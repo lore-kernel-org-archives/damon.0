@@ -1,97 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.139
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.152
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793030071;
-	b=htqWru0uzMjVU0P64O2aIDYGBDtPO2dkWR+wxS7tAQNB/1wKXk2NKfIqothBL0rirl0C
-	 M9emMYIfQJFbJjyxKxRtPvXQL4rZmJTi8sT8L3y6BR32ZfU2sImMlBiSMVu0/1LdbuWcW
-	 CMNXK66GEHatub5kP+jfrqSdxbbfjgjO/px3qqMvz2Gt/Z3YjNDTYOkoZ1FPuaW+jFtIT
-	 YX3un/KSvBTeFigvNTIU+48OQUODY7ilwo2JlKo0w4l03OpdlORd0NX0b1TuYuYKSfUZ7
-	 ccxToEpweNFBt8+K/uy+wqW5WVklJsY5zctunJcO+Iy+8HrUr9PzlJXlJbQ9MT/Mhng==
+	t=1793037108;
+	b=q6s35JLCfWbKQ7RQJLLDq128T0I0VHMh+4Azc6O/n+qS6jpS2cag8QD/eY1gVaKLGz7E
+	 yMTPvPeNm79BEIWQpez4o2cL8D6rLcHNcpilAdyUC7S+fsbH75E3ZSD0qlma6i9rpq6xm
+	 4wEch1HzUt60MfVK/bYqApsW82a4H7R7o0f4BxCliO70bEaYqu+2YfIOQgXha0PH0nKRS
+	 WjxLEwhNMUz1QVGnWDeD0dhUCeCur4/u1qK4h9xJBnHurF6VIeTOKK/RlDJbZuaYV0Z2A
+	 hRk8RLFsOffZXVpTogrj1eJ6MvSXBuAnTNMaYa+WslusIFBq6NPpTo9EgZNDzZlrayQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793030071;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:Date:Message-ID;
-	bh=B8FTqo2cthF1N8/EPSwd5W+NmZQX4EUuEeAqIs6bJK8=;
-	b=dnJ90+/1exC4kLIlzo2sBKeu218bTfl2Ve+GFQPCwB2iF2yRl6GOyzZuHf03VCgfyV1X
-	 h+Cb+FcjssjKzxrWwiuiOf9exdURMt87R7LHWIhss9cPTOTLT8YYke3oLBwJGlkH16uia
-	 6GWkv0FvS1y2qVEiweRhaXGl8QNqhaXtMy4LmZWqeOOWczQrUr0IlXWEpiNfER9Zw6c+7
-	 1iqc1DqWrxvpHaHj3C+YcQBUqrSOKOko4R+l2lOhOr3jOaq+mUdpvZdENl3lStV3t5UlE
-	 oC6ubnlPejo+DMl4HtsedI3XuGtuh9goC57laP7eKIHqsGOwKJBHrGs2mWuuu+vQENg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793037108;
+	h=DMARC-Filter:Received:DKIM-Signature:Message-ID:Subject:From:To:Cc:
+	 Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
+	 User-Agent:MIME-Version:X-MBO-RS-META:X-MBO-RS-ID;
+	bh=+zE9kVNs5C7sYZHMxAgpjn8fTZT69NqSWFunM32ji+Q=;
+	b=ReAAbhnTu3udEMxD92m4isvhcOUX56yQyq8SYyG1zXAfJkIi3JffQPS9QN9EnK9F/vwP
+	 F2MMWTZiw+43Kkg1N7B4U3bi9mFKZKmfbndhbyEYJSynF9ssh52t07AygpWIbST/9ktcI
+	 fVFbiKFC86DZP25DzrKybSTUCjoowHebTeSm1KvOtNPFKdq7EMeyae80vKVm553vO6p5q
+	 BNhfSRkhoq6UHDl80CDndbttBBdwudmXaPx14Nq6TGE0UYkqBGdd7+AND7ylB0RllfZW6
+	 pU7KWi9JHmere+5hP4zNqqfJHMpQhO3yTatGBAs/CEYJUpiKXiXxhoIt/ysj3H1oXTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=N4psmp0o;
-	arc=none smtp.remote-ip=74.125.227.139
-Received: from mail-pj2-f11.google.com (mail-pj2-f11.google.com [74.125.227.139])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=mailbox.org;
+	spf=pass smtp.mailfrom=mailbox.org;
+	dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=vfM+xgkT;
+	arc=none smtp.remote-ip=80.241.56.152
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E682606A31F
-	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 15:54:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4E682606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200F9606A31A
+	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 17:51:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 200F9606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=N4psmp0o
-Received: by mail-pj2-f11.google.com with SMTP id d9443c01a7336-2ea993271f2so10687515ad.0
-        for <damon@lists.linux.dev>; Mon, 26 Oct 2026 08:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793030071; x=1793634871; darn=lists.linux.dev;
-        h=message-id:date:mime-version:content-transfer-encoding:content-type
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=B8FTqo2cthF1N8/EPSwd5W+NmZQX4EUuEeAqIs6bJK8=;
-        b=N4psmp0oTWaB4A0GkRU5qgXCAfs7t/35dlgApBibLUmWf9s9tkpHCGaT00z3pL8niY
-         jqao3dqF0ndXd0T2nyQezP0U3c79M7Z2jqg+ofUeWfpAWK8Xg4i0qbtH2YVIWQKd9ZDq
-         vwxEL0HCEJEotlG1+nR+8vFuAqXyTU2LatumUKWgEtC9FTsUZC9HFuRuyODk+uU6fbsK
-         MqeNMnYkeqQeBSwmJnlsQsJUlWdbrvXL6bLx95nGW8W199pXm39TMlvRB74dhBPulokT
-         wVMHHEMdN6QT76hYpXZFi/k/BBGda76quDwg+FkS4mVN4SaT8VK1LxLC/+OyyRqL44Kn
-         RM8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793030071; x=1793634871;
-        h=message-id:date:mime-version:content-transfer-encoding:content-type
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=B8FTqo2cthF1N8/EPSwd5W+NmZQX4EUuEeAqIs6bJK8=;
-        b=lmxzaJEhHe4Sbqmqlqa2nAzksr7J/KE3ofn6zQwbW9n+o2Pc1VtXCFzMllmPK4Caaw
-         +Xzrmja9S9qk20jqMseV/Hc8Yz1/f/W8lzvGj3WBhIE2bYlyADqBLk2GsbFVIGrT0v1K
-         RgzKrMYdGoXLIFeyUlB5P5/BDbiQTj7qEKQx9j1BziinTPGckurv/fnBIER69Oybnfch
-         Xd5iYYKeiBjcUhizFPmIGCUuIMZbNbjMrBArcGyJTz4HbzHLxktJyvGINv9n4x5iQLZ4
-         G0mqhyz/dRdDFHsIsSVpiDloSV+tANyw7WEBo/xkK+hxY4qdaLZZTXZpN2wlECprgIiu
-         Pcow==
-X-Forwarded-Encrypted: i=1; AKwUvBzE2lFsT+VgkhmNesDU22XUHkLKJpn+MyxKU2v1ubG7iEL702yUET+HoGCNlWxZPYQ86Ne7vQ==@lists.linux.dev
-X-Gm-Message-State: AFq9FYKy5tMW201292U79IrUzsPdN7LE0grAkkpBjWvw3c5crZK7oZMz
-	YQcGj0xei9ZQxKWDC32Qk3DrVHPmddy7JhgTY7aDsB7OPvP9HTp1YP34
-X-Gm-Gg: AYBFou3LU/yGPlfh1bnd57kW6vIlUL4113EdN+6E04YAMwl/9kN38MyJwmPc3O5KpRK
-	Lh8Xe8+cPj+mnvl6+cVg1DUQxsVmuBP9hHmT2YgBqatFVHj3qZlXZL+Ad72UcgxdS87kUCR2RRn
-	WQKaNA/MvR51NxXyZ62AKBwyvaCfrATRP0kfP+QZ7QGOmXkh4HUEMxurPzdveBc0wfIqWgGBHOY
-	8uPLKvimQ45fLXzF1d8J2NFo9pLiBD1J7tfEpqLu+ovsYhiSkuxIb8m/dszdv7nozlMrjYrKNFQ
-	0WE9aElkM3rqX7T0G3sx5lc2DC5RWqVA7+pxT0RnAyRl20J4klceol+JxOGUbVR9i4JNkLjOS/M
-	s68E7HYEX2L3LNTqxwCoQTZtWycCY8eaBI2nxbpNHvrLIieiwW31kz1FzdpTnLR4JmtgIznHd6n
-	PjPg/rs4UAkemzoTvm98Wobq7w7vEc/hcALkTsYwnfwjHHpPFrgDqhCGVrgH0Rub6COjH8WGcaj
-	xpUcrRNb4vV1xEQjoe/CL1GE0kh1TW2VgYyefoloHvnpFIJR6wgZz0EzO4FyfqHam+U3kirOvmi
-	kbTlPHX/Jnr6HGRc2eksER3YDU6eAUvDcT/bk/Refd40jH9jws4V
-X-Received: by 2002:a17:903:988:b0:2e9:5059:4477 with SMTP id d9443c01a7336-2ea9c6c82f1mr52579075ad.23.1793030070524;
-        Mon, 26 Oct 2026 08:54:30 -0700 (PDT)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea9b221101sm19099555ad.71.2026.10.26.08.54.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 08:54:30 -0700 (PDT)
-From: Aveline Noir <jm5905938@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=vfM+xgkT
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4jD1Ql1YcdzKp50;
+	Mon, 26 Oct 2026 18:51:43 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1793037103;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+zE9kVNs5C7sYZHMxAgpjn8fTZT69NqSWFunM32ji+Q=;
+	b=vfM+xgkTeSHFp0dpRFW5mvDxLWynvaYYd1UZ+0M8/RjdK3Y/o+kfyc5kjAwpXTIZsr9Eu6
+	iExYX6fI/vZP81wbfVGzOl1iJoKCqxBJmoBTf7rDmFgc7GkX9+CIvi72yb/ZgfofHKatWm
+	CEhmHoyYhPPpDYIG2BX/PYZg6euQ1DnaSJdvglOUm5V7jnR3pJMr3adsVPyyWfe80IThes
+	PV1MfXTDdgA2dDMotzgnU6/3lFKeT8b0eHT0SY7mfG9tZzTHCgiEdq+PwAAqfMMCzCGB+q
+	5PjQz2AM722OC6zZ3Ral0YnsHFgnv2G3dPDeGPmex+WvUtmaIsXIBJ5iXOlHYg==
+Message-ID: <72437017a038310cad48a5ff488377a9f8eb89f1.camel@mailbox.org>
+Subject: Re: [PATCH] mm/damon/reclaim: improve grammar and style
+From: Manuel Ebner <manuelebnerli@mailbox.org>
 To: SJ Park <sj@kernel.org>
-Cc: Manuel Ebner <manuelebnerli@mailbox.org>, Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>, Randy Dunlap <rdunlap@infradead.org>,
- damon@lists.linux.dev, linux-mm@kvack.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject:
- Re: [PATCH 4/8] Docs/admin-guide/mm/damon/lru_sort: fix remaining grammar
-In-Reply-To: <20261026144451.150560-1-sj@kernel.org>
-References: <d054b7a2653a2ff3d419b689a50a53290c2cafbb.camel@mailbox.org>
- <20261026144451.150560-1-sj@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan
+ <skhan@linuxfoundation.org>,  Randy Dunlap <rdunlap@infradead.org>,
+ damon@lists.linux.dev, linux-mm@kvack.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Aveline Noir <jm5905938@gmail.com>
+Date: Mon, 26 Oct 2026 18:51:40 +0100
+In-Reply-To: <20261017162706.103996-1-sj@kernel.org>
+References: <20261017162706.103996-1-sj@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -101,33 +74,207 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Date: Tue, 27 Oct 2026 02:50:54 +1100
-Message-ID: <179302985414.2.11997096580844017569.damon-docs-reply-04-lru-sort@gmail.com>
+X-MBO-RS-META: 5bdyhnnc1mx585ghi5jiq6o1fnqt5y33
+X-MBO-RS-ID: 6365762b24dbd342937
 
-Hi SJ and Manuel,
+Hi,
 
-On Mon, 26 Oct 2026 07:44:50 -0700, SJ Park wrote:
+took me some time to respond because of the procrastinations.
 
-> > Yours isn't wrong but I would make it:
-> > +this scheme should automatically be activated and deactivated with three memory
-> >
-> > Choose as you like.
+On Sat, 2026-10-17 at 09:27 -0700, SJ Park wrote:
+> On Sat, 17 Oct 2026 11:18:34 +0200 Manuel Ebner <manuelebnerli@mailbox.or=
+g> wrote:
+>=20
+> > Hi SJ,
+> >=20
+> > On Thu, 2026-10-15 at 07:01 -0700, SJ Park wrote:
+> > > On Thu, 15 Oct 2026 10:06:23 +0200 Manuel Ebner <manuelebnerli@mailbo=
+x.org> wrote:
+> > >=20
+> > > > Fix tenses. Replace 'set as' with 'set to'.
+> > > > Rewrite complex sentences.
+> > >=20
+> > > Let's put two sentences in one line, while breaking it for the 75 col=
+umn limit.
+> >=20
+> > Will do.
+> > >=20
+> > > [...]
+> > > > @@ -113,8 +113,8 @@ quota_sz
+> > > > =C2=A0
+> > > > =C2=A0Limit of size of memory for the reclamation in bytes.
+> > > > =C2=A0
+> > > > -DAMON_RECLAIM charges amount of memory which it tried to reclaim w=
+ithin a time
+> > > > -window (quota_reset_interval_ms) and makes no more than this limit=
+ is tried.
+> > > > +DAMON_RECLAIM recordes the amount of memory which it tried to recl=
+aim within a time
+> > >=20
+> > > s/recordes/charges/=C2=A0 or s/recordes/records/ ?
+> >=20
+> > For me charge is such a weird word exepct in 'charge a battery' or 'cha=
+rge a fee'. And
+> > 'recordes' is a typo. Does this work:
+>=20
+> 'charge' in this sentence is somewhat like 'charge a fee'.=C2=A0 I person=
+ally don't
+> feel it is weird.=C2=A0 But 'record' also work for me.
 
-I feel my wording reads a little better here, so I might lean towards
-keeping it.
+I will keep 'charge' at the later mention in the file.
 
-> > My choice :
-> > +Below are the descriptions of each parameter.
+>=20
+> > DAMON_RECLAIM records the amount of memory which it tried to reclaim wi=
+thin a time
+>=20
+> So this looks good to me, too.
 
-Agreed. The plural "descriptions" reads better here.
+Will do.
 
-> > I would go for this, but I'm not sure:
-> > +Number of times that the time quota limit for hot regions have been exceeded.
->
-> I have no strong opinion.  Aveline, let me know if you have some.
+>=20
+> >=20
+> > I could do this in a second patch aswell.
+> >=20
+> > >=20
+> > > I'd prefer charges, but my English is definitely bad, so looking for =
+your
+> > > suggestion.
+> > >=20
+> > > > +window (quota_reset_interval_ms) and stops when this memory limit =
+is reached.
+> > >=20
+> > > I feel like readers might wonder what is stopped.=C2=A0 How about "st=
+ops trying
+> > > reclaiming memory when ..." ?
+> >=20
+> > window (quota_reset_interval_ms) and stops trying to reclaim memory whe=
+n this limit is reached.
+>=20
+> Looks good.
 
-I think "has been exceeded" fits here, since the subject is the
-singular "time quota limit". The same applies to cold regions.
+Ack.
 
-Thanks for the reviews :)
-Aveline Noir
+>=20
+> >=20
+> > >=20
+> > > > =C2=A0This can be used for limiting consumption of CPU and IO.=C2=
+=A0 If this value is
+> > > > =C2=A0zero, the limit is disabled.
+> > > > =C2=A0
+> > > > @@ -125,19 +125,19 @@ quota_reset_interval_ms
+> > > > =C2=A0
+> > > > =C2=A0The time/size quota charge reset interval in milliseconds.
+> > > > =C2=A0
+> > > > -The charge reset interval for the quota of time (quota_ms) and siz=
+e
+> > > > -(quota_sz).=C2=A0 That is, DAMON_RECLAIM does not try reclamation =
+for more than
+> > > > +The quota reset interval of time is quota_ms and of size is
+> > > > +quota_sz.=C2=A0 That is, DAMON_RECLAIM does not try reclamation fo=
+r more than
+> > >=20
+> > > I think this change is just wrong?=C2=A0 quota_ms is not quota reset =
+interval of
+> > > time.=C2=A0 Which part of the original sentence was difficult to read=
+?
+> >=20
+> > 'charge' again, and I think there is the verb is missing.
+>=20
+> If use of the term 'charge' is really making reading difficult, we could =
+add a
+> short definition of 'charge' as a separate patch.
+
+I think it's not necessary, it's probably me.=20
+>=20
+> E.g.,=20
+>=20
+> '''
+> --- a/Documentation/mm/damon/design.rst
+> +++ b/Documentation/mm/damon/design.rst
+> @@ -695,7 +695,9 @@ dynamic.
+> =C2=A0To mitigate that situation, DAMOS provides an upper-bound overhead =
+control
+> =C2=A0feature called quotas.=C2=A0 It lets users specify an upper limit o=
+f time that DAMOS
+> =C2=A0can use for applying the action, and/or a maximum bytes of memory r=
+egions that
+> -the action can be applied within a user-specified time duration.
+> +the action can be applied within a user-specified time duration.=C2=A0 D=
+AMOS tracks
+> +(charge) the amount of memory that the action is applied, and stops appl=
+ying
+> +the action once the limit is reached.
+>=20
+> =C2=A0To know how user-space can set the basic quotas via :ref:`DAMON sys=
+fs interface
+> =C2=A0<sysfs_interface>`, refer to :ref:`quotas <sysfs_quotas>` part of t=
+he
+> '''
+>=20
+> Please let me know if you'd like to send such a patch.
+
+No need.
+
+>=20
+> >=20
+> > >=20
+> > > > =C2=A0quota_ms milliseconds or quota_sz bytes within quota_reset_in=
+terval_ms
+> > > > =C2=A0milliseconds.
+> > > > =C2=A0
+> > > > -1 second by default.
+> > > > +1000 (1 second) by default.
+> > >=20
+> > > Isn't this (1 second in milliseconds is 1,000) easy enough to infer f=
+or
+> > > readers?
+> >=20
+> > Ok.
+> >=20
+> > > > =C2=A0
+> > > > =C2=A0quota_mem_pressure_us
+> > > > =C2=A0---------------------
+> > > > =C2=A0
+> > > > =C2=A0Desired level of memory pressure-stall time in microseconds.
+> > > > =C2=A0
+> > > > -While keeping the caps that set by other quotas, DAMON_RECLAIM aut=
+omatically
+> > > > +While keeping the caps set by other quotas, DAMON_RECLAIM automati=
+cally
+> > >=20
+> > > How about "caps that are set by ..." ?
+> >=20
+> > Yes, this was my second choice.
+> >=20
+> > >=20
+> > > > =C2=A0increases and decreases the effective level of the quota aimi=
+ng this level of
+> > > > =C2=A0memory pressure is incurred.=C2=A0 System-wide ``some`` memor=
+y PSI in microseconds
+> > > > =C2=A0per quota reset interval (``quota_reset_interval_ms``) is col=
+lected and
+> > >=20
+> > >=20
+> > > Thanks,
+> > > SJ
+> >=20
+> > I messed up the subject line, should be:
+> > Docs/admin-guide/mm/damon/reclaim: improve grammar and style
+> >=20
+> > I'll follow up with a [v2], including Aveline suggestions.
+>=20
+> Sounds good.=C2=A0 But let's finish the discussion about use of the term,=
+ 'charge'
+> before posting v2.
+
+Then I'll head to [v2] and make it a 2 part series.
+
+>=20
+>=20
+> Thanks,
+> SJ
+
+Thanks
+ Manuel=20
+>=20
+> [...]
