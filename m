@@ -1,61 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793025076;
-	b=MOI77TksCspiDcz3hjDNGKzmhAAygXgbME+uXvwv9wqgWMqgPJ1yQl5cP2A4WS7HD4q5
-	 uJuKCbbd800k81JPovkvARRE//l4lP6cpQLZuNtMRs/9w0mwuVTu05rdMaAbaQ08Wf5UO
-	 BlLv4HoVQGoNnI2EnA7dcqnNyLRMHEKFfs0sK7ZIyRHW178XTAnBhBCkGj+6HQUpxBYEw
-	 uGbedR3zJM3WGA/oczV5ReJMOObFEOLgLvEQhpbk5kM5Aa1sXa8yV4Whcd/OCCPq+bYY1
-	 TTxajrGbrdcUqAO7mrDaY3gCzoP4u5NHR2Tc+mD9nGlC7I7jQN/+WJLYCcofyRmsB2w==
+	t=1793025432;
+	b=f27kymoMxJ4AudOyos5w3/yMNI2E83TjkXEM5Gr3ucmi1vPNBMeH1ThbLWTIqHU13jT6
+	 2X9i/8jhlxkFgCM7B8abcze5gM+SyAbKwNskLinqCIdnkTVWl4YiZQ4Y0msjPKRspTn+H
+	 WUIfjO9de6kUOe4sW9birGk01IIPG13RKtd1a5Alo/qkTJqi0ajGPDO9JNQrQNPezk3PG
+	 WFlFVTNMCYtRJZO/HPEfcQTeuyU0FbqvramIXNk6/hgE3O6khee9h/72ENt92uRBTTEpW
+	 WvMvCiYgyDEMpqipMQX1lnIK+EtLwEqfgNHyOr9VF6OXJFiKnnOrJZfqhESNOOFvaVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793025076;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793025432;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=HHYZN7CUNSVC86iKOqMGjhaR96VGj0GsKVxO2ePAdxU=;
-	b=Sj5pltxm3Ge0THHeSI0wHT85FY8BMxjmFnEIqTc4lvxNlBQSMXOEPDxInQqnYkGV6JwM
-	 IWY4Szwpl/I86gYH3ciVk+cEPBEUtC0SOeYfPhWw+31EDbX8Z3h7Rd4PenrJFRn2a1Z9a
-	 jLJiupZhFQimNJ3fkJoUpRb80Vae6QFNdveAifoIq2wBGBuJOjffmZ/K7tjgAeSrTcNMT
-	 R4wXCESQWDOo+TgmGpJ5KpizBS4bT7Io0JKmpv+o+FzUHVXZqoBleiOv+SZQpyH4b8C+c
-	 VxiSuqENb8AWo8usukPL3OpMNpmHymGvfomPX0ae/aAPFm3pKvcrUB7EbLKMSuEIOkw==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=8PHEbKOgIuYghLeVCFmg8SLPsx9HPWBRfgbGFvrH17c=;
+	b=WhHolpsuE9/YV2ZmZ41Lc7ySrtXd4qiDjy2a1v7JwwtZ4DGAfOn+nFbC7Tm+M4KV1ELx
+	 IVagR07xFI1FkMjLjBHmlpv6l9e7I5Zo05ula91eo54fqazle/mJj5Psiel7WscFZ0Ouv
+	 CI8IQtf2dx31ikgL4Yv0fBr/Z2tIu7/GXiZyuDvztc2iS8ZuQ9h0WKoaJcjO3LIGnCA9z
+	 PlEc/7wNnVZIk+4HpLLaZJmSjqpfLCS+hvSedJfKDhfEC+d3LFFwVar87fCBGbkLxojez
+	 v/TaKiTV2xcjOTHNTOE3XVZCxeLuiZErC2U9MjlG0lzHdRBXmgvZwbk08lQ9m0H9syw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Bvu4++Ow;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cevX3BAN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96118606A323;
-	Mon, 26 Oct 2026 14:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867F9606A321;
+	Mon, 26 Oct 2026 14:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Bvu4++Ow
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077A91F01825;
-	Mon, 26 Oct 2026 14:31:15 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cevX3BAN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D6D1F01828;
+	Mon, 26 Oct 2026 14:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793025076;
-	bh=HHYZN7CUNSVC86iKOqMGjhaR96VGj0GsKVxO2ePAdxU=;
+	s=k20260515; t=1793025432;
+	bh=8PHEbKOgIuYghLeVCFmg8SLPsx9HPWBRfgbGFvrH17c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bvu4++OwAGVMLQ16yY85QEzvab4FU9r/RLkombk+8WziaGpwdrl9QXwIpuZv+5NP7
-	 6AHYU2waZPDWZ/I5v63v65bImurDsoUN/G7fEHIqUieNkxz3ZXNNau5vcc/CDDmbDa
-	 mmSCreJn18/wb41wKRbfo6OaMjF05WYkfPrAfQKqaSbuYpbkNABoUam2Goe7Xk3Zbz
-	 wEKYIedkH2rLNDFkW5rftn+aRFc+bYkwhLBs28Yn76Kbwaf2Y2nc+03EFe6kXfnRuP
-	 Yi9NXbujFsfSFP80yAkcP8eR2bSkKhCqyrNwtGwJjuba8tO+Vc77pSqbY+E6rohhYc
-	 vzlNhN7SKEvzA==
+	b=cevX3BANmffQu1qgFyv4HRuz8GW0FWfyx9uJqCXhZxAaiRMvlBOfO5dDbdqgN/HfH
+	 XoRQ2EdMkdq9BScuvVuiOCS0DQ4K4Vc72eWHn+QYnoEyRZW1TKqa4szPjOZbGDCqR5
+	 do8uY9SBE+0z0lI0qmghksHnTFh9WOpYEjfXxjxQD09lVNQ2p6kFaQ7cQ8SIrgYLeF
+	 kI1VnfXebszpr3HB55cK4JmN1Al7Lvf4JSqWtbLE9Dht2w1XGmBgrO8/yWK10O4Y2I
+	 8prW0ADDRSdd70UvO8HIhebwL7EExfseHMMMbSPyTHcJNCJ1k0K7DIFjtTb4Ibg2Lg
+	 iZ4b7VA8bHnVw==
 From: SJ Park <sj@kernel.org>
-To: Manuel Ebner <manuelebnerli@mailbox.org>
+To: Aveline Noir <jm5905938@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	Aveline Noir <jm5905938@gmail.com>,
 	Jonathan Corbet <corbet@lwn.net>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Randy Dunlap <rdunlap@infradead.org>,
+	Manuel Ebner <manuelebnerli@mailbox.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/8] Docs/admin-guide/mm/damon/stat: fix pronoun agreement
-Date: Mon, 26 Oct 2026 07:31:07 -0700
-Message-ID: <20261026143109.150059-1-sj@kernel.org>
+Subject: Re: [PATCH 3/8] Docs/admin-guide/mm/damon/usage: fix grammar
+Date: Mon, 26 Oct 2026 07:37:04 -0700
+Message-ID: <20261026143705.150221-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <203ef50d11ae600ab06546d73a2290f291381551.camel@mailbox.org>
+In-Reply-To: <179301327249.2.6830202812762243627.damon-docs-grammar-3@gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -66,64 +65,24 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 26 Oct 2026 13:44:55 +0100 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
+On Mon, 26 Oct 2026 22:14:35 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
-> Hi Aveline,
-> 
-> On Mon, 2026-10-26 at 22:14 +1100, Aveline Noir wrote:
-> > "converts it" refers to the access events, so I think it should be
-> > "them".  Rewrap the paragraph while at it.
-> > 
-> > Signed-off-by: Aveline Noir <jm5905938@gmail.com>
-> > ---
-> >  Documentation/admin-guide/mm/damon/stat.rst | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/Documentation/admin-guide/mm/damon/stat.rst b/Documentation/admin-guide/mm/damon/stat.rst
-> > index 4a9db755a526..a93609649a5f 100644
-> > --- a/Documentation/admin-guide/mm/damon/stat.rst
-> > +++ b/Documentation/admin-guide/mm/damon/stat.rst
-> 
-> Here I found this one:
-> @@ -41,8 +41,8 @@ enabled
->  
->  Enable or disable DAMON_STAT.
->  
-> -You can enable DAMON_STAT by setting the value of this parameter as ``Y``.
-> -Setting it as ``N`` disables DAMON_STAT.  The default value is set by
-> +You can enable DAMON_STAT by setting the value of this parameter to ``Y``.
-> +Setting it to ``N`` disables DAMON_STAT.  The default value is set by
->  ``CONFIG_DAMON_STAT_ENABLED_DEFAULT`` build config option.
+> Fix a handful of grammar mistakes in the usage doc, mostly
+> subject-verb agreement and a missing or extra "be".  Also turn "Below
+> commands applies" into "The commands below apply", which I think reads
+> better.  Rewrap where the lines got too long.
 
-Thanks.  Unless Aveline objects or add this part to the next revision of this
-patch, I will add this  when I apply this patch to damon/next.
+Looks good and correct to me.
 
->  
-> > @@ -68,10 +68,10 @@ estimated_memory_bandwidth
-> >  Estimated memory bandwidth consumption (bytes per second) of the system.
-> >  
-> >  DAMON_STAT reads observed access events on the current DAMON results snapshot
-> > -and converts it to memory bandwidth consumption estimation in bytes per second.
-> > -The resulting metric is exposed to user via this read-only parameter.  Because
-> > -DAMON uses sampling, this is only an estimation of the access intensity rather
-> > -than accurate memory bandwidth.
-> > +and converts them to memory bandwidth consumption estimation in bytes per
-> > +second.  The resulting metric is exposed to user via this read-only parameter.
-> > +Because DAMON uses sampling, this is only an estimation of the access intensity
-> > +rather than accurate memory bandwidth.
-> >  
-> >  memory_idle_ms_percentiles
-> >  --------------------------
 > 
-> 
-> Thanks,
-> Reviewed-by: Manuel Ebner <manuelebnerli@mailbox.org>
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
 
-Thank you for your review.
+Reviewed-by: SJ Park <sj@kernel.org>
 
 
 Thanks,
 SJ
+
+[...]
