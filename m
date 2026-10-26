@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793025432;
-	b=f27kymoMxJ4AudOyos5w3/yMNI2E83TjkXEM5Gr3ucmi1vPNBMeH1ThbLWTIqHU13jT6
-	 2X9i/8jhlxkFgCM7B8abcze5gM+SyAbKwNskLinqCIdnkTVWl4YiZQ4Y0msjPKRspTn+H
-	 WUIfjO9de6kUOe4sW9birGk01IIPG13RKtd1a5Alo/qkTJqi0ajGPDO9JNQrQNPezk3PG
-	 WFlFVTNMCYtRJZO/HPEfcQTeuyU0FbqvramIXNk6/hgE3O6khee9h/72ENt92uRBTTEpW
-	 WvMvCiYgyDEMpqipMQX1lnIK+EtLwEqfgNHyOr9VF6OXJFiKnnOrJZfqhESNOOFvaVg==
+	t=1793025789;
+	b=Qld1RLIaFfUGKSS5sqXqKD2uyenmZiu0GyZkTGppUET2499d6gEwo7KQJ6Gv7DuXE61/
+	 xO4GB0fHczl96Rn97Kt1AQ39oV3In0kwtwGuFxSIMGFA9t9hcykzWcpM4bNtZfv/RUSpP
+	 4d95iWZRzzHdNBGstiS8Mc9mUos6iL2Hcz//MsQq6sIbbcvVt7Nq2KuS4L4AWrr4hSDhE
+	 f6pEIgXqGIIXsoWUm8ZVQpBDnaFi2RkUIl3S9DrhVUw50uxOsgWxlHI4SFYztyqhQg2jT
+	 Lr342piakhI/6vaSvGYIu8ZcUdJXtHl68pS4f/s2mMeydDqTU8VzR7N0vvQK32ieqSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793025432;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793025789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=8PHEbKOgIuYghLeVCFmg8SLPsx9HPWBRfgbGFvrH17c=;
-	b=WhHolpsuE9/YV2ZmZ41Lc7ySrtXd4qiDjy2a1v7JwwtZ4DGAfOn+nFbC7Tm+M4KV1ELx
-	 IVagR07xFI1FkMjLjBHmlpv6l9e7I5Zo05ula91eo54fqazle/mJj5Psiel7WscFZ0Ouv
-	 CI8IQtf2dx31ikgL4Yv0fBr/Z2tIu7/GXiZyuDvztc2iS8ZuQ9h0WKoaJcjO3LIGnCA9z
-	 PlEc/7wNnVZIk+4HpLLaZJmSjqpfLCS+hvSedJfKDhfEC+d3LFFwVar87fCBGbkLxojez
-	 v/TaKiTV2xcjOTHNTOE3XVZCxeLuiZErC2U9MjlG0lzHdRBXmgvZwbk08lQ9m0H9syw==
+	bh=RrYs5r78deoBJ9Dw8ytqmVZU3I9/wl2AOXZaDAj5RqE=;
+	b=HMXCozFGvQEbDffo1bKAFlJ7fNW6xC6d3B+3PXq6kaHS+QnNbH1AvZmw76rpAJ+J+h1G
+	 yc0enAfUVivKAqEqbhQst/juNKj2bmnVInThNL+IixP+9GgQ0q9RWfd+jGMuKb1A48fUe
+	 +qn9By5V9owK/LlzP7vdxxf5BT+RDrST1QV2T9HvozI5niEe9E0liZLMF6zOmCOw3JGUT
+	 C5w+dDdR+FXCC8FAlbbe6D752zuQ68HZsgbCuPC1ig5EgjacpZHSHBLl2biR9EytKjWYn
+	 UwZ9VfeLUIfBWro0UYe/gAZRagkGIqaf52VhZRFjkPTJSavYTPu2/TJidccK1AXCEDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cevX3BAN;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=D20H8oLN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867F9606A321;
-	Mon, 26 Oct 2026 14:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112D4606A31B;
+	Mon, 26 Oct 2026 14:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cevX3BAN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D6D1F01828;
-	Mon, 26 Oct 2026 14:37:11 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=D20H8oLN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515111F031E1;
+	Mon, 26 Oct 2026 14:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793025432;
-	bh=8PHEbKOgIuYghLeVCFmg8SLPsx9HPWBRfgbGFvrH17c=;
+	s=k20260515; t=1793025788;
+	bh=RrYs5r78deoBJ9Dw8ytqmVZU3I9/wl2AOXZaDAj5RqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cevX3BANmffQu1qgFyv4HRuz8GW0FWfyx9uJqCXhZxAaiRMvlBOfO5dDbdqgN/HfH
-	 XoRQ2EdMkdq9BScuvVuiOCS0DQ4K4Vc72eWHn+QYnoEyRZW1TKqa4szPjOZbGDCqR5
-	 do8uY9SBE+0z0lI0qmghksHnTFh9WOpYEjfXxjxQD09lVNQ2p6kFaQ7cQ8SIrgYLeF
-	 kI1VnfXebszpr3HB55cK4JmN1Al7Lvf4JSqWtbLE9Dht2w1XGmBgrO8/yWK10O4Y2I
-	 8prW0ADDRSdd70UvO8HIhebwL7EExfseHMMMbSPyTHcJNCJ1k0K7DIFjtTb4Ibg2Lg
-	 iZ4b7VA8bHnVw==
+	b=D20H8oLN6BZpOOZUJ1qL0Xv4S4dpsgiCPtzFIyu5ruJIuvlTihAIxGVsuxWioWI/m
+	 ULjJ47lKnw0OBl0+YT1jJLLiSw07yLju/PazLSV8+7gLtByV5+DmnK/KwxpT3gupX7
+	 jI0Zjp505x3PCsm9T/ZoT8pDgk2D+1RIM/XizPPiBRLmJrqwYHv6D2DqEUc1ZvObSi
+	 rJz9G1Ll7LG0xLaZOaui9AUvC8FvmLOYpLgT1PlksU+Uaj+ROciQOQXojTPMHGpaA1
+	 nUuvK0DP/PQ5k4ln1IBTRhXC5a4XaaYhyAIThMDoqfkRZ4zLDq3o2YhMmrR4Sc4XIv
+	 1hJsjE/64cDhw==
 From: SJ Park <sj@kernel.org>
 To: Aveline Noir <jm5905938@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
@@ -50,11 +50,11 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/8] Docs/admin-guide/mm/damon/usage: fix grammar
-Date: Mon, 26 Oct 2026 07:37:04 -0700
-Message-ID: <20261026143705.150221-1-sj@kernel.org>
+Subject: Re: [PATCH 4/8] Docs/admin-guide/mm/damon/lru_sort: fix remaining grammar
+Date: Mon, 26 Oct 2026 07:42:55 -0700
+Message-ID: <20261026144256.150394-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <179301327249.2.6830202812762243627.damon-docs-grammar-3@gmail.com>
+In-Reply-To: <179301327249.2.16817896016779044743.damon-docs-grammar-4@gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -67,15 +67,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 26 Oct 2026 22:14:35 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
+On Mon, 26 Oct 2026 22:14:36 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
-> Fix a handful of grammar mistakes in the usage doc, mostly
-> subject-verb agreement and a missing or extra "be".  Also turn "Below
-> commands applies" into "The commands below apply", which I think reads
-> better.  Rewrap where the lines got too long.
-
-Looks good and correct to me.
-
+> Manuel's recent grammar fix for this file, now in damon/next, covered a
+> good part of it.  This should take care of the few mistakes that are
+> left, like "should automatically activated" and "Make DAMON_LRU_SORT
+> reads".  Rewrap where the lines got too long.
 > 
 > Signed-off-by: Aveline Noir <jm5905938@gmail.com>
 
