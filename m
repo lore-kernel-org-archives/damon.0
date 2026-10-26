@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793022139;
-	b=19+DgL1BLbwSP9w3DXQDdgwvwSLzQXak2A/s8sMpAwGDMSU3E/4nYPzsplG4SAt8YSvo
-	 IG03u5EbgBzu9KEZysUIr/CvZN18TtEPqbQmLXkHR+w+GWh/R0pQ+KRXv99yP5CIlOkj8
-	 DRu6L/zL8XpnNenWgh99fg4aXNFq4QlozlSGAjiOCnLh7V7nQ9PFMtqSXSXLJMZurEvUL
-	 NRY8Ql8H/ri3oXjKDGtK9QFzg2osPmwA3yIcUE8x5YDRsVY6+GVuh8pNnTvIzmcemSLs6
-	 CdfnpGN2A8t1QWxkORy7cZFI/ZitPfbxAO4oCwyKNRwFL7b9q2FNMin22iddj0OAHIQ==
+	t=1793022296;
+	b=UZDmjz+VcEBFdLFMjQSgt2Q6eWTpd6+wJhqYHgci7S8m12tFEf/x/OHc6NIZC5nKf6QC
+	 n4Ewe+MgX1lu7bI52YMSYGTT6agi69TbfeYV4TbKulxUUtvZAxk87Pb4TnOnCCbkNt9FY
+	 aZDSemEfVbmaH5RVR5M6wD+GH+XwOORZ5LR5MxpP2qD1T9BFXhT18zUzQMygTaWVsM2CP
+	 LSc+J2QaeYsYEcin7RfZSgeZJ4rPyQ4D9CrEYf6jl55QAXc4aMrPHIszddeyawprbNSW3
+	 fkngmPbBTtQ+GM/G/2yMOb3WH+GFbf+Wv0NFAgxwNZXolxck9JJe/1pB8fRGoSskkOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793022139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793022296;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=j8QMB/Zbu3pSmjToLJD1z99Ta8FDwHJe8fx7RyfNJg4=;
-	b=4bGeWV2HoGy3SzK0qGehCjbPZAkKCID0P9kWiKTe2di3VJ8k/t0e7RZXBJzKM74asznC
-	 wNIgXhz6y/bb6yq2gLzupATCVrz7aUfYwHqtHEwUnoEivx0c1iTehLtVQXzAaBJcK44ye
-	 qLi45b+4I4WsirUXMJ/yVHCD0sTTB5VBVIMHEfm38UmlbfVpQbw1hEK9cVjnVRJulXzpv
-	 yYTymHhapC3dhOSTcnKcVDgl3g6KZDhdNA2E5Ze+PoVyU5Yy/nFYEZN51uBZGs7d8yqmS
-	 f1E95kRAtkZNieSrEzeuzalSZDUhkzXryDIurCZ9a8CY6D6QZqjjdkuv2rSFMrco4Iw==
+	bh=+5+BcnPA3TasL3pGkZQPb41lgq+0gWIVGehsz+Es24Q=;
+	b=W8FnJXojcb8RaQGuwkWm4vTGVOcjPXLOK3vBJv1ufnoc2ueLHEbkX1LwvyNvhVTL2/DR
+	 hypP2IVW7XXf6j43+AhmZRtnZBgtmUpSS0rNxqcDSwOJPcvlQMTrcn4y2BUSRk1qenFs3
+	 jZgKElWEad9GJJIjU1pw0n5yQ3DGNS8SVP97tZ+YKfYYpcFjUHsyigmACrtCddBmP+9uI
+	 BW9yPdgJxjHKUpeDBnLHjTgrec6jvMSv45MSD84rpaT6heCBw+MDvUdr4Vccb8e0f62qt
+	 J0sLX/bPRqj1vQ34Ad0r61XRI+HJYA7NvF+/pffLBRrXylMCEHTuNSikBy/bgXa24kQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fj8tDop1;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iYXyJnTB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF93606A31A
-	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 13:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3602B606A31A
+	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 13:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fj8tDop1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1177F1F01825;
-	Mon, 26 Oct 2026 13:42:19 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iYXyJnTB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A371F01825;
+	Mon, 26 Oct 2026 13:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793022139;
-	bh=j8QMB/Zbu3pSmjToLJD1z99Ta8FDwHJe8fx7RyfNJg4=;
+	s=k20260515; t=1793022295;
+	bh=+5+BcnPA3TasL3pGkZQPb41lgq+0gWIVGehsz+Es24Q=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=fj8tDop18bzlC2y24eWNfPWtWYCVsT4nPzEeylC2GKS9CHz3Kbii4Pw+9/SUks097
-	 qYJyGKsM+XsmAq/OI5D8rrkASwq+swvbawk+ptVIk3UaboVXmlGjDtpb2kNchhcP2P
-	 JySshc3IqrYhyZ9hls5GwIG+5HcK2Ulx26pabQ8xxiM9HeFUNfwBv+6PUaOmR2ZY2V
-	 ToZz1HrPHVCxkX8E74buUWw2HNG1Mva9TmPE2x6OXVuQHDVuzNihKp5EKOmsiB0J5x
-	 6nT28j6XCJLgwXQkJEM75amkmWH+pLvTgGi0v1UlprM3M4YokFFWvF2AJowiW/dA9b
-	 4gJ8i3YvPYAWg==
-Message-ID: <sashiko-outbox-185325@kernel.org>
+	b=iYXyJnTBh9Tf6d3TM9Fv+Od5psl3mO+ECkySzfHDARFoZ1wi36sLAA6mn+2b34PVp
+	 0WWPKj2kUp1TQAhrR0hrRglS3hVlRVn8ckeXNFVrzbnlMjtw8jkFyShPcIpTr7/Hhe
+	 rX1i7GJCLPbVWsM29OfovsZYcHsg0AtURnewNfvgJniVDRzDUnnCL0FBFQCki+muuO
+	 D3HsoxlPb4rtJgAgjhBEJtXk9A5oBEdI6iS1aaZwfV7/AkEXXp6jBCQppwChLOsv/A
+	 xX1UiNWwS3oN17V69l+ggQ0zyX75SWL9aFIKL1guaUiRDQmDza0WjoXS1ZUpA3ScFu
+	 inz/75Q2HOB8Q==
+Message-ID: <sashiko-outbox-185333@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 7.3.y] mm/damon/core: error damos_commit_quota_goal()
- for zero target_value
+Subject: Re: [RFC PATCH 7.2.y v2] mm/damon/core: error
+ damos_commit_quota_goal() for zero target_value
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261026133320.68445-1-sj@kernel.org>
-References: <20261026133320.68445-1-sj@kernel.org>
+In-Reply-To: <20261026133645.119485-1-sj@kernel.org>
+References: <20261026133645.119485-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 26 Oct 2026 13:42:18 +0000
+Date: Mon, 26 Oct 2026 13:44:55 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -85,6 +85,6 @@ Precedence: list
 Sashiko has reviewed this patch and found no issues.
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261026133320.6844=
-5-1-sj@kernel.org?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261026133645.1194=
+85-1-sj@kernel.org?part=3D1
 
