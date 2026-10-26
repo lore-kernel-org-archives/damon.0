@@ -1,47 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793010777;
-	b=zbxPD7XznA1lFOqCvuXHYm5/8vgKA7T/WwlelucSqTgvjY6terefrvxBLH50sk7LmCr6
-	 tSQUqrg7W19D5uzb1940tF9G02P8DRjxz2ZVJcyyPKiOOB5h+dUTdPzOGGBQiKevyq2hG
-	 3YvInssQ3lKvNRq6r507PxxvEMXeu1Me1imUvtUPRTe88ZYePCerxE344Cv+zc3ZPXuUV
-	 TbgMRSFCHeZj1NlKcuticInWihfKkq0+gN9wzwQUNBYwsR1pWypmIg0hG5/7H+fEhklBj
-	 UX2LMdTPHI92i1fhRuY4NHmJEZPVpdJ/nS+XDRykk+Cdz3S/acoArTgkPxIzuIxqeAQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793010777;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=5fGI+y4MpKjEewUYjAn8ox6qZ5C7dHcWOShQtBM7bNs=;
-	b=O4j1I4mum1c6tB06HkPClJkOci10FX8H+qlzVD9CYHsn73X9PkXIy2ulCk9daI6qUaW4
-	 IQlW1Is6hU64GDhXx87JiP6KKO3S3c3C/S7piepNix4XectcByBFTJP5rE3ME6PkIJYRj
-	 xrB6WwDWsn7VpO2deYSFjXnmEagFJ1Wsvyt6czWXVz5Fwo/VnwSRQg1y7cUPnLwUDt48b
-	 qWeDCS4dLNzzvSAcBvXchYJoAwjoSk1tGn/YWiRWldd6UAJ6CtE9JWAeTYCm4qcG+ByCW
-	 JlVi4BfM3Bu0/Y5UzfJv+wZmXob8nESpiS5/BSTe4cBR5LPFUXHYKjhrNGCwzHJadSA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RO6dfT3Q;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.35
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793011115;
+	b=yWMJN0F7apIVGwdpZF1ZR6+PbaAkV6I2PWs9av0CdS8KITAZedNOGzt3jJHTFKJhKp0p
+	 s8v+fLZ+xy8No0OK71BOcd/qZe3Ch1wuvxuLE38UYVNQiCFsyZv9ArLIUba8yqwPDBemI
+	 IQcmbXS37u+TYX+lntxXv8C+31EnycG55Bu6tHLfy0Ew7SBMWQ/n1ghdeJxAjN3gkXk+U
+	 mpntBEs9rw3xLsDBLQeHtut6Q2EwxYLzCpAWW9IoYLbz/OWKmk53KoO0OXZefZ6QC56lM
+	 gm78JkIbpIi7XtFrnC184zph/sSfm4yxHvwEE9RVLnNGdiPr2EMPkd+GIyQUhBB69iQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793011115;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-ID:References:In-Reply-To:To:CC:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Originating-IP:
+	 X-ClientProxiedBy:X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=C69q8YVfbq6Wnj5phIjJy8NVq8cn1ZrzPW8sluVzesI=;
+	b=UOJGcT3aAfEOykM/lz1bCc0CCQ3t0RJF2+8WzBluFeiFfrsd9DFdCOkYlQyauCGM3Ae5
+	 6JoNnyCBYv2U+DIq5f1swn4/INBSjwUbjpW2szBC4YJb4kZgr3VzTua30F4NVOgFR/yJD
+	 VYTz0L4eTvUYbBTyNz2eX/n7bg2x2vbeqImUbAvKECFGO3AuRn8GIc5HoayO50s3cDhcT
+	 LpUj0dcXZXLob24y3PZK6FPLsOkseS6sUSrkkYa42nYwFfOnW0XLzSdEOeFLdnq3OLTi4
+	 ImZwoILwNl8RXdNvDhMTOXLu6KllTXXmQTq4rBnHUNzlvDZdFDvbI3lc1YDz6PivZIQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=NcTNMk3M;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.48.35
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012035.outbound.protection.outlook.com [52.101.48.35])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BFE606A320;
-	Mon, 26 Oct 2026 10:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8D0606A31A
+	for <damon@lists.linux.dev>; Mon, 26 Oct 2026 10:38:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D8D0606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RO6dfT3Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD311F01828;
-	Mon, 26 Oct 2026 10:32:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793010777;
-	bh=5fGI+y4MpKjEewUYjAn8ox6qZ5C7dHcWOShQtBM7bNs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=RO6dfT3QYsUPq4P/l+LzkzWsJNIeE4tNHdZ+B1Mabg0HNxC/baN6fFufRG2KvUn7o
-	 BX5QCIBZ5N8hEF6cNLuQlvNVEZ673nYKERFyr5nN1XR/ngPtDM5sBlxUf0xYx9yW34
-	 HaVBERjbK3lHqcFAw3bgQZt2FvA3bZCr5p3BynhuGD9scfLpV5xQrhJXzl1iWPqe0e
-	 iqp/S03RLxbvRJrevVEedl7sWT8x7j9FPrfoz6X3dEmZEAc5qcXT0K8rvNu9VXTyeD
-	 f1yh7pVsA+wCM2I2F2zAlMsTlbpsIt1sprPvc3PJ9xhqSrReBqbyberrBKLfj+X5Cx
-	 Uu6l6Djs0qgyw==
-Message-ID: <8da0110d-e05a-4559-a581-44a1fe28a41f@kernel.org>
-Date: Mon, 26 Oct 2026 11:32:42 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=NcTNMk3M
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Bp8KxC0s/dX3bLxUPaiuAmGf3y+ztkN63c2rAir0DKn6xpgroyLGAV4YS1FpsBSZ6OeN3K/s52RjzELNIr3GiFMTCvZxTKVfwaq74uXB3F0CcJqSzwrLNrk0T1wsvTJek+9TYsdH8FhAlIEKrhovUOE/yKtw8bPZSvmWXwj1XzL0aNjRP2nqagmjXrjHIy5sGxa0yiDx0r0vondw7ncNhf0PHvqYVC4iG+E+m3L36673O/LugMQWWw7cqVabWoC3VqGALSFn5ikl6olKA+6LijOvSoFxR035xrBBurt9dCMfKGCBkKfjl+F7OWKG2h7u3zcfTMgsnpro8gyo5AqOXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=C69q8YVfbq6Wnj5phIjJy8NVq8cn1ZrzPW8sluVzesI=;
+ b=Yr1cnY/5uUm0UnR9vFTrcta+0OzzLHaMV73d7ov5YTpp9b4AFzQ+mOEWCAbLngCHJMXsz9+et21LkvcBtlsn+sJbZMFJvpeT4MSe2NyLv/TTPKnE60rmbKwAYrmXuuIlwqdllKh472CXJHtf3QthtTQK+nZ7fQaZYOx4sZmQrzCcRLPVlkdaK/3GQcvEK4I+F8UrMxwlP7Qy33E11c/EUGSBSIKihfEyXmF6pXPVl4GRpvGgA5X7+NIJ4g7vS8YKAO0hsu7cm/KxlOCk9AvmLuJ783KpRKNzDFPujbat33GAXWbB1YJJ8X/TXuNFm8wk2NzaOXcK5ebkmJSxFZ6N6w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=infradead.org smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=C69q8YVfbq6Wnj5phIjJy8NVq8cn1ZrzPW8sluVzesI=;
+ b=NcTNMk3MpoZKXq5C30SkCEPBnaj8fbFt8z3yR94iytzk33Z1b0cLJGrcYqWPSxB0Bn0+0zQpsiq6bsonwh7qPIvNLzJfycrPQ3ztsItOZ4TKcKZjESE2d3fVeRSCOW2FKelqbuEsTQiIjALWw79utPWfydHThwY7D7S9gemj63A=
+Received: from YT3PR01CA0029.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:86::35)
+ by BY5PR12MB4162.namprd12.prod.outlook.com (2603:10b6:a03:201::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
+ 2026 10:32:38 +0000
+Received: from BL6PEPF0006C3DD.namprd02.prod.outlook.com
+ (2603:10b6:b01:86:cafe::6e) by YT3PR01CA0029.outlook.office365.com
+ (2603:10b6:b01:86::35) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.22 via Frontend Transport; Mon,
+ 26 Oct 2026 10:32:37 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL6PEPF0006C3DD.mail.protection.outlook.com (10.167.249.232) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.569.4 via Frontend Transport; Mon, 26 Oct 2026 10:32:37 +0000
+Received: from [127.0.1.1] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Mon, 26 Oct
+ 2026 05:32:25 -0500
+From: Shivank Garg <shivankg@amd.com>
+Date: Mon, 26 Oct 2026 10:30:35 +0000
+Subject: [PATCH 7/8] mm/zsmalloc: remove unused zpdesc_lock()
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -51,122 +100,99 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] mm: remove unused functions
-To: Shivank Garg <shivankg@amd.com>, Andrew Morton
- <akpm@linux-foundation.org>, Lorenzo Stoakes <ljs@kernel.org>,
- "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Michal Hocko <mhocko@suse.com>, Kairui Song <kasong@tencent.com>,
- Qi Zheng <qi.zheng@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>,
- Barry Song <baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>,
- Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>,
- Baoquan He <baoquan.he@linux.dev>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>,
- Hugh Dickins <hughd@google.com>, Rik van Riel <riel@surriel.com>,
- Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>,
- Lance Yang <lance.yang@linux.dev>, Chris Li <chrisl@kernel.org>,
- Kemeng Shi <shikemeng@huaweicloud.com>, Nhat Pham <nphamcs@gmail.com>,
- Youngjun Park <youngjun.park@lge.com>, Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>, Johannes Weiner
- <hannes@cmpxchg.org>, Michal Hocko <mhocko@kernel.org>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Muchun Song <muchun.song@linux.dev>, Uladzislau Rezki <urezki@gmail.com>,
- SJ Park <sj@kernel.org>, Minchan Kim <minchan@kernel.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>,
- Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>, Pedro Falcato <pfalcato@suse.de>,
- Bharata B Rao <bharata@amd.com>
-Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, cgroups@vger.kernel.org, bpf@vger.kernel.org,
- damon@lists.linux.dev, kasan-dev@googlegroups.com
-References: <20261026-unused-sym-v1-0-82ca2dceabe1@amd.com>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20261026-unused-sym-v1-0-82ca2dceabe1@amd.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-ID: <20261026-unused-sym-v1-7-82ca2dceabe1@amd.com>
+References: <20261026-unused-sym-v1-0-82ca2dceabe1@amd.com>
+In-Reply-To: <20261026-unused-sym-v1-0-82ca2dceabe1@amd.com>
+To: Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand
+	<david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett"
+	<liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, Mike Rapoport
+	<rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko
+	<mhocko@suse.com>, Kairui Song <kasong@tencent.com>, Qi Zheng
+	<qi.zheng@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, Barry Song
+	<baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie
+	<yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He
+	<baoquan.he@linux.dev>, Baolin Wang <baolin.wang@linux.alibaba.com>, "Matthew
+ Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Hugh Dickins
+	<hughd@google.com>, Rik van Riel <riel@surriel.com>, Harry Yoo
+	<harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang
+	<lance.yang@linux.dev>, Chris Li <chrisl@kernel.org>, Kemeng Shi
+	<shikemeng@huaweicloud.com>, Nhat Pham <nphamcs@gmail.com>, Youngjun Park
+	<youngjun.park@lge.com>, Jonathan Corbet <corbet@lwn.net>, Shuah Khan
+	<skhan@linuxfoundation.org>, Johannes Weiner <hannes@cmpxchg.org>, "Michal
+ Hocko" <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>,
+	"Muchun Song" <muchun.song@linux.dev>, Uladzislau Rezki <urezki@gmail.com>,
+	SJ Park <sj@kernel.org>, Minchan Kim <minchan@kernel.org>, Sergey Senozhatsky
+	<senozhatsky@chromium.org>, Alexander Potapenko <glider@google.com>, "Marco
+ Elver" <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>, Pedro Falcato
+	<pfalcato@suse.de>, Bharata B Rao <bharata@amd.com>
+CC: <linux-mm@kvack.org>, <linux-kernel@vger.kernel.org>,
+	<linux-fsdevel@vger.kernel.org>, <cgroups@vger.kernel.org>,
+	<bpf@vger.kernel.org>, <damon@lists.linux.dev>, <kasan-dev@googlegroups.com>,
+	Shivank Garg <shivankg@amd.com>
+X-Mailer: b4 0.15-dev-47d62
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793010663; l=774;
+ i=shivankg@amd.com; s=20260518; h=from:subject:message-id;
+ bh=pV2CJt/tj69awn4Duh9GB/gFNsS3CYaXfVzki/FvS/w=;
+ b=cfJct9dDG3Rb4zakj5xPViULlOXvo8YGBrJPsYr/lIe1RkOegXg5a8F3i3XZyz+fOedVV6alz
+ Oos4EYAz7F1DyTt9/HV0FY7mGL8KBTvvUaX6tv6T54iv10eMEIUjaUf
+X-Developer-Key: i=shivankg@amd.com; a=ed25519;
+ pk=2l2QGTeXuGkZTtfmx0nPQU8iFZfjYmX/ymMojitevx4=
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0006C3DD:EE_|BY5PR12MB4162:EE_
+X-MS-Office365-Filtering-Correlation-Id: 78c1434a-339c-46a3-0826-08df334c747d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|23010399003|376014|7416014|82310400026|1800799024|261021123027099003|10067099003|56012099006|22082099003|18002099003|921020|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	VfIRwhjfUx/TB96SXFH8IUtYbnJkZkZiCyC/aeGisK3Rh3XTJJzfIjsCG9RnotSASRztCJXPNr9qvrb2TNb8UTh7fc0zJ0V6URWJhNYAVtQuhqPfTcWNo3W4mylqiFn14/D3ysggLpX6sPdj+/na7pm4DQnmq69aKdsLOzNir0f1S9+TxENtE++jsSUlFUARRGHr5ugKAIyRIgqbNBi12NxQPLtfBBZpX2bKs4n5Krdgq22RWOVixNjpKPywS3GNsBIXzBi5Qj2eqBxvB4PL7rSmby/2rD5Cx0SIXRhtPPwjuFx/iYqlZ5ccP5GGqCl3aJo1lS8QdrW6GarFX0Ti6BzHbcEyATRIyPh5ricOwmlbul5UQe0WTSVPMVAR4ZQynfYvocelsCKyHHcSkg1sVNtrYEkcQn+mEDseQ5jbFX5e5dE/5ZLrp2DVXfstJpaWNHMzPscwx+u1Z9O7y8vtz79wMNleEN7NhNDTU3dkVgr4KM8fJV2sI9fjhcTK9hArws6dgR9pvMfSL6y1vcr8WUdBTusceHYHzquWqeX+epDnDQuE7EK9dzL5EgoB7yhWLyfY7KeHR/By1Zj8+uBnJHS/S7o1GTr3WuzksXWoRMAQITnUGq4TYI1Jl0oLHEPaYrDDci7tclYfHrgDEqMDb0uthh5muBDGie2qu4lQg7usCTYOy4M1UI7XL1uqHSEk/7+6Iz5i2WfUwwWl+WrjVS5L8t/cTlHWshNeBJIEJnltPd6/Aebn/wUCNQRw1dqf
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(376014)(7416014)(82310400026)(1800799024)(261021123027099003)(10067099003)(56012099006)(22082099003)(18002099003)(921020)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	XscwIhuvR9Q5CdmVBAN3VKSqRX5Nbyapr/3n8wlBJbzPHqzfDla3xIC8p1zaQRzi+kKO8cIrhyfslyY0J9XQ4sIeozbkiMu5wuNZ6xKZC3G5MqIOd/WVtSGMcB+uIBvOx2K9nVUHJpVjhi+0HoEDNPVFB+IKhZpZLj5rX67Wsp2VFKNb1oJnsXEcKmNC81ku3IsPiUc8jphyChFQuM8a3i3NE6nCHMjdeYZqMuTNOjfR1dR8/osC6RpByzFz0NqPyfmHD1NYD4GQ6znCv5yCfbV5pft/aWr4fs4ZiOrOKA3l+Viul4VPKG1EhwsFo6VPjd26O8NHt9t8PNu622I6FmHNu0KDSFRqEHS3pybAVcyFW1JOuNYeQT9Wf/44jQM+5Tsm2NqGPRe7UtoaizdNCdZYaZ6pgaGxDgyoDkoSXGAesd1tX5zYel8W+0ToBxZe
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 10:32:37.4343
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 78c1434a-339c-46a3-0826-08df334c747d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL6PEPF0006C3DD.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4162
 
-On 10/26/26 11:30, Shivank Garg wrote:
-> This series removes 16 functions and one variable in mm that have no
-> users left anywhere in the tree. The functions are all static inline
-> helpers in headers, which no compiler warns about: GCC never reports
-> unused static inline functions, and Clang only reports them in .c
-> files, and only with W=2. The variable is heap_stack_gap in
-> mm/nommu.c, unused since the start of git history. Each patch covers
-> one file or subsystem, so they can be picked or dropped independently.
-> 
-> How they were found:
-> 
-> I wrote some Python scripts, with the help of an LLM, that scan the
-> whole tree for every config and architecture at once. They look for
-> static inline functions without callers, and for non-static functions
-> named nowhere but in their own definition, declarations, stubs and
-> EXPORT_SYMBOL(). Where a ## macro could paste together one of the
-> names, they read every call of that macro to see whether one does.
-> The candidates were then cross-checked with a real build: a scratch
-> tree marks each one __deprecated, an x86_64 allmodconfig build is run,
-> and any candidate that triggers even one deprecation warning is
-> dropped. The final report labels a symbol "Sure" only when that build
-> confirms it unused, and "Unsure" when the build doesn't compile it or
-> the scripts can't rule out a use. 
-> 
-> Before posting, I searched lore with semcode MCP for removals that
-> others had already posted, to avoid duplicates. Each patch was also
-> build-tested on its own.
-> 
-> The scripts and a generated HTML report are here [1], if anyone wants
-> to play with them:
-> 
+It was added in commit c1b3bb73d55e ("mm/zsmalloc: use zpdesc in
+trylock_zspage()/lock_zspage()") but has never had a caller.
 
-After the merge window please. Focus on reviewing fixes on the list.
+Signed-off-by: Shivank Garg <shivankg@amd.com>
+---
+ mm/zpdesc.h | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/mm/zpdesc.h b/mm/zpdesc.h
+index 4fd81c2e8076..aaab5f1bfb52 100644
+--- a/mm/zpdesc.h
++++ b/mm/zpdesc.h
+@@ -107,11 +107,6 @@ static_assert(sizeof(struct zpdesc) <= sizeof(struct page));
+ 	const struct page *:		(const struct zpdesc *)(p),	\
+ 	struct page *:			(struct zpdesc *)(p)))
+ 
+-static inline void zpdesc_lock(struct zpdesc *zpdesc)
+-{
+-	folio_lock(zpdesc_folio(zpdesc));
+-}
+-
+ static inline bool zpdesc_trylock(struct zpdesc *zpdesc)
+ {
+ 	return folio_trylock(zpdesc_folio(zpdesc));
 
 -- 
-Cheers,
+2.53.0
 
-David
