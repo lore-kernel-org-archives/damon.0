@@ -1,61 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.135
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793062164;
-	b=pUeERkUUbM+PhaMYjhTjf4A6Gb+7UEYQnSR+iVObpIoPvcyixPLQxC6liVOihJlYLSKA
-	 pcqNmB5XBvTEke0BrYal2gFVjTrLq/xdxPuR3Vgc+uAIgMcrCtZikfqwnUfJnCkyNSHL9
-	 H2/BO1vsxj5M3Jy7wnvWbijJrE9GAwQYShPnFDpn/RwjNvAyX2hPIETJTndRbm5jqKlkF
-	 TRQoMxdJBfiiMuwy7TXQaT+m3OqbOH+dt/fZH/XLs2NOXFeidgKegvpJL/ecPBfYSPoP0
-	 ln31jwB5V5eTSZQThpxmz/fE6Eg2ALtMFo1CrRHsOkp8rcui/JOhmt3xOU50BXHTlYw==
+	t=1793069276;
+	b=47hyyQDx3OqdVx4QTJgovSrvMJ5+vbd7fW8dw6CBDtDzQJHAmwxSTQClC18k4EdkG9ri
+	 sH7Pz0c1gp/07bn0Q3DbBbgSElxS2ArQrRxVTTkc5g7FVAFJFJdyXh17q67i97iJ4Fm45
+	 SvNmIMS1+eWwJYRKZgkmHeheP8vEevg4RqnJZrr4h2Feuq4B10oVhWMS/VulhPVY4i0ND
+	 BoHvu/AT3IAuKMOd4MtmuWdmJKqghxbQyJcpkrYxNRO0XiUzd0PWNM6hRt8pFQHafslnH
+	 UqS71xH2uSozYAfvfr/IWFDfYVJS5WViSDTMIRhVSu7qkTYwUNtnenMZyF7mjfaam6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793062164;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=7/kZUclGYQP8NN34Z8XfBgy8oKvHfBFdfanXD9OlfAM=;
-	b=ptTYF8md8ukhdZNIukL0utOi6W4EMj2WDV42ruJGHANnJsUi0WwGN7a3ZTMdqkj8FQ43
-	 xUFRmwRS6ZQ3jlVzSFf8lIh2YQKw4pyL0yTI7t1qRWIZgQPGk9OTGSF4p5Eof+2a/Qkyo
-	 ispM6mBvJBHkWBSkxeRPUq4w7agWmKU6cITZQZvJ1N4Lu8qqdOo41nMyAy81TvfzOth4v
-	 clCKRCvSnYPQwewVDL5ypkkMZ/OG7kwOp/gjPjcTEqgmaKEATak/B+bbvaXYonLZp+z5t
-	 0sithd1WixF+pf0ib3pdRRsSoqkWPaubSzqt/8wOolY3cFN8ETEG2f0T6gnYKtq5GTQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793069276;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:Date:Message-ID;
+	bh=lvDhK1lQBCnTBgCeDn8IE0UD8FXFRVaT+2qmolhhuoo=;
+	b=BvgiMjf7xCTGZ2HHVmrR4DSlZfOtK0CGN0tlQ8oKS5J9XVoIEitfMxGZz0qYOy25Qrd0
+	 WwvN6HkbJTQCMUTUuwwJ3+ICVMqUQHo/yKt/N1Z8BCb6OTVfNmPKjSFxYzb3D22vnhrNT
+	 zQh78CIA8YYqHun83wGj4aoVRWaRlSDPfArfDwM/bD1W0g0UUQc3GruX18CunPBE2leX8
+	 DN1hEwAfFYCDutaRLQvAoLBnhItZvHD7fWoNBah7F7RfGkcjgmHHHTDrfGkGOo6Lp4muO
+	 HXc78oDQSlgRn17hqDfUPYan/THHHOVYwuuGBf8XHa2iuKCxGQQX7QysjmAvPZNfozw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IhwJd0HH;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=74.125.227.135
+Received: from mail-pj2-f7.google.com (mail-pj2-f7.google.com [74.125.227.135])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25172606A31A;
-	Tue, 27 Oct 2026 00:49:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IhwJd0HH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533701F01825;
-	Tue, 27 Oct 2026 00:49:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793062163;
-	bh=7/kZUclGYQP8NN34Z8XfBgy8oKvHfBFdfanXD9OlfAM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IhwJd0HH7ml97hUAhy4mM+LxrQ2bHSAnxXT5bcTTqCYrKorbjVOfa6aQK448DPZUZ
-	 I0UbDVCSy2hHLW5PW4h032ayX/+bDm61VYux5U+fOZd7u5iOR44XnnAQq0KNDlAhUq
-	 jHUdbLzFXl4HCeqTogfS6QXU4nSqG7WsHqALzTeQcaDypFzXJjdhjSDGSpkntipz4i
-	 UI97FyUNZraeWVxoio6pYIeHastvNhvR7snqnMmzqVCnUvGEO0vnbj6cr3GER0BFD4
-	 n1EoM7UhMef2S2pPI2Qw/maUpE2zwjOXsiIqMNgYEkNmbL8RdxlO3rp/V4bemheEIM
-	 r0fMOuo2qCurg==
-From: SJ Park <sj@kernel.org>
-To: Aveline Noir <jm5905938@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Manuel Ebner <manuelebnerli@mailbox.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F76A606A321
+	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 02:47:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F76A606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj2-f7.google.com with SMTP id 98e67ed59e1d1-3ac63aee1ecso707936a91.0
+        for <damon@lists.linux.dev>; Mon, 26 Oct 2026 19:47:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793069266; x=1793674066; darn=lists.linux.dev;
+        h=message-id:date:mime-version:content-transfer-encoding:content-type
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=lvDhK1lQBCnTBgCeDn8IE0UD8FXFRVaT+2qmolhhuoo=;
+        b=Avv8dYPROLORNH94EMdZg/79ANclns3CV1GBlZiSC/aRlRsguDFoUc0mG/gu6zBM0Z
+         Fpl+FI0lK1fydTYYXKXfeWs2K2Pr+p1lNhdIfAGCJCI9Nt+GeUYzMmSwxcq2u/TaIS4H
+         UFt249Fky0tKTIgKOZCroVicCmVgyVoFy6LiYyDOsEje83iCCy4D13rwWZtDa2XjHJGT
+         I0KJMziri/IPE8b45++Kag3uTW+KPrk9g6u7dvol5IN4wSbnswm3GzbaRF7+JrSWGF6g
+         uzP0f0Jg3Na2vxUCf4PZnrADIs9SR6zrIgTgMTNnirboKQVqMZA7IOUvvffatawa2l5F
+         dBmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793069266; x=1793674066;
+        h=message-id:date:mime-version:content-transfer-encoding:content-type
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lvDhK1lQBCnTBgCeDn8IE0UD8FXFRVaT+2qmolhhuoo=;
+        b=uTS7iEvsLaVpHRFkoTpCHdaYtcUGFvZI+iN10JiUcxDy1tuqHPakLdctivVEF0EhYB
+         miGW1zeHWxamAf+YOZcGhk982Q/9ZKVe0kZxquNTvAGMbfu+2oSnCnOhgtbZCX+GprKR
+         MCCm9p82GIPDqwdmeU6kTATBaF8hKGBTeFcdh4q6S9N0QKzLrXRhIeCZdP24ZproHCdM
+         jfT3PRm7y33LODwwN0JAnNpN1VdECvKkdAkcnJLAQvKYtPjSC1BMDq2dLyCKt/U1ZHDg
+         P0h9ZMG2hPv3QBRxxrvbayGsOLSFPh4MuEK7sWji/BDPFdh2l2t2D0ZWmvV8qxVJF4Qx
+         gGQg==
+X-Forwarded-Encrypted: i=1; AKwUvBzzlKG1NxYSdtwS8ECUe8QNbvDJV89nkdPIW+skLoygvyAhqg/l78kK+TtbGoeTf5AjRVe0VA==@lists.linux.dev
+X-Gm-Message-State: AFq9FYJfBTGbkbHWn8pFKclUu7JTMp/HZ3s6ZcKDlHEcXJzcCcTVxuey
+	jwG3RV4t+cW0ptNSqDPTgzjvq3R2CIjdi3BAcZLBQbKkFtXVG1JszjiR
+X-Gm-Gg: AYBFou3ikmc80ZXoRByKXk2gaSGq0UhS8+uxmtjQWfRKKijDnl+nftYjOYQtqZWs8QM
+	1aN3a6JQ1vh6gGO/lwFKaLmTZWERcjlRZWOhqonPxjVc4Z2KJ7atKUB5KCQBx9RNsSbHmx+vbx7
+	MZvuIU6+q0p5g4gbJjDMMUZOu64KkjHBlUvmIKhfHWw+C+wAcuxmtevfT5umwydKA4r+3G0Nj6W
+	8MxX6bH40DjK5G5iCEymBdKgNbVeZinYx1t5naDRhJ+hTCC6bUPxgV7aB5MlD3l4dFkbUsIs/9K
+	iCmX0O4ywJIuENzAqvVFh0EHldse3W3zWfMUFRB3HjffW4Pgt6atnSsLNICPE2Lv0N6dzu+Rfhp
+	iQqYvarSPp8XirffPcfoCBUrQdAhd7LFXMVKZsVwlqy7A41AxTSRzhViKOTyQMGw11rZq8fL0kK
+	Xkfdhuc5QJEGOC55jjs6WW7UgCyFxnc3mwrqo/qRhb+L2T2ya4sNnbSKAkfVaKs5as1RCOoJDWE
+	IEt5tbw5oDYEre/e4pzm3JHZAC+kQNR8WaGIk3dTHF3JuQpDfEpOQPUnFje189qV8kJKOmv+70m
+	fcb3CaTs+ldRf2OqWgOoSnUHQMGe2SGes3o9BvvkTju6OXMmeitt
+X-Received: by 2002:a17:90b:3b45:b0:3a8:7096:9b48 with SMTP id 98e67ed59e1d1-3ade9b2cff5mr7922722a91.1.1793069265598;
+        Mon, 26 Oct 2026 19:47:45 -0700 (PDT)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae404426c2sm1518262a91.7.2026.10.26.19.47.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2026 19:47:45 -0700 (PDT)
+From: Aveline Noir <jm5905938@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+ Randy Dunlap <rdunlap@infradead.org>,
+ Manuel Ebner <manuelebnerli@mailbox.org>, damon@lists.linux.dev,
+ linux-mm@kvack.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH 0/8] Docs: damon: fix grammar and typos
-Date: Mon, 26 Oct 2026 17:49:15 -0700
-Message-ID: <20261027004916.160854-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <179301327249.2.4690198998605536207.damon-docs-grammar-0@gmail.com>
-References: 
+In-Reply-To: <20261027004916.160854-1-sj@kernel.org>
+References:
+ <179301327249.2.4690198998605536207.damon-docs-grammar-0@gmail.com>
+ <20261027004916.160854-1-sj@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -65,51 +98,19 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Tue, 27 Oct 2026 13:46:00 +1100
+Message-ID: <179306916017.2.12297411301652219760.damon-docs-footer-reply@gmail.com>
 
-Hello Aveline,
+Hi SJ,
 
-On Mon, 26 Oct 2026 22:14:32 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
+On Mon, 26 Oct 2026 17:49:15 -0700, SJ Park wrote:
 
-> I was reading the DAMON docs and kept running into small grammar
-> mistakes and typos, so here is a series that tries to clean them up.
-> There is one patch per document, and nothing beyond grammar was
-> changed :)
-> 
-> Some fixes pushed lines over 80 columns, so those paragraphs are
-> rewrapped.  Patch 4 picks up what I think was left in lru_sort.rst
-> after Manuel's recent fix.
+> Are you intentionally removing those suffix, using 'git format-patch
+> --no-signature' like feature?  If so, any reason to do so?
 
-Thank you for these fixes.  All look good to me.
+I was trying out my own script to assemble the patch emails this time,
+and seemingly I forgot to add the Git version footer. Thx for 
+reminding me that.
 
-I applied  this series to damon/next [1] tree, together with Manuel's
-suggestion patches.  Manuel's suggestion patches will be squashed into your
-original patches while adding 'Suggested-by:' tag for Manuel.  I will repost
-the resulting version after next -rc1 to request merging of it into the mm.git.
-So, no action from your side is needed for now.  If anything is wrong or the
-plan doesn't work for you, please feel free to let me know.
-
-> 
-> Based on damon/next at 9d301805e3f6.
-
-Thank you for clarifying the baseline.  I guess this was because your patch
-depend on Manuel's early lru_sort.rst fix?  Clarifying the dependencies would
-also be helpful from the next time.
-
-By the way, I found your patches don't have the usual git version signature.
-That helped me finding a bug in hkml.  I fixed the bug, so no problem.
-
-Nonetheless, I'm just curious.  I might be able to make DAMON development
-process more easy for contributors if I better understand contributors' work
-setup.  Are you intentionally removing those suffix, using 'git format-patch
---no-signature' like feature?  If so, any reason to do so?  This might just
-don't matter, though.  Please feel free to do not answer if you find no worthy
-to answer or just feel uncomfortable.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
-
-
-Thanks,
-SJ
-
-[...]
+Thanks for applying the series,
+Aveline Noir
