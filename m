@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793109814;
-	b=NRllWJYTg2p6yo+GlIqHurx8jocNIqdMksrKFBx+JfY4F/X1Za/qBZyTU7XlsrqGvC6o
-	 wCrF3nHbHARvmyldL2P9W4S/4sUmvx10fj4sjehX6hYxnP1/A/Uevk2Bcgna+x13P4OD3
-	 xxeP4WiNJ9UNq9ozZKJtG8Ckllkyd6o44ZNxoxZg4WKKaX4HdkL1w2gnDj06w7DVv6/i0
-	 FHurX1HD4iNZmUDP99gH+QcX1AnLeiLQ4/pb8unfLYQUS9PZVI5zzYnkf06pNXHAdWtD/
-	 GGzlXLimkv/6KDt8Ta/s9zpW6JF2p3JnclUPdFJWVBxy7N23jOvFDztxzNqyvRRNxnw==
+	t=1793109914;
+	b=NLBCNzv0vq7C7DXZnTM8qmNgZpRxLP6zR54QHeMNQ/pkEel0mT2RtDRJh2AAXaA1lcxv
+	 AlGiam+AF7tagQn1+GUxV2+1XXCqT7jCC3fITuBydf1K5JEP2vxTSnI0iCMQvv6/laLJr
+	 MezLXkoaoUiM4U8kXlDkqK6YWBODIQDB3g9hgx7Qw5pVpeNFn50PG4yN2uPo+iDWfoDZM
+	 TiVatnW0ZjmhEt6ZBcqnIKGZIXRxWpbps1z82TKa6s2Vb3UG2VxNZ8+9o8/zwA1+FRUUw
+	 fXFbOO5O0ItY0sg7nBPG5uqmzlHY2uN50M9RUHFBdk9EGku2b2J74fr/Mza5/V8y0pQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793109814;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=/a5Q8lUWBEd/9wSdAV9zhg3EG5K6dH/Wqad5vDppMa8=;
-	b=a2pSHoBgUPObB/rwpCtaHDH2nNIudmVf3rM+kQJ8lzvuD4+sDHEmb8rBunG2Ybodcw4x
-	 fO0JDJH4XaG0v6xOi1HUFP1TGqiAD/gLqZgkgac4syilWV9S0mc/O3bAj95FVJF0Zz2Wa
-	 yPgVjQgpcCjSB35FuRvsXh6jUZNd+qyyWZs0GdL/Q/evpm32pm36fr2BM+XJolS+uvaKM
-	 B58QqpU95IULBt/7kkJck+FBA8fzXMrEJJ/4ApKvtL8OZlie6XN/X6nIL+1AA8y/RgsEA
-	 iqU6C5vXWfEgiFbtDtGfHi0UskP6p8K/tGT2LFQtNQPrVBhB0vxSWIOBs5MFZ6YPfLQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793109914;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=4KhxvdvDQCeedsWKLn5TkwxzZrsB6FbsYmXemrM3uP4=;
+	b=15Im9ATKwgn5fhcYjMeMz4Ru6ThQIjNeamytVregicxpMzj3kpXBHtPZgISMQFSh04zx
+	 2Y3+7SjmriOo239jhm46o7tvauC+Iae9urT3HFV9KNGYZLbOKNK1/ODDQuNCwnMpVFkTb
+	 6SaB0SoFE3bs/OlBhnmiHM+QTL+x+kfOPLB2+Z21iv/Xy5SyO9RsQztf5jJ/83MnPnjXr
+	 lqqXowuxMrKRmLdOCwiOlFNuo5/qMBgllfYeLgxP3qGoM31vak0vcyrDomLC6P+gSx5Wz
+	 iRm3e0iRFV1WPZ43x7+CijkODzA7Ygu2xgSomzAdtLCjmH+i7HHXvCCiyMhNNaHesJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SYEBO1zL;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kqulH87C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F4F606A31A;
-	Tue, 27 Oct 2026 14:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A7F606A31A
+	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 14:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SYEBO1zL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8232B1F01828;
-	Tue, 27 Oct 2026 14:03:33 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kqulH87C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB6D1F01825;
+	Tue, 27 Oct 2026 14:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793109813;
-	bh=/a5Q8lUWBEd/9wSdAV9zhg3EG5K6dH/Wqad5vDppMa8=;
-	h=From:To:Cc:Subject:Date;
-	b=SYEBO1zL5ZF15BWDdDdN9iXWFFoy1Sphreo+ZkNHF0l425741/n5Gb2MeJn3i375B
-	 fO92W96b28BGlLA984Qh8udrJLq1+m5PiZ8qwelstttw8SYWUTVmKug7i8WOeQuEVZ
-	 PZdkc/bN+b8Umaf7FTY+DKuebUcMl0/OzMDVAZDnHYKSqOAcNjtmUdsW6lw0UXFGM9
-	 oJT82COi1DLQ6YPvPVcS9XFrKDKvJB4GDCABA/sqbhviFXMv9gFlwOtK7jJtVBWLxt
-	 KM5jDL+YEgGIJ9vb23zF+XFFZdrCdetFSh9zcAvPd2u30z8QTUveaPkPOnATvO+hXQ
-	 m6zZyyIsOG0eQ==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	stable@vger.kernel.org
-Subject: [RFC PATCH 6.12.y v3] mm/damon/core: error damos_commit_quota_goal() for zero target_value
-Date: Tue, 27 Oct 2026 07:03:25 -0700
-Message-ID: <20261027140326.153338-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	s=k20260515; t=1793109914;
+	bh=4KhxvdvDQCeedsWKLn5TkwxzZrsB6FbsYmXemrM3uP4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=kqulH87CYTfP1oN2RE0+A4lYmk5PZVtv6UbZrHy7S3PcyoPrHE8cia9Bdq4ODrjd8
+	 cosWbLLm7RShdxv4Ap81KLBLbHgpCGUjTFC75prgvH+7ZHWLPG+IIOd7iTVjRPkS6U
+	 e7pwIUDJfdN+F0yWxW/xFwLR3mVD662bI061k/LH5hx8cFIF/+yAneCN5iruSDyDZ8
+	 eg/3Abxq46VDYmnaR+G4QQxbb0P90QjZE4ywZ6/vox/SeIjD28FbcFONqHWCD/4ugj
+	 YqiqZkuVs1ItaEZmbBUpw2muHk4Q7vPAGz7XronxjUFXMUmoYokMtzipBl0zT5xA7C
+	 UYs0eIRDUqa4g==
+Message-ID: <sashiko-outbox-186693@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH 1/3] mm/damon/ops-common: avoid overflow in weighted
+ hotness score
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "DaeMyung Kang" <charsyam@gmail.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261027135932.2301646-2-charsyam@gmail.com>
+References: <20261027135932.2301646-1-charsyam@gmail.com>
+ <20261027135932.2301646-2-charsyam@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 27 Oct 2026 14:05:13 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,169 +60,32 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Patch series "mm/damon: move zero damos quota target_value handling to the
-core layer".
+> damon_hot_score() combines the frequency and age subscores using the
+> user supplied DAMOS quota weights.  The weights are unsigned int, and
+> both the weighted sum and the total weight are calculated in unsigned
+> int.  This is independent of the architecture word size.
+>=20
+> A frequency weight of 50,000,000 makes the weighted sum wrap, so a
+> region that is accessed in every sample gets a score of 13 instead of
+> 99.  If the two weights add up to exactly 2^32, the total wraps to zero
+> and the averaging division is skipped.
+>=20
+> Accumulate both values in u64 and divide the weighted sum by the full
+> total weight.  Add a KUnit case covering a large weight, weights summing
+> above UINT_MAX, and zero weights.
+>=20
+> The issue was discovered [1] by Sashiko.
+>=20
+> [1] https://lore.kernel.org/20260623141527.044D11F000E9@smtp.kernel.org
+>=20
+> Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritizatio=
+n")
+> Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
 
-Having zero DAMOS quota target value can cause division by zero.  DAMON
-API callers are checking the target value parameters to avoid that.  It is
-easy to make mistakes in some of the multiple API callers.  Move that to
-the core layer.
+Sashiko has reviewed this patch and found no issues.
 
-Patch 1 adds the corner case handling into the core layer DAMON parameters
-validation logic.  Patches 2 and 3 remove no more needed DAMON API callers
-side handling of the corner case in DAMON_LRU_SORT and DMON_SAMPLIE_MTIER,
-respectively.
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261027135932.2301=
+646-1-charsyam@gmail.com?part=3D1
 
-This patch (of 3):
-
-If a DAMOS scheme has a damos_quota_goal of zero target_value,
-damos_quota_goal() could trigger division-by-zero error.  Hence each DAMON
-API callers should do the zero target_value validation.  It is easy to
-make mistakes.  Actually such bugs in DAMON_LRU_SORT and
-DAMON_SAMPLE_MTIER were found and fixed [1].
-
-It is better to handle the corner case only once in the core layer,
-instead of multiple places in all DAMON API callers.  One straightforward
-option is using an alternative denominator for the corner case in the
-damos_quota_goal().  However, the zero target_value is meaningless.  In
-this case, the quota goal is always evaluated as achieved or
-over-achieved.  The quota will only keep being reduced.
-
-Simply avoid using zero target_value by adding a check in the core layer
-DAMOS quota goal parameters validation/commit path,
-damos_commit_quota_goal().  Update it to return an error in the case.
-Also update its caller to propagate the error.
-
-Notes for stable kernel porting.  The upstream commit doesn't have
-Fixes: and therefore not ported to stable kernels.  It turned out it
-fixes commit 8b549a4fd3c5 ("mm/damon/sysfs-schemes: commit damos quota
-goals user input to DAMOS") which was merged into v6.8.  The user impact
-is a race condition that can result in divide-by-zero.  Hence backport.
-Reproducing the issue requires sysfs write permission, certain DAMON ABI
-usages that are supposed to be uncommon, and a rare race timing, though.
-The issue was discovered [2] by Sashiko as a part [3] of its bug report.
-
-Also, the upstream commit on this stable kernel can fix the issue for
-parameters commit paths but DAMON start path.  That's because DAMON
-start path does not invoke damon_commit_quota_goals().  To fix the path
-with minimum change, add a new small validation of quota goal target
-value before damon_start() call.
-
-[2] https://sashiko.dev/#/bug/linux-7f814c9a-986f-4103-a55a-ef9537dcf62b
-[3] https://lore.kernel.org/20261021005234.94107-1-sj@kernel.org
-
-Link: https://lore.kernel.org/20260903010722.94244-1-sj@kernel.org
-Link: https://lore.kernel.org/20260903010722.94244-2-sj@kernel.org
-Link: https://lore.kernel.org/20260803134034.15217-1-sj@kernel.org [1]
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 610c4438fb66e06d9e693c0ad3b2c1be54c0d61f)
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from RFC v2
-- RFC v2: https://lore.kernel.org/20261026135555.149244-1-sj@kernel.org
-- Put target pid reference count in damon_start() path -EINVAL case.
-Changes from RFC
-- RFC: https://lore.kernel.org/20261025182326.178326-1-sj@kernel.org
-- Fix a typo and macro expansion build error for quota goal iteration.
-- Destroy ctx in the before-damon_start() error path.
-
- mm/damon/core.c  | 18 +++++++++++++-----
- mm/damon/sysfs.c | 19 +++++++++++++++++++
- 2 files changed, 32 insertions(+), 5 deletions(-)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 81d44e41de210..ed32855c16ed8 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -698,14 +698,17 @@ static struct damos_quota_goal *damos_nth_quota_goal(
- 	return NULL;
- }
- 
--static void damos_commit_quota_goal(
-+static int damos_commit_quota_goal(
- 		struct damos_quota_goal *dst, struct damos_quota_goal *src)
- {
-+	if (!src->target_value)
-+		return  -EINVAL;
- 	dst->metric = src->metric;
- 	dst->target_value = src->target_value;
- 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
- 		dst->current_value = src->current_value;
- 	/* keep last_psi_total as is, since it will be updated in next cycle */
-+	return 0;
- }
- 
- /**
-@@ -723,18 +726,23 @@ static void damos_commit_quota_goal(
- int damos_commit_quota_goals(struct damos_quota *dst, struct damos_quota *src)
- {
- 	struct damos_quota_goal *dst_goal, *next, *src_goal, *new_goal;
--	int i = 0, j = 0;
-+	int i = 0, j = 0, err;
- 
- 	damos_for_each_quota_goal_safe(dst_goal, next, dst) {
- 		src_goal = damos_nth_quota_goal(i++, src);
--		if (src_goal)
--			damos_commit_quota_goal(dst_goal, src_goal);
--		else
-+		if (src_goal) {
-+			err = damos_commit_quota_goal(dst_goal, src_goal);
-+			if (err)
-+				return err;
-+		} else {
- 			damos_destroy_quota_goal(dst_goal);
-+		}
- 	}
- 	damos_for_each_quota_goal_safe(src_goal, next, src) {
- 		if (j++ < i)
- 			continue;
-+		if (!src_goal->target_value)
-+			return -EINVAL;
- 		new_goal = damos_new_quota_goal(
- 				src_goal->metric, src_goal->target_value);
- 		if (!new_goal)
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 5aa23c6545cb8..ad9fa8a86c9ef 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1497,6 +1497,20 @@ static struct damon_ctx *damon_sysfs_build_ctx(
- 	return ctx;
- }
- 
-+static bool damon_sysfs_valid_start_ctx(struct damon_ctx *ctx)
-+{
-+	struct damos *s;
-+	struct damos_quota_goal *g;
-+
-+	damon_for_each_scheme(s, ctx) {
-+		damos_for_each_quota_goal(g, (&s->quota)) {
-+			if (!g->target_value)
-+				return false;
-+		}
-+	}
-+	return true;
-+}
-+
- static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
- {
- 	struct damon_ctx *ctx;
-@@ -1517,6 +1531,11 @@ static int damon_sysfs_turn_damon_on(struct damon_sysfs_kdamond *kdamond)
- 	ctx = damon_sysfs_build_ctx(kdamond->contexts->contexts_arr[0]);
- 	if (IS_ERR(ctx))
- 		return PTR_ERR(ctx);
-+	if (!damon_sysfs_valid_start_ctx(ctx)) {
-+		damon_sysfs_destroy_targets(ctx);
-+		damon_destroy_ctx(ctx);
-+		return -EINVAL;
-+	}
- 	err = damon_start(&ctx, 1, false);
- 	if (err) {
- 		damon_destroy_ctx(ctx);
-
-base-commit: 85d82e0d7c2dfd3e75d34f35b7ebbf41f45c9c4e
--- 
-2.47.3
