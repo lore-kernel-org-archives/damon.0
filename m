@@ -1,79 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793109577;
-	b=aZqdFleLsh7ccRX/Om9OZjtu3G9G6fMRB+vFuZJqDhAtJNL7ZMCnR6+l/0Xa/YjVKNx2
-	 GKhl59J4uUmsW0QW5jRJEsljCvoJoCnk++HdSgAVggd6ny+0ifptPtNHT5H+UEHcOK5pf
-	 8gw5eiM1WqrUkdPeA8EIYXo28EFJZHN2aUIalwGdSSJ583LowIz54wP0YNyWw9NYK0emW
-	 DplPiE6/6zv43xb2vNo5CQGP3cyD86Cxrf5SuTIoSkT63yeK1MqZCsdIqFRzO86F/PB5Z
-	 Pp17NqOVVnDX6KiYlm86FhpvIS3YR6aDFE/C+pd8MzKpg1jehRloWo/qQmvLYUk0G4w==
+	t=1793109579;
+	b=3xaEBKuggULmQIQl8WnxYDO1BKV4X9rv+HhgASh/FQNLj3C/Dc9ooe4HnRWpxyL9i/39
+	 05IGeV3WI///KMCu1TxVATSP1cH2EMFuTEzmfZjQnD7AiSGfPA9EL5fsBKcwIQAITnizp
+	 o60i+rhF3kCdYk2XD1WoHzk6kT69q8+fh/X2E9xEpJVNRAK6q+KFOS5Lbk1TgZVSwR/u1
+	 /IhO1QER+qfSb/jjAB1qNuBezGR+mu+I2od1nf0rI1gVm7plraRw3a7jWFmRt3k0nwxI2
+	 OfnLbUso1QxqbZOIx8ZXzcYMumx1JhIoMPTaZPZhvz4YawtY8fOy+FSErThgd0a37Sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793109577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793109579;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=Ze3hDNgAVXxR03vgb3ebN8Im6n2FcLAKEpCxr8ESZ/g=;
-	b=aAyNC6IkJALeNda60G+ZqB9OU5MQGoQJJnNHgwV4s0E2edN6nt9HpHupAoP/e2ToOKP2
-	 4rMPMS87xoAxYJUnxJAFPSwjz1X9KmOQLs2SNvGOvzLKKcz2sTs9TBhHbte8gjn/vX2T+
-	 F3sFN51dXNwboLh1mZKHE6h4w6yag2Ll8kNQkgnV6+Np6Z2+AYLUCAR8BN6up+vrSOXor
-	 0b/WtdvarY5TEM51cKf/+lwPMNV0+kScsOHKEh4Fnp9BLE9okE+WJztdRJkm/e4SojojR
-	 6KDTNd/mAK7jbMjjiDlzN1t8wFmHqFSbq5yKjxVZBV5+ObhxijIHuTVllPH+jqeXvpQ==
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=28t27eQ8gsM3u/fL1shL3y8iqdAx6jSJDsl/RU1Nwjs=;
+	b=TPmtFLCgKJ5XwZ6YDsXD+YObwYdkGsX2jQyBOwkXp4wjEhkgg0paC0MvPLvIC83QX3NN
+	 Ka9P5uWLA4dt5rWQV7OP/YGnrw/dmx1vABK7Ysaj63uu7rkemvJQ8gJL5aymjoFdpki/+
+	 EuzV6odcxorsGu7R2Tl8HDb9sjwP1pQRxkY2t+ayO3erFJBqkSaVWX+j/pBs12V4LIWrN
+	 dsRe7MgJcMHZ4vwXHdlzEI6+hbbneg1NeVgWbpKBvNBBbV92qwHb4e8A/WoTJB2+EKXCO
+	 NJBi/57/ex/sQF8M1Eg7oQLEoozluNHKaYA/1L6vdNSRoCThbLP4U+V1HXGdDRCIfEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F6qXQ4i9;
-	arc=none smtp.remote-ip=209.85.216.48
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=DyvZqIvb;
+	arc=none smtp.remote-ip=209.85.215.179
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660C4606A31A
-	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 13:59:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 660C4606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BA2606A31A
+	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 13:59:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 90BA2606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F6qXQ4i9
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-3ad47c246f8so394272a91.0
-        for <damon@lists.linux.dev>; Tue, 27 Oct 2026 06:59:37 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=DyvZqIvb
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-cd5f2834b19so175808a12.0
+        for <damon@lists.linux.dev>; Tue, 27 Oct 2026 06:59:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793109577; x=1793714377; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Ze3hDNgAVXxR03vgb3ebN8Im6n2FcLAKEpCxr8ESZ/g=;
-        b=F6qXQ4i9QtYml97dTT858YySPEabJXnFwK1pc0j9fkDlf2WkL2GgNSCDLQ21NB9O0c
-         QGIGwZS1Vrj7+uz58GqbmAgOOxIaCJGY+/7KmvHSYIz6CtjAqso6IUiejxNYf/xqjqdc
-         XbQBytnU3Kqa/LeOXWJjEKj4ptJc38K8ytsFqdzU1m8ujGOvgVJds81TAE3k7K0pTypO
-         ScCc/Lh3jv0bDermPKKsD6kM84WChDCQZPUizZ1AckB7pvXy1W0fbYJ9nTJdM/Q4TYob
-         rLxX0CYQyQoP9B5gs4ey6w5lG/8LHOHftN729L78slJtFZ+rYQUp0V5PAktNYRmumfNB
-         90iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793109577; x=1793714377;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1793109579; x=1793714379; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Ze3hDNgAVXxR03vgb3ebN8Im6n2FcLAKEpCxr8ESZ/g=;
-        b=WtoIuC57kLX9Bmcms9Is50C8+stv7XtDzDmTq7pJ8jH3pmNFyT+sbVM/CdU77ohqcH
-         ZrMrk3qNf4hIBmMu6umAyQxP05D3aJY2O9k1/FflDlU3xTdvc97pz5aQWbBWgzWYLnK6
-         nMbiC8+VT72l2zEYGmqA7ruP5ERXUHtyHXuLIrA9ptg4SUCG/XaXpS1ferRRIuDVgxdE
-         OuuV4PPsYM4iYAUo4bbVX0Sf3Pwac7ZK51+uvLKUv6DCkx3IcJPRg7cMOqbgFzgLinRu
-         1MsR1HPgIGgTrHGJdE9w5dCwLvavWgyu97gT3IwFyE7XrJSYELuBghNal80VX8UHvVnM
-         s7bA==
-X-Gm-Message-State: AFq9FYIRqj6HRT4ACefn6S1imQWQ1MwMK0FhuSubzo0QaIwULkL4I8VZ
-	rcOTWCCw/j9eKl0Sf43L8JRYlRzQYz2faSVHbTsrQsy6HD+qroZmZiFd
-X-Gm-Gg: AYBFou3BGu6f5b2VcryyMKpOAEsibucnrZqIB41EhcpupfzxKHpFO/Gwrl9YZrGax9J
-	tl0mjr04HNJMRRpi3jStKGwXADGyplEFgwQHJVXyslBkffTqjBVJLp6S5Qcbpk4r80uqxThOptT
-	njAilHQhZxgD17QqhwO4h/WdMqWVur/ACV5pGxvv/YHZv5tFnL3sjsD2xir7LGimWINyDzH6Nna
-	tB3dTr+L6v/oPqwnWXC94lTgYQ/DhqBozLIk8B7Yv3et4VqaG8UpjfwkVIl/eGS/rUMwWjs/F+T
-	XjI1YA92jZnzgyOuCtAX6IjBOeyR/TSZSi9Vh6et0eRoHjYZ2G3hYwArInSZimILFxkHE95ZHU/
-	YpWWX+enZolRuaHALp1EWJSwXUY0Dr5bmZ820CuSmo7lS46aHy5hNL5ETrOxI+KiQBtBB4QFK0U
-	RyUx8r2gH75m8N33+kMXweVRROPyDW8V4TObQ0NJ9FUwsPfrS1Ys2hh0KYr1YiWJvdPPv9c5olN
-	j+WicARxLpWnOXiNxCYRMIzZkh7InFr3jHXBcWFMLhxy+cT
-X-Received: by 2002:a17:90b:28c4:b0:3a6:f1d2:57fa with SMTP id 98e67ed59e1d1-3adeae5dd2emr12875632a91.4.1793109576511;
-        Tue, 27 Oct 2026 06:59:36 -0700 (PDT)
+        bh=28t27eQ8gsM3u/fL1shL3y8iqdAx6jSJDsl/RU1Nwjs=;
+        b=DyvZqIvbMT5Z+eKmS4OWuITQUugU609Bvf3e08mfV4/mDX7ZlNI3Q/iHaDxiQoKgiX
+         0uaaqhOvVS6wgARzLTBbbW8eDTncxftitQlkxx9+KsLvEe910BWaA/NqEjTHeuP5Z1Sj
+         JU5aflEw6W10CPiK9FP3UsTYclymXwDg/VNCNuvwF/FCVW3Bfo34xwP9aCN+4uYJVq/l
+         l7eDPrxZpbGiU/m2/BRlbtfNlBU1Ckw6lDBr8Yrc3jAoZTdJYyONdGc4Kzmm2iEQJg9z
+         29a5wr49T90V6fo/4Vl2iRKWacbAD1V76ZpgpzuEjnxMzGtzvFYI8DReRITiubuwT2eB
+         Rlvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793109579; x=1793714379;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=28t27eQ8gsM3u/fL1shL3y8iqdAx6jSJDsl/RU1Nwjs=;
+        b=ofiMlMy/tfFdqWZAsRFr9j+E6MN2rRbZFg+4sMFT8rliy6aMMTVoupdr0P2wioiCEs
+         44hYGOJdGzi0VzawRfx6P7G9DuLcISIUIq/PnvV3G0LAZYLfeJbnlcjaGVCNeFD/3wyx
+         tsT/3g6y/xwCgCX2UPo8CX/Wj2a24tuBTLE4UUvOnlKtZCGYe3+VPavZUApciSdv0zE4
+         YwLO0SWRajn1pefJm2I9/BxeGjphn+s+05OBP+KhO5HjqXczo0FHrYyOiK718iTniU73
+         FmOeQKTm43IFHk05WEEviZi5xd2W8f0RyZ12NK/ynRscpHAK55nnhF71fK2/Lh1UuWuB
+         DeuQ==
+X-Gm-Message-State: AFq9FYI/VprIlKmZz2oT8lY6aLiBIMF0Jyyxizqsm8wc5prbA3HzsVJx
+	5jFwhW8dvEuUqInkuTyVN0SFk3211yQ7DR29r7lcfHbXOK0aJjojSZ0H
+X-Gm-Gg: AYBFou3lPOIBrgva9ReAjDRhaooyDtqkF8ctVZesTsI+KAswB2PclugvUSeRw33MXVL
+	6nok/7CUIzA8W4zY5JPWD/yAq0c91CjGpwFRUIyIZMhhLI4RZLs9dyJ995Pyz0vPnsAdhgxJlIp
+	XXOp09ctXrqwm8Je8SBfZgPW8ZWzPk8s6ZRyp/AvR4hH1mEYLOwuLgCiIohiasha4cIjVIvorjz
+	N5VQ1ENRaUtUv12SeUBeMm08XvoShFpGE03vL1qBkpBpVxhQDREVYRsh2SoQv6V4KTkf7tD0Aaj
+	GwCUGnhFT9sWEFt2vzMFeyCRF4h9L6xGZT6fGjdVgpVENxw0niG1MloOkDHtoiiUphaMd07ObA/
+	UvazUCYBrzfl33G4ieP5411sV1azvkQ1m+sPIZ0IxYYN/v3ElnyVCMfnJfSOjW99edlPtM7KjKJ
+	KNYIaf0uoAJi4uuiEytzvZDgy7XuHJu0C6Ea/DWoGc+ksgydFiPSVZ87Rl4rMDt9eLdQR3BGcXW
+	LFHfXkkmaQLdFQZfnm0u3LZeiU4SrDU0BX+gzXbn0Jc+WM7
+X-Received: by 2002:a17:90b:39a6:b0:3a7:a463:54bb with SMTP id 98e67ed59e1d1-3adeb10f4c4mr14989953a91.5.1793109578629;
+        Tue, 27 Oct 2026 06:59:38 -0700 (PDT)
 Received: from ser8.. ([221.156.231.192])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae404432a5sm4243466a91.9.2026.10.27.06.59.34
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae404432a5sm4243466a91.9.2026.10.27.06.59.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 06:59:36 -0700 (PDT)
+        Tue, 27 Oct 2026 06:59:38 -0700 (PDT)
 From: DaeMyung Kang <charsyam@gmail.com>
 To: SJ Park <sj@kernel.org>
 Cc: damon@lists.linux.dev,
@@ -81,10 +83,12 @@ Cc: damon@lists.linux.dev,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
 	DaeMyung Kang <charsyam@gmail.com>
-Subject: [RFC PATCH 0/3] mm/damon: fix overflows in score and ratio calculations
-Date: Tue, 27 Oct 2026 22:59:29 +0900
-Message-ID: <20261027135932.2301646-1-charsyam@gmail.com>
+Subject: [RFC PATCH 1/3] mm/damon/ops-common: avoid overflow in weighted hotness score
+Date: Tue, 27 Oct 2026 22:59:30 +0900
+Message-ID: <20261027135932.2301646-2-charsyam@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261027135932.2301646-1-charsyam@gmail.com>
+References: <20261027135932.2301646-1-charsyam@gmail.com>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -96,57 +100,117 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Sashiko reported several pre-existing overflows in DAMON score and
-ratio calculations [1-5].  This series fixes them with wide
-intermediates and an overflow-safe mult_frac() variant.
+damon_hot_score() combines the frequency and age subscores using the
+user supplied DAMOS quota weights.  The weights are unsigned int, and
+both the weighted sum and the total weight are calculated in unsigned
+int.  This is independent of the architecture word size.
 
-Patch 1 fixes the weighted hotness score, which overflows with large
-user supplied quota weights on any architecture.  It accumulates the
-weighted sum in u64, preserving scores for non-overflowing inputs.
+A frequency weight of 50,000,000 makes the weighted sum wrap, so a
+region that is accessed in every sample gets a score of 13 instead of
+99.  If the two weights add up to exactly 2^32, the total wraps to zero
+and the averaging division is skipped.
 
-Patch 2 adds damon_mult_frac().  It returns the same result as
-mult_frac() when that does not overflow, computes the remainder product
-in full width when needed, and saturates results that do not fit in
-unsigned long.  It fixes the region age and sample ratio conversions
-for new monitoring intervals, and the moving sums of access counts and
-probe hits.  The helper is introduced with its first users so that each
-commit builds without an unused function warning.
+Accumulate both values in u64 and divide the weighted sum by the full
+total weight.  Add a KUnit case covering a large weight, weights summing
+above UINT_MAX, and zero weights.
 
-Patch 3 uses the helper for the page based memory ratio quota goal
-metrics, including the hugepage metric, and for the quota goal score.
-The node eligible memory metric counts bytes in phys_addr_t and uses
-mul_u64_u64_div_u64() directly to avoid truncation on 32-bit PAE.
-
-The remaining mult_frac() users, including the intervals auto-tuning
-score that has an ongoing discussion, are not changed.
-
-I am sending this as RFC to ask whether this approach is preferred for
-these overflow issues.
-
-The DAMON KUnit suites pass on UML, i386 QEMU, and x86_64 QEMU with
-NUMA enabled (54 tests each).  The new regression cases fail on i386
-without the fixes.
+The issue was discovered [1] by Sashiko.
 
 [1] https://lore.kernel.org/20260623141527.044D11F000E9@smtp.kernel.org
-[2] https://lore.kernel.org/20260708140944.F26821F000E9@smtp.kernel.org
-[3] https://lore.kernel.org/20260901133650.EF4F71F000E9@smtp.kernel.org
-[4] https://lore.kernel.org/20260626002448.975E21F000E9@smtp.kernel.org
-[5] https://lore.kernel.org/20260831184956.1DA321F000E9@smtp.kernel.org
 
-DaeMyung Kang (3):
-  mm/damon/ops-common: avoid overflow in weighted hotness score
-  mm/damon/core: avoid overflows in monitoring results calculations
-  mm/damon/core: avoid overflows in quota goal metrics and scores
-
- mm/damon/core.c                   |  59 ++++++++++++-----
- mm/damon/ops-common.c             |  10 ++-
- mm/damon/tests/core-kunit.h       | 105 ++++++++++++++++++++++++++++++
- mm/damon/tests/ops-common-kunit.h |  47 +++++++++++++
- 4 files changed, 203 insertions(+), 18 deletions(-)
+Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+---
+ mm/damon/ops-common.c             | 10 +++++--
+ mm/damon/tests/ops-common-kunit.h | 47 +++++++++++++++++++++++++++++++
+ 2 files changed, 54 insertions(+), 3 deletions(-)
  create mode 100644 mm/damon/tests/ops-common-kunit.h
 
-
-base-commit: bae9a042b03b27924c6fd5bdc00a20d6a44d6041
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 2f3bf86a221b..af170b112e08 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -170,6 +170,7 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 	int age_in_log, age_subscore;
+ 	unsigned int freq_weight = s->quota.weight_nr_accesses;
+ 	unsigned int age_weight = s->quota.weight_age;
++	u64 total_weight, weighted_sum;
+ 	int hotness;
+ 
+ 	freq_subscore = mult_frac(damon_nr_accesses_mvsum(r, c),
+@@ -197,9 +198,10 @@ int damon_hot_score(struct damon_ctx *c, struct damon_region *r,
+ 	age_subscore = age_in_log * DAMON_MAX_SUBSCORE /
+ 		DAMON_MAX_AGE_IN_LOG / 2;
+ 
+-	hotness = (freq_weight * freq_subscore + age_weight * age_subscore);
+-	if (freq_weight + age_weight)
+-		hotness /= freq_weight + age_weight;
++	total_weight = (u64)freq_weight + age_weight;
++	weighted_sum = (u64)freq_weight * freq_subscore +
++			(u64)age_weight * age_subscore;
++	hotness = total_weight ? div64_u64(weighted_sum, total_weight) : 0;
+ 	/*
+ 	 * Transform it to fit in [0, DAMOS_MAX_SCORE]
+ 	 */
+@@ -576,3 +578,5 @@ bool damon_ops_filter_match(struct damon_filter *filter, struct folio *folio)
+ 	}
+ 	return matched == filter->matching;
+ }
++
++#include "tests/ops-common-kunit.h"
+diff --git a/mm/damon/tests/ops-common-kunit.h b/mm/damon/tests/ops-common-kunit.h
+new file mode 100644
+index 000000000000..813bad69cdcd
+--- /dev/null
++++ b/mm/damon/tests/ops-common-kunit.h
+@@ -0,0 +1,47 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#ifdef CONFIG_DAMON_KUNIT_TEST
++
++#include <kunit/test.h>
++
++static void damon_test_hot_score_large_weight(struct kunit *test)
++{
++	struct damon_ctx ctx = {
++		.attrs = {
++			.sample_interval = 1000,
++			.aggr_interval = 100000,
++		},
++	};
++	struct damon_region region = {
++		.nr_accesses = 100,
++	};
++	struct damos scheme = {
++		.quota = {
++			.weight_nr_accesses = 50000000,
++		},
++	};
++
++	KUNIT_EXPECT_EQ(test, damon_hot_score(&ctx, &region, &scheme), 99);
++
++	scheme.quota.weight_nr_accesses = UINT_MAX;
++	scheme.quota.weight_age = UINT_MAX;
++	KUNIT_EXPECT_EQ(test, damon_hot_score(&ctx, &region, &scheme), 74);
++
++	scheme.quota.weight_nr_accesses = 0;
++	scheme.quota.weight_age = 0;
++	KUNIT_EXPECT_EQ(test, damon_hot_score(&ctx, &region, &scheme), 0);
++}
++
++static struct kunit_case damon_ops_common_test_cases[] = {
++	KUNIT_CASE(damon_test_hot_score_large_weight),
++	{}
++};
++
++static struct kunit_suite damon_ops_common_test_suite = {
++	.name = "damon-ops-common",
++	.test_cases = damon_ops_common_test_cases,
++};
++
++kunit_test_suite(damon_ops_common_test_suite);
++
++#endif /* CONFIG_DAMON_KUNIT_TEST */
 -- 
 2.43.0
 
