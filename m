@@ -1,73 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.161
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793136507;
-	b=oL4RXI0OzoTz2Tqn65bd9G+rUsroKIm9g5kN9zLKuml78CWe+plfSI/rI+Vsf0dyxUPh
-	 bOHQsSgE/qKhgUKZ/JZzRMpSZMxtsqdDj5O0NUM/YKlBp7j904hUPeWJLOBbIIgeRqvTa
-	 eDsicVLP1dMRUmkCi/DLaIosYHqYBlOop5xgN8Wdex1XpS6SyCSa542N/nTLhJ8nbY7Vq
-	 WdDzPx1MkBdG8UDBFM7Gxjxbgp60ugnIPp0W5qpvlkCHKBlp3T5CEBXUGmDG1JFz4WBWo
-	 9i9fBmEMrwckPSAAqC7ydrJEFLErgfTUzDwFVbQVs1F42iXXwXyjD/WsSc1FcAe6AiA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793136507;
-	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-MBO-RS-META:X-MBO-RS-ID;
-	bh=6ZcefObpE2rrm+ga5uEHO3LEMifW2uFgmof4Smx6N7c=;
-	b=3B1vCr8JnDs8Fsc8TeLwmnoYp3DMga8ZMYvjBUnqWCy1piYSPqSkctX3PRTkbtyrP9R3
-	 R19zMgUwJXGpxnfozJmM0svbyarGQmJrGyoPpfjjccHfFJexgaQAoTLWxiUa4X00PBrus
-	 5j7aPai/RahlmO7Cp1L+DB8tWP87/SyNvhR4t7fT2QqwMIk9dKy1AvG/1vM2qgGC/ipt+
-	 JY+GoKXHdyApxtSd1SN2y36fKV4xk5+kEmBdl2nGYHSCCoGBlDMU95VWd/J4mNS3E4Wk3
-	 dbz6cIDPrbjftwxSCD/j0+AbaPvtoij3Ywln4t40QGsajx9zFBfZnwVbS6fe74/99fw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=mailbox.org;
-	spf=pass smtp.mailfrom=mailbox.org;
-	dkim=pass header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=PEjfA7Jh;
-	arc=none smtp.remote-ip=80.241.56.161
-Received: from mout-p-103.mailbox.org (mout-p-103.mailbox.org [80.241.56.161])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.182
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793145439;
+	b=QNIrXtt+90KR2zKKpUgguiLyC62NsnVoPrPDMNxiVJJu3uEaH/ECYkaW/HPEIloN4rPv
+	 BFYFeoODrdjoUPEFCWThOUTiFF5D80F+70yLFp/c1Yf7tUDQlxY4HutOJ3dzGu5/b795+
+	 qGi4sj5DeVC2HoekGR7Arz5dOSBPNmpLi9VXj9ia5PpbyiC+/qFNqs1rw8NVsJpArFY4G
+	 nkS0ZuIo8SQLyf+bUV1Ap+RPbHcSc/IYwOdiwZp5Zgs0n+ZMMOCy/xqqy4wCHJuWhF8+4
+	 Z5u8zxr5m2MYfen8lXKO03h6WUnydAUzbj6u5SkrQiRgbRVrhWwuOG62/NLzi6wU5Jw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793145439;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=tyLuWatZQwuD0wqN6huARvqhfVRglzi7qhQ3+et65cs=;
+	b=zW34WWe4Ukr4ZikzYzNqyrIGMicctnnKFPd/PtTG5p1okXz+PEcwnSmQcuHAxkQexqG/
+	 SFOQmacHtBlakSVeMJpXXZT1a9DODqR3KDzMZOtxJiTErIuL7c12/dXoFMfcAAsjsY8yf
+	 FFwE/JoU4wHFi8WPycBBzm0FN1Td/hZik1LxPrT48kZHe8G5On7l/pHd1r7nImsXeZCt5
+	 H9j+NB80cXi5FWO4r2EMz985IVK+99fnuB9BxP0goGFc8SgUNg7K2XusJzEB31M4mC+h1
+	 y1COjy1+bq2cB4F5WT3EfI9PNIXAmQFbfdZe2/LrdT9xxLMozgR4oIjji22WVbH70tQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QGPvmwed;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.182
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A19606A31A
-	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 21:28:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 10A19606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA81606A31A
+	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 23:57:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6BA81606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=mailbox.org header.i=@mailbox.org header.a=rsa-sha256 header.s=mail20150812 header.b=PEjfA7Jh
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-103.mailbox.org (Postfix) with ESMTPS id 4jDkBG3Fx2zKmLf;
-	Tue, 27 Oct 2026 22:28:22 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
-	t=1793136502;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6ZcefObpE2rrm+ga5uEHO3LEMifW2uFgmof4Smx6N7c=;
-	b=PEjfA7JhLtXHkEkXY0y+Sz/oezTaehWwA+IPyY2Jb4P/waxTQmmqjoUBQrOTlvW/R2iSHO
-	BGdQwdww6vuLSa4gK3/5/uNgxpWHPADhwdxm8Kusc7EfTxiDPc/gyi8xbZO4prQyjNWH0K
-	lod/NqX8OsElQ/wn3OdnfSKKyBG4UQcWKCCVELp1KdiHc3ZoltCUiCZBzfK6pLaj5fqdi1
-	Bgj4BgbLmw3NGUNvqW7M7+snNsR2eWjjjV1EpxtRWYvnFrtf8X302MsUExMZaQJSiAvEPf
-	zBX5EXf/IuORh4jkdwAc2/YUL+m2SlDkmH8AHT6TLmNoC9ODVEGKi6guxwZhrw==
-From: Manuel Ebner <manuelebnerli@mailbox.org>
-To: manuelebnerli@mailbox.org
-Cc: corbet@lwn.net,
-	damon@lists.linux.dev,
-	jm5905938@gmail.com,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	rdunlap@infradead.org,
-	sj@kernel.org,
-	skhan@linuxfoundation.org
-Subject: [PATCH v2 2/2] Docs/admin-guide/mm/damon/reclaim: rewrite complex parts
-Date: Tue, 27 Oct 2026 22:23:46 +0100
-Message-ID: <20261027212345.2586628-2-manuelebnerli@mailbox.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261027185938.2526259-2-manuelebnerli@mailbox.org>
-References: <20261027185938.2526259-2-manuelebnerli@mailbox.org>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QGPvmwed
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8b0f1dfef72so406667b3.2
+        for <damon@lists.linux.dev>; Tue, 27 Oct 2026 16:57:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793145438; cv=none;
+        d=google.com; s=arc-20260327;
+        b=FO9fFh5RIDp4EB0CFrA7rZ4CBLqhlLUVmm/3WSqbqAkO5wy/iUzqKFQK+xbKcBNo+l
+         /8gaxPBraxi0plYY6Skw8aHHa2NJYOjdtCO1TInds+Do0o/4X759G4Zw3kYSfonuVUWN
+         Ld5MlrjA5GzrMTmLsw1o92WDBPEegZ4JwMEm93Z4HGfZDLTgthMe3vIz1mrlIx91fDo5
+         rH/eZ/Jz36IB5kh3xnV7XNKId3edZ+jCRr/mU7Y/EskZUzgFYyX+Xv4Tm6L0RbMpUcCR
+         uibBi8p9p7YsxicsJknC/L5qKH4zi96hUM/zRaK77iD1pczWlXqulyT7jm6e5gFdZ54M
+         IQXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tyLuWatZQwuD0wqN6huARvqhfVRglzi7qhQ3+et65cs=;
+        fh=nzGyYFRFPwIIpIV+OE22FXViGccE7ivnWOydWo3K4w0=;
+        b=CILtwbU/qvP/Wq4cHNr3YF32iJSgnINmd36OHUm/noHn4fcI0Pm7fWR3qkNa7RvL8Y
+         J6yKXbe1Y6XQ2fnIQ0LcNd2GziKbVLaCmhaZl0yhJZ0KfNd5zq9fnUxP2dBoj91Rhjcn
+         nbZGBxya02KgoxVrb0K1gqx8qkVYAzSBRbq5BchqhLZzdljquzXYZoe/+CwO4RlF79GU
+         uQZDHDdNVziIN3i7qxWyH+MPGBAHw6aBmtWQrQVJDZ7Hlf3zdvT/y+2LN7ejCLx5MJHE
+         fEpegxO0J3/GjUp0SCSQO6TpPNuHtRoUep+Uo1Sfwk7gjanqBzeMX794MyXu45IO8CfZ
+         g5Mw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793145438; x=1793750238; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=tyLuWatZQwuD0wqN6huARvqhfVRglzi7qhQ3+et65cs=;
+        b=QGPvmwedPm6USqdpVnzXzeG/sDXBp1y1eyWJMZvnQ6b+YY8BfEVgsosn27aMJCOVoF
+         uH4HDp8ozt9ItwAMdiAYjhfhwsL07CXO7nZyMwpYh+W7RYL+4VFsXUAUpytkcDSFpDNv
+         a90IOnfbyBqTr2Mrzmt5HRgD41HGz9U0IP6353TufKWAtZFiA3PVSRCHtIGV5QFKCs6x
+         bi5/IstkD2O7NEUDx7L1TXacy7SM58Cn84zNMvd/i9xve7l0mI2gbvbHeZThR24bLLPV
+         3F8xIbCbV91c+4AEkeFBLyQkzH9/ZDCKWPqA02pSWYo0s4rNke2+nFsKNciKpYVOdRxp
+         l7bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793145438; x=1793750238;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tyLuWatZQwuD0wqN6huARvqhfVRglzi7qhQ3+et65cs=;
+        b=MgJoxmikbMfjGWbuH2J3NGrqTmCIXkhLSQoQKqkV1YBZYjPSsP8lNUG2KPl+V4/uNW
+         ADmdlnr/2YZE4bzcLczEB7S6vJ8WIbV8XC2XxTuPt31cY7eSm+YQKDFEyYmZbNjqqRuR
+         RYUu4ESHBkURL/klQpR9+v6uTCDrmvzNXvX0w0VAyY0RjhotmqDxsvpu8IY1cp7+cQ5S
+         bWQlu/8p0fgQsyVA7yAqo2Dio7jaELollx87jIGIqA3Jf+env4BVm31infTdCLNaY4q9
+         /7btH/ztG3cepeRu/Va0WrW2YTYBe86gBTffmEGqbvYkE3NB2g7nDGWnvwVQgZFwjfhW
+         Cc4g==
+X-Gm-Message-State: AFq9FYJgqnUZ+JhwVru1HwLqxz8bwIvzJlbl4w30BkrPyx/KV6vEn80u
+	QbODw4bySagRu0EIkOnqXkqr2LERNI5R/oT4cZGIQTyECILkyrHs/k54Rs4QPE6wbLP7yulaq/R
+	Ouf24lgeHZE9yBBGDpPUk/UTywCXt7eQ=
+X-Gm-Gg: AYBFou25DqBlNyvMqAUn7xi7sE88TRa9rA2vVsXuEedn7gcEN0J/uARYQIGG3PGXOuS
+	TSV6QuLS/1wA5iJqAei1UT9ynpYZCYW1FBDE4S6iiT/AXp03eBYMAYs4islbHYzTdWjxkP4MWVt
+	jYy610O9aA5BLX3d9akiOBbIPEoenP/btcgIAsyHjodQcy7yy+GWMUxuXmUgRVAQ1Hrquj7Qk+o
+	N+wI+lwtJVgJ8jSSN2tckeiesJzWSDPlrj5oSiMosNikzt1SyW06VaH1iL0Kv7k+zXo2c30IduM
+	DhHYgItghFevhjIEL+YBpVbf26qcEEZ3JgMlqZ6IDtXfEuAqnh6oXDur/iRYnxK76B2+rdrCVVs
+	uVGXQ3RmUakSBGfhyF4TOaa6usVwCAULOAlQknmc=
+X-Received: by 2002:a05:690c:a1c2:b0:8ab:3696:d86e with SMTP id
+ 00721157ae682-8b1b5d32b5fmr5371157b3.4.1793145438420; Tue, 27 Oct 2026
+ 16:57:18 -0700 (PDT)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -77,68 +103,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-MBO-RS-META: zkn5gizzhos5yth6gkn8gqewj5aihmqs
-X-MBO-RS-ID: fa7e08e0a3bd8cf13af
+References: <20261027035431.1007584-1-charsyam@gmail.com> <20261027135354.149948-1-sj@kernel.org>
+In-Reply-To: <20261027135354.149948-1-sj@kernel.org>
+From: CharSyam <charsyam@gmail.com>
+Date: Wed, 28 Oct 2026 08:57:06 +0900
+X-Gm-Features: AclHuK95AvTLehgLpYDxlvAp4vsS4yVkPrgwzegsV_wexP6gryXmq4iIKOugNPQ
+Message-ID: <CAMrLSE6ySuzsJJX-KXoeG49pS4ZVbNWZve1dwj1v1avAhHeEdQ@mail.gmail.com>
+Subject: Re: [PATCH] mm/damon/vaddr: preserve migration weights above UINT_MAX
+To: SJ Park <sj@kernel.org>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org, akpm@linux-foundation.org, 
+	bijantabatab@micron.com, ravis.opensrc@micron.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Rewrite complex sentences.
+Hi, SJ.
 
-Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
-Suggested-by: Aveline Noir <jm5905938@gmail.com>
----
-Two more minor changes
-@ 31
-/s/attempts to pages out those/attempts to page out those/
-@ 126
-+ 'is' to fix grammar
+Thanks for your reply.
 
- .../admin-guide/mm/damon/reclaim.rst          | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+1. I found this by code inspection, not from a real-world bug report.
+I consider it a correctness issue for valid inputs.
+2. I would prefer a u64 total over rejecting those inputs, since the
+interface does not document a limit on the sum of weights.
+3. Given the lack of a reported real-world impact, I do not think Cc:
+stable is needed.
 
-diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-index 0bab2299ea..033686f410 100644
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -30,12 +30,13 @@ guests could mitigate this problem.
- How It Works?
- =============
- 
--DAMON_RECLAIM finds memory regions that weren't accessed for specific time
--duration and page out.  To avoid it consuming too much CPU for the paging out
--operation, a speed limit can be configured.  Under the speed limit, it pages
--out memory regions that weren't accessed longer time first.  System
--administrators can also configure under what situation this scheme should
--automatically be activated and deactivated with three memory pressure watermarks.
-+DAMON_RECLAIM identifies memory regions that have not been accessed for a
-+specified period and attempts to page out those.  To avoid it consuming
-+too much CPU for the paging out operation, a speed limit can be configured.
-+Within the configured speed limit, it prioritizes regions that have been
-+idle longer for reclamation.  System administrators can also configure under
-+what situation this scheme should automatically be activated and deactivated
-+with three memory pressure watermarks.
- 
- Interface: Module Parameters
- ============================
-@@ -125,8 +126,8 @@ quota_reset_interval_ms
- 
- The time/size quota charge reset interval in milliseconds.
- 
--The charge reset interval for the quota of time (quota_ms) and size
--(quota_sz).  That is, DAMON_RECLAIM does not try reclamation for more than
-+The charge reset interval for the quota of time is quota_ms and for the quota of
-+size is quota_sz.  That is, DAMON_RECLAIM does not try reclamation for more than
- quota_ms milliseconds or quota_sz bytes within quota_reset_interval_ms
- milliseconds.
- 
-@@ -137,7 +138,7 @@ quota_mem_pressure_us
- 
- Desired level of memory pressure-stall time in microseconds.
- 
--While keeping the caps that are set by other quotas, DAMON_RECLAIM automatically
-+While respecting the limits imposed by other quotas, DAMON_RECLAIM automatically
- increases and decreases the effective level of the quota aiming this level of
- memory pressure is incurred.  System-wide ``some`` memory PSI in microseconds
- per quota reset interval (``quota_reset_interval_ms``) is collected and
--- 
-2.55.0
+Thanks.
+Daemyung
 
+2026=EB=85=84 10=EC=9B=94 27=EC=9D=BC (=ED=99=94) =EC=98=A4=ED=9B=84 10:54,=
+ SJ Park <sj@kernel.org>=EB=8B=98=EC=9D=B4 =EC=9E=91=EC=84=B1:
+>
+> Hello Daemyung,
+>
+> On Tue, 27 Oct 2026 12:54:31 +0900 Daemyung Kang <charsyam@gmail.com> wro=
+te:
+>
+> > DAMOS migration accepts an unsigned int weight for each destination,
+> > but sums the weights into an unsigned int.  If the total wraps to zero,
+> > no folio is migrated.  Other wrapped totals select the wrong node.
+>
+> Thank you for finding the issue.
+>
+> But, is it realistic to have the weight_total overflow?  Have you found t=
+he
+> issue on real usage?  Or, theoretical?
+>
+> >
+> > Sum weights into a u64 once per migration walk.  Keep the existing
+> > 32-bit divisor path for totals up to UINT_MAX and use a 64-bit remainde=
+r
+> > for larger totals.  Add KUnit coverage for the actual summing path and
+> > for destination selection at the overflow boundary.
+>
+> Do we really need to support that user inputs?  Unless we have a very rea=
+l use
+> case that require such huge weight values, I'd prefer not.
+>
+> How about just clearly notify users those are invalid parameters?  We cou=
+ld do
+> so by adding weight_total overflow check to the central parameters valida=
+tion
+> path: damos_commit_dests().
+>
+> >
+> > Fixes: 19c1dc15c859 ("mm/damon/vaddr: use damos->migrate_dests in migra=
+te_{hot,cold}")
+>
+> Should we Cc: stable?
+>
+>
+> Thanks,
+> SJ
+>
+> [...]
