@@ -1,81 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.171
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793109581;
-	b=Vhrwo4uPuWw6CMtWtmJhWusrdVSpa2GaqKacPsAaiHzwy2k1cifgq23wSYwTmp28dWq7
-	 l/4Ff2imgj2AOIluR8G4nWCf3iOTDKebNxdUb78vyM5UsTYEQqnGdbZ9EgUdzgfkNGiIW
-	 7gbengWL/Dzkg/tfX3zQ31fknZjRJRLoTU8N1pjfD/n2FWclVkizfPI5dWkqJPJqEyKlM
-	 3Vsqq7Vet71yWeSdkvI0KMLEpvflDCMzSer/7Dc4wZhXnnyp3ZtAwmLRjJrMa/z5tIWca
-	 mNW+teGAyXtvTNR1zy/+1woKlNnfOHf07jv/IM1wpGqNzn1auSig1MTPvP0qA6A7j9w==
+	t=1793109584;
+	b=Mud4Jx9jBZX7QOm/JhNA4b67eTpycxrcMiTdFj5pdEaN07FcktS8jb3PBws7FJaQNlW1
+	 vWrX1mk7kIx1hom3UZ4t2l8rIQZ74Vb/gUso9GgMFt1WuSnhik2SHeW+31b+pbd/Zr80O
+	 jCvG3wxaREp/0q4vRkbU1yBLNSXhpveZvuGyMMBOa3G+yicvr5Kr5q5SO/Fhuy+qEFW/L
+	 mEc0MpW8W0ISG676AeinD/g8s6hqQ1qZtia5crNGLClbtTIE1nCJ7/RlCENXCU+7nLbe2
+	 K6FT9bnl0JqmuQY9fWbu4iYmJpMR7HsWdXKvxPHZsMCxpFNIeAUsG+Z2TLXjiGRy/mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793109581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793109584;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=ql43MqEJknME13oyH0mE3lrKnV2gOIDFu0p5gqyqxnE=;
-	b=vcpXHzvXfC8DY6D2NLFXlhlUH19J3+iR3hl03aK6WNqCWNPgZtkZyOD1Wq05zM6XlOUq
-	 nViw+kU+UD8yLAbUqEFlFzuDKDCixEBoBPaJ2oB9jS3vMF274Bt3Uw/pjfGjlUlhdAC2x
-	 snWLdHkwgwXKDkKYeY1m5DlquT49rBvsz8VJLb9ajbw95co+dmli21+3ZRhHLLONW05XJ
-	 R+bKq7iRjZ/F1yxkgXRmli0eJmAhINfY1ZPJs9kFxT2FdXfVy4uw4tnMDzyPVRIoJLYQv
-	 qGHZiWLgbgcng3yBxpJPSwcKbCe8pI26g1SLE6meRw5BrgcI1XNI0Oe4OcAzrqJtb9w==
+	bh=+PFYfGoi9f2AhMkO9c1ssgX+qWfwUcRN+0tOm5gagYw=;
+	b=TNDUmGirFEui8CtHziRFPw8i9STlV8lqUhSke1gZ1/sW2dUYmM7v63pQSTnm1VBut7ia
+	 eK48BiF+GTAGHVIUHzo20OU0PhmhNSGsoDcuFH/pzscla6KWhGzRSLFXeMjMujGXr+Bsx
+	 tFx/lk0feDTF5cjy+4XWeTo1onYXkBPvTBm4dl0a1Tq9uQjWxnpSSlUgN0+ypgAKFbFGr
+	 aMF6DNeI9KdSKER8r8bSr7BmVJ6wKevtfBj7j59xmq5dOpiZq5So982dEpqXn/yNRC4CI
+	 HIr5C+ZESZRQEJ6K+yCgoEW3kU/U1X2SwaHKNcktTVVLWwebcQ7IiyCEdsNSCoMVqWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=mXEO2pFD;
-	arc=none smtp.remote-ip=209.85.216.44
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CekaV4Ef;
+	arc=none smtp.remote-ip=209.85.215.171
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE6A606A31B
-	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 13:59:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7EE6A606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EB8606A31B
+	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 13:59:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 95EB8606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=mXEO2pFD
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3ae1a9e187aso308240a91.3
-        for <damon@lists.linux.dev>; Tue, 27 Oct 2026 06:59:41 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CekaV4Ef
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-cd6b78a0a80so196313a12.0
+        for <damon@lists.linux.dev>; Tue, 27 Oct 2026 06:59:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793109581; x=1793714381; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1793109583; x=1793714383; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=ql43MqEJknME13oyH0mE3lrKnV2gOIDFu0p5gqyqxnE=;
-        b=mXEO2pFD1BV7nOW6zHBjJTXZN86ZsjvZp+SjclXIGOeeCp4uFn2NgLkHmCw9UdgzU5
-         g4yzmk+d9z8Ah1c+gklCmtyqd8XyrxNAiYfjEeRi10gKGd4kDgC3UFAKcSCEe8EpqKTi
-         /Kj8Pdmtz7cchYO6EqrP3jFieux+p0O6e1Pg6ithlhyfL2/cPEsO6LbUovDxJb2C7QPE
-         dfMczJ6DgXL4NSr4sxNJx/NOAzK5bVEDkHpHZi4u8uKnaGZABS3NTaCGMHqpXDwGuzsV
-         eK842MjegKWsLaiM8CVOTOvQ7bzp5otOlEG/y7ijtSlRce6lLe+GNHFMb8+0bdNKjEK2
-         yJOg==
+        bh=+PFYfGoi9f2AhMkO9c1ssgX+qWfwUcRN+0tOm5gagYw=;
+        b=CekaV4Ef1MEZmXabWcvsYjnmeF+2p/UYou+NYjSF/v7i0/EPPCr1f3cJRPy5nSolGJ
+         I00Krs1FgGGoDZEucaEpPsenNkL5GTZ/CQRKpIq2+4V1XZOt3J8eEJ+jQQm8NEEHoj0i
+         NgX8yDEjhDG24+MfKnJ9spL3mHPvdPLmz0tUNXqOA3LFtscHRdCQHmO1bmsR53ccP2H0
+         phl3eKX7kOAPEwlzECVi7kK3n0xLs6yG5bjSw0+j8eyRaZB00hW7wCFsQOKthsWCAbF9
+         DnmQiQ9xwofWP5zcZLBaTOi9B3exlyZ+45peAer2lDXnTBwpRqoZXP2N2ks9Cg08ztVg
+         w4lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793109581; x=1793714381;
+        d=1e100.net; s=20260707; t=1793109583; x=1793714383;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ql43MqEJknME13oyH0mE3lrKnV2gOIDFu0p5gqyqxnE=;
-        b=cM8zKB1x0KEo0BkCAESuWPTHNxyYPuEnufQJgZipgsCExzobb37T75Fiwuk/IKyWCx
-         1Y/xk0sJJL18jZhhhWoVWSJXQLtIPWUeSx/WNsFsZo8YBbs62zGz88YdAZJUl31hnt2O
-         YQUrorjU/lh4egniZBePVf1/LBKFYm0BZIvRj0amc/K5rlBcSTKmrwGEIjkKK4/YbR5G
-         mngxO2zKCNMEauAAVyKmz3MeC2AF/s6/sZlIGE9fffemjEN7tcfFl01mQemp5bvKh6Cm
-         Tr58dQKULJEv91PSCPe5g8krB9/LwviLlDA6I+y3VZpmZNUN+V32mHn3yscDR0/XYKI8
-         FW5w==
-X-Gm-Message-State: AFq9FYLGG082p3PGm0LO0J8ImBYiyjj/jG2qw5bkLOfZ6FNO5ZLVEbV9
-	P2Hks4igjw15vfOEq75JTrNc9kScBGwjoQXOJzP+clAddf0MP/8NCUeR
-X-Gm-Gg: AYBFou1iALIDr5kCMMPl58KySQgBDKMpJ+zyF7ImGMZ/cwZwJm/Fqc3xlu/eEsn4ir0
-	GvN/ipMmnHOlSDLC2HSdOWulMhdBDxSu7l7ulCxUzjgxrnXUSdckMsPVcO0rDqYzI4OGM2Ms51e
-	SWDhGqNnr1D/i585MPvwl5NNVeRnScOv02QmOTkd4K1ZopuVkGY+bFVb1zoe41lQGha6egT41AO
-	JvyADYbAINWTGdPHExaMnxkIA/tok1+o3SYwqnm0amPEs2EOZG73cTxn8k79MOM0JxfJVn4k8kE
-	M17QdW/jFKh4/7PY9KtWBepAWq08ia+gp5VKghl3PrHAf/Tg0J1fgpD2pdUAwxqtgouTxj/wWS3
-	9fCxxqcnr2hjk0rD970QgBfywJsKxy0xjxJ9oDLEHgOeJUUCIpUiZLHqxwLXw41/FqjTHNgRBtZ
-	o4iOY5bFxcc4YAnYweT1GwkMWluNHrOR9L2LPPwsRwJK9H1aTwsHjW4GWGVrAzClFEPqMCNLqku
-	ndCwd4i90/S9BTJL0yBhz8KUpUrvbeAzQfuNKBY70J9qXnH
-X-Received: by 2002:a17:90b:1c88:b0:3ac:9e5e:d1a5 with SMTP id 98e67ed59e1d1-3adeb173881mr13849327a91.6.1793109580732;
-        Tue, 27 Oct 2026 06:59:40 -0700 (PDT)
+        bh=+PFYfGoi9f2AhMkO9c1ssgX+qWfwUcRN+0tOm5gagYw=;
+        b=uJ7t6e5zfZ9VvqUSYAwdSggpdFUD8tyl28+TgYUDFMnky34w+wuk22pjpDck1tC/Tb
+         ruzJ2D7XoGv8pahZN+caQHn6agtZELQOSSpON2h0YKyURtXiWiYvbPL/gSuNUt1f6mSa
+         S1mVATqRkdqRO3lIvv1ASxb/psCz0i6K6bJdaeiyoHPX+p3qiJcJFBb1PB64Z09kqyC4
+         Fk2x43yqCGhnAgQH0iMujvXyGfxYjJQyswprzZUs10W+IPNz8LXv0ArKU2IVbn8a1TgX
+         hj3Ns57gmRIuG49DJzfN1GLt5qPGXRoRaCwKevIExjzflN1QLcGUhjKaxJGAi71FQIAe
+         uHgA==
+X-Gm-Message-State: AFq9FYJXevokP2MtC0YHx0TxGcMPUAJ6MfFo09MPfUWi4UUXbh7SiPys
+	4kw/ShCGnvkMN+W1kRfKqP1ZBGf79cfIXskNvszIPsnOmi9O+eNlLJCr
+X-Gm-Gg: AYBFou0fFfgBpWLz0LAHWc/yiN4D19VmnL8AH69Bm6Uu9BhbBpuw7IzcA4VNUezMu2j
+	irSvW87VDwJmywC09Li55eZnDq82lbxrkcr5ctUo1NTAK1oer85B1qzQwDnyBshgVw7KZyhXutN
+	mAQpKWVMid1d54vMlB65GT9yOd5Vq3Gd+ctZyzVWMfTsq1ABSvx1L0YPpVD7Vv7y5dLHHAd/s7L
+	kX5HkFSxRXFfAqtfGHwFgt+oEPqeONNLnkqtkwC2tQPIIEPfFnAzdTbd7Haqv+6KMPcZbKKQUNm
+	uiLfe9fOhD9M2zvXjlAEIrHjjVi6JY23xGsCM2crSxV7qCUsJL+Ixm01D9NRvVnehxPRyjA7D/z
+	WSFJo38ofW/XbVFtqZF/rSGK9MtgScS/SeKUET3+mfY+Z4kQ6Y7wUVBmZmy0I/4Y5b1pSZgsQWL
+	h8rBQAJOQTEFqCC5vNJoXUUYyH77WNOIoWvslyI6k1lHJ9RSE4YX+gJVjW0Xt75LckUJ0r/MHDE
+	Y9b1yILQjtK5Enw7Vjn9xv18VH9mz2ACmiGILgohIt9ok/EyLA74E44nfbOMwYjWxBTQw==
+X-Received: by 2002:a17:90b:58cd:b0:3ac:9c37:9422 with SMTP id 98e67ed59e1d1-3adea2003c9mr13980641a91.2.1793109582809;
+        Tue, 27 Oct 2026 06:59:42 -0700 (PDT)
 Received: from ser8.. ([221.156.231.192])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae404432a5sm4243466a91.9.2026.10.27.06.59.38
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae404432a5sm4243466a91.9.2026.10.27.06.59.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2026 06:59:40 -0700 (PDT)
+        Tue, 27 Oct 2026 06:59:42 -0700 (PDT)
 From: DaeMyung Kang <charsyam@gmail.com>
 To: SJ Park <sj@kernel.org>
 Cc: damon@lists.linux.dev,
@@ -83,9 +83,9 @@ Cc: damon@lists.linux.dev,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
 	DaeMyung Kang <charsyam@gmail.com>
-Subject: [RFC PATCH 2/3] mm/damon/core: avoid overflows in monitoring results calculations
-Date: Tue, 27 Oct 2026 22:59:31 +0900
-Message-ID: <20261027135932.2301646-3-charsyam@gmail.com>
+Subject: [RFC PATCH 3/3] mm/damon/core: avoid overflows in quota goal metrics and scores
+Date: Tue, 27 Oct 2026 22:59:32 +0900
+Message-ID: <20261027135932.2301646-4-charsyam@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261027135932.2301646-1-charsyam@gmail.com>
 References: <20261027135932.2301646-1-charsyam@gmail.com>
@@ -100,239 +100,164 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When monitoring intervals change, DAMON converts region ages and sample
-counts for the new intervals.  The conversions overflow before division:
+The node memory, node memcg memory, LRU [in]active memory, and hugepage
+memory quota goal metrics, as well as damos_quota_score(), use
+mult_frac() to scale a value by 10000.  mult_frac() multiplies the
+remainder by 10000 in unsigned long, which overflows on 32-bit kernels
+even when the result fits:
 
-- damon_age_for_new_attrs() multiplies the age by the old aggregation
-  interval in unsigned long.  On 32-bit kernels, the default 100 ms
-  interval makes this overflow after about 72 minutes.
-- The sample ratio conversions multiply unsigned int values.  They can
-  overflow on every architecture when an aggregation has more than
-  429,496 samples, such as a 1 ms sample interval and a 430 second
-  aggregation interval.
+- For the page based metrics, this happens once the numerator exceeds
+  about 429,496 pages, or 1.6 GiB with 4 KiB pages.  For example, 2 GiB
+  used out of 3 GiB returns 1205 bp instead of 6666 bp.  The LRU
+  [in]active and hugepage metrics do not depend on NUMA.
 
-The moving sums also use mult_frac() for the fraction of an aggregation
-window that remains and for the previous window's contribution.  On
-32-bit kernels, both can overflow with long aggregation intervals.  For
-example, 500,000 remaining samples of a 600,000-sample window are
-8,333 bp, but the first calculation returns 1,175 bp.
+- For quota goal scores, any current value above about 429,496 can
+  overflow.  For example, a DAMOS_QUOTA_SOME_MEM_PSI_US goal with a
+  target of one second and a current value of half a second returns 705
+  instead of 5000.  On any architecture, mult_frac() also silently wraps
+  scores that do not fit in unsigned long.
 
-Add damon_mult_frac(), which preserves mult_frac() results when its
-intermediates fit, calculates larger remainder products in full width,
-and saturates results that exceed unsigned long.  Use it for the
-conversions and the moving sums.  Saturate the unsigned int conversion
-results at UINT_MAX.
+Use damon_mult_frac() for those calculations.
 
-Add KUnit coverage for the helper, the conversions, and the moving sums.
+The node eligible memory metric counts bytes in phys_addr_t, so on
+32-bit kernels it overflows once the eligible memory exceeds about
+420 KiB, and it also truncates the byte counts to unsigned long with
+PAE.  Use mul_u64_u64_div_u64() on the phys_addr_t values for it.  The
+node eligible memory never exceeds the total, so the result fits.
 
-The conversion issues were discovered [1] by Sashiko.
+Add a KUnit case for the quota goal scores.  The helper's KUnit cases
+also cover the large page ratio used by the metrics.
 
-[1] https://lore.kernel.org/20260708140944.F26821F000E9@smtp.kernel.org
+The issues were discovered [1,2,3] by Sashiko.
 
-Fixes: 2f5bef5a590b ("mm/damon/core: update monitoring results for new monitoring attributes")
-Fixes: 9f3786d8602f ("mm/damon/core: introduce damon_nr_accesses_mvsum()")
-Fixes: 2ec26dd341d1 ("mm/damon/core: introduce damon_probe_hits_mvsum()")
+[1] https://lore.kernel.org/20260901133650.EF4F71F000E9@smtp.kernel.org
+[2] https://lore.kernel.org/20260626002448.975E21F000E9@smtp.kernel.org
+[3] https://lore.kernel.org/20260831184956.1DA321F000E9@smtp.kernel.org
+
+Fixes: 0e1c773b501f ("mm/damon/core: introduce damos quota goal metrics for memory node utilization")
+Fixes: b74a120bcf50 ("mm/damon/core: implement DAMOS_QUOTA_NODE_MEMCG_USED_BP")
+Fixes: 4835e2871321 ("mm/damon/core: introduce [in]active memory ratio damos quota goal metric")
+Fixes: f465dc71aba0 ("mm/damon: introduce DAMOS_QUOTA_HUGEPAGE auto tuning")
+Fixes: 9138e27a3bc3 ("mm/damon: add node_eligible_mem_bp goal metric")
+Fixes: 06ba5b309ed8 ("mm/damon/core: let goal specified with only target and current values")
 Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
 ---
- mm/damon/core.c             | 41 +++++++++++++++++---
- mm/damon/tests/core-kunit.h | 74 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 109 insertions(+), 6 deletions(-)
+ mm/damon/core.c             | 18 +++++++++---------
+ mm/damon/tests/core-kunit.h | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+), 9 deletions(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 73b571b429cb..5cd4007cc370 100644
+index 5cd4007cc370..cc4e010e400d 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -281,6 +281,32 @@ static bool damon_has_probe_weights(struct damon_ctx *c)
- 	return false;
+@@ -3056,7 +3056,7 @@ static __kernel_ulong_t damos_get_node_mem_bp(
+ 		numerator = i.totalram - i.freeram;
+ 	else	/* DAMOS_QUOTA_NODE_MEM_FREE_BP */
+ 		numerator = i.freeram;
+-	return mult_frac(numerator, 10000, i.totalram);
++	return damon_mult_frac(numerator, 10000, i.totalram);
  }
  
-+/*
-+ * damon_mult_frac() - calculate @x * @n / @d without overflowing.
-+ *
-+ * Same as mult_frac(), but the intermediate product of the remainder does not
-+ * overflow, and a result that does not fit in unsigned long is saturated to
-+ * ULONG_MAX.  Returns the same value as mult_frac() when mult_frac() does not
-+ * overflow.  @d must not be zero.
-+ */
-+static unsigned long damon_mult_frac(unsigned long x, unsigned long n,
-+		unsigned long d)
-+{
-+	unsigned long q = x / d, r = x % d;
-+	unsigned long frac;
-+
-+	if (n && q > ULONG_MAX / n)
-+		return ULONG_MAX;
-+	if (!n || r <= ULONG_MAX / n)
-+		frac = r * n / d;
-+	else
-+		/* r < d, so the quotient is smaller than n */
-+		frac = mul_u64_u64_div_u64(r, n, d);
-+	if (frac > ULONG_MAX - q * n)
-+		return ULONG_MAX;
-+	return q * n + frac;
-+}
-+
- /*
-  * damon_mvsum() - Returns pseudo moving sum value for a time window.
-  * @current_nr:		The value of the current aggregation window.
-@@ -305,7 +331,7 @@ static bool damon_has_probe_weights(struct damon_ctx *c)
- static unsigned long damon_mvsum(unsigned long current_nr,
- 		unsigned long last_nr, unsigned long left_window_bp)
- {
--	return current_nr + mult_frac(last_nr, left_window_bp, 10000);
-+	return current_nr + damon_mult_frac(last_nr, left_window_bp, 10000);
+ static unsigned long damos_get_node_memcg_used_bp(
+@@ -3102,7 +3102,7 @@ static unsigned long damos_get_node_memcg_used_bp(
+ 		numerator = used_pages;
+ 	else	/* DAMOS_QUOTA_NODE_MEMCG_FREE_BP */
+ 		numerator = i.totalram - used_pages;
+-	return mult_frac(numerator, 10000, i.totalram);
++	return damon_mult_frac(numerator, 10000, i.totalram);
  }
  
- /**
-@@ -337,7 +363,7 @@ unsigned int damon_nr_accesses_mvsum(struct damon_region *r,
- 	else
- 		left_window = ctx->next_aggregation_sis -
- 			ctx->passed_sample_intervals;
--	left_window_bp = mult_frac(left_window, 10000, window_len);
-+	left_window_bp = damon_mult_frac(left_window, 10000, window_len);
+ #ifdef CONFIG_DAMON_PADDR
+@@ -3199,11 +3199,11 @@ static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
  
- 	if (left_window_bp == 10000)
- 		return r->last_nr_accesses;
-@@ -361,7 +387,7 @@ unsigned char damon_probe_hits_mvsum(int probe_idx, struct damon_region *r,
- 	else
- 		left_window = ctx->next_aggregation_sis -
- 			ctx->passed_sample_intervals;
--	left_window_bp = mult_frac(left_window, 10000, window_len);
-+	left_window_bp = damon_mult_frac(left_window, 10000, window_len);
+ 	node_eligible = damos_calc_eligible_bytes(c, s, nid, &total_eligible);
  
- 	if (left_window_bp == 10000)
- 		return r->last_probe_hits[probe_idx];
-@@ -990,21 +1016,24 @@ static bool damon_attrs_equals(const struct damon_attrs *attrs1,
- static unsigned int damon_age_for_new_attrs(unsigned int age,
- 		struct damon_attrs *old_attrs, struct damon_attrs *new_attrs)
- {
--	return age * old_attrs->aggr_interval / new_attrs->aggr_interval;
-+	return min(damon_mult_frac(age, old_attrs->aggr_interval,
-+				new_attrs->aggr_interval), UINT_MAX);
+-	if (!(unsigned long)total_eligible)
++	if (!total_eligible)
+ 		return 0;
+ 
+-	return mult_frac((unsigned long)node_eligible, 10000,
+-			(unsigned long)total_eligible);
++	/* node_eligible <= total_eligible, so this cannot overflow */
++	return mul_u64_u64_div_u64(node_eligible, 10000, total_eligible);
+ }
+ #else /* CONFIG_DAMON_PADDR */
+ static unsigned long damos_get_node_eligible_mem_bp(struct damon_ctx *c,
+@@ -3246,8 +3246,8 @@ static unsigned int damos_get_in_active_mem_bp(bool active_ratio)
+ 		global_node_page_state(NR_LRU_BASE + LRU_INACTIVE_FILE);
+ 	total = max(active + inactive, 1);
+ 	if (active_ratio)
+-		return mult_frac(active, 10000, total);
+-	return mult_frac(inactive, 10000, total);
++		return damon_mult_frac(active, 10000, total);
++	return damon_mult_frac(inactive, 10000, total);
  }
  
- /* convert sample ratio in bp (per 10,000) to count */
- static unsigned int damon_sample_bp_to_count(
- 		unsigned int bp, struct damon_attrs *attrs)
- {
--	return bp * damon_nr_samples_per_aggr(attrs) / 10000;
-+	return min(damon_mult_frac(bp, damon_nr_samples_per_aggr(attrs),
-+				10000), UINT_MAX);
+ static unsigned int damos_hugepage_mem_bp(void)
+@@ -3263,7 +3263,7 @@ static unsigned int damos_hugepage_mem_bp(void)
+ 	thp = global_node_page_state(NR_ANON_THPS) +
+ 				global_node_page_state(NR_SHMEM_THPS) +
+ 				global_node_page_state(NR_FILE_THPS);
+-	return mult_frac(thp, 10000, total_pages - free_pages);
++	return damon_mult_frac(thp, 10000, total_pages - free_pages);
  }
  
- /* convert sample count to ratio in bp (per 10,000) */
- static unsigned int damon_sample_count_to_bp(
- 		unsigned int count, struct damon_attrs *attrs)
- {
--	return mult_frac(count, 10000, damon_nr_samples_per_aggr(attrs));
-+	return min(damon_mult_frac(count, 10000,
-+				damon_nr_samples_per_aggr(attrs)), UINT_MAX);
- }
+ static void damos_set_quota_goal_current_value(struct damon_ctx *c,
+@@ -3329,7 +3329,7 @@ static unsigned long damos_quota_score(struct damon_ctx *c, struct damos *s)
+ 	damos_for_each_quota_goal(goal, quota) {
+ 		damos_set_quota_goal_current_value(c, s, goal);
+ 		highest_score = max(highest_score,
+-				mult_frac(goal->current_value, 10000,
++				damon_mult_frac(goal->current_value, 10000,
+ 					goal->target_value));
+ 	}
  
- static unsigned int damon_nr_samples_for_new_attrs(unsigned int nr,
 diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 43e2f950f8ff..e71e60d59400 100644
+index e71e60d59400..aaf65828a5e1 100644
 --- a/mm/damon/tests/core-kunit.h
 +++ b/mm/damon/tests/core-kunit.h
-@@ -698,6 +698,64 @@ static void damon_test_update_monitoring_result(struct kunit *test)
- 	damon_destroy_ctx(ctx);
+@@ -756,6 +756,36 @@ static void damon_test_sample_ratio_large_value(struct kunit *test)
+ 			UINT_MAX);
  }
  
-+static void damon_test_mult_frac(struct kunit *test)
++static void damos_test_quota_score_large_value(struct kunit *test)
 +{
-+	KUNIT_EXPECT_EQ(test, damon_mult_frac(7, 3, 2), 10ul);
-+	KUNIT_EXPECT_EQ(test, damon_mult_frac(ULONG_MAX, 0, 1), 0ul);
-+	/* the remainder product overflows on 32-bit */
-+	KUNIT_EXPECT_EQ(test, damon_mult_frac(524288, 10000, 786432), 6666ul);
-+	KUNIT_EXPECT_EQ(test, damon_mult_frac(500000, 10000, 1000000), 5000ul);
-+	/* the remainder product overflows even on 64-bit */
-+	KUNIT_EXPECT_EQ(test, damon_mult_frac(ULONG_MAX - 1, ULONG_MAX,
-+				ULONG_MAX), ULONG_MAX - 1);
-+	/* the quotient product overflows */
-+	KUNIT_EXPECT_EQ(test, damon_mult_frac(ULONG_MAX, 10000, 1), ULONG_MAX);
-+	/* the largest representable result, and one beyond it */
-+	KUNIT_EXPECT_EQ(test, damon_mult_frac(ULONG_MAX - ULONG_MAX / 10000,
-+				10000, 9999), ULONG_MAX);
-+	KUNIT_EXPECT_EQ(test, damon_mult_frac(ULONG_MAX - ULONG_MAX / 10000 + 1,
-+				10000, 9999), ULONG_MAX);
-+}
-+
-+static void damon_test_age_for_new_attrs_large_value(struct kunit *test)
-+{
-+	struct damon_attrs old_attrs = {.aggr_interval = 100000};
-+	struct damon_attrs new_attrs = {.aggr_interval = 50000};
-+	unsigned int age;
-+
-+	age = damon_age_for_new_attrs(50000, &old_attrs, &new_attrs);
-+	KUNIT_EXPECT_EQ(test, age, 100000u);
-+
-+	new_attrs.aggr_interval = 1;
-+	age = damon_age_for_new_attrs(UINT_MAX, &old_attrs, &new_attrs);
-+	KUNIT_EXPECT_EQ(test, age, UINT_MAX);
-+
-+	old_attrs.aggr_interval = ULONG_MAX;
-+	age = damon_age_for_new_attrs(UINT_MAX, &old_attrs, &new_attrs);
-+	KUNIT_EXPECT_EQ(test, age, UINT_MAX);
-+}
-+
-+static void damon_test_sample_ratio_large_value(struct kunit *test)
-+{
-+	struct damon_attrs attrs = {
-+		.sample_interval = 1000,
-+		.aggr_interval = 600000000,
++	struct damos s;
++	struct damos_quota_goal goal = {
++		.metric = DAMOS_QUOTA_USER_INPUT,
++		.current_value = 500000,
++		.target_value = 1000000,
 +	};
 +
-+	KUNIT_EXPECT_EQ(test, damon_sample_bp_to_count(10000, &attrs),
-+			600000u);
-+	KUNIT_EXPECT_EQ(test, damon_sample_count_to_bp(600000, &attrs),
-+			10000u);
-+	KUNIT_EXPECT_EQ(test, damon_sample_count_to_bp(500000, &attrs),
-+			8333u);
-+	KUNIT_EXPECT_EQ(test, damon_sample_bp_to_count(UINT_MAX, &attrs),
-+			UINT_MAX);
++	memset(&s, 0, sizeof(s));
++	INIT_LIST_HEAD(&s.quota.goals);
++	INIT_LIST_HEAD(&goal.list);
++	damos_add_quota_goal(&s.quota, &goal);
++	KUNIT_EXPECT_EQ(test, damos_quota_score(NULL, &s), 5000ul);
 +
-+	attrs.aggr_interval = attrs.sample_interval;
-+	KUNIT_EXPECT_EQ(test, damon_sample_count_to_bp(UINT_MAX, &attrs),
-+			UINT_MAX);
++	goal.current_value = 1500001;
++	KUNIT_EXPECT_EQ(test, damos_quota_score(NULL, &s), 15000ul);
++
++	goal.current_value = ULONG_MAX;
++	goal.target_value = 1;
++	KUNIT_EXPECT_EQ(test, damos_quota_score(NULL, &s), ULONG_MAX);
++
++	/* the largest representable score, and one beyond it */
++	goal.current_value = ULONG_MAX - ULONG_MAX / 10000;
++	goal.target_value = 9999;
++	KUNIT_EXPECT_EQ(test, damos_quota_score(NULL, &s), ULONG_MAX);
++	goal.current_value++;
++	KUNIT_EXPECT_EQ(test, damos_quota_score(NULL, &s), ULONG_MAX);
 +}
 +
  static void damon_test_set_attrs(struct kunit *test)
  {
  	struct damon_ctx *c = damon_new_ctx();
-@@ -735,6 +793,7 @@ static void damon_test_mvsum(struct kunit *test)
- 		3, 10, 5000, 8,		/* 3 + 10 * 0.5 */
- 		32, 100, 1000, 42,	/* 32 + 100 * 0.1 */
- 		42, 49, 0, 42,		/* 42 + 49 * 0 */
-+		0, 600000, 8333, 499980, /* 32-bit remainder product overflow */
- 	};
- 
- 	int i;
-@@ -794,6 +853,18 @@ static void damon_test_nr_accesses_mvsum(struct kunit *test)
- 				damon_nr_accesses_mvsum(r, c));
- 	}
- 
-+	c->attrs.sample_interval = 1000;
-+	c->attrs.aggr_interval = 600000000;
-+	c->passed_sample_intervals = 100000;
-+	c->next_aggregation_sis = 600000;
-+	r->nr_accesses = 100000;
-+	r->last_nr_accesses = 600000;
-+	KUNIT_EXPECT_EQ(test, damon_nr_accesses_mvsum(r, c), 599980u);
-+
-+	r->probe_hits[0] = 0;
-+	r->last_probe_hits[0] = 100;
-+	KUNIT_EXPECT_EQ(test, damon_probe_hits_mvsum(0, r, c), 83);
-+
- 	damon_free_region(r);
- 	damon_destroy_ctx(c);
- }
-@@ -2494,6 +2565,9 @@ static struct kunit_case damon_test_cases[] = {
- 	KUNIT_CASE(damon_test_set_regions),
- 	KUNIT_CASE(damon_test_nr_samples_per_aggr),
- 	KUNIT_CASE(damon_test_update_monitoring_result),
-+	KUNIT_CASE(damon_test_mult_frac),
-+	KUNIT_CASE(damon_test_age_for_new_attrs_large_value),
-+	KUNIT_CASE(damon_test_sample_ratio_large_value),
+@@ -2568,6 +2598,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_mult_frac),
+ 	KUNIT_CASE(damon_test_age_for_new_attrs_large_value),
+ 	KUNIT_CASE(damon_test_sample_ratio_large_value),
++	KUNIT_CASE(damos_test_quota_score_large_value),
  	KUNIT_CASE(damon_test_set_attrs),
  	KUNIT_CASE(damon_test_mvsum),
  	KUNIT_CASE(damon_test_nr_accesses_mvsum),
