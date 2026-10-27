@@ -1,94 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.135
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793069276;
-	b=47hyyQDx3OqdVx4QTJgovSrvMJ5+vbd7fW8dw6CBDtDzQJHAmwxSTQClC18k4EdkG9ri
-	 sH7Pz0c1gp/07bn0Q3DbBbgSElxS2ArQrRxVTTkc5g7FVAFJFJdyXh17q67i97iJ4Fm45
-	 SvNmIMS1+eWwJYRKZgkmHeheP8vEevg4RqnJZrr4h2Feuq4B10oVhWMS/VulhPVY4i0ND
-	 BoHvu/AT3IAuKMOd4MtmuWdmJKqghxbQyJcpkrYxNRO0XiUzd0PWNM6hRt8pFQHafslnH
-	 UqS71xH2uSozYAfvfr/IWFDfYVJS5WViSDTMIRhVSu7qkTYwUNtnenMZyF7mjfaam6g==
+	t=1793073278;
+	b=lE21BjlwGWmJJvLyovTuppP7g5u7XNyMRbVk0QJORQKh0UHDmowbDcoSZ8wVOfBUxd6U
+	 kzxkY8NlNen3Y839aP+lO2IISzLfEk4oLgQzXqzfv3ImhC8ZfOnxDr41QZ9VFeLH1mnUC
+	 lQegrtJH3SYwQoMU5fdLUbdGtU05O9vbJaslTkGAd3D8MGhjG9v84I/jAiqnjbjSPs06H
+	 cPFbBcya5ypUEQCuR8pQnvH0bSZBEPewTop7ricD33PxOvxiv2N3K2Xo+b6V8CREZAnSQ
+	 ZReTXGGqZE7TLbgDSL92WDV00Q3qpMv76OWh/eM9on+LN6sZSgZjatXeqTdqN8Hpkfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793069276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793073278;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:Date:Message-ID;
-	bh=lvDhK1lQBCnTBgCeDn8IE0UD8FXFRVaT+2qmolhhuoo=;
-	b=BvgiMjf7xCTGZ2HHVmrR4DSlZfOtK0CGN0tlQ8oKS5J9XVoIEitfMxGZz0qYOy25Qrd0
-	 WwvN6HkbJTQCMUTUuwwJ3+ICVMqUQHo/yKt/N1Z8BCb6OTVfNmPKjSFxYzb3D22vnhrNT
-	 zQh78CIA8YYqHun83wGj4aoVRWaRlSDPfArfDwM/bD1W0g0UUQc3GruX18CunPBE2leX8
-	 DN1hEwAfFYCDutaRLQvAoLBnhItZvHD7fWoNBah7F7RfGkcjgmHHHTDrfGkGOo6Lp4muO
-	 HXc78oDQSlgRn17hqDfUPYan/THHHOVYwuuGBf8XHa2iuKCxGQQX7QysjmAvPZNfozw==
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=2AEMzOaulMq/RsoCrjXdy/D9LsLssAz3PfPw5l67yFs=;
+	b=yVy6EclsVqEFFqlINi8RLLiLG27fHvHs6TV+J6MHxVQDHqeoleSmrSsdXAoaskID78KF
+	 i1pdI+7lf1zVuR23y/aBpK/T+fbNPiSNia+PdtbhU82j2fNY7jRomWF1ir84I02vwHSr5
+	 h/TqCVZYXpH2py/qOTQrD8w/wITYw468VOQjo2rLctRC7KUAGAtguUQDkeUO+j3tZ0kiV
+	 D7N66skJjf+N1ObUvUMx8g9nIJ+JpiCN6Y8CkM1R3LPrVwTAQ/7PBkjTqhuokhUPXl/h0
+	 WIh6g87NscRGPwrU5pvUvy/k8QYajqQUJMw5PKY516B7CwfApSWUSv3Is0ii4j9QE9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=74.125.227.135
-Received: from mail-pj2-f7.google.com (mail-pj2-f7.google.com [74.125.227.135])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=eqZasIgu;
+	arc=none smtp.remote-ip=209.85.214.170
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F76A606A321
-	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 02:47:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F76A606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78913606A31D
+	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 03:54:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78913606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj2-f7.google.com with SMTP id 98e67ed59e1d1-3ac63aee1ecso707936a91.0
-        for <damon@lists.linux.dev>; Mon, 26 Oct 2026 19:47:46 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=eqZasIgu
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2e8ad5b2f61so6531245ad.2
+        for <damon@lists.linux.dev>; Mon, 26 Oct 2026 20:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1793069266; x=1793674066; darn=lists.linux.dev;
-        h=message-id:date:mime-version:content-transfer-encoding:content-type
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=lvDhK1lQBCnTBgCeDn8IE0UD8FXFRVaT+2qmolhhuoo=;
-        b=Avv8dYPROLORNH94EMdZg/79ANclns3CV1GBlZiSC/aRlRsguDFoUc0mG/gu6zBM0Z
-         Fpl+FI0lK1fydTYYXKXfeWs2K2Pr+p1lNhdIfAGCJCI9Nt+GeUYzMmSwxcq2u/TaIS4H
-         UFt249Fky0tKTIgKOZCroVicCmVgyVoFy6LiYyDOsEje83iCCy4D13rwWZtDa2XjHJGT
-         I0KJMziri/IPE8b45++Kag3uTW+KPrk9g6u7dvol5IN4wSbnswm3GzbaRF7+JrSWGF6g
-         uzP0f0Jg3Na2vxUCf4PZnrADIs9SR6zrIgTgMTNnirboKQVqMZA7IOUvvffatawa2l5F
-         dBmw==
+        d=gmail.com; s=20251104; t=1793073278; x=1793678078; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=2AEMzOaulMq/RsoCrjXdy/D9LsLssAz3PfPw5l67yFs=;
+        b=eqZasIgufeLBJLrFNgXRn/GpwT/vfBEvGPbkAIW5ZGPTNFBLR0aySQaFcPXF4RGbSj
+         ewpJIIv0wth3Opnxdo/R6Ffix3p5THXMcewps8MI3+8PiVFtwE4yVgY/hnX4YIttpLNT
+         U+1eIG4R1/hkL8rMTHBUtu+ltxEzVNxJgRmoX8U0JZ3v4sJSi9XnMC8bsoNBNLu/XXXE
+         W7BW7CaUm1SdomJrBaWoSm9vxQugKTiFXIvTTo3cQCnSJvo2Rep5CLQKjdOIoyp07FWo
+         xPlylil/5n9/eiGx7wKn+jTMDxujy9Qob3Q9z3Iu/I3kHbJmtL8jZv2EEFFzVuPPz1bB
+         jXAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793069266; x=1793674066;
-        h=message-id:date:mime-version:content-transfer-encoding:content-type
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=lvDhK1lQBCnTBgCeDn8IE0UD8FXFRVaT+2qmolhhuoo=;
-        b=uTS7iEvsLaVpHRFkoTpCHdaYtcUGFvZI+iN10JiUcxDy1tuqHPakLdctivVEF0EhYB
-         miGW1zeHWxamAf+YOZcGhk982Q/9ZKVe0kZxquNTvAGMbfu+2oSnCnOhgtbZCX+GprKR
-         MCCm9p82GIPDqwdmeU6kTATBaF8hKGBTeFcdh4q6S9N0QKzLrXRhIeCZdP24ZproHCdM
-         jfT3PRm7y33LODwwN0JAnNpN1VdECvKkdAkcnJLAQvKYtPjSC1BMDq2dLyCKt/U1ZHDg
-         P0h9ZMG2hPv3QBRxxrvbayGsOLSFPh4MuEK7sWji/BDPFdh2l2t2D0ZWmvV8qxVJF4Qx
-         gGQg==
-X-Forwarded-Encrypted: i=1; AKwUvBzzlKG1NxYSdtwS8ECUe8QNbvDJV89nkdPIW+skLoygvyAhqg/l78kK+TtbGoeTf5AjRVe0VA==@lists.linux.dev
-X-Gm-Message-State: AFq9FYJfBTGbkbHWn8pFKclUu7JTMp/HZ3s6ZcKDlHEcXJzcCcTVxuey
-	jwG3RV4t+cW0ptNSqDPTgzjvq3R2CIjdi3BAcZLBQbKkFtXVG1JszjiR
-X-Gm-Gg: AYBFou3ikmc80ZXoRByKXk2gaSGq0UhS8+uxmtjQWfRKKijDnl+nftYjOYQtqZWs8QM
-	1aN3a6JQ1vh6gGO/lwFKaLmTZWERcjlRZWOhqonPxjVc4Z2KJ7atKUB5KCQBx9RNsSbHmx+vbx7
-	MZvuIU6+q0p5g4gbJjDMMUZOu64KkjHBlUvmIKhfHWw+C+wAcuxmtevfT5umwydKA4r+3G0Nj6W
-	8MxX6bH40DjK5G5iCEymBdKgNbVeZinYx1t5naDRhJ+hTCC6bUPxgV7aB5MlD3l4dFkbUsIs/9K
-	iCmX0O4ywJIuENzAqvVFh0EHldse3W3zWfMUFRB3HjffW4Pgt6atnSsLNICPE2Lv0N6dzu+Rfhp
-	iQqYvarSPp8XirffPcfoCBUrQdAhd7LFXMVKZsVwlqy7A41AxTSRzhViKOTyQMGw11rZq8fL0kK
-	Xkfdhuc5QJEGOC55jjs6WW7UgCyFxnc3mwrqo/qRhb+L2T2ya4sNnbSKAkfVaKs5as1RCOoJDWE
-	IEt5tbw5oDYEre/e4pzm3JHZAC+kQNR8WaGIk3dTHF3JuQpDfEpOQPUnFje189qV8kJKOmv+70m
-	fcb3CaTs+ldRf2OqWgOoSnUHQMGe2SGes3o9BvvkTju6OXMmeitt
-X-Received: by 2002:a17:90b:3b45:b0:3a8:7096:9b48 with SMTP id 98e67ed59e1d1-3ade9b2cff5mr7922722a91.1.1793069265598;
-        Mon, 26 Oct 2026 19:47:45 -0700 (PDT)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae404426c2sm1518262a91.7.2026.10.26.19.47.37
+        d=1e100.net; s=20260707; t=1793073278; x=1793678078;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=2AEMzOaulMq/RsoCrjXdy/D9LsLssAz3PfPw5l67yFs=;
+        b=lA3ycEbLY8HRRnd09oEE1YiYKYn0HiPenyVz8bSonbWLbRCt9v2jUKt8fBaxD9/rp+
+         vrN8EoePl7tT2Dof1Cvu8V//Hnnwl+k/Yb3r6+EE7BXKHb+VpEeMRSCLu82i+GbSaZYD
+         fMB+BCIVxNjx7bJmUk321yMVghWj69S03FxIAQ3AL+JxHsP8Jk7tp2HtTmFSMsbnAJ9G
+         IhZsfvccQgm4FldeQgL4GDLrApBjAjEtJJgpxX+ePBC414Q/3mc1frURrC+qvO0ekSYu
+         1zi6w+I9Eh1c/pZQ5L5Z3H5Eo/xEUuTBghU9Z7FPDvJWrt54+A49UtI5GkVK3l51aNdQ
+         Inhw==
+X-Forwarded-Encrypted: i=1; AKwUvByuFQREY1AMHWGNn0aYPXNT267nHChKDyaHHILM6St6mnUYsD4k2b5r0f/TalgXR1kZR36OXA==@lists.linux.dev
+X-Gm-Message-State: AFq9FYJUsCktIP50hplluxOkPUiHVQMrLRDrs3M7YL9Z1L7SYN4RChGa
+	wJZenovxjZkKL7VLSg4NbwFSxCAQkpTdddAtFagc+TRO/g4Pd7rfN6La
+X-Gm-Gg: AYBFou1/Sr95E+BzX/hd1DiauwIR//i+cpfpU+1hQKInUE5PudYeVdx7tAWH8kcS4bI
+	eu7k/YNQz7XfYny6Aa1HTHL+qUiCq/a6XTujYES4dHcItuo//hsohwZlOmFl2cgr+CLktZbvwcg
+	6B4djYDlZc4hPp44EZSx5+pKjN78mNTFiaezrYPPRnSstc5X5Gp0mG8mkU3ZuyWqo/qxrQqIpaL
+	HdOO0bL5yrFjYVje7NEZXjwDusqZSrXe+Bd4rY5CZS5Pl1XBuCtFxKJlGKXtNa+IqutCnSp+dsc
+	mNKfK1ubug70thNnR7joOUqeSz3osGwCCvHKiMIb4MtwPnBky7y8bPWfHrSzU9NBjMPIg8hUlIX
+	4vOBLuSTchtwa1MwZEji6zvqoAo5qgNGySiyr8bYhnOx+7II5WPTGXCXJPcCL5HyPjrFmpVA7CE
+	IuV2eOdme+rl4KkvAyja3idpogPiDiCJ659Pyb73ryMXFw7pM4p/9msJ29N48oaL2PA/Mw6fhUH
+	tzD2D8iAJB+pYaCda8ZXpAstJSe5EugcVlbd6DIO3RnPcmj
+X-Received: by 2002:a17:90b:2d84:b0:3a8:736e:c19b with SMTP id 98e67ed59e1d1-3adeaf9ce48mr12810128a91.4.1793073277737;
+        Mon, 26 Oct 2026 20:54:37 -0700 (PDT)
+Received: from ser8.. ([221.156.231.192])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae406153fesm1657632a91.5.2026.10.26.20.54.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 19:47:45 -0700 (PDT)
-From: Aveline Noir <jm5905938@gmail.com>
-To: SJ Park <sj@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
- Randy Dunlap <rdunlap@infradead.org>,
- Manuel Ebner <manuelebnerli@mailbox.org>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/8] Docs: damon: fix grammar and typos
-In-Reply-To: <20261027004916.160854-1-sj@kernel.org>
-References:
- <179301327249.2.4690198998605536207.damon-docs-grammar-0@gmail.com>
- <20261027004916.160854-1-sj@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+        Mon, 26 Oct 2026 20:54:37 -0700 (PDT)
+From: Daemyung Kang <charsyam@gmail.com>
+To: sj@kernel.org,
+	damon@lists.linux.dev
+Cc: linux-mm@kvack.org,
+	akpm@linux-foundation.org,
+	bijantabatab@micron.com,
+	ravis.opensrc@micron.com,
+	Daemyung Kang <charsyam@gmail.com>
+Subject: [PATCH] mm/damon/vaddr: preserve migration weights above UINT_MAX
+Date: Tue, 27 Oct 2026 12:54:31 +0900
+Message-ID: <20261027035431.1007584-1-charsyam@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -98,19 +97,215 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Date: Tue, 27 Oct 2026 13:46:00 +1100
-Message-ID: <179306916017.2.12297411301652219760.damon-docs-footer-reply@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-Hi SJ,
+DAMOS migration accepts an unsigned int weight for each destination,
+but sums the weights into an unsigned int.  If the total wraps to zero,
+no folio is migrated.  Other wrapped totals select the wrong node.
 
-On Mon, 26 Oct 2026 17:49:15 -0700, SJ Park wrote:
+Sum weights into a u64 once per migration walk.  Keep the existing
+32-bit divisor path for totals up to UINT_MAX and use a 64-bit remainder
+for larger totals.  Add KUnit coverage for the actual summing path and
+for destination selection at the overflow boundary.
 
-> Are you intentionally removing those suffix, using 'git format-patch
-> --no-signature' like feature?  If so, any reason to do so?
+Fixes: 19c1dc15c859 ("mm/damon/vaddr: use damos->migrate_dests in migrate_{hot,cold}")
+Signed-off-by: Daemyung Kang <charsyam@gmail.com>
+---
+ mm/damon/tests/vaddr-kunit.h | 35 +++++++++++++++++++
+ mm/damon/vaddr.c             | 65 +++++++++++++++++++++++-------------
+ 2 files changed, 77 insertions(+), 23 deletions(-)
 
-I was trying out my own script to assemble the patch emails this time,
-and seemingly I forgot to add the Git version footer. Thx for 
-reminding me that.
+diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
+index d61b503..f67f1a0 100644
+--- a/mm/damon/tests/vaddr-kunit.h
++++ b/mm/damon/tests/vaddr-kunit.h
+@@ -266,12 +266,47 @@ static void damon_test_apply_three_regions4(struct kunit *test)
+ 			new_three_regions, expected, ARRAY_SIZE(expected));
+ }
+ 
++static void damon_test_migrate_dests_idx(struct kunit *test)
++{
++	unsigned int weights[] = { UINT_MAX, 1 };
++	struct damos_migrate_dests dests = {
++		.weight_arr = weights,
++		.nr_dests = ARRAY_SIZE(weights),
++	};
++	u64 total = damos_va_migrate_weight_total(&dests);
++
++	KUNIT_EXPECT_EQ(test, total, (u64)UINT_MAX + 1);
++	KUNIT_EXPECT_EQ(test, damos_va_migrate_dests_idx(&dests, 0, total), 0);
++	KUNIT_EXPECT_EQ(test, damos_va_migrate_dests_idx(&dests,
++			UINT_MAX, total), 1);
++
++	weights[1] = 2;
++	total = damos_va_migrate_weight_total(&dests);
++	KUNIT_EXPECT_EQ(test, total, (u64)UINT_MAX + 2);
++	KUNIT_EXPECT_EQ(test, damos_va_migrate_dests_idx(&dests,
++			UINT_MAX, total), 1);
++
++	weights[0] = 0;
++	weights[1] = 0;
++	total = damos_va_migrate_weight_total(&dests);
++	KUNIT_EXPECT_EQ(test, total, 0ULL);
++	KUNIT_EXPECT_EQ(test, damos_va_migrate_dests_idx(&dests, 0, total), -1);
++
++	weights[0] = 1;
++	weights[1] = 3;
++	total = damos_va_migrate_weight_total(&dests);
++	KUNIT_EXPECT_EQ(test, total, 4ULL);
++	KUNIT_EXPECT_EQ(test, damos_va_migrate_dests_idx(&dests, 1, total), 1);
++	KUNIT_EXPECT_EQ(test, damos_va_migrate_dests_idx(&dests, 4, total), 0);
++}
++
+ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_three_regions_in_vmas),
+ 	KUNIT_CASE(damon_test_apply_three_regions1),
+ 	KUNIT_CASE(damon_test_apply_three_regions2),
+ 	KUNIT_CASE(damon_test_apply_three_regions3),
+ 	KUNIT_CASE(damon_test_apply_three_regions4),
++	KUNIT_CASE(damon_test_migrate_dests_idx),
+ 	{},
+ };
+ 
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index d5dde97..279dbc6 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -7,6 +7,7 @@
+ 
+ #include <linux/highmem.h>
+ #include <linux/hugetlb.h>
++#include <linux/math64.h>
+ #include <linux/mman.h>
+ #include <linux/mmu_notifier.h>
+ #include <linux/page_idle.h>
+@@ -774,8 +775,41 @@ static bool damos_va_filter_out(struct damos *scheme, struct folio *folio,
+ struct damos_va_migrate_private {
+ 	struct list_head *migration_lists;
+ 	struct damos *scheme;
++	u64 weight_total;
+ };
+ 
++static u64 damos_va_migrate_weight_total(struct damos_migrate_dests *dests)
++{
++	u64 total = 0;
++	size_t i;
++
++	for (i = 0; i < dests->nr_dests; i++)
++		total += dests->weight_arr[i];
++	return total;
++}
++
++static int damos_va_migrate_dests_idx(struct damos_migrate_dests *dests,
++		pgoff_t ilx, u64 weight_total)
++{
++	u64 target;
++	int i;
++
++	if (!weight_total)
++		return -1;
++
++	if (weight_total <= UINT_MAX)
++		target = ilx % (unsigned int)weight_total;
++	else
++		div64_u64_rem(ilx, weight_total, &target);
++
++	for (i = 0; i < dests->nr_dests; i++) {
++		if (target < dests->weight_arr[i])
++			return i;
++		target -= dests->weight_arr[i];
++	}
++	return -1;
++}
++
+ /*
+  * Place the given folio in the migration_list corresponding to where the folio
+  * should be migrated.
+@@ -784,13 +818,11 @@ struct damos_va_migrate_private {
+  */
+ static void damos_va_migrate_dests_add(struct folio *folio,
+ 		struct vm_area_struct *vma, unsigned long addr,
+-		struct damos_migrate_dests *dests,
+-		struct list_head *migration_lists)
++		struct damos_va_migrate_private *priv)
+ {
++	struct damos_migrate_dests *dests = &priv->scheme->migrate_dests;
+ 	pgoff_t ilx;
+ 	int order;
+-	unsigned int target;
+-	unsigned int weight_total = 0;
+ 	int i;
+ 
+ 	/*
+@@ -806,20 +838,10 @@ static void damos_va_migrate_dests_add(struct folio *folio,
+ 	ilx = vma_start_pgoff(vma) >> order;
+ 	ilx += linear_page_delta(vma, addr) >> order;
+ 
+-	for (i = 0; i < dests->nr_dests; i++)
+-		weight_total += dests->weight_arr[i];
+-
+-	/* If the total weights are somehow 0, don't migrate at all */
+-	if (!weight_total)
++	i = damos_va_migrate_dests_idx(dests, ilx, priv->weight_total);
++	if (i < 0)
+ 		return;
+ 
+-	target = ilx % weight_total;
+-	for (i = 0; i < dests->nr_dests; i++) {
+-		if (target < dests->weight_arr[i])
+-			break;
+-		target -= dests->weight_arr[i];
+-	}
+-
+ 	/* If the folio is already in the right node, don't do anything */
+ 	if (folio_nid(folio) == dests->node_id_arr[i])
+ 		return;
+@@ -829,16 +851,14 @@ static void damos_va_migrate_dests_add(struct folio *folio,
+ 		return;
+ 	node_stat_add_folio(folio, NR_ISOLATED_ANON +
+ 			folio_is_file_lru(folio));
+-	list_add(&folio->lru, &migration_lists[i]);
++	list_add(&folio->lru, &priv->migration_lists[i]);
+ }
+ 
+ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 		unsigned long next, struct mm_walk *walk)
+ {
+ 	struct damos_va_migrate_private *priv = walk->private;
+-	struct list_head *migration_lists = priv->migration_lists;
+ 	struct damos *s = priv->scheme;
+-	struct damos_migrate_dests *dests = &s->migrate_dests;
+ 	struct folio *folio;
+ 	spinlock_t *ptl;
+ 	pte_t *start_pte, *pte, ptent;
+@@ -856,8 +876,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 			goto huge_out;
+ 		if (damos_va_filter_out(s, folio, walk->vma, addr, NULL, pmd))
+ 			goto huge_out;
+-		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
+-				migration_lists);
++		damos_va_migrate_dests_add(folio, walk->vma, addr, priv);
+ huge_out:
+ 		spin_unlock(ptl);
+ 		return 0;
+@@ -881,8 +900,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 			continue;
+ 		if (damos_va_filter_out(s, folio, walk->vma, addr, pte, NULL))
+ 			continue;
+-		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
+-				migration_lists);
++		damos_va_migrate_dests_add(folio, walk->vma, addr, priv);
+ 		page_idx = folio_page_idx(folio, pte_page(ptent));
+ 		nr = folio_nr_pages(folio) - page_idx;
+ 	}
+@@ -958,6 +976,7 @@ static unsigned long damos_va_migrate(struct damon_target *target,
+ 	use_target_nid = dests->nr_dests == 0;
+ 	nr_dests = use_target_nid ? 1 : dests->nr_dests;
+ 	priv.scheme = s;
++	priv.weight_total = damos_va_migrate_weight_total(dests);
+ 	priv.migration_lists = kmalloc_objs(*priv.migration_lists, nr_dests);
+ 	if (!priv.migration_lists)
+ 		return 0;
+-- 
+2.43.0
 
-Thanks for applying the series,
-Aveline Noir
