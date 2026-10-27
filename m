@@ -1,61 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793059908;
-	b=RIieyEqrYCIs1E/RuHx7QCqFr/JBP2yIguyqbx9AThbzI53GRXnlN7wRzYvE025P74/t
-	 kH2e0B4UzJVEQ9kC9+YQ6O2+4Z4zFpD1W2mG/Ot/R+781TmzteCz+YfYLwpQrccXQk/GS
-	 1nii1Sua4nnsQhsVmgmpwkdBCyMUcj5KQPePqOi6/CPQEO+fb3JR/Z/xUcT4YsX3G+fF5
-	 BZXPpAMZE/gWDKZL0Ss+ZfIwzZCXU5pcv5Rd4yZbkISaBOZHjkTSnjt2hQrC706i8zU81
-	 omNuuMtqmBt3UHyeWfmApApHx6jhyGAbfJt3c5ghoBaCJr0GheFuiu/R6tPUhkr1KRw==
+	t=1793062164;
+	b=pUeERkUUbM+PhaMYjhTjf4A6Gb+7UEYQnSR+iVObpIoPvcyixPLQxC6liVOihJlYLSKA
+	 pcqNmB5XBvTEke0BrYal2gFVjTrLq/xdxPuR3Vgc+uAIgMcrCtZikfqwnUfJnCkyNSHL9
+	 H2/BO1vsxj5M3Jy7wnvWbijJrE9GAwQYShPnFDpn/RwjNvAyX2hPIETJTndRbm5jqKlkF
+	 TRQoMxdJBfiiMuwy7TXQaT+m3OqbOH+dt/fZH/XLs2NOXFeidgKegvpJL/ecPBfYSPoP0
+	 ln31jwB5V5eTSZQThpxmz/fE6Eg2ALtMFo1CrRHsOkp8rcui/JOhmt3xOU50BXHTlYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793059908;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793062164;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=U1SFQNo+l1KuH2xYEh9agzXyBaFApHyliTW2I3WAcVs=;
-	b=uWyRepCpFEE9V8nx1xHbR1lUHvxy0G/asURJtwnU+rQj494ItLvdxZgzxtk3iq8sklA4
-	 FXacnFWppy88uYiTMeTDOZSYsBKt9reYlULhNcIeECfY21DOlbaZaRqVyv9D/hfnB9Pvr
-	 YgKTPqeL4BSZuxUkjQOjN+rtNlUdy5OcUastRYFbgVLbs1tT7gWPj8ZdbN3Jq2qBqUj8b
-	 GPNib/dDic0gEiqad5rC+TOJ6tzRnEUlQblysnHMXiothoQu7ur21+OwcS4TEzQ4HR08c
-	 uqaAzgfr7wnAjkIWt7w2hHlfsuvYU/ZtYyW2JIr99cgV+BktptQcXcS+vpPOQNKazHA==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=7/kZUclGYQP8NN34Z8XfBgy8oKvHfBFdfanXD9OlfAM=;
+	b=ptTYF8md8ukhdZNIukL0utOi6W4EMj2WDV42ruJGHANnJsUi0WwGN7a3ZTMdqkj8FQ43
+	 xUFRmwRS6ZQ3jlVzSFf8lIh2YQKw4pyL0yTI7t1qRWIZgQPGk9OTGSF4p5Eof+2a/Qkyo
+	 ispM6mBvJBHkWBSkxeRPUq4w7agWmKU6cITZQZvJ1N4Lu8qqdOo41nMyAy81TvfzOth4v
+	 clCKRCvSnYPQwewVDL5ypkkMZ/OG7kwOp/gjPjcTEqgmaKEATak/B+bbvaXYonLZp+z5t
+	 0sithd1WixF+pf0ib3pdRRsSoqkWPaubSzqt/8wOolY3cFN8ETEG2f0T6gnYKtq5GTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Bc71X7f4;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IhwJd0HH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2841606A31A;
-	Tue, 27 Oct 2026 00:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25172606A31A;
+	Tue, 27 Oct 2026 00:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Bc71X7f4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834D31F01825;
-	Tue, 27 Oct 2026 00:11:47 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IhwJd0HH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533701F01825;
+	Tue, 27 Oct 2026 00:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793059907;
-	bh=U1SFQNo+l1KuH2xYEh9agzXyBaFApHyliTW2I3WAcVs=;
+	s=k20260515; t=1793062163;
+	bh=7/kZUclGYQP8NN34Z8XfBgy8oKvHfBFdfanXD9OlfAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bc71X7f4rfISVUR0Q+mRib4UDa8SXxUWoc6UT2xY2SO2fApAG1z/OSEaUSnyeo4Br
-	 8peydQWyrzSfkCwNYMC0wjL41Y0vFPFhG49//dKT9C7skO2pobu6cL9sgI2IRWlu4o
-	 LCLFeRqX9snStGV5ZPsMzuFhV2a4vDFLpw3qQjRgROrukMZhWJk9bl+Vj1m8QapCMg
-	 5/imp6wcDRWsxCKqGsmloSl4mypLGVsPfloszOFnwWua1Q0pkxYFo81a0AtaiBXuNo
-	 o9q0MVyWgdBSoReJUwKntEURHZH5IqJKa6yRn11hDHMtu4D9d3rlafywHeTkxwFaHR
-	 smupkFF+1f5lg==
+	b=IhwJd0HH7ml97hUAhy4mM+LxrQ2bHSAnxXT5bcTTqCYrKorbjVOfa6aQK448DPZUZ
+	 I0UbDVCSy2hHLW5PW4h032ayX/+bDm61VYux5U+fOZd7u5iOR44XnnAQq0KNDlAhUq
+	 jHUdbLzFXl4HCeqTogfS6QXU4nSqG7WsHqALzTeQcaDypFzXJjdhjSDGSpkntipz4i
+	 UI97FyUNZraeWVxoio6pYIeHastvNhvR7snqnMmzqVCnUvGEO0vnbj6cr3GER0BFD4
+	 n1EoM7UhMef2S2pPI2Qw/maUpE2zwjOXsiIqMNgYEkNmbL8RdxlO3rp/V4bemheEIM
+	 r0fMOuo2qCurg==
 From: SJ Park <sj@kernel.org>
-To: Manuel Ebner <manuelebnerli@mailbox.org>
+To: Aveline Noir <jm5905938@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
 	Jonathan Corbet <corbet@lwn.net>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Randy Dunlap <rdunlap@infradead.org>,
+	Manuel Ebner <manuelebnerli@mailbox.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Aveline Noir <jm5905938@gmail.com>
-Subject: Re: [PATCH] mm/damon/reclaim: improve grammar and style
-Date: Mon, 26 Oct 2026 17:11:39 -0700
-Message-ID: <20261027001140.156967-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/8] Docs: damon: fix grammar and typos
+Date: Mon, 26 Oct 2026 17:49:15 -0700
+Message-ID: <20261027004916.160854-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <72437017a038310cad48a5ff488377a9f8eb89f1.camel@mailbox.org>
+In-Reply-To: <179301327249.2.4690198998605536207.damon-docs-grammar-0@gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -66,61 +65,48 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 26 Oct 2026 18:51:40 +0100 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
+Hello Aveline,
 
-> Hi,
+On Mon, 26 Oct 2026 22:14:32 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
+
+> I was reading the DAMON docs and kept running into small grammar
+> mistakes and typos, so here is a series that tries to clean them up.
+> There is one patch per document, and nothing beyond grammar was
+> changed :)
 > 
-> took me some time to respond because of the procrastinations.
+> Some fixes pushed lines over 80 columns, so those paragraphs are
+> rewrapped.  Patch 4 picks up what I think was left in lru_sort.rst
+> after Manuel's recent fix.
 
-No worry!
+Thank you for these fixes.  All look good to me.
+
+I applied  this series to damon/next [1] tree, together with Manuel's
+suggestion patches.  Manuel's suggestion patches will be squashed into your
+original patches while adding 'Suggested-by:' tag for Manuel.  I will repost
+the resulting version after next -rc1 to request merging of it into the mm.git.
+So, no action from your side is needed for now.  If anything is wrong or the
+plan doesn't work for you, please feel free to let me know.
 
 > 
-> On Sat, 2026-10-17 at 09:27 -0700, SJ Park wrote:
-> > On Sat, 17 Oct 2026 11:18:34 +0200 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
-> > 
-> > > Hi SJ,
-> > > 
-> > > On Thu, 2026-10-15 at 07:01 -0700, SJ Park wrote:
-> > > > On Thu, 15 Oct 2026 10:06:23 +0200 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
-> > > > 
-> > > > > Fix tenses. Replace 'set as' with 'set to'.
-> > > > > Rewrite complex sentences.
-> > > > 
-> > > > Let's put two sentences in one line, while breaking it for the 75 column limit.
-> > > 
-> > > Will do.
-> > > > 
-> > > > [...]
-> > > > > @@ -113,8 +113,8 @@ quota_sz
-> > > > >  
-> > > > >  Limit of size of memory for the reclamation in bytes.
-> > > > >  
-> > > > > -DAMON_RECLAIM charges amount of memory which it tried to reclaim within a time
-> > > > > -window (quota_reset_interval_ms) and makes no more than this limit is tried.
-> > > > > +DAMON_RECLAIM recordes the amount of memory which it tried to reclaim within a time
-> > > > 
-> > > > s/recordes/charges/  or s/recordes/records/ ?
-> > > 
-> > > For me charge is such a weird word exepct in 'charge a battery' or 'charge a fee'. And
-> > > 'recordes' is a typo. Does this work:
-> > 
-> > 'charge' in this sentence is somewhat like 'charge a fee'.  I personally don't
-> > feel it is weird.  But 'record' also work for me.
-> 
-> I will keep 'charge' at the later mention in the file.
+> Based on damon/next at 9d301805e3f6.
 
-Thank you for accepting my humble suggestion.
+Thank you for clarifying the baseline.  I guess this was because your patch
+depend on Manuel's early lru_sort.rst fix?  Clarifying the dependencies would
+also be helpful from the next time.
 
-[...]
-> > Sounds good.  But let's finish the discussion about use of the term, 'charge'
-> > before posting v2.
-> 
-> Then I'll head to [v2] and make it a 2 part series.
+By the way, I found your patches don't have the usual git version signature.
+That helped me finding a bug in hkml.  I fixed the bug, so no problem.
 
-Looking forward to v2!
+Nonetheless, I'm just curious.  I might be able to make DAMON development
+process more easy for contributors if I better understand contributors' work
+setup.  Are you intentionally removing those suffix, using 'git format-patch
+--no-signature' like feature?  If so, any reason to do so?  This might just
+don't matter, though.  Please feel free to do not answer if you find no worthy
+to answer or just feel uncomfortable.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
