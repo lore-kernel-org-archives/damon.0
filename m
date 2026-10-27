@@ -1,69 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793109474;
-	b=AmAauDGwdwKh7VOoH6kj4a0lNnBvNTgbmoCNSRaCqSGxlw7/8iAby5vIyhXDTANN+WGG
-	 GNu6C+kRofvlH28pixF/MrnZ06n3ZLJwVs/lD9XPFIo6zT7+4aCXLKvUoDvX+70gXmRJ8
-	 RgROpEfEsFKilr66dGJQqfA7udwrC9jbC/MIsk799v33WatGgpcF6GbpHKIUoud5KGdEF
-	 c/eab7o+AYeUZZxv2Q2EUWkO0Crwol8RdSObkOoDPZyQM0btC9qN8X00UxC6O+hz6EOrB
-	 uZrwlhO7IwjnUmXrwkF0lbfDpC/zBuu100mCvxk1DIHGxTGAag668+nDBb8dxWCQE3g==
+	t=1793109577;
+	b=aZqdFleLsh7ccRX/Om9OZjtu3G9G6fMRB+vFuZJqDhAtJNL7ZMCnR6+l/0Xa/YjVKNx2
+	 GKhl59J4uUmsW0QW5jRJEsljCvoJoCnk++HdSgAVggd6ny+0ifptPtNHT5H+UEHcOK5pf
+	 8gw5eiM1WqrUkdPeA8EIYXo28EFJZHN2aUIalwGdSSJ583LowIz54wP0YNyWw9NYK0emW
+	 DplPiE6/6zv43xb2vNo5CQGP3cyD86Cxrf5SuTIoSkT63yeK1MqZCsdIqFRzO86F/PB5Z
+	 Pp17NqOVVnDX6KiYlm86FhpvIS3YR6aDFE/C+pd8MzKpg1jehRloWo/qQmvLYUk0G4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793109474;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=Oc9SGkKtJQTMDl5C3kvAcEmkGmH87ZOZUzIPqVhBwZ4=;
-	b=swrywVHWZPae574EW+8Q0DCA1m6xAoQMva5FXBA2MK/p7Bz989ei8NTjGrY/3pcrKZWf
-	 p1GdidJZDbuF+zoaRA9Vb0O45yW9gU1SoWn3sbh/aWpnu5IolkM4de2ON/mdijN5uLFsq
-	 RWinfzwHlFM+jVRsOrAhD24T9HBo32LLELkjUjcSGZrIrYh1VjsID48MGKqpPcBaM6Ror
-	 M6LX7h+UQAGI67IELmOdPu6LV4+x0A+2df5q0yw2tLTAsdy5gnL9GWP2IKgm2cRwpcbaQ
-	 XA3A0ftGcj7Y1Xuz5nh1fpsm2OSTDaUgjy/+YNztyL1Ij3pJF1DSqaJ5M8y/13/bYig==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793109577;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=Ze3hDNgAVXxR03vgb3ebN8Im6n2FcLAKEpCxr8ESZ/g=;
+	b=aAyNC6IkJALeNda60G+ZqB9OU5MQGoQJJnNHgwV4s0E2edN6nt9HpHupAoP/e2ToOKP2
+	 4rMPMS87xoAxYJUnxJAFPSwjz1X9KmOQLs2SNvGOvzLKKcz2sTs9TBhHbte8gjn/vX2T+
+	 F3sFN51dXNwboLh1mZKHE6h4w6yag2Ll8kNQkgnV6+Np6Z2+AYLUCAR8BN6up+vrSOXor
+	 0b/WtdvarY5TEM51cKf/+lwPMNV0+kScsOHKEh4Fnp9BLE9okE+WJztdRJkm/e4SojojR
+	 6KDTNd/mAK7jbMjjiDlzN1t8wFmHqFSbq5yKjxVZBV5+ObhxijIHuTVllPH+jqeXvpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ox1Of21z;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F6qXQ4i9;
+	arc=none smtp.remote-ip=209.85.216.48
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA9E606A31E;
-	Tue, 27 Oct 2026 13:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660C4606A31A
+	for <damon@lists.linux.dev>; Tue, 27 Oct 2026 13:59:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 660C4606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ox1Of21z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 792D41F01825;
-	Tue, 27 Oct 2026 13:57:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793109474;
-	bh=Oc9SGkKtJQTMDl5C3kvAcEmkGmH87ZOZUzIPqVhBwZ4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ox1Of21zf466valLKp99VgE6Npi2m7UHhoXKf5/TUQH6DnfElXxvgH+b8ifIMFE2v
-	 xqW2zDm8NqAQ7dUm++XEnYWmeQzWP5RpgtM0B7TOTf24MP7EfMospsQZ7/sgzl/979
-	 vhE16OirDAl6Fiz5ULpEB8KiUY4J+qgVXP2petQuujOnuEA+xirLoGwsa/G5YS10Zq
-	 UjMG99NwwvwzJVx71/wKf3oLYTwbzySL4wz7xpZq1DiaCbcS3ysDJqgyOnxn9QO6Ze
-	 WiBbCpZXOD3JoefiyU+yrAom6HW/pMrLrpG6QLJ3VFXugz2MLttS/vNNt6GjjTg223
-	 ccDppjdY79y8A==
-From: SJ Park <sj@kernel.org>
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
-	david@kernel.org,
-	ljs@kernel.org,
-	liam@infradead.org,
-	vbabka@kernel.org,
-	rppt@kernel.org,
-	surenb@google.com,
-	mhocko@suse.com,
-	corbet@lwn.net,
-	skhan@linuxfoundation.org,
-	rdunlap@infradead.org,
-	damon@lists.linux.dev,
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F6qXQ4i9
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-3ad47c246f8so394272a91.0
+        for <damon@lists.linux.dev>; Tue, 27 Oct 2026 06:59:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793109577; x=1793714377; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Ze3hDNgAVXxR03vgb3ebN8Im6n2FcLAKEpCxr8ESZ/g=;
+        b=F6qXQ4i9QtYml97dTT858YySPEabJXnFwK1pc0j9fkDlf2WkL2GgNSCDLQ21NB9O0c
+         QGIGwZS1Vrj7+uz58GqbmAgOOxIaCJGY+/7KmvHSYIz6CtjAqso6IUiejxNYf/xqjqdc
+         XbQBytnU3Kqa/LeOXWJjEKj4ptJc38K8ytsFqdzU1m8ujGOvgVJds81TAE3k7K0pTypO
+         ScCc/Lh3jv0bDermPKKsD6kM84WChDCQZPUizZ1AckB7pvXy1W0fbYJ9nTJdM/Q4TYob
+         rLxX0CYQyQoP9B5gs4ey6w5lG/8LHOHftN729L78slJtFZ+rYQUp0V5PAktNYRmumfNB
+         90iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793109577; x=1793714377;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Ze3hDNgAVXxR03vgb3ebN8Im6n2FcLAKEpCxr8ESZ/g=;
+        b=WtoIuC57kLX9Bmcms9Is50C8+stv7XtDzDmTq7pJ8jH3pmNFyT+sbVM/CdU77ohqcH
+         ZrMrk3qNf4hIBmMu6umAyQxP05D3aJY2O9k1/FflDlU3xTdvc97pz5aQWbBWgzWYLnK6
+         nMbiC8+VT72l2zEYGmqA7ruP5ERXUHtyHXuLIrA9ptg4SUCG/XaXpS1ferRRIuDVgxdE
+         OuuV4PPsYM4iYAUo4bbVX0Sf3Pwac7ZK51+uvLKUv6DCkx3IcJPRg7cMOqbgFzgLinRu
+         1MsR1HPgIGgTrHGJdE9w5dCwLvavWgyu97gT3IwFyE7XrJSYELuBghNal80VX8UHvVnM
+         s7bA==
+X-Gm-Message-State: AFq9FYIRqj6HRT4ACefn6S1imQWQ1MwMK0FhuSubzo0QaIwULkL4I8VZ
+	rcOTWCCw/j9eKl0Sf43L8JRYlRzQYz2faSVHbTsrQsy6HD+qroZmZiFd
+X-Gm-Gg: AYBFou3BGu6f5b2VcryyMKpOAEsibucnrZqIB41EhcpupfzxKHpFO/Gwrl9YZrGax9J
+	tl0mjr04HNJMRRpi3jStKGwXADGyplEFgwQHJVXyslBkffTqjBVJLp6S5Qcbpk4r80uqxThOptT
+	njAilHQhZxgD17QqhwO4h/WdMqWVur/ACV5pGxvv/YHZv5tFnL3sjsD2xir7LGimWINyDzH6Nna
+	tB3dTr+L6v/oPqwnWXC94lTgYQ/DhqBozLIk8B7Yv3et4VqaG8UpjfwkVIl/eGS/rUMwWjs/F+T
+	XjI1YA92jZnzgyOuCtAX6IjBOeyR/TSZSi9Vh6et0eRoHjYZ2G3hYwArInSZimILFxkHE95ZHU/
+	YpWWX+enZolRuaHALp1EWJSwXUY0Dr5bmZ820CuSmo7lS46aHy5hNL5ETrOxI+KiQBtBB4QFK0U
+	RyUx8r2gH75m8N33+kMXweVRROPyDW8V4TObQ0NJ9FUwsPfrS1Ys2hh0KYr1YiWJvdPPv9c5olN
+	j+WicARxLpWnOXiNxCYRMIzZkh7InFr3jHXBcWFMLhxy+cT
+X-Received: by 2002:a17:90b:28c4:b0:3a6:f1d2:57fa with SMTP id 98e67ed59e1d1-3adeae5dd2emr12875632a91.4.1793109576511;
+        Tue, 27 Oct 2026 06:59:36 -0700 (PDT)
+Received: from ser8.. ([221.156.231.192])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae404432a5sm4243466a91.9.2026.10.27.06.59.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 06:59:36 -0700 (PDT)
+From: DaeMyung Kang <charsyam@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] mm/damon/reclaim: allow disabling watermarks to force reclaim of cold pages
-Date: Tue, 27 Oct 2026 06:57:45 -0700
-Message-ID: <20261027135746.150166-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <6e381f14-f00b-4c0d-8499-f5a5f37b2572@huawei.com>
-References: 
+	Andrew Morton <akpm@linux-foundation.org>,
+	Asier Gutierrez <gutierrez.asier@huawei-partners.com>,
+	DaeMyung Kang <charsyam@gmail.com>
+Subject: [RFC PATCH 0/3] mm/damon: fix overflows in score and ratio calculations
+Date: Tue, 27 Oct 2026 22:59:29 +0900
+Message-ID: <20261027135932.2301646-1-charsyam@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -73,61 +94,59 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Tue, 27 Oct 2026 17:46:11 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+Sashiko reported several pre-existing overflows in DAMON score and
+ratio calculations [1-5].  This series fixes them with wide
+intermediates and an overflow-safe mult_frac() variant.
 
-> 
-> 
-> 在 2026/10/20 21:58, SJ Park 写道:
-> > Hello Jinjie,
-> > 
-> > On Tue, 20 Oct 2026 21:32:33 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
-> > 
-> >> DAMON_RECLAIM runs its scheme only while the free memory rate is in
-> >> [wmarks_low, wmarks_mid].  Reclaiming cold pages raises the rate, so the
-> >> scheme self-stops as soon as memory looks plentiful again, which is wrong
-> >> for a VMM parking an idle sandbox that wants cold anonymous pages
-> >> reclaimed immediately.
-> >>
-> >> So add an ignore_wmarks module parameter. When set, the scheme uses
-> >> DAMOS_WMARK_NONE, so damos_wmark_wait_us() always returns zero and the
-> >> scheme stays active, bounded only by min_age and the quota.
-> > 
-> > I agree there could be use cases that doesn't want the watermarks at all.  I'd
-> > like to avoid adding new DAMON_RECLAIM parameters if possible, though.  That's
-> > becasuse DAMON_RECLAIM is introduced to let people use it without complicated
-> > setups.  We will of course add new parameters if really needed, but I want to
-> > see if there is a good alternative.
-> > 
-> > Have you considered some other alternatives?  For example, could respectively
-> > setting wmarks_high, wmarks_mid and wmarks_low to 100%, 100% and 0% effectively
-> > disable watermarks?  Have you tried that?  If that works, how about updating
-> 
-> Hi SJ,
-> 
-> Yes, it does for my use case.
+Patch 1 fixes the weighted hotness score, which overflows with large
+user supplied quota weights on any architecture.  It accumulates the
+weighted sum in u64, preserving scores for non-overflowing inputs.
 
-Thank you for confirming.
+Patch 2 adds damon_mult_frac().  It returns the same result as
+mult_frac() when that does not overflow, computes the remainder product
+in full width when needed, and saturates results that do not fit in
+unsigned long.  It fixes the region age and sample ratio conversions
+for new monitoring intervals, and the moving sums of access counts and
+probe hits.  The helper is introduced with its first users so that each
+commit builds without an unused function warning.
 
-> 
-> > document to clearly explain the usage?  Also, have you considered using DAMON
-> 
-> Thank you! I will send a patch to update the doc later.
+Patch 3 uses the helper for the page based memory ratio quota goal
+metrics, including the hugepage metric, and for the quota goal score.
+The node eligible memory metric counts bytes in phys_addr_t and uses
+mul_u64_u64_div_u64() directly to avoid truncation on 32-bit PAE.
 
-Looking forward to your patch!
+The remaining mult_frac() users, including the intervals auto-tuning
+score that has an ongoing discussion, are not changed.
 
-> 
-> > sysfs interface instead of DAMON_RECLAIM?
-> 
-> DAMON sysfs can also do this with "none" watermarks. But I want the
-> simple DAMON_RECLAIM for only proactive reclam.
+I am sending this as RFC to ask whether this approach is preferred for
+these overflow issues.
 
-Thank you for clarifying, that makes sense to me.
+The DAMON KUnit suites pass on UML, i386 QEMU, and x86_64 QEMU with
+NUMA enabled (54 tests each).  The new regression cases fail on i386
+without the fixes.
+
+[1] https://lore.kernel.org/20260623141527.044D11F000E9@smtp.kernel.org
+[2] https://lore.kernel.org/20260708140944.F26821F000E9@smtp.kernel.org
+[3] https://lore.kernel.org/20260901133650.EF4F71F000E9@smtp.kernel.org
+[4] https://lore.kernel.org/20260626002448.975E21F000E9@smtp.kernel.org
+[5] https://lore.kernel.org/20260831184956.1DA321F000E9@smtp.kernel.org
+
+DaeMyung Kang (3):
+  mm/damon/ops-common: avoid overflow in weighted hotness score
+  mm/damon/core: avoid overflows in monitoring results calculations
+  mm/damon/core: avoid overflows in quota goal metrics and scores
+
+ mm/damon/core.c                   |  59 ++++++++++++-----
+ mm/damon/ops-common.c             |  10 ++-
+ mm/damon/tests/core-kunit.h       | 105 ++++++++++++++++++++++++++++++
+ mm/damon/tests/ops-common-kunit.h |  47 +++++++++++++
+ 4 files changed, 203 insertions(+), 18 deletions(-)
+ create mode 100644 mm/damon/tests/ops-common-kunit.h
 
 
-Thanks,
-SJ
+base-commit: bae9a042b03b27924c6fd5bdc00a20d6a44d6041
+-- 
+2.43.0
 
-[...]
