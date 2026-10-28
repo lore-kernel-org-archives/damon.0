@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793164032;
-	b=PmTo4RgqLlFNUwnaqKsycdw5YISQs0N90NnKwDXFbXghIobIeY5oTabJ9r+6Dqh7T7bT
-	 1mHvsmgex4BoxTRiOyTy7i1YSXRCxZhKqLfhGkEvIV0IbSuhZZW5VBJtS7XZWGDnOOytJ
-	 QUzNsCE2EOjDiTXR7BO6ecBorlh4mnVTN9JkVmLbhR9ompe4LR5/v+wnLnb3HnhP4I2WA
-	 cPEsLIUITzVl54aQODw1PPEDVB1tlW6r4VKKZlJ9e7m+a0uO8zNTJw/ob4No1B46hr1nB
-	 hZoaQq+LSoJbY9uSsw6SO9T+Zww1BATm0xNSypVal5hlasvRPMffxSDQvJkI9+TJMAw==
+	t=1793164273;
+	b=MS3bQdqcmInpES7IrWFRSnoGonyHTl6Ge1YHZWYIDHvdr+O93Texl+5kJsaOFKNT9iAI
+	 hwYXLl8HvQWEXmnU0PXDZity5muZ0UTkWcGhokwx8QJkS+8phpdHUS2kZHVoOfvn6eChT
+	 emA+vU37W/X0+MAZJtuvELN9+TLiSIOQz+8nf4YjMQNq798BBO1iDcDBIbtzyBXHJm664
+	 f/goq0ISt/2Ovxa63DOhcYN94NSL40LzOh1S6UMD8AAGkWsUHmA1XMou+vV+BPNus9NYV
+	 PwuMw0aJfvjQ1CKKF2+k0Lb7yrXMc9/mUxOfBDi1ecsUe+p8ea7hel0s9D8n8kwzdog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793164032;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=iEq0dvI3niER9Pjv8HvtcBKpE9ekMrGDmjPkt4Ul9Cs=;
-	b=UNutR6rD/mofkVZ+7DW5IC1D0Hag66Q3Ik9jtHg6SXp1MTND2P7ua91OLZik0uVgJig/
-	 pJCAKdxRjk1+B9S5LVQW8KQCISGZALm33Mgi4P/nI43yZL8xoPoLj5cHf/htJS7DfQDFJ
-	 iPGw4HteD1wJi1y+o28MEvv+kmrm7h3o2CoKqJckKUBEH8/vombURAanJnDxZkYD14Hev
-	 dRwN1PjiibxLFGVyeZEbL/0aBATTxAiLyIZgWiLUkbubcPYDl1ZuModfoO9IMsXWrIJqs
-	 jS0oaE/SYlv+eJQRaWotqGNvcKnL+zAVx8E7I/BPVeZ5BPELylSfdmyj9kRgKjht2zQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793164273;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3pS9CAQrAJLVnQcJS9FSWP6kxBvqhToAiMsGHORpn34=;
+	b=uLjq/EM/NfhXjsjF8QZv6CKqNUNxg2kkEUnDvXXD89hQuGt672xTdMLg5ldTyPY2Bsig
+	 GpFaoQfEjkAIpnrWYEVjde5tzXTuNuMiaJhe8x5qJ4ewKeZ3JtH4FJKrKUNuEo8E8eRwS
+	 NcL6q/Z3Wi/aWPXZnvVUJVB7UwLGOISB9AMA5MpfGmRcUmqii6DZ82B+wwT0ljeINfWKm
+	 bWeJCqJn0lf/AhjXzZTOyhSAZxRR5dnoJ0uRDW+jG1h1XsnIPOTnSEt0m5Yrc2+3zeojo
+	 cxLdasNErze9DLiwYsz7yGUNhJdWB7dSZ7lW1QbyysE4FZo2+8v8MWJymGUshiYa5eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eN1S+xwQ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PM7+JxHl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A881606A31A
-	for <damon@lists.linux.dev>; Wed, 28 Oct 2026 05:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87700606A31A;
+	Wed, 28 Oct 2026 05:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eN1S+xwQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55821F01828;
-	Wed, 28 Oct 2026 05:07:11 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PM7+JxHl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0B71F01828;
+	Wed, 28 Oct 2026 05:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793164032;
-	bh=iEq0dvI3niER9Pjv8HvtcBKpE9ekMrGDmjPkt4Ul9Cs=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=eN1S+xwQfiMHfr+OOeOWWcEwK+4t5bzkZSarERL67ViyOxBPMepkjPNBNYX7P9cuH
-	 LEXuwJU050hcpvBaoOEqbhFgeVVKCGIUFItN/Ggvy/3drbT1mS3gMs3I2rMX8Tb5GQ
-	 4KDmFYzwYSGxbKVzPxpcnlorGNbV5tfvcczwfXWaz6/HfkNw0Lw5n3oCLicdCiKp/6
-	 gPDeO9dITBqsj45hh7h7sZGxUiWRWP1eEjsKox3H9rtnWgsdFMMdYTCxMBmD82guQ5
-	 TreBY1pvJQYb1ZLi4SssQW+7uK3Tnoh6YT0JC66VnyOJvUHbC9iH3Bgx1moALjpSh5
-	 esQHYCgqyLtYg==
-Message-ID: <sashiko-outbox-187502@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 6.6.y 1/2] mm/damon/sysfs: put target pids for
- damon_start() failure
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261028045902.148624-2-sj@kernel.org>
-References: <20261028045902.148624-1-sj@kernel.org>
- <20261028045902.148624-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 28 Oct 2026 05:07:11 +0000
+	s=k20260515; t=1793164273;
+	bh=3pS9CAQrAJLVnQcJS9FSWP6kxBvqhToAiMsGHORpn34=;
+	h=From:To:Cc:Subject:Date;
+	b=PM7+JxHlWTwo2Ik9zg/BlT5FVYX/ie60vqdCZjcrhWFWWzCyH6ykp93wUbG+o75oY
+	 Gw4ehDJsaYvSWssTO51ia3ZeKLh5GLLECO+RywpdBtah8+lTKRGi1sPTl831Oh5lYI
+	 s9xLvllWJrbMj41XwUYMZM8HA01P/b4u8j402n6/HSWn+IxVMJz6pzrxV62U0gGEd2
+	 v2w7WQEu+DIORlwX/JNamAzGpntaT1sfC2kt7UlYqHnt03DJwms9HUGsa9TQoMABxM
+	 SxfsPp3KrIXD86L5mFA2JA0QIFA4RQeRIZDHfP8wFqy5D8ivgigHHXgmzDOwPW+2RN
+	 3/zasmou6Hcdg==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 6.1.y 0/2] mm/damon/sysfs: fix pid leaks from wrong error handlings
+Date: Tue, 27 Oct 2026 22:11:01 -0700
+Message-ID: <20261028051104.154232-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,25 +59,24 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> damon_sysfs_turn_damon_on() allocates and sets up damon_ctx to start.
-> If it is for virtual address space monitoring, the setup increases the
-> reference counts of the target pids.  After the setup, the function
-> invokes damon_start().  If damon_start() fails, it deallocates the
-> damon_ctx object without decreasing the reference counts of target pids.
-> As a result, pids can be leaked.
->=20
-> Fix the leak by putting pids using damon_sysfs_destroy_targets() before
-> deallocating the damon_ctx object.
->=20
-> Fixes: a61ea561c871 ("mm/damon/sysfs: link DAMON for virtual address spac=
-es monitoring")
-> Cc: <stable@vger.kernel.org> # 5.18.x
-> Signed-off-by: SJ Park <sj@kernel.org>
+DAMON sysfs interface can leak pids due to wrong error handlings.  The
+issue in the mainline has been fixed with code refactoring.  The
+refactoring is done with commits including 7114bc5e01cf ("mm/damon/core:
+add cleanup_target() ops callback").   Porting all the refactoring
+changes to old stable kernels will be challenging.  Hence submitting
+this non-mainline hotfix series.
 
-Sashiko has reviewed this patch and found no issues.
+SJ Park (2):
+  mm/damon/sysfs: put target pids for damon_start() failure
+  mm/damon/sysfs: put target pids for apply_inputs() failure
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261028045902.1486=
-24-1-sj@kernel.org?part=3D1
+ mm/damon/sysfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+
+base-commit: 969f73b24b91eb0b5042d4d7b26b4bece1f27d18
+-- 
+2.47.3
