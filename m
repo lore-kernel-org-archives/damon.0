@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793155182;
-	b=HZ5F8kQc+o6C6R5tYWiS9kSxIwqQSN5sHZUHF2r1y8qLNCyY+eH9MLUQXFJfOKia5Mwe
-	 ykOPpdjvkEAQF6OVEjbdv2P4k+Jm3UZUUGAlHNGoDLyNAR9uBIXBxGNzhEg7q1z5NXEBf
-	 yI6lwAQIgPO3mE6KTmCAQiJfYR/5IIVhCw6V7cb7ArJK8PE2Zk2r0wpeZJmiJwCHPqbzl
-	 p/bOxyJNvUH5CXCeta4RvRgbnPUwOotC5ptIVId0MUSdn8A3sLVaKJESCWfnUTPNDS/r9
-	 77FJ8LgEr1r1iHCqH3SlqybMPT38bcZNzf2vYwpf6sVgG31J1PtkL+VH5/E68FOJXUg==
+	t=1793161586;
+	b=swT/VmzJODJHbUrkeW5QYOowR93t+gvksMzHC++LGBwSioMtRomy9sTwPh2qfN449RSe
+	 f0uaBfUJ08+Iqsq+fquZMRRF3vHfvPAEY6dVxhuIZk/+aLi8W6hrE3td83P8gzY6iSARh
+	 L5DXz5+CxfK4gmGtpl8jw8zm0K8xDEycjMfmE5juhk1/VX0LLsfn2xZXAHFJ4Kbu7UL1l
+	 eiakv7EXR8NbThoh4u1E4Q9TG6W0LvTD6pCoJt0YRnGCIVF+vnDZ5DRevJURRnQeWFTvT
+	 vNV72S3HUegsPQYWz84HHI0/lPhg4FusTVzgN6l3TrkY0bjfUaAtwK7P7Z9bQj8G88Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793155182;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=CSYYa0XleAV81e2G4TUKPzenaDlnv01ydJ1eiMlRcFs=;
-	b=KLzgXFOBlXIqaDdpOA5N+6ooPymFwRleJmAmLgCVOZilAKzcRFhhdvsQ5DUJ2q6CKpEX
-	 +9JUpsy50JA+CboX3Xp5mASECTSg17yD1/nh600ITANlfKs2oNooPeeRGMPf6Uz9sC0Mt
-	 ocqdNhm+uzFjjZc9mLg5Fo9NGI9MSEscHXfY9w+C3Q9CXJRWbiBTNxxqTv4JxI2Xjyccb
-	 j1IugikKtfSUKKHEPufbN3hmheJo2KHA5uDSN5N+l9zqwFLQaEn/HF1jLu/tGyeSq8ONy
-	 5SBjV0vcyevLnGSeZZ9nNlCGGziJWEvnMo3IhEvn9RmlnGnTKoTI2GaCvmZlIIDzb9A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793161586;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=qsSJjk2iONV4ODDHOr7Ui6FDrROh+Yjjmw83BnKZCco=;
+	b=un8lh5jFNvAW/JI9SCqU9UQWW3C0nHhxvgMlP6zq3VYCpE0oXUTG29+axyX9DkQQXZaD
+	 oa1XfmAVy/fUmcw6GuvAd7KeSlvuHhrdtNsBtJDJIwsTSwx7KAvy0SlygcQhAopAGiY3V
+	 rwOJM02Cpe50IHLlCPj3Yw0jZ4Z6QYzbRVzwRZQq4TKowzOBigl/uK7l9CZecfPCUigyz
+	 mNCRwYWd9wCWDXrCbZ5M33+YYeuTLpSa0S+2/NZQGrsu4HX/pzS+oWyWb9vvuFDPPhLxD
+	 iyXUSoW7uWasg5wmXu0WRw0id38V4ZyezD3kuJhQEQXt8MCSQ7HrIzkyLWmjRKmhntA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lvViFLAP;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=B6tdC5HJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262D1606A31A
-	for <damon@lists.linux.dev>; Wed, 28 Oct 2026 02:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C095606A31A;
+	Wed, 28 Oct 2026 04:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lvViFLAP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5D51F01829;
-	Wed, 28 Oct 2026 02:39:41 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=B6tdC5HJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205B81F01825;
+	Wed, 28 Oct 2026 04:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793155181;
-	bh=CSYYa0XleAV81e2G4TUKPzenaDlnv01ydJ1eiMlRcFs=;
-	h=From:Subject:Reply-To:To:In-Reply-To:References:Date;
-	b=lvViFLAPS0/FNCdmwUlm7GUjwjSZX11lftC8jhBiI9h1SHRBr40UFZKPKi1mBz2w3
-	 PkFYGrnypzPthJhJYEVD/iGVQ4jAUdDhizZIFb245+Nvgd9h4yYsTp0D/fIuaL4DGb
-	 wKDH1VxfbF7tEs6rk4rSMJnPihMcAQxmrjjxk1xEXPzXGb0FiYQX6hd62PaanNpQsC
-	 mmHnuzEU6LxBTnvkTuCFynT6DZ12osGL1B/Yt1HkJQoVJvqq2f5PEtTkEMmZEyXFfZ
-	 pOsww27l4SA+K/5XEV2tifIGYns8phyjMO9tFsbap3IA5fbk5ljM4CStY7lKrNDB5W
-	 EDnYFcal1xtgg==
-Message-ID: <sashiko-outbox-187361@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] Docs/admin-guide/mm/damon/reclaim: document how to
- disable watermarks
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Jinjie Ruan" <ruanjinjie@huawei.com>, damon@lists.linux.dev
-In-Reply-To: <20261028023628.795637-1-ruanjinjie@huawei.com>
-References: <20261028023628.795637-1-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 28 Oct 2026 02:39:41 +0000
+	s=k20260515; t=1793161586;
+	bh=qsSJjk2iONV4ODDHOr7Ui6FDrROh+Yjjmw83BnKZCco=;
+	h=From:To:Cc:Subject:Date;
+	b=B6tdC5HJ9k3ZB4fk7jBl3mMIc/5JBY7E3fcRpaOJwhBROFz+b73TIB+x7rOev7ArW
+	 hTY2MPjSLu6meWTZNjYIN+TX3k4inwAfQUMBYcl2hgNzbJy5sKE7/+ROCiEu//cVVK
+	 ATO5UDNn4IkjcAaQiyREue8O4iMqjIfDFHDNmT0N2PenX4wKRDSPuLajWmZVnwPe+m
+	 yXe+/XfoJzeTx6ZmMgELRS2VUKnnsbKklLMGdY4MEGP74mVqgW5Gie9hWFaCjh6dlf
+	 7j8A7KkkztoKTnAYtlVhx5oqwnH/vf8BRgvkSv54F4q8FHJLWXHrfe0VhFq6eFCD6t
+	 8wnBq2HY/kYSA==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 6.12.y 0/2] mm/damon/sysfs: fix pid leaks from wrong error handlings
+Date: Tue, 27 Oct 2026 21:26:13 -0700
+Message-ID: <20261028042617.165657-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -58,19 +59,24 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> DAMON_RECLAIM runs its scheme only while the free memory rate is
-> between `wmarks_low` and `wmarks_mid`.
->=20
-> But some users want to reclaim cold pages even while the system has
-> plenty of free memory, and it is not obvious that the existing
-> watermarks parameters can already do that. So Document the setup.
->=20
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+DAMON sysfs interface can leak pids due to wrong error handlings.  The
+issue in the mainline has been fixed with code refactoring.  The
+refactoring is done with commits including 7114bc5e01cf ("mm/damon/core:
+add cleanup_target() ops callback").   Porting all the refactoring
+changes to old stable kernels will be challenging.  Hence submitting
+this non-mainline hotfix series.
 
-Sashiko has reviewed this patch and found no issues.
+SJ Park (2):
+  mm/damon/sysfs: put target pids for damon_start() failure
+  mm/damon/sysfs: put target pids for apply_inputs() failure
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261028023628.7956=
-37-1-ruanjinjie@huawei.com?part=3D1
+ mm/damon/sysfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+
+base-commit: cdfe28f3e9f0e6bfc80fca63d2defc5eb972d56c
+-- 
+2.47.3
