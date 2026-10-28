@@ -1,60 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793146764;
-	b=Of2mopPgybk2vL+dfd0s1JrgNtqxDTROvL78JQ5M2eShL6PFuba+6s14LspcixaQXrkg
-	 imuezeyK6fbCAVKcvgLVDcYsg52MZVX7L7Qdh8t6Tx9Z15uthfPw4DgKab8HvUrKmOl61
-	 qpoHtuL+Kjy9Njg6K+pDaHk7yLK0wPL3hAxX3lylmGftYylyEaFx1td+D8gyL2RadEEQt
-	 MF9tunczfNuafBQtIv/fUs3Lor/syJMX46/+RlLS73DiggyKkVm8pjnv+SVTs/9sCkfco
-	 y3WcgFddAFCruu58u60Hm3IetYSPLdBPDqCUIDcX7kYjlSz+NNEsN9FVHBGdTYhPAfQ==
+	t=1793148901;
+	b=pWeWbJB89sJlYueTeRWN7S9flcImwNYcVgdKfj0Zgq85OdPOf0FDZOgEohPRA0/NV1mP
+	 blp/YY54+Nu5FeW58DxRP7F+Ssa9mYL1jPLkmvelXAJeTKFRfDleSzU0PlbJQtOBrfZEC
+	 L70uBbfWkTelQ94cYY08aRbUaiK7xHfEudZj1Hij5eJjqcYNWImSIX5mRFI4fKqazhsSu
+	 7EoVrB0z2qJSrMSgZV98kAoNlAJ8MJEYECXGPCTrreWkrPJq9ePmgCV+9BiwZCVXVQWcj
+	 J/X6beFd3Dj04P3vCJ6+ggCn4Js0Z1bZZZgynCTHNlu1TRh5hq1ltd7D17DllJQcVqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793146764;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793148901;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=Of+Ihfq2JolsP7lQDuT/aMXMnMjzwRQu8EA+8gWaGVg=;
-	b=nMfd2/dUYenWmjdqoyRzPF+HqWQR3cDwxKsiBqfj3iIQoYfFrS3tdwz75BGj2Sz89rQ7
-	 aJCQnKI3/HEp4U2qhJjt9jAXcUtHhs+4PXPDHr/rVT9NdN9wcOrFPbObyg+bNK4nTc7AK
-	 AHR4x46QnG2nIQFhZuZ7FyZtDzYALSFHeHqA77W96qkRopA2lFoR5YRTsBND7FWTnZPlx
-	 V6CL81fqlqtTq1FCLVshZXFICF5KaDy8D07bK9VMxBR9cNIO75iRcxZDKDqKdW+Ti5XIO
-	 hL0hf4+wNvZVciDxIctRyQ9Cl0RQIgBeAa8pSAzljAwRLU7+Q+EjKkRzrPN1BFgtnlg==
+	bh=4ZgROYSFX3uxrNR5jpP0XfaMHw/DaoPH2lgDKlwezuY=;
+	b=r3pLlp+dk5ofepVlA1qRVfPb6xV/AmC5KjS723/oXLpOlro7RkgjfQ0WF5ftGtKJZEaG
+	 H97ujJNEqYZM/Q86nWSiX1PCgxJ/EEEVXUh8Y7oBKz4yFuHXK3L2RYUVgB4VSO7sUTRKl
+	 VNNuDJ5FgXMjmfIGJZMgeH7edlhE3+uKOUFddAylwVIl+IJRBCLUpnP1t3lKnPjTFSy3G
+	 KJBsoDMbMOoNVQtQ77wCUhg+wKgg0iSSUHiGI0fSplD7im6qrlU5uXnftEzawu13S2ji6
+	 wx2gWKdQsBwfAtFQsjVCWKWxYTbObfsmW5aSMOMcIAAQmw0SbYa3tEnX915/SydAFCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="SUj6Hq/E";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iB3y2nsF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80113606A31A;
-	Wed, 28 Oct 2026 00:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8454606A31A
+	for <damon@lists.linux.dev>; Wed, 28 Oct 2026 00:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SUj6Hq/E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62C51F01825;
-	Wed, 28 Oct 2026 00:19:23 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iB3y2nsF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0496D1F01825;
+	Wed, 28 Oct 2026 00:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793146764;
-	bh=Of+Ihfq2JolsP7lQDuT/aMXMnMjzwRQu8EA+8gWaGVg=;
+	s=k20260515; t=1793148900;
+	bh=4ZgROYSFX3uxrNR5jpP0XfaMHw/DaoPH2lgDKlwezuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUj6Hq/E/BbsMuEPgwvTu+j59aaKTVRomAQqlezP6T5LfKJTaXDSIHye46Kac/A3j
-	 zhAIed35qXIE1rALmYpMIjVWkPi3TV/Qu5E1tJdkR8j36fIw7yeXUl+PosckFVvipq
-	 I3SmzaPG4nSarXEnDWZvJDI5Mzy7ZXolD3alEDUQ/KwZ8fnVjjeD9d9b0wbv8kLZWw
-	 U7ZBFjbBT4SbtHAa+2GKllC8fgxCjii9c/xVnELEzTky1JActGEE7AqeblKcDPYcs6
-	 Ri+2bWQqoQ1CTFN9sJzMx/xy64IJMKIyXleyk7nkibh4iFg1+o/+/Y0Z945UNCpLYP
-	 BE1r0CbrGGQ7Q==
+	b=iB3y2nsFBMKfAAVx/mDQIl6NqTb6vNM3Wtbs7LJ6JXVXIHixsjFy24NuALtMNEA78
+	 RswEHWxDTSjCj6WcaaKlbRDyoBJV5eMAHIbYfUvKldVz5+B3vNtd1gsXGTb/Lvt7cR
+	 +bq95bOiWJZ38nQSoH8qqkA0NDUCoaHuFP/SsL+gqEkmmI9/OggVa5UeCXomRA24G9
+	 XH8P2uO/zy7NZsKblD+4lExNvMGoO1R6C4HouLVtnCH17Gl87e3W9OpHGlw4mJ1Hsf
+	 p757BDd/K5HWCppehd5KakAhD01doOIQea7Wh6d2MANIXStfCVRH/vxKGtfltY1Wmp
+	 rQGEza6WYsRag==
 From: SJ Park <sj@kernel.org>
-To: Manuel Ebner <manuelebnerli@mailbox.org>
+To: CharSyam <charsyam@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	corbet@lwn.net,
 	damon@lists.linux.dev,
-	jm5905938@gmail.com,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	rdunlap@infradead.org,
-	skhan@linuxfoundation.org
-Subject: Re: [PATCH v2 2/2] Docs/admin-guide/mm/damon/reclaim: rewrite complex parts
-Date: Tue, 27 Oct 2026 17:19:15 -0700
-Message-ID: <20261028001916.157488-1-sj@kernel.org>
+	akpm@linux-foundation.org,
+	bijantabatab@micron.com,
+	ravis.opensrc@micron.com,
+	bijan311@gmail.com
+Subject: Re: [PATCH] mm/damon/vaddr: preserve migration weights above UINT_MAX
+Date: Tue, 27 Oct 2026 17:54:52 -0700
+Message-ID: <20261028005452.157810-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261027212345.2586628-2-manuelebnerli@mailbox.org>
+In-Reply-To: <CAMrLSE6ySuzsJJX-KXoeG49pS4ZVbNWZve1dwj1v1avAhHeEdQ@mail.gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -67,85 +65,44 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Manuel,
+Apparently Bijan's micron email is no more working.  I added Bijan's gmail to
+Cc list.
 
+On Wed, 28 Oct 2026 08:57:06 +0900 CharSyam <charsyam@gmail.com> wrote:
 
-On Tue, 27 Oct 2026 22:23:46 +0100 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
+> Hi, SJ.
+> 
+> Thanks for your reply.
 
-> Rewrite complex sentences.
-
-Any special reason to keep this as a separated one?  I think it is ok to merge
-this into the first patch.
+You're welcome!
 
 > 
-> Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
-> Suggested-by: Aveline Noir <jm5905938@gmail.com>
-> ---
-> Two more minor changes
-> @ 31
-> /s/attempts to pages out those/attempts to page out those/
-> @ 126
-> + 'is' to fix grammar
-> 
->  .../admin-guide/mm/damon/reclaim.rst          | 19 ++++++++++---------
->  1 file changed, 10 insertions(+), 9 deletions(-)
-> 
-> diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-> index 0bab2299ea..033686f410 100644
-> --- a/Documentation/admin-guide/mm/damon/reclaim.rst
-> +++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-> @@ -30,12 +30,13 @@ guests could mitigate this problem.
->  How It Works?
->  =============
->  
-> -DAMON_RECLAIM finds memory regions that weren't accessed for specific time
-> -duration and page out.  To avoid it consuming too much CPU for the paging out
-> -operation, a speed limit can be configured.  Under the speed limit, it pages
-> -out memory regions that weren't accessed longer time first.  System
-> -administrators can also configure under what situation this scheme should
-> -automatically be activated and deactivated with three memory pressure watermarks.
-> +DAMON_RECLAIM identifies memory regions that have not been accessed for a
-> +specified period and attempts to page out those.  To avoid it consuming
-> +too much CPU for the paging out operation, a speed limit can be configured.
-> +Within the configured speed limit, it prioritizes regions that have been
-> +idle longer for reclamation.  System administrators can also configure under
-> +what situation this scheme should automatically be activated and deactivated
-> +with three memory pressure watermarks.
->  
->  Interface: Module Parameters
->  ============================
-> @@ -125,8 +126,8 @@ quota_reset_interval_ms
->  
->  The time/size quota charge reset interval in milliseconds.
->  
-> -The charge reset interval for the quota of time (quota_ms) and size
-> -(quota_sz).  That is, DAMON_RECLAIM does not try reclamation for more than
-> +The charge reset interval for the quota of time is quota_ms and for the quota of
-> +size is quota_sz.  That is, DAMON_RECLAIM does not try reclamation for more than
->  quota_ms milliseconds or quota_sz bytes within quota_reset_interval_ms
->  milliseconds.
+> 1. I found this by code inspection, not from a real-world bug report.
+> I consider it a correctness issue for valid inputs.
 
-I think the original sentence was not that confusing.  Also, this changes the
-nuance of the sentence?  What the sentence is saying is
-"quota_reset_interval_ms is the charge reset interval for ...".  If this was
-really confusing, maybe we can add "quota_reset_interval_ms is " part.
+Thank you for clarifying.
 
-But, I start feeling we might trying too much polishing...?
+> 2. I would prefer a u64 total over rejecting those inputs, since the
+> interface does not document a limit on the sum of weights.
 
->  
-> @@ -137,7 +138,7 @@ quota_mem_pressure_us
->  
->  Desired level of memory pressure-stall time in microseconds.
->  
-> -While keeping the caps that are set by other quotas, DAMON_RECLAIM automatically
-> +While respecting the limits imposed by other quotas, DAMON_RECLAIM automatically
->  increases and decreases the effective level of the quota aiming this level of
->  memory pressure is incurred.  System-wide ``some`` memory PSI in microseconds
->  per quota reset interval (``quota_reset_interval_ms``) is collected and
+But I doubt the value of documenting it.  I wonder if real users will find the
+behavior at all.  I think it would be not too late to consider documenting it
+after we get an issue report from a real world user.
 
-I'm not sure if the original sentence was really difficult to understand.
+Even just keeping the current behavior looks not really bad to me, as long as
+it is easy to test and only shoot the foot of users who didn't run test for
+their weird inputs.  We can revisit after a real issue report is delivered.
 
-I'd prefer dropping this change.
+What do you think?
+
+> 3. Given the lack of a reported real-world impact, I do not think Cc:
+> stable is needed.
+
+Makes sense, I agree.
+
+Please avoid top-posting [1] from the next time.
+
+[1] https://subspace.kernel.org/etiquette.html#do-not-top-post-when-replying
 
 
 Thanks,
