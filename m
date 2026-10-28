@@ -1,57 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793164835;
-	b=HIb2PuhZmVefXczOnaeS4uNpBnlN2Ai1L+d2KXetgcKR7ukUUqsSFen0+asP7UGvi92c
-	 w1bgQJ9/J7+09/2/FhYXiUBhyMisIPaYfVSGFO9fltyP1ulVdJpBbkDy7a7eu3h4Q6V3O
-	 Ft1CZVBG1sD8iJSEGQIoCk3OJp/nSlxkBKT3/D1sy0N1605ibVySjAj9SDUoV0ATjfOOg
-	 yUqcxOeakiz7lTCMLeOnP+Q2+6WTG668nSQkQSHDEiNMeyObdLHSviTmIGPeD/mY6DHVs
-	 k1IzExicA3xGDAMpqyKshWTv3jqFn+4Y8Vxcd1hZg8Hwv0CBCeVz//wkCHzxh9nbLbQ==
+	t=1793165073;
+	b=cPUDNdAx0/2xohyTXO22GWd/YEVHd3cfLdjTyobgpt/nPmVo6HxnrVBA1OjpkrHKYMXh
+	 g9kWtPLBFXGTzNCIz72sdcyd5UQ2c1MG1hlpLHj4c9kNkKFduL6WoCN5pXqHGp25pu9eF
+	 SeYjQ2wQOP/TBJMkG+2o2/duPBJ1PdG5h7SQAxLtu9b+bMdfO4pVjfclcvCn18wuP8LQI
+	 UbFAylEYceIyReRVvsHGqmLo3pDcjKvdCO9RQURQHH2/MGSChqoaFsKuzLPlJs3Usfvex
+	 FMawR6DTFbPPPgdy6XDLwxY43NAlRQxQuinCYjHWlEbvnF27NVuRtirG8BfAyLOtY5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793164835;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=H0xBG+xgv6fbezQlDemDQ+tWGKLiW1LS2vRUrw2MdXU=;
-	b=uEXdbN4JfADxyeK5hO8SN/P+kUAGLijiA/jHGaZTl0eneOskTKvxXv15KLRaIDQQ4eQX
-	 1eicbSlweQCTBVh1BSr8u7JlyTRYQd76amtZhpamnFPNmAu/DYOC8zOfLBqUZNP+Fd4f0
-	 ZCzQ7pSvgqj4m0G9zOwST9+sfvBKeS8oqsnfzqFJrgAADbUbwRTwTbdAqC0ytnIAGQGoL
-	 OJcBrXtCqsM8RhzsZpeFZe/PH1K7sRn/xJoTf9mIYN5HH+Pn4Oe/YoyfYme+UsY+xvPuA
-	 LMQqS1GuXgzYN/26vEG/8+3g0jESWKc4bOUBwTfeOzrsQogoEyrauCw7r7skP2a4Cvg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793165073;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=oJZAZ0A86kifY1NPYX8XYC0xWNprTevsjHMyzxjeHnM=;
+	b=0sppppXqxKv7E14ESMLDT+k1EOpOD3mUgGKsGpVUUaGf4babSK40QeEuC70woNVz7zl2
+	 BzUD90xf4eWEmI4/yjGGzvl7Km5Eju6qJgAuIG5G6M5SG3NxAEB3OyNHt5FIGj1Vt1az7
+	 r6Os8y/2YsgOAOStWxmXbPwh9caeQTu0mVd0CnIZO4zaaCdKgIU6oIvIqWKkXSUI8EzGX
+	 KGEtecfBNNRBfQenitVHXY3YRqzgp0XP+eKZIc/wcmXWaNMaUgsY74rCZCzmKYfm6UHq0
+	 vz7vTSK4VO/LuwsOZo0X5yZgpb16MBPKeuorg93y8sMlcu+8WuHhTVVyrJt3wPXQ+RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZO3Wllub;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ngYis3e2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1519F606A31A
-	for <damon@lists.linux.dev>; Wed, 28 Oct 2026 05:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7A7606A31A;
+	Wed, 28 Oct 2026 05:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZO3Wllub
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B8D1F01825;
-	Wed, 28 Oct 2026 05:20:34 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ngYis3e2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4059F1F01825;
+	Wed, 28 Oct 2026 05:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793164834;
-	bh=H0xBG+xgv6fbezQlDemDQ+tWGKLiW1LS2vRUrw2MdXU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ZO3WllubGDUB+68BLIUpTBdiym2u/ZFEKrrBjuTOvveAo14ihGCFlUOZo/t06jq7m
-	 lDmsnBOxrD2fJB6xFuGT/oLEsLyLeTphk3b0liwQLoLdVdw+vgTYFAD8RM9uuemKQP
-	 qiL1mLh4TNLvVFzQkxq9oSttoAx0+7ct/clOFG471qQD57XmZDQECqBHjWswmXUrZM
-	 AzbY5pOKTBGeW45gCEknXsfTCywQc0M7jCGVYu9dqJ8unMUrKxjKEgtYQGRvHR1lN2
-	 vy47ubrPxCDFpRlIg1Qqig44m8DJYqfKDfhMPrRq57sYbXAouumAPYnmEN8eaWYfpI
-	 NKYT8JNduSSdw==
-Message-ID: <sashiko-outbox-187526@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 6.1.y 1/2] mm/damon/sysfs: put target pids for
- damon_start() failure
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261028051104.154232-2-sj@kernel.org>
-References: <20261028051104.154232-1-sj@kernel.org>
- <20261028051104.154232-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 28 Oct 2026 05:20:34 +0000
+	s=k20260515; t=1793165072;
+	bh=oJZAZ0A86kifY1NPYX8XYC0xWNprTevsjHMyzxjeHnM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=ngYis3e2wvUOSJvp8+0jEGKSRDYMAK9HDAntN9cymSinu549gET696m3116YIejwJ
+	 5XIWt/Mp+Inwhh34rmXQnFzlmSbXuxweOA+gSdcBQjRlwCxPXq6FAheBvqJqQdZzNA
+	 E4wKqnPVfaQAlZ4Q9i9McBUaVFtLkG+c7NtlMpsqccENGbmjhCiPc3cv70cYXmodue
+	 eiab7TSuTB75C1kUmYTF2sV0N6KN9Ul50EVqFwxf4RSWnUpOYVgSmnti6Ms1sTCTGr
+	 di74MpOpebIVO3Xyh3IelZ0EUD/1U+rRwUvsu+S/FEDd8MSxu6L20KJk588yv9LuGR
+	 pMMcssqoPeMDg==
+From: SJ Park <sj@kernel.org>
+To: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: SJ Park <sj@kernel.org>,
+	corbet@lwn.net,
+	skhan@linuxfoundation.org,
+	rdunlap@infradead.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] Docs/admin-guide/mm/damon/reclaim: document how to disable watermarks
+Date: Tue, 27 Oct 2026 22:24:24 -0700
+Message-ID: <20261028052425.154616-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261028023628.795637-1-ruanjinjie@huawei.com>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,25 +63,53 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> damon_sysfs_turn_damon_on() allocates and sets up damon_ctx to start.
-> If it is for virtual address space monitoring, the setup increases the
-> reference counts of the target pids.  After the setup, the function
-> invokes damon_start().  If damon_start() fails, it deallocates the
-> damon_ctx object without decreasing the reference counts of target pids.
-> As a result, pids can be leaked.
->=20
-> Fix the leak by putting pids using damon_sysfs_destroy_targets() before
-> deallocating the damon_ctx object.
->=20
-> Fixes: a61ea561c871 ("mm/damon/sysfs: link DAMON for virtual address spac=
-es monitoring")
-> Cc: <stable@vger.kernel.org> # 5.18.x
-> Signed-off-by: SJ Park <sj@kernel.org>
+Hello Jinjie,
 
-Sashiko has reviewed this patch and found no issues.
+On Wed, 28 Oct 2026 10:36:28 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261028051104.1542=
-32-1-sj@kernel.org?part=3D1
+> DAMON_RECLAIM runs its scheme only while the free memory rate is
+> between `wmarks_low` and `wmarks_mid`.
+> 
+> But some users want to reclaim cold pages even while the system has
+> plenty of free memory, and it is not obvious that the existing
+> watermarks parameters can already do that. So Document the setup.
 
+Thank you for this patch!
+
+> 
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> ---
+>  Documentation/admin-guide/mm/damon/reclaim.rst | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+> index ec7e3e32b4ac..23fede7d1cdb 100644
+> --- a/Documentation/admin-guide/mm/damon/reclaim.rst
+> +++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+> @@ -193,6 +193,13 @@ DAMON_RECLAIM becomes inactive, so it does nothing but periodically checks the
+>  watermarks.  In the case, the system falls back to the LRU-list based page
+>  granularity reclamation logic.
+>  
+> +To keep DAMON_RECLAIM always active regardless of the free memory rate, set
+> +``wmarks_high``, ``wmarks_mid`` and ``wmarks_low`` to ``1000``, ``1000`` and
+> +``0``, respectively.  Then the reclamation is limited only by ``min_age`` and
+> +the quotas.  This is useful for reclaiming cold pages even while the system
+> +has plenty of free memory, e.g., right after an idle virtual machine is
+> +paused.
+> +
+
+I feel like above might be too detailed.  Particularly, the second sentence
+looks too detailed.  In a sense, it is not technically correct because of
+'skip_anon' parameter.  We might later need to add more such controls, and I
+concern if this kind of detailed documentation will limit such extensions.
+
+What about keeping only the first sentence and dropping later two sentences?
+
+
+Thanks,
+SJ
+
+[...]
