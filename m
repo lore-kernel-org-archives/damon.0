@@ -1,61 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793196493;
-	b=YNLE4vsr0Dk72InRk/LoeQaJfIAyjPCPlrW7/FoTzNvkXYCvGJruZlHFwzsQON3ydwrn
-	 COkNZDQ4LVXT0++bgVsC/tV8rAXTtm3KPJlxys+mgOVhcbvYkQgYHwPioxmWvgP7iDx73
-	 losgo9Iu/YO+aKH/wTSRml9xu2SSNIWPzaRjfWj5Jr74WQilnV9XHnRIP9W0Wer2idI0E
-	 5R5mRLgpp4I0lH3dBzHJXItNs/xD7lsBE0csJVK5KBe+8vYpIPfOvmXQjqEm0w5IWwvaz
-	 T+LERgqyBiLQEQ6lAGTdOlrNoRxHElF/QZu1ozAEw6bH5YZtrgzAAFUjCGHdP0F6ORg==
+	t=1793196718;
+	b=ogvrAYEmmdAOpiNoxkgnvk29cw9tVIYJhiRSWqlL49Tb90Oqm/NuwSyXv0c6Yq8AvGWV
+	 zxOt0nnoB0R198glaGpevjSRCAFxYI0vOJtY5NFMoZxf8t75TeskGxZQtaP5atUMIwhsj
+	 q35NaV0i2JI1+4TCkb6ZpVYIxBhJRN0yCEFC4ULcyWduVfMbFo3A8DDZ8i3qK+9uC3+ZR
+	 Kh3ehE0fWgTtW9FAHyEN3n6qFdkswxKiZTlt27iH7PeMWOWgbS54R6ECdctIeD3C/Q9TJ
+	 kzyaDT1EJ9b1NX76TMed8YI+CI+ffPnFpX3w1OcG0nGo/MeyQMOOFnBGLwKJbtuT5OQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793196493;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793196718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=qRZx+uCzjDXnaggv9NA2GtraDXmEHwAiGFLHgafIj5E=;
-	b=RAZiXWjNYrQCtBwt8p7xYJZ9EkZSWnTyVlOjcW2dV5zjTH/0ELd8R1uHnsEkNmmbqblF
-	 +jPVAPNcJ7jPqPHiQFoHsAB4a4Uw8q4exAnNGWActI1S59fnGyFh7xwqIaXxBocB/w+0e
-	 giQVVkpxAhDdsVtbKsv4Hy7sDoRHBcg2fSIUR9eGn6PDPc+7u2V+3uR6ekqH9MHaujZbK
-	 0UxYcxpvlzAGOCr+hM0y1HeU/n3FgjEhB6aRrGDNioects89wDYUmdeN6lFNT5a+HAkc2
-	 9OlccVhfapp9O7g+9S2O8nowh+ThHCyxoODKVhamwjSOGI0jiQOy0YF90tLXZngVMFQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=DBAwupr574cqsrPW8LZMhh/I92Jfido+74PsyFCXFnU=;
+	b=pir7KkMRS9k3rFx7VELHvFjAe5mZtUG6/MpzYJHG2LWNEVOEhBy/FWbrCE/OeguVQ7md
+	 VcxDlG5Ue/MXdk+AiQZB3exFIy4fHkSR/Sx34qjYfe5I5lJtuuiv8fgCZS3CCiDX67vod
+	 vHIJt4b2xpAGVjPorngMobbgsAcZx/BNOU9Li8bw7buB9SyEpRic90qQelHLyQA8u/Vxf
+	 zPRZdOpKBG7ATlAk9znZbMdA/fBpmH7aAr/6i/nVsHE2QhTOGM+QxiSfu13iS+3oPskwi
+	 1uXaQF2gkxrLdnHG0jQZXEw9ij6xsH3AEjrTHoKFQvVI56/5hIVlc42fKi42MwXYReg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JjrDrAWL;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ftx4v6cB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71FC606A31A;
-	Wed, 28 Oct 2026 14:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8723606A321;
+	Wed, 28 Oct 2026 14:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JjrDrAWL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E72C1F01825;
-	Wed, 28 Oct 2026 14:08:12 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ftx4v6cB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569361F031E8;
+	Wed, 28 Oct 2026 14:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793196492;
-	bh=qRZx+uCzjDXnaggv9NA2GtraDXmEHwAiGFLHgafIj5E=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JjrDrAWLTDPsAUrZN+XPbqZ7cfing5M98T3onac6DKid6Qut5cw1320CJkeX4nD0u
-	 Ukbu5Ugwyx1bjDn0dOwA1Ev/LBOIW4TE6G48P/ZRhfHcx47w9Wg8NhhyQdAtClTw1/
-	 dXiquSva30A28GxPycrfHJoY9YBvSHy4ObLysaizJdTgYa5VRICt83OZF9bIxisNkU
-	 LH2lkfoFucpK6GUtB+0kkk+JB0T/e9v04zuEgNt9JxcDAfPQrFxQkpads/0BNR3fQx
-	 K5HcZ+O0PfwyAkuRuGn3VgoaRWCZK1cqd0h3/Dq9zDyvaCYYchTRFqcUxdFr/EkL3I
-	 2ysaDSNlGZltw==
+	s=k20260515; t=1793196717;
+	bh=DBAwupr574cqsrPW8LZMhh/I92Jfido+74PsyFCXFnU=;
+	h=From:To:Cc:Subject:Date;
+	b=ftx4v6cBTQ46AqtV5OsXjBLzK2VZEfSGpWSzh7CkWjresyhm7DwBOHHRqgUhqClrt
+	 cpoP1kXSBgT9E2TVC/mm9xrJQ0JCIxsQeHrHRohqt+ZgK5Or5CBCR9tBmZViDEEBN7
+	 dzaWEbFQt0wGylL0iQI8tJzABrTGD8pOtUq3SlSpE7i0ED6wYN6Y36krgehar4eY2b
+	 X2PTMBtxH3RhpGtV2s5u2HMmSWCNZ3Mk684Gq2dH8zuCitzzKYXfbxQLiRIrYC+VgZ
+	 HuZ+2FgJZpQuYo0lPJKW4GcUXdHAMBMaeGF01PT0nKY9CtRkgITpdHJWimRzHVj5Pk
+	 ToRQwPwkClIwA==
 From: SJ Park <sj@kernel.org>
-To: Jinjie Ruan <ruanjinjie@huawei.com>
+To: stable@vger.kernel.org
 Cc: SJ Park <sj@kernel.org>,
-	corbet@lwn.net,
-	skhan@linuxfoundation.org,
-	rdunlap@infradead.org,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Docs/admin-guide/mm/damon/reclaim: document how to disable watermarks
-Date: Wed, 28 Oct 2026 07:08:03 -0700
-Message-ID: <20261028140805.159912-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 6.12.y 0/2] mm/damon/sysfs: fix pid leaks from wrong error handlings
+Date: Wed, 28 Oct 2026 07:11:47 -0700
+Message-ID: <20261028141150.160711-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <b0fb80cc-4a0d-4612-beef-bf2fc398f06e@huawei.com>
-References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -65,79 +59,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, 28 Oct 2026 14:09:39 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+DAMON sysfs interface can leak pids due to wrong error handlings.  The
+issue in the mainline has been fixed with code refactoring.  The
+refactoring is done with commits including 7114bc5e01cf ("mm/damon/core:
+add cleanup_target() ops callback").   Porting all the refactoring
+changes to old stable kernels will be challenging.  Hence submitting
+this non-mainline hotfix series.
 
-> 
-> 
-> 在 2026/10/28 13:35, SJ Park 写道:
-> > On Tue, 27 Oct 2026 22:24:24 -0700 SJ Park <sj@kernel.org> wrote:
-> > 
-> >> Hello Jinjie,
-> >>
-> >> On Wed, 28 Oct 2026 10:36:28 +0800 Jinjie Ruan <ruanjinjie@huawei.com> wrote:
-> >>
-> >>> DAMON_RECLAIM runs its scheme only while the free memory rate is
-> >>> between `wmarks_low` and `wmarks_mid`.
-> >>>
-> >>> But some users want to reclaim cold pages even while the system has
-> >>> plenty of free memory, and it is not obvious that the existing
-> >>> watermarks parameters can already do that. So Document the setup.
-> >>
-> >> Thank you for this patch!
-> >>
-> >>>
-> >>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Changes from RFC
+- RFC: https://lore.kernel.org/20261028042617.165657-1-sj@kernel.org
+- Drop RFC tag.
 
-Reviewed-by: SJ Park <sj@kernel.org>
+SJ Park (2):
+  mm/damon/sysfs: put target pids for damon_start() failure
+  mm/damon/sysfs: put target pids for apply_inputs() failure
 
-> >>> ---
-> >>>  Documentation/admin-guide/mm/damon/reclaim.rst | 7 +++++++
-> >>>  1 file changed, 7 insertions(+)
-> >>>
-> >>> diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-> >>> index ec7e3e32b4ac..23fede7d1cdb 100644
-> >>> --- a/Documentation/admin-guide/mm/damon/reclaim.rst
-> >>> +++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-> >>> @@ -193,6 +193,13 @@ DAMON_RECLAIM becomes inactive, so it does nothing but periodically checks the
-> >>>  watermarks.  In the case, the system falls back to the LRU-list based page
-> >>>  granularity reclamation logic.
-> >>>  
-> >>> +To keep DAMON_RECLAIM always active regardless of the free memory rate, set
-> >>> +``wmarks_high``, ``wmarks_mid`` and ``wmarks_low`` to ``1000``, ``1000`` and
-> >>> +``0``, respectively.  Then the reclamation is limited only by ``min_age`` and
-> >>> +the quotas.  This is useful for reclaiming cold pages even while the system
-> >>> +has plenty of free memory, e.g., right after an idle virtual machine is
-> >>> +paused.
-> >>> +
-> >>
-> >> I feel like above might be too detailed.  Particularly, the second sentence
-> >> looks too detailed.  In a sense, it is not technically correct because of
-> >> 'skip_anon' parameter.  We might later need to add more such controls, and I
-> >> concern if this kind of detailed documentation will limit such extensions.
-> >>
-> >> What about keeping only the first sentence and dropping later two sentences?
-> > 
-> > If you don't mind, I could add this patch to damon/next after dropping the last
-> > two sentences on my own.
-> 
-> Hi SJ,
-> 
-> It is fine with me, thanks. Please go ahead.
-
-Thank you for accepting my suggestion.
-
-I applied this patch to damon/next [1] with my suggested change.  I will repost
-it for mm.git merge next week.  So, no action from your side is needed for now.
-If it seems I also forgot doing that or you cannot wait for my action, please
-feel free to ping me or Andrew.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+ mm/damon/sysfs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 355214ae5d8da08854c5749cc79b688e4ff265f7
+-- 
+2.47.3
