@@ -1,66 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793318696;
-	b=GJyKUtqWaDIGcOybm23wmMOJYBXUiX5KR3gL9d+WT7IsSdDSnA+NwzxeoTnoJgRGKisp
-	 VteeVeQlRY5tcCi5fG+gzfbEjfMsb7dRjVBy41L6PA/Q63rfc51oYFIXcSWXNdAFTWum4
-	 wou+9EwZ29YgvU4xchT08jKnry0iUXAYQX+MQnLFGvT+2Vbi5xN5eYg7bM9TAzkipAyfm
-	 tf9Qpt3jcauOv3zZu0uUbmXJ63vL/YsTiBwXI/A7cyYJpgTfJnEVKwq8r9S0fwHdct9RR
-	 p+Wu4wCerT3sJQaDwL0hXflh1VdKSqy/No3M0lRmfc849ZKWnZA23VGVnpHg6NRXM9g==
+	t=1793335612;
+	b=0vlWcaw+ybRUhwwtluYF4ok1r7GhhERK7LTaoBlYqC+GBM+F652rpVshX3L/mICLF7ki
+	 9N5aML9nn2FUWhkn3VGjBkRKjuE1+pwNdN/Wnw/zr/+O67AnoOZNmiC4cz/6aRKSYVEw5
+	 SqJYzy9ATIh5pAqzWzSQ/uSpC4pgAw4I80GWkPEJwk/AJdcMdXPjNC9WgANrdIntDurdg
+	 WFMv+dne+LJ1nTOI0IyO6gW14qvHL914ytu+W3IRX9uVBuaLjRGORVvmWlO6avE7qRC1W
+	 anVfA2pW1nxMf38R3EXNDAjATpum1USblv6yuj9ngVM2w4vh6cRODZsb7clF4fCrcOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793318696;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793335612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=6HBJvZV2dPTZRQu5LKyPil8pJlXI/lZDJKNMF2wLkEc=;
-	b=qouxpumt12wJXNZOQI5WW3K9YgiRLxPo66gQa2/CHktOBy7y5CZFbN6JIe/SvCuVlog5
-	 KiEOvTXoj9hxpTIJyHhJBo6l0fH/KVnXEQOFOjJ3qvBrnBzqldQSZ/TRftvG+MpnbIKFi
-	 hy+lQOfn36Iaj3iWam2CGgNoHhBpF1vsq2JGFk9RVal17KHrEiDDJ4tGbtOxf4KKTMQWs
-	 Eypx/CApLg77XJnqsme9vpLudXS8KLCnmbAnN7P+C6UcYnogNR6PXnLpEcqvyumVrWX5i
-	 2owkA12B+PvcgzsEJ0XkV4v+eEShMSewSqWup3eU3zZD3he2YrKy/L5qtU9Lr1Gq7sw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=DZp5otDluq4NV2cKmLa7Nu+U3zJLkg4HxbRo5oi+i0M=;
+	b=5Blh0pUyckYWX15sXTqNxyleeR9uKlBF6bExx1xwl12hoIIJcQE7qsg+B9a/hcIRfCtA
+	 ebVtH5vAhqeyKdJK5DO0SqgTVgkCmE+4otsZLKqabNiAAmH+YO19xeRJ+IAcM1UrcyB+Z
+	 ev3ndGthN9lZS8W0/gNqxQwQicFMYgX3/+fFnUxSBZSGHjTfLzlLkbEAaH7KhL3AHe7Kt
+	 1ZAusxfvzYraLwMNfYTbZfmsF7sSMlAcRgKluHCPq7ZKdM9f3/1GwRpqxRzW7ArRGpiTL
+	 B3i5V/Ur81Pxl5cc9Ra4oQ/2f7OCMBfvUo9MZhOtsoCqTxw44b8PrdQJXQi0BE6dIEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="HVK/tpV0";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MZiFfe4M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA08606A31A;
-	Fri, 30 Oct 2026 00:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B4D606A31A;
+	Fri, 30 Oct 2026 04:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HVK/tpV0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E302B1F0093A;
-	Fri, 30 Oct 2026 00:04:55 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MZiFfe4M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4731F000C1;
+	Fri, 30 Oct 2026 04:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793318696;
-	bh=6HBJvZV2dPTZRQu5LKyPil8pJlXI/lZDJKNMF2wLkEc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HVK/tpV0ZKdvtF02lea0g0LqWP+h1081rOGwZG2eGA484KV66l9vfQt+KhQDtVqOQ
-	 hlmEVtrokSTyRQW3iTgbfzrNeaRRzGcll9GRoDDt1wRBcZMX1ZDhYLKVYoKH0gJKGs
-	 RfkYieSRU9NV9n03/2EQf478Fb1mrQWjWjlbau3RSxjxm3E/8C9+9Q1xyC347IqFH6
-	 OStkSpvmB7Er5L0uSt27Tv5RA2yqde5I1arQBkGLGriiTfWjEqDVkAUM3aJl/yFlZU
-	 gDQLs5xaiAcnUvqmvc26UZd3QqAI4zeTvJZRw/8Zr9/+s4ix2YON6cK8481/ZsgDkk
-	 ZChh0runNeBlg==
+	s=k20260515; t=1793335611;
+	bh=DZp5otDluq4NV2cKmLa7Nu+U3zJLkg4HxbRo5oi+i0M=;
+	h=From:To:Cc:Subject:Date;
+	b=MZiFfe4MaqqgRmB0M8Sok3Bxfg3CbjxRydYTFp7y5XUzPe6DLkiZJUwTknZefJSPr
+	 saZ96LltFBZ124M/oaiB6gcCOLBs4HUO8MYUPaTLrIB3kko2dfCuC0gjv/BITeMs5A
+	 YuKUu69lrKKDpVxInh/TNuYHDscjoLNibIOKlLJU/pK5o7IZu816Jv4IUGx77+a3lT
+	 YMG+qNzOlzINkS7X3PdbZntrmEkkObPHfsWatqZd8MSd+BNcQhokZBWcWIReTo0RSL
+	 RtSh0qwJfgt89xutqRh6vxGG86kdvQDqg7CaQZ4AUT97K+EIM7K+1YGlzEkQPymJ/W
+	 4E8AZY78E4LZQ==
 From: SJ Park <sj@kernel.org>
-To: Dan Carpenter <error27@gmail.com>
+To: 
 Cc: SJ Park <sj@kernel.org>,
-	Xiaolei Wang <xiaoleiwangxiaolei@gmail.com>,
-	akpm@linux-foundation.org,
-	david@kernel.org,
-	ljs@kernel.org,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/tests/sysfs-kunit: fix leaked pid reference in add_targets test
-Date: Thu, 29 Oct 2026 17:04:48 -0700
-Message-ID: <20261030000449.154316-1-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH] selftests/damon/sysfs_memcg_path_leak: define ksft_skip
+Date: Thu, 29 Oct 2026 21:46:42 -0700
+Message-ID: <20261030044643.157105-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <auNjrR4FyTf4WbgI@stanley.mountain>
-References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -72,56 +64,48 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 29 Oct 2026 18:18:05 +0300 Dan Carpenter <error27@gmail.com> wrote:
+sysfs_memcg_path_leak test uses $ksft_skip without defining it.  As a
+result, the test is marked as passed while it was skipped, like below.
 
-> On Thu, Oct 29, 2026 at 07:10:40AM -0700, SJ Park wrote:
-> > Hello Xiaolei,
-> > 
-> > On Thu, 29 Oct 2026 15:56:09 +0800 Xiaolei Wang <xiaoleiwangxiaolei@gmail.com> wrote:
-> > 
-> > > From: Wang Xiaolei <xiaoleiwangxiaolei@gmail.com>
-> > > 
-> > > damon_sysfs_test_add_targets() creates its monitoring context with
-> > > damon_new_ctx(), which leaves ctx->ops zero-initialized.  Since
-> > > DAMON_OPS_VADDR is zero, damon_target_has_pid() returns true for the
-> > > context, and damon_sysfs_add_targets() therefore calls
-> > > damon_set_target_pid() for each target it adds.  That function grabs a
-> > > reference to the target's struct pid via find_get_pid().
-> > > 
-> > > The test then tears the context down with damon_destroy_ctx(), which
-> > > releases such a reference from ctx->ops.cleanup_target().  For the vaddr
-> > > operations set that callback is damon_va_cleanup_target(), and it is the
-> > > only place where the reference is put.  The test never selects an
-> > > operations set, though, so cleanup_target is NULL and both references --
-> > > one for each of the two damon_sysfs_add_targets() calls -- are leaked on
-> > > every run of the test.  Running the test with CONFIG_DEBUG_KMEMLEAK
-> > > enabled reports the leaked struct pid objects as unreferenced.
-> > > 
-> > > Fix this by selecting the vaddr operations set for the context before
-> > > adding the targets, mirroring what the sysfs interface does.
-> > > damon_select_ops() fails if the vaddr operations set is not registered,
-> > > in which case the test cannot exercise the pid handling and skips
-> > > itself.
-> > 
-> > Makes sense.  Thank you for finding and fixing this.
-> > 
-> > > 
-> > > Fixes: b8ee5575f763 ("mm/damon/sysfs-test: add a unit test for damon_sysfs_set_targets()")
-> > 
-> > The impact is leak.  I think we should add Cc: stable@.
-> 
-> I wouldn't bother Cc stable for unit tests.  It's not something
-> which affects production or real life at all.
+    $ ./sysfs_memcg_path_leak.sh
+    Run as root
+    $ echo $?
+    0
 
-Thank you for your input, Dan!
+Users who run the test could therefore wrongly believe the test was run
+and passed while it was skipped.
 
-I have no strong opinion.  But we got CVEs [1] for this class of unit test code
-in the past.  I'd like to keep it consistent to the past for now.
+Define the value at the beginning of the test.  After this patch, the
+exit code reflects the skip.
 
-[1] https://lore.kernel.org/2024102930-CVE-2024-50068-2e3c@gregkh/
+    $ ./sysfs_memcg_path_leak.sh
+    Run as root
+    $ echo $?
+    4
 
+Fixes: dfa3cf0bc018 ("selftets/damon: add a test for memcg_path leak")
+Cc: <stable@vger.kernel.org> # 6.17.x
+Closes: https://sashiko.dev/#/bug/linux-a0456336-0608-4fec-ac22-0ee61d1d6a91
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ tools/testing/selftests/damon/sysfs_memcg_path_leak.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Thanks,
-SJ
+diff --git a/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh b/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
+index 34c37129c49fe..d407dddb879ec 100755
+--- a/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
++++ b/tools/testing/selftests/damon/sysfs_memcg_path_leak.sh
+@@ -1,6 +1,9 @@
+ #!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ 
++# Kselftest framework requirement - SKIP code is 4.
++ksft_skip=4
++
+ if [ $EUID -ne 0 ]
+ then
+ 	echo "Run as root"
 
-[...]
+base-commit: 20b1ca206f8a664a16ad3006262c63b5d37b1ecc
+-- 
+2.47.3
