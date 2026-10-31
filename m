@@ -1,62 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793468858;
-	b=2qhKqr3AlCwit2zjnNpo/39ryYfBY0eXDqowrKR02hJP568DtiFIPO6Iv/k8UA39PuXs
-	 vUis0KqimQBhneZUnVDyRjI2p2SMbL199qBqIjMhvT0fb+Xr5Ijx4jIMkAAeHAB8R4N+V
-	 QebSGeuqClM/MMdgQoQ67B5wB0R/TyrDx87qSKrmdb+a9cuknwF9x9sJ6VMQCeNBsQIH2
-	 IvJkPvoa0dC+bUBy+sXnrfVv0G90b8S7gBWBB9KuYKWDXhAjV5Z2aePgULMxCmooUSCQJ
-	 nL+4jC+26RYjtBYSJCKkmcq05B6pakaPSUf+I8EFjZp0lQ+NzDlklg2pNFTZTGYTcCQ==
+	t=1793478383;
+	b=jfg+u3ZzqYeRGuJXF+N5zltpA2ATc5TDTzo4Cs35jX5zC46cQw007flnO0UEa1UZoeCs
+	 kGo337091smwhh4EYSeiSN+riOYjIGPi/z+cm0+3MUFlskYtuzLltSyBFIsqJsVuU/Ssw
+	 rY72YuLz4D3ov/s8HZKwtzKDYx9t34/RDCVKOJHpdpRWuMLEv284+kY4YlB1/+jmzz0SH
+	 GFZwa/t+Wx0jQIV2Jskcdm8qi28361+BwTxendfXSzUmygIbS7JfvoryDv96FBkBsnPio
+	 m54aBILh5jlYwrajwPTPsaN9HuC2YqBofgH8YuutWK3SKBxb78cRZqHIRlwmVebLfYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793468858;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793478383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=1h5N+uXBUkAc2XasWbf+L9wwWxu8fi1nQyRF01jT8d8=;
-	b=SD8bw2jn6w30eJBbV2RVL/26kUoJR7IKVusQOVGv1JeO85I9A4ReciCCrczK9RqvrbUx
-	 37DWP3cjEA8JTvDEfVtv96A+pTPBILk7cu0BsSd5HHo44cttGQvL7ZplZOX9NgQPmcdMQ
-	 /oux/WoMueJ/r8F1Nk+bnl280D+HJ1GRDeW7K8we162aRWkYI6BGlHUQBcnBqXLoiTDSS
-	 4bhE4q24hJo1D6HVE2sUWsF97sgJFMTH5LASEymD8iJcNcKiSivFxpkz+PIxuXzCm2kCu
-	 87I9GCCQogBYp2prs+F7wE2bFMCJm4d2vjv/PoGYStwZJdoVul5brSK3RKP0wVtLsiQ==
+	bh=qzYWdZOqtsRFb3ngZK/C1CAHvUR8f0Jk0wMaxETN/S8=;
+	b=V3SPDe1G2pOTcwYfy/iNqaErr9fgnJdY9V25qNliMrKW/B9yBFc4a0FdZOsdHPTDSmsT
+	 qLRQ2hQEbkYcvp1CHlHg0f9Ir2fOTq3NlSUwUq+xdAlbeKJVtD/z0QJGib0d7nsZF4/Xn
+	 ERgiQEu8TtPQVwL//zey+38OjuJSWWUhsSJLDaR/O0kj7smCmOC9EY/IvOqX0VFKPtZb5
+	 DE5JIiL8l2cUNq/eYAYuZeLA2OfuUJbRpPUyV7yeTLK9AdOKClYJepmWekgqWEpxTfAUf
+	 k5q4hZs3j2ZU1imz/WtCZkfHienkERmhCzLMN8Fe3emY/g1h3VcJIRTVKgQqGRZ3hNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lbuTd6xN;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dXuiWQid;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF55606A31C;
-	Sat, 31 Oct 2026 17:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFF6606A31D;
+	Sat, 31 Oct 2026 20:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lbuTd6xN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12FC1F000C1;
-	Sat, 31 Oct 2026 17:47:37 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dXuiWQid
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745481F0093A;
+	Sat, 31 Oct 2026 20:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793468858;
-	bh=1h5N+uXBUkAc2XasWbf+L9wwWxu8fi1nQyRF01jT8d8=;
+	s=k20260515; t=1793478382;
+	bh=qzYWdZOqtsRFb3ngZK/C1CAHvUR8f0Jk0wMaxETN/S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lbuTd6xNnxzdilE1w0rc0CBCjKyKLmuTFN0ZkPJp8l0CHMEMCSa0pedHFdUP6VI5V
-	 4w7flaCig/G2AcBK3nVYftBnflhgxu/FJXeI8MZ/cSp7jpuuU00xtTQPpgCYh5ElLA
-	 Z3m1Xp0xWuVyP3dGnyhH+KLqvAv+dqucYOrVv6fwjoJNRK+nGmd1lRJkIBgyUYYraJ
-	 EC2NyWGK/s6iE261vlWHrsSqQSEroUYKuD9DQIBqiN4wpCFkRP2L/ROm2C32Kmzb/5
-	 /XKZycPwA3ssUx+64jaA8lO72VWn2Rx9jrII7xA8QqgiQf820IlPUcN52gUviFg345
-	 W8lpSSTJOZAcg==
+	b=dXuiWQidxV4GKs1te2r8gQmqYhcV1FaR1jedExIalifCzD4YoA7zD4x7ducE94Zbx
+	 VSXw9pzJ0MtbNE57AWdEBBEm8j/4qxd9wLxHgBMsq4y4TVvwXgvCBMyLTztCngesZv
+	 xGmqDr6Z36wN5ZxnpHhCmCK5Tgwhlr4RB9izoTQCYt5RMEGFAQh3IU4Kv6SQn1Fw7c
+	 mA9n/ivt7TW+YNqdRqEY7YNIJq5KXI+I/o7/UF9fRxEc+oXkJnmvshRnGrlDSXAIRc
+	 /Jd15eCnt6ozjqwsV9gLsRfKGG3SwX2f4cZL6hWZ41zm6/SYuXfvFkWeKN88R2q1/S
+	 RRtvmySP98taQ==
 From: SJ Park <sj@kernel.org>
-To: Aveline Noir <jm5905938@gmail.com>
+To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org,
-	sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Shuah Khan <shuah@kernel.org>,
-	stable@vger.kernel.org
-Subject: Re: [RFC PATCH] selftests/damon/sysfs_memcg_path_leak: define ksft_skip
-Date: Sat, 31 Oct 2026 10:47:25 -0700
-Message-ID: <20261031174726.85433-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH 1/6] mm/damon/core: handle invalid target in damos_fix_stale_charge_pointers()
+Date: Sat, 31 Oct 2026 13:26:08 -0700
+Message-ID: <20261031202614.96036-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <179346448183.4.15545164251841296990@gmail.com>
-References: 
+In-Reply-To: <20261031202614.96036-1-sj@kernel.org>
+References: <20261031202614.96036-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -68,35 +63,51 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 01 Nov 2026 03:34:41 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
+The fixup of DAMOS quota charge pointers
+(damos->charge_{target,addr}_from) for removed targets and regions is
+done in damos_fix_stale_charge_pointers().  A similar fixup for invalid
+(terminated pid) targets is done in kdamond_apply_schemes().  Having
+similar fixups in different places only make it confusing to read the
+code.  Consolidate the fixups into damos_fix_stale_charge_pointers().
 
-> Hi SJ,
-> 
-> On Sat, 31 Oct 2026 08:38:58 -0700 SJ Park wrote:
-> 
-> > Thank you for reviewing, Aveline.
-> 
-> Oh, looks like I forgot that. Thanks for the reminder.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-No worries!
-
-> 
-> That also gives me an idea: maybe I could build a modular tool to help
-> write emails. Building on b4 might be a good starting point.
-
-Sounds like a good plan!
-
-> 
-> Tested the non-root skip path on x86-64 Linux with Bash 5.3.20:
-> the exit status changed from 0 to 4.
-> 
-> Reviewed-by: Aveline Noir <jm5905938@gmail.com>
-> Tested-by: Aveline Noir <jm5905938@gmail.com>
-
-Thank you for reviewing and testing!
-
-
-Thanks,
-SJ
-
-[...]
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 73b571b429cb3..ce75db510a9d3 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3394,7 +3394,11 @@ static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
+ 		return;
+ 	damon_for_each_target(t, c) {
+ 		if (t == quota->charge_target_from) {
+-			if (damon_nr_regions(t) > 0)
++			bool valid_target = true;
++
++			if (c->ops.target_valid && !c->ops.target_valid(t))
++				valid_target = false;
++			if (valid_target && damon_nr_regions(t) > 0)
+ 				return;
+ 			break;
+ 		}
+@@ -3513,15 +3517,8 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
+ 	max_region_sz = damon_region_sz_limit(c);
+ 	mutex_lock(&c->walk_control_lock);
+ 	damon_for_each_target(t, c) {
+-		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
+-			damon_for_each_scheme(s, c) {
+-				if (s->quota.charge_target_from != t)
+-					continue;
+-				s->quota.charge_target_from = NULL;
+-				s->quota.charge_addr_from = 0;
+-			}
++		if (c->ops.target_valid && c->ops.target_valid(t) == false)
+ 			continue;
+-		}
+ 		damos_apply_target(c, t, max_region_sz);
+ 	}
+ 
+-- 
+2.47.3
