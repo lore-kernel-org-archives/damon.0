@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793478383;
-	b=jfg+u3ZzqYeRGuJXF+N5zltpA2ATc5TDTzo4Cs35jX5zC46cQw007flnO0UEa1UZoeCs
-	 kGo337091smwhh4EYSeiSN+riOYjIGPi/z+cm0+3MUFlskYtuzLltSyBFIsqJsVuU/Ssw
-	 rY72YuLz4D3ov/s8HZKwtzKDYx9t34/RDCVKOJHpdpRWuMLEv284+kY4YlB1/+jmzz0SH
-	 GFZwa/t+Wx0jQIV2Jskcdm8qi28361+BwTxendfXSzUmygIbS7JfvoryDv96FBkBsnPio
-	 m54aBILh5jlYwrajwPTPsaN9HuC2YqBofgH8YuutWK3SKBxb78cRZqHIRlwmVebLfYQ==
+	b=crH/H/hu1dG3ZYpI1XyXJkPmdmkP8vqWgtrJVUufV8ifLgzZvSFQtwGVdyWrDh5rPgMm
+	 af8hn1ZGnlPVt9RPt7jcS5OwEoE26R+UhcWrye+MOl2eHXyvEzyifQCgPyF88n1YunxF7
+	 DwH5If5bDxiy+G59eIFEYZe5xDwNTqcA6z5QPuONc41ZD4GWVVyd2UrvJALNukibt8oXS
+	 vJNhEU++UK/w89DsnzJNajszizz13GU0O6KgIibjxjczaM0C4PFtpIDq4H3DK0Oo8Fq6u
+	 hhyjAvT76PPN0TSRMQujZDirJ3KPtPAd8f5nyIid9ngDAiwuaSz4g57TdL3mzHMMOBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793478383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=qzYWdZOqtsRFb3ngZK/C1CAHvUR8f0Jk0wMaxETN/S8=;
-	b=V3SPDe1G2pOTcwYfy/iNqaErr9fgnJdY9V25qNliMrKW/B9yBFc4a0FdZOsdHPTDSmsT
-	 qLRQ2hQEbkYcvp1CHlHg0f9Ir2fOTq3NlSUwUq+xdAlbeKJVtD/z0QJGib0d7nsZF4/Xn
-	 ERgiQEu8TtPQVwL//zey+38OjuJSWWUhsSJLDaR/O0kj7smCmOC9EY/IvOqX0VFKPtZb5
-	 DE5JIiL8l2cUNq/eYAYuZeLA2OfuUJbRpPUyV7yeTLK9AdOKClYJepmWekgqWEpxTfAUf
-	 k5q4hZs3j2ZU1imz/WtCZkfHienkERmhCzLMN8Fe3emY/g1h3VcJIRTVKgQqGRZ3hNw==
+	bh=m1pJ4mfGksx99HkJq8FYvOx6HIQ0+ynloGyB5SLePdU=;
+	b=QQJ9nEWf2CuYLxB5E4PgOuEsTYQI8utV2bNF8KLw1m7x00YLv34WxwTAWOoTIopXCEuF
+	 IRGbIrmKJNeQztmm3yc/QpbqrocylP+Ud7mplVnCrlLFaJi+RxhKcgGrVvPVYtxbrmaOv
+	 nLdlZeoIT++fug+95NsS8D996JDNzQidFWPDQc9RUOIWR6SgsY0fgzu1M9kJNTj4O4RnX
+	 e70BzSaCfMWeD+mK/1l72Rht5rDFkyYJJUnAxUa6Y+7hpM6PLBugoReekOxll1hbYfwPa
+	 4p1DK/lvKP+53ddzKdekPnygjXTXlHpYKhYBOeKspwnHW98srF9LjRmdmb7XIe/E1iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dXuiWQid;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ftCwKSyr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFF6606A31D;
-	Sat, 31 Oct 2026 20:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD8A606A322;
+	Sat, 31 Oct 2026 20:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dXuiWQid
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745481F0093A;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ftCwKSyr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4561F00919;
 	Sat, 31 Oct 2026 20:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1793478382;
-	bh=qzYWdZOqtsRFb3ngZK/C1CAHvUR8f0Jk0wMaxETN/S8=;
+	bh=m1pJ4mfGksx99HkJq8FYvOx6HIQ0+ynloGyB5SLePdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dXuiWQidxV4GKs1te2r8gQmqYhcV1FaR1jedExIalifCzD4YoA7zD4x7ducE94Zbx
-	 VSXw9pzJ0MtbNE57AWdEBBEm8j/4qxd9wLxHgBMsq4y4TVvwXgvCBMyLTztCngesZv
-	 xGmqDr6Z36wN5ZxnpHhCmCK5Tgwhlr4RB9izoTQCYt5RMEGFAQh3IU4Kv6SQn1Fw7c
-	 mA9n/ivt7TW+YNqdRqEY7YNIJq5KXI+I/o7/UF9fRxEc+oXkJnmvshRnGrlDSXAIRc
-	 /Jd15eCnt6ozjqwsV9gLsRfKGG3SwX2f4cZL6hWZ41zm6/SYuXfvFkWeKN88R2q1/S
-	 RRtvmySP98taQ==
+	b=ftCwKSyrq/qTTQ3igmVJUHvDKcaYxQvEaPr7Gre89WudutxclXGGdSXc/1Cy2PCyy
+	 GVA55+jbA6TSShSdO2sbA/dKMoFUw+I65d9NLTiOIWJX/MgBUmeMW4kep3b1IF9Yb5
+	 cgnTdQU45rJaskbG2y6UZvXeuWKcMNtifHCUVpVKgINTMWg8iKbAE9gi92prWrwnXZ
+	 x/7NRDBAGyO83guQPk+J+goYXiz4Yl2RQPScs47ZYqmvvP1edrjYVWWLKwvhjBqj6Y
+	 c/FnFEiSStslR+N/+BuYdcx3CNKmMMi/O8alqGfj59niN+5ebYdxsQJ9xQHMb9m9VP
+	 nD/g40WW2zq9w==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -46,9 +46,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 1/6] mm/damon/core: handle invalid target in damos_fix_stale_charge_pointers()
-Date: Sat, 31 Oct 2026 13:26:08 -0700
-Message-ID: <20261031202614.96036-2-sj@kernel.org>
+Subject: [RFC PATCH 2/6] mm/damon/vaddr: advance migration attempt in folio level for filter out
+Date: Sat, 31 Oct 2026 13:26:09 -0700
+Message-ID: <20261031202614.96036-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261031202614.96036-1-sj@kernel.org>
 References: <20261031202614.96036-1-sj@kernel.org>
@@ -63,51 +63,40 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The fixup of DAMOS quota charge pointers
-(damos->charge_{target,addr}_from) for removed targets and regions is
-done in damos_fix_stale_charge_pointers().  A similar fixup for invalid
-(terminated pid) targets is done in kdamond_apply_schemes().  Having
-similar fixups in different places only make it confusing to read the
-code.  Consolidate the fixups into damos_fix_stale_charge_pointers().
+damos_va_migrate_pmd_entry() finds folios to migrate under the given
+pmd, using a loop for the pmd address range.  The loop advances in page
+size if a given folio is excluded by DAMOS ops filters.  DAMOS ops
+filters work in folio granularity.  Hence it is more efficient and makes
+sense to advance in the folio size.
 
+Advance the loop in folio size for the ops filter out decision.  For
+that, do the folio size based loop advancement offset update before
+applying DAMOS ops filters.
+
+Closes: https://sashiko.dev/#/bug/linux-67c34df7-6dfb-4e18-9ce0-0d26915e5785
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/core.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ mm/damon/vaddr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 73b571b429cb3..ce75db510a9d3 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3394,7 +3394,11 @@ static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
- 		return;
- 	damon_for_each_target(t, c) {
- 		if (t == quota->charge_target_from) {
--			if (damon_nr_regions(t) > 0)
-+			bool valid_target = true;
-+
-+			if (c->ops.target_valid && !c->ops.target_valid(t))
-+				valid_target = false;
-+			if (valid_target && damon_nr_regions(t) > 0)
- 				return;
- 			break;
- 		}
-@@ -3513,15 +3517,8 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
- 	max_region_sz = damon_region_sz_limit(c);
- 	mutex_lock(&c->walk_control_lock);
- 	damon_for_each_target(t, c) {
--		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
--			damon_for_each_scheme(s, c) {
--				if (s->quota.charge_target_from != t)
--					continue;
--				s->quota.charge_target_from = NULL;
--				s->quota.charge_addr_from = 0;
--			}
-+		if (c->ops.target_valid && c->ops.target_valid(t) == false)
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index b549496ea8e2c..c271b6d63c027 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -881,12 +881,12 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 		folio = vm_normal_folio(walk->vma, addr, ptent);
+ 		if (!folio)
  			continue;
--		}
- 		damos_apply_target(c, t, max_region_sz);
++		page_idx = folio_page_idx(folio, pte_page(ptent));
++		nr = folio_nr_pages(folio) - page_idx;
+ 		if (damos_va_filter_out(s, folio, walk->vma, addr, pte, NULL))
+ 			continue;
+ 		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
+ 				migration_lists);
+-		page_idx = folio_page_idx(folio, pte_page(ptent));
+-		nr = folio_nr_pages(folio) - page_idx;
  	}
- 
+ 	pte_unmap_unlock(start_pte, ptl);
+ 	return 0;
 -- 
 2.47.3
