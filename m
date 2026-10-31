@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793479003;
-	b=PL05OHDS5Tsef4u7jsMUuUbaD0s++SDgTr+vXTyGz4+9Af1dmyt/Ropgd9953wCzr2I+
-	 aJAfsEXK89E0Lngp7P23RJI4z9juhUPdDOEAPy5S5qn0k9Cx/pITgOlVoRHTux9bNYMZ/
-	 qjVP1bE9+INnYf4zBQoYnSJjvdIWAKeJDQb8qr7HfDdlps9hsor/CTKlunqIGkvnvFhcO
-	 2Kl5evZrQaVfmhgh9dgox5ZkslhONTaeG1zMM0WE/hwFEnRIHJJboM0Xg5ss3ieRvqfN7
-	 JEegqQYDDDLc+Y4UoKRpRxDbWaLNBayk1ZvDWdr8tlKG1WdWzw+0DGY4JxUWV33cxQw==
+	t=1793479771;
+	b=QAokdLQ1ZnzJz66rTelhbZkpUsNfon1hYclK3aj5xbmKv7ZB9G7Q4QUgnrlCiiyesKNU
+	 lD09VSWzzIGlrtHsbieSUgxZSpu7PM+lKbaDp9KbFHLsHDcbertdcId1nX+DAB7K7dTZY
+	 +qD67QCXE7xihmDtbUIR+RvrvSRbNyL0HWaN0VZ+ts/Ka8hsJqIJL6tBa1FQWLS3+IOA8
+	 FnOau9ZMwyYEQTXvzuUV/Ofnij/9X3uG8zS4J9D1ykz5YeAmvMImP7hIMaErw8binZmfm
+	 tme6oumJwp/VZ778xw7Ls1QUnp00kGODUggHy4NDAqOp4/lwHfad2N9Kd4Qzba0MqgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793479003;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=Q1FLDEmGnWMRgBUd/62r3WuYHm0P7ulS+ZFGuHNlRhs=;
-	b=BLRDLO9Jo4hm6XDy9Sve7mlhyFRQ9V/Pv7GBs+Qtm2/5gx5yMrMTOWlsDK3bgeCvrPPq
-	 vomudeAKdA7vIgxB5VtWDkRpMFpwSrwJcmjt7Ew7CsP5LWdRUIUx0ur0j/5p6iWNwbOkr
-	 apXXDH6Cy5da9W1rMrkzVevARFG+Bc3Oi7ISlN7T6pkew6B7SRT22O7zDJXUpLlVVSgeS
-	 CpSV5BxxScFuGM+3BijaZoY8Cpwm4YizTjfdE+GcLwa/rQ0o0637SzlJT/osRbk8Zui3G
-	 v6ayuNMQYZK0IUgqwwitZGd6XQtvk6TCvdMf3GCmY0j14Sk9rb/Ew4V+8II8lnRAFIw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793479771;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=GfcB9TvOu6Mjj8+qufOnmdae3K58sylRc4kNrDjGfQQ=;
+	b=AX7y0CTqHnFRPCrgpgkpuWAww/b12UIcgpPeiMg10DWGcXEke/Wu6ZZO33Zq4ASZ6MM0
+	 xD5aFKDBzkz55Vz1EL/C5dWESja/zdR1EXPLYXiDg16Gj3WOua/4yA/9oAI5CDH/cBG8F
+	 WMxrn/Id+zDTuOsTlQAVfots0ySks/tq//0c1Lk56pmYgxz6gjqeUvG5gcC7wdwDeTL9C
+	 IQCAisyt+SxFaPNS44Jqt8mIl4+7Eh1EknORn3ai0c944hS58Y8kYPEuW/MtVqQA61RdQ
+	 cDHoZjrcQx7DhxiYNb0dMrTUv2IR3sVdiP9OvX1OnAiEJ7IBDvf+CiRxBuyKYXX3mkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lBkXbKm0;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NF3x9qzp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62A1606A31A
-	for <damon@lists.linux.dev>; Sat, 31 Oct 2026 20:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD52606A31A
+	for <damon@lists.linux.dev>; Sat, 31 Oct 2026 20:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=lBkXbKm0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4FE1F000C1;
-	Sat, 31 Oct 2026 20:36:42 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NF3x9qzp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5186E1F000C1;
+	Sat, 31 Oct 2026 20:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793479002;
-	bh=Q1FLDEmGnWMRgBUd/62r3WuYHm0P7ulS+ZFGuHNlRhs=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=lBkXbKm0ggNaVdYj3PLU457vdE8DIw4WdjhJH7utu9m9MiI2gHhu5DoA5F2ozLy3H
-	 obgcQknCpoL9hjk9AKez74ZHsER4E5uouIY2eyc4sshTDmSphMrIcesMIlqE9YmXeL
-	 7tGytCPZgt/MuuJj1WdEth1PnVua4sidm6Am/rxmsb8lTze0EweEPsgi7MdyHtaYXe
-	 O47UkGmOQAmL105q33xrAYpzxhRlaXdnKB/cCNqOm01S4/jPRoONubrmTgN/mHhe7A
-	 HoZWfM66k+gW4Yglj+0UduQUU4ZXUJuZomdQ8AQikjm30R94Miz2StRk5BEUnn987G
-	 Wl38HzVtqMBiw==
-Message-ID: <sashiko-outbox-192119@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 3/6] mm/damon/vaddr: implement sz_filter_passed for
- migrate_{hot,cold} action
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
-In-Reply-To: <20261031202614.96036-4-sj@kernel.org>
-References: <20261031202614.96036-1-sj@kernel.org>
- <20261031202614.96036-4-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 31 Oct 2026 20:36:41 +0000
+	s=k20260515; t=1793479770;
+	bh=GfcB9TvOu6Mjj8+qufOnmdae3K58sylRc4kNrDjGfQQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=NF3x9qzpmt9KSRu9FegTUQncFR0lNXiplGIUK5tfIM7DStEB7TvANGiTkMivbrg1J
+	 YY0E5M+pIUS+APOGc9F8vQOCmZ1bQ7wD571M8Fzoj40vPMJfGlx9ZIZPvwHKKNqLIS
+	 59tK3arW76yF7DkUS4R+MI2EFUIp2J7ZfR8FCErTe8+N2zlJ2YAWuw3vNdChspJmsM
+	 Wc/HC5mwBvVK+zCYpTvDN0tPiuS8BkGKfN52bb0y/7UzPsojMTkIY6qxvtbKK07+Gg
+	 X7Kt78GRA+dj/jEVZjMiynqaQTa7yowLezXjGfGbXqvFvaYThFryjWiuVIqK6wK96D
+	 DhWgdGJypBO0g==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	"Andrew Morton" <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH 1/6] mm/damon/core: handle invalid target in damos_fix_stale_charge_pointers()
+Date: Sat, 31 Oct 2026 13:49:21 -0700
+Message-ID: <20261031204923.96778-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <sashiko-outbox-192118@kernel.org>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,129 +60,133 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 2 potential issue(=
-s) to consider:
-- [Critical] mm/damon/vaddr: uninitialized priv.sz_filter_passed in damos_v=
-a_migrate()
-- [Medium] mm/damon/vaddr: double-counted sz_filter_passed in damos_va_migr=
-ate_pmd_entry()
---
+On Sat, 31 Oct 2026 20:36:25 +0000 sashiko-bot@kernel.org wrote:
 
-commit 872d2945863aba3a6ac672128498f5d65dbc8d40
-Author: SJ Park <sj@kernel.org>
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] mm/damon/core: stale charge_target_from and skip regression on invalid target
+> --
+> 
+> commit 3b1cac25b68197d5c2819d4a16dbde02446b2d07
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/core: handle invalid target in damos_fix_stale_charge_pointers()
+> 
+> This commit moves the DAMOS quota charge pointer fixup for invalid targets
+> from kdamond_apply_schemes() into damos_fix_stale_charge_pointers().
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 73b571b429cb3..ce75db510a9d3 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -3394,7 +3394,11 @@ static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
+> >  		return;
+> >  	damon_for_each_target(t, c) {
+> >  		if (t == quota->charge_target_from) {
+> > -			if (damon_nr_regions(t) > 0)
+> > +			bool valid_target = true;
+> > +
+> > +			if (c->ops.target_valid && !c->ops.target_valid(t))
+> > +				valid_target = false;
+> > +			if (valid_target && damon_nr_regions(t) > 0)
+> >  				return;
+> >  			break;
+> >  		}
+> > @@ -3513,15 +3517,8 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
+> >  	max_region_sz = damon_region_sz_limit(c);
+> >  	mutex_lock(&c->walk_control_lock);
+> >  	damon_for_each_target(t, c) {
+> > -		if (c->ops.target_valid && c->ops.target_valid(t) == false) {
+> > -			damon_for_each_scheme(s, c) {
+> > -				if (s->quota.charge_target_from != t)
+> > -					continue;
+> > -				s->quota.charge_target_from = NULL;
+> > -				s->quota.charge_addr_from = 0;
+> > -			}
+> > +		if (c->ops.target_valid && c->ops.target_valid(t) == false)
+> >  			continue;
+> > -		}
+> 
+> [Severity: Medium]
+> Can moving the invalid-target reset from kdamond_apply_schemes() into
+> damos_fix_stale_charge_pointers() cause stale quota->charge_target_from
+> pointers and alter round-robin target skipping across multiple targets?
+> 
+> First, in kdamond_apply_schemes(), damos_adjust_quota() (which calls
+> damos_fix_stale_charge_pointers()) runs for all schemes before the
+> damon_for_each_target() application loop.  For virtual address space
+> monitoring, c->ops.target_valid(t) is damon_va_target_valid(), which
+> checks whether the target PID still has a live task_struct.
+> 
+> If the target referenced by s->quota.charge_target_from is valid when
+> damos_fix_stale_charge_pointers() checks it, but the process exits while
+> damos_adjust_quota() builds the score histogram or while
+> damos_apply_target() applies schemes to earlier targets, the target loop
+> in kdamond_apply_schemes() will see c->ops.target_valid(t) == false and
+> skip t without clearing s->quota.charge_target_from.  For all remaining
+> targets after t in c->adaptive_targets, damon_do_apply_schemes() calls
+> damos_skip_charged_region():
+> 
+> mm/damon/core.c:damos_skip_charged_region() {
+> 	if (quota->charge_target_from) {
+> 		if (t != quota->charge_target_from)
+> 			return true;
+> ...
+> }
+> 
+> which will skip every subsequent target for that apply interval.
 
-mm/damon/vaddr: implement sz_filter_passed for migrate_{hot,cold} action
+This race can happen even in the current code.  That is, the target could be
+terminated between the current check and damos_apply_target() call.  The race
+can happen more easily, but I don't think this is a regression.
 
-This commit adds sz_filter_passed accounting to the DAMON virtual address
-space implementation of the migrate_hot and migrate_cold DAMOS actions by
-accumulating folio sizes in damos_va_migrate_pmd_entry().
+> 
+> Second, damos_adjust_quota() returns early before calling
+> damos_fix_stale_charge_pointers() whenever damos_quota_is_set(quota) is
+> false:
+> 
+> mm/damon/core.c:damos_adjust_quota() {
+> 	if (!damos_quota_is_set(quota))
+> 		return;
+> 	...
+> 	damos_fix_stale_charge_pointers(c, s);
+> }
+> 
+> whereas damon_do_apply_schemes() calls damos_skip_charged_region()
+> unconditionally.  If damos_quota_is_set(quota) becomes false while
+> quota->charge_target_from is still set to a target t (for example, when a
+> quota is disabled or its goal is removed via online commit in
+> damos_commit_quota(), which preserves quota->charge_target_from, and
+> quota->esz becomes 0), and t exits before kdamond_apply_schemes() reaches
+> t, neither damos_adjust_quota() nor kdamond_apply_schemes() will ever
+> clear quota->charge_target_from, causing damos_skip_charged_region() to
+> skip all other targets permanently.
 
-> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> index c271b6d63c027..112095c2d53fd 100644
-> --- a/mm/damon/vaddr.c
-> +++ b/mm/damon/vaddr.c
-> @@ -776,6 +776,7 @@ static bool damos_va_filter_out(struct damos *scheme,=
- struct folio *folio,
->  struct damos_va_migrate_private {
->  	struct list_head *migration_lists;
->  	struct damos *scheme;
-> +	unsigned long *sz_filter_passed;
->  };
-> =20
->  /*
-> @@ -840,6 +841,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, uns=
-igned long addr,
->  	struct damos_va_migrate_private *priv =3D walk->private;
->  	struct list_head *migration_lists =3D priv->migration_lists;
->  	struct damos *s =3D priv->scheme;
-> +	unsigned long *sz_filter_passed =3D priv->sz_filter_passed;
+Good finding.  I will drop this patch from the next version of this series for
+now.
 
-[Severity: Critical]
-Is priv.sz_filter_passed ever initialized before the page walk runs?
+> 
+> Finally, when monitoring multiple targets [t0, t1, t2] where the previous
+> quota window stopped at charge_target_from = t1 and t1 has since exited,
+> kdamond_apply_schemes() previously skipped t0 via
+> damos_skip_charged_region(), cleared charge_target_from upon reaching t1,
+> and resumed applying the scheme at t2.  With charge_target_from cleared
+> upfront in damos_fix_stale_charge_pointers() before the target loop
+> starts, won't kdamond_apply_schemes() restart charging from t0 instead of
+> advancing to t2?
 
-In damos_va_migrate(), struct damos_va_migrate_private priv is declared on
-the stack without an initializer, and only priv.scheme and
-priv.migration_lists are set before calling damon_va_walk_page_range():
+Again, good finding.  This is only a corner case that happen only for one
+cycle.  I think it is a reasonable tradeoff for code simplicity.  But since I
+decided to drop this patch for now, I will think about this again, too.
 
-mm/damon/vaddr.c:damos_va_migrate() {
-	...
-	struct damos_va_migrate_private priv;
-	...
-	priv.scheme =3D s;
-	priv.migration_lists =3D kmalloc_objs(*priv.migration_lists, nr_dests);
-	if (!priv.migration_lists)
-		return 0;
-
-	for (int i =3D 0; i < nr_dests; i++)
-		INIT_LIST_HEAD(&priv.migration_lists[i]);
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261031202614.96036-1-sj@kernel.org?part=1
+> 
 
 
-	mm =3D damon_get_mm(target);
-	if (!mm)
-		goto free_lists;
-
-	damon_va_walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
-	...
-}
-
-When damon_va_apply_scheme() invokes damos_va_migrate() for DAMOS_MIGRATE_H=
-OT
-or DAMOS_MIGRATE_COLD and damos_va_migrate_pmd_entry() encounters a present
-folio that passes damos_va_filter_out(), won't *sz_filter_passed +=3D
-folio_size(folio) dereference an uninitialized stack pointer?
-
->  	struct damos_migrate_dests *dests =3D &s->migrate_dests;
->  	struct folio *folio;
->  	spinlock_t *ptl;
-> @@ -858,6 +860,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, uns=
-igned long addr,
->  			goto huge_out;
->  		if (damos_va_filter_out(s, folio, walk->vma, addr, NULL, pmd))
->  			goto huge_out;
-> +		*sz_filter_passed +=3D folio_size(folio);
->  		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
->  				migration_lists);
->  huge_out:
-> @@ -885,6 +888,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, uns=
-igned long addr,
->  		nr =3D folio_nr_pages(folio) - page_idx;
->  		if (damos_va_filter_out(s, folio, walk->vma, addr, pte, NULL))
->  			continue;
-> +		*sz_filter_passed +=3D folio_size(folio);
-
-[Severity: Medium]
-Can *sz_filter_passed double-count a large folio that spans across multiple
-adjacent damon_region ranges?
-
-In damos_va_stat_pmd_entry(), the walk checks damos_va_invalid_folio(folio,=
- s)
-and records s->last_applied =3D folio so that a PMD-mapped THP or PTE-mapped
-large folio overlapping more than one damon_region is only counted once per
-scheme application pass:
-
-mm/damon/vaddr.c:damos_va_stat_pmd_entry() {
-		...
-		if (damos_va_invalid_folio(folio, s))
-			goto huge_unlock;
-
-		if (!damos_va_filter_out(s, folio, vma, addr, NULL, pmd))
-			*sz_filter_passed +=3D folio_size(folio);
-		s->last_applied =3D folio;
-		...
-}
-
-In damos_va_migrate_pmd_entry(), s->last_applied is neither checked nor
-updated on either the THP path or the PTE loop path. If a large folio spans
-multiple regions and is not migrated during the first region's walk (for
-example, because folio_nid(folio) already matches the target node in
-damos_va_migrate_dests_add(), or because isolation or migration fails),
-walking the next overlapping damon_region will encounter the same folio and
-add the full folio_size(folio) to *sz_filter_passed again.
-
-Should damos_va_migrate_pmd_entry() also check damos_va_invalid_folio(folio,
-s) and update s->last_applied =3D folio?
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261031202614.9603=
-6-1-sj@kernel.org?part=3D3
+Thanks,
+SJ
