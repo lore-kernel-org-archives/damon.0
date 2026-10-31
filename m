@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793478384;
-	b=XJn1IR/YqnTbCwHXjQbRb1bspp6U7hQv/r+38nROGnX11WvR149JRqZJbvipsfXzO8Pp
-	 CcHKMab2P9RS5t8XDKm4ty8i+9evGU72i6Nqjr2lZwROYeGqJ7kAOFF/aRd2wJQa3yekh
-	 dEHnijz3MecNnM24Gyx4pxx0lXyluKT/w6TpgQLT4IRKpdKj4Np2lh5srdi1g51WRTzce
-	 lH5vDBXJm9iB6l/RnhKbaJa01crbmqc4riW0Wd+MfdzLCS4Bnghs6VWY1+VkqVZxR9gVJ
-	 bRFMIwBXkCutahB03SkW6n9E6Zbm0Kxm4YHuHvdlvRT2r5OQ02lRH2w8+crPFleYLBg==
+	b=PJmPjhVmpbSeJlFwAH4NX20y/vwUqBOPPYDp1n8AGuXIZ9Mr8OjT7dRSGnRuABShP2rc
+	 tcWeQ01PjHD41NeKRRR15090vf6X/F+QG2mPXgMVKMph/x55JM1ICtWH8iKW1WAASy3kU
+	 I30Zon9isciIGl9jp8HJf3cqpNWOyzYWm16GVJgV4AVyKC91MxmRAazGBCo+DUUBOgfyc
+	 wDY4z2GGW/rOocTEFqa6SZ+ZGvOA4ILq0QxicCWzN6Q4+ZIYHWsekA1aRSzBsv4hiunqX
+	 9QXVOIlbsiolw5xdj298f+C0l5bS+zdzfyv9oPNXm4G526JudKb9nZbTu1wP3u2fQYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793478384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=Nl/jwuQeYoLkJzo/bhBa5SyX/AJXXbPvtIr1rgEJpfc=;
-	b=WELvfDKIO7QFR4hvyIU1NOWO27n2So6wt1uLI7cIlmbnXLHbF30mo7j3TIkVxmt7nV03
-	 G0RrjdK3sTS7aRLPeYKqfEYEj1v3/kRxhvaeYBOeEWsaFc/3diNNe6vgK+vrI7/bn/yln
-	 zhuWVU2E6NQcW16Lz8eRcckUm2cSWnaMb4V9zM+Bam06ElozVDmlRo4XzsKXQ+9sa/KhR
-	 QCwe62ct3VTUoNRx+IsSq3xJdeXZdCfWYuvKW4kIbia2vgkoHB3Q9niPerrr9TyQpB+F3
-	 7MdMX5hUmOu8RCXJdEFi2qiNrVLw4QS0HpyUq84P+p7Q0oK1BLIQtHyOHprAmuEsalA==
+	bh=70C4Ph3UTf6cW+VymDmG9zqM2mh9k5ZlsNQ24H+enrI=;
+	b=BoKy8FuKcQFYRDxJJE4BSV8FQNufWKh6/LffFCrSB3imZkp/avG010yeabgdnpNV57SG
+	 9QwMBkyQIWp3K7SRQPtY31l2oXY5V4uRm5qH5lEBp/K5sqUA0ZG/id7P8C0mQ6hNQwARc
+	 aszLaAh+9i+k0DORLIuYP8/wgSfUVkTLUncZYmeslRVPRfizisK04e+ix7vyxL15M95HE
+	 WJ3pU5DbUTOE5lZY8yO5MBv8LhKa9Df9Ve+CS87nbEXgWTJvedurSteJ6KLpbuTDgzJ0F
+	 wsMDL+KQFXbA/gBIh8kJXK8gVj+pfACxiGQRKXAc1vY4ICZOpewEMIxlg5KiGTCprIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZPb2m8Gh;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xmf1ZoGy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B47606A333;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8982B606A32A;
 	Sat, 31 Oct 2026 20:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZPb2m8Gh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23F61F00A02;
-	Sat, 31 Oct 2026 20:26:23 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xmf1ZoGy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D121F00A17;
+	Sat, 31 Oct 2026 20:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793478383;
-	bh=Nl/jwuQeYoLkJzo/bhBa5SyX/AJXXbPvtIr1rgEJpfc=;
+	s=k20260515; t=1793478384;
+	bh=70C4Ph3UTf6cW+VymDmG9zqM2mh9k5ZlsNQ24H+enrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZPb2m8Gh6rnTXbroSHauDyU9CHuyH220YgRt0Dn1rHI18EQmlKWyqR0eP++CYByBY
-	 NUrVbs56SKOyVIzXG83r6fBDDB8fGds1TfvEP2XUBz5wCIXZwvFcZ/e7KQPDndwHIy
-	 zDl9aSiQk+1UxMSsfqqbTs0BT2iwS1XrwlwLbgN6z40ko8pupuuSXar08cWzyZk0bB
-	 YTHDuN+EOWzLXEKXn+XsLEAoTNAltNLzVpv+Xqn6Z5/4mlpIX5erm3xA9LQbAx7zqO
-	 U89XSlkZKRS9IVYE9l0mcAHlhnyoHMIZ5MwJUlumHh4dJny1q0ZfDD94li2W0lp7a2
-	 p+eIP/3YiWgDQ==
+	b=Xmf1ZoGylTJ7V7s8tHeeR5xjfQystGY8ac/LppuY+XFyKUcX4h4p3yCAx0yJhK59M
+	 pQDoEkGjcbBAdphannF7mt1f6uGhWHfaNXUviR2tszW0CwUI2WIQPF3cvsKh82FdF9
+	 KiyC4f6ZuBrCb9BRXbo6eHavlHFfBXkKbEJD2VmYAlXnZZwY7QyleQCFjCc6klxgTI
+	 jXY9//+47DH84Z8C9j+n2UIL6/jUlqq9BRO7xcGUyPft+GR1YcMUKZCOYesgpOHUrW
+	 aN4w36ja7orqBNxLPV6QgNFD5mFSNdHq9MxbEN+9ETcaE2A0sp3x8ZQHkn+EZA4xyZ
+	 z+PZJtgQa59rg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -47,9 +47,9 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 5/6] selftests/damon/damos_apply_interval: remove unused variables
-Date: Sat, 31 Oct 2026 13:26:12 -0700
-Message-ID: <20261031202614.96036-6-sj@kernel.org>
+Subject: [RFC PATCH 6/6] selftests/damon: remove unused imports of os and sys modules
+Date: Sat, 31 Oct 2026 13:26:13 -0700
+Message-ID: <20261031202614.96036-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261031202614.96036-1-sj@kernel.org>
 References: <20261031202614.96036-1-sj@kernel.org>
@@ -64,28 +64,41 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-wss_collected and nr_quota_exceeds in damos_apply_interval.py are
-assigned to but never used.  Remove.
+sysfs_no_op_commit_break.py imports os module but never uses it.
+sysfs_update_schemes_tried_regions_hang imports the sys module but never
+uses it.  Remove the unnecessary imports.
 
 The issue is found using flake8.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/damos_apply_interval.py | 2 --
- 1 file changed, 2 deletions(-)
+ tools/testing/selftests/damon/sysfs_no_op_commit_break.py        | 1 -
+ .../selftests/damon/sysfs_update_schemes_tried_regions_hang.py   | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/damos_apply_interval.py b/tools/testing/selftests/damon/damos_apply_interval.py
-index 0bf7768b2006a..0ad110be0fb94 100755
---- a/tools/testing/selftests/damon/damos_apply_interval.py
-+++ b/tools/testing/selftests/damon/damos_apply_interval.py
-@@ -42,8 +42,6 @@ def main():
-         print('kdamond start failed: %s' % err)
-         exit(1)
+diff --git a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+index 81774ddc55ac4..5664f75186bac 100755
+--- a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
++++ b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+@@ -4,7 +4,6 @@
+ import json
+ import os
+ import subprocess
+-import sys
  
--    wss_collected = []
--    nr_quota_exceeds = 0
-     while proc.poll() == None:
-         time.sleep(0.1)
-         err = kdamonds.kdamonds[0].update_schemes_stats()
+ import _damon_sysfs
+ 
+diff --git a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
+index 625761c243b58..326a14f040534 100755
+--- a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
++++ b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
+@@ -4,7 +4,6 @@
+ import os
+ import subprocess
+ import sys
+-import time
+ 
+ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ import _damon_sysfs
 -- 
 2.47.3
