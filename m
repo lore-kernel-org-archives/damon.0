@@ -1,58 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793553400;
-	b=t/7tw/FhPwUGKtF8bOe1sxNl6cepQm8gqzVTyglGys+IL10pWrF+VPRiwoar6Ox51UuA
-	 x0rXIZy05DqyAWfR2z8mXLHsdXpS+Kr5hMK65brOX6y18QAQDB1RUr51vswd6OJMoXJqf
-	 sQ3WxNy1GIdqY+niTmSLcbbj4yuAWE6BxdLFkmXD4ZGkfY6hlhOeFPRXw9gb4qdTQqOby
-	 uvuDFYob1CJfHlO13cgUDBMdBiXZHnE5V6K3kbHAzJ+O1EiExsr1l6WsxmiYJ/b7Rltn1
-	 z4tXspcr/3PXbwbLxTQY8J1QQrl93ShFIJgWKdxobKt5MwpJ9j/ooN7Ko9qzCPFHiuA==
+	t=1793553528;
+	b=UaqrHd+/kPijgbBEqRvop96VOh+0BJUmd4s0F6TmChjABo4x7mmDIiI1yZbIEMR2hvNG
+	 bxntzmGTJa1miFWYwQ/Nvb/FM7jqZwxhoIBARa0J36FEYXWmlIbLdPYChPQDkur9nREe+
+	 DwLcpP0OvjAk2IzEhWBkNT6+mZxbxcsqx48sQhETyIZ5LrJzMtdwjRO2+67KhlUkEJDbF
+	 CCn7QFd2kZIVnDPoxEIp/2cPvm+E57QiCEbHksjJ7y/4rEXhVWnR4TuJAYLc1thtIpCne
+	 h/BYdq2XN3LZ/r0LuRpgVFR8gR8G0rDABuFXWmqw35DlR50JJeH0XnRQDFmKykex72g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793553400;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=Nl/jwuQeYoLkJzo/bhBa5SyX/AJXXbPvtIr1rgEJpfc=;
-	b=A+Si53MyMYzGT9E5azM+aqNh4HhGUVsS9dq1PBsZeCLMRMjhgKaxoBmmC1WqslMO6eyx
-	 /IpCKbhe6MfAlxyL3eQkv6a18aZmtwFovkGpxaNgTUhuYxuuafDcaotoPPACtegTmxTSM
-	 rHdUSNjfD3xD+yiCzjrHh4q73/UqH5kmvefMNBvyWh7EEh/m4q9bFoT1msl5Hkqe348pP
-	 Es3rI6l5VmtbQxoCKgElNxOn+q4jFZ0cdVL6DnxuwnVM7bAGqtCTs1XCRbnwNHFSS/lxl
-	 y+X5IqaTXq5wfDvpGecopJ4c055tVgxKSjHt9q41kdiqkhxHnV5LWvjkOYNCurXCpmA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793553528;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=hFq2JlypRdY/YjkW0Uvui4RgCayoIZBinlM+DbqMCX0=;
+	b=MHaWGRKR60oT94GnK2WdF70AhzaMknzbCxykYHnjTsRI3xOtnEJmLysPP12CjiNTukNh
+	 dKYl8TGz/7DoP/3c14DaiopYXLtNHIpW+myuzhdH/aCeCS4wL/xshcLXfpPC0+ShxeEH2
+	 IIl+cOk2a06oLrW94nLTPzIRSeRaZ5bHmjBiQQSutfCFDyexImRh+ws1EhbEUWR9cf+c7
+	 TEjWx9ER9jtiJpxcDmDA9//+qHMhO4Qbehg/7FPp0rTcDpIWSPaIaQ0TZ3VpMdHpquli9
+	 UPjP8T0sS9S89RKIso4lPquGy8c1tFTqYUROXPUfZcRRwD1ehISCKNbxoMfYDOxlFMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fdF2XExI;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xr7xin5l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050DD60A2607;
-	Sun,  1 Nov 2026 17:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588D0606A324
+	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 17:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fdF2XExI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37B91F00A20;
-	Sun,  1 Nov 2026 17:16:39 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xr7xin5l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0845F1F000C1;
+	Sun,  1 Nov 2026 17:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793553399;
-	bh=Nl/jwuQeYoLkJzo/bhBa5SyX/AJXXbPvtIr1rgEJpfc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdF2XExI4DFSHn3O+sv2bRhrZabBsUJQa7Q46X459ylwshC4GVgY9EGouNFGzEWxD
-	 7/b0UDGTjczQ1VrCbZytoQsIsBvcAZdfq+Wb7wRv2sFGgDsEegfHuygkcIpyoimxTk
-	 p7nUr6tmdkBgkXCYtic8otEvTzAWHQ6YFcroqckJe0FYPKJdFvJtRFcTJtR5y/L2XU
-	 MO41HI4MHwCPsPu0htndVTEqkLX9Dd+1laq4ujto4zijNAKoVP8dtFHlR6bOxccba5
-	 EY4kAgWmmOAaT+f2c2SK+ayeGvSGKxl/9aNrmA0LN1sS3Jph3ZX9tUGa3s1cOs0bhr
-	 4l4FatZv41FWw==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH v2 5/6] selftests/damon/damos_apply_interval: remove unused variables
-Date: Sun,  1 Nov 2026 09:16:28 -0800
-Message-ID: <20261101171630.81477-6-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261101171630.81477-1-sj@kernel.org>
+	s=k20260515; t=1793553528;
+	bh=hFq2JlypRdY/YjkW0Uvui4RgCayoIZBinlM+DbqMCX0=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Xr7xin5l/USduDUTOHKY9EP03PCq0xZe7y50lyYPCjVUG7FTOxhxH2AgdnFXlm3dM
+	 PXWYnNsp8e3rrkc3tYGtOMOibpOBZDxF5Sb0qjlaRv45sCrIakN9VjORdKkbUcyKPV
+	 KRSc+MX1ocz8nWshSntf6bJieAeTN+NTrgVjgqOm2BcWrbRnsjRTt14h0HZSnyDxzA
+	 yjembYPnyWazconAHCxO+XpjGLsswyLynTq4ziHMb8fmYsCz8naZFlQBCq24T7211k
+	 ruua13HPKDOxfCOP8EaG4BlVPNq2Afp71jNfQI3P0s5pHfU3RptIcxu73rO25aaWDf
+	 W9aS5a3hWxYBA==
+Message-ID: <sashiko-outbox-192520@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH v2 5/6] selftests/damon/damos_apply_interval: remove
+ unused variables
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261101171630.81477-6-sj@kernel.org>
 References: <20261101171630.81477-1-sj@kernel.org>
+ <20261101171630.81477-6-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 01 Nov 2026 17:18:47 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,31 +60,17 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-wss_collected and nr_quota_exceeds in damos_apply_interval.py are
-assigned to but never used.  Remove.
+> wss_collected and nr_quota_exceeds in damos_apply_interval.py are
+> assigned to but never used.  Remove.
+>=20
+> The issue is found using flake8.
+>=20
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-The issue is found using flake8.
+Sashiko has reviewed this patch and found no issues.
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- tools/testing/selftests/damon/damos_apply_interval.py | 2 --
- 1 file changed, 2 deletions(-)
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261101171630.8147=
+7-1-sj@kernel.org?part=3D5
 
-diff --git a/tools/testing/selftests/damon/damos_apply_interval.py b/tools/testing/selftests/damon/damos_apply_interval.py
-index 0bf7768b2006a..0ad110be0fb94 100755
---- a/tools/testing/selftests/damon/damos_apply_interval.py
-+++ b/tools/testing/selftests/damon/damos_apply_interval.py
-@@ -42,8 +42,6 @@ def main():
-         print('kdamond start failed: %s' % err)
-         exit(1)
- 
--    wss_collected = []
--    nr_quota_exceeds = 0
-     while proc.poll() == None:
-         time.sleep(0.1)
-         err = kdamonds.kdamonds[0].update_schemes_stats()
--- 
-2.47.3
