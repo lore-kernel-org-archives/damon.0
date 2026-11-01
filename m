@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793554658;
-	b=MnxSqNB/YGj6sE6RmBIzb9YvUyB9DB/UfHn7r01jXSPXAZNsgHHUkYnnCoOcw2nBakZN
-	 JUc4TukjbDEHwBt+6qWVBEt2FKx12y+GbsWAGWMmq1XfxvnwYmYMB+pY+pYKUBckZrEZa
-	 gT3+dwh+G8SUX7rtEle62ySmm4feZlJI63u1hTUpV76nPG2eQBtJPm2jfOFoqr0uGzl00
-	 9IgQv842OnrHexhxmgTX9+cPKSJ1SmWbLU3e8rJ7vXexjuMt+d4X4f0YOP1Fq0oNtdaqY
-	 pS17MDl8d64PGFEdEmQ1KH9V8MMxWW1bxLs/4lpZXCD4woInnQt9vdBx3jT4xlwkC5w==
+	t=1793554725;
+	b=GbIeDjIPLqEwsd8Qmo0m0/wUhj+de4J48idSVFbZ8ijaf5rGUhgW+Ed+5m/0ybU98MqN
+	 cgmcBXkrMAnCDNaaaMtkWP5pTeqzYyE9MgZNs9Krnu5Xltw9D2xQdck03sBDM2P9EKIuf
+	 QZIylA3JE6tmK56C6dl+vyQ/ReMwzi76C/TykOFW0dS0G2G58M8HBh8QyTKPGJzKIJSpm
+	 PwwlNx54TIvChvab+8enfKe5DotYE5kYcgMw0LDE5B+73gF0fVnK+j3lfbycYqOARhL0K
+	 p9P1SP2/eEMdtJwlef/jmezaUALuZn4JypQpaa5mUvIpWNEKvdE0z/c4Dahq3rEdt+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793554658;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793554725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=qMaecMqOlVRGUh+8OqrsInbsoiLpkH+gXXcFWIMg3iQ=;
-	b=HjWIH8OaGI7W5A8zLNQC03Jb5FLjmoWhmuSxdbF+ENzPzFuOcs9EYkRZgSguryuWMOn6
-	 yzdXBttYTdJDFnY2jUGpgvnm4YTKEs4/T2I0Py9EFt64hhsJJq6vnoM2KTjq40EHbQ14H
-	 dYgRjW3mjWBttNKPb8aOJfTQWDXmz6bcGYF0x01b3J9WpqKsXlLVL8pP5ViGRDvu97B1O
-	 ikhg/eCD4oDxr9uSaQ+csK+ysxXgZgtDytSMUDfLcbBb9fUQAh2kiDGews0mmmMcp9Ntk
-	 T3fL0d8la17uWryfhPJ7NcF7Rg9ughiR7cU2L0yPU1UzaMYxuxuBfp1t58G9hI9zGsQ==
+	bh=PAth9uuBsiD2ZBusvqK9jhofezKOh4eMDf+spvC6ZS8=;
+	b=ChSbnMqtqVfRrnq9yA9Bh1acZWHqck/3JsplunIqAfa4C25xz3ZGQBhIKVNOTo0xtdfQ
+	 MgKibiLN5x7ttsCN194lm2yCxGzLuGJjZ9p5kZCRe+SMcTzdBhK1RvRvVbYF1fITQwBCf
+	 VfdgV93EwvQ6C658pExC1YQBrDUhE7YIUbTkK8N588J6vfQXUnDyUJkazKUNAN1povfbs
+	 5gp+Hl8J73BjiMwfimNfQV+7Bib9ZLrHy1KTLCidOxpF+ZLtY1+tPHBiGphx6DUnjcmv1
+	 eTfv4PQv6CXoTan7cr1RDDf1OgApnkdyMOy2N5wfNEULFfpyRQw2dnk8zrsvJ7ePoGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XvAYE3bq;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kQ8VzZvS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5263606A324
-	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 17:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085CA606A324
+	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 17:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XvAYE3bq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275091F000C1;
-	Sun,  1 Nov 2026 17:37:37 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kQ8VzZvS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC651F000C1;
+	Sun,  1 Nov 2026 17:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793554657;
-	bh=qMaecMqOlVRGUh+8OqrsInbsoiLpkH+gXXcFWIMg3iQ=;
+	s=k20260515; t=1793554724;
+	bh=PAth9uuBsiD2ZBusvqK9jhofezKOh4eMDf+spvC6ZS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XvAYE3bqY8JCXvb3i2Y5oUe+IYKSKxDpN8J5kkzFBAqNLzZsgBoqTNfEYU6AabKq2
-	 bG6g1xqikhvh1v7eMMyORcUWMIk3YoRljaTRVvwURIWWifghbYuAk3hoYNyGqH3H6x
-	 wp9FYmPJX0UnF30eZg3GIIKQdPBGWnqn0/gvd2wZhDPEWexHQr7YFwL/AM3lavClkl
-	 G6irBLpOJxEOelBT3nx6ifdvzAo4iHqBJK/BflbJu1UpmjwNVUmqBI64FNZhSt7uhQ
-	 0r6hoY08nmhezf9QpgmtlDyD+keOc6HcoTZYINpvyScH4qboNt6Ay53B1tpFVR8j+4
-	 njjc6CJ0CJRiw==
+	b=kQ8VzZvSgspbzf0SuM8xUN2hyNsa3Eg74XNmydQiskesNLCOsRNB5olap9pQpi1VB
+	 CCcI8te22TpleARbiUDmhCAqU5Lx9wNMBlTeBloBVweDq8uemlzyIb+r128NtFhz1W
+	 GX6WBNAWszmFdHRHb+Vhm8BEnKEKydTJ/zD1oDy4E+JEOeFNFAJjB0P1SvPUzNF//3
+	 cgp1uMut585Jy5DXx6iq+N+ECqXK07GCmFuFcOO2MUbwagmcTfODhuNyUcU+DiPnhV
+	 gGf6AjCETFkciKdSY5uW7YCB/q5igRf+lAKlJA6qtg+vC9W+vdNEgzkcDpfnr0ArXO
+	 CUVJp7zt0NeTw==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
+	"Shuah Khan" <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v2 3/6] mm/damon/vaddr: implement sz_filter_passed for migrate_{hot,cold} action
-Date: Sun,  1 Nov 2026 09:37:28 -0800
-Message-ID: <20261101173730.82717-1-sj@kernel.org>
+Subject: Re: [RFC PATCH v2 6/6] selftests/damon: remove unused imports of os and sys modules
+Date: Sun,  1 Nov 2026 09:38:36 -0800
+Message-ID: <20261101173837.82868-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-192523@kernel.org>
+In-Reply-To: <sashiko-outbox-192521@kernel.org>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -64,60 +64,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 01 Nov 2026 17:21:39 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 01 Nov 2026 17:20:33 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] mm/damon/vaddr: undeclared dests in damos_va_migrate_pmd_entry()
+> - [Low] selftests/damon: commit subject names wrong removed modules
 > --
 > 
-> commit 7670e03c4d866e7e831b34d6066cefe5b658b73a
+> commit dfc99fb0f6f595e8bf824229e67f0b391cab2a8e
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/vaddr: implement sz_filter_passed for migrate_{hot,cold} action
+> selftests/damon: remove unused imports of os and sys modules
 > 
-> This commit adds sz_filter_passed accounting to the DAMON_VADDR
-> migrate_hot and migrate_cold actions by passing the counter through
-> damos_va_migrate_private and accumulating the size of folios that pass
-> ops filters in damos_va_migrate_pmd_entry().
+> This commit removes unused Python module imports from
+> sysfs_no_op_commit_break.py and sysfs_update_schemes_tried_regions_hang.py
+> in the DAMON selftests.
 > 
-> > diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-> > index b1d7bcf7305bb..6fd0e07b60705 100644
-> > --- a/mm/damon/vaddr.c
-> > +++ b/mm/damon/vaddr.c
-> [ ... ]
-> > @@ -846,7 +847,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
-> >  	struct damos_va_migrate_private *priv = walk->private;
-> >  	struct list_head *migration_lists = priv->migration_lists;
-> >  	struct damos *s = priv->scheme;
-> > -	struct damos_migrate_dests *dests = &s->migrate_dests;
-> > +	unsigned long *sz_filter_passed = priv->sz_filter_passed;
-> >  	struct folio *folio;
-> >  	spinlock_t *ptl;
-> >  	pte_t *start_pte, *pte, ptent;
-> > @@ -865,6 +866,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
-> >  		if (damos_va_filter_out(s, folio, walk->vma, addr, NULL, pmd))
-> >  			goto huge_out;
-> >  		s->last_applied = folio;
-> > +		*sz_filter_passed += folio_size(folio);
-> >  		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
-> >  				migration_lists);
+> >     selftests/damon: remove unused imports of os and sys modules
+> >     
+> >     sysfs_no_op_commit_break.py imports 'sys' module but never uses it.
+> >     sysfs_update_schemes_tried_regions_hang imports 'time' module but never
+> >     uses it.  Remove the unnecessary imports.
+> >     
+> >     The issue is found using flake8.
+> >     
+> >     Signed-off-by: SJ Park <sj@kernel.org>
 > 
 > [Severity: Low]
-> Was the declaration of dests in damos_va_migrate_pmd_entry() removed by
-> accident when adding sz_filter_passed?
+> As reported by Sashiko on RFC [1], should the commit subject be updated to
+> refer to the sys and time modules instead of os and sys?
+
+Yes, I forgot updating the subject.  I will do in the next spin.
+
 > 
-> Both the transparent hugepage path above and the PTE loop below in
-> damos_va_migrate_pmd_entry() still pass dests to
-> damos_va_migrate_dests_add(), which causes mm/damon/vaddr.c to fail to
-> compile with an undeclared identifier error when CONFIG_DAMON_VADDR is
-> enabled.
-
-Yes, it is a mistake I made while formatting this patch.  I will fix it in the
-next spin.
-
+> In tools/testing/selftests/damon/sysfs_no_op_commit_break.py, the patch
+> removes import sys while import os remains and is used in
+> dump_damon_status_dict():
+> 
+>     file_dir = os.path.dirname(os.path.abspath(__file__))
+>     dump_script = os.path.join(file_dir, 'drgn_dump_damon_status.py')
+> 
+> In tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py,
+> the patch removes import time while both import os and import sys remain and
+> are used at module scope:
+> 
+>     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+> 
+> [1] https://lore.kernel.org/r/sashiko-outbox-192115@kernel.org
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261101171630.81477-1-sj@kernel.org?part=3
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261101171630.81477-1-sj@kernel.org?part=6
 > 
 
 
