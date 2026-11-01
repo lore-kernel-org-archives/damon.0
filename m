@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793553645;
-	b=rjxNMkZkivxK1vGRBUwWgMU2mGl30O7cw5+W4mciuUvg/10uUGMnBcV5/OSjrUX29qHn
-	 /g9Fv48XHqyAhynCbLQO+vjAqDwOp1MF9tJdOTfUuzSqQtXBbYkUSGHqr5oyXnyfgVwax
-	 XW+tW4yANNhwJpc2YW6Km8aovSb+o3bqcoUu4KBE3330ov9HAEi2hMlaTqP2Dpd0rSS0Q
-	 jQZMX7xNRSvS+NW/hP3sZtug0iRRj+aafeA0ZBsIEy16scnCFp2Bbdj+Ps/qX+FQn5kM4
-	 YndyDUFEDgK+0te9M0q+rYW0kPxMJO6Ue333+W7lCj/hi+jcrghO9gSnVJhQufDDm6g==
+	t=1793553701;
+	b=Gh3vPvMCcMqYCkY6SfykvR+2Kv/d0SPjJyO6/WZytS4aL/fgAHPYIL9fqhqoPYMD4uKV
+	 nFe4L4ApgbuzxQczdgWdm9jD8VlO9PPRKIZGGznblvZrD8vnzr4HVVZ1BNh/QP7rivCan
+	 zzMKjrZxebp261jf6uxejxT0/VxfvHCWN49GcnmfC9UatD3rLEQGIluwV2A8bqFjtgcLH
+	 Jv1Pe/ND/NJvrBhmw6lvP+pfzOuxtqhNvdkU12TL8RdnbWEHz6fBfEt+wPxj8VZMlC7ow
+	 BeGUnnJOjYEicmjP94w5Ed7GKcPxRjlFbbuvz+ETwTrBHTnh20a8o6+DsWu+xIC50Vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793553645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793553701;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=Q5zNVXdZQeuxmOn9a/a6AhqjI1cyyUu/Pybufe0UgsU=;
-	b=DuoEmzv/7iUsamDyhCB/pwjh+7PCos18/AN+Z/iETy/qLxTCpHBPbqv/WFbAOQYkpcG1
-	 9AllBloUHm2jxXKep3GByMdp/IowVDzNFnL6rXLX7Q7fXsrZILO5V0HXIm24+X5MnTt6/
-	 aeIf8s88/Bix4qy55zXwo08XDF8kIT0EzynTyNV/l9voqutaBgp7uZNHcg7jqDCaJPrIg
-	 muJIYnzMxSV4w3DF6qvm4XI5RUZL/9FVnkm+Lr014uMlRRAllOpt82aY0w+4rAwjNahg7
-	 Z6NV6NIuJX4Ckynqj04eLYZ8tqH497Niz1gHyXSLMmDs5bU4ccrmyCT67X96jYnyV2Q==
+	bh=JPRODuptNXZdkhl8l76yddILf9I1UG9LWBNv7LQOJiw=;
+	b=PaZgCXTGrJFNyA8UA3duAQsEAmN49nxAxpXmu4FySCS5oFGj1LhEUyKmD+qlva64suJw
+	 PXu5EkVXmt5BXu/7s7rbseXxAp0CDPk4CqiggILkdzJkz+csA8UjR55iYK7SH+DheZkTc
+	 CH1IuM8ylxFz67muB3WF8QaW+Fm8DLIY+YTensDpgQSDF0D6aBIOf5Li9d8rCCYOKLHhL
+	 sDXNONBQhIKabe8wk5wpED7qIVGOAzyNP9jEp/xKuSEjAa3RQ9VAbe9gXdAnuV/NO+rqi
+	 IbyBM7Q9SSK0Eoed77Rar4MRLWN0Wpjf/Ys7BCn1cCcGzcJG5Iw406nHsv5qS51EGqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OxGxrlCy;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YqNC3NC1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78B7606A324
-	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 17:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E16606A325
+	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 17:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OxGxrlCy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3241F000C1;
-	Sun,  1 Nov 2026 17:20:44 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YqNC3NC1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F53B1F000C1;
+	Sun,  1 Nov 2026 17:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793553644;
-	bh=Q5zNVXdZQeuxmOn9a/a6AhqjI1cyyUu/Pybufe0UgsU=;
+	s=k20260515; t=1793553700;
+	bh=JPRODuptNXZdkhl8l76yddILf9I1UG9LWBNv7LQOJiw=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OxGxrlCyfz40T61O4UEZ9aqBstEnK1sV77j5h72HqmX6fmD7Ywe1IvFxflfC8WEMm
-	 U0Vvw5wxeZSVjWGf9yRvB9lCUu7bv1SEIz8AimIyA6ZomarF3T+HpNJUjljr/Mjqmp
-	 zxJHXtODXwPlUtyr7IWf3k1wgCHohtidfCiTexdQ3U46HHganHxDU+0XQ+osV6QGNk
-	 +2xGjnQXRb/zdjnst1Ez4kGMcngtuAgbT8Ec7S89OG3dhUGNCNVlLQC/ZF26Sq0rVB
-	 sc5pbceqJ4Rer4fiLaxcteySB0MgXJZ2Hy0hb0O5LW8I+UVihjVSlWfWL/wP1Yw5Km
-	 b2kwuOk5lxfPg==
-Message-ID: <sashiko-outbox-192522@kernel.org>
+	b=YqNC3NC1Slcf+zh8YkkZd/uNePiYEwCworQXME2nbDCX7OBbTK9iOcjAhilllCwD5
+	 s9zefvdtNGzLbliOtAFp3pLnoBu/usJ2sQAm5wGu+ppvAekmOnhmEs3Iob/tkQZdwM
+	 c37GCRXB7ecvmOIR+Ge2qIGO2B3cwH1ictAg0/G4TWjCAeZRbyu0zZ9ttuxUDXtr3q
+	 9MnTiAwUy+/d/12v867/N4015Zh0BmezkeN8kYCbETilBqeM+H5bDakj17OVLs2JiJ
+	 o0QqSz73m6vT/g0JB+XbB9ae3f8WplHlrLJpqeh/mkWGH46nO3TNeMWsH09kSuPnle
+	 a4RFXSV55hMwA==
+Message-ID: <sashiko-outbox-192523@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 1/6] mm/damon/vaddr: advance migration attempt in
- folio level for filter out
+Subject: Re: [RFC PATCH v2 3/6] mm/damon/vaddr: implement sz_filter_passed
+ for migrate_{hot,cold} action
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261101171630.81477-2-sj@kernel.org>
+Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
+In-Reply-To: <20261101171630.81477-4-sj@kernel.org>
 References: <20261101171630.81477-1-sj@kernel.org>
- <20261101171630.81477-2-sj@kernel.org>
+ <20261101171630.81477-4-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 01 Nov 2026 17:20:44 +0000
+Date: Sun, 01 Nov 2026 17:21:39 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,23 +61,55 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> damos_va_migrate_pmd_entry() finds folios to migrate under the given
-> pmd, using a loop for the pmd address range.  The loop advances in page
-> size if a given folio is excluded by DAMOS ops filters.  DAMOS ops
-> filters work in folio granularity.  Hence it is more efficient and makes
-> sense to advance in the folio size.
->=20
-> Advance the loop in folio size for the ops filter out decision.  For
-> that, do the folio size based loop advancement offset update before
-> applying DAMOS ops filters.
->=20
-> Closes: https://sashiko.dev/#/bug/linux-67c34df7-6dfb-4e18-9ce0-0d26915e5=
-785
-> Signed-off-by: SJ Park <sj@kernel.org>
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Low] mm/damon/vaddr: undeclared dests in damos_va_migrate_pmd_entry()
+--
 
-Sashiko has reviewed this patch and found no issues.
+commit 7670e03c4d866e7e831b34d6066cefe5b658b73a
+Author: SJ Park <sj@kernel.org>
+
+mm/damon/vaddr: implement sz_filter_passed for migrate_{hot,cold} action
+
+This commit adds sz_filter_passed accounting to the DAMON_VADDR
+migrate_hot and migrate_cold actions by passing the counter through
+damos_va_migrate_private and accumulating the size of folios that pass
+ops filters in damos_va_migrate_pmd_entry().
+
+> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> index b1d7bcf7305bb..6fd0e07b60705 100644
+> --- a/mm/damon/vaddr.c
+> +++ b/mm/damon/vaddr.c
+[ ... ]
+> @@ -846,7 +847,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, uns=
+igned long addr,
+>  	struct damos_va_migrate_private *priv =3D walk->private;
+>  	struct list_head *migration_lists =3D priv->migration_lists;
+>  	struct damos *s =3D priv->scheme;
+> -	struct damos_migrate_dests *dests =3D &s->migrate_dests;
+> +	unsigned long *sz_filter_passed =3D priv->sz_filter_passed;
+>  	struct folio *folio;
+>  	spinlock_t *ptl;
+>  	pte_t *start_pte, *pte, ptent;
+> @@ -865,6 +866,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, uns=
+igned long addr,
+>  		if (damos_va_filter_out(s, folio, walk->vma, addr, NULL, pmd))
+>  			goto huge_out;
+>  		s->last_applied =3D folio;
+> +		*sz_filter_passed +=3D folio_size(folio);
+>  		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
+>  				migration_lists);
+
+[Severity: Low]
+Was the declaration of dests in damos_va_migrate_pmd_entry() removed by
+accident when adding sz_filter_passed?
+
+Both the transparent hugepage path above and the PTE loop below in
+damos_va_migrate_pmd_entry() still pass dests to
+damos_va_migrate_dests_add(), which causes mm/damon/vaddr.c to fail to
+compile with an undeclared identifier error when CONFIG_DAMON_VADDR is
+enabled.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261101171630.8147=
-7-1-sj@kernel.org?part=3D1
-
+7-1-sj@kernel.org?part=3D3
