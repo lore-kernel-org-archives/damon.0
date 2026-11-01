@@ -1,58 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793558052;
-	b=s2hUv3S/ZuLSQrao18cOjsFoCZCC8ys3JCB7IPS6tdZnpYFGcc/VtAdEPvsM4/BbnR2b
-	 JBO7dv4TlhriT3dt5F0XTG9mTcQsbx3qnGtAf4YOCgd/orrHV0KQE6/e2SlHvHRb2Vo6m
-	 CyM6+2r2ZsSm5onzr6KIrNdNt3YS9E5pXUrYXIRPYhv2JAJr/rwoyrqm4YAp8fGWxAPdm
-	 02UuG40mUUYNp2WQboDTL2+8V1/IeKgwlc/ox2pKKH83zlvmFm2VBMTMGEg/dB9D6yPRu
-	 8l3mwNXi+cO5ir2Y0X4oZDlMYi07+KWQfGWYa3h9z9Bs7f/YAQYGVYzdYFruh6zGN5w==
+	t=1793560431;
+	b=FdTBhGCYDNHVeBZ4MOIUXDeH7zfjlCXs/KS0KBBthveyxQPkgM6TXrCUxv3CD4inMmLY
+	 O6J3bc2edeKYYwYKgdwspa9CYAa13NOJnvdRTvgD/IaqzBhIC3/1IHww+1R6Sw6lvueLj
+	 RYch1+ve9EcP1eZgaAFP8tZ33322APhlNr8+0lbgCT5IijJxrhnP1xd8xucbDfF5sTRkj
+	 +vDj+2UETbQDvout3U5SIhC/CLxh3DI0KzynnSBbml8VF58NeBEFEQq2BvF/Hgb1MXEjt
+	 kPqM4hp8l74nTk/cMUK0nlYeDzUybsY5TDlTRiQ9ZpTtGVi6T5IqeAdp4MPmkl1v7/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793558052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793560431;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=Mdcb8PA8Fd6Cc1lT/iQNz2eYhuJFQtFMCUvyRyZT5cY=;
-	b=cS7//4zHjdeSLfotgHKMtW3pVPcyB9hmEFOBzedxHdtWvucSueUK03IgJDlyDddhxKkK
-	 HnVhPjrkd1ZWCkSA57ppncnlS8pMYWmFaHo9yrsQTJS9TZAA8jKnypOkZHuMhauwYR8YE
-	 cJyaQvijOVvj//A+BaraRsJ5K9RvbfLT0aPVy1plenIVxKG74ywRq0ehyX5TVzkUJiEyz
-	 Q28xaPNRWa2TsYycI3XH1gvkj1RdEn2lEjTu1ulvaQNtHZ/R+PY9FJ1BaYpXrSbv9QB0K
-	 Ra4Pc5zbLTliWimTHEKjx3twWr3z3D+3Dx7RN3gEE2SXaz5Hm1Kv7rPbnRMcNDZWzRw==
+	bh=7S6qxSAluU5AdwDGWk4KFzyP5dBcL1YEzQEDbpdNMCo=;
+	b=xOAlnsrPSIi3Fk1j9atr+8X5DlGsg6KGyZS3SF3kt9z/2G53N6C1PDE5WvdGGEUkVY4N
+	 k7gEZQASCRadzfrC+i41C7yW6JBSKSntikxwZh5BNuHui3U4W/tCmCOnEMwp5D1DK0ERx
+	 g6YVFFwMceshc1g7OaX2EW91ZTtkS9NJ9YDEVA/auSR91uxVIjP7JDYuVx88hILwg5rLR
+	 /VvF9DkjiQafJHS0H/iV3gB0NkTeJWTCzXfadqs8h5gXIVolYMS139tou6QqtYrd7G/8/
+	 UGz2TXahjhL3ESS+PSDJRzutPEeG4bfAnQsrVTz5AfYJYeEiHRumzoBAJILA7SScT+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hLm3dxmD;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=J9orr59w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD47606A324;
-	Sun,  1 Nov 2026 18:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B412606A324;
+	Sun,  1 Nov 2026 19:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hLm3dxmD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAE51F000C1;
-	Sun,  1 Nov 2026 18:34:11 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=J9orr59w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73061F000C1;
+	Sun,  1 Nov 2026 19:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793558051;
-	bh=Mdcb8PA8Fd6Cc1lT/iQNz2eYhuJFQtFMCUvyRyZT5cY=;
+	s=k20260515; t=1793560431;
+	bh=7S6qxSAluU5AdwDGWk4KFzyP5dBcL1YEzQEDbpdNMCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hLm3dxmDedMrL0uJIydX4V5pvwijynFBnvMmkO6AIa0gsNMiytEFTqd9cpmP0BfeW
-	 ZGWcQpNCYUIqDD7t+eNji1CYS0nnQLYbFzUG63Fm7Lb5artoBEnMRWXTJZNQw5q8FE
-	 E1ZVVghFjQeJSsWKS+GmlMNUhWXooFCdo+pMWFxy8XomwZ8J655cLKN/a0++FZrsL3
-	 ReT6z0RPW/G+APAN9gLEKHp3PUIXWkUJVAQF8gQfyxNz8I69AEv7RC1MdQJg0KuGMF
-	 FbrTg+FmcBnCO58kp4sOFyUhd+oVWYjd7vSmMYWrDwigh8wLQ3zXULhDszeWbUu86s
-	 Ck5iniqhfHDlw==
+	b=J9orr59wDCUxwTVoMXio+VZBFQqFXKqHct9qyTpQX6AYK/aEi3wlWAxRJBT9bbsXV
+	 6OKkw1BaGmeNdzruw8FpzJ2nH5WG2lANAchqxlO7c/eXUHh+h7vdXM8XdWdN48ehGP
+	 xpERGMWHbF3etUfiIfbY6RKViVcKjL5oI32mIOTZ4c0CctH3j+jQ68bIlFwCDsf6dV
+	 5ksod5lN/+lhd2xVF7Xo26Cxz2vGQcF6X4qz4lUwaO74N29SCOavE/kCOCHJoJdHnr
+	 A7fD0qR+jzmV+VuDv70p1epw1+s7AjNLDHpvXu83VWyMWI4dpwsm5ssrk2MamC4Llj
+	 l6msJQyclhn5g==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+To: Wang Guangke <gkwang@linx-info.com>
+Cc: SJ Park <sj@kernel.org>,
+	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v0] Docs/mm/damon/design: document data attributes report infra design (beyond page table accessed-bit milestone 2)
-Date: Sun,  1 Nov 2026 10:34:04 -0800
-Message-ID: <20261101183404.85322-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/stat: avoid overflow in estimated_memory_bandwidth calculation
+Date: Sun,  1 Nov 2026 11:13:43 -0800
+Message-ID: <20261101191344.85683-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261017195747.89961-1-sj@kernel.org>
+In-Reply-To: <20261101180001.167198-1-gkwang@linx-info.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -65,151 +63,91 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 17 Oct 2026 12:57:45 -0700 SJ Park <sj@kernel.org> wrote:
+Hello Wang,
 
-> The "beyond page table accessed-bit DAMON extension" project [1]
-> milestone 2 is for building the basic infrastructure for continued
-> extension.  After starting it, I studied perf event little and found a
-> few demons in details.  I therefore spent time on high level design.  As
-> it started looks like making sense to me, I'd like to share the humble
-> design first and get feedback from more eyeballs.
+On Mon,  2 Nov 2026 02:00:01 +0800 Wang Guangke <gkwang@linx-info.com> wrote:
+
+> The calculation of estimated_memory_bandwidth computes
+> access_bytes * USEC_PER_MSEC * MSEC_PER_SEC / aggr_interval directly.
+> On 32-bit systems, the intermediate product
+> access_bytes * USEC_PER_MSEC * MSEC_PER_SEC may overflow before the
+> division is performed.
+
+Do you find this issue from real usage?  Or, jsut theoretical?  Could you
+please clarify it, and user impacts of the issue?
+
 > 
-> Add a blueprint of the milestone 2 as a high level design document.
-> Describe the API and ABI of data attribute report infrastructure, and an
-> example use case of it for per-CPUs write-only monitoring.  The API and
-> ABI will later be extended for more data attributes reporters utilizing
-> AMD IBS, Intel PEBS, Arm SPEs like h/w features and any possible
-> DAMON-external reporter kernel components.
+> Fix it by splitting the division into quotient and remainder,
+> multiplying each part separately.
+
+Thank you for this patch.
+
 > 
-> Request for comments
-> ====================
+> Fixes: fabdd1e911da ("mm/damon/stat: calculate and expose estimated
+> memory bandwidth")
+
+Please do not wrap Fixes: tag line.
+
+Could you clarify why you do not Cc stable@?
+
 > 
-> This is an RFC for high level design discussion, so no implementation is
-> provided.  Comments I want to receive include but not limited to below.
-> 
-> Does the idea for perf CPU cycle sampling based access monitoring makes
-> sense?
-> 
-> Does the design provides clear idea about how it can be extended for the
-> future extensions that already scoped for milestone 3 (AMD IBS, Intel
-> PEBS, Arm SPE)?
-> 
-> For the foreseeable extensions (AMD IBS, Intel PEBS, Arm SPE), would the
-> required change minimum and maintainable?
-> 
-> Next steps
-> ==========
-> 
-> I will start implementing the infrastructure and perf CPU cycle sampling
-> based access monitoring as described in this patch.  It will go through
-> the normal development process.  Delivery of it will be the completion
-> of the milestone 2.  As set on the initial roadmap [1], ETA of the
-> delivery is LSFMMBPF'27.  No delay is expected so far.
-> 
-> [1] https://lore.kernel.org/all/20260525225208.1179-1-sj@kernel.org/
-> 
-> Signed-off-by: SJ Park <sj@kernel.org>
+> Signed-off-by: Wang Guangke <gkwang@linx-info.com>
 > ---
->  Documentation/mm/damon/design.rst | 44 +++++++++++++++++++++++++++++++
->  1 file changed, 44 insertions(+)
+>  mm/damon/stat.c | 17 +++++++++++------
+>  1 file changed, 11 insertions(+), 6 deletions(-)
 > 
-> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-> index a465e34bb1d9c..1e699e3f8a496 100644
-> --- a/Documentation/mm/damon/design.rst
-> +++ b/Documentation/mm/damon/design.rst
-> @@ -433,6 +433,50 @@ monitoring.
->  Refer to the :ref:`admin guide <damon_usage_sysfs_probes>` to know how users
->  can use the mode.
+> diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+> index b05b68f73e10..7cfa3a8d6801 100644
+> --- a/mm/damon/stat.c
+> +++ b/mm/damon/stat.c
+> @@ -32,8 +32,8 @@ static bool enabled __read_mostly = IS_ENABLED(
+>  module_param_cb(enabled, &enabled_param_ops, NULL, 0600);
+>  MODULE_PARM_DESC(enabled, "Enable of disable DAMON_STAT");
 >  
-> +Data Attributes Reporting
-> +~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +Infrastructure for receiving attribute information from DAMON-external kernel
-> +components.
-> +
-> +Because DAMON is not hooked in every place but runs in its own worker thread,
-> +it cannot retrieve some types of data attribute information by itself.  Many of
-> +those are available to DAMON-external kernel components such as perf event
-> +callbacks and page fault handler.  For such cases, DAMON provides attributes
-> +reporting infrastructure.  Using its API, any kernel components can report
-> +their finding to DAMON.
-> +
-> +The API for doing the report is a function, damon_report_attrs().  The function
-> +receives the attribute information and saves it in DAMON's internal buffer.
-> +The function is safe to be called in any context including NMI.  The internal
-> +buffer has a fixed size and keeps only latest reports of the size.  Because one
-> +buffer size doesn't fit all, multiple report buffers of different size and
-> +rules can be generated and shared by multiple reporters.  DAMON provides API
-> +for such management of report buffers.  damon_report_attrs() can specify into
-> +which buffer the report should be saved.  DAMON user interface (ABI) for doing
-> +the buffer setup, and enable/disable reports of supported types is also
-> +supported.
+> -static unsigned long estimated_memory_bandwidth __read_mostly;
+> -module_param(estimated_memory_bandwidth, ulong, 0400);
+> +static u64 estimated_memory_bandwidth __read_mostly;
+> +module_param(estimated_memory_bandwidth, ullong, 0400);
+>  MODULE_PARM_DESC(estimated_memory_bandwidth,
+>  		"Estimated memory bandwidth usage in bytes per second");
+>  
+> @@ -55,15 +55,20 @@ static void damon_stat_set_estimated_memory_bandwidth(struct damon_ctx *c)
+>  {
+>  	struct damon_target *t;
+>  	struct damon_region *r;
+> -	unsigned long access_bytes = 0;
+> +	u64 access_bytes = 0;
+> +	u64 remainder, bytes_per_interval;
+>  
+>  	damon_for_each_target(t, c) {
+>  		damon_for_each_region(r, t)
+> -			access_bytes += (r->ar.end - r->ar.start) *
+> +			access_bytes += (u64)(r->ar.end - r->ar.start) *
+>  				r->nr_accesses;
+>  	}
+> -	estimated_memory_bandwidth = access_bytes * USEC_PER_MSEC *
+> -		MSEC_PER_SEC / c->attrs.aggr_interval;
+> +	bytes_per_interval = div64_u64_rem(access_bytes,
+> +			c->attrs.aggr_interval, &remainder);
 
-I allowed callers/users to manage the buffers because I didn't have a
-confidence at maanging the buffers in a good way.  But I now think it was not a
-good design choice.
+This is not bytes per interval but bytes per microsecond.  Let's rename the
+variable to bytes_per_us.
 
-First of all, it is offloading decision to users.  I also feel like this design
-exposes too much internal implementation details to users.  It would be better
-to let DAMON just manage it.  If it turns out to be too suboptimal, we can
-later consider optimizing it and even let users control it if really needed.
+> +	estimated_memory_bandwidth =
+> +		bytes_per_interval * USEC_PER_MSEC * MSEC_PER_SEC +
+> +		div64_u64(remainder * USEC_PER_MSEC * MSEC_PER_SEC,
+> +				c->attrs.aggr_interval);
 
-Letting M:N reports:queue routing makes it quite complicated, too. 
+Let's use USEC_PER_SEC instead of 'USEC_PER_MSEC * MSEC_PER_SEC'.
 
-So, unless others object, I will change the design to hide the report buffers
-management from users.
-
-> +
-> +The data attribute probe supports the reports.  The probes can be configured to
-> +hit for a given memory region depending on the existence of specific types of
-> +reports that associated with the memory region in given report buffers.
-> +
-> +For example, per-CPUs write-only monitoring can be configured using this
-> +infrastructure like below.
-> +
-> +The user sets a report buffer and enable CPU instruction sampling report for
-> +the buffer.  DAMON will enable perf event counter for CPU cycles sampling.  The
-> +sampling callback will save the sampling time CPU instruction and the id of the
-> +CPU that was executing it, into the DAMON report buffer, using
-> +damon_report_attrs().  DAMON can automatically adjust the perf event sampling
-> +frequency to minimize old report drops due to the buffer size limit.
-> +
-> +The user further sets a DAMON probe.  The probe hits for a given DAMON region
-> +if a store instruction for a memory in the region that was executed from a
-> +given CPUs group exists in the report buffer.  As a result, the probe hit
-> +counts represent relative frequency of writes from a given CPUs group to a
-> +given memory region.
-
-My initial plan was to implement the above per-CPU write monitoring with the
-milestone 2 patch series.  That's mainly because we don't want to have an API
-without its callers.  But implementing perf cycle sampling would be no small
-amount of code that require extensive tests.  It may take time and make the
-patch series quite big.  I'm now trying to make it small and quick.
-
-I find this report infrastructure could also be used for direct user reports.
-That is, users might know which memory they are accessing, and want to ensure
-DAMON knows that, by reporting their information using the report infra.  I
-will expose an ABI for such direct user report, and connect it with the
-reporting infra.  That would look similar to that of DAMOS quota goal
-user_input metric.  I will continue implementing perf cpu cycle based report
-producer implementation on top of it.  But maybe we could also just call the
-user report as milestone 2, as there will be no more blockers for other works
-like AMD IBS support.
-
-Unless I get concerns on above plan, I will update this design patch and write
-user ABI documents.  I will share those as RFC v0.1, and keep iterating the
-documentation-only patches for continued design discussion until I get a
-confidence in the interface design.
-
-FYI, damon/next [1] tree may have hacky changes that could significantly be
-changed in future.  Please don't rely on those.  Don't spend time on reviewing
-those.  I sometimes regret I should named it 'damon/hack'.  Anyway, I will
-share things that ready to be reviewed on this mailing list.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+>  }
+>  
+>  static int damon_stat_idletime(const struct damon_region *r)
+> -- 
+> 2.47.3
+> 
+> 
 
 
 Thanks,
 SJ
-
-[...]
