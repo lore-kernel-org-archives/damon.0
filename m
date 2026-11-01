@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793480279;
-	b=Fva0jpONlNPvoUutq0QY6xwQs1+CjvXiMFIKXGIb4ps9gCxUX745w7+i3NZbjty7YYGX
-	 iUa+uHyzyk/tFXXaLDsq0yQLZLuPwlAutL72HIUwplN8xe+Irh1GkhQjD1+Mu3bzJdyw8
-	 YkznU+pJcXLq0UTiv6qu69vjq0M7biTgrWAoMo06q39iPCAEc5hQ6QnVfc02rbPbID3GP
-	 /BHJeD59SDFFKaJlaQ7J9iAeN0y5C1jCMxiEeEohuzzFZACG93MI5OyyyRUtvv/uv3dQu
-	 PJOZaVX+2DoJ+r9u8CNTTPoVaCEUl2Lh7MMWMtfVeYD/U1foh/X59urTx/0NJJpPWHA==
+	t=1793548907;
+	b=znwLwrEQ7BV2njU/sLCWrtghbr44bLiKH0FtKjX75XZ7thsfB96QuhfY6QoLjSzOi0LV
+	 ezH4WYYocsFV1+mEHESwpkFuB+o5RyNp5tISlfEOF5cqUeoeBA6F/ZfH/fmxptAUQZcdy
+	 9myJZHRmU8h0TFO/vLbbVEeY2RomnHnUUinmIPvjzCIP3DmuHovDroUnbPrK8j8d1VcSA
+	 MWW+oHNjYz0e6XdVujNkvdxee9lFjtnyjyp3w5IHGVuBJws0FJn/92MCp/4iwNORjFSvs
+	 LITq4sxeZHyByJlMdlPHDrwJ0j7ewBYCxv8EbI9Q5dV7kCG3pD8IrP597AtAY80uz4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793480279;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793548907;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=9ME/DwqzmVxiuu2qCC6yi8ywsrQDgzY0nAzN4XnJ72s=;
-	b=u3UzNQKQjDKein5hYTbOT8Z36X6c0vZSOktGZrm4+svC5qUML6sN9bi8eb7Mna9IN7Ni
-	 R57PKN4XJ40aZ2wJdeiPScXsEtD08QnVSBIvr7JBwiVDZhgFd5briUdj8fuqR/Zu6vulx
-	 UqZRizeKVjDzqTpH3bP1vaMVAruf3XxSWMJdOvE2q7BfLwOyZR+oxuFAUCqAzviHsfl5X
-	 3glRIXIZNQQvXXzDbw/uIXbfIHut3nKYiuQB0Z19/p+bq2QU36qHRmosPqpVpqyTnQ6ZJ
-	 MWnpc2Np0TPURkE59T4uZ99owIxlR8zCWDCWBUqY5ihIY8zPYOCRElyLxKz/Pkndvew==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=Rds4H6dx4b1Y1/1DcN2ykcLQmlq7nhhI7m9hZrgFe7U=;
+	b=4LFW5sdet8HvCDnw1BVFoU7A8KCJwOrcHj829UWRPfm2yjQFUj3isYQI1NWGV42cZdkW
+	 keBjSV8nf8xRQBNCEFiSA8hK81VHBCt9pzvI5DSTquHZjOnMWLaSlQsgN+qwO2bgXd1e7
+	 c+g5yuxwFH3862G6TRr42eIEcP9niesCeUI/6ccFTuqQ31JcKcd9akBNHhew+7Pg/wJ7N
+	 JTiCtpgiDH0aUXTr41ZhIhuRlsWpDSLF9jXyFY815SRctD9HyjtBKAbZHHdTOF52OuspD
+	 FH/zgol6b+SsomYA6303oe55hf5tdoULRnC/YO9biZX2Ij1l4Vf+pDO9QFoN3BXEx6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a2zKxdT8;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xrm8487O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC38B606A31A
-	for <damon@lists.linux.dev>; Sat, 31 Oct 2026 20:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C545606A325;
+	Sun,  1 Nov 2026 16:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a2zKxdT8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1231F000C1;
-	Sat, 31 Oct 2026 20:57:58 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Xrm8487O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A4A1F00A15;
+	Sun,  1 Nov 2026 16:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793480278;
-	bh=9ME/DwqzmVxiuu2qCC6yi8ywsrQDgzY0nAzN4XnJ72s=;
+	s=k20260515; t=1793548906;
+	bh=Rds4H6dx4b1Y1/1DcN2ykcLQmlq7nhhI7m9hZrgFe7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a2zKxdT88rxs4YIcSMs5D84GMbDVm/XhD4gZ07oiTDLAA8DEkyNOah0XcscTm7V9T
-	 +tg978hxHZK64QEYIAcecR8fmrQ3InNoL01bVp5ggvWjEnLhEcwNEfXovgP4QoPXCU
-	 FqZ40Ef8/6JGAkCgR1p31s3UKv69HpwHA49ONdsKA9xb3D5qeEm8GAxooClXkaue3K
-	 YrVjqRrD0exk3GMWJDolJp7bXkIyh+HzswzwP784X5NIowMtaWlg97SZ7LDzv2h5Kx
-	 bV7Ld4p58+p5RjUTcaiM1KQKdhHbCmyrKiaLWXdpm1ssqmxg3mtxtH+pntaMpamt0y
-	 zuRSkpiVhGH8g==
+	b=Xrm8487Ocqu78WL5jN8h4I7d8DoNc2EHlDXaPxlDLInKUzlIwlAbe4HlBevo/8+2k
+	 6DEGnYvbUrOFlPAvds0Hx3oiSzZcQf8eaadIcAOsivzPwqCEnbY2Cu7Jd28xqwj06v
+	 YcZU0DlLENOlB120BTuezof0tqVpgD/XRYESsof/xD0MRYY21uEE0YFGzkaqCsaU3c
+	 5SLGUU8gRA3jqh1NaXu2eUEUysOlNNw5kRiNMncoCJsB+T2d38q9vovFDKiu9xTzQl
+	 5uf+Xgw9F50IK5Y/ua28sWweu1hGu47QQTtv/d4gawx/YpyYwBWLbjTAEIn8fUcgnk
+	 5AQTF1rTfiSMg==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: kernel test robot <lkp@intel.com>
 Cc: SJ Park <sj@kernel.org>,
-	"Shuah Khan" <shuah@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 6/6] selftests/damon: remove unused imports of os and sys modules
-Date: Sat, 31 Oct 2026 13:57:50 -0700
-Message-ID: <20261031205751.97240-1-sj@kernel.org>
+	oe-kbuild-all@lists.linux.dev,
+	damon@lists.linux.dev
+Subject: Re: [sj:damon/next 41/139] mm/damon/vaddr.c:891:21: error: too few arguments to function 'damos_va_invalid_folio'; expected 2, have 1
+Date: Sun,  1 Nov 2026 08:01:39 -0800
+Message-ID: <20261101160139.108584-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-192115@kernel.org>
+In-Reply-To: <202611010354.GdEQgO22-lkp@intel.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -61,59 +59,36 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 31 Oct 2026 20:29:00 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 01 Nov 2026 04:00:38 +0100 kernel test robot <lkp@intel.com> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] selftests/damon: commit message names wrong removed modules
-> --
+> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
+> head:   7004d750fdd0fe580091136ef098fba296e51863
+> commit: 046c68e46b042453c4cdbd909eb4dc448dde6325 [41/139] mm/damon/vaddr: use damos->last_applied for migrate action
+> config: csky-randconfig-2000-20261101 (https://download.01.org/0day-ci/archive/20261101/202611010354.GdEQgO22-lkp@intel.com/config)
+> compiler: csky-linux-gcc (GCC) 15.3.0
+> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20261101/202611010354.GdEQgO22-lkp@intel.com/reproduce)
 > 
-> commit 55304159b940aad6f9b71d318671a40d9d63ca46
-> Author: SJ Park <sj@kernel.org>
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202611010354.GdEQgO22-lkp@intel.com/
 > 
-> selftests/damon: remove unused imports of os and sys modules
+> All errors (new ones prefixed by >>):
 > 
-> This commit removes unused Python module imports from two DAMON selftest
-> scripts.
-> 
-> >     selftests/damon: remove unused imports of os and sys modules
-> >     
-> >     sysfs_no_op_commit_break.py imports os module but never uses it.
-> >     sysfs_update_schemes_tried_regions_hang imports the sys module but never
-> >     uses it.  Remove the unnecessary imports.
-> >     
-> >     The issue is found using flake8.
-> >     
-> >     Signed-off-by: SJ Park <sj@kernel.org>
-> 
-> [Severity: Low]
-> Does the commit message name the wrong removed modules?
-> 
-> In tools/testing/selftests/damon/sysfs_no_op_commit_break.py, the patch
-> removes import sys rather than import os, and os is still used in
-> dump_damon_status_dict():
-> 
->     file_dir = os.path.dirname(os.path.abspath(__file__))
->     dump_script = os.path.join(file_dir, 'drgn_dump_damon_status.py')
-> 
-> In tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py,
-> the patch removes import time rather than import sys, and both sys and os
-> are still used at module load time:
-> 
->     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-> 
-> Should the commit subject and message be updated to refer to the sys and
-> time modules instead of os and sys?
+>    mm/damon/vaddr.c: In function 'damos_va_migrate_pmd_entry':
+> >> mm/damon/vaddr.c:891:21: error: too few arguments to function 'damos_va_invalid_folio'; expected 2, have 1
+>      891 |                 if (damos_va_invalid_folio(folio))
+>          |                     ^~~~~~~~~~~~~~~~~~~~~~
+>    mm/damon/vaddr.c:840:20: note: declared here
+>      840 | static inline bool damos_va_invalid_folio(struct folio *folio,
+>          |                    ^~~~~~~~~~~~~~~~~~~~~~
 
-Good catches.  I will fix these in the next revision.
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261031202614.96036-1-sj@kernel.org?part=6
-> 
+Thank you for this report, I just fixed this on my tree and pushed.
 
 
 Thanks,
 SJ
+
+[...]
