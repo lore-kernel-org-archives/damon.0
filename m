@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793553867;
-	b=ER5Aq1V5nbu5qhaXGuqdij7p1PNGtxoz2MnITGuX2btdTjOPMwrp3kttIZvN37OlF4tm
-	 hFPpUangJCS24AOCyJoRMA0xKnAYtG8sXfASuV5uxYtl+BN4DauOnkT5N+18G0fySyJg3
-	 F3BtP9qqEHlAppkAk7TJ581sThBQnewHEIVWtTDmoD0dFz867ZYNUTci7uukUxeAg202Y
-	 p4vAbMVWeFJ6xz/42xnHQ8nQxO3885nW66nCsvLyC8T+Lk61Edt7TwZp9Dt1L4XciQqS5
-	 ksWx4tsoh2rKZwLWj1AQNlaidNjF/x9o6KPYCCWBvckIl6TmAGBBvPeK/myEceQ574Q==
+	t=1793554024;
+	b=YPcCQJtFxNs/OCP8G16Ll9j1EkIDkg1Gd01JeYdNVsiPj3c/G8k1hNg848OiA3TICJ6O
+	 ieIi3IU4MOktTJwv3D9z9W5KJ59qSbYAJSMB+iKgktF1f6T8G40jHlOt0QkOzJTbBd9u0
+	 yZKFUnt8u7ElS7pinEqlX6pI8ijucfy//iC6JJDndJPrfZ402kTNhg8S2Gz11OCYZ7uzo
+	 nuC7BkCV0/1YlHkQLj4TJ+aiGNOp+6Lpiy7V6ceoAtreoJC/JjOxTtzMSQv93BhtQTU0g
+	 sEO2m36rMX5ZJkPlWUS/AtALetGF1vBil4qupEcjO605ZUXCbK7E/TUppv4t8YGrovw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793553867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793554024;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=147o5fUFXrCNV/qQ89AzwD3Q2RWXIphR1psPINCNBXo=;
-	b=uafgkn01LQN9prJZkvS5+cKdL2pYNGDf3vhVHhmxI4ckIDsQHafvryJXi6BaSVm5gKyF
-	 cHv9aIWUCHGYlTSzSXy6gbJXox13BFU5mtfPDNamP8q6KVijfSzEcV32HGmsAtBet4dPz
-	 33Ue/PTFEIG0hVJmi6mHGXMdA4osk7PlabTfal+KlzccHOGfcNouf57MUjQNSlNigS7mU
-	 Fd2LdQ1ALudS81hUhOHcdkuZnhRdyBS3zzVxAB0XS/fYxvu1Bxlel007/DcmAO976o3Ir
-	 2Q7cs83HNtWtLcSPmWV/am7RKsGdTlwDI6VKIXtG+50M8i4xXVSO9ZqbrmYh1egwZ7w==
+	bh=GCvl4GH3y9uU8cU83n0Aqgbp55NBVPifWHgCr4BLTPY=;
+	b=daS3W61DN8uPnDAT7T9c1SCVYxYpIgatijCZ0w9AbF1A4ScZlAJRxwIJTKhaBYgeE9+I
+	 fIa6brOw8Fq/0PfcO8xf/YiruhvcwAMwuGlJZ3/L8Yffy9mzIeRIdRVV7xy/go81h0+HS
+	 Gth5w9L715pxEBV+vnYKrelFiUIQozlj3hVYbLaCQl+VkKKAT6WLcA1PHZuuN0SxlDxCT
+	 9xOtN5Gyz7y2lpWcWM4W45dXPs4uPIlmNKM/kMNV9hV5rF7GK/gR1otYTohuwo3fvbyX6
+	 KXPZaDD5AXDozObUnXrI8tURpUbg5D3IHD1J+1NVL0WNnlgaAEOYquaJFy948yExWCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g5JOACo4;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KtPJYDIE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D9F606A324
-	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 17:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92336606A324
+	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 17:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g5JOACo4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5B11F000C1;
-	Sun,  1 Nov 2026 17:24:26 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KtPJYDIE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CEA1F000C1;
+	Sun,  1 Nov 2026 17:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793553866;
-	bh=147o5fUFXrCNV/qQ89AzwD3Q2RWXIphR1psPINCNBXo=;
+	s=k20260515; t=1793554024;
+	bh=GCvl4GH3y9uU8cU83n0Aqgbp55NBVPifWHgCr4BLTPY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=g5JOACo4+6b+Jq5uh/Ar61G+OS9b9hg/cQjFW+mUjnTP0qJyhGAgbxu9o0r+UWbTD
-	 8rHmk42uPdNPpN8aiv9ju6jTiKG3FpHhQvHNKlWcKoGs5Ht9uGX1KWD+TafwgR8RKD
-	 czAAC2dHgJMJqQsz4Gb9uZTPsUPL0Z8dcQoSXYmtXzgVKrynHPYu4qJzJC5XVZ1Nwr
-	 XXzAS0pZ+6fHwiKc/IeIwvM9UkGOMubOqWO6lqXoXTne7DG7YVNwoaY9BO4CWGx9yF
-	 raslDeLUIJv42JD30LN+HocU6kMlYEsekHDFWZJAcAj5sV+92hfS2yUgi0EEka/f01
-	 LTTaL02QnB/Gg==
-Message-ID: <sashiko-outbox-192525@kernel.org>
+	b=KtPJYDIEFnbveDyEft5FlkpvOHSj4BW2FOlUAthD34fg4TDyUwklta8wENFeI5ZKe
+	 lSLS3WMCK55J+q/QHY3dOiIjXffwIYz5Fwco5Tpr0v/COlFbpcIX7YHfZX8ML4VxE/
+	 7qOm4+Wlt5+HzdNBB+Ujj+eDuwKaxZJxb2VFfIqOfrzhdNt1i3GBuo5bfDYK8/49w3
+	 fEMTGU4X2ka78VMVFdPDDLGKZ4fomFFj79Lh7xCW58imHvrIa4M8wab7KH8kP/tbcZ
+	 9EIYEJVsG5y15pMbPi7kJAfI1X7kdc5SQ9r1/gFPmu0F5sEF/mY7oZGqGTzu5p30ow
+	 QRFpcw8iXIQRw==
+Message-ID: <sashiko-outbox-192531@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 4/6] mm/damon/sysfs-schemes: drop redundant and
- racy zero target_value check
+Subject: Re: [RFC PATCH v2 2/6] mm/damon/vaddr: use damos->last_applied for
+ migrate action
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261101171630.81477-5-sj@kernel.org>
+Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
+In-Reply-To: <20261101171630.81477-3-sj@kernel.org>
 References: <20261101171630.81477-1-sj@kernel.org>
- <20261101171630.81477-5-sj@kernel.org>
+ <20261101171630.81477-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 01 Nov 2026 17:24:25 +0000
+Date: Sun, 01 Nov 2026 17:27:03 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,27 +61,169 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> DAMON sysfs interface disallowed zero target_value because it could
-> result in divide-by-zero in damos_quota_store().  Because similar checks
-> were duplicated to other DAMON API callers, a patch series that starts
-> with commit 610c4438fb66 ("mm/damon/core: error
-> damos_commit_quota_goal() for zero target_value") added a same check in
-> the core layer central parameters, and dropped redundant checks in
-> DAMON_LRU_SORT and DAMON_SAMPLIE_MTIER.  It forgot to drop that in the
-> DAMON sysfs interface.
->=20
-> Now the zero target_value check in DAMON sysfs interface is only
-> redundant.  Further, it has a time-of-check to time-of-use (toctou) race
-> with target_value_store().  It can confuse readers to believe [1] the
-> division-by-zero can still happen.  Drop the redundant and racy check.
->=20
-> [1] https://lore.kernel.org/20261021005234.94107-1-sj@kernel.org
->=20
-> Signed-off-by: SJ Park <sj@kernel.org>
+Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
+- [Medium] mm/damon/vaddr: last_applied not updated when damos_va_filter_ou=
+t() rejects
+- [Medium] mm/damon/vaddr: stale folio in last_applied after damos_va_migra=
+te()
+- [Low] mm/damon/vaddr: single-page PTE step in damos_va_migrate_pmd_entry()
+--
 
-Sashiko has reviewed this patch and found no issues.
+commit af5ba00f84f8ca12cd15e44abbd02f8e8e38b95b
+Author: SJ Park <sj@kernel.org>
+
+mm/damon/vaddr: use damos->last_applied for migrate action
+
+This patch updates damos_va_migrate_pmd_entry() to check and record
+s->last_applied via damos_va_invalid_folio() so that DAMOS_MIGRATE_HOT and
+DAMOS_MIGRATE_COLD actions are not applied multiple times to folios spanning
+adjacent virtual address regions.
+
+> diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+> index c271b6d63c027..b1d7bcf7305bb 100644
+> --- a/mm/damon/vaddr.c
+> +++ b/mm/damon/vaddr.c
+> @@ -834,6 +834,12 @@ static void damos_va_migrate_dests_add(struct folio =
+*folio,
+>  	list_add(&folio->lru, &migration_lists[i]);
+>  }
+> =20
+> +static inline bool damos_va_invalid_folio(struct folio *folio,
+> +		struct damos *s)
+> +{
+> +	return !folio || folio =3D=3D s->last_applied;
+> +}
+> +
+>  static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
+>  		unsigned long next, struct mm_walk *walk)
+>  {
+> @@ -854,10 +860,11 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, u=
+nsigned long addr,
+>  		if (!pmd_present(pmde))
+>  			goto huge_out;
+>  		folio =3D vm_normal_folio_pmd(walk->vma, addr, pmde);
+> -		if (!folio)
+> +		if (damos_va_invalid_folio(folio, s))
+>  			goto huge_out;
+>  		if (damos_va_filter_out(s, folio, walk->vma, addr, NULL, pmd))
+>  			goto huge_out;
+> +		s->last_applied =3D folio;
+>  		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
+>  				migration_lists);
+>  huge_out:
+> @@ -879,12 +886,13 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, u=
+nsigned long addr,
+>  		if (pte_none(ptent) || !pte_present(ptent))
+>  			continue;
+>  		folio =3D vm_normal_folio(walk->vma, addr, ptent);
+> -		if (!folio)
+> +		if (damos_va_invalid_folio(folio, s))
+>  			continue;
+
+[Severity: Low]
+In damos_va_migrate_pmd_entry(), when damos_va_invalid_folio(folio, s) retu=
+rns
+true because folio =3D=3D s->last_applied for a PTE-mapped large folio at t=
+he
+start of the next region, the loop continues before computing page_idx and =
+nr:
+
+	nr =3D 1;
+	ptent =3D ptep_get(pte);
+
+	if (pte_none(ptent) || !pte_present(ptent))
+		continue;
+	folio =3D vm_normal_folio(walk->vma, addr, ptent);
+	if (damos_va_invalid_folio(folio, s))
+		continue;
+	page_idx =3D folio_page_idx(folio, pte_page(ptent));
+	nr =3D folio_nr_pages(folio) - page_idx;
+
+Doesn't this leave nr at 1 and step through all remaining tail PTEs of that
+large folio one page at a time instead of advancing by folio_nr_pages(folio=
+) -
+page_idx?
+
+>  		page_idx =3D folio_page_idx(folio, pte_page(ptent));
+>  		nr =3D folio_nr_pages(folio) - page_idx;
+>  		if (damos_va_filter_out(s, folio, walk->vma, addr, pte, NULL))
+>  			continue;
+> +		s->last_applied =3D folio;
+>  		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
+>  				migration_lists);
+>  	}
+
+[Severity: Medium]
+Should s->last_applied be updated even when damos_va_filter_out() rejects t=
+he
+folio in both the PMD and PTE paths of damos_va_migrate_pmd_entry(), matchi=
+ng
+damos_va_stat_pmd_entry() and damon_pa_migrate()?
+
+When a PMD-mapped THP or PTE-mapped large folio spans two adjacent regions =
+and
+is rejected by damos_va_filter_out() in the first region, jumping to huge_o=
+ut
+or continuing before setting s->last_applied =3D folio leaves s->last_appli=
+ed
+unchanged. When the second region is walked, damos_va_filter_out() is called
+a second time on the same folio.
+
+If an ops filter such as DAMOS_FILTER_TYPE_YOUNG is used to exclude young
+folios (for example with DAMOS_MIGRATE_COLD), evaluating
+damos_va_filter_young_match() in the first region clears the page table you=
+ng
+bit and marks the folio idle as a side effect:
+
+mm/damon/vaddr.c:damos_va_filter_young_match() {
+	...
+	if (young && ptep)
+		damon_ptep_mkold(ptep, vma, addr);
+	else if (young && pmdp)
+		damon_pmdp_mkold(pmdp, vma, addr);
+	...
+}
+
+Wouldn't re-running damos_va_filter_out() on the same folio in the adjacent
+region then observe the folio as old, pass the filter, and migrate the young
+folio that was just rejected in the first region?
+
+[Severity: Medium]
+Also, how does s->last_applied deduplicate a folio across adjacent regions
+once damos_va_migrate() has migrated it in the first region?
+
+In damos_va_migrate(), damon_migrate_pages() runs at the end of each region
+before the next region is walked:
+
+mm/damon/vaddr.c:damos_va_migrate() {
+	...
+	damon_va_walk_page_range(mm, r->ar.start, r->ar.end, &walk_ops, &priv);
+	mmput(mm);
+
+	for (int i =3D 0; i < nr_dests; i++) {
+		nid =3D use_target_nid ? s->target_nid : dests->node_id_arr[i];
+		applied +=3D damon_migrate_pages(&priv.migration_lists[i], nid);
+		cond_resched();
+	}
+	...
+}
+
+When a large folio spanning two adjacent regions is migrated during the fir=
+st
+region, migrate_pages() allocates a new destination folio, remaps all PTEs =
+or
+PMDs across the VMA (including those in the second region) to the new folio,
+and frees the source folio.
+
+When damos_va_migrate_pmd_entry() then walks the second region,
+vm_normal_folio() or vm_normal_folio_pmd() returns the newly allocated
+destination folio while s->last_applied still holds the old source folio
+pointer. Since the pointers do not match, won't damos_va_invalid_folio()
+return false in the second region, causing damos_va_filter_out() and
+damos_va_migrate_dests_add() to be evaluated again on the already-migrated
+folio?
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261101171630.8147=
-7-1-sj@kernel.org?part=3D4
-
+7-1-sj@kernel.org?part=3D2
