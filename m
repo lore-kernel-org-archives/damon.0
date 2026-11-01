@@ -1,57 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.247.232.78
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793554725;
-	b=GbIeDjIPLqEwsd8Qmo0m0/wUhj+de4J48idSVFbZ8ijaf5rGUhgW+Ed+5m/0ybU98MqN
-	 cgmcBXkrMAnCDNaaaMtkWP5pTeqzYyE9MgZNs9Krnu5Xltw9D2xQdck03sBDM2P9EKIuf
-	 QZIylA3JE6tmK56C6dl+vyQ/ReMwzi76C/TykOFW0dS0G2G58M8HBh8QyTKPGJzKIJSpm
-	 PwwlNx54TIvChvab+8enfKe5DotYE5kYcgMw0LDE5B+73gF0fVnK+j3lfbycYqOARhL0K
-	 p9P1SP2/eEMdtJwlef/jmezaUALuZn4JypQpaa5mUvIpWNEKvdE0z/c4Dahq3rEdt+w==
+	t=1793556035;
+	b=drWD3hPmwEWL6pnO2r3RXeWyz+XQQYYtjmRPc0cYbAXmSdita4AD2bGnrOmLhp52ni6W
+	 ROXtlGPd94UsN7wQotBHmL3CsVW8TkFrzbj0HOn2HMyXnfkBYByyOcW8r70iLsCgvCW6v
+	 tWFpXOE7ic784gh9nlOmF3bbfkMl4zNp0bcgUhti6l4w/1FZ7vCR7Md8koESuDoSGaNRw
+	 2qdKF7VDsyl1RTIVeTlrPFwzBDu96T59d3i4zLXPyrdW1IgA3a0zNBNuECtR3jEIiytCp
+	 VMVyl7AzjcKlta9jkTDH7GQWU9lYHZXGYwrR1YmtaEvr+i3t52CwM5ttBYY00RP9b/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793554725;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=PAth9uuBsiD2ZBusvqK9jhofezKOh4eMDf+spvC6ZS8=;
-	b=ChSbnMqtqVfRrnq9yA9Bh1acZWHqck/3JsplunIqAfa4C25xz3ZGQBhIKVNOTo0xtdfQ
-	 MgKibiLN5x7ttsCN194lm2yCxGzLuGJjZ9p5kZCRe+SMcTzdBhK1RvRvVbYF1fITQwBCf
-	 VfdgV93EwvQ6C658pExC1YQBrDUhE7YIUbTkK8N588J6vfQXUnDyUJkazKUNAN1povfbs
-	 5gp+Hl8J73BjiMwfimNfQV+7Bib9ZLrHy1KTLCidOxpF+ZLtY1+tPHBiGphx6DUnjcmv1
-	 eTfv4PQv6CXoTan7cr1RDDf1OgApnkdyMOy2N5wfNEULFfpyRQw2dnk8zrsvJ7ePoGA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793556035;
+	h=DMARC-Filter:Received:Received:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=sQF5AaRAqJJwPNtFv8d82MWcPLAgvRqmvTygJZxjDWE=;
+	b=AC1qSrV3R0v7/9wsxXBYgdQhqb3qQpl0eW9cjE6/jwHcL3hUcqMcGkwEytneLdpbi6gv
+	 gjNG6JhrYofQIN3OVWAthrdZhc9gafBPPHI5QPSJBuNcr3/KaTqZP1PPPbOezOGtNExBG
+	 NxhWuMCFhXKkhOOQo/q0hSXlyqnmdcZ0GdInHsu7O9XoekpXpkKuZILnxmyCf8Aljq/Rn
+	 65x2f1xtifa8X0VJmSzGKUJFUEPFm/aAfANj/pki9Z1uekk5S3f0j/WDWTj7JTwCiQ8AF
+	 G5U4lVthgCRZCnreiwyU7uzYz/alyfjaqJFfvUuo6co/GbjtdZ2IxK+Tp8Em1m2Slgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kQ8VzZvS;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085CA606A324
-	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 17:38:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kQ8VzZvS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC651F000C1;
-	Sun,  1 Nov 2026 17:38:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793554724;
-	bh=PAth9uuBsiD2ZBusvqK9jhofezKOh4eMDf+spvC6ZS8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kQ8VzZvSgspbzf0SuM8xUN2hyNsa3Eg74XNmydQiskesNLCOsRNB5olap9pQpi1VB
-	 CCcI8te22TpleARbiUDmhCAqU5Lx9wNMBlTeBloBVweDq8uemlzyIb+r128NtFhz1W
-	 GX6WBNAWszmFdHRHb+Vhm8BEnKEKydTJ/zD1oDy4E+JEOeFNFAJjB0P1SvPUzNF//3
-	 cgp1uMut585Jy5DXx6iq+N+ECqXK07GCmFuFcOO2MUbwagmcTfODhuNyUcU+DiPnhV
-	 gGf6AjCETFkciKdSY5uW7YCB/q5igRf+lAKlJA6qtg+vC9W+vdNEgzkcDpfnr0ArXO
-	 CUVJp7zt0NeTw==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	"Shuah Khan" <shuah@kernel.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH v2 6/6] selftests/damon: remove unused imports of os and sys modules
-Date: Sun,  1 Nov 2026 09:38:36 -0800
-Message-ID: <20261101173837.82868-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-192521@kernel.org>
-References: 
+	dmarc=none header.from=linx-info.com;
+	spf=pass smtp.mailfrom=linx-info.com;
+	arc=none smtp.remote-ip=114.247.232.78
+Received: from mail.linx-info.com (mail.linx-info.com [114.247.232.78])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D883606A327
+	for <damon@lists.linux.dev>; Sun,  1 Nov 2026 18:00:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D883606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linx-info.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linx-info.com
+Received: from localhost (localhost [127.0.0.1])
+	by mail.linx-info.com (Postfix) with ESMTP id E2697321215;
+	Mon,  2 Nov 2026 02:00:24 +0800 (CST)
+Received: from mail.linx-info.com ([127.0.0.1])
+	by localhost (mail.linx-info.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id n6jflpuqa_Xy; Mon,  2 Nov 2026 02:00:24 +0800 (CST)
+Received: from DiGouShu (unknown [172.31.255.20])
+	by mail.linx-info.com (Postfix) with ESMTPSA id 8498432116A;
+	Mon,  2 Nov 2026 02:00:24 +0800 (CST)
+From: Wang Guangke <gkwang@linx-info.com>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Wang Guangke <gkwang@linx-info.com>
+Subject: [PATCH] mm/damon/stat: avoid overflow in estimated_memory_bandwidth calculation
+Date: Mon,  2 Nov 2026 02:00:01 +0800
+Message-ID: <20261101180001.167198-1-gkwang@linx-info.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,60 +55,65 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 01 Nov 2026 17:20:33 +0000 sashiko-bot@kernel.org wrote:
+The calculation of estimated_memory_bandwidth computes
+access_bytes * USEC_PER_MSEC * MSEC_PER_SEC / aggr_interval directly.
+On 32-bit systems, the intermediate product
+access_bytes * USEC_PER_MSEC * MSEC_PER_SEC may overflow before the
+division is performed.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] selftests/damon: commit subject names wrong removed modules
-> --
-> 
-> commit dfc99fb0f6f595e8bf824229e67f0b391cab2a8e
-> Author: SJ Park <sj@kernel.org>
-> 
-> selftests/damon: remove unused imports of os and sys modules
-> 
-> This commit removes unused Python module imports from
-> sysfs_no_op_commit_break.py and sysfs_update_schemes_tried_regions_hang.py
-> in the DAMON selftests.
-> 
-> >     selftests/damon: remove unused imports of os and sys modules
-> >     
-> >     sysfs_no_op_commit_break.py imports 'sys' module but never uses it.
-> >     sysfs_update_schemes_tried_regions_hang imports 'time' module but never
-> >     uses it.  Remove the unnecessary imports.
-> >     
-> >     The issue is found using flake8.
-> >     
-> >     Signed-off-by: SJ Park <sj@kernel.org>
-> 
-> [Severity: Low]
-> As reported by Sashiko on RFC [1], should the commit subject be updated to
-> refer to the sys and time modules instead of os and sys?
+Fix it by splitting the division into quotient and remainder,
+multiplying each part separately.
 
-Yes, I forgot updating the subject.  I will do in the next spin.
+Fixes: fabdd1e911da ("mm/damon/stat: calculate and expose estimated
+memory bandwidth")
 
-> 
-> In tools/testing/selftests/damon/sysfs_no_op_commit_break.py, the patch
-> removes import sys while import os remains and is used in
-> dump_damon_status_dict():
-> 
->     file_dir = os.path.dirname(os.path.abspath(__file__))
->     dump_script = os.path.join(file_dir, 'drgn_dump_damon_status.py')
-> 
-> In tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py,
-> the patch removes import time while both import os and import sys remain and
-> are used at module scope:
-> 
->     sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-> 
-> [1] https://lore.kernel.org/r/sashiko-outbox-192115@kernel.org
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261101171630.81477-1-sj@kernel.org?part=6
-> 
+Signed-off-by: Wang Guangke <gkwang@linx-info.com>
+---
+ mm/damon/stat.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index b05b68f73e10..7cfa3a8d6801 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -32,8 +32,8 @@ static bool enabled __read_mostly = IS_ENABLED(
+ module_param_cb(enabled, &enabled_param_ops, NULL, 0600);
+ MODULE_PARM_DESC(enabled, "Enable of disable DAMON_STAT");
+ 
+-static unsigned long estimated_memory_bandwidth __read_mostly;
+-module_param(estimated_memory_bandwidth, ulong, 0400);
++static u64 estimated_memory_bandwidth __read_mostly;
++module_param(estimated_memory_bandwidth, ullong, 0400);
+ MODULE_PARM_DESC(estimated_memory_bandwidth,
+ 		"Estimated memory bandwidth usage in bytes per second");
+ 
+@@ -55,15 +55,20 @@ static void damon_stat_set_estimated_memory_bandwidth(struct damon_ctx *c)
+ {
+ 	struct damon_target *t;
+ 	struct damon_region *r;
+-	unsigned long access_bytes = 0;
++	u64 access_bytes = 0;
++	u64 remainder, bytes_per_interval;
+ 
+ 	damon_for_each_target(t, c) {
+ 		damon_for_each_region(r, t)
+-			access_bytes += (r->ar.end - r->ar.start) *
++			access_bytes += (u64)(r->ar.end - r->ar.start) *
+ 				r->nr_accesses;
+ 	}
+-	estimated_memory_bandwidth = access_bytes * USEC_PER_MSEC *
+-		MSEC_PER_SEC / c->attrs.aggr_interval;
++	bytes_per_interval = div64_u64_rem(access_bytes,
++			c->attrs.aggr_interval, &remainder);
++	estimated_memory_bandwidth =
++		bytes_per_interval * USEC_PER_MSEC * MSEC_PER_SEC +
++		div64_u64(remainder * USEC_PER_MSEC * MSEC_PER_SEC,
++				c->attrs.aggr_interval);
+ }
+ 
+ static int damon_stat_idletime(const struct damon_region *r)
+-- 
+2.47.3
 
-Thanks,
-SJ
