@@ -1,55 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793632087;
-	b=FuAVqRuxH/R5JRvdMVAvuoasxI/4gDoDt3w/mXODif3z6KHWgIHijbQlgOc+1JamPlUC
-	 9Phbi+iXAM8PD0ymtJ7DCfhd10SP6KWoUJgJkMjgKepTM7cdSQJG6XeTjDgRU83ZxhXS1
-	 hRKZhcOR+KSEG4TA1nKQyfyAyOFVhcOWJFEwVgiE9x2qMqh/1hiuUrfEtOMy3QBVoOeoB
-	 /lcyXGahNtMERmhU2mRIEYrUiZUEd67xG8ICbF2NMoMboFVzPvs/yiW0Tdx85KXPdcwgH
-	 AJEN5Z0rbtHqOudOVJUwrU3VW9lNPCZBs3DOcueOU3VgnLKobfCVLcyZZ1wrbW/Ur7g==
+	t=1793632088;
+	b=Aj+pHub/s5x2frNb7XrBbw+DTbb4kgNimEoD+7hpJtH6JjBGqp7srPfpmowiySKaeo2b
+	 GfPZU+C8zh2sjoiCqNZw0CZQGuC138auXqFCHFzrd6dVKXjsA7TqB8OUeNrd32jFKtNjU
+	 HzjcoTdJcOZPgiIViVl1tmb7VyslGPgB2ASaGGM3+tMqlz1GXmB9LTF3i62lyaDeM8I1j
+	 gfEfsQC0WKQ2Jbvn2PYGwEiX/eN9eox1bKmjFj+T0W246HUG4E/G4FCruyZWkSIqjrLHb
+	 UpkN8+ha1INspItN0+jZWJMHJQBD3HleYkowrnuf4iYrktjLSYcueaCVgXaUQNaVJrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793632087;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793632088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=+IKR9RbbuGuGx/yVom6rw6BPG5GNPAbNpjwaKg4rCb0=;
-	b=OOo1Z5ETH3kiwWFH3SxV5VoB7knNJqE2oFVotsJS7JPKxyDlp1y6mIGO3f73dFdWNhXV
-	 tngyu6srj0C42+l07lN0kBpWkUgwLTFdBqwTZ0la2HU95jhE1n6IZAvez8Pl+8/oL8e8l
-	 L8USB1wa1LO7fHqVbeJ47WOJ02RZyVH5iwDusvySv9DluUsblJ37bKlLyMlFdaNzquobB
-	 VRhpnjRljDd0fhHnegIYoT1RfrBuyZCrurA2aj6npILdSBupooSWfVjZIYXzQwFS4EjFb
-	 DHChgLHxeqEGOCkJUmpYv7nJOObXlFvRlAXwuRSW+JDLpvhIEIN2L+8dTDYx3sNtu3w==
+	bh=c6vXo64FE51u/FRjXpJ4fxOm9pgZA8t7pGEdtQQpkrc=;
+	b=FyAd6w49gw6Kr4bqJ7+2n9QjWfeT9i14POuZ6pcLdHkmp2NQY7srNjEmABT3rSS144eD
+	 szznTUd4y5W4XTe7ll1ZkUwntymHauv1eEK3VcCakNtxs8MQG+6L8mLzeoHXxBET1T96s
+	 D5dGhE2/BW/AEOqg8zWLEwaBLjXzZ/sjBg9Y5PorzVmsKrrVoZuZ/8s+QsV2HyR1YUJ2l
+	 Hb4iuJ2r1f3KD0bmhkjvlhSCXxX1yvTcYY4EE9R3lRewwYT/UIPgNlykLwIkIUhGRzulC
+	 hJAuA3D7D9a5p6WwstHrKHhNIascCj4i7u875GXFpEeK2C1a2+J3PpX8wQU6xUWt/eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cCgQyS4g;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FKzpjaeK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5550460A34D4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A7C60A0FF9;
 	Mon,  2 Nov 2026 15:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cCgQyS4g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5A01F00A26;
-	Mon,  2 Nov 2026 15:08:06 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FKzpjaeK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599D11F00A25;
+	Mon,  2 Nov 2026 15:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1793632087;
-	bh=+IKR9RbbuGuGx/yVom6rw6BPG5GNPAbNpjwaKg4rCb0=;
+	bh=c6vXo64FE51u/FRjXpJ4fxOm9pgZA8t7pGEdtQQpkrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cCgQyS4gxgKrL6ivpISet83poV/dEhRXOe58Rztq6mhqbAx0PILnDAQbC2eGQZoxz
-	 P5GXEwFJJa5546UnO1Szdjt0UbXAwPhU6BI4rbfKV/ZT6A2ODGnTfq2pa1ZSPjMh+O
-	 QsSdlLfZKb4tHBcBLnViwunT9CLdEgNQyAi3ZqKFIlK/pyhQVZG3g1qFoswzDAHcXQ
-	 bKPLwqxyv7LcL/fttn+G4UzuWC49D85BiOkz6T8McRV06dm5tfNOT6LfwRV1+lQcVm
-	 LWC5uFbIqdpyeg4YzcU2Sup7ATcad4o/WCt/llXv7TDQhx746G4pFg1OkzPRe2ZE6M
-	 IkbLx7R2KynxQ==
+	b=FKzpjaeKxeWvrMo9fGM/PnSq0y0waTRF4nSaoUSYDv463BztBvjEVpSlC5+0COvjN
+	 X26BBza7Xv6XWxrBPglzRWkVzVzPJvCoHeXy3056YIhWrGQWrPbp2OLtEmO4vPx/SG
+	 7+g0AzMvI7cNlqVF/b6KqJ0pltCp527K6EerXOA2bhuIj9m6SIpi/ywzjcN595FUjO
+	 k2drc6SVXL7i8UG16cGyfpDc9Lh39ZF0gNIZ2VjEdlrh7mvPx3wIZ8c6z07Ozs/2gt
+	 pMubg37QrajgabkRLwZdsCeLBhk01x7VY3kNOVEVwOawnfeDk8HsKbgTLB8698U51P
+	 vwyw1wIhBumcA==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Aveline Noir <jm5905938@gmail.com>,
-	Bijan Tabatabai <bijan311@gmail.com>,
+Cc: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>,
 	SJ Park <sj@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 5/9] mm/damon/{p,v}addr: skip folios already on the migration target node
-Date: Mon,  2 Nov 2026 07:07:52 -0800
-Message-ID: <20261102150757.93058-6-sj@kernel.org>
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org,
+	Aveline Noir <jm5905938@gmail.com>
+Subject: [PATCH 6/9] selftests/damon/sysfs.py: stop obsolete_target shells hanging the test
+Date: Mon,  2 Nov 2026 07:07:53 -0800
+Message-ID: <20261102150757.93058-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261102150757.93058-1-sj@kernel.org>
 References: <20261102150757.93058-1-sj@kernel.org>
@@ -64,122 +66,59 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Aveline Noir <jm5905938@gmail.com>
+From: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>
 
-While measuring DAMOS migration overhead, I found that the target_nid
-path isolates folios already on the target node, then puts them back on
-the LRU without migrating them.
+The obsolete_target test spawns three 'sh' processes as monitoring
+targets.  The processes inherit stdin from the test.  When the test is
+run via 'make run_tests' from an interactive terminal, the kselftest
+runner executes it under 'timeout', which puts it in a background
+process group.  The 'sh' processes then try to read the terminal, so
+the kernel sends SIGTTIN to the whole process group.  This stops the
+'sh' processes, and also the child the test has just forked to spawn
+the next 'sh', before it can run 'sh'.  The test then waits on that
+child forever, until the kselftest runner kills it after 45 seconds.
+The test passes when run directly.
 
-Skip them before isolation in vaddr and paddr, as the vaddr explicit
-destinations path already does.
+Fix this by passing stdin=subprocess.PIPE when spawning the processes.
+The processes then read from a pipe that never receives input, so they
+stay alive and idle as the test expects.
 
-In a synthetic same-node fvaddr test on a two-node x86-64 KVM guest (8
-interleaved runs per kernel), guest-kernel cycles fell by about 29% with
-4 KiB regions and 90% with 16 MiB regions. Median kdamond CPU time fell
-by about 76% with 16 MiB regions, with no clear change with 4 KiB
-regions.
-
-Cc: Bijan Tabatabai <bijan311@gmail.com>
-Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Jaeyeon Lee <jaeyeon.lee.dev@gmail.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Tested-by: Aveline Noir <jm5905938@gmail.com>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
 Changes from v1
-- v1: https://lore.kernel.org/179320218513.2.7432933245840036676.damon-same-node-skip@gmail.com
-- Put performance results in commit message.
-- Use two tabs indentation for second parameter lines.
+- v1: https://lore.kernel.org/20261018020415.35567-1-jaeyeon.lee.dev@gmail.com
 - Collect R-b: from SJ.
 - Rebase to latest mm-new.
 
- mm/damon/paddr.c |  2 ++
- mm/damon/vaddr.c | 18 ++++++++++--------
- 2 files changed, 12 insertions(+), 8 deletions(-)
+ tools/testing/selftests/damon/sysfs.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index 2cfdc356b4157..5b773012a8764 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -368,6 +368,8 @@ static unsigned long damon_pa_migrate(struct damon_region *r,
- 		else
- 			*sz_filter_passed += folio_size(folio) / addr_unit;
+diff --git a/tools/testing/selftests/damon/sysfs.py b/tools/testing/selftests/damon/sysfs.py
+index 66c826189320d..ce54fa21c09fe 100755
+--- a/tools/testing/selftests/damon/sysfs.py
++++ b/tools/testing/selftests/damon/sysfs.py
+@@ -390,12 +390,12 @@ def main():
+     kdamonds.stop()
  
-+		if (folio_nid(folio) == s->target_nid)
-+			goto put_folio;
- 		if (!folio_isolate_lru(folio))
- 			goto put_folio;
- 		node_stat_add_folio(folio, NR_ISOLATED_ANON +
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index b549496ea8e2c..1e65e7651cd98 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -786,14 +786,15 @@ struct damos_va_migrate_private {
-  */
- static void damos_va_migrate_dests_add(struct folio *folio,
- 		struct vm_area_struct *vma, unsigned long addr,
--		struct damos_migrate_dests *dests,
-+		struct damos *s,
- 		struct list_head *migration_lists)
- {
-+	struct damos_migrate_dests *dests = &s->migrate_dests;
- 	pgoff_t ilx;
- 	int order;
- 	unsigned int target;
- 	unsigned int weight_total = 0;
--	int i;
-+	int i, nid;
- 
- 	/*
- 	 * If dests is empty, there is only one migration list corresponding
-@@ -801,7 +802,8 @@ static void damos_va_migrate_dests_add(struct folio *folio,
- 	 */
- 	if (!dests->nr_dests) {
- 		i = 0;
--		goto isolate;
-+		nid = s->target_nid;
-+		goto check_nid;
- 	}
- 
- 	order = folio_order(folio);
-@@ -821,12 +823,13 @@ static void damos_va_migrate_dests_add(struct folio *folio,
- 			break;
- 		target -= dests->weight_arr[i];
- 	}
-+	nid = dests->node_id_arr[i];
- 
-+check_nid:
- 	/* If the folio is already in the right node, don't do anything */
--	if (folio_nid(folio) == dests->node_id_arr[i])
-+	if (folio_nid(folio) == nid)
- 		return;
- 
--isolate:
- 	if (!folio_isolate_lru(folio))
- 		return;
- 	node_stat_add_folio(folio, NR_ISOLATED_ANON +
-@@ -840,7 +843,6 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
- 	struct damos_va_migrate_private *priv = walk->private;
- 	struct list_head *migration_lists = priv->migration_lists;
- 	struct damos *s = priv->scheme;
--	struct damos_migrate_dests *dests = &s->migrate_dests;
- 	struct folio *folio;
- 	spinlock_t *ptl;
- 	pte_t *start_pte, *pte, ptent;
-@@ -858,7 +860,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
- 			goto huge_out;
- 		if (damos_va_filter_out(s, folio, walk->vma, addr, NULL, pmd))
- 			goto huge_out;
--		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
-+		damos_va_migrate_dests_add(folio, walk->vma, addr, s,
- 				migration_lists);
- huge_out:
- 		spin_unlock(ptl);
-@@ -883,7 +885,7 @@ static int damos_va_migrate_pmd_entry(pmd_t *pmd, unsigned long addr,
- 			continue;
- 		if (damos_va_filter_out(s, folio, walk->vma, addr, pte, NULL))
- 			continue;
--		damos_va_migrate_dests_add(folio, walk->vma, addr, dests,
-+		damos_va_migrate_dests_add(folio, walk->vma, addr, s,
- 				migration_lists);
- 		page_idx = folio_page_idx(folio, pte_page(ptent));
- 		nr = folio_nr_pages(folio) - page_idx;
+     # test obsolete_target.
+-    proc1 = subprocess.Popen(['sh'], stdout=subprocess.PIPE,
+-                             stderr=subprocess.PIPE)
+-    proc2 = subprocess.Popen(['sh'], stdout=subprocess.PIPE,
+-                             stderr=subprocess.PIPE)
+-    proc3 = subprocess.Popen(['sh'], stdout=subprocess.PIPE,
+-                             stderr=subprocess.PIPE)
++    proc1 = subprocess.Popen(['sh'], stdin=subprocess.PIPE,
++                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
++    proc2 = subprocess.Popen(['sh'], stdin=subprocess.PIPE,
++                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
++    proc3 = subprocess.Popen(['sh'], stdin=subprocess.PIPE,
++                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     kdamonds = _damon_sysfs.Kdamonds(
+             [_damon_sysfs.Kdamond(
+                 contexts=[_damon_sysfs.DamonCtx(
 -- 
 2.47.3
