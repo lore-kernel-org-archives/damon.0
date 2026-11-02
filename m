@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793630883;
-	b=Fl84aE6UOPdfK33rsPIaD3aOW+lzoI4tkZ66thNjuozOTrRhsgsBfWTPZ1CKerrEaRNV
-	 /xILiQxq5xDxOOabvfYEwXFKOJj1XWCQp2tb/PTkDUqz4AwM8Zv076lEkvGn+MRqhAS5Q
-	 CuyzAGiW69BSwf2DRdniahQAwpGejzDaUpyDluWg1YiOW/QhQ+2E0WwACv725pGdjf7R7
-	 8V9ULJZXozdLEc3FFTDa59mrxCN3pYXEkjCZYHvjzoH2UPBs5noQ5zT3HX5O47Rx2BJsS
-	 WLXFnLjerWY9AFetCd1ro72pspP+JYF2R/3hLFsxQQhHnzDe4mqRXbwMEUDsEMaLfAQ==
+	t=1793630928;
+	b=CazU2TZ+4efBIYe7nUu5ZZRPMpj4WnY8BML3zXAkGLfYkKATapEEpg5WaybjAT5HB2j5
+	 7dG5CNLZY0uyo40ItzYZLuLOgl+7QO+sLgmWsYq4d+jD9yAspE7tVntajdDZgJz41QNkd
+	 FULAcKBqLM3RmlNJCJwGk4J0k2ZBS+0JL8bCcdqFEcw14MCENW2/qIOvQCrxq8/9J8BNg
+	 5SPbhdf+oniCWXcZty9VLeKpUxObrZL6SvYehREVqDDtY5azzmLTm3C3tKHBUjlEN1O1X
+	 Z7DvSR6BywFLoeOe2rrtL6BuwiC2VfycvYdCre0ZmtsxsrS+ePfvWMbweSYNEHu/hxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793630883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793630928;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=G9lp6lp7aRrqvLo599muNL3XhA3hEQTZDj7UELlaV4g=;
-	b=uhaD5VLpoDLjIMMHhy4o5fyvuOWVYAwjPftUIf1VVRcJUm07+yvWliIa5MSAafZ9vHDS
-	 ApQn0hs2GH6x/5ljca0IjuH5V4BObHr6NGYXZuiisCmG/XjsvfJ61WSOAhZl9vpJQA//Q
-	 rapju7z1H9ea+nx7GLi69mGZfe7+uxmzgj2dcPnG+LDadsgFsD+u3WLQv8BOwagNsLGuJ
-	 omTvFdhXtT1loGyDbYVXapt46N8i4NBM2KSlHk8F5Hgxw87vicks59td+D7Vsts+01mY0
-	 2qd+0oQ2xKz/UWfqkM8xcvSQuLGjWULtEJ4J5Odd/brm8sRa/r0SlrsN6hxkQQGlPyw==
+	bh=y5WlFLElMB431G3ZNM4dZCEkZMIcokDkM66S6LRmp/o=;
+	b=KgoEyWyCBA645ld75gh4f6KuR9Tc7+01JiV3AJx7J9LqlB5/G9szg9zxwlAkVVB14VtD
+	 AVsI2SrMnvRagOpXvEQA51baXRAeJVbmS/ihnwHZK14Dk+0GpR/UQmTbH6GS3633nngSx
+	 jKS1Rnp7Enjszguz4xV/tVCNqTT0CkFdjPP3IwZGgezsG0k4r71vLDCXVhpZXUohZTr4z
+	 xbnGz24+KZSGAGmwY+1gJvJsWYsxfp4MABolkMzP4ucyQC5I09pA4p2yuZvzYSh21PkmK
+	 xc52JBzuVPPehU7ENFhsGSBAevzRsp5Cehxe6hRCEN7q9Nf9tv5MUGjA8rj9XGmEdBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iPWYLPJT;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E9MyM1qY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEAC606AB95
-	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 14:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14DE606ABA3
+	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 14:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iPWYLPJT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6F51F00A1B;
-	Mon,  2 Nov 2026 14:48:02 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E9MyM1qY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615E91F00A1B;
+	Mon,  2 Nov 2026 14:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793630882;
-	bh=G9lp6lp7aRrqvLo599muNL3XhA3hEQTZDj7UELlaV4g=;
+	s=k20260515; t=1793630928;
+	bh=y5WlFLElMB431G3ZNM4dZCEkZMIcokDkM66S6LRmp/o=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=iPWYLPJTUPmM8iPGkizYCM5D/YgrWC83B96bCFD+yqfp1ihjZ4mAi/M26rRa0tdWo
-	 egdJnaUVEEcADBLnBSax+isS3vFSgmaXVTB/gtBofnYQBPKLy0mAKfr/61KRp7QkmC
-	 yNcyFvTgMij7F/nvQFzeon7ombYPOtta38sZ9871o/eYZoBDGHGXaGuQnYwvtzDHmc
-	 3ysM36WAFVSQA8VDAhWkHuhAwaIemYZv99ITgo52v7MTcKfWvaAIMFKMC7B33P4S+X
-	 2gdq87UjVWKULV1VGq4yutrxdDUfiJ0XuMDBVG60BFAqXh1TNpobELfVolZyd4++JH
-	 kahP1CW8kWdDw==
-Message-ID: <sashiko-outbox-193602@kernel.org>
+	b=E9MyM1qYPp9Oh6bbwY0kY1b0+vFJZ8NFTBFuisaSn0pee76qS6oFacOVMPmykjZWa
+	 4crplJ34n7eO8hMPiZmgc8ViBYFAPVxZKpA0evLauOa4xAQgq0tRzZYnzDrQdMEBYa
+	 rn7oD2E/t9zUo9sulXWDzUIWqUGhNpCi3KA+C6Q2mrMYQ7aSSnL1Vshm8D9nGIGkNV
+	 jCTd7AQ0+pMvtdKfuTJ/QNm0lZjnNi33P3qMXLdYVs68yTl5Ltc+Rmgu5bUgw1sv4g
+	 xpfCmmGh4H8cjhGkQT9c6mo5fbgVxzlr5wSnrcYDYhnucvvmTI7NA7dY1s3lb+wiXs
+	 aWWOElohGCarQ==
+Message-ID: <sashiko-outbox-193603@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH mm-hotfixes-unstable 3/3]
- selftests/damon/sysfs_memcg_path_leak: define ksft_skip
+Subject: Re: [PATCH mm-hotfixes-unstable 1/3] mm/damon/core: reset watermark
+ wait state on each iteration
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261102144627.88843-4-sj@kernel.org>
+In-Reply-To: <20261102144627.88843-2-sj@kernel.org>
 References: <20261102144627.88843-1-sj@kernel.org>
- <20261102144627.88843-4-sj@kernel.org>
+ <20261102144627.88843-2-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 02 Nov 2026 14:48:02 +0000
+Date: Mon, 02 Nov 2026 14:48:47 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,36 +61,32 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> sysfs_memcg_path_leak test uses $ksft_skip without defining it.  As a
-> result, the test is marked as passed while it was skipped, like below.
+> From: Aveline Noir <jm5905938@gmail.com>
 >=20
->     $ ./sysfs_memcg_path_leak.sh
->     Run as root
->     $ echo $?
->     0
+> Found while reviewing the DAMON source code that if an online commit
+> removes all schemes while kdamond is waiting for watermark activation,
+> the scheme loop becomes empty but min_wait_time keeps the previous
+> positive value.  kdamond then keeps sleeping instead of resuming
+> monitoring without schemes.
 >=20
-> Users who run the test could therefore wrongly believe the test was run
-> and passed while it was skipped.
+> The way to wake up the kdamond again without DAMON is bit complicated.
+> Install a scheme having watermarks that can activate the kdamond again,
+> and remove the scheme again.  Doable but cumbersome and complicated.
 >=20
-> Define the value at the beginning of the test.  After this patch, the
-> exit code reflects the skip.
+> Initialize min_wait_time and init_wait_time on each loop iteration so
+> the wait is calculated from the current schemes and an empty scheme
+> list resumes monitoring.
 >=20
->     $ ./sysfs_memcg_path_leak.sh
->     Run as root
->     $ echo $?
->     4
->=20
-> Fixes: dfa3cf0bc018 ("selftets/damon: add a test for memcg_path leak")
-> Cc: <stable@vger.kernel.org> # 6.17.x
-> Closes: https://sashiko.dev/#/bug/linux-a0456336-0608-4fec-ac22-0ee61d1d6=
-a91
-> Reviewed-by: Aveline Noir <jm5905938@gmail.com>
-> Tested-by: Aveline Noir <jm5905938@gmail.com>
+> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+> Cc: <stable@vger.kernel.org> # 5.19.x
+> Assisted-by: LLM
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+> Reviewed-by: SJ Park <sj@kernel.org>
 > Signed-off-by: SJ Park <sj@kernel.org>
 
 Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102144627.8884=
-3-1-sj@kernel.org?part=3D3
+3-1-sj@kernel.org?part=3D1
 
