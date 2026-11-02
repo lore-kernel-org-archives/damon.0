@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793630928;
-	b=CazU2TZ+4efBIYe7nUu5ZZRPMpj4WnY8BML3zXAkGLfYkKATapEEpg5WaybjAT5HB2j5
-	 7dG5CNLZY0uyo40ItzYZLuLOgl+7QO+sLgmWsYq4d+jD9yAspE7tVntajdDZgJz41QNkd
-	 FULAcKBqLM3RmlNJCJwGk4J0k2ZBS+0JL8bCcdqFEcw14MCENW2/qIOvQCrxq8/9J8BNg
-	 5SPbhdf+oniCWXcZty9VLeKpUxObrZL6SvYehREVqDDtY5azzmLTm3C3tKHBUjlEN1O1X
-	 Z7DvSR6BywFLoeOe2rrtL6BuwiC2VfycvYdCre0ZmtsxsrS+ePfvWMbweSYNEHu/hxg==
+	t=1793631055;
+	b=m4MVzWWcfVfDbYeXVA/hM+TKI0ZBFpS1Ksv21D/HMQDjvz6iXU9Ahg9MIz71ZVxcFB3/
+	 TjNKH0CM3FTyEtRY/ggX/CITq2hpUOU8HEftqKxNXssLbti5A9KH2b7KRK4I68qx0M1b2
+	 NkCKMt7Z84CT2SoW9GyClAW5ttPLlq50vpUktQkgbE0FcpdlbfCB2QyCQ0bTSN7jrZpOi
+	 0an2bRKiZaHOWAHm44ocnXLntes5Vtw2lovRiANfd5INoyaLwIMKew3XQhBrXL+vwHfGn
+	 ieWUaWD1NurqVVN0zclHGnxeux0GU/NOJ50tPHrOPHFShI7eEZAi/5tsFkahGuUyEYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793630928;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793631055;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=y5WlFLElMB431G3ZNM4dZCEkZMIcokDkM66S6LRmp/o=;
-	b=KgoEyWyCBA645ld75gh4f6KuR9Tc7+01JiV3AJx7J9LqlB5/G9szg9zxwlAkVVB14VtD
-	 AVsI2SrMnvRagOpXvEQA51baXRAeJVbmS/ihnwHZK14Dk+0GpR/UQmTbH6GS3633nngSx
-	 jKS1Rnp7Enjszguz4xV/tVCNqTT0CkFdjPP3IwZGgezsG0k4r71vLDCXVhpZXUohZTr4z
-	 xbnGz24+KZSGAGmwY+1gJvJsWYsxfp4MABolkMzP4ucyQC5I09pA4p2yuZvzYSh21PkmK
-	 xc52JBzuVPPehU7ENFhsGSBAevzRsp5Cehxe6hRCEN7q9Nf9tv5MUGjA8rj9XGmEdBw==
+	bh=LeCYwJ+pKIIQ0aVl0SNFzHO7+RmNY3iDYrhP6aRMp8w=;
+	b=rtaXJZF27l+m/fXvb4iN5iq+iZaQFoE3QhgGA1A8sehwqfOazYIrnTRSEMXvFMtyvuAm
+	 Vok5sNTRDPzQ4BRpV22pCFBs3M+WgWBQXtf5Y9fiXqRh4u+uVF9QIz6fNieOg0UZJ2GgN
+	 zRHQf/eY9t7s4WMGWLh03W2njVjtadmj8casDknjqpOjJ5bqte2C5pRtU09Y0QEjFzDrV
+	 Mu4/uDqg+YGWJ8FciFRgHNnNQTl6SFO8JAZaW8/CgWnT5/q7yLDF7KDHFXN3XBUE/ifek
+	 1C8yk0eti+rcoFsjBxHI736efmDENCtPLBMyb7lJvc79kOi0OWIKCkVL0fP/VXnsA3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E9MyM1qY;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RfN8C7V0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14DE606ABA3
-	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 14:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E9C606B92A
+	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 14:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E9MyM1qY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615E91F00A1B;
-	Mon,  2 Nov 2026 14:48:48 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RfN8C7V0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137C11F00A18;
+	Mon,  2 Nov 2026 14:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793630928;
-	bh=y5WlFLElMB431G3ZNM4dZCEkZMIcokDkM66S6LRmp/o=;
+	s=k20260515; t=1793631055;
+	bh=LeCYwJ+pKIIQ0aVl0SNFzHO7+RmNY3iDYrhP6aRMp8w=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=E9MyM1qYPp9Oh6bbwY0kY1b0+vFJZ8NFTBFuisaSn0pee76qS6oFacOVMPmykjZWa
-	 4crplJ34n7eO8hMPiZmgc8ViBYFAPVxZKpA0evLauOa4xAQgq0tRzZYnzDrQdMEBYa
-	 rn7oD2E/t9zUo9sulXWDzUIWqUGhNpCi3KA+C6Q2mrMYQ7aSSnL1Vshm8D9nGIGkNV
-	 jCTd7AQ0+pMvtdKfuTJ/QNm0lZjnNi33P3qMXLdYVs68yTl5Ltc+Rmgu5bUgw1sv4g
-	 xpfCmmGh4H8cjhGkQT9c6mo5fbgVxzlr5wSnrcYDYhnucvvmTI7NA7dY1s3lb+wiXs
-	 aWWOElohGCarQ==
-Message-ID: <sashiko-outbox-193603@kernel.org>
+	b=RfN8C7V0jXTl1JyzzBsBU3MK1+pvtPJk6QVICON6bFGcaRZvCC2GvG6VsnkKLxL9E
+	 aOhQ4Pf/9pBREzBfrQJj5E5S1rsj6S6fVAZmKYwNC0VkKYlN9tDayDIG1ERgOxkm1f
+	 Rrtv/nDI0ZbvVwL86j55TZAnMwbPy8aEqM5RtFIKrvkO62pvJ2MFUHKyKs1Bvmi9tW
+	 VYd/nzq4lAy9o8wuc47UHaonnzmg9UaAlkmH68wKJ+AOOaediauNZ++NawWtduARls
+	 8mq6WPas0cm1kEiNvLZH1zugVNeGJdz5ZSAlDoWobbx9pPYNSORTwsZejQk1W3u5qN
+	 EW7mZcBe4/5CQ==
+Message-ID: <sashiko-outbox-193608@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH mm-hotfixes-unstable 1/3] mm/damon/core: reset watermark
- wait state on each iteration
+Subject: Re: [PATCH mm-hotfixes-unstable 2/3] mm/damon/tests/sysfs-kunit:
+ fix leaked pid reference in add_targets test
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261102144627.88843-2-sj@kernel.org>
+In-Reply-To: <20261102144627.88843-3-sj@kernel.org>
 References: <20261102144627.88843-1-sj@kernel.org>
- <20261102144627.88843-2-sj@kernel.org>
+ <20261102144627.88843-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 02 Nov 2026 14:48:47 +0000
+Date: Mon, 02 Nov 2026 14:50:54 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,26 +61,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> From: Aveline Noir <jm5905938@gmail.com>
+> From: Wang Xiaolei <xiaoleiwangxiaolei@gmail.com>
 >=20
-> Found while reviewing the DAMON source code that if an online commit
-> removes all schemes while kdamond is waiting for watermark activation,
-> the scheme loop becomes empty but min_wait_time keeps the previous
-> positive value.  kdamond then keeps sleeping instead of resuming
-> monitoring without schemes.
+> damon_sysfs_test_add_targets() creates its monitoring context with
+> damon_new_ctx(), which leaves ctx->ops zero-initialized.  Since
+> DAMON_OPS_VADDR is zero, damon_target_has_pid() returns true for the
+> context, and damon_sysfs_add_targets() therefore calls
+> damon_set_target_pid() for each target it adds.  That function grabs a
+> reference to the target's struct pid via find_get_pid().
 >=20
-> The way to wake up the kdamond again without DAMON is bit complicated.
-> Install a scheme having watermarks that can activate the kdamond again,
-> and remove the scheme again.  Doable but cumbersome and complicated.
->=20
-> Initialize min_wait_time and init_wait_time on each loop iteration so
-> the wait is calculated from the current schemes and an empty scheme
-> list resumes monitoring.
->=20
-> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-> Cc: <stable@vger.kernel.org> # 5.19.x
-> Assisted-by: LLM
-> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+> The test then tears the context down with damon_destroy_ctx(), which
+> releases such a reference from ctx->ops.cleanup_target().  For the vaddr
+> operations set that callback is damon_va_cleanup_target(), and it is the
+> only place where the reference is put.  The test never selects an
+> operations set, though, so cleanup_target is NULL and both references --
+> one for each of the two damon_sysfs_add_targets() calls -- are leaked on
+> [ ... ]
+> Cc: Vlastimil Babka <vbabka@kernel.org>
+> Cc: "Liam R. Howlett" <liam@infradead.org>
+> Signed-off-by: Wang Xiaolei <xiaoleiwangxiaolei@gmail.com>
 > Reviewed-by: SJ Park <sj@kernel.org>
 > Signed-off-by: SJ Park <sj@kernel.org>
 
@@ -88,5 +87,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102144627.8884=
-3-1-sj@kernel.org?part=3D1
+3-1-sj@kernel.org?part=3D2
 
