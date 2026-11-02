@@ -1,59 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793632086;
-	b=fhBEXSYgEh4JUFeOZqY8ErNOlOu2aHNlilc90xLu/8Oh93HhykRKKloF3C7aCmjWcqML
-	 akiKETD7AlQPrYQs4RjlDpiNWboPDz+VN8hVpyeZsc1dFFRuePR2mHXxqDhqhh+XbS9ze
-	 V9qV3Wigq5gKA1p57tI1UiFXVaqd5S98+dSs5ro9dK6REpqIxU8MksRJPsI5/6TTKCFXA
-	 J+Lk2oTsSRYEoHbrzZ7bGRdXjILRkra8W+4TMt0UYj+iHiEieFnY/gWTE5jRRi4nGqH8A
-	 wp/xqEAnHyDzh7TMlnjA92PmFaJVThfphxAh5vCiTuSo4hozBzV2cYVNYIoBDeTzWCA==
+	t=1793632087;
+	b=LUqE82osmDoq4zH4d0NyXxCwtL/TpMbkQNg/LUPo3ZJGD1/ybUw3tJCvO5yl7EWQ4v8g
+	 QSYHZwHeERKduiS4zpABMv81blWOCbqHTbhpT0COCcLnI6HjNikkcTktLPtVNig5T4PMT
+	 ySyp84/D88tQVc0yNZW8iv5JrmbGAkMtTTl1XnaxZdQG9Q1yc6P8fbtK43FcKTh/8GG2T
+	 AQS4fLkfCSHypB5HP7yb7HNje6Vqw4W0Gk+C6Z7AHpQqOOVslweL+gVAGEiA6gj3/impu
+	 mP8DyncwDQs9rCoZiNuFefCPWtQAh6ueIKe57Mlm+QGq2GItnycfoLdwKn4uRT2KS8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793632086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793632087;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=awuxY1FvzsoS1AnamJJIhHpAk0A733zuvxu39gKku+U=;
-	b=Pe9ju3dcR1ni4w49N7vp2EgBd8QkJv/Abc6bA80Eq84aPKVrqNNoclhBXczjEm5LvvzV
-	 cUQb/pcN37TAP8eAzAlJLJuo7wZTlnDBJDWLg6SvtEPomV8K6zqHGoFHfbI+8Gly/Tbi9
-	 4nI7J2Z1o5PVdXcmaMsmd4iHg6awkBeiZKkxGj4FzaR1pDGbyYMYDQhQgpzWcce9yQ1lq
-	 Sp44uuOHrcCcQUKBCu9RtwIdki5bzZvS5+QzftCDSTeoX8tu/Yhyh7aX6pGQWPMvcKpxr
-	 mQIM+9cKioYAWuCpDkll7kYLXMSHB/XDCAcCZIy2owtFRmzqNYX0J9ErhowGkqaGP3Q==
+	bh=6b6oFi/epwMKMYOCvMcLX5SixjsFrg88HIyGcM89GbU=;
+	b=PlTJliYTtl4oXEv4dpZe/9xrTBZyln+9mSuEaKgRZcLkaD8EoZODboMANkrOgjjLSUXH
+	 cRVwi0SJ0HerBLQEymDD6SI8+aphFst9QvyCfqTMTxWIm/LAupOSOkn18mO9lHckS/vX3
+	 icQo0YFEGh5EXwosDsKutqPbXwXtWufg3YTTAMAh1FEvvK5AwY9VH1Wtpl5qbeh6Irqv1
+	 /L5S6p5P6ajkPgg7cNokJ7VDlgE+SHd5qcrldl6DyAQTzzg//lJf2+N1BeOK3Im8gh7Ki
+	 Kk6JJiC3OG5Yvmosy4D3KwxYfeJ7H1DFOiw3eXEKWxUkppRpSxtkYUuxqLYJ1LeYGaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ag3K53I0;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XrZQnn4C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F0560A0FE9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9233E60A0FEF;
 	Mon,  2 Nov 2026 15:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ag3K53I0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9AF1F00A1D;
-	Mon,  2 Nov 2026 15:08:05 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XrZQnn4C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A241F00A2A;
+	Mon,  2 Nov 2026 15:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793632085;
-	bh=awuxY1FvzsoS1AnamJJIhHpAk0A733zuvxu39gKku+U=;
+	s=k20260515; t=1793632086;
+	bh=6b6oFi/epwMKMYOCvMcLX5SixjsFrg88HIyGcM89GbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ag3K53I0Csd3ikdmc6KReqMvi/VyGvfqEHpgseRbEL1brw4iXQitfE5arNES3VbsB
-	 50u+rHAwCPanrp577miARyXu7d0J14BF952So/jncCy8Mhbj8Slb4Zp3jio3RV86J9
-	 KT6Da6cOMPynOo0CwHrzLzWzlkV5G0lkfD0oURrHQFrzocfDppWxqL4fzxf7mfqJ1k
-	 tiYd1ZTjd5hJqzG4DbnOP0+oKwfr3APif41tdiQPYW/8hGFFijtfUpz9/oK37+DQJI
-	 39a6lz78YeIT5IZMmNOwIheYMUhGOg1jPy5GXwM8FcxmHA0e6wjVve3INVygwZ7ckA
-	 qQr3r9LchhW/g==
+	b=XrZQnn4CsywSn7qcJI5WSFd6QsTFCkiSXKgVSrtcHW7w3BEPDx2Ei2g0dIeCyp/ho
+	 IELSsBOsA8xgkDWQFCYeCfw/LMll3OC63RXdWKfROfoZiFSISwpziClYJ6Aw3p/2+S
+	 WbH8KnZWq21CEEu9lwvPaL3X1rm/odickrCYAjwXWggL7LQ2G4l+gVJSU+aagHAnHf
+	 fS+e+YShp6GqAAMioEpvJMbOOkjDMCL5lJU/cfxkdiUbSHkjm1yKeXDESlp0fJMfht
+	 iSG23szz+J/DgIdXs8WA/oxAW9kQJfVI1Asn/Vq8H4BGIaKmQGVpSeIQwRK4sFO8y6
+	 RCpEUe885QO8w==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: "Shubhang Kaushik (Ampere)" <sh@gentwo.org>,
+Cc: Aveline Noir <jm5905938@gmail.com>,
 	Fernand Sieber <sieberf@amazon.com>,
 	Leonard Foerster <foersleo@amazon.de>,
 	SJ Park <sj@kernel.org>,
 	SeongJae Park <sjpark@amazon.de>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
+	Shubhang Kaushik <sh@gentwo.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	Aveline Noir <jm5905938@gmail.com>
-Subject: [PATCH 2/9] mm/damon/ops-common: align MMU notifier range when clearing PTE young bit
-Date: Mon,  2 Nov 2026 07:07:49 -0800
-Message-ID: <20261102150757.93058-3-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [PATCH 3/9] mm/damon/ops-common: align MMU notifier range when clearing PMD young bit
+Date: Mon,  2 Nov 2026 07:07:50 -0800
+Message-ID: <20261102150757.93058-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261102150757.93058-1-sj@kernel.org>
 References: <20261102150757.93058-1-sj@kernel.org>
@@ -68,59 +68,43 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: "Shubhang Kaushik (Ampere)" <sh@gentwo.org>
+From: Aveline Noir <jm5905938@gmail.com>
 
-DAMON selects a byte-granular sampling address.  damon_ptep_mkold()
-clears the young bit of the PTE covering that address, but passes the
-unaligned range [addr, addr + PAGE_SIZE) to MMU notifiers.
+damon_pmdp_mkold() clears the young bit of a PMD but notifies
+[addr, addr + HPAGE_PMD_SIZE), where addr can be an unaligned sampling
+address. This can miss part of the sampled huge page and age secondary
+mappings in the next one.
 
-For an unaligned address, that range extends into the following page.
-KVM ages every guest page intersecting the notifier range, so it can age
-a secondary mapping for the following page although DAMON cleared only
-the sampled page's primary PTE.
-
-Align the address before both the primary PTE operation and the
-MMU notifier call so that they cover the same page.
+Align addr to HPAGE_PMD_MASK so both operations cover the same huge page.
 
 Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-Signed-off-by: Shubhang Kaushik (Ampere) <sh@gentwo.org>
-Reviewed-by: Aveline Noir <jm5905938@gmail.com>
-Tested-by: Aveline Noir <jm5905938@gmail.com>
+Cc: Shubhang Kaushik (Ampere) <sh@gentwo.org>
+Signed-off-by: Aveline Noir <jm5905938@gmail.com>
 Reviewed-by: SJ Park <sj@kernel.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
 Changes from v1
-- v1: https://lore.kernel.org/20261021-damon-align-pte-young-notifier-v1-1-d0365ac45b66@gentwo.org
+- v1: https://lore.kernel.org/r/20261021-damon-align-pte-young-notifier-v1-1-d0365ac45b66@gentwo.org/
+- Drop Link: tag.
 - Collect R-b: from SJ.
-- Collect R-b: and T-b: from Aveline.
 - Update subject prefix.
 - Rebase to latest mm-new.
 
- mm/damon/ops-common.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/damon/ops-common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
-index 2f3bf86a221be..f88c6fd189fca 100644
+index f88c6fd189fca..b9571f53e538c 100644
 --- a/mm/damon/ops-common.c
 +++ b/mm/damon/ops-common.c
-@@ -64,6 +64,8 @@ void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr
+@@ -102,6 +102,8 @@ void damon_pmdp_mkold(pmd_t *pmd, struct vm_area_struct *vma, unsigned long addr
  	bool young = false;
  	unsigned long pfn;
  
-+	addr = PAGE_ALIGN_DOWN(addr);
++	addr &= HPAGE_PMD_MASK;
 +
- 	if (likely(pte_present(pteval)))
- 		pfn = pte_pfn(pteval);
+ 	if (likely(pmd_present(pmdval)))
+ 		pfn = pmd_pfn(pmdval);
  	else
-@@ -83,8 +85,7 @@ void damon_ptep_mkold(pte_t *pte, struct vm_area_struct *vma, unsigned long addr
- 		 * Arch implementation of ptep_test_and_clear_young() may
- 		 * require aligned @addr
- 		 */
--		young |= ptep_test_and_clear_young(vma, PAGE_ALIGN_DOWN(addr),
--				pte);
-+		young |= ptep_test_and_clear_young(vma, addr, pte);
- 	young |= mmu_notifier_clear_young(vma->vm_mm, addr, addr + PAGE_SIZE);
- 	if (young)
- 		folio_set_young(folio);
 -- 
 2.47.3
