@@ -1,57 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793629536;
-	b=KwFN6xRHADznBq9wgwaQkMrEuYLLIxqrEwse6Nzly0w0nfbyNcnxHMi0kWoX/WloXVYM
-	 VFYC1pXLfYlTc5L70KpgVf2Hj/l5e69iIwRbGKy4jDiptUmSAl6j3Ct6Rik8l4SLblTkg
-	 xTWFoWJh5BjUTHYWUcthepJop/yorA4S0Vcg4xfC0oA3UMrF5D3fJp9hgYV/fOSuwOChh
-	 tTg2s5teZY9qQ43lsEVvZz4DMXth9FMvznMW2LcZQW31+26+UF7FuVKO78bL8nbBp1eOK
-	 mZCxoJz4KWP65l5YwSpETCBnyhlBnH781iVCWoMppx5iBF5FpEU1iwrXE8hxgiU9BEA==
+	t=1793630795;
+	b=X2qItx23mivUl9CxXd/7cGQSgXoGTHNG5bXa9Tj+wKsYEMhFqt3kvZUUP0n10qu7KsZz
+	 fxUobOzYZVPMR3DYw63oWdcGdcSD56k9fOSrQ6Axkma2plUpHM2eositKB4AdVeISdNWX
+	 VcpqHTmNW2fhXVksqPZVpUfkJfW/Js8QxcsP/rBhS4oaJaAdzu5T9LMquCTV9dagB9tpZ
+	 7dXzGYg1RqDzkCbZF6HWJ3vfFpvn9QcIIULd3xKVWvwgpoYejgiOKhwdo5qM3wqt8g9Bh
+	 2yk4CjmacV7v4YAy/Ez17JKi3v0OV7ksk/dLJfZ/LNkQLjaYVtNBeyVz1gSgtLedCpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793629536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793630795;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=sRCWFpBz7FUgfB3FARLk2m5vQjODJMmPqdZnqL3DW4o=;
-	b=eEpjGxI6eIuQA3xzqOFsv6SjfoUEauCYaPr9+1ej/eDiRTmfVdDRMnMj29P39RcTaYrH
-	 bapd1UJwE5ys+kcY5bhQ91AJJlQe+V8IwhMWeSHANW4hnMGAbrS6hpbyLY5EuT3Cu7MxG
-	 AP5Vtv6Nvv+ET5DjgFv0xjBq0Wvzb5jTqk14ZnyFPhN6N445NMQGnO4GYGzlnXTGuFmLl
-	 Glw9wWj8rYkmBZ7vhU0SNCiInq8fzXmGp+zHQmsE6ZDYUNq5LEROzw1ss0gmLW0AZfOBy
-	 yy8PqosLUoQMlZBDEv8dHeb1VAmK2jsMVoN2A01x2PLdNYfMQG6PYsh2wrHurFxb1lg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=+CbOy/w4oZmoVyUdrE5PFeUUqcG8Qy13cgKPirYGonw=;
+	b=tA/oWasUSf0zVHptQRpBY1J6greX4c64ZJHa4dE/pnJxiVfV6RUQkqIJ8LPdIvz9oMeb
+	 egRM8OgcTqdw/9YWRHg88/ynx2JGOhgl+Q3dPMytRcvZvWNjJdyxKO4mSqEYRyAtpiJV9
+	 DN2nYzYxofKo5INAUxxz9Vc/Yi/DfR+HXFT/bH3K01vpm/wpgpCJ4+h/+r0QjwZnvhKkj
+	 8VZx86qsml3g5FMNcogG1/+DvxMHlkq0xiSJ7ttiALCW6dzRUNPJiMYzNMArGlYGtVMOW
+	 fLK8tSOpxHjw4SSb9f/Hmcex8X9IMk5ejYyAFrLQT3N1CDYKruHrK9d7QYI453BjQnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Qnp4nuoE;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UzgLpTAs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A560606B1CF;
-	Mon,  2 Nov 2026 14:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B3E6070D96;
+	Mon,  2 Nov 2026 14:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Qnp4nuoE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9356E1F00A18;
-	Mon,  2 Nov 2026 14:25:35 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UzgLpTAs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735601F00A18;
+	Mon,  2 Nov 2026 14:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793629535;
-	bh=sRCWFpBz7FUgfB3FARLk2m5vQjODJMmPqdZnqL3DW4o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qnp4nuoEfk8SdEnmrUkDHhXQUJXar6SX8Pi/DJVfadKNXU+/ctRAHnZp8dZaCRxAw
-	 fcYb6hZd1zRLPUMakrEKVr0sOc7ajeDE5Izdae3NY1zvrzLlN761lH3e4+fPxdsTRU
-	 CxkjDup95CmCwWKMw0/+xp3bICK8mdacJAN6HZJZCAVzm7Rc4vbgGBDPZagaqjZooQ
-	 nieDQzA6NqrKQXFK4LIprqJKLKd4AcDQn3nuLVlLQ0CjQFRJblDxFCxTP+eQ7meUWj
-	 zlD+6ugLz8L6ZAbPh5zuzDxjfOSL1v2LPhUQRMozZ7TzLTeP71yNW9B831St1pJ0na
-	 9Wiu5/7EtuXlg==
+	s=k20260515; t=1793630795;
+	bh=+CbOy/w4oZmoVyUdrE5PFeUUqcG8Qy13cgKPirYGonw=;
+	h=From:To:Cc:Subject:Date;
+	b=UzgLpTAsh/8b2lAuCsP4MmQBFlTwq27nXfldudYpUFO9wJWmkv9UIHFAXDDexAlif
+	 iO1Q0+qe6cHXAUlIT+U3r4HyjZYBl4HukMhSEITaTw4So/C+I1yS3Syg7C5sIxDZPG
+	 5S0ZNudLwPF0WmqBgUtsD6evmUSs8XzPvMYhh9Bl1eVwPb+BqphU2ASIGP7YiG/TJe
+	 ZGwuEjboJWhAA6PG6w3PUOPbiFKqwfO9qGu2VmKADh+w6P2mhbFyIdU7jmBJpgBnal
+	 IG0ZgOE6r9qhpaa0kScLQ3/QfF4TUP+ddUJtSY/QX/sgQfDsbHDsuF3Ku34F0iemg5
+	 EEcdLIA1YJTXQ==
 From: SJ Park <sj@kernel.org>
-To: Wang Guangke <gkwang@linx-info.com>
+To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
+	"Liam R. Howlett" <liam@infradead.org>,
+	stable@vger.kernel.org,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/stat: avoid overflow in estimated_memory_bandwidth calculation
-Date: Mon,  2 Nov 2026 06:25:28 -0800
-Message-ID: <20261102142528.27792-1-sj@kernel.org>
+	kunit-dev@googlegroups.com,
+	linux-kernel@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH mm-hotfixes-unstable 0/3] mm/damon: fix watermark state, kunit pid leak and selftest fake pass
+Date: Mon,  2 Nov 2026 06:46:23 -0800
+Message-ID: <20261102144627.88843-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <auhgJ74TeQOIvTtO@DiGouShu>
-References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,44 +71,30 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 2 Nov 2026 18:04:23 +0800 Wang Guangke <gkwang@linx-info.com> wrote:
+Three hotfixes for core, kunit and selftest.  Fix kdamond deactivation
+from missed watermark reset with patch 1.  Fix pid leak in kunit test
+with patch 2.  Fix a selftest wrongly passing when it should skip, with
+patch 3.
 
-> Hi SJ,
-> Thanks for your review.
-> 
-> On Sun, Nov 01, 2026 at 11:13:43AM -0800, SJ Park wrote:
-> > Hello Wang,
-> > 
-> > On Mon,  2 Nov 2026 02:00:01 +0800 Wang Guangke <gkwang@linx-info.com> wrote:
-> > 
-> > > The calculation of estimated_memory_bandwidth computes
-> > > access_bytes * USEC_PER_MSEC * MSEC_PER_SEC / aggr_interval directly.
-> > > On 32-bit systems, the intermediate product
-> > > access_bytes * USEC_PER_MSEC * MSEC_PER_SEC may overflow before the
-> > > division is performed.
-> > 
-> > Do you find this issue from real usage?  Or, jsut theoretical?  Could you
-> > please clarify it, and user impacts of the issue?
-> 
-> I found it by code inspection, not from real usage on a 32-bit system.
+Note for reviewers.  This series is a collection of fixes that were
+initially developed by different people.  Changelog is in each patch.
 
-Thank you for clarifying.
+Aveline Noir (1):
+  mm/damon/core: reset watermark wait state on each iteration
 
-[...]
-> > > +	estimated_memory_bandwidth =
-> > > +		bytes_per_interval * USEC_PER_MSEC * MSEC_PER_SEC +
-> > > +		div64_u64(remainder * USEC_PER_MSEC * MSEC_PER_SEC,
-> > > +				c->attrs.aggr_interval);
-> > 
-> > Let's use USEC_PER_SEC instead of 'USEC_PER_MSEC * MSEC_PER_SEC'.
-> 
-> Thanks, I will rename the variable to bytes_per_us, and use USEC_PER_SEC
-> instead of 'USEC_PER_MSEC * MSEC_PER_SEC'.
+SJ Park (1):
+  selftests/damon/sysfs_memcg_path_leak: define ksft_skip
 
-Thank you for accepting my humble suggestions.  Looking forward to v2.
+Wang Xiaolei (1):
+  mm/damon/tests/sysfs-kunit: fix leaked pid reference in add_targets
+    test
+
+ mm/damon/core.c                                        | 5 +++--
+ mm/damon/tests/sysfs-kunit.h                           | 9 +++++++++
+ tools/testing/selftests/damon/sysfs_memcg_path_leak.sh | 3 +++
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 395206c0e287bdd981918e033a2b1621ea6a3b9a
+-- 
+2.47.3
