@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793661918;
-	b=N38195LXLthJHrSR+sAK6TSCE+jiKyzQM8nNzbGnvFem0iEgjcU/xXGJjeglvkgATEvd
-	 2OH8AsiycJ08RiI01kgvWfk22yehc+e/0Na5272/SMxg16oWowF/PVY3omFjil2dO9zvH
-	 h0ad9AqLF98bLjUO8HX81g9buvUiwT80r+gqfenk4dO2lKk52K1Izvz94CZQeTjdWvZDn
-	 xhgFYxaIJTEZ8DeivwPjJchGPqmidRsMRzyEuT8L4RlETW7zj1I9kwP2av0OZ7rSgXbXX
-	 zv5ncEqglM/iVS7mtYfa6vDbzJInqjUbEwCY6opD2L3TD24Lg8KOvXkLEFwFWuyFsRA==
+	t=1793662176;
+	b=2tUjZ2Hot4rQC85Ucrh67rGKrMHZORYZCNepcqlrNKVsqOIH+/hf/uODarM2ftuuxP4p
+	 kp5nLeqSG6BDlpDXzxvvWPoas/Pl7wBaP7s6xasU7+hwUKnUjhqXElbvnF9W/trY9H424
+	 ET6FMK1LO9xnTyKTwy7CO9OkoT21gIXbTUH2FqxdY6AzvXrJKxI2jPWP7g1H48W4dqsqJ
+	 KEd/+3r3KvQmjyDCpCqr+Oa1wVJggTpChb3lSGRLfgXMoaynRhixw83BZ7YJWPHtQf3Lh
+	 UxLc05nPXbPM/NeZyk9KMbi6CzqqiE06eDiXy0xTjR4h7iNTa7EdBlRJPd6iiRUuWWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793661918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793662176;
 	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
 	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
 	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=Vb7HtkX73433xtUzqqWbVnSmEduHdD/Vc57qkP1iLvg=;
-	b=nVc9hbE0NP073v25bvvWHwdZxMMuWB2BexTzV3T98Bxv0NkTD/bKduekoPladQF/E4sO
-	 VYCDXVNRG6F8usjrYONB5xN+mNHMH5orwzPsqqNJH1mazW4rojJVKRhC2+Km4hAqRzoE6
-	 OnxdFnCx5593UKa8V/Au7r2XDLhJ+Vfcayi+jXJXDJsyF8spbfRQ4bvxpOcsyZ+jtfr/y
-	 LH88hutf6gLXMaNovFCeeenwJgP7uw70X3LJTt3CE2sIDEP4ltV6M8MZgajhs5bXsC7tC
-	 0O6uqVK2eyUEAV5jDSGWcLLiH63U8e+rIqkf3Hoj2KNYDOo6ix1xTyaTDjWk475z2Tg==
+	 Subject:To:Cc:Content-Type;
+	bh=YTKi2ZfuXtkzbJQerS/R1oO64J2LCdQqFsgYxGf3I7A=;
+	b=KP6Bo3GCD5ew2ZwOb6fkFbn67zWQc3yfOXcjAJ+OHzSfWn1v1L9uKASnWsTETAIvOn3e
+	 YkwasTRCw7JMkbjN/beQkI1WSJNHTz1UjiI4FnO0XJIJI/b7AXZ3ztEulqMp+yk3pVjeI
+	 EUVqUfvaw3J2ocRhttS453h959Mt+32mVWW2df5xq+OAlTaZMnbcCv0Bwq7U2d3igbo3u
+	 ss8ic0pIX72XTwS4SvNP6MQERDBkZbLnH9a1ELAGPKhlNK7q/5SIEZ0sgczXiuX2Jdx9z
+	 IUrjcosNVAF0HeGWSi1IQ0c4aHsXk8bGLFVOzL2Qvs9ZAohWJAPZMYz0pZsLfWhqz7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OBqmeNNG;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iLmxYpKB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C995E606A327
-	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 23:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646BA606A326
+	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 23:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OBqmeNNG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F241F00A1F
-	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 23:25:17 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iLmxYpKB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207981F00A1F
+	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 23:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793661917;
-	bh=Vb7HtkX73433xtUzqqWbVnSmEduHdD/Vc57qkP1iLvg=;
+	s=k20260515; t=1793662175;
+	bh=YTKi2ZfuXtkzbJQerS/R1oO64J2LCdQqFsgYxGf3I7A=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=OBqmeNNGZHL9b/mqGT1ya+9SGOyrRQ09iqF5W2E1MpvLqbSpIQR8EhDzW5Ds0pK1Q
-	 vuAxA0bBJNQGh2L2D6+8j+wof5F99cRXEqAdgdIf8jyUKWf2WaazyXEjw1+GeUc9pM
-	 nHaVAA+pD/4iKZGDL0AUumdU+14WgSAhBzKXq35iFOJE3ZsfsD/APTIJIcc6Km0ryq
-	 sR3tiFP7u0HAfb87ycF2cPsiFGQJUq6PLsN9Ec88PUqRSVlgNPEDLYjQsuyt7o1YnO
-	 I+6ABrf4/xwSI8OtidDsBoSkm0MUZs7CU0a5NqBHkOfBXlSVISIQnWlwahkQ1emod4
-	 un8Hizug9xLEA==
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c4cac7a7d3cso435577266b.3
-        for <damon@lists.linux.dev>; Mon, 02 Nov 2026 15:25:17 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AKwUvBwUtVhHwVAkvOXcU5NjSVafcAFcpNMjPWLVQX+sHKNYhgdTPHv38yo8BVHsQnreW2hdAXRBEA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/YlnvwVnawx0KzTywbOOsLiAZ1VcqpUMeuhZDH01GY0lmtZa7n
-	r8QuLKj9+Dg9QPIxCNaCiJnJDV9ERCxCjexX+Q+g3O70jHSnc95gosOVK8/is+nD0VCxFo1jzkt
-	1W1i70v6vq9Zxz24EmurnvSPAR5gYgoU=
-X-Received: by 2002:a17:907:5c5:b0:c3f:8c92:3b5a with SMTP id
- a640c23a62f3a-c4ca7a41ac2mr936046766b.12.1793661916543; Mon, 02 Nov 2026
- 15:25:16 -0800 (PST)
+	b=iLmxYpKBtb2Sdv0r01qtXOVlpvgwAWru+Ok8vsOsBX4TUWT/L3zIPpIEZIEWF7vdx
+	 t8NntwM9tD/+nK96mxlr/NPIwELo4bF3H2n8XE4d7C30PFnO7jgAaL3NP9oyq9X9S2
+	 jt9BkWKOGgp4pkADIcBhBIQoH+shB2mgdM/3dG8K+bbkCvX7qXWQRS1cPGnpTaW9S1
+	 C61TAVnooyiRHepDeFGV5dEKolSdlaasXHuN2HJgLpJ9+EhlSck7XqnFX9DcGYVTpp
+	 yLdxyMXJ8SIqh9bdjs2XFDFX6j07xSXenmV6L/tkuUrInI1EigN+A9+RaXbiuTHgg7
+	 E2GiFdzlDl74g==
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c4322d310e7so581772466b.0
+        for <damon@lists.linux.dev>; Mon, 02 Nov 2026 15:29:35 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AKwUvBxpNg1t1itq7DwP9lq7JZZj5x4TmKRTC0H9YRecD5kR0WOhUCPsDE+u0fk4dPj4cvFUQBQkqw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+6BYFoDiDzYgV+4Hr4U5QJF6lU3FJ7uCp4GnCLRaa1c2A+sSzM
+	SZiJ4RUQPrhCvKDpWEaJeH1GNpIo44C1FSJ4SBls+Xh2xlL242qP0x3MASN/rs36oNjXvHM0+vJ
+	RUDS6yllSDE6G3EPXtzqxIKnsizIYBZM=
+X-Received: by 2002:a17:907:6ea6:b0:c2e:378c:8ce3 with SMTP id
+ a640c23a62f3a-c4ca7aa72b9mr897146466b.32.1793662173962; Mon, 02 Nov 2026
+ 15:29:33 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,14 +59,15 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261102225030.2743129-1-joannelkoong@gmail.com> <20261102225030.2743129-2-joannelkoong@gmail.com>
-In-Reply-To: <20261102225030.2743129-2-joannelkoong@gmail.com>
+References: <20261102225030.2743129-1-joannelkoong@gmail.com> <20261102225030.2743129-3-joannelkoong@gmail.com>
+In-Reply-To: <20261102225030.2743129-3-joannelkoong@gmail.com>
 From: Yosry Ahmed <yosry@kernel.org>
-Date: Mon, 2 Nov 2026 15:25:05 -0800
-X-Gmail-Original-Message-ID: <CAO9r8zMWOda=j=Y0hdg32myOxQvE9MKLqFq_zNg3RMn=XJwALQ@mail.gmail.com>
-X-Gm-Features: AclHuK-Ty7Urj65mhCgz7LxhIJtH9a0TCSeDIGE09_PbY5bWsOV6yqbGX4M-Ndk
-Message-ID: <CAO9r8zMWOda=j=Y0hdg32myOxQvE9MKLqFq_zNg3RMn=XJwALQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/3] mm: zswap: fix shrinker count for the root memcg
+Date: Mon, 2 Nov 2026 15:29:22 -0800
+X-Gmail-Original-Message-ID: <CAO9r8zP87zRuoFqeKFcAJoCrOG8M+7HCtX6hvxwdLzuHUXD0Gw@mail.gmail.com>
+X-Gm-Features: AclHuK-4t4jepCmFSgrDiHYFCB2QMcYxAclyDHxOZQ_Fy5-IrgHz_mEoVtmdPJI
+Message-ID: <CAO9r8zP87zRuoFqeKFcAJoCrOG8M+7HCtX6hvxwdLzuHUXD0Gw@mail.gmail.com>
+Subject: Re: [PATCH v1 2/3] mm: memcg: read root lruvec LRU stats from the
+ node counters
 To: Joanne Koong <joannelkoong@gmail.com>
 Cc: akpm@linux-foundation.org, shakeel.butt@linux.dev, hannes@cmpxchg.org, 
 	mhocko@kernel.org, roman.gushchin@linux.dev, muchun.song@linux.dev, 
@@ -74,44 +75,60 @@ Cc: akpm@linux-foundation.org, shakeel.butt@linux.dev, hannes@cmpxchg.org,
 	ljs@kernel.org, linux-mm@kvack.org, cgroups@vger.kernel.org, 
 	damon@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 2, 2026 at 2:51=E2=80=AFPM Joanne Koong <joannelkoong@gmail.com=
-> wrote:
+> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+> index ac6c43ea8c5a..938843346571 100644
+> --- a/mm/memcontrol.c
+> +++ b/mm/memcontrol.c
+> @@ -587,6 +587,50 @@ unsigned long lruvec_page_state_local(const struct lruvec *lruvec,
+>         return x;
+>  }
 >
-> zswap_shrinker_count() scales the number of freeable entries on a
-> memcg's zswap LRU by the memcg's compression ratio. That compression
-> ratio is computed from the memcg's MEMCG_ZSWAP_B and MEMCG_ZSWAPPED
-> stats.
->
-> However, for the root memcg, the zswap entries owned by the root memcg
-> itself are never accounted for in the stats (obj_cgroup_charge_zswap()
-> skips the root objcg, and before the root memcg had an objcg, its
-> entries weren't charged at all). The stats only reflect the entries
-> owned by the root memcg's descendants. When the root memcg's descendants
-> have no zswap entries (eg when the whole workload runs in the root
-> cgroup), the shrinker reports nothing to reclaim for the root memcg, and
-> its zswap entries are never written back by the shrinker. When its
-> descendants do have entries, the root memcg's entries are scaled by the
-> descendants' compression ratio instead of a ratio that includes them.
->
-> Fix this by using the zswap pool-wide counters for the root memcg
-> instead. The zswap pool-wide counters cover every zswap entry, including
-> those owned by the root memcg.
->
-> This also gets rid of having to flush the root memcg's stats, which
-> flushes every cgroup in the system.
+> +static bool lruvec_is_root(const struct lruvec *lruvec)
+> +{
+> +       return !mem_cgroup_disabled() && mem_cgroup_is_root(lruvec_memcg(lruvec));
+> +}
+> +
+> +/**
+> + * lruvec_lru_page_state - read an LRU stat of an lruvec
+> + * @lruvec: the LRU vector to read from
+> + * @idx: the node_stat_item to read
+> + *
+> + * Like lruvec_page_state(), but for the root memcg the node counter is read
+> + * instead. For stats that only track memory charged to a memcg (LRU sizes,
+> + * workingset, rotation and reclaim writeback counts), the root memcg's
+> + * hierarchical value equals the node counter. The root memcg can just read the
+> + * node counter directly instead of going through rstat, which requires
+> + * flushing. Flushing the root memcg flushes every cgroup in the system.
+> + *
+> + * Use lruvec_page_state() for other stats (eg slab).
+> + */
+> +unsigned long lruvec_lru_page_state(const struct lruvec *lruvec,
+> +                                   enum node_stat_item idx)
+> +{
+> +       if (lruvec_is_root(lruvec))
+> +               return node_page_state(lruvec_pgdat(lruvec), idx);
+> +
+> +       return lruvec_page_state(lruvec, idx);
+> +}
+> +
+> +/**
+> + * lruvec_lru_page_state_monotonic - lruvec_lru_page_state() for delta sampling
+> + * @lruvec: the LRU vector to read from
+> + * @idx: the node_stat_item to read
+> + *
+> + * See lruvec_page_state_monotonic() and lruvec_lru_page_state().
+> + */
+> +unsigned long lruvec_lru_page_state_monotonic(const struct lruvec *lruvec,
+> +                                             enum node_stat_item idx)
+> +{
+> +       if (lruvec_is_root(lruvec))
+> +               return node_page_state_monotonic(lruvec_pgdat(lruvec), idx);
+> +
+> +       return lruvec_page_state_monotonic(lruvec, idx);
+> +}
 
-I would have taken the patch just for the dropped flush ;)
-
->
-> In a VM running a reclaim-heavy workload in the root cgroup with the
-> zswap shrinker enabled, the shrinker wrote back no pages before this
-> change (zswpwb stayed at 0) and 1016 pages with it.
->
-> Fixes: b5ba474f3f51 ("zswap: shrink zswap pool based on memory pressure")
-> Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-
-Acked-by: Yosry Ahmed <yosry@kernel.org>
-
-Thanks!
+Why not do this directly in lruvec_page_state() and
+lruvec_page_state_monotonic()? They already fallback to node stats if
+memcg is disabled, why not do the same for the root? Are there cases
+where the node stats are not the right thing to do?
