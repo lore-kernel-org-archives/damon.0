@@ -1,65 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793630795;
-	b=X2qItx23mivUl9CxXd/7cGQSgXoGTHNG5bXa9Tj+wKsYEMhFqt3kvZUUP0n10qu7KsZz
-	 fxUobOzYZVPMR3DYw63oWdcGdcSD56k9fOSrQ6Axkma2plUpHM2eositKB4AdVeISdNWX
-	 VcpqHTmNW2fhXVksqPZVpUfkJfW/Js8QxcsP/rBhS4oaJaAdzu5T9LMquCTV9dagB9tpZ
-	 7dXzGYg1RqDzkCbZF6HWJ3vfFpvn9QcIIULd3xKVWvwgpoYejgiOKhwdo5qM3wqt8g9Bh
-	 2yk4CjmacV7v4YAy/Ez17JKi3v0OV7ksk/dLJfZ/LNkQLjaYVtNBeyVz1gSgtLedCpw==
+	b=jodMRgraQLGuIMLmccf8nz3ho04/UQ4YU2AIVDvrFMsF2mWhfV/GGct37LNeOe5buGM3
+	 /7qF6hsYOxGTZ2pFW62RRay1T1+Z6+YziAgzKoqIIPqEL/5Lso0nKkajJ6T/i+MRYMiog
+	 Ju7tSiOPC5DrvR6gmm4Ij08QOC7r+NRV+p23hK/BprA9jGp0oVi9IyEhX4ByM7BLMKXop
+	 tvHr7CpWbY63LNmb8fssOLauY8uPWzoE5zy1PjgOMncFE7t/fgMHg1eQFYGcbEoRuwg2u
+	 54nhaoL+Ibt5kKsCEj0JHbXJPyv2j89EBhTso4XpblF5s0ERCJkEje/EB2LTHsLCXXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793630795;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+CbOy/w4oZmoVyUdrE5PFeUUqcG8Qy13cgKPirYGonw=;
-	b=tA/oWasUSf0zVHptQRpBY1J6greX4c64ZJHa4dE/pnJxiVfV6RUQkqIJ8LPdIvz9oMeb
-	 egRM8OgcTqdw/9YWRHg88/ynx2JGOhgl+Q3dPMytRcvZvWNjJdyxKO4mSqEYRyAtpiJV9
-	 DN2nYzYxofKo5INAUxxz9Vc/Yi/DfR+HXFT/bH3K01vpm/wpgpCJ4+h/+r0QjwZnvhKkj
-	 8VZx86qsml3g5FMNcogG1/+DvxMHlkq0xiSJ7ttiALCW6dzRUNPJiMYzNMArGlYGtVMOW
-	 fLK8tSOpxHjw4SSb9f/Hmcex8X9IMk5ejYyAFrLQT3N1CDYKruHrK9d7QYI453BjQnQ==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=rCtrAnJviulqez0+JTPRdagoIh7IeZsTjrVmURq9iV0=;
+	b=BnhzKvszTYbUr5i6kCdKKekR2V6yAb6dBMhh7YdmJSNJBS7hIQpeeZWrtJf8n843tuJb
+	 WeilY9+4UKGjm3ZCU9ChWq919u7+KLjP0VHhHU2kbvVzbPeVP0P0IvivQc4H6/La1BnHM
+	 6EvUJgd/vYSKjVKq3bfk+nHpB9yPyMS0iFutIIjhZWrDJlj9qTZKO4ppQRPFhYIfCncf2
+	 IweCGkxlRgvxeedWfzq0pdryfNADZ5Sr7DFUf/85Ci8zrk0S+C85WxvJUvxn23z7LnCMz
+	 viwYYJe1LbLZcwt8suUOPqhl9S233cKIMLx45xZxr45OHD/kA1ZI2rYuFq6dsmyfe5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UzgLpTAs;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=U4HZd+4W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B3E6070D96;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B006088B30;
 	Mon,  2 Nov 2026 14:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UzgLpTAs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735601F00A18;
-	Mon,  2 Nov 2026 14:46:34 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=U4HZd+4W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29ED81F00A2D;
+	Mon,  2 Nov 2026 14:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1793630795;
-	bh=+CbOy/w4oZmoVyUdrE5PFeUUqcG8Qy13cgKPirYGonw=;
-	h=From:To:Cc:Subject:Date;
-	b=UzgLpTAsh/8b2lAuCsP4MmQBFlTwq27nXfldudYpUFO9wJWmkv9UIHFAXDDexAlif
-	 iO1Q0+qe6cHXAUlIT+U3r4HyjZYBl4HukMhSEITaTw4So/C+I1yS3Syg7C5sIxDZPG
-	 5S0ZNudLwPF0WmqBgUtsD6evmUSs8XzPvMYhh9Bl1eVwPb+BqphU2ASIGP7YiG/TJe
-	 ZGwuEjboJWhAA6PG6w3PUOPbiFKqwfO9qGu2VmKADh+w6P2mhbFyIdU7jmBJpgBnal
-	 IG0ZgOE6r9qhpaa0kScLQ3/QfF4TUP+ddUJtSY/QX/sgQfDsbHDsuF3Ku34F0iemg5
-	 EEcdLIA1YJTXQ==
+	bh=rCtrAnJviulqez0+JTPRdagoIh7IeZsTjrVmURq9iV0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=U4HZd+4W6Pf3UVe/MGTpV9jp2TFzuGLQQAhPFC68075Wo8dHMtqMo5Y4Fh8nxp5Qh
+	 3EApXUcedvjXzWfbAhUPrGms3NRdpkfiHqxym5bMR87QRmB5iWx6OipKELl6UJN1XZ
+	 r3u45gEBFq1RGa/V13bozPYdrkPTARCASrS+ph7S4w+dDE2cvq5cfY49TLM8QYL8nN
+	 8xACTcgMaF9BWeG1IrJHLFJ9NqLTj8XZsXexq1SU3vXXAC/ZQ9rtBL/InawXTqBhHM
+	 Y1eugorTDD4/gXU+p8bpwbgGZ3e5DwEXeNxMfIYb6k4zeN3ZEu4gJPKMgjKqaWA5zu
+	 6C1AzMtEt4zdA==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
+Cc: Aveline Noir <jm5905938@gmail.com>,
 	stable@vger.kernel.org,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
-	kunit-dev@googlegroups.com,
 	linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH mm-hotfixes-unstable 0/3] mm/damon: fix watermark state, kunit pid leak and selftest fake pass
-Date: Mon,  2 Nov 2026 06:46:23 -0800
-Message-ID: <20261102144627.88843-1-sj@kernel.org>
+Subject: [PATCH mm-hotfixes-unstable 1/3] mm/damon/core: reset watermark wait state on each iteration
+Date: Mon,  2 Nov 2026 06:46:24 -0800
+Message-ID: <20261102144627.88843-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261102144627.88843-1-sj@kernel.org>
+References: <20261102144627.88843-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -71,30 +64,56 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Three hotfixes for core, kunit and selftest.  Fix kdamond deactivation
-from missed watermark reset with patch 1.  Fix pid leak in kunit test
-with patch 2.  Fix a selftest wrongly passing when it should skip, with
-patch 3.
+From: Aveline Noir <jm5905938@gmail.com>
 
-Note for reviewers.  This series is a collection of fixes that were
-initially developed by different people.  Changelog is in each patch.
+Found while reviewing the DAMON source code that if an online commit
+removes all schemes while kdamond is waiting for watermark activation,
+the scheme loop becomes empty but min_wait_time keeps the previous
+positive value.  kdamond then keeps sleeping instead of resuming
+monitoring without schemes.
 
-Aveline Noir (1):
-  mm/damon/core: reset watermark wait state on each iteration
+The way to wake up the kdamond again without DAMON is bit complicated.
+Install a scheme having watermarks that can activate the kdamond again,
+and remove the scheme again.  Doable but cumbersome and complicated.
 
-SJ Park (1):
-  selftests/damon/sysfs_memcg_path_leak: define ksft_skip
+Initialize min_wait_time and init_wait_time on each loop iteration so
+the wait is calculated from the current schemes and an empty scheme
+list resumes monitoring.
 
-Wang Xiaolei (1):
-  mm/damon/tests/sysfs-kunit: fix leaked pid reference in add_targets
-    test
+Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+Cc: <stable@vger.kernel.org> # 5.19.x
+Assisted-by: LLM
+Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from v1
+- v1: https://lore.kernel.org/179277129124.2.16132047926074873101.damon-empty-schemes@gmail.com
+- Collect R-b: from SJ.
+- Add how to work around the problem.
+- Update Fixes: and add Cc: stable@.
+- Rebase to latest mm-new.
 
- mm/damon/core.c                                        | 5 +++--
- mm/damon/tests/sysfs-kunit.h                           | 9 +++++++++
- tools/testing/selftests/damon/sysfs_memcg_path_leak.sh | 3 +++
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ mm/damon/core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-
-base-commit: 395206c0e287bdd981918e033a2b1621ea6a3b9a
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 73b571b429cb3..7441cdea57dc5 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3976,10 +3976,11 @@ static int kdamond_wait_activation(struct damon_ctx *ctx)
+ {
+ 	struct damos *s;
+ 	unsigned long wait_time;
+-	unsigned long min_wait_time = 0;
+-	bool init_wait_time = false;
+ 
+ 	while (!kdamond_need_stop(ctx)) {
++		unsigned long min_wait_time = 0;
++		bool init_wait_time = false;
++
+ 		damon_for_each_scheme(s, ctx) {
+ 			wait_time = damos_wmark_wait_us(s);
+ 			if (!init_wait_time || wait_time < min_wait_time) {
 -- 
 2.47.3
