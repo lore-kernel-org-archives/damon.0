@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793632938;
-	b=UDydRKMeh7ZUPyyZarS4jSJW/QX7SwFkyOXRfGhIJQdUL1Es52/51MDicLSfZk6kYJ6t
-	 Z3mlSwHSk+ein7PESWXxOpTu2RileemxZlVvRyUy2nsf5Je8K9VUUF3jAHzR2DSYc+2Db
-	 gF1l7AhhiQY3xB3CqWprSiwaHgRy/qSLuhywP6QmIEbQhgx4hoDBYZp6ghsvpVNFSN8M/
-	 KK8xcRS7QOjjFO9jywIcTwmGxl1ciNcetkepJ2V0xReF0nTeBzeJacQwpSzxD0QMTABRu
-	 iidOf3nMF0/uGkQk/HcRaG/ZuCMKRvivzNES52tATNG6IKDmsppLECEOlbhOKT0+Hyg==
+	t=1793633338;
+	b=I9Vc2uMg3myHpVIfi2dBMttfI9CE7qKf2jipYzl06J9XnOZX1Zx70UyVDfToOPuIZ1qI
+	 MDcUpmiv9RS1/9E/fWntyuxiuzsWOQnlVnz+tDaJictgHu0+vmEt2SPMGRdLzyxhJbH8E
+	 C8Ts3cWWj/VQlsupOSMK8LW6SHTrTMqVAWF3HuvgGKaM3uwe7Tcfe3pStSOJTATwUyzxz
+	 HM0CNdpsJ50jd6QoRZTnVmZdvhLjHBg8kGXvocqZOCqXM2oZbX+c7UJankx+HF6EEpuVI
+	 oAKnlp3PSBVs85lx3D/0wJhjxNLl+B11VrKb2kz/NapjmdZS8QQ9wankGB62Rb8FTYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793632938;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=hpheugCcUEO/5DSpsv8WVE+mauo40FdCSRc0eLrlYjY=;
-	b=lcT0cIMxVS/sqiHqs3qi29cFL3R4unY68mzrnTEmHfw/zX3rh/2c5LAId0QDzCqQ0uqe
-	 kC8uYkr3lCFYYwfNQkPmo2pcJ+pxHph5X7XtGVzHhNC9NXNqq9l4ZcV1eBq8Yoohu7ojj
-	 zZ083S1dXLD/n/b83pzYsUvqKXDZJo1YXLYxMvKyq+CG2FppYAmjVLY2+hF6SsdVccuZo
-	 R+87LZM4I2yxYIagmtHMDXX5yUv+mRcx2tXcdFaP2eaUr5REdlj1aYga2It9yJ6Q5wWwR
-	 nrdhRvvW2nZJIHcPFsGTaz1IaUyNOc1d1o6OCy/AAhF9qGnEhe7bWUslUlll7onDNqg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793633338;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=vgW6iwfR4oxej1sYSTg0bSps9+FkII3Zqymh4t6eG2I=;
+	b=ItFR/kDvGPb+eHBEJDetbUsMEIA/r/ZL/w+SCoExa08ZQ3dpEMto+lmTYqCHSeomqdmm
+	 H+BDt/w4kFPL/HD1PbwLH7CxQLuai9MFFjXCOJhI9Dj+x0C6y81gdxf3q4xU7Muml92xu
+	 DziVddMApsOTB++/HgD0AcNSjmRQ+ZXktIjn2cJDA7hpzdUIhYnBEWtr5hptSc5m7vNnY
+	 RRjshavcb/CYNjrE4g0WwgNy+otfh9cnapgC1Vlx271rqRE6gwNP5njdKTeXEaufVGbxJ
+	 q/JTAXMDm29FyRwlGVOgVdpp7JljT6h5l1T7uoUz61z8Jv7Nd2f+TFWSXrueqoAZEaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cmELlMpa;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gvpLyEv1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C16081CC1
-	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 15:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E30609D12D;
+	Mon,  2 Nov 2026 15:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cmELlMpa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A951F00A16;
-	Mon,  2 Nov 2026 15:22:18 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gvpLyEv1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BF61F00A17;
+	Mon,  2 Nov 2026 15:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793632938;
-	bh=hpheugCcUEO/5DSpsv8WVE+mauo40FdCSRc0eLrlYjY=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=cmELlMpa7vHiiOUhyWYe3CO+6bENcK6c05ldgqbNtBH6cuUvMqDlRF9MpIHL8tptm
-	 foC5lT/SP1kUoF/hkGDkjzeH98QH1Sjb2kjDAelQf1shXrTnOZRRDLzjFoW9gq58wR
-	 nolvN5qHElXFBw5SyvEYuKi6o51Lfvm2cyQ56fIkKADPgivie55L/DD2iLmBosVqsB
-	 xckcj0DCTi9UVJwm3J3dDL1X+pbevKJWYmweTBJo+5Xh1HCjEY7A3iKykrGFmvNdfv
-	 Xa9H3s2ZIppwNcvB9Ku0wyA5Sqqi9bkYbBYUtTqhF3Q67SGiWD9+JHWSknuUsxjMtD
-	 RYvZ0CV2ml9Vg==
-Message-ID: <sashiko-outbox-193653@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 2/9] mm/damon/ops-common: align MMU notifier range when
- clearing PTE young bit
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261102150757.93058-3-sj@kernel.org>
-References: <20261102150757.93058-1-sj@kernel.org>
- <20261102150757.93058-3-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 02 Nov 2026 15:22:17 +0000
+	s=k20260515; t=1793633338;
+	bh=vgW6iwfR4oxej1sYSTg0bSps9+FkII3Zqymh4t6eG2I=;
+	h=From:To:Cc:Subject:Date;
+	b=gvpLyEv1W1KJxo1PAJDh8KPS32YJFHX7/HsmuuZht4rmXQ1GtOc6nGzDPSSy5NnCf
+	 LMx0sQVe1Yt1Us1YPjKRcAxNNDHs6AtycyfPlTz7kKK+XCJH0WhLzjqPvkq8YIAiKs
+	 wDkwg/aum3jc9pA3ldSeevn0LfCRUQEuWAlK6bo5HTM3+IjQ/7HKUEKIkyBNn6GSbZ
+	 ecp+8bNQtdUoAzfhCV5mjdmWHn9ghCd93h6BXd0O36MA8uWkvWWwzHiGUkTxHoIjKp
+	 5VA+3lP+TzWTeECyXAFF8Dr4pJxXV5bmsXd4jdkxNOb/jrrD+YeQ024oW8ht+4dBMd
+	 uLmqwT6KhOzNA==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH v2 0/3] Docs/admin-guide/mm/damon: minor fixes
+Date: Mon,  2 Nov 2026 07:28:44 -0800
+Message-ID: <20261102152849.96057-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,32 +61,35 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> From: "Shubhang Kaushik (Ampere)" <sh@gentwo.org>
->=20
-> DAMON selects a byte-granular sampling address.  damon_ptep_mkold()
-> clears the young bit of the PTE covering that address, but passes the
-> unaligned range [addr, addr + PAGE_SIZE) to MMU notifiers.
->=20
-> For an unaligned address, that range extends into the following page.
-> KVM ages every guest page intersecting the notifier range, so it can age
-> a secondary mapping for the following page although DAMON cleared only
-> the sampled page's primary PTE.
->=20
-> Align the address before both the primary PTE operation and the
-> MMU notifier call so that they cover the same page.
->=20
-> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memo=
-ry address spaces")
-> Signed-off-by: Shubhang Kaushik (Ampere) <sh@gentwo.org>
-> Reviewed-by: Aveline Noir <jm5905938@gmail.com>
-> Tested-by: Aveline Noir <jm5905938@gmail.com>
-> Reviewed-by: SJ Park <sj@kernel.org>
-> Signed-off-by: SJ Park <sj@kernel.org>
+From: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
 
-Sashiko has reviewed this patch and found no issues.
+Docs/admin-guide/mm/damon: minor fixes
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102150757.9305=
-8-1-sj@kernel.org?part=3D2
+This small patch series fixes various typos, copy-paste mistakes, and an
+incorrect command syntax in the DAMON documentation files.
 
+Changes from v1
+- v1: https://lore.kernel.org/20261006061549.627-1-adrianhuang0701@gmail.com
+- Collect R-b: from SJ.
+- Rebase to latest mm-new.
+
+Adrian Huang (Lenovo) (3):
+  Docs/admin-guide/mm/damon: fix various typos
+  Docs/admin-guide/mm/damon/lru_sort: fix copy-paste mistakes
+  Docs/admin-guide/mm/damon/usage: fix incorrect option syntax in perf
+    example
+
+ Documentation/admin-guide/mm/damon/lru_sort.rst | 6 +++---
+ Documentation/admin-guide/mm/damon/reclaim.rst  | 4 ++--
+ Documentation/admin-guide/mm/damon/start.rst    | 6 +++---
+ Documentation/admin-guide/mm/damon/stat.rst     | 2 +-
+ Documentation/admin-guide/mm/damon/usage.rst    | 2 +-
+ 5 files changed, 10 insertions(+), 10 deletions(-)
+
+
+base-commit: 7fa9b9f1350aa38c32315a6de022c770e78dbfae
+-- 
+2.47.3
