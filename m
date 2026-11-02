@@ -1,61 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793632089;
-	b=d0FSwJkrgGe8hxKDAcSItB2eHmtDrMkM+ibSf8lTVRJzOJRQMaMARj5KGv4XYTMeCYkh
-	 ZWsSdZbAOH75f6yyZMrIbdOgaq6ZYYRilIyU/Bx9TzNCAfAWDol9O0an0irJ91W54XbM2
-	 /u+0nC8TNCQuyWLlr84bn3tb8JFpg63uFDNuUstEt96UoTor4PqV5eWmcQRHlkEjTge2W
-	 FCr3Lyr8R7M3iK9PBkXvtyC/oUlVZTJj4fSPB2WnhAzUSEmbw4tJWQkXHHQ/6Pra7OIz/
-	 xaxmnlr/2DoKLs1Usqt+mMLdaoFasRXPRM1N6e4cNepk9mFEjXzwp2NN0Tvc5hIGnBg==
+	t=1793632236;
+	b=Wa1DXvge/xhjEP9m5sDMB+rmN1cG725jMQarw0Og8lCl3Tpj3R5Sa1CyzetEA4kKOtXZ
+	 uz4os/dCXKkCJZK5OP0mPBz4vCaoX5QIhgyxQ9mGEYKI7dNOh/3G4ES+/u4TlE+Yyl9Dq
+	 6V1ehmqGGeCzuIvIqqg+ZoGGwbEP0LcAFI5a1SWYacl0fGXfXQVUgT/jtj+K9hO9N0zzt
+	 97tG58DS9rvzsW9z4XxVH6ywYvIZ0iCLSF/0VlVOT3IuKjyEdAunJzPxu0APZ7zh6yOza
+	 7cHujYxO6JTFInBL3k3k9kY54zfvlpcpJoVfRpf5Zj9R7FSV4N+bM3+intJ6KfIbtbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793632089;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=EOIOo2WRViZfcB5LyNG3dNe7ZyXvt9pNDQFYal3R+A8=;
-	b=lZCcaJ078KSGqEp4ETxgsMgWPctV0Mo2BI9kPvMoqF83ZsK85CPNV4049/9Bf8Ntd7+u
-	 69iEPz6tNuVcMlNjXqXKAbDU2qwhrrgQJdfKpt9UyzuvU3dPk6E8m5o0PmuTC9TL4n8H0
-	 mH3dnw0vdjUBo08dPDUR6sZ6FHL2XdgfN2AUGF9gK8nOWXzWpESd6y5QpXibKlTPWeMT1
-	 RkXWubky2IzYjyXafiD71DkMO+vsRaWINXu1Y0ctPMYwNpkk4xRJabyXSpl3dUpKJbR7d
-	 PGXKaAMSNLanhZVvGkhxxh2bAriZkOaRqMJDFyKxosM4uJD6+9dXHXzWG6tHKvduq2g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793632236;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=RxlhBq6qsMYFK2TteCy+GaCR8fORPJrcSM48P+L1Xh4=;
+	b=E/TosWpxQYFB5o4kwK0VFsTfV2ITjvJAUAmN5C9JKAQ7NP5JuV07qMKfaTtgSTfGIb4W
+	 XZv/gAyqvmXaSCpctqMkUVSK7SD9n6j/b03nuLQuFJpB5Nide2tdPa10bjXBtAG2hE8yk
+	 dDFHiS8DUsbPiN7y7vCEs6UGCDPAwzaLHCBey8bVWtgRl8cn3rEBnD3Rj5wl+8/bjf9W6
+	 JX+i1gxpm085wDDjuYZO2avMvVziEVXfuksa3kmU1Z8gV9NTjYnpRUCnN3pCQiweO2nuZ
+	 K0HQgJ2j8WB9tSZ9jKbNRNChhJlM6IazlHWYZsRBDEAs57rdjR5edpf77R8mgIpCAlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hZ3jzzXe;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RC7lW4BJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3BE60A1DB5;
-	Mon,  2 Nov 2026 15:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9937607365A
+	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 15:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hZ3jzzXe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10721F00A20;
-	Mon,  2 Nov 2026 15:08:08 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RC7lW4BJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83F01F00A1F;
+	Mon,  2 Nov 2026 15:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793632089;
-	bh=EOIOo2WRViZfcB5LyNG3dNe7ZyXvt9pNDQFYal3R+A8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hZ3jzzXe4gx8n7MBZeCRakfm9HOlLvf9jFjlwFESg5Jm4sD/MhZAQt8kb5DlUnOK5
-	 DNbU47GQk7H9ZMFiNYeXo9J/oYvXNRctFi6Rpt8O14AS5hvsgGF+mRRfcWT1TumK9q
-	 cHUdHZfgyt1jRhTXCc6xTE0ZebWXnQsYzVTUfNWdcbuPKU3CoDrowWsFP4yG5Jj2iZ
-	 Vy6SgRoqAo1Hhj+CQXjfKfluEIBUOedbelAexoQjrqaDyCs8eBBdMDrsSN/49zhbd9
-	 wTo/4o+CT6VNTeqiaDES5LNSgGaJQKD2BmpAt6ItswXDb1fp5oHS1Ui3exVch7ZPlX
-	 OqkAAEfW8FnSw==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Jinjie Ruan <ruanjinjie@huawei.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	SJ Park <sj@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 9/9] Docs/admin-guide/mm/damon/reclaim: document how to disable watermarks
-Date: Mon,  2 Nov 2026 07:07:56 -0800
-Message-ID: <20261102150757.93058-10-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261102150757.93058-1-sj@kernel.org>
+	s=k20260515; t=1793632235;
+	bh=RxlhBq6qsMYFK2TteCy+GaCR8fORPJrcSM48P+L1Xh4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=RC7lW4BJ3SWzo8wLWymjXrkTguesE5AE65uZtVQPru0AnopDvutQ17lK3MJjfSrCW
+	 CxMMaa8zOTUQnJkkfIPjK2IacFRLxS/GrfANiwGtUJOwaxgQqaqfv9Nw7u+GtkuZjB
+	 psymvS5UARRMASFMlqCYNKoRF9ucaA9N4+zisZUpQrDnSDNm2iVmnnVBDGot/SwcbR
+	 EqOZP+cWXsyNmBEwJ4p06vp7qiFmZ1gHU/aatZHcRUBvhWJ4C/e/gk4o+qdDdo0fi5
+	 gLwrsffBLPlPmzQxzD4BrIpRx/lG34t8sxeWx1Xe96OhxRcqnINsrHWqLcRLRqdZcA
+	 cjcFIFZvaStcg==
+Message-ID: <sashiko-outbox-193637@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 1/9] mm/damon/core: remove unnecessary
+ zero-initialization in damon_new_ctx()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261102150757.93058-2-sj@kernel.org>
 References: <20261102150757.93058-1-sj@kernel.org>
+ <20261102150757.93058-2-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 02 Nov 2026 15:10:35 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -64,44 +60,26 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+> From: "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>
+>=20
+> damon_new_ctx() allocates the context structure using kzalloc(),
+> which already initializes all fields to zero.
+>=20
+> The explicit initialization of passed_sample_intervals,
+> next_aggregation_sis, and next_ops_update_sis is therefore redundant.
+> In addition, they are later initialized by kdamond_init_ctx() before use.
+>=20
+> Remove the unnecessary assignments to simplify the code.
+>=20
+> Cc: Andrew Morton <akpm@linux-foundation.org>
+> Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
+> Reviewed-by: SJ Park <sj@kernel.org>
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-DAMON_RECLAIM runs its scheme only while the free memory rate is
-between `wmarks_low` and `wmarks_mid`.
+Sashiko has reviewed this patch and found no issues.
 
-But some users want to reclaim cold pages even while the system has
-plenty of free memory, and it is not obvious that the existing
-watermarks parameters can already do that. So Document the setup.
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102150757.9305=
+8-1-sj@kernel.org?part=3D1
 
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from v1
-- v1: https://lore.kernel.org/20261028023628.795637-1-ruanjinjie@huawei.com
-- Collect R-b: from SJ.
-- Rebase to latest mm-new.
-
- Documentation/admin-guide/mm/damon/reclaim.rst | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
-index ec7e3e32b4ac6..14f9b82b38ed9 100644
---- a/Documentation/admin-guide/mm/damon/reclaim.rst
-+++ b/Documentation/admin-guide/mm/damon/reclaim.rst
-@@ -193,6 +193,10 @@ DAMON_RECLAIM becomes inactive, so it does nothing but periodically checks the
- watermarks.  In the case, the system falls back to the LRU-list based page
- granularity reclamation logic.
- 
-+To keep DAMON_RECLAIM always active regardless of the free memory rate, set
-+``wmarks_high``, ``wmarks_mid`` and ``wmarks_low`` to ``1000``, ``1000`` and
-+``0``, respectively.
-+
- sample_interval
- ---------------
- 
--- 
-2.47.3
