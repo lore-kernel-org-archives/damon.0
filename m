@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793632236;
-	b=Wa1DXvge/xhjEP9m5sDMB+rmN1cG725jMQarw0Og8lCl3Tpj3R5Sa1CyzetEA4kKOtXZ
-	 uz4os/dCXKkCJZK5OP0mPBz4vCaoX5QIhgyxQ9mGEYKI7dNOh/3G4ES+/u4TlE+Yyl9Dq
-	 6V1ehmqGGeCzuIvIqqg+ZoGGwbEP0LcAFI5a1SWYacl0fGXfXQVUgT/jtj+K9hO9N0zzt
-	 97tG58DS9rvzsW9z4XxVH6ywYvIZ0iCLSF/0VlVOT3IuKjyEdAunJzPxu0APZ7zh6yOza
-	 7cHujYxO6JTFInBL3k3k9kY54zfvlpcpJoVfRpf5Zj9R7FSV4N+bM3+intJ6KfIbtbg==
+	t=1793632938;
+	b=UDydRKMeh7ZUPyyZarS4jSJW/QX7SwFkyOXRfGhIJQdUL1Es52/51MDicLSfZk6kYJ6t
+	 Z3mlSwHSk+ein7PESWXxOpTu2RileemxZlVvRyUy2nsf5Je8K9VUUF3jAHzR2DSYc+2Db
+	 gF1l7AhhiQY3xB3CqWprSiwaHgRy/qSLuhywP6QmIEbQhgx4hoDBYZp6ghsvpVNFSN8M/
+	 KK8xcRS7QOjjFO9jywIcTwmGxl1ciNcetkepJ2V0xReF0nTeBzeJacQwpSzxD0QMTABRu
+	 iidOf3nMF0/uGkQk/HcRaG/ZuCMKRvivzNES52tATNG6IKDmsppLECEOlbhOKT0+Hyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793632236;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793632938;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=RxlhBq6qsMYFK2TteCy+GaCR8fORPJrcSM48P+L1Xh4=;
-	b=E/TosWpxQYFB5o4kwK0VFsTfV2ITjvJAUAmN5C9JKAQ7NP5JuV07qMKfaTtgSTfGIb4W
-	 XZv/gAyqvmXaSCpctqMkUVSK7SD9n6j/b03nuLQuFJpB5Nide2tdPa10bjXBtAG2hE8yk
-	 dDFHiS8DUsbPiN7y7vCEs6UGCDPAwzaLHCBey8bVWtgRl8cn3rEBnD3Rj5wl+8/bjf9W6
-	 JX+i1gxpm085wDDjuYZO2avMvVziEVXfuksa3kmU1Z8gV9NTjYnpRUCnN3pCQiweO2nuZ
-	 K0HQgJ2j8WB9tSZ9jKbNRNChhJlM6IazlHWYZsRBDEAs57rdjR5edpf77R8mgIpCAlA==
+	bh=hpheugCcUEO/5DSpsv8WVE+mauo40FdCSRc0eLrlYjY=;
+	b=lcT0cIMxVS/sqiHqs3qi29cFL3R4unY68mzrnTEmHfw/zX3rh/2c5LAId0QDzCqQ0uqe
+	 kC8uYkr3lCFYYwfNQkPmo2pcJ+pxHph5X7XtGVzHhNC9NXNqq9l4ZcV1eBq8Yoohu7ojj
+	 zZ083S1dXLD/n/b83pzYsUvqKXDZJo1YXLYxMvKyq+CG2FppYAmjVLY2+hF6SsdVccuZo
+	 R+87LZM4I2yxYIagmtHMDXX5yUv+mRcx2tXcdFaP2eaUr5REdlj1aYga2It9yJ6Q5wWwR
+	 nrdhRvvW2nZJIHcPFsGTaz1IaUyNOc1d1o6OCy/AAhF9qGnEhe7bWUslUlll7onDNqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RC7lW4BJ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cmELlMpa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9937607365A
-	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 15:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C16081CC1
+	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 15:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RC7lW4BJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83F01F00A1F;
-	Mon,  2 Nov 2026 15:10:35 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cmELlMpa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A951F00A16;
+	Mon,  2 Nov 2026 15:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793632235;
-	bh=RxlhBq6qsMYFK2TteCy+GaCR8fORPJrcSM48P+L1Xh4=;
+	s=k20260515; t=1793632938;
+	bh=hpheugCcUEO/5DSpsv8WVE+mauo40FdCSRc0eLrlYjY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=RC7lW4BJ3SWzo8wLWymjXrkTguesE5AE65uZtVQPru0AnopDvutQ17lK3MJjfSrCW
-	 CxMMaa8zOTUQnJkkfIPjK2IacFRLxS/GrfANiwGtUJOwaxgQqaqfv9Nw7u+GtkuZjB
-	 psymvS5UARRMASFMlqCYNKoRF9ucaA9N4+zisZUpQrDnSDNm2iVmnnVBDGot/SwcbR
-	 EqOZP+cWXsyNmBEwJ4p06vp7qiFmZ1gHU/aatZHcRUBvhWJ4C/e/gk4o+qdDdo0fi5
-	 gLwrsffBLPlPmzQxzD4BrIpRx/lG34t8sxeWx1Xe96OhxRcqnINsrHWqLcRLRqdZcA
-	 cjcFIFZvaStcg==
-Message-ID: <sashiko-outbox-193637@kernel.org>
+	b=cmELlMpa7vHiiOUhyWYe3CO+6bENcK6c05ldgqbNtBH6cuUvMqDlRF9MpIHL8tptm
+	 foC5lT/SP1kUoF/hkGDkjzeH98QH1Sjb2kjDAelQf1shXrTnOZRRDLzjFoW9gq58wR
+	 nolvN5qHElXFBw5SyvEYuKi6o51Lfvm2cyQ56fIkKADPgivie55L/DD2iLmBosVqsB
+	 xckcj0DCTi9UVJwm3J3dDL1X+pbevKJWYmweTBJo+5Xh1HCjEY7A3iKykrGFmvNdfv
+	 Xa9H3s2ZIppwNcvB9Ku0wyA5Sqqi9bkYbBYUtTqhF3Q67SGiWD9+JHWSknuUsxjMtD
+	 RYvZ0CV2ml9Vg==
+Message-ID: <sashiko-outbox-193653@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/9] mm/damon/core: remove unnecessary
- zero-initialization in damon_new_ctx()
+Subject: Re: [PATCH 2/9] mm/damon/ops-common: align MMU notifier range when
+ clearing PTE young bit
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261102150757.93058-2-sj@kernel.org>
+In-Reply-To: <20261102150757.93058-3-sj@kernel.org>
 References: <20261102150757.93058-1-sj@kernel.org>
- <20261102150757.93058-2-sj@kernel.org>
+ <20261102150757.93058-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 02 Nov 2026 15:10:35 +0000
+Date: Mon, 02 Nov 2026 15:22:17 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,19 +61,25 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> From: "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>
+> From: "Shubhang Kaushik (Ampere)" <sh@gentwo.org>
 >=20
-> damon_new_ctx() allocates the context structure using kzalloc(),
-> which already initializes all fields to zero.
+> DAMON selects a byte-granular sampling address.  damon_ptep_mkold()
+> clears the young bit of the PTE covering that address, but passes the
+> unaligned range [addr, addr + PAGE_SIZE) to MMU notifiers.
 >=20
-> The explicit initialization of passed_sample_intervals,
-> next_aggregation_sis, and next_ops_update_sis is therefore redundant.
-> In addition, they are later initialized by kdamond_init_ctx() before use.
+> For an unaligned address, that range extends into the following page.
+> KVM ages every guest page intersecting the notifier range, so it can age
+> a secondary mapping for the following page although DAMON cleared only
+> the sampled page's primary PTE.
 >=20
-> Remove the unnecessary assignments to simplify the code.
+> Align the address before both the primary PTE operation and the
+> MMU notifier call so that they cover the same page.
 >=20
-> Cc: Andrew Morton <akpm@linux-foundation.org>
-> Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
+> Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memo=
+ry address spaces")
+> Signed-off-by: Shubhang Kaushik (Ampere) <sh@gentwo.org>
+> Reviewed-by: Aveline Noir <jm5905938@gmail.com>
+> Tested-by: Aveline Noir <jm5905938@gmail.com>
 > Reviewed-by: SJ Park <sj@kernel.org>
 > Signed-off-by: SJ Park <sj@kernel.org>
 
@@ -81,5 +87,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102150757.9305=
-8-1-sj@kernel.org?part=3D1
+8-1-sj@kernel.org?part=3D2
 
