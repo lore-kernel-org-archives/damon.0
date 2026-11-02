@@ -1,84 +1,84 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.173
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793659861;
-	b=wJB7gJMeALqoX8K4DsFFpQ9/3xxQJNuHrEpni7obKThNdlQsoIGElSPMw5A2rCrLqyS2
-	 ldhCwlg7NYzSroeC145eIL/CBhvsq7pvUzeZ8KppJHBsfxdll+//+BM8VJoxkl1Bc5WSZ
-	 SnpY4BivowVHMegZOl21Wo5UpBdpW2IlvvuOmvtNYLM6+caDddAPEi4r8PytFoWw1ySKC
-	 KbJdXXKd0RyME4uiLCHIeFNJE0UyhjumbARE4tJKrJKHwQPVEAAtbSEtXGs//EAE2VVPB
-	 Yd5Szh8fcABTnLME3F/fNqSgs92m9eBvfP6C8JUh6EdsejQwYm45wjTExnUWi+9S8aw==
+	t=1793659863;
+	b=jd+6eVh8/IV/607Nh4lLDrB8eGR6uZxNhl77TDWF3IzEl/NcuhPFiQjimDda0Cw8uglI
+	 UeS87zyODSx15YZzRVq3OJYXhD4iJ1b0pK1SakndiEMA5maE4n87WVAdhLGsIZ9XC0n/P
+	 Ng/Nl7Odg4c8zI6RubAf76UWRP5c35gBRuIZFgJe2d7sj0CwMvidB/0WJr4DR5qJBXW+W
+	 a/3+qBxlwwUrARXq0u0BxUmw7RXTdrsLtNz+h4mVAw+9nKqCeqk/CNE7aJ3v2PrVFsauP
+	 AIOhvrQNZMNs2yCCpBpkw+DmOIkXo24cVqFrxqWUJaXkmfe9ma3lGD5+yleHNVoENeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793659861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793659863;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EN7S1V6hsPYuJ8/hHPqk/DKDGgJqqDJKvPrCgDVd4b8=;
-	b=Dz77u3a+KX7+t+B2Wh09tTT4jKOUXtuI5FY9y7QL+YSfQCr1XSJ30oB2OpiApbgw5n3g
-	 B5y5eDFTFl0UpUAyJLy8qwVAi/LeMnoPd1v11NQXf88f3bhsavROqPNbBSJcUfdS/Jc2u
-	 tlIsGCT3wd1RsSFxcenZA6l/POWSwjH/omGFsRX4xThA8KZh0xafQlmFaDEBxZgxOIoaP
-	 9pbEi42a8wiJa0nrBcH/cM1yXkuQYgiPlqFSXkn0ZIgYyG69uEAk4h+4w1xRb8RkIpoOq
-	 KCJ155dCuGU5KdF433YWgHkMZ6we1N8hJAwasKIWFO9tSj1Ycd5OL+7nfjMbjEAJROA==
+	bh=8k0YpciZy/RNGLWCkWb5Euha9kzjWaqxc+X4RS4poFk=;
+	b=XT/cZdzT7Dr5MyYjFzQ5CTTIJHmtdaT6Y84rPUzCTiG7A87J0Q33bwoHegCeve6XRD/n
+	 neBBLkLLA5PDX14U9J5Sf2DmnhKxQ0qj6S/H5RjJP8Ykor7MZKW+1bg0NARtyNZErSJ6D
+	 44ZllLH8IbOmzjIM3VB5dhL6wNU0DtStDfoimexpPd3rFmaoZAy3jz8s2f2oU4pbRq8vB
+	 QvFyU6FXQhN5sv5GvkwgzYcgFPgbrLXyvXSSOdnY4/lOhO/NOz8N3x2HiAGpkRFwm6WKX
+	 KuZfd11UQ50FT99OTgaaRFQfW/Tn8LdXzBVUl0XahhP6ZyKYqU0YKtVAsIt6jOtUpKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="HP/tkSqj";
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JzPxDoh2;
 	arc=none smtp.remote-ip=209.85.128.173
 Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D09606A326
-	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 22:51:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A5D09606A326
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71E4606A327
+	for <damon@lists.linux.dev>; Mon,  2 Nov 2026 22:51:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E71E4606A327
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=HP/tkSqj
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8ab395abf79so30966907b3.0
-        for <damon@lists.linux.dev>; Mon, 02 Nov 2026 14:51:00 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JzPxDoh2
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8b0f59a5fdeso29340467b3.1
+        for <damon@lists.linux.dev>; Mon, 02 Nov 2026 14:51:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793659860; x=1794264660; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1793659862; x=1794264662; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=EN7S1V6hsPYuJ8/hHPqk/DKDGgJqqDJKvPrCgDVd4b8=;
-        b=HP/tkSqj141l3opOYJqNRNJG4K2TokzTNzQwzCzBY00ur31OcyjWT1K0BToB5ITVd6
-         b18UeuOAbC7X0KlL2Q2ChYGEs8KVHBomKisJ7IF2dxF3SHuOkCNN0EJu/PDzeArLhq40
-         871vp5/mT4SmbyKJW2ywYvHr1M2CkTCvAWqQY2forUszZuA5WzYnl6zOfblqgyIwZwTF
-         +LK9MdhP7X1xocmTHBqqxSzEIdxEq480m+ZQhiOnsnGvheH/H0c4STa5f+LBComXz2Ty
-         1y0hfMReZVX2cBh+2VaSqSm5ffiOKNGGNislb6hn70Wprn8ouqZ4UJ8hds7kVdKdfWhI
-         tBVA==
+        bh=8k0YpciZy/RNGLWCkWb5Euha9kzjWaqxc+X4RS4poFk=;
+        b=JzPxDoh2L/8FdwUpHzcNWYKLVAHuwI1POTAcKfJSEo1IwU9HjVfMMKbwbJ+DSsxPt1
+         slmXdLI+3Ch2Rs3Czpl7LN0pRpmqOI4sSvT/dhJrOXHoEGS+4PjZAK2vE4ac8I/RYORq
+         QcOJCZVy4sMA1FMv1tk4fiqXGPynGDHPK/XI1PBwKNH3z9n+oP6NKreFQ9GIG26e2HhF
+         IhbsbCDMf5cyc69UcLG5UZGGsumJVF881vDfGIHIUXa4ZOzJN1wVaXWAvEpAxq78ooSZ
+         aW9xijTb3ItC1r5R8wIMnXVR53PJE5xStoBOoqYKlG/GFyjhXJdKUx84gKlIwPwsvjaD
+         iMAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793659860; x=1794264660;
+        d=1e100.net; s=20260707; t=1793659862; x=1794264662;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=EN7S1V6hsPYuJ8/hHPqk/DKDGgJqqDJKvPrCgDVd4b8=;
-        b=quxeowEoQ+9aAWmpkMYbCiq8cUSSgDEH6841y/bLrV47C8E2NGDcKW7hh1q5wJ8fQl
-         wyX4BA7TRiIo4tWbRsHOhYruSlzIxSUOpBaCAQrRwIAZ+QslZFQ75SoKMoaN5zLdX2dV
-         858lp8OS0llT0tF9b3d7RnD+vGtk3G4iuzSSgaOWcL3+wxjDR0JvE2WugFjYmUGW/3fD
-         CttmhG0olyl/NYZlSgjYLIJj1d6xBulHNifm3QAggVPcTRx5uxo1Qwp8LzRmAvayyNbZ
-         8d5tIqNYk1l7h75+/eGnbk1mlZNV2zDGyNH7petmx04wm2MHAkYpvewFHEaTOPkva7IM
-         NBdg==
-X-Forwarded-Encrypted: i=1; AKwUvBzEzG9jNHBO1dDn2R8wDIIpxrlWFgkE8etaqPtmK48q14qXyXmgIlick6NHjTOutsdT5+x/mQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z837jpoPN/AtVxZdOUOvWib9RxaydMzpzZ0I8RkKNqdEJEqI2vM
-	WG7f1LQS/M6+Gshl+8kj3I2dxL/FmPEqDCXKM0wocZ4zYN8dqYRJ3S3+
-X-Gm-Gg: AYBFou03bH0Hj8F8RFBQuDse08nMwIvFY3+gjGButIwGX08uM+XN5B9D0Q7sP5xtTOq
-	DvOKOD+I8kUL/OxRXAIHlJB7JfEnJXHQRK4glDEuU4Wn51ET1GmtjmdIn7qSFe7jJYJt5cTOFfb
-	lOj0p8JTtkbCLBmmuPkhg/MmRY6j2vc+5UWsxWVfZdqCeLk6SwwzQ7P0PPDmSTwGRpJeuBBpG0p
-	ZdyP9bD6ATjS1JqKJDg91+165qmsUSrHfB8UcqVvlVnQ/aOMTLPO8rIoXxDonixk0FNf/JcmlIZ
-	Ru8TVkAryxMDAhTS2cZ41hWVZbtN5+ynDgMKmJ6Pt+E3jSnOeoVAxH/XomcqDxgS2I2yxRYS49D
-	lMtwdCvuqaeb6FMWNhq0JiuyK0O/l/YLRtZ0U0q7j0dR5iVPXbVhhfjl83GAV/XBBNd5mtczUJA
-	MM62sVWruQiZvGKs6wSjf1hM/hlcGBwqlZeHuswDLdjXrJcPuDHdbu675w4S8/PYg+fro9Hl3yg
-	TjcN2yfcnBgm4+sUwgDPfibiN6u7yNy+LwNL3Q9PoMzg2kSSv3aexhhEB8xFdQrBlhySe876qlC
-	iVL92bS3jcT4bxDdk4NrGb90bJf3uzgVIC7u3B31NRJmh8CeG8GwSqvbADQrPMIfQaWDjhRe1Va
-	PxWjo1Q==
-X-Received: by 2002:a05:690c:dd5:b0:8b1:7072:a61b with SMTP id 00721157ae682-8b2b67323c3mr92119087b3.22.1793659859510;
-        Mon, 02 Nov 2026 14:50:59 -0800 (PST)
-Received: from localhost ([2a03:2880:ff:4e::])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b2b714bdafsm61225847b3.19.2026.11.02.14.50.57
+        bh=8k0YpciZy/RNGLWCkWb5Euha9kzjWaqxc+X4RS4poFk=;
+        b=VHxAhMgMwIK3tKjokd8sDL4kv/AMsR/sGMLKF7hzXxZY8pP9Q2k2zOHZjdcikJtHfz
+         Iennyf0X3bb+5dE/tysSgZ8n3J1+3uh2Ldc75NkTHMJgAQ3GuHSxQugmYdk1ryV3LzJy
+         g1U6YgkMXHy2tbUAxHLgYmND9f8eryQjeRmW3PF+OoDjd0gDAe4fYLL7L6MqOw0kmiZG
+         k0Y6LrgJJsm0tQzv/bQULefIpmKLnelUiSLe5zF5qEpWd0tPbjJ+cjiyuOBFoymGs0YY
+         L6/1rjDBXUL5uSJIS4iZf4ODgG+gSWroHyOzauLI+T/WikRP5Tx6Yb1GbzhHc79AJQZK
+         Qz2A==
+X-Forwarded-Encrypted: i=1; AKwUvBzb6HokJqVF0FJ7E0ds76RByPUMm3PXdAz07na4MXCNOJq1lamCOP+2ouQfonRloEXdQda/gA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/3nfdjN3yQo38h1cbSE86MEGfqCmd+AurRJaCVS08PY2ifhOfZ
+	dp+Zn7lK9OY00azPb4VKKS+KWXlxw7YMd3Mcm7jATSrgsJh22NNG9isP
+X-Gm-Gg: AYBFou0kyDKTYgWNqBMgCy2ngwkkrsc84NYI/lCnEdk6girOjMfs9loftQpSyfUgSjd
+	0zw2afPut8fP645LmHNDBf+C0Rc6rkKEGOLdjX5oEHIvZthCKU8/fPTx+D2HDT2PdmmzkPnBwzT
+	mmmIAVRsIa8uVAgx6+p0JB9dbeB8TW1CioW3NtDY3Je/vxiI6cBzjRSfI1qxhtouCIrZ5Xg1Ac3
+	zIqA556lUIP+NDsQXLnlwkYg1t/DgVToSrgzDtGUwCLTux+RA/BQ7TaBf2GBoPQYmQpzumQ7V7E
+	eVAzrGBOiglzj6ujJUrs+BFIL9sus4m7S5QX4v5lanpPz1WZJBt0sRx/jjAXjD3EgwSdmn7x9f2
+	5eMaqqEga/ZWlJ2Ih/Pmo2nRjIPCAMIkusvyTmfRGETikYcxClWkSOLKCCLm1hNhb7FfYwsDb1w
+	MPODuIOccL0CjpLjLKRmIFoI1BKjt0rBvOHjP04Q7ucjcrpbAKqK2mq08EcH9LVUfV+E0Bxb5zC
+	+ASN0H6p4Akzg6cGICK+t5l/+FmS5+kKGT1pR7eKLgpP2YX9DBHgk+9Pic3kVnxpF7UjCe9/nwp
+	mrzwaK85lFzxMrHMtxuELK3MoBkPnhS6pvw5GDJ/KFi4pnhusXU21d+cPit6CbtLVsb6J2nvFar
+	vUcAc
+X-Received: by 2002:a05:690c:6d81:b0:8b0:8b34:edc2 with SMTP id 00721157ae682-8b2b66c629bmr83714117b3.19.1793659861879;
+        Mon, 02 Nov 2026 14:51:01 -0800 (PST)
+Received: from localhost ([2a03:2880:ff:9::])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b2b71bce56sm60299087b3.44.2026.11.02.14.51.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 14:50:58 -0800 (PST)
+        Mon, 02 Nov 2026 14:51:01 -0800 (PST)
 From: Joanne Koong <joannelkoong@gmail.com>
 To: akpm@linux-foundation.org
 Cc: yosry@kernel.org,
@@ -95,9 +95,9 @@ Cc: yosry@kernel.org,
 	linux-mm@kvack.org,
 	cgroups@vger.kernel.org,
 	damon@lists.linux.dev
-Subject: [PATCH v1 1/3] mm: zswap: fix shrinker count for the root memcg
-Date: Mon,  2 Nov 2026 14:50:28 -0800
-Message-ID: <20261102225030.2743129-2-joannelkoong@gmail.com>
+Subject: [PATCH v1 2/3] mm: memcg: read root lruvec LRU stats from the node counters
+Date: Mon,  2 Nov 2026 14:50:29 -0800
+Message-ID: <20261102225030.2743129-3-joannelkoong@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20261102225030.2743129-1-joannelkoong@gmail.com>
 References: <20261102225030.2743129-1-joannelkoong@gmail.com>
@@ -112,58 +112,270 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-zswap_shrinker_count() scales the number of freeable entries on a
-memcg's zswap LRU by the memcg's compression ratio. That compression
-ratio is computed from the memcg's MEMCG_ZSWAP_B and MEMCG_ZSWAPPED
-stats.
+Reclaim and refault detection read LRU sizes and workingset counters
+from the target lruvec after a ratelimited rstat flush. For global
+reclaim and the root memcg, that flush covers every cgroup in the
+system, and the ratelimiting can leave the stats stale for seconds.
 
-However, for the root memcg, the zswap entries owned by the root memcg
-itself are never accounted for in the stats (obj_cgroup_charge_zswap()
-skips the root objcg, and before the root memcg had an objcg, its
-entries weren't charged at all). The stats only reflect the entries
-owned by the root memcg's descendants. When the root memcg's descendants
-have no zswap entries (eg when the whole workload runs in the root
-cgroup), the shrinker reports nothing to reclaim for the root memcg, and
-its zswap entries are never written back by the shrinker. When its
-descendants do have entries, the root memcg's entries are scaled by the
-descendants' compression ratio instead of a ratio that includes them.
+For stats that only track memory charged to a memcg (LRU sizes,
+workingset, rotation and reclaim writeback counts), the root memcg's
+hierarchical value equals the node counter, which is always up to date.
+Add lruvec_lru_page_state() and a monotonic variant that read the node
+counters for the root memcg, and use them in reclaim and
+workingset_test_recent(). Root reclaim and refault detection then see
+current values instead of stats that can lag by seconds.
 
-Fix this by using the zswap pool-wide counters for the root memcg
-instead. The zswap pool-wide counters cover every zswap entry, including
-those owned by the root memcg.
+workingset_test_recent() only reads the eviction memcg's own lruvec, so
+skip its rstat flush when that is the root memcg. For reclaim however,
+we still need to keep the flush (for now) since global and root reclaim
+also read the rstat stats of the child memcgs they scan, which the flush
+is needed for in order to keep up to date.
 
-This also gets rid of having to flush the root memcg's stats, which
-flushes every cgroup in the system.
+On an 80-CPU machine, a root flush took 69us on average with little
+cgroup activity and ~0.9ms with 128 memcgs actively allocating (wall
+time, including waiting for the rstat lock). Reading a node counter
+doesn't add any cost. It took the same amount of time as reading the
+rstat counter (~150ns, which includes bpftrace probe overhead).
 
-In a VM running a reclaim-heavy workload in the root cgroup with the
-zswap shrinker enabled, the shrinker wrote back no pages before this
-change (zswpwb stayed at 0) and 1016 pages with it.
-
-Fixes: b5ba474f3f51 ("zswap: shrink zswap pool based on memory pressure")
 Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
 ---
- mm/zswap.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/memcontrol.h | 16 ++++++++++++++
+ mm/memcontrol.c            | 44 ++++++++++++++++++++++++++++++++++++++
+ mm/vmscan.c                | 36 +++++++++++++++----------------
+ mm/workingset.c            | 19 +++++++++-------
+ 4 files changed, 89 insertions(+), 26 deletions(-)
 
-diff --git a/mm/zswap.c b/mm/zswap.c
-index 37d217860a6b..c11cd2a6e24e 100644
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -1332,9 +1332,12 @@ static unsigned long zswap_shrinker_count(struct shrinker *shrinker,
- 	 * runtime-disabled: we can get sc->memcg == NULL, which is ok
- 	 * for the lruvec, but not for memcg_page_state().
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 980358bc6f49..656bd677dd3c 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -968,6 +968,10 @@ unsigned long lruvec_page_state_monotonic(const struct lruvec *lruvec,
+ 					  enum node_stat_item idx);
+ unsigned long lruvec_page_state_local(const struct lruvec *lruvec,
+ 				      enum node_stat_item idx);
++unsigned long lruvec_lru_page_state(const struct lruvec *lruvec,
++				    enum node_stat_item idx);
++unsigned long lruvec_lru_page_state_monotonic(const struct lruvec *lruvec,
++					      enum node_stat_item idx);
+ 
+ void mod_memcg_lruvec_state(struct lruvec *lruvec,
+ 			    enum node_stat_item idx, int val);
+@@ -1430,6 +1434,18 @@ static inline unsigned long lruvec_page_state_local(const struct lruvec *lruvec,
+ 	return node_page_state(lruvec_pgdat(lruvec), idx);
+ }
+ 
++static inline unsigned long lruvec_lru_page_state(const struct lruvec *lruvec,
++						  enum node_stat_item idx)
++{
++	return node_page_state(lruvec_pgdat(lruvec), idx);
++}
++
++static inline unsigned long lruvec_lru_page_state_monotonic(const struct lruvec *lruvec,
++							    enum node_stat_item idx)
++{
++	return node_page_state_monotonic(lruvec_pgdat(lruvec), idx);
++}
++
+ static inline void mod_memcg_lruvec_state(struct lruvec *lruvec,
+ 					  enum node_stat_item idx, int val)
+ {
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index ac6c43ea8c5a..938843346571 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -587,6 +587,50 @@ unsigned long lruvec_page_state_local(const struct lruvec *lruvec,
+ 	return x;
+ }
+ 
++static bool lruvec_is_root(const struct lruvec *lruvec)
++{
++	return !mem_cgroup_disabled() && mem_cgroup_is_root(lruvec_memcg(lruvec));
++}
++
++/**
++ * lruvec_lru_page_state - read an LRU stat of an lruvec
++ * @lruvec: the LRU vector to read from
++ * @idx: the node_stat_item to read
++ *
++ * Like lruvec_page_state(), but for the root memcg the node counter is read
++ * instead. For stats that only track memory charged to a memcg (LRU sizes,
++ * workingset, rotation and reclaim writeback counts), the root memcg's
++ * hierarchical value equals the node counter. The root memcg can just read the
++ * node counter directly instead of going through rstat, which requires
++ * flushing. Flushing the root memcg flushes every cgroup in the system.
++ *
++ * Use lruvec_page_state() for other stats (eg slab).
++ */
++unsigned long lruvec_lru_page_state(const struct lruvec *lruvec,
++				    enum node_stat_item idx)
++{
++	if (lruvec_is_root(lruvec))
++		return node_page_state(lruvec_pgdat(lruvec), idx);
++
++	return lruvec_page_state(lruvec, idx);
++}
++
++/**
++ * lruvec_lru_page_state_monotonic - lruvec_lru_page_state() for delta sampling
++ * @lruvec: the LRU vector to read from
++ * @idx: the node_stat_item to read
++ *
++ * See lruvec_page_state_monotonic() and lruvec_lru_page_state().
++ */
++unsigned long lruvec_lru_page_state_monotonic(const struct lruvec *lruvec,
++					      enum node_stat_item idx)
++{
++	if (lruvec_is_root(lruvec))
++		return node_page_state_monotonic(lruvec_pgdat(lruvec), idx);
++
++	return lruvec_page_state_monotonic(lruvec, idx);
++}
++
+ static void __mod_memcg_lruvec_state(struct mem_cgroup *memcg, int nid,
+ 				     enum node_stat_item idx, long val);
+ 
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 7ddef3b488b3..fc93a1d8afe0 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2379,8 +2379,8 @@ static bool inactive_is_low(struct lruvec *lruvec, enum lru_list inactive_lru)
+ 	unsigned long inactive_ratio;
+ 	unsigned long gb;
+ 
+-	inactive = lruvec_page_state(lruvec, NR_LRU_BASE + inactive_lru);
+-	active = lruvec_page_state(lruvec, NR_LRU_BASE + active_lru);
++	inactive = lruvec_lru_page_state(lruvec, NR_LRU_BASE + inactive_lru);
++	active = lruvec_lru_page_state(lruvec, NR_LRU_BASE + active_lru);
+ 
+ 	gb = (inactive + active) >> (30 - PAGE_SHIFT);
+ 	if (gb)
+@@ -2428,7 +2428,7 @@ static void prepare_scan_control(pg_data_t *pgdat, struct scan_control *sc)
+ 	 * into a decaying average. This ensures currency, as workloads
+ 	 * change over time, and avoids overflow in the calculations.
  	 *
--	 * Without memcg, use the zswap pool-wide metrics.
-+	 * Without memcg, or for the root memcg, use the zswap pool-wide
-+	 * metrics. The root memcg's stats don't count the entries it owns
-+	 * itself (obj_cgroup_charge_zswap() skips the root objcg), whereas the
-+	 * pool-wide metrics cover every entry and don't need a flush.
+-	 * Use lruvec_page_state_monotonic() so unsigned subtraction
++	 * Use lruvec_lru_page_state_monotonic() so unsigned subtraction
+ 	 * yields the correct delta across a signed-long wraparound of
+ 	 * the underlying counter (a real hazard on 32-bit that the
+ 	 * clamp in lruvec_page_state() would otherwise turn into a huge
+@@ -2440,13 +2440,13 @@ static void prepare_scan_control(pg_data_t *pgdat, struct scan_control *sc)
+ 		struct lru_cost *cost = &target_lruvec->cost[f];
+ 		unsigned long rotated, io, nr_rotated, nr_io;
+ 
+-		rotated = lruvec_page_state_monotonic(target_lruvec,
+-						      PGROTATE_ANON + f);
+-		io = lruvec_page_state_monotonic(target_lruvec,
+-						 WORKINGSET_RESTORE_BASE + f);
++		rotated = lruvec_lru_page_state_monotonic(target_lruvec,
++							  PGROTATE_ANON + f);
++		io = lruvec_lru_page_state_monotonic(target_lruvec,
++						     WORKINGSET_RESTORE_BASE + f);
+ 		if (f == WORKINGSET_ANON)
+-			io += lruvec_page_state_monotonic(target_lruvec,
+-							  NR_VMSCAN_WRITE);
++			io += lruvec_lru_page_state_monotonic(target_lruvec,
++							      NR_VMSCAN_WRITE);
+ 
+ 		nr_rotated = rotated - cost->last_rotated;
+ 		nr_io = io - cost->last_io;
+@@ -2468,10 +2468,10 @@ static void prepare_scan_control(pg_data_t *pgdat, struct scan_control *sc)
+ 	anon_cost = &target_lruvec->cost[WORKINGSET_ANON];
+ 	file_cost = &target_lruvec->cost[WORKINGSET_FILE];
+ 
+-	lrusize = lruvec_page_state(target_lruvec, NR_INACTIVE_ANON) +
+-		  lruvec_page_state(target_lruvec, NR_ACTIVE_ANON) +
+-		  lruvec_page_state(target_lruvec, NR_INACTIVE_FILE) +
+-		  lruvec_page_state(target_lruvec, NR_ACTIVE_FILE);
++	lrusize = lruvec_lru_page_state(target_lruvec, NR_INACTIVE_ANON) +
++		  lruvec_lru_page_state(target_lruvec, NR_ACTIVE_ANON) +
++		  lruvec_lru_page_state(target_lruvec, NR_INACTIVE_FILE) +
++		  lruvec_lru_page_state(target_lruvec, NR_ACTIVE_FILE);
+ 
+ 	while (anon_cost->count + file_cost->count > lrusize / 4) {
+ 		anon_cost->count /= 2;
+@@ -2495,7 +2495,7 @@ static void prepare_scan_control(pg_data_t *pgdat, struct scan_control *sc)
+ 		 * workingset is being established. Deactivate to get
+ 		 * rid of any stale active pages quickly.
+ 		 */
+-		refaults = lruvec_page_state(target_lruvec,
++		refaults = lruvec_lru_page_state(target_lruvec,
+ 				WORKINGSET_ACTIVATE_ANON);
+ 		if (refaults != target_lruvec->refaults[WORKINGSET_ANON] ||
+ 			inactive_is_low(target_lruvec, LRU_INACTIVE_ANON))
+@@ -2503,7 +2503,7 @@ static void prepare_scan_control(pg_data_t *pgdat, struct scan_control *sc)
+ 		else
+ 			sc->may_deactivate &= ~DEACTIVATE_ANON;
+ 
+-		refaults = lruvec_page_state(target_lruvec,
++		refaults = lruvec_lru_page_state(target_lruvec,
+ 				WORKINGSET_ACTIVATE_FILE);
+ 		if (refaults != target_lruvec->refaults[WORKINGSET_FILE] ||
+ 		    inactive_is_low(target_lruvec, LRU_INACTIVE_FILE))
+@@ -2518,7 +2518,7 @@ static void prepare_scan_control(pg_data_t *pgdat, struct scan_control *sc)
+ 	 * thrashing, try to reclaim those first before touching
+ 	 * anonymous pages.
  	 */
--	if (!mem_cgroup_disabled()) {
-+	if (!mem_cgroup_disabled() && !mem_cgroup_is_root(memcg)) {
- 		mem_cgroup_flush_stats_ratelimited(memcg);
- 		nr_backing = memcg_page_state(memcg, MEMCG_ZSWAP_B) >> PAGE_SHIFT;
- 		nr_stored = memcg_page_state(memcg, MEMCG_ZSWAPPED);
+-	file = lruvec_page_state(target_lruvec, NR_INACTIVE_FILE);
++	file = lruvec_lru_page_state(target_lruvec, NR_INACTIVE_FILE);
+ 	if (file >> sc->priority && !(sc->may_deactivate & DEACTIVATE_FILE) &&
+ 	    !sc->no_cache_trim_mode)
+ 		sc->cache_trim_mode = 1;
+@@ -6701,9 +6701,9 @@ static void snapshot_refaults(struct mem_cgroup *target_memcg, pg_data_t *pgdat)
+ 		return;
+ 
+ 	target_lruvec = mem_cgroup_lruvec(target_memcg, pgdat);
+-	refaults = lruvec_page_state(target_lruvec, WORKINGSET_ACTIVATE_ANON);
++	refaults = lruvec_lru_page_state(target_lruvec, WORKINGSET_ACTIVATE_ANON);
+ 	target_lruvec->refaults[WORKINGSET_ANON] = refaults;
+-	refaults = lruvec_page_state(target_lruvec, WORKINGSET_ACTIVATE_FILE);
++	refaults = lruvec_lru_page_state(target_lruvec, WORKINGSET_ACTIVATE_FILE);
+ 	target_lruvec->refaults[WORKINGSET_FILE] = refaults;
+ }
+ 
+diff --git a/mm/workingset.c b/mm/workingset.c
+index 1504f91cdca5..e8620ae1c516 100644
+--- a/mm/workingset.c
++++ b/mm/workingset.c
+@@ -483,10 +483,13 @@ bool workingset_test_recent(void *shadow, bool file, bool *workingset,
+ 	 * section (for e.g, in cachestat) - these callers need to skip flushing
+ 	 * stats (via the flush argument).
+ 	 *
++	 * For the root memcg, the LRU sizes are read directly from the node
++	 * counters (see lruvec_lru_page_state()).
++	 *
+ 	 * XXX: With per-memcg flushing and thresholding, is ratelimiting
+ 	 * still needed here?
+ 	 */
+-	if (flush)
++	if (flush && !mem_cgroup_is_root(eviction_memcg))
+ 		mem_cgroup_flush_stats_ratelimited(eviction_memcg);
+ 
+ 	eviction_lruvec = mem_cgroup_lruvec(eviction_memcg, pgdat);
+@@ -518,17 +521,17 @@ bool workingset_test_recent(void *shadow, bool file, bool *workingset,
+ 	 * workingset competition needs to consider anon or not depends
+ 	 * on having free swap space.
+ 	 */
+-	workingset_size = lruvec_page_state(eviction_lruvec, NR_ACTIVE_FILE);
++	workingset_size = lruvec_lru_page_state(eviction_lruvec, NR_ACTIVE_FILE);
+ 	if (!file) {
+-		workingset_size += lruvec_page_state(eviction_lruvec,
+-						     NR_INACTIVE_FILE);
++		workingset_size += lruvec_lru_page_state(eviction_lruvec,
++							 NR_INACTIVE_FILE);
+ 	}
+ 	if (mem_cgroup_get_nr_swap_pages(eviction_memcg) > 0) {
+-		workingset_size += lruvec_page_state(eviction_lruvec,
+-						     NR_ACTIVE_ANON);
++		workingset_size += lruvec_lru_page_state(eviction_lruvec,
++							 NR_ACTIVE_ANON);
+ 		if (file) {
+-			workingset_size += lruvec_page_state(eviction_lruvec,
+-						     NR_INACTIVE_ANON);
++			workingset_size += lruvec_lru_page_state(eviction_lruvec,
++								 NR_INACTIVE_ANON);
+ 		}
+ 	}
+ 
 -- 
 2.52.0
 
