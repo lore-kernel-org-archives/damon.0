@@ -1,55 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793667648;
-	b=PbO5hkgSr3lV7gt2ct422w86UjOfbObZ3ccbyad4Wq+R5lfwU6GJ122bJbD2gMRRICYp
-	 fSSEC7bPS9Iy2HgQyLfySU1iGGsTAyC/GoOUSfvFS3qKhEULXwxNrlvFqhSDGizjkXxpX
-	 Q5lKDu9pYUzjU1UjCH0GryhJg+/2Ea1mHZ0xL2NNKuENZXmqD7UEfyl8E/fobWHeJRQyd
-	 YWfAsxcpI1w4bsc4ExXYyEXYsDtv9sPqWV5lfaN/BLnf6ntMOquZcGKHgCrBgD5IDFNH3
-	 WZSlzkrLpwyiIOdFgWcUvUiNrvN5F0x/wcXnbaBLKbdEKM8kYFK7VbPx95aw3N6+GxQ==
+	t=1793667685;
+	b=fF3oAogfv3r+MpHo2qkbv+PPn3WTEgUCL/ojFojMZNxwnDIN+KVisQoLUbc5vDzMAhM3
+	 RjeSa9fVS3dsGIdJs9ziHpsWAu7CaHjzYfkSGaUMSq+AlzxWx3YhWweXitKqXuVzWvkgm
+	 wq4SOyY/hlhTquH5x6/U5dJ3Cc+y4z3uZ2NhMldeHIhoC6xXzo8E31qAC+UP6qDWVa9Ba
+	 jKwo/Sp6WsTNjLMLtTxm4RZ+BbSS0T31VdGghm+Ej0SGJ4hlbT41JMOlqN9Wg+4jH2KbC
+	 /cJPxy6QmhzF+4t1x2+27ngiXhx9FzGwkb8TzYvi+fD+6fsynmPz1ZJfl/TwXAXfOOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793667648;
-	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=4HQ3Qgd7i2dVNUMZQt7YfeVDy1gbBVil90g1I4doNFE=;
-	b=Nk6YoxA+Jw856pq9x64Uy0D1NdOGF6mRbdkBW1c0te0fJeuLnkGU3p3mMU9it4loTfd2
-	 NbRXHZSfG0wqLa2EQUr4bcHgNH5kQK+rwXxqTcqku3YVWF4DnyMRLUtjUQsycY+PNCGPJ
-	 Qv1zrjOOjOL9HDEirE1e66oMTNOgZX9Bl01Uc9/+R2l5Vmsdf6uXxnEmjFjJDC3nCoveo
-	 wAekHhDT60ZrUn01v72YKyN2iVZzCE10c53xuQYj0jf0I5EwbOaBSV3bD2I66Bid56dQI
-	 0d7ULRJdvfYvr1S0D9jDULlWwvmdpw+w0jqCzCzu58FDW6FGEXVsEV3ubHSvAGJf4EQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793667685;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=zMO/1BcGmSkkMHarNPanl71tad5tjVeTsG2i8QmLAFc=;
+	b=aGwiTOTz0pTu6SwU8w90HmgjzBW5HCG84JZt29FKbDQPrj+yP4u9ZcC3IzniuYLGZpQP
+	 nsE98Liofqm5JUpZ59hjLMgtvV2gbJ9D9Mled2QdwEFn43ebqSHdt3MI/M4SR51+784ip
+	 x+2d9TsvqTXPJ367rE3Ofvp42q0Fhm+2ly/tGZ3OBLP2Mx8mY2oD4UjsMROBsevK0TF5J
+	 3Pp+DIk566PEBZXEUVEzdXkjPT7+B8Oe9grvq2LaDjLeE77JEktEz1H/queeEsQGeLAN0
+	 /aXcIlI4fFyJwZr+jzEu9ELP3OYaQn3DB0dwEWCjVHuMEyM2/FiejXbsFmoW3o2Q4tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BgGv8lJO;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k9Abk2Ns;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67B6606A326
-	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 01:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119CB606A324
+	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 01:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BgGv8lJO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FD91F00A1A
-	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 01:00:47 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=k9Abk2Ns
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791071F000C1;
+	Tue,  3 Nov 2026 01:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793667647;
-	bh=4HQ3Qgd7i2dVNUMZQt7YfeVDy1gbBVil90g1I4doNFE=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=BgGv8lJOHVEgop2gWiFbPShFWku0TCjm6MwzTYsrxTPTGPDILDl6x5fU6Q1UWKT2e
-	 MQNOpygshQ0/ofvQ10Q3ccG8DqHWbje392YnCG1S2tnxMi4Qgo9vaUQ0HSJQwxuM8J
-	 y0xc1HUsR9GiC4fAohVrc7jYr2h1hf00pZMGkMwuYMMHLCt+Xph6T+SGT7l5HfBv7w
-	 cm9UFAAqtTlUWYTt2GeUfwqpNZfNMfIiRfm4dwTsjyoqjBWPjFPz1ARLIBqrD4VGn0
-	 N0c4T5/GkF4pzmYOmcEubV/bs6fvsOa2gFk8mi7KeO4USRlFk5UTNJ8gCZPkVH5QxO
-	 mzDoMkXY1sn6g==
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c4ceb15dfd7so86389066b.2
-        for <damon@lists.linux.dev>; Mon, 02 Nov 2026 17:00:47 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AKwUvByv4gz8g95Q1Cy0MbMz4bZf71blRqQ1MAGXZNKKR1tVOZv17E/vbc2klnSG6BLodBJ9rFikog==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/HKmXKtDTaGDQWAaUCH+8V8KGE/mIxOJO0fh19bymWcy19gYbW
-	w29YGEOI5gSXlbXjPHMmZokeqUSsNt4Z9kQ+Gz0v0JOfUeLNtaBKBD/wd1sv2ggdgRMGO9uUi0l
-	Qd8hcegbTDYf7KLSUCeR82imrvqX2SfY=
-X-Received: by 2002:a17:907:7fa5:b0:c40:eb1a:4c8b with SMTP id
- a640c23a62f3a-c4ca7a6d245mr897957366b.29.1793667646429; Mon, 02 Nov 2026
- 17:00:46 -0800 (PST)
+	s=k20260515; t=1793667684;
+	bh=zMO/1BcGmSkkMHarNPanl71tad5tjVeTsG2i8QmLAFc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=k9Abk2NsT+PvwuEoxjPV+yNvZ3ITZceUiUp+e+N89lHSpTwZzpQAIYm68f91c/+fN
+	 Z/sn9VxP6srQASDyBdczIJFaXn8PS9ktlyeoJv9NibwXaVCrz3XrY3KRXUgF4aVug0
+	 sIVuvONlkEr3a4tP0FXmTBJcDDpY2pnqrBM2ArfSEBgLkUJMiQgjWCld5GycMdy0OJ
+	 He1Jh+Q9FDW5OUedcaTv0nvb4s/7IQmSsNgHtJVCW4yIuFG4dLMP5ygJ1qqXmymM0+
+	 +IjwjJbSnQlCRS3r1YeuEb3GHcBft0NbjYictZtjsyYAc/JHxb8VVLXFBksH3Tk1BT
+	 r9f/+Y0tP2tTw==
+Message-ID: <sashiko-outbox-194408@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2 7/8] Docs/mm/damon/maintainer-profile: fix
+ subject-verb agreement
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261103005940.91432-8-sj@kernel.org>
+References: <20261103005940.91432-1-sj@kernel.org>
+ <20261103005940.91432-8-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 03 Nov 2026 01:01:24 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -58,122 +60,22 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-References: <20261102225030.2743129-1-joannelkoong@gmail.com>
- <20261102225030.2743129-3-joannelkoong@gmail.com> <CAO9r8zP87zRuoFqeKFcAJoCrOG8M+7HCtX6hvxwdLzuHUXD0Gw@mail.gmail.com>
- <CAJnrk1bv-P_TQztAGiHYdfg=5hbj4GREML2M0Uxp5oC1R9J-Mw@mail.gmail.com>
-In-Reply-To: <CAJnrk1bv-P_TQztAGiHYdfg=5hbj4GREML2M0Uxp5oC1R9J-Mw@mail.gmail.com>
-From: Yosry Ahmed <yosry@kernel.org>
-Date: Mon, 2 Nov 2026 17:00:35 -0800
-X-Gmail-Original-Message-ID: <CAO9r8zMvofnW-6OsiasiocOBqoRbZuD71dp3RQE5746YGzamNA@mail.gmail.com>
-X-Gm-Features: AclHuK-Nd_GMyDmaw4iY6A-BMZy3XZnuaOJfkxR3X8uJTpecvIovrO_sqKDwyjY
-Message-ID: <CAO9r8zMvofnW-6OsiasiocOBqoRbZuD71dp3RQE5746YGzamNA@mail.gmail.com>
-Subject: Re: [PATCH v1 2/3] mm: memcg: read root lruvec LRU stats from the
- node counters
-To: Joanne Koong <joannelkoong@gmail.com>
-Cc: akpm@linux-foundation.org, shakeel.butt@linux.dev, hannes@cmpxchg.org, 
-	mhocko@kernel.org, roman.gushchin@linux.dev, muchun.song@linux.dev, 
-	nphamcs@gmail.com, chengming.zhou@linux.dev, sj@kernel.org, david@kernel.org, 
-	ljs@kernel.org, linux-mm@kvack.org, cgroups@vger.kernel.org, 
-	damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 2, 2026 at 4:34=E2=80=AFPM Joanne Koong <joannelkoong@gmail.com=
-> wrote:
->
-> On Mon, Nov 2, 2026 at 3:29=E2=80=AFPM Yosry Ahmed <yosry@kernel.org> wro=
-te:
-> >
-> > > diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-> > > index ac6c43ea8c5a..938843346571 100644
-> > > --- a/mm/memcontrol.c
-> > > +++ b/mm/memcontrol.c
-> > > @@ -587,6 +587,50 @@ unsigned long lruvec_page_state_local(const stru=
-ct lruvec *lruvec,
-> > >         return x;
-> > >  }
-> > >
-> > > +static bool lruvec_is_root(const struct lruvec *lruvec)
-> > > +{
-> > > +       return !mem_cgroup_disabled() && mem_cgroup_is_root(lruvec_me=
-mcg(lruvec));
-> > > +}
-> > > +
-> > > +/**
-> > > + * lruvec_lru_page_state - read an LRU stat of an lruvec
-> > > + * @lruvec: the LRU vector to read from
-> > > + * @idx: the node_stat_item to read
-> > > + *
-> > > + * Like lruvec_page_state(), but for the root memcg the node counter=
- is read
-> > > + * instead. For stats that only track memory charged to a memcg (LRU=
- sizes,
-> > > + * workingset, rotation and reclaim writeback counts), the root memc=
-g's
-> > > + * hierarchical value equals the node counter. The root memcg can ju=
-st read the
-> > > + * node counter directly instead of going through rstat, which requi=
-res
-> > > + * flushing. Flushing the root memcg flushes every cgroup in the sys=
-tem.
-> > > + *
-> > > + * Use lruvec_page_state() for other stats (eg slab).
-> > > + */
-> > > +unsigned long lruvec_lru_page_state(const struct lruvec *lruvec,
-> > > +                                   enum node_stat_item idx)
-> > > +{
-> > > +       if (lruvec_is_root(lruvec))
-> > > +               return node_page_state(lruvec_pgdat(lruvec), idx);
-> > > +
-> > > +       return lruvec_page_state(lruvec, idx);
-> > > +}
-> > > +
-> > > +/**
-> > > + * lruvec_lru_page_state_monotonic - lruvec_lru_page_state() for del=
-ta sampling
-> > > + * @lruvec: the LRU vector to read from
-> > > + * @idx: the node_stat_item to read
-> > > + *
-> > > + * See lruvec_page_state_monotonic() and lruvec_lru_page_state().
-> > > + */
-> > > +unsigned long lruvec_lru_page_state_monotonic(const struct lruvec *l=
-ruvec,
-> > > +                                             enum node_stat_item idx=
-)
-> > > +{
-> > > +       if (lruvec_is_root(lruvec))
-> > > +               return node_page_state_monotonic(lruvec_pgdat(lruvec)=
-, idx);
-> > > +
-> > > +       return lruvec_page_state_monotonic(lruvec, idx);
-> > > +}
-> >
-> > Why not do this directly in lruvec_page_state() and
-> > lruvec_page_state_monotonic()? They already fallback to node stats if
-> > memcg is disabled, why not do the same for the root? Are there cases
-> > where the node stats are not the right thing to do?
->
-> Hi Yosry,
->
-> Thanks for taking a look at this series! I don't think we're able to
-> do this directly in lruvec_page_state()/lruvec_page_state_monotonic()
-> because I think there's still some places where the node stat and the
-> root memcg stat are not guaranteed to be equal.
->
-> The stat I was looking at last week was slab's NR_SLAB_RECLAIMABLE_B
-> and NR_SLAB_UNRECLAIMABLE_B where for those, the node counter value
-> can contain memory/stats that wasn't actually charged to any memcg,
-> which I think means for these cases, the node counter values can be
-> larger than what reading the root memcg rstat value would give. The
-> functions I was looking at were account_slab() and
-> memcg_slab_post_alloc_hook() where the logic adds every new slab page
-> to the node counter but the memcg stats only get updated if specific
-> criteria are met (eg the cache had SLAB_ACCOUNT set or the allocation
-> had the __GFP_ACCOUNT gfp flag set and the allocation was not from a
-> root memcg).
+> From: Aveline Noir <jm5905938@gmail.com>
+>=20
+> "The DAMON maintainer usually work" should be "works".
+>=20
+> Cc: Jonathan Corbet <corbet@lwn.net>
+> Cc: Shuah Khan <skhan@linuxfoundation.org>
+> Cc: Randy Dunlap <rdunlap@infradead.org>
+> Cc: Manuel Ebner <manuelebnerli@mailbox.org>
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+> Reviewed-by: SJ Park <sj@kernel.org>
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-If it's only the slab stats, it probably makes sense to special case
-those instead of the rest of the readers, right? It would be nice if
-the default behavior is reading the node stats that doesn't require a
-flush.
+Sashiko has reviewed this patch and found no issues.
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103005940.9143=
+2-1-sj@kernel.org?part=3D7
+
