@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793667591;
-	b=esZPW/fE/+2XvTyBh4FJ5jmmBL0GWKNDS/CkczY28HffaUOwXDPxhOEUeiWl16Xrubnv
-	 2THLdd7JbWzj4Nr+HcJuSYLfuA1AC3ER2dj4EpPWtoqKGSEFRXGQI5x4w8ZbCk3PcwgTB
-	 8iyVH9oQE0mUlG8xxkX/DReJYJXQ7w1OpSaGhyw+RVyJh1HZqGCvVG0EyG/DUv1gMM4Ie
-	 qeWTEzMS+v7BkrG6TjaOzRvgj2hiVE8rwFVdBlzZCFGc20/Wv4gy53L1bgPUCCSUGi+kT
-	 Vmig+Fox1SBYvg8bvwdBzp/qumQkJqJLGwR164GxPrcIxujdA6TxeBRDenRAKOYktlA==
+	b=X19SkDLz01eZnreL6J//qx0gjRSeusYjXv4x3eFjPfsXDnj8LlhJbEoHmbJkbdD9VZrK
+	 FapcB2ieZTG0pMAiR4o0qTzr87+Fs+/EQLvlWH7qJhhYpITQRw1ihsmVIXDiA5XFL6EIz
+	 vmjLPQAr4898CJSEb8NtoQRkU1kcnRBJIhSRPKrA/gZ76BBmqa79LB2AFHAdHiAH0jQBe
+	 cRSErH1oQKkUESqz6XXCkLZ+Ti7e3lkGj5pb2cVcGMeYl3hT6j7vCPAXAoBBkxxHSvbDR
+	 hcPSrIFNeACnu5bQ8QFlCsXRADRrXJTtuRDHBs1WXFZGRdhlH22COH2RYgpYMVLc+qg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793667591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=P1IgRM5/h9FbBb2fDW0NDKc872TwF1DZp/yvTjMOChM=;
-	b=krM8ci8wSh/uWZ0yEwLCnpp+Hf2Jawy2HZwF8jq+FSXwQ02Cm72S1n/+FjbzEJ8KIQTc
-	 daoAgZY3v6AHVQMFHSBn/losw/ntbW12/Rpkk01tYFBa6G7ApvJoci440kmuqytEehZye
-	 /ji3Ab+J/NVRtJfmuAZEtOtlpyka5OeFM2ugmLQdcCjLdguosWnd2fQO4i98kBGBSGffh
-	 o7tSVVQ2/wsjr9NTjpo1dl1zIg7GyaTnwcfTdT3+3+b2OslEIObGwvPriDDJCAK3G2pCo
-	 aTKC83OvFX2ucTjy6a+aluzKi4jJSRjMRnBANjVJnaLrnexbFhisMeEHqtWcp2XMNQw==
+	bh=6iRmnLuflCl7MrpW9F1BaNAFdZpZANiW6H3XK0CDxEM=;
+	b=As1a9wY920F+//4MWdouh3dhYymYKGfuCu0yGq7q+tbU8y08rlolx3rM7LHURfMe9jPl
+	 WUinQGSgRY5wmqe+coZRlVuEuSz8vq96vs+T06WHSppNSwbqm6DuG5LcutHyynsk666TL
+	 yq455qxf5MirC3j4JNgKKL5sh12XJUP/S7fLNcKmwf4Z8bUsgAigsGyzIAFr1ze4Cficg
+	 oAOxl0vLPHv9hzAKSyJVZwcSdM8B54Wgcp+eTPHjzx4tismw438bamI6jXDKL0sZMmw6H
+	 +0/XU1zsiLuXEtltvpcM+93kQRo1v6foVSD4UqIhzaxdeVDismSUFVu1twB0ag6lBPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h8KJ7+mb;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EuKmAoxP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C57606D801;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B49606D812;
 	Tue,  3 Nov 2026 00:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h8KJ7+mb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CC01F00A1D;
-	Tue,  3 Nov 2026 00:59:50 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EuKmAoxP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E701F00A17;
+	Tue,  3 Nov 2026 00:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793667590;
-	bh=P1IgRM5/h9FbBb2fDW0NDKc872TwF1DZp/yvTjMOChM=;
+	s=k20260515; t=1793667591;
+	bh=6iRmnLuflCl7MrpW9F1BaNAFdZpZANiW6H3XK0CDxEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h8KJ7+mb2WSxfOooeFyLr45AiAhF9g4OdrxWyWuMHWL+SpLs3b25GVRV5IyEFfU+V
-	 UK4b8q9z3UBvobMZZgWAjj4zeuyiCkMqidcySBAFyMubgwwt9JZxS0U5wIYQM8wZ8B
-	 hI0qf7fsFOoPD+wWUEGfd4mRpONazx82QP7UoNYvWADOP9htX3t37VUd6xhVmYwz3g
-	 K20nRc9Do9Dot+vWcnve6BrsfanFtGScsB9yz5mpAiPiZ/4kNQi9KBW/6UerGn/VnV
-	 XwFUFnXbFQhKc8KP5FqCCI87fI52bDyVjhTWDXEPAMSe4vV7b3+zE9xWJjBz/dOgDZ
-	 IDHbKbRfa46tQ==
+	b=EuKmAoxPUZd1e7NVeSBwZx2Whlycgt1C3G4NUbXqptUWAcrd6tI393dYDWQ5NQPbv
+	 HCbaS/JDXyVh6fE+bZREr2FwtnXUCh09Gk0HJXKoCGbkbAy5mwAaGONKY7VscihMzh
+	 iJJ4UfOovxiwJ1k8g+HmWt5EunQy0yjhx1oaYYotm3ozcOQtVQqTHOUAqMNHmS36Oa
+	 /dSHq86YJ2xk9xwuGXD/+w/bo8SRDanqnZ5s4D3GhVVytqd1AvX73HAhlGNi+0jNWb
+	 aq+LkQui7L8doXVYbxcCQ/6dpkmVIFBN3c1WMetDaA02IqrTsZg74ToWpLl1HdSkhC
+	 lvAx7YSg9NUWQ==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: Aveline Noir <jm5905938@gmail.com>,
@@ -51,9 +51,9 @@ Cc: Aveline Noir <jm5905938@gmail.com>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH v2 5/8] Docs/mm/damon/design: fix grammar and typos
-Date: Mon,  2 Nov 2026 16:59:35 -0800
-Message-ID: <20261103005940.91432-6-sj@kernel.org>
+Subject: [PATCH v2 6/8] Docs/mm/damon/api: fix verb form
+Date: Mon,  2 Nov 2026 16:59:36 -0800
+Message-ID: <20261103005940.91432-7-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261103005940.91432-1-sj@kernel.org>
 References: <20261103005940.91432-1-sj@kernel.org>
@@ -70,11 +70,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Aveline Noir <jm5905938@gmail.com>
 
-The design doc has quite a few relative clauses that seem to have lost
-their verb, like "pages that assumed to have" or "filters that handled
-by the core layer".  Fix those, along with some agreement issues and a
-couple of typos: "Parreto", and "Use space", which I think should be
-"User space".  Rewrap where the lines got too long.
+It should be "All you need to do is include", not "including".
 
 Cc: Jonathan Corbet <corbet@lwn.net>
 Cc: Shuah Khan <skhan@linuxfoundation.org>
@@ -84,281 +80,21 @@ Signed-off-by: Aveline Noir <jm5905938@gmail.com>
 Reviewed-by: SJ Park <sj@kernel.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 108 +++++++++++++++---------------
- 1 file changed, 54 insertions(+), 54 deletions(-)
+ Documentation/mm/damon/api.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 5cd651b1b7aa8..0689fd48446dc 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -33,13 +33,13 @@ Overall Architecture
- DAMON subsystem is configured with three layers including
+diff --git a/Documentation/mm/damon/api.rst b/Documentation/mm/damon/api.rst
+index 08f34df45523a..1f330429b486c 100644
+--- a/Documentation/mm/damon/api.rst
++++ b/Documentation/mm/damon/api.rst
+@@ -5,7 +5,7 @@ API Reference
+ =============
  
- - :ref:`Operations Set <damon_operations_set>`: Implements fundamental
--  operations for DAMON that depends on the given monitoring target
-+  operations for DAMON that depend on the given monitoring target
-   address-space and available set of software/hardware primitives,
- - :ref:`Core <damon_core_logic>`: Implements core logics including monitoring
-   overhead/accuracy control and access-aware system operations on top of the
-   operations set layer, and
- - :ref:`Modules <damon_modules>`: Implements kernel modules for various
--  purposes that provides interfaces for the user space, on top of the core
-+  purposes that provide interfaces for the user space, on top of the core
-   layer.
+ Kernel space programs can use every feature of DAMON using below APIs.  All you
+-need to do is including ``damon.h``, which is located in ``include/linux/`` of
++need to do is include ``damon.h``, which is located in ``include/linux/`` of
+ the source tree.
  
- 
-@@ -134,8 +134,8 @@ finding the relevant PTE Accessed bit(s) from the address.  While the
- implementation for the virtual address walks the page table for the target task
- of the address, the implementation for the physical address walks every page
- table having a mapping to the address.  In this way, the implementations find
--and clear the bit(s) for next sampling target address and checks whether the
--bit(s) set again after one sampling period.  This could disturb other kernel
-+and clear the bit(s) for next sampling target address and check whether the
-+bit(s) are set again after one sampling period.  This could disturb other kernel
- subsystems using the Accessed bits, namely Idle page tracking and the reclaim
- logic.  DAMON does nothing to avoid disturbing Idle page tracking, so handling
- the interference is the responsibility of sysadmins.  However, it solves the
-@@ -152,7 +152,7 @@ ranges.  In some cases, the address space for a given operations set could be
- too large to be handled with the type.  ARM (32-bit) with large physical
- address extension is an example.  For such cases, a per-operations set
- parameter called ``address unit`` is provided.  It represents the scale factor
--that need to be multiplied to the core layer's address for calculating real
-+that needs to be multiplied to the core layer's address for calculating real
- address on the given address space.  Support of ``address unit`` parameter is
- up to each operations set implementation.  ``paddr`` is the only operations set
- implementation that supports the parameter.
-@@ -194,9 +194,9 @@ duration.  The resolution of the access frequency is controlled by setting
- ``sampling interval`` and ``aggregation interval``.  In detail, DAMON checks
- access to each page per ``sampling interval`` and aggregates the results.  In
- other words, counts the number of the accesses to each page.  After each
--``aggregation interval`` passes, DAMON calls callback functions that previously
--registered by users so that users can read the aggregated results and then
--clears the results.  This can be described in below simple pseudo-code::
-+``aggregation interval`` passes, DAMON calls callback functions that were
-+previously registered by users so that users can read the aggregated results and
-+then clears the results.  This can be described in below simple pseudo-code::
- 
-     while monitoring_on:
-         for page in monitoring_target:
-@@ -219,11 +219,11 @@ Region Based Sampling
- ~~~~~~~~~~~~~~~~~~~~~
- 
- To avoid the unbounded increase of the overhead, DAMON groups adjacent pages
--that assumed to have the same access frequencies into a region.  As long as the
--assumption (pages in a region have the same access frequencies) is kept, only
--one page in the region is required to be checked.  Thus, for each ``sampling
--interval``, DAMON randomly picks one page in each region, waits for one
--``sampling interval``, checks whether the page is accessed meanwhile, and
-+that are assumed to have the same access frequencies into a region.  As long as
-+the assumption (pages in a region have the same access frequencies) is kept,
-+only one page in the region is required to be checked.  Thus, for each
-+``sampling interval``, DAMON randomly picks one page in each region, waits for
-+one ``sampling interval``, checks whether the page is accessed meanwhile, and
- increases the access frequency counter of the region if so.  The counter is
- called ``nr_accesses`` of the region.  Therefore, the monitoring overhead is
- controllable by setting the number of regions.  DAMON allows users to set the
-@@ -289,7 +289,7 @@ attributes monitoring feature is provided.
- 
- Using the feature, users can register data attributes of their interest to the
- DAMON :ref:`context <damon_design_execution_model_and_data_structures>`.  The
--registration is made by specifying a probe per attribute.  Each of the probe
-+registration is made by specifying a probe per attribute.  Each of the probes
- specifies a rule to determine if a given memory region has the related
- attribute.  The rule is constructed with multiple filters.  The filters work
- same to :ref:`DAMOS filters <damon_design_damos_filters>` except the supported
-@@ -305,12 +305,12 @@ filter types.  Currently below filter types are supported.
- 
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
--<damon_design_region_based_sampling>`.  The number of samples that identified
--as having the data attribute (hitting the probe) per :ref:`aggregation interval
--<damon_design_monitoring>` is accounted in a per-region per-probe counter.
--Users can therefore know how much of a given DAMON region has a specific data
--attribute by reading the per-region per-probe probe hits counter after each
--aggregation interval.
-+<damon_design_region_based_sampling>`.  The number of samples that are
-+identified as having the data attribute (hitting the probe) per
-+:ref:`aggregation interval <damon_design_monitoring>` is accounted in a
-+per-region per-probe counter.  Users can therefore know how much of a given
-+DAMON region has a specific data attribute by reading the per-region per-probe
-+probe hits counter after each aggregation interval.
- 
- Users can optionally register probing preparation actions per probe.  If such
- actions are registered, DAMON applies the actions to each region's sampling
-@@ -358,7 +358,7 @@ can use the mode.
- Dynamic Target Space Updates Handling
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--The monitoring target address range could dynamically changed.  For example,
-+The monitoring target address range could be dynamically changed.  For example,
- virtual memory could be dynamically mapped and unmapped.  Physical memory could
- be hot-plugged.
- 
-@@ -396,8 +396,8 @@ to converge regions with the :ref:`regions adjustment mechanism
- time scale of the given purpose.  This could happen if the workload is actually
- making only rare accesses but the user thinks the amount of accesses for the
- monitoring purpose too high.  For such cases, the target amount of access to
--capture per ``aggregation interval`` should carefully reconsidered.  Also, note
--that the captured amount of accesses is represented with not only
-+capture per ``aggregation interval`` should be carefully reconsidered.  Also,
-+note that the captured amount of accesses is represented with not only
- ``nr_accesses``, but also ``age``.  For example, even if every region on the
- monitoring results show zero ``nr_accesses``, regions could still be
- distinguished using ``age`` values as the recency information.
-@@ -444,7 +444,7 @@ interval`` based on the :ref:`the tuning guide idea
- users to set the aimed amount of access events to observe via DAMON within
- given time interval.  The target can be specified by the user as a ratio of
- DAMON-observed access events to the theoretical maximum amount of the events
--(``access_bp``) that measured within a given number of aggregations
-+(``access_bp``) that is measured within a given number of aggregations
- (``aggrs``).  The ratio is in basis point (bp or 1/10,000).
- 
- The DAMON-observed access events are calculated in byte granularity based on
-@@ -456,7 +456,7 @@ with theoretical maximum ``nr_accesses``, which can be calculated as
- ``aggregation interval / sampling interval``.
- 
- The mechanism calculates the ratio of access events for ``aggrs`` aggregations,
--and increases or decrease the ``sampling interval`` and ``aggregation
-+and increases or decreases the ``sampling interval`` and ``aggregation
- interval`` in same ratio, if the observed access ratio is lower or higher than
- the target, respectively.  The ratio of the intervals change is decided in
- proportion to the distance between current samples ratio and the target ratio.
-@@ -465,12 +465,12 @@ The user can further set the minimum and maximum ``sampling interval`` that can
- be set by the tuning mechanism using two parameters (``min_sample_us`` and
- ``max_sample_us``).  Because the tuning mechanism changes ``sampling interval``
- and ``aggregation interval`` in same ratio always, the minimum and maximum
--``aggregation interval`` after each of the tuning changes can automatically set
--together.
-+``aggregation interval`` after each of the tuning changes can be automatically
-+set together.
- 
--The tuning is turned off by default, and need to be set explicitly by the user.
--As a rule of thumbs and the Parreto principle, 4% access samples ratio target
--is recommended.  Note that Parreto principle (80/20 rule) has applied twice.
-+The tuning is turned off by default, and needs to be set explicitly by the user.
-+As a rule of thumb and the Pareto principle, 4% access samples ratio target
-+is recommended.  Note that Pareto principle (80/20 rule) has been applied twice.
- That is, assumes 4% (20% of 20%) DAMON-observed access events ratio (source)
- to capture 64% (80% multiplied by 80%) real access events (outcomes).
- 
-@@ -708,14 +708,14 @@ auto-tuning mechanism tries to make ``current_value`` of ``complement``-ed
- ``target_metric`` be same to ``target_value``.
- 
- - ``user_input``: User-provided value.  Users could use any metric that they
--  has interest in for the value.  Use space main workload's latency or
-+  have interest in for the value.  User space main workload's latency or
-   throughput, system metrics like free memory ratio or memory pressure stall
-   time (PSI) could be examples.  Note that users should explicitly set
-   ``current_value`` on their own in this case.  In other words, users should
-   repeatedly provide the feedback.
- - ``some_mem_psi_us``: System-wide ``some`` memory pressure stall information
--  in microseconds that measured from last quota reset to next quota reset.
--  DAMOS does the measurement on its own, so only ``target_value`` need to be
-+  in microseconds that is measured from last quota reset to next quota reset.
-+  DAMOS does the measurement on its own, so only ``target_value`` needs to be
-   set by users at the initial time.  In other words, DAMOS does self-feedback.
- - ``node_mem_used_bp``: Specific NUMA node's used memory ratio in basis point
-   (bp or 1/10,000).
-@@ -804,16 +804,16 @@ number of filters for each scheme.  Each filter specifies
- For efficient handling of filters, some types of filters are handled by the
- core layer, while others are handled by operations set.  In the latter case,
- hence, support of the filter types depends on the DAMON operations set.  In
--case of the core layer-handled filters, the memory regions that excluded by the
--filter are not counted as the scheme has tried to the region.  In contrast, if
--a memory regions is filtered by an operations set layer-handled filter, it is
-+case of the core layer-handled filters, the memory regions that are excluded by
-+the filter are not counted as the scheme has tried to the region.  In contrast,
-+if a memory region is filtered by an operations set layer-handled filter, it is
- counted as the scheme has tried.  This difference affects the statistics.
- 
--When multiple filters are installed, the group of filters that handled by the
--core layer are evaluated first.  After that, the group of filters that handled
--by the operations layer are evaluated.  Filters in each of the groups are
-+When multiple filters are installed, the group of filters that are handled by
-+the core layer is evaluated first.  After that, the group of filters that are
-+handled by the operations layer is evaluated.  Filters in each of the groups are
- evaluated in the installed order.  If a part of memory is matched to one of the
--filter, next filters are ignored.  If the part passes through the filters
-+filters, next filters are ignored.  If the part passes through the filters
- evaluation stage because it is not matched to any of the filters, applying the
- scheme's action to it depends on the last filter's allowance type.  If the last
- filter was for allowing, the part of memory will be rejected, and vice versa.
-@@ -832,26 +832,26 @@ Below ``type`` of filters are currently supported.
- 
- - Core layer handled
-     - addr
--        - Applied to pages that belonging to a given address range.
-+        - Applied to pages that belong to a given address range.
-     - target
--        - Applied to pages that belonging to a given DAMON monitoring target.
-+        - Applied to pages that belong to a given DAMON monitoring target.
-     - probe_hits_wsum
-         - Matches to monitoring regions having a given range of :ref:`probe
-           hits weighted sum <damon_design_attrs_only_monitoring>` value.
- - Operations layer handled, supported by only ``paddr`` operations set.
-     - anon
--        - Applied to pages that containing data that not stored in files.
-+        - Applied to pages that contain data that are not stored in files.
-     - active
-         - Applied to active pages.
-     - memcg
--        - Applied to pages that belonging to a given cgroup.
-+        - Applied to pages that belong to a given cgroup.
-     - young
-         - Applied to pages that are accessed after the last access check from the
-           scheme.
-     - hugepage_size
--        - Applied to pages that managed in a given size range.
-+        - Applied to pages that are managed in a given size range.
-     - unmapped
--        - Applied to pages that unmapped.
-+        - Applied to pages that are unmapped.
- 
- To know how user-space can set the filters via :ref:`DAMON sysfs interface
- <sysfs_interface>`, refer to :ref:`filters <sysfs_filters>` part of the
-@@ -885,14 +885,14 @@ the region is eligible to apply the scheme's :ref:`action
- <damon_design_damos_access_pattern>`, :ref:`quotas
- <damon_design_damos_quotas>`, :ref:`watermarks
- <damon_design_damos_watermarks>`, and :ref:`filters
--<damon_design_damos_filters>` that handled on core logic could affect this.
-+<damon_design_damos_filters>` that are handled on core logic could affect this.
- The core logic will only ask the underlying :ref:`operation set
--<damon_operations_set>` to do apply the action to the region, so whether the
-+<damon_operations_set>` to apply the action to the region, so whether the
- action is really applied or not is unclear.  That's why it is called "tried".
- 
- "A scheme is applied to a region" means the :ref:`operation set
- <damon_operations_set>` has applied the action to at least a part of the
--region.  The :ref:`filters <damon_design_damos_filters>` that handled by the
-+region.  The :ref:`filters <damon_design_damos_filters>` that are handled by the
- operation set, and the types of the :ref:`action <damon_design_damos_action>`
- and the pages of the region can affect this.  For example, if a filter is set
- to exclude anonymous pages and the region has only anonymous pages, or if the
-@@ -911,12 +911,12 @@ documentation.
- Regions Walking
- ~~~~~~~~~~~~~~~
- 
--DAMOS feature allowing users access each region that a DAMOS action has just
-+DAMOS feature allowing users to access each region that a DAMOS action has just
- applied.  Using this feature, DAMON :ref:`API <damon_design_api>` allows users
--access full properties of the regions including the access monitoring results
-+to access full properties of the regions including the access monitoring results
- and amount of the region's internal memory that passed the DAMOS filters.
--:ref:`DAMON sysfs interface <sysfs_interface>` also allows users read the data
--via special :ref:`files <sysfs_schemes_tried_regions>`.
-+:ref:`DAMON sysfs interface <sysfs_interface>` also allows users to read the
-+data via special :ref:`files <sysfs_schemes_tried_regions>`.
- 
- .. _damon_design_api:
- 
-@@ -1001,7 +1001,7 @@ is already running, others will return ``-EBUSY`` upon start requests.
- Sample DAMON Modules
- --------------------
- 
--DAMON modules that provides example DAMON kernel API usages.
-+DAMON modules that provide example DAMON kernel API usages.
- 
- kernel programmers can build their own special or general purpose DAMON modules
- using DAMON kernel API.  To help them easily understand how DAMON kernel API
+ Structures
 -- 
 2.47.3
