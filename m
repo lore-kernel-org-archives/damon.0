@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793716458;
-	b=wzNndmRw6zhvChu909Zl993LuFgusCN9z8j+gA3pBeC/Qm9Ze8VqCbl81hU5kjMKv14N
-	 BxwFie37qTad0kzdDWNbJl4OqlUfMrB+DXrTIQfUBNmh7KSKOnejixH4d4B3XIfwZ4Jm/
-	 hlNoFuZrLouZa9eR33MZMfT6dxY9PQE3Id4x3JNbmWjN/P3MAOfaz4msY73TtiTev/c7T
-	 D5WV3ciVt0X3zKXBwzRF4PSNWuedbdOXPejYPXTgwmma+7PhU1rf2L9DyPI1/PHzGRhmI
-	 kJ9kFDHzfa0F2P7imKlfCnS3PaYrhY4VBbdBZUwKvNRZmYzT0FmQElaf4R2rOGxFtpQ==
+	t=1793716592;
+	b=NB/0XQISw74TsdceDOAJy7E74boa+9hRytdzOdsiE69E6wbQ5z3OjwTJ4wWVF4gY7w82
+	 8xxl/flDNK0hr8Ze8UOVSD5RJHHEVMZoQCYsgrJrKWqe+68f1+ZXRnxcQCA3GgAOktJEO
+	 7njIIejRFAkkf3bOw+OLhtUj4eofRG2Dss7ESJrbKjoEmyqoJ1aUEcXMFxrOSXEh+gOSY
+	 D9QipqzwAGaQjgdPz5wlRr0z8zdw3nIJ5igYZjdXgWKnFQgMoR8jjvzRztzT61DwJ62jD
+	 Z2YJFXIadcnjhWiiTkQG2CmUZ0Bjkp4iDraJfYjJ/lR/8fqo5jPC8UtfaqpkpI1edIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793716458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793716592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=0ajyy7n+0qSH1YTBPHJg2ZBD7XeUrxHy6Kcj1EJImYg=;
-	b=d4qipvW2A4OYPJiwkHIbLdVR93dTIQWGh2tPxIBWRgTGg4VIooNs3B6wTRNdoFTE/D+/
-	 Aa0MJEGEAWNvN3OGOshlsKlnsT8YjbQfKs9bqIKkxGFsSu/+Kt9EnX8D36P6h2a1rBviK
-	 0vLB/qfOXWFHb9zFgLxXEL+xzKzokRjdpyh5wW0+1OVaIZrNAizkibanymrkJt969DdcT
-	 Z4m9YtnoBoFeKN8erZkdYKlCMcPynxgkTvyRy0LTa5crDTeSIFcdEY7faJLrogE9cdom5
-	 8eyGrRrNCRChTpf6el95pyZwgK5gXMAJGS1IaG1OWGjNPGcHp8HvD+uimuynbX/FBvw==
+	bh=q+a2wZJ2Sr+Br++CEZ+cT4egHi/stEdo2N+elVI+KzA=;
+	b=WHFINdMfkJx6Nxwca2so9SmYY4TA13Xw8jZLXJ0beUd9hucSlgq/Vo6wFwyJFg05tcMz
+	 1JfGHcQZxRA11/1K0tO1RomCjZzxQemaNMcuBmUcFgXMVjwPvub/Wx3c/0BrnAmS+gDuN
+	 lLL5OmqkqCea6DVMXCavwWYkPjq8U0jNe3SBsCH93YwVwGXQbnEkKxJF/9YLXoPSJVk/k
+	 MD3DEKVVOK3bwbfgFTTbYRzdLTIW5pPn8MFYVXHvxOB/P8KaRLlznF6p0nGVqW/+5VNDo
+	 777TsNAqs2jraveTdJZWd5/GyTXkO/e5OQlMg8tvmxyH+4sfbGHhUxGdDK3xAE4oRYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TPTCykYL;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ItKwD9uj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20F0606D83E;
-	Tue,  3 Nov 2026 14:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ADD606A324;
+	Tue,  3 Nov 2026 14:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TPTCykYL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC6E1F0093A;
-	Tue,  3 Nov 2026 14:34:17 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ItKwD9uj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88EA1F000C1;
+	Tue,  3 Nov 2026 14:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793716457;
-	bh=0ajyy7n+0qSH1YTBPHJg2ZBD7XeUrxHy6Kcj1EJImYg=;
+	s=k20260515; t=1793716592;
+	bh=q+a2wZJ2Sr+Br++CEZ+cT4egHi/stEdo2N+elVI+KzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPTCykYLb7YyiJfftqIjfbRil9UPgYWqaphUQv4SNzGMIybk7zut1L7O8CycL0PEv
-	 Smo0NgFZGhnE+mBm7d9Btecxf57Ahxs29iz8mkXeRHCPAETLHr85sZIyWoN6caU4eI
-	 Ol7GIqDjsQJNf1roys0/r/YwrfJP37d3aGtuBGDBHiKYgYoKHl7VVo5s8XPI5BOU3q
-	 Jlv+0oj6r42VtAZvavVTNp0T2saIeiOJ1iLja14RovmpDMdwqr8eAnzS0XW8QkM8Lw
-	 887397wb8fvNkInSWSXM7qeWGxayhLmWhlLO+BDB2X2DhcHaVwnIi73BFArxarkNqm
-	 vJrNG4eH9MRIg==
+	b=ItKwD9ujotxRUWUD0Nc2COsYKT7zk/W3ZKPNJr43S8pe86LEco1327TT4io8rfgZP
+	 r7uvqMI37FJir7fz/EHwmZuTkl+2jWBDJld8JrwzdZ5O5gwhAPdBsyluZefBXDytYO
+	 PwE2/aXli8cWVmRj39WoyjYn/oJSnT3inm4MJDT+0gyMEpr8Su46eYDOXyc/3N3tCY
+	 pNXg5uqGYrbtc+1DhSp0dx/5CuLPHQ7p9xAXfoeRZqhyd7yk+dO+KkcX/EvZ6lyvn0
+	 33xJJ4nQC42lCThtXWFG6axQwgESejvl5ZVMcDim6Qdt6Aam/ReUceuMPby7AxoQ87
+	 uUVOwCpTNmCyw==
 From: SJ Park <sj@kernel.org>
-To: Wang Guangke <gkwang@linx-info.com>
+To: Enze Li <lienze@kylinos.cn>
 Cc: SJ Park <sj@kernel.org>,
-	akpm@linux-foundation.org,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/stat: avoid overflow in estimated_memory_bandwidth calculation
-Date: Tue,  3 Nov 2026 06:34:09 -0800
-Message-ID: <20261103143410.87235-1-sj@kernel.org>
+	enze.li@gmx.com
+Subject: Re: [PATCH] mm/damon/core: use list_{next,prev}_entry() in damon_{next,prev}_region()
+Date: Tue,  3 Nov 2026 06:36:24 -0800
+Message-ID: <20261103143625.87764-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261103034034.7978-1-gkwang@linx-info.com>
+In-Reply-To: <20261103100714.70742-1-lienze@kylinos.cn>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -64,32 +63,17 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Wang,
+On Tue,  3 Nov 2026 18:07:14 +0800 Enze Li <lienze@kylinos.cn> wrote:
 
-On Tue,  3 Nov 2026 11:40:34 +0800 Wang Guangke <gkwang@linx-info.com> wrote:
-
-> estimated_memory_bandwidth is calculated by access_bytes *
-> USEC_PER_MSEC * MSEC_PER_SEC (= USEC_PER_SEC) / aggr_interval,
-> and users read it via
-> /sys/module/damon_stat/parameters/estimated_memory_bandwidth.
-> 
-> On 32-bit systems, access_bytes * USEC_PER_SEC overflows unsigned
-> long once access_bytes exceeds about 4294 (U32_MAX / USEC_PER_SEC),
-> so users get a wrong value.
-> 
-> Fix it by doing the calculation in 64-bit and splitting the division
-> into quotient and remainder.
-> 
-> The issue was reproduced on a 32-bit system (qemu-system-i386): the
-> parameter estimated_memory_bandwidth reported 362 instead of the
-> expected 1926150; with the fix, the value matches the expectation.
+> damon_next_region() and damon_prev_region() manually do container_of()
+> type casting to fetch the next and previous region from the linked
+> list.  Use the dedicated list.h helpers, list_next_entry() and
+> list_prev_entry(), as damon_first_region() and damon_last_region() do.
 
 Looks good to me.
 
 > 
-> Fixes: fabdd1e911da ("mm/damon/stat: calculate and expose estimated memory bandwidth")
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Wang Guangke <gkwang@linx-info.com>
+> Signed-off-by: Enze Li <lienze@kylinos.cn>
 
 Reviewed-by: SJ Park <sj@kernel.org>
 
