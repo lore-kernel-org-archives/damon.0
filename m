@@ -1,63 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793667593;
-	b=KYKREUZX2avJHC5tWQT2jHITtuwdMPjhS/BtFJh90PkonidYMqvwv7WAUQN74Yn+Ws2f
-	 f5ioyCxbsjGpfTirUaiaKZyUw4ttt+cAo3aVEoLe7TsuB4ziJRNLP/06t+i2JuPTO2SZK
-	 1yP6JXBbCOfetLTxMRXJRYnXj7lEvgWoCw/tCeLKE4mez/XJaKvvhE+kcRYDYtDnJUtOk
-	 bplkuI9FP8Znr8C49KAH7BRnU3ht4Vb341l9qFbHixJHmIYPP2qVIkUKT+2BG3VIdw97m
-	 Fbu4/1LyZZbSdml2PpWUEuPfSmJT0Quga29TQOT2a2vTFTUkyBYcLp0KqvVgkeU/rSA==
+	t=1793667648;
+	b=PbO5hkgSr3lV7gt2ct422w86UjOfbObZ3ccbyad4Wq+R5lfwU6GJ122bJbD2gMRRICYp
+	 fSSEC7bPS9Iy2HgQyLfySU1iGGsTAyC/GoOUSfvFS3qKhEULXwxNrlvFqhSDGizjkXxpX
+	 Q5lKDu9pYUzjU1UjCH0GryhJg+/2Ea1mHZ0xL2NNKuENZXmqD7UEfyl8E/fobWHeJRQyd
+	 YWfAsxcpI1w4bsc4ExXYyEXYsDtv9sPqWV5lfaN/BLnf6ntMOquZcGKHgCrBgD5IDFNH3
+	 WZSlzkrLpwyiIOdFgWcUvUiNrvN5F0x/wcXnbaBLKbdEKM8kYFK7VbPx95aw3N6+GxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793667593;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=U+/s7Vb6ZoZJ6uW3ceyKnu6jy4tym2GZzS23JZFD/TI=;
-	b=Qy59FVf5dvOLACJ3TJ/jXDDyuzPH81Elx5V1dvOUA5hTTxX3pAyspSJdKFHh/XP6ZXzV
-	 3ZQFmmfPU0Aoj3H8cduXJjn2Q4gLSuDJ07xTS7xlgqgseZyI7WPXVtvuXRWngbD+tU9xL
-	 G6koSW2LR51OsnD+fvfnUi7rNFVWygzaJ40dPXKSFi5sTG4bKXJTVcDNbqA4WMrn2kfyn
-	 0i88E+bNlZwKCh3CiiSsDnZt0n5Pzy5xisk/VeNaUgvavWSLkvslipNmfPWpn/ZaGAfkp
-	 iBerP6LqRRc/10L2OM9k02Bij2RIbKt/m6Vbi9MS80hCiyzNrI9QHlvr1wIfUpvNZ5Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793667648;
+	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=4HQ3Qgd7i2dVNUMZQt7YfeVDy1gbBVil90g1I4doNFE=;
+	b=Nk6YoxA+Jw856pq9x64Uy0D1NdOGF6mRbdkBW1c0te0fJeuLnkGU3p3mMU9it4loTfd2
+	 NbRXHZSfG0wqLa2EQUr4bcHgNH5kQK+rwXxqTcqku3YVWF4DnyMRLUtjUQsycY+PNCGPJ
+	 Qv1zrjOOjOL9HDEirE1e66oMTNOgZX9Bl01Uc9/+R2l5Vmsdf6uXxnEmjFjJDC3nCoveo
+	 wAekHhDT60ZrUn01v72YKyN2iVZzCE10c53xuQYj0jf0I5EwbOaBSV3bD2I66Bid56dQI
+	 0d7ULRJdvfYvr1S0D9jDULlWwvmdpw+w0jqCzCzu58FDW6FGEXVsEV3ubHSvAGJf4EQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UWjpaNQo;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BgGv8lJO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A0C606D808;
-	Tue,  3 Nov 2026 00:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67B6606A326
+	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 01:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UWjpaNQo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B4B1F00A1A;
-	Tue,  3 Nov 2026 00:59:52 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BgGv8lJO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FD91F00A1A
+	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 01:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793667592;
-	bh=U+/s7Vb6ZoZJ6uW3ceyKnu6jy4tym2GZzS23JZFD/TI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UWjpaNQowfbD0Vr9Rqfp3WWh/eEkoo573HHDC4GEyaHcoDnyaWD1gx4XydqwYQGtL
-	 JzjaII3d6YxhQYdBOXoqXrLrjmkIwPgrk3uEcuAGnBB7wBEQdlYLJDtrgL094RZggq
-	 i0IiGGl+UR/kidKZjutj3NXc7xj1rW39loo3GmqtebQeUU3WuTa3Hen5TCR7OVdT0S
-	 IBOsCKzTiZw5CZntoy/SG32ySxgasubhGHV4uN2LNnNOgzthrr1aZBRGL7kAqCKKZE
-	 K5yuaLOE0vJt+TgpafXM7hPbpRNvXGC7GtUf2/1bmk48mRQSDBtoLUiQl2ol2aOgow
-	 uaQLHrqs8QDOA==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Aveline Noir <jm5905938@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Manuel Ebner <manuelebnerli@mailbox.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	SJ Park <sj@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH v2 8/8] Docs/mm/damon/monitoring_intervals_tuning_example: fix grammar and typos
-Date: Mon,  2 Nov 2026 16:59:38 -0800
-Message-ID: <20261103005940.91432-9-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261103005940.91432-1-sj@kernel.org>
-References: <20261103005940.91432-1-sj@kernel.org>
+	s=k20260515; t=1793667647;
+	bh=4HQ3Qgd7i2dVNUMZQt7YfeVDy1gbBVil90g1I4doNFE=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=BgGv8lJOHVEgop2gWiFbPShFWku0TCjm6MwzTYsrxTPTGPDILDl6x5fU6Q1UWKT2e
+	 MQNOpygshQ0/ofvQ10Q3ccG8DqHWbje392YnCG1S2tnxMi4Qgo9vaUQ0HSJQwxuM8J
+	 y0xc1HUsR9GiC4fAohVrc7jYr2h1hf00pZMGkMwuYMMHLCt+Xph6T+SGT7l5HfBv7w
+	 cm9UFAAqtTlUWYTt2GeUfwqpNZfNMfIiRfm4dwTsjyoqjBWPjFPz1ARLIBqrD4VGn0
+	 N0c4T5/GkF4pzmYOmcEubV/bs6fvsOa2gFk8mi7KeO4USRlFk5UTNJ8gCZPkVH5QxO
+	 mzDoMkXY1sn6g==
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c4ceb15dfd7so86389066b.2
+        for <damon@lists.linux.dev>; Mon, 02 Nov 2026 17:00:47 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AKwUvByv4gz8g95Q1Cy0MbMz4bZf71blRqQ1MAGXZNKKR1tVOZv17E/vbc2klnSG6BLodBJ9rFikog==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/HKmXKtDTaGDQWAaUCH+8V8KGE/mIxOJO0fh19bymWcy19gYbW
+	w29YGEOI5gSXlbXjPHMmZokeqUSsNt4Z9kQ+Gz0v0JOfUeLNtaBKBD/wd1sv2ggdgRMGO9uUi0l
+	Qd8hcegbTDYf7KLSUCeR82imrvqX2SfY=
+X-Received: by 2002:a17:907:7fa5:b0:c40:eb1a:4c8b with SMTP id
+ a640c23a62f3a-c4ca7a6d245mr897957366b.29.1793667646429; Mon, 02 Nov 2026
+ 17:00:46 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -67,112 +59,121 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20261102225030.2743129-1-joannelkoong@gmail.com>
+ <20261102225030.2743129-3-joannelkoong@gmail.com> <CAO9r8zP87zRuoFqeKFcAJoCrOG8M+7HCtX6hvxwdLzuHUXD0Gw@mail.gmail.com>
+ <CAJnrk1bv-P_TQztAGiHYdfg=5hbj4GREML2M0Uxp5oC1R9J-Mw@mail.gmail.com>
+In-Reply-To: <CAJnrk1bv-P_TQztAGiHYdfg=5hbj4GREML2M0Uxp5oC1R9J-Mw@mail.gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Mon, 2 Nov 2026 17:00:35 -0800
+X-Gmail-Original-Message-ID: <CAO9r8zMvofnW-6OsiasiocOBqoRbZuD71dp3RQE5746YGzamNA@mail.gmail.com>
+X-Gm-Features: AclHuK-Nd_GMyDmaw4iY6A-BMZy3XZnuaOJfkxR3X8uJTpecvIovrO_sqKDwyjY
+Message-ID: <CAO9r8zMvofnW-6OsiasiocOBqoRbZuD71dp3RQE5746YGzamNA@mail.gmail.com>
+Subject: Re: [PATCH v1 2/3] mm: memcg: read root lruvec LRU stats from the
+ node counters
+To: Joanne Koong <joannelkoong@gmail.com>
+Cc: akpm@linux-foundation.org, shakeel.butt@linux.dev, hannes@cmpxchg.org, 
+	mhocko@kernel.org, roman.gushchin@linux.dev, muchun.song@linux.dev, 
+	nphamcs@gmail.com, chengming.zhou@linux.dev, sj@kernel.org, david@kernel.org, 
+	ljs@kernel.org, linux-mm@kvack.org, cgroups@vger.kernel.org, 
+	damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Aveline Noir <jm5905938@gmail.com>
+On Mon, Nov 2, 2026 at 4:34=E2=80=AFPM Joanne Koong <joannelkoong@gmail.com=
+> wrote:
+>
+> On Mon, Nov 2, 2026 at 3:29=E2=80=AFPM Yosry Ahmed <yosry@kernel.org> wro=
+te:
+> >
+> > > diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+> > > index ac6c43ea8c5a..938843346571 100644
+> > > --- a/mm/memcontrol.c
+> > > +++ b/mm/memcontrol.c
+> > > @@ -587,6 +587,50 @@ unsigned long lruvec_page_state_local(const stru=
+ct lruvec *lruvec,
+> > >         return x;
+> > >  }
+> > >
+> > > +static bool lruvec_is_root(const struct lruvec *lruvec)
+> > > +{
+> > > +       return !mem_cgroup_disabled() && mem_cgroup_is_root(lruvec_me=
+mcg(lruvec));
+> > > +}
+> > > +
+> > > +/**
+> > > + * lruvec_lru_page_state - read an LRU stat of an lruvec
+> > > + * @lruvec: the LRU vector to read from
+> > > + * @idx: the node_stat_item to read
+> > > + *
+> > > + * Like lruvec_page_state(), but for the root memcg the node counter=
+ is read
+> > > + * instead. For stats that only track memory charged to a memcg (LRU=
+ sizes,
+> > > + * workingset, rotation and reclaim writeback counts), the root memc=
+g's
+> > > + * hierarchical value equals the node counter. The root memcg can ju=
+st read the
+> > > + * node counter directly instead of going through rstat, which requi=
+res
+> > > + * flushing. Flushing the root memcg flushes every cgroup in the sys=
+tem.
+> > > + *
+> > > + * Use lruvec_page_state() for other stats (eg slab).
+> > > + */
+> > > +unsigned long lruvec_lru_page_state(const struct lruvec *lruvec,
+> > > +                                   enum node_stat_item idx)
+> > > +{
+> > > +       if (lruvec_is_root(lruvec))
+> > > +               return node_page_state(lruvec_pgdat(lruvec), idx);
+> > > +
+> > > +       return lruvec_page_state(lruvec, idx);
+> > > +}
+> > > +
+> > > +/**
+> > > + * lruvec_lru_page_state_monotonic - lruvec_lru_page_state() for del=
+ta sampling
+> > > + * @lruvec: the LRU vector to read from
+> > > + * @idx: the node_stat_item to read
+> > > + *
+> > > + * See lruvec_page_state_monotonic() and lruvec_lru_page_state().
+> > > + */
+> > > +unsigned long lruvec_lru_page_state_monotonic(const struct lruvec *l=
+ruvec,
+> > > +                                             enum node_stat_item idx=
+)
+> > > +{
+> > > +       if (lruvec_is_root(lruvec))
+> > > +               return node_page_state_monotonic(lruvec_pgdat(lruvec)=
+, idx);
+> > > +
+> > > +       return lruvec_page_state_monotonic(lruvec, idx);
+> > > +}
+> >
+> > Why not do this directly in lruvec_page_state() and
+> > lruvec_page_state_monotonic()? They already fallback to node stats if
+> > memcg is disabled, why not do the same for the root? Are there cases
+> > where the node stats are not the right thing to do?
+>
+> Hi Yosry,
+>
+> Thanks for taking a look at this series! I don't think we're able to
+> do this directly in lruvec_page_state()/lruvec_page_state_monotonic()
+> because I think there's still some places where the node stat and the
+> root memcg stat are not guaranteed to be equal.
+>
+> The stat I was looking at last week was slab's NR_SLAB_RECLAIMABLE_B
+> and NR_SLAB_UNRECLAIMABLE_B where for those, the node counter value
+> can contain memory/stats that wasn't actually charged to any memcg,
+> which I think means for these cases, the node counter values can be
+> larger than what reading the root memcg rstat value would give. The
+> functions I was looking at were account_slab() and
+> memcg_slab_post_alloc_hook() where the logic adds every new slab page
+> to the node counter but the memcg stats only get updated if specific
+> criteria are met (eg the cache had SLAB_ACCOUNT set or the allocation
+> had the __GFP_ACCOUNT gfp flag set and the allocation was not from a
+> root memcg).
 
-Fix a few typos, including "Moniting" in the title, and some grammar in
-the interval tuning example.
-
-"starts looking degrading" should be "start looking degraded for", as I
-think the sentence means the cold region detection starts to look worse.
-Rewrap where the lines got too long.
-
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Manuel Ebner <manuelebnerli@mailbox.org>
-Signed-off-by: Aveline Noir <jm5905938@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
- .../monitoring_intervals_tuning_example.rst   | 28 +++++++++----------
- 1 file changed, 14 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/mm/damon/monitoring_intervals_tuning_example.rst b/Documentation/mm/damon/monitoring_intervals_tuning_example.rst
-index 7207cbed591f9..367b031ce55a3 100644
---- a/Documentation/mm/damon/monitoring_intervals_tuning_example.rst
-+++ b/Documentation/mm/damon/monitoring_intervals_tuning_example.rst
-@@ -1,8 +1,8 @@
- .. SPDX-License-Identifier: GPL-2.0
- 
--=================================================
--DAMON Moniting Interval Parameters Tuning Example
--=================================================
-+===================================================
-+DAMON Monitoring Interval Parameters Tuning Example
-+===================================================
- 
- DAMON's monitoring parameters need tuning based on given workload and the
- monitoring purpose.  There is a :ref:`tuning guide
-@@ -38,7 +38,7 @@ access-hotness of a region.  It is calculated as a weighted sum of the access
- frequency and the age of the region.  If the access frequency is 0 %, the
- temperature is multiplied by minus one.  That is, if a region is not accessed,
- it gets minus temperature and it gets lower as not accessed for longer time.
--The sorting is in temperature-ascendint order, so the region at the top of the
-+The sorting is in temperature-ascending order, so the region at the top of the
- list is the coldest, and the one at the bottom is the hottest one. ::
- 
-     # damo report access --sort_regions_by temperature
-@@ -56,7 +56,7 @@ list is the coldest, and the one at the bottom is the hottest one. ::
-     total size: 62.000 GiB
- 
- The list shows not seemingly hot regions, and only minimum access pattern
--diversity.  Every region has zero access frequency.  The number of region is
-+diversity.  Every region has zero access frequency.  The number of regions is
- 10, which is the default ``min_nr_regions value``.  Size of each region is also
- nearly identical.  We can suspect this is because “adaptive regions adjustment”
- mechanism was not well working.  As the guide suggested, we can get relative
-@@ -91,7 +91,7 @@ aggregation interval.
- 100ms/2s intervals: Starts Showing Small Hot Regions
- ====================================================
- 
--Following the guide, increase the interval 20 times (100 milliseocnds and 2
-+Following the guide, increase the interval 20 times (100 milliseconds and 2
- seconds for sampling and aggregation intervals, respectively). ::
- 
-     # damo start -s 100ms -a 2s
-@@ -129,17 +129,17 @@ seconds for sampling and aggregation intervals, respectively). ::
-     [50,400,010,000, 59,720,011,000)   4.000 KiB  |*                   |
-     total size: 62.000 GiB
- 
--DAMON found two distinct 4 KiB regions that pretty hot.  The regions are also
--well aged.  The hottest 4 KiB region was keeping the access frequency for about
--8 minutes, and the coldest region was keeping no access for about 7 minutes.
--The distribution on the histogram also looks like having a pattern.
-+DAMON found two distinct 4 KiB regions that are pretty hot.  The regions are
-+also well aged.  The hottest 4 KiB region was keeping the access frequency for
-+about 8 minutes, and the coldest region was keeping no access for about 7
-+minutes.  The distribution on the histogram also looks like having a pattern.
- 
- Especially, the finding of the 4 KiB regions among the 62 GiB total memory
- shows DAMON’s adaptive regions adjustment is working as designed.
- 
- Still the number of regions is close to the ``min_nr_regions``, and sizes of
- cold regions are similar, though.  Apparently it is improved, but it still has
--rooms to improve.
-+room to improve.
- 
- 400ms/8s intervals: Pretty Improved Results
- ===========================================
-@@ -196,8 +196,8 @@ good enough to make some meaningful memory management efficiency changes.
- =================================
- 
- Further double the intervals (800 milliseconds and 16 seconds for sampling
--and aggregation intervals, respectively).  The results is more improved for the
--hot regions detection, but starts looking degrading cold regions detection. ::
-+and aggregation intervals, respectively).  The results are more improved for the
-+hot regions detection, but start looking degraded for cold regions detection. ::
- 
-     # damo start -s 800ms -a 16s
-     # sleep 600
-@@ -243,5 +243,5 @@ Conclusion
- ==========
- 
- With the above experimental tuning results, we can conclude the theory and the
--guide makes sense to at least this workload, and could be applied to similar
-+guide make sense to at least this workload, and could be applied to similar
- cases.
--- 
-2.47.3
+If it's only the slab stats, it probably makes sense to special case
+those instead of the rest of the readers, right? It would be nice if
+the default behavior is reading the node stats that doesn't require a
+flush.
