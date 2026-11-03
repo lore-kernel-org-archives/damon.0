@@ -1,52 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.247.232.78
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793677261;
-	b=P7/BPLYUolYiEpVWFDAmzob68zfZjaHMmEOHo3LBJKEmoLFc8F482DcMq03qOIGE86KQ
-	 A1M/Cr0NTb4F1+1OQtR/LF5hDjN7OpeKLPP2e3TqNBxeAd6u052NXI5i5RPtuABmfNgV3
-	 JNvO8oPP0cQPbXhrDswkmwf2p+KnPBBDpJ/ghqBrmp4VmFuZA+m1lpt53VW9/iG4eGc21
-	 NM2pEignNnDf+4nNvcFC81yKxF3ZGyPib8oBxf/xmex3SPuh+pKsZ5zkcmrd0dap83GuS
-	 RRTNA/1JXVhI5nan09x5LVnoowua8dxhUqEHb1OwzX5YdE2dhxY/mgulgzG5+u4NHlg==
+	t=1793677599;
+	b=LtuULQcFs62te90zbFKsBMvG9g4oPP1ztlU1+G1A5XYj+AsJ1W7up8l016X2Q/XwUD4r
+	 dRe/J5EWNP33uRInGXJQYiy1TMgQEPYfysUXRKhuMSYpiwvwM5qmCXzam75F970IZbGpE
+	 2ipMNMfXXOO5odLMPgLHojUjfdkmPpjz+5i3gkyIv864uG19ZELezlS99ekdcX8eVA5Oz
+	 f61BkR32jqfbpmN+91rt2r6QhdwxL/aNN8GKPY1iLRBTt3NvC2NclViutxhFNndY343d0
+	 nUZqd+cCJj0nrlrOW0+tUCx1IWJF9lH3dSGzsKIY0ZlMuUI9GioUEHagzoxg02KoIeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793677261;
-	h=DMARC-Filter:Received:Received:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
-	bh=VSTrktgGZ8s9uEUboO9uuASria0PEjkILQvjOya3gqE=;
-	b=dJDxUQhaEfpWZcLot1l7EDpxLHEGUjEmN7hjFRsZhXNasx49Vqqe36Ih1o993Z8wmPIa
-	 QBsQFb76LuBc/Ja3q2i0Yx2Pj36k7C7kfFUpD058SseAT9AQXul+9quErAqs8tnAKSKZ8
-	 JWkiI6xMzT1Xnm7ZrWgmUlU/cKPgN9diTDKjGJm99oUBFgNjoR4zpsekIaJznEGoOKbrv
-	 2xdOBiQre/golVpDcBhmmTyBWMQM5WfvOHadaG1fKHPsLL1uy9rgvmRzvzQAMs7HRKvj7
-	 qBiMrsQUaD7Rjx7eijisnJv2fQmsrEdaaP8k3YAOU9S9ILil5rNjpzHW4BfnxXpxW/Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793677599;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=pwVj5oxfVRTyQKfsqEoLZWoU1i/N5apZIhXRJKLjNU8=;
+	b=499Qy7s7KQV4SEErpodfxFt43/DdLRGGSJHcfJkTwoojW1pFxL6QGQ5bAXF5ugSpiVQs
+	 +kbzgyvhX6V7fXqb456ZeeHOgIaRi2k80aC1K4utDRvX0CwgCj2QYNrItKSM4yfEblCIQ
+	 1T6O3dC9d0NPSnD/wts4azilWlr4/kU6Ox6eDmPODMpZCAE3VcMBJ3Kj5Kz+eZtkkvHGa
+	 7GXFhocVt83uYkVNWcJ5apZWUwoLvlSPqSeos5vszJ9UnbgvXehtrR4qATIsNd9hjXKyp
+	 1h67C1a0WwTM4l8FaVkDl+fvTXckcUpr2QQbnUSbn0SDHdPIfjvYfR4Kms0R/vG+Eng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linx-info.com;
-	spf=pass smtp.mailfrom=linx-info.com;
-	arc=none smtp.remote-ip=114.247.232.78
-Received: from mail.linx-info.com (mail.linx-info.com [114.247.232.78])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC5CF606A32C
-	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 03:40:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC5CF606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linx-info.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linx-info.com
-Received: from localhost (localhost [127.0.0.1])
-	by mail.linx-info.com (Postfix) with ESMTP id 761E53211C5;
-	Tue,  3 Nov 2026 11:40:51 +0800 (CST)
-Received: from mail.linx-info.com ([127.0.0.1])
-	by localhost (mail.linx-info.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0X34993ex3hU; Tue,  3 Nov 2026 11:40:51 +0800 (CST)
-Received: from localhost.localdomain (unknown [172.22.21.200])
-	by mail.linx-info.com (Postfix) with ESMTPSA id 5DBB232119D;
-	Tue,  3 Nov 2026 11:40:51 +0800 (CST)
-From: Wang Guangke <gkwang@linx-info.com>
-To: sj@kernel.org,
-	akpm@linux-foundation.org
-Cc: damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Wang Guangke <gkwang@linx-info.com>,
-	stable@vger.kernel.org
-Subject: [PATCH v2] mm/damon/stat: avoid overflow in estimated_memory_bandwidth calculation
-Date: Tue,  3 Nov 2026 11:40:34 +0800
-Message-ID: <20261103034034.7978-1-gkwang@linx-info.com>
-X-Mailer: git-send-email 2.47.3
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Prd9F0hv;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A0D606A333
+	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 03:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Prd9F0hv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB681F000C1;
+	Tue,  3 Nov 2026 03:46:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793677598;
+	bh=pwVj5oxfVRTyQKfsqEoLZWoU1i/N5apZIhXRJKLjNU8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=Prd9F0hv80kuPuLSC7Ze8taYGS1tDHS8LoSG0yKvJlSj81mJ+AODpUpJBXlrT4Ho2
+	 IkYfKKNc+pJ1JfPhLlv7cG5V53AfysDR6RvY01k39vm2gsS2VJYg/htzr0f+I5ptUw
+	 YwSCTAueEARsgyG9LKjuBYrf9dclh+Iol+m8SCnpo/LJg6yod9OCACEYF5ZqR+s4j5
+	 pnV5Zf5kzYAY3K7KVPEI+iK7/thU4tjNyLpARLLKcx8GXH64v3v446Y2u+2fhG8VYO
+	 jl3a4PArPG7w/c+pwbdzssCVnRwG5runcfB1EZHAupvTmXSRjzne2Og3w3z9quZUrK
+	 TuHXErvf1lnfA==
+Message-ID: <sashiko-outbox-194539@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH v2] mm/damon/stat: avoid overflow in
+ estimated_memory_bandwidth calculation
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "Wang Guangke" <gkwang@linx-info.com>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261103034034.7978-1-gkwang@linx-info.com>
+References: <20261103034034.7978-1-gkwang@linx-info.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 03 Nov 2026 03:46:37 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -55,77 +59,31 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-estimated_memory_bandwidth is calculated by access_bytes *
-USEC_PER_MSEC * MSEC_PER_SEC (= USEC_PER_SEC) / aggr_interval,
-and users read it via
-/sys/module/damon_stat/parameters/estimated_memory_bandwidth.
+> estimated_memory_bandwidth is calculated by access_bytes *
+> USEC_PER_MSEC * MSEC_PER_SEC (=3D USEC_PER_SEC) / aggr_interval,
+> and users read it via
+> /sys/module/damon_stat/parameters/estimated_memory_bandwidth.
+>=20
+> On 32-bit systems, access_bytes * USEC_PER_SEC overflows unsigned
+> long once access_bytes exceeds about 4294 (U32_MAX / USEC_PER_SEC),
+> so users get a wrong value.
+>=20
+> Fix it by doing the calculation in 64-bit and splitting the division
+> into quotient and remainder.
+>=20
+> The issue was reproduced on a 32-bit system (qemu-system-i386): the
+> parameter estimated_memory_bandwidth reported 362 instead of the
+> expected 1926150; with the fix, the value matches the expectation.
+>=20
+> Fixes: fabdd1e911da ("mm/damon/stat: calculate and expose estimated memor=
+y bandwidth")
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Wang Guangke <gkwang@linx-info.com>
 
-On 32-bit systems, access_bytes * USEC_PER_SEC overflows unsigned
-long once access_bytes exceeds about 4294 (U32_MAX / USEC_PER_SEC),
-so users get a wrong value.
+Sashiko has reviewed this patch and found no issues.
 
-Fix it by doing the calculation in 64-bit and splitting the division
-into quotient and remainder.
-
-The issue was reproduced on a 32-bit system (qemu-system-i386): the
-parameter estimated_memory_bandwidth reported 362 instead of the
-expected 1926150; with the fix, the value matches the expectation.
-
-Fixes: fabdd1e911da ("mm/damon/stat: calculate and expose estimated memory bandwidth")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Wang Guangke <gkwang@linx-info.com>
----
-Changes in v2:
-- v1: https://lore.kernel.org/all/20261101180001.167198-1-gkwang@linx-info.com
-- Clarify the issue and its impact on users.
-- Add Cc: stable@.
-- Rename variable bytes_per_interval to bytes_per_us.
-- Use USEC_PER_SEC instead of 'USEC_PER_MSEC * MSEC_PER_SEC'.
----
- mm/damon/stat.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/mm/damon/stat.c b/mm/damon/stat.c
-index b05b68f73e10..e44f5bf3645c 100644
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -32,8 +32,8 @@ static bool enabled __read_mostly = IS_ENABLED(
- module_param_cb(enabled, &enabled_param_ops, NULL, 0600);
- MODULE_PARM_DESC(enabled, "Enable of disable DAMON_STAT");
- 
--static unsigned long estimated_memory_bandwidth __read_mostly;
--module_param(estimated_memory_bandwidth, ulong, 0400);
-+static u64 estimated_memory_bandwidth __read_mostly;
-+module_param(estimated_memory_bandwidth, ullong, 0400);
- MODULE_PARM_DESC(estimated_memory_bandwidth,
- 		"Estimated memory bandwidth usage in bytes per second");
- 
-@@ -55,15 +55,18 @@ static void damon_stat_set_estimated_memory_bandwidth(struct damon_ctx *c)
- {
- 	struct damon_target *t;
- 	struct damon_region *r;
--	unsigned long access_bytes = 0;
-+	u64 access_bytes = 0;
-+	u64 remainder, bytes_per_us;
- 
- 	damon_for_each_target(t, c) {
- 		damon_for_each_region(r, t)
--			access_bytes += (r->ar.end - r->ar.start) *
-+			access_bytes += (u64)(r->ar.end - r->ar.start) *
- 				r->nr_accesses;
- 	}
--	estimated_memory_bandwidth = access_bytes * USEC_PER_MSEC *
--		MSEC_PER_SEC / c->attrs.aggr_interval;
-+	bytes_per_us = div64_u64_rem(access_bytes,
-+			c->attrs.aggr_interval, &remainder);
-+	estimated_memory_bandwidth = bytes_per_us * USEC_PER_SEC +
-+		div64_u64(remainder * USEC_PER_SEC, c->attrs.aggr_interval);
- }
- 
- static int damon_stat_idletime(const struct damon_region *r)
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261103034034.7978=
+-1-gkwang@linx-info.com?part=3D1
 
