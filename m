@@ -1,101 +1,52 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=209.85.160.171
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793673466;
-	b=GnL9iNSsk5l40qUIe6xPHWGiP1IzAmBO1su9WmmbaR+WgwCVf/ZAbxFLk0Xnc+GujX33
-	 oumf4VjFMPH+Lw8l0dowPJVNeGLhtnVs+XsfP/pO0k7q8PvVA3TfujTWABJFLv5JIdfmo
-	 vrAuUrIiKC6hW+FuZ5Ppbe0dC164MJp266yuaCLVfOvcBzAppueuyRl4n1eYqCd40jNg0
-	 g+FkMA0w9iLaPcsI9Rww8mkQIFp7GuIQCFWF5+Zq2L4DAH5l5TuHQkvva1Qm1Xu7Sc0ie
-	 7NvoflAeA0WE5ecSlJaFak2PEsr/4DQ429vW+GRyGT6icTn1uytXePMtuQ6c4f+MrPw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793673466;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=aEZiUdHtVe6n866bPKhnP+/zTxBd9R2ODjgeXi2Z0Tk=;
-	b=l2lCTbAIbaFYOL6Hz6aKDy3uETsnbFGNTQm9dw88gdGsBAifo8zd6DHiP0G8T0KNE7lq
-	 7kFkTHEetOy2EEhRwCxecEwlhyhY35C6FevmGtSoBcliYaBVPR/IEqVWwylrkdLAnDetu
-	 1dnHjnc84qHa/BsSfV+zUdw9awwhfxHNphpASVPokeJZOWqXzn7UnPlbsYSOEQw8H4fAA
-	 nfGzUdwH1qCDerI9TFUUpVrDKUv6a7u0cMVymNrjTO/5bKKeDmpCf+aImTM/9UtbPZj3l
-	 yflIdfE2tdd7j2FBrZBol2hn2556B+NGIeeV5GvCqapuxgTEm7f7fUjBleO7YzDtyRg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mgiVNmQu;
-	arc=fail smtp.remote-ip=209.85.160.171
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F948606A326
-	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 02:37:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4F948606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=mgiVNmQu
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-53381e53b80so41327771cf.1
-        for <damon@lists.linux.dev>; Mon, 02 Nov 2026 18:37:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793673465; cv=none;
-        d=google.com; s=arc-20260327;
-        b=NDzmNlk0WMVNDpSSRkR57OH4ywtuEP7T4JFJ8HREiB2+xCg7lhCpydL86tzbHum2LU
-         N/anK2fyX/UxosXd2BAH3ORSGTuiPtXVb1kAjXwmRn0OIXOCiMS7FEELXV+S714/FtTW
-         yMemfwkw8ux5u3UHT8WUkqqUkfCz1NTWkvR30/bp+hNvJbQK/0olgdFNNqfCCzJZeGol
-         lBc6BWgo/JdcQcOHLHk5hkDBvuf23lG3WAgOJ/A8uShHkfP+yATQjLsEFlUyWJm8RuOz
-         tjBN3tEm9MObrgWiIE+qnhjOHr4164DO5F4wbwZiSlFwcjzHze6RqPMyS8HBZG8Ig7Ub
-         rsZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=aEZiUdHtVe6n866bPKhnP+/zTxBd9R2ODjgeXi2Z0Tk=;
-        fh=tYW90Gh5KRwBiaZGtBru/nVR84kF4HdYj8cWmQUR3lc=;
-        b=rfkq7+vKE8AHFaKai2yNpxbsjGNrhTxb7IGOM/DOFsB/OZJR5buKauKwCd98g72ZRy
-         0hI/8df66ay4TqPpbtjnNNgOZsmBJpwnR64LA/VPjCdnQZ8pT9TNNamIfQgdgyj5zklX
-         k8BmP37A1f3BRTdwwGc0mPnN61wpCLyUFgiCB4x8Iy058lKQmM7/CsqaZUHvBUXAonua
-         L8lEdDeQHi/tZNy62QfXez09Du4dbjGJwYC37d6y9ARe6MZ/oEJnGWMPzpcRlO8h3CTF
-         33M36/tYTFuhUmGooeTKBfozGN3Zs05Z43peDqUOqQRe8Gj/y4lKODPSQ1PMZl1wLU9G
-         6KQQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793673465; x=1794278265; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aEZiUdHtVe6n866bPKhnP+/zTxBd9R2ODjgeXi2Z0Tk=;
-        b=mgiVNmQusRkiYIObnoexQQUd+TQLqyvwr9A1ERKSuoWd2Hfpg5j8A3gi8mQIQ6URLu
-         M9ANA8rRu2toTSLC2h/fZf5DNtZ+0V3alfF4JOBhwNUMgK7QQ1fxcj9h8tEq3/DR2hL9
-         JsTuvaAJ2x2Ag/kBbFjlVA3zflUxARoCCWZ4/crHQAnblB9Rpzehc5VecSd2+rkWqATX
-         MiVLF4uvnHyTuTkAHQr0jN1OZYznC5ovEgs6SXdvrsGmqG5JrISQrvToME/shvvZXB51
-         3G9nXHUQvwn2OserQnkLKRJ5yhei2XnOmoAOAGKJUB6GMvmvnPT7jAMSWon3iBy/7sAw
-         MOFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793673465; x=1794278265;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=aEZiUdHtVe6n866bPKhnP+/zTxBd9R2ODjgeXi2Z0Tk=;
-        b=No+z8PnYtqhfZQHiR7Swvg3HZSDXd04WTLOpzIAzObj5rGGEihG1c2dmRw1Jr4pTap
-         SYDR24faU8dtd4rWmniLBdrHXXp+80IlBgsYuhdx9owtRWiQI1RwQJ4fd2+/JtzMkGFi
-         pN9IIlD9y/nbAVc9uUmJ4nfq2CUBbEiJCao9CCkq7ZryGxI+qmC3JRBlu/1gblqa5N8Q
-         sP63msA+5ril3T2Zxn+t8skr6ZsL5herpvlJKaj6Hq48QTVVAD0iz6yGfCbouRzFdMt6
-         +OZXnfsPnaaesswqsLwjK9xR/M8saloTAaZN8iauq2sR/o4zX7IjSpTyuh3XxrLK8Fh0
-         Ks3g==
-X-Forwarded-Encrypted: i=1; AKwUvBxpE1vRMrvKnypF3twb2e1vQDHJRV2A5UEnwGnlHeJVw9jdDTlBcRVbt7vSUGIb836igSi+gw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+Pt6CKUzrTLr1AZ+77OUof8gFrvdKNzqYK3GlSuCWSvbuoCJ0T
-	H9Dp2SfGzhzGDhpkH3JylY1/6eNi0hhD/Jz5JX4QKg2NIRubl5gF/C1QDWEqoc7/JZ6BxDANBbb
-	HYblU3qjVdFGAvEXXRLUNo7WvERnkhWA=
-X-Gm-Gg: AYBFou1illjGj76KU93ZqMS0ac9v60oe1/MwEgexVjeECJ9APJ5jYdsJDFZdESCVJfp
-	j1IrNjzEsavKTDHj/0hNrS7yKRFqR4CTxKxPhbBJZs32HpUHtmuUTNTakVH7d2MG8VcONZjtr/Q
-	5J5KZzDE/HXoMvHXMqAlhb1NWiAmX84KdlfCltE0DNuF1ZuqT2EFkTo5UYgYv5Ms9ONFfNVmRWc
-	4s6DCXTWX1ZHlnLmeLc2ZcJQ4WHlunruZdmpY3mIrW64tNFcQWimH3jsEnX1voEQuMnSjq7vI4Q
-	fesV2ylE5gvbuP5B0FobebDGvT7EysYWn1AHRWmNV0a/0oZoToKVY2FBXQWEY53TxZ3XzlmTikU
-	hJUu8LZpo/uERL3XQsUK5iDv8krCZZEZU38FFWZeXS3Su+9KtE5oxRYCK1vAKlORDJYTXEqcxEC
-	2xJ8BPjyXZcg/B9cTFt27yFhfgttNeP/EDfsvnrovpdFU7Gwv1qPb4HiLdncmhJeXgaOXRzjHmI
-	GVd4dDney55nTzfBh+8c7PC0P8qMbzj1TN68OS20m2YRbU=
-X-Received: by 2002:a05:622a:1b09:b0:533:a8fe:e430 with SMTP id
- d75a77b69052e-542b6593777mr202082331cf.14.1793673465209; Mon, 02 Nov 2026
- 18:37:45 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.247.232.78
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793677261;
+	b=P7/BPLYUolYiEpVWFDAmzob68zfZjaHMmEOHo3LBJKEmoLFc8F482DcMq03qOIGE86KQ
+	 A1M/Cr0NTb4F1+1OQtR/LF5hDjN7OpeKLPP2e3TqNBxeAd6u052NXI5i5RPtuABmfNgV3
+	 JNvO8oPP0cQPbXhrDswkmwf2p+KnPBBDpJ/ghqBrmp4VmFuZA+m1lpt53VW9/iG4eGc21
+	 NM2pEignNnDf+4nNvcFC81yKxF3ZGyPib8oBxf/xmex3SPuh+pKsZ5zkcmrd0dap83GuS
+	 RRTNA/1JXVhI5nan09x5LVnoowua8dxhUqEHb1OwzX5YdE2dhxY/mgulgzG5+u4NHlg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793677261;
+	h=DMARC-Filter:Received:Received:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=VSTrktgGZ8s9uEUboO9uuASria0PEjkILQvjOya3gqE=;
+	b=dJDxUQhaEfpWZcLot1l7EDpxLHEGUjEmN7hjFRsZhXNasx49Vqqe36Ih1o993Z8wmPIa
+	 QBsQFb76LuBc/Ja3q2i0Yx2Pj36k7C7kfFUpD058SseAT9AQXul+9quErAqs8tnAKSKZ8
+	 JWkiI6xMzT1Xnm7ZrWgmUlU/cKPgN9diTDKjGJm99oUBFgNjoR4zpsekIaJznEGoOKbrv
+	 2xdOBiQre/golVpDcBhmmTyBWMQM5WfvOHadaG1fKHPsLL1uy9rgvmRzvzQAMs7HRKvj7
+	 qBiMrsQUaD7Rjx7eijisnJv2fQmsrEdaaP8k3YAOU9S9ILil5rNjpzHW4BfnxXpxW/Q==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=linx-info.com;
+	spf=pass smtp.mailfrom=linx-info.com;
+	arc=none smtp.remote-ip=114.247.232.78
+Received: from mail.linx-info.com (mail.linx-info.com [114.247.232.78])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC5CF606A32C
+	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 03:40:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BC5CF606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linx-info.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linx-info.com
+Received: from localhost (localhost [127.0.0.1])
+	by mail.linx-info.com (Postfix) with ESMTP id 761E53211C5;
+	Tue,  3 Nov 2026 11:40:51 +0800 (CST)
+Received: from mail.linx-info.com ([127.0.0.1])
+	by localhost (mail.linx-info.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 0X34993ex3hU; Tue,  3 Nov 2026 11:40:51 +0800 (CST)
+Received: from localhost.localdomain (unknown [172.22.21.200])
+	by mail.linx-info.com (Postfix) with ESMTPSA id 5DBB232119D;
+	Tue,  3 Nov 2026 11:40:51 +0800 (CST)
+From: Wang Guangke <gkwang@linx-info.com>
+To: sj@kernel.org,
+	akpm@linux-foundation.org
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Wang Guangke <gkwang@linx-info.com>,
+	stable@vger.kernel.org
+Subject: [PATCH v2] mm/damon/stat: avoid overflow in estimated_memory_bandwidth calculation
+Date: Tue,  3 Nov 2026 11:40:34 +0800
+Message-ID: <20261103034034.7978-1-gkwang@linx-info.com>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -105,34 +56,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261102150757.93058-1-sj@kernel.org> <20261102150757.93058-9-sj@kernel.org>
-In-Reply-To: <20261102150757.93058-9-sj@kernel.org>
-From: Daniel Pereira <danielmaraboo@gmail.com>
-Date: Mon, 2 Nov 2026 23:37:34 -0300
-X-Gm-Features: AclHuK-Jg7-xraD80qWPaNaA0iIrhVFnMpsq1hNuG58d2LObr6cS1Stfw00xqhY
-Message-ID: <CAMAsx6epLXuUjaV3J0=SWAuLvajr4h58DTM9gL+LMmaCyjcxUg@mail.gmail.com>
-Subject: Re: [PATCH 8/9] Docs/admin-guide/mm/damon/lru_sort: fix grammar and stlye
-To: manuelebnerli@mailbox.org, sj@kernel.org
-Cc: corbet@lwn.net, rdunlap@infradead.org, skhan@linuxfoundation.org, 
-	damon@lists.linux.dev, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Manuel,
+estimated_memory_bandwidth is calculated by access_bytes *
+USEC_PER_MSEC * MSEC_PER_SEC (= USEC_PER_SEC) / aggr_interval,
+and users read it via
+/sys/module/damon_stat/parameters/estimated_memory_bandwidth.
 
-> Docs/admin-guide/mm/damon/lru_sort: fix grammar and stlye
+On 32-bit systems, access_bytes * USEC_PER_SEC overflows unsigned
+long once access_bytes exceeds about 4294 (U32_MAX / USEC_PER_SEC),
+so users get a wrong value.
 
- "stlye" -> "style"?
+Fix it by doing the calculation in 64-bit and splitting the division
+into quotient and remainder.
 
-> Fix tenses. Split long sentences thereby imporove readability.
+The issue was reproduced on a 32-bit system (qemu-system-i386): the
+parameter estimated_memory_bandwidth reported 362 instead of the
+expected 1926150; with the fix, the value matches the expectation.
 
-"imporove" -> "improve"
+Fixes: fabdd1e911da ("mm/damon/stat: calculate and expose estimated memory bandwidth")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Wang Guangke <gkwang@linx-info.com>
+---
+Changes in v2:
+- v1: https://lore.kernel.org/all/20261101180001.167198-1-gkwang@linx-info.com
+- Clarify the issue and its impact on users.
+- Add Cc: stable@.
+- Rename variable bytes_per_interval to bytes_per_us.
+- Use USEC_PER_SEC instead of 'USEC_PER_MSEC * MSEC_PER_SEC'.
+---
+ mm/damon/stat.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-> +suitable to be used as a trustworthy access pattern source. These situations
-> +including reclamation target page selection under sudden memory pressure.
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index b05b68f73e10..e44f5bf3645c 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -32,8 +32,8 @@ static bool enabled __read_mostly = IS_ENABLED(
+ module_param_cb(enabled, &enabled_param_ops, NULL, 0600);
+ MODULE_PARM_DESC(enabled, "Enable of disable DAMON_STAT");
+ 
+-static unsigned long estimated_memory_bandwidth __read_mostly;
+-module_param(estimated_memory_bandwidth, ulong, 0400);
++static u64 estimated_memory_bandwidth __read_mostly;
++module_param(estimated_memory_bandwidth, ullong, 0400);
+ MODULE_PARM_DESC(estimated_memory_bandwidth,
+ 		"Estimated memory bandwidth usage in bytes per second");
+ 
+@@ -55,15 +55,18 @@ static void damon_stat_set_estimated_memory_bandwidth(struct damon_ctx *c)
+ {
+ 	struct damon_target *t;
+ 	struct damon_region *r;
+-	unsigned long access_bytes = 0;
++	u64 access_bytes = 0;
++	u64 remainder, bytes_per_us;
+ 
+ 	damon_for_each_target(t, c) {
+ 		damon_for_each_region(r, t)
+-			access_bytes += (r->ar.end - r->ar.start) *
++			access_bytes += (u64)(r->ar.end - r->ar.start) *
+ 				r->nr_accesses;
+ 	}
+-	estimated_memory_bandwidth = access_bytes * USEC_PER_MSEC *
+-		MSEC_PER_SEC / c->attrs.aggr_interval;
++	bytes_per_us = div64_u64_rem(access_bytes,
++			c->attrs.aggr_interval, &remainder);
++	estimated_memory_bandwidth = bytes_per_us * USEC_PER_SEC +
++		div64_u64(remainder * USEC_PER_SEC, c->attrs.aggr_interval);
+ }
+ 
+ static int damon_stat_idletime(const struct damon_region *r)
+-- 
+2.47.3
 
-Shouldn't this be "These situations include"? As written it is a
-sentence fragment.
-
-Thanks,
-Daniel
