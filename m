@@ -1,84 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.136
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793702027;
-	b=XNHsXdhGlakOH6RAau1ubNfB/qcUV9cS43AmKyLI4E8D9caGed0Pas/4beMqnwdkIDId
-	 StfeXa9ZfGaE3dYBUiVVdrsI/aqlgcEZqBni9henPwqLDmeteD5TLu0A6CVkjqFUp+20b
-	 Tk7/Cg3DBbMC0pY0uySxQwUDUJ1JlitbdmFQ4YDeardF+iUSpFWtYpghIGNNQzQMZUsjD
-	 7q+kejWKXQkB4c7Hrz9jaeFmInywT9FhZiXMpwW5/2V616vSkZq9Xcz9vNLeG3CHXkZ6z
-	 1PNnJvMyWNqjCOHAq3m0U8fxFJyJGkO0FejgZJ0gt4LoHLbFe7j29nM+268D17LYvAA==
+	t=1793704658;
+	b=DCAynrIdURX3ex0MM3jf6NeLc15dPlCSvjuUgAgWQ0n8qX1RrF904x94Mfu3IWLu6A4y
+	 +Y+aXmAsauV8XuRl+7N/oGJ90DysIvG1mzZ8iN3GVFhbJNKW5kOqdvR3ywVZhiJzzvZh0
+	 EIaNVFpuqq1O8df40cI4PkOoAVql7zvWPIXEMsFj9fd38f6kFXszOe5a3l6k+yx/8tN2L
+	 u4uVdNxhtDz38/wnhvkQD9lv95i4crbz5WHN5dWzO3+NBo6v8Qul4fV7Lpxh7koowYF0s
+	 i4RvMWo5cClXH0zfpaeeTvDfFMhBdJ/G3CDcWLEIsc8U/3CEgtFgHtE2b4paCjz7T2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793702027;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793704658;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Subject:From:Date:Message-Id:
-	 To:Cc:In-Reply-To:References:X-Mailer;
-	bh=BN9Z4rjr/QQvEFqoc3xGEEd37Gz2EGsQ1eWVAdfc5T0=;
-	b=FfWxpewkYTrk2WHXL/LCjMQYM+ntrgHyai2tA7qPlc5prPLCIzyax4/xDmodhC4NaPHd
-	 XcGfnZUydYGcECHD62tbohCs7Gmql9QU6rD5jo5WnPKfARcOeOP+FT+0aSpmy57nFzNWP
-	 BkKEsUK5ry34hf82nfaVCrT2IoRaF5cAqhInw4nqmBYEgKjhBVE8y0QqjUb0p2RDLNDTZ
-	 dxwb3cHb/4eXRYzAex/SF0zVnRwOovO7yetEuwApXxQJOLSsRgqgKNXNldCN3ltxzFI6p
-	 sPvNJQQSPM7Y5ciTa/eKr2mp64Fts3zzpv44CExMlx4EoBobuQ7aE2NhTP5zzw054Hw==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=rO8PyIeQTJjW9jZC3eDavQXhSeNQrxCH5KHGWPFOq/g=;
+	b=zQQuqr88dc8Lni0Fzpcz3ICJ8LqcmveEVMLlbiyarHOG/9xPqNsX1E4AxRb18I/lCSo+
+	 bBqVPp42BOwvnETB0Jgt5UojmezH9Ys9gCz1UF8sfaQdquZ/oDkRlVXb5DEczuki9D5YK
+	 jvXAkAMZpGeOhH7KrBsjcwtRVAbzmMJyh+clylTV1RtmHN4Ry3xvgtF2q50uH3LCtp6su
+	 fpI/48p3zx+l6mUy/ROpuR7fVCg0bOoDnhRFQprkm9ecZqMuPd/k1SyjzwIMLcpjmDzEC
+	 pWAWBgr+qt0bdJ+bPJLOUYguGif52ufYGMxkwvgf80FqEn7fcojc3oDOP6b7K+DFxSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QFvpHVAo;
-	arc=none smtp.remote-ip=74.125.227.136
-Received: from mail-pj2-f8.google.com (mail-pj2-f8.google.com [74.125.227.136])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dt8JJdkR;
+	arc=none smtp.remote-ip=209.85.215.177
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88490606BF96
-	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 10:33:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88490606BF96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC40606C5A6
+	for <damon@lists.linux.dev>; Tue,  3 Nov 2026 11:17:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3CC40606C5A6
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QFvpHVAo
-Received: by mail-pj2-f8.google.com with SMTP id d9443c01a7336-2e538951d07so36862435ad.0
-        for <damon@lists.linux.dev>; Tue, 03 Nov 2026 02:33:47 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=dt8JJdkR
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-cdab938dc83so1541060a12.3
+        for <damon@lists.linux.dev>; Tue, 03 Nov 2026 03:17:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793702027; x=1794306827; darn=lists.linux.dev;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=BN9Z4rjr/QQvEFqoc3xGEEd37Gz2EGsQ1eWVAdfc5T0=;
-        b=QFvpHVAoyFpD1u6ae5a25foMh6qVkunNEOnrlsZZzUsujPuQ6L7fY/JX6kZVIf3Ay+
-         /HKxekAUwCp8YcI/2SUonWSVnMvr+Pfh/WVGWNKHq2U11iaRr4z7tsxjLiT6alj3ZT1v
-         p63EyvBeoPuzPOdW7+qdF13QM2DTq2DGIyjyLbrBII0gXEl92TomoRKARmid5pBTFRqy
-         q/TK7yRQrLs+SKVEExdLHLs7Z5GmrJ/NWc2m7ppTUMq4pjx6QKPcZWYx4fnxYvPvuypn
-         YaAs0q9mhX3LJoTkmDby11uOaYjWJ5akXMoOOoHUJJwRnlpTIM5nYI4XqjFx+VFfsmMf
-         chkA==
+        d=gmail.com; s=20260707; t=1793704657; x=1794309457; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=rO8PyIeQTJjW9jZC3eDavQXhSeNQrxCH5KHGWPFOq/g=;
+        b=dt8JJdkR8wsbXoY0NbK9cur3UaDS8M4n6U+/p6vK/oLnoyIA3QLEDhYBduBBfxsd4Q
+         BzAp+kMJ0pQEdRMMEcu/fDoe//B6cWdaX7Ah+QAzQg2ldBOhQr6Dz0tk56asoQLN7gMV
+         ahG5Li162GYpKeODozZ6PCOsnZt2BlRKI8LuGwqttXU0Wxl7foDWYzkoNB/yiZMBjwWT
+         KieODjdANBU0xdnwhYyM//aIN1TSHdb37fxtNP9zfbY8sjAgsHmsDGuU9onDWn6em8L+
+         0D5mMqiUM6WAmbSH28mNA+QR7V7o5MGd3ZRImGhzyYzY7cpoLDflVY+I5Az8r/9uQXvY
+         1qlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793702027; x=1794306827;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BN9Z4rjr/QQvEFqoc3xGEEd37Gz2EGsQ1eWVAdfc5T0=;
-        b=IRovUn8fdZ6zUBc1iIIZaoxWii0whuHX7OjBSfcSv+H0wXNys8kNbVnN7mxLdGsE23
-         JpdCkNzaDYCw3ev/ikE+54fae+V4DoNN+DVBO5pRZL5gqptCFmuqgCPn4YUSo5tZV4jt
-         430l9sjVWIcGH0/twh2+lOCDSVS9OADsVZgMIrNwkpVwXyB92KsmKMQ8WqNTPmGxAwti
-         8YQP9kZupQUGMj4dSLlxpn+2E7SZfBbQXH46tKbdCCmZ49PN9DIDkkmKfAWbFZ08LiN9
-         pXeDDoO3zBki9MiGPBmRzjPPH8dDa/24QsZRw7K/EEy0bWHQ+xaA+I9Q27i2dqnNXDf5
-         R3uw==
-X-Gm-Message-State: APuU4Z8BpszzYVwTiZ/BkpGYt2YGc2ZHJ12IdOBgXmLuvUiysuYGzUw5
-	8QN/bDBfAeQXNJigoo1SN19qCl8WzmtLbVxLgO0Tf67LLE+4M6gF0gtD
-X-Gm-Gg: AYBFou1QVLVFpu7P0oHAFf3rYh84CeMDTJpNaoINgn1EGlHUrIeRvwvF9xLsLMNzhZm
-	o6m5aFfVkPb2OEjT9OM4qR8FDjBkqCwkewTgVh9PVIiRt8pnL7XUjK3DmTctYSDxA6EFKEbZpKA
-	RucU0RfLEJ/yWasazrtqEPsEo36ImncHo/BZ/z7S4GIK3drDaYUMITF5/m4S1vT/jlfu/bO1GaD
-	83mX8mUfoS14zgz87j6V9F1e0sA2EE8O/+n5vx3Qd+ChX7B4LHdyHJcekfmcacuxa0BmmbGqaGV
-	LPy7FUlIMQ6DWXErw2hr6GSauDdhUEqZbi0TERp/rvdEHAZUwPT+P6dk/Z6mzKz97yd6bdGGjMW
-	lO81PNEDiU+tcHVwzRXydNPWN+wmI5G2QaNJJ27JkkrR6Vg1cKT4PJ2Gu2z4Lp/V2fRKYiPaCk1
-	P4NA0b9/3RvV0OviOCZTqKINUYrUGSDYtbyDlyHBQ4GfhdNqf5i+gZ9/+Ja7jDyczatHravnOh2
-	/xTbDJO1sXw/gY0h0bObyZmUxywjQWz1Qn7vGalILR4tHdFvNGXEc/hoV2jlYIynaLCvOrgauAJ
-	SCkVroxkYcjbMtp374848QXeHIgmj48MW5jlIPWQQMSiIOlDYpLkn19ev9gGe6L9sh9wt8saCPi
-	53zJeAtXpJpIAKXzqiLLrOOTwfdo=
-X-Received: by 2002:a17:903:3804:b0:2ca:e19c:97b with SMTP id d9443c01a7336-2eb36405304mr129374835ad.5.1793702026750;
-        Tue, 03 Nov 2026 02:33:46 -0800 (PST)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2eb3928d821sm38374845ad.56.2026.11.03.02.33.41
+        d=1e100.net; s=20260707; t=1793704657; x=1794309457;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rO8PyIeQTJjW9jZC3eDavQXhSeNQrxCH5KHGWPFOq/g=;
+        b=DI0dHX6/1bfwOglh9JOU2qGZadPFti8ccxxfEz2aODAh6G9xcX+i41CyEIeCHAzLP4
+         EcH0TGJMZGcVFJRwUsrEdrhyRGUCEtO35gsJKCu5lEUSNowTc7wvOJDYzT3dESfLxNOV
+         sM5666Fd2HSjwgZ0D9ni/tzIuVRE3HXwM9wVyo1AhV/xaPRym+6HH5kqDn+tf7btUrIP
+         TfFL3qM/wtmWrrJmIJloSBz4kDyMjpV9OnAF7HmZaSm2qCew0DIFnmydd+umoNSLYabn
+         PGgcCQTa3RIGmrMzJwHOCRiN+X0sYPyIvUV9HmFj4c+aG3QwwxWE29sX6FkEJAXPO9Ev
+         y39A==
+X-Gm-Message-State: APuU4Z/04Rcm7cvrGNkrOQT2/Kuqp8GkeGbgNPEgqBjsShwRq99C7r0R
+	ITaGR50siKPZCxXAQBlo3ne7bcVocVXWAOKHjNIRSKOccaqkgxy0e7AP
+X-Gm-Gg: AYBFou1qOK1vhLRUsqvVqIKU3krFg6NvUfHsUPUSkVhVyE4e2Y0CGig9dwRRLe63Z45
+	ONYhm68AtAvwfOtuaU+sKQcg/cuoY2O9SLx6xKOAPrD9fl299sgpTZmEl18WUMcmQlKb42/vMpQ
+	2jzRRMJzXn1eCdgtiyugJzmcvc/DdL1vGiy/U5OT22pWPTmpVVNTU5t6zbwDNtIaPuRKgNQcWDf
+	vAzN2VaSxVAwpXv8nfxAVHrHsqztkZ2ra5ojXVRSpXgcYal8YFx9kr6RgN9N/w9n6pBMn+0rSQa
+	ZXhIzJeyBgLkAt4lidc2vjHxRMEU6HwXGQkJXVzutQyg0aKzMZBKKPw07uRgk1n4wcvz6lw38Q+
+	p+quGuqBxoZ5RkhJdnVi1e3S+lU/x9XAVijlwcnWV2U0aT2XbvXScTT8JiY/GtycNn8uzVxStA0
+	CLWNyxKb6JPI3klcYUgr5dsM8kzjDkkJLLxFGZ2W68zYheVvHsqfovuz1UGcYRilKyMIzz+RIdN
+	xYVrrdYTprGoTrf+FROfXvrNXuRhGWjq/m/eXeH5C+0NVQMgHBDedJ1D4n753XVRT5DJAwNUrgP
+	TRNDTX6MQ3QgRzAjRl7ArWntvttXJQ4jFosiTiZMXS0DaAZ6oW5LnEaKrC2EOrjPLSZh
+X-Received: by 2002:a05:6a21:3216:b0:3e2:ad49:b24f with SMTP id adf61e73a8af0-3e928e47524mr11186434637.68.1793704656472;
+        Tue, 03 Nov 2026 03:17:36 -0800 (PST)
+Received: from xiaolei-VMware-Virtual-Platform ([219.142.21.190])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8aadaf82a66sm3065147b3a.56.2026.11.03.03.17.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2026 02:33:46 -0800 (PST)
+        Tue, 03 Nov 2026 03:17:36 -0800 (PST)
+From: "Xiaolei Wang (Kaihong)" <xiaoleiwangxiaolei@gmail.com>
+To: sj@kernel.org,
+	akpm@linux-foundation.org,
+	david@kernel.org,
+	ljs@kernel.org,
+	error27@gmail.com,
+	xiaoleiwangxiaolei@gmail.com
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>
+Subject: [PATCH] mm/damon/core: reject empty access pattern intervals on scheme commit
+Date: Tue,  3 Nov 2026 18:54:18 +0800
+Message-ID: <20261103105418.362459-1-xiaoleiwangxiaolei@gmail.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -88,38 +104,76 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH] mm/damon/core: use list_{next,prev}_entry() in
- damon_{next,prev}_region()
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Tue, 03 Nov 2026 21:31:41 +1100
-Message-Id: <179370190119.71013.18301574509097172702.b4-reply@b4>
-To: Enze Li <lienze@kylinos.cn>
-Cc: damon@lists.linux.dev, enze.li@gmx.com, linux-kernel@vger.kernel.org, 
- linux-mm@kvack.org, sj@kernel.org
-In-Reply-To: <20261103100714.70742-1-lienze@kylinos.cn>
-References: <20261103100714.70742-1-lienze@kylinos.cn>
-X-Mailer: b4 0.16.0
+Content-Transfer-Encoding: 8bit
 
-Hi Enze,
+DAMOS schemes accept access pattern bounds with min > max (e.g.
+min_sz_region > max_sz_region).  No input path validates the bounds:
+damon_new_scheme() stores the pattern as is, and the sysfs ul_range
+stores are plain kstrtoul().
 
-On Tue, 03 Nov 2026 18:07:14 +0800 Enze Li wrote:
+At runtime __damos_valid_target() evaluates "min <= x <= max" for each
+of the three pattern dimensions.  A reversed interval is an empty set,
+so every region fails the check and the scheme silently never matches
+anything: nr_tried stays zero forever while the kdamond keeps running
+normally.
 
-> damon_next_region() and damon_prev_region() manually do container_of()
-> type casting to fetch the next and previous region from the linked
-> list.  Use the dedicated list.h helpers, list_next_entry() and
-> list_prev_entry(), as damon_first_region() and damon_last_region() do.
+With such a reversed interval, damo starts normally (rc=0, kdamond
+state=on), but nr_tried and nr_applied stay zero forever and the target
+RSS does not drop.
 
-The change looks correct to me.  list_{next,prev}_entry() expand to the
-same container_of() calls, so there is no functional change.
+The same holds for the watermarks thresholds, which must be monotonic
+(low <= mid <= high).
 
-That said, my understanding is that the kernel generally discourages
-changes made only for coding style, outside of other work on the same
-code.  Documentation/process/4.Coding.rst notes that "pure coding style
-fixes are seen as noise by the development community".
+Validate the access pattern and watermarks at the beginning of
+damos_commit(), through which both new schemes (damo start) and online
+updates (damo tune) pass.
 
-SJ, what do you think about this kind of cleanup for DAMON?
+Fixes: 1f366e421c8f ("mm/damon/core: implement DAMON-based Operation Schemes (DAMOS)")
+Cc: stable@vger.kernel.org
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Signed-off-by: Xiaolei Wang (Kaihong) <xiaoleiwangxiaolei@gmail.com>
+---
+ mm/damon/core.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-Thanks,
-Aveline Noir
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index eb1fcdabc007..865627bda240 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1566,10 +1566,29 @@ static struct damos *damon_nth_scheme(int n, struct damon_ctx *ctx)
+ 	return NULL;
+ }
+ 
++static int damos_validate_scheme(struct damos *s)
++{
++	struct damos_access_pattern *p = &s->pattern;
++	struct damos_watermarks *wmarks = &s->wmarks;
++
++	if (p->min_sz_region > p->max_sz_region ||
++	    p->min_nr_accesses > p->max_nr_accesses ||
++	    p->min_age_region > p->max_age_region)
++		return -EINVAL;
++	if (wmarks->metric != DAMOS_WMARK_NONE &&
++	    (wmarks->low > wmarks->mid || wmarks->mid > wmarks->high))
++		return -EINVAL;
++	return 0;
++}
++
+ static int damos_commit(struct damos *dst, struct damos *src)
+ {
+ 	int err;
+ 
++	err = damos_validate_scheme(src);
++	if (err)
++		return err;
++
+ 	dst->pattern = src->pattern;
+ 	dst->action = src->action;
+ 	dst->apply_interval_us = src->apply_interval_us;
+-- 
+2.53.0
+
