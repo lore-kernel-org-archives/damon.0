@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793807274;
-	b=LrRuV8tZF/39SZwf+YRrYH/3Ja1YGHkUxfH3vHY9zWAShowr6So2QvXsuajZijtJNA1r
-	 QgE29irK67e7f3xN2k2XYYivn8x4nvUK6waBT5Jq8DbH4qnRo55MIw4bm7y1xJhEpg+wH
-	 u2PH5aJChiJFZDcWFzkOrKfn4bvrJvP8avS/aOGV7BjMWdiT92+5sMmLRSwVjy+xnNRZF
-	 rAf0qSqBLKIItWvu+1Ta/RXkzhFSxe/37weG36JIA6VvoqxAvZEO6DTKFzt8UsMlWSSl2
-	 B2UyqUy+S6kuv2S/VLaXa5HXTcAG8NCB7lrPZPjLvwp8RTR4z0dpdOkAf2zArL5WXLA==
+	t=1793807424;
+	b=v2EcFivA8+luT+l9c3tQexrqonw2Z5raZHyQ3aLIs5BnmKC5i2b1XWPIumaN5z29Abgi
+	 /ST+jgBlcXFLJOQ6qyJOQvetgfzBAHxHsLhQjwIiVAv5uIJ2NorsueBv0jJsytEF+UjG2
+	 lJoTwPXvv/wR0jv/ep6TInwotKjsAkXchVz/lu6bBhuNVzuQ8smht0Nd1YAVQ0mEGmNn5
+	 +cEZFNeTjHk6BzqMWbYTVNgiAn1aOaw10ETw/pGNxgvorQkVZLmiXXw4msMrIKcvgH9cB
+	 H0zP3a2IWT7U8lV64m6u5vrx0e76SJ5p9UTqvOOwjeEivA6rcgbYcQEIV+GXrusDKVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793807274;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=utyyihQu8TN6QRESsH/hf81T3MrNdClL6kRbHxBQQsM=;
-	b=qcznx77GVk44ZVjKqO7bRIRXKDTpG4CMtq+hUPHtR8yRfsFRJw8P+wMtaOOEWhoICMCV
-	 EfCIgNeRx7PUwvECt00d/XGgOFhwllYO89fXDo1wHa8wm9lPDyOWWWLp5ZR9PXN3x4pXD
-	 Y1lTsnEXR7tGXQ+JnNmTu8MJGz9nqaYoiztUlk02Vt8IDkJSC1V1a6WA29yP7Vj1njy0z
-	 OO0wNZL68F1CFWBbcYDz/ct8OBNxA1aLUTVbQWzTwQlHvtJfzjRjQVDuL+4rT6UpBu+7K
-	 Lwrx4paDGuokKkG26e9pitguiCHWz76DOYpRabGeqY2x8hine5hsbnsGN5BQhKmLOQA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793807424;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=K2Rm/qqSbuCxIXb1iiVZqgo+p9PpDw6v0y8c0lPMvLc=;
+	b=zEtshc8M7mZT7yczGD5xwG3Y5YreBuuTZ90wqthYVMnE6l2Oz92SRf1BhC1kZHiDzBPL
+	 a8s4grR4VPDn4npX68/k8le4dQTIfTZ3Xt+/LVB9rEO3K49XCn2AsTSNi83xrL+eK9jbz
+	 4RTShkMJuS8M2XyFFWsnFiBTrbqzE/ii7xj8UEFyg9SbtD4JMaeXsnILGWm5U0LpZQRyF
+	 k3a/Ot+TdMaf+Oc7sBLk9FIyvJmH9HiT6Hc6qlTGyII7hMvF9zNhTXEp7s4SCYJVYoqiZ
+	 DI3jNMakPDs8Q3F2z++YFvPzDTr/qXdXMF/UUOwZDxBzIA2KLkfdSDeuRume0V+/hag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="PlAfkGF/";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="I3/ZktAz";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA42606A328
-	for <damon@lists.linux.dev>; Wed,  4 Nov 2026 15:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B96606A31B
+	for <damon@lists.linux.dev>; Wed,  4 Nov 2026 15:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PlAfkGF/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743B81F000C1;
-	Wed,  4 Nov 2026 15:47:53 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=I3/ZktAz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85851F000C1;
+	Wed,  4 Nov 2026 15:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793807273;
-	bh=utyyihQu8TN6QRESsH/hf81T3MrNdClL6kRbHxBQQsM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PlAfkGF/BxL9SxJ5WXeUsapSWT8XAwemDgaP8uhuj5rZ8V88IT6OMtRmCK8VxMdsK
-	 qVRxEPQ02tahFQsLb/e6YG6jf3cT3JC0mkaODuA1XWfOHOfeUOtTpLZnYYI033j/aX
-	 VGJ0KcEtpQnTLhz+wEZr1nD3Ud47QBRUMTBA3CtqGo6H19+7VaGrTOQAbCGd25RDQj
-	 fpkW70zoWzdXiZLJEZD6aCy9F+GGFW28YFPrzyVhnH8gdyWGxiRu6yZTvgW2/yPIJL
-	 SPkMtZUkWjDai2500OB8XxglIMc6KlfYz+Whu+IFqey+Oc97Zwlf4YNZfuj1aBY14f
-	 vAEQ7KpGTYkTw==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 1/4] mm/damon/core: add DAMOS_FILTER_TYPE_AGE_MS
-Date: Wed,  4 Nov 2026 07:47:45 -0800
-Message-ID: <20261104154746.83311-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-197530@kernel.org>
-References: 
+	s=k20260515; t=1793807424;
+	bh=K2Rm/qqSbuCxIXb1iiVZqgo+p9PpDw6v0y8c0lPMvLc=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=I3/ZktAzonT+YJQP1B7Dfbe167+htrikqCuyVM1BQMd+f/JXPzVqNuLHllKkPiSYt
+	 7rpVHNHimWsaAZSQFYYQ/GUcXH6uqne+IjWdKwyOHxrNg9DAnXORe/XgB4mao/MN45
+	 f9aLgSiDPn2BsFsL1HFusNldxTDrlooToV32anBz3oTmL31kVqAL9GRhgKeI2JcGeg
+	 QgmvxvdQ5BNrrYs7pmuAjNW03JLOH+lVbJtS/oKbOr9hh45VQrQvSsvNXjaxJnBGCt
+	 k3PD2xA93KBNRx0Ad0q5L3NJexTpfb1p2VTSzg9blgxVDFBaN7eRHZEKq7t27Arhit
+	 jD+Ixkzc8qseA==
+Message-ID: <sashiko-outbox-197544@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH 2/4] mm/damon/sysfs-schemes: support
+ DAMOS_FILTER_TYPE_AGE_MS
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
+In-Reply-To: <20261104153645.82945-3-sj@kernel.org>
+References: <20261104153645.82945-1-sj@kernel.org>
+ <20261104153645.82945-3-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 04 Nov 2026 15:50:23 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,78 +60,71 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
-On Wed, 04 Nov 2026 15:44:08 +0000 sashiko-bot@kernel.org wrote:
+Thank you for your contribution! Sashiko AI review found 1 potential issue(=
+s) to consider:
+- [Medium] mm/damon: 32-bit overflow calculating age_ms in damos_filter_mat=
+ch()
+--
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] mm/damon/core: 32-bit overflow calculating age_ms in damos_filter_match()
-> --
-> 
-> commit 8785e74923668744015c21ff7266b94722501bbc
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: add DAMOS_FILTER_TYPE_AGE_MS
-> 
-> This commit adds a new DAMOS core filter type, DAMOS_FILTER_TYPE_AGE_MS,
-> allowing schemes to filter target regions by age in milliseconds using
-> damos_filter->range_min and damos_filter->range_max.
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index d36823f4d0928..d631863b034db 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -2552,7 +2554,7 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
-> >  	bool matched = false;
-> >  	struct damon_target *ti;
-> >  	int target_idx = 0;
-> > -	unsigned long start, end, wsum;
-> > +	unsigned long start, end, wsum, age_ms;
-> >  
-> >  	*err = 0;
-> >  	switch (filter->type) {
-> > @@ -2594,6 +2596,11 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
-> >  		matched = filter->range_min <= wsum &&
-> >  			wsum <= filter->range_max;
-> >  		break;
-> > +	case DAMOS_FILTER_TYPE_AGE_MS:
-> > +		age_ms = r->age * ctx->attrs.aggr_interval / USEC_PER_MSEC;
-> > +		matched = filter->range_min <= age_ms &&
-> > +			age_ms <= filter->range_max;
-> > +		break;
-> 
-> [Severity: Medium]
-> Can the multiplication r->age * ctx->attrs.aggr_interval in
-> damos_filter_match() overflow on 32-bit architectures?
-> 
-> Since r->age is unsigned int and ctx->attrs.aggr_interval is unsigned long
-> (in microseconds), the multiplication is evaluated in 32-bit unsigned long
-> on 32-bit platforms before dividing by USEC_PER_MSEC. Once a region's age
-> exceeds ULONG_MAX microseconds (about 4,295 seconds, or r->age >= 42,950 at
-> the default 100,000 us aggr_interval), the intermediate product wraps around
-> and misclassifies old regions with a small age_ms value.
-> 
-> By comparison, damon_hot_score() in mm/damon/ops-common.c casts r->age to
-> u64 and uses div_u64() to avoid this 32-bit overflow:
-> 
-> 	age_in_sec = div_u64((u64)r->age * c->attrs.aggr_interval,
-> 			     USEC_PER_SEC);
-> 
-> Should damos_filter_match() similarly use div_u64((u64)r->age *
-> ctx->attrs.aggr_interval, USEC_PER_MSEC)?
+commit 9c78f1b31239922167bf213c5406c37c05fd310f
+Author: SJ Park <sj@kernel.org>
 
-Good finding.  I will do so in the next spin.
+mm/damon/sysfs-schemes: support DAMOS_FILTER_TYPE_AGE_MS
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261104153645.82945-1-sj@kernel.org?part=1
-> 
+This commit exposes DAMOS_FILTER_TYPE_AGE_MS to the DAMON sysfs interface
+using the "age_ms" filter type keyword and the existing min and max sysfs
+range files.
 
+> diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
+> index 637f1bd0c950b..230987efac3ac 100644
+> --- a/mm/damon/sysfs-schemes.c
+> +++ b/mm/damon/sysfs-schemes.c
 
-Thanks,
-SJ
+[ ... ]
+
+> @@ -2875,6 +2879,7 @@ static int damon_sysfs_add_scheme_filters(struct da=
+mos *scheme,
+>  			filter->sz_range.max =3D sysfs_filter->range_max;
+>  			break;
+>  		case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
+> +		case DAMOS_FILTER_TYPE_AGE_MS:
+>  			filter->range_min =3D sysfs_filter->range_min;
+>  			filter->range_max =3D sysfs_filter->range_max;
+>  			break;
+
+[Severity: Medium]
+When userspace configures an age_ms filter with range_min and range_max via
+damon_sysfs_add_scheme_filters() on a 32-bit system, can age_ms overflow in
+damos_filter_match()?
+
+When kdamond evaluates the filter via
+kdamond_apply_schemes()->damon_do_apply_schemes()->damos_apply_scheme()->da=
+mos_core_filter_out()->damos_filter_match():
+
+mm/damon/core.c:damos_filter_match() {
+	...
+	case DAMOS_FILTER_TYPE_AGE_MS:
+		age_ms =3D r->age * ctx->attrs.aggr_interval / USEC_PER_MSEC;
+		matched =3D filter->range_min <=3D age_ms &&
+			age_ms <=3D filter->range_max;
+		break;
+	...
+}
+
+Here r->age is unsigned int and ctx->attrs.aggr_interval is unsigned long
+(in microseconds). On 32-bit architectures, multiplying r->age by
+ctx->attrs.aggr_interval is performed in 32-bit unsigned arithmetic before
+dividing by USEC_PER_MSEC, which wraps around once a region's age exceeds
+approximately 4,295 seconds (~71.6 minutes) even though the resulting
+millisecond value fits in a 32-bit unsigned long.
+
+A similar 32-bit overflow on r->age * c->attrs.aggr_interval in
+damon_hot_score() in mm/damon/ops-common.c was fixed in commit 0284dff76e87
+("mm/damon/ops-common: fix age_in_sec overflow on 32-bit"). Should
+damos_filter_match() use div_u64((u64)r->age * ctx->attrs.aggr_interval,
+USEC_PER_MSEC) as well?
+
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261104153645.8294=
+5-1-sj@kernel.org?part=3D2
