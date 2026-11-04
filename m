@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793806620;
-	b=pOKcDJ+4urlU8YGjghfzk8M/KmNe4s2LHpZDiBLnINkZqKwJQVsqIqQVA5M3gFv/j9hu
-	 J7Lw7Q7HtF/W1KgVroHfLO+5j9jyWmXcqrn713WrrzTwS8iRzEH90MSfn3AlHXrQyQkZi
-	 +2UCV8cA3EVdh7YzTEoay/hDg3fdsCQtbpQDScI6pGhwIevnyO5UvJvKoScRYhswgVv2w
-	 6YNIHlMlKw8TQao9VXGN3ElbZRH9O5a4L+lOPJvxeOYHuBpAndlrb+OUavm3oyo7CJtOy
-	 eQox/uOt7DCb0vUgZsKFJILD8v0uf5OvvT4KGyJPOyFlwOkPVHOkgAG8DqVuPeyE4JQ==
+	b=zXz0MIvObiie4pseUUfvZnjeBeqGoIjmrC4J4pyPaDSrWyT3NzAthQXGdV3wOcnJI13r
+	 xEmupxaSdsnykKIEokx7H10ORZbIiWgWGeW59gUM5KuNdN5ZTSUMV7Go/Ge/w0ucMxPPp
+	 NYOXxo0ALULrF+YVCYCJ7xbmgVmjT4fi2tkZk5Tya6/2sN4I2SFXioCDUY78iuZpdg/+r
+	 uXNXjK0EMytQdEMx+DfCUGYvPxdpFxJ14qX1atCSo1IXJf9+jetVvEzot9wLvfQpdbkqd
+	 K090oIG5yZ/abXtM+KrWhi/gO+jfQiCUDqoUclN9qzfPhnNOBAoR7QinGTWMzZS3Pnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793806620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=91rtiUe/bcG4k5Xjc7nZyZOJQYuQ+APASrUv58d3YCo=;
-	b=O6u/3LNNIqRt/hnvwyQx1VciFfIGQakIzlbmE9noMG7Z7DOhxATNMwgB+AyyDQ9T6TLn
-	 BlcygdyKgPxFg3LXYEKy9icDFvbTOzVIiUx6IQ4d0bEFypoWFhXJGDIvQS3zcB2MhbAZ8
-	 QMM4PgqN+/RHB1tnUjG6rAdJQ5G5Of4OL6qcTa7RHXe1XVfv1HyQbLjvcJ+JeYBiY2FrN
-	 IFwsXdKifUMNjoF+IelWBXlYDzm1sCnYJwgtMsEQ7MVdGJ3HDN2YPyEF/JRAaVnfTPqTu
-	 VXzCNjAgIHZrd4rJvZK9gnNYomw1MIo3e78qEVvt/4e9BmTGbu5V+WeW8tnCCnyQrtw==
+	bh=wajzrzMNwWMprOwxfVXw4rbgafdH+J9WHgqDAMj2GDo=;
+	b=GoariZgBAbXbscvNt2Y0CQ8lvbhttMv+tj7lQ89beG3AknCJjm2vHLNOQn1jzSXjRy61
+	 U3UXdUIc+ldubdxPneTv9E9YOS79SIPapSkkPA5E+D1gqBWX6ik2vbRjFEYVm+KhVQVbB
+	 OhU2ig/XDpwN/8hzWTA6PIxMZ9806X2SV1ry5Po/ZNmqcADmeaC6PPFiMX04tXFukuuC+
+	 xE/ePQ3qW/7+PmXRNjlnfuRRqlP1k9rlFmx/8Rg8ur6Fc5viDe+sX7HrTBcaBSXMPm+1S
+	 CL9ODFnbP4Ka95TFgN/peTNGj8iDcGPOcTJStE58SKA35aHO/bufNSFax22TKK74EjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gUY10+qd;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fUSTHPfX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C043F606D804;
-	Wed,  4 Nov 2026 15:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FE5606D80E;
+	Wed,  4 Nov 2026 15:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gUY10+qd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6289B1F00A15;
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fUSTHPfX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52C81F00A1A;
 	Wed,  4 Nov 2026 15:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793806619;
-	bh=91rtiUe/bcG4k5Xjc7nZyZOJQYuQ+APASrUv58d3YCo=;
+	s=k20260515; t=1793806620;
+	bh=wajzrzMNwWMprOwxfVXw4rbgafdH+J9WHgqDAMj2GDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gUY10+qdYkwl/0fqE1gyFkd9MkTXLhSDeGkXS3rTMVGYtMcqkhwFqOhQkEP8+BiXL
-	 7vnLQSQ9iaXsYwC+3khwbLtJi0psWgJkts2NFZsqy1+J6kL0K+CkuXwJMnQGw3YbeV
-	 GW7h2LQQ/hcOVvMDBFep6u2HIqkk/OIUAjtfIXUuqf/LjKRGTqRYIAZCHkWttKOAgp
-	 S6SyEAiw9+FmkXhw/mHZA1c6eaelOUKJilh/6c5f/fG54ndQzm00UxxsxyxFNRLVSd
-	 5rslerFt/RQ2EUCSAm+mX42mfs9uisUrpbIzgwyMqgSGRUvDtKKviytekeht5FtCTB
-	 Toz6SewxQ+v5w==
+	b=fUSTHPfXVyy6eDhEmXV0pnycw1UJqdw0B8+lWylxFcXirpx6O0qCliB9/lW0fp5HW
+	 lU+aSu/oYSGUW23wsJuGLsEi6HIdqkO8DI8GmcEVmlyMoZ8Rto3P/+FhZvEsIw61Xb
+	 fxlZ9EPX+lm9RxCJOggxpzuGUnhrZz5XQrdf/2Di8zw5WZhrp1GfT3TNIvR9L3AnI3
+	 VtWgWNe1lJpxsu1jbFZ48yijjiHQdJwPLDIF6349sO2bzQUgukoFotCiC5+s48wsAA
+	 CwFJrWbFeULQ5V9HcAeYXs9YHOXElDKApgfofnzOBANckqnFE+nKdvLvtFXvM00k9B
+	 9RSCczVberDDA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -49,9 +49,9 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 3/4] Docs/mm/damon/design: update for age_ms damos core filter type
-Date: Wed,  4 Nov 2026 07:36:42 -0800
-Message-ID: <20261104153645.82945-4-sj@kernel.org>
+Subject: [RFC PATCH 4/4] Docs/admin-guide/mm/damon/usage: update for age_ms damos core filter
+Date: Wed,  4 Nov 2026 07:36:43 -0800
+Message-ID: <20261104153645.82945-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261104153645.82945-1-sj@kernel.org>
 References: <20261104153645.82945-1-sj@kernel.org>
@@ -66,27 +66,28 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON design document for the newly added age_ms DAMOS core
-filter type.
+Update DAMON usage document for the newly added age_ms DAMOS core filter
+type.  Add an explanation of how the age range for the filter can be
+specified by the user.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/mm/damon/design.rst | 3 +++
+ Documentation/admin-guide/mm/damon/usage.rst | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index 0689fd48446dc..8440c4954090e 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -838,6 +838,9 @@ Below ``type`` of filters are currently supported.
-     - probe_hits_wsum
-         - Matches to monitoring regions having a given range of :ref:`probe
-           hits weighted sum <damon_design_attrs_only_monitoring>` value.
-+    - age_ms
-+        - Matces to monitoring regions having a given range of :ref:`age
-+          <damon_design_age_tracking>` value in milliseconds.
- - Operations layer handled, supported by only ``paddr`` operations set.
-     - anon
-         - Applied to pages that contain data that are not stored in files.
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index cc7465251bb6f..6093b1c8fbfd9 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -559,6 +559,9 @@ For ``probe_hits_wsum`` type, you can specify the minimum and maximum probe
+ hits weighted sum value for the filter to ``min`` and ``max`` files,
+ respectively.
+ 
++For ``age_ms`` type, you can specify the minimum and maximum age in
++milliseconds for the filter to ``min`` and ``max`` files, respectively.
++
+ For ``memcg`` type, you can specify the memory cgroup of the interest by
+ writing the path of the memory cgroup from the cgroups mount point to
+ ``memcg_path`` file.  For ``addr`` type, you can specify the start and end
 -- 
 2.47.3
