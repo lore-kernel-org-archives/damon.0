@@ -1,87 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793843116;
-	b=bxJL1/4tqjsDavG+DwdMx8oxiV2cknI7U+VThXmJOmj+YIB7bq53cWr+2d5xM1UeeO0t
-	 uVLBlBAXo4prNVrvoVdVL0R8cbJNYAcrFGgSG50+514WHO0TEgMLqhqPk4jzmig7ke9ca
-	 i3HqM5Sma4OOPDbdmdITxERE0is9EZL5f/koasfSpxOCC96H98JKtD6yfeRvvxj6SEyNT
-	 u9nxljDSPOjZBbMafCHoo2JayKM46emSPkXVgpr9xMcsDJVbG5rwApAhRbUEjKBEpcbA9
-	 HFvlXQdpqcBbQXb98VbknZIQhKjLrYNX1/l2/YJ0RKMEMI+9kpf9E60p13I4Fsv3yLA==
+	t=1793850841;
+	b=BhEBHKcG+q4I7D7/9q5mBHGbGcjNnlVBzVhdGLDx6UcjyjUFs9GnRGWNpwj0Y4opwdNw
+	 m9ePCJEFe0KE946HiBeoUTDQdyoOcE4MHecbIT081L+22oJZEkA/g82Zh+BNZSJCOBUiF
+	 OtumaefY/uhRI4frzpSjmq55cRHYWazFdYfPr7e7MhOMaMsIZ9EW9UyYQ1B2637xPqrGf
+	 nUlPrfH0kYKSBw31j/HI53lt39wdu2TKy14tJrLOzIxE5YROPfXU/iohRk3jB7M3iBLQp
+	 xfBHFPIB0ufGt24ybS/Md0o5uzFhO+V3zG7FQxjquGMOh8Wfu7iZNPFJr6ys8IpFexQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793843116;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=aw1j/DMSrkeRfjbyviCP/rue4/RfxPKGIkftd8fC4p8=;
-	b=p0FUgvkiZwLBquSC7bfeoBuPujVXR58ADqVeBEy1N3WlNCAaxTO+OgQUwwRzFBP0pmYC
-	 HaA3DIckE19Z5oSlp6/xuBOdgHeD69JXMxTf8EnOAGpkK1j/BLJejOmlxqkMZdwoQmsI9
-	 oVRdi34Qf4PYMdtvuaT3haaeiHZ+sS/edLS6hzosc7VC9AlPUbeTq+xtA0zqACg5sBnB9
-	 6n9vbJansEgRod7tFRcw0Aw7dLNcNAmaPLJfquReFNQ3XgHH2USm5RAwfsxxtWbJZWpL0
-	 bE6jRDwzgk5Iy2cvWaDRSfIxrUVOMa52tlxTdpsOysbrBczq0xlpBxed0EEDJmVzjFQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793850841;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=SyYtWJd8HkAgxcNPjNyLkkcWf3ysT6ZQbYCzKJBembs=;
+	b=t6+yR0wmxDNua7boNxSwSHSPtujWh96M/j24FqehzZKOGmUCG/+nE/9KXoz5vztTQfM5
+	 wGhyzzG77qLQ1UwftB5igVMI2gOCpsV08y9XXn3EGy9l1mHDNCJ12mB/2MCVt7Ogt4VAo
+	 JjDMTHtRZY1+olWFPMISNw/6Nb+chAa+5K0vo7wzFEclxu3yg4Q62BbEjtOKj0GAaOKf2
+	 S/guel6x5rWvMKBYcnBLgMuM3zEmOJoWR5DznNa95XYOennOquY1/ssOM5/Z/Gzkqrm71
+	 iVfmyVnnLRvG/F9ARChrGv0l1TNy+SMGvZZq3QlP2ML7Vl4PFOH2htDPLVkaFazm8Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hgXM5TC6;
-	arc=none smtp.remote-ip=209.85.216.46
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CKNMIQEn;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C0B606A329
-	for <damon@lists.linux.dev>; Thu,  5 Nov 2026 01:45:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86C0B606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5134A606A31B;
+	Thu,  5 Nov 2026 03:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hgXM5TC6
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3adc4590de4so1187004a91.2
-        for <damon@lists.linux.dev>; Wed, 04 Nov 2026 17:45:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793843116; x=1794447916; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=aw1j/DMSrkeRfjbyviCP/rue4/RfxPKGIkftd8fC4p8=;
-        b=hgXM5TC6nu/vrYfNZUEH/61zizt8rkZCK4NhcCbUJyECFZdLNsbnjKVVADmgpUamk3
-         5K5GqviuAS6e/7wI5UrDc58uuW3bb1AKDSLRepn/y/E5pRTXdGfO4iBW4vFEhTds80Ki
-         9Wv3sRRmjXGbrLfOlWn4XjZgKVqtUlwdgJq9ISGa0S0HXGsuWKt3+PZZwnsBN8CUeeje
-         MgE2j6rcB6gMEjlLGnddFiVzKRLcy0wQqyY/4NeF5jwRgoXB/FuBMEEvU9kN5v1+MBPg
-         PseedsQ/JswgzoiiRTan4lzblWUA2y3dV1bYBwe1GMvMBwPbxa/6h7bu7VI7/oGO/SLq
-         84+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793843116; x=1794447916;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aw1j/DMSrkeRfjbyviCP/rue4/RfxPKGIkftd8fC4p8=;
-        b=FGU3OOvoEYLq4wc83yYbZpodYjWHmWnoWDtKd5CIdmhAWyFqlL91wry83Z2dCfkbYi
-         WYVh3Mkkz8Qs9NoyHhgLis2dm3rcVOCm+ygvcH4/Jyy3/DC/UOzxpr1VbRv5hbCRxxdl
-         YwNx4YFdDs4CmarxNXH0tsu1GD+wgrpH02Cm3LJVJNcRW7iUuvCfnmiw7ya46rRuj6Mx
-         cSGxHqWbHMa0+mBV1VNBrwlWZTuWUwSYyW0/JYhbPN5yuo8PZ2BBs9InOqH0zOF4WzyK
-         Swp7T/GlgoPASeFhg7JcLcWEuBTAxxKv2wg9tVza4pOdTF79H8YZVwT/kcmPeSwB5h3I
-         YUDg==
-X-Forwarded-Encrypted: i=1; AKwUvBzqLPI9zQo6ktoNkihCig/RWuFihVgLxewqfqGmwMQs8/Iai+Di8/AWG5kncwXRK1hwXlBZYg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9J2SGAkuC+cFS3IT2diudDvNW0Y8phI8PJ5JdcpdPJTODwAgJ3
-	gamdRkDaiabLAPoOd4B9a/uqiRcy5Aig2hVIq47DmqWWNBI+ulh2Zqvi
-X-Gm-Gg: AYBFou3uZgw82OzeoWwl3f4MzGZI21AFgT2ZgFaWqkmzQsobfTFs2VlKceO/JKvngQo
-	NPMSacxO4Btr/Dt20V/AFTYjar2OUPIMz4J939q87y5EmlQXRC+4/XfgluhkpXcCaQbzleF4d3z
-	NQZnpvwakVRISVyINSgmQZ0mlLj+I97tspk9Hu+s6CHYfypViYEwj9b+tmLA6U0TArkT2W+mhK6
-	YG6zz6r4sGS2UsSxrgqeYShJyuHkRtfiJv0091UougvP6zodXYA1WdtVlLTiwUVcuPmv7tsdNBe
-	BLVqO5FwQJsRyWDC9KRUY1HVf2o7XA7/D4L4mv72XAjb6+OPdUyy8nae4k7dOckduGIQ6/RrDus
-	eHl7Bu84MeTF/HnxbQHJN5vslqGw7YZbXpylEgDi+5R+ysQ00bXjaVeDRF69qwWhuvCR8SmxG5g
-	rWiOxm1dMgvrAHLKqyhG0qgCIzrlXxiypkh9V+yVzFApRAH+Ay9AgvLfbbkQ6Q6/PBXM/WfHhWg
-	McHRRAPdXp72tc0a/JCYIDjY+Aa5K2lKb/oQN/4056tcxKJS7OAauEIXjIWVjTEJZpCZuLMhhlp
-	qyIdqqk6GlGUIXCd6LQ0mc5Sx3KN565XSyoAWElWutgsUnG3L6FSaAKmIreZndaFcGO0OyqaB6C
-	6yogTNWb3En2RitChKWaG/0twuA==
-X-Received: by 2002:a17:90b:2f08:b0:3ad:50a2:9abf with SMTP id 98e67ed59e1d1-3ae89835db3mr14659660a91.38.1793843115728;
-        Wed, 04 Nov 2026 17:45:15 -0800 (PST)
-Received: from [192.168.52.49] (ec2-13-158-86-59.ap-northeast-1.compute.amazonaws.com. [13.158.86.59])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b0b3131f8csm1307297a91.2.2026.11.04.17.45.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Nov 2026 17:45:15 -0800 (PST)
-Message-ID: <0ee661a9-b642-424f-99a1-21c9731c53aa@gmail.com>
-Date: Thu, 5 Nov 2026 09:45:10 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CKNMIQEn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9411F000C1;
+	Thu,  5 Nov 2026 03:54:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793850840;
+	bh=SyYtWJd8HkAgxcNPjNyLkkcWf3ysT6ZQbYCzKJBembs=;
+	h=From:To:Cc:Subject:Date;
+	b=CKNMIQEnnhY2QbBFROUSjMbFm4V6oQxsptiUgzTk6dVdjhi2uYuTS4ff3jB9hR5oy
+	 W/wxI8iRZf7DBrvU6GoQG0jUOucDRSBO2c0frGqlSDwr1ahnr1S7xe8ipj3mIMpzg+
+	 e/rH+4AjJgxdXDywJpm8kA7czou+8ouTnIG6VyKKmgiOsI/4RCrXeK047OugyJTD61
+	 AEFsEYMUpMoSot8eE9LrM0JJhjNi/3NDDO7R1+If40yEDjxpruOz/z5WtMHS+GpGcI
+	 /wPZTIt0/p636/wryBwY39rkt7fdDfnfX1k3xe86AUOqOaMDrQMYOq8dh12c9HETbx
+	 G+LAsg8gtwtlw==
+From: SJ Park <sj@kernel.org>
+To: damon@lists.linux.dev
+Cc: SJ Park <sj@kernel.org>,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: DAMON Beer/Coffee/Tea chat reminder for the week of 2026-11-09
+Date: Wed,  4 Nov 2026 19:53:52 -0800
+Message-ID: <20261105035353.89667-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -91,56 +57,40 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/damon/core: reject empty access pattern intervals on
- scheme commit
-To: SJ Park <sj@kernel.org>
-Cc: jm5905938@gmail.com, akpm@linux-foundation.org, david@kernel.org,
- ljs@kernel.org, error27@gmail.com, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org,
- "Liam R. Howlett" <liam@infradead.org>, Michal Hocko <mhocko@suse.com>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Vlastimil Babka <vbabka@kernel.org>
-References: <20261105013653.88123-1-sj@kernel.org>
-From: Wang Xiaolei <xiaoleiwangxiaolei@gmail.com>
-In-Reply-To: <20261105013653.88123-1-sj@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+Hello,
 
-在 2026/11/5 9:36, SJ Park 写道:
-> On Wed, 4 Nov 2026 09:17:24 +0800 Wang Xiaolei <xiaoleiwangxiaolei@gmail.com> wrote:
->
->> Hi SeongJae and Aveline
->>
->>    Thank you both for the careful review.
->>
->> I appreciate the clarification that DAMON simply executes what
->>
->>    the user configured, and that this is more of an input validation
->>
->> improvement than a bug fix. Perhaps I was too aggressive in framing
->>
->> it as a bug.
-> Thank you for clarifying.  But my point is that this change might be just
-> unnecessary behavior change rather than an improvement.  What do you think?
-Hi SeongJae
 
-Thank you again for the clear explanation.
+This is yet another reminder of upcoming DAMON Beer/Coffee/Tea chats
+(https://docs.google.com/document/d/1v43Kcj3ly4CYqmAkMaZzLiM2GEnWfgdGbZAH3mi2vpM/edit?usp=sharing)
+for the week of 2026-11-09.
 
-I agree with you . My earlier framing was wrong;
+As usual, we have two time slots for meetings in the week.  Next six time slots
+are as below.
 
-I won't push this patch further. Let me focus on the
+2026-10-26 (Mon) 18:00 PT (not yet reserved)
+2026-10-27 (Tue) 09:30 PT (not yet reserved)
+2026-11-09 (Mon) 18:00 PT (not yet reserved)
+2026-11-10 (Tue) 09:30 PT (not yet reserved)
+2026-11-23 (Mon) 18:00 PT (not yet reserved)
+2026-11-24 (Tue) 09:30 PT (not yet reserved)
+2026-12-07 (Mon) 18:00 PT (not yet reserved)
+2026-12-08 (Tue) 09:30 PT (not yet reserved)
 
-other items that are genuine bugs instead.
+Please reach out to me (sj@kernel.org or whatever) to reserve the
+not-yet-reserved time slots for your topics.  The reservation is made in a
+First-Come First-Served way, and I will send a Google Meet link to
+reservation-confirmed attendees.
 
-thanks
+Please note that other time slots are also available on demands.
 
-xiaolei
+Shared Calendar
+---------------
 
->
->
-> Thanks,
-> SJ
->
-> [...]
+You can get the schedule via this shared Google Calendar:
+https://calendar.google.com/calendar/u/0?cid=ZDIwOTA4YTMxNjc2MDQ3NTIyMmUzYTM5ZmQyM2U4NDA0ZGIwZjBiYmJlZGQxNDM0MmY4ZTRjOTE0NjdhZDRiY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t
+
+
+Thanks,
+SJ
