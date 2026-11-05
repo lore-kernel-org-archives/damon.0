@@ -1,101 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.49
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793900344;
-	b=hyj3nOCBhLFLKiznC7lf96T7W5HGHcNkUbyC+jHPEqq9VslUBKTQu70qQqP+95qZ+/gf
-	 gXjUwOealleicXPOuvVBy4ubKPpwBX9FzX8ffTtyTgNIMncv2IGl3HNlKg13uV1B8t2HD
-	 5emUIzQJ7PEU97qYYtXhOMcOiY23PNJB5pt8cU9wHKbBJorJC42f8RcebeU5EMCAP1clP
-	 vVK0TzvI1zcHHX5wpnjxVZI/7kfsnTvlfOpqlLB1+GCY53mIAX/qntl95amtPSdGr8/34
-	 wgxC0HMgWExefVjfbK8P0YsAFQu/2QXuyMBPpEotraSPWxtNCxhYR1aKA14o/n1hNBQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793900344;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=nqw4yirBXK57TsA0wfsU6JHIgj6p3RFArPkzpDymZNI=;
-	b=4DeN3wsN/uHkNxsUQO3MgAnQkzot0LrzIKZonZtMYnCw4GMJ8Aj+mVpoEJ6tS4VvOrQr
-	 jUgOfsvz3T5ZlJljDuQBvRwLW+w8lnEspAFeMB/REL0STm77fiByBq5o44V1RU51fD1rf
-	 9c75RDFozfibFOiHrkHayccIe+KGzwNG8yh+8g6oxosJGrxu4JCaIVELl9UJLnrMhdUYO
-	 j4tnZ6wUPKshMZCS9QYaMoTykL039WwEcuAIGMOQjJk3zQd3leCGWQx1cbaUTIDEpe16H
-	 VYBQ97n3N+BDgN68gRnaTRUbb/B0bkvz+sDp0PewX1EqjrPbhZucpA+iU57uwevga8w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lEF5xTnQ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.49
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793914298;
+	b=1z5EjoMhqy0EdmuPMyj21tASlYZUd3cKtYg/ZiKHeAB1XrdE4VcigFopzpU7IHIfmdcM
+	 msJyhuSwiF+6Hde49rxUgJKL64qUIrPT34osxYfzNG7EHF+Kf+VuZmBaKBbv3BFfk06bA
+	 /xOFMAJyHE9IshoAWURzmlCN/q5WYm0YtId9T3oaxCymKpa2iMduGwl0keoIIlW6TZErq
+	 bh6zg6xQoIqe9V9MmaPpfS3CtXcwcrBdCkD65ecLqBmCVaCS+dKMdBsFzx4U8NVbAqw+n
+	 Ejg0ZjA2VcD31qRKUFowODJsAxIcunx4oM9iF29OZp/HD26LKc+8dGlRqG7u7+fWcdQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793914298;
+	h=Received:DKIM-Signature:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
+	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=l/XBPzIruKyaT68fHsJTL6/0Y1whGy5OpPSy6WgTELw=;
+	b=nm++eguCki+POq6S1UrLZlZXxBBRbWTIZ33gj3TSSAI8zd6+2I+3kK1aVNcxmkjeA3eP
+	 jqPlScq3yWDvgZIzzeiqhr1kRwOt6fUc82TN+iAiMDdH00Qeh8aymdSuSdogkz4KA7jta
+	 6cwk6BARb37bSPhT1TSXum5KYXb9+yMfhDmVy9Ig8ryImZBws6Miqb8vSh7GtcG2wFagu
+	 95IFM2+YTUeTwmEy+k1sv6bSLnNqT9UwbSX23WHhWnJMYAEgtrnp2c8D40Kki5d9iipT3
+	 zgWcnYzC0j2iMMhvRf7xnaXnr/5aRqR6nlTAGNmA6DPzvYvP9ZIdP9U6NVMzc0v4bbw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aE+anxcK;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D20606A328
-	for <damon@lists.linux.dev>; Thu,  5 Nov 2026 17:39:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 22D20606A328
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5880A606A31B;
+	Thu,  5 Nov 2026 21:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lEF5xTnQ
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-48dfc0421d9so1992516f8f.1
-        for <damon@lists.linux.dev>; Thu, 05 Nov 2026 09:39:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793900342; cv=none;
-        d=google.com; s=arc-20260327;
-        b=SYk9rYrEgPCEfwnF+GF96W0F5OLrygAnDm0Un6vbBgnzDDBgMG8MtT1p6ArpCQL9oD
-         xY7updXKtJ4eHib5Rf6w8+5YxxTOYGkgchD7COiqVaYA8KVx4bELOMYxqd1/jAlpJwxz
-         8n3GMhz/05mZU95FmjcQrLIEWXTpM6aRpjumRDNJd0v+a7/tW7a+SL4UfXhoCdHh9DtS
-         xvi78d1pbUOcY859yseTXCB0RzHyHHsXcA2zzgNr+NCRbXvVAfq0n44briLULNwn3kiF
-         xsSTpAacxS8EiCBHbuHwBVV2JV/VTw0C1otF9+0IIYw1CLKmktp2NaBX9+tbVRrNfSWP
-         wzcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nqw4yirBXK57TsA0wfsU6JHIgj6p3RFArPkzpDymZNI=;
-        fh=yoruSGXsRMgQP9wtTjme2+87GCpCXDtMZNrLIl7zaUY=;
-        b=TVxubLjFjWxFSO4K4NJ+bF2YjZZXvUiiv7DVSUi2VDSC6+wl/ul/1HgrjosFUJgqjM
-         oUUns6BWR10AOrneB3udKCvY5hP9hnStCWvgm8Ji5vYDoXSYbrGs4rY2yf4Davd3TgIJ
-         OuqNyUMEpTGFN7ae9lyfl/e32PtoxA6NR7YeY/rIe1o8O+rR4CEphuNqcv5l+ILQmMve
-         Nn+PlHw7fKN8BQD2S1oriSzkMKL7hV2Twll6Ogj8If7LKnRIKcogAjTqYYM/j8kD12Ji
-         gOcNgdfaBj/fEYscd3B/fQDhK40li8Tk84Iu2ltXARiL7liRTUN5XL63ljA/rma8MXAO
-         81EA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793900342; x=1794505142; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=nqw4yirBXK57TsA0wfsU6JHIgj6p3RFArPkzpDymZNI=;
-        b=lEF5xTnQgsPDHqbXe70ceXLQy0EAvMnefjWzU1jVljy8ACGDA3VmcV+6wvgMg8arHp
-         ZZmWLUjySpM9rZxXNLK0q48Fv9wJOnivm8dctppg46LWAYuU+8TRFVjRjldvfnuqJStB
-         3kAp26fx2CX/ML4/wy21NcsnD7lpjEZhMlvoyvfD76ppCcWryz7sGRinfJDkBtr3JlIB
-         IwI/LSPQB1Teuqi/FCzC4xxBeza+0Whza42xnD/Je0pYkeyFWectWarN0HLzzxIfiJyY
-         7ebM/RcEbBtTYLpEy7XcCrksWhcjwowwKbylyPog2VQrei6bClqQezb3nFrkAfUR/42S
-         k+og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793900342; x=1794505142;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=nqw4yirBXK57TsA0wfsU6JHIgj6p3RFArPkzpDymZNI=;
-        b=urUjDg9oijKCY2iLdenPg4T5xFSFeDOtt6cwcaa2CVBgFLEVqK/hznF/Sffkm79QlG
-         rEuPREFV9Wf96c6A7xHHWuOfmbEms8y1Mk2iUExvEncgFIwoxXYE6C9TIuloi4RhX99O
-         AE7GwIhZPjMfFyXW89Bop9pmhSAzwiOLUFQkPznAoAfpNDnR2Aq3tF0LgAljFl1EBo4u
-         ASzr9GPaIjlKVAO0SElGFcOWOCa23WZhZ60ZbGxKp55KIeO5vAi6rUSpl6ApenSXmHnO
-         /npFWr6lPN7C6JbzojOSnLJ5DdgirDF91ZSBQiBU6Sx17ipw39R2CyQxjZYrvctYG/6i
-         HWuA==
-X-Forwarded-Encrypted: i=1; AKwUvBzq6wb5yQ+tJnz4Lhcth4fPRB8EG9xTO7hX9Muvjvfx3rU/QknuCJ/Ay3BOrbB2k3xYX7ZaGA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+6E+EpT7PB/TxuHNL04Yjl6EiphuDTI5wdf4fY8siGTDH/Z7D0
-	js7jKg3UbqMRqpGOA7ejC3JzmbaMuFkwAVW/6nkD7nDY/sfpTak/xzls7ud5cm1rlzOPAjUy2Xf
-	Hs0L6qaqXOoQ04FdQNvpZSrPPJHBkKeg=
-X-Gm-Gg: AYBFou1xiKE4iZKR30W6FPxjSJzIwZ+ydes/Zl7hor+MD8IHBO//OsfDnKKGzfaWGBh
-	RkkffkEgvnv+QjOysJyWlyuHt4kj9ZX+o+CBn68gn+Xvmi3UbRRZXFh2Gr4DsmACz13txn66eHh
-	Iw/uevNQa73uDfFrPua4ce0B5vTW2IwiggwXIvnGqDlAGV9NB+jksZQR7tQJJWL4z9EIQt82LB6
-	Jy0giGkuQ4rXLdR0CuvBYJ2bod9UJEtraMv3xR2CCc1T33qGwpEAEe9AeIN3oeXRDR0zTp1kHSg
-	O/bRe0IREKVfDucy+KYRqRz/9DEbMp485ZJq7EXbc7Gzk1JOMgfDp0BatXtpQBfQw7u1MmH96A4
-	0QOL9cdW7jD2LPWngCVPf7KdiBt+2Jxod9N1dlO6eQtjXukyLzyopK1wsUEWTGPQn9+Qqike63+
-	TTa8dKND79RzReMNO1gThZ7yziO3tDgIeUoYqfaiq60LuH+Y1xy5+Q
-X-Received: by 2002:a05:6000:5c9:b0:48e:75f:477d with SMTP id
- ffacd0b85a97d-49273e5b2eemr704427f8f.7.1793900342253; Thu, 05 Nov 2026
- 09:39:02 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aE+anxcK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747CB1F0089F;
+	Thu,  5 Nov 2026 21:31:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793914298;
+	bh=l/XBPzIruKyaT68fHsJTL6/0Y1whGy5OpPSy6WgTELw=;
+	h=From:Subject:Date:To:Cc;
+	b=aE+anxcK5DVd4PxfaPeug+8Go7oXIkkyd0cr7QF/UCjgq9jQl+bNK0q+4BhKrFU6l
+	 nH9TpbM/0AmUyIRXZfMR7+ZGUYkgq1BDmA0gMwCZlN+dq+z3ta162TfttOjx4fBrgt
+	 5jqDEBSY60zS13wAtaGgurmcThNfq1GYkCiTlr6kkqTQkdSz/nP1SkszH09Zyo8Vxs
+	 gkd/MAkUnyzsOIfsT4YNgixR1lw3gB/K4VRz5l4xVnYXGhfODUOU8wO+APAcsQd4VM
+	 pobOy+eE76XoFeivYZrQgxoRdn9FhNGDUTwlg2/ulGNDaKNWkzGWtu8Q8T+PXTf1Xg
+	 PFYf3vnSp0ZNg==
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+Subject: [PATCH 00/13] mm: continue vma_flags_t conversion
+Date: Thu, 05 Nov 2026 21:30:51 +0000
+Message-Id: <20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -105,53 +53,149 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261102225030.2743129-1-joannelkoong@gmail.com> <20261102225030.2743129-2-joannelkoong@gmail.com>
-In-Reply-To: <20261102225030.2743129-2-joannelkoong@gmail.com>
-From: Nhat Pham <nphamcs@gmail.com>
-Date: Thu, 5 Nov 2026 10:38:51 -0700
-X-Gm-Features: AclHuK-snOd3ku1r5RN2yfgSJS1XUyMqGhPauQIZ7tv5ax41vh5WTgomz0EDQZ0
-Message-ID: <CAKEwX=MBdWEuKZhi_g3Rq42ytwmn7h3DbVhHHmPjOtVfAKceTA@mail.gmail.com>
-Subject: Re: [PATCH v1 1/3] mm: zswap: fix shrinker count for the root memcg
-To: Joanne Koong <joannelkoong@gmail.com>
-Cc: akpm@linux-foundation.org, yosry@kernel.org, shakeel.butt@linux.dev, 
-	hannes@cmpxchg.org, mhocko@kernel.org, roman.gushchin@linux.dev, 
-	muchun.song@linux.dev, chengming.zhou@linux.dev, sj@kernel.org, 
-	david@kernel.org, ljs@kernel.org, linux-mm@kvack.org, cgroups@vger.kernel.org, 
-	damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MSwqAMAwA0atI1gaMlQpeRVyEmtaAP1oRQby71
+ eVbzNyQJKok6IobopyadFszqCzATbwGQR2zoa5qS1QRznwIfsJzYfQzh4SNpdYQW2OdgVzuUbx
+ e/7UfnucF8MbcSGUAAAA=
+X-Change-ID: 20261101-late-2026-vma-flags-461731a636c3
+To: Andrew Morton <akpm@linux-foundation.org>, 
+ David Hildenbrand <david@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>, 
+ John Hubbard <jhubbard@nvidia.com>, Peter Xu <peterx@redhat.com>, 
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, 
+ Rik van Riel <riel@surriel.com>, "Liam R. Howlett" <liam@infradead.org>, 
+ Vlastimil Babka <vbabka@kernel.org>, Harry Yoo <harry@kernel.org>, 
+ Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
+ Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
+ Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
+ Gregory Price <gourry@gourry.net>, 
+ Ying Huang <ying.huang@linux.alibaba.com>, 
+ Alistair Popple <apopple@nvidia.com>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, 
+ Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
+ Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, 
+ Xu Xin <xu.xin@linux.dev>, Chengming Zhou <chengming.zhou@linux.dev>, 
+ Madhavan Srinivasan <maddy@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, 
+ "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, 
+ "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>, 
+ Shrikanth Hegde <sshegde@linux.ibm.com>, Pedro Falcato <pfalcato@suse.de>, 
+ Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
+ Shakeel Butt <shakeel.butt@linux.dev>, 
+ Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
+ Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+ Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+ Michal Hocko <mhocko@suse.com>, Leon Romanovsky <leon@kernel.org>, 
+ SJ Park <sj@kernel.org>, Rakie Kim <rakie.kim@sk.com>, 
+ David Rientjes <rientjes@google.com>, 
+ Alexander Viro <viro@zeniv.linux.org.uk>, 
+ Christian Brauner <brauner@kernel.org>, 
+ Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
+ Arnaldo Carvalho de Melo <acme@kernel.org>, 
+ Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>, 
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+ Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
+ Adrian Hunter <adrian.hunter@intel.com>, 
+ James Clark <james.clark@linaro.org>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+ John Johansen <john.johansen@canonical.com>, 
+ Georgia Garcia <georgia.garcia@canonical.com>, 
+ Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>, 
+ "Serge E. Hallyn" <serge@hallyn.com>, Mimi Zohar <zohar@linux.ibm.com>, 
+ Roberto Sassu <roberto.sassu@huawei.com>, 
+ Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, 
+ Eric Snowberg <eric.snowberg@oracle.com>, Fan Wu <wufan@kernel.org>, 
+ Stephen Smalley <stephen.smalley.work@gmail.com>, 
+ =?utf-8?q?Ondrej_Mosn=C3=A1=C4=8Dek?= <omosnacek@gmail.com>
+Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
+ linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+ kvm@vger.kernel.org, damon@lists.linux.dev, 
+ linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org, 
+ apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org, 
+ linux-integrity@vger.kernel.org, selinux@vger.kernel.org, 
+ "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3442; i=ljs@kernel.org;
+ h=from:subject:message-id; bh=dw144I8hKInR8Qv8iKnjrU9/3cK4949dnMwWVIcVGbg=;
+ b=owGbwMvMwCV2fu7ZrsZH9SKMp9WSGLLefF0a6K1vw5BxVPUqn46M6rZ32+yPLM/K3OK58Z/1t
+ UlJ376qdZSyMIhxMciKKbI8/yK+P0gkbF7nBX83mDmsTCBDGLg4BWAiQn8Y/scXBihtmHE7PkF4
+ 5fTvjHX5lf8yagzLot8b3ry68ZZUJgcjw8Jnxy6ELVt+JnMKc9vFq+wXXtq4lq3/3aB8muuMQpi
+ TOR8A
+X-Developer-Key: i=ljs@kernel.org; a=openpgp;
+ fpr=E7F417BF5214569E89D04F46CF9DCD8A81E27F14
 
-On Mon, Nov 2, 2026 at 3:51=E2=80=AFPM Joanne Koong <joannelkoong@gmail.com=
-> wrote:
->
-> zswap_shrinker_count() scales the number of freeable entries on a
-> memcg's zswap LRU by the memcg's compression ratio. That compression
-> ratio is computed from the memcg's MEMCG_ZSWAP_B and MEMCG_ZSWAPPED
-> stats.
->
-> However, for the root memcg, the zswap entries owned by the root memcg
-> itself are never accounted for in the stats (obj_cgroup_charge_zswap()
-> skips the root objcg, and before the root memcg had an objcg, its
-> entries weren't charged at all). The stats only reflect the entries
-> owned by the root memcg's descendants. When the root memcg's descendants
-> have no zswap entries (eg when the whole workload runs in the root
-> cgroup), the shrinker reports nothing to reclaim for the root memcg, and
-> its zswap entries are never written back by the shrinker. When its
-> descendants do have entries, the root memcg's entries are scaled by the
-> descendants' compression ratio instead of a ratio that includes them.
->
-> Fix this by using the zswap pool-wide counters for the root memcg
-> instead. The zswap pool-wide counters cover every zswap entry, including
-> those owned by the root memcg.
->
-> This also gets rid of having to flush the root memcg's stats, which
-> flushes every cgroup in the system.
->
-> In a VM running a reclaim-heavy workload in the root cgroup with the
-> zswap shrinker enabled, the shrinker wrote back no pages before this
-> change (zswpwb stayed at 0) and 1016 pages with it.
->
-> Fixes: b5ba474f3f51 ("zswap: shrink zswap pool based on memory pressure")
-> Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Continue the conversion of legacy vm_flags_t flags to the new vma_flags_t
+bitmap type.
 
-Acked-by: Nhat Pham <nphamcs@gmail.com>
+Do some more core mm conversion (we really should be the first to
+completely move to the new scheme :), but also update some mm-adjacent and
+otherwise straightforward cases - /proc/$pid/maps and friends, the coredump
+VMA dump size logic, uprobes, perf and LSM mmap/mprotect hooks.
+
+This series only makes strictly mechanical changes to keep things gentle
+during this very busy cycle.
+
+No functional change intended.
+
+Build tested on x86-64 (allmodconfig, each patch individually), i386,
+arm64, riscv nommu and ppc64le.
+
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+---
+Lorenzo Stoakes (ARM) (13):
+      mm/gup: convert GUP code to use vma_flags_t
+      mm/filemap: convert fault and readahead logic to use vma_flags_t
+      mm/rmap: convert remaining VMA flag tests to use vma_flags_t
+      mm/migrate: convert VMA flag tests to use vma_flags_t
+      mm: convert THP VMA flag tests to use vma_flags_t
+      mm/ksm: convert VMA flag tests to use vma_flags_t
+      mm/madvise: convert madvise_vma_behavior() to use vma_flags_t
+      mm: convert miscellaneous VMA flag tests to use vma_flags_t
+      fs/proc/task_mmu: convert VMA flag tests to use vma_flags_t
+      fs/coredump: convert vma_dump_size() to use vma_flags_t
+      uprobes: convert VMA flag tests to use vma_flags_t
+      perf: convert VMA flag tests to use vma_flags_t
+      security: convert VMA flag tests to use vma_flags_t
+
+ arch/powerpc/kvm/book3s_hv_uvmem.c | 10 ++++----
+ fs/coredump.c                      | 16 ++++++-------
+ fs/proc/task_mmu.c                 | 43 +++++++++++++++++-----------------
+ include/linux/huge_mm.h            |  4 ++--
+ include/linux/ksm.h                |  4 ++--
+ include/linux/mm_inline.h          |  2 +-
+ kernel/events/core.c               | 26 +++++++++++----------
+ kernel/events/uprobes.c            | 12 ++++++----
+ lib/test_hmm.c                     |  4 ++--
+ mm/damon/vaddr.c                   |  2 +-
+ mm/filemap.c                       | 24 ++++++++++---------
+ mm/gup.c                           | 45 +++++++++++++++++++-----------------
+ mm/hmm.c                           |  6 ++---
+ mm/huge_memory.c                   | 32 +++++++++++++-------------
+ mm/internal.h                      |  2 +-
+ mm/khugepaged.c                    | 18 ++++++++-------
+ mm/ksm.c                           | 22 ++++++++++--------
+ mm/madvise.c                       | 47 ++++++++++++++++++++------------------
+ mm/mempolicy.c                     |  4 ++--
+ mm/migrate.c                       |  5 ++--
+ mm/migrate_device.c                |  8 +++----
+ mm/mmap_lock.c                     |  4 ++--
+ mm/mremap.c                        |  2 +-
+ mm/msync.c                         |  4 ++--
+ mm/oom_kill.c                      |  4 ++--
+ mm/pagewalk.c                      |  2 +-
+ mm/rmap.c                          |  8 ++++---
+ mm/vma.h                           |  4 ++--
+ security/apparmor/lsm.c            |  2 +-
+ security/integrity/ima/ima_main.c  |  2 +-
+ security/ipe/hooks.c               |  2 +-
+ security/selinux/hooks.c           | 14 ++++++------
+ 32 files changed, 202 insertions(+), 182 deletions(-)
+---
+base-commit: b61fa14ce6bcbba2cb9a96feea31b760226d6b43
+change-id: 20261101-late-2026-vma-flags-461731a636c3
+
+Cheers,
+-- 
+Lorenzo Stoakes (ARM) <ljs@kernel.org>
+
