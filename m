@@ -1,59 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793853883;
-	b=oH/syvuS33SuHDPMthlEh4l828XJzwa5P/ds4Q4kngW83C05VFzkVYSOJcSzN6Wz0wrZ
-	 YF/aTax7IyxVG9AnkWm0w+PsIVnkkMdKDDwF0g5ZJakrrSeo2vl3UYB6QXiSO0x7HpZCQ
-	 tlrfysv9xIxbIn8O09TwWU0WWwST2BRZMt0PXa5Uv+OQDGc1JSQZKdsBnYrlTo92ue0/q
-	 nSJf0ky3ItCbsKZsgEVIQgsC+sYm6Vf1GnGGocYq8r5F/EQWVMzS8cV6K7HczJOn69xn3
-	 P/v3J6GfKMZXJycCPdhZ9a0P8mllx5b1pWJWP3raIZ5kPBuu0nH1ispHynvG2HcE6AA==
+	t=1793853884;
+	b=qW81mGfRCO6xUsqlOqUYaLyv6OkK9ks25tPTiRqAqnP+ZXNBjU+VHUdbh2RNQtz8qhY1
+	 WCS01gvMDvIm3I0xyNWBlpFq6tCYaTahum6fG7zP3ohD9Nufe1aGo1CTI+pjBUyNR+PhU
+	 2bNut6EAwVurDqhDPxzmZPH8qJvdV173V79VCsZVp/k9TmFoWtEtKW1dQOU+Y743ZOQEh
+	 VT5lNTi4PwbjipuoyW591w/Bd26WKX0mEfWsfHxSVXKje32rayVzLI/lqnaIDFHpjLV5x
+	 nVUpwYisaJeyaabV2N2UiZllweS5H2y0RY++c7i1e1pXE14eS1cNoO6vEJFNHtWpxnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793853883;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793853884;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=3wzoM/i5blqpVa0PHI6iBHhA/UaoyUK0u2TZ2889m7Q=;
-	b=k1OAQBVP37wbxUkpx8bfSxZ5MoHqAVC7zt2QlOkVwKJ2VkV69OZlzr9FJaM+arUNc1Ls
-	 K8DROFOFPxImmdkL/7y8l81SHB25BOJibWt5FNatPvBxKjvBYIpsdgyaXJ0VFPiehqFFX
-	 aKVYb/SyKdamtLgE7D6j+nDfmfC2eMvBBmQlsYVuBz4CrxY35LiNaVxEdGiKdoNKsyPoa
-	 fMVgXkmAGRtoGpUjHXDuq7h/ZBgL7po4YrU/TbcSi9T4E8nKWAUjH4px5NR580IQFUJfB
-	 FV6Ku0zpVkawxbro07cJWgWFy9XQhxLiu4/Pf5WL7xIWXKKPzOqyfxd4WCmL1jRKFhQ==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=0E1yY97q/pydVP7NezmXD+YUjsSoHVSYEsMffIc/xZM=;
+	b=CMTL0TJg75Ho9YW06RYkNnSzK9M2DeCWrxfwht76i+Tz5x7ORaM8JfdYjIk9Y5XD0YGr
+	 WqnyovMjoJQnGk0gVNwr/eoEV2BRVqAo/P0WZ2O1tg6r0djBoJsyp9gJs3IzoZxggVc/A
+	 CEFfryvwkVuUEFzZnuSgUc0/OxrOXa98Agvmf64GcPaciuWYKiVbuJTk5U03MasPileN5
+	 +YcfBTfR8f0A4uJAf/buVmTzwBm1Lsd9qoV3OjupzAJbVwHpuL47mwHET7yt9R9duW0lu
+	 RVOnAiw0o9g9xPo2JH/sQkOfIDrHz5+KEfRrifh8ZFQY0Jvd84IQQ+2VZ3InR/5oc+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SyumF8Du;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SLA7DNSp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17201606A326;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2550606A333;
 	Thu,  5 Nov 2026 04:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SyumF8Du
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5421F000C1;
-	Thu,  5 Nov 2026 04:44:42 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SLA7DNSp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9CA1F0093A;
+	Thu,  5 Nov 2026 04:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793853882;
-	bh=3wzoM/i5blqpVa0PHI6iBHhA/UaoyUK0u2TZ2889m7Q=;
-	h=From:To:Cc:Subject:Date;
-	b=SyumF8DuwB1mhQ7DKcJKoThrAl/2XnlZWVntfbW+1Iam7h5p6/p8wDzO4vsnUamxr
-	 f2vjQ9gyDJp0aOk6/I1pCgZ+otIdVxM9sGHXCpzjqAP2d7Yf7Vll+84mgj6WjItQYB
-	 rgjG2nmh77sMq1poDCRz0Bk5HDTzWeZxn2aqQvlMEN/VoR3YoD8IgXhGX+7Q8Qrx5Q
-	 4R+llb5pKV1EUHx9ml9sQVDOa+TD4jOYwWDtnNAqSKGF802SOh3SFGq36KYCIKRmld
-	 doT8uF+6VPVW84ueqyanMl7HH1x97rs49DbAXNVoEm0mtgTTWxfx4mJ+vdLFycf6d5
-	 QWpSIc2gYi7rQ==
+	s=k20260515; t=1793853883;
+	bh=0E1yY97q/pydVP7NezmXD+YUjsSoHVSYEsMffIc/xZM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=SLA7DNSpQtaLkg6G/4UXy4ihZNO1i84EybNVBIO3rvMBbbx2XTwHwflUN49ZgIUbr
+	 13GwnTmSTD1yn7U7qDg8NUULnqTJ+MrtyqyA7X8HZlWE+SwhH6wIpNu52uQ9A9W/N0
+	 AYp/XrQ9Ndza/H2F85YWVoKYRGCYa+5ttpniRmJGUHDBkfqTHBmKWFN93PyW1Acphq
+	 o9WmgspkQeFKzF4SkWdTf0BXQkPk9nT0hXQECwRB17qCGTH6TwqIlDC5eSqU2Zgqfe
+	 UmYO+cYSIZ63iIcdFtgy1g08ypYEB8L2pQ+2Ol1SmwSit3qMriKafdTB49d3IzPO1H
+	 WS/zywksWuT5w==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 0/4] mm/damon: introduce age_ms damos core filter type
-Date: Wed,  4 Nov 2026 20:44:20 -0800
-Message-ID: <20261105044425.87142-1-sj@kernel.org>
+Subject: [RFC PATCH v2 1/4] mm/damon/core: add DAMOS_FILTER_TYPE_AGE_MS
+Date: Wed,  4 Nov 2026 20:44:21 -0800
+Message-ID: <20261105044425.87142-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261105044425.87142-1-sj@kernel.org>
+References: <20261105044425.87142-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -65,49 +63,98 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS access pattern supports selecting regions to apply a given
-operation to, based on their age (access frequency stability).  The age
-is specified in the aggregation intervals unit.  The aggregation
-interval can be changed by users or intervals auto-tuning features.  If
-the intention is to specify the age in a deterministic way (e.g., 2
-minutes), it should be updated for each aggregation interval update.
-Doing so is cumbersome and challenging, particularly in the interval
-auto-tuning case.
+There is no way to specify DAMOS target regions with a deterministic
+time based age range.  Extend DAMOS core filter to specify target
+regions with age in milliseconds.  Introduce new damos_filter_type,
+DAMOS_FILTER_TYPE_AGE_MS in DAMON API, and implement support of the type
+in the core layer.
 
-One straightforward solution is extending the DAMOS access pattern for
-specific deterministic time based age specification.  However, DAMOS
-core filter is a better option.  It is playing a similar role in a more
-flexible way.  It can be used for both accepting and rejecting regions
-based on if they matched or unmatched to a given criteria.  Multiple
-filters can also be combined for more flexible and detailed rules.
+Convert the age in aggregation intervals to milliseconds and use it when
+the filter is evaluated.  Reuse damos_filter->range_{min,max} to save
+the age range.
 
-Extend DAMOS core filter to support milliseconds unit based age
-criteria.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h | 16 ++++++++++------
+ mm/damon/core.c       | 10 +++++++++-
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
-Implement a new DAMOS core filter type, DAMOS_FILTER_TYPE_AGE_MS, in
-core layer and expose to DAMON API, via patch 1.  Add the support of the
-feature on DAMON sysfs ABI with patch 2.  Update the design and usage
-documents to explain the new features with patches 3 and 4,
-respectively.
-
-Changes from RFC
-- RFC: https://lore.kernel.org/20261104153645.82945-1-sj@kernel.org
-- Use div_u64() to avoid 32 bit overflow of age_ms in core.
-
-SJ Park (4):
-  mm/damon/core: add DAMOS_FILTER_TYPE_AGE_MS
-  mm/damon/sysfs-schemes: support DAMOS_FILTER_TYPE_AGE_MS
-  Docs/mm/damon/design: update for age_ms damos core filter type
-  Docs/admin-guide/mm/damon/usage: update for age_ms damos core filter
-
- Documentation/admin-guide/mm/damon/usage.rst |  3 +++
- Documentation/mm/damon/design.rst            |  3 +++
- include/linux/damon.h                        | 16 ++++++++++------
- mm/damon/core.c                              | 10 +++++++++-
- mm/damon/sysfs-schemes.c                     |  5 +++++
- 5 files changed, 30 insertions(+), 7 deletions(-)
-
-
-base-commit: b8894fdd591f7e789182cabd6b6a2aefd3d35c3d
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 380f9cf6ddd82..1302ffb6f0bcb 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -394,13 +394,16 @@ struct damos_stat {
+  * @DAMOS_FILTER_TYPE_ADDR:	Address range.
+  * @DAMOS_FILTER_TYPE_TARGET:	Data Access Monitoring target.
+  * @DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:	probe_hits weighted sum range.
++ * @DAMOS_FILTER_TYPE_AGE_MS:	Region age range in milliseconds.
+  *
+- * All types except &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET and
+- * &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM are handled by the underlying &struct
+- * damon_operations as a part of scheme action trying, and therefore accounted
+- * as 'tried'.  In contrast, &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET
+- * and &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM filters are handled by the core layer
+- * before trying of the action, and therefore not accounted as 'tried'.
++ * All types except &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET,
++ * &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM and &DAMOS_FILTER_TYPE_AGE_MS are handled
++ * by the underlying &struct damon_operations as a part of scheme action
++ * trying, and therefore accounted as 'tried'.  In contrast,
++ * &DAMOS_FILTER_TYPE_ADDR, &DAMOS_FILTER_TYPE_TARGET,
++ * &DAMOS_FILTER_TYPE_PROBE_HITS_WSUM and &DAMOS_FILTER_TYPE_AGE_MS filters are
++ * handled by the core layer before trying of the action, and therefore not
++ * accounted as 'tried'.
+  *
+  * Support for the operations-handled filters depends on the running
+  * &struct damon_operations.
+@@ -415,6 +418,7 @@ enum damos_filter_type {
+ 	DAMOS_FILTER_TYPE_ADDR,
+ 	DAMOS_FILTER_TYPE_TARGET,
+ 	DAMOS_FILTER_TYPE_PROBE_HITS_WSUM,
++	DAMOS_FILTER_TYPE_AGE_MS,
+ };
+ 
+ /**
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index d36823f4d0928..0a056949604f9 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -659,6 +659,7 @@ bool damos_filter_for_ops(enum damos_filter_type type)
+ 	case DAMOS_FILTER_TYPE_ADDR:
+ 	case DAMOS_FILTER_TYPE_TARGET:
+ 	case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
++	case DAMOS_FILTER_TYPE_AGE_MS:
+ 		return false;
+ 	default:
+ 		break;
+@@ -1336,6 +1337,7 @@ static int damos_commit_filter_arg(
+ 		dst->sz_range = src->sz_range;
+ 		break;
+ 	case DAMOS_FILTER_TYPE_PROBE_HITS_WSUM:
++	case DAMOS_FILTER_TYPE_AGE_MS:
+ 		if (src->range_max < src->range_min)
+ 			return -EINVAL;
+ 		dst->range_min = src->range_min;
+@@ -2552,7 +2554,7 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
+ 	bool matched = false;
+ 	struct damon_target *ti;
+ 	int target_idx = 0;
+-	unsigned long start, end, wsum;
++	unsigned long start, end, wsum, age_ms;
+ 
+ 	*err = 0;
+ 	switch (filter->type) {
+@@ -2594,6 +2596,12 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
+ 		matched = filter->range_min <= wsum &&
+ 			wsum <= filter->range_max;
+ 		break;
++	case DAMOS_FILTER_TYPE_AGE_MS:
++		age_ms = div_u64((u64)r->age * ctx->attrs.aggr_interval,
++				USEC_PER_MSEC);
++		matched = filter->range_min <= age_ms &&
++			age_ms <= filter->range_max;
++		break;
+ 	default:
+ 		return false;
+ 	}
 -- 
 2.47.3
