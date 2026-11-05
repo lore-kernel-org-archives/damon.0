@@ -1,61 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793840525;
-	b=SmzTEA+1Wqw1xHcVff0xPgk/ojmbl0eORT7Te/i78ox7WMe/Xsd4qZV/QAy1jIElsF1g
-	 m1G8UdGl0LNNYKV1U6nDnfLq0Z+v79x1g7Ph/8EDaydMqAZd3V5bt/W8tpc39NbZV2Sr0
-	 5LOkoGg092EvU6THN4xDDbuzYmMnqoLBhQe1uYpIMClmScBGrRwk+jV+soEmdHptH+1g/
-	 GoWLdK8DkYwXwaLKxidACTnMlB+wL+GONrsgzRvRetzEm8jAOoHoLn2BFa5O8uxhXzXt2
-	 yxTtxTCerK/5Ryc5NKFWyI7AWMRDbF4tfs8ty+6FUPROB7gkQaatEqdm/v3jfPqbMzA==
+	t=1793841350;
+	b=CW+fMbODFKdKPiOx7tNRvnMW6n+aRU0dL2vCe2Iz1tPUMmSTEUOQ14+nBqFx0pUyVSOQ
+	 k49raaxrBqXi7u0Bgrbi1pdHCsYz8j8iqyZrokgiQJQVbS5WLsJVP8c4/2iuX10E//+NV
+	 aD4vmG0NxtjQe/Qej8l2/TOn0I+0en3MfJfGAR3rE0t84SlrVQjDKZTSM2gjoEbGxmAQ6
+	 ESvZZy4C8MCCwzc7vrTlxdZpvjPazbdSQ7W2cQY1o8WHbkgCsvyRZLZXaTnxpP5HoZku8
+	 rol7F21AUZaxs6PQrTWbgerOE2338QLORHSXA1z+yGyQEDfHYyEAm5YSt4PSFzlkYOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793840525;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793841350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=AdTomW99VvfVgE5W24KzmRdqP4Moe13ZETF0Fbj5rS4=;
-	b=n2p/TNDUrGL86MffJesqFyoFAtnt4s2P+eBZk6aiM6hJGv7Sii2Yvyvmcor6/jkQiTiT
-	 uub/fzSkPehPe/g6YYnFwBTBd8U+Vc798PX2+48DeOHkUG+pUKoRIsHvSDXnt9+6szvys
-	 L3pdOI8siZJaYwHCzqajluNFNp5bX6wqJDnfwIrWXiu5TzYChGSy0Y24uZlqW43/xQ9pg
-	 Q9iiwltblDMh1YDZi8i2ZsU10KWzGGs7fZg5ohOOw4FtNYalNELtWJwM+UpAvxD0Zk7m1
-	 w09jUowDbmOx98P/2qbqt9w0CaIMIzdnW/Gqx2ONocNOKOuh522zEfCzxG+q3qR394g==
+	bh=Rko/oVa5FlJMWt6lgI18FJfDtxQ0qN5STtLR6l6SJiM=;
+	b=1xDjYxZ3jTbfWoD845o84MnFoonKZZA+YjxxDvcoWoYX2NaB4oTf00CH2vcQKfW9L2WL
+	 cXc25LREaeYjtqu1zReXDewB9oH38TZHfW1/DJalrCr2LILzbrWYcKkK7zSU6fxkB95Yh
+	 kLHgvU0WOTmqBKT6ld4Aj5vC6DvM5/Ag/I7KtA+0jFhs0iTC3+cXZqa0PPjEGEfQgLpxX
+	 AmtxmdTP8/z65eZcJBy4CSW/8gHVxlH+1myy/KcCmUMm6oCH2IbNr7ZGWdhMzwrq6IWFa
+	 ZYqWBmf+p4smF2+qr0TJrro4ilNwWSF144wesJ/0D/yrrdpy6OCKeL7swtuWCrVdO/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fVLSEKAh;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hWPhHi63;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAB8606A330;
-	Thu,  5 Nov 2026 01:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E958606A31B;
+	Thu,  5 Nov 2026 01:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fVLSEKAh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 639F21F00919;
-	Thu,  5 Nov 2026 01:02:04 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hWPhHi63
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8A21F000C1;
+	Thu,  5 Nov 2026 01:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793840524;
-	bh=AdTomW99VvfVgE5W24KzmRdqP4Moe13ZETF0Fbj5rS4=;
+	s=k20260515; t=1793841349;
+	bh=Rko/oVa5FlJMWt6lgI18FJfDtxQ0qN5STtLR6l6SJiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fVLSEKAhvrku33NQwqvpc1uvzIv9Ozs8WWw826VC/BFa80lLIcCQ+clssqoDbgDHF
-	 YOVjVYcUcsWQsx+1v4R9hQVs268jZbcB+dOu6yvVMfGqaFUloURsGYbgXtFNa5RkEr
-	 z32FsIuuUgthsX/hKkTTlpXakgqZPESIyl1XYKlaspyzQQ7Yw1LO/Zoz/Eq4+ne6wY
-	 wZZaA46fjXPR/GuEGq+8xNhaInoyIYsZz0pzx2r3C1SBe4X7ckzHYntZnNxkouoYrB
-	 JQJlNnAnqRFjtBKhlZT5zLLzcC7S3YxTYDlhmxz2U9wXaybF3lopHXk+OprHFmIC1R
-	 An49kSjhTDREQ==
+	b=hWPhHi63xBWIe8w49sI1jemg42UKII7ysuNMr8mEs0I76GTzAMMS9I+OkKbonZvZ4
+	 QSWOmxA1dYXxbaWc7H8ZMlJnQxTs+shIg0AmbKdZqNwjJ+2o8QIG/hbnkvPZA9PYbu
+	 5fJXuOoDTeqnzgcwuV5v3gk+gGYspxsQdKXa6NrDE5lTxwbVc3wA5Mw7DmWXbijYrQ
+	 5T9EFbM/hgxEX3nWa0Z7efOyzGquX3Caepdl1yyInswDFRChZjikU5uuRQF6HYcO5M
+	 jH7X1ABapKmgbn0eTYj1lL4JbkR/mPJMCmTCoIhAdL91yeJsZ1h2nl0MfvmjzLjeri
+	 iHnb62PFUYiWA==
 From: SJ Park <sj@kernel.org>
-To: Manuel Ebner <manuelebnerli@mailbox.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
 	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	Randy Dunlap <rdunlap@infradead.org>,
-	Daniel Pereira <danielmaraboo@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
 	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4] Docs/admin-guide/mm/damon/lru_sort: fix grammar and style
-Date: Wed,  4 Nov 2026 17:01:57 -0800
-Message-ID: <20261105010157.87652-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH 0/4] DAMOS access pattern supports selecting regions to apply a given
+Date: Wed,  4 Nov 2026 17:15:41 -0800
+Message-ID: <20261105011542.87865-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261104202959.128646-2-manuelebnerli@mailbox.org>
+In-Reply-To: <20261104153645.82945-1-sj@kernel.org>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -68,33 +66,58 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed,  4 Nov 2026 21:29:58 +0100 Manuel Ebner <manuelebnerli@mailbox.org> wrote:
+On Wed,  4 Nov 2026 07:36:39 -0800 SJ Park <sj@kernel.org> wrote:
 
-> Fix tenses. Split long sentences thereby improve readability.  Replace
-> 'set as' with 'set to'. Replace [] with () to make the file uniform.
+I forgot adding a subject line.  As a result, first part of below paragraph was
+added to the subject.  Sorry for inconvenience.  So, please read below
+paragraph before the quoted followup paragraph to read the full intentional
+cover letter message.
+
+    DAMOS access pattern supports selecting regions to apply a given
+    operation to, based on their age (access frequency stability).  The age
+    is specified in the aggregation intervals unit.  The aggregation
+    interval can be changed by users or intervals auto-tuning features.  If
+    the intention is to specify the age in a deterministic way (e.g., 2
+    minutes), it should be updated for each aggregation interval update.
+    Doing so is cumbersome and challenging, particularly in the interval
+    auto-tuning case.
+
+> One straightforward solution is extending the DAMOS access pattern for
+> specific deterministic time based age specification.  However, DAMOS
+> core filter is a better option.  It is playing a similar role in a more
+> flexible way.  It can be used for both accepting and rejecting regions
+> based on if they matched or unmatched to a given criteria.  Multiple
+> filters can also be combined for more flexible and detailed rules.
 > 
-> Signed-off-by: Manuel Ebner <manuelebnerli@mailbox.org>
-> Reviewed-by: SJ Park <sj@kernel.org>
-> CC: Daniel Pereira <danielmaraboo@gmail.com>
-> ---
-> Daniel thanks for the Feedback.
-
-FWIW, it was a feedback to the reposting [1] for mm.git merge quest.  Sharing
-the link for a case someone wonders where the feedback is.
-
-> SJ, could you please reapply this patch, if you think it's worth it.
-
-From the next time, please discuss on the feedback by replying to it and ensure
-the discussion is completed, before posting a new version of the patch.
-
-This patch is already in mm.git as commit e576f9950ada
-("Docs/admin-guide/mm/damon/lru_sort: fix grammar and stlye").  Andrew, could
-you please replace it with this version?
-
-[1] https://lore.kernel.org/CAMAsx6epLXuUjaV3J0=SWAuLvajr4h58DTM9gL+LMmaCyjcxUg@mail.gmail.com
+> Extend DAMOS core filter to support milliseconds unit based age
+> criteria.
+> 
+> Implement a new DAMOS core filter type, DAMOS_FILTER_TYPE_AGE_MS, in
+> core layer and expose to DAMON API, via patch 1.  Add the support of the
+> feature on DAMON sysfs ABI with patch 2.  Update the design and usage
+> documents to explain the new features with patches 3 and 4,
+> respectively.
+> 
+> SJ Park (4):
+>   mm/damon/core: add DAMOS_FILTER_TYPE_AGE_MS
+>   mm/damon/sysfs-schemes: support DAMOS_FILTER_TYPE_AGE_MS
+>   Docs/mm/damon/design: update for age_ms damos core filter type
+>   Docs/admin-guide/mm/damon/usage: update for age_ms damos core filter
+> 
+>  Documentation/admin-guide/mm/damon/usage.rst |  3 +++
+>  Documentation/mm/damon/design.rst            |  3 +++
+>  include/linux/damon.h                        | 16 ++++++++++------
+>  mm/damon/core.c                              |  9 ++++++++-
+>  mm/damon/sysfs-schemes.c                     |  5 +++++
+>  5 files changed, 29 insertions(+), 7 deletions(-)
+> 
+> 
+> base-commit: 32e967f279b24f952a5482e2c427894787848ee0
+> -- 
+> 2.47.3
+> 
+> 
 
 
 Thanks,
 SJ
-
-[...]
