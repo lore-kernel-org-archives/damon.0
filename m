@@ -1,51 +1,51 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.145
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.186
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793947248;
-	b=CS7/AA6DdiPXTQEgvMrAVB4y+YCQlaozvbJxWTsgKHQS1fx6LdgqEBGdx7n9NHF8vwle
-	 xxOsAY2K8udW1xCFzKzBZa1axdtxKDVbHQ+c0QXMsnyPjaab16/MRmQJZPf45ydnT7CHX
-	 7BYQHWpxuD95kSWNaqMTGA8UBmTaP3aOy/YFntaylpxorszi2MEg6b0DeQ9z9WCswrwNN
-	 PSYSsjZaSCCQ4qB8lybn8ypZ9TDpI4OhaLq9FS6Jiv9QmRZNZxJxHOUpBvQEZwgVs4u6X
-	 0UBm4QwivEUjRgwkMyJ+JKShkbVkKCuWJC//xB8Jl96lHJ2CJBB/hfwxhIZyT8kdq/A==
+	t=1793948381;
+	b=gAldWVUCuz1+W7elsuKl/PDBPzs3W4yGGi7lh3ta3aG/wGoInlI1eWfvAWd9un6IB0uD
+	 Xq8TcFNiBVI7IWFVLrBtjqikurzfWvFcN963Ua2a3qt+e6otR5vtyqQa0gC7Z/iYeaHmI
+	 41B1EJacowKYZqcqLzk4tyCuRcdc/E02PQwrjM9ffffOJLJ/9a2y1Dl3SBy445uR60dII
+	 WHk8jdMMPLHYmLc5sel3dmN8kg1EUdswX0okO1+QhXglmbKzx4VrxddUBp68Pcw9wv9gV
+	 PYDWo/7hYbxn1LjxRkbOlyRPv+JxK1JWOEI7PgEu4NcFyUIoQKOy6CRBzPFBZ9fR+XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793947248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793948381;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:Date:Message-ID:
 	 X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=/4USJW9qcyUNn/FtQy4xUl++EAECigPJpoER1jiXivk=;
-	b=3z6siBoRIm6mbM+Zd0oDi6YV7ZFyOXo1Efx2rXTZ6us1lufaEv/YulDNAz9WNbHP21n1
-	 M86c7WLfONbGAfYn1ZqtCA6ZuLlTY+6gpAyHJCpJuRMNQzkLv8EdWcvu8ivoskxgt4iNL
-	 9PdFYezAbJxSgqlPjy67vCdiKas3u8tRopoRJUuFLbfmBblaZ6tw9DUNI9XK7kPbpRu1z
-	 X4Bpi0VdzDYJI6dHVK1f66K5DgdWhDaEW6y+FGbw/B/ACKqFBqoMxVhoJxwnu34sdeAvo
-	 Vm0CmM1JjOU0UOyY1dX4gEBmVHXa88/FimsCzEyPUBgwNl0UAl3E5vkkQe1U6QRgmDw==
+	bh=OcOt4PX0tQHzNhn0VTU6sv5KTaqGga1IVFO+qQedORk=;
+	b=mZQ2qPfcZuMzpo0fojKuhud3T1uBCKEl8kza/ahZlsFwSucMkzzhu6RbS2XvcUyH+gz0
+	 pvJFzak35m2jHBbvlo3hO68hW5n/Jf/Eg77VoknIwvU8XnPzhxWcL6XU/37wdMm+X4psC
+	 QdrwKB35X9g+VytYexInW4jN2rl+uO86QU+j2Nmcmd0Gf19IH1t1+rEwRBd6Ioe7kMcdX
+	 uRCDV5vWA+s97FgFiSLSsshPQOZJdN+Z2tLBqRsQnjsZ8SkE4iZrN9wiYpESl2+RoxLFj
+	 gglLqJ7Ps3IlnxYfF9bLp/5fvnyMntdprG7dcLOjK4EJTJ9B9g7riXxouTxaasGeZLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=IcbILbbr;
-	arc=none smtp.remote-ip=91.218.175.145
-Received: from mta0.migadu.com (out-145.mta0.migadu.com [91.218.175.145])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=OQ135yXp;
+	arc=none smtp.remote-ip=91.218.175.186
+Received: from mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C1E606A328
-	for <damon@lists.linux.dev>; Fri,  6 Nov 2026 06:40:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A0C1E606A328
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D97606A32C
+	for <damon@lists.linux.dev>; Fri,  6 Nov 2026 06:59:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51D97606A32C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=IcbILbbr
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=OQ135yXp
 X-Envelope-To: damon@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=/4USJW9qcyUNn/FtQy4xUl++EAECigPJpoER1jiXivk=;
+DKIM-Signature: a=rsa-sha256; bh=3ZBSNl6NQMmaNPPXZuPSoh3zWTH6z/X2ys0Il7SoJQY=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793947245; v=1; x=1794552045;
- b=IcbILbbryd1I3w1iL8fhJLF2OUYHv5Tyqkc68QQjOHZymCkhfCKDjFPt8t5LirvIlRN47tqe
- ee8LhFrRGDFMoSWHsHZ1JFPRE1zEzqKvRbBoUIV3cCuFStEPm2EHHYMP8JIUF+xhi6tgbXWaNEp
- SgWZgo+3zPwEUJKaCwLHEWp8=
+ t=1793948377; v=1; x=1794553177;
+ b=OQ135yXpIr2On9kCLVcHKB66wbY/9XnE9jgMuylMZcxWnBg5ejs0kivZuG+F9TF6SeHGvSey
+ C4aZPBJ4rDvrdNQCQPzJX5Tic26erGhCz+6ro6sEZmxIwShxbUh3TDBgl2iAKb4OaPRne0rHMDF
+ iyvVr3VG6p1Pa9Ztn1FmynAk=
 X-Envelope-To: damon@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 500c6a5405d2c587;
-	Fri, 06 Nov 2026 06:40:42 +0000
-X-Mizu-Trace-ID: 500c6a5405d2c587
+Received: by smtp.migadu.com with ESMTPS id fab8f084cc4903d4;
+	Fri, 06 Nov 2026 06:59:35 +0000
+X-Mizu-Trace-ID: fab8f084cc4903d4
 X-Migadu-Flow: FLOW_OUT
 From: Lance Yang <lance.yang@linux.dev>
 To: ljs@kernel.org
@@ -137,12 +137,12 @@ Cc: akpm@linux-foundation.org,
 	linux-security-module@vger.kernel.org,
 	linux-integrity@vger.kernel.org,
 	selinux@vger.kernel.org
-Subject: Re: [PATCH 08/13] mm: convert miscellaneous VMA flag tests to use vma_flags_t
-Date: Fri,  6 Nov 2026 14:40:36 +0800
-Message-ID: <20261106064036.47774-1-lance.yang@linux.dev>
+Subject: Re: [PATCH 09/13] fs/proc/task_mmu: convert VMA flag tests to use vma_flags_t
+Date: Fri,  6 Nov 2026 14:59:25 +0800
+Message-ID: <20261106065925.50906-1-lance.yang@linux.dev>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20261105-late-2026-vma-flags-v1-8-0d3cd15ab75f@kernel.org>
-References: <20261105-late-2026-vma-flags-v1-8-0d3cd15ab75f@kernel.org>
+In-Reply-To: <20261105-late-2026-vma-flags-v1-9-0d3cd15ab75f@kernel.org>
+References: <20261105-late-2026-vma-flags-v1-9-0d3cd15ab75f@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -156,14 +156,114 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, Nov 05, 2026 at 09:30:59PM +0000, Lorenzo Stoakes (ARM) wrote:
->Replace use of the legacy vm_flags_t flags with vma_flags_t values in the
->remaining straightforward VMA flag tests scattered throughout core mm, HMM
->(and its test module), DAMON and the OOM reaper.
+On Thu, Nov 05, 2026 at 09:31:00PM +0000, Lorenzo Stoakes (ARM) wrote:
+>Replace use of the legacy vm_flags_t flags with vma_flags_t values where
+>VMA flags are tested directly in /proc/$pid/[s]maps, pagemap, clear_refs
+>and PROCMAP_QUERY.
+>
+>In replacing vm_flags_clear() (which takes the VMA write lock) with
+>vma_clear_flags() (which does not) in clear_refs_write(), we explicitly
+>write lock the VMA. The mmap write lock is already held at this point.
+>
+>The show_vma_header_prefix() and show_smap_vma_flags() output functions and
+>the thp_vma_allowable_orders() call continue to use legacy flags for the
+>time being.
 >
 >No functional change intended.
 >
 >Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 >---
+> fs/proc/task_mmu.c | 43 ++++++++++++++++++++++---------------------
+> 1 file changed, 22 insertions(+), 21 deletions(-)
+>
+>diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+>index 22361607020d..b6e8ef15e40e 100644
+>--- a/fs/proc/task_mmu.c
+>+++ b/fs/proc/task_mmu.c
+>@@ -569,18 +569,18 @@ static struct vm_area_struct *query_matching_vma(struct proc_maps_locking_ctx *l
+> 
+> 	/* VMA permissions should satisfy query flags */
+> 	if (flags & PROCMAP_QUERY_VMA_FLAGS) {
+>-		u32 perm = 0;
+>+		vma_flags_t perm = EMPTY_VMA_FLAGS;
+> 
+> 		if (flags & PROCMAP_QUERY_VMA_READABLE)
+>-			perm |= VM_READ;
+>+			vma_flags_set(&perm, VMA_READ_BIT);
+> 		if (flags & PROCMAP_QUERY_VMA_WRITABLE)
+>-			perm |= VM_WRITE;
+>+			vma_flags_set(&perm, VMA_WRITE_BIT);
+> 		if (flags & PROCMAP_QUERY_VMA_EXECUTABLE)
+>-			perm |= VM_EXEC;
+>+			vma_flags_set(&perm, VMA_EXEC_BIT);
+> 		if (flags & PROCMAP_QUERY_VMA_SHARED)
+>-			perm |= VM_MAYSHARE;
+>+			vma_flags_set(&perm, VMA_MAYSHARE_BIT);
+> 
+>-		if ((vma->vm_flags & perm) != perm)
+>+		if (!vma_test_all_mask(vma, perm))
+> 			goto skip_vma;
+> 	}
+> 
+>@@ -647,13 +647,13 @@ static int do_procmap_query(struct mm_struct *mm, void __user *uarg)
+> 	karg.vma_end = vma->vm_end;
+> 
+> 	karg.vma_flags = 0;
+>-	if (vma->vm_flags & VM_READ)
+>+	if (vma_test(vma, VMA_READ_BIT))
+> 		karg.vma_flags |= PROCMAP_QUERY_VMA_READABLE;
+>-	if (vma->vm_flags & VM_WRITE)
+>+	if (vma_test(vma, VMA_WRITE_BIT))
+> 		karg.vma_flags |= PROCMAP_QUERY_VMA_WRITABLE;
+>-	if (vma->vm_flags & VM_EXEC)
+>+	if (vma_test(vma, VMA_EXEC_BIT))
+> 		karg.vma_flags |= PROCMAP_QUERY_VMA_EXECUTABLE;
+>-	if (vma->vm_flags & VM_MAYSHARE)
+>+	if (vma_test(vma, VMA_MAYSHARE_BIT))
+> 		karg.vma_flags |= PROCMAP_QUERY_VMA_SHARED;
+> 
+> 	karg.vma_page_size = vma_kernel_pagesize(vma);
+>@@ -970,7 +970,7 @@ static void smaps_pte_entry(pte_t *pte, unsigned long addr,
+> {
+> 	struct mem_size_stats *mss = walk->private;
+> 	struct vm_area_struct *vma = walk->vma;
+>-	bool locked = !!(vma->vm_flags & VM_LOCKED);
+>+	bool locked = vma_test(vma, VMA_LOCKED_BIT);
+> 	struct page *page = NULL;
+> 	bool present = false, young = false, dirty = false;
+> 	pte_t ptent = ptep_get(pte);
+>@@ -1017,7 +1017,7 @@ static void smaps_pmd_entry(pmd_t *pmd, unsigned long addr,
+> {
+> 	struct mem_size_stats *mss = walk->private;
+> 	struct vm_area_struct *vma = walk->vma;
+>-	bool locked = !!(vma->vm_flags & VM_LOCKED);
+>+	bool locked = vma_test(vma, VMA_LOCKED_BIT);
+> 	struct page *page = NULL;
+> 	bool present = false;
+> 	struct folio *folio;
+>@@ -1728,7 +1728,7 @@ static int clear_refs_test_walk(unsigned long start, unsigned long end,
+> 	struct clear_refs_private *cp = walk->private;
+> 	struct vm_area_struct *vma = walk->vma;
+> 
+>-	if (vma->vm_flags & VM_PFNMAP)
+>+	if (vma_test(vma, VMA_PFNMAP_BIT))
+> 		return 1;
+> 
+> 	/*
+>@@ -1798,9 +1798,10 @@ static ssize_t clear_refs_write(struct file *file, const char __user *buf,
+> 
+> 		if (type == CLEAR_REFS_SOFT_DIRTY) {
+> 			for_each_vma(vmi, vma) {
+>-				if (!(vma->vm_flags & VM_SOFTDIRTY))
+>+				if (!vma_test(vma, VMA_SOFTDIRTY_BIT))
+> 					continue;
+>-				vm_flags_clear(vma, VM_SOFTDIRTY);
+
+vm_flags_clear() still warns on VM_SOFTDIRTY when pgtable_supports_soft_dirty()
+is false. Did you mean to drop that?
+
+(Vaguely recall you weren't too keen on that warn, though I could be wrong.)
+
+Otherwise, LGTM!
 
 Reviewed-by: Lance Yang <lance.yang@linux.dev>
