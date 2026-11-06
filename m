@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793930768;
-	b=TzH6TLu8bASUBTWYmoan92D1Bq7SFRgMZILdEUi7cHKgmts9UklNmkSrEyi7URjnOROa
-	 nHk+MOinRpazAdNnn6Llco0SeRRdJ5WHBWib2pAqEWRNWn2jlc3PCewpyyIzLq4vRFbZ9
-	 pDf65Y/HgRz/pLzpmi5/go2GtCHRj4o2Qa0OIxKGwlBHw1Tb7Kgka7uZ9HjkDMpDM3FXs
-	 Beca78djXc6SKYdz7ziN5mJzTXrK59SqaHc52piYx0ls6p1Q3OF+tWO0IBcODppLprgnt
-	 yUBSTfkjCpxyxgO/clETDM7C9BixRggC+ZgHgNBQ/4XCaWkooNxg9oX4BqyBvVDCamA==
+	t=1793930769;
+	b=mavlSJpEdJiqxVaLPYNRtv3nnLlQB7WB28PgWvdOGi7YPAG05Wt2mkTAzrL9GQaoUlHF
+	 xxucdzLX6K3jsZqwqN0r7YIC1WAGkxLFQP/4ORjrx4DbAk6iNca2WNGoZOwf5IGH+qn1R
+	 BIbZ1k1e+TqgqB47/XkNeVxOI2m5Y2q75QfL4BzwHUkYHbIW1D8JKRbS8rfk+w+mDWVkw
+	 yNM9TOMnC4O5e3508em+zG1SZIlgXtK9byiCZS9ZcEXu6x4sWxiRWNfDYtWhcn16n6hpc
+	 ZHSRK6TWiV2ED1k0Z8czqQGM6qCLlrMZLLSwlzolKM++zzUIO9JxfpV/q1BdluX1AQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793930768;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793930769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+jfAcZvSxO4g28unhuivWT88AZU4hI/BOX/Z4s4PPy0=;
-	b=AqAHv/q3nPUJCSZFLNfInNYszeuiIKkdGF/xv0A9rlwBTWbVRlOyebMc1yjghNP3L9AC
-	 O8TXkvI7huazeGGymnjTC+EW/4OR2q+oiUjsqNclG60yQr/6tFJScJgcMi+O5NUOyKmpG
-	 7iuIFc0GquUoorJDCHHoZUp3sth+mv96WNopY+NolRHkhXgUx94ntPr4/Mv7twXt4JDZu
-	 dL1rTZmWDsrRefkD8ohGQUd9Shh5raTzma/WNXtKf6mQoQPZNyAP1YYtiHtKrje4i0uVx
-	 iM+h/n5ING4VvgpifuESO62Mfh0eevwyM+Om2hIy6QJoq0sAwXfMAg3hll1KDSWfT6Q==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=0n/wDrzFbORfw6YzEg6DroNWO8MgvFUslfYGWlwdzxI=;
+	b=Lk7yIpHzPiv31/jROUg4YLoH1FAO6oQMngZDOm/iFHS6aMEpS8sIopJOQVL16a78VeST
+	 nwGC++cBmE6Krija/IQVlilSqQ+KatuTv7PIcRsJCjJfmBbuBIosoUx7N2Dz+5WouBEQ0
+	 1inqxUXDxg/lsQczrOOM1crSTgYn297BMCosNqSQKGWyc4U02Z5ipdpjWJhYN6wbBHMzo
+	 d6H5rJwAGTv5QRKqppgYc/ExuqWw/Dimipx6to38hrzcVBL1i5VXrQ1Mwzhz+X9DZcV1a
+	 /UwZppkkrUOjTXwx0C9I+OkJYYB5QtBhRmdgo42zK54bwdhnf3T216jAg6K3lzZoW+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YViRP3+J;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Tphx6Tfi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B73C606A31B;
-	Fri,  6 Nov 2026 02:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC04F606A33E;
+	Fri,  6 Nov 2026 02:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YViRP3+J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0191F0089F;
-	Fri,  6 Nov 2026 02:06:06 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Tphx6Tfi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2711F008A1;
+	Fri,  6 Nov 2026 02:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793930766;
-	bh=+jfAcZvSxO4g28unhuivWT88AZU4hI/BOX/Z4s4PPy0=;
-	h=From:To:Cc:Subject:Date;
-	b=YViRP3+JBx0U/NyWH9/JaYvOBxsvdJHuPWnx/znRaVcUJG5Br2bSxRVILsrtyploB
-	 I2N9qQ0q4+5BpquvAzUvhS+dNU075TUW9mQUdJIHNP5Z5nZ/5KSXANCVGml5axjAc5
-	 yYPDc1H+vczREA3nKWnImiQ+7dm2OWIPy9AXfWF+thanS9C7wmYd5cRC36us/N6M5W
-	 nBCyyE+sBwC7AmGQargd7SZ1zZwjKSw+vH+9jJRlpz0mCOpM2UfGshveKWq4oU/L9g
-	 1RSG6L1f21Cc8+ENpo04tG0Fl6ccLVTtKAin6eTfAMMWSuaK8h4de/vFIouv/BZfZr
-	 xNGAxY3mpYULg==
+	s=k20260515; t=1793930768;
+	bh=0n/wDrzFbORfw6YzEg6DroNWO8MgvFUslfYGWlwdzxI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Tphx6Tfik8E4UtEnOk8Clt/iHUWlHE6k1PWmjL4eJTrPCPcxUwl5+3udkaPcNrUaV
+	 3/z9ygt75kQexmfFkoR79CmuIg78I8JbA3mUF9OBg7TCq3NK+BdukJSyeenTWcJd0i
+	 H4Z6L5acwe0egZDICo87IHlxCzsuIWcffoLi/GrVvoK9BwcVhfHRwzQGXOYZhedKQg
+	 ptMN9VhvdzR+RzuMfCDNoqAgjSjnNW4ig5xRWF7eLHQaye/ax+itiZfHjT/o6PL7BQ
+	 LYuErvG7amcFnH+i6tcKiMK4A1uyRZQb0h2FJTDRL/RrJosMEo2Y8Qfw67Xks8bGQ9
+	 7IfNSHH0Qo95A==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -48,11 +48,14 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 0/4] mm/damon: introduce age_ms damos core filter type
-Date: Thu,  5 Nov 2026 18:05:54 -0800
-Message-ID: <20261106020559.98352-1-sj@kernel.org>
+	linux-mm@kvack.org,
+	Aveline Noir <jm5905938@gmail.com>
+Subject: [PATCH 4/4] Docs/admin-guide/mm/damon/usage: update for age_ms damos core filter
+Date: Thu,  5 Nov 2026 18:05:58 -0800
+Message-ID: <20261106020559.98352-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261106020559.98352-1-sj@kernel.org>
+References: <20261106020559.98352-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -64,119 +67,29 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS access pattern supports selecting regions to apply a given
-operation to, based on their age (access frequency stability).  The age
-is specified in the aggregation intervals unit.  The aggregation
-interval can be changed by users or intervals auto-tuning features.  If
-the intention is to specify the age in a deterministic way (e.g., 2
-minutes), it should be updated for each aggregation interval update.
-Doing so is cumbersome and challenging, particularly in the interval
-auto-tuning case.
+Update DAMON usage document for the newly added age_ms DAMOS core filter
+type.  Add an explanation of how the age range for the filter can be
+specified by the user.
 
-One straightforward solution is extending the DAMOS access pattern for
-specific deterministic time based age specification.  However, DAMOS
-core filter is a better option.  It is playing a similar role in a more
-flexible way.  It can be used for both accepting and rejecting regions
-based on if they matched or unmatched to a given criteria.  Multiple
-filters can also be combined for more flexible and detailed rules.
+Reviewed-by: Aveline Noir <jm5905938@gmail.com>
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ Documentation/admin-guide/mm/damon/usage.rst | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Extend DAMOS core filter to support milliseconds unit based age
-criteria.
-
-Implement a new DAMOS core filter type, DAMOS_FILTER_TYPE_AGE_MS, in
-core layer and expose to DAMON API, via patch 1.  Add the support of the
-feature on DAMON sysfs ABI with patch 2.  Update the design and usage
-documents to explain the new features with patches 3 and 4,
-respectively.
-
-Reviewer notes (no need to be in git history).
-
-Test
-====
-
-Confirmed the age_ms filter is working using masim [1] and DAMON
-user-space tool [2]'s DAMOS filter-based snapshot feature, like below.
-
-Start masim.
-
-    $ ./masim.py run --config_file ./configs/stairs-500mb.cfg \
-            --quiet --repeat 10 &
-
-Start DAMON for access monitoring.
-
-    $ sudo ./damo start --probe \
-            --probe_prep set_pgidle --probe_filter allow pgidle_unset
-
-Monitoring results without an age_ms filter shows regions of any age.
-
-    $ sudo ./damo report attrs --style idle-time-percentiles
-    # total recency percentiles
-    <percentile> <idle time>
-      0     0 ns  |                    |
-      1     0 ns  |                    |
-     25   100 ms  |                    |
-     50  3.300 s  |****************    |
-     75      4 s  |******************* |
-     99  4.100 s  |********************|
-    100  4.100 s  |********************|
-    memory bw estimate: 66.628 GiB per second
-    total size: 7.797 GiB
-    record DAMON intervals: sample 5 ms, aggr 100 ms
-
-With an age_ms DAMOS filter applied for snapshotting, shows regions of
-given age range.
-
-For [0, 2s range]
-
-    $ sudo ./damo report attrs --style idle-time-percentiles \
-            --snapshot_damos_filter allow age_ms 0 2s
-    # total recency percentiles
-    <percentile> <idle time>
-      0     0 ns  |                    |
-      1     0 ns  |                    |
-     25     0 ns  |                    |
-     50     0 ns  |                    |
-     75   100 ms  |*                   |
-     99   200 ms  |**                  |
-    100  1.600 s  |********************|
-    memory bw estimate: 100.311 GiB per second  df-passed: 0 B per second
-    total size: 7.797 GiB  df-passed 0 B
-    scheme stats
-    tried 0 times (0 B)
-    applied 0 times (0 B)
-    0 B passed filters
-    quota exceeded 0 times
-    0 B
-    tried 0 snapshots (max 0)
-    record DAMON intervals: sample 5 ms, aggr 100 ms
-
-[1] https://github.com/sjp38/masim
-[2] https://github.com/damonitor/damo
-
-Changes from RFC v2
-- RFC v2: https://lore.kernel.org/20261105044425.87142-1-sj@kernel.org
-- Rebase to the latet mm-new.
-- Collect R-b: from Aveline.
-- Add test results to the cover letter.
-Changes from RFC
-- RFC: https://lore.kernel.org/20261104153645.82945-1-sj@kernel.org
-- Use div_u64() to avoid 32 bit overflow of age_ms in core.
-- Rebase to the latest mm-new.
-
-SJ Park (4):
-  mm/damon/core: add DAMOS_FILTER_TYPE_AGE_MS
-  mm/damon/sysfs-schemes: support DAMOS_FILTER_TYPE_AGE_MS
-  Docs/mm/damon/design: update for age_ms damos core filter type
-  Docs/admin-guide/mm/damon/usage: update for age_ms damos core filter
-
- Documentation/admin-guide/mm/damon/usage.rst |  3 +++
- Documentation/mm/damon/design.rst            |  3 +++
- include/linux/damon.h                        | 16 ++++++++++------
- mm/damon/core.c                              | 10 +++++++++-
- mm/damon/sysfs-schemes.c                     |  5 +++++
- 5 files changed, 30 insertions(+), 7 deletions(-)
-
-
-base-commit: f10c161fdac5b0b3fac99877805e64e682c56281
+diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+index cc7465251bb6f..6093b1c8fbfd9 100644
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -559,6 +559,9 @@ For ``probe_hits_wsum`` type, you can specify the minimum and maximum probe
+ hits weighted sum value for the filter to ``min`` and ``max`` files,
+ respectively.
+ 
++For ``age_ms`` type, you can specify the minimum and maximum age in
++milliseconds for the filter to ``min`` and ``max`` files, respectively.
++
+ For ``memcg`` type, you can specify the memory cgroup of the interest by
+ writing the path of the memory cgroup from the cgroups mount point to
+ ``memcg_path`` file.  For ``addr`` type, you can specify the start and end
 -- 
 2.47.3
