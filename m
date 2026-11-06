@@ -1,93 +1,77 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793960026;
-	b=BkR6aj5ZeCtWMDu6vul64vOLd0tBl/2ZgO8tCEh+bL9lf/llv8ECdpMt9k1qL+Egjnkn
-	 snXrQ27AVHQ5Ee8HpNLmovJ1p+Z+X9AcTvwDGWGhBPKcy2T43tlX+XxlVggAB65lte1QC
-	 +zcuvUfkXAx4aQ4kbCyIcz1AcH1UckWxAyWGg/Z9iISeCbMe09anvcPYwSI6oZyifiLo8
-	 eaQBhX5b//Q1n4ztnEgIl7TKzVlltqB8brUKU5yGTxAAT6gxDtMrcLOz8p0ZpJrI7p85e
-	 zEgnfeCOT7WY/kYgOi8yzP2IWAhtq46TKLx4/HXwNb3iSGF0lPzUgQuu1riRcNIJIJQ==
+	t=1793962010;
+	b=kZnHJrRQKvkDPG8LOe7V0K+CM/REhmGksf0GL9ElVxv2TnmqVCIlY2CZMo3FtuVrThNs
+	 suCr5p4+BJawEc/ErOm/SQ3y1C/N6ba7f9M2iixBNAPoN78pGJ3/VB5YG8bS4xDQJ9vT6
+	 YcIyqGOknXwZ5fUEwiO0JXJ9sN9Ue+DnmwiJrsQRc4BU8DV3imPe0XL2Rjgj0oZ5j/WcD
+	 9mspPpa9hLfbIIcrrWt7Zuy1DaohFPihrE8rrkFC6yiQT8ElWpUuR/jBTQeAp+YzBLsTJ
+	 H7V7GIMBpd09iwAOsVTp+kuHS4WK+WZ9PLZ4yzbKTt71w9czPOefpX82pvpV3vPjuKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793960026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793962010;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=cFVMR87EGNpkNOCnSwEX2b70j/gGYf8Jkc9yEvS8W5Y=;
-	b=2lOMFaOb8G+xAUauT1HWRGCCaoECIzcqs3NKGAQc4lNAgLpV++2wRVE2xD0b520lfDYZ
-	 OQCkNkf2NadnHPvizY7Cn6tHOYZkjcsFWvT3QOCIxJvPZ5x4f6OX1ZmLdoFJRwh0qlt7H
-	 HcPg/CnvYCpqM6Ncf+9qAk8enXpD17LvtQwT0/if+24P5MX+dKSQ+SyQYEVIYjwYdHsuk
-	 1/XkK9fZ3uYV/HYjEdSmqBbjxITJ8+dUxCXEafElhRdu+nyF6Hi4RmTYKPW3H2aejhY9n
-	 eH4ZeMP6iDYDgU6Wi0BVMuitDxGh8MFRVcwH0GFcTY1+h+s7HMqXBeH9G4oBYk0EPSg==
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=R4UXJ8D6lFItiQJcibx9Gvr2Xk0BfzjmL2Cx9RaqZ2M=;
+	b=SYFEHufbF9aqOEa4yqDuFKtrfKTLwikOx0WKTz2EMr3NEcCX11zo8WkMwqFhN27XEQAO
+	 31oPPs2vE6wQ4VFbyBwx2lMHFwXpvC8PgCt53g+ye9NHX3iFBzg5NTEl2nRiF15fEAW95
+	 XU8tZsXQORW+PYcL6njFs8Wje3QMtsRglaiAVVAzu+wRCgvs8vVF4FpWqALi8zAMMT+Fw
+	 MJ1xVkJRhJulg+VIepQDUl9GJp4nfQOL/ru8piX8MclcIwroN9s7kSV3zv3Q3GQv/fi34
+	 VnwSdy99xsByE4evnoRTydyeRTsuMlxy/W4n2CNJXsWci0wI8TJaIIcar0U2unfAdIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YwYtVdd3;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hCunnEIZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A68606A335;
-	Fri,  6 Nov 2026 10:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB6A606A326;
+	Fri,  6 Nov 2026 10:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YwYtVdd3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE401F008A6;
-	Fri,  6 Nov 2026 10:13:29 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hCunnEIZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0321F0089F;
+	Fri,  6 Nov 2026 10:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793960025;
-	bh=cFVMR87EGNpkNOCnSwEX2b70j/gGYf8Jkc9yEvS8W5Y=;
+	s=k20260515; t=1793962009;
+	bh=R4UXJ8D6lFItiQJcibx9Gvr2Xk0BfzjmL2Cx9RaqZ2M=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YwYtVdd3f+9r0rGtBh8d1tRPhVBL4qmvxhKCMZkV8lomBwDWV76lkDV2ZPvzrsUcy
-	 trEyAB1TCppduadMVhftHMFVxgeYolc/EMPmtth1hXWiwFgz1kQ0EKU4byddd4Ylof
-	 Kw8NW48Kkjzx+SlpAufJOnfBvexabI3n6q9ar/Hme/DA7MCCquYR1YVU8yI3FmAIG8
-	 1O4CYPlx4m2ZTD5HMwTNZOFUugRf4D3Ab0jOV8qahLlzSisYMSFxFIYqDA/1U31men
-	 TNFTuhw5aLNcrLSy3wXMfK9DUwkHBXM2MWRhS62JTGof+13zFAAyi0DL6QeEKCjKfL
-	 pWOWcHUvqbeJQ==
-Date: Fri, 6 Nov 2026 10:13:27 +0000
+	b=hCunnEIZfKlr6qoMUNMOsdGsxQ7IjWUgxiafHv1Z+GtVnHVIkVloNm7JSe0jucf4v
+	 Be00OZ6LyBekuVn6BjvLPY9n2k+e1AmiDi7InnmDdbDQGdSnjuudqzxDjYAlNYhG2v
+	 SnIHZ4gjFJUpZLBedEUDIPptonWTz9uotLA6iRgOA5X7/RHU+Qv1IOi7Qmd5Lw5GMa
+	 S4EJI6CpXc1502QDo0gR7VlleOn0nXISLFq96tAGYmHD/6PzuqiHbzA0uFQN4lnX9K
+	 Fvb6evOecIr4CJf2MUAMnT/LJw8xU/8SNUha42jnLM4sIhXYighfjJoCreU0/7wDnB
+	 tlpx359Zg2mQQ==
+Date: Fri, 6 Nov 2026 10:46:29 +0000
 From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-To: Paul Moore <paul@paul-moore.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
-	David Hildenbrand <david@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	John Hubbard <jhubbard@nvidia.com>, Peter Xu <peterx@redhat.com>, 
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Rik van Riel <riel@surriel.com>, 
-	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
-	Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
-	Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
-	Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
-	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Alistair Popple <apopple@nvidia.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
-	Barry Song <baohua@kernel.org>, Usama Arif <usama.arif@linux.dev>, 
-	Kiryl Shutsemau <kas@kernel.org>, Xu Xin <xu.xin@linux.dev>, 
-	Chengming Zhou <chengming.zhou@linux.dev>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
-	Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, 
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>, 
-	Shrikanth Hegde <sshegde@linux.ibm.com>, Pedro Falcato <pfalcato@suse.de>, 
-	Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, Axel Rasmussen <axelrasmussen@google.com>, 
-	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
-	Michal Hocko <mhocko@suse.com>, Leon Romanovsky <leon@kernel.org>, SJ Park <sj@kernel.org>, 
-	Rakie Kim <rakie.kim@sk.com>, David Rientjes <rientjes@google.com>, 
-	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, 
-	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
-	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
-	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
-	Adrian Hunter <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, 
-	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
-	John Johansen <john.johansen@canonical.com>, Georgia Garcia <georgia.garcia@canonical.com>, 
-	James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
-	Mimi Zohar <zohar@linux.ibm.com>, Roberto Sassu <roberto.sassu@huawei.com>, 
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, Eric Snowberg <eric.snowberg@oracle.com>, 
-	Fan Wu <wufan@kernel.org>, Stephen Smalley <stephen.smalley.work@gmail.com>, 
-	Ondrej =?utf-8?B?TW9zbsOhxI1law==?= <omosnacek@gmail.com>, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, kvm@vger.kernel.org, 
-	damon@lists.linux.dev, linux-trace-kernel@vger.kernel.org, 
+To: Lance Yang <lance.yang@linux.dev>
+Cc: akpm@linux-foundation.org, david@kernel.org, jgg@ziepe.ca, 
+	jhubbard@nvidia.com, peterx@redhat.com, willy@infradead.org, jack@suse.cz, 
+	riel@surriel.com, liam@infradead.org, vbabka@kernel.org, harry@kernel.org, 
+	jannh@google.com, ziy@nvidia.com, matthew.brost@intel.com, joshua.hahnjy@gmail.com, 
+	byungchul@sk.com, gourry@gourry.net, ying.huang@linux.alibaba.com, 
+	apopple@nvidia.com, baolin.wang@linux.alibaba.com, nico.pache@linux.dev, 
+	ryan.roberts@arm.com, dev.jain@arm.com, baohua@kernel.org, usama.arif@linux.dev, 
+	kas@kernel.org, xu.xin@linux.dev, chengming.zhou@linux.dev, maddy@linux.ibm.com, 
+	npiggin@gmail.com, mpe@ellerman.id.au, chleroy@kernel.org, ritesh.list@gmail.com, 
+	sshegde@linux.ibm.com, pfalcato@suse.de, kasong@tencent.com, qi.zheng@linux.dev, 
+	shakeel.butt@linux.dev, axelrasmussen@google.com, yuanchu@google.com, weixugc@google.com, 
+	baoquan.he@linux.dev, rppt@kernel.org, surenb@google.com, mhocko@suse.com, 
+	leon@kernel.org, sj@kernel.org, rakie.kim@sk.com, rientjes@google.com, 
+	viro@zeniv.linux.org.uk, brauner@kernel.org, peterz@infradead.org, mingo@redhat.com, 
+	acme@kernel.org, namhyung@kernel.org, mark.rutland@arm.com, 
+	alexander.shishkin@linux.intel.com, jolsa@kernel.org, irogers@google.com, adrian.hunter@intel.com, 
+	james.clark@linaro.org, mhiramat@kernel.org, oleg@redhat.com, 
+	john.johansen@canonical.com, georgia.garcia@canonical.com, paul@paul-moore.com, 
+	jmorris@namei.org, serge@hallyn.com, zohar@linux.ibm.com, roberto.sassu@huawei.com, 
+	dmitry.kasatkin@gmail.com, eric.snowberg@oracle.com, wufan@kernel.org, 
+	stephen.smalley.work@gmail.com, omosnacek@gmail.com, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+	kvm@vger.kernel.org, damon@lists.linux.dev, linux-trace-kernel@vger.kernel.org, 
 	linux-perf-users@vger.kernel.org, apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org, 
 	linux-integrity@vger.kernel.org, selinux@vger.kernel.org
-Subject: Re: [PATCH 13/13] security: convert VMA flag tests to use vma_flags_t
-Message-ID: <au2ny_goOYa9TJ4u@gremlin>
-References: <20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org>
- <20261105-late-2026-vma-flags-v1-13-0d3cd15ab75f@kernel.org>
- <CAHC9VhSR=9YNhBxeFBcTR8wgG2yDP1fW590QKjzuc4Kq9ohaiQ@mail.gmail.com>
+Subject: Re: [PATCH 09/13] fs/proc/task_mmu: convert VMA flag tests to use
+ vma_flags_t
+Message-ID: <au2tJWwPamlmx1Q4@gremlin>
+References: <20261105-late-2026-vma-flags-v1-9-0d3cd15ab75f@kernel.org>
+ <20261106065925.50906-1-lance.yang@linux.dev>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -97,41 +81,130 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHC9VhSR=9YNhBxeFBcTR8wgG2yDP1fW590QKjzuc4Kq9ohaiQ@mail.gmail.com>
+In-Reply-To: <20261106065925.50906-1-lance.yang@linux.dev>
 
-On Thu, Nov 05, 2026 at 06:17:47PM -0500, Paul Moore wrote:
-> On Thu, Nov 5, 2026 at 4:35 PM Lorenzo Stoakes (ARM) <ljs@kernel.org> wrote:
-> >
-> > Replace use of the legacy vm_flags_t flags with vma_flags_t values in the
-> > mmap and mprotect LSM hooks of SELinux, AppArmor, IMA and IPE.
-> >
-> > No functional change intended.
-> >
-> > Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-> > ---
-> >  security/apparmor/lsm.c           |  2 +-
-> >  security/integrity/ima/ima_main.c |  2 +-
-> >  security/ipe/hooks.c              |  2 +-
-> >  security/selinux/hooks.c          | 14 +++++++-------
-> >  4 files changed, 10 insertions(+), 10 deletions(-)
+On Fri, Nov 06, 2026 at 02:59:25PM +0800, Lance Yang wrote:
 >
-> Similar to the other patchset you just posted, is there any reason why
-> individual subsystem maintainers can't pick these patches up, or is
-> there some reason I'm missing and they need to go through a single
-> tree?
+> On Thu, Nov 05, 2026 at 09:31:00PM +0000, Lorenzo Stoakes (ARM) wrote:
+> >Replace use of the legacy vm_flags_t flags with vma_flags_t values where
+> >VMA flags are tested directly in /proc/$pid/[s]maps, pagemap, clear_refs
+> >and PROCMAP_QUERY.
+> >
+> >In replacing vm_flags_clear() (which takes the VMA write lock) with
+> >vma_clear_flags() (which does not) in clear_refs_write(), we explicitly
+> >write lock the VMA. The mmap write lock is already held at this point.
+> >
+> >The show_vma_header_prefix() and show_smap_vma_flags() output functions and
+> >the thp_vma_allowable_orders() call continue to use legacy flags for the
+> >time being.
+> >
+> >No functional change intended.
+> >
+> >Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+> >---
+> > fs/proc/task_mmu.c | 43 ++++++++++++++++++++++---------------------
+> > 1 file changed, 22 insertions(+), 21 deletions(-)
+> >
+> >diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+> >index 22361607020d..b6e8ef15e40e 100644
+> >--- a/fs/proc/task_mmu.c
+> >+++ b/fs/proc/task_mmu.c
+> >@@ -569,18 +569,18 @@ static struct vm_area_struct *query_matching_vma(struct proc_maps_locking_ctx *l
+> >
+> > 	/* VMA permissions should satisfy query flags */
+> > 	if (flags & PROCMAP_QUERY_VMA_FLAGS) {
+> >-		u32 perm = 0;
+> >+		vma_flags_t perm = EMPTY_VMA_FLAGS;
+> >
+> > 		if (flags & PROCMAP_QUERY_VMA_READABLE)
+> >-			perm |= VM_READ;
+> >+			vma_flags_set(&perm, VMA_READ_BIT);
+> > 		if (flags & PROCMAP_QUERY_VMA_WRITABLE)
+> >-			perm |= VM_WRITE;
+> >+			vma_flags_set(&perm, VMA_WRITE_BIT);
+> > 		if (flags & PROCMAP_QUERY_VMA_EXECUTABLE)
+> >-			perm |= VM_EXEC;
+> >+			vma_flags_set(&perm, VMA_EXEC_BIT);
+> > 		if (flags & PROCMAP_QUERY_VMA_SHARED)
+> >-			perm |= VM_MAYSHARE;
+> >+			vma_flags_set(&perm, VMA_MAYSHARE_BIT);
+> >
+> >-		if ((vma->vm_flags & perm) != perm)
+> >+		if (!vma_test_all_mask(vma, perm))
+> > 			goto skip_vma;
+> > 	}
+> >
+> >@@ -647,13 +647,13 @@ static int do_procmap_query(struct mm_struct *mm, void __user *uarg)
+> > 	karg.vma_end = vma->vm_end;
+> >
+> > 	karg.vma_flags = 0;
+> >-	if (vma->vm_flags & VM_READ)
+> >+	if (vma_test(vma, VMA_READ_BIT))
+> > 		karg.vma_flags |= PROCMAP_QUERY_VMA_READABLE;
+> >-	if (vma->vm_flags & VM_WRITE)
+> >+	if (vma_test(vma, VMA_WRITE_BIT))
+> > 		karg.vma_flags |= PROCMAP_QUERY_VMA_WRITABLE;
+> >-	if (vma->vm_flags & VM_EXEC)
+> >+	if (vma_test(vma, VMA_EXEC_BIT))
+> > 		karg.vma_flags |= PROCMAP_QUERY_VMA_EXECUTABLE;
+> >-	if (vma->vm_flags & VM_MAYSHARE)
+> >+	if (vma_test(vma, VMA_MAYSHARE_BIT))
+> > 		karg.vma_flags |= PROCMAP_QUERY_VMA_SHARED;
+> >
+> > 	karg.vma_page_size = vma_kernel_pagesize(vma);
+> >@@ -970,7 +970,7 @@ static void smaps_pte_entry(pte_t *pte, unsigned long addr,
+> > {
+> > 	struct mem_size_stats *mss = walk->private;
+> > 	struct vm_area_struct *vma = walk->vma;
+> >-	bool locked = !!(vma->vm_flags & VM_LOCKED);
+> >+	bool locked = vma_test(vma, VMA_LOCKED_BIT);
+> > 	struct page *page = NULL;
+> > 	bool present = false, young = false, dirty = false;
+> > 	pte_t ptent = ptep_get(pte);
+> >@@ -1017,7 +1017,7 @@ static void smaps_pmd_entry(pmd_t *pmd, unsigned long addr,
+> > {
+> > 	struct mem_size_stats *mss = walk->private;
+> > 	struct vm_area_struct *vma = walk->vma;
+> >-	bool locked = !!(vma->vm_flags & VM_LOCKED);
+> >+	bool locked = vma_test(vma, VMA_LOCKED_BIT);
+> > 	struct page *page = NULL;
+> > 	bool present = false;
+> > 	struct folio *folio;
+> >@@ -1728,7 +1728,7 @@ static int clear_refs_test_walk(unsigned long start, unsigned long end,
+> > 	struct clear_refs_private *cp = walk->private;
+> > 	struct vm_area_struct *vma = walk->vma;
+> >
+> >-	if (vma->vm_flags & VM_PFNMAP)
+> >+	if (vma_test(vma, VMA_PFNMAP_BIT))
+> > 		return 1;
+> >
+> > 	/*
+> >@@ -1798,9 +1798,10 @@ static ssize_t clear_refs_write(struct file *file, const char __user *buf,
+> >
+> > 		if (type == CLEAR_REFS_SOFT_DIRTY) {
+> > 			for_each_vma(vmi, vma) {
+> >-				if (!(vma->vm_flags & VM_SOFTDIRTY))
+> >+				if (!vma_test(vma, VMA_SOFTDIRTY_BIT))
+> > 					continue;
+> >-				vm_flags_clear(vma, VM_SOFTDIRTY);
 >
-> If they can go through multiple trees, can you split this patch up?
-> AppArmor, Integrity/IMA, IPE, and SELinux are all maintained by
-> different groups/people.
+> vm_flags_clear() still warns on VM_SOFTDIRTY when pgtable_supports_soft_dirty()
+> is false. Did you mean to drop that?
 
-Sure, they're all independent so you can take the security bits through your
-tree, I guess fairly easy for Andrew/David to figure out which went where?
+Yep it's silly. Checking every single operation with VMA_SOFTDIRTY_BIT for
+whether CONFIG_MEM_SOFT_DIRTY is enabled, which is not done for literally any
+other VMA flag, is ludicrous frankly :)
 
-Intentionally made these easy ones given how busy the cycle is, just keeping the
-conversion rolling forward :)
+>
+> (Vaguely recall you weren't too keen on that warn, though I could be wrong.)
+>
+> Otherwise, LGTM!
+>
+> Reviewed-by: Lance Yang <lance.yang@linux.dev>
+
+Thanks!
 
 --
 Cheers, Lorenzo
