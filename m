@@ -1,56 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794087935;
-	b=S45Vo6uXGBV/ttL3B+w1pdNM5NW7Y5GIjT2z3OrJ7fcYvpC55n2gmjOj5YzwcBMbZ3jH
-	 02YGKo4V0d59WqXeCUbXu0+LDO9DKuAu62SpAlgc3cyi9JSAxPMR+sOHcqrc1AIm0pBJf
-	 4pgVx+MpqXlsXPR78OdcYx2hMIvElkiQjPiaSMVhEO6EclE598Jg8fnu20QKE+b8z0QKw
-	 MxK2tJtb4g8LZ7zboChBuJ1xAgvmsNxuxRUdETd1bnxJMisijhiRzonJ87kVo+3zCKFlU
-	 XAYFvxBXye1SjWDvoGD03HzPDeoj5gfwEU6gWz3fajLjiZAw9o5CQQoOboGeZLxoMPg==
+	t=1794087936;
+	b=jT4mfArrlrxg0A+JacS/dWLCt5UY4wI6IaDWw82OXh0qgz4xJm71wgVwnDOI3uUyy9VI
+	 EN6hbxtydHMgE5awJ0u2T7xSxUAaLo4dyiExSUD3T491wZvEZtYv4yZFBT2cUveq/SRhp
+	 kVUEBNKswHUq4jl2pCe2/w+/dL+/hS/2BCD/PYt/ZIdIXpISHT/0q2H7wqfBCc9f48NGy
+	 zN1Tpizvj708/yXvFyaUQk5Oss88IpabfwPUU6LOYeNpf1lfKsVrkA/iO4qVXmV2j9YU+
+	 Q7aBpgEAR/9lDElMin6KU+g5byqO8ys7eNmsxARbyM3xmtHArr3B8XAPlLz2wp/Agfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794087935;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794087936;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=WPf2icVK/e9KPEuHFkG431PIxwdSKi/zxFeSHw01Gc8=;
-	b=tiZ75oNAn5cVTo9Y3db9630mwwua0ZkPJLR1EMBp3kWSGGD2xAW66rfgap25RzZ3DlBp
-	 HpZsivP3PrgQq5ki+oQXf683RtWH+4Lozm9sa9jY3ncaAj2ghBEedgHxkWhtokYN8CpBW
-	 Ba5udaiRI/mQtqmbfTyf18v1Nyo0Dg09nRvnmnyC4zAzIBh84NmO5bDaETf3SkSqd648p
-	 gW25PuS9qJ1l+5QrDIdUyRAjvBnJkXVWt6OaLGtUzAVBgrPFS8R14+v+OKd8xe2aeKE2F
-	 2923ODpsW40KXri6oxjefU7zL7+2boEFe2wbkT6atyx0G4qir7V4qeKNTHkxlNVfmZA==
+	bh=vOx4qL3rBGLSIPXxU4NuO61z7Gu3DhBSLmuQAAlPYBc=;
+	b=QjjfnZQJJhmBUqGM6XaYDakoVqaFoEXAYIjTRxbrcn74tgmPuLFuO99mZ4BdZfR3E0Uv
+	 W9n/+g81EPP9tojRAcrkNuxQ6HTh8vge3TA8LfypVUK0pL7X76IzTUrOoI/v9v0qlZIwf
+	 VUkBGqThHvNGaf1IaQ5fWthxo41qZAx6+/OxlbGPoSJhQeGUPBEEQlMK3zin0H/KjYNpL
+	 PPixSZcnPp3VpT2gjQbdMnDMojAsM0OB3igUzLPbIfF4TF9wUEpMgfn+6SgGakaMyi5V/
+	 p3/PXM7QtukT9TzUjZdgnHUguENdUl7F0vans1Cb2sVsuuAEOzAZNQq3MEL/esdn9IQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oZKP33Cl;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Rgob1eXt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614FE606A331;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06736606D804;
 	Sat,  7 Nov 2026 21:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oZKP33Cl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01531F008A1;
-	Sat,  7 Nov 2026 21:45:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Rgob1eXt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5291D1F008A2;
+	Sat,  7 Nov 2026 21:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1794087935;
-	bh=WPf2icVK/e9KPEuHFkG431PIxwdSKi/zxFeSHw01Gc8=;
+	bh=vOx4qL3rBGLSIPXxU4NuO61z7Gu3DhBSLmuQAAlPYBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oZKP33ClNFoSGATo0q5PTPN25UDr1CaEy9FVsDI//fftn/U6S1OkqegWFde7R+wZ3
-	 loW/lpUpE0rMV5fwDFFGtNzvdSoxyUXb9ddSvQ+q/1mkMsdUfbIyWK3W3ql66P/fJN
-	 bwGEw+jGHG/RiR3ICsvqqK2IJz35FgjhfgJz+Ws+BAYaMBshWq9MFSivQc5hwcbqxA
-	 0Rz1CC1HzXce9xlIeUzij/vABIwGyeWo33PV5GSKFw7I9J+JrLSTLiv6rDdlS5rkne
-	 WUiGWRp1IzZHIqCYrkQx8EHjBoBG4iw/8IJc2uvBgM2jb0BN6jcZP5Bl6eIyOMLX1g
-	 l7YOmN3YWjJ6w==
+	b=Rgob1eXtdv2UmztDyt5IdCdFEy+qFB0tzYedbFmfzDILucvsc8rrSXoEwNLtcwRFk
+	 kKpjego6wf039GawfVoixG/fSb7lMgSO3E7HV0uu5VROGB7sBhrLAxtrzLmPmxOqxS
+	 rLxpyzJu/ffGgADA1ds/IAly+g+vQn7chEO4rcgQmJWtgnsItzmljoJuA8KlRMSlnK
+	 fYL+ADxIdyfWilnN/WYL+/no6p6UHlv/dDssTn2V7M2juJF/h06kAnZpC/8mWeHYnx
+	 EXF1oNrB4L5dYJcTPfIjhLpcetwUYJ/+dIwGrJGKPJgMvQzKAGsLERk76KBQR2r2nx
+	 bFedBA+U6vyZg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	stable@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Usama Arif <usamaarif642@gmail.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 6.12.y 2/5] mm/damon/paddr: respect folio end for DAMOS actions except STAT
-Date: Sat,  7 Nov 2026 13:45:21 -0800
-Message-ID: <20261107214525.304638-3-sj@kernel.org>
+	linux-mm@kvack.org,
+	Lian Wang <lianux.mm@gmail.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>
+Subject: [RFC PATCH 6.12.y 3/5] mm/damon/core: handle uninitialized damos_quota_goal->last_psi_total
+Date: Sat,  7 Nov 2026 13:45:22 -0800
+Message-ID: <20261107214525.304638-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261107214525.304638-1-sj@kernel.org>
 References: <20261107214525.304638-1-sj@kernel.org>
@@ -65,65 +69,96 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A few functions for applying DAMOS actions including pageout, lru_[de]prio
-and migrate_{hot,cold} in DAMON physical address space operation set
-(paddr) collect folios of the given region by getting the folios of
-region-internal addresses.  Then, those functions apply the action to the
-collected folios at once.  The collection starts from the region start
-address and advances the address by the size of the folio of the address
-until it goes out of the region.  If the start address is in the middle of
-a large folio, and if the next folios are small, some of the next folios
-could be skipped.  Fix the issue by advancing the address to exactly the
-start address of the next folio.
+When DAMOS_QUOTA_SOME_MEM_PSI_US metric damos quota goal is set, the PSI
+delta for the feedback loop is calculated using
+damos_quota_goal->last_psi_total.  However, it is initialized only after
+the first feedback loop.  The first iteration of the loop uses the
+uninitialized value.  As a result, the feedback loop can change the
+effective quota in an unexpected way at the first iteration.
 
-The user impact is that DAMOS action is applied to less than expected
-amount of memory.  Given the best effort nature of DAMON, it is no big
-problem, but it is clearly a bug that is better to be fixed.
+The user impact of the issue is not big, because the issue impacts only
+the first iteration of the feedback loop.  The feedback loop also has an
+internal cap of the quota adjustment.  The wrong adjustment will soon be
+corrected over a few iterations.  For this reason, doing no initialization
+at commit time was intentional.  It is also explicitly commented.  That
+said, nobody likes behaviors that are unexpected or difficult to be
+expected.
+
+Check last_psi_total initialization and skip the tuning round when it is
+not initialized.  For this, initialize last_psi_total with U64_MAX in the
+goal creation and the goal commit time.  U64_MAX means the field is not
+initialized.  The tuning round shows the value and adjusts it to guarantee
+the current quota is maintained for the round, and last_psi_total is
+correctly initialized on the next round.
+
+Before this change, committing a new PSI goal on an existing PSI goal with
+goal-only DAMON sysfs command (commit_schemes_quota_goals) just worked.
+After this change, the tuning round right after the commit will be
+unnecessarily skipped, because last_psi_total is unconditionally marked as
+not initialized in the damos_commit_quota_goal_union().  This is an
+intended tradeoff for simplicity.  Skipping just one round of tuning is no
+problem.  Meanwhile it makes both the code and the behavior simple to
+understand.
+
+Also update the quota goal commit unit test for changed last_psi_total
+setup behavior.
 
 The issue was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260901131850.98037-4-sj@kernel.org
-Link: https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org [1]
-Fixes: 3a06696305e7 ("mm/damon/ops: have damon_get_folio return folio even for tail pages")
+Link: https://lore.kernel.org/20260902002725.108635-3-sj@kernel.org
+Link: https://lore.kernel.org/20260718005316.89585-1-sj@kernel.org [1]
+Fixes: 2dbb60f789cb ("mm/damon/core: implement PSI metric DAMOS quota goal")
 Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: <stable@vger.kernel.org> # 6.15.x
-(cherry picked from commit 1613ac9edf385c35f171a25610e2706a7e6afad6)
+Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+Tested-by: Lian Wang <lianux.mm@gmail.com>
+Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@davidgow.net>
+Cc: Quanmin Yan <yanquanmin1@huawei.com>
+Cc: <stable@vger.kernel.org> # 6.9.x
+(cherry picked from commit 29c6084658af41b5b1fefd873d26d441830ced34)
+Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/paddr.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/damon/core.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index a6b1de97b1e8a..6bac269cd679e 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -273,7 +273,7 @@ static unsigned long damon_pa_pageout(struct damon_region *r, struct damos *s)
- 		else
- 			list_add(&folio->lru, &folio_list);
- put_folio:
--		addr += folio_size(folio);
-+		addr = PFN_PHYS(folio_pfn(folio)) + folio_size(folio);
- 		folio_put(folio);
- 	}
- 	if (install_young_filter)
-@@ -306,7 +306,7 @@ static inline unsigned long damon_pa_mark_accessed_or_deactivate(
- 			folio_deactivate(folio);
- 		applied += folio_nr_pages(folio);
- put_folio:
--		addr += folio_size(folio);
-+		addr = PFN_PHYS(folio_pfn(folio)) + folio_size(folio);
- 		folio_put(folio);
- 	}
- 	return applied * PAGE_SIZE;
-@@ -483,7 +483,7 @@ static unsigned long damon_pa_migrate(struct damon_region *r, struct damos *s)
- 				folio_is_file_lru(folio));
- 		list_add(&folio->lru, &folio_list);
- put_folio:
--		addr += folio_size(folio);
-+		addr = PFN_PHYS(folio_pfn(folio)) + folio_size(folio);
- 		folio_put(folio);
- 	}
- 	applied = damon_pa_migrate_pages(&folio_list, s->target_nid);
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 6ef77741b783b..52f01a6508b66 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -324,6 +324,8 @@ struct damos_quota_goal *damos_new_quota_goal(
+ 		return NULL;
+ 	goal->metric = metric;
+ 	goal->target_value = target_value;
++	if (metric == DAMOS_QUOTA_SOME_MEM_PSI_US)
++		goal->last_psi_total = U64_MAX;
+ 	INIT_LIST_HEAD(&goal->list);
+ 	return goal;
+ }
+@@ -705,7 +707,8 @@ static void damos_commit_quota_goal(
+ 	dst->target_value = src->target_value;
+ 	if (dst->metric == DAMOS_QUOTA_USER_INPUT)
+ 		dst->current_value = src->current_value;
+-	/* keep last_psi_total as is, since it will be updated in next cycle */
++	else if (dst->metric == DAMOS_QUOTA_SOME_MEM_PSI_US)
++		dst->last_psi_total = U64_MAX;
+ }
+ 
+ /**
+@@ -1608,7 +1611,12 @@ static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
+ 		break;
+ 	case DAMOS_QUOTA_SOME_MEM_PSI_US:
+ 		now_psi_total = damos_get_some_mem_psi_total();
+-		goal->current_value = now_psi_total - goal->last_psi_total;
++		/* uninitialized last_psi_total; make no effect this round */
++		if (goal->last_psi_total == U64_MAX)
++			goal->current_value = goal->target_value;
++		else
++			goal->current_value = now_psi_total -
++				goal->last_psi_total;
+ 		goal->last_psi_total = now_psi_total;
+ 		break;
+ 	default:
 -- 
 2.47.3
