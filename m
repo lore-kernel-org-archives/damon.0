@@ -1,57 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794082882;
-	b=bxUgYFCBCQkN4RGhnLWOflDdjy8QdebeQyA+gUV5U1Wh1qXzc/xfqo0RyPe/J1Wl3tZm
-	 QdQZEkp2nO0kDsYy145bXZ0TYqmOk1cr3qO6PzsDNIDkzLoYE9QjjOzh1zyLJsDuFtetn
-	 O4YeUIh0TXMdPjEQqypp0ycJQJR6rG8NxSqGZNQ5YJh6SU2HsVVMmRf8LpoH9VL7Q8Ucz
-	 uXndmGwXq2MKrowwBM5T/czaJuvnu1PAGGoF/RsXZZoVELV6Im/8BQegoYmXw3Hp04xbX
-	 bfQgdawdfdD6pO34XV5XvBIluP+gqB+FkeY/KencZsdeKlaNfHlugFdtnsILtx92dbw==
+	t=1794083261;
+	b=nBuOt8KCH0dw4VEfJKkzAoUAum6GmKLlYGl6llfJrKR4+inHm6svFHLKKeIW8jpAI189
+	 r98IX6F+koLqJ9p/sOperIM896KY3WisJ6N2uPEwVUXQVYEA7WAdm+qmQNNmsqbU89W/q
+	 HqPqJX78cVhBXePiyBThQuGgzlDGqABg0ddmrQF3atnilGufb4BFeWT4DSNqRCIdjvOmU
+	 dMNF/ceYTslV4xAaZ/mhi2MqB9Av8wPLpPEytb1/XkhD7UAxAg60JbDcRwKiYFNMrkzk7
+	 6NYOAKMstxx7WeMjIyQYRxP7yWts/BjaN/qgjR3FDJNwGpJvUHy9aQIV3P2ppfFiTeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794082882;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=6We6rYrg+ReKBWigb/yjU/6KNb5lrBLOloaJS03fYtE=;
-	b=fo6D3STaO81YczLloGVPQi8JLvyGJmEj5t0ManxLMxcJIOy5K/8Ja7qEzZAN1b3QQqMs
-	 sandGmE+z5HgLa5o5MNY+IDNd/i/xMbhQo6zpNpb3VivlHaCsWij3gLFo0aMjzzwEYMiT
-	 Zppg9AJ1tH8p13lzhzDVi1RxaJTAvz6cuydp71IPlbnVwiEVkW/ZjDi3kIjY39VEZE0rT
-	 vvNDPhuxPp7N8TgDCiyHvsLk8hAUn15Fu4K8tTgLRC3UMOiLYzID6NB0io9RVr06T9JN3
-	 MU5B5hBDoWZb7OEmjrsmTvMtPhXGCNdz/L5YlQ27QuI95WosUDEKvo/YgZJGC7F4x1Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794083261;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=+DUELhgEaqAYntYFp1DpQZLJYBain+UJS9q9wsG5xwM=;
+	b=jhlpSDyRp6pSegL79ytDQokA6GHrYZz7Pe6QQWu6pwhUwg+3lsUn62BmRceSmkMCwNy6
+	 lpNgjsPGEygu3DoprbeN7Otx3h69rn4d+lYgtwcvu2qpDxF22BO5vCErIvqFNLSUKwiHr
+	 nak7/kWSlpEjAq6iQzHEjXqsqsh0BqUYbRd6WROWVnwsUo25gGLZAfhTFCME1RPGq4oZG
+	 8hn4d4swx2Dx0YVYjkAI5HdP0dE6UyXjC21AjbqiYNDPhtkJ7Zn/vDGNdgP5wOZJpWWZu
+	 Mki+2thvC+098BJxr31XBFF1OgOQGkQckueQdo9VBuvmdEfMdcofXXrt2KLV4JKurmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="K/rBbzx7";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hw8Ig7N8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6076C606A32C
-	for <damon@lists.linux.dev>; Sat,  7 Nov 2026 20:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E7D606A32C;
+	Sat,  7 Nov 2026 20:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K/rBbzx7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB021F0089F;
-	Sat,  7 Nov 2026 20:21:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Hw8Ig7N8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273561F0089F;
+	Sat,  7 Nov 2026 20:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794082882;
-	bh=6We6rYrg+ReKBWigb/yjU/6KNb5lrBLOloaJS03fYtE=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=K/rBbzx7Or16wEeuZZOyKPiYdmdCkTueKIMWjHQACzPqSRdt0S+WaEf8e7J57BIb3
-	 4/QcQ3XmQc1AfqV68hb6dGXzxmvR03yZhTJpqFXjkcSJ0AwBiw5vzt9OWeGBk5+Fg5
-	 XCyQKHi9scXsvQNsJS2thQolFgLqSRAwyGoJoenG1sj9WZsyP0MLdCuGlwWcDuyTl2
-	 wK2SLKaS18m58xv5UeShuOHWtaEJeja4pTM3p73weZmT4wuQBBleZlTBorWuOOzL1Y
-	 R7qGkwzPRrSxLuDsUhInBO8zeSQQIya8JxFJVUbq1xTDjLN41+xDSeWBvSNZ7GpGFb
-	 d2rVr7i3NBWTg==
-Message-ID: <sashiko-outbox-203268@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 6.18.y 4/5] mm/damon/core: remove unreachable damos
- charge_{target,addr}_from
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261107201001.206120-5-sj@kernel.org>
-References: <20261107201001.206120-1-sj@kernel.org>
- <20261107201001.206120-5-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 07 Nov 2026 20:21:21 +0000
+	s=k20260515; t=1794083261;
+	bh=+DUELhgEaqAYntYFp1DpQZLJYBain+UJS9q9wsG5xwM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Hw8Ig7N8ipyfZ3oLF7oLXIIZROi1iV2VlJcpQRKDu+rHlxJAzQELrbHXUg4YZpqRD
+	 UV76H4ugRrTqydRRici07WNIQ/tX/4TS2nIEkIOlyvnsK277QeSwN9+8hGYsdFpYgL
+	 U5pMd+DJp82x4qomj0SHutM6mLqvYF8rdurufBYAf038bETyufr2jLGEQl5c3ndEs+
+	 H2tdwboDLY9XhTZ2Euj9vsT0snFGnkFuhUqFpi/ajjyNlqhnzge/RYgia14Ae6wZcd
+	 tregYEgMbom2x6RbsmuavUlH3hHrRxpt0si+ySATU5xLB9x1JXYBf5CQQpUDlLGhlT
+	 M2UNz6wQztZdw==
+From: SJ Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <david@davidgow.net>,
+	Sasha Levin <sashal@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.18 487/869] mm/damon/tests/core-kunit: test the size charged for a filter-trimmed region
+Date: Sat,  7 Nov 2026 12:27:33 -0800
+Message-ID: <20261107202734.231272-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261107134910.088452714@linuxfoundation.org>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,42 +64,21 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> damos_quota->charge_{target,addr}_from saves the target and region the
-> scheme's quota limit is reached.  damos_skip_charged_region() skips the
-> target and regions before the point.  The target that was assigned to
-> charge_target_from could be dynamically removed from the context by the
-> runtime parameters update (aka commit) feature.  In this case,
-> damos_skip_charged_region() cannot find if the point is passed or not,
-> so the scheme is effectively disabled.
->=20
-> Similarly, the user could also remove all the regions of the target
-> using the runtime parameters update feature.  It would be uncommon to do
-> that, but it is a supported feature.  Because the skip pointer detection
-> logic (damos_skip_charged_region()) works for each region of targets,
-> this result in the logic is entirely skipped and the scheme is
-> effectively disabled again.
->=20
-> The user impact is that the DAMOS scheme could suddenly stop working
-> under certain uses of the runtime parameters update feature.  It could
-> surprise users. No crash or leak happens though.  Users could also
-> simply work around by re-installing the scheme.
->=20
-> Catch the corner cases in damos_adjust_quota() and reset the pointers.
->=20
-> Link: https://lore.kernel.org/20261020023958.108276-1-sj@kernel.org
-> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-> Signed-off-by: SJ Park <sj@kernel.org>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c4=
-9b8
-> Cc: <stable@vger.kernel.org> # 5.19.x
-> (cherry picked from commit 5695abc4e742b947f586bfb6a080a80ad9957e5d)
-> Signed-off-by: SJ Park <sj@kernel.org>
+On Sat, 7 Nov 2026 08:52:49 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Sashiko has reviewed this patch and found no issues.
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261107201001.2061=
-20-1-sj@kernel.org?part=3D4
+Please drop this.  This is not intended to be picked for stable tree, and
+causing a DAMON kunit test failure.
 
+The Cc:stable@ tag was wrongly added due to a mix of Cc:stable@ and
+non-Cc:stable@ patches in a series.
+
+
+Thanks,
+SJ
+
+[...]
