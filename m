@@ -1,58 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794085577;
-	b=G26ahdW+xRkz/SyaLPqKFeTk4HOdsDiQraHUJ0minnZCMeMWmaz8FY96L62tAQorHs9f
-	 suBz4Dic1D80P/hR7raiFD2wCIPosAhm3CFODfl6thWo1o1L0eurvLjlqnokA7dFhXc6P
-	 GPJtdSoukNREi9aAZwwTA7E/Fy29NWS92rUfIvUd8SHdy7yFFmV2o3ljCPmj9KFe5sk4z
-	 tzxiKZz8GV6SESilO/Xarvx9vpmOfUoDrOL9i6cLIu0Q2+ePtr4blEAN8ibC+It2wH66c
-	 SOQeHPtGv57fQBf6Rbi7bU/W13kB+0WEw1EKibeIxav7rg/TrsI/z5BqYawGH1qEQsg==
+	t=1794087935;
+	b=HgaZTtEStf28m/fv2LvbIYqy2kEDXt60MSJRfwVNXW0TK7wYMUPzoRMct2b/fxgk9oNN
+	 1mk4IETTc3XA1Y5tXjjN1VyeK/JTWjHxMEL0lyBmlzlNR9/LscOKrH0ljzMPf5c6EnHj2
+	 2mrai5cp+1qXb7bpmR0pN18OxYCcPFyWaHR3Zou6AjaWf6QhEuDOIPlVkJeS0c9QLTwR4
+	 1EFCYuSFvcK8FsoWRlhHNXLIQSEkyBGQdH8Da8OeczBevkji6fCQ1c4BnoAnd+jKl+GKj
+	 tBgVT2l93xL0R7XxGu2Z+1L3Vn2wXBgZsNg1Jn11Xfo0TPm5xK7auEwf0K8YvN0a33g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794085577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794087935;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=rKOpXDTka6zsRI+o/WN9YYaFvky2KJDqfkcQZqbSnuk=;
-	b=d+k4x8tOtiBudugnL0QsYI65oEEz/4g9wKrARIEq1wuw4s4UlYtFjLJ5Fy6P7lDBL+rr
-	 adt04mUkt9IQUu0sp8ZXrzngXFAqbfE902qKCpOA3nAaYQW0NoYfUFM5oJszEHDAw9KR7
-	 F6IXi+eSPFi31PmORaSGRqgnHWtB9TQT9j6unPdL9+o2/cg70Rg8d2InI1p6H1Z0E7tX9
-	 01bVS3Su8xbFSdv7PyJJlgRtprbA3MbFghwCGlpSw6y2gDJyYsdvTAVOS+JIii8t9oWcN
-	 4k1Z+m/0RPNj5BYrNW/6VfnwHg/rLrPWl9oKJ0X2GYm1/d3WkKaJ6uVoACzCU5DWCOQ==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=Jg6uYRNhV7mTrgb91kiVKd41vY7ff4cg96iZM39MthE=;
+	b=28Bi3Ahg/0moaUL6ZWO9FJQ6mep5gJnWfTK6/vMkDr6IxRDdodu4Uq0dWLk+eeCpp0pF
+	 7KrmU98KHvsfmZbZ61C8+V9XiwpTVHYi3nYWdlZpSnIAVrDtAekKwuH0cUATY5cGdkFfZ
+	 2T+VP+qb3XCbD8gIx29Y1ABz/li8rLIL0DbH/Mx0B2+mMmS5e32uy+GwYIl3BBNFkReS3
+	 t0oip053hVuTs+NIU6WZ/ZLfzjhacjnBH+cz5Ivh/2bwoXE9eC4cNRalH2MbUSuPc2jmA
+	 qbMJQ+A8DeJtme8dk+ajpVytkwdlpFts+fSHFKvgZXJGneoe810xeTvv2c3nyIXUIpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a0HhVEsC;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="oL/zu0XQ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DE8606A32E
-	for <damon@lists.linux.dev>; Sat,  7 Nov 2026 21:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9E9606A32C;
+	Sat,  7 Nov 2026 21:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=a0HhVEsC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2AE11F0089F;
-	Sat,  7 Nov 2026 21:06:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oL/zu0XQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A641F008A2;
+	Sat,  7 Nov 2026 21:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794085577;
-	bh=rKOpXDTka6zsRI+o/WN9YYaFvky2KJDqfkcQZqbSnuk=;
+	s=k20260515; t=1794087934;
+	bh=Jg6uYRNhV7mTrgb91kiVKd41vY7ff4cg96iZM39MthE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a0HhVEsCCO989RwnIKRu0YCBkukRW5SoTDDJrsDOmtPFdYdN2GP3+kmQOBs/AVd2X
-	 AWDWlh/spnyvqU2xCNEKf+OChocFfOc+KgynHefki9QebPyg2I0M1cSmHpxh47KAmg
-	 TonPYIIqVjVMD/jQ2c0Qss1fkKnJVC6RMdMi3r3etcVgzOP9p0bN3fezOHkGG9jkur
-	 gxD9w+LzkBi+Pm7cSjzHclviioQ9qNXiKdiIy/F0L3uG1ApFCvXuNgiBnwzbkjS8M7
-	 X2qH1lzNWuifeXlfzVs1X2qemCMTpWB1YLyd7pGDdEylhXmhjnreWeOZyMU8KoOtVn
-	 Srr38yUNYRbVg==
+	b=oL/zu0XQFZaVfByvORZm31uzlL1kH9iZIQ5kdPtCh6MIXLDcb95w1Y8QfuHey5/fQ
+	 WfhE2Uv3CrpUZO+yBgilHI+A9zN2eQu0oO+XijYO+CkTsztVUvrk1IphCLlJMRhJAl
+	 2vaqWMhpdt0KQGtAmmC9hAjskXzZmnJWJQfE2OYLBCEIklZff4LKXlmY3T3NlnyEbd
+	 Ow3TNupoUfoJNfTIYk6CfPqgZibk4yk5G3uXFZax64L8sS8i7UvdGok6ElA5k8L8So
+	 g4cKAtJ4K7aIaKIvNjizyxxL8V6ArKR6vfrs1oyxLsRcEBNdS6qsvabpy2Ni4MTslt
+	 PlTVyKZIQO6KQ==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: 
 Cc: SJ Park <sj@kernel.org>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	"Usama Arif" <usamaarif642@gmail.com>,
+	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Usama Arif <usamaarif642@gmail.com>,
 	damon@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 6.18.y 1/5] mm/damon/core: skip applying scheme if region split for quota fails
-Date: Sat,  7 Nov 2026 13:06:08 -0800
-Message-ID: <20261107210610.270916-1-sj@kernel.org>
+Subject: [RFC PATCH 6.12.y 1/5] mm/damon/core: skip applying scheme if region split for quota fails
+Date: Sat,  7 Nov 2026 13:45:20 -0800
+Message-ID: <20261107214525.304638-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-203262@kernel.org>
-References: 
+In-Reply-To: <20261107214525.304638-1-sj@kernel.org>
+References: <20261107214525.304638-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -62,73 +63,104 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 07 Nov 2026 20:18:33 +0000 sashiko-bot@kernel.org wrote:
+Patch series "mm/damon: fix DAMOS bugs in core, paddr and vaddr".
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] mm/damon: damos_apply_scheme() inflates stats on region split
->   failure
-> --
-> 
-> commit dd2b638af6fec217ed7123ab31fe119102f17f78
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: skip applying scheme if region split for quota fails
-> 
-> This commit updates damon_split_region_at() to return an error code on
-> allocation failure and skips applying the DAMOS scheme in
-> damos_apply_scheme() when splitting a region to fit within the size quota
-> fails.
-> 
-> Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
-> Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
-> Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 8fa788b0d709c..4c536a9b958e4 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> [ ... ]
-> > @@ -2000,7 +2000,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
-> >  					c->min_sz_region);
-> >  			if (!sz)
-> >  				goto update_stat;
-> > -			damon_split_region_at(t, r, sz);
-> > +			if (damon_split_region_at(t, r, sz))
-> > +				goto update_stat;
-> >  		}
-> >  		if (damos_filter_out(c, t, r, s))
-> >  			return;
-> 
-> [Severity: Low]
-> Does jumping to update_stat when damon_split_region_at() fails inflate
-> s->stat.nr_tried and s->stat.sz_tried?
-> 
-> At this point sz holds the non-zero aligned quota remainder, so
-> damos_update_stat() increments s->stat.nr_tried and adds sz to
-> s->stat.sz_tried even though damos_filter_out() and c->ops.apply_scheme()
-> were skipped.  Because quota->charged_sz is not updated on this failure
-> path, subsequent oversized matching regions in the walk will repeatedly add
-> sz to s->stat.sz_tried while allocation keeps failing.
+Fix misc bugs of DAMOS.  Patch 1 makes DAMOS less stress memory allocator
+under extreme situation.  Patches 2 and 3 fix wrong folios walking in
+DAMON_PADDR.  Patches 4 and 5 fix wrong folios walking in DAMON_VADDR.
+Patches 6-8 handle extreme and unlikely memory situations that can cause
+divide by zero and underflow.
 
-Good finding.  But too trivial to block this patch, in my opinion.
+All bugs are discovered by Sashiko.
 
-It happens under small memory allocation failure, which should be very rare or
-even could be argued as too-small-to-fail.  The inflation would also be also
-capped to quota size.  Hence it is trivial.
+This patch (of 8):
 
-Also, same issue is in the mainline.  I will consider fixing it in mainline
-first and add Cc:stable@ tag.  I might conclude not to fix this, since the
-user impact is quite trivial.
+damos_apply_scheme() splits a region and apply the action to the subregion
+if it is needed for not violating the quota.  The split operation
+(damon_split_region_at()) could fail for allocation failure.  In the case,
+the quota could be violated.  From the user's perspective, DAMOS becomes
+more aggressive than expected under the extreme situation.  Handle the
+failure.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261107201001.206120-1-sj@kernel.org?part=1
-> 
+The user impact is not critical.  The failure of damon_split_region_at()
+is unlikely since it is arguably too small to fail.  Also DAMOS being
+aggressive is limited to the single region.  Users can set min_nr_regions
+to set the maximum size of each region.  If it is reasonably set, the
+transient overhead shouldn't be critical.
 
+The issue was discovered [1] by Sashiko.
 
-Thanks,
-SJ
+6.12.y porting notes.  Modify damon_split_region_at() to return
+failures.  It is a part of commit c60874860762 ("mm/damon/core: handle
+region split failure in apply_min_nr_regions()").  Without it, build
+fails.
+
+Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
+Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
+Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
+Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: <stable@vger.kernel.org> # 5.16.x
+(cherry picked from commit 90c2fa6adfed7abe0935506a43cdff3a05c1fff0)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 81d44e41de210..6ef77741b783b 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1266,7 +1266,7 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
+ 	}
+ }
+ 
+-static void damon_split_region_at(struct damon_target *t,
++static int damon_split_region_at(struct damon_target *t,
+ 				  struct damon_region *r, unsigned long sz_r);
+ 
+ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
+@@ -1470,7 +1470,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 					DAMON_MIN_REGION);
+ 			if (!sz)
+ 				goto update_stat;
+-			damon_split_region_at(t, r, sz);
++			if (damon_split_region_at(t, r, sz))
++				goto update_stat;
+ 		}
+ 		if (damos_filter_out(c, t, r, s))
+ 			return;
+@@ -1861,15 +1862,17 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+  *
+  * r		the region to be split
+  * sz_r		size of the first sub-region that will be made
++ *
++ * Return: 0 on success, negative error code otherwise.
+  */
+-static void damon_split_region_at(struct damon_target *t,
++static int damon_split_region_at(struct damon_target *t,
+ 				  struct damon_region *r, unsigned long sz_r)
+ {
+ 	struct damon_region *new;
+ 
+ 	new = damon_new_region(r->ar.start + sz_r, r->ar.end);
+ 	if (!new)
+-		return;
++		return -ENOMEM;
+ 
+ 	r->ar.end = new->ar.start;
+ 
+@@ -1879,6 +1882,7 @@ static void damon_split_region_at(struct damon_target *t,
+ 	new->nr_accesses = r->nr_accesses;
+ 
+ 	damon_insert_region(new, r, damon_next_region(r), t);
++	return 0;
+ }
+ 
+ /* Split every region in the given target into 'nr_subs' regions */
+-- 
+2.47.3
