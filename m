@@ -1,58 +1,92 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794082212;
-	b=ECUcdk5zigDWCyOWLztGwZCRqrNch4k6Fb+hGKHnyRAWf/IgW8WRwCO2ishv4BDlJJUz
-	 Ho/3xRIyPeUAV+iQUpvtj0/sSKgnem11QvbB3YXk0ZSkJ3g6bCO0PRK+ofURFLMfPv4n3
-	 eerttzTBqO5y/m3tNIYwShUYG0b0UcBTbmQrc3v1QTLZpYG6INua2y/zrzkWK3mEs4Tcs
-	 Zvcu2gr1b17l6yvcR5e4F1gNNyXFiptw9I/1epN4QpAsrg1R2auFFif+sL2laPJwWexbM
-	 BADzIKCAEsdApGTjkzR19bL6ixZ3FSDw5cRonzNTu9LpQDsWBlpvAIT3LdLHwkTzllA==
+	t=1794082215;
+	b=uHXW3fAvQtUp7AwtObeDMEY2z5xz2SuP20HBG6V+k8SvStKuexo39nTUdBe/7ZWaoWpI
+	 LD9qLi8kYqeizve7W5eR/GZIdZijURWkV1Ob8mRTQWduXYljpMX6dHWHjnPOrcFP14lF5
+	 sMS7c4eOwLqe3dL8NCLdc7ZfdmCFyqSFP71FUYAp8aA+9QqSBKdEX50t1PyuL9qvdDuZX
+	 TsqrRA31M8HFahZ37v08GKHuC8LdcGNG51utO8/8/0CIlaoXLPPHUUCTTPDfOagwLcFRL
+	 YMJn2PhLqPOtBJIsOt8GGlTIsXWOc06fFrOzdapk+ebBgATmGs5qPG+qZ7FyzhikI1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794082212;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=TIAVWRl5IyIEzSAGdy1Y9O94fKWUT6y4xqwWabU5n+M=;
-	b=2XuWxx5f+Ze8584V4X7b11qXrP1/hd6ZwGnnKcerjUo/G0AySs/evCuVUtBV0z5/bTZp
-	 VPaSnTs1k8zjQRTQzr/RSE4xI0ewmxnFWEj95XX7qZ1/Ef3F+RxaoiwldcEC/6OD4eIW5
-	 O+UPiUaOtCcsPLGdobtIFeCPKQ9hyiwAlAJgy4Sh78BSiklKWKoXxw/i2t8aelwODg4oS
-	 CSgcu73XTCZtrodjfcb7LfJjiVfdDUixPMVZRTsHrsNuqZbLby4fUUpmba8/nwAXItXSP
-	 URkzCjSuB6bGhd1h/byZs+zc3G3U8YPLQjZKcfbmGq+x+mw8ZqbPV8cMn1d1e8ylvmQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794082215;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=CMFxkbGnr/NpLAXZXk8rbwy5EGs+66IVJk9lKIVoNp8=;
+	b=uX1djr4KrJAMZKxMVMBGYBEm/Gr7wt1qgnOzrDxZK9R1iSBgprGdLPyP6K/Kq5ISNBIN
+	 wMVrjJPxY+WYgwM6OzCuCxosnXy6wpI7W2HCMKsmd4geOY/3EXgMLxeQzoTZZKzIr/H56
+	 N3barsESmMZbnsBeKFP/sE+lvJdpfnVBVYh6KtGrA6YPQCjDC5vbFEdrF/uGb8eu08gGQ
+	 IIiYpTSbihqegc9CVuAUJXC/ca/2FRym+yV5s/6JKpiCAr5bxDzblan4+s6Pnbta5N+DB
+	 y+rKReozhIyNO+exF3zibImrmrZ/WANB3SHiefsi5qtkY52sPd3I9px3QHhTq1zuMRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LPjsm0m9;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iLeOYJRj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36B3606D82B;
-	Sat,  7 Nov 2026 20:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830D7606A331;
+	Sat,  7 Nov 2026 20:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LPjsm0m9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF501F008AB;
-	Sat,  7 Nov 2026 20:10:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iLeOYJRj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D661F008A3;
+	Sat,  7 Nov 2026 20:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794082211;
-	bh=TIAVWRl5IyIEzSAGdy1Y9O94fKWUT6y4xqwWabU5n+M=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LPjsm0m9nACOdC0KAk8ANoS9Ly8u0kM51qmquHDqDhuZLfKLwr0Q2z+iSYMtsUHwd
-	 hlRiCO4hNc2UxC0daRQWjOhW3r3CSX/Wxl8FLRhB8yi/92VZs1S5sfwbdoIUgkKCEo
-	 Loc4iyzPizp6Ny1ISQiSKE+WeF7mKUVsQ8scyNMhlvxSTpgHrg9ZPEPrhjs8cO7uYj
-	 TNk6Ls8ow1sOBcwuevAjSVsf9t81VnW/uKpJjlFaMi1g3ov/m1Dsa+WPMQ/8snOHMn
-	 9RpG6DxmoaYM4Vxpa3iYaCHoUuMsEE7p2xQWcILdwmd2YZUnJ4eA0OCWneA8Qy8ruL
-	 ST7jwRmPY7dcQ==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 6.18.y 5/5] mm/damon/core: filter out damos address filter-split failed region
-Date: Sat,  7 Nov 2026 12:10:01 -0800
-Message-ID: <20261107201001.206120-6-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261107201001.206120-1-sj@kernel.org>
-References: <20261107201001.206120-1-sj@kernel.org>
+	s=k20260515; t=1794082215;
+	bh=CMFxkbGnr/NpLAXZXk8rbwy5EGs+66IVJk9lKIVoNp8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=iLeOYJRjjnhZl3LWMSGaUd1S27vEBJh9NrDzelAqlZmg4R2RciRfWoeIsojODwzqH
+	 AmV3EGrrSvx70iXnLVmV7/bs2dBDE1x/r3nyPcxADmxBtch4xZP+oTaqLUfx+eYAuG
+	 SGRWdAxli2sYIZwe/Tbuw0udh+c0QNfiwmJOXLSfQKYp1etxVNRgoDq0IPlAd0lt9t
+	 yDMA0BPoIWju9BFMAW7mO+dutMm2GHuzj6pjWBP8PMNdT9kLO2lCpBJij+NhIf7LIF
+	 N/2SXcwPj4meyprPc8KlcX/gZ5yZ2cdhj422kyiEPIrnEjIKnHoNmFfhk++nuATcLn
+	 UZoP1hyr/4Jww==
+Date: Sat, 7 Nov 2026 20:09:55 +0000
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+	Jason Gunthorpe <jgg@ziepe.ca>, John Hubbard <jhubbard@nvidia.com>, Peter Xu <peterx@redhat.com>, 
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Rik van Riel <riel@surriel.com>, 
+	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+	Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
+	Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
+	Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
+	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
+	Alistair Popple <apopple@nvidia.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
+	Barry Song <baohua@kernel.org>, Usama Arif <usama.arif@linux.dev>, 
+	Kiryl Shutsemau <kas@kernel.org>, Xu Xin <xu.xin@linux.dev>, 
+	Chengming Zhou <chengming.zhou@linux.dev>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
+	Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, 
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>, 
+	Shrikanth Hegde <sshegde@linux.ibm.com>, Pedro Falcato <pfalcato@suse.de>, 
+	Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Axel Rasmussen <axelrasmussen@google.com>, 
+	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Michal Hocko <mhocko@suse.com>, Leon Romanovsky <leon@kernel.org>, SJ Park <sj@kernel.org>, 
+	Rakie Kim <rakie.kim@sk.com>, David Rientjes <rientjes@google.com>, 
+	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
+	Adrian Hunter <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	John Johansen <john.johansen@canonical.com>, Georgia Garcia <georgia.garcia@canonical.com>, 
+	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>, 
+	"Serge E. Hallyn" <serge@hallyn.com>, Mimi Zohar <zohar@linux.ibm.com>, 
+	Roberto Sassu <roberto.sassu@huawei.com>, Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, 
+	Eric Snowberg <eric.snowberg@oracle.com>, Fan Wu <wufan@kernel.org>, 
+	Stephen Smalley <stephen.smalley.work@gmail.com>, Ondrej =?utf-8?B?TW9zbsOhxI1law==?= <omosnacek@gmail.com>, 
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	linuxppc-dev@lists.ozlabs.org, kvm@vger.kernel.org, damon@lists.linux.dev, 
+	linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org, apparmor@lists.ubuntu.com, 
+	linux-security-module@vger.kernel.org, linux-integrity@vger.kernel.org, selinux@vger.kernel.org
+Subject: Re: [PATCH 00/13] mm: continue vma_flags_t conversion
+Message-ID: <au-DXpEi4wHwsz0r@gremlin>
+References: <20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org>
+ <d0ea7929-7c12-4245-ba3f-6dd5c0269e6b@kernel.org>
+ <au3r0-geuwtRYPiC@gremlin>
+ <1c0b1368-a381-4b25-bba9-7a4f8e92b764@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -62,152 +96,82 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1c0b1368-a381-4b25-bba9-7a4f8e92b764@kernel.org>
 
-When an address type DAMOS filter is configured, DAMOS tries to split the
-region for the filter range, and apply DAMOS action to the filter-in
-region.  The split operation (damon_split_region_at()) could fail from
-allocation failure under extreme memory pressure.  In the case, DAMOS
-action could be applied more or less than expected, ignoring the address
-filter.
+I think we're slightly talking across purposes, so to be clear - I am totally
+fine with you taking any of this through your tree or whatever works for you and
+Andrew to avoid merge pain :)
 
-The issue only rarely happens under extreme memory pressure.  No crash or
-leak happens.  Occasionally not applying the action to a few regions
-shouldn't be a real problem.  But applying the action to a region that the
-user has excluded via address filter could be a surprise depending on the
-use case.  It is only theoretical.  No such real case is found yet.
+I was just talking more generally about how to merge series that touch a lot of
+subsystems and maintainers-who-may-never-reply, etc.
 
-Filter out the entire region if the split is failed.  Update
-damos_filter_match() signature to receive the error from split.  Also
-update kunit tests for the updated signature.
+These are the edge cases that make things... fun :)
 
-The issue was discovered [1] by sashiko.
+Anyway, I guess easiest resolution here is for you to take the bits that belong
+to your trees and Andrew takes the bits that belong elsewhere?
 
-Link: https://lore.kernel.org/20261020004119.106690-1-sj@kernel.org
-Link: https://lore.kernel.org/20260801203121.117449-1-sj@kernel.org [1]
-Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org> # 6.6.x
-(cherry picked from commit bbeec2d8324d7aac438bb12dd2d22b184e0a8d43)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/core.c             | 16 ++++++++++++----
- mm/damon/tests/core-kunit.h | 16 +++++++++++-----
- 2 files changed, 23 insertions(+), 9 deletions(-)
+I don't think anything here has an inter-dependency.
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 00cd0e2a1e341..dc8608c3cae40 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1812,13 +1812,14 @@ static void damos_update_stat(struct damos *s,
- 
- static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
- 		struct damon_region *r, struct damos_filter *filter,
--		unsigned long min_sz_region)
-+		unsigned long min_sz_region, int *err)
- {
- 	bool matched = false;
- 	struct damon_target *ti;
- 	int target_idx = 0;
- 	unsigned long start, end;
- 
-+	*err = 0;
- 	switch (filter->type) {
- 	case DAMOS_FILTER_TYPE_TARGET:
- 		damon_for_each_target(ti, ctx) {
-@@ -1844,12 +1845,13 @@ static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
- 		}
- 		/* start before the range and overlap */
- 		if (r->ar.start < start) {
--			damon_split_region_at(t, r, start - r->ar.start);
-+			*err = damon_split_region_at(t, r,
-+					start - r->ar.start);
- 			matched = false;
- 			break;
- 		}
- 		/* start inside the range */
--		damon_split_region_at(t, r, end - r->ar.start);
-+		*err = damon_split_region_at(t, r, end - r->ar.start);
- 		matched = true;
- 		break;
- 	default:
-@@ -1863,10 +1865,16 @@ static bool damos_filter_out(struct damon_ctx *ctx, struct damon_target *t,
- 		struct damon_region *r, struct damos *s)
- {
- 	struct damos_filter *filter;
-+	bool matching;
-+	int err;
- 
- 	s->core_filters_allowed = false;
- 	damos_for_each_filter(filter, s) {
--		if (damos_filter_match(ctx, t, r, filter, ctx->min_sz_region)) {
-+		matching = damos_filter_match(ctx, t, r, filter,
-+				ctx->min_sz_region, &err);
-+		if (err)
-+			return true;
-+		if (matching) {
- 			if (filter->allow)
- 				s->core_filters_allowed = true;
- 			return !filter->allow;
-diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
-index 0ce6481319432..814197da4f507 100644
---- a/mm/damon/tests/core-kunit.h
-+++ b/mm/damon/tests/core-kunit.h
-@@ -548,6 +548,7 @@ static void damos_test_filter_out(struct kunit *test)
- 	struct damon_target *t;
- 	struct damon_region *r, *r2;
- 	struct damos_filter *f;
-+	int err;
- 
- 	f = damos_new_filter(DAMOS_FILTER_TYPE_ADDR, true, false);
- 	if (!f)
-@@ -570,28 +571,32 @@ static void damos_test_filter_out(struct kunit *test)
- 
- 	/* region in the range */
- 	KUNIT_EXPECT_TRUE(test,
--			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION));
-+			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION,
-+				&err));
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
- 
- 	/* region before the range */
- 	r->ar.start = DAMON_MIN_REGION * 1;
- 	r->ar.end = DAMON_MIN_REGION * 2;
- 	KUNIT_EXPECT_FALSE(test,
--			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION));
-+			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION,
-+				&err));
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
- 
- 	/* region after the range */
- 	r->ar.start = DAMON_MIN_REGION * 6;
- 	r->ar.end = DAMON_MIN_REGION * 8;
- 	KUNIT_EXPECT_FALSE(test,
--			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION));
-+			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION,
-+				&err));
- 	KUNIT_EXPECT_EQ(test, damon_nr_regions(t), 1);
- 
- 	/* region started before the range */
- 	r->ar.start = DAMON_MIN_REGION * 1;
- 	r->ar.end = DAMON_MIN_REGION * 4;
- 	KUNIT_EXPECT_FALSE(test,
--			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION));
-+			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION,
-+				&err));
- 	/* filter should have split the region */
- 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 1);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 2);
-@@ -607,7 +612,8 @@ static void damos_test_filter_out(struct kunit *test)
- 	r->ar.start = DAMON_MIN_REGION * 2;
- 	r->ar.end = DAMON_MIN_REGION * 8;
- 	KUNIT_EXPECT_TRUE(test,
--			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION));
-+			damos_filter_match(NULL, t, r, f, DAMON_MIN_REGION,
-+				&err));
- 	/* filter should have split the region */
- 	KUNIT_EXPECT_EQ(test, r->ar.start, DAMON_MIN_REGION * 2);
- 	KUNIT_EXPECT_EQ(test, r->ar.end, DAMON_MIN_REGION * 6);
--- 
-2.47.3
+
+On Sat, Nov 07, 2026 at 08:26:29PM +0100, David Hildenbrand (Arm) wrote:
+[ ... ]
+>
+> Because of [PATCH 05/13] mm: convert THP VMA flag tests to use vma_flags_t which
+> is THP-only, and feels like it could go straight through one of my trees,
+> avoiding conflicts with Andrew's tree. But maybe there is more to it that I am
+> missing.
+
+Sorry about that! Please take that through your tree.
+
+>
+> I assume stable topic branches would fix that, but they are currently
+> unfortunately not on the table ... :)
+
+I guess we need everybody-on-git for this!
+
+I guess when Liam and & I have the VMA tree we can do that at least for stuff
+that goes there :)
+
+>
+> >
+> >>
+> >> Ideally, patches really only touch one component.
+> >
+> > Right, but sometimes functions are declared in one place and called in
+> > others. It is impossible to change the signature of one without also touching
+> > the others.
+>
+> Yes. Something like that is unavoidable. Or if you need new APIs/
+
+Yes.
+
+>
+> >
+> >>
+> >> [PATCH 07/13] mm/madvise: convert madvise_vma_behavior() to use vma_flags_t
+> >>
+> >> is all over the place :)
+> >
+> > It's not really all over the place, it's converting vm_flags_t to
+> > vma_flags_t across madvise.c, which involves changing a few function
+> > signatures, whose callers must be updated.
+>
+> Ah, yeah. What on earth does arch/powerpc/kvm/book3s_hv_uvmem.c do with madvise :(
+
+Yeah it's quite worrying that... :)
+
+>
+> >
+> > I could split it up into 3 patches where 1 does internal-only, one changes 1
+> > function, and the next changes another, if that works?
+>
+> No, these things really have to go in as one unit, no need to split that up.
+
+Thanks, yeah, it's a pain I know but eventually 'one fine day' (probably in
+2028) everything will be converted to vma_flags_t/mmap_prepare and we won't have
+to think about this :P
+
+--
+Cheers, Lorenzo
