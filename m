@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794091059;
-	b=Wuwr0mX0KrwaRfyWGYWV32VesKCk9gfrpWbvg+bOiTa+GJpRDuOKzjnCUZFdfP+UiD6E
-	 oeTPVrr89HU1IcvNd1yDhcM0FiiDn9Rpw8/Su3lgrgXNLpkGRA+Qj5HutJwQQpbTozfBg
-	 Atxf/U7/qQjI04i7F1WSsFK+9qWxcc/xKr2fSVq9Cmdmd4n1iDajAQorFv7ZtxDVj7mcA
-	 9FO1nlKwdi/9Zw20W7UP9OXcsp/KziPcbHCJMZSSX4A7jkmifOKTIQ7ckoai6LLE4DIpL
-	 sCNG5/uBqpBno0w03HAeAIE07HTsMfLb0nhdQH9GfqabpEYxQ0m98L21Ll+wrMKSpfw==
+	t=1794091148;
+	b=XwEwlx3BY1wHSTalcgoGSAnz39oNDrHqlQRFuWo1eHvHDLD5I98Wph1g57P4NI3ZOq2P
+	 8tgSK8r9s1Sr+na/YA6bIf6JxKesbqE9/BDpxTq6FZTm+cZrkG0lPXuFIm+VRCu6IDu+x
+	 sQSSffFupfB4nrtGqblGACbovG+YQ+2CFU7HctMemSpNft6lmrn6PqTyb5y+tQlLBDZT9
+	 9K3zvmZHB/13dmCF3YpVBmUiJdEZtyoFRrHdhsA4WSCP6XV/hyprk0uomwxprRGpYPCUP
+	 wQZLb2/w6pBD3QgFywzuHgJJtmuM9z/5v+SkMp320aDZI8kVYqadYu0zYcTnyrvLV0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794091059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794091148;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=uTIW9ZNXo7IGqTDCIPcbW/4Ni86f8N+1UGLWhTVhaP8=;
-	b=bqkDEJ1ngSIIpq2jyr2CfWrsFV3iWTW8oLacrfFQB01K1aO1666FbivI3O4KCVpfIl5u
-	 YyLT2xsOIldxN3kGrEGo4HqQQZmjnBYpKfXud83/oGj7xtywFrIKsgR0QPDDSg0Ecvaq5
-	 Z3Koy0Q6qZv66LOGNwzwgKx698OfeGLJ1vLNDy/VZZ2zmvwyYTe38Lz8RgG0yzvO2jXDH
-	 Naf3SOkZ+08nGhMewCeCwN6K6mHDry2+XypFj0OsnSS68SMvdP884hG5XU5alNu7g0liq
-	 QthV7hSrTI9HD7TPkSczwfLI1G3mQkBwFEamI+Fd5QttpQ49qQx17FDUxFDVVYRWClw==
+	bh=XBd2FYBcaPk2XSMjlkWCU4wyPCzPsns5z6a0+wxgQxQ=;
+	b=OIKyYok1Tg1vGpScKb41Kn84KbR1GAacROQdoA8sfTtMj0BjNplZxKRoqQ69rIFhWM4P
+	 +yZlPRdsXdhVEdCB4kmbSDq2cyIbuSkxsN29OXEGV5plfQMOUyvzfTlkjm7YTwAG/Iewt
+	 S/4dA65BitWOXKlcl0OuROpsulBcGNk1qBUiHm4DKg9kK3Z83ePlt2mmry1YJ9t18kUNY
+	 BHDIU9qYvhD9K8VSVkjhsIHYsOogs+53SimVWAgI/KdsFlV2OXoPkfg+qiX+dFQPQwF+s
+	 ZI25eKWEi5hHBn+Ax8CDw0duf40od8y9RlFZJ/rCkGIwBoD0D7uR2Buu3xyTfVUo/0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CIKJ08AS;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HCcDT+0G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF658606A326
-	for <damon@lists.linux.dev>; Sat,  7 Nov 2026 22:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2C0606A326
+	for <damon@lists.linux.dev>; Sat,  7 Nov 2026 22:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CIKJ08AS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACF71F0089F;
-	Sat,  7 Nov 2026 22:37:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HCcDT+0G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AEB71F0089F;
+	Sat,  7 Nov 2026 22:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794091058;
-	bh=uTIW9ZNXo7IGqTDCIPcbW/4Ni86f8N+1UGLWhTVhaP8=;
+	s=k20260515; t=1794091147;
+	bh=XBd2FYBcaPk2XSMjlkWCU4wyPCzPsns5z6a0+wxgQxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CIKJ08ASs6Z/18JYlAd7yBe6WatK4BqkdG/0IGe4R30w9gZQUdYrT2S8/9cYK2RSg
-	 scu5N709Ae8PvmqNXQWl3KxhUuiNoVanGaRRRUV2sF6m2v8FO8b+ugVxkLx05Wo0AH
-	 PcSyHi4UU/gSBbm/s+W2g8nruCmUBikifij8wpdKWBY/dXlAnMka1VMyssO5YaVG9P
-	 ZhZukBKtBCluRLYFjEbn9SUr6LlVx6GzZqx3Pur3jJCEnBTAR5/TenfHmO0gVLnEkJ
-	 4uUKl+cLP6Yhry/nV/4w1IOEC5OXv4XohmtrgN3l4aAgu6PacUA+mX7yRBQBPC1E+S
-	 MnTathE26L9KQ==
+	b=HCcDT+0GnbTtVC35bg2MEujcDKNUToAzzu/JC2oMHTUkxnHgRuaquPSvlxWT5vLC+
+	 LvXtNOspfFPhxcP5VzJ6zOCxDRPRdXPaO7ip8WLixZdf22P+kXLNykH1OsYLI30Fjq
+	 fVDdXLRYYL0NZTkl36lIS5u3+nCuHztP671ezDdmq8+m6Ri4CuXgjOh/1sNjXGZHP+
+	 yvj2RhJGBugFX/qtBDbMurZxbrcWxz13NI/Okb6LJxvHhvEz20ttiLFxH4jOJgy03k
+	 KJFQwDYS8EVwhcnCRrCb9nVNdl1a2xhXQ2Kb3ab2TkxRXgJwSR9CyxSFb5bzKJ6hWC
+	 3WufiZG9rpxTA==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
 	"Andrew Morton" <akpm@linux-foundation.org>,
-	"Usama Arif" <usamaarif642@gmail.com>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 6.6.y 1/3] mm/damon/core: skip applying scheme if region split for quota fails
-Date: Sat,  7 Nov 2026 14:37:30 -0800
-Message-ID: <20261107223731.331778-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 6.6.y 3/3] mm/damon/core: remove unreachable damos charge_{target,addr}_from
+Date: Sat,  7 Nov 2026 14:38:59 -0800
+Message-ID: <20261107223900.331929-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-203366@kernel.org>
+In-Reply-To: <sashiko-outbox-203367@kernel.org>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -65,66 +64,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sat, 07 Nov 2026 22:33:38 +0000 sashiko-bot@kernel.org wrote:
+On Sat, 07 Nov 2026 22:34:54 +0000 sashiko-bot@kernel.org wrote:
 
 > Thank you for your contribution! Sashiko AI review found 1 potential
 > issue to consider:
-> - [Medium] mm/damon: false tried stats on split failure in
->   damos_apply_scheme()
+> - [Medium] mm/damon/core: dangling pointer ABA match in
+>   damos_fix_stale_charge_pointers()
 > --
 > 
-> commit ae5a2312a946a6108ba6414ca8a1f6fb984dd078
+> commit f7e621ee98abae5b2fb7828ae72ea3e96d1173fd
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/core: skip applying scheme if region split for quota fails
+> mm/damon/core: remove unreachable damos charge_{target,addr}_from
 > 
-> This commit updates damon_split_region_at() to return an error code on
-> allocation failure and skips applying the DAMOS scheme in
-> damos_apply_scheme() when splitting a region to fit within the remaining
-> size quota fails.
+> This commit adds damos_fix_stale_charge_pointers() to damos_adjust_quota() to
+> reset quota->charge_target_from and quota->charge_addr_from when the target is
+> no longer in the context or has no regions.
 > 
-> Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
-> Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
-> Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
+> Link: https://lore.kernel.org/20261020023958.108276-1-sj@kernel.org
 > 
 > > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index b5b6d00d7a3b5..9d4a78deaa06a 100644
+> > index 99e934a6d1ce9..61d45d40fc1d3 100644
 > > --- a/mm/damon/core.c
 > > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -1004,7 +1004,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
-> >  					DAMON_MIN_REGION);
-> >  			if (!sz)
-> >  				goto update_stat;
-> > -			damon_split_region_at(t, r, sz);
-> > +			if (damon_split_region_at(t, r, sz))
-> > +				goto update_stat;
-> >  		}
-> >  		if (damos_filter_out(c, t, r, s))
-> >  			return;
+> > @@ -1088,6 +1088,27 @@ static void damos_set_effective_quota(struct damos_quota *quota)
+> >  	quota->esz = esz;
+> >  }
+> >  
+> > +
+> > +static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
+> > +		struct damos *s)
+> > +{
+> > +	struct damos_quota *quota;
+> > +	struct damon_target *t;
+> > +
+> > +	quota = &s->quota;
+> > +	if (!quota->charge_target_from)
+> > +		return;
+> > +	damon_for_each_target(t, c) {
+> > +		if (t == quota->charge_target_from) {
+> > +			if (damon_nr_regions(t) > 0)
+> > +				return;
+> > +			break;
+> > +		}
+> > +	}
+> > +	quota->charge_target_from = NULL;
+> > +	quota->charge_addr_from = 0;
+> > +}
 > 
 > [Severity: Medium]
-> Does jumping to update_stat when damon_split_region_at() fails inflate
-> s->stat.nr_tried and s->stat.sz_tried?
+> Can t == quota->charge_target_from falsely match a newly allocated
+> damon_target if the old one was freed and its slab slot reused before
+> damos_adjust_quota() runs?
 > 
-> At this point sz is non-zero, so damos_update_stat(s, sz, sz_applied)
-> increments s->stat.nr_tried and adds the remaining quota size sz to
-> s->stat.sz_tried even though scheme application was skipped before
-> damos_filter_out() or c->ops.apply_scheme() ran.  Because quota->charged_sz
-> is not updated either, every subsequent matching region in the same walk
-> that fails to split will add sz to s->stat.sz_tried again.  Returning
-> directly instead of jumping to update_stat would avoid accounting the
-> skipped region as tried.
+> When an online commit removes a target in damon_sysfs_apply_inputs(),
+> damon_sysfs_set_targets() frees the damon_target via damon_destroy_target(),
+> leaving quota->charge_target_from dangling, while damon_set_attrs() advances
+> s->next_apply_sis past ctx->passed_sample_intervals so kdamond_apply_schemes()
+> skips damos_adjust_quota() on that cycle.  If another target is added before
+> damos_adjust_quota() next runs, kmalloc() can allocate the new damon_target at
+> the same address, causing damos_fix_stale_charge_pointers() to return early
+> and leave the stale charge_target_from and charge_addr_from values active in
+> damos_skip_charged_region().  Clearing charge_target_from and charge_addr_from
+> when the target is destroyed during commit would avoid keeping a dangling
+> pointer.
 
-Good finding, but no blocker.  The user impact is trivial.  Also same issue
-exists in the mainline.  I will think about whether to fix it in mainline and
-backport to stable.
+Good finding, but no real issue.  Occasionally starting quota charging from
+unexpected target is no real issue in real DAMOS use case in my opinion.  Also,
+same behavior in the mainline.  No blocker for this patch.
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261107222202.331476-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261107222202.331476-1-sj@kernel.org?part=3
 > 
 
 
