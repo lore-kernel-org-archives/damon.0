@@ -1,59 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794084348;
-	b=S1KSRo2+j2trU4zMcfYlSbuYJNVReCgQcL2uXRopn+HPdQwdPzH8X7ZOq8RIsGM1XaB1
-	 ZRcIgF7O01wA0/lxLgS00pY1JhM+nO2/7Uk/nfnBaGiFVGtNwEtgP8Y37+vYH5MAIDUUZ
-	 snkpgtm+yf76K79MZr7OHVNZrHBR0b9uLC94iGpHeXwQNerXvpAk/zhxlmz1a2HuaU6ob
-	 +C80TSdEDJBKhpbXdkR77595nMnJlg+s4bA/C4RuaH7/AT9Ph0UU0i3uWTYdOkJa4DIsW
-	 0ZBbTQJluM+Dd8PHEcF9D8YTwveVlQqHWVrwTu6MfGvx3THN2+tzrZwsNN2B/uXN/6Q==
+	t=1794085290;
+	b=ctduYJm9KJbZ0v9hdCMr7jFAz1HzP3plCSeJ9njNSJWxKn/a04QxBbaKzk3WAVB0cHBC
+	 OB0c6l9kNSeU/plTDAr0/OeHK28QDgDaQ96ghSS70U5AVmjDqYZtssdWg4sgmnXzMgwD5
+	 8iwaTcu1VouTFJaZvlio7UsjLkTyVZnlRwv3SYb7shP7Qt+ob7dDQZS+wI67doJxIlxcq
+	 rGnqYcpkkGyHs1obcPJDDn/FaIWP5qyAKo4ZQiDIH5TsXs8NoWopMSZlAdDCtbMN7eISX
+	 +kD294FWL42N79dkWNJkqv7mvi7zBE5NCl3w/hgqR+U9jPR6IOxkVXh2H41FQ2C5hCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794084348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794085290;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=M8bgwxspFahVCZ0yH00o4YkH5qoecwxn20OJ9z9Hb00=;
-	b=FTwj3JtUMP1zrK+n7Usw2NBSYLJuoD5sIZNn9wkYboy2EwSEoCaPYy0F8vB0Yw+lz/3J
-	 AYvM7XPkc5QKBIzpSOqX7OmavZ85JfopZyTO8O4XrvMKY1zhzsMUFS8+TuTEFGer8R2qg
-	 6sNI/X48vEDEcyATEmvyImMw67p5mEF2MfyY7LFy/CSO/ippiLElY92KvKYZpr4bnStQF
-	 X/K0KxgUCs4oXO7+0anc01ANfH8FJ1aGipAxmJgUAMGB5P7q/bEKHOfcMolVqYDlnaYgk
-	 N959B8eyOBhbe9WX7AQFW9YykuxN1HUJ1vQxdywpPY9tbjA0t6fNUvZ9pFNyzAwbeBg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=sOA44YoxPQVvGdEMaXi0+AmgG6ByQMuITCfSYFe/6fI=;
+	b=aFmoSTXc0Dd8tngZKyh62y4onl0hpZmXR73u0kEIwhtBpnDpODgpjAEZXJwV7Zr84qNh
+	 fnT+A9xOMNOwOvgnoxy66rUnDJbOMOYAnEmMCvrE0F7MtjI4Wx3wzCHnPdnPdDi7WkIbj
+	 wJ9mDQYDfZ4O3m/JnRw0qbdnOWYb6q+UxgOH2njpvu+xRhuBwGVDyAXodF8qLZLb+4UeO
+	 olejkw2G6v53ilJmLpt/PIGqvhLGTH0KCpIGGCaVUbSH1Y7+Fn4+C2gHIXqTmXeF5MQMQ
+	 iNIIHxGjIM1ulWTF/IgmANLyKvgfTXsq9ZFnnHebnGtJHJ1UdAdsHhdf7zKAi6m4/Hg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ClSP5JC+;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TC9Gi9tF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382BF606A32D;
-	Sat,  7 Nov 2026 20:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A797606A32C;
+	Sat,  7 Nov 2026 21:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ClSP5JC+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8257D1F0089F;
-	Sat,  7 Nov 2026 20:45:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TC9Gi9tF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26041F0089F;
+	Sat,  7 Nov 2026 21:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794084347;
-	bh=M8bgwxspFahVCZ0yH00o4YkH5qoecwxn20OJ9z9Hb00=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ClSP5JC+Ctl8qE4ktkLMUrfT3cqho0khiqd2A9toxiep84llJT4HyJAnHGa8vNi5L
-	 0F9J3i4zDRPk7YvOreWsgkdlLixOryDqlWwnWY07nOtFOvX+6bQVoKT5IPAGL9Ke4R
-	 Uu/Ficnvgi5obENWFGYRw/sXhzcdV8HtZDcOtUGGxxcB8S0e6euDLZgvgbXUM+NfHy
-	 wusRwqVKw1ZYEfrTAwDVENWH6nwm8o5XoejlSOEUh98PbOyKcQY4DRcRs2Iw1MVpvH
-	 pZmLCIuE4ALFxUx9HG77QkbpunioOgA53DYCpQxtnrQgXJYuGo0r3q1ILy0i+OKQ/j
-	 8ak58/WJ2YzfA==
+	s=k20260515; t=1794085290;
+	bh=sOA44YoxPQVvGdEMaXi0+AmgG6ByQMuITCfSYFe/6fI=;
+	h=From:To:Cc:Subject:Date;
+	b=TC9Gi9tFzcpsvR/2saFUxIf64m/Tyyrnr3xir/TaM/J7y28+6fefaLX22Ac6KTOO8
+	 rjJE26J2Rgno/9cgWdnICuYqbEqIKpZaB3vinje/JK2Ald6jEG7dFgaK0lOCSuxYD6
+	 XEaCCkwcp1QIgHhEVVSzF1S9qpWLDCEka4vtypFFXDcTt/g1FvIDRhssSVn8Mh9qCF
+	 EhrJkESleYSdA8e5KwhEldNGchvtVUSI4cBmJdxVCpfpwz4U/vQMO5HJyIE4i8vSAS
+	 kEag5PixS9F0tB86cR9l99gbEAVCQ5/Ku0IRdq2v7YSJGhJWP4+3X6frl4+w56hHJ6
+	 6D4gkLiMQkDvg==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: Sasha Levin <sashal@kernel.org>,
-	akpm@linux-foundation.org,
-	brendan.higgins@linux.dev,
-	davidgow@davidgow.net,
-	usamaarif642@gmail.com,
-	stable@vger.kernel.org,
-	damon@lists.linux.dev
-Subject: Re: FAILED: patch "[PATCH] mm/damon/core: disallow max < min damos filter range arguments commit" failed to apply to 7.3-stable tree
-Date: Sat,  7 Nov 2026 12:45:39 -0800
-Message-ID: <20261107204540.256103-1-sj@kernel.org>
+To: stable@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [stable] Wrongly applied DAMON patches
+Date: Sat,  7 Nov 2026 13:01:22 -0800
+Message-ID: <20261107210123.270641-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261107194352.198354-1-sj@kernel.org>
-References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -65,17 +61,42 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-[...]
-> Let me know if you'd prefer just adding those, or finding and dropping those
-> wrongly applied ones from series before released.  I could also help in any
-> case.
+Hello stable@ maintainers,
 
-Maybe I could identify stable-rc patches that don't have 'Fixes:' tag as
-wrongly applied ones.  I will find those from current stable-rc trees and
-request dropping those.
+
+A few DAMON patches unintentionally got [1] Cc:stable@ tags and queued for a
+few stable kernels.  Some of those even causing test failures.  Below are my
+best-effort (having no Fixes: tag) search of the unintentionally queued patches
+on stable-rc tree.  Could you please unqueue those?  If you prefer keeping
+patches that not intended to be queued for stable@ but not found to cause test
+failures, that's also fine for me.
+
+7.3.y
+=====
+
+b7156fe3b9cdb mm/damon/tests/core-kunit: test the size charged for a filter-trimmed region
+2ae8e0a3f49e3 mm/damon/core-kunit: test invalid damos filter commits
+96af19427e2bf mm/damon/core-kunit: extend damos_commit_filter_for() for wrong input
+f13b460f99105 mm/damon/core: return an error from damos_commit_filter_arg()
+
+The third commit is causing a test failure.
+
+6.18.y
+======
+
+c088f850b5e60 mm/damon/tests/core-kunit: test the size charged for a filter-trimmed region
+
+The commit is also causing a test failure.
+
+6.12.y
+======
+
+fc18efc64dc84 mm/damon/tests/core-kunit: test the size charged for a filter-trimmed region
+
+The commit is also causing a test failure.
+
+[1] https://lore.kernel.org/20261107194352.198354-1-sj@kernel.org
 
 
 Thanks,
 SJ
-
-[...]
