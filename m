@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794082586;
-	b=gzTaaSZpwaomjOpUa6xS0lg1B6xX/K39ho+N1ppVAQwk3Zn5OqZFJvXYJ/naIEn554jM
-	 c4tb4T2Y0BKf5Xc/YePkYnVUiRcItYA6OJDWaLGO46lQMjJLDZtc1hWWZIU2tXK9oV5Hs
-	 b0+dlMzA/rYZrHwgXaPXg8g6zjmG+BypuTirqGvwGPuhCZ8yRPBGQjMng+aPRa2Jzu7dJ
-	 p7tf3STPLJS/nXnG/J/yO7no7Jsqy1qCKJ5J4sSbePBRvAxBh+ezMbcu2WAKgfa+fvUt5
-	 XjqN7MD3s8diqroAtzUfPpEKBHwFhtEN/wOIMKcll6/PQJa+6YeRmFhqi4NG8b/Jheg==
+	t=1794082619;
+	b=07c6td8AiJQHNmjoQDq1RMMCOtEwXAT0Weu0ZFPnpvKvv7ENn2rcsxCTJgL3VkAxXVRd
+	 KzGyTq1KDol2kt7lsJAptADCZBmPP5CFZowSyNwLbzoH05b7FGW03Hany0PJ+t6PuwLpT
+	 mwN6H/WGYYlmooIMCAhNGDvhjMHHnBsISC9hyGU2iI6kBPxIv+IcnVKuVmIOdIFtMbaQo
+	 xzKUrUvlNM/8HlLf14QZpPdvGKzb9t9fHGYC+oiwyI7wHlhg1ly5u11PZrJdqiyf3Q4Uu
+	 zb0ElE8jQ7h8eUX5s0BtOe8yDL1h/43mizOGaZUzMkRefUOJZdvVI7RXM4Adfi7IU4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794082586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794082619;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=M7g2pr3kkD/CSWJUpDzGgViLett+jFEZktD5nsKbj1s=;
-	b=i/yTJCS62b1oDsMaNKE1sTm0MtSOnyBG3AyWaVtHz1ZAaufMnwW7kxq+Zz8QPnJoCUKy
-	 44WP/Oc3xi8wwdTx1ln7YGxMAzbE8zDRSMIg+sYTmF5il/sm4Z6Bvo4VhHCyQYF55x+/6
-	 DrGfa8dG0fV0jAck6ufQDLSi3lYz17zlBf9E2pHD65WMoZT9nXEIU3rwm3P1ezK+I2fy5
-	 Y0LlW9S0wzFR5y2MoCcvKq0AcRVjGgLWu93M0+QX14qU/Lf53GdyFeXgYCUgGgPYJe0bP
-	 0GsrINgOZi6IXwyTitETcyvg+uEvC7srO9WOpfZ/yLgtf1x5gwXPhnKfFGSHmLYCSmg==
+	bh=o+ZMjVLJcfcDmMSakGA07yGVejbhw+dwwn3jlM9VjIE=;
+	b=v9+H/Vg/p8cEd/J5LmhmUn6rSQv3lC/Fdk2rvqnL+wm4g2/7HIo7hOAr9AqxGtGmf31t
+	 by9qZcCK9UPNpJvqU56xOlnypvhIc2xmyWliiwfwCCpitiQG3NykbdblztEFuotkn234y
+	 b/WXjAoqt67O3aRbjQqh4Ap0fHSRWBGFQZRCB7QzaysqJmucqzdO+vvlUETACDP3Aatc3
+	 I8KSgtmCn7bNZhvDNQwZLApY1EN1UPJ/MwEZsh7YCSKhHijupS5OaHg4aWZAN/Qq8M0p1
+	 Uq+mtmLgQHBNMJzQJlYzIz87CwZQRoPSSJD0h32FEeY0qojTFyA5kKioKgIZohPTc0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="YA//QQ1G";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T11aGfsf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B78606A331
-	for <damon@lists.linux.dev>; Sat,  7 Nov 2026 20:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B182A606A326
+	for <damon@lists.linux.dev>; Sat,  7 Nov 2026 20:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YA//QQ1G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391D91F0089F;
-	Sat,  7 Nov 2026 20:16:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T11aGfsf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F011F0089F;
+	Sat,  7 Nov 2026 20:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794082586;
-	bh=M7g2pr3kkD/CSWJUpDzGgViLett+jFEZktD5nsKbj1s=;
+	s=k20260515; t=1794082618;
+	bh=o+ZMjVLJcfcDmMSakGA07yGVejbhw+dwwn3jlM9VjIE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=YA//QQ1GrkHwK19OK91/wAhu1y+2ZKJWaKNB+bPnpNQ2zWz/6gWBi6RBt7EEjPfnB
-	 apd6s0nIuN7r59bbYvUBzwCPk1B3Yc4cCuKC+7hDYGVlnB50MnXz+BEtrAvm7g4L3p
-	 u/UxDPJkLpmc0ARmBZHEbr17GwZQOYA3tXE2YF3kNaPTjumg4B/eohsDe7BnqDhMxr
-	 Zb/IgGRcElgGtzlOivirPagg2Y/s0BMQT6d6nRSG3aANYkNR+05cpforrkiRypkEBj
-	 pSg9+BDi2Z4EwNjL8QOJkGZexBkh1urjWnZRLvd6QLmLfNte3waxyzWxR5qkMhE6jN
-	 kFhDhnuLW5L3w==
-Message-ID: <sashiko-outbox-203256@kernel.org>
+	b=T11aGfsfSszaoqxxQK1Cl6JQU/4IIj2OBZjZAxw6TF1slNvKNZUOE6iKpaxopjgN0
+	 vRtucqazIE/xdnSiUO89eoBJtnJQuWlcdrbnLc7XI0p44nHWBcHG+CR+BGr7YUmowV
+	 eDOvXNX/0ZzDww9Fmyc9gU15kQZUkipOP0WIzX/qBSqkCbSFB6zIF9DI6i6TtJqQnO
+	 j6geuEOg7ESw8+ajI3ZaOsRZyJ3EouqIOCfeA92T+RuQqIsnTEotOOSr1EGkbol4GU
+	 fjqhVN/LT2bK+E53QIivnm8Mf8GqQVKzfFqB/N2qXkCUBG7oDqAReN9l/yECLsP5LE
+	 Ns/ljFpGGNXBQ==
+Message-ID: <sashiko-outbox-203259@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 6.18.y 2/5] mm/damon/core: handle uninitialized
- damos_quota_goal->last_psi_total
+Subject: Re: [RFC PATCH 6.18.y 5/5] mm/damon/core: filter out damos address
+ filter-split failed region
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261107201001.206120-3-sj@kernel.org>
+In-Reply-To: <20261107201001.206120-6-sj@kernel.org>
 References: <20261107201001.206120-1-sj@kernel.org>
- <20261107201001.206120-3-sj@kernel.org>
+ <20261107201001.206120-6-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 07 Nov 2026 20:16:25 +0000
+Date: Sat, 07 Nov 2026 20:16:58 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,31 +61,38 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> When DAMOS_QUOTA_SOME_MEM_PSI_US metric damos quota goal is set, the PSI
-> delta for the feedback loop is calculated using
-> damos_quota_goal->last_psi_total.  However, it is initialized only after
-> the first feedback loop.  The first iteration of the loop uses the
-> uninitialized value.  As a result, the feedback loop can change the
-> effective quota in an unexpected way at the first iteration.
+> When an address type DAMOS filter is configured, DAMOS tries to split the
+> region for the filter range, and apply DAMOS action to the filter-in
+> region.  The split operation (damon_split_region_at()) could fail from
+> allocation failure under extreme memory pressure.  In the case, DAMOS
+> action could be applied more or less than expected, ignoring the address
+> filter.
 >=20
-> The user impact of the issue is not big, because the issue impacts only
-> the first iteration of the feedback loop.  The feedback loop also has an
-> internal cap of the quota adjustment.  The wrong adjustment will soon be
-> corrected over a few iterations.  For this reason, doing no initialization
-> at commit time was intentional.  It is also explicitly commented.  That
-> said, nobody likes behaviors that are unexpected or difficult to be
-> expected.
+> The issue only rarely happens under extreme memory pressure.  No crash or
+> leak happens.  Occasionally not applying the action to a few regions
+> shouldn't be a real problem.  But applying the action to a region that the
+> user has excluded via address filter could be a surprise depending on the
+> use case.  It is only theoretical.  No such real case is found yet.
 >=20
-> [ ... ]
-> Cc: David Gow <davidgow@davidgow.net>
-> Cc: Quanmin Yan <yanquanmin1@huawei.com>
-> Cc: <stable@vger.kernel.org> # 6.9.x
-> (cherry picked from commit 29c6084658af41b5b1fefd873d26d441830ced34)
+> Filter out the entire region if the split is failed.  Update
+> damos_filter_match() signature to receive the error from split.  Also
+> update kunit tests for the updated signature.
+>=20
+> The issue was discovered [1] by sashiko.
+>=20
+> Link: https://lore.kernel.org/20261020004119.106690-1-sj@kernel.org
+> Link: https://lore.kernel.org/20260801203121.117449-1-sj@kernel.org [1]
+> Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos f=
+ilter")
+> Signed-off-by: SJ Park <sj@kernel.org>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> Cc: <stable@vger.kernel.org> # 6.6.x
+> (cherry picked from commit bbeec2d8324d7aac438bb12dd2d22b184e0a8d43)
 > Signed-off-by: SJ Park <sj@kernel.org>
 
 Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261107201001.2061=
-20-1-sj@kernel.org?part=3D2
+20-1-sj@kernel.org?part=3D5
 
