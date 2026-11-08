@@ -1,59 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794168209;
-	b=eRqyN7RU22W39TjiuZMg3lu47jrAjso4MbVZ7r0aMygJSo7BKvgSgdTD4pIxG+PtyPGf
-	 vU7aVhX5S3gpUjKjfsawpF22fVYqUGsFbyOKNLIg1Hoh7IIllsUPtIsZL03ry1kWG9DQA
-	 rgvmYltnMzkSq1hwX0zbrEPPbCn0BlcofkLkrwwktzhuj8kRd1rCbyMhbQ4jbGxitNndf
-	 n1orjChN3w92YZG93zoc6MBTZFA9phP9tCTvJUJgSSGufxp8JKFzl9UysZUHUXpsFqjKY
-	 QlXzEjaQ1Hiupn13YBRycuKpomc8YX5QDxEy+Hu9iW10vtYQ9rQ5CUjfGwLB33jXjIQ==
+	t=1794168442;
+	b=umSHT6R5r2CWkUvRIVCLrkYrA++tz+7NMbJgoVNR//olWA7lcgClZbTnSx/jb1kZsBRx
+	 D8v+GI/Rbcoux87lAoLfiV0hei1Zzy0cOkd0eF62N4gq24UDBrGSEzaAOq+10Lv9GDIKU
+	 vFYqQ8gFP75RI7JtiKtuoiHzI8+Pwa9gUOK1N7x04jDqfywnu2g7nqwNLeyCG+6uwCe1k
+	 hn35e9oX6YRHNNT7Gfbp7kCiQRWo8bifDrj0br4vkv85hZWM8CsE324+W2yB80CA7zo2x
+	 KyfDu1iCd4ygFc1b3CwRE/7Hc2xDnM65Bqy93UGE1GlWc46ivOgaDMvJAaFqhyz4e2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794168209;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794168442;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=DZ6gdZXmi+wGnZ9NA1jOeRLxjxmr/2rmV5TZgPwzxj4=;
-	b=eI2pkhtXMu3Dts+U4En+IsQN+AbMXs+r6X6gdwPruD8wyGUHv3VoHdODdyyWVft1PLns
-	 I+/rpW6mEgpSv+CaVJNJufXdrDA0cQIbPHj3j9I3kI9g9WwYHTQAPFbd1PPBMVYJrYfNN
-	 LuE4OC/vS4a7/yz3A9De5WkWwmnyyyFwGG5wi37k6b1ItIx+VRGGG8v8zn9UEWdOG1eiw
-	 WkZv8xsZsJK7plWfeNhMA7xNpTofGJ8nmnIaY/HlSU/XkgrOU6M1Qj/2ORkzm/s/qnmyZ
-	 0wFL82b3TzSzYPEgsaJakQlxBVADhA3j+cD4NV3Jpy3wy9rktE+7tPNMh6weGsEd2bw==
+	bh=JnexiImNzH0LwZiSLs2mNm4Ym4tC9B2T6qJnvzE4gug=;
+	b=Ehx+BcSpmmeuiKmkLnuqVOUQB6H7a7QPrHpNzzGoN0Ndpzzrk7H+44Bm99V2BAylwOnr
+	 DuewvFxTS5wmQau/EbXaBmLZqXQ1Q+Kfk537Arxpz5UvPHpMmmVhHtetxa3HjOeFILmYU
+	 T2ooOPi+bsyf9RCxakjLUaH8EcYjZzj67uF+j/BVPEb6q3hyZ4pl3gqTEnRwOZNRewr2Y
+	 GFo1ZVzjwTDLkMMkZrFEkEHNoaogI3MQ4rr3nX1mntBWUYbdcwZawDwYVmN9QcOUytzlv
+	 ZuIqzk0YcRZXcD8Y0HaImCDeu7Ob8pzLgSsHRhrJ665Q9JguUwKPvcECkls9KRhX3Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KdXtynUd;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RtI7SBsq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ABE606A31C
-	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 20:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B01606A320
+	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 20:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KdXtynUd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EB41F0089F;
-	Sun,  8 Nov 2026 20:03:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RtI7SBsq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744361F0089F;
+	Sun,  8 Nov 2026 20:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794168208;
-	bh=DZ6gdZXmi+wGnZ9NA1jOeRLxjxmr/2rmV5TZgPwzxj4=;
+	s=k20260515; t=1794168441;
+	bh=JnexiImNzH0LwZiSLs2mNm4Ym4tC9B2T6qJnvzE4gug=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=KdXtynUdUUSz2QX4FLHkq1IJ5Bbm5ohUKS//EZI/ce81aoJ2geW29TVr8cD0feOmb
-	 k8opN37d91LRaoS8Ypam63Xq4B/p33j9SeXA2RnBbFD39DL8bSKrtE3ow/vHk34A/l
-	 P2wFdHAab1hueE0bEhNjSKKyP5jGjFVBezFWQuh4mE0oMIDDkwzvhBYIlBsXjS8Sso
-	 HSt/zfQWYu7rXT6w8dq8NzZz9KXSAf8OIzXCKil4kRtVScCrEIi9pb+IzMP6nsIp6U
-	 v+2Q5B3smCJtYLoCOMrzyg+QBgeaUCiiiy9mf4LCxCL1jhF7D8LPE8Lmrc1z9Ph3XJ
-	 eqB6VeUiWlLIg==
-Message-ID: <sashiko-outbox-204001@kernel.org>
+	b=RtI7SBsquop8doU+a30rEi5WVgWUCoDWJ7lWelkxnHAoC5ngjRy54/bUtJVcU0b0V
+	 HApbTTTadibw6G+kS4m0fUBJTPXOl6S225MTD29K4HrwyD53OrhW2OWnjkX5wd/tz+
+	 rbouP/p4NjKqyVQoI7kf+jQBU8CWZAAqe4x28OL25xMJ42Oa2EloIhMEG0GZk6aA3E
+	 zOOQAvQeBprvlpTf0oZyEFWYx7W0BxtDnsFYrI1b7Ox8U5VzDCMdHoxmhHCG9JDSyX
+	 90rO3Q6g4VbDRtVCiq61xcl67yW/YgIKevJ6ByOBN5IIdmWl+g2V7dO3qmRQVVg7Ps
+	 xWwhb1axHmL3w==
+Message-ID: <sashiko-outbox-204004@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.12.y 3/5] mm/damon/core: handle uninitialized
- damos_quota_goal->last_psi_total
+Subject: Re: [PATCH 6.12.y 5/5] mm/damon/core: remove unreachable damos
+ charge_{target,addr}_from
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
-Cc: "Andrew Morton" <akpm@linux-foundation.org>, "Brendan Higgins" <brendan.higgins@linux.dev>, "David
- Gow" <davidgow@davidgow.net>, "Quanmin Yan" <yanquanmin1@huawei.com>, damon@lists.linux.dev, linux-mm@kvack.org, "Lian
- Wang" <lianux.mm@gmail.com>, "Kunwu Chan" <kunwu.chan@gmail.com>
-In-Reply-To: <20261108195145.115792-4-sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261108195145.115792-6-sj@kernel.org>
 References: <20261108195145.115792-1-sj@kernel.org>
- <20261108195145.115792-4-sj@kernel.org>
+ <20261108195145.115792-6-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 08 Nov 2026 20:03:27 +0000
+Date: Sun, 08 Nov 2026 20:07:21 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,70 +61,41 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Medium] mm/damon: integer overflow in damos_quota_score() on first
-  PSI round
---
+> damos_quota->charge_{target,addr}_from saves the target and region the
+> scheme's quota limit is reached.  damos_skip_charged_region() skips the
+> target and regions before the point.  The target that was assigned to
+> charge_target_from could be dynamically removed from the context by the
+> runtime parameters update (aka commit) feature.  In this case,
+> damos_skip_charged_region() cannot find if the point is passed or not,
+> so the scheme is effectively disabled.
+>=20
+> Similarly, the user could also remove all the regions of the target
+> using the runtime parameters update feature.  It would be uncommon to do
+> that, but it is a supported feature.  Because the skip pointer detection
+> logic (damos_skip_charged_region()) works for each region of targets,
+> this result in the logic is entirely skipped and the scheme is
+> effectively disabled again.
+>=20
+> The user impact is that the DAMOS scheme could suddenly stop working
+> under certain uses of the runtime parameters update feature.  It could
+> surprise users. No crash or leak happens though.  Users could also
+> simply work around by re-installing the scheme.
+>=20
+> Catch the corner cases in damos_adjust_quota() and reset the pointers.
+>=20
+> Link: https://lore.kernel.org/20261020023958.108276-1-sj@kernel.org
+> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
+> Signed-off-by: SJ Park <sj@kernel.org>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c4=
+9b8
+> Cc: <stable@vger.kernel.org> # 5.19.x
+> (cherry picked from commit 5695abc4e742b947f586bfb6a080a80ad9957e5d)
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-commit 6456f90a0b14251a6d548d6849beb9dd850f55e6
-Author: SJ Park <sj@kernel.org>
-
-mm/damon/core: handle uninitialized damos_quota_goal->last_psi_total
-
-This commit initializes damos_quota_goal->last_psi_total to U64_MAX upon
-creation and commit, and sets goal->current_value to goal->target_value on
-the first PSI tuning round so the effective quota remains unchanged until
-a baseline PSI reading is recorded.
-
-Link: https://lore.kernel.org/20260902002725.108635-3-sj@kernel.org
-Link: https://lore.kernel.org/20260718005316.89585-1-sj@kernel.org [1]
-
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 6ef77741b783b..52f01a6508b66 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-
-[ ... ]
-
-> @@ -1608,7 +1611,12 @@ static void damos_set_quota_goal_current_value(str=
-uct damos_quota_goal *goal)
->  		break;
->  	case DAMOS_QUOTA_SOME_MEM_PSI_US:
->  		now_psi_total =3D damos_get_some_mem_psi_total();
-> -		goal->current_value =3D now_psi_total - goal->last_psi_total;
-> +		/* uninitialized last_psi_total; make no effect this round */
-> +		if (goal->last_psi_total =3D=3D U64_MAX)
-> +			goal->current_value =3D goal->target_value;
-> +		else
-> +			goal->current_value =3D now_psi_total -
-> +				goal->last_psi_total;
->  		goal->last_psi_total =3D now_psi_total;
->  		break;
->  	default:
-
-[Severity: Medium]
-Can setting goal->current_value to goal->target_value overflow in
-damos_quota_score() when goal->target_value exceeds ULONG_MAX / 10000?
-
-Unlike mainline where damos_quota_score() uses mult_frac(), this tree
-computes the score with unsigned long multiplication:
-
-mm/damon/core.c:damos_quota_score() {
-	damos_for_each_quota_goal(goal, quota) {
-		damos_set_quota_goal_current_value(goal);
-		highest_score =3D max(highest_score,
-				goal->current_value * 10000 /
-				goal->target_value);
-	}
-}
-
-When goal->target_value > ULONG_MAX / 10000 (for example, above 429,496 us
-on 32-bit architectures), goal->current_value * 10000 wraps around and
-produces a score below 10000, causing damon_feed_loop_next_input() to
-increase the effective quota on the first round instead of keeping it
-unchanged.
+Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261108195145.1157=
-92-1-sj@kernel.org?part=3D3
+92-1-sj@kernel.org?part=3D5
+
