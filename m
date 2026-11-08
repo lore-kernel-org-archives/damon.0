@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794168442;
-	b=umSHT6R5r2CWkUvRIVCLrkYrA++tz+7NMbJgoVNR//olWA7lcgClZbTnSx/jb1kZsBRx
-	 D8v+GI/Rbcoux87lAoLfiV0hei1Zzy0cOkd0eF62N4gq24UDBrGSEzaAOq+10Lv9GDIKU
-	 vFYqQ8gFP75RI7JtiKtuoiHzI8+Pwa9gUOK1N7x04jDqfywnu2g7nqwNLeyCG+6uwCe1k
-	 hn35e9oX6YRHNNT7Gfbp7kCiQRWo8bifDrj0br4vkv85hZWM8CsE324+W2yB80CA7zo2x
-	 KyfDu1iCd4ygFc1b3CwRE/7Hc2xDnM65Bqy93UGE1GlWc46ivOgaDMvJAaFqhyz4e2A==
+	t=1794168467;
+	b=W7PTqBKKO5m1b946UTIzViUj6eXCaekZOP6VsSFaGcU820fZ2rPSvdkU9c7zIXBdLF3D
+	 64PUU2/GLXcMU0hvVsOhau08uJgk8TrHLZzsof4kQPq9UnDgBTFWvAQpyooT4NbqTcaMn
+	 72cSvr269GIkoti3H5dEuudgD2S+4A9R7G0WLq/bMlL/5nZvCqfjeLU5oXLGK17PooChe
+	 cxuA/XggMgFDF1mtNO+T1v+Nv7TguBw4IvQeexAfYEXyLiGmrJT0oJDbVoge5nZKttBeP
+	 Hd7Abya3PZp1tWFIMGMWzBgX5EoiLAtt1VX66W0n0w9jtT1vLhEu+kfO49IE+X3FFcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794168442;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=JnexiImNzH0LwZiSLs2mNm4Ym4tC9B2T6qJnvzE4gug=;
-	b=Ehx+BcSpmmeuiKmkLnuqVOUQB6H7a7QPrHpNzzGoN0Ndpzzrk7H+44Bm99V2BAylwOnr
-	 DuewvFxTS5wmQau/EbXaBmLZqXQ1Q+Kfk537Arxpz5UvPHpMmmVhHtetxa3HjOeFILmYU
-	 T2ooOPi+bsyf9RCxakjLUaH8EcYjZzj67uF+j/BVPEb6q3hyZ4pl3gqTEnRwOZNRewr2Y
-	 GFo1ZVzjwTDLkMMkZrFEkEHNoaogI3MQ4rr3nX1mntBWUYbdcwZawDwYVmN9QcOUytzlv
-	 ZuIqzk0YcRZXcD8Y0HaImCDeu7Ob8pzLgSsHRhrJ665Q9JguUwKPvcECkls9KRhX3Zw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794168467;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=2TO+CpsEMkIicevAnwrknqp+HSpjmNynu9r53SRPWuc=;
+	b=q99VcVMmC4rhL1A5/VgmLSgZa3t3Xhpkwgr2lfvUHkqYwkDZZrDb42DF0fyL0cZMOTbj
+	 ib/oe9Nl4SxJxC8GdHANRX8oxiNOGAaXjJGLrtj0hOtrWJ5PqInluwCF/k4Oe/zFc1AXD
+	 VLZm8HY5q9AEZJCOqHbhZ2jYAdm//bBbhhgXta7MguwJ6CbOk7H4Gw6lg7rF8Df476pWN
+	 mI/LrPkA9+DuDqcm+obZxBZhhtxP032f2lJoLnYPQYGo7BzHMsR6+FGZ+4u65z4j1hoxU
+	 Za4zmNDu1yOe/ccfidAMp64rXCDGnM88FzbBVlkyjEAIKSQMIK7uhMqFkrXkZjxY8CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RtI7SBsq;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PgRwkHww;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B01606A320
-	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 20:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234EF606A31C
+	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 20:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RtI7SBsq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744361F0089F;
-	Sun,  8 Nov 2026 20:07:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PgRwkHww
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A2E1F0089F;
+	Sun,  8 Nov 2026 20:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794168441;
-	bh=JnexiImNzH0LwZiSLs2mNm4Ym4tC9B2T6qJnvzE4gug=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=RtI7SBsquop8doU+a30rEi5WVgWUCoDWJ7lWelkxnHAoC5ngjRy54/bUtJVcU0b0V
-	 HApbTTTadibw6G+kS4m0fUBJTPXOl6S225MTD29K4HrwyD53OrhW2OWnjkX5wd/tz+
-	 rbouP/p4NjKqyVQoI7kf+jQBU8CWZAAqe4x28OL25xMJ42Oa2EloIhMEG0GZk6aA3E
-	 zOOQAvQeBprvlpTf0oZyEFWYx7W0BxtDnsFYrI1b7Ox8U5VzDCMdHoxmhHCG9JDSyX
-	 90rO3Q6g4VbDRtVCiq61xcl67yW/YgIKevJ6ByOBN5IIdmWl+g2V7dO3qmRQVVg7Ps
-	 xWwhb1axHmL3w==
-Message-ID: <sashiko-outbox-204004@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.12.y 5/5] mm/damon/core: remove unreachable damos
- charge_{target,addr}_from
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261108195145.115792-6-sj@kernel.org>
-References: <20261108195145.115792-1-sj@kernel.org>
- <20261108195145.115792-6-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 08 Nov 2026 20:07:21 +0000
+	s=k20260515; t=1794168466;
+	bh=2TO+CpsEMkIicevAnwrknqp+HSpjmNynu9r53SRPWuc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=PgRwkHwwOmAE2ueWzcsEYsrtwZZxIFcB2QYHHOQN15qQM43ZwDti1n3zhOrGbqixh
+	 sGNZoR1ISIeGqbr89cNSvODGlFtogYezoGsOmDsVjetf3yvL6zuLz3JLUeZuvg2+y7
+	 uch30Ku/7hh5fwy9s43S5p9JbR45T908c0Ni6/IGw/nV9A6y74QvNnyae9vPMUipi0
+	 sM2aYCx6Nh2KCZYMppTuclvoixIoRt/joRxrIbKwV7MME6QQvt6ftUfO0XMFBqwFJO
+	 fepI2Bnk/djZYaXlKHUjODQFFOq+dMtFdBd2xuskq5zrSCP/b1b3rHAWW69TWsG7Bu
+	 OG7UitbI8h0qQ==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	"Andrew Morton" <akpm@linux-foundation.org>,
+	"Usama Arif" <usamaarif642@gmail.com>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: Re: [PATCH 6.12.y 1/5] mm/damon/core: skip applying scheme if region split for quota fails
+Date: Sun,  8 Nov 2026 12:07:38 -0800
+Message-ID: <20261108200739.116084-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <sashiko-outbox-204000@kernel.org>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,42 +61,68 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> damos_quota->charge_{target,addr}_from saves the target and region the
-> scheme's quota limit is reached.  damos_skip_charged_region() skips the
-> target and regions before the point.  The target that was assigned to
-> charge_target_from could be dynamically removed from the context by the
-> runtime parameters update (aka commit) feature.  In this case,
-> damos_skip_charged_region() cannot find if the point is passed or not,
-> so the scheme is effectively disabled.
->=20
-> Similarly, the user could also remove all the regions of the target
-> using the runtime parameters update feature.  It would be uncommon to do
-> that, but it is a supported feature.  Because the skip pointer detection
-> logic (damos_skip_charged_region()) works for each region of targets,
-> this result in the logic is entirely skipped and the scheme is
-> effectively disabled again.
->=20
-> The user impact is that the DAMOS scheme could suddenly stop working
-> under certain uses of the runtime parameters update feature.  It could
-> surprise users. No crash or leak happens though.  Users could also
-> simply work around by re-installing the scheme.
->=20
-> Catch the corner cases in damos_adjust_quota() and reset the pointers.
->=20
-> Link: https://lore.kernel.org/20261020023958.108276-1-sj@kernel.org
-> Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-> Signed-off-by: SJ Park <sj@kernel.org>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c4=
-9b8
-> Cc: <stable@vger.kernel.org> # 5.19.x
-> (cherry picked from commit 5695abc4e742b947f586bfb6a080a80ad9957e5d)
-> Signed-off-by: SJ Park <sj@kernel.org>
+On Sun, 08 Nov 2026 20:00:20 +0000 sashiko-bot@kernel.org wrote:
 
-Sashiko has reviewed this patch and found no issues.
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] mm/damon/core: inaccurate tried stats on split failure in
+>   damos_apply_scheme()
+> --
+> 
+> commit 2d3797cf5f053ac8bc0b4587f17ff69eb9813ce6
+> Author: SJ Park <sj@kernel.org>
+> 
+> mm/damon/core: skip applying scheme if region split for quota fails
+> 
+> This commit updates damon_split_region_at() to return an error code on
+> allocation failure and skips applying the DAMOS scheme in
+> damos_apply_scheme() when splitting a region to fit within the remaining
+> size quota fails.
+> 
+> Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
+> Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
+> Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
+> 
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 81d44e41de210..6ef77741b783b 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> 
+> [ ... ]
+> 
+> > @@ -1470,7 +1470,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+> >  					DAMON_MIN_REGION);
+> >  			if (!sz)
+> >  				goto update_stat;
+> > -			damon_split_region_at(t, r, sz);
+> > +			if (damon_split_region_at(t, r, sz))
+> > +				goto update_stat;
+> >  		}
+> >  		if (damos_filter_out(c, t, r, s))
+> >  			return;
+> 
+> [Severity: Low]
+> Does jumping to update_stat when damon_split_region_at() fails
+> inaccurately inflate s->stat.nr_tried and s->stat.sz_tried?  At this
+> point sz holds the non-zero remaining quota, so damos_update_stat()
+> increments s->stat.nr_tried and adds sz to s->stat.sz_tried even though
+> scheme application and damos_filter_out() were skipped.  Because
+> quota->charged_sz is not updated on this failure path, any further
+> matching regions that also fail to split in the same walk will
+> repeatedly add the remaining quota to s->stat.sz_tried.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261108195145.1157=
-92-1-sj@kernel.org?part=3D5
+Trivial user impact issue that also exists in the mainline.  No blocker for
+this patch.
 
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261108195145.115792-1-sj@kernel.org?part=1
+> 
+
+
+Thanks,
+SJ
