@@ -1,58 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794171707;
-	b=Tp2bxrHnvVVnmtlZ4rb9eipvDAsG5GeDbrlUbrHlqAmx60n6uSogR0oiX8/KXnEXxNk3
-	 KrudzHgMPqyEpQsr0NQC9h5SUJ5o4uzCFvc5lDZInkd177dvtYRVzuJc6n71d+938rZsW
-	 CxsMitpiF0zezd+vDLKlTktxEV1sQwQQ9WNP0VUaOWA2lhgvF+3SGyskgD4sUV8vIBXO6
-	 U/zQu6KC7+sxU1/JISzw7ZgYOOi8IK9q2gy0aqYS+2TZmsC59XdxYIWrkM6hXg6mTZiwc
-	 VGbK4NCuGAA7MNT0Rhlpkfui7ed+0Z/2jvZD3TjnkzvEFtEecx3xFBdLVQZUr8JclrA==
+	t=1794171871;
+	b=sx2wafEIeDepWJMYhbv4IGXUCT7u1NZqQ9cVRgAHuxLQUyP6wavuUmKZyNMSKVu14DuO
+	 Y1i7ZWuO1N7JvRI1vo/GjtUxdAG31AEWN0Zc6QDkE4oFLjg865709CguzPWxIlmlv2Ebr
+	 jzxcdYCaBk931eRI3CvClGU6RqxMiIYSPdbt250rPA2YqIOmhY6UnAtNUFSveJQovDelE
+	 BmefMTjPO3uAJ5TDjzt9+UxfGkFeElLebDYvVIvyfFe1Ol51u48YyH+UuIYm4GTXe+a5t
+	 NNn72OdCxTEn3qd1BUKJRdLhgPYV9UHWe2RMnbaa1yL1A/PT5fR/NVvOFjNBeHCmIyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794171707;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=LlRw1T3EhDLk7qpw1Iv3e7L77NPv6Myz+uuZpVhsszI=;
-	b=ZTfFz3sAnzueZ4iZx1YaBG4vf8obvkab8TOpJftkfeYV54E6jmtTVNSi9EMKnNsInRlS
-	 z8ttOoL3XmMv6OGPHTyWGECPrU1SQs4cbTXgUEnCNPKRj/vEkPKR6cmFZkfAEW/1kFdpm
-	 4fWrNXM3tvLVxV0gBua59/04sCXRYlvlrqSuLLWP/9LYrQJiD9USN+ACDDzly/HMLLJ0o
-	 LDJ3WKPOhlzMiITeKc1hSTi0P+6J4vnpnR3rUschZIxo9L1FciEr16H9kgMi1gZs0e2hg
-	 ATMJSKSzI4xzVG6xyfwtzfXmDCQ5KY9ul10whSRDXD8lhhNbpwlYx2/eMrLTv1wnxRg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794171871;
+	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=dA8BlSr4nW8M2tmghZ/qmNUjL9Vz8LO1wLh57I7CYw8=;
+	b=JfkxAKXZT/a5gi6yS+uEjdJF/44SkTHTbdUyKNLAstgWoTwBYQKY+is+498/CCC0tkZU
+	 A5QPhU+ROO7dVnDZt3UYj6Bn5mfyKtjZ09WRDLy5MjEaors8xnoD6/2bVPe0lbgyPS3dA
+	 //4Gva2vHC+EI5VpqWOjw7IiCCj9EJwcMI0MIwxwmEvgKHV6AyVcE4iD5G82vCelbM8vC
+	 ONLybnGoaO/xp9xMMVRTAk0xE4sB+qd6walRKUPNyaIttlhmS4x/XWYyJRQUlkrUaBTn3
+	 Ra4VLeFhe2oUI+A3W2sryrHNl7bQq7NqduONdgGQU8FTNMp3wTzNSFk6J3JhDKEuBhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BHvQJEZm;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Gm0vMsur;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6864D606A321
-	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 21:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B39606D819
+	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 21:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BHvQJEZm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C728D1F008A1;
-	Sun,  8 Nov 2026 21:01:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Gm0vMsur
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C011F00932
+	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 21:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794171707;
-	bh=LlRw1T3EhDLk7qpw1Iv3e7L77NPv6Myz+uuZpVhsszI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BHvQJEZm1OHVlrkHXPv0o9B3+mNxp6d8OeOu8Ms2swuGncA3vCencR/PNNlMeLHbS
-	 FTqXLaA31Q+LSWY0NZq6/xtPOa/7Y9LzeGnonavPI94pD7bAMm9Z2CjarWPQjLLE8t
-	 9c7jmyaWMvXYzsUqhwywIGmOTG+QDHV/QvovtcbNLnCGpYiUNNa+L7XGjaIWOhadFV
-	 YHo91DIFEGM8C/7m0NiLxQNJewxOmKBmcMBXgWOGWt72q23QgognUsvRTJYofz+Qwt
-	 8j6u5mVmzv/T2t/ya717XIuGYvd2AnyefCvwyhB52UxoIyi3nu+mAF2b9C8cHgzNrb
-	 3pcHTOnAozH1g==
-From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	"Usama Arif" <usamaarif642@gmail.com>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: [PATCH 6.1.y 1/2] mm/damon/core: skip applying scheme if region split for quota fails
-Date: Sun,  8 Nov 2026 13:01:38 -0800
-Message-ID: <20261108210140.908-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-204020@kernel.org>
-References: 
+	s=k20260515; t=1794171869;
+	bh=dA8BlSr4nW8M2tmghZ/qmNUjL9Vz8LO1wLh57I7CYw8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=Gm0vMsur6Zp+NDkvE5MIcJ+lRVCZkjKGPWerSg0Ixxfn9AEbpAu/RLNKOqwe/ZTdo
+	 qPph1jA31UrzXqTs+vyoemnUgI2gqnqO/vugay5bIG4wQdwTss9sreUHZHeUpgXCew
+	 xT57TF/AzNCIVb5ptdoraysWsiWP9qiz+GAmeYe2ZaABkPz3HHL/YoH5zndZBhaInK
+	 l1ZfJq9jygp4h8kT5Gh1IRgMOKCswVib34YlOmDx7ZDzDx5NL5V9adTpX+A20v/nD1
+	 BvGjiE7CAPVWDb1+95/Ev5HtSHiPIok/91M5Lqq/9Iz2IAxMN30nyu4NE4pqAouu5k
+	 JZwc0uwTnuukw==
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-9440304604aso26055885a.0
+        for <damon@lists.linux.dev>; Sun, 08 Nov 2026 13:04:29 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AL+hErFj1yIt4yCbFmIhCTdbZlDvcT/ifPL0MmpY/bUGD5CVGTWW7SuH3wqAi3LKkcZE+7IKjaO0/Q==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8MD/VCoblV3tkjGu4zxnRduEYwURymxzfbpIoKvpmmRjn4xrfr
+	XwVcvHSlXPQmyVjRWik+Gl1xUhhvpOw9TxqpS6OCrhZqjDHDFcrh5kBl8GprBVm8++5RG5ZuKWZ
+	pX3jUDKP5fJrqkyBnFlLrf9hbZBJz+uY=
+X-Received: by 2002:a05:620a:4147:b0:945:d2f9:5c2e with SMTP id
+ af79cd13be357-94784201be3mr321265885a.18.1794171868934; Sun, 08 Nov 2026
+ 13:04:28 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -62,75 +59,97 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com> <20261016-mglru-fg-v4-7-2106750c0bfa@tencent.com>
+In-Reply-To: <20261016-mglru-fg-v4-7-2106750c0bfa@tencent.com>
+From: Barry Song <baohua@kernel.org>
+Date: Mon, 9 Nov 2026 05:04:17 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4wSDOgCC9AmLS-z670W-nkF3DXB_cNvNFnptX5F95fGMA@mail.gmail.com>
+X-Gm-Features: AclHuK88cVk2cTHlbMRpEce2sAMWIV7FVPbAiXOdIHIxIsSaZ46UdtpCmeHh5_Y
+Message-ID: <CAGsJ_4wSDOgCC9AmLS-z670W-nkF3DXB_cNvNFnptX5F95fGMA@mail.gmail.com>
+Subject: Re: [PATCH v4 07/17] mm/mglru, gup: mark folios referenced via a fast helper
+To: kasong@tencent.com
+Cc: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, SJ Park <sj@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>, 
+	Muchun Song <muchun.song@linux.dev>, Qi Zheng <qi.zheng@linux.dev>, 
+	Ying Huang <ying.huang@linux.alibaba.com>, Chris Li <chrisl@kernel.org>, 
+	Baoquan He <baoquan.he@linux.dev>, Nico Pache <nico.pache@linux.dev>, 
+	Usama Arif <usama.arif@linux.dev>, Michal Hocko <mhocko@kernel.org>, 
+	Roman Gushchin <roman.gushchin@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, 
+	David Hildenbrand <david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>, 
+	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
+	Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Kemeng Shi <shikemeng@huaweicloud.com>, 
+	Nhat Pham <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, 
+	Gregory Price <gourry@gourry.net>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, 
+	Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
+	David Rientjes <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, 
+	Vernon Yang <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, 
+	Chen Ridong <chenridong@xiaomi.com>, Tal Zussman <tz2294@columbia.edu>, 
+	Kairui Song <ryncsn@gmail.com>, Xiang Liu <liuxiang.277@bytedance.com>, 
+	Ehab Ababneh <ehab.ababneh@intel.com>, zhaozhengzhuo <zhaozhengzhuo@uniontech.com>, 
+	Lian Wang <lianux.mm@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>, linux-kernel@vger.kernel.org, 
+	cgroups@vger.kernel.org, damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 08 Nov 2026 20:36:18 +0000 sashiko-bot@kernel.org wrote:
+On Fri, Oct 16, 2026 at 2:15=E2=80=AFAM Kairui Song via B4 Relay
+<devnull+kasong.tencent.com@kernel.org> wrote:
+>
+> From: Kairui Song <kasong@tencent.com>
+>
+> Introduce folio_inc_lru_refs_fast(): raise refs from 0 to
+> LRU_REFS_REFERENCED via cmpxchg, or just set PG_referenced for the
+> classical LRU as before. No counter update, promotion, and guarteens
+> no other complex operations in following commits.
+>
+> Convert the gup fast-path sites. No behavior change for classical LRU.
+>
+> Tested-by: zhaozhengzhuo <zhaozhengzhuo@uniontech.com>
+> Signed-off-by: Kairui Song <kasong@tencent.com>
+> ---
+>  include/linux/mm_inline.h | 25 +++++++++++++++++++++++++
+>  mm/gup.c                  |  6 +++---
+>  2 files changed, 28 insertions(+), 3 deletions(-)
+>
+> diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
+> index 65415eeac802..effa13c63632 100644
+> --- a/include/linux/mm_inline.h
+> +++ b/include/linux/mm_inline.h
+> @@ -454,6 +454,31 @@ static inline bool lru_gen_del_folio(struct lruvec *=
+lruvec, struct folio *folio,
+>  }
+>  #endif /* CONFIG_LRU_GEN */
+>
+> +/**
+> + * folio_inc_lru_refs_fast - Bump folio refs count without promotion.
+> + * @folio: the folio
+> + *
+> + * Raise refs from 0 to LRU_REFS_REFERENCED and leave hotter folios
+> + * untouched. For the classical LRU, a plain PG_referenced set.
+> + */
+> +static __always_inline void folio_inc_lru_refs_fast(struct folio *folio)
+> +{
+> +       unsigned long new_flags, old_flags;
+> +
+> +       if (!lru_gen_enabled()) {
+> +               folio_set_referenced(folio);
+> +               return;
+> +       }
+> +
+> +       old_flags =3D READ_ONCE(*folio_flags(folio, 0));
+> +       do {
+> +               if (lru_get_refs_flags(old_flags))
+> +                       break;
+> +               new_flags =3D old_flags;
+> +               lru_set_refs_flags(&new_flags, LRU_REFS_REFERENCED);
+> +       } while (!try_cmpxchg(folio_flags(folio, 0), &old_flags, new_flag=
+s));
+> +}
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] mm/damon: inflated tried stats in damon_do_apply_schemes() on
->   split failure
-> --
-> 
-> commit 3b087258b4341cba87012b7cb96ed676fd164c12
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: skip applying scheme if region split for quota fails
-> 
-> This commit updates damon_split_region_at() to return an error code on
-> allocation failure and skips applying the DAMOS scheme in
-> damon_do_apply_schemes() when splitting a region to fit the quota fails.
-> 
-> Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
-> Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
-> Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index f0da5cb2b88a0..9206737d05ae7 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -810,7 +810,8 @@ static void damon_do_apply_schemes(struct damon_ctx *c,
-> >  						DAMON_MIN_REGION);
-> >  				if (!sz)
-> >  					goto update_stat;
-> > -				damon_split_region_at(t, r, sz);
-> > +				if (damon_split_region_at(t, r, sz))
-> > +					goto update_stat;
-> >  			}
-> >  			ktime_get_coarse_ts64(&begin);
-> >  			sz_applied = c->ops.apply_scheme(c, t, r, s);
-> 
-> [Severity: Low]
-> Does jumping to update_stat on damon_split_region_at() failure inflate
-> s->stat.nr_tried and s->stat.sz_tried?
-> 
-> When damon_split_region_at() fails, sz is the non-zero remaining quota
-> size, c->ops.apply_scheme() is skipped, and quota->charged_sz is not
-> advanced:
-> 
-> mm/damon/core.c:damon_do_apply_schemes() {
-> 	...
-> update_stat:
-> 		s->stat.nr_tried++;
-> 		s->stat.sz_tried += sz;
-> 	...
-> }
-> 
-> Because quota->charged_sz remains unchanged, subsequent matching regions
-> can repeatedly add sz to s->stat.sz_tried if allocation continues to fail.
-
-Trivial user impact issue.  The same behavior exists in the mainline.  No
-blocker for this patch.
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261108202759.117377-1-sj@kernel.org?part=1
-> 
-
+What is the actual purpose of this patch? Is it to skip
+cmpxchg() when the folio already has non-zero refs for
+better performance?
 
 Thanks,
-SJ
+Barry
