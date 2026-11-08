@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794167914;
-	b=IK6gdyZ2DBNHc7ifSAe425b4CCLZ+3o030tZIJ779jX99aNxmLLgssQ9N/me9iznLp4l
-	 RItg1KZjMG1ppqKbdmKsvem0Lfk4l0JMv/QLdFcH2VSDZohJm3ZR6SRRD4Hdzw+AEnu7P
-	 54dmra8XHoZ3WDzH3TgNtNxjsK62ArDnAx7vCy7Gx44n1AZXNVNC5D0iT56N1t7l0EBiJ
-	 /FtVOS2yNoRKi25ojEgdMBfZTO21GuPkczAkCGFL7q2TEhCY8OmaDcA3KgWKyizTSCxuL
-	 IxY3RdMra1TknpodINgCS2RGgi4855Qijqr6eYfsvw1765fFXEeXAEcOOsn0+vc93sg==
+	t=1794167935;
+	b=I9/AXfcVj+3NhyvnSZNKyeOHM1169RkzpB31Cj7v8FXvqzB98Tj7E6yWxDg0xov5ghvV
+	 gsTVsCA19PyQsT6GqNPOh/6jpCIjc6ldAngGvxulzxM+toaU+tLfmFDriwXPUbpE22xL8
+	 wiBZPKAl4IWbgJ3rXlh3K1Wxyb2dVECZaS7zD+4k8/KFyWg/XgcOudp3g+750WgdTcpLw
+	 oF0aIIbiDuIfK74Mg/yze1r6x60YmAWRCAObiciu1btuR55PiPeVoudydZspCU7LPP/xe
+	 lsaFfMFPYE+id1+Ihr1GAjZY8m8G+YnWEPcIfbjQJXjlA4vhGpmBVZS2ow8erff6bxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794167914;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794167935;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=V53rlsVgy5PvZV8iHNpM01AjNY+VwscLtv0DUGrod14=;
-	b=CUMv23/s/NID6/zFWyqdhrqo6CJ+Vh7DiJlBgHoHSHoUChMZg+7YyVLS/XDUcN1oxD9q
-	 PwMhApAxWNb7qt9a70lWw337QP2WaI6WDHZf4UzWnd1Y6yvwvT5izHBHqKrg+sKwVC0tV
-	 gSzSg0tEiUsi9qsEv70JT87z1xrWUD8vTi3ECfyM0cUBZGtRl/L5L2fNKRa7MLhYjee+6
-	 sf51Lui5Gz01UcOjy3hcr1XLOj66N4HjhO96iwL7J3GKmnbxt/TIo52Oa61PEZSG7Z9J6
-	 ALliZy8iDRanma4A4AVeLvjae4CyFVE+rNzKbDjehufe1f2esVh5+9+zSD5HDa4/Wag==
+	bh=OHdC0GgEhyrosirHNB/j9T8So70Qs+7SiSlEMgyb4uI=;
+	b=X3g5lVOagBdtWfBhZw0p4opt84J3fVH0n4zy6GZ19c3okoavnJN3LiQULJdRCM8vgPbQ
+	 ASYrIahwUWjBhmzuw8klR2x8KdheuqC2u7m3F5oK4etPn1KG7q4qlf23EqTzTeWvsr01S
+	 vrR3fkc2qh8k0XlKEPiwvkWZe0gShnMCLLpgkzUtxEpCgN1ogSQZxLjXLV/5wSl27QGIb
+	 YsJLNvJ2xWyIyRz4WwfVLo/eEi/aIdQ4G2fXrBDRuMOMPjjKB0CdD2C5BHRSP7rYqkFXM
+	 GlVfyMbOjnFo+9dfFUfomSzOzITVCL/2QeCGPs8Cz7/Cg1xK2GBU67ydkl8jVx7Dz8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="OVLxm/KH";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fG38dylr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E89606A31C
-	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 19:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59578606A31C
+	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 19:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OVLxm/KH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D571F0089F;
-	Sun,  8 Nov 2026 19:58:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fG38dylr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D208B1F0089F;
+	Sun,  8 Nov 2026 19:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794167914;
-	bh=V53rlsVgy5PvZV8iHNpM01AjNY+VwscLtv0DUGrod14=;
+	s=k20260515; t=1794167935;
+	bh=OHdC0GgEhyrosirHNB/j9T8So70Qs+7SiSlEMgyb4uI=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OVLxm/KHP5XdlfvP6M00K9PaaJzInxlpLLKpVJ1GcDQOe+TXsl8tpoBoMdP10/MZo
-	 T1TzDZqMj7r3bEV/jbFpIv1DiTX5rgHDSLL/TWQ/LEJVG3NKgbxVEgggxii6OYQbzj
-	 zchqHyMddJ5esRmIg8VU9hS8ktskAqnfuo5o3z8BpovByt8B0EzYzSXLTuoUNw43Wq
-	 hLE4DuDNqZj9C/LUeo1yQ/Gp6MdU0pnAm4e1N4Gf6qZIS0eb+u3949z4ABqkoTnqKk
-	 XVvzGJp+UkVATNcoZfo/6MezrGK2IiUG8auB2cjKYPUhhr45IIOYP95LV2cl+LsRTW
-	 2PlFp9xNAdhUQ==
-Message-ID: <sashiko-outbox-203998@kernel.org>
+	b=fG38dylr9Hy1btz5PvAxrRAt/orWcJxUM2voNaet6bOKkGuuuOTUBnMBgArAckq8U
+	 tTeF98Jrcfa+2HS05hjKOQNrbdTQPfiW2i+sU1DiLaNMl1qbixrVsxq2HBvqFDE9BR
+	 ///7R0lL+dn7iXebZywDkgSgniNr3BQaGSZOkpdgL+Bu9fUVFQt+IUFz5R0w7az1nP
+	 /VUyesUkBgR5+VWHEc3QR93MPx6EaNUqA/M/AOZRugGXMCZmQRJGoSkHJIdXB1P5Zm
+	 nnfXfM9o6ufbENK8B3iXmmAnoJwreDaSqPBctV/VSdZHfDZhLn+TCIbxpFLwaIZU3c
+	 uqZzfndzwXu6Q==
+Message-ID: <sashiko-outbox-203999@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 6.12.y 2/5] mm/damon/paddr: respect folio end for DAMOS
- actions except STAT
+Subject: Re: [PATCH 6.12.y 4/5] mm/damon/core: filter out damos address
+ filter-split failed region
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261108195145.115792-3-sj@kernel.org>
+In-Reply-To: <20261108195145.115792-5-sj@kernel.org>
 References: <20261108195145.115792-1-sj@kernel.org>
- <20261108195145.115792-3-sj@kernel.org>
+ <20261108195145.115792-5-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 08 Nov 2026 19:58:33 +0000
+Date: Sun, 08 Nov 2026 19:58:54 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,33 +61,38 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> A few functions for applying DAMOS actions including pageout, lru_[de]prio
-> and migrate_{hot,cold} in DAMON physical address space operation set
-> (paddr) collect folios of the given region by getting the folios of
-> region-internal addresses.  Then, those functions apply the action to the
-> collected folios at once.  The collection starts from the region start
-> address and advances the address by the size of the folio of the address
-> until it goes out of the region.  If the start address is in the middle of
-> a large folio, and if the next folios are small, some of the next folios
-> could be skipped.  Fix the issue by advancing the address to exactly the
-> start address of the next folio.
+> When an address type DAMOS filter is configured, DAMOS tries to split the
+> region for the filter range, and apply DAMOS action to the filter-in
+> region.  The split operation (damon_split_region_at()) could fail from
+> allocation failure under extreme memory pressure.  In the case, DAMOS
+> action could be applied more or less than expected, ignoring the address
+> filter.
 >=20
-> The user impact is that DAMOS action is applied to less than expected
-> amount of memory.  Given the best effort nature of DAMON, it is no big
-> problem, but it is clearly a bug that is better to be fixed.
+> The issue only rarely happens under extreme memory pressure.  No crash or
+> leak happens.  Occasionally not applying the action to a few regions
+> shouldn't be a real problem.  But applying the action to a region that the
+> user has excluded via address filter could be a surprise depending on the
+> use case.  It is only theoretical.  No such real case is found yet.
 >=20
-> The issue was discovered [1] by Sashiko.
+> Filter out the entire region if the split is failed.  Update
+> damos_filter_match() signature to receive the error from split.  Also
+> update kunit tests for the updated signature.
 >=20
-> Link: https://lore.kernel.org/20260901131850.98037-4-sj@kernel.org
-> Link: https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org [1]
-> Fixes: 3a06696305e7 ("mm/damon/ops: have damon_get_folio return folio eve=
-n for tail pages")
+> The issue was discovered [1] by sashiko.
+>=20
+> Link: https://lore.kernel.org/20261020004119.106690-1-sj@kernel.org
+> Link: https://lore.kernel.org/20260801203121.117449-1-sj@kernel.org [1]
+> Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos f=
+ilter")
 > Signed-off-by: SJ Park <sj@kernel.org>
 > Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> Cc: <stable@vger.kernel.org> # 6.6.x
+> (cherry picked from commit bbeec2d8324d7aac438bb12dd2d22b184e0a8d43)
+> Signed-off-by: SJ Park <sj@kernel.org>
 
 Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261108195145.1157=
-92-1-sj@kernel.org?part=3D2
+92-1-sj@kernel.org?part=3D4
 
