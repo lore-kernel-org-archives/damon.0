@@ -1,62 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794168802;
-	b=Q4VNUv1zFq0sCJ0r8rKauzIBvGv/jBIZa/1TofJEQ/A4fTpQZjJWBFYgqW79RMZY8/QB
-	 JlzAQzNCiRtRXoA3DNKnw8u20zTk2HIHoA+jzsP+livJ0NgQT0o3YzHGs6Vmsr7fLhpsF
-	 OdS64+UbQAyOXdzxwQ+3PPchDtLzwawB7+ag1jX6ZC+S+6nwPCAHZsGNcASoGKWbn5qNS
-	 BgodHk+PkCfW6X0XCidRPDjHwbDUtrAAOuKXwOzanul3TKla+0ckXk+j7vI3yPt+wkpFT
-	 vOhlkPa8b8IMJ0NB7iJmXUhpfYVXw1BKcZW0gEnhrvOoStldveIdIbA+SGAdzUsW//w==
+	t=1794168908;
+	b=33u0cooFekcNQSdK0C+Ix1RC/R7CUIk9hyGG7H5HmjTeIlXY9G7LpUr/219iRPpaowTm
+	 arBC0+YxKyavfcTCEg277i67zdtuARair/TJIJe0LyfuUx6AUI1Q/ceqxMDi0Qt9lK1ql
+	 CoM26RNrd43mlmL0SrzQ0EZAJzl70nYinCAhN+7BQMS1tA/5duZHXMNQbQm8BuFkNls3o
+	 Qqq4cAB1OmZQZJW0WBQaySwIYD+o8X+NkKCGtphLt7gTzjezs/yYoFunStBYFmvJMXeA1
+	 jYQ+KyN9pwhIgq4I6fyCCI+gkKVrmX00M3aORFpxO1IkOkjSMVo5Q0T9IUdf5TsWgpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794168802;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794168908;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=j8+c5Xbh3DzXpViCvYHZV/a1sIh6FK99cPDHc6wG5Rs=;
-	b=ja3LhwekLE1HHV3m6nNEUA1FqPE1FqF2DTe8Pi8S7V8rAkm3ipDJN+3u+ISNAea0r/8N
-	 CJU8AyoRWQPr0wxMrQ9Alxz/qmVhIf/atbt8eIpEj231G9e9z0ocTUA98IJUh6DgtoEyc
-	 CpoNS1rI8/noZjSIsv/beOCRkzkFnsaTGXZEnR2LXMqKdG/y0uHEJuREKxw2FLtUad92k
-	 q/V+okBvV8znIDQ+oQvY3jiJDK5GULTwYZXTH6Fd37PmMU7xKmdOeXyCo8YWkawU+70mT
-	 LraaRZVxH0i60gF2CA4PMABuN7cMP0y3tYPGIpYDV9/M+HkEEMSggy9BOG6KH1gbpcg==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=uQA9Oy9D6eu6KxEgI1EDIZ+uJxOBHu6oOt+CM7JsTKU=;
+	b=BCbieoaisGVpfVyq+xTLKNmdblfKWpSrxPBppa+bfIQJ/GwFZUaUfbBE+7WN/M+MT2XQ
+	 WOkoxiGnNCEFhTcMAsFfH5tPgXfX+gRUoaSXvRtn9zSAA6AkBaLLApEcpzLn+sEOXMBN2
+	 iagXDGZkHp95wYHyYhjkA8zZQmSy8I1nL2VmxDEqtpt05JXcosqDGA2cY1LzmIEafW/oq
+	 eHU0zAtT9qSDtSSqdyVgBR1AqOK9TzyCHelPODfHvvcHqCeJ+jAC5M0B2er1dpf+HcLRd
+	 1SMk3Iz3JmlL+xOOlQcJ0xUSQ/LRQeOfG2Soc8/5WP2NKlwa9UpOQ4hBsqnA/gHhmbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j8H96QFs;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BZGTGAoS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FC5606A31C
-	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 20:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90482606A320;
+	Sun,  8 Nov 2026 20:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j8H96QFs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704D31F0089F;
-	Sun,  8 Nov 2026 20:13:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BZGTGAoS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339741F008A1;
+	Sun,  8 Nov 2026 20:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794168801;
-	bh=j8+c5Xbh3DzXpViCvYHZV/a1sIh6FK99cPDHc6wG5Rs=;
+	s=k20260515; t=1794168908;
+	bh=uQA9Oy9D6eu6KxEgI1EDIZ+uJxOBHu6oOt+CM7JsTKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j8H96QFsFu0tIe1dXcGE9/ihf6kXtPI52ctqXqM3F9q457AuZPP6RPCrdWWxNGMHA
-	 f8/afim4JGWPvGLum9RWkAvDCKI6oir9nRD52Lugnqo5fkSlcHPHOvab/yh5GDnJgv
-	 Mf7H6AuUleQe+k91199kTRalcMA7jQ6dHLdvK6ZrsG1RvLeZUtGM30BcJ7ra0WIurd
-	 ho5EQsL3SaFEqpf/rOF4tKgRLSVaB5fjIYsAQkuuWkJjL8e89npGW+3NRDNtA8i8I0
-	 OGq7YAPgNmot1TmPso8FbH/hmt2+m7x2eBU3CrhQS7Fv0TJGQwv9ocHXpn4ZCKmPgu
-	 iBuu0OIJ5EBlA==
+	b=BZGTGAoSnxPWLIuE6uo4I9+ALy76x261/kivftWKEy78SkHTjJDypwqsxHLAekK/D
+	 Y6rUL1pbvzRfbkI4ucKZujclvkVBOlXYLDzyEcWrjBwNSh31LjynpwipS+L6vDHTr3
+	 /rIQlowp9fXr0yKTk/Rk+Md5qR69ujJGJtdI8McQy9XBn0fdKux43BsjEV1IJzuI1K
+	 nKVs5rTQabk7j1EbHPw9X1nQrP0o6Dj40e/Fwx7VVA/gGGajQNY7pozXe9nLK0blIj
+	 tgbSuw5pEATop+IRLHGTSmnst52qu5zEMy00r8JJMLATRXguHoS9QJpWIHrHVzr0t9
+	 jLUfoQME7suPw==
 From: SJ Park <sj@kernel.org>
-To: sashiko-bot@kernel.org
+To: stable@vger.kernel.org
 Cc: SJ Park <sj@kernel.org>,
-	"Andrew Morton" <akpm@linux-foundation.org>,
-	"Brendan Higgins" <brendan.higgins@linux.dev>,
-	"David Gow" <davidgow@davidgow.net>,
-	"Quanmin Yan" <yanquanmin1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Usama Arif <usamaarif642@gmail.com>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	"Lian Wang" <lianux.mm@gmail.com>,
-	"Kunwu Chan" <kunwu.chan@gmail.com>
-Subject: Re: [PATCH 6.12.y 3/5] mm/damon/core: handle uninitialized damos_quota_goal->last_psi_total
-Date: Sun,  8 Nov 2026 12:13:12 -0800
-Message-ID: <20261108201314.116356-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 6.6.y 1/3] mm/damon/core: skip applying scheme if region split for quota fails
+Date: Sun,  8 Nov 2026 12:14:53 -0800
+Message-ID: <20261108201456.116824-2-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-204001@kernel.org>
-References: 
+In-Reply-To: <20261108201456.116824-1-sj@kernel.org>
+References: <20261108201456.116824-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -66,82 +62,103 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 08 Nov 2026 20:03:27 +0000 sashiko-bot@kernel.org wrote:
+Patch series "mm/damon: fix DAMOS bugs in core, paddr and vaddr".
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Medium] mm/damon: integer overflow in damos_quota_score() on first
->   PSI round
-> --
-> 
-> commit 6456f90a0b14251a6d548d6849beb9dd850f55e6
-> Author: SJ Park <sj@kernel.org>
-> 
-> mm/damon/core: handle uninitialized damos_quota_goal->last_psi_total
-> 
-> This commit initializes damos_quota_goal->last_psi_total to U64_MAX upon
-> creation and commit, and sets goal->current_value to goal->target_value on
-> the first PSI tuning round so the effective quota remains unchanged until
-> a baseline PSI reading is recorded.
-> 
-> Link: https://lore.kernel.org/20260902002725.108635-3-sj@kernel.org
-> Link: https://lore.kernel.org/20260718005316.89585-1-sj@kernel.org [1]
-> 
-> > diff --git a/mm/damon/core.c b/mm/damon/core.c
-> > index 6ef77741b783b..52f01a6508b66 100644
-> > --- a/mm/damon/core.c
-> > +++ b/mm/damon/core.c
-> 
-> [ ... ]
-> 
-> > @@ -1608,7 +1611,12 @@ static void damos_set_quota_goal_current_value(struct damos_quota_goal *goal)
-> >  		break;
-> >  	case DAMOS_QUOTA_SOME_MEM_PSI_US:
-> >  		now_psi_total = damos_get_some_mem_psi_total();
-> > -		goal->current_value = now_psi_total - goal->last_psi_total;
-> > +		/* uninitialized last_psi_total; make no effect this round */
-> > +		if (goal->last_psi_total == U64_MAX)
-> > +			goal->current_value = goal->target_value;
-> > +		else
-> > +			goal->current_value = now_psi_total -
-> > +				goal->last_psi_total;
-> >  		goal->last_psi_total = now_psi_total;
-> >  		break;
-> >  	default:
-> 
-> [Severity: Medium]
-> Can setting goal->current_value to goal->target_value overflow in
-> damos_quota_score() when goal->target_value exceeds ULONG_MAX / 10000?
-> 
-> Unlike mainline where damos_quota_score() uses mult_frac(), this tree
-> computes the score with unsigned long multiplication:
-> 
-> mm/damon/core.c:damos_quota_score() {
-> 	damos_for_each_quota_goal(goal, quota) {
-> 		damos_set_quota_goal_current_value(goal);
-> 		highest_score = max(highest_score,
-> 				goal->current_value * 10000 /
-> 				goal->target_value);
-> 	}
-> }
-> 
-> When goal->target_value > ULONG_MAX / 10000 (for example, above 429,496 us
-> on 32-bit architectures), goal->current_value * 10000 wraps around and
-> produces a score below 10000, causing damon_feed_loop_next_input() to
-> increase the effective quota on the first round instead of keeping it
-> unchanged.
+Fix misc bugs of DAMOS.  Patch 1 makes DAMOS less stress memory allocator
+under extreme situation.  Patches 2 and 3 fix wrong folios walking in
+DAMON_PADDR.  Patches 4 and 5 fix wrong folios walking in DAMON_VADDR.
+Patches 6-8 handle extreme and unlikely memory situations that can cause
+divide by zero and underflow.
 
-The issue impacts only DAMOS quota auto-tuning quality under certain setups.
-No blocker for this patch.
+All bugs are discovered by Sashiko.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261108195145.115792-1-sj@kernel.org?part=3
-> 
+This patch (of 8):
 
+damos_apply_scheme() splits a region and apply the action to the subregion
+if it is needed for not violating the quota.  The split operation
+(damon_split_region_at()) could fail for allocation failure.  In the case,
+the quota could be violated.  From the user's perspective, DAMOS becomes
+more aggressive than expected under the extreme situation.  Handle the
+failure.
 
-Thanks,
-SJ
+The user impact is not critical.  The failure of damon_split_region_at()
+is unlikely since it is arguably too small to fail.  Also DAMOS being
+aggressive is limited to the single region.  Users can set min_nr_regions
+to set the maximum size of each region.  If it is reasonably set, the
+transient overhead shouldn't be critical.
+
+The issue was discovered [1] by Sashiko.
+
+6.6.y porting notes.  Modify damon_split_region_at() to return failures.
+It is a part of commit c60874860762 ("mm/damon/core: handle region split
+failure in apply_min_nr_regions()").  Without it, build fails.
+
+Link: https://lore.kernel.org/20260901131850.98037-1-sj@kernel.org
+Link: https://lore.kernel.org/20260901131850.98037-2-sj@kernel.org
+Link: https://lore.kernel.org/20260718171523.87547-1-sj@kernel.org [1]
+Fixes: 2b8a248d5873 ("mm/damon/schemes: implement size quota for schemes application speed control")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: <stable@vger.kernel.org> # 5.16.x
+(cherry picked from commit 90c2fa6adfed7abe0935506a43cdff3a05c1fff0)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ mm/damon/core.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index b5b6d00d7a3b5..9d4a78deaa06a 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -828,7 +828,7 @@ static void kdamond_reset_aggregated(struct damon_ctx *c)
+ 	}
+ }
+ 
+-static void damon_split_region_at(struct damon_target *t,
++static int damon_split_region_at(struct damon_target *t,
+ 				  struct damon_region *r, unsigned long sz_r);
+ 
+ static bool __damos_valid_target(struct damon_region *r, struct damos *s)
+@@ -1004,7 +1004,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 					DAMON_MIN_REGION);
+ 			if (!sz)
+ 				goto update_stat;
+-			damon_split_region_at(t, r, sz);
++			if (damon_split_region_at(t, r, sz))
++				goto update_stat;
+ 		}
+ 		if (damos_filter_out(c, t, r, s))
+ 			return;
+@@ -1266,15 +1267,17 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+  *
+  * r		the region to be split
+  * sz_r		size of the first sub-region that will be made
++ *
++ * Return: 0 on success, negative error code otherwise.
+  */
+-static void damon_split_region_at(struct damon_target *t,
++static int damon_split_region_at(struct damon_target *t,
+ 				  struct damon_region *r, unsigned long sz_r)
+ {
+ 	struct damon_region *new;
+ 
+ 	new = damon_new_region(r->ar.start + sz_r, r->ar.end);
+ 	if (!new)
+-		return;
++		return -ENOMEM;
+ 
+ 	r->ar.end = new->ar.start;
+ 
+@@ -1283,6 +1286,7 @@ static void damon_split_region_at(struct damon_target *t,
+ 	new->nr_accesses = r->nr_accesses;
+ 
+ 	damon_insert_region(new, r, damon_next_region(r), t);
++	return 0;
+ }
+ 
+ /* Split every region in the given target into 'nr_subs' regions */
+-- 
+2.47.3
