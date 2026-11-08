@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794171871;
-	b=sx2wafEIeDepWJMYhbv4IGXUCT7u1NZqQ9cVRgAHuxLQUyP6wavuUmKZyNMSKVu14DuO
-	 Y1i7ZWuO1N7JvRI1vo/GjtUxdAG31AEWN0Zc6QDkE4oFLjg865709CguzPWxIlmlv2Ebr
-	 jzxcdYCaBk931eRI3CvClGU6RqxMiIYSPdbt250rPA2YqIOmhY6UnAtNUFSveJQovDelE
-	 BmefMTjPO3uAJ5TDjzt9+UxfGkFeElLebDYvVIvyfFe1Ol51u48YyH+UuIYm4GTXe+a5t
-	 NNn72OdCxTEn3qd1BUKJRdLhgPYV9UHWe2RMnbaa1yL1A/PT5fR/NVvOFjNBeHCmIyQ==
+	t=1794174518;
+	b=u9DQfQesQvqcTmhcOC6PvWIJX1YXymzAMU2Al1oFk/pJ7s6Z0cUU2Jz048vBUlX5nA5x
+	 UZKzXEBQKc7gpPLLFYojdrQNCegUC98LtkEmxlOv5hrtfNjxoDU74GurfKEMb4t6tsCdX
+	 Eu02Z/Df9W6vlfwKCM5D4w1a2knsTC+nFzGkC7hbkMZi7mq2/DZE8eYV3pW4QcYep3w56
+	 xfEZfIm5qHabxhiOJZtai/ZfJT4MW7Q62a9Iyj1O7zChqyxNV0BtKcP9KBci8xyJFfNLy
+	 hADU9UNzuNpJPZucqU4X65Gt1NnuS6sQs/WwIrTszCPH2Sohe3Q8xFRitpbISoZahUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794171871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794174518;
 	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
 	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
 	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
 	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=dA8BlSr4nW8M2tmghZ/qmNUjL9Vz8LO1wLh57I7CYw8=;
-	b=JfkxAKXZT/a5gi6yS+uEjdJF/44SkTHTbdUyKNLAstgWoTwBYQKY+is+498/CCC0tkZU
-	 A5QPhU+ROO7dVnDZt3UYj6Bn5mfyKtjZ09WRDLy5MjEaors8xnoD6/2bVPe0lbgyPS3dA
-	 //4Gva2vHC+EI5VpqWOjw7IiCCj9EJwcMI0MIwxwmEvgKHV6AyVcE4iD5G82vCelbM8vC
-	 ONLybnGoaO/xp9xMMVRTAk0xE4sB+qd6walRKUPNyaIttlhmS4x/XWYyJRQUlkrUaBTn3
-	 Ra4VLeFhe2oUI+A3W2sryrHNl7bQq7NqduONdgGQU8FTNMp3wTzNSFk6J3JhDKEuBhw==
+	bh=FZdZQVw9H6aXCI8eUM5Z1MxH6OVioYDlzBV87SdVf/c=;
+	b=Da3XSVb2E+1rtEwZhaIZgyzP3SfYuEwxbZif0ULoXrHNknTUCjA9iUg6D5xFTVTs7zdP
+	 hpvmU/Ymee6QVtaY+aMreE+WgDWJrsgKsEyE7cv8JqHqL4pIfQjoHN+Yil2y2z+h8/yCH
+	 XmLMgrpbngm0tXKuUXWBqIY7icRDdW6/nknS/m6kawd1V5Qt5pXfq0bkp0rJmg90qgVDI
+	 SLlVxK/UOqhWOtbDwW1D3Eh+dZP7hKN+LnbxBEpJntSUYL+cpMwASprAawzGxbl2oP5ma
+	 EeSVklskmEyC8S4HwxldqEiCbj8IfvGApO/1csUcHxp/Zs2JkPETIni4T5UEW9vznQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Gm0vMsur;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h749haC2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B39606D819
-	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 21:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556B3606A320
+	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 21:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Gm0vMsur
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C011F00932
-	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 21:04:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=h749haC2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD6E1F008A2
+	for <damon@lists.linux.dev>; Sun,  8 Nov 2026 21:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794171869;
-	bh=dA8BlSr4nW8M2tmghZ/qmNUjL9Vz8LO1wLh57I7CYw8=;
+	s=k20260515; t=1794174517;
+	bh=FZdZQVw9H6aXCI8eUM5Z1MxH6OVioYDlzBV87SdVf/c=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=Gm0vMsur6Zp+NDkvE5MIcJ+lRVCZkjKGPWerSg0Ixxfn9AEbpAu/RLNKOqwe/ZTdo
-	 qPph1jA31UrzXqTs+vyoemnUgI2gqnqO/vugay5bIG4wQdwTss9sreUHZHeUpgXCew
-	 xT57TF/AzNCIVb5ptdoraysWsiWP9qiz+GAmeYe2ZaABkPz3HHL/YoH5zndZBhaInK
-	 l1ZfJq9jygp4h8kT5Gh1IRgMOKCswVib34YlOmDx7ZDzDx5NL5V9adTpX+A20v/nD1
-	 BvGjiE7CAPVWDb1+95/Ev5HtSHiPIok/91M5Lqq/9Iz2IAxMN30nyu4NE4pqAouu5k
-	 JZwc0uwTnuukw==
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-9440304604aso26055885a.0
-        for <damon@lists.linux.dev>; Sun, 08 Nov 2026 13:04:29 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AL+hErFj1yIt4yCbFmIhCTdbZlDvcT/ifPL0MmpY/bUGD5CVGTWW7SuH3wqAi3LKkcZE+7IKjaO0/Q==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8MD/VCoblV3tkjGu4zxnRduEYwURymxzfbpIoKvpmmRjn4xrfr
-	XwVcvHSlXPQmyVjRWik+Gl1xUhhvpOw9TxqpS6OCrhZqjDHDFcrh5kBl8GprBVm8++5RG5ZuKWZ
-	pX3jUDKP5fJrqkyBnFlLrf9hbZBJz+uY=
-X-Received: by 2002:a05:620a:4147:b0:945:d2f9:5c2e with SMTP id
- af79cd13be357-94784201be3mr321265885a.18.1794171868934; Sun, 08 Nov 2026
- 13:04:28 -0800 (PST)
+	b=h749haC2V/XH+rC3K3xZ2wCvKWGJ5JE0f2GbovfaHTt3D/u5QfXd2iyVCNiTnKZIM
+	 ODXuy42y0MzQgkjbdEXs5txIu2ux86/C7yTN2i6Y97nMIvvqTE9JbB1QCxj4578oQp
+	 Lr+way/ME1xPBlUjZwlPKWnL21bwu8ouWiWvid8JkmXrT2/Dghr1kakaG4ZT1HbAhU
+	 irwHehre1CG1W9ESNDHyBWhpYkguCYcFz71xLk+S6rtitM48OYMowLo5OjsvysreQO
+	 UvscgMaY+RKC3bXCjWT7Z75qS16oxBBXJnPsz39uJ4vpbrgf6Rcgb39zxA8hb6tai2
+	 dBYUK1t/dssHA==
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-93f1cf92c9eso27412685a.0
+        for <damon@lists.linux.dev>; Sun, 08 Nov 2026 13:48:37 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AL+hErFEPr/d2R0znxKnGBkoqq+feel1CZzfxf/TLTjKWnU8L5D7LyLTELF2k+6bSH2lBqJoyt9JWQ==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8Lwaqp7kS+xJwzoS2C3wIe5W7EvtzVyyjHrgSYxm5PKuJ3J3yd
+	Tt+oZbfMRBKaGiym9sb+1fAH7v56jqroytYKnBIVUI+3saryOnc7j8n8JYrMihTsjrsLhypTxfa
+	lONQcmaKa7GybX0N20RksGHrMLxyqjdM=
+X-Received: by 2002:a05:620a:838d:b0:93f:568d:ebbf with SMTP id
+ af79cd13be357-947847989dcmr307877085a.75.1794174517262; Sun, 08 Nov 2026
+ 13:48:37 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,14 +59,14 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com> <20261016-mglru-fg-v4-7-2106750c0bfa@tencent.com>
-In-Reply-To: <20261016-mglru-fg-v4-7-2106750c0bfa@tencent.com>
+References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com> <20261016-mglru-fg-v4-15-2106750c0bfa@tencent.com>
+In-Reply-To: <20261016-mglru-fg-v4-15-2106750c0bfa@tencent.com>
 From: Barry Song <baohua@kernel.org>
-Date: Mon, 9 Nov 2026 05:04:17 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4wSDOgCC9AmLS-z670W-nkF3DXB_cNvNFnptX5F95fGMA@mail.gmail.com>
-X-Gm-Features: AclHuK88cVk2cTHlbMRpEce2sAMWIV7FVPbAiXOdIHIxIsSaZ46UdtpCmeHh5_Y
-Message-ID: <CAGsJ_4wSDOgCC9AmLS-z670W-nkF3DXB_cNvNFnptX5F95fGMA@mail.gmail.com>
-Subject: Re: [PATCH v4 07/17] mm/mglru, gup: mark folios referenced via a fast helper
+Date: Mon, 9 Nov 2026 05:48:26 +0800
+X-Gmail-Original-Message-ID: <CAGsJ_4wTFHJxzuiRDBcuevdULMcD+se6SuPbzWKA8wsUAG80_w@mail.gmail.com>
+X-Gm-Features: AclHuK-s7JbtIEWTZGMVhiT12ls0SfPHfw3O0hQ9GXy9byf5WRAn6-BR9O_AjyE
+Message-ID: <CAGsJ_4wTFHJxzuiRDBcuevdULMcD+se6SuPbzWKA8wsUAG80_w@mail.gmail.com>
+Subject: Re: [PATCH v4 15/17] mm/mglru: make folio_inc_lru_refs lruvec lockless
 To: kasong@tencent.com
 Cc: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, SJ Park <sj@kernel.org>, 
 	Andrew Morton <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>, 
@@ -93,63 +93,89 @@ Cc: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, SJ Park <sj@kern
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 16, 2026 at 2:15=E2=80=AFAM Kairui Song via B4 Relay
+On Fri, Oct 16, 2026 at 2:16=E2=80=AFAM Kairui Song via B4 Relay
 <devnull+kasong.tencent.com@kernel.org> wrote:
 >
 > From: Kairui Song <kasong@tencent.com>
 >
-> Introduce folio_inc_lru_refs_fast(): raise refs from 0 to
-> LRU_REFS_REFERENCED via cmpxchg, or just set PG_referenced for the
-> classical LRU as before. No counter update, promotion, and guarteens
-> no other complex operations in following commits.
+> The lruvec spinlock in folio_inc_lru_refs was only taken to keep
+> concurrent aging from corrupting the size counters.  This is no
+> longer needed: the per-generation counters are atomic, and the
+> active/inactive ABI counters are updated per folio and linearized by
+> the CAS on the folio flags, so concurrent aging can no longer corrupt
+> them.  The same argument already allowed folio_reset_lru_refs() to
+> drop the lock.
 >
-> Convert the gup fast-path sites. No behavior change for classical LRU.
+> Use folio_lruvec_live_get()/folio_lruvec_live_put() to hold the RCU
+> read lock around the lruvec lookup, and drop the spinlock entirely.
 >
-> Tested-by: zhaozhengzhuo <zhaozhengzhuo@uniontech.com>
+
+Yes, this is cool. We have two paths calling
+folio_inc_lru_refs() or folio_inc_lru_refs_walk().
+
+1. folio_mark_accessed() from syscall access
+2. walk_update_folio() from page table walker or look_around
+
+For the latter, we can't actually cross multiple
+lruvecs/memcgs, because of get_pfn_folio() as shown
+below:
+
+static struct folio *get_pfn_folio(unsigned long pfn, struct mem_cgroup *me=
+mcg,
+                                   struct pglist_data *pgdat)
+{
+        ...
+        rcu_read_lock();
+        if (folio_memcg(folio) !=3D memcg)
+                folio =3D NULL;
+        rcu_read_unlock();
+        ...
+}
+
+Consider a common library file used by 100 memcgs, with
+its folio residing in the root memcg.
+
+When walking the 99 non-root memcgs, even if the folio
+has been accessed, we won't get a chance to call
+folio_inc_lru_refs_walk() for it. As a result, this folio
+may eventually reach the eviction rmap path. With a high
+mapcount, folio_referenced() could become quite
+expensive.
+
+That's what I was trying to point out here as well:
+
+https://lore.kernel.org/linux-mm/20261102213915.57805-1-baohua@kernel.org/#=
+t
+
+For the former, you can get the lruvec with:
+
+lruvec =3D lruvec_live_lock_irq(folio_lruvec(folio));
+
+I'm wondering whether we could eventually unify them
+so that both support cross-memcg inc_refs.
+
+This isn't a blocker for the patch, just something I've
+been thinking about.
+
+> Without the lock, aging can advance max_seq while a promotion is in
+> flight.  Generations are indexed by seq % MAX_NR_GENS, so the folio
+> flags can return to the value read earlier and the cmpxchg succeeds
+> with a target gen computed from a stale max_seq.  Recheck max_seq after
+> a gen-changing cmpxchg: if it moved, account the committed update and
+> retry with LRU_REF_FORCE, which promotes the folio to the newest gen.
+> The retry may count the access twice, which is acceptable and avoids
+> folio_activate(), whose LRU lock causes latency jitter.  smp_rmb()
+> orders the flags read, including the one returned by a failed
+> cmpxchg(), before the max_seq read.
+>
+> Also simplify the post-CAS accounting guards: gen is only assigned
+> non-negative values after the old_gen < 0 early exit, so gen !=3D old_gen
+> implies gen >=3D 0, and lru_gen_update_size() needs no explicit guard.
+> The active/inactive ABI update keeps its gen >=3D 0 check because an
+> off-LRU folio has no lruvec to update.
+>
 > Signed-off-by: Kairui Song <kasong@tencent.com>
 > ---
->  include/linux/mm_inline.h | 25 +++++++++++++++++++++++++
->  mm/gup.c                  |  6 +++---
->  2 files changed, 28 insertions(+), 3 deletions(-)
->
-> diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-> index 65415eeac802..effa13c63632 100644
-> --- a/include/linux/mm_inline.h
-> +++ b/include/linux/mm_inline.h
-> @@ -454,6 +454,31 @@ static inline bool lru_gen_del_folio(struct lruvec *=
-lruvec, struct folio *folio,
->  }
->  #endif /* CONFIG_LRU_GEN */
->
-> +/**
-> + * folio_inc_lru_refs_fast - Bump folio refs count without promotion.
-> + * @folio: the folio
-> + *
-> + * Raise refs from 0 to LRU_REFS_REFERENCED and leave hotter folios
-> + * untouched. For the classical LRU, a plain PG_referenced set.
-> + */
-> +static __always_inline void folio_inc_lru_refs_fast(struct folio *folio)
-> +{
-> +       unsigned long new_flags, old_flags;
-> +
-> +       if (!lru_gen_enabled()) {
-> +               folio_set_referenced(folio);
-> +               return;
-> +       }
-> +
-> +       old_flags =3D READ_ONCE(*folio_flags(folio, 0));
-> +       do {
-> +               if (lru_get_refs_flags(old_flags))
-> +                       break;
-> +               new_flags =3D old_flags;
-> +               lru_set_refs_flags(&new_flags, LRU_REFS_REFERENCED);
-> +       } while (!try_cmpxchg(folio_flags(folio, 0), &old_flags, new_flag=
-s));
-> +}
-
-What is the actual purpose of this patch? Is it to skip
-cmpxchg() when the folio already has non-zero refs for
-better performance?
 
 Thanks,
 Barry
