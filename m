@@ -1,63 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794184492;
-	b=r4wtPf0QmST3Jcxl1y2ATAFmYN3HrFx39Etkrlef/AB8OTvy1V2EkZ9w7kjzdXc7FDis
-	 ru5SMLQF+3TwlzLUQXNP+spQltLIFrES/eiiOA4B6tZyUuW3+xgUAw/rmdDzRmW5jjLIg
-	 U/OzS/k5lrX4EYsry3Bp40UfrS8HXIIQqSmgpUn7bi109CqCk4c+ESmBkJfcIafaTqRbm
-	 jsUxnemNI9z/QqDtzKm+wb4JN+XfXJSDjfW8i5GtdXUpgJxMf+uX52vfUNfPMyoB+beti
-	 tfdTiFK9RaoyEaZxZjo4Vlw8YVGGsiuwBjhtmf/2DoP+k3cuLpboKgaQr8FDOPu63PA==
+	t=1794185474;
+	b=dDDj28RNOkb6bkFT+uiBK6OX5kBm4EROrtst8bWz85uFZPaCrZtbFcBaTph3EFp1MzOC
+	 uMShJ+9uEwsC2q5bcYWsCj5K3q6HdyifrczRPmpQ6SfSaOMxGNNNosn8tE3/eL7BBkie8
+	 BbLVqXb/bLQ/r0uCulkCSEbVKvwwEFm3WIoNxRx55H2IkLxvFZhZkH6dBEzgptVpjocSc
+	 sRZZEvez2FHQ2o9EnoOhIWq4fHRRfPZBe9kb9M1FvwNAfmoGTCBTxLpj6rjKzz1KYbbMk
+	 lJESPkhjCMdcKdBIJSjgcpfCt80sLaerW4OSeWy72RlaZmkkeaJ1wURJAJrqccivPzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794184492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794185474;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=7OCudfXEDg6cig4yHI+UL63p9GsP6rZU26NzHz6BN+I=;
-	b=XtA6lQbUnK6yBVYSz/Iwm1JVB+X6pn0ePtEnNOOxSBGxpawWPOcdgqA3NxNqtKG5MjDe
-	 oqKJDekzwXtjIV4ww6qfcwb7HeqXlsZOX7Hj3ZxM6SLkLsUhc+vd0lYnyI0G4zf2j81uR
-	 IJBzurDqKwx0MM/zUmLSKuh3NNM0zx8Ht4g9dZvebrPJgGPFy3CFf0e8MExZyEWV3kC90
-	 ongenilGj1snUVD8RgtIrEoDxj83x3d2SJStdoyMi1viCjuf6SDlTUbEYTKXDFd+nLf5+
-	 ald8CPxBjAeYgFPtZU2w9Y5cPqRINQPCOKWraGbgotKx+OtOYezhtUuLDBVN0icIZrQ==
+	bh=vNYpZVkWRff+ctPGTKbnjtC6bk8Ke3uAIy1eqQ5b3w4=;
+	b=r1NZrR5Iy7wx3wr5vGlrwbzB5/LsZZylugWbQADDy2YDASPTlOOnZ8wttKGWUyMPpGTv
+	 FcywI7ZhSx5NK9djxWEb7JreVeXjjNyaAi6HMPkIIoZubavqZ7GK8hZKQyhiVBIAzOOqB
+	 YFevk+9OMVpqZoSqhKGz45nSRkjy0QUr7sjyFG7rh+i2Js0Cj9Zx29/w4IlEh1KAu0YAu
+	 BQ2qmD34pZXeh7rk3R3pKLl5nGtzutsY35nKz9Cv1OfCP8lBRMF4IUEDORlz4h6NOzoH3
+	 ABV88w4Ok3uozAjuEElr/ZdOTiM8SMj0JIGK7C+s5b/rFjSvnBrCXJYCZc66K1vH+vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ebr0IUwg;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cx99pLE7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A068A6082BE2;
-	Mon,  9 Nov 2026 00:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C520606A31C;
+	Mon,  9 Nov 2026 00:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ebr0IUwg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B7F1F008A3;
-	Mon,  9 Nov 2026 00:34:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cx99pLE7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CE41F0089F;
+	Mon,  9 Nov 2026 00:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794184492;
-	bh=7OCudfXEDg6cig4yHI+UL63p9GsP6rZU26NzHz6BN+I=;
+	s=k20260515; t=1794185474;
+	bh=vNYpZVkWRff+ctPGTKbnjtC6bk8Ke3uAIy1eqQ5b3w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ebr0IUwgo91kruwpo9Hk3mbBwDRDTrBS6j7Ob50y75nFR8MmrRUyk6EB47MxXB772
-	 08VUMfY1hsSWTKbXCpLVubJCmAi1kNLNoDSImKenxeWhQbOL2IJmETIz2ekO3JKBn/
-	 A7HKMcdwLVKBaia4SYBC3dxPViIQOo+qwWeiz2d/Yc4LvLVb44UNbTCMWQsab7WExQ
-	 gvzIXHHsMeDDu1RcC7x+qY4pOsN2YvlpXgd1OG5XbybiHIN+Mwb1Yp5hnvpm264UFd
-	 eoAit+l/jZS5+pYH4ecbP11wbPkbZBzVrB06jqHENA4MCR0XXgZjw3y7qAKvzmMp3q
-	 sOAdv2ROJWYCg==
-From: Sasha Levin <sashal@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: Sasha Levin <sashal@kernel.org>,
+	b=cx99pLE7MNZnSiz/V0Tbf7PqC8O606hcv/R77eemET12NiNbuJcvEwfNi5Y392ske
+	 Rb00uWu/d6PXLd/TjB1ipe3rFPsJTgxsOkFWujKrxiVUOOuJeEX4KDQjyMC5lzmr+b
+	 zy77UvQNNqVRPOIawUAU3Emg5wmputEby140cq7NmjElo3Zi4xURVC6HFOmJBnP+d5
+	 Eejm/plWqt/UucnDNHebAjOI0yBMmV6XTtxp7gjksAwr4+jhZX4j8PClZTTZa5Ch5l
+	 DUo1q3n8v6jJ5OvuPVxUxgP4LenHLXoAMHKqWxUakHUM4r//xH6SxsJq55oNdqvRqG
+	 zSFvJfUqTUnaw==
+From: SJ Park <sj@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: SJ Park <sj@kernel.org>,
 	stable@vger.kernel.org,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Brendan Higgins <brendan.higgins@linux.dev>,
 	David Gow <davidgow@davidgow.net>,
-	Quanmin Yan <yanquanmin1@huawei.com>,
+	Usama Arif <usamaarif642@gmail.com>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	Lian Wang <lianux.mm@gmail.com>,
-	Kunwu Chan <kunwu.chan@gmail.com>
-Subject: Re: [RFC PATCH 6.12.y 3/5] mm/damon/core: handle uninitialized damos_quota_goal->last_psi_total
-Date: Sun,  8 Nov 2026 19:34:37 -0500
-Message-ID: <2026-11-08-1-daily-reply-0009-damon-6-12-psi@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261107214525.304638-4-sj@kernel.org>
-References: <20261107214525.304638-4-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH 6.18.y 3/5] mm/damon/sysfs-schemes: read sysfs_filter->sz_range only once
+Date: Sun,  8 Nov 2026 16:51:05 -0800
+Message-ID: <20261109005106.77748-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <2026-11-08-1-daily-reply-0006-damon-6-18-sysfs@kernel.org>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -69,17 +67,22 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> When DAMOS_QUOTA_SOME_MEM_PSI_US metric damos quota goal is set, the PSI
-> delta for the feedback loop is calculated using
-> damos_quota_goal->last_psi_total.
+On Sun,  8 Nov 2026 19:34:34 -0500 Sasha Levin <sashal@kernel.org> wrote:
 
-Patches 1, 2, 4 and 5 are queued for 6.12.
+> > DAMON sysfs interface reads the user-provided size range arguments for
+> > hugepage_size type DAMOS filter twice.
+> 
+> Patches 1, 2, 4 and 5 are queued for 6.18.
+> 
+> For this one, af19aff38d6f ("mm/damon/sysfs-schemes: read
+> sysfs_filter->sz_range only once") is also missing from 7.3 and doesn't
+> cherry-pick there. Could you send the 7.3.y port first? I'll take it for 6.18
+> once 7.3 has it.
 
-This one doesn't apply: 610c4438fb66 ("mm/damon/core: error
-damos_commit_quota_goal() for zero target_value") is queued for 6.12 and made
-damos_commit_quota_goal() return int, so the `return 0;` has to be kept. Please
-rebase it on the queue and resend.
+Thank you, I will do.
 
--- 
+
 Thanks,
-Sasha
+SJ
+
+[...]
