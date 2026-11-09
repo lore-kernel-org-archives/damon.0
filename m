@@ -1,55 +1,95 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794217920;
-	b=1B77313FmJXfNZ3ixsL10eJy9V7SMkkxM827VAX/lmAG+5R8v/y+ItKvaE7C7iAOSVjp
-	 R3kCIhTAVvZPtBXN3hdYfFMFarWBxBK5HWh3ulZCEEawQdu7ytbPTZOMcg50hsG9/9C8f
-	 dcjl3FNCfgpIbGtV4+lHezRwlXEq/xiAujL4YE7OTKGY7+ApKPH769/dxyG6W5UDylLbz
-	 7RaTT9KM6wsDOIVf8SOI3NJteN5iRYTLfBs8joEAYwFvuVRoYNuQcO+Xq9THSOS++Q+na
-	 i7p2zzb5ipf097Ehfq+kyp5u/VIky0xMraEjfaiUvP67v6McwLwIVQ7YnJPXBDYfxkg==
+	t=1794227183;
+	b=NrIrE9yApcsqVd5SU3ZiyjqhfbZBh5i9xqCllwy+/hpyEwnCiS9SINaoa6Nt+fUm03/o
+	 fSO+N6hU2uCUpIlnNgaOXaadMOlPMsC0NbaZzZNjjDV8PC/xItR0ckRcVlGT9kxIFFixY
+	 VUf+T1NyZCkRZcPK7JdMhmUUFxBOjZVGNELacL30Wk8gmNM6dTX685/qV+C5OD9OmUqUb
+	 Ok1ugviyAv9D9QiIIn34Pw2u2P2+5TZYwomOD28zXQCQ4npqdbrc7HGXcX3E4SE0pfRZs
+	 a99t9hcKkDfF4UhcVQfzZVLN6+IvL511H/gq5aIBZiSzAsJ5tFBnycme0oiHzRvPguA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794217920;
-	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=BPClaJ9k3pZ7M2HgIHwRGL9GY0oByLTbIb+UN2JvJdI=;
-	b=idQnxOW78Tr6jibcq0B9BTqikt8eJU+HaWVtxoTNTYvfHSEhFKv20g6dIKAIdGqUXY/+
-	 X6n3G7Y5yGfq8Xl5xHoQDjNktfr0r0ZuYZtFy8QOW6es1E87dkvk+Imr/zpzh6trXMEO9
-	 oMY9O4lC+CbNaw+Az7pwMUih7r0X9UZdg0gq6gvfYvX/7+RqegWXdNv37ty+uETWDqKka
-	 6jczd/V/B46C5p1ST0OT3EahtRIIgJ67J8SJqmqD2Q4hMbeolU9GIQJHteFL2WBegtZiF
-	 SJsmcns6BYRLqyj+7eskXIBsbN0uaf3oAnaeZrgdOU6i6Du9KBytp37rmbWuuEDC6tA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794227183;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=6+EKYQdPiDyWXkzzfV/UN8vBxInBjW4N6ZELhlBfhOI=;
+	b=FravJIZPmJWItFVVMLMskbgWqU7crZr5vlViguxVfCH3UAh8W/8KcprpC5sqA27dNA6I
+	 XfQfEuYpWdg10AGdYVERwxyvnJTUiRbAtpxtRdMnRBKrQfCMFQsYR6la6ycqBr5L+cbF/
+	 CCbl8pXhNakEck3IKSCctFEHMMlJCfRDWgGqSd0sTvU0F/UU1Gl9Q44SM7pZ2reCzL6G7
+	 S5F3OJANODDPdlcak96qiA+K+bKGmxy7eqE0fMlif8fmo552dmgDtzyPPyyfH0yYLfS4h
+	 R3KWz87o4PQqkpirYcU3rc+cEthaL0341PymLTfKsM8Ova9CwXG1AeVGR9mIkY44iEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ClskhasM;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VhodTs+A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E01606EE82
-	for <damon@lists.linux.dev>; Mon,  9 Nov 2026 09:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9811606A321;
+	Mon,  9 Nov 2026 12:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ClskhasM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767C31F00934
-	for <damon@lists.linux.dev>; Mon,  9 Nov 2026 09:51:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VhodTs+A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937971F0089F;
+	Mon,  9 Nov 2026 12:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794217919;
-	bh=BPClaJ9k3pZ7M2HgIHwRGL9GY0oByLTbIb+UN2JvJdI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ClskhasMy/BO/ZFdZwG+TW51LQNe0aK6dpQ2tXf3zXQZrXEHcm8neQwkSGJQK5bn8
-	 LSLm+/HBxMHZMxvoJu/FfopjGzpVjathiWg6LhLTjtHomqOV6NScv+voJMgOraZPB+
-	 /ycD4F1aoK068VBjmEHIzTpz6UCYVE334qo4AAnvYskYS657GvVKuV95oqJnh/isCp
-	 Ew07MQtp8jOpq34koBR4cll0v4jnwrIVmL3RYMomGUCU4+PMwbvb/yi5tiY3SPEdBZ
-	 YFw2QOk4Ib9EJpoMe7VKixgAJAlLv7+MJTeey2wVMPTTTLYNNHu/Q6loLUjbENBCIP
-	 uVqmfBr+FuxdQ==
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-5ebf39def3aso189234e0c.3
-        for <damon@lists.linux.dev>; Mon, 09 Nov 2026 01:51:59 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AL+hErH3s34W1DxKgpsvxDXneqSl/Ta09tP58s8LnpxsFWZPoSQhvhd0Zp3jVBuIxfwd2XdeuODdQA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9Am3lDGJTOc4tdqXZqbUojqugeAP6Pem1Xkw90vYoQ5343rExs
-	womKYmqIbCoaWFodLw+Z0A3fMvmS03hLGN5zPuoHve3r7oGNciG6rQ/6FXHoW+2KORNZTi8Q9k7
-	0bY8flkXVgchIY0f+DKqsqt3j6TnaJCs=
-X-Received: by 2002:a05:6122:a012:b0:5ea:c9ab:bd86 with SMTP id
- 71dfb90a1353d-5edf9435d18mr565522e0c.21.1794217918356; Mon, 09 Nov 2026
- 01:51:58 -0800 (PST)
+	s=k20260515; t=1794227182;
+	bh=6+EKYQdPiDyWXkzzfV/UN8vBxInBjW4N6ZELhlBfhOI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=VhodTs+AWpB6b78audXhz1hdToGnTfiqsIeh7C9iS51ypshI9FNnayYXFucaMgeLZ
+	 xeEIungcy0zjIPzwmpAqArp8eRXgn6aLR4nNmqHiWaRHWsbsQ7Qxh3+PgSaQmGodli
+	 iH97FzOVZfiuF5Da5WjkLmXe3XJknzf7SbtxrzdHDZZM2QKqqAHZOHOY4doionvKHw
+	 4h930muPKhPQSSHI+AAJgxUYDe3aTAGC8NAItOXceOH2dwmRr1lJ1teB6f1iCQBu+D
+	 7GUCaRQliXvLQza+jV5DiZhXeIr64nvzKuidlvAiLong4iDN+nDILPyMHrAS7gpG/t
+	 Sxhmv2E4eHoMw==
+Date: Mon, 9 Nov 2026 12:26:00 +0000
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: Barry Song <baohua@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, 
+	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Jason Gunthorpe <jgg@ziepe.ca>, John Hubbard <jhubbard@nvidia.com>, Peter Xu <peterx@redhat.com>, 
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, Rik van Riel <riel@surriel.com>, 
+	"Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+	Harry Yoo <harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
+	Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
+	Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
+	Gregory Price <gourry@gourry.net>, Ying Huang <ying.huang@linux.alibaba.com>, 
+	Alistair Popple <apopple@nvidia.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
+	Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, Xu Xin <xu.xin@linux.dev>, 
+	Chengming Zhou <chengming.zhou@linux.dev>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
+	Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, 
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>, 
+	Shrikanth Hegde <sshegde@linux.ibm.com>, Pedro Falcato <pfalcato@suse.de>, 
+	Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Axel Rasmussen <axelrasmussen@google.com>, 
+	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+	Michal Hocko <mhocko@suse.com>, Leon Romanovsky <leon@kernel.org>, SJ Park <sj@kernel.org>, 
+	Rakie Kim <rakie.kim@sk.com>, David Rientjes <rientjes@google.com>, 
+	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
+	Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
+	Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
+	Adrian Hunter <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, 
+	Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
+	John Johansen <john.johansen@canonical.com>, Georgia Garcia <georgia.garcia@canonical.com>, 
+	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>, 
+	"Serge E. Hallyn" <serge@hallyn.com>, Mimi Zohar <zohar@linux.ibm.com>, 
+	Roberto Sassu <roberto.sassu@huawei.com>, Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, 
+	Eric Snowberg <eric.snowberg@oracle.com>, Fan Wu <wufan@kernel.org>, 
+	Stephen Smalley <stephen.smalley.work@gmail.com>, Ondrej =?utf-8?B?TW9zbsOhxI1law==?= <omosnacek@gmail.com>, 
+	linux-mm@kvack.org, kvm@vger.kernel.org, damon@lists.linux.dev, 
+	linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org, apparmor@lists.ubuntu.com, 
+	linux-security-module@vger.kernel.org, selinux@vger.kernel.org
+Subject: Re: [PATCH 02/13] mm/filemap: convert fault and readahead logic to
+ use vma_flags_t
+Message-ID: <avG7mvt0okaFGUT7@gremlin>
+References: <20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org>
+ <20261105-late-2026-vma-flags-v1-2-0d3cd15ab75f@kernel.org>
+ <sashiko-outbox-200257@kernel.org>
+ <au2_PPpdAMgRJZtX@gremlin>
+ <CAGsJ_4yWQom=cG5vw2B-FR8+7wNU+rwZkvghjAxusym+3OH96A@mail.gmail.com>
+ <CAGsJ_4zvRSUSspBe_hNwTYDjK3-TLuq6Mhi5gDyOPZGDXN8gDw@mail.gmail.com>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,128 +99,56 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com>
- <20261016-mglru-fg-v4-6-2106750c0bfa@tencent.com> <CAGsJ_4zQh0TnAxifWPo2+DcyFFOtpXM+2QW91A07oumfyrqVYg@mail.gmail.com>
- <CAMgjq7DeC23zak6Xur=E29qo7JPNvQUMtbbO34Y62jrQjQgStA@mail.gmail.com>
-In-Reply-To: <CAMgjq7DeC23zak6Xur=E29qo7JPNvQUMtbbO34Y62jrQjQgStA@mail.gmail.com>
-From: Barry Song <baohua@kernel.org>
-Date: Mon, 9 Nov 2026 17:51:47 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4w275Z8ruQHNMFd9uL+wJgAusU2+QN-cwS5mZcBrg9fRA@mail.gmail.com>
-X-Gm-Features: AclHuK-xWTO8SHWDNdqRk7rNXhHpJft0o90jKbimD22mK-2buKuHz7N9dEvOsNg
-Message-ID: <CAGsJ_4w275Z8ruQHNMFd9uL+wJgAusU2+QN-cwS5mZcBrg9fRA@mail.gmail.com>
-Subject: Re: [PATCH v4 06/17] mm/mglru: move add/del LRU size accounting out
- of lru_gen_update_size()
-To: Kairui Song <ryncsn@gmail.com>
-Cc: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, SJ Park <sj@kernel.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>, 
-	Muchun Song <muchun.song@linux.dev>, Qi Zheng <qi.zheng@linux.dev>, 
-	Ying Huang <ying.huang@linux.alibaba.com>, Chris Li <chrisl@kernel.org>, 
-	Baoquan He <baoquan.he@linux.dev>, Nico Pache <nico.pache@linux.dev>, 
-	Usama Arif <usama.arif@linux.dev>, Michal Hocko <mhocko@kernel.org>, 
-	Roman Gushchin <roman.gushchin@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, 
-	David Hildenbrand <david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>, 
-	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
-	Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Kemeng Shi <shikemeng@huaweicloud.com>, 
-	Nhat Pham <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, 
-	Gregory Price <gourry@gourry.net>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, 
-	Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
-	David Rientjes <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, 
-	Vernon Yang <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, 
-	Chen Ridong <chenridong@xiaomi.com>, Tal Zussman <tz2294@columbia.edu>, 
-	Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh <ehab.ababneh@intel.com>, 
-	zhaozhengzhuo <zhaozhengzhuo@uniontech.com>, Lian Wang <lianux.mm@gmail.com>, 
-	Kunwu Chan <kunwu.chan@gmail.com>, linux-kernel@vger.kernel.org, 
-	cgroups@vger.kernel.org, damon@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGsJ_4zvRSUSspBe_hNwTYDjK3-TLuq6Mhi5gDyOPZGDXN8gDw@mail.gmail.com>
 
-On Mon, Nov 9, 2026 at 5:34=E2=80=AFPM Kairui Song <ryncsn@gmail.com> wrote=
-:
+On Sun, Nov 08, 2026 at 03:42:36PM +0800, Barry Song wrote:
+> On Sun, Nov 8, 2026 at 3:20 PM Barry Song <baohua@kernel.org> wrote:
+> >
+> > On Fri, Nov 6, 2026 at 7:53 PM Lorenzo Stoakes (ARM) <ljs@kernel.org> wrote:
+> > [...]
+> > > > --
+> > > > Sashiko AI review · https://sashiko.dev/#/patchset/20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org?part=2
+> > >
+> > > It seems these are valid, oops!
+> > >
+> > > Andrew suggested a fix off-list, and I agreed to this as an in-place fixup to
+> > > avoid respin.
+> > >
+> > > I have also updated the series locally to reflect this change:
+> >
+> > Seems like a reasonable fix. maybe_unlock_mmap_for_io()
+> > could have released mmap_lock, leaving the VMA
+> > unprotected. but  ra->size *= 2 is still going there no matter
+> > if the vma has disappeared
+> >
+> > For the original patch combined with the fix,
+> >
+> > Reviewed-by: Barry Song <baohua@kernel.org>
+> >
 >
-> On Mon, Nov 9, 2026 at 4:48=E2=80=AFAM Barry Song <baohua@kernel.org> wro=
-te:
-> >
-> > On Fri, Oct 16, 2026 at 2:15=E2=80=AFAM Kairui Song via B4 Relay
-> > <devnull+kasong.tencent.com@kernel.org> wrote:
-> > >
-> > > From: Kairui Song <kasong@tencent.com>
-> > >
-> > > Pure code shuffle, no behavior change.  lru_gen_update_size() now onl=
-y
-> > > updates the per-generation counters plus the promotion move; the
-> > > addition and deletion active/inactive accounting move to
-> > > lru_gen_add_folio() and lru_gen_del_folio(), which know the generatio=
-n
-> > > and can apply the active-window test directly.
-> > >
-> > > The unevictable case is untouched: unevictable folios never enter
-> > > lru_gen_add_folio() and keep being accounted by lruvec_add_folio() as
-> > > before.
-> > >
-> > > Tested-by: zhaozhengzhuo <zhaozhengzhuo@uniontech.com>
-> > > Signed-off-by: Kairui Song <kasong@tencent.com>
-> > > ---
-> >
-> > The patch looks good to me.
-> >
-> > Meanwhile, I've been struggling with the names of
-> > __update_lru_size() and lru_gen_update_size() for a long
-> > time.
-> >
-> > Given that lru_gen_update_size() now only updates
-> > nr_pages:
-> > static inline void lru_gen_update_size(struct lruvec *lruvec, int type,
-> >                 struct folio *folio, int old_gen, int new_gen)
-> > {
-> >        ...
-> >
-> >         if (old_gen >=3D 0)
-> >                 atomic_long_sub(delta, &lrugen->nr_pages[old_gen][type]=
-[zone]);
-> >         if (new_gen >=3D 0)
-> >                 atomic_long_add(delta, &lrugen->nr_pages[new_gen][type]=
-[zone]);
-> > }
-> >
-> > while __update_lru_size() only handles
-> > active/inactive accounting, could we rename them to make
-> > their roles clearer? For example:
-> >
-> > lru_gen_update_nr_pages()
-> > lru_gen_update_active_inactive_size()
+> BTW, one question is whether mmap-based readahead is
+> still worthwhile if the VMA is actually gone after we
+> release mmap_lock (or the VMA lock). Perhaps we don't
+> need to continue readahead in that case.
 >
-> Hmm but __update_lru_size is also used by CLRU, so it's not a
-> "lru_gen" specific helper. If we can merge CLRU/MGLRU, then maybe we
-> can rename them?
+> However, we don't have a reliable way to know whether
+> the VMA is really gone until the page fault is retried.
+> We release the lock to perform readahead, so in this
+> racy case, readahead might be happening for a VMA that
+> is being removed.
+>
+> I'm not challenging this patch, just leaving a note
+> to think about later :-)
 
-I did a quick search in mm/vmscan.c and found that
-everything is MGLRU. But you're right, I missed
-update_lru_size(), which is part of CLRU.
+I suspect it's one of those 'not worth checking' situations, VMAs can come
+and go at will at any time and theoretically you can do useless work, as
+long as that's mostly not the case I think we're OK.
 
-   1     62  include/linux/mm_inline.h <<update_lru_size>>
-             __update_lru_size(lruvec, lru, zid, nr_pages);
-   2    279  include/linux/mm_inline.h <<lru_gen_update_size>>
-             __update_lru_size(lruvec, lru, zone, delta);
-   3    287  include/linux/mm_inline.h <<lru_gen_update_size>>
-             __update_lru_size(lruvec, lru, zone, -delta);
-   4    293  include/linux/mm_inline.h <<lru_gen_update_size>>
-             __update_lru_size(lruvec, lru, zone, -delta);
-   5    294  include/linux/mm_inline.h <<lru_gen_update_size>>
-             __update_lru_size(lruvec, lru + LRU_ACTIVE, zone, delta);
-   6   3355  mm/vmscan.c <<reset_batch_size>>
-             __update_lru_size(lruvec, lru, zone, delta);
-   7   4101  mm/vmscan.c <<inc_max_seq>>
-             __update_lru_size(lruvec, lru, zone, delta);
-   8   4102  mm/vmscan.c <<inc_max_seq>>
-             __update_lru_size(lruvec, lru + LRU_ACTIVE, zone, -delta);
-   9   4632  mm/vmscan.c <<__lru_gen_reparent_memcg>>
-             __update_lru_size(child_lruvec, lru + child_lru_active,
-zone, -nr_pages);
-  10   4633  mm/vmscan.c <<__lru_gen_reparent_memcg>>
-             __update_lru_size(parent_lruvec, lru + parent_lru_active,
-zone, nr_pages);
+And in general I think these code paths need significant rework before we
+revisit stuff like this, we always pay a tax for code complexity!
 
-Thanks,
-Barry
+--
+Cheers, Lorenzo
