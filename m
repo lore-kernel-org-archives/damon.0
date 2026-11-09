@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794194444;
-	b=bSEktuLV/oH+cjHF9EjpAnY1+055DSZZSYviJCuINetT6B/UYb2oVzZnOnFoDcnvpX01
-	 al59Dg0oUQiJMLGTWN3hurq32/WeNLUyEULEwWnyBTDy3LVdG7luSiRonDhUJ6XuIbVNR
-	 0uGKswYsBbVwrLOMkQO50bTVVot15avBPc7Vq2BdwCLbiUjdGu2ZZFfOesfp33Rr/6TUR
-	 oheu2oaxWWgZKXxiF3i7V4p9dOdBzuGlEc+KXT0Qvk+UCxeKu6owg09qSmXy9ndUyUScg
-	 Q2Gxfm77hqIJbBii/vSde78JXMLcZkHr6HdM+OaS8GcFE5a7EW2nYKc8JKCbeQn0+bg==
+	t=1794211731;
+	b=bdIXhiO8M4RcqZysZl0dBLnVilDKHhSpqSXgNlz1hGxPw2omfy4gbJZMnn+98C2fO09a
+	 yeafr1Pv3Q1LAYfgTaqjlDOJNaAKbWi6x7mOcyYk7mb9L7134/pLiaBQQ+SzDyHzw22wq
+	 oO/cH+bVT/eva6cd5i795Ve/myBYTc/RETxbMxyPZd2eS1hYsCUDfYU+8p4D6ePIRdRve
+	 15+rvD9sCxCUpXkkLF3PFiznopSuvNyoq+HrlIAzLwRrIEFICTQ9xKuhFmjFbtPMGV8Oi
+	 6sgeXDZTBwgSEMJMUJn1QlM8qOqnKolJAXK4ou+hLDKVZ82tfU8W/MighmO2Dz8BAGQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794194444;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794211731;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=sE/fNcXhZCFYoGckzt8mvo4VUCyVdxTAKOyI+l9fVSA=;
-	b=HKlWp4VrQqeXmE9cf6X76MTxfeE04LWytUsJn/s3VzymCFaXJMZFyra3ZPZ3jtLR4sxc
-	 Vf9subWoKtPx93InQWglPhByicY2QZoD5JMZnwxTmJQvYE3A3agb5UJQp6Vd7MxT5189h
-	 6bJWFKkQkNWCeOxdlF17GpycwASjJuqSk0dLlfl3cAoMyUFsE2ekJYRp5zD9YoIaaUG30
-	 0NwTI+wmYkIlcfooRCEF6PsxS7qetJ1UGOgXxVzV4aKqx7FkeeoSiG6lvjwqilg3pj+Q3
-	 nPOm9iGl4nEhQIWvj3XaAsg5LhmV0mNYf5eBTJ4dAn/5DZ+foxUryHra7t4KxaiYCZg==
+	bh=LiMJF1XvwF+Qc5jdWubo4n2qJDpryfHhpNFCa3GO55Y=;
+	b=sPpCyjuukcdhlFN/1w0XpG9ca+oMx9brukxX1o0c4M6nyJJjC0JA0tPWATCNmybHcYR6
+	 y8pFimVuFJggZTl/LT7Y8+NUU8DFEVdyiatL/++QW+0+rbfezNKzFuWzHvTeBsjEiXnSL
+	 ql0zN0oXHIuO0XZd5JKxg1w40vvuc6EcDPb/0Rfrhnkt7qUL2C7N8mtgN87VVR6+4xckx
+	 CW4x9Rcm0L7lb8SOh/mSFOuai/JVaQYOFuhkeWs34zRyW/8ywf9gXeej3OhTdilZrlneK
+	 2DAK4JGWvADpCTYvarLVO8H7Ux6/ZSN/kuNZ7/vcSuAalUb7o2X4LO6ms2a9MVOpkrg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zf2ixuWf;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.49
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y6j8lzD5;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B69606A320
-	for <damon@lists.linux.dev>; Mon,  9 Nov 2026 03:20:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24B69606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A10606A330
+	for <damon@lists.linux.dev>; Mon,  9 Nov 2026 08:08:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 31A10606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zf2ixuWf
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-c434376dbebso71103666b.1
-        for <damon@lists.linux.dev>; Sun, 08 Nov 2026 19:20:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1794194442; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y6j8lzD5
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c45551fa84eso74719066b.3
+        for <damon@lists.linux.dev>; Mon, 09 Nov 2026 00:08:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794211729; cv=none;
         d=google.com; s=arc-20260327;
-        b=Rk1cum+yq8ZxvYNYbDezveaNacaZy6Ovhz6y13vzAxVav3wd27A3GyYqGIppoFySzg
-         8CpkDIjA4/MP+24IR1yNcIVvtKoAw52SUiKfTYrq6CPYoLBrmFOY2PglfgXXlVeqjnrz
-         XZ/jZayh/t+OtjWPUWNy1/4HHQacnF2FiDfROrDW/r6Vnaq1D/kvIJRMHcOasqUldci+
-         Jy7cJEOTMw++CGNtb++K2kAU5GYrGcsoSdJTbot+TuBLxODHArattxhKGrQz04//netX
-         YKRmpYGmybYQNaFV6sqmyopLJblw4yP6G3tizKWy5bjqEKD3WBB6aXnnKdmBFqcLVe2e
-         qqgQ==
+        b=JS+KgRmeTB2L6wz9ZlXgf2C8aXMAn7V9UatclJdVc96bm0EM9CTHuoNFZavJmfaAn2
+         9tsfFRifbfCJjkdT+LS5guXzhEYbgTen4MAUPYzPvb6X9cpYz76pjRzU4VSdZr5KvZeT
+         ivn7qef8DDH7M2TIeunr97ucfIQEhTwPcSvRDSFsAV2z+jHuObrngeOl/31wTdLicu85
+         oTcGPTJNs109frme08A+ww+yLu5Ym3OnVt1i4aDa+WgSIj9fp/yJnVPfDSI7ZHxsCqdy
+         ls/nkgftRS20KXoeeGESs9HkyhW9vroR3aiUgix4Wtpn35i8A8H8aZSEehxbZdqkqqSN
+         6h/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=sE/fNcXhZCFYoGckzt8mvo4VUCyVdxTAKOyI+l9fVSA=;
-        fh=NdDhkqXeKaEQVt98zc4Sbafk8NPygXup3ub86FFStaA=;
-        b=mkP4+f26v2E7d3iwmUHiIeDAXiNbaXuctS7GuZQhxWvc92htuumue32L1+xERgucfq
-         PX38JDLJE/Ovi0/UQ3UzCXJi0DylIvgdHtH+yb2yLQJM+VGot4un+YH3n2DXakHUvPBE
-         Kw7idJXaIUmPhZbnntfgHaPfEBQE2GCPfVi3i9X98KNftaMCs9eN/5w9RZtw+33OrXSY
-         Qk8t+UfguWmOpUKmY6c188NSA4gecqH+pBsdh9lMxm61deyBVDYihWi38MwJw5uYCVDs
-         A/F1jJ0CRVtZ0+MFPs0BHzmnvBqg52luT4ZjPZcCPeZ4Rx9qMXxfPnnTfMz58eEyd/rT
-         7Lpg==;
+        bh=LiMJF1XvwF+Qc5jdWubo4n2qJDpryfHhpNFCa3GO55Y=;
+        fh=g2GwwMR52dn09p94gdA0OAsLwIGvTj23/k9i36wpYH8=;
+        b=UX5GpDV5rr1F8NhGD+JY9UOSurkChTZK6tHdoBrOEVt1Md2y3B/8FMmxYlVDTxE9JI
+         pBzmmTlWY3trI0KFxlsKnC5RHiwTtudfwlX8JsFeCNdiw41hn0TWzj0LCxE/cpUsOtfA
+         jZk1aW2jsHFDESpAwAgmCSfZ1drsvhmqs6vnSsFkr/m6KQt09u74i917BMeZtWmWDLss
+         32IMQbobEJQtfAwYEU2AD2Pianfv/xard+qYocXP1hg2+Q1X4LCYYmcNNJt5UtjUqqEw
+         KTt99TI5+mXz/PQemfX04qz4AJbK5F/RYwu2alFfUhIUb2XTe02MObvbJcEDY+FWmn95
+         fSkw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794194442; x=1794799242; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794211729; x=1794816529; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=sE/fNcXhZCFYoGckzt8mvo4VUCyVdxTAKOyI+l9fVSA=;
-        b=zf2ixuWfGRj9wEHQO/p6haxDCZlDllCLCzv/rx9AZswV8KBb2i30GgMacCVMmn13mP
-         QN/qr57Xc/0G8/rskWw6LsXZD/BKtyLmCYu/SbvzPRbnzKmr9VFBKNmDvQIXVZL3mXA7
-         NmJevqQz8IzuwExNyvpQQapyq7rjHizVf/krMNAaUbreN4XJw7BgdcziuqczY3bkX8U5
-         fmyyof7pjCwMqCW5H0wcxouOeMj62LOItg9XGOBxCV1v11RnixZRIO7OcOuvk0b4g7UE
-         2coEyj+xAz22U7Kw5Z1S8b6K+6sZ3kdChFRgDbg0+nd12YmPOEhaW8+RilctsvVFRRyk
-         zQeg==
+        bh=LiMJF1XvwF+Qc5jdWubo4n2qJDpryfHhpNFCa3GO55Y=;
+        b=y6j8lzD5dha0eJHQTnNJgy7LWHWB3PUqmXaei8QeMdYixm1QWHIHzXxfyxRAytHY8l
+         TrmA0kUNTQut6sgg2eivWX+I7xbtj7hB1fk8rmlDuH8obpMhKy2BIrq9wGqv+VsNaIXz
+         RKfXQkrYYytaJetXvYdPpOjEDfKc4HDt+M8bRPfXpkQGYMQs0vZ5jbVbjvvFFovvyBck
+         p8Vmwq8vyMKmzYW3LGv4Y9nppr8vZD5MTkfeZlgMNsIC/V9b/Z+X0dCXLJIknFW51b6N
+         G8vIYYyIssp9qrkQah02rr+tr9Ak+IUPoPLHRnsu9LsTJjn2hqAde8lZDQ3XVkue7dab
+         9/Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794194442; x=1794799242;
+        d=1e100.net; s=20260707; t=1794211729; x=1794816529;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=sE/fNcXhZCFYoGckzt8mvo4VUCyVdxTAKOyI+l9fVSA=;
-        b=04vcXCCSf9SyFL15Chc3J1MVSLN9gQQ+72DBcVHEP0iOKMGsiE8rxB2LC8hkFvn/mH
-         JKm8jKYC3rCaDGtV5hqAivnkl+RJ32VeGP3O9iSgo4MWXlTcj2sEbn5KwgwaYetA8Zp8
-         MjE5g1gK7T6aGn6eFFANAWZ6cmUj1tjAQICdNk7nPghWf1jzJ2cLLngmcuJV443aTcbr
-         eVSIWHmwVir1Wzx4Es6jQlwBsbEDepjr/daN5ezhr5JF55vxfsOERHNkmXjK2TtvRC0A
-         rDfxn5r+8yqNogP4h6GhDnxexon8z3VVu66ac70ncBRbtpipXGsGHSpayvs4rCebEoMq
-         ZCWA==
-X-Forwarded-Encrypted: i=1; AL+hErGm0AI1nGHXLMuXaj+pYMfT3q0R5laUtaAP/Uh8isGR3xKFotXEzlyHUpWi0ze0Mu81PBJusg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8jYHjH4qdveZ+b4DIHx/Sp99bePliMFctAVrSaO5eOOx0DAMZa
-	dbcUwGpih5YPNPI/rNJ94kzZ+GWL0zrqPacHgS3KSLzy3l3I1whC4BltwciB9aDtqGM69513N9T
-	isIKvwKT8V8maEoQrvGRE1EMLV50iqM8=
-X-Gm-Gg: AYBFou1UVxiR9Xh6Jszz3PHFnXhZdlG0ROAJQaZ3vG060zXhkjKMQxnQDCZX+yVzAah
-	DFvTkaqaTgVerr6DkkegoNK75P6Gyz//JEvS0N5w/6E0N2BZzqS7AOLtGJ+5GKWGFjp5/4EsSdG
-	V/aIx17H1LogZC0c7IcyVOAeTnX+hCRj8a3TaykMB2SL5ZQMJnlKwQw/qBHZMo+dMhXP9dR3JUR
-	cKake2newctULu3AvOXhY9QwJqLZvASd5NsB78od3Ct7Lhg+2+Hjp0bPis4KCyy6mNDN3oX+VuD
-	kbkL5nVNAkCpnmXtAl7VL7A/+/XbonxG6rB2aYizWzak7aPqUVom7l8jYjNNgxvQNNYl+heGkKW
-	zaSgmn3vL6wTVnKXzmEFENllmhiSZaC8VBQcPGXZ88dtHscECjpxpYKuAzm61k9LyfNNF
-X-Received: by 2002:a17:907:94c9:b0:c26:1cfd:4244 with SMTP id
- a640c23a62f3a-c4d525794f8mr366547266b.11.1794194442101; Sun, 08 Nov 2026
- 19:20:42 -0800 (PST)
+        bh=LiMJF1XvwF+Qc5jdWubo4n2qJDpryfHhpNFCa3GO55Y=;
+        b=L+69rZX1BPPH3ekWHahsGcNh5NnOJ855ffEUcuwquHBsxjbLbrcx3uId+1CotX7Hwh
+         sS2c71sKD7B2cUjhO1yeWZzBxKWD0UX1rpsDp8Su7m+NFQqaP/3JuxoF5roIdSSRbUTs
+         PPtRhv8FX6DfJ61SInwZxwO7zC0otrLTd/YAMGYjE+h/tZL0HZk8cVdWsBT0xIbnVeAQ
+         6SQsYsGxTG7KJ+R1qBkDgmiUyecR/ZNJm/Ad6X9SNEYJXZD4MwVSf9rj7JfUE0l8XQEj
+         oLRec6XHpYswKTH3TrzpoJJkCmHbcb3d0+RfuKkwssy8+kd60VbQnVVILdcKIvz67gJz
+         zXOg==
+X-Forwarded-Encrypted: i=1; AL+hErFnYkIdcnXJv2xOIj48BGdztkYFBn9pPKXqViDvU/Ny/BpaJDya29alDPtfH/TQRZ+cr1mXrQ==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+gHYKBYIJXEHjn/mJW+SeJ3YWo0Oa0sPuoo++ZRFWnymU6ybc4
+	TxQeutrxtd2zb+61xr5dhB8ZwAz8rgzW/d++H93Rg9qKjZ5MEcsjRvOzC2jHC1MquPv/1CXpR7Z
+	JtkpD5qNYG6lcVp+u0dUY5aslauYuw7c=
+X-Gm-Gg: AYBFou0P3aWe8T0rFYpVJ3LjsIIYFas4V3hn9cYSN03c8bp1jDicnXte0i4q+ZQHTtM
+	MmZY9mjHQ5lqqfdlf8WyiSIHCtLh4LRa+9Odqe5y37ytAujAYu1++vYoo1JulNT+WxtN5Ut+e10
+	bl2UZqoIBfDKIkroG3SrjALrAg8OEE+4GVf6Xs+1/QNa5NkFFOBxXSikWeR9jNyzW5YDPpR2XqO
+	R6yLTRHF5AE81hzd8x56PLa7i+q0zUWAU9EgZKzq0GHRaeqLxYkgpEZCbZNSeV9RIpfA2NfbdhS
+	ooEVU9ZTfVfybryga92CVi26ujR6vXylbdAGtraqgHFBvLfO8IJHjNDmEgFoajgcGRcO4i1zkc+
+	vHfr/e8XTOkYJbgz/vwQ9x5qloLuQUuLIV/FexXnPHxnmm9vxsLwFxOSXJmXBZs0oghmm
+X-Received: by 2002:a17:906:d54d:b0:c42:4750:8d33 with SMTP id
+ a640c23a62f3a-c4d6d79c9e9mr220208366b.28.1794211729178; Mon, 09 Nov 2026
+ 00:08:49 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -105,14 +105,13 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261016-mglru-fg-v4-0-2106750c0bfa@tencent.com>
- <20261016-mglru-fg-v4-12-2106750c0bfa@tencent.com> <CAGsJ_4y-7R07wFJTY2a8tMQ1xvG2kjuG0Q1rLjx8DOg4u3UwZA@mail.gmail.com>
-In-Reply-To: <CAGsJ_4y-7R07wFJTY2a8tMQ1xvG2kjuG0Q1rLjx8DOg4u3UwZA@mail.gmail.com>
+ <20261016-mglru-fg-v4-15-2106750c0bfa@tencent.com> <CAGsJ_4wTFHJxzuiRDBcuevdULMcD+se6SuPbzWKA8wsUAG80_w@mail.gmail.com>
+In-Reply-To: <CAGsJ_4wTFHJxzuiRDBcuevdULMcD+se6SuPbzWKA8wsUAG80_w@mail.gmail.com>
 From: Kairui Song <ryncsn@gmail.com>
-Date: Mon, 9 Nov 2026 11:20:04 +0800
-X-Gm-Features: AclHuK8iUb9Dq3WsbSIlLK65gh2Lc8G5m0UCp-qFnn41-FIR3YsEFvqlSwVsNTk
-Message-ID: <CAMgjq7Cj3dvJf8JCkLacGP0=2bPv6WR1sjOD4Ese7XeGP5VhAA@mail.gmail.com>
-Subject: Re: [PATCH v4 12/17] mm/huge_memory: mark folio as accessed more
- accurately on split
+Date: Mon, 9 Nov 2026 16:08:12 +0800
+X-Gm-Features: AclHuK-rg_Epjx8c_oIR5RKRDfprNqzR2T_gknTk1R87bd-Y63IPVOAg_lUq4r0
+Message-ID: <CAMgjq7Atry0zRc_-xbrL_VubxTBQOT8R2_aumghXQaO9uTANHg@mail.gmail.com>
+Subject: Re: [PATCH v4 15/17] mm/mglru: make folio_inc_lru_refs lruvec lockless
 To: Barry Song <baohua@kernel.org>
 Cc: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, SJ Park <sj@kernel.org>, 
 	Andrew Morton <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>, 
@@ -139,7 +138,7 @@ Cc: linux-mm@kvack.org, "Liam R. Howlett" <liam@infradead.org>, SJ Park <sj@kern
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 9, 2026 at 6:15=E2=80=AFAM Barry Song <baohua@kernel.org> wrote=
+On Mon, Nov 9, 2026 at 5:48=E2=80=AFAM Barry Song <baohua@kernel.org> wrote=
 :
 >
 > On Fri, Oct 16, 2026 at 2:16=E2=80=AFAM Kairui Song via B4 Relay
@@ -147,73 +146,89 @@ On Mon, Nov 9, 2026 at 6:15=E2=80=AFAM Barry Song <baohua@kernel.org> wrote=
 > >
 > > From: Kairui Song <kasong@tencent.com>
 > >
-> > The behavior of updating the folio's access info isn't consistent for
-> > huge mapping splitting or ordinary unmapping. The page table's young
-> > flag has to be translated into folio's access info.
+> > The lruvec spinlock in folio_inc_lru_refs was only taken to keep
+> > concurrent aging from corrupting the size counters.  This is no
+> > longer needed: the per-generation counters are atomic, and the
+> > active/inactive ABI counters are updated per folio and linearized by
+> > the CAS on the folio flags, so concurrent aging can no longer corrupt
+> > them.  The same argument already allowed folio_reset_lru_refs() to
+> > drop the lock.
 > >
-> > Right now it only check and set folio's referenced flag, which isn't
-> > enough since folio flags update on access have its rules. Ordinary
-> > unmapping (zapping) calls folio_mark_accessed(), and it also checks
-> > if the VMA has recency to avoid false updates.
+> > Use folio_lruvec_live_get()/folio_lruvec_live_put() to hold the RCU
+> > read lock around the lruvec lookup, and drop the spinlock entirely.
+> >
 >
-> This might be a bit off-topic, but I once proposed
-> recency fading for the zapping case in Android workloads:
+> Yes, this is cool. We have two paths calling
+> folio_inc_lru_refs() or folio_inc_lru_refs_walk().
 >
-> https://lore.kernel.org/linux-mm/20250514070820.51793-1-21cnbao@gmail.com=
-/
+> 1. folio_mark_accessed() from syscall access
+> 2. walk_update_folio() from page table walker or look_around
 >
-> folio_mark_accessed() might not be ideal for Android
-> apps that are being killed, as we expect them to be
-> relaunched only after a long period of time.
+> For the latter, we can't actually cross multiple
+> lruvecs/memcgs, because of get_pfn_folio() as shown
+> below:
 >
-> But for the splitting case, I guess there is no doubt
-> that the accessed state should be set.
+> static struct folio *get_pfn_folio(unsigned long pfn, struct mem_cgroup *=
+memcg,
+>                                    struct pglist_data *pgdat)
+> {
+>         ...
+>         rcu_read_lock();
+>         if (folio_memcg(folio) !=3D memcg)
+>                 folio =3D NULL;
+>         rcu_read_unlock();
+>         ...
+> }
+>
+> Consider a common library file used by 100 memcgs, with
+> its folio residing in the root memcg.
+>
+> When walking the 99 non-root memcgs, even if the folio
+> has been accessed, we won't get a chance to call
+> folio_inc_lru_refs_walk() for it. As a result, this folio
+> may eventually reach the eviction rmap path. With a high
+> mapcount, folio_referenced() could become quite
+> expensive.
+>
+> That's what I was trying to point out here as well:
+>
+> https://lore.kernel.org/linux-mm/20261102213915.57805-1-baohua@kernel.org=
+/#t
 
 Hi Barry,
 
-Thanks for the review.
+Thanks for the review, I saw that too, very interesting approach! And
+I believe it will helpful.
 
-I agree with these points. BTW that recency fading patch seems
-interesting too, but perhaps we need something stronger than
-folio_maybe_mapped_shared, maybe folio_maybe_shared, and do that when
-"current's cgroup matches the folio's cgroup and have a ref count ~=3D
-1"?
+> For the former, you can get the lruvec with:
+>
+> lruvec =3D lruvec_live_lock_irq(folio_lruvec(folio));
+>
+> I'm wondering whether we could eventually unify them
+> so that both support cross-memcg inc_refs.
 
-> > @@ -3216,8 +3216,8 @@ static void __split_huge_pmd_locked(struct vm_are=
-a_struct *vma, pmd_t *pmd,
-> >                         folio =3D page_folio(page);
-> >                         if (!folio_test_dirty(folio) && pmd_dirty(old_p=
-md))
-> >                                 folio_mark_dirty(folio);
-> > -                       if (!folio_test_referenced(folio) && pmd_young(=
-old_pmd))
-> > -                               folio_set_referenced(folio);
-> > +                       if (pmd_young(old_pmd) && vma_has_recency(vma))
-> > +                               folio_mark_accessed(folio);
->
-> We now have two inc_refs paths:
->
-> - folio_inc_lru_refs_walk() for mapped folios;
-> - folio_inc_lru_refs() for syscall accesses, or possibly
->   mapped folios with the appropriate flags such as
->   LRU_REF_MAPPED, LRU_REF_EXEC, LRU_REF_FORCE, etc.
->
-> The interface is:
->
-> void folio_inc_lru_refs(struct folio *folio, unsigned int flags);
->
-> Here we call folio_mark_accessed(folio), which is the
-> syscall path with flags =3D 0:
->
-> folio_inc_lru_refs(folio, 0);
->
-> Are we somehow applying the syscall access policy to
-> folios accessed through the page table?
+Definately, actually for that link you posted, combined with the code
+snip above, after FG, I think we can further simplify that, no need to
+check mem_cgroup_is_descendant, we just do:
 
-Right at this point I'm just trying to stick with the current upstream
-behavior, and not promote these folios aggressively. The results are
-looking OK for end to end benchmarks so far, maybe they can be tweaked
-further like a LRU_REF_MEAN so it won't promote them, just inc the
-ref, I didn't find any oberable differenence at this point as THP
-alloc success rate is very low when under pressure so sticking with
-the current behavior seems not a bad idea.
+- folio_inc_lru_refs_walk: if the folio belongs to the lruvec being
+walked, the batch stays in walk->lruvec
+- folio_inc_lru_refs: if the folio is a remote one, per-folio, no batch
+
+non-descendant folio sharing across memcg are actually quite common
+e.g., libc and shared mapped memory, this could be more helpful? And
+it seems fast for the walker.
+
+folio_inc_lru_refs_walk follow the same rule as folio_inc_lru_refs
+(with MAPPED flag), just faster, skipping RCU and the speculative
+check afterwards as the walker owns the seq it is advancing, and
+caller handles the batch update of counter. While folio_inc_lru_refs
+only requires the caller to hold an reference to the folio it heavily
+relies on RCU / CAS conventions, not easy to batch things there, but
+it's still accetablily fast already (e.g. the fio read test showed
+almost no performance penalty).
+
+And I think the main reason MGLRU can't operate cross memcg was, lack
+of a protocol to stablilze the memcg's gen and holding a lock is too
+costly, now folio_inc_lru_refs handles that, and FG
+ lives on top of that. So we can try that out right after the FG series.
