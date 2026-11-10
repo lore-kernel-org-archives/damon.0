@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794277428;
-	b=IQQfh9HMXP21iV4AikZoT6M44KQOvjq6HGDgaPNeH/XH9rfg2pfz3nIueDyvLgk5N6du
-	 w5gigZo/57NaXYmx4yM1UyZO/CA+TY6ub//JPG+S0a2cK2cD30D1gfWgGui4XKl2iqQnC
-	 NtMmiZ8DOq6G8adxe5EKYY3t+Jp7Tc059LZ+tH+5P6AAA8DPztqbQ1bEb76SnRl/hvDum
-	 7Vb26Gt2Zm5/FEFNlKfqdj7YmTtOSNvUOw0fdGeqxbubS3wMDG3vhJftjv9njhLRQPg4g
-	 ZnDRDOgPJVJm9YbC1bm4+/b9jvgWIDoN8LwKuP6Ho0L5rY8vyZm4yt9jcCO65wB+O5w==
+	t=1794277777;
+	b=adfKlYQ5xwAPRhCIFh8TVgixPDbTi0Ma5XwWt/qlLdtqH0yAtWkPI96MtWBqOOg+iW2n
+	 S3pwh5dSw6SKtqD2bms8tKCGxPsE+A+Le23U+WUVdzEmv7bnZD9rJDaxd3eBsfV9db/8B
+	 rdEX64mNP2TcJaNZ1kWAXaacFQfafpKkVmaJcCbHF+9j2FuJl31FBG300k86UeP7IxemV
+	 eFZjY+eSwrfd9HXiqgNksEvnYGrKvuGxa2eZpWLSu06eneUwre/tupFFyhFEG4KtO+So9
+	 Pz8Y/i1cqgwitNLadE+27+koU/jaRM0jgJAU9q1R7FvT9i0OB8MdCH7Ef+0pOy+zkwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794277428;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=A+lzFeOLtG99Ghw9rX8G9p1QUCxnDj5eZlO4QzFSIas=;
-	b=RZ3T0vixHRE/9B4V/jxcR6SPdal7+JupRL62DhY6zKgkUK0RJhqQj179v5oyzGx8mPgD
-	 vct6LWvzciH2lcfU8aBYSnpGdNAwGXuKzKNvO2s6AKs1JeLLicU/yFBNTgWONt0veykKv
-	 Jge2mM9fwgsRpyTLKd8VuaJILz6a+yivrTHUrhaPKRjWU5pdniQp/90cKi+eLQl2SCkmG
-	 PlCTnI5BT6Tuh3SYGXMh2BX1NDwlyAcjVaoi+sI8CcexRAh14nBFcknni3pOxbqUUeIhF
-	 mZtxWL1BVZZjwq0gYEc/kDXKw7NRrfGc77O7nxGi3cFcoyut5CchXgtzU08krh2cNoQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794277777;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=lYxPH1s3j7NymSUn5H4vCRp+bnEOR+4MdhHPZkbHfzI=;
+	b=rpdn+zl8P1vqfpzr71ejwqfJ1HXYY/UyTuxndgC6C4d/6d77tUrWyzltl+ZH+4WLrk0Y
+	 nfdm/nrGb6j1ETsmV/lSUtQKZ4W5Zb/2I+8CaqDaw6F2Q/H7ZuSEszv8esXblrxYJywfg
+	 uB/CiuChXPfusQpeUn9j6YDbBtj0CPgf8NnOZQGTiN6u9LrSktTFmHD0//0bBcxMhkuWa
+	 r8qT3KFG8d083pXLOah8/dTfPx4Ln2ny87Y8OJPJmYugbQ+MzCbcQ/mbOGDyzUa+37czE
+	 TdYFGcMiMDxKCvhQXzhaFAQQ4hpGYx72J8ByK6WJVp2CP2tSTLT56sakXHSKlzufIjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IOGLKWu6;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MqLfRzLw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69135606A321
-	for <damon@lists.linux.dev>; Tue, 10 Nov 2026 02:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C024606A31C;
+	Tue, 10 Nov 2026 02:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IOGLKWu6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA141F008A1;
-	Tue, 10 Nov 2026 02:23:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MqLfRzLw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2CC1F0089F;
+	Tue, 10 Nov 2026 02:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794277428;
-	bh=A+lzFeOLtG99Ghw9rX8G9p1QUCxnDj5eZlO4QzFSIas=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=IOGLKWu6U2jlr8eViXU1gCgBZA8adj0frtLiodU/busKR5eEm5s6yfDZntS5oxw6c
-	 NTfF9gLWvfACN3wq8trUkbz5JkiasKDhu92o9cmXGRd2kHKWedzv84gLjkectZajP1
-	 TGMINjX+nnRDMcp8Z9RUAnmT88gYhyBvqtZTmPZOPyuhdfU+//TY0AttNs6DIZJ0fd
-	 ocCkl5A3JKkRdJd8WOskeeu2B4AY3n1bGDOxFhOTY7KBvjjIMnT/soj4hny6bpfSNH
-	 cHdA+8LpZNYZH3jerZnhS3V+OSgnJpCVH2KMfP2H53J/ZwxcVATC4effDDlfdIm72L
-	 IST5UC/5nfBtA==
-Message-ID: <sashiko-outbox-206041@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 2/4] mm: memcg: read root lruvec stats from the node
- counters
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Joanne Koong" <joannelkoong@gmail.com>, akpm@linux-foundation.org
-Cc: yosry@kernel.org, shakeel.butt@linux.dev, hannes@cmpxchg.org, mhocko@kernel.org, roman.gushchin@linux.dev, muchun.song@linux.dev, nphamcs@gmail.com, chengming.zhou@linux.dev, sj@kernel.org, david@kernel.org, ljs@kernel.org, linux-mm@kvack.org, damon@lists.linux.dev, tj@kernel.org, mkoutny@suse.com
-In-Reply-To: <20261110015321.611093-3-joannelkoong@gmail.com>
-References: <20261110015321.611093-1-joannelkoong@gmail.com>
- <20261110015321.611093-3-joannelkoong@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 10 Nov 2026 02:23:46 +0000
+	s=k20260515; t=1794277777;
+	bh=lYxPH1s3j7NymSUn5H4vCRp+bnEOR+4MdhHPZkbHfzI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=MqLfRzLwWeunB4gF4YprwOEGCBTuv5dyrpEBFlLh2Or5FjcxWYmwurKpefk+tT9jf
+	 vbqt4BKKSP+1QQQZSwVcKqfRm0az5s6YNunX/giKqwgFkkdBeJEuWvUPLzapra1bO4
+	 iETRRW5rgL7FpRTqlqOrr5pzRyLRLDsvsMnMpY4JbU1MoJ5/6mWHyCP9txyTtB+tfn
+	 YFp31tQYcp+BRNdEBuZKu8DQETiyzk7p66K26JXhzrtjm+ottwAuCseGqILkIHEbQN
+	 cXRFpfhfqhOIjrXdvJJv95wr72UALHh6WPNwx54CV33Yeyn/W7MoMKvOL99YDSO3bE
+	 e5+Yw+RBij8mA==
+From: SJ Park <sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: damon@lists.linux.dev,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	SeongJae Park <sjpark@amazon.de>
+Subject: [PATCH 6.12.y] mm/damon/core: move static variable last_nr_regions to damon_ctx
+Date: Mon,  9 Nov 2026 18:29:24 -0800
+Message-ID: <20261110022924.115699-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261109200803-failed-6.12-26ae50a0901a@kernel.org>
+References: <20261109200803-failed-6.12-26ae50a0901a@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,91 +60,83 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [Medium] mm: memcg: node_stat_includes_unaccounted() omits file and
-  writeback stats
---
+kdamond_split_regions() uses a static variable last_nr_regions, to infer
+if the region boundaries are too stable.  If it looks too stable, it
+does a more aggressive region split because it might be a fake stability
+coming from non-aggressive split.  Because the variable is static, the
+inference can be racy and wrong when multiple kdamonds are running in
+parallel.
 
-commit d2ba314724a8ba015e3bf2a30f155f1beba25a8c
-Author: Joanne Koong <joannelkoong@gmail.com>
+The user impact is not critical.  No crash, no leak.  DAMON's
+best-effort monitoring accuracy can be degraded when multiple kdamonds
+are used in parallel and the workload has certain access patterns. Still
+it is a bug that is better to fix.
 
-mm: memcg: read root lruvec stats from the node counters
+Move the variable into the damon_ctx struct to fix the problem.
 
-This commit changes lruvec_page_state() and lruvec_page_state_monotonic()
-to read per-node vmstat counters instead of rstat values for the root
-memcg when querying stats that only track memory charged to a memcg.
+Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
+Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
+Cc: Fernand Sieber <sieberf@amazon.com>
+Cc: SeongJae Park <sjpark@amazon.de>
+Cc: <stable@vger.kernel.org> # 5.15.x
+(cherry picked from commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ include/linux/damon.h | 5 +++++
+ mm/damon/core.c       | 5 ++---
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-> diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-> index 1ebc9330aeae5..2575bf2ba0ea6 100644
-> --- a/mm/memcontrol.c
-> +++ b/mm/memcontrol.c
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 4688a10eca89b..dfd0295104d37 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -641,6 +641,11 @@ struct damon_ctx {
+ 
+ 	struct list_head adaptive_targets;
+ 	struct list_head schemes;
++	/*
++	 * number of regions after last merge.  Read kdamond_split_regions()
++	 * for more details.
++	 */
++	unsigned long last_nr_regions;
+ };
+ 
+ static inline struct damon_region *damon_next_region(struct damon_region *r)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3142776e2e0ee..ec7f22ad33e1d 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1932,7 +1932,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ {
+ 	struct damon_target *t;
+ 	unsigned int nr_regions = 0;
+-	static unsigned int last_nr_regions;
+ 	int nr_subregions = 2;
+ 
+ 	damon_for_each_target(t, ctx)
+@@ -1942,14 +1941,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ 		return;
+ 
+ 	/* Maybe the middle of the region has different access frequency */
+-	if (last_nr_regions == nr_regions &&
++	if (ctx->last_nr_regions == nr_regions &&
+ 			nr_regions < ctx->attrs.max_nr_regions / 3)
+ 		nr_subregions = 3;
+ 
+ 	damon_for_each_target(t, ctx)
+ 		damon_split_regions_of(t, nr_subregions);
+ 
+-	last_nr_regions = nr_regions;
++	ctx->last_nr_regions = nr_regions;
+ }
+ 
+ /*
+-- 
+2.47.3
 
-[ ... ]
-
-> @@ -504,13 +511,52 @@ struct lruvec_stats {
->  	long state_pending[NR_MEMCG_NODE_STAT_ITEMS];
->  };
-> =20
-> +/*
-> + * Whether the node counter for @idx can also count memory that isn't ch=
-arged
-> + * to a memcg (eg kernel memory that isn't accounted). For these stats, =
-the
-> + * node counter can be larger than the root memcg's value, so the root m=
-emcg
-> + * has to read its rstat value instead.
-> + */
-> +static bool node_stat_includes_unaccounted(enum node_stat_item idx)
-> +{
-> +	switch (idx) {
-> +	case NR_SLAB_RECLAIMABLE_B:
-> +	case NR_SLAB_UNRECLAIMABLE_B:
-> +	case WORKINGSET_NODERECLAIM:
-> +	case NR_VMALLOC:
-> +	case NR_KERNEL_STACK_KB:
-> +	case NR_PAGETABLE:
-> +	case NR_SECONDARY_PAGETABLE:
-> +#ifdef CONFIG_HUGETLB_PAGE
-> +	case NR_HUGETLB:
-> +#endif
-> +		return true;
-> +	default:
-> +		return false;
-> +	}
-> +}
-
-[Severity: Medium]
-Should node_stat_includes_unaccounted() also include NR_FILE_PAGES,
-NR_FILE_MAPPED, and NR_WRITEBACK?
-
-For NR_FILE_PAGES, swapcache operations such as __swap_cache_add_folio(),
-__swap_cache_del_folio(), and __swap_cache_alloc() update NR_FILE_PAGES
-only in the node counter while accounting swapcache in the lruvec under
-NR_SWAPCACHE:
-
-mm/swap_state.c:__swap_cache_add_folio() {
-	...
-	node_stat_mod_folio(folio, NR_FILE_PAGES, nr_pages);
-	lruvec_stat_mod_folio(folio, NR_SWAPCACHE, nr_pages);
-	...
-}
-
-Reading node_page_state(pgdat, NR_FILE_PAGES) for the root lruvec
-therefore includes all swapcache pages, which inflates the "file" counter
-in the root cgroup's memory.numa_stat (double-counting swapcache alongside
-"swapcached") and causes it to diverge from memory.stat even after a
-flush.
-
-Similarly, __folio_mod_stat() -> lruvec_stat_mod_folio() updates the node
-NR_FILE_MAPPED counter without updating memcg rstat whenever an uncharged
-folio (folio_memcg(folio) =3D=3D NULL, such as a driver mapping or a
-root-cgroup __GFP_ACCOUNT kernel folio) is mapped into userspace, and
-nfs_folio_mark_unstable() and nfs_folio_clear_commit() update
-NR_WRITEBACK only in the node counter for unstable NFS pages awaiting
-server COMMIT.
-
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110015321.6110=
-93-1-joannelkoong@gmail.com?part=3D2
