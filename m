@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794278776;
-	b=SKQYyBzGw9AMtVPVjpc37T1AnTkg9Pz4VjppT8+o8afOSzhU06V2x/I47KHBKky4vE/3
-	 AqYPRiWEpu5M1h8mtKGSkXnpGz9P/1/RaivO30wG0Xl0yaGnLyjvJfoHe4duRo5EDNHs9
-	 YsQgYP0oolFUER6KSX/KWnAbvn9V4eM0TnXpjOnjvXq6dUsYH31eAKoSEyX3mKvHS++sM
-	 HIexnLgcs7V9UtIB2W55OmFYY2M2mPzzeZ0SZeLCw66Tml2oZl5vc7Ekufr7ZeJORU1Bi
-	 W/JrDfuEH6c5LH7l6YSqhv7rTaC3rQn+QYlDBY8pQAmNhPpwwWl10rcl3M1Jt3Jdh+A==
+	t=1794278831;
+	b=DiqMUe2swPxox2EMuW9fHpuZGlctrwgAjoWbPiwfssIewzy2PLosITblwBtjZPrV8R4s
+	 znVBbIEA9QniIDgb6fa/ypXEI/prJfJyc4i92U8Er25vd7upcNc+DsCbX8iGp4/MonWL3
+	 qTRy7ab3uRw1Lbcl2PsfP6f5m26OkXfWdVknylQuWcyKYUDOVVu+HZu8RoHK1ZgSAhEOc
+	 9+UzUw/WwVhSXfuU5s5ycJ2P4NMJLRZV4yUeRN67NUYAQRwdYjWyXUmybSV/y1L9abiDB
+	 3OiD2UacPF3eVLUS5Gb7aolP8YVHzgcHNlO9aI4pqF+0SsJYpTsm+voIYxeqbFW9mxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794278776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794278831;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=fFFb3ERYWhLPPrGzb6PUS+6QBuR3ObPrqTUZrlW/KL8=;
-	b=2ln4csm2D+4WJYWAkVow3mOeO6Lg9qwtybmIpSSYT0azt34e67MkWSpgfTNzHQBND8WD
-	 f9RJVC9nzCw2QYoXh5w0H42aGb8uS7Xs4z1ldSIBYwIUIXSKGuK8TAk/4QR/N84vVaKNK
-	 6/Xb1Ex3V3x2DExpg/PReUvg7RJOzknvAxCV+PxITyllWwy9jyGBBEhXvtOBmaZC/6MGp
-	 12Tk/fiN7z7lge8MrTZtwgsBdsi/3To/dgcw8GlQ5HxcyMf1NRUhn5PiSV1s4aBr92jTC
-	 qzZmUYgA/1anBhg3OslQSWYhjFhd5HQrGv59o+GRRLb6vLHWJ3hEVQjCGkMVumnPCJw==
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=j+lkRAnd6mBQc9FMob8xImFMoyAakN1CieZ1Wx5EmEo=;
+	b=XGN3VmytO4IIbIbmQr6nfjEjT7O5bTQPZbnvK8FN1HHfrErcGA34vS2fz43EdU9howhR
+	 3dxAtf8fcVkBXe4Ky0/T6mZDp6yJp1d0Glk3X4yaH4SHOsoVsgS3bS6lLj6QTd0VXiTwP
+	 ypsy47yq9J5XCiVVKGmdIAGtJI2Smd/K79WzTqSzrfznSfwDotcjmM2au5LSIw+U4Pb8Y
+	 d8IIbBDxYOfm1LACNs776a5Mu1Q6WIM/MjXzTG12QK62VubuIGFR6JLGR2Amikmdm5dUh
+	 3cKsevfel6JJepTfKwXtr9TggGiZXnKF2OFJ3QamaH21tXczD7yoAyybeoT840C/wUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XZeAw83X;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DAUSMrSk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E28606A31C;
-	Tue, 10 Nov 2026 02:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47BE606A31C
+	for <damon@lists.linux.dev>; Tue, 10 Nov 2026 02:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XZeAw83X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9151F0089F;
-	Tue, 10 Nov 2026 02:46:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DAUSMrSk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804CD1F0089F;
+	Tue, 10 Nov 2026 02:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794278775;
-	bh=fFFb3ERYWhLPPrGzb6PUS+6QBuR3ObPrqTUZrlW/KL8=;
+	s=k20260515; t=1794278830;
+	bh=j+lkRAnd6mBQc9FMob8xImFMoyAakN1CieZ1Wx5EmEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZeAw83Xs4YUcCgKf2X1UoJYkgecetN5u/kBBH+Wcpr1jyGmNH+nzDAca6vOQpkQS
-	 WiULalmKcYo0kMAsngmvkgajgiRmxpHaSshtPBOrIVOCEKyFp1sFE1Hi9qmt2+7SIU
-	 yoifEjzDzjAJnTvETVLnrDXISk6H3NfHJE1y9AbbwfRZiOdkPPgsEfBJVZbiadCnTz
-	 mclfuNQfXIR+exf4oCNIqmn9DuvjcU0cmDR+a81H+UcFKF9lc6L2pvMO+yJpqEEtN9
-	 5VKEkGtMbWLxjYqANr6lkdRgeQHTN7ZjyfysUPM+LlDbiIph74kO5gCmAicJ5ZfZ/F
-	 98MSU4jlYqDag==
+	b=DAUSMrSkrtZIVEmoyWnxYPsNfk6xfSvYz0oanBbVUiSxOvRlJscBkiT7SbwJts085
+	 /e9IPFuBVqGpVro0FlCewhs/n5US7AYvA5pg8WO76NrqKogxfiHS2pKAHUnD6aMg/6
+	 8Q2dgtaAwvGjuhfP+fos1gkAzKD1fGFvw6AIr2g+bMtohDQc0BriKMqPtzk8ax3dsG
+	 cfCchRZ58VOV6IF9BFbDCR2jAQALBRQq+e11Qy9FPQmE4Q8jAncuVQoMqv06HqvB7i
+	 fSfSQP+RnvM/s8zCIRmrssK3Aoc9a/05k1jiSKDiHCjk1npJbdnlA5eCLgt8+k0xhP
+	 IN7L7OjisJFzg==
 From: SJ Park <sj@kernel.org>
-To: SJ Park <sj@kernel.org>
-Cc: stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	SeongJae Park <sjpark@amazon.de>,
-	damon@lists.linux.dev,
-	Jonathan Corbet <corbet@lwn.net>,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH 6.18.y] mm/damon/core: move static variable last_nr_regions to damon_ctx
-Date: Mon,  9 Nov 2026 18:46:07 -0800
-Message-ID: <20261110024608.119184-1-sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev
+Subject: Re: [PATCH 6.12.y] mm/damon/core: move static variable last_nr_regions to damon_ctx
+Date: Mon,  9 Nov 2026 18:46:59 -0800
+Message-ID: <20261110024701.119411-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261110022454.112647-1-sj@kernel.org>
+In-Reply-To: <sashiko-outbox-206056@kernel.org>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -63,43 +59,62 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon,  9 Nov 2026 18:24:54 -0800 SJ Park <sj@kernel.org> wrote:
+On Tue, 10 Nov 2026 02:35:53 +0000 sashiko-bot@kernel.org wrote:
 
-> kdamond_split_regions() uses a static variable last_nr_regions, to infer
-> if the region boundaries are too stable.  If it looks too stable, it
-> does a more aggressive region split because it might be a fake stability
-> coming from non-aggressive split.  Because the variable is static, the
-> inference can be racy and wrong when multiple kdamonds are running in
-> parallel.
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] mm/damon: last_nr_regions placed in public section of struct
+>   damon_ctx
+> --
 > 
-> The user impact is not critical.  No crash, no leak.  DAMON's
-> best-effort monitoring accuracy can be degraded when multiple kdamonds
-> are used in parallel and the workload has certain access patterns. Still
-> it is a bug that is better to fix.
+> commit eb0ad0bdecede5a2fbbdad016dac644dd4b389f4
+> Author: SJ Park <sj@kernel.org>
 > 
-> Move the variable into the damon_ctx struct to fix the problem.
-[...]
-> --- a/include/linux/damon.h
-> +++ b/include/linux/damon.h
-> @@ -804,6 +804,11 @@ struct damon_ctx {
->  
->  	struct list_head adaptive_targets;
->  	struct list_head schemes;
-> +	/*
-> +	 * number of regions after last merge.  Read kdamond_split_regions()
-> +	 * for more details.
-> +	 */
-> +	unsigned long last_nr_regions;
+> mm/damon/core: move static variable last_nr_regions to damon_ctx
+> 
+> This commit moves the static last_nr_regions variable from
+> kdamond_split_regions() into struct damon_ctx so parallel kdamond threads
+> do not race on region split state.
+> 
+> Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
+> 
+> > diff --git a/include/linux/damon.h b/include/linux/damon.h
+> > index 4688a10eca89b..dfd0295104d37 100644
+> > --- a/include/linux/damon.h
+> > +++ b/include/linux/damon.h
+> > @@ -641,6 +641,11 @@ struct damon_ctx {
+> >  
+> >  	struct list_head adaptive_targets;
+> >  	struct list_head schemes;
+> > +	/*
+> > +	 * number of regions after last merge.  Read kdamond_split_regions()
+> > +	 * for more details.
+> > +	 */
+> > +	unsigned long last_nr_regions;
+> >  };
+> >  
+> >  static inline struct damon_region *damon_next_region(struct damon_region *r)
+> 
+> [Severity: Low]
+> Should last_nr_regions be placed inside the /* private: internal use only */
+> section of struct damon_ctx (or preceded by a /* private: */ marker)?
+> 
+> In this tree, the end of struct damon_ctx is after /* public: */, so adding
+> last_nr_regions here without a kernel-doc entry causes scripts/kernel-doc
+> (via Documentation/mm/damon/api.rst) to warn:
+> 
+>   Function parameter or struct member 'last_nr_regions' not described in 'damon_ctx'
 
-Sashiko warns [1] this could cause kernel-doc build warning.  I will post v2
-after fixing the issue.
+Nice catch.  I will post v2 with a fix for this.
 
-[1] https://lore.kernel.org/sashiko-outbox-206056@kernel.org
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261110022924.115699-1-sj@kernel.org?part=1
+> 
 
 
 Thanks,
 SJ
-
-[...]
