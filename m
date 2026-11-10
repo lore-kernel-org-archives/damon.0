@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794300916;
-	b=xq13UNhDwn9CYmE75U1mgiCJ+IdNHzkQUKuVqHQpDjg+XEfoNvH6DT7BeU70SD+yIsAY
-	 GxX20KeM2QTa5i/enQUcrDAZ5WH3cJ8jTKAubMObeXfOekIRotZzKOicZbRL6arq3a+gQ
-	 gh59SqJ64M/ylXhjFvv3ioJ2xmoqg9+Ui1E7aGF53DeLR0mfZnLhA+SO6atWsiVH4aI3l
-	 J2BURPck1uXoYFes+u8dBLzX1zsNtC6du+W8fDIjYqIXUGX2ULuvv5p2tsELuvuJAZrbY
-	 QEegA0E9sH/lqii2whBgjE+VNBW0AwSzmHCz4ixLi+YMAIvDOHmtp1jv/qokiFul5wg==
+	t=1794320921;
+	b=BNwCRkeLBagG/ls5ByB2lQUjmtai0VuML8nBCMfy/eztwuuPTKpjH18NmUJX4GsPFYAB
+	 yr8rUd62aCNPTBt0ZCN+O5GtZ1XPYvbvaZcyMLzS2HlpcR/ZtYn8I9pQFGlQ8fr9aKIqd
+	 +zCxClVKNiIy8igag8FhOpPcICmrTocuL1bKy/B7yowBva0QT3RMixxKkMrAiiUXu3krE
+	 57h91PwvxG1TxLMQgXu4vIjnLFQoXPzbBiAUWJA0Ghgpi/Wun9nPhGfT/mT9hCLtkfXh/
+	 cSV3LKGv9T+rYylAecHzjp5SucNsI1SqDnjOSsUYC0IeojOUIPGtdhkEsLzSPVFC8Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794300916;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=VoJmpsIla/y0sHzCmi64L0xEySQhXNAybHsk2OGI1tI=;
-	b=fylLQTq0bpI4c7fLO/8Px3F002Pq9wLTWiPcMYjCnYWhAbCQLfzSCiqfyIjQFDdQL4cg
-	 Zhdgo0GAKwzj8F0zUbfW9QnYE7HfTOsCfMjhbNNuWki+E8lY0qlC9F5lkWuVa0YKLzOdW
-	 JepB/JkT1i2D17MB8zDQ6y91xcnFq83GDem8cADezaLi8oG+xvwmXZg4I8LBRVRbQA+/4
-	 S9pfxnOgyg22yrYH9TVN/NEq6KkW7nCSxTajSXcaeeoaHpPxJrXhfc1ldWSDQckAN9JfE
-	 vXZ9oPzFU2C/Mjee/5ZNrgEmRo+QxSf0zKKDBsa8hM4Whowbbf2tSdhUnEvAsNeABSg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794320921;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=1qaGSPaC0XCHovE6/6ImavtPtW70B7Caa544xCbJ1lk=;
+	b=LBRr110/5+/qD+9FJPdIwHRLNmem3Rf9YITm6/tFVhicn89cGAgXSMaE9mVpyOFgwwc8
+	 ZBxQ+yR85z/EMJ3NnQfCkhg7r5pKxLJL3rKGfKstMEkl5CQaW5YSPn6fAtIujqRhZ2Gu0
+	 4nEs9rMAd/Gzam4doUUm+7vdNytfWAbk2XPgH8Dd92Z3SeyfVQReaFX9t2nYhdj3ZaXZ3
+	 beg2KEkxPYKuYJHQXeo8clwrts4pLjRNH3eujPOmoWQGAO1EfNZebLu8ibbZAdag2k4tU
+	 stAVy5qbQXOVB2zyjCobG7xigIk5GOGJWwM5R52h8I6zMG/yJKwSDAHt2oAxzAhSJJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OZrmtWIn;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FcFl01OE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E9860A2614
-	for <damon@lists.linux.dev>; Tue, 10 Nov 2026 08:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE18D606A334;
+	Tue, 10 Nov 2026 14:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OZrmtWIn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385831F008BE;
-	Tue, 10 Nov 2026 08:55:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FcFl01OE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789F81F008A2;
+	Tue, 10 Nov 2026 14:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794300916;
-	bh=VoJmpsIla/y0sHzCmi64L0xEySQhXNAybHsk2OGI1tI=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=OZrmtWInISHVU1sU4wf/43giuL9lU5k7VnKKD/0FWc8SyGgqhHZyMQ/xZVgPZZLf3
-	 NjAFbpKY+KwiXq6Le6XdgYiNhcPnxRs3Ewe7jTREyjvk4Ip9wzYs6CfQB/2kyu7/Ls
-	 tnlx9Q2e65hrn3cBq0mqEyJDR3GCUN6lH5csReZwXkU2DaHiZqC4KA4sLzoZvNlLvq
-	 5YraNorsnbYBwzA54eCOGEF1N4PHYLD8bUju8ELmlUm1sJ4OoBJ2PHVltioDAJOeJL
-	 PQ0JPB3cdZ9ipGtnBEfZB0XOuxHV3I0ShT1I2gMGDbSMD+UMMOPIQz8Fw8THBHE7HW
-	 /5FqyXdS6BA0w==
-Message-ID: <sashiko-outbox-206676@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/1] mm/damon/core: simplify minimum watermark wait time
- calculation
-Reply-To: sashiko-reviews@lists.linux.dev
-To: =?utf-8?b?QWRyaWFuIEh1YW5nIChMZW5vdm8p?= <adrianhuang0701@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261110085132.1023-1-adrianhuang0701@gmail.com>
-References: <20261110085132.1023-1-adrianhuang0701@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 10 Nov 2026 08:55:15 +0000
+	s=k20260515; t=1794320920;
+	bh=1qaGSPaC0XCHovE6/6ImavtPtW70B7Caa544xCbJ1lk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=FcFl01OEJwQTQHZrTm6jK/Js0r+4bJ48iaEc8NUiXKBqF4OjexUtdkMTwTSUcVizZ
+	 HpfdJ/tOuIEdhgt0ex7ha2q1uuAmjjf9OWZayFNeZ8G6mG8tOQtQX97VEpEchHZhTy
+	 acRWfoQBPW/fIYxm9wtBk6f3aTKcofcBvv/3u6ESyAZetmriK/TrkuUwoVpABOmgP/
+	 w/LtzB9BRjkFsxQu8VwPCd5tC6EIdu/3z/AIP6YM5H43u9c247f8ukh3NK4ZJ3o7YR
+	 EdBp+u9HmK5bad1d4G8UjantxsvuABUQhKATlITsuXIjPoQnURywIqaZNMeJKYKdot
+	 KhA1SLEXl0R5g==
+From: SJ Park <sj@kernel.org>
+To: stable@vger.kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	SeongJae Park <sjpark@amazon.de>,
+	damon@lists.linux.dev
+Subject: [PATCH 6.18.y v2] mm/damon/core: move static variable last_nr_regions to damon_ctx
+Date: Tue, 10 Nov 2026 06:28:28 -0800
+Message-ID: <20261110142832.125968-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261109200407-failed-6.18-26ae50a0901a@kernel.org>
+References: <20261109200407-failed-6.18-26ae50a0901a@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,23 +60,89 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> The minimum watermark wait time calculation uses an additional boolean
-> variable, init_wait_time, to determine whether min_wait_time has been
-> initialized.
->=20
-> Simplify the logic by using list_is_first() to identify the first
-> scheme and initialize min_wait_time accordingly. Subsequent schemes
-> update min_wait_time only when their waiting intervals are shorter.
->=20
-> This removes the unnecessary boolean variable while preserving the
-> existing behavior, including the case where no schemes are configured.
->=20
-> Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
+kdamond_split_regions() uses a static variable last_nr_regions, to infer
+if the region boundaries are too stable.  If it looks too stable, it
+does a more aggressive region split because it might be a fake stability
+coming from non-aggressive split.  Because the variable is static, the
+inference can be racy and wrong when multiple kdamonds are running in
+parallel.
 
-Sashiko has reviewed this patch and found no issues.
+The user impact is not critical.  No crash, no leak.  DAMON's
+best-effort monitoring accuracy can be degraded when multiple kdamonds
+are used in parallel and the workload has certain access patterns. Still
+it is a bug that is better to fix.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110085132.1023=
--1-adrianhuang0701@gmail.com?part=3D1
+Move the variable into the damon_ctx struct to fix the problem.
 
+Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
+Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
+Cc: Fernand Sieber <sieberf@amazon.com>
+Cc: SeongJae Park <sjpark@amazon.de>
+Cc: <stable@vger.kernel.org> # 5.15.x
+(cherry picked from commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c)
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from v1
+- v1: https://lore.kernel.org/20261110022454.112647-1-sj@kernel.org
+- Mark last_nr_region as private field to avoid kernel-doc warning.
+
+ include/linux/damon.h | 6 ++++++
+ mm/damon/core.c       | 5 ++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 656a314ad2159..125fbe1c73a9d 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -804,6 +804,12 @@ struct damon_ctx {
+ 
+ 	struct list_head adaptive_targets;
+ 	struct list_head schemes;
++/* private: */
++	/*
++	 * number of regions after last merge.  Read kdamond_split_regions()
++	 * for more details.
++	 */
++	unsigned long last_nr_regions;
+ };
+ 
+ static inline struct damon_region *damon_next_region(struct damon_region *r)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 56f2343ffefac..701173dadd7bc 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2525,7 +2525,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ {
+ 	struct damon_target *t;
+ 	unsigned int nr_regions = 0;
+-	static unsigned int last_nr_regions;
+ 	int nr_subregions = 2;
+ 
+ 	damon_for_each_target(t, ctx)
+@@ -2535,14 +2534,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ 		return;
+ 
+ 	/* Maybe the middle of the region has different access frequency */
+-	if (last_nr_regions == nr_regions &&
++	if (ctx->last_nr_regions == nr_regions &&
+ 			nr_regions < ctx->attrs.max_nr_regions / 3)
+ 		nr_subregions = 3;
+ 
+ 	damon_for_each_target(t, ctx)
+ 		damon_split_regions_of(t, nr_subregions, ctx->min_sz_region);
+ 
+-	last_nr_regions = nr_regions;
++	ctx->last_nr_regions = nr_regions;
+ }
+ 
+ /*
+
+base-commit: b7660db717aee489e4f202401ccfe6fbe1b15238
+-- 
+2.47.3
