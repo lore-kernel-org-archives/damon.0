@@ -1,57 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794323977;
-	b=l4osYR+GaYK8hP8rMOqo4wKvqfEx2s6vE0uTWWkNcyl0Y+0p0+Jv3QES3CyHwgqhxBRt
-	 WT0fr/44v25QxKLDbYqFu9VxK8jE7GyxrxcD8+qgGiwHSauqAxGxb2PGlhR7zafXwtedw
-	 jQCyoXrJnWJ6e2ehWoOcVZwjNoJZ24eRd87iVAHGeVWfZ51KvjrXnGZucJBcVaDcaiGv6
-	 Kka0nKjxU+x0Kq0ffsU5ZuMl6EWV8xGlMpOYPw9dj9YI1tGWfNlqOT/Yc9RL5KtbEKT9u
-	 B41B8OfqveF9+NMeXNrxILli090LMEPN+7PxQBjXw913jN+DAFI4V4VHwD17Ob4qQFw==
+	t=1794325160;
+	b=OSMKpCKLRyigE2olNUlC2CyYF41pV7c6QQJLNBMdamkKAEjMQYRr3h+hbJegqWhD0QoV
+	 Ihdl6Hq/zWX8zSzeYadltphlEAoWKbbpNVRuFFrRpXdw+SCMlWzGLNg2pOKcecIiUZy9s
+	 hF/JDUvBgYR0kFPLBnyYtaxFK3FSTD09wg8f4CVHXBzr/I9loPf/iJBE3JQe7bhpdXtLP
+	 Qh2jzOrnbJbZFmgcrGNflicEop5CSI2y9m/Xi9GQXG0ghyurMvytCk/oy8jXj7HQLGl6k
+	 rF5JDYrvEGVViePrRy3jKRRWzkGCevGeWsILR5a0erjl+RK+2cqWIAxlrKw/1MpzayA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794323977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794325160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=PCAWNzL1cvfVcJ1evLQxJn+oYYrJ86Z4hoDytTewJdc=;
-	b=Qdvq99EguzH5+ky1ASI0QZ5NmThpMbeXoJe/ToTe0LASACaXJBhDzTUsQcpK7TfzmSar
-	 gmPmvgBmZDRWvvsf5Jhb3ncJlaLY56PS5BJfFLh2bpi7SanjhOpRZRrtA7txO4NfBiiN6
-	 luNQqdcvTmJr7G76tANlNE9S/0ltKIs+Oq5pS1iyVsZmZnRLXHz2tZYuocbuW3w6lk/MT
-	 JhIobqSAIuAonhN8+x6s/EyjRBcpAVGcI4OSWj+L0NLzEHMTrIjgv4yTVm4oS1pztay6T
-	 Sd4OCT3YoJ47h8KFIzOp6R7cHcO4yb9ta1qWRmDsJYnX8xPVjV4OHwUV2yr9l3Y663A==
+	bh=fxFIcL8AVsaeZE4IFp9DhoZHiAUFlATqoX61kjAFAEY=;
+	b=1Dzo9EcpFER5PTMOFo/kEgwUTFSueR/w0KuZhmQYGxB8iWASNVbiMQjB95AgVHjOI+c9
+	 vzQv+aQr9kOaNSFCsVJ18VhfIH+qRH2IzsgeiIOGT5JIUCdX8IFKh8whahVgR1w5mGp31
+	 h24+K0jOUP+Ty4SQG0SX5zYJvVrcOim1jc2lCSxDY2+Smr8k1/21KfpjM0iLdN9O+Tod/
+	 gx73M03RI6z9QT2VzJeFWdqaTJ+b9QA0OUlw8AXzU2IMASbLNs7asynkMhU6LziWXQYG+
+	 ihFVuQ24LOquTKMK5/m2drYSore9xT5+nmiHfdb970G6z/x99+G81wXJRIeU3q2El5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PokqkXyE;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b8RNwxrC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD1B606A320;
-	Tue, 10 Nov 2026 15:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A86606A31C;
+	Tue, 10 Nov 2026 15:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PokqkXyE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8278E1F0089F;
-	Tue, 10 Nov 2026 15:19:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b8RNwxrC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AC11F0089F;
+	Tue, 10 Nov 2026 15:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794323976;
-	bh=PCAWNzL1cvfVcJ1evLQxJn+oYYrJ86Z4hoDytTewJdc=;
+	s=k20260515; t=1794325159;
+	bh=fxFIcL8AVsaeZE4IFp9DhoZHiAUFlATqoX61kjAFAEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PokqkXyE276PTXpE8nAJDY4Jc6TYyfM5lEA2F8gcVbpGkNCsZ+yzOWeNIdARlUhDM
-	 rvw9a1dw0qeGJRN3SaNEVXIQr3CcbT17gGeJtq6JvKxKD5rumexJKSetUQ0BihYcJ+
-	 TiBmQG9JMt+DhnRS4KK0BVCkODx5y6BI3LH2ZXRiVsIWbCoPvWUXzTNdAjBGTpGnd7
-	 M4W8i4Rbcw7NvnA5yprNxjmtw9j4HgSafG1do8Jq8pwqvbtINlQ9+LNo68ZEbwnn+e
-	 ZxHd8JltWWZ2s3iOjGOCwRqglraCiyw5dNzMpkG+SYwvwj8YmcLe6qOsAhQfSOMsPW
-	 ctgPF7vQn+Dyw==
+	b=b8RNwxrCoval3cj7VaO5A2ekKiYwrG6m4fB1V1beYqHCJFlZdt063QAGd6toVBr83
+	 etntU9CFZEUgPMcYVHZYJ3UhlXaIH0XTgMdZnJP+k/BDfMMK/VhvuOaAwCV+zDwBLQ
+	 ml2wpf8Zr6aaSjwttXo5aCMFtc6+9ht+prziUkDAvgsllki2tEiwMc0LOrxnsO/Yrx
+	 /HczPATqi9To/i5RdnbPeA9DVAEBjTllfSyTjBI01XNDiQrtCIs1Im5iCgvxW/YBVZ
+	 dfAhqJfxR9HrEqTQPEq28TlwGujAWv+9D0qI/gethfpu71Tb08V2WRj6J2l/Xg+wa5
+	 qJQPkO9w8jPMA==
 From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: damon@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+To: "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	SeongJae Park <sjpark@amazon.de>
-Subject: [PATCH 5.15.y] mm/damon/core: move static variable last_nr_regions to damon_ctx
-Date: Tue, 10 Nov 2026 07:19:27 -0800
-Message-ID: <20261110151927.158140-1-sj@kernel.org>
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	ahuang12@lenovo.com
+Subject: Re: [PATCH 1/1] mm/damon/core: simplify minimum watermark wait time calculation
+Date: Tue, 10 Nov 2026 07:39:06 -0800
+Message-ID: <20261110153907.158338-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261109202159-failed-5.15-26ae50a0901a@kernel.org>
-References: <20261109202159-failed-5.15-26ae50a0901a@kernel.org>
+In-Reply-To: <20261110085132.1023-1-adrianhuang0701@gmail.com>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,81 +64,60 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-kdamond_split_regions() uses a static variable last_nr_regions, to infer
-if the region boundaries are too stable.  If it looks too stable, it
-does a more aggressive region split because it might be a fake stability
-coming from non-aggressive split.  Because the variable is static, the
-inference can be racy and wrong when multiple kdamonds are running in
-parallel.
+Hello Adrian,
 
-The user impact is not critical.  No crash, no leak.  DAMON's
-best-effort monitoring accuracy can be degraded when multiple kdamonds
-are used in parallel and the workload has certain access patterns. Still
-it is a bug that is better to fix.
+On Tue, 10 Nov 2026 16:51:32 +0800 "Adrian Huang (Lenovo)" <adrianhuang0701@gmail.com> wrote:
 
-Move the variable into the damon_ctx struct to fix the problem.
+> The minimum watermark wait time calculation uses an additional boolean
+> variable, init_wait_time, to determine whether min_wait_time has been
+> initialized.
+> 
+> Simplify the logic by using list_is_first() to identify the first
+> scheme and initialize min_wait_time accordingly. Subsequent schemes
+> update min_wait_time only when their waiting intervals are shorter.
+> 
+> This removes the unnecessary boolean variable while preserving the
+> existing behavior, including the case where no schemes are configured.
+> 
+> Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
+> ---
+>  mm/damon/core.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index d36823f4d092..93ec684a113c 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -3985,14 +3985,12 @@ static int kdamond_wait_activation(struct damon_ctx *ctx)
+>  
+>  	while (!kdamond_need_stop(ctx)) {
+>  		unsigned long min_wait_time = 0;
+> -		bool init_wait_time = false;
+>  
+>  		damon_for_each_scheme(s, ctx) {
+>  			wait_time = damos_wmark_wait_us(s);
+> -			if (!init_wait_time || wait_time < min_wait_time) {
+> -				init_wait_time = true;
+> +			if (list_is_first(&s->list, &ctx->schemes) ||
+> +			    wait_time < min_wait_time)
+>  				min_wait_time = wait_time;
+> -			}
 
-Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
-Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: SeongJae Park <sjpark@amazon.de>
-Cc: <stable@vger.kernel.org> # 5.15.x
-(cherry picked from commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c)
-Signed-off-by: SJ Park <sj@kernel.org>
----
- include/linux/damon.h | 6 ++++++
- mm/damon/core.c       | 5 ++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+I implemented and used list handling wrappers like damon_for_each_scheme(), to
+hide implementation details of data structures.  This change exposes some of
+such details.  If we agree we have to remove init_wait_time, I'd prefer adding
+a sort of damon_first_scheme() like wrapper.
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index d68b67b8d458d..bc0cdd67e2473 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -203,6 +203,12 @@ struct damon_ctx {
- 	unsigned long min_nr_regions;
- 	unsigned long max_nr_regions;
- 	struct list_head adaptive_targets;
-+/* private: */
-+	/*
-+	 * number of regions after last merge.  Read kdamond_split_regions()
-+	 * for more details.
-+	 */
-+	unsigned long last_nr_regions;
- };
- 
- #define damon_next_region(r) \
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 3a50ced2efc0f..1ce0438328b94 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -603,7 +603,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- {
- 	struct damon_target *t;
- 	unsigned int nr_regions = 0;
--	static unsigned int last_nr_regions;
- 	int nr_subregions = 2;
- 
- 	damon_for_each_target(t, ctx)
-@@ -613,14 +612,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 		return;
- 
- 	/* Maybe the middle of the region has different access frequency */
--	if (last_nr_regions == nr_regions &&
-+	if (ctx->last_nr_regions == nr_regions &&
- 			nr_regions < ctx->max_nr_regions / 3)
- 		nr_subregions = 3;
- 
- 	damon_for_each_target(t, ctx)
- 		damon_split_regions_of(ctx, t, nr_subregions);
- 
--	last_nr_regions = nr_regions;
-+	ctx->last_nr_regions = nr_regions;
- }
- 
- /*
--- 
-2.47.3
+But, init_wait_time really need to be removed?  I cannot show clear benefit of
+removing it that justifies adding a new wrapper.  To someone or on some
+evironments, init_wait_time might making the code too difficult to read or
+inefficient (system having so small amount of memory?), though.  If not, I'd
+suggest dropping this.
 
+What do you think, Adrian?
+
+
+Thanks,
+SJ
+
+[...]
