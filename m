@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794320921;
-	b=BNwCRkeLBagG/ls5ByB2lQUjmtai0VuML8nBCMfy/eztwuuPTKpjH18NmUJX4GsPFYAB
-	 yr8rUd62aCNPTBt0ZCN+O5GtZ1XPYvbvaZcyMLzS2HlpcR/ZtYn8I9pQFGlQ8fr9aKIqd
-	 +zCxClVKNiIy8igag8FhOpPcICmrTocuL1bKy/B7yowBva0QT3RMixxKkMrAiiUXu3krE
-	 57h91PwvxG1TxLMQgXu4vIjnLFQoXPzbBiAUWJA0Ghgpi/Wun9nPhGfT/mT9hCLtkfXh/
-	 cSV3LKGv9T+rYylAecHzjp5SucNsI1SqDnjOSsUYC0IeojOUIPGtdhkEsLzSPVFC8Pg==
+	t=1794321153;
+	b=X/kZJ0gmVxOgMarIkOlFSShDjX6oJP8ZerUcVIvcJQHj2p13QaGkt73Exsw7/41WcNWI
+	 mAILv4rA3E97y6SED4lKK0LYodl+0yWRAjFt3Cm1eX0UyJKL+dU4+P5qDhNGnUi+t1exC
+	 DdIyciS2/mrYULaQhoUXpXMYWwjwTD10NK097gvPSgzdejadrbgj/X1GMbaDS+aNt3WGP
+	 BjYq84HLWhiWINLZ7RpLFj9POKY8rOg5+CoW+3BYAUa++rPnAvMfG0GZm6pPynMNdN2vh
+	 Ly5+ZQ8DqIvpcx+v0vOYA17jWBgIJoxysJR+jVVeCp+rbn2EOTSCba1OFlLZmHriO8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794320921;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=1qaGSPaC0XCHovE6/6ImavtPtW70B7Caa544xCbJ1lk=;
-	b=LBRr110/5+/qD+9FJPdIwHRLNmem3Rf9YITm6/tFVhicn89cGAgXSMaE9mVpyOFgwwc8
-	 ZBxQ+yR85z/EMJ3NnQfCkhg7r5pKxLJL3rKGfKstMEkl5CQaW5YSPn6fAtIujqRhZ2Gu0
-	 4nEs9rMAd/Gzam4doUUm+7vdNytfWAbk2XPgH8Dd92Z3SeyfVQReaFX9t2nYhdj3ZaXZ3
-	 beg2KEkxPYKuYJHQXeo8clwrts4pLjRNH3eujPOmoWQGAO1EfNZebLu8ibbZAdag2k4tU
-	 stAVy5qbQXOVB2zyjCobG7xigIk5GOGJWwM5R52h8I6zMG/yJKwSDAHt2oAxzAhSJJw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794321153;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=LQoM5nOZNlBHX41/l/LlXZiZjsaHSH9kVooFnAbN0w8=;
+	b=EZXmAOHoMG8t3oTGPWAi1KM/5WnSIU6FDBL3xqEFCzZkB4dRvcWDGIGQ7XmtZFDbl7+s
+	 QlPaThbUcMeB4gvWYQ7gyNcF90I0P+GWFFlrFfndxPqYxkLPw48dC5oH2tmMXxZcdGlmN
+	 +cyFG5BuC6GdmA6QkQX0IUVgtMMhY0axukPzmAHh54Dk6onZjvKunczmEEpMXFtHc4xAw
+	 tzyg2LW8rMKyQ8XqopHceJr/OP02aWYSXkt+vrTK5Pz7g5X4+pIdhW7EXDDSn1p5GNa86
+	 WUu+AAi0VVafNmUqcKpx+SwgwtrvWi5wavHym6x6bf/GPNhpa+U6QtuinIBxtCylJQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FcFl01OE;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kEuYXIlm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE18D606A334;
-	Tue, 10 Nov 2026 14:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BEA606A325
+	for <damon@lists.linux.dev>; Tue, 10 Nov 2026 14:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FcFl01OE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789F81F008A2;
-	Tue, 10 Nov 2026 14:28:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kEuYXIlm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF931F0089F;
+	Tue, 10 Nov 2026 14:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794320920;
-	bh=1qaGSPaC0XCHovE6/6ImavtPtW70B7Caa544xCbJ1lk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcFl01OEJwQTQHZrTm6jK/Js0r+4bJ48iaEc8NUiXKBqF4OjexUtdkMTwTSUcVizZ
-	 HpfdJ/tOuIEdhgt0ex7ha2q1uuAmjjf9OWZayFNeZ8G6mG8tOQtQX97VEpEchHZhTy
-	 acRWfoQBPW/fIYxm9wtBk6f3aTKcofcBvv/3u6ESyAZetmriK/TrkuUwoVpABOmgP/
-	 w/LtzB9BRjkFsxQu8VwPCd5tC6EIdu/3z/AIP6YM5H43u9c247f8ukh3NK4ZJ3o7YR
-	 EdBp+u9HmK5bad1d4G8UjantxsvuABUQhKATlITsuXIjPoQnURywIqaZNMeJKYKdot
-	 KhA1SLEXl0R5g==
-From: SJ Park <sj@kernel.org>
-To: stable@vger.kernel.org
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	SeongJae Park <sjpark@amazon.de>,
-	damon@lists.linux.dev
-Subject: [PATCH 6.18.y v2] mm/damon/core: move static variable last_nr_regions to damon_ctx
-Date: Tue, 10 Nov 2026 06:28:28 -0800
-Message-ID: <20261110142832.125968-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261109200407-failed-6.18-26ae50a0901a@kernel.org>
+	s=k20260515; t=1794321152;
+	bh=LQoM5nOZNlBHX41/l/LlXZiZjsaHSH9kVooFnAbN0w8=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=kEuYXIlm6W8iZgkC8OJc1JrA2ZtlijRLmx8R/K+HOp3NseLu6KA0uto/5q+FZAVtO
+	 AilMLoilCO2tPfJ2s9dU2CUjLW102bpn2JMpotifm9GxowfLP5VRAnh9z2NgDbPjID
+	 8DwVs5/wr4i231VdIjiFMpNdm1AvXTKIHYokAE6liGtyQH98SkpW5k0Mx+jfcEhwZ4
+	 OqSvWIlWnzLg0T15KlOV1k3mHiUcM8pXwjVJ13Fg3z7/1FZFpkrW494dUXSZutvIpX
+	 O6JMdoz0udqjbgv8nUFjDwfx8d6qgQANHBY+NwV2SvrIpq1sw2PvJLqP5Wr8Rwxt92
+	 etpY64WhuBoRQ==
+Message-ID: <sashiko-outbox-207194@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.18.y v2] mm/damon/core: move static variable
+ last_nr_regions to damon_ctx
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261110142832.125968-1-sj@kernel.org>
 References: <20261109200407-failed-6.18-26ae50a0901a@kernel.org>
+ <20261110142832.125968-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 10 Nov 2026 14:32:31 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,89 +60,36 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-kdamond_split_regions() uses a static variable last_nr_regions, to infer
-if the region boundaries are too stable.  If it looks too stable, it
-does a more aggressive region split because it might be a fake stability
-coming from non-aggressive split.  Because the variable is static, the
-inference can be racy and wrong when multiple kdamonds are running in
-parallel.
+> kdamond_split_regions() uses a static variable last_nr_regions, to infer
+> if the region boundaries are too stable.  If it looks too stable, it
+> does a more aggressive region split because it might be a fake stability
+> coming from non-aggressive split.  Because the variable is static, the
+> inference can be racy and wrong when multiple kdamonds are running in
+> parallel.
+>=20
+> The user impact is not critical.  No crash, no leak.  DAMON's
+> best-effort monitoring accuracy can be degraded when multiple kdamonds
+> are used in parallel and the workload has certain access patterns. Still
+> it is a bug that is better to fix.
+>=20
+> Move the variable into the damon_ctx struct to fix the problem.
+>=20
+> Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
+> Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
+> Signed-off-by: SJ Park <sj@kernel.org>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a4=
+7f2
+> Cc: Fernand Sieber <sieberf@amazon.com>
+> Cc: SeongJae Park <sjpark@amazon.de>
+> Cc: <stable@vger.kernel.org> # 5.15.x
+> (cherry picked from commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c)
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-The user impact is not critical.  No crash, no leak.  DAMON's
-best-effort monitoring accuracy can be degraded when multiple kdamonds
-are used in parallel and the workload has certain access patterns. Still
-it is a bug that is better to fix.
+Sashiko has reviewed this patch and found no issues.
 
-Move the variable into the damon_ctx struct to fix the problem.
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261110142832.1259=
+68-1-sj@kernel.org?part=3D1
 
-Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
-Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: SeongJae Park <sjpark@amazon.de>
-Cc: <stable@vger.kernel.org> # 5.15.x
-(cherry picked from commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c)
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from v1
-- v1: https://lore.kernel.org/20261110022454.112647-1-sj@kernel.org
-- Mark last_nr_region as private field to avoid kernel-doc warning.
-
- include/linux/damon.h | 6 ++++++
- mm/damon/core.c       | 5 ++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 656a314ad2159..125fbe1c73a9d 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -804,6 +804,12 @@ struct damon_ctx {
- 
- 	struct list_head adaptive_targets;
- 	struct list_head schemes;
-+/* private: */
-+	/*
-+	 * number of regions after last merge.  Read kdamond_split_regions()
-+	 * for more details.
-+	 */
-+	unsigned long last_nr_regions;
- };
- 
- static inline struct damon_region *damon_next_region(struct damon_region *r)
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 56f2343ffefac..701173dadd7bc 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2525,7 +2525,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- {
- 	struct damon_target *t;
- 	unsigned int nr_regions = 0;
--	static unsigned int last_nr_regions;
- 	int nr_subregions = 2;
- 
- 	damon_for_each_target(t, ctx)
-@@ -2535,14 +2534,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 		return;
- 
- 	/* Maybe the middle of the region has different access frequency */
--	if (last_nr_regions == nr_regions &&
-+	if (ctx->last_nr_regions == nr_regions &&
- 			nr_regions < ctx->attrs.max_nr_regions / 3)
- 		nr_subregions = 3;
- 
- 	damon_for_each_target(t, ctx)
- 		damon_split_regions_of(t, nr_subregions, ctx->min_sz_region);
- 
--	last_nr_regions = nr_regions;
-+	ctx->last_nr_regions = nr_regions;
- }
- 
- /*
-
-base-commit: b7660db717aee489e4f202401ccfe6fbe1b15238
--- 
-2.47.3
