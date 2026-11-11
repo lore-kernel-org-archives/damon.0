@@ -1,85 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.201
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794382817;
-	b=vgRQyhteUp+ICxU+7OmlmbSH6SoK1PHXz7JeBn7Gt4+hvsHDpDHb5biUEOBY9ifl+h07
-	 7dH5gvOqoOaK6DQ29f5sSgEpWzzjRRmGT1TAL12Gcy1w6a2AqS1Lp1OweImCu8+wWwomM
-	 UU1585y9CzfRkYqzttKWbgc+zVeAWq6OFfeSDQeQffqr1qooN/9GcoNA2Ac7KJeMe3rsL
-	 VNhX/p8Z9QauN9AHtpvbOohQgSfk+d2lrFTywJLuS+dlY56d77bZVEHNWGaWGtaoAquDl
-	 EdIxESe/tZnY0QFnTdP1+oY9bmM4glUS/69snOx77npxJvfkSY8NBytyJWbymdvQaCg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794382817;
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=209.85.214.170
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1794402871;
+	b=DuwKVSVYxdzcB6M6X+ue4R2Ejukn+CkIZAdEcKwefEiz1ZqaDJ6ccpz4KC2Qlf3T4Ulh
+	 ZAs8TFI+1G+zyUf76RVZMrdlWX6nW78iULlVbmpRbw6ZjrxDubO+kV9i8OTakxN0tsWdk
+	 ennDtx3FAO0nTaDh/G5LtA2B6aM2RatXXH0OaZgTqS5jlKOpvBKBvWfP3B0lNV9Aqcu4O
+	 jKyWMRycYEF/mLZIwRMNXpEY6p7Tv8CdBpl2i6M/q+5oj7fXT7uIC+kk07CGh1+JXCqCy
+	 EVqL9o8e11a+b5AjGDO4m3KOkxb9rR3sJtkQsh91TYVxK9NeiChsmvXyiyW3t8p4HOw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794402871;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
-	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
-	bh=5sA/bJ7zlvzB4PjwB/BzIEOEcwq2h4lfsdHKluSnl6M=;
-	b=5rGNBV7j3L9v1mZ12sGQYCCQAdPuv76IPP7fm8AlShbzkwLtsSeIGu44qVLPqV8SK4Ms
-	 gqEIUE9sDXuNSTJz4Af8R7FJ5C2TpWs9UmI2OjK8vWP+43H4fyDGDIuzDOx9zeRI0nUIp
-	 bB3GH4sQWwZTbguG7cuNTrSgOXqW5xfFjdgPqKb+UykyV4X4dldV4eKfMSnPOiIOh0wOz
-	 NUAQrzgLxCv1pg8QvWi9RQnjt0Xl9+SfKr3/wwKfkJyuZKcJzobUpCzHat9WnSUHILJau
-	 mtH3uqcjyL/+c5TsLWC0AVI89EekSLVcXsBE4DK4iOOcVR9vJKROB7nYNfQf3KKHQjw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=g/0oI6uv/H1EEuDN9a5C5Hh0fYM+cFB/bWC6crw40RE=;
+	b=5omWFuBkg4xrxWxS9n96oySc/TGx8FMFGYFMU3UImt5u0ZFCx/NK6zKbilr10by7gCd9
+	 K6pPnzGSA8BuP3r4ykJGEySDHXKekvcBQgkvWzJza4l4I2S7Un58EPI7dON4iUE1bNF6c
+	 0DdgTPr5nJXZ4ek3SmdCdQaOUFHPDnzsZbQenXCKfyPZsZSIdyTHHPRh31vq29f3gfgR2
+	 g1IYv8DcXutQAihHgQdOq0wdT03hQwmoQDjmbGmW0gq/e7v2f/+CrU/zMjg+KCCyfmsD6
+	 E+V9iG+8+ntgAUbNgsMg895KRMlMyG0rsjK+cFvYsxu3OQ7fybY/Y225HIXstNKhDxg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xAiFKv0X;
-	arc=none smtp.remote-ip=74.125.227.201
-Received: from mail-pi2-f9.google.com (mail-pi2-f9.google.com [74.125.227.201])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=z7dXi4c6;
+	arc=fail smtp.remote-ip=209.85.214.170
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFCB606A336
-	for <damon@lists.linux.dev>; Wed, 11 Nov 2026 07:40:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CCFCB606A336
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22C0606A321
+	for <damon@lists.linux.dev>; Wed, 11 Nov 2026 13:14:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C22C0606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=xAiFKv0X
-Received: by mail-pi2-f9.google.com with SMTP id 41be03b00d2f7-cdd9779aac8so413790a12.0
-        for <damon@lists.linux.dev>; Tue, 10 Nov 2026 23:40:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=z7dXi4c6
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2e8f2c3ad6bso20312955ad.1
+        for <damon@lists.linux.dev>; Wed, 11 Nov 2026 05:14:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1794402870; cv=none;
+        d=google.com; s=arc-20260327;
+        b=nmPSnFjoHDpnRs0YP3wVlufyKM3xijIEZ1841VZvz30dBbtmr+F+otStOQ3FX/ljxO
+         pjXm8aNMQcTHZMmbRh1TVWP1vugaKsJOPPd2Jp+KXCLY07xXkOmAGlLXYnfX9Ucgz63x
+         abEImXa0HMW+7BWLiJBrvmfDk0DGUl+moCqsCFPPyYNXHEtWIGBVv9fz52BgsJJ6dSjJ
+         B0emt2yXDPlBW2DFB6uYjFxnQcVGYT4s7OW0uxCGDxSqq80EwXfFeUNfIG81Y6txaW/z
+         G1i5njrVlFepO0u+v5Lef8hLReeI4RgcnNmSsNqK9N4WwJjX6C/Ak1YEBmcqLZoAVisB
+         MJ/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=g/0oI6uv/H1EEuDN9a5C5Hh0fYM+cFB/bWC6crw40RE=;
+        fh=wYZYJnAcw6+HVN/P2kSdXfJsdE6FgNo8MAB+3lqWGt0=;
+        b=fg1RHadp3GvMIBHTQYyNs+G83m8rl9yBiNXbtHhf7JeX56a81fJbxuNNIrw6JHVzuv
+         4evU6W61HhafBh1DwYbuiVcsAosdWGILCQ4CPG4cZGyYvLbDIHovIvSTcGHLuGMc7XuQ
+         nY38eRmiQaG4uxMVq/6WQpI6dQHtr42OUPu/m7YDkrdV6FWHcbFVhLxqXpw74Y/uvLTC
+         9VrDrDcjQYGKweMVxON+Ir6hcZ32piUKToJLQmlD8KAP/10h2r1Q1/wiSUsqt/oYDfxG
+         oklUBuRJvXMLyIi5M+ho+eN7Y9VL7FlsHUGQArdqSwzxFuLeZ9cbscseyTcDFagxGtA4
+         OGVQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794382816; x=1794987616; darn=lists.linux.dev;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=5sA/bJ7zlvzB4PjwB/BzIEOEcwq2h4lfsdHKluSnl6M=;
-        b=xAiFKv0XsLGpWqmcBRH7/MZ10QbR2982tg/SoWkgUSLzyEPc2CBufz7dUyyjZfM2Yp
-         YPtwiBAhTNKMT3RtH760Ht88T9A7s253pRASETJ7elCNyZC9HLZFMa/G3ugK6y0tK8h+
-         OFYNl7ioUGMm3C4gON1cvqRDotwnsTTo22TrQi9qC0TsDjTssoBjiUU8K0f5jiNlYowQ
-         +Kn5STFjdm/wYhmSRW8LNfHlrS9zNdZVT2TuvASNXE73HQce/N7ROlcKthTsu5Q9fJsu
-         1AXW9xK/wzDy/S2waEFZST0xJS5J6xN5Kdh5NqoBXPGkz3zswMshq5mbUCmVf3WihUmd
-         Yrdw==
+        d=gmail.com; s=20260707; t=1794402870; x=1795007670; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=g/0oI6uv/H1EEuDN9a5C5Hh0fYM+cFB/bWC6crw40RE=;
+        b=z7dXi4c6TiONnNgCIL5b31hXPYGYdjAuD0HH7gJIlnKhljgNpiTbnEMhyh/+V9vbOd
+         OPB26kVmcDCVaS+tcLXvUi+LT+2NZwwhKKPVb/wyNO7ZgM0BZa0LUvsFY8WHW64dAos0
+         /kAjpRO1IeBVtUjEtHhpjdEty/kRbeWEDZq80w5aYte9UIz68zFuJFnShUV8pK71JqNj
+         hd8aJ5Y3eD+2zcBfDIPji5aMl+sW6ldQ6zjnzuI0+57o4eXGQtIziGi7Akevjs8VZxmS
+         N0bu0HwD0+POA2JuPQphXa34k+gsg9Me1Vxq8j1HkfkPY9oYJV59Qv77D8C9llh5gtMh
+         S2yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794382816; x=1794987616;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1794402870; x=1795007670;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=5sA/bJ7zlvzB4PjwB/BzIEOEcwq2h4lfsdHKluSnl6M=;
-        b=eJMXyWDqJEpu9IDT/02CXwg7HYvSZK84JisrxRMqoBz7ObjWUEPwUblSoAyH/ecA7m
-         a4jbbeHmiPAlF69VbKtWxgnFJANk16O/IzzodyKkHy9QZ1svZX5derc8Nb2Y4enV6VmV
-         f6w1bMB5i4/Zh5zWeKB2TPF7kanxSriCqlbU3ptjsx+iCGAcMSwu711moCDPzqSRCJus
-         SlwdxjngJk0BFs5UDhfvk7CdGk0CW2VwsSZrw3lreAWVB/1gwrjOgisU9dLL9Za16VoQ
-         pnR8Nm6LfkOWzl+P4NrrRVSpcU4pfUiTdLvz7H+OPiU6p/8Z+YQXUfRUvZkKcfUoExGP
-         95Gg==
-X-Forwarded-Encrypted: i=1; AL+hErF9W2XYAtZhBr7Es6HKnNgPUdCvTYMfEi3Nmc6GrXkTKEQQFhwo/qoKCbsZpXNSFReAf7S9Dg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8lqt1vAYNit0lGSEtS0jbL8ntgi50/gtdkvsvQpP1TVKz8gGaB
-	DMjtQ1vwlCIKEKbIJVjEA0/Ryl6e8cNfHFUIJIY9YPKmHDB9frqy2rO6
-X-Gm-Gg: AYBFou0aF85Z+QuQhiQWGnIyqMLzln810/7LCrWt2O7RnrFi/jxfFLdyYWkqMyJR1ze
-	zUO7OEvvgcvoJg1s0y1Tky1Alof6qwt0eTf7nZH/DNLScdZ3gSq+jlaxcbw0HO2Sp3rGBq2wSE+
-	6w0jDQEggYWA0CtiaMsYEPhti9adeEd0eagZFzpRickO7BqDqCbmNk3fVtvQIXXhqEWC9il2Qz7
-	I70jUEoSFTi/sYfguN63UvAi+l9W87gTBh/MmUwtTxAV/qA8j1cIGg8JSBBzgKDXnnz3KiNCYPu
-	tDrTEByuUrXxPs3u8cbQGkX717zTGkEb8eyDWgBNtD7SYJmELUeEfeqvhpOm7Tgpi9mj2E6Fidc
-	a4/HIVZtsrsG2apPtOgYfjbjG76ijXpnXbNnjzjM8BInVFqN6tmCBrtcZk6yB+ct5QQLwTe4aGS
-	3OyX9oggFt8NTmPVWNfYVwTcNBmDYxziy4je477un7V7dukSsT9+EBUADAIMWW5cM+7AgvJ+UcC
-	ZyhM9/XcCJ+cZuBZfv7fEl7Fvzm5AoIWy1ZIZvOAkR2LhWUhlnEJp0pVk2nwyjizHyqo3a0S/gW
-	PfESw6NnUmcYVBZCuUJNWcDoC+AaHv7HyuqXjCpkRCz7Vf6IScQAfkKB/Bq/rmpd+TLIjR/2Svg
-	Zh12lAZDvZMKENo9jUAHHqExsZA==
-X-Received: by 2002:a05:6a00:813:b0:89d:5a80:5256 with SMTP id d2e1a72fcca58-8bc1c59482dmr1963449b3a.9.1794382816055;
-        Tue, 10 Nov 2026 23:40:16 -0800 (PST)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8baaae3e110sm1781918b3a.36.2026.11.10.23.40.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2026 23:40:15 -0800 (PST)
+        bh=g/0oI6uv/H1EEuDN9a5C5Hh0fYM+cFB/bWC6crw40RE=;
+        b=Np7nMRxu3MahdkH4iIA8WtN6w6d2PTjqsw8KDzusOb7CuGklAz8xbFJbKvB3apUNBc
+         5IWdHsWyFtg1w0CwHI9RV5kxYz3+K4tZKws5kIS7/ukppFa6g9uvnpzanBuXDTIE8uyM
+         ofnZySaNxURwfYifyJn59171NIZttPRJ7ZvFStOqb9oByJRMpg8vgbeuhlYIF7cb+I4z
+         sMKTshfijMDV0omX5uqa6JdY4B3iMa0JIeDT56wBK7Y0AJ/9yoZjGf0NGMmOXvJwfR6d
+         4UJ6GoM1q+MnCG4NfwLfIgizuc11GVgnU/HMLda0dllvCVuvtFmU38QrNigGCVdXj7Jr
+         aS5Q==
+X-Forwarded-Encrypted: i=1; AL+hErEkXDrYz0XfN57fzi9QyZ8XVtjz1j7peEMP5H5pRHQWAYGev9NBcZfW6QQ2NDWJQKek7ujfag==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8eD+L6vIibRdzz2fmt7okJKAs8yqyQCQJ1zym6Gtl644M8DCuL
+	pjUmV3nrqpMV18spz/L7pTWf7Yd+Ogv4P55GXL7FSxNOlCgMdXIhcMl+ekOq1tdA0pBD4D+6kON
+	z9EPO/zqjRjyWKMlknwj5VWoL4BktPzY=
+X-Gm-Gg: AYBFou1raBzojxZx6oMqr5AGjhe1Wqd9sehytvS2G0kc9iXe6Xs26l3Gid4LabINhkt
+	gFeoSqPgbtT5jUs5PBoDs/ctsfK+yrf8qplsQd7ITmp+hmiMFunD1oSEm1aXAahV8ZQzKhAK411
+	y0etAD0/cWzUxRzKjT91RV/4OD05NTYMt1yOSi86f+1v3kk9bkchV6GMzSaTW+SE5vj1B3i/ee7
+	EsAv57Z0vqSAYISykJWd8D3U8/FwBLiu84XaZzJGMhRUKgUPViL7LTBf4AtMNX8Vl+A6DrqZvdX
+	WRvFenPepSlz5qXX/Hf1P1vkiJxDYpQwxzzaok72GuBuHSa41+zzVnJUggSkxHOt28bRBMDNHZ5
+	eeKkbQW7dLu0L+IuwTyYIKnKWWvbpqHquBn4zoQsOl4nJ55GdZPUFzIwu/THpfioB
+X-Received: by 2002:a17:903:2442:b0:2ed:45eb:51d2 with SMTP id
+ d9443c01a7336-2edd7a9888dmr27729925ad.47.1794402870030; Wed, 11 Nov 2026
+ 05:14:30 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -89,50 +104,88 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [RFC PATCH v0] Docs/mm/damon/design: document data attributes
- report infra design (beyond page table accessed-bit milestone 2)
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Wed, 11 Nov 2026 18:35:52 +1100
-Message-Id: <179438255225.3134195.10613668244848761847.b4-reply@b4>
+References: <20261110085132.1023-1-adrianhuang0701@gmail.com> <20261110153907.158338-1-sj@kernel.org>
+In-Reply-To: <20261110153907.158338-1-sj@kernel.org>
+From: Huang Adrian <adrianhuang0701@gmail.com>
+Date: Wed, 11 Nov 2026 21:14:18 +0800
+X-Gm-Features: AclHuK_JPlTrjZpaZjohmplxPFoK1WduWQbas8gb3wbIHqUrtWb9Qa3r2Biv8pg
+Message-ID: <CAHKZfL3+i_Sq+zgA76O0gqj1nP8x_FKJR8SRa0oz-5N4LrduFg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] mm/damon/core: simplify minimum watermark wait time calculation
 To: SJ Park <sj@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, damon@lists.linux.dev, 
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
- Ravi Jonnalagadda <ravis.opensrc@gmail.com>, 
- Randy Dunlap <rdunlap@infradead.org>, 
- Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20261017195747.89961-1-sj@kernel.org>
-References: <20261017195747.89961-1-sj@kernel.org>
-X-Mailer: b4 0.16.0
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, ahuang12@lenovo.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Hi SJ,
 
-On Sat, 17 Oct 2026 12:57:45 -0700 SJ Park wrote:
+On Tue, Nov 10, 2026 at 11:39=E2=80=AFPM SJ Park <sj@kernel.org> wrote:
+>
+> Hello Adrian,
+>
+> On Tue, 10 Nov 2026 16:51:32 +0800 "Adrian Huang (Lenovo)" <adrianhuang07=
+01@gmail.com> wrote:
+>
+> > The minimum watermark wait time calculation uses an additional boolean
+> > variable, init_wait_time, to determine whether min_wait_time has been
+> > initialized.
+> >
+> > Simplify the logic by using list_is_first() to identify the first
+> > scheme and initialize min_wait_time accordingly. Subsequent schemes
+> > update min_wait_time only when their waiting intervals are shorter.
+> >
+> > This removes the unnecessary boolean variable while preserving the
+> > existing behavior, including the case where no schemes are configured.
+> >
+> > Signed-off-by: Adrian Huang (Lenovo) <adrianhuang0701@gmail.com>
+> > ---
+> >  mm/damon/core.c | 6 ++----
+> >  1 file changed, 2 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index d36823f4d092..93ec684a113c 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -3985,14 +3985,12 @@ static int kdamond_wait_activation(struct damon=
+_ctx *ctx)
+> >
+> >       while (!kdamond_need_stop(ctx)) {
+> >               unsigned long min_wait_time =3D 0;
+> > -             bool init_wait_time =3D false;
+> >
+> >               damon_for_each_scheme(s, ctx) {
+> >                       wait_time =3D damos_wmark_wait_us(s);
+> > -                     if (!init_wait_time || wait_time < min_wait_time)=
+ {
+> > -                             init_wait_time =3D true;
+> > +                     if (list_is_first(&s->list, &ctx->schemes) ||
+> > +                         wait_time < min_wait_time)
+> >                               min_wait_time =3D wait_time;
+> > -                     }
+>
+> I implemented and used list handling wrappers like damon_for_each_scheme(=
+), to
+> hide implementation details of data structures.  This change exposes some=
+ of
+> such details.  If we agree we have to remove init_wait_time, I'd prefer a=
+dding
+> a sort of damon_first_scheme() like wrapper.
 
-> +The data attribute probe supports the reports.  The probes can be configured to
-> +hit for a given memory region depending on the existence of specific types of
-> +reports that associated with the memory region in given report buffers.
+Ah, sorry. I didn't realize you intentionally hid the implementation
+details. That makes sense.
 
-I'm wondering how this would interact with the region size.  If each
-page of a region is reported with probability q, a region of s pages
-would hit with probability 1 - (1 - q)^s, so a large region may hit
-more often than a small region of the same access density.  The page
-table accessed-bit check samples one page per region, so its hit rate
-doesn't depend on the region size in the same way.
+> But, init_wait_time really need to be removed?  I cannot show clear benef=
+it of
+> removing it that justifies adding a new wrapper.  To someone or on some
+> evironments, init_wait_time might making the code too difficult to read o=
+r
+> inefficient (system having so small amount of memory?), though.  If not, =
+I'd
+> suggest dropping this.
+>
+> What do you think, Adrian?
 
-A quick replay of the crediting rule of Ravi's RFC v4 [1] on synthetic
-traces showed a similar trend.  The adaptive regions adjustment would
-mitigate this to some extent, but large cold-only regions still kept
-high hit rates after split and merge in the replay.  I'm not sure how
-much it matters on real workloads, though.
+I agree with your point. Let's drop this patch. Thanks for the quick
+feedback anyway. ;-)
 
-Would crediting the hits relative to the region size, e.g., reported
-bytes / region bytes, make sense to you?  It would need probe_hits
-wider than u8, so it is not free.  If you think it is worth exploring,
-I may run more experiments and share the results.
-
-[1] https://lore.kernel.org/all/20261005-damon-perf-rfc-v3-send-2026-10-03-v4-0-b03452e137f3@gmail.com/
-
-Thanks,
-Aveline Noir
+-- Adrian
