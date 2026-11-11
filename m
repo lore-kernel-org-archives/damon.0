@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794423260;
-	b=P77mGpBltN6++fLhYEyjIN2KmcB7EdJMVadDTFEgAu9A76Cfe1dZDNxVwKKTwwno25d3
-	 JwKlbyJS9po1BQzdMkfqHCPSVzXV5MhxyDTeopxX1rFQ94Gv7no1JzGmoGqxEa6m3/kdx
-	 vYgzJz3jMjGXqQwxbXr4DN2Tchpv8Kna9l/hTGCaWzE2JssLImKSsCKu8YKXFUEkN6JqW
-	 D3ZJ9SS9gkgb5k+Lklib9jYjzh8FsXKBm6RiGGQ+GmJORtZDl8RAoNWN0roZmlDxepUWl
-	 LwthHP0nseJScLmmGQFiPxhz5m9iPxGSAhNQbBmTiSXFki0pRS1ZAFRp82wWviy1aDg==
+	t=1794424680;
+	b=BK6n5rRVr7ZIuGuF31wb2mw0RArn2zy2Uhd9vFxgHuCNtmz4nzKPoQpY47m8A0XnsR6v
+	 n5YnejarhSuSsZ+GhiB0trAWEqJxqUNDrv5u286WLtBbXDZ5Ac7XaskXSG2WaLA9rUvMk
+	 qYBDuANIB7TZdbm7ClKYerYeUtmd/kFFiMvmM18pyuMLRfAp/UtT2lNhG5A3NWoWVY4+k
+	 tRxaoegZWkC3YDgicBpE/b07oeGQNEkLVoNhwyFr3NxU9cLuQtgADar43+hF5D9Ktb5mb
+	 kVu8oAsXSNO9PVsUlw7Lm85SxfejyCY0Q8hUvvgXS/FeXz82INLklWkI0N7Dez0ntyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794423260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794424680;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=7ZxY6FRy+iKIYaOcDLkICzfkOfpdlmgKNXCeP3oQIdA=;
-	b=jxXAIKTy8JQyHG7EXnLcTMRmD4U7+lIY2Ah/hD8J/E+RfEM19cRo9EeHUOt/sLdRzX7F
-	 sInpN4EUsqnLwf4SsH/IN/fkz3Jw2Bx4vng80t0/vdFUGBke4R47MEe52UkL8PGxADCVp
-	 8gvjTOuNxFAxTswQDkWu9AK/pjp6YacIVaGym/6Dcu8RX5XZdv87eQ5g4fDuUAJy5h2DU
-	 khsjn1qeMyZF4in2/hdTgYeypzDCbS7+nGN/aCOMqoBBOq0xMdKTQzq9X+mC1M61Xv5XM
-	 zPTea2cJ5pTaPDnQEVjyuXkB4LEKCPRnS/m9AIL7olD3Qsu6y9dUdgX2sHAkgrwMUPQ==
+	bh=FbGsBkq80dTXDcXRO3OyP/kA9RBJVrCTbNnkA3YaMcQ=;
+	b=LzYBxnhcVrb/bzRkjIap8jjdA+5qtwvG9lGT3gcesbVb3Lchf/RtrQQKSiIqUV2fDLtC
+	 GrF/9J3y8uIpF1JfV5zCCdYAplVUj7kxe3/ExDlOVAsc5tHMbpLSS7ASmpB5IsphtHWqI
+	 x62GRxOy7z74P+oZYMJ1IWg/DL2mtenwYjJ4Pkp/XP6zfoFxsbSaF89e9tNnSszdEYqJh
+	 aGpF2ot+Bru15wXOYHL/4Sa/7NXnyJxbfVkW0xQt0NhUXX7LVvew9zZhad3wLXcuveiGy
+	 OZbUrCzDqYj7jOvz6i3CCXG6nrRHSnGYTapQr4o8Ki1HRxFAU1fx1ol9CGzeKKRzMpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KfLQmTEy;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K28nOICW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FA3606A324;
-	Wed, 11 Nov 2026 18:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBE8606A324;
+	Wed, 11 Nov 2026 19:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KfLQmTEy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE5F1F00A05;
-	Wed, 11 Nov 2026 18:54:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K28nOICW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A499B1F00A05;
+	Wed, 11 Nov 2026 19:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794423259;
-	bh=7ZxY6FRy+iKIYaOcDLkICzfkOfpdlmgKNXCeP3oQIdA=;
+	s=k20260515; t=1794424680;
+	bh=FbGsBkq80dTXDcXRO3OyP/kA9RBJVrCTbNnkA3YaMcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KfLQmTEyEkOjYetaEk86ZORqkxLgjToheQz9VDFoVBwVZrB/rJa6h9lEWderuWfiQ
-	 ULjZbma3rGqhDciaC502VLOZvkQ2w2xErqM0Hog1YFYSl4Rx45zl/ZAd0ri7hH+qrE
-	 QtErvf9h8g+tbl8H2VGCQgGiUxktXrOOCgR6qJgXFpuJwyiDiwlNzq3/4FOBJ7+Gle
-	 U+l8BYmRkJ4nk8jnkKBSiuaUjytbADFO4Ek9XJKkuXU9UxzuVsmyH+LaQrP5sPgNIt
-	 OIJrWa6AiIZyTHrYGmq6W1he/IXInF4jzwG/wDVRVWDLWU3myEF/9tyx/Jq8wtt+E/
-	 ruJB9OrNjbp8g==
+	b=K28nOICWilHBG7YzxMSQh0SxT0VsVxB0J/CWM0TQkAcAFbkikEwMcpJo/uBe17gKu
+	 5D1Pw0fSGhW3aheo4iegmfxooOxhZ8/cqVmJukXfcfvNup6Nr+AtHJ7pYlVAk/IW/e
+	 LEzArB8JhmJ1Sx+mX2HuPXMQWwFS9D2x9Bgqkvlw5efkAJADe7ErITKvagfkEWD6tP
+	 l3mTk3/CoXKys6wsx+ThT6vELjCi2wrhpERH8VvgwpfMUCaXzA3QBv6JseuEXyA87u
+	 s/AJd6qLegmBFEuxOJFggMjvStqx8pQZ8PSbINn5mgRrd3/QueHlw0+QSr6T8N5l5Z
+	 Txj+rYf4OWLAw==
 From: SJ Park <sj@kernel.org>
-To: Aveline Noir <jm5905938@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
+To: SJ Park <sj@kernel.org>
+Cc: Aveline Noir <jm5905938@gmail.com>,
 	Jonathan Corbet <corbet@lwn.net>,
 	damon@lists.linux.dev,
 	linux-doc@vger.kernel.org,
@@ -51,10 +51,10 @@ Cc: SJ Park <sj@kernel.org>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	Shuah Khan <skhan@linuxfoundation.org>
 Subject: Re: [RFC PATCH v0] Docs/mm/damon/design: document data attributes report infra design (beyond page table accessed-bit milestone 2)
-Date: Wed, 11 Nov 2026 10:54:11 -0800
-Message-ID: <20261111185412.145514-1-sj@kernel.org>
+Date: Wed, 11 Nov 2026 11:17:51 -0800
+Message-ID: <20261111191752.145919-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <179438255225.3134195.10613668244848761847.b4-reply@b4>
+In-Reply-To: <20261111185412.145514-1-sj@kernel.org>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -67,56 +67,37 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Aveline,
+On Wed, 11 Nov 2026 10:54:11 -0800 SJ Park <sj@kernel.org> wrote:
 
-On Wed, 11 Nov 2026 18:35:52 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
-
-> Hi SJ,
+> Hi Aveline,
 > 
-> On Sat, 17 Oct 2026 12:57:45 -0700 SJ Park wrote:
+> On Wed, 11 Nov 2026 18:35:52 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 > 
-> > +The data attribute probe supports the reports.  The probes can be configured to
-> > +hit for a given memory region depending on the existence of specific types of
-> > +reports that associated with the memory region in given report buffers.
+> > Hi SJ,
+> > 
+> > On Sat, 17 Oct 2026 12:57:45 -0700 SJ Park wrote:
+> > 
+> > > +The data attribute probe supports the reports.  The probes can be configured to
+> > > +hit for a given memory region depending on the existence of specific types of
+> > > +reports that associated with the memory region in given report buffers.
+> > 
+> > I'm wondering how this would interact with the region size.  If each
+> > page of a region is reported with probability q, a region of s pages
+> > would hit with probability 1 - (1 - q)^s, so a large region may hit
+> > more often than a small region of the same access density.
 > 
-> I'm wondering how this would interact with the region size.  If each
-> page of a region is reported with probability q, a region of s pages
-> would hit with probability 1 - (1 - q)^s, so a large region may hit
-> more often than a small region of the same access density.
-
-Thank you for sharing this finding.  Seems this theory assumes the probe will
-hit for report of any byte of the region exists in the report buffers.  Under
-the assumption, that makes sense.
-
-But I'd say the assumed implementation is not realistic.  That's because DAMON
-design does probing for only single sampling byte of the region, not the entire
-bytes of the region.  In a real implementation that is aligned with the design,
-the probe will hit if a report associated with the sampling byte exists.
-
-> The page
-> table accessed-bit check samples one page per region, so its hit rate
-> doesn't depend on the region size in the same way.
-
-I'd say it is not because it uses accessed-bit, but it respects the address
-sampling design.
-
+> Thank you for sharing this finding.  Seems this theory assumes the probe will
+> hit for report of any byte of the region exists in the report buffers.  Under
+> the assumption, that makes sense.
 > 
-> A quick replay of the crediting rule of Ravi's RFC v4 [1] on synthetic
-> traces showed a similar trend.  The adaptive regions adjustment would
-> mitigate this to some extent, but large cold-only regions still kept
-> high hit rates after split and merge in the replay.  I'm not sure how
-> much it matters on real workloads, though.
-> 
-> Would crediting the hits relative to the region size, e.g., reported
-> bytes / region bytes, make sense to you?  It would need probe_hits
-> wider than u8, so it is not free.  If you think it is worth exploring,
-> I may run more experiments and share the results.
+> But I'd say the assumed implementation is not realistic.  That's because DAMON
+> design does probing for only single sampling byte of the region, not the entire
+> bytes of the region.  In a real implementation that is aligned with the design,
+> the probe will hit if a report associated with the sampling byte exists.
 
-As long as the real implementation respects the address sampling design, I
-think this will not be needed.
-
-Thank you again for raising this question, and please let me know if I missed
-something.
+I will rephrase the document in the next spin to make this be more clear.
+E.g., The probes can be configured to hit for existence of specific types of
+reports that associated with the probing memory in the report buffers.
 
 
 Thanks,
