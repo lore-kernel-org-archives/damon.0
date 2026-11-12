@@ -1,85 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.200
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794461789;
-	b=PCCmIgxha4R9gpRX/0ubvM/8+BsvEmN6Tw+wEhBuPgy/2LuyeAdONrCv6LDTkRq4ypKC
-	 KxtQAyKEN7SNl0oXIZHG9VlH8unG4+M038NFvtUvAPsbNhLh3EM28lsVzkOdZiliqgs9p
-	 OyijWQVK0K7MxtuAp+vDk4Z+t0WpJaFX+RKUVpzntsrYuE7Rk2mWsdrw18iZV+Ak3Tdbx
-	 Urz2xgXlsErx+3KVpEU73PoetmNOXTjP6pZsPL61j4B97it8AUHCSipHsSAvHU5nIMKIc
-	 Q1D5nI1H8QTslVPoZP/6a0NlVFgyp2umUmPC3LL9C4D4B50BNpmWAC6vN6IlhQVQv5w==
+	t=1794462404;
+	b=ZUUWov4kfUKOLD4Sg1yuUN1uINydLSByJBqnh2wn3HrAbEnJ9RJY5qpnCd1lZOWk3wdW
+	 hNvK89iSyi4rQ+qzJUNTDbwmN9Nsx9PtYIY3SanVSd0wuWEjzZdYPlcaKDEzMdODSR/is
+	 b2le7JUEinXc2Thiw5xOVLvUKkRoGpesruovGqtyRzrWAbVPMq2dqD+f2g2+loCac9ZRS
+	 BPzMH/wdwL09qbMD7GmSUyyt/1hTF1OGcsfCwIzDcBKFNMF6dImi4H/FV6pdc9qKZHZLP
+	 Vg1Pc5AnNLaJ/0mZDTCGPqOLP/Jzas8+3pf0zHNjp5vm2eZ64hZ1VKv+64imMUw9LBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794461789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794462404;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:To:
-	 Cc:In-Reply-To:References:Date:Message-Id:X-Mailer;
-	bh=e2soeXJ852281gC+OC2yZSX9G2s4v3lG9pbKt+VP0DM=;
-	b=ojPv6hi6cMQCCxx50P73DJYIYIs9HY3HTCrh3h36L6eMoe/KVxxhWBBFv3I6UgXKXvvp
-	 WoIRm4ox4ZLXq4znCm4TPwG0zInVQSW0T6bKGoRhJTwt84tQQsma/Frf0CgRsL4eE4X2Y
-	 9VbtNrFrLNkFcwRtSDcfVHV1XN9ScqhE+RFQKqQfMjkwZRKfKua+FGuDJZZFtbW1kJqVY
-	 VuTS76YHllxD6lp59UVnxF+YqfSFV7JrxR59n4wcN8ZUCkmXV/Rz8Px+7K16az5EfpyuU
-	 3Bun/hmC2i9HFZp5iSu9jPuNDooCPPuw2DE6TLCcGofgYiiRTrruu4ojlqIXpRVeZuA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
+	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
+	bh=+13rBtkeR+s+DndYboZRmZoW8VMp8Nay7Rh+6kbD7E4=;
+	b=yN+XnMQl9GXiB9zevnW7LeVyYTx/euE8/4RxAPWEoUFqTCnXAQxJoDwPx/nm89MLa1bE
+	 B8xSZRrk+G9jztDw0xAzZYn2Wt2lUS1AG6/RVQQr/y1y6X+WOlHpGmUr8edQFIlzqrTyZ
+	 Pv3l0rzZXnCvfhMw1Ws7u1XzzIl2YC8moAKAmPOKAgVBQ5jPaGb42fHmomCDBQfz0DoPK
+	 K3I3kAe8p5csi1pHfu1vrmHxiJzd00ldPoTMKK3Y1u0gpPAuo5YX0C9cAuY7FpfW/9GlK
+	 3E9rBSC2o4Angc1/QSYKGipAJaw5exzwHT7qzqxGWFNMS0a6dgJv0yuHQx2OvulbvNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=gourry.net;
-	spf=pass smtp.mailfrom=gourry.net;
-	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=LL67M6Nc;
-	arc=none smtp.remote-ip=209.85.222.182
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iDANefkk;
+	arc=none smtp.remote-ip=74.125.227.200
+Received: from mail-pi2-f8.google.com (mail-pi2-f8.google.com [74.125.227.200])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C286606A324
-	for <damon@lists.linux.dev>; Thu, 12 Nov 2026 05:36:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6C286606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729F4606A324
+	for <damon@lists.linux.dev>; Thu, 12 Nov 2026 05:46:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 729F4606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=LL67M6Nc
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-93e55db58cfso352338985a.1
-        for <damon@lists.linux.dev>; Wed, 11 Nov 2026 21:36:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=iDANefkk
+Received: by mail-pi2-f8.google.com with SMTP id 41be03b00d2f7-cddb56fa486so82008a12.1
+        for <damon@lists.linux.dev>; Wed, 11 Nov 2026 21:46:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1794461788; x=1795066588; darn=lists.linux.dev;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
+        d=gmail.com; s=20260707; t=1794462404; x=1795067204; darn=lists.linux.dev;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
          :content-transfer-encoding:content-type:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=e2soeXJ852281gC+OC2yZSX9G2s4v3lG9pbKt+VP0DM=;
-        b=LL67M6Nc/IxVGbNe48ElrrUygZKdp7qdfg2CobwrmdDJkE5lLm/3bDU/UcwlEIQcW0
-         cXXzxnlJbTN1cPqL0DmSxw449iTI1FfZpr95IqOtaCcB5XXmh7b1aq/NrOkyqQ3GkOY9
-         Y6TMkNrYo06sQDcUyCCbsLs7z78OiWMlxtgyul6qRzUvAnt0D3R7iDgukTUSNu4wtF3n
-         cRImh/MLomhy3cgcMKlgnZN55MT+2y9hzFOC0JI2pTkn8nPi0MsodNfY+1w57InRST9F
-         3vpEb9UrBp7OI2bvweFCcIATxZrx+ydul5S3VrhwyZ6RXSbpr9Km+VTPDaXwIdt4GYM4
-         yoIg==
+        bh=+13rBtkeR+s+DndYboZRmZoW8VMp8Nay7Rh+6kbD7E4=;
+        b=iDANefkkj7g6v7UQ6DwBJgEjUIIcP01zfkZltFf9nEiAYnzd+ExzG8ekg96UGd7A1+
+         yPkj2y0Q3ZLcF1YU9l8W9S34AiXGDqmnJfActo6U19Cz1lG/lKJc+/YJwd/ffE3ULTW4
+         NHQ3PoW0NbleFtjrNp7RPfa6WCiObeTvqIjLE0bbB2UQ4BjqDrNaEGEG3yrXQEgcBh99
+         NkHifcATeze0v+W1X96A43ev0uayGduF6oQ060G93CDmUYg3O4omfACCl3Y5Cd7sxK7M
+         Vl1VjJSELOxmSsWoJlDF56Eb+peHuhYFMCxH9MOa8ugT/18XclYEprhKLpOmlaFu16yX
+         gYzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794461788; x=1795066588;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
+        d=1e100.net; s=20260707; t=1794462404; x=1795067204;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
          :content-transfer-encoding:content-type:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=e2soeXJ852281gC+OC2yZSX9G2s4v3lG9pbKt+VP0DM=;
-        b=CCxl0azCXzMdglABMbtGb0H98r7iiQfECiL260DwXGQfH5isoYZdihniU2VrHRysCR
-         huw5sTjp/X5HeG5QZGeSeIto/avDnhtpRnVW0VnjowfpY+sYmUWMX0I8wcP7/IzFHyff
-         qPpg2WsTSQNYFXCL4dRt+TwQafFFvOqFip3roBpbhEdTkyns7TN/LXOBcl4Nz1iae+oX
-         snfszSGJ2MkRRQ4gRqZ9ytDdF7Y5+bOBPFspkAr583q7W2S/mttoQ7TysURbziuyITJE
-         qLcNy0vLguVdkP1INJcJQEPP9mGzcM1k7znbCKZ9dv4um6BsGa5nu4XruYlKkeuliLCN
-         OuKw==
-X-Forwarded-Encrypted: i=1; AL+hErGhu32Vlp4f/whE8WlX8EqzFPKZF0B6jaQe5rvrWZdpoDF3un+ithBn2r7Z/bHMgvjswDN98w==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/1vFFmumsd8bnVsipljlmR//5ej6U/4aaitoOVZuPriR7lbK+b
-	aEaNQpETTe2S/kZsA+Z31mnPfO3TbzjNs8XNI7QohTYPKDw4QEqYs75PV1TilzeaT1s=
-X-Gm-Gg: AYBFou1b3FAft9EEQWn3Qrfekq9Jrn4+dNLFd9fx+9AiMgt3geYtExPd2Sj75qBn3Hu
-	g2g+2urfTRwt8GokBOkqRqVi11j5VJ7dLyIIL0wNDfDIjgv5/tHfh9Juddu0TzcOv2hjbIxVw7p
-	AlLcN0bJx/UM8uBCwCgc0BUURytVjMpxpJejS+/CYn8n/mbsD9abArp8BeytwmJ/DqddBeB8TGF
-	sZ/l15ZQ/IfEWY2GJWxWQT3n/KxhMxBmuOBRtzNJEqoP+b1H/HWJ57AY+xPTcE65R6DC13b3DBm
-	9ztQIpHt41NBbmutGVB3PIAeWAkZybt1JwPabHRUPWCAQH8jvDZwN6v98wEFym9QsNx5Uf/HKo3
-	VLYYvt6V66Q/ZN/AtI/LYK+ww+LDGyzjSuP1pNqsGhRVIv4fHrEZcDx5eMPOk7XLLrwxP81ZJM6
-	c6NVUoUFG49SZPZ4sCHg2aGWck/WAlq+Z+MThQAPn7auzISayAkrWSM+a+1fTELT+iQqNC51Z5E
-	l2Z7SEFxqZMxVhlKfLGlh1ld0CFdoR8rjIGmxHeURKRF6JgvshdnQNCgowRs6Ezjlngj8C4q/UL
-	oPiP5+NnXGHbJgTG4uhjRaUCqrcI6PCmgyyNuUzlxEP02qnYpvnU//A3pT9CJrxvt0c1vSa9y1Y
-	lRNaX6Yc=
-X-Received: by 2002:a05:620a:4481:b0:93c:c2c2:40eb with SMTP id af79cd13be357-947b0046fb4mr764496385a.66.1794461787830;
-        Wed, 11 Nov 2026 21:36:27 -0800 (PST)
-Received: from [192.168.50.231] (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9479e4fa312sm647786285a.0.2026.11.11.21.36.24
+        bh=+13rBtkeR+s+DndYboZRmZoW8VMp8Nay7Rh+6kbD7E4=;
+        b=AUF6TEp/9b06koX3qG8gYqkZq/UH2Uh4G+Y9/LqvjkJCYxbtJT7gJq79QWLxx9onW3
+         u2Hk6UjduU6BYk1OYSe0Q2vr1Q2h64SW0WhmB+DVId3pmD0tHKg07lgbjhoJhND7fstq
+         BzjxrVV5Uz7NsX3lvwVgCeegYkevHHG+xc+m4dwSR2vV1PzHBiYlEPdRilwu6y+h74bz
+         gjQ05VzbAFI4hEoEtqG9IScyzqdNB3Z1CNjMslGYft9kT/VQ3auTMLiiso4Jahbyy9Uo
+         aRWw9Zz1YIW9QgZSS3lmK0uNl3kgd7Aed5G7mf+a9y/F8UIiuoBpypivucYwufZgdGTp
+         fCIA==
+X-Forwarded-Encrypted: i=1; AL+hErECUJeHjz+eIHWnPMqZDLekYpqnQcPRgvGiIjDutt3zubHiRpftSXH8c+WL6CRZaDP4SfIFmw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8IT+pttjHq8rRgoFKVHuX8QAHLRWAowciDrnD6ToD0ZvRlW/kb
+	COWqwLQ1Z1nDx9Fy06Pw2uO46tD9oi30sQflIyGE07y/K6mPWrJsGgvK
+X-Gm-Gg: AYBFou2tCg7L1U3TyWy2/KDRl7s5RVLspoxh5J5pW3xldOfEESoFvajIphxjCLIFzho
+	EKNtR3GDjKp0n4SX775OeyojOrhElbqv6cSC1Ae6aaX1qZBTGPCWwIevrZXhT7QkbZtLBMZQ74x
+	0jnNHstPl2AersyJwe1czS3EM4bw437vjEMf+rDZck1NB7vCDQg3FAegrh6eQ0lHfb7L2hQOpbs
+	7ZwP4cWCpJOA5UfdNYizkQOjLWD+5vHhD6XImh3wxSzrS/dM1NYlSrzHwhNZmFgohlpAiwTcS6p
+	44q4jU1ehC0mndzOKQyPdA7fnVSHsWmyZuQ8rCtGr5fGAGzK9l28etQg4MRWGZmIeH2wjwNVKEx
+	pV46QKyxFwtzja+ErQz3GWPPbGKHep4SCoIZnuP8LNcq58+vTAhsKEWiGhoXwgiRmBjBhESZ3Hs
+	WZlAllGsmjQJfJpRKEj8l7qFGl4C03e5zhfYw6Yujm0HqUboxyX0X/5YJD/8bK4UW6LSvtoyHQ7
+	8F/Sn9o2p01Hy9dBLzed0w7prmQg1n6tg6tqUNKC6HvA9anlOsOhgtoTGMRyo8iISRG3OfEIaut
+	dWULQnBA4PlPwrEeb18PSur1iv8mntNnLHHvFEiz4djMNMX8fmt1YSN3XyrRfTLkIplXPUhrewb
+	1SdQOc7kRYisRK6ApIplFHbE4Xg==
+X-Received: by 2002:aa7:9a86:0:b0:8a0:4032:af85 with SMTP id d2e1a72fcca58-8bc16651ea2mr4128251b3a.0.1794462403606;
+        Wed, 11 Nov 2026 21:46:43 -0800 (PST)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8baab8dccc7sm2776591b3a.52.2026.11.11.21.46.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2026 21:36:27 -0800 (PST)
+        Wed, 11 Nov 2026 21:46:43 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -91,83 +91,30 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 08/13] mm: convert miscellaneous VMA flag tests to use
- vma_flags_t
-From: "Gregory Price (Meta)" <gourry@gourry.net>
-To: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, 
- David Hildenbrand <david@kernel.org>, Jason Gunthorpe <jgg@ziepe.ca>, 
- John Hubbard <jhubbard@nvidia.com>, Peter Xu <peterx@redhat.com>, 
- "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, 
- Rik van Riel <riel@surriel.com>, "Liam R. Howlett" <liam@infradead.org>, 
- Vlastimil Babka <vbabka@kernel.org>, Harry Yoo <harry@kernel.org>, 
- Jann Horn <jannh@google.com>, Lance Yang <lance.yang@linux.dev>, 
- Zi Yan <ziy@nvidia.com>, Matthew Brost <matthew.brost@intel.com>, 
- Joshua Hahn <joshua.hahnjy@gmail.com>, Byungchul Park <byungchul@sk.com>, 
- Gregory Price <gourry@gourry.net>, 
- Ying Huang <ying.huang@linux.alibaba.com>, 
- Alistair Popple <apopple@nvidia.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, 
- Dev Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, 
- Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, 
- Xu Xin <xu.xin@linux.dev>, Chengming Zhou <chengming.zhou@linux.dev>, 
- Madhavan Srinivasan <maddy@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, 
- "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, 
- "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>, 
- Shrikanth Hegde <sshegde@linux.ibm.com>, Pedro Falcato <pfalcato@suse.de>, 
- Kairui Song <kasong@tencent.com>, Qi Zheng <qi.zheng@linux.dev>, 
- Shakeel Butt <shakeel.butt@linux.dev>, 
- Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
- Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
- Michal Hocko <mhocko@suse.com>, Leon Romanovsky <leon@kernel.org>, 
- SJ Park <sj@kernel.org>, Rakie Kim <rakie.kim@sk.com>, 
- David Rientjes <rientjes@google.com>, 
- Alexander Viro <viro@zeniv.linux.org.uk>, 
- Christian Brauner <brauner@kernel.org>, 
- Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, 
- Arnaldo Carvalho de Melo <acme@kernel.org>, 
- Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>, 
- Alexander Shishkin <alexander.shishkin@linux.intel.com>, 
- Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, 
- Adrian Hunter <adrian.hunter@intel.com>, 
- James Clark <james.clark@linaro.org>, 
- Masami Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, 
- John Johansen <john.johansen@canonical.com>, 
- Georgia Garcia <georgia.garcia@canonical.com>, 
- Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>, 
- "Serge E. Hallyn" <serge@hallyn.com>, Mimi Zohar <zohar@linux.ibm.com>, 
- Roberto Sassu <roberto.sassu@huawei.com>, 
- Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, 
- Eric Snowberg <eric.snowberg@oracle.com>, Fan Wu <wufan@kernel.org>, 
- Stephen Smalley <stephen.smalley.work@gmail.com>, 
- =?utf-8?q?Ondrej_Mosn=C3=A1=C4=8Dek?= <omosnacek@gmail.com>, 
- linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
- linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
- kvm@vger.kernel.org, damon@lists.linux.dev, 
- linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org, 
- apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org, 
- linux-integrity@vger.kernel.org, selinux@vger.kernel.org
-In-Reply-To: <20261105-late-2026-vma-flags-v1-8-0d3cd15ab75f@kernel.org>
-References: <20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org>
- <20261105-late-2026-vma-flags-v1-8-0d3cd15ab75f@kernel.org>
-Date: Thu, 12 Nov 2026 00:36:24 -0500
-Message-Id: <179446178440.482102.12362401790016415292.b4-reply@b4>
-X-Mailer: b4 0.17-dev
+Subject: Re: [RFC PATCH v0] Docs/mm/damon/design: document data attributes
+ report infra design (beyond page table accessed-bit milestone 2)
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Thu, 12 Nov 2026 16:45:39 +1100
+Message-Id: <179446233975.762943.16115029371266375222.b4-reply@b4>
+To: SJ Park <sj@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, damon@lists.linux.dev, 
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ Ravi Jonnalagadda <ravis.opensrc@gmail.com>, 
+ Randy Dunlap <rdunlap@infradead.org>, 
+ Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20261111185412.145514-1-sj@kernel.org>
+References: <179438255225.3134195.10613668244848761847.b4-reply@b4>
+ <20261111185412.145514-1-sj@kernel.org>
+X-Mailer: b4 0.16.0
 
-On 2026-11-05 21:30 +0000, Lorenzo Stoakes (ARM) wrote:
-> Replace use of the legacy vm_flags_t flags with vma_flags_t values in the
-> remaining straightforward VMA flag tests scattered throughout core mm, HMM
-> (and its test module), DAMON and the OOM reaper.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Hi SJ,
 
-Acked-by: Gregory Price (Meta) <gourry@gourry.net>
+On Wed, 11 Nov 2026 10:54:11 -0800 SJ Park wrote:
 
--- 
-~Gregory
+> In a real implementation that is aligned with the design,
+> the probe will hit if a report associated with the sampling byte exists.
 
+Ah, I missed that.  Thanks for clarifying.
+
+Thanks,
+Aveline Noir
