@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794547040;
-	b=hmVC+llCdQOv1381PjvXLNqYSAp7A/7lBQHe9M7B7VZk0E246BgHiAwMLRiV44Hj/IR0
-	 VnORd+2ZhP53jelR7AMLiFO7/Zsv2YxOfqEcVQ5eer5iK+o1tAT/yKS24pHRNFsjXCgPD
-	 9NPlEeufhrylSIBNii/i1FlagEfVIiZfQXVzz6Pcv2VyEpAGcXKVkNShdLL6XQ+M1Wrc9
-	 XDb2BO4NdGGiqCug6fC4MY+XW6CFmTDNyNGe8sJEDS2SC1tCfW5E5gFR83LKUZ/vTD/o1
-	 JFiejaR4nTW4xf/v7Ohbc8XDTTExLt/d6UaJ/amdKePOTtZAfGYvUMlDf3TG9LjiXBw==
+	t=1794547041;
+	b=mHccBNcyYHxtpvPzF0JmdQtKv6KJwrDfV0ns7FaMHrumRM1a4CsP1/cs8u/hVYq1fkbi
+	 xEZ36moF7q/qpPRog/johlARYpHMuzlWzC3ogLd3uPJn17kE/bL/9o/qsT0PBr2X+tvRN
+	 9CQNc3bU+Yn0tpvY7OkcMlJy26kmS+QdxTGY+Y4OEGNhw2oTiVoma6QASBxPwQTEcLjD+
+	 YBMGHM/BaHYTzrqQT2/bLsQG9oIJ15+09K35qRGeTZHySApRXx9IeaQFQHGl+8ZPq5ymd
+	 cYtKymTYdmwdW8pgfxPZNF9xr5brM24uYcghrraX9fcPSOOVw7b+P16aEigSDPnDTMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794547040;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794547041;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=HEvMyrDAXRSzNt1aAK2qvgfoj7RJAzXbHjO64hkCzVk=;
-	b=kKCnMtAfsELJMp3hJs+z+hrlve2KYv35in8v6pyPwnmsip2j8GRvaoODmiMWveVHG568
-	 WFMk2n3ezxc6bNlhsLCsZ5jdZjRKMSZCLhz4UogS5OKIHtzTckZma6ccBZkRbQKRvoV6u
-	 NbHcOdxVJsq32kyWM1NI2QcDydnGK37EqAFVnltkdD2MxC4e/T4pPZunMbSNQx9fUBuEz
-	 soPJtkjgL5HQ/IMYbhQD5nZsTOEHiw51VTx6SdXWWAeX0KcE+PCPljfsCOIYVsi+XmKfw
-	 sTONdpk0Ki/qzRd5WO46vMPhCotsoaHF86bYVJPZ10cnlnFxutcwsTH0jk69FguQ0fA==
+	bh=EeP31xDwtklkLCBDsJsARx3xlsMptNDNnDQPe92kOMU=;
+	b=pZKsYveLSrDeJIHRJbj6j2OmBBLsGTmuK8twYXTWrlsjFD69if05r+4MXLgx/MsNjnZv
+	 Nqgl5NCxQ2O0wiaiPJ7BJKLTbDYPFOVD9SsaOQ/lW1eUi3gLODePk2AtZDv6YaOg/nyRA
+	 5vLL+o3eZIWDdrdS1sLDTbIOQh8Mc5iDTcYrXLA6snNIwM75gsfm89a4XmKfDOLUOQQSc
+	 H7C//WTTzOq1BuNOxLnfsKcu3WU2N78lnHKnNUpf7kHUKEfwxXyn0iXwLNo6+xJs9rysN
+	 UYbyQ6meTrnlhSyFFuRmAXyjOY4BfTeluz2yhN5zBbb8g0IevMPUN1tIXg4WYpX0PfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dWOGVOub;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DI6cec1l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADBA606A339;
-	Fri, 13 Nov 2026 05:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EA3606A888;
+	Fri, 13 Nov 2026 05:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dWOGVOub
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C2B1F000C6;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DI6cec1l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBE41F000C7;
 	Fri, 13 Nov 2026 05:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794547040;
-	bh=HEvMyrDAXRSzNt1aAK2qvgfoj7RJAzXbHjO64hkCzVk=;
+	s=k20260515; t=1794547041;
+	bh=EeP31xDwtklkLCBDsJsARx3xlsMptNDNnDQPe92kOMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWOGVOubQmYgYdR8aCldbmFLhmQ08Gh1b0R0l21HrmWv9XzbUVfELJAKkZOJMPv8K
-	 WDtTZkH7Bg7kjkBoPZHw7iUO8DCJ4kVhsT7U3ZI4DxMdJoXHixj0vaF7ZERLCvrdBV
-	 dEs5fNKnfHyI5zQSXNppadSq1zgr/jGmYbZDlgFN7tUfRDhieaAYsJF/EK4aj9P1g5
-	 xoQKRV81NdW3OoGCUPbqyL8M9wLI/bFo2APYa9Klm007GVSsfzEag76GYDiEzUev0m
-	 2CTXe9hFU5BlL+1rB2439VlUpsSb1uGYzwisi8w+I5egUqKlvfNIVSgYbKv/kaV1fW
-	 ZT3uHeB23RTMQ==
+	b=DI6cec1lFt8nmjrGEBO06CLJUfSSC0a4BWkepHbUenLfF+pTjP4iHYOLkmB8PSAA4
+	 r5pUMB7bEhqPBrtWR/RmojjvJ0vlKVEDNcYG01IOBUSbRefGRBCFdnxwif74ZyMLqE
+	 BaeG+uliSCOC09CuaZQeCsCw/efjvQgDfSmEaP/qhwVdN6YqoZmCyp0w7AoMRqdhFU
+	 1cV4AxixDcFvYbDHKiiP5vewGsfSkAUAD8reJhbdvD7AWipadBUlnU5ybqNUkTMlK1
+	 WJF4npA/BAcQkbM+yr4SLM1skaBp5R4fNs6IL6ezmVfxGA404PYlgtFOykjaSnLtuL
+	 L6hzl0asMCdhw==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH 3/4] mm/damon/sysfs: support LRU-activeness based DAMON filter setup
-Date: Thu, 12 Nov 2026 21:17:09 -0800
-Message-ID: <20261113051711.89274-4-sj@kernel.org>
+Subject: [PATCH 4/4] Docs/mm/damon/design: update for DAMON_FILTER_TYPE_ACTIVE
+Date: Thu, 12 Nov 2026 21:17:10 -0800
+Message-ID: <20261113051711.89274-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261113051711.89274-1-sj@kernel.org>
 References: <20261113051711.89274-1-sj@kernel.org>
@@ -62,30 +66,25 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Support DAMON sysfs interface based setup of DAMON_FILTER_TYPE_ACTIVE
-type DAMON filters.  For that, wire the type with a new user keyword,
-"active".  Users can set up the new type of filter using the existing
-DAMON filter setup interface with the new keyword.
+Update DAMON design document for the newly added LRU-activeness DAMON
+filter type.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/mm/damon/design.rst | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 70a4b64fb8ea9..779c98205a94b 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1011,6 +1011,10 @@ damon_sysfs_filter_type_names[] = {
- 		.type = DAMON_FILTER_TYPE_HUGEPAGE_SIZE,
- 		.name = "hugepage_size",
- 	},
-+	{
-+		.type = DAMON_FILTER_TYPE_ACTIVE,
-+		.name = "active",
-+	},
- };
+diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
+index 8440c4954090e..b676be6971589 100644
+--- a/Documentation/mm/damon/design.rst
++++ b/Documentation/mm/damon/design.rst
+@@ -302,6 +302,7 @@ filter types.  Currently below filter types are supported.
+ - ``pgidle_set``: Matches if the page for the memory is marked as access-idle.
+ - ``hugepage_size``: Matches if the page for the memory is a part of a hugepage
+   of a given size range.
++- ``active``: Same to that for DAMOS filters.
  
- static ssize_t type_show(struct kobject *kobj,
+ If such probes are registered, DAMON executes the probes for each region's
+ sampling memory when it does the access :ref:`sampling
 -- 
 2.47.3
