@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.224.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794616199;
-	b=a3bc2wweuwEyg5Vwzb5/aKhvz0C0pnrno5/GSOaoReUNU1F6LYEKr0mF4gZWEWvo0iy4
-	 5+4daHZqQTKJlsfbNGJ1KQTj9sIBfU6x5bppie+KSwiM5AiY5s0EOamCd+cdk8QRcyJs9
-	 2DRixcRufcNiNKafBqhhaZItZcyTUxAzoZEZGkWx2ldrFpsGPuBHuMbqwIgPAN8GFAi/i
-	 hX9u4p1QrboB2YCER1efrZ4V+hnMiApBDJx/eTWuMUOxAuBtAa8DprXlIttBY987KBwW2
-	 ndjycR4GAIGnCMY/jwf09ZNDhsIbTDPbFDsj6etw+vLUB+cDYP4+mAYnnpWxrW6SWEg==
+	t=1794616202;
+	b=EqdjkxO9VmW/L+zHha9yrRbA4z5NnhjNwPFhKiBWW2MBF0wonGVTLi2AtTLr94trMW7J
+	 OKqxkpP2fqxL4zGaczPBmYR+NOmH5m+LP8CwsOHUfvrLARPEZ/+gu0gkARvho2DlVitux
+	 3hJHTk6Ap7eSseeluLOPJsyf0T8BB3+LWWKr8pi3+UAalv+o6Ke/P7v8Gw+jzxGQEV8tX
+	 rHw8egCGIzKS2QYMmsf4jFmgjhUYUeZ02hkG9ApIZXdGmouBiO1TbmeiUAQ4c45oE1xxL
+	 tJjkS+2Gy6PYltJXe539xhSpgiWnta7leol3skzMJS4LQxHpj+W7ilsWT/mqjr+P/7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794616199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794616202;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nJgQdHN5NLYxxbOCpexwWsSr9IBzYZ+JufSPNjQMV9s=;
-	b=ldPKsr2kN2p2gV6HBwtwiSLQNalpyadtazJv+LKcY1V3S8ZsE0KLsU9cSAPYVfAdHg+t
-	 zGOMBrddeQ3Q/ZXJaR19oNbswLwAxPP05UNXJvprsj92vsXNMbQ4M+gFtlXG/rNlxpU05
-	 MO19C9D0ghko0cFqJkWRCXGZwD8yesYm1cCluOUYrXjr81n0McsOS6kAheQlvGufyyIBF
-	 Y5720Ic/F9D77AVu0p9xTBhvRgLnTrXHjwRdSSIIf1yS1X4N4fwCXIvscTwww+O+17657
-	 KpykpvPgb3Ogn/NOYsvr1Bua63KFlR4zFYivpwjxNYh+zfMt5dWJSsKxsYq9JqNRJ+Q==
+	bh=JBroOjocv6eBCvG1grylAnibv/9seMQfy8rDwVLFt1I=;
+	b=x5pf13ORDTsAgXbE01hfoUwySJE576QnGtNnWicnad8s8A5GFLAnLfPO4V/wa/kWmC9w
+	 YWMZiCdwUf5ezAysyEWlO8QFwcwrfR94t29c114h2KyOLuYJvhUy9wyqU9ILCzi1a43A1
+	 DgKo81ZrSpZz+ME5z1MYGDo5kViVTCS8sHXuWn5R+sCkqf2LsRPnkIZmqeJ8UHwzZdFPC
+	 CSsrcrpm/30bVqmMO+rgOOGcRV/+QwXxSbeBelolnarBDsvwzgBQaB01iKX5xgnHGQCod
+	 fU0SjEjTE9FJEb2L95uJVg6q4gC2i2DopUi+FNtr1PCRaA8xFKbeRgLzkE6y1DV7GFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GfL6l9Lf;
-	arc=none smtp.remote-ip=74.125.224.46
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LYHWIhOa;
+	arc=none smtp.remote-ip=209.85.128.172
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E46F606A331
-	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 00:29:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1E46F606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4984606A338
+	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 00:30:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4984606A338
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GfL6l9Lf
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6798eb0d190so1264561d50.3
-        for <damon@lists.linux.dev>; Fri, 13 Nov 2026 16:29:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LYHWIhOa
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-8b0dba37a7fso17369557b3.0
+        for <damon@lists.linux.dev>; Fri, 13 Nov 2026 16:30:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794616198; x=1795220998; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794616201; x=1795221001; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=nJgQdHN5NLYxxbOCpexwWsSr9IBzYZ+JufSPNjQMV9s=;
-        b=GfL6l9Lf3Wrqde3kS70A2z/9zyLwzI7tu1AZNhlDTOv1eczBMxAt7zr2CMBEwRIcBF
-         DKmmXtoce0S36jhHd78cIPEaOT3LD6gEQvUTxGx/3eJ+6ccz8tqPq3kIRkJtySyqP57Q
-         ju57F+a2eavt0+dT5qff7GHnCXvFp6myAn1TGqG98jeZT3XEpIQP0zAf/8t/+pkSOMzB
-         i/zxlIq+C8wRUK/WLjB2YJzoE9Js/p2An4UjJORUpn7t6NC6K2x16S3a0J4d+KciQc/h
-         Ac/eppIzh6gIS2jHd+OVYEDGH0GMfrJ88MOcEY4RYabZtHhN2FYgFnu3F70RfiU5d1z8
-         pypg==
+        bh=JBroOjocv6eBCvG1grylAnibv/9seMQfy8rDwVLFt1I=;
+        b=LYHWIhOayeG2SGzDxv9ByCoV3HtYR7GyDq96kjB5wzuUFeKjQh+EjWPzWRrhOVNjr/
+         XdckKWpmfEoK7boKP2QB9XQr1rQY2NrrhrnmLjypmlXZKRV+55AcLv2lm+AF+czOx/qD
+         vMmBAYcf7qVot2WF3ki/pxylJRB47zpeFJfPzD7GcjxugLbWdeg1yLTc4Ut7BvbZwvky
+         rnvwoicgQeptexe6jreRSPHC3JayZNYxGMmp4mnj2R0LSutCUlPl01mea2mjukkVST5j
+         ROSH1jcJLmIv0gpDwbwCgeNaeuIh/lxVsrUggYbm/OLxHwvt7q6IX2kBeblNtEGqFa2h
+         MQSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794616198; x=1795220998;
+        d=1e100.net; s=20260707; t=1794616201; x=1795221001;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=nJgQdHN5NLYxxbOCpexwWsSr9IBzYZ+JufSPNjQMV9s=;
-        b=zsEIJFRtt9Amdn8FOrw/XCS/Y44dSpmap8rCPn18Pny4fydxxH1pmScbnv0wqbf5zB
-         V6fn/mwAsc3nRvudYTkp1kEASw3iLw/VGDEoJqWLENk1dfZaTsMefdEbmgz9MXtV14Nl
-         S3C9X2B+1rIIR+gYZeDYX/RLtq8PltLNpWeiF5Md1Ewcrt5RhFJ4ye3/BAOPWvYO9ttn
-         /b3Wlu83VTE8+5P7R3NNovXlVXMKz0hBVC3wZMUkIQxGxvZQ0zcp32/6TPccaWPHyqG6
-         K5YTessrr8CZlUUJumhB/xs8me73pIjAw5JAWfluu+oSSAFN/kw6GGXYHVt9lPzFuKlz
-         +yQg==
-X-Forwarded-Encrypted: i=1; AL+hErH5wAmTXPNpPTV8W8MPbZU9HzSJS2S6B1i1BZmxvp5+OnZyTIIGqhTtVq01+FBsxbk/Nzr8nw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/iJ3xdUMJng5pRXrkoMtsIlgCDPYJ6hifvT4+XkSF+mUcub8BX
-	CezubyQZg/0dSQ0VAMI9YNFBJdozpdGSZ0xA3CAc5GHO897QNqRctEzy
-X-Gm-Gg: AYBFou3nlhi5usO1OTwcZWUuk9U/lMtSYOVifboswGf0ir7VFW0lDSo6rQU3Iy+vNF9
-	Lx9umtj8OaW9oxbGK3rHw9LRU5FD3F6qImHYHNN7h2tWfVUElsfzgWaMBg+evRf1ZRAUTTiDFuQ
-	JQERubVo9wjcsNOYyh9x8Adj1TlCHMUOB3FGedD+dnPRk9hk9FsQ1ZySi8xtNPQ0/lWODlfz8rt
-	0aI2GtqMayFqA5WgQHCwTTApydaaN9vUofDG5xuXnmVTghMv1z3qUwSMKFTNsECQ7PpHa7wWYBq
-	Dz0Vq1tSU6k04nJm7PsqMcOATQz1wSpTUYEOhB2GoL6Dz+a0EfVu0TM9hOGt2+U0j9vaMrCByOc
-	6aYxZDjZIBLKU0JG+aN5xYskzEvIdAg7fonpBV24Pt+kmbUCYbSD4tskDQrMybJbsARsyU4uiqp
-	rCHVxQhLIiFMGQTwe52z0B/zcC2Xmk0SnNKJf6JFVA5ZweAtePW4+MKWmv2nsvoJWLY0TrG8LSj
-	aCBmx3hgMTkLi9Av67DJcggZirHgMyMIUWR5cca4bemwzC+qnjMjSxR7XGIcrqLDC2X8jssArT3
-	6KpuDmF2jlMxZEHpuQywjO//VIPDfzYGtVEQbp18iPmIWAz4x9tapFvw7ZT/46MX82m1oRJjDaG
-	+1dGWXQ==
-X-Received: by 2002:a05:690e:144d:b0:67c:1fba:b42c with SMTP id 956f58d0204a3-67d896508efmr2961856d50.45.1794616197983;
-        Fri, 13 Nov 2026 16:29:57 -0800 (PST)
-Received: from localhost ([2a03:2880:ff:47::])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67d8a555cf0sm3448893d50.5.2026.11.13.16.29.57
+        bh=JBroOjocv6eBCvG1grylAnibv/9seMQfy8rDwVLFt1I=;
+        b=Am4MMl4mkK11zW2QXIGXw2fjwoG5Wbj80U3DxMWGklyU74OlTBRp4xwp4dXAvs+yqN
+         jk9MyeZqMYwfjd6tHUnvyPolRUmCZqiPb8vpHpgiU1DjgMS92N+9CFvtWuNnZYH6uiwW
+         DusU3EhHvAtI2nRwsG2C7Y38eYpkJQ8cxZLERGZ7WqKZFjTXHGh8vn7ofhYXQ6Rx0CYz
+         h8e5uCmKcgFXhTi9jYWfVicwrxarB35P063RLveisPdEJHuJlGckCOsfKW7g5jcnD6rD
+         UA6/UmR2rmvk0C3ZHRzPAHTur47oB93ZoU28J2WUewUOxKK0eGnj6DeSpwp5+rd5PWfU
+         qChQ==
+X-Forwarded-Encrypted: i=1; AL+hErFtjGeWNOwICs8E+cn25vDJ4tnLbwdj5ISkjScFHcZRLaOgFoYKnRvdOYt6Rvash9X3po3EGw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z9Eaj9QmLKbuxAR/vYId3tcXVWXRYAEsrJyj9kDI8KlRq/OCYks
+	jlUNDDNWg8qkv/+e3VVW/PZyh2yacRs+S6R0qbSjdRuaU3gLwdz+qQVe
+X-Gm-Gg: AYBFou2BNIx6SXqVFtlr+J0lEoryOHj7qhnktIMKOd5gh22YPEsRplHrM7vGHeMhkHS
+	AJXRCQZdlxvouFhsLQXD8YHIKSOwfvtwSQb4JNDY2tMVMwnSSZIXprBM9H7tTBAPTTVpRl32KKq
+	MW+AmtRODekwTP/EoaLzd622Wjlo4hnRJKiryTj7veyqVlHRF/HIsuS4CRJxxoZZFuEqhTz8jn1
+	8+xLe9fHkWQVSAx31w7LazHD1xVirUUEEUDzumeZYrjNeuHypPSLQ2LL9B4mZkVF5gd0bYfq9if
+	AqKuA//CfTJ8JfWJNAHjuQpRd2FaEw/2JPuJQzBV5deLjMGRe5FEYYrQU3aS0R7OUehMKk8FIGF
+	hsMiH6c/TdTa/HMdAl2M/qhoWezfAJiO83b9c5pW4k+S1tCgGx+4iswUOHH12ohCnZkGdjHQDNd
+	jR1pFXoNg9fj5fk4yH+Tls2akyR0ukSlZIg2X0SdObdPkutE5zKX3EE4M7qx69O12sCDpzc8A1S
+	OCLVVdJy9DgNhoP1osDj8j6q+WRTqbL92eSdP7hqCnckpeUH4ZRIl0TZkilPJgf1dFdLDl7ePVr
+	+lJPfDcg2N8X48w99zlKa6OOK+9sIPk3nWwlXbBDM4L6AHA3zd+jsc9YMnrdLNwjbaKFDL63q5V
+	X9U0ja32V2AlQbVTBeFTdlBe/dss=
+X-Received: by 2002:a05:690c:e251:10b0:8b3:23f3:134d with SMTP id 00721157ae682-8b4aa2b33a1mr16832317b3.42.1794616200944;
+        Fri, 13 Nov 2026 16:30:00 -0800 (PST)
+Received: from localhost ([2a03:2880:ff:4d::])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b4aa96b441sm33820597b3.23.2026.11.13.16.29.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 16:29:57 -0800 (PST)
+        Fri, 13 Nov 2026 16:30:00 -0800 (PST)
 From: Joanne Koong <joannelkoong@gmail.com>
 To: akpm@linux-foundation.org,
 	david@kernel.org
@@ -96,9 +96,9 @@ Cc: yosry@kernel.org,
 	linux-mm@kvack.org,
 	cgroups@vger.kernel.org,
 	damon@lists.linux.dev
-Subject: [PATCH v3 2/4] mm: memcg: read root lruvec stats from the node counters
-Date: Fri, 13 Nov 2026 16:28:20 -0800
-Message-ID: <20261114002822.1043378-3-joannelkoong@gmail.com>
+Subject: [PATCH v3 3/4] mm: workingset: skip the root memcg flush in workingset_test_recent()
+Date: Fri, 13 Nov 2026 16:28:21 -0800
+Message-ID: <20261114002822.1043378-4-joannelkoong@gmail.com>
 X-Mailer: git-send-email 2.52.1
 In-Reply-To: <20261114002822.1043378-1-joannelkoong@gmail.com>
 References: <20261114002822.1043378-1-joannelkoong@gmail.com>
@@ -113,128 +113,47 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-For the root memcg, lruvec_page_state() returns the rstat value, which
-needs a flush to be up to date. Flushing the root memcg is expensive, as
-it flushes every memcg in the system.
+We can skip the rstat flush in workingset_test_recent() when the
+eviction memcg is the root memcg. lruvec_page_state() now reads the LRU
+sizes of the root memcg from the node counters, which are always up to
+date, and workingset_test_recent() only reads the eviction memcg's own
+lruvec. This avoids an expensive flush on the refault path, as flushing
+the root memcg flushes every memcg in the system.
 
-Most memcg node stats only track memory charged to a memcg, so the root
-memcg's hierarchical value equals the node counter, which is always up
-to date and doesn't need a flush. For those stats, have
-lruvec_page_state() and lruvec_page_state_monotonic() read the node
-counter for the root memcg, as they already do when memcg is disabled.
-Callers that only read the root memcg's own lruvec then no longer need
-to flush it, which the following patches take advantage of. It also
-makes the root memcg's stats more accurate, as callers that ratelimit
-the flush can otherwise read values that are seconds old.
+For reclaim however, we still need to keep the flush (for now) since
+global and root reclaim also read the rstat stats of the child memcgs
+they scan, which the flush is needed for in order to keep up to date.
 
-The exceptions are the kernel memory stats (slab, kernel stack, page
-tables, secondary page tables and vmalloc), hugetlb, and
-WORKINGSET_NODERECLAIM, which counts reclaimed xarray nodes (slab
-objects). Their node counters also count memory that isn't charged to a
-memcg, which falls into two categories:
-
-a) the allocation isn't accounted to any memcg (eg kernel page tables,
-   or hugetlb when hugetlb accounting is off)
-b) the allocation is accounted, but it comes from a task running in the
-   root cgroup, and the root memcg isn't charged for it
-
-As such, these stats still need to read the rstat value, since the node
-counter value can be higher than the rstat value.
-
-One user-visible change is that the root memcg's memory.numa_stat (and
-the hierarchical_* entries of the cgroup v1 memory.numa_stat) now
-reports the node counters for the non-excluded stats, as it reads
-lruvec_page_state(). This is more accurate, but as a result, it may not
-exactly match the root memcg's memory.stat, which still reads the rstat
-values.
+On an 80-CPU machine, a root flush took 69us on average with little
+cgroup activity and ~0.9ms with 128 memcgs actively allocating (wall
+time, including waiting for the rstat lock). Reading a node counter
+doesn't add any cost. It took the same amount of time as reading the
+rstat counter (~150ns, which includes bpftrace probe overhead).
 
 Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
 ---
- mm/memcontrol.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 56 insertions(+), 2 deletions(-)
+ mm/workingset.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 091401cecf39..196c0382181b 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -504,13 +504,67 @@ struct lruvec_stats {
- 	long state_pending[NR_MEMCG_NODE_STAT_ITEMS];
- };
+diff --git a/mm/workingset.c b/mm/workingset.c
+index 1504f91cdca5..383f951eaad4 100644
+--- a/mm/workingset.c
++++ b/mm/workingset.c
+@@ -483,10 +483,13 @@ bool workingset_test_recent(void *shadow, bool file, bool *workingset,
+ 	 * section (for e.g, in cachestat) - these callers need to skip flushing
+ 	 * stats (via the flush argument).
+ 	 *
++	 * For the root memcg, the LRU sizes are read directly from the node
++	 * counters (see lruvec_page_state()).
++	 *
+ 	 * XXX: With per-memcg flushing and thresholding, is ratelimiting
+ 	 * still needed here?
+ 	 */
+-	if (flush)
++	if (flush && !mem_cgroup_is_root(eviction_memcg))
+ 		mem_cgroup_flush_stats_ratelimited(eviction_memcg);
  
-+/*
-+ * Whether to read the node counter for @idx instead of @lruvec's rstat value.
-+ * This is only done for the root memcg for stats where every update also
-+ * updates a memcg's stats, so the root memcg's hierarchical value equals the
-+ * node counter. The node counter is preferred since it is always up to date,
-+ * and avoids an rstat flush which for the root memcg flushes every cgroup in
-+ * the system.
-+ */
-+static bool lruvec_use_node_stat(const struct lruvec *lruvec,
-+				 enum node_stat_item idx)
-+{
-+	if (!mem_cgroup_is_root(lruvec_memcg(lruvec)))
-+		return false;
-+
-+	switch (idx) {
-+	case NR_INACTIVE_ANON:
-+	case NR_ACTIVE_ANON:
-+	case NR_INACTIVE_FILE:
-+	case NR_ACTIVE_FILE:
-+	case NR_UNEVICTABLE:
-+	case WORKINGSET_REFAULT_ANON:
-+	case WORKINGSET_REFAULT_FILE:
-+	case WORKINGSET_ACTIVATE_ANON:
-+	case WORKINGSET_ACTIVATE_FILE:
-+	case WORKINGSET_RESTORE_ANON:
-+	case WORKINGSET_RESTORE_FILE:
-+#ifdef CONFIG_NUMA_BALANCING
-+	case PGPROMOTE_SUCCESS:
-+#endif
-+	case PGDEMOTE_KSWAPD:
-+	case PGDEMOTE_DIRECT:
-+	case PGDEMOTE_KHUGEPAGED:
-+	case PGDEMOTE_PROACTIVE:
-+	case PGSTEAL_KSWAPD:
-+	case PGSTEAL_DIRECT:
-+	case PGSTEAL_KHUGEPAGED:
-+	case PGSTEAL_PROACTIVE:
-+	case PGSTEAL_ANON:
-+	case PGSTEAL_FILE:
-+	case PGSCAN_KSWAPD:
-+	case PGSCAN_DIRECT:
-+	case PGSCAN_KHUGEPAGED:
-+	case PGSCAN_PROACTIVE:
-+	case PGSCAN_ANON:
-+	case PGSCAN_FILE:
-+	case PGROTATE_ANON:
-+	case PGROTATE_FILE:
-+	case PGREFILL:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
-+
- unsigned long lruvec_page_state(const struct lruvec *lruvec, enum node_stat_item idx)
- {
- 	const struct mem_cgroup_per_node *pn;
- 	long x;
- 	int i;
- 
--	if (mem_cgroup_disabled())
-+	if (mem_cgroup_disabled() || lruvec_use_node_stat(lruvec, idx))
- 		return node_page_state(lruvec_pgdat(lruvec), idx);
- 
- 	i = memcg_stats_index(idx);
-@@ -551,7 +605,7 @@ unsigned long lruvec_page_state_monotonic(const struct lruvec *lruvec,
- 	const struct mem_cgroup_per_node *pn;
- 	int i;
- 
--	if (mem_cgroup_disabled())
-+	if (mem_cgroup_disabled() || lruvec_use_node_stat(lruvec, idx))
- 		return node_page_state_monotonic(lruvec_pgdat(lruvec), idx);
- 
- 	i = memcg_stats_index(idx);
+ 	eviction_lruvec = mem_cgroup_lruvec(eviction_memcg, pgdat);
 -- 
 2.52.1
 
