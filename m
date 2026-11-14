@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794640766;
-	b=OtIfn6LzDvWLrxzraicVDCueQcwPTSMLIvpGnlV4K3GpIuyp7DCTGIygQvYhHc8U73cs
-	 fgpi8/j4J0Lq8SNNUcg65Cd8La+MMMOOCPkzFW8apGlcZWguGa60r1nm0LYN2qV4voLrN
-	 nUcOywds34njCMD6G0Fw523forX0Qq4KixWecU6uAsTbjB2ZAi2nv9OfuS/j/9JxCLopy
-	 1h31teX4Ae7WrCppVzv+R+6vI4isACKKc1NReHHJre08hJqFIfqU5+17PGrnUrpC9DSyA
-	 W884GgbQ5zF/hvx4fnyPPk1R/3W6Q+c9RH0qMl+LxdB/Hdl0TP9zwV1X0x/1dzwoPiA==
+	t=1794640777;
+	b=MxYhF6F7TXfkIA75YOZxwC5UocWgKdzLW9iUWaidaSDHABP86Clb0nTEZB5G32ho1k10
+	 OpUAXugWODj1NFjt9XCbMRAd3DKlcq3OmG0/CqZGBth/3+SlykuApSsnAc3QqsMJMaJUS
+	 6FX83eY21N/ODr29qTECV77xKFZcBVgzTG8XTMaA/3YuqZZaDtIz68je/gWuaq0gFKl8M
+	 BgMSELeDNfbx76zO++IsrrYvbZP3PBw8d2Lj63EyreVtSXNh2qJ6TShzlVpoQlhniEvvH
+	 EIqNCw8ZH8AgUNjwTSU9sACAXJCW+MV1noA2zE/Ny9ogvUvloFpWvsxxtJL5/U+nKNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794640766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794640777;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=53F86g1+1KdF2REfEFTFGhykm2HEgV3Qa4BfWICYJIs=;
-	b=tgW4IWbNTqmZTn5l0N/TdTF3lUtaAueUHjQEhR7Qe7jjH3NYFipmyuD2DqeORVeemP69
-	 sSjJMJ/1WvHlm5WEjx0mQ3oe7khQn5erMxN/8KfQ0Nk73Tok7f/3burhVEyWqR9x/QA5w
-	 wQLTsbi3mNh9kWrWsfBJiLGRUac3+GgVYoZ4xLdkfrnsC1D5koh+DudB5ZR5MMzMoQR1P
-	 qMadBP3i1ekMv2LuIBJsFYlI5LApOI4VMUiwXL7MJwRxY3EHmMiH7RkXwB9UuEHFVgsv+
-	 zSeRQFSbxAzLBmvKPlYXZd6VGXMaWtdPwpPOiP6RR5BCXJOTP9si18U2FFQBBwwr/VA==
+	bh=g/tkwbNyOeHmVDX5uB5zyoGRQNcO7r7mwzqQHoXqwJ4=;
+	b=2QD5cfERGr2GirYzzChZSiSjvAIgh0bWmlby0ubqE33Xdn44NspXBgmiZAE0WPL799FU
+	 ziV19Xh6hKW/yFeFWhhDrhcYX4wyEPYW/VwRvUDlLm9G+7TWZ3CQT421STWCtEGZpc16u
+	 zu2Sq0cvy0CVREUAT19PHmmrTMNhE9Hn+rAVu6ycWNqhsBPPkzqq7BavUrSpWOw0JTDCl
+	 Zj+SCBJ7asbaQqZiOZw86Zt/chjXsJefh0WaIgwy7CelKkBfF4DAXt0Pjb4nNYw4Iu+2x
+	 3A3ISOGL1pEN5PPdfPK3pGtlzB7NtaMxAjOYTboqr/7QwI5rxiRvLbnKq6lz6h/3qAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T96Kmyy1;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JoYpJyUl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE99606A335;
-	Sat, 14 Nov 2026 07:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A3B606A334;
+	Sat, 14 Nov 2026 07:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T96Kmyy1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E682F1F000C5;
-	Sat, 14 Nov 2026 07:19:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JoYpJyUl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936C91F000C4;
+	Sat, 14 Nov 2026 07:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794640766;
-	bh=53F86g1+1KdF2REfEFTFGhykm2HEgV3Qa4BfWICYJIs=;
+	s=k20260515; t=1794640776;
+	bh=g/tkwbNyOeHmVDX5uB5zyoGRQNcO7r7mwzqQHoXqwJ4=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=T96Kmyy1RsaEcBN1qA2dNQ5sye4PYKQvGLL9AzCeLRZ6YCWfC2jHM5eSkHZpwH7BK
-	 J7n8/+rve+OIZ1vzYbVpi22xV1P4x38oHghXH2EPsLIfqPTS7LpnDo5ERQnXZ6eXhA
-	 Jp/RfzmwuoB2tvEeKlb6T6ybVFXnyyshAHU+UhDHFGACobYkz23iMbT933D9WjfsNY
-	 mKG4W25/H755mq7wpdRLbhT++O3UWFhS/3zxu8aniCblTx0Q3Pw/NEha46JGGn06MJ
-	 8Mq6zM/8dTi4txFo0eCH1bNiIRDqbY5XhiH+WNKtFmOlaW7dvQywDQG4OW+coGE/mA
-	 rPEv923oOaoYQ==
-Message-ID: <sashiko-outbox-214255@kernel.org>
+	b=JoYpJyUl/qnaWsfGxWozRxy3m68GZNJlQOGK65ZLzqiw1n4EfbvHBkXB0wooNoASx
+	 Mk44EY9Ta1GhlL/RHzTy3oWK/B5XsIwC2HfhPSE7+kGtNXL3MWhiu9MOjPDLPspLgg
+	 x8DsKa68Pl2GzC3Jvthl9+NcSKDzyCKzzlb29tFI3ZWIreNJMYdbu1WognkIlhmxz2
+	 6q89yp3ftBaVjpPWsnQadpHlnkw/LdsZHO88Cnt9YUOictjp8KxfS84qMAsh3D9Jt3
+	 23qmeV7d/wo2EYiIpT6eTl03AWcYU4AskD5maArCJv2h6+dYnouKIE6oqZa/muG2RR
+	 PgffrXWIM5CYA==
+Message-ID: <sashiko-outbox-214256@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 18/22] mm/compaction: restrict compaction to common
- memory
+Subject: Re: [PATCH 01/22] mm: add node-state-filtered zone and node
+ iterators
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?R3JlZ29yeSBQcmljZSAoTWV0YSk=?= <gourry@gourry.net>
 Cc: linux-serial@vger.kernel.org, damon@lists.linux.dev
-In-Reply-To: <20261114070959.3490008-19-gourry@gourry.net>
+In-Reply-To: <20261114070959.3490008-2-gourry@gourry.net>
 References: <20261114070959.3490008-1-gourry@gourry.net>
- <20261114070959.3490008-19-gourry@gourry.net>
+ <20261114070959.3490008-2-gourry@gourry.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sat, 14 Nov 2026 07:19:25 +0000
+Date: Sat, 14 Nov 2026 07:19:36 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,17 +61,11 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> Compaction serves the ordinary allocation domain.
+> Add node-state-filter helper functions/macros so MM walkers can select
+> their node eligibility explicitly.
 >=20
-> Restrict it to N_MEMORY_COMMON:
->   - start kcompactd only on common nodes, at boot and hotplug.
->   - walk only common zones in direct compaction and when deciding
->     whether more reclaim could let compaction succeed.
->   - compact only common nodes for /proc/sys/vm/compact_memory,
->     and trigger proactive compaction only on common nodes.
->=20
-> The fallback zonelists hold only common memory, and all memory is common
-> at this point, so behavior is unchanged.
+> Add nodemask intersection and nodemask/state iterators using the bitmap
+> intersection helpers, without allocating a temporary nodemask.
 >=20
 > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 
@@ -79,5 +73,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261114070959.3490=
-008-1-gourry@gourry.net?part=3D18
+008-1-gourry@gourry.net?part=3D1
 
