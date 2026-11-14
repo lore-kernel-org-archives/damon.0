@@ -1,84 +1,84 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794640218;
-	b=hGREpjNFT+wSsn5KWMzaLvhCJoEP+2rajvb0NUvfadHxHq9skYMtoa58hy+mN1MoC+FF
-	 PXdiOI9uEHjWZ0sEzfQ2CC3OBdnbD7i362RL0VESRGZFcn7K4s0CJXgo2QglR/YT1oyRC
-	 c9OTgX0AEkNyAwmpkbbvo7oXhKPVQ6DgZ57bsgN57qGIdkYX/VGW+p4cUGQ6ZokPCNfnJ
-	 aHK3kbcv/Roj3WW5klBGvz9vtb6sa1XnvJ3++2Mzl9ipm1fv5a/iPyySfqKphLU3joZzE
-	 YIm+lMfWEpzHcYH57PdXxpXA4/DsztnRhaqfriaDaXL/CmuVgutfpZEnP8yuF4IBeMA==
+	t=1794640220;
+	b=eGQyZQ7LXkFKbbZgeG1Z+OiiQRuC1FFkm74g7FtoJSPkBnXAAB7sb0wKCoOTz7iiN2K9
+	 OkSgA0wRAug6EbwZ9QrrFljWYGiKiupZXs79jJkAD/t2KnXYT2obWrobGNTPmhLNK31m0
+	 PUVN2x7yRpaEULDlfHI/9lkIk4INkE9zVap0d6o0nvjxHHBtqN+mLr/mERtuKYYBS0wSh
+	 a5jxnaU43SQDm4I7wKUZbRsV5h4I/dyr+cd+yds8f3Zo5P6zO0/avMYwfuKI41k8mS9sX
+	 dhjJ6xHERQNHSc0zmlhO9SYoJYdHYuwp3lqSnw3896EXqZlpfjZNMWXlHorrBUdRJCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794640218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794640220;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pld+EM/EXNXxfgZubwvob88FbJ3qDEqFg5eLGFwAxrw=;
-	b=TkmnXAW4HYuJDvwyWjPSR4ZMzPfJcFES7byi16aCKVWGbC01EDCipp4VKk0jO6UwulZ/
-	 XC7l/u2m+Sj5AgAQ9RDmRuL7QouvDQrIvNnfcSqtRs6r1grMUbpVgvzY6djEbUPKUqadq
-	 nLsuAIsYmcAkz+3qq6bY8Z9xXxq+DyeiIqfnpVzwnwbT8hnQCdHxs3jLBsNz2/Jh1BHcD
-	 nrGXbxkfidtZWG+Mw3lFZQ21q5yFm+WqHoL2mr8994FjPljqrxEk5Yz2k2bOqfX0bXE3U
-	 ga+MSsgZxDQ8UNx6L6jPRhj8h0kPWASYN5YFiW5wz+ANHHbg7+qxYB3gHfm6NuiySgg==
+	bh=KKsqfMs+Khz2jHdLUAmVstaMz+t2qjUPbSjoMCe8lqE=;
+	b=XEF938tnb3SSfqW/Qm+N7ux0RkspQoxryqBrxuJGPC1B9mWHBDZ0yLHbKqWiNDwnxV/Q
+	 8YNVWG9gEYPe6331Q6SwGmoYt39dvkacTjATGPCQdaW1zyTUN5VlsZLswqxxXt1Rw3cQI
+	 PiRyZqhsuVHlTn1nAAQXzR1fzq3DQfyAcFTrICYcFzDSnA1sJy2Bz/EcBAzjkuFa2A3IR
+	 ZdH/01jVYADeRRb17T7T8iokDqq833JcxDjQWNsWzJeV0LKbMdHri3vCPzi4HUkRq5k4r
+	 egc4dlwCUfhXw8qPN/u2BzSWZgWIMA49auQFLHEQxEYBMhuANt9+q0KOGqYGg4Kpk0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=gourry.net;
 	spf=pass smtp.mailfrom=gourry.net;
-	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=ct+xPY1D;
+	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=W1OylGpA;
 	arc=none smtp.remote-ip=209.85.219.51
 Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CCB60A3808
-	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 07:10:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19CCB60A3808
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D603F60A381F
+	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 07:10:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D603F60A381F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=ct+xPY1D
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-91eb53957cbso45070916d6.3
-        for <damon@lists.linux.dev>; Fri, 13 Nov 2026 23:10:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=W1OylGpA
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-91eb46044c4so40932726d6.1
+        for <damon@lists.linux.dev>; Fri, 13 Nov 2026 23:10:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1794640217; x=1795245017; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1794640219; x=1795245019; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=pld+EM/EXNXxfgZubwvob88FbJ3qDEqFg5eLGFwAxrw=;
-        b=ct+xPY1DtrgxmMmbnkPvgL1GWioCTi+9p2OTv/ztfCbmWwkjPS1I+3ksuGvSee835w
-         U9re8UM/a+pYtFYHz16ITdxCKQdq+HcNthoG0ZF50l2qVXMLSa8ZGZSzBkuhFM+rsMjQ
-         PYBRnxDNSmJoAHHZjI5vCetUDvPcDpNCVXgGYFMwh9WtAYFM1756y6Xb8BpR2r33FRa1
-         4MH+awbHQtGGrjfOidNjbxhIHFYhbSj+S8yPBYBcHC7jHOK3ce9MeT9RWSirelgSPQoM
-         gSqaE0Qtiv10Ru04GqCbABUq6crFfbN1pF8Ddr1vBPebXeVTOnX2rVu8UF2hwfXFtUSV
-         R9ow==
+        bh=KKsqfMs+Khz2jHdLUAmVstaMz+t2qjUPbSjoMCe8lqE=;
+        b=W1OylGpA4BfP9zCMyW7rwFKo9B6IX6QMlAhEdmLMJiFYXBHuXaSu6l+ObB5oQg3hxo
+         DfqPWD2r2oYfEERgCAzzewmnX4x/JsFalsaiDlQPpqdD6GaYL8O1vJIBb1d+vNKRTd7c
+         K8Nk8e6NqNIanbNz61LnlOUHeZslMDBdlLaezHpwr4Ab09ZO+K0E8JB37y5676xIIaSG
+         HSV5ZjMhtgEv/liGIv50W0+bEu+H1bDuyX2QZ0Kzk9CX1lRE0XmsU3Qe3h4Y+JAQ5POv
+         7m/CSI5v7QwjmPNPdXKlk5k5aN4buJo6hc8/jk36GAjNjGyE+pAd/YD81q8yEw/hmyXI
+         p4lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794640217; x=1795245017;
+        d=1e100.net; s=20260707; t=1794640219; x=1795245019;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=pld+EM/EXNXxfgZubwvob88FbJ3qDEqFg5eLGFwAxrw=;
-        b=jg4TgPoSdJdsSpVx3o0AF4JlpwaWuefMRU40GXEXvzm6GnlZ8lHniFnGRXWAEkCk0J
-         CnsEpWELUrM1bqsz38xKWmOmS7jjMRy0KW8grIYwCYazqv48btBokgd165NIQe2AbtTR
-         XpeVc/7ul7V/nvxlEgFKQ7xBwgln5yLHF8W+f2r81ugXu7tEHzbMFHPEIHxx311V+JsS
-         vy5nLJjBZvljYJy4svEjeeep1alpRx8ciILaIxEN7utjogXm+nzUDTw+eaNu0i6zGru4
-         /cuECEyrdEy1CuK/zXFrwdny7QlolNhw3uFxc9FChTat5Li02cAY7qt5HZj8YgsJGyFH
-         6UdQ==
-X-Forwarded-Encrypted: i=1; AL+hErEYZg2jqZsktHF/oXyNFAgyOIb1/QjZsw4RloI5xkG72tXBb9lvMU1R0V6S/ZGZoEn5jsAYTw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/SycBbTwTXQrhwhrO5T+rvqmx+dtaLVd1vTKH6BGKm7kzyrCxL
-	Mx3smONqshTZunlMgUqCvZLVzZP8ikHUxfAFxJaCCRRtusbQTMIhtIOFnej4nQshTlQ=
-X-Gm-Gg: AYBFou2To+0VnmrgDzciWeil8qD8C79J0ZwG2ZMm2AC2eh1MXGP1HeFoW6exfUd8zwE
-	ke6Lj77hDMOw/6msD1AKOqheFor2CeYc5Ot34NQuJ8Q4Z7Hio3jb40phy4uh98N3UJVGTs4ZSrM
-	qym9qH6AyVtVmjJBVeqYEL6BHQAYlQ9yeCY4VmzwD+ZeUhieSOiZcyybhJeM+zvGieyn2WWO5z3
-	LnuM8pn7amdBPBqAK99Ni81uGGclDgYIk14i0wrV7wp+yfHP8T8wS1xS3U9eneV4/Qwk0uzv0TK
-	QcSTx/2AqtYgDp/yMcHwERD1OZyMI7Me15a0+mBulIvEE0rwUgj330MQ9HrTyQvtT9OMBX5znYd
-	v/nzwyu51e1z08QOPqbnA3/N3BmQattYRDWQleXiGRcCl9K6NBG2l33A6oT0FHIjbAYcMSj6R6P
-	G0QsSupf1+OgmXV5nWL9ZeEVfDRN/LW+MLdzyrgqBhjsZfAqeSr+2WJ+4jBJhfWmvC+JFi69M7U
-	ttVnJ8vepUCUTy7Wn2qO7ydwCGVGHQgu+iPFr84Uej/FwJ9Enysx4wZvHz7Y7oiaRHRBqYePFBB
-	TYYZPBOxDR6qTy4V1y7O2lnSMnIz/W/oFSrZhsmA/gv5NyQnaRJY+Av3/D7MMLrzubF9v0Xgpkl
-	Qsnp7JFHJImN5zWIilX91xiKEY8rABx6CTdIB
-X-Received: by 2002:a05:6214:6347:10b0:91e:cf4d:f868 with SMTP id 6a1803df08f44-91f2420f9c3mr56246926d6.22.1794640216984;
-        Fri, 13 Nov 2026 23:10:16 -0800 (PST)
+        bh=KKsqfMs+Khz2jHdLUAmVstaMz+t2qjUPbSjoMCe8lqE=;
+        b=oI18EG5smSDF0x3CsOcYTeNAfXuP4qJEBTwW7cGxUQgIr3qR1j8fMAlhFrrh5fxRR7
+         kOLlU6e3tQ0vQwV6VFmUROPG1GlrTePqniCkNoyivHYKO5hRjZS7Eo+IWBVZVtYwYdKv
+         +DC7su0NlpzoJ1ObfRnkhe+NaPo7KWYx/toeAkm4gZuhUNVBzOH951JbS0LtxBoBum7G
+         BoPEkf4/CVvr2Ti8UV3NLVab9IIPR9Mno/CMCV/D0DiCKiYqn9gKIdfPA7XLNyV4+yM1
+         NBT+X/m1IK9w0GCQOVPspJp51IXr/pF7IHJNGtIbNfpqYUSLg2oBYThpWhZHFohtdhMq
+         xH9Q==
+X-Forwarded-Encrypted: i=1; AL+hErEr9hzOCpoxGXv/+/BUBIadzVWXBPEaiYucLOhjYvGJ3uOevwnV9vB1IaK/BeGyz5F+KadahA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8cgQ4iHKtTXSCjJ1Mkr8IK4GLUkB0r8TtlT82cT2LDa+4bgBcO
+	o3lCsKyT9vTvjEgZ68kZPSeHpoqwinKRwKiv9HgPvo2pdwjQ0Dl/sU3MuCaeSshs7UA=
+X-Gm-Gg: AYBFou3tI/5YUvpoE2b8/OFYaqhbVgHaHznTT8C05hxd0qV9xnhcGB52qVsjJVblEt2
+	1z7CVMvXtl+OHvaRDns+Vokt+QtQSBDw1pNIakTPkRLjQqTByoe+CVn4SAyZI4xQyy/zQ5PXvH/
+	XzZlKMR1t5WnE0HR9NUnaOd0L3fKPRYqhaJDoilh8Z0x4Svw3h2CTXz1tm2wOCMEvwJcWUHoC2m
+	VFbA8brzSuhBWWR1IIlfFF/YaeyQJztZ2Qud6qjIXqMM/UqYCI1OZw4fYL6fS7C4htOnJ3FFCZx
+	uZAANHr5Arclf/kja9TfC3POqbn2SQME1bZ+fZsFEvgMrIpg7gIFNPFbDbGK6/qvZD8y3VspKHs
+	nmeGBMb15Pt5hAqzfWfvUN09mn0TviDTuDMWHVvA7/5LgXkNrmPz+xG97drtAPaQ+C29w6lA9zu
+	XuF7byg6+t+VMAdieScWlmGWkBIUN//xT8XrxhE0Xb8nsdL/bpqMvtj04dv8ZbgiO9BHseMnOS6
+	7E9r5I/XoLlX/ZHHmjPSnk/s0KNWDzNWTsidA5VejsgYl4Zl7Jc7mUAX7W5GvmBqn2zrBHRKkRL
+	fSU4zbqaJ+TKAmyiRzoPxS1+9w6cthPMlj2iPug01NmE1mU6bOU76RNFcjYxPBm4Pzxg/aAOCpo
+	q1d+C8cCN7qBVxic=
+X-Received: by 2002:ad4:5d68:0:b0:91e:a6e7:b445 with SMTP id 6a1803df08f44-91f241e127bmr84458226d6.9.1794640218986;
+        Fri, 13 Nov 2026 23:10:18 -0800 (PST)
 Received: from gourry-fedora-PF4VCD3F (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f23db3a99sm37730986d6.40.2026.11.13.23.10.15
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f23db3a99sm37730986d6.40.2026.11.13.23.10.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 23:10:16 -0800 (PST)
+        Fri, 13 Nov 2026 23:10:18 -0800 (PST)
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 To: linux-mm@kvack.org
 Cc: linux-kernel@vger.kernel.org,
@@ -139,9 +139,9 @@ Cc: linux-kernel@vger.kernel.org,
 	byungchul@sk.com,
 	apopple@nvidia.com,
 	rientjes@google.com
-Subject: [PATCH 06/22] mm: base hash distribution on common memory nodes
-Date: Sat, 14 Nov 2026 02:09:43 -0500
-Message-ID: <20261114070959.3490008-7-gourry@gourry.net>
+Subject: [PATCH 07/22] mm/memory_hotplug: migrate offlined pages to common memory
+Date: Sat, 14 Nov 2026 02:09:44 -0500
+Message-ID: <20261114070959.3490008-8-gourry@gourry.net>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261114070959.3490008-1-gourry@gourry.net>
 References: <20261114070959.3490008-1-gourry@gourry.net>
@@ -156,32 +156,57 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-hashdist is useful when large kernel hash tables can be allocated across
-multiple NUMA nodes. The tables come from ordinary allocations, which
-only N_MEMORY_COMMON nodes serve.
+do_migrate_range() / alloc_migration_target() is only capable of
+allocating memory on N_MEMORY_COMMON nodes. The destination nodemask
+presently starts with N_MEMORY and removes the source-node.
 
-Count N_MEMORY_COMMON nodes when applying the single-node optimization.
+In the current code, if the destination mask becomes empty, the source
+node is restored to allow migration during partial offlining.
 
-All memory is common as of now, so behavior is unchanged.
+Consider this configuration:
+  Node0 = N_MEMORY_COMMON
+  Node1 = N_MEMORY, not N_MEMORY_COMMON
+
+Node 1 keeps the destination mask non-empty, despite being unreachable.
+This leaves migration with no usable destination because the source
+node is not an eligible allocation target.
+
+Restrict the hot-unplug migration target-list to N_MEMORY_COMMON so it
+reflects the nodes the allocator can reach.
+
+All memory is common at this point - behavior is unchanged.
 
 Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 ---
- mm/mm_init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memory_hotplug.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/mm/mm_init.c b/mm/mm_init.c
-index b4c4dba93652d..0c076bf5bf380 100644
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -685,7 +685,7 @@ __setup("hashdist=", set_hashdist);
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 490f400498f14..29ff2c46499b3 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1904,7 +1904,7 @@ static void do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
+ 		folio_put(folio);
+ 	}
+ 	if (!list_empty(&source)) {
+-		nodemask_t nmask = node_states[N_MEMORY];
++		nodemask_t nmask = node_states[N_MEMORY_COMMON];
+ 		struct migration_target_control mtc = {
+ 			.nmask = &nmask,
+ 			.gfp_mask = GFP_KERNEL | __GFP_MOVABLE | __GFP_RETRY_MAYFAIL,
+@@ -1919,9 +1919,9 @@ static void do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
+ 		mtc.nid = folio_nid(list_first_entry(&source, struct folio, lru));
  
- static inline void fixup_hashdist(void)
- {
--	if (num_node_state(N_MEMORY) == 1)
-+	if (num_node_state(N_MEMORY_COMMON) == 1)
- 		hashdist = false;
- }
- #else
+ 		/*
+-		 * try to allocate from a different node but reuse this node
+-		 * if there are no other online nodes to be used (e.g. we are
+-		 * offlining a part of the only existing node)
++		 * try to allocate from a different common node but reuse this
++		 * node if there are no other common nodes to be used (e.g. we
++		 * are offlining a part of the only common node)
+ 		 */
+ 		node_clear(mtc.nid, nmask);
+ 		if (nodes_empty(nmask))
 -- 
 2.53.1-Meta
 
