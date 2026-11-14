@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794640233;
-	b=yaRQDeBih9/fyVLj7Qqbh9LEbwYzfWWSjhKSpTJEW3W9WsSFwx0/eeHf2rSLLITFnq62
-	 7Yv+Zg03ftXM7yeng3ytRO//hd491wmRlaqny9kv0WdUHgVXVra85Db7xvaf+rNyZE7fQ
-	 f4NgvZeAA1x6oAUXmf+IZgbs98/xrq/RzD2qj3Kg5XHo++v3ebtPjeIzXhssOvf05OnRJ
-	 UKggNtbZtsPvhr8aBn59GH0kHhWVZ2Ltz8KcjzXozyBRG7eob5FA6ojLGgmUyBy9lLc4f
-	 7MDd7TpoiXXWqYpA5O6TrUHuFLyY+26rXlPdz5oUwvMplEG1lcMVaxUJS8ZbJZcRaSg==
+	t=1794640236;
+	b=ThMNpjmJElWpHA4e7a+6/Fgu9BUKCafR4ZVgZUPhAHfdx8pX7/9sbqkjzez0/RtKQmMg
+	 DpHTkRsFqg8rlxip0oG7ypL9JZzZmaE8bF7sMKMO8hF7HztNzXCRUIAKdYruV+MmgtFjf
+	 zxilYQoQAV02lzHZTUqa1CKEDo2E4DueTrmLNdADw5fYKAIdCYXkI//42t3IZX6vwWD/C
+	 wLXegHE02agGzQN82+QUm52AJG0sBxGFDvucguSn+zwIRF/kERwNp3MnuH9cYXP4u6Kla
+	 WlNtBKCAoRv4MtD21t8BgUAunzAcyIPYvsa6rKbxEptAeMmOvUZ0C5y1/rZJDYnR++g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794640233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794640236;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5RFbW7qtEXFgFx3OLZ5ldAh4JcKSI5CeWW5dNwakgac=;
-	b=cwqCL64iU1qNf0hY1uXCvtIQMYdyb+TpYtdrV/GhlCm/k5NcBpoHrmMDZP+uhsK4hc5V
-	 oylaMoGzBhZZRJ9KaITLdX1Jyad3aXjh8G3/0wZJk80BqThQNsReuTbv6RWBmyAKcY9Mx
-	 wOMIC8tB+YEjChj2Axo2b9H1BH8envd9n8pXn52dBoXE2eKNwxZ6ED9muS+2eXhYNYMkn
-	 AVWA5I1GWTF0IRU/jN17WOV5vCYv+hcyPvlRBl2cOiTRlHswdUcRpR79TywiyUXetpNYI
-	 c6G/e87vmpwBYzJQSiHduoDa6LA0XcZIJANcG1nOlVSfn2ioCtwZOpmNUUAm3jT2/VA==
+	bh=LMm4cY2G8/N+lvY6+YyUeSTrUdIgOLxyZozNrk1mUY8=;
+	b=Y2ZyWoRM7am5OPTVWWaKpHpFmKE1fwvlH27ziylqohXPPZzQjTL0Thhs5Yhuzs7WbCB0
+	 cHPpiHUqxsmibspGLcrG5GO7VDicmnctz04EQtI1hwffSZBiclhPk3WonLKj2/x7rBE5O
+	 9oLdb14YJemvUbcNIbHDg+7IuBBgKzBOq5FPnqqMrfW8NGl9iM4S2uQ1EwqTkfkiJsaxh
+	 K0AFLhnSXn0KXEz9f8JNC13J7lzZaJQE5znHdwE0XdHpddfsIgQUf0QNTynOlA1UL38DB
+	 J2NT8Q+eN1XjluFwpWhpIr0UmZS2ZFMlVPkOJzqwbGQmeQrPhCBB6HV8PpvGcDUc9Pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=gourry.net;
 	spf=pass smtp.mailfrom=gourry.net;
-	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=CPE9fRt3;
-	arc=none smtp.remote-ip=209.85.160.174
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=CH4YjEA5;
+	arc=none smtp.remote-ip=209.85.219.41
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF11B60A6F7A
-	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 07:10:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DF11B60A6F7A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9243606B41A
+	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 07:10:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9243606B41A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=CPE9fRt3
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-5363316fa0cso29203301cf.3
-        for <damon@lists.linux.dev>; Fri, 13 Nov 2026 23:10:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=CH4YjEA5
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-91ea0c05c92so32026926d6.0
+        for <damon@lists.linux.dev>; Fri, 13 Nov 2026 23:10:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1794640232; x=1795245032; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1794640235; x=1795245035; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=5RFbW7qtEXFgFx3OLZ5ldAh4JcKSI5CeWW5dNwakgac=;
-        b=CPE9fRt3Th/9h41MELRzPqGEgQT14KdsGngeNCixNSbZPIcskYdcxUwVUUDHZ52ymd
-         vDcKBU92mTjSiVxO+R+8N88LjJHJ6ljD+xNspdFkHxqLYhN/FxqEyxc24GlhhGVUipKy
-         RYk3o14lSBPX2tskXZSc6RwDNdecQRVfIWj20aujTAP2Utda3h1/1Ou/UXgAUEgi02Gf
-         Jb83h1F6acTQgC203iVs9vLlUTOMIkYEK7CU7e7IPpKOlZBHeIeWjcZ3GziD5BsrZGAU
-         8tc1NabYWCEEQ3D+QR0h+/UmkDZINyh0FIJmz2ISjEUr/2ysE+hhFpVTd5WR3L7tIZ5X
-         WPyA==
+        bh=LMm4cY2G8/N+lvY6+YyUeSTrUdIgOLxyZozNrk1mUY8=;
+        b=CH4YjEA5/pPUBd3brO40Ys0VFmTUV3nhKoRHUhyuyj02EN0kmlgS5D2P2nYpN+dfaU
+         Yca4qMpyP84ibJto4/MT8P5wmtILf3YFg9vKMVVntkByv7rcb6nc6MaQReNFm7KUdd9H
+         PaMVRpYzoqCiaWoJNplVQx6a1C1sCQqyBbkUhqaowhRtQ8INIwE0R1bluZabK4aAaxOQ
+         ezxRYTGSaMfJS/bg2Sl60CU3dgh8xZoa7LVy/QAgvF0xMBADXvh2vAp/AuShfDBdZXY6
+         AIAQO3vKsJKZdSGOo7wEwM+ZS62EVXwTtKJOuFP/3m1SBL9u/5wsnhVAPT6LtYEzktpO
+         lA9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794640232; x=1795245032;
+        d=1e100.net; s=20260707; t=1794640235; x=1795245035;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=5RFbW7qtEXFgFx3OLZ5ldAh4JcKSI5CeWW5dNwakgac=;
-        b=yDXeIx0IgxjXKFSGwFJN1sZ+mr2D4GRdlkzvthodnbgHouvpHD/fnoo9JJpAYaRRai
-         FgGUP6kj4Xl1L8eEwsoHozMm5o2rC8xeZ1kv7P2GbfVHZq5jXifQQACWC3eFSbxL7Mug
-         uXNk6amIREFrFY9RTrbSyROwc0ylvwX57UiVeCn7XEtP2nBOIGfCoQE/jEbxIcaIy3oO
-         CJ0eMYTvc+bBZwXw/PSXMYu4TvrEHObcp89kYhu+qXDVCZ+WRO3opdz458Ocy+T3PSJU
-         92uM1OWJqmE2fkPUs8Ql5fU52JIK3XgtCFzde3Rgd+qHrHUJofcBECcdJSktFW0WicCk
-         TlbA==
-X-Forwarded-Encrypted: i=1; AL+hErHqGO0R/quVxZ84eejF7WBVLs907QSM/y7KmgkoxUlmCV8tKhAS8Ry8AU6apiFwnQKVRH0qLg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+pBSG+RXlHxRCKiuJoeW2NgAeDuOB/VqdgpZyOIbyL/j9+kdsi
-	5Maa7s0OTB0O3jlxLjgzdSLg85TQx5yQwh2Cooj3W3iG5ZEx8YkqvfC8dJK+WxvbWTo=
-X-Gm-Gg: AYBFou23fB8FLWEwhfkwJl7D9z0jYDOMr+djhU50YeyB7Bal2lUC5lbNJ83Th+u9w98
-	Mx0qWQ516PKdoahiEslLE6L+5zEg1Pi2FBukeMCZ/fuH0t6mQpJI6fpvNaKcdbPRixLinfwHvZ5
-	IA4Tyqkt6xnO7oqFrCIPl42Q1I7qDlsI5h96crro7z8i39raBhiAEDWHPFmByvGzgM3FZkjYD4a
-	fPUAUYaFsKDw98WWoi1Yz40izqqGuPWBO186qN4ViXhnSn/MgHkhAqaXWYXkjjDAa7azqMDVmeC
-	P01j+txFHxslwrZ3vUwmzuDut2FykucQ3v6ZSgVmYBAFjAViVyGVS5oX12oUkredPgkEvyBsQq5
-	JRk04bhOnx2EGSMNChpeZZhFZnQg57vsORbfEsp+rZn719UGED1tcgRmV1cquzJK7Gfa5ND7/5o
-	RiDCqEBrolScV8nvQZUHiCG6SiKSwRK9t0+O2pjlfce6noUDkkVUmsT0bYYSbl10TfLj4cMz5DF
-	Aa+MSvZSfW0+sh0qPej1sOmD2lNOC1TcFVfgjsc0m6xNaMmVTPI5RFm8yrYpROfu9bD5r3h/kOq
-	kEGNobzaa0jNOMQKSwS7vx/imZEtWrpPY5n6MNR+3jof712LovZ9ntDOwc5LRECoUjP1KUKNGAs
-	QkLQi2onJSWeV8EXeMIJG2XBSJE7DXfPqpPNC
-X-Received: by 2002:a05:622a:58c:b0:535:a5fb:6459 with SMTP id d75a77b69052e-55ac8e98474mr80004781cf.68.1794640231712;
-        Fri, 13 Nov 2026 23:10:31 -0800 (PST)
+        bh=LMm4cY2G8/N+lvY6+YyUeSTrUdIgOLxyZozNrk1mUY8=;
+        b=P3viZT97MV6FCqZV6jxlskiLKi1/XfKGtySOEvA6wS7Q3/KgawvNAMo5xOSrpDiC4m
+         mLQiNIGGEaF2+ucA96EfJMyF4AoEzJcPbbHdKv1bjWM8V4SQ7oduCFQo8TKaCjnH3YLw
+         eueAZJdVfLq7YEzH8W2r3zgQWBaY5EfwniwSd7M2Iky1rhNNyJ0MB/BHwM8MlhZYOJ11
+         Bh+lCUAjDpSb9gssQME/LcdM7crxw90YcPp2ssOS/MYQOn60MJ5NmeOTr0TT4fai7j39
+         p4mHZZzEDpdu6XJAyQ3DIRp9rg5PnWiMu3X5viKkinKUBwx5bcS6GWc8TsV4sqBBLR2T
+         5oYw==
+X-Forwarded-Encrypted: i=1; AL+hErHz+E2iUwbVqMesceQ+PqLMdldynrsoQ6+dxVgSzExa03uOxpRrW8/PB5KS4H0/9fFLp9PE2g==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+x/Qn4aTIlPjxm+/6uvgFPM9nplRKTOJykrPQsc5Sd3fvpfhH8
+	3h0hQi2oBEuRq9x/6YI+3mIPQ881RZib023zP0B3c0zw/WwwpcdAByfN87sCtIK4dus=
+X-Gm-Gg: AYBFou1ncoYON2EtY+nuZBHJpC5IuM8WrCZVtWPQSP/JIfAvAKtXmLQf58uCylhiT3U
+	SkvvcGzh6MThBwSAVD0wk13b90ypivFJQejhtHbSovv+pu3vMZdXHuNHIfXv4S6CkY7FkeJPt5p
+	9BWNKcm0dPNz9k5AoXMWnlaxpeDbCywcHAO9d/4HhlRGGfsU6igcbMwDHspKQJlza0kdAYPLUpi
+	Cjv7p/10NIFoF4qQux6w7xSbHnlnuj6AdBq60ZTjTvQmNyj5AW9bML4v46sm0byonZOD007fYK1
+	x7XBgJwf8r/cP7p+TFxq+RelR+mpjyishbjiXG8MJVpKVKb/1PyL41uJo/ScTRC40JSJ9WyWzJW
+	MRZ3ZUI/ZDPSrkBq5hI64ajGKVBcoEkeVQsib/Itc8n2eQ4QME+P8Jw+18a0Sc/pIZEi4uMexvZ
+	Ou8I15nrdwL3t1Gdi8MMssMKaud9WUdDnWSctdE+J2QdK3irnkVf8qG5gUIIymWMccslqGrKgxw
+	5IHh031qFSqpOXR+kWtOYAZn4qA+N029KU2DQrXmMPaxSMOTOM6TOmOl1ZR7JUZGXtbjOqFhFGW
+	LbI2TTIPGlxl8jQV1p438p+XFY2FX3GBlSUnvxU6jF6JsIoOgdi5/PdKCLfJt1gI6C3KM3Fnsht
+	tk5EFaAq0dfWiPMU=
+X-Received: by 2002:a05:6214:1d2a:b0:91f:17be:7c90 with SMTP id 6a1803df08f44-91f2424c199mr78511936d6.55.1794640234508;
+        Fri, 13 Nov 2026 23:10:34 -0800 (PST)
 Received: from gourry-fedora-PF4VCD3F (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f23db3a99sm37730986d6.40.2026.11.13.23.10.30
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f23db3a99sm37730986d6.40.2026.11.13.23.10.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 23:10:31 -0800 (PST)
+        Fri, 13 Nov 2026 23:10:34 -0800 (PST)
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 To: linux-mm@kvack.org
 Cc: linux-kernel@vger.kernel.org,
@@ -139,9 +139,9 @@ Cc: linux-kernel@vger.kernel.org,
 	byungchul@sk.com,
 	apopple@nvidia.com,
 	rientjes@google.com
-Subject: [PATCH 13/22] mm/hugetlb: restrict pool growth to common memory
-Date: Sat, 14 Nov 2026 02:09:50 -0500
-Message-ID: <20261114070959.3490008-14-gourry@gourry.net>
+Subject: [PATCH 14/22] mm/page_alloc: count common memory nodes for kswapd recovery
+Date: Sat, 14 Nov 2026 02:09:51 -0500
+Message-ID: <20261114070959.3490008-15-gourry@gourry.net>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261114070959.3490008-1-gourry@gourry.net>
 References: <20261114070959.3490008-1-gourry@gourry.net>
@@ -156,143 +156,33 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Fresh HugeTLB pool folios come from ordinary allocations, which only
-N_MEMORY_COMMON nodes serve.
+When a zone recovers above its high watermark, free_frozen_page_commit()
+clears a hopeless kswapd state if more than one memory node exists,
+since allocations could then have fallen back to another node without
+triggering direct reclaim here.
 
-Restrict HugeTLB allocations and pool-growth to N_MEMORY_COMMON nodes.
-
-Keep the original allowed mask for pool shrinking and demotion so
-existing pool folios can still be found on any online-memory node.
-
-The result of this change is that hugepage allocations will fail on
-nodes without N_MEMORY_COMMON.  This restriction can be loosened later
-when/if it grows a user.
+Only common memory provide fallbacks, so count N_MEMORY_COMMON nodes.
 
 All memory is common at this point, so behavior is unchanged.
 
 Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 ---
- mm/hugetlb.c | 44 ++++++++++++++++++++------------------------
- 1 file changed, 20 insertions(+), 24 deletions(-)
+ mm/page_alloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index cb2de24affdc4..cc1468f68901b 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -3452,13 +3452,13 @@ static void __init hugetlb_hstate_alloc_pages_onenode(struct hstate *h, int nid)
- 			gfp_t gfp_mask = htlb_alloc_mask(h) | __GFP_THISNODE;
- 
- 			folio = only_alloc_fresh_hugetlb_folio(h, gfp_mask, nid,
--					&node_states[N_MEMORY], NULL);
-+					&node_states[N_MEMORY_COMMON], NULL);
- 			if (!folio && !list_empty(&folio_list) &&
- 			    hugetlb_vmemmap_optimizable(h)) {
- 				prep_and_add_allocated_folios(h, &folio_list);
- 				INIT_LIST_HEAD(&folio_list);
- 				folio = only_alloc_fresh_hugetlb_folio(h, gfp_mask, nid,
--						&node_states[N_MEMORY], NULL);
-+						&node_states[N_MEMORY_COMMON], NULL);
- 			}
- 			if (!folio)
- 				break;
-@@ -3528,7 +3528,7 @@ static void __init hugetlb_pages_alloc_boot_node(unsigned long start, unsigned l
- 			prep_and_add_allocated_folios(h, &folio_list);
- 			INIT_LIST_HEAD(&folio_list);
- 		}
--		folio = alloc_pool_huge_folio(h, &node_states[N_MEMORY],
-+		folio = alloc_pool_huge_folio(h, &node_states[N_MEMORY_COMMON],
- 						&node_alloc_noretry, &next_node);
- 		if (!folio)
- 			break;
-@@ -3672,13 +3672,12 @@ static void __init hugetlb_init_hstates(void)
- 
- 	for_each_hstate(h) {
- 		/*
--		 * Always reset to first_memory_node here, even if
--		 * next_nid_to_alloc was set before - we can't
--		 * reference hugetlb_bootmem_nodes after init, and
--		 * first_memory_node is right for all further allocations.
-+		 * Always reset the allocation cursor here, even if it was set
-+		 * before: hugetlb_bootmem_nodes cannot be referenced after init,
-+		 * and further pool allocations use common memory.
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 580feeb608b7a..6d98e213460a9 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -2949,7 +2949,7 @@ static bool free_frozen_page_commit(struct zone *zone,
+ 		 * kswapd work again by resetting kswapd_failures.
  		 */
--		h->next_nid_to_alloc = first_memory_node;
--		h->next_nid_to_free = first_memory_node;
-+		h->next_nid_to_alloc = first_node_state(N_MEMORY_COMMON);
-+		h->next_nid_to_free = first_node_state(N_MEMORY_COMMON);
- 
- 		/* oversize hugepages were init'ed in early boot */
- 		if (!hstate_is_gigantic(h))
-@@ -3802,23 +3801,21 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
- 	unsigned long allocated;
- 	struct folio *folio;
- 	LIST_HEAD(page_list);
--	NODEMASK_ALLOC(nodemask_t, node_alloc_noretry, GFP_KERNEL);
-+	NODEMASK_ALLOC(struct nodemask_scratch, scratch, GFP_KERNEL);
- 
--	/*
--	 * Bit mask controlling how hard we retry per-node allocations.
--	 * If we can not allocate the bit mask, do not attempt to allocate
--	 * the requested huge pages.
--	 */
--	if (node_alloc_noretry)
--		nodes_clear(*node_alloc_noretry);
--	else
-+	/* Scratch masks for allocation eligibility and per-node retries. */
-+	if (!scratch)
- 		return -ENOMEM;
-+	nodes_clear(scratch->mask2);
- 
- 	/*
- 	 * resize_lock mutex prevents concurrent adjustments to number of
- 	 * pages in hstate via the proc/sysfs interfaces.
- 	 */
- 	mutex_lock(&h->resize_lock);
-+
-+	/* Fresh pool pages come from the ordinary allocation domain. */
-+	nodes_and(scratch->mask1, *nodes_allowed, node_states[N_MEMORY_COMMON]);
- 	flush_free_hpage_work(h);
- 	spin_lock_irq(&hugetlb_lock);
- 
-@@ -3855,7 +3852,7 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
- 		if (count > persistent_huge_pages(h)) {
- 			spin_unlock_irq(&hugetlb_lock);
- 			mutex_unlock(&h->resize_lock);
--			NODEMASK_FREE(node_alloc_noretry);
-+			NODEMASK_FREE(scratch);
- 			return -EINVAL;
- 		}
- 		/* Fall through to decrease pool */
-@@ -3873,7 +3870,7 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
- 	 * within all the constraints specified by the sysctls.
- 	 */
- 	while (h->surplus_huge_pages && count > persistent_huge_pages(h)) {
--		if (!adjust_pool_surplus(h, nodes_allowed, -1))
-+		if (!adjust_pool_surplus(h, &scratch->mask1, -1))
- 			break;
+ 		if (kswapd_test_hopeless(pgdat) &&
+-		    num_node_state(N_MEMORY) > 1)
++		    num_node_state(N_MEMORY_COMMON) > 1)
+ 			kswapd_clear_hopeless(pgdat, KSWAPD_CLEAR_HOPELESS_PCP);
  	}
- 
-@@ -3889,9 +3886,8 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
- 		/* yield cpu to avoid soft lockup */
- 		cond_resched();
- 
--		folio = alloc_pool_huge_folio(h, nodes_allowed,
--						node_alloc_noretry,
--						&h->next_nid_to_alloc);
-+		folio = alloc_pool_huge_folio(h, &scratch->mask1, &scratch->mask2,
-+					      &h->next_nid_to_alloc);
- 		if (!folio) {
- 			prep_and_add_allocated_folios(h, &page_list);
- 			spin_lock_irq(&hugetlb_lock);
-@@ -3978,7 +3974,7 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
- 	spin_unlock_irq(&hugetlb_lock);
- 	mutex_unlock(&h->resize_lock);
- 
--	NODEMASK_FREE(node_alloc_noretry);
-+	NODEMASK_FREE(scratch);
- 
- 	return 0;
- }
+ 	return ret;
 -- 
 2.53.1-Meta
 
