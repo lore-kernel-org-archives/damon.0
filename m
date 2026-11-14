@@ -1,84 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794640240;
-	b=ljmt30Egzl9Q+c2mMj30MOLnhVNq6NuQ30bmZOf40kXJEs+vuXh7JYIPyZF9x0MD8fsF
-	 nujSdIe8KhR96iU3FdVv5GmxPb4CSnggFvSKTGN4mP1I1rvjGBronjF8Nloecygh7iB1R
-	 hQ1fe2Nqp0KohCjxtfaSwIsx6MLXF+kaW+oCRDFzm0OF1y84VWylBgLbyIroopdWjZUwd
-	 h7i2UwgDh+sZg54tskInnuwnTEAWzyULzbd62YTuVMoK+M5k2rwbBmK7bMAOhVXfe7AJk
-	 +2Jcj0dnFdERzKbNUwH5lMFJ+wNt9g7W3USZcvtVHLBL1odqp8sqs3OGKsxcAs4sZNg==
+	t=1794640242;
+	b=WbTqmWXS8MPej+cIGY1U5xoNR9DD85NRE4HgMXXZbJ5/fcK9YOzOwVBU3bZTxbGutoqm
+	 F8DeSbFrH+nEspoPVZNJajU8XdHUV2jN6oh49S/QYMhb9qslp7RJr5F2o0MKCKaO1RTkE
+	 FUOMlSyr6JF81uXUDxkMiKlo9JZh8me7YIfe+e/n78KpAqu2Vk0Fq/Xdi/j2tkDwiboSm
+	 7OBnBSSNXooI6ck8ALl/shhFE6xtK5WglnYTWRbpWksQWwM9Dfq406Df2LiK4OGpVh6GE
+	 44CSwKMfUP78OGr0TkiNDxrxf/rrQUa0pR6XqnZmRwduRJM5KuCUcg8oK44AdQMJnrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794640240;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794640242;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TW0pg36vCDijleVRTyqZR6UjU0iehYYk3FdVNC+q6Cw=;
-	b=WscDvgKOxr8Zq280VDLM6lHcVXLF+ldCiTLEWptqjSe33qOqlS1UCMobS0q1XJicGfda
-	 kcINJKoc+7X/WdKwcC0EuP7o9bjrg2bmwgekrJwpQWAa+PxlZPJ4//zI3wsmqgfYMdurf
-	 FNs5P7sriVZpG/2AGupekPXEn3sCR9+1LT2Nl2YRgmFiyLg7JWbYLfMYPjvjecAIK6dNL
-	 fBjpyCkChWojQJJbddTBBd7De18BmY9JsIRg7EKhCbdDemcRywE3TsZdnirzaKs6TWMI4
-	 VVq1+mBYiBvbm6KoVqgGDd262ypnhWSlZC9udzxomQvmw+04geAaEjWNcs7ORwsWkOA==
+	bh=Fkzw1dSkiJcsilY2Mokhk9gjBcrzBYNOsKL3JfHFbP4=;
+	b=E8mz7vlhtn1ZKPirSiA0xOYnWM+jL2WTZqtvLje7TxLMU+xiRiV01r7teOSVZI2cxABm
+	 ijMzO2UdZeZJqHdgBll5DxGZH8RPrr4aSLRda7boRvmAl5GG0bCcqz79eaEBlSSBiQ0WZ
+	 cHmJfVYGmAoQkDX1tZPkn0x+D5oABleQ8lazYoMffvRW8jemingMgMdMjU30CgUZ+hTD/
+	 tbruKptcKOrTth+eekeOmQ9FvVI1J/QN71uD6AEzjIkOaM+eR+E6FtqiW1TBYqtYqeHk+
+	 LC2s8KYmvLsDpH+4YmkDSfdrr0Ei+mB8MLgUGgC88TNmyxkjTmK1zbIN5/jQGCn5IAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=gourry.net;
 	spf=pass smtp.mailfrom=gourry.net;
-	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=TE3JlMbU;
-	arc=none smtp.remote-ip=209.85.219.46
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=U9RDYU3x;
+	arc=none smtp.remote-ip=209.85.219.44
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AE360A2619
-	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 07:10:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5AE360A2619
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F089B60A5BE3
+	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 07:10:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F089B60A5BE3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=TE3JlMbU
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-91ebf4cd218so27850996d6.3
-        for <damon@lists.linux.dev>; Fri, 13 Nov 2026 23:10:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=U9RDYU3x
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-91ea0c05c92so32027476d6.0
+        for <damon@lists.linux.dev>; Fri, 13 Nov 2026 23:10:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1794640239; x=1795245039; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1794640241; x=1795245041; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=TW0pg36vCDijleVRTyqZR6UjU0iehYYk3FdVNC+q6Cw=;
-        b=TE3JlMbUJAYnSFB6WBXsLcgEn+bQBWcYy8Gp4d8vKosGJUP+bCoeZ/l/dGVjt6wgSd
-         kX533FJOKHS5OsLyx5seillcVIu//3TunFSvKkeK4lUyDmWzMAmdJdSKnmFTu3RdkQAP
-         KFNEotulcnFRJe42Wcbmy6QKQC0Y7bKVC85IMnCpaPX63BL6U11GyD9wEMJQ8c3ZktFt
-         dI3yckXKQSxuMbWFmHJPAZj53+iBhddCkCwc/46yJ6+Cjhba8uziM91jLmgBgxCQ1dH+
-         /QC0okzFqSvJk+QXU5a/mt8+f7p0y8m2UHqy6EnZGi7mCjypPshjRZp3jALU0rQaz+/8
-         uEgA==
+        bh=Fkzw1dSkiJcsilY2Mokhk9gjBcrzBYNOsKL3JfHFbP4=;
+        b=U9RDYU3xcVUWOssMt974oUfW9TgUuKGjVVOgWd4RHxCPQU81oo32gYF/K/o2t1ZUM/
+         Huko/T6TilHIzLmpk6tyUMsyG+7fgcyImxMmL21MYPGCVDfdx/+QdvtcqfxXNU6Ol1un
+         9A3RjWAtS2bR04FH1/JskV1IN4j57e8CcT4BS22nmg8Y0GK+d/EPI/QZjKVKVTGYWFRt
+         BxgjilfB8Sq/OXWpSrFHCrd8Rx9lyQU7idZnnv3A4o9WMXGfycPEu7tHAvDGNwo9OgD+
+         k0mgXY2WR6cogDdwCxpN5zLmY+QdhsYxyq1VFVzdm3EOwzOT0BB37FLDOYNEf7tpAfAs
+         j0oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794640239; x=1795245039;
+        d=1e100.net; s=20260707; t=1794640241; x=1795245041;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=TW0pg36vCDijleVRTyqZR6UjU0iehYYk3FdVNC+q6Cw=;
-        b=JE3XxMrey7225mUbIoH8t7Frl1+wojC6soWTxwc8zemEjpZqvIEKcP4ZMM2gg+K4C4
-         gUTALoQccI94pJ3ZVKi9QOiYODrw3n5IMk5CY0y+e1+RuYKKpqPkqewWhS6g9/duq4dv
-         HKsM7U7jrggy/BF98AWWd/Ukt3vg4vbjZJyhJDa0t8i+8rJwcpiSgd5oUveXUR3EPaQ4
-         chHck2uDR/7p/WuImXKbKQjBNKThYBOd5z1juq5xDBpMlNcK1RoO8LvZnvssyjS0+XIa
-         MNhPk/lfvhlzwJ5EswDuuHGa5uF3xNhUW06tf26Udou1OLMQKpzO8FfWKzTu2d1lxL9o
-         3oSA==
-X-Forwarded-Encrypted: i=1; AL+hErHNwIaZFHtA6454Iw+RnvZ6PGdZDE9raHV3/v8Md2ox2Mmx4QhzQY6pnwUqmPUag3KnVvr9yw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z95nE4Jyr95QhE70qQ8BygLxHsbFDpXUsUUTa/BXPB7W8yjsTuw
-	LISiDi2m0W96hMuGxM4sDPMGo79ULG+rXnso/V8yOKgs6csiwXUmVPtIrB6XLhzXLfo=
-X-Gm-Gg: AYBFou0GtiJT9FKzRKQqakvQT9Glrin97IYJHAiePzBvYj5P7dr0LWfjqEk/TjLrU0M
-	Zr0PC5wA4ryDx1cKlHuUiItlJsITgWxOf+5i4Q0BCWfM/BPmqqERjVd26wZnUZ3HQ8Ezwh12iPN
-	fqQiI4Y5oa+5GcnzmctQVAtv2OuoYtnB8XIY0y0dhauc63v2hDLsVPA22rxyLxMApCFqtZk0AgK
-	Xk+k1ApZ/wFY51XeuX0xWSkxtsCx3imkXO/amnhrgvUpoUA+taPj5w5lemXHHbLlby30sXP/oLk
-	hNJnacM7dTRo0vsshDRX7OvGjTD6z0nQmdU5tBDwPUFbpaC+swaR6zmU0wVyCM+Sxg1YA+QPr3T
-	GuYdr1DppO9/Hi4Jngm9/Ua6rEL8hQxNUk/8b5ReO3tZqMPC2j55pjCqZvUrgb0r08W2V9nb8Mn
-	UOj54FU2GoF2mzrq0ydUJ8yGQh6Un6U97D0ehaHfAJTfQQbtOthsUlXUW7uj8hiwRx3WhJ+lazB
-	JKX/f5XYa5y4nLhT5G/z5UWplu5zdBdiojpkFnx/HzTFm+UKIofy9+qSkJhLHe0y8HZYVbimOiB
-	qNVZuB5O7hzFnJ4Paks10PMg+MUdBVWbuxa7ntN90QLsQeZimZgnSc9+2Vy1Mfyc+FtsTsCmps4
-	vIkpZSXbeCCxg4dx0yVA52H/R2Yj4/urx8pyA
-X-Received: by 2002:a05:6214:1311:b0:91f:2208:b683 with SMTP id 6a1803df08f44-91f2428c6aemr76715686d6.55.1794640238785;
-        Fri, 13 Nov 2026 23:10:38 -0800 (PST)
+        bh=Fkzw1dSkiJcsilY2Mokhk9gjBcrzBYNOsKL3JfHFbP4=;
+        b=MNSqfosBdKHvW08qCZGULdIgavjM015XU51jshfvZNIiegupfMrFCsu3ql0S/d7oEe
+         cY4/d7Y3WdDTKAFEoZ57+USMP0cq1mOW2Fpijzu5XSBu8ddvJHwikLcID5rQN5UzipFw
+         c5KdnhKaOM5tl5giu/4u866eXLXIbfqaFTlflsVlQ7GWe4TA63SoaWygZJPzaiMpzl5V
+         lB9Cm2BTqCbK3Fgu7fc2j6yjYVryWU/3AxtnaT8UJMXqUfmBtBJPQqtLQDMbVtanH22f
+         /wwCAHaxyo/b6GCnjBbfNtmuC/MU5xfJ1IIRJEedz/j/ymhhR+beo7JKD5A7dyeG66mG
+         zr2w==
+X-Forwarded-Encrypted: i=1; AL+hErFC+kB/S2PYlwGudKDi+2sInhCInmBxMI09qK4Q0lqngLzBAHTCwUDtw8C5Wo3QViAdIwsHUQ==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/yiu2pIWeibw/KR5qCzaKg1qvVNfkIvSL+zAkh6cGn0ywzGbhh
+	4xyfifptj1VB3ePUtqZVN2fs9gUFnVn5D9B6CpRHIw3RZ76lnQygu6oKDFW6rIt6ukM=
+X-Gm-Gg: AYBFou37tlfTzUWx5a4bgSoXq3MsdySYgqVJOcd6Hq37b5b/1sO5QCvjPfHJiI82M9+
+	Mndy1gNWq2ML61rFnLGz28auNWvX+xLJH95zB2D/R6iuDF9Zdsya9tC3oSOI4RJR0as+rnS0u/m
+	55bYCtXi5bkf7o5VyDLTGMmUgpuEHQG+4WyIqbh4Q2ZJO5swPxCwL4W4IkHTN2TmgPf5efUBDZm
+	fzotFhxkv1hsrLVFP1UDxg5h8uJ/VucjCXwc207KLEg/QFDzrvm9LM2/l3UZFrUBGL+I9wZq1Xr
+	wdhz15ITq/cW+laywjdLqWRj2dylmmXqdCLdieAxtBF3e5PezvVyjBidZd/rRXkuwKq0T4wFuK6
+	Q+33DxnRr10rGSdTHglORQPbRlbwJiHNMnVlqIxixpNdxqrxJnkWegpVB5jY7+cFretsRXjhVb9
+	XpblRvzf2BweLXFlDZUdXZtA6imwxK4IpKn1psj8mYCeSeEQbKrzr755t2KQ2wcNxOCuzIqctQO
+	EaT/H1ueq12fpZritdfvrANZon4yaOP9rpQ9+uirfd/SbcRF0lo391u9B4s2usZE7aHBtTFXUsw
+	Z/XWACCQ8DErTsb/E/LFKccgMRubrgHmtyXZlZr0K8+CCPzTdgIm7YysFkUJqt125OLRY4A8BSF
+	EjLxv0hwHPd1E8jI=
+X-Received: by 2002:a05:6214:c2b:b0:91c:9086:ee07 with SMTP id 6a1803df08f44-91f2420df31mr81654406d6.38.1794640240818;
+        Fri, 13 Nov 2026 23:10:40 -0800 (PST)
 Received: from gourry-fedora-PF4VCD3F (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f23db3a99sm37730986d6.40.2026.11.13.23.10.37
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91f23db3a99sm37730986d6.40.2026.11.13.23.10.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2026 23:10:38 -0800 (PST)
+        Fri, 13 Nov 2026 23:10:40 -0800 (PST)
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 To: linux-mm@kvack.org
 Cc: linux-kernel@vger.kernel.org,
@@ -139,9 +139,9 @@ Cc: linux-kernel@vger.kernel.org,
 	byungchul@sk.com,
 	apopple@nvidia.com,
 	rientjes@google.com
-Subject: [PATCH 16/22] tty/sysrq: use common memory for the manual OOM zonelist
-Date: Sat, 14 Nov 2026 02:09:53 -0500
-Message-ID: <20261114070959.3490008-17-gourry@gourry.net>
+Subject: [PATCH 17/22] mm/vmscan: restrict reclaim to common memory
+Date: Sat, 14 Nov 2026 02:09:54 -0500
+Message-ID: <20261114070959.3490008-18-gourry@gourry.net>
 X-Mailer: git-send-email 2.56.1
 In-Reply-To: <20261114070959.3490008-1-gourry@gourry.net>
 References: <20261114070959.3490008-1-gourry@gourry.net>
@@ -156,34 +156,138 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-SysRq-f constructs an OOM request with GFP_KERNEL and supplies a
-zonelist for allocation-constraint checks. The request represents an
-ordinary allocation, whose fallback domain contains common memory rather
-than every node that happens to have memory.
+Reclaim serves the ordinary allocation domain.
 
-Select the zonelist from the first common-memory node instead of the
-first memory node. All memory nodes are common at this point, so
-behavior is unchanged.
+Restrict it to N_MEMORY_COMMON:
+  - start kswapd only on common nodes, at boot or hotplug.
+  - walk only common zones in direct reclaim and when throttling it,
+    so no reclaimer waits on a node that has no kswapd.
+  - walk common nodes when MGLRU registers an mm and when its debugfs
+    interface iterates or validates nodes, using first_node_state()
+    and next_node_state() in place of first_memory_node and
+    next_memory_node.
+
+The fallback zonelists hold only common memory, and all memory is common
+at this point, so behavior is unchanged.
 
 Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 ---
- drivers/tty/sysrq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/memory_hotplug.c |  3 ++-
+ mm/vmscan.c         | 26 +++++++++++++-------------
+ 2 files changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/tty/sysrq.c b/drivers/tty/sysrq.c
-index f4571d05b4962..824f5836b47d7 100644
---- a/drivers/tty/sysrq.c
-+++ b/drivers/tty/sysrq.c
-@@ -386,7 +386,8 @@ static void moom_callback(struct work_struct *ignored)
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 29ff2c46499b3..410a29732bae7 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1207,7 +1207,8 @@ int online_pages(unsigned long pfn, unsigned long nr_pages,
+ 	/* reinitialise watermarks and update pcp limits */
+ 	init_per_zone_wmark_min();
+ 
+-	kswapd_run(nid);
++	if (node_state(nid, N_MEMORY_COMMON))
++		kswapd_run(nid);
+ 	kcompactd_run(nid);
+ 
+ 	if (node_arg.nid >= 0)
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 061fbd168d982..bb7b1c50bfb78 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2932,7 +2932,7 @@ void lru_gen_add_mm(struct mm_struct *mm)
+ #endif
+ 	spin_lock(&mm_list->lock);
+ 
+-	for_each_node_state(nid, N_MEMORY) {
++	for_each_node_state(nid, N_MEMORY_COMMON) {
+ 		struct lruvec *lruvec = mem_cgroup_lruvec(memcg, NODE_DATA(nid));
+ 		struct lru_gen_mm_state *mm_state = get_mm_state(lruvec);
+ 
+@@ -5562,7 +5562,7 @@ static void *lru_gen_seq_start(struct seq_file *m, loff_t *pos)
+ 	do {
+ 		int nid;
+ 
+-		for_each_node_state(nid, N_MEMORY) {
++		for_each_node_state(nid, N_MEMORY_COMMON) {
+ 			if (!nr_to_skip--)
+ 				return mem_cgroup_lruvec(memcg, NODE_DATA(nid));
+ 		}
+@@ -5587,13 +5587,13 @@ static void *lru_gen_seq_next(struct seq_file *m, void *v, loff_t *pos)
+ 
+ 	++*pos;
+ 
+-	nid = next_memory_node(nid);
++	nid = next_node_state(nid, N_MEMORY_COMMON);
+ 	if (nid == MAX_NUMNODES) {
+ 		memcg = mem_cgroup_iter(NULL, memcg, NULL);
+ 		if (!memcg)
+ 			return NULL;
+ 
+-		nid = first_memory_node;
++		nid = first_node_state(N_MEMORY_COMMON);
+ 	}
+ 
+ 	return mem_cgroup_lruvec(memcg, NODE_DATA(nid));
+@@ -5665,7 +5665,7 @@ static int lru_gen_seq_show(struct seq_file *m, void *v)
+ 	DEFINE_MAX_SEQ(lruvec);
+ 	DEFINE_MIN_SEQ(lruvec);
+ 
+-	if (nid == first_memory_node) {
++	if (nid == first_node_state(N_MEMORY_COMMON)) {
+ 		const char *path = memcg ? m->private : "";
+ 
+ #ifdef CONFIG_MEMCG
+@@ -5765,7 +5765,7 @@ static int run_cmd(char cmd, u64 memcg_id, int nid, unsigned long seq,
+ 	int err = -EINVAL;
+ 	struct mem_cgroup *memcg = NULL;
+ 
+-	if (nid < 0 || nid >= MAX_NUMNODES || !node_state(nid, N_MEMORY))
++	if (nid < 0 || nid >= MAX_NUMNODES || !node_state(nid, N_MEMORY_COMMON))
+ 		return -EINVAL;
+ 
+ 	if (!mem_cgroup_disabled()) {
+@@ -6492,8 +6492,8 @@ static void shrink_zones(struct zonelist *zonelist, struct scan_control *sc)
+ 		sc->reclaim_idx = gfp_zone(sc->gfp_mask);
+ 	}
+ 
+-	for_each_zone_zonelist_nodemask(zone, z, zonelist,
+-					sc->reclaim_idx, sc->nodemask) {
++	for_each_zone_node_state(zone, z, zonelist, sc->reclaim_idx,
++				 sc->nodemask, N_MEMORY_COMMON) {
+ 		/*
+ 		 * Take care memory controller reclaiming has small influence
+ 		 * to global LRU.
+@@ -6604,8 +6604,8 @@ static unsigned long do_try_to_free_pages(struct zonelist *zonelist,
+ 	} while (--sc->priority >= 0);
+ 
+ 	last_pgdat = NULL;
+-	for_each_zone_zonelist_nodemask(zone, z, zonelist, sc->reclaim_idx,
+-					sc->nodemask) {
++	for_each_zone_node_state(zone, z, zonelist, sc->reclaim_idx,
++				 sc->nodemask, N_MEMORY_COMMON) {
+ 		if (zone->zone_pgdat == last_pgdat)
+ 			continue;
+ 		last_pgdat = zone->zone_pgdat;
+@@ -6756,8 +6756,8 @@ static bool throttle_direct_reclaim(gfp_t gfp_mask, struct zonelist *zonelist,
+ 	 * for remote pfmemalloc reserves and processes on different nodes
+ 	 * should make reasonable progress.
+ 	 */
+-	for_each_zone_zonelist_nodemask(zone, z, zonelist,
+-					gfp_zone(gfp_mask), nodemask) {
++	for_each_zone_node_state(zone, z, zonelist, gfp_zone(gfp_mask),
++				 nodemask, N_MEMORY_COMMON) {
+ 		if (zone_idx(zone) > ZONE_NORMAL)
+ 			continue;
+ 
+@@ -7736,7 +7736,7 @@ static int __init kswapd_init(void)
  {
- 	const gfp_t gfp_mask = GFP_KERNEL;
- 	struct oom_control oc = {
--		.zonelist = node_zonelist(first_memory_node, gfp_mask),
-+		.zonelist = node_zonelist(first_node_state(N_MEMORY_COMMON),
-+					  gfp_mask),
- 		.nodemask = NULL,
- 		.memcg = NULL,
- 		.gfp_mask = gfp_mask,
+ 	int nid;
+ 
+-	for_each_node_state(nid, N_MEMORY)
++	for_each_node_state(nid, N_MEMORY_COMMON)
+  		kswapd_run(nid);
+ 	register_sysctl_init("vm", vmscan_sysctl_table);
+ 	return 0;
 -- 
 2.53.1-Meta
 
