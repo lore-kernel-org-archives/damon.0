@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1794774546;
-	b=CVR8UbCLzisOI2rNQTmzuX1B/fm98UbQW4VRZ2YG8aYY9mgC4AbCsfgQv3Lc0zAcqLmz
-	 SwSxN0ijP8Vqzte0LD+2l1d88XWk5s4JNEMa2/gp4/0knFKpZ975n163vAPtpoOnrwuag
-	 AzNzXhuv24wfdq1ywll12MCkqVHemU2OV9aTMP/xKwVR/QROfhhnBUM1wsep+/SEC4dir
-	 jxiw9xGfKsri9/7xY9RVISGa+bZx9di/pv8P8i0jZBOsqtpkY0iXshkTh4p047ZRldS7u
-	 D6Ms7e6r+OkVa5zQg15YkOtoFiaU3Ior5Ecrv+Huhje5QnCzbRpJ197Xz8nx4L1nsLw==
+	b=WEQR0qt4GB+aH5Pb4orHfiJEbWYA7U3sRrdJIXJGNP8dgpiZj8y+FQgFeZ1zcj0NgdES
+	 eh6X3zjiy6bV2P28+5298TbvKQGf606Eu15UMU5YQAPA5+jPqfQvdI/sMctlv3rHDZcTW
+	 4jnhvv5fsUC9jZ+6OeNpd61qLhAm1Wc9OQFzUo8O9dwwZsuXq78+nO9r6xZHi1kN8wDiB
+	 cXgzNEWYa/zh5ozRwIAV3WFbP8CI5hQ+QUe3Wn5Xj+vW38rd0kfxcHg5k+tG3iswYe7GU
+	 RK82U+m7LRa1gkLYLEuACPukZB7tkvXF7aj6o5yAfyli06KmReENVfuhTyE39jbx/fQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794774546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=wpJsxUs5k/v5Q/BJmFbBidw7iSSRFrTJt5QonQhU+Vk=;
-	b=UvJcKaKOP7gtdfjWxg+LQTjNLeBe0gJvLhprl/l09Iyo6HogwUt+EZF5fNQ72X58dvPp
-	 xlIHPNTjVGYC7bYjJh/az+/LrtElrWp87T84CGafZJW0m5RYfCW+6uUo72QAVvxx0qgHF
-	 auXWW1RBWmNq/4uvkC74UEOxcgZ8G+neZOcL7XnzJMt6q5eYkQInFOYX8udZ11ffJBRUh
-	 2Y3J1SidmjHUYBDhjAX2ke6VpNUJ8MkrVsvPOA3DNAXU+RB5U0Ii2FQwT/Tc2trPK2YY0
-	 ZEyBfBDYt/DEh8ysxc2wwG/3YIBNlRhyBMXOM0AGmAsKCGpI0C3TTroGDboN0zhFb+g==
+	bh=6gIxUQIo/TA1PIO0jTUdNpj13U+tqjhnz67nbkreB/0=;
+	b=FLHhyMvV98dT7qNiE8lFdO2IsMM4xIxMLG8ns/1mxXZ8+9mz1C3zdRZ++j1C869zaXNc
+	 qeuh7u8m74JAZuXYgxd/sztCVf5OEiQXqB33HKxVMwNAGochQROL8IuNp+AX1pPsjKlXN
+	 1xDqYIIL5m7eNjEhCghdh5m5ckSTud/gYm7lADcpGZrNcu/Bm0baZDHXO0yFiSooMrbIq
+	 Oxsm3CWxd2ICutIao79YJxiQtDkZG+dskGbaJjpJcjk7NET575IPbxvHnBF2J/JLSVGXi
+	 +XROkQwsCwOd0q6tqPSNDAB00UHqskD3i0LrtVCaGZuiRHAIkwmzW4dbci8zNIe0J5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DAg4GCbX;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DvQ6xmJJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B9B60A3817;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2167606A329;
 	Sun, 15 Nov 2026 20:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DAg4GCbX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141B21F0092B;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DvQ6xmJJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5945C1F000D2;
 	Sun, 15 Nov 2026 20:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1794774546;
-	bh=wpJsxUs5k/v5Q/BJmFbBidw7iSSRFrTJt5QonQhU+Vk=;
+	bh=6gIxUQIo/TA1PIO0jTUdNpj13U+tqjhnz67nbkreB/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DAg4GCbXkR2wW9RLIVal7F0rVzKWUYpk5e8bIAkwv0wIk2bmYWXK5nQZQ3pLSjofO
-	 QGurE227J1JXsGJ4jya6+feB+xYvDKqqFCkJyPhVhg0udHzSwWWGrtPQQxVhH+YHvH
-	 3Rkc+g553eTVaPJmxSliRd11f7FniUllftDxI0zLrxyHuQvX9+rg4Te4hzYS7aoYQI
-	 6R71KtxCQ/S+EZQ+LbMMXaMaUkjO767VawaUty1e70oC1EjD7fi8XGa8faCKK8X8Po
-	 Jct8Fzo+DP9ThYBjTCfrEacIX43mJcvfnZJml7iQy+9DexClo2kUPfRHCcuys5elQ6
-	 MSSdAAVT9thcw==
+	b=DvQ6xmJJtmDKQVvz7veeezW21iojwJCKmLcgN3cpqA3PNtLaYDr/JaTaePbfxC0/h
+	 djgNWagXMtLjieepCkMuyrCQZqw5RohLAf4P34avIASU3q+9X5jDigFemK9bvOiVR5
+	 02o4W5I0iHcQ8O1QFGoEQk2fLwENjCP7SMUZRA/EfS9KnY8Q9ocoa4t1OZUXr7Kusx
+	 SJwF4nFiNy/iT8I6tp0A7XfOvgDYiSbnEvkl3OYedUKskLnCUrEijBF/fU9kSn9MJe
+	 J+WUM2KSbnj+7o6rGntSo5S8qWoc66k/yg+tC0cG9I+TKHQlnirFWONRYYWsjijv+V
+	 rtCvDrTjflb5w==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 11/27] Docs/ABI/damon: update for report producer sysfs files
-Date: Sun, 15 Nov 2026 12:28:29 -0800
-Message-ID: <20261115202849.99134-12-sj@kernel.org>
+Subject: [RFC PATCH 12/27] mm/damon/core: introduce DAMON_FILTER_TYPE_REPORT_MADE
+Date: Sun, 15 Nov 2026 12:28:30 -0800
+Message-ID: <20261115202849.99134-13-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261115202849.99134-1-sj@kernel.org>
 References: <20261115202849.99134-1-sj@kernel.org>
@@ -62,41 +63,59 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Update DAMON ABI document for the newly added data attribute report
-producer control sysfs files.
+Extend DAMON probe filter for the existence of data attribute reports
+for the probing memory.  Define a new filter type, REPORT_MADE, for the
+purpose.  Add a union argument for specifying the type of the reports
+for the filter.  Update the new argument for the new type when new
+filter parameters of the type are committed.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- .../ABI/testing/sysfs-kernel-mm-damon         | 20 +++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ include/linux/damon.h | 3 +++
+ mm/damon/core.c       | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index 4acb2015c2f4f..c9f718f126c70 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -695,3 +695,23 @@ Date:		May 2026
- Contact:	SJ Park <sj@kernel.org>
- Description:	Reading this file returns the number of data-attribute
- 		monitoring probe-hit positive samples of the region.
-+
-+What:		/sys/kernel/mm/damon/admin/reports/producers/nr_producers
-+Date:		Nov 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Writing a number 'N' to this file creates the number of
-+		directories for controlling each DAMON report producers
-+		named '0' to 'N-1' under the 'producers/' directory.
-+
-+What:		/sys/kernel/mm/damon/admin/reports/producers/<P>/report_type
-+Date:		Nov 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Writing to and reading from this file sets and gets the type of
-+		the reports the producer will generate and submit.
-+
-+What:		/sys/kernel/mm/damon/admin/reports/producers/<P>/producer_state
-+Date:		Nov 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	A file for requesting actions including enablement and
-+		disablement of the producer.  Refer to
-+		Documentation/admin-guide/mm/damon/usage.rst for more details.
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index ca0135c6f6700..cce7d344c585b 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -804,6 +804,7 @@ struct damon_prep {
+  * @DAMON_FILTER_TYPE_PGIDLE_SET:	Pgidle is set.
+  * @DAMON_FILTER_TYPE_HUGEPAGE_SIZE:	Page is part of a hugepage.
+  * @DAMON_FILTER_TYPE_ACTIVE:		LRU-active pages.
++ * @DAMON_FILTER_TYPE_REPORT_MADE:	Report is submitted.
+  */
+ enum damon_filter_type {
+ 	DAMON_FILTER_TYPE_ANON,
+@@ -812,6 +813,7 @@ enum damon_filter_type {
+ 	DAMON_FILTER_TYPE_PGIDLE_SET,
+ 	DAMON_FILTER_TYPE_HUGEPAGE_SIZE,
+ 	DAMON_FILTER_TYPE_ACTIVE,
++	DAMON_FILTER_TYPE_REPORT_MADE,
+ };
+ 
+ /**
+@@ -834,6 +836,7 @@ struct damon_filter {
+ 			unsigned long range_min;
+ 			unsigned long range_max;
+ 		};
++		enum damon_report_type report_type;
+ 	};
+ /* private: */
+ 	/* Siblings list. */
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 06b85d00e38d9..c02c7fbc1d864 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1834,6 +1834,9 @@ static int damon_commit_filter(struct damon_filter *dst,
+ 		dst->range_min = src->range_min;
+ 		dst->range_max = src->range_max;
+ 		break;
++	case DAMON_FILTER_TYPE_REPORT_MADE:
++		dst->report_type = src->report_type;
++		break;
+ 	default:
+ 		break;
+ 	}
 -- 
 2.47.3
