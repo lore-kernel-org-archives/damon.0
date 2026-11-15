@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794776970;
-	b=1YcU0/NBevAOXA4Mg2CuD1ivkGfrztr9ixjKu1YrbeYRs/W0mFMbVhFMdMUa+IhLpXy0
-	 qbVDnhpx5IGVNSUR4gB2OclCm8uZMhLZt91cGputCU6qqvYlSVmdE3OAGgBNhkQdMvL6P
-	 4xzHBHJVvAIqMxAigtpZyYt7axrWVcREOlZgCwC6lyglV3ZbvVOh+fQtTmYy1jxYxPAJf
-	 NGWj8zHACnCM0n0ObV30B8C6LdrlJFPuruMzZCOoxqFgRtAyV5GeCPg/CdIqfN7bUKGuN
-	 Voi+uPR2+gRH4DrhTBJxZcR8e8eF8bPxE/gW9OuES9IzD2m4QOeZ0WIEeJ5YE1bUfZw==
+	t=1794777450;
+	b=HkSmaO1KxD03FZ9pIuOiX337895kI9146O+7ScaoG0UQIE/HfCc+ftSCFpuMnU3qjj7E
+	 9QMAB5LsKwSPLwv0kxT+/KEL81G0mSKZDrU3wcLKdrdvWKIiwQEQbQqk5KagbLwUQDtwa
+	 ATfxS9QYvgwLLuoKHQVPbHpA3lm5N1X01kdeGWmQOZImaQFiWeqxV4rLPNmVTU4LnfY5D
+	 FD31sgOvSk7DhdvoCAqqfUIyqpPMfV0/4qmPA1OMANzp8r5qj76IHMrM254ItQMNnaxXN
+	 kgyrl/Xi9b00DsN55a0HFEe2F+daBjdZYyu9n5j8fcMmwnzN9TkOTZMiZRQVJLvGVHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794776970;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794777450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding;
-	bh=WIxMAhHIgqQiK3JeHg/MoUdkFWwJF4Zy1XHbF7nLUlk=;
-	b=tD4Md2ZSKjg/3KNRl9IM8E9R0VrStiVPRrShRNjnP4wXnzAFv0pzTR5fy7bo0BRY9XuX
-	 Kw+CVLKZZ+HRZgd0dGKqKtibnvxR2VE9ZDw//ukp+VgfQUIu1wQ06ikgPg/Je1ZfQJxXv
-	 FrT+Q96JGmfVeoErqME9hw0tXuVN9G+hDWBxP9Ox7xUMBAMxEKs5T/bMfM8aHQ3ViRp39
-	 7ACL76geKwmLhKt9FnV2glMWgDZWVmPMvqQpqmsSNgN7Jw+AHuAY6r51i1q/pj8k3iQ/3
-	 IDEZB/8EidcP1kAAZB0dddxBnhb/LzTx4IczCYqiJjnpWnsgYhF/3CTotNKT0XKAjQA==
+	bh=EE7GAzdHDxgyN97YRBQACDLzjUljmIUH3x5jpLG84+E=;
+	b=b0D1W30BFpglUCMrw0Cc7rTRIGyEiuEoQogfcFteXBd+x2Ar3+z19h03ZQtN0nQGa+mx
+	 Kci8i83NuPWTB2lVPQ0ZTo6OW7wAKaAJYh5+dQDfGT5BQh1vx6OcOt7k6oIxtDz2dGW1t
+	 S2ftavk/I10VNxk1Fa9WzgdNPAO+bI7hjQzuzph66l9N6pTDg5mqNPZYFNtEcammGtb0x
+	 sqSqwg/g/VMa/IhoyluW7262Fq1m+UmYluPjVLtXoCRvZfpZs3P/EgqgOc41lpqINPk8W
+	 Smm7HBisUJurIkt55Sj7N63TyrPcCeWebj5bE9oKX2bDS7/1QrXpMmUS4qEwDxE5DoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Vf8Th39W;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BwYVRuQ3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A4B606A323
-	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 21:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C031A606A329
+	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 21:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Vf8Th39W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26C01F000C4;
-	Sun, 15 Nov 2026 21:09:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BwYVRuQ3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FDC1F000C5;
+	Sun, 15 Nov 2026 21:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794776970;
-	bh=WIxMAhHIgqQiK3JeHg/MoUdkFWwJF4Zy1XHbF7nLUlk=;
+	s=k20260515; t=1794777450;
+	bh=EE7GAzdHDxgyN97YRBQACDLzjUljmIUH3x5jpLG84+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vf8Th39W8aEvthNwZAoSMhIT3m3nSVljDh+VPZSChi7xIwA1x0uMtqcVTUqb/tw6y
-	 yxGOFjUFxUAmY3zWjArPoJYormorz8ZywUfXal6UDa2KZkNxZFfwGA+hxndFbk6Yhd
-	 UNpGWW9HnRLaNsI6p/k9Cu6S62wvuSDuwVn0dLIiEbadhlajxFObiLBAwDBTSPUkwQ
-	 2y+ST6GltxvbhE8VrdY5+jNOoRLLoEdfZigkGhlavdsIi+xBakaYJ79JFwmvfR3vCT
-	 8Ui00UVdGfUZgMq04f9QLeWt2Pkkzx71G3o93Y2KTIPpfUCJT+baI2N1B30tdRjaDu
-	 g6vd1RzaoEt+A==
+	b=BwYVRuQ3+jmYVOnw/z8CebDR+LNz8kgr/CPQcAxMUOha8IjB4i7VZajFRhyWLuqtB
+	 q9TepgLNsgS7Jb4tOeJm8PDeo61l/KRfxdxIFVOVf4TsQUd9Vm5tQ1N1UQfdsazrUb
+	 iPNyRpeVOgme/P5NUsn0f+MHjoY3Vc4rmKXQL15Td9oi77VU7OZhp13RYijWXWvmgn
+	 x/yMNpxtA4FfVnarTOOFCre6EWFUg1+3+RJUV9tRXPA4etZk8oMMVgtWBitvbsMVJm
+	 vlgvvGm8nSN1aE0SBLNCls2Zo4ae144ELao1ZMKnh7+4aS37Q3hb6oQf1C/ty7OfHN
+	 cmpRAt0jGMkLw==
 From: SJ Park <sj@kernel.org>
 To: sashiko-bot@kernel.org
 Cc: SJ Park <sj@kernel.org>,
+	"Andrew Morton" <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: Re: [RFC PATCH 01/27] mm/damon/api: introduce struct damon_report
-Date: Sun, 15 Nov 2026 13:09:16 -0800
-Message-ID: <20261115210917.100412-1-sj@kernel.org>
+Subject: Re: [RFC PATCH 02/27] mm/damon/core: implement data attribute report queue
+Date: Sun, 15 Nov 2026 13:17:22 -0800
+Message-ID: <20261115211723.101033-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-215838@kernel.org>
+In-Reply-To: <sashiko-outbox-215849@kernel.org>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -63,60 +64,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 15 Nov 2026 20:34:31 +0000 sashiko-bot@kernel.org wrote:
+On Sun, 15 Nov 2026 20:41:23 +0000 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [Low] mm/damon: nonexistent fields in struct damon_report kernel-doc
->   comment
+> Thank you for your contribution! Sashiko AI review found 3 potential
+> issues to consider:
+> - [Medium] mm/damon: damon_init() leaks damon_region_cache on queue
+>   alloc failure
+> - [Low] mm/damon: missing static qualifier on damon_report_queue in
+>   core.c
+> - [Low] mm/damon: struct damon_report_queue comment documents head not
+>   nr_reports
 > --
 > 
-> commit 919e8293a0141a206eb1e31c857deac8b6249a6d
+> commit 10a61bc9bab6e48534e4a8552380aecaccbee97a
 > Author: SJ Park <sj@kernel.org>
 > 
-> mm/damon/api: introduce struct damon_report
+> mm/damon/core: implement data attribute report queue
 > 
-> This commit defines enum damon_report_type and struct damon_report to
-> represent data attribute reports.
+> This commit adds an internal damon_report_queue structure, allocates its
+> buffer for up to 1,000 reports in damon_init(), and checks that buffer in
+> damon_initialized().
 > 
-> > diff --git a/include/linux/damon.h b/include/linux/damon.h
-> > index 06bd92981af21..5c32ddebf4625 100644
-> > --- a/include/linux/damon.h
-> > +++ b/include/linux/damon.h
-> > @@ -751,6 +751,29 @@ struct damon_intervals_goal {
-> >  	unsigned long max_sample_us;
-> >  };
+> > diff --git a/mm/damon/core.c b/mm/damon/core.c
+> > index 0a056949604f9..3f87a7eec442e 100644
+> > --- a/mm/damon/core.c
+> > +++ b/mm/damon/core.c
+> > @@ -2334,6 +2334,25 @@ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control)
+> >  	return 0;
+> >  }
 > >  
-> > +/**
-> > + * enum damon_report_type - Type of &struct damon_report.
+> > +/*
+> > + * struct damon_report_queue - &struct damon_report queue.
+> > + *
+> > + * @lock:	Represent if this queue is being used by someone.
+> > + * @head:	Head of the queue.
+> > + * @tail:	Tail of the queue.
+> > + * @size:	Size of the queue.
+> > + * @reports:	Array of &struct damon_report.
 > > + */
-> > +enum damon_report_type {
-> > +	NR_DAMON_REPORT_TYPES,
+> > +struct damon_report_queue {
+> > +	atomic_t lock;
+> > +	unsigned int tail;
+> > +	unsigned int size;
+> > +	unsigned int nr_reports;
+> > +	struct damon_report *reports;
 > > +};
-> > +
-> > +/**
-> > + * struct damon_report - Data attribute report information.
-> > + *
-> > + * @type:	Type of the report.
-> > + * @addr_range:	The address range of the memory to report for.
-> > + *
-> > + * Note that the @start_addr and @end_adr represents an end-open range.
-> > + */
-> > +struct damon_report {
-> > +	enum damon_report_type type;
-> > +	struct damon_addr_range addr_range;
 > 
 > [Severity: Low]
-> The kernel-doc comment refers to @start_addr and @end_adr (with a typo in
-> "end_adr"), but struct damon_report embeds @addr_range (a struct
-> damon_addr_range with @start and @end fields) rather than defining those
-> fields directly.
+> The comment above struct damon_report_queue documents @head, whereas the
+> struct defines nr_reports instead.
 
-Good finding, thank you.  I will drop the last line of the comment.
+Nice catch.  I will remove the comment for @head and add a comment for
+@nr_reports.
+> 
+> > +
+> > +struct damon_report_queue damon_report_queue;
+> 
+> [Severity: Low]
+> Should damon_report_queue be marked static?  struct damon_report_queue is
+> private to mm/damon/core.c, so leaving damon_report_queue non-static
+> exports it into the global namespace and triggers sparse and W=1 missing
+> variable declaration warnings.
+
+Good suggestion, I will mark it as static.
+
+> 
+> > +
+> >  /*
+> >   * Reset the aggregated monitoring results ('nr_accesses' of each region).
+> >   */
+> > @@ -4308,7 +4327,7 @@ void damon_update_region_access_rate(struct damon_region *r, bool accessed)
+> >   */
+> >  bool damon_initialized(void)
+> >  {
+> > -	return damon_region_cache != NULL;
+> > +	return damon_region_cache && damon_report_queue.reports;
+> >  }
+> >  
+> >  static int __init damon_init(void)
+> > @@ -4319,6 +4338,14 @@ static int __init damon_init(void)
+> >  		return -ENOMEM;
+> >  	}
+> >  
+> > +	damon_report_queue.size = 1000;
+> > +	damon_report_queue.reports = kmalloc_objs(*damon_report_queue.reports,
+> > +			1000, GFP_KERNEL);
+> > +	if (!damon_report_queue.reports) {
+> > +		pr_err("report queue alloc fail\n");
+> > +		return -ENOMEM;
+> > +	}
+> 
+> [Severity: Medium]
+> Does this error path leak damon_region_cache when kmalloc_objs() fails?
+> Destroying damon_region_cache and resetting it (along with
+> damon_report_queue.size) before returning -ENOMEM would avoid leaking the
+> slab cache and leaving partially initialized state.
+
+Good suggestion.  I will do destroy damon_region_cache.
 
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261115202849.99134-1-sj@kernel.org?part=1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261115202849.99134-1-sj@kernel.org?part=2
 > 
 
 
