@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794763773;
-	b=HuF0XbxWFLPHjsKuXlpFmCzOMKr/N8CUxM45u7HWknclJN8aWvbyZb6A16hHt9In5Fx/
-	 dK2keobh2VGsSg4cpJmE6oQMqSoho6BSRBor7/QLRoOmuwTjPmy3e6iim9NiiubNAt9RE
-	 +V5r3u4twqV83zWKBO+juMUrXrHQpAbM12CQvZJbe+ZUfJZXcWoyDw6Ylt/BXQnckrtv0
-	 k5+I0aFL4MzeST2lV7B7SAGcZimrP6+4ghUDU9C5iGqf4Jpo8vuF4ZOnHls1G9GSf2zkE
-	 Zw9VqnMvv6HYkNFM83Vv2c7XwCcfEJYFF0BliGKnoEsYyAKvH6hElP3LaKY1Uqu3W9w==
+	t=1794764030;
+	b=DVOfcEfViuvMWzS/RLo+nVYB/rKTUY3/rDsD1p9rU93ikp5l8sK72JK6W/yK6e1eVAJg
+	 V/LxDcfisnw8bg2MC3NVpqLhsaXTw7PvnCNzLl01AeCS9dUKpXgf5g8TPXYPELh6rCvNk
+	 F3TyznUCunebrK61KbzsOdHtD4+YDJX3P9CqbLkGKjQ3zU4MYEcwjHRO5jx9JbUEBIeaa
+	 kdRrxlufc3OPNfMA4tV++/7N6KKRaG1wL5hSLjxiZUoSvg6HNdwdrCSmuapjn0Ct3mFb0
+	 2Kk39gX1PY5sMUhiPs5Br9eu+Rge18UQx7JC97JfY5UPInx4lYZbQJc9ThzYwotgvSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794763773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794764030;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=UzsPgLIU+sooLMnPzcYi0muGH1V9TV21ckVkYTTSwiA=;
-	b=KKzz1hzVdJ6OtimjKBSS33WT+YFAfEAfmWy6cqAdXcG3/4Wj80eADwsDCozuMdUbVUJ4
-	 652MXr0w9mgsdBE6qUSvIefTO12MEb4Fjya3EteCIVkEV3TrhLCoHndEg6min4H/hfJOd
-	 ri57ZoMfu6ywIMMlWG6ZMgSKU/ZL3dha7h261qhzT5im2n5wFX9vJZxPtZY4Z23UmZFjj
-	 nTU0JrYg+KWzvQ3MmPJIidLwzE9mRYktxFnHufd/Koip/vj5Hw+T+489X4NV8kGeHvwgn
-	 n/g72Gf9PIU+wqJF4T4iC5WbadfwERU6IiV/TXH+OVc9sILjsi/ujreXT1mJVXFHQQg==
+	bh=oGZSQK36dQO1d5WmaeXJ05lPFIpl1QQYBwK+/5+t2vQ=;
+	b=sdUj8DeZWhqE5aUxmpbqhEp6KSBo/EkH5h92f91JtZLkqVTJhnzqeNzfj61o2BwUdWmi
+	 yetbTw8DUgjXm+57ZM/nb5Gi4OU7qi/4x/F901n6TXrqjcqpdu077Ua7iv/+Rx2EvY2EQ
+	 95RE8aQB/XQUjtBPNPdj63rEtvimCO9X1hI7rEq4sUnBwdYCGWb/byQjTmGQuDHCGOmbL
+	 dwQ7+0mmA64YKJWHnidPfWxwEwOTx1XeEeRcuiMbgzr+ZXH76s9HnGtxonixQYrhwFVzH
+	 SvHYs+GSXvGF1AcmU4KakAgvhMdTklzRl8YQwG04Iq1rmHhySv1bhHeMX+UlC/H40Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FlfaPaI8;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=A1EuXLLm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC10C606A31A;
-	Sun, 15 Nov 2026 17:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FFE606A31A;
+	Sun, 15 Nov 2026 17:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FlfaPaI8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FE61F000C9;
-	Sun, 15 Nov 2026 17:29:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=A1EuXLLm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAB91F000C4;
+	Sun, 15 Nov 2026 17:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794763773;
-	bh=UzsPgLIU+sooLMnPzcYi0muGH1V9TV21ckVkYTTSwiA=;
+	s=k20260515; t=1794764030;
+	bh=oGZSQK36dQO1d5WmaeXJ05lPFIpl1QQYBwK+/5+t2vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FlfaPaI844FEyQ6iJqQxw2r+UmOq0LMzlE8A9OLF6pgGmr6zxbw7u6Db70bL0EOVV
-	 aZh3dl6uvOKHP4jO1yT9uEKnAptf6Y0wM/DFtg2US2QtsI8skondznfIuu3YgbJwKk
-	 HKGqk/QJmpSTKgCmE2tyADtXmKzWcpIsbbAmDX4BeC4ERSTa6gr/fjlhHmxdiZelGw
-	 Y09NMzzHRTBhR82lyomTZ+CbbfNWx9syvzQx0sgZ3f5k32PGbELdiW1euUSCQV7/D3
-	 Y9O1BDNs/pf47qL/EJuwpowFryKn4qAayBfkxw2OWeB4l4bO8z7ggrEkiba6YyG7S5
-	 LxwB/6ThbzyLg==
+	b=A1EuXLLmgt9jXZn2tSu3WzLjEbZru4Lcta2QCZYFNqTUj0Zah/bIhU5rNG6q5iby2
+	 S5JWxRB6HxLhaBMdF/px4nMxQXtcwZmvommDDJGFYcbroMNZgakb7tWLKL5t6Bcnuq
+	 LnezLGbUFkNd2L2hqZ54EjeGEqQ/g057yYHc3kdPemIyCqAmfU/gBnyBmOdYwpnkP7
+	 q8J4CJtNZdQMoYaArjtUHNmyOSWwRUIgxFVrHfK6WPGNlk00If5pDJS3nqpnv4yv2P
+	 DYKvJ1jQ9DHtk3hArDac4OYuyiQmoddZSjfBoAS0WPNT+aiV8DfAuGpBPBCNVTFrdQ
+	 Hy6XkPeBAQLpQ==
 From: SJ Park <sj@kernel.org>
-To: kernel test robot <lkp@intel.com>
+To: David Carlier <devnexen@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	oe-kbuild-all@lists.linux.dev,
-	damon@lists.linux.dev
-Subject: Re: [sj:damon/next 37/125] mm/damon/core.c:1839:2: warning: unannotated fall-through between switch labels
-Date: Sun, 15 Nov 2026 09:29:25 -0800
-Message-ID: <20261115172926.82234-1-sj@kernel.org>
+	Aveline Noir <jm5905938@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/9] mm/damon/stat: avoid 32-bit overflow in idle percentiles
+Date: Sun, 15 Nov 2026 09:33:42 -0800
+Message-ID: <20261115173343.82437-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <202611150922.CN5lOX66-lkp@intel.com>
+In-Reply-To: <20261114181034.2665113-1-devnexen@gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -61,33 +64,27 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sun, 15 Nov 2026 09:33:12 +0100 kernel test robot <lkp@intel.com> wrote:
+Hello David,
 
-> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git damon/next
-> head:   c6e08f98976018ef8823a44dfabbfa444fdc39da
-> commit: 0e9dffb2f36016e675b02bf66467ef5b4fc8ed63 [37/125] mm/damon/core: introduce DAMON_FILTER_TYPE_REPORT_MADE
-> config: x86_64-allmodconfig (https://download.01.org/0day-ci/archive/20261115/202611150922.CN5lOX66-lkp@intel.com/config)
-> compiler: clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
-> rustc: rustc 1.96.0 (ac68faa20 2026-05-25)
-> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20261115/202611150922.CN5lOX66-lkp@intel.com/reproduce)
-> 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202611150922.CN5lOX66-lkp@intel.com/
-> 
-> All warnings (new ones prefixed by >>):
-> 
-> >> mm/damon/core.c:1839:2: warning: unannotated fall-through between switch labels [-Wimplicit-fallthrough]
->     1839 |         default:
->          |         ^
->    mm/damon/core.c:1839:2: note: insert 'break;' to avoid fall-through
->     1839 |         default:
->          |         ^
->          |         break; 
->    1 warning generated.
+On Sat, 14 Nov 2026 18:10:34 +0000 David Carlier <devnexen@gmail.com> wrote:
 
-Thank you for this report!  I pushed a fix to damon/next.
+> Hi SJ, Aveline,
+> 
+> The value stored a few lines below has the same problem on 32-bit:
+> 
+> 	damon_stat_idletime(region) *
+> 	(long)c->attrs.aggr_interval / USEC_PER_MSEC;
+> 
+> The product is the region's idle time in microseconds, held in a 32-bit
+> long, so it wraps once a region has been idle for more than about 36
+> minutes, whatever the intervals are. The cold-end percentiles then come
+> out negative or wrong. Doing the multiply in s64 with div_s64() would
+> keep the sign and avoid it.
+> 
+> Hope it helps !
+
+Yes, this is helpful.  Thank you for sharing.  Would you like to send a patch
+for this issue?
 
 
 Thanks,
