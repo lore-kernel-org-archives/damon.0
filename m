@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794774551;
-	b=evxFxbnJVyFW/dMxSOlgbgCEQkT4VOzZTBMuZNfj30H3XTsA8ohAPPnXuKQ3nm8il2F9
-	 7EqLlMzOE2i4tjGku2MciPa5J2aiA9s7aURs8stqBPXUeJ9/K924KsW9P3AcEx0qRERnP
-	 AfIrdtF+QWvtgLvpN53epqEVFmo6BfDExi+86ELqMcX/fZUGxFPDESuM13YH0U4RlHzNa
-	 qRUSVccrKsZf/6nXsEMVI0LOdyoottGjr8jeYN3c3T6GBEV+kvb8JYuY5lygLQFJyl62z
-	 Z2mnaPRZFvAgHTLU9w5Hl+nBDoCWBFfsEsh+Q+uhKFCmbIusI+h3RiKi4ISqikEqFwQ==
+	t=1794774684;
+	b=RNBncThj/uX14fnoUca+3JPvq8w6snQ7x4zdef8d6lsjl+i206VFgT7S9I+XB7VCwh9+
+	 q0tIZQWqvH9kjkHStFKzWuvEhNiczml/OhOBpNvXBE98tbEcrVRoyww5iqVEfFvjf6r6W
+	 mfUsWNML2A+SJL9v0q1Q4fM0qo+zdQirrA4Z+iyQes5aj/hgmzkrUE6vYxRnrOQcdI7gi
+	 HnghMy9kmQbygFOuLQIZY0Fmx/i60g4VOPIXzG0ks9mV8CfB3O4Tj1h9JleIfs+3fvXiO
+	 UKIlnuaXa0viwKKVYONrKLiPYzEv/kMiQ2z6pNf+WkPl0fhvMJIJo4O3p1cB456Tntg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794774551;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=qlae4a7V9R97zMrEaNBWgX7mTwWMZswJckc2kKiXm6o=;
-	b=JVXa2+qtHa0VX74XMpTEI8KyhwqjqVqVm+uXo1uqfAhytJWk/jQH6N3in/x52YoVv/oB
-	 D4yvJvNtM7F2R7167KcoirO56qbubvg+QUyVHFFmb13UL5PoZdntt2XGrtpRxIpaPJbuw
-	 63MpS2iGSpme3El8XwJvS5EmisXHQhHBek649fzGJ/IusiszqOxMz/iLThl+19jS8n6Fa
-	 C9X+67Uux/uSK/BITq71yCNfrE3aWPELQETnwTFRAapeZ+ZlRYwq107lponCK+ivYDtC2
-	 wesvm3VYzI7BgIx5MhPpJ/E2ZUhJeH6PUx4QMGCLtFpJiKfF5kTKbZeFKJ/maOnUMrA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794774684;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=k99PzsEljm9Pn+S/bAvEFMC9AXuNPs5YnvAGObBHIt4=;
+	b=ec5eFr6cN+emB11Gi1ya2nJ6wTSgp/Pq/v+fWtTAC6Artm5xUC9WkdWsW+UoaPeZJXn/
+	 SYZeXIUZCHqBNmQnEM6+pU0FG0R+5MyjFeQ4jsmjvXYq1wMdjJYMKQCgW8o3G6LW5k07S
+	 ewaOq5WaLz8viDAhK+Suv9K8vDyIaGH5kq78CsJ3OGs0VnB2TIu6bSmSl9/MXal+H4xf7
+	 OECNoRUrIberqpTjkdccLfsShNhsC3TJKzccf1cwl4WAzC7fXOFSUL56eFDPouH/Wz1l0
+	 pA701pFBMf4li4K/WFrVS9CFo0fyVggFBIWQaNcmnA8Mx8DWABgZKqgKT5jb3pc79Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=THi1KgCx;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="aKscN/H6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76FF606A8A4;
-	Sun, 15 Nov 2026 20:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A01606A323
+	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=THi1KgCx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6596A1F000CC;
-	Sun, 15 Nov 2026 20:29:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aKscN/H6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EC21F000C4;
+	Sun, 15 Nov 2026 20:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794774551;
-	bh=qlae4a7V9R97zMrEaNBWgX7mTwWMZswJckc2kKiXm6o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=THi1KgCxCL/tbIRUz7DgsnAjLwtHt5wNvzgJivwOw4fEf/fZM7GH4glNvoLqmzslG
-	 jKxqeLUpLt4kFsM4nGAncRTmC61p1JP5hbdlG6CzfS32sL+5jbU5zewNXDAfw6oVQc
-	 Vclh/Pii1rNz7JCCg+gmQWVT5swKWKdvtA3sq8qEJhgXsW+XuVGNZfLpdVf0cymrg8
-	 hWzlNFpoN2vEocHRbokZjJ+XGcFLF8YYDetJ2BWi1WrILp4AtA93fb57B0YHq+bjvD
-	 sMiNcLQBk4pBvp0nD8srpKbpE5oI/LMHmKnSY9uVU1826Sl2Nip4cITi8ibu8/QWbb
-	 9X8B94TlhuGFg==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	damon@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [RFC PATCH 27/27] Docs/ABI/damon: update for user_report report support
-Date: Sun, 15 Nov 2026 12:28:45 -0800
-Message-ID: <20261115202849.99134-28-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261115202849.99134-1-sj@kernel.org>
+	s=k20260515; t=1794774684;
+	bh=k99PzsEljm9Pn+S/bAvEFMC9AXuNPs5YnvAGObBHIt4=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=aKscN/H60uPGUogPhCbpNUCkGlnCH8NDfjeW4w1ciD92ZkRudU24Qlac1hn+G/Tzb
+	 nMcXjvoGhfyO7u+v+T3W1JBUpYUnrByYFxXTwdOGrhX2b7ql7IRpePj+s4FEaYRM79
+	 QmdA1fjPaHm3O2uZYjZVAmfBfN5LRjr1NbAPbWc/Etqrs0t35G75+wMYbCIshuThUp
+	 Euw4bG4y+CpZfOqn6ekN0o+o0jTO5zmBrse8biQUiOOrnne/qdWleP+jwa1Zg40RyX
+	 iHmb4h13WSnEoFWmpEtQ9jM4yV5ro3KGVjC9wnVTBnFwiw37+ZR0NHIN4htFYotQXl
+	 dfh1B/UCF49iw==
+Message-ID: <sashiko-outbox-215819@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH 11/27] Docs/ABI/damon: update for report producer
+ sysfs files
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261115202849.99134-12-sj@kernel.org>
 References: <20261115202849.99134-1-sj@kernel.org>
+ <20261115202849.99134-12-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 15 Nov 2026 20:31:23 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,40 +60,15 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Update DAMON ABI document for the newly added user_report type data
-attribute report support.
+> Update DAMON ABI document for the newly added data attribute report
+> producer control sysfs files.
+>=20
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-Signed-off-by: SJ Park <sj@kernel.org>
----
- Documentation/ABI/testing/sysfs-kernel-mm-damon | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Sashiko has reviewed this patch and found no issues.
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-mm-damon b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-index e558dd4212f2c..41a4ce49fbd35 100644
---- a/Documentation/ABI/testing/sysfs-kernel-mm-damon
-+++ b/Documentation/ABI/testing/sysfs-kernel-mm-damon
-@@ -722,3 +722,19 @@ Contact:	SJ Park <sj@kernel.org>
- Description:	A file for requesting actions including enablement and
- 		disablement of the producer.  Refer to
- 		Documentation/admin-guide/mm/damon/usage.rst for more details.
-+
-+What:		/sys/kernel/mm/damon/admin/reports/producers/<P>/addr_start
-+Date:		Nov 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Writing an integer to and reading from this file sets and gets
-+		the start address of the report to manually generate and
-+		submit, depending on the type of the report producer.  Note
-+		that the start address is inclusive.
-+
-+What:		/sys/kernel/mm/damon/admin/reports/producers/<P>/addr_end
-+Date:		Nov 2026
-+Contact:	SJ Park <sj@kernel.org>
-+Description:	Writing an integer to and reading from this file sets and gets
-+		the end address of the report to manually generate and submit,
-+		depending on the type of the report producer.  Note that the
-+		end address is exclusive.
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115202849.9913=
+4-1-sj@kernel.org?part=3D11
+
