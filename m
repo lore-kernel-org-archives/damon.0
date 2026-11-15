@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794775295;
-	b=SgHbXjsuaZzscJ8FNU8GfQwKLXpPLiB1pDZNr2IcvmEPa3pIaXflYoxtQePbxbpUxJtB
-	 KMuk7DpobGOB09WXqggTI9KRxAylTs1B6dbvFtj8P2GL/LD6gwFbe16DpC0PNNAsAn1S4
-	 AuYNpwmgnkIUqbf1FFkKgAmMQ1XA9f76ENKxfZD/OpSGwr1oEo3Ik3RlAFFimhGpV44x1
-	 +htO6PkzFb+UruL2937Q2Gu28yBp0GldTzdQbm2bYq5KyGe/TvDWkQaxpTmFFTmaWfhPA
-	 JvyVqY21i9E1V8/HO2MhiGL/6nN0VbQ9p4Qd9uVE3rb9P9ZsYY/H/rUoV+xsJCnrVxw==
+	t=1794775361;
+	b=nIFi/M209KTgf0Z2J7p66q5JFSeHZQublqpN3UK5h4ZbG76hyNKbFtu6p01E2dRnZUj5
+	 992mfN5uzsrrbNheXHzqI1M1G/pbaS44raNcAVYoKZ0XH9VQWdqtx7kLfsmciHoC4VE0Q
+	 SAmbakt8pP4fwxEgP/I/kUs3nEWrGn/QsE2TlbO6PiKCg7KkHL1sisymmGxQ87oMVn6+n
+	 1u0VJwtAHvdScAbjlL1Wto1K9x82BCA+s6eUj6UfbzXkukKQak6hd+gMcWqK7TV3uK249
+	 XgU59CJ43VyXCr+9sM+x3hC/mszrkpatfkDQ+f/Oc9NnyubAtIrtCDvn+1AMeicXjnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794775295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794775361;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=Q4vAPhP/V1Bp8qYGqnFchGNpQrdWi5lSaW3Lmn/+Q0E=;
-	b=yH0FLapT8kflJ3UZMmujbAtGarDh2Dno4f89OgxjhBfuqeUP/MioXoC7BYUP0sqL+afQ
-	 E2TgmQgBdrKskN0MGmLNpeU+4Mn8XI6ZhcHuJ/bZKBXRkLVoZSAcKM4NO1MuV0viGLMtw
-	 pK6IHqvbhjXfjNjbw+AvzqXanc4TJxbVhjf4ULPnuwXVnNtS1P0MMlYEVcpRisAeWRH6Q
-	 G+5hoydndd7NCHwxqVCU8kMwTcqs4b/4phXwkF1fJHYP+dKWE8S9P1msK2kUfTbiP6D55
-	 YnYLIrCr2wL4p35aLFfXtISXE8RL9Un/dmDiO52Dreg0IFDCGMET2Hn/mqsvBapSuYg==
+	bh=J+fnsq6nNb+xpVBHQjdCD20xN1KOTbGtm9ZI5ilhmXQ=;
+	b=boSJ67Rk3rS2fWf11SCnXh3fdannMOUSMqfmunv25nbGsBvHaWuTsTKCa1VqwHmH0jde
+	 JIaYjCj21DIjJ6VGjT0UNEthBnre1JMAO+tyJ2ndU3bPVQGbwcCkhm36wTM1QCB1Fmws7
+	 uy/+SF8+AWHYZSFOq5P6NM95yEUb4KiHG02eSvbPG6c4xDka5MKO/2J0BC2AV1PoBgwoO
+	 LUrcR4Nl2DxSX7jeAkVXkU6W8PN0qH8O78SLKd7EQykEoH7ARQgMq+qSKzSRJmwSgXxwN
+	 HsdejrT2EpVebQ1tgQqh6TLEEMZMxApG7iGljZhLg6SrZ2FV1oNRPt6/yM2nZKM60ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eGCaiakI;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EwQHu0Ih;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300FF606A31F
-	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A338606A33D
+	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eGCaiakI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE87D1F000C4;
-	Sun, 15 Nov 2026 20:41:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=EwQHu0Ih
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9191F000C4;
+	Sun, 15 Nov 2026 20:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794775295;
-	bh=Q4vAPhP/V1Bp8qYGqnFchGNpQrdWi5lSaW3Lmn/+Q0E=;
+	s=k20260515; t=1794775361;
+	bh=J+fnsq6nNb+xpVBHQjdCD20xN1KOTbGtm9ZI5ilhmXQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=eGCaiakIfl1kezaf+/ujmceYlD7vtcZ0Ev8DWvP5MSBcLVTnKerZQofuwmGY7/LLa
-	 2a0NuYDoXGKY72Uc+2yah1dVO5COdg6izZ5D2YrwEZwgtytMjy4cFYXjNdS/jx8zUp
-	 Axp11qCyNEX1is3jALAC5fo5xhtgMCT1l413hb+tqmR7LteRoVhvzKWCuFYfinj0JU
-	 +5PyZR1DHVG5vNz3bvhjZ52ZODUAgWO+GyaKh2uprvy9vk9/+dBBCS7JRFea8SXNC5
-	 hHzfvu1hb3HmEtr+LSuXuGVjCgqKSMHQduj6w7ksO544b9HdqOI4xWUWbuhHV0iUv3
-	 7Lt/WPL5eo5VA==
-Message-ID: <sashiko-outbox-215850@kernel.org>
+	b=EwQHu0Ihzk7asjxuCCKyAoub+Dl6eWnzX31BDUHVHZ/uc+OYXFXix3OqRDrJHVw4c
+	 BVdZ5ugXhFLRXY7BXa1mJHZbdadQZZYw6BJq/uyXkk7n78edKN5+RvU+01o7PBTZfk
+	 eJNcA4+dFSKSW7DyemrVUplsg+dlRIwbI3s3frM9XunF9DjPZvwT6b4BMvgbfHNghq
+	 EBJNva0C1AefbYTjROMQDhnTX7bX3bWwRrCKODeiyROj33Ys6x7Fokp6tfwVVkyXlL
+	 o2DIfBuuywkTxmfx4BbRUZBT+6zrTJlrLvcFxD0kw9TyHRS1+PgfyEd0YA425o56Mr
+	 Xs/YEEhJovOqw==
+Message-ID: <sashiko-outbox-215851@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 14/27] mm/damon/paddr: support REPORT_MADE type
- probe filter
+Subject: Re: [RFC PATCH 03/27] mm/damon/core: introduce
+ damon_submit_report()
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
-In-Reply-To: <20261115202849.99134-15-sj@kernel.org>
+In-Reply-To: <20261115202849.99134-4-sj@kernel.org>
 References: <20261115202849.99134-1-sj@kernel.org>
- <20261115202849.99134-15-sj@kernel.org>
+ <20261115202849.99134-4-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 15 Nov 2026 20:41:34 +0000
+Date: Sun, 15 Nov 2026 20:42:40 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,140 +61,72 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 3 potential
+Thank you for your contribution! Sashiko AI review found 2 potential
 issues to consider:
-- [High] mm/damon: out-of-bounds and uninitialized read in
-  damon_report_exist()
-- [Medium] mm/damon: phys_addr_t truncation and unit mismatch in
-  damon_pa_filter_match()
-- [Medium] mm/damon: uninitialized filter->report_type in
-  damon_pa_filter_match()
+- [High] mm/damon/core: out-of-bounds write in damon_submit_report() on
+  queue wrap
+- [Low] mm/damon/core: missing Return section in damon_submit_report()
+  kernel-doc
 --
 
-commit db7c0b8660ac4e99fdce33921b7535218eaa4dc6
+commit bcb278386fb51304d0c224892db9744bf9e27c8f
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/paddr: support REPORT_MADE type probe filter
+mm/damon/core: introduce damon_submit_report()
 
-This commit adds support for the DAMON_FILTER_TYPE_REPORT_MADE probe
-filter in the physical address space operation set by querying
-damon_report_exist() over the last sampling interval.
+This commit adds damon_submit_report() to enqueue a data attribute report
+into the DAMON internal report queue using CAS-based try-locking.
 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 5b773012a8764..04e95047f8cea 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -140,9 +140,10 @@ static void damon_pa_prep_probes(struct damon_ctx *c=
-tx, bool set_samples)
->  }
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 3f87a7eec442e..06b85d00e38d9 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2353,6 +2353,36 @@ struct damon_report_queue {
 > =20
->  static bool damon_pa_filter_match(struct damon_filter *filter,
-> -		struct folio *folio)
-> +		struct folio *folio, phys_addr_t pa, struct damon_ctx *ctx)
->  {
->  	bool matched =3D false;
-> +	struct damon_addr_range addr_range;
+>  struct damon_report_queue damon_report_queue;
 > =20
->  	switch (filter->type) {
->  	case DAMON_FILTER_TYPE_PGIDLE_UNSET:
-> @@ -157,19 +158,27 @@ static bool damon_pa_filter_match(struct damon_filt=
-er *filter,
->  		else
->  			matched =3D damon_folio_young(folio) =3D=3D false;
->  		break;
-> +	case DAMON_FILTER_TYPE_REPORT_MADE:
-> +		addr_range.start =3D pa;
-> +		addr_range.end =3D pa + 1;
+> +/**
+> + * damon_submit_report() - Enqueue a given report to DAMON internal buff=
+er.
+> + * @report:	The report to enqueue.
+> + *
+> + * This function can be called from any context including the NMI contex=
+t.
+> + */
+> +int damon_submit_report(struct damon_report *report)
 
-[Severity: Medium]
-Can assigning pa and pa + 1 into addr_range truncate 64-bit physical
-addresses and miss reports when ctx->addr_unit > 1?
+[Severity: Low]
+This isn't a bug, but the kernel-doc comment for damon_submit_report() is
+missing a Return: section describing the 0 and -EBUSY return values, which
+triggers a kernel-doc warning under W=3D2 builds.
 
-struct damon_addr_range defines start and end as unsigned long, so on
-32-bit PAE/LPAE systems where phys_addr_t is 64-bit, physical addresses
-at or above 4 GiB lose their upper 32 bits (and pa + 1 wraps to 0 when
-the low 32 bits are 0xffffffff).  In addition, when ctx->addr_unit > 1,
-pa is aligned to ctx->addr_unit, so setting addr_range.end =3D pa + 1 only
-checks the first byte of the sampled unit instead of [pa, pa +
-ctx->addr_unit).
-
-> +		matched =3D damon_report_exist(filter->report_type, &addr_range,
-> +				jiffies -
-> +				usecs_to_jiffies(ctx->attrs.sample_interval));
-> +		break;
+> +{
+> +	struct damon_report_queue *queue;
+> +	int lock_old_val;
+> +	unsigned int tail;
+> +
+> +	queue =3D &damon_report_queue;
+> +	report->jiffies =3D jiffies;
+> +	lock_old_val =3D atomic_cmpxchg(&queue->lock, 0, 1);
+> +	if (lock_old_val)
+> +		return -EBUSY;
+> +
+> +	tail =3D queue->tail;
+> +	if (tail =3D=3D queue->size)
+> +		tail =3D 0;
+> +	queue->reports[tail] =3D *report;
+> +	queue->tail++;
 
 [Severity: High]
-Does calling damon_report_exist() read uninitialized or out-of-bounds
-elements from damon_report_queue.reports?
+Does this write out of bounds of queue->reports[] after the queue wraps?
 
-In damon_submit_report(), the report is written at queue->reports[tail]
-and queue->tail is then incremented, so queue->tail points to the next
-slot to be written and is never wrapped when it reaches queue->size:
-
-mm/damon/core.c:damon_submit_report() {
-    ...
-	tail =3D queue->tail;
-	if (tail =3D=3D queue->size)
-		tail =3D 0;
-	queue->reports[tail] =3D *report;
-	queue->tail++;
-    ...
-}
-
-mm/damon/core.c:damon_report_exist() {
-    ...
-	idx =3D queue->tail;
-	for (nr_read =3D 0; nr_read < queue->nr_reports; nr_read++) {
-		report =3D &queue->reports[idx];
-		if (idx)
-			idx--;
-		else
-			idx =3D queue->size - 1;
-    ...
-}
-
-Because damon_report_exist() indexes queue->reports[idx] at queue->tail
-before decrementing idx, it reads uninitialized heap memory on the first
-iteration while 1 <=3D nr_reports < queue->size (and never inspects index
-0), and reads out of bounds at queue->reports[queue->size] and beyond once
-queue->size reports have been submitted.
-
-[Severity: Medium]
-Can filter->report_type be uninitialized here when a new
-DAMON_FILTER_TYPE_REPORT_MADE filter is added via damon_commit_ctx()?
-
-damon_new_filter() allocates struct damon_filter with kmalloc_obj()
-without zeroing the union, and when damon_commit_filters() creates a new
-filter it only copies union members for DAMON_FILTER_TYPE_MEMCG and
-DAMON_FILTER_TYPE_HUGEPAGE_SIZE:
-
-mm/damon/core.c:damon_commit_filters() {
-    ...
-		new_filter =3D damon_new_filter(src_filter->type,
-				src_filter->matching, src_filter->allow);
-		if (!new_filter)
-			return -ENOMEM;
-		switch (src_filter->type) {
-		case DAMON_FILTER_TYPE_MEMCG:
-			new_filter->memcg_id =3D src_filter->memcg_id;
-			break;
-		case DAMON_FILTER_TYPE_HUGEPAGE_SIZE:
-			if (src_filter->range_max < src_filter->range_min) {
-				damon_destroy_filter(new_filter);
-				return -EINVAL;
-			}
-			new_filter->range_min =3D src_filter->range_min;
-			new_filter->range_max =3D src_filter->range_max;
-			break;
-		default:
-			break;
-		}
-    ...
-}
-
-As a result, new_filter->report_type retains uninitialized slab bytes
-when damon_pa_filter_match() passes it to damon_report_exist().
+When queue->tail reaches queue->size, only the local variable tail is
+reset to 0 while queue->tail++ increments queue->tail to queue->size + 1.
+Every subsequent submission then bypasses the tail =3D=3D queue->size check
+and writes past the end of the queue->reports heap array, corrupting
+adjacent slab memory.  Updating queue->tail =3D tail + 1 would wrap the
+index properly.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115202849.9913=
-4-1-sj@kernel.org?part=3D14
+4-1-sj@kernel.org?part=3D3
