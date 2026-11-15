@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794775273;
-	b=rFe89BX90SNK7do59OCL1088mocFhSdxMpWA6iWZ0YZfn1l3ETn/0J/625gunJ0+RS2D
-	 SLrYyy3NwcYDM0D4UmTsPuF9YRTwVaWE1rlkyF5/9ZR5q02O3FOIeBUVgjXOejahTNreb
-	 k0Q3VzNC0nAxoYMg3PlWVjMhqp5e5q+6nlqwYA4BicBVS6RWWqIMr32raj/0BAGNX9IDB
-	 RdJUcAxhY1LMhazwVksg8ZzDaquK/qKOpCJKCLgc06SLUQPd3DXD+zUXraHeRd/3f2hYR
-	 0oAutuk3Mf7AdzwaeWM/53Dq4ibP/SHYGKgvR2LUFIGzPcwSJkUMgkd++yQf84lKmUA==
+	t=1794775284;
+	b=KGCac+i3h/4mbDK/xAaMhoXrBt7tCWjeBgEFt/hgVo+pjy9rvulC/ge7oJDFoulkQTDY
+	 kUXSLmC8eGrqtAFtQghVHkoic3PD74gpzUpI2dBGfdUo0wVqMVLKonFi+/VXgw2+LMhIP
+	 hPXg/eXvfrD51zJNBjssYnrZRJHfNGv4PSkRFB274jfYJlt43lTHPPk1ojCw7tp1cO6Id
+	 kyJrgBQFHhcySM3/r+WGhiQjl70qL75b6hYDLKCr32eLniM9Q4Yg0c4oxptOqQk1fw6FS
+	 zz4XQFy60QKQBveWt/A8XYKRvZYyRXr9REAS/hyK2Dwk6eHhnkqdBsC43RuAi28IqVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794775273;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794775284;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=PSxkxgjUByaP/FYRn8+uu178H4zEv9vDMaVbpvfzlA0=;
-	b=HmRVoIEaBLGMXPyNM5JP9DCWRfJGP61ri/i5Xef6dxhP5IyKY3GoiJQ3+J2v/1KRtiVv
-	 07v0CeR9GfN+Vi8Nm23Jh00gMW74XByaw1/Gn4yq4XDAJeOfeVvKKiOq7Jwr3zx4ZV34S
-	 ngmVnusFfl9TL1Ycg5sNiDy/r2Wscrwzij74akGneSxHpc26EFadT6i/wWu3rsVX+gmd0
-	 D2urXOvbtVG3SVTNffQjdw5TxjhLjzxORc/Kqgcwu5ucYu5cqNuZEzq7C4emfSrPWw3TB
-	 e+/WUwK6jAf1v3vzD2ooJBAryLXPjgaYPUw3yhx9MrdGATK+4iqtBRPqWHMW9MLBK9w==
+	bh=31PK8ejQi8OkMxNdvjJcNS0+QCT6SvYzZcKuJxbk+N0=;
+	b=uy+kSRt7hWybJe6m2hAEKTGnP5f9USYfr8/G3wJzXYLtpJKrC1kPqyJ53Nx92z7AZGX+
+	 TtbOGa2te9CInafVObdrqD7yvtPdlGAhM1/Sx9UvnPLx28g47/KMeRmjoj+qLTkdBm3Gh
+	 KqWBrJnYnScbj4S4Wq23gZbGHSDW84vH3qpIyK3b6K1bnhQtOdJFXgWVoMOdBR4j0QDdy
+	 b5+k0TjLXVDeVSmgBM7692KhBG6GcxtyQ4zrgQHgCnqv3dSSuVP8CviOaBEIlQI/PpWdw
+	 SG/IY4GTbEKgz8ZEDStTVo8kkACUw9XJMnUebt6t4Wi6wWJSs78z9UNbwYHymNFVjLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wah75oXT;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QC8ZDgAO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FD0606A31F
-	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80EF606A323
+	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wah75oXT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6ED1F000C4;
-	Sun, 15 Nov 2026 20:41:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QC8ZDgAO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A0E1F000C4;
+	Sun, 15 Nov 2026 20:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794775273;
-	bh=PSxkxgjUByaP/FYRn8+uu178H4zEv9vDMaVbpvfzlA0=;
+	s=k20260515; t=1794775284;
+	bh=31PK8ejQi8OkMxNdvjJcNS0+QCT6SvYzZcKuJxbk+N0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Wah75oXTv2g4ttvtDi6nwIIBo8lsoWaTHCTLZLfGxhNDoypBNWWYtaVdjs8CtVFnn
-	 vFbClSO25JEdibuy+6h6C9kbRRDHAbHR2taRqwmbyPuHe24Wdnepx5JVLqwqtPTJ+b
-	 kCyfdl6/1mRnRzVjsOwwV9SMMdCHyLzFatUSGIdogPj92ZQ+F3fK4K4BeCSdEkmQJg
-	 WdlhqRzml3rLrUVeaFp3TYEhrlTuMkSGWUCPIhwMFcARw2vgGW1Lela+YTq60DuMIW
-	 Hb6kIm+cOjT+WABlKfDWu6JfnoFcORM2oWiL3fxB3SHqlwEEk3jmsr8SRhfws9bkRm
-	 irecO7xFTbLsA==
-Message-ID: <sashiko-outbox-215848@kernel.org>
+	b=QC8ZDgAOAz/goD9F04hw0cJMzG4vhfIXnkMQU3fY2LwoClwGP8zFbjSxQx0sSJm8Y
+	 8gmKsPCp4eI0Nw0F51WVqnIKG5DTr4rE+O7AWpQE2gcvcNeqsuwtzsX0SKXeB9zxAm
+	 IohSyxPw1H920YflUmB3oPQH7fMD0/eMG6YOIyfwISSaN8tA+U0tUhiUGW+nEi3KiM
+	 gTo0hsQD55MS3Fy0VlvtDDOLZsPTzQlSEpLybbgaAAEIFwH+j9Bp129rvm4pKIXHPs
+	 2uOJRtgCbqsdii+m5vJlt5dVZR1f0LzaWB/RvfJgiazK0knymfJVzTykPOQA+TIZDh
+	 d95R7NSBYb7PA==
+Message-ID: <sashiko-outbox-215849@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 16/27] mm/damon/sysfs: support REPORT_MADE type
- probe filter setup
+Subject: Re: [RFC PATCH 02/27] mm/damon/core: implement data attribute
+ report queue
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
-In-Reply-To: <20261115202849.99134-17-sj@kernel.org>
+In-Reply-To: <20261115202849.99134-3-sj@kernel.org>
 References: <20261115202849.99134-1-sj@kernel.org>
- <20261115202849.99134-17-sj@kernel.org>
+ <20261115202849.99134-3-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 15 Nov 2026 20:41:12 +0000
+Date: Sun, 15 Nov 2026 20:41:23 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,122 +61,97 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 2 potential
+Thank you for your contribution! Sashiko AI review found 3 potential
 issues to consider:
-- [High] mm/damon: out-of-bounds and uninitialized access in
-  damon_report_exist()
-- [Medium] mm/damon: uninitialized report_type in damon_commit_filters()
+- [Medium] mm/damon: damon_init() leaks damon_region_cache on queue
+  alloc failure
+- [Low] mm/damon: missing static qualifier on damon_report_queue in
+  core.c
+- [Low] mm/damon: struct damon_report_queue comment documents head not
+  nr_reports
 --
 
-commit 6058e18a855d5b73c171dc4b94eb6031f06fdc63
+commit 10a61bc9bab6e48534e4a8552380aecaccbee97a
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/sysfs: support REPORT_MADE type probe filter setup
+mm/damon/core: implement data attribute report queue
 
-This commit adds "report_made" to the DAMON sysfs probe filter type list
-and copies the filter's report_type when setting up probe filters.
+This commit adds an internal damon_report_queue structure, allocates its
+buffer for up to 1,000 reports in damon_init(), and checks that buffer in
+damon_initialized().
 
-> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-> index ca971cf1dcf6d..1c171af4590a8 100644
-> --- a/mm/damon/sysfs.c
-> +++ b/mm/damon/sysfs.c
-> @@ -1016,6 +1016,10 @@ damon_sysfs_filter_type_names[] =3D {
->  		.type =3D DAMON_FILTER_TYPE_ACTIVE,
->  		.name =3D "active",
->  	},
-> +	{
-> +		.type =3D DAMON_FILTER_TYPE_REPORT_MADE,
-> +		.name =3D "report_made",
-> +	},
->  };
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 0a056949604f9..3f87a7eec442e 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2334,6 +2334,25 @@ int damos_walk(struct damon_ctx *ctx, struct damos=
+_walk_control *control)
+>  	return 0;
+>  }
 > =20
->  static ssize_t type_show(struct kobject *kobj,
+> +/*
+> + * struct damon_report_queue - &struct damon_report queue.
+> + *
+> + * @lock:	Represent if this queue is being used by someone.
+> + * @head:	Head of the queue.
+> + * @tail:	Tail of the queue.
+> + * @size:	Size of the queue.
+> + * @reports:	Array of &struct damon_report.
+> + */
+> +struct damon_report_queue {
+> +	atomic_t lock;
+> +	unsigned int tail;
+> +	unsigned int size;
+> +	unsigned int nr_reports;
+> +	struct damon_report *reports;
+> +};
 
-[Severity: High]
-Can enabling DAMON_FILTER_TYPE_REPORT_MADE filters cause uninitialized and
-out-of-bounds accesses on queue->reports[]?
+[Severity: Low]
+The comment above struct damon_report_queue documents @head, whereas the
+struct defines nr_reports instead.
 
-In damon_submit_report(), each report is stored at queue->reports[tail] and
-then queue->tail is incremented, so queue->tail points to the next slot to
-write rather than the most recent entry:
+> +
+> +struct damon_report_queue damon_report_queue;
 
-mm/damon/core.c:damon_submit_report() {
-    ...
-	tail =3D queue->tail;
-	if (tail =3D=3D queue->size)
-		tail =3D 0;
-	queue->reports[tail] =3D *report;
-	queue->tail++;
-    ...
-}
+[Severity: Low]
+Should damon_report_queue be marked static?  struct damon_report_queue is
+private to mm/damon/core.c, so leaving damon_report_queue non-static
+exports it into the global namespace and triggers sparse and W=3D1 missing
+variable declaration warnings.
 
-When damon_pa_filter_match() calls damon_report_exist() for a report_made
-filter, the loop reads queue->reports[idx] starting at idx =3D queue->tail
-before decrementing idx:
-
-mm/damon/core.c:damon_report_exist() {
-    ...
-	idx =3D queue->tail;
-	for (nr_read =3D 0; nr_read < queue->nr_reports; nr_read++) {
-		report =3D &queue->reports[idx];
-		if (idx)
-			idx--;
-		else
-			idx =3D queue->size - 1;
-    ...
-}
-
-While queue->nr_reports < queue->size, the first iteration reads the
-unwritten slot at queue->reports[queue->tail] and the loop stops before
-checking queue->reports[0].  Once queue->tail reaches queue->size,
-damon_report_exist() reads out of bounds at queue->reports[queue->size],
-and the next damon_submit_report() wraps only the local tail variable
-before incrementing queue->tail past queue->size, causing subsequent
-submissions and lookups to write and read out of bounds on the heap.
-
-> @@ -2336,6 +2340,8 @@ static int damon_sysfs_set_filters(struct damon_pro=
-be *probe,
->  		} else if (filter->type =3D=3D DAMON_FILTER_TYPE_HUGEPAGE_SIZE) {
->  			filter->range_min =3D sys_filter->range_min;
->  			filter->range_max =3D sys_filter->range_max;
-> +		} else if (filter->type =3D=3D DAMON_FILTER_TYPE_REPORT_MADE) {
-> +			filter->report_type =3D sys_filter->report_type;
->  		}
->  		damon_add_filter(probe, filter);
+> +
+>  /*
+>   * Reset the aggregated monitoring results ('nr_accesses' of each region=
+).
+>   */
+> @@ -4308,7 +4327,7 @@ void damon_update_region_access_rate(struct damon_r=
+egion *r, bool accessed)
+>   */
+>  bool damon_initialized(void)
+>  {
+> -	return damon_region_cache !=3D NULL;
+> +	return damon_region_cache && damon_report_queue.reports;
+>  }
+> =20
+>  static int __init damon_init(void)
+> @@ -4319,6 +4338,14 @@ static int __init damon_init(void)
+>  		return -ENOMEM;
 >  	}
+> =20
+> +	damon_report_queue.size =3D 1000;
+> +	damon_report_queue.reports =3D kmalloc_objs(*damon_report_queue.reports,
+> +			1000, GFP_KERNEL);
+> +	if (!damon_report_queue.reports) {
+> +		pr_err("report queue alloc fail\n");
+> +		return -ENOMEM;
+> +	}
 
 [Severity: Medium]
-Does committing a new DAMON_FILTER_TYPE_REPORT_MADE filter to a running
-context leave new_filter->report_type uninitialized?
-
-When damon_sysfs_commit_input() commits the context built here via
-damon_commit_ctx() -> __damon_commit_ctx() -> damon_commit_probes() ->
-damon_commit_filters(), newly added filters are allocated with
-damon_new_filter(), which does not initialize the union in struct
-damon_filter, and the switch in damon_commit_filters() does not handle
-DAMON_FILTER_TYPE_REPORT_MADE:
-
-mm/damon/core.c:damon_commit_filters() {
-    ...
-		new_filter =3D damon_new_filter(src_filter->type,
-				src_filter->matching, src_filter->allow);
-		if (!new_filter)
-			return -ENOMEM;
-		switch (src_filter->type) {
-		case DAMON_FILTER_TYPE_MEMCG:
-			new_filter->memcg_id =3D src_filter->memcg_id;
-			break;
-		case DAMON_FILTER_TYPE_HUGEPAGE_SIZE:
-			...
-		default:
-			break;
-		}
-    ...
-}
-
-As a result, damon_pa_filter_match() passes uninitialized slab memory in
-new_filter->report_type to damon_report_exist().
+Does this error path leak damon_region_cache when kmalloc_objs() fails?
+Destroying damon_region_cache and resetting it (along with
+damon_report_queue.size) before returning -ENOMEM would avoid leaking the
+slab cache and leaving partially initialized state.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115202849.9913=
-4-1-sj@kernel.org?part=3D16
+4-1-sj@kernel.org?part=3D2
