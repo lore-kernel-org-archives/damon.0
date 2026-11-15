@@ -1,97 +1,136 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.48
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794679838;
-	b=jT6WXjWzpPPJWML3g1fasXMFQJSPsuK4Yk4TjUZ6Y4yCXmLPAgN6fIvH84sCjr1WTrzA
-	 0zjju9299N+00bPY21pttI2VqABJshzAQ0MjFO5G8Ij0IFV/lFkB/l+dsyi6ezPVdfqpP
-	 O8RKM42QRxe8WrpS2I+yK8hL0FNdqWRGowpJpGNAagpRg7UzEBQfcCG3YXunoJNV2phUW
-	 1RJ4VO+g4VfzlRQTUFKmXjIM0fbssVdRniBEJCxt4J4Iq2OnVtIH6AHAstdp2lFeCqzpe
-	 mxhAp1uhczrYcfV0kXU6OTVsj5PcDWhkiaPAQsmloPIZXlsADl1zYlOShGSljSXtZHQ==
+	t=1794716871;
+	b=JzKh9EZDbMCvPAE+vvgRurTE2lDQAfUiW4YuA9APfHEJZwRaKzVNscq3iGijDEPYYWWC
+	 bkg2m4Zg5b6Zzr03R9oLPV7FZqRZsSI7kpgYnwg7s8v15t5SixSVdzWq5BE04IEBvUcau
+	 bAjCDnW92cUhOAQo1/G9wSnMaaJdth4ZT+XQAE6hciVmXat6NIkaLTaiizCICIcPIstKI
+	 rDcBDeS8PF7wFEO56R/Kid0xIdbqLLU+oVWg8XTxpfAt8SE9L/mnp8iXYMBZa6nJNIVUw
+	 4sNi1qm9qjY4Mu4NygE8sSLzKo0egQmLFdp76ZuNFMh4sctXWfYml6FeMAo0J74zPiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794679838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794716871;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2tV4PJFJAVwFY0+x5FVmRJ66Mz8ksU1cklE+L0oAwR0=;
-	b=nIzMqPSVJ702G3o1QccAu+AUqgBA+invdESCiN++c42egruKVOF0ialZVd4fNZLO1Hg9
-	 /uGpL/myoOk2rVSqUO1kIKioBkBmzgio7aeA2Zd+SEeWpFX9pvJX1GHzYeX2ZAKex2oTN
-	 GCog7KBHFgqYcso53Wea+RhaQQsQJO0BH6pjg9/dWt4kLk8+yn/FVWpXzeTyGhjQa2Svh
-	 ztkRzWMWgkiumRVWaTP8WbG4uO/b8v1xJqCohafog2xRKni2li7oDBH8RE2DyvSvZ5FQI
-	 6qPbnKg7LHfq7htiGHDZo6tHAVALN/CkWVL7QuHu591BNOFxlEHxKURyx5Y7d3Q9EMw==
+	 From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
+	 MIME-Version:Content-Type;
+	bh=lBVnC2BKavV2mvXAWvVCtFrvsJ4cH4FcPMsK31plLKI=;
+	b=CT6TUw9SHhG8SxFD8DpxeAjce7oHEDKpULIbu/8USJTLskBKBJkCRwlIJLXzoijvn7Zl
+	 g/0AOwjezXCtBBNI4fziQW3pGMLzKv3J1gNVKF79s+pRyGO1UcZNXN2GPTxZ1MEHiJLhe
+	 lrPIEq9o+PGqxPLM9ei1lGKM7tyJA+hCQVjJ0i3gHq0VeBUawfLdcxhCb7+KjMZn5NP8E
+	 d81vQRBYqAwhBgl3bWi2w7AublC4+lQeMBNtxel2vPZt6uw2usswmX50gKDeNF1oG+uvJ
+	 NlBwvHQl5zesU2SVNYFdmQLHuBChV8Jl3vOiyezgBOuDdFl1OpV4keMC6qiHxw/Xm1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wGsDC7YE;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=c3VKhBqL;
+	arc=none smtp.remote-ip=74.125.82.48
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A31606A32D
-	for <damon@lists.linux.dev>; Sat, 14 Nov 2026 18:10:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 36A31606A32D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF96606A32D
+	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 04:27:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4BF96606A32D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wGsDC7YE
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a35ac4475dso12238975e9.2
-        for <damon@lists.linux.dev>; Sat, 14 Nov 2026 10:10:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=c3VKhBqL
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-15ea896ddc8so3364574c88.0
+        for <damon@lists.linux.dev>; Sat, 14 Nov 2026 20:27:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794679836; x=1795284636; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=2tV4PJFJAVwFY0+x5FVmRJ66Mz8ksU1cklE+L0oAwR0=;
-        b=wGsDC7YEiarre1DZuaw6B7KRtFEBZIcSLptdv6z5vOqVgFRiB4Y1+sQcGXrwqmbbis
-         GKi4kFW85gfLSJhie7VRJi2tMRw4sTxtdNsQ0eWPdrrqEa8CpHfEWkQ4b+iKv0tP0wjP
-         8QU5G2PaMeE6roK8QcjhuF3a1VM8NTS9zGifDavZ/EdNFejSz65DGlzf7jj+tMkYdfsd
-         lgoHjLijRRZ0W+oAJpK2EKW35uQaIpkkLF61sHAyHXxV8IoZyEMXGHmv2F//MWMPE36p
-         Y2+VE3Cvne/CkJ7DjAlv3au1g0FfQ8ifubtiDh/Kdon8lXLj8gCiAvnStIptDA+Th6+9
-         B7HA==
+        d=gmail.com; s=20260707; t=1794716870; x=1795321670; darn=lists.linux.dev;
+        h=content-type:mime-version:references:message-id:date:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=lBVnC2BKavV2mvXAWvVCtFrvsJ4cH4FcPMsK31plLKI=;
+        b=c3VKhBqLnxwMQkjmUIubVeYN0E61+/0xCMlLVKT+ZCgmSQ8QpxooHnYEfm1kSfG6tI
+         nH+bEU4OGQ4/6+Ho01XrZaMNWlyBAJ71jBafsogd7YefH8CbRCginABO9+3w/ff/S8ep
+         HKSXLaEsuc8bE8oVb5RwfG6Y3HhxYsDf51u3Qtl9Snx/OogZpS9LcK2Ht4xnAHozO1B2
+         9ieZUaHnDzz0oGooFyVs6RCagnZAKbdAWPo85LnZ89KOdTj0TWio1XNhEhM7+m8NdS7F
+         gI+wI+EOcecWD37SB7biwf2aNUbk5bSYTZXNFAD7m3RSKWyZZfelv+/MX1s62noO7Xgv
+         Kpkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794679836; x=1795284636;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=2tV4PJFJAVwFY0+x5FVmRJ66Mz8ksU1cklE+L0oAwR0=;
-        b=jSQ7v19D363QLqpWGqRAOj+2SgOecuvuRiaNIou6ghFhQISy6fUFiubbx15AtkXc31
-         bZX0SrgAnwleDgiaZrVA9IOb3nM4ZD2IeRUpWykZbQG8MpdwK3HK7tX+Qwui3V1xMpYh
-         osr5m6Rh8iZ/5VKqNPXPuC3A9kw30CyULA/4wxpA2Tk5OyNqpVRoh4tWNV1g/OeO3006
-         SrmxGfTL/HuBRNg/aRuIZ6idBRgARln/MeAHnuUWyHNJlposUEDHHgPI+Wx4LQMkZgJ/
-         phlLndrJDp1o1/KVXF6tYX9bp+sw+t9rvjhg4r7YsEMLa7xuzWb6blVH0iFpGYhlrtWe
-         og7w==
-X-Forwarded-Encrypted: i=1; AL+hErHMzOxJmvdMah20o9puWK2AhLmz5EJf91042Ve/GwVEaPfvYy3sYxsrpqc2ArDUKzZdDWKpbw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8n2pWZpjs5ckHtoyrhh/XxrGKNKEF6NhJRkLutDzkgCFBn6cDk
-	l7fK5wYbw0dzw/8ZaiqQV4GGnE0yDmSe6DhDQ1iB44u8q62OGlq6c3kk
-X-Gm-Gg: AYBFou0Iz/cgYRyDAHaow46gm80sNuTBsSw5+rNsDwOGAN641A4KghpcnHFGw51dNhM
-	BXI3k/3HobKhA05Yxltvzavvg1cn1ldVCnVU41qp4XvQZklc2vRBHLOOU9mWLbZAgz358OlGTaC
-	5hb3WCkpcow5YoWH6OCPnL4OC7OjbzlzgDGjy0m1v5mBDXt3mbqPv957oBECZaJiWNkXsTO7G1f
-	OqTNyy/LZ6jLdWq95XVlJ3b71vxm1rdgiQz6r/b4EysXEA2i0v9K7VBRf8g9M++JbS7daWpYgef
-	XfFCiIaKGAKmdAiP5i/mhxvi2nAUhXB3tT9LtlEpO3JxBtilMcR59VbCs7AVC5C5xTo2vH8JXju
-	28kESoSBt4OhmnrRKbFinq7RoCfmKruCUUVIysogkMFppc4T25FNb1f419ZvE8lPgjq0Ii3JYly
-	bHTRALkeKehfCJ6cu+SfF+BuReVnsO3JmB5beY6gg7HrV2L0FZeRoufRABhmjWUX7Fi6jr7ck4e
-	xP2IZRmcWJubPrGHC1JWqGtPeYP+dFWQ46dCPC2cHQtqTfZupE/4SHQpEA5xPOsoJNg1U0y0ecr
-	jGn39POCcT3CgjCkRKp3WvrKqqW/1hvWwJlLRxOzJhN5TZWrxH6u7WYtSj6Uv3oKsRaw+ByR7Wu
-	OHQ5ixU95bpNVPDkPCJsTZL7vpJ1QDQnQ7/Y=
-X-Received: by 2002:a05:600c:4715:b0:4b7:6b0a:a2f6 with SMTP id 5b1f17b1804b1-4bb55a963ecmr125366935e9.21.1794679836134;
-        Sat, 14 Nov 2026 10:10:36 -0800 (PST)
-Received: from dohko.chello.ie (188-141-5-72.dynamic.upc.ie. [188.141.5.72])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c605e5b2fsm12637227f8f.40.2026.11.14.10.10.35
+        d=1e100.net; s=20260707; t=1794716870; x=1795321670;
+        h=content-type:mime-version:references:message-id:date:in-reply-to
+         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=lBVnC2BKavV2mvXAWvVCtFrvsJ4cH4FcPMsK31plLKI=;
+        b=aB6gHqVdljj0+ud8sh/NRvvHOCwdhsUuGpZSRDYrGHbMSLQLGRGAZruYyCq+Ug/iAh
+         Q6c1K3USNyQ9lo/FBskJcAbOGWLsnNJpfQ0kODizDr60v9iy24+6wNQo2/hbu3NCVfAe
+         hQ/jtHdzuY08xbfDgfP51Bkv37TUCVJh/12Vg7AuiNMib331yAMFJQM+mBtT1WTfU9zL
+         51Yf3XxYn4u09mSyVinUUKVsgVdxeo8vN1oLcqV1jEcEqNUdVGd1H1M3V9Ul5GS/Nc26
+         CQFXQv08I2/hPO65NqQYNLfgwIq4SQ2/eqbu+CwvVIG8ptNctjKaaXjVNn4/MP0pzx8u
+         6eJg==
+X-Forwarded-Encrypted: i=1; AL+hErFB6eTGKd4AFq9mtQBRyZlPwHYpXOwd1+ZOp5sVGpoMAfBcT2fS50puV28TuEBIa1BAu0QtdA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8YvsAxGHAZCdvPhsEc4BZayEYafluwDaawN+7BLq4LCvalD3hO
+	m2p7CB0Sn3EgxgZqZHqDwu8o4r2h+vw+kbDX5dygk+B8byT9UytX3NNE
+X-Gm-Gg: AYBFou1rY2vT1uSlf3D5vznjr1g6h0kUIefGCVY7mfNSrLEftPSvBxpwWdCIHfpdS07
+	7Ip/NPo7eBu9R1aXIgDjwMexR6sCie/Dux0xRAxpXFoQFub6eX0K+NYj8+5R2CUu4A02AwVqHz5
+	vEEMphpAbpNEDokK9oCVqkZLGgsTswuu8gRYFEj9q6jyTZjiiRLG17F59gES93fD+tSD0nV187N
+	Yv6AYzWjvVfF+q66G07hYd6iQx/yH2+y7e0gwJ+aluvfIvnFOi4+hFMOuYKpP0BWgHQqlLvoiXl
+	KdOEZJ4U2XAQhl1sE5ZKhLGMTX/g7IpMhFBS0LJwmzjIr8GLSDAmOmOGbWqPSPsjU/Z9TozyGpN
+	EXvXprlFB8rCTcat7p9lOFnIMyXES9DMJNwdLW3SKlPUCvpGvFughDzR0480z/LhqFh2cWVdbfS
+	cfiCFIqJfa8fw/tHZWc4WyhjfS0wLYiirRhNI9QZ+4o9FUf16OZE2TaK0ZDU+/bOjo5otwVv84Q
+	9rZjqOeA1V6VvhmJ92dDEqvO6Hu3YF98DAWeCjqZeVa7tM75FmSyGDEwXDwtjWPhitCQBJzHScq
+	kGtNdffW15D8Tc1PZrzHZPcL8VI=
+X-Received: by 2002:a05:7300:ff46:b0:37b:c89d:1d56 with SMTP id 5a478bee46e88-37bc89d354bmr1627673eec.12.1794716870280;
+        Sat, 14 Nov 2026 20:27:50 -0800 (PST)
+Received: from pve-server ([49.205.216.49])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3797f98b9b2sm20640706eec.6.2026.11.14.20.27.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Nov 2026 10:10:35 -0800 (PST)
-From: David Carlier <devnexen@gmail.com>
-To: SJ Park <sj@kernel.org>
-Cc: Aveline Noir <jm5905938@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/9] mm/damon/stat: avoid 32-bit overflow in idle percentiles
-Date: Sat, 14 Nov 2026 18:10:34 +0000
-Message-ID: <20261114181034.2665113-1-devnexen@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261102150757.93058-5-sj@kernel.org>
-References: <20261102150757.93058-5-sj@kernel.org>
+        Sat, 14 Nov 2026 20:27:49 -0800 (PST)
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+To: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>, "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Jason Gunthorpe
+ <jgg@ziepe.ca>, John Hubbard <jhubbard@nvidia.com>, Peter Xu
+ <peterx@redhat.com>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan
+ Kara <jack@suse.cz>, Rik van Riel <riel@surriel.com>, "Liam R. Howlett"
+ <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, Harry Yoo
+ <harry@kernel.org>, Jann Horn <jannh@google.com>, Lance Yang
+ <lance.yang@linux.dev>, Zi Yan <ziy@nvidia.com>, Matthew Brost
+ <matthew.brost@intel.com>, Joshua Hahn <joshua.hahnjy@gmail.com>,
+ Byungchul Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>, Ying
+ Huang <ying.huang@linux.alibaba.com>, Alistair Popple
+ <apopple@nvidia.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Nico
+ Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, Dev
+ Jain <dev.jain@arm.com>, Barry Song <baohua@kernel.org>, Usama Arif
+ <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, Xu Xin
+ <xu.xin@linux.dev>, Chengming Zhou <chengming.zhou@linux.dev>, Madhavan
+ Srinivasan <maddy@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, "Christophe Leroy (CS GROUP)"
+ <chleroy@kernel.org>, Shrikanth Hegde <sshegde@linux.ibm.com>, Pedro
+ Falcato <pfalcato@suse.de>, Kairui Song <kasong@tencent.com>, Qi Zheng
+ <qi.zheng@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, Axel
+ Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>,
+ Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, Mike
+ Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal
+ Hocko <mhocko@suse.com>, Leon Romanovsky <leon@kernel.org>, SJ Park
+ <sj@kernel.org>, Rakie Kim <rakie.kim@sk.com>, David Rientjes
+ <rientjes@google.com>, Alexander Viro <viro@zeniv.linux.org.uk>, Christian
+ Brauner <brauner@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Ingo
+ Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>, Jiri Olsa
+ <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, Adrian Hunter
+ <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, Masami
+ Hiramatsu <mhiramat@kernel.org>, Oleg Nesterov <oleg@redhat.com>, John
+ Johansen <john.johansen@canonical.com>, Georgia Garcia
+ <georgia.garcia@canonical.com>, Paul Moore <paul@paul-moore.com>, James
+ Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, Mimi
+ Zohar <zohar@linux.ibm.com>, Roberto Sassu <roberto.sassu@huawei.com>,
+ Dmitry Kasatkin <dmitry.kasatkin@gmail.com>, Eric Snowberg
+ <eric.snowberg@oracle.com>, Fan Wu <wufan@kernel.org>, Stephen Smalley
+ <stephen.smalley.work@gmail.com>, Ondrej =?utf-8?B?TW9zbsOhxI1law==?=
+ <omosnacek@gmail.com>, linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ kvm@vger.kernel.org, damon@lists.linux.dev,
+ linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
+ apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
+ linux-integrity@vger.kernel.org, selinux@vger.kernel.org
+Subject: Re: [PATCH 00/13] mm: continue vma_flags_t conversion
+In-Reply-To: <au-DXpEi4wHwsz0r@gremlin>
+Date: Sun, 15 Nov 2026 09:50:28 +0530
+Message-ID: <7bie914j.ritesh.list@gmail.com>
+References: <20261105-late-2026-vma-flags-v1-0-0d3cd15ab75f@kernel.org> <d0ea7929-7c12-4245-ba3f-6dd5c0269e6b@kernel.org> <au3r0-geuwtRYPiC@gremlin> <1c0b1368-a381-4b25-bba9-7a4f8e92b764@kernel.org> <au-DXpEi4wHwsz0r@gremlin>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -101,19 +140,29 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi SJ, Aveline,
+"Lorenzo Stoakes (ARM)" <ljs@kernel.org> writes:
 
-The value stored a few lines below has the same problem on 32-bit:
 
-	damon_stat_idletime(region) *
-	(long)c->attrs.aggr_interval / USEC_PER_MSEC;
+>> > It's not really all over the place, it's converting vm_flags_t to
+>> > vma_flags_t across madvise.c, which involves changing a few function
+>> > signatures, whose callers must be updated.
+>>
+>> Ah, yeah. What on earth does arch/powerpc/kvm/book3s_hv_uvmem.c do with madvise :(
+>
+> Yeah it's quite worrying that... :)
+>
 
-The product is the region's idle time in microseconds, held in a 32-bit
-long, so it wraps once a region has been idle for more than about 36
-minutes, whatever the intervals are. The cold-end percentiles then come
-out negative or wrong. Doing the multiply in s64 with div_s64() would
-keep the sign and avoid it.
+Thanks David & Lorenzo, for pointing this out. I have changed this to
+use ksm_disable() instead [1], which then also removes vm_flags_t usage
+from there.
 
-Hope it helps !
+Please take a look at it whenever you can. Since it also removes the
+EXPORT of ksm_madvise(), I think we will anyways need an Acked-by there.
+(note that: looking at those changes, it seems like it should go via
+powerpc tree)
+
+[1]: https://lore.kernel.org/linuxppc-dev/0500fbfbb98776091c89584155368610095b4dd5.1794537345.git.ritesh.list@gmail.com/
+
+-ritesh
