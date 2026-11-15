@@ -1,56 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794775040;
-	b=AhqhuMH/gROCerYjOibjHx/xgIz3whKmv5bUdEOuqQ8KfCsdJt3CfqtqiREwH64Tm0Mp
-	 lxi4D7FxaxRfDl8KHPXkItcLLTOANxf7san7wM3vuYuXmQA4NFkQuCaftJBewlgUvfbZB
-	 SyTJXpWsmEcqEK+jPtdCD2uBOf0iGtsG9FtrGrXhBWIKtfkN53PdJwtMnx96gKaDrajDm
-	 5ixqejNIUS0CRVecT39TISJXpSoPLWdFs8+FgsxxBJXUo7F4avaHGSKZzBhnzWT6yo/BZ
-	 lM6OQh5tCVLZBgmGIE/Lyi2208BBanUTKpe7h18nOiI14WYRZXJtvtPU1VEog8/728w==
+	t=1794775273;
+	b=rFe89BX90SNK7do59OCL1088mocFhSdxMpWA6iWZ0YZfn1l3ETn/0J/625gunJ0+RS2D
+	 SLrYyy3NwcYDM0D4UmTsPuF9YRTwVaWE1rlkyF5/9ZR5q02O3FOIeBUVgjXOejahTNreb
+	 k0Q3VzNC0nAxoYMg3PlWVjMhqp5e5q+6nlqwYA4BicBVS6RWWqIMr32raj/0BAGNX9IDB
+	 RdJUcAxhY1LMhazwVksg8ZzDaquK/qKOpCJKCLgc06SLUQPd3DXD+zUXraHeRd/3f2hYR
+	 0oAutuk3Mf7AdzwaeWM/53Dq4ibP/SHYGKgvR2LUFIGzPcwSJkUMgkd++yQf84lKmUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794775040;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794775273;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=+Ikmg9N1RsKIQbI3uEth/NIY2dtjDJEnXxL3eJbP4m4=;
-	b=TtLStk9u6wX2SeAiOyUOMxywZSYBFK0yshI8DcNHKkWt5BN46YM6Sa4CtXsCHz2EXteG
-	 16HA7552/yJigK3mqUy3/XuYHZ4qNqmvtuPOHdxLeU+ixMB7DJZC9Zuv5WLGKrAXCYWf0
-	 e+sRX0jQgR3Ja57LezC3rZJDx4jrACYwfmtHkywug90oEX6Xc5nbPi1MAwiPONqPF8ODW
-	 yfsYxvzdGTEtoB9CuvjvEYR+kBVCSHvu8KGg7IaykFtSvFMg9ycQL5OLSrAR1yk2W4k96
-	 ViGcJV4PZsIXIHGStkkikRncg2K6S6hHkYNIks4SfiJZZfY/PVzXB5L1XeOmiTjp40Q==
+	bh=PSxkxgjUByaP/FYRn8+uu178H4zEv9vDMaVbpvfzlA0=;
+	b=HmRVoIEaBLGMXPyNM5JP9DCWRfJGP61ri/i5Xef6dxhP5IyKY3GoiJQ3+J2v/1KRtiVv
+	 07v0CeR9GfN+Vi8Nm23Jh00gMW74XByaw1/Gn4yq4XDAJeOfeVvKKiOq7Jwr3zx4ZV34S
+	 ngmVnusFfl9TL1Ycg5sNiDy/r2Wscrwzij74akGneSxHpc26EFadT6i/wWu3rsVX+gmd0
+	 D2urXOvbtVG3SVTNffQjdw5TxjhLjzxORc/Kqgcwu5ucYu5cqNuZEzq7C4emfSrPWw3TB
+	 e+/WUwK6jAf1v3vzD2ooJBAryLXPjgaYPUw3yhx9MrdGATK+4iqtBRPqWHMW9MLBK9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ibTWXuln;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wah75oXT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B104A606A887
-	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FD0606A31F
+	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ibTWXuln
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3063F1F000C5;
-	Sun, 15 Nov 2026 20:37:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wah75oXT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6ED1F000C4;
+	Sun, 15 Nov 2026 20:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794775040;
-	bh=+Ikmg9N1RsKIQbI3uEth/NIY2dtjDJEnXxL3eJbP4m4=;
+	s=k20260515; t=1794775273;
+	bh=PSxkxgjUByaP/FYRn8+uu178H4zEv9vDMaVbpvfzlA0=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ibTWXulnm28aRjewGrfq6X+okOL9yYiscjWw6mYnGt7knhi/F9w8MR032Xl5rDvaP
-	 Inu4IFd4B5cpdoJXapkN3GLodvVDOnFSgYli8deK0COtDp8o4OQFICCna0oLS4howi
-	 WJFHEbwOdYk6IIGiSj2PuhFV4ZlHRSR6TB8sSTQOlRpsnQ5C3Ow8mC0di726vKx7JQ
-	 IsEzyO2ZiCNESLXtPfCJqwrGRC3lMqj3s++MkaH7TERa9Q1hoGY6UaiSdkEyXnPQh1
-	 3ZlgDmPjFHmGT6A5lfI4IqnFgFDJICzjhco5R0GJ/FYS5h7Gsxy6v8zrK8Ky3puM9l
-	 R0C+rcPwpLPAQ==
-Message-ID: <sashiko-outbox-215847@kernel.org>
+	b=Wah75oXTv2g4ttvtDi6nwIIBo8lsoWaTHCTLZLfGxhNDoypBNWWYtaVdjs8CtVFnn
+	 vFbClSO25JEdibuy+6h6C9kbRRDHAbHR2taRqwmbyPuHe24Wdnepx5JVLqwqtPTJ+b
+	 kCyfdl6/1mRnRzVjsOwwV9SMMdCHyLzFatUSGIdogPj92ZQ+F3fK4K4BeCSdEkmQJg
+	 WdlhqRzml3rLrUVeaFp3TYEhrlTuMkSGWUCPIhwMFcARw2vgGW1Lela+YTq60DuMIW
+	 Hb6kIm+cOjT+WABlKfDWu6JfnoFcORM2oWiL3fxB3SHqlwEEk3jmsr8SRhfws9bkRm
+	 irecO7xFTbLsA==
+Message-ID: <sashiko-outbox-215848@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 13/27] mm/damon/core: introduce damon_report_exist()
+Subject: Re: [RFC PATCH 16/27] mm/damon/sysfs: support REPORT_MADE type
+ probe filter setup
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
-In-Reply-To: <20261115202849.99134-14-sj@kernel.org>
+In-Reply-To: <20261115202849.99134-17-sj@kernel.org>
 References: <20261115202849.99134-1-sj@kernel.org>
- <20261115202849.99134-14-sj@kernel.org>
+ <20261115202849.99134-17-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 15 Nov 2026 20:37:19 +0000
+Date: Sun, 15 Nov 2026 20:41:12 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,91 +61,122 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-Thank you for your contribution! Sashiko AI review found 1 potential
-issue to consider:
-- [High] mm/damon/core: out-of-bounds and uninitialized read in
+Thank you for your contribution! Sashiko AI review found 2 potential
+issues to consider:
+- [High] mm/damon: out-of-bounds and uninitialized access in
   damon_report_exist()
+- [Medium] mm/damon: uninitialized report_type in damon_commit_filters()
 --
 
-commit be7b07b7677627ddaaa72484649217b5172610a1
+commit 6058e18a855d5b73c171dc4b94eb6031f06fdc63
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: introduce damon_report_exist()
+mm/damon/sysfs: support REPORT_MADE type probe filter setup
 
-This commit adds damon_report_exist() to search damon_report_queue for a
-report matching a given type, address range, and minimum age in jiffies.
+This commit adds "report_made" to the DAMON sysfs probe filter type list
+and copies the filter's report_type when setting up probe filters.
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index c02c7fbc1d864..c60a6504d0a15 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2386,6 +2386,52 @@ int damon_submit_report(struct damon_report *repor=
-t)
->  	return 0;
->  }
+> diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+> index ca971cf1dcf6d..1c171af4590a8 100644
+> --- a/mm/damon/sysfs.c
+> +++ b/mm/damon/sysfs.c
+> @@ -1016,6 +1016,10 @@ damon_sysfs_filter_type_names[] =3D {
+>  		.type =3D DAMON_FILTER_TYPE_ACTIVE,
+>  		.name =3D "active",
+>  	},
+> +	{
+> +		.type =3D DAMON_FILTER_TYPE_REPORT_MADE,
+> +		.name =3D "report_made",
+> +	},
+>  };
 > =20
-> +/**
-> + * damon_report_exist() - Find if a report of a given condition exists.
-> + *
-> + * @report_type:	Type of the report.
-> + * @addr_range:		Address range of the report.
-> + * @jiffies_old:	Oldest jiffies to find the report for.
-> + *
-> + * Returns true if the report is found, false otherwise.
-> + */
-> +bool damon_report_exist(enum damon_report_type report_type,
-> +		struct damon_addr_range *addr_range, unsigned long jiffies_old)
-> +{
-> +	struct damon_report_queue *queue;
-> +	int lock_old_val;
-> +	unsigned int idx, nr_read;
-> +	struct damon_report *report;
-> +	bool found =3D false;
-> +
-> +	queue =3D &damon_report_queue;
-> +	lock_old_val =3D atomic_cmpxchg(&queue->lock, 0, 1);
-> +
-> +	if (lock_old_val)
-> +		return false;
-> +	idx =3D queue->tail;
-> +	for (nr_read =3D 0; nr_read < queue->nr_reports; nr_read++) {
-> +		report =3D &queue->reports[idx];
-> +		if (idx)
-> +			idx--;
-> +		else
-> +			idx =3D queue->size - 1;
+>  static ssize_t type_show(struct kobject *kobj,
 
 [Severity: High]
-Can indexing queue->reports[idx] before decrementing and wrapping idx read
-uninitialized or out-of-bounds memory?
+Can enabling DAMON_FILTER_TYPE_REPORT_MADE filters cause uninitialized and
+out-of-bounds accesses on queue->reports[]?
 
-In damon_submit_report(), queue->tail is post-incremented after writing
-queue->reports[tail]:
+In damon_submit_report(), each report is stored at queue->reports[tail] and
+then queue->tail is incremented, so queue->tail points to the next slot to
+write rather than the most recent entry:
 
 mm/damon/core.c:damon_submit_report() {
-	...
+    ...
 	tail =3D queue->tail;
 	if (tail =3D=3D queue->size)
 		tail =3D 0;
 	queue->reports[tail] =3D *report;
 	queue->tail++;
-	...
+    ...
 }
 
-Because queue->tail points one slot past the newest report, the first
-iteration of damon_report_exist() reads the unwritten slot at
-queue->reports[queue->tail] (which is allocated with kmalloc_objs() in
-damon_init() without zeroing) and never visits queue->reports[0].  Once
-queue->size (1000) reports have been submitted, queue->tail reaches 1000
-and the first iteration reads queue->reports[1000], one element past the
-end of the array.  Also, when damon_submit_report() wraps local tail to 0,
-queue->tail itself is not wrapped and increments past queue->size on
-subsequent submissions.
+When damon_pa_filter_match() calls damon_report_exist() for a report_made
+filter, the loop reads queue->reports[idx] starting at idx =3D queue->tail
+before decrementing idx:
 
-Should idx be decremented (wrapping from 0 to queue->size - 1) before
-indexing queue->reports[idx], with damon_submit_report() updating
-queue->tail =3D tail + 1?
+mm/damon/core.c:damon_report_exist() {
+    ...
+	idx =3D queue->tail;
+	for (nr_read =3D 0; nr_read < queue->nr_reports; nr_read++) {
+		report =3D &queue->reports[idx];
+		if (idx)
+			idx--;
+		else
+			idx =3D queue->size - 1;
+    ...
+}
+
+While queue->nr_reports < queue->size, the first iteration reads the
+unwritten slot at queue->reports[queue->tail] and the loop stops before
+checking queue->reports[0].  Once queue->tail reaches queue->size,
+damon_report_exist() reads out of bounds at queue->reports[queue->size],
+and the next damon_submit_report() wraps only the local tail variable
+before incrementing queue->tail past queue->size, causing subsequent
+submissions and lookups to write and read out of bounds on the heap.
+
+> @@ -2336,6 +2340,8 @@ static int damon_sysfs_set_filters(struct damon_pro=
+be *probe,
+>  		} else if (filter->type =3D=3D DAMON_FILTER_TYPE_HUGEPAGE_SIZE) {
+>  			filter->range_min =3D sys_filter->range_min;
+>  			filter->range_max =3D sys_filter->range_max;
+> +		} else if (filter->type =3D=3D DAMON_FILTER_TYPE_REPORT_MADE) {
+> +			filter->report_type =3D sys_filter->report_type;
+>  		}
+>  		damon_add_filter(probe, filter);
+>  	}
+
+[Severity: Medium]
+Does committing a new DAMON_FILTER_TYPE_REPORT_MADE filter to a running
+context leave new_filter->report_type uninitialized?
+
+When damon_sysfs_commit_input() commits the context built here via
+damon_commit_ctx() -> __damon_commit_ctx() -> damon_commit_probes() ->
+damon_commit_filters(), newly added filters are allocated with
+damon_new_filter(), which does not initialize the union in struct
+damon_filter, and the switch in damon_commit_filters() does not handle
+DAMON_FILTER_TYPE_REPORT_MADE:
+
+mm/damon/core.c:damon_commit_filters() {
+    ...
+		new_filter =3D damon_new_filter(src_filter->type,
+				src_filter->matching, src_filter->allow);
+		if (!new_filter)
+			return -ENOMEM;
+		switch (src_filter->type) {
+		case DAMON_FILTER_TYPE_MEMCG:
+			new_filter->memcg_id =3D src_filter->memcg_id;
+			break;
+		case DAMON_FILTER_TYPE_HUGEPAGE_SIZE:
+			...
+		default:
+			break;
+		}
+    ...
+}
+
+As a result, damon_pa_filter_match() passes uninitialized slab memory in
+new_filter->report_type to damon_report_exist().
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115202849.9913=
-4-1-sj@kernel.org?part=3D13
+4-1-sj@kernel.org?part=3D16
