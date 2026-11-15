@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794775284;
-	b=KGCac+i3h/4mbDK/xAaMhoXrBt7tCWjeBgEFt/hgVo+pjy9rvulC/ge7oJDFoulkQTDY
-	 kUXSLmC8eGrqtAFtQghVHkoic3PD74gpzUpI2dBGfdUo0wVqMVLKonFi+/VXgw2+LMhIP
-	 hPXg/eXvfrD51zJNBjssYnrZRJHfNGv4PSkRFB274jfYJlt43lTHPPk1ojCw7tp1cO6Id
-	 kyJrgBQFHhcySM3/r+WGhiQjl70qL75b6hYDLKCr32eLniM9Q4Yg0c4oxptOqQk1fw6FS
-	 zz4XQFy60QKQBveWt/A8XYKRvZYyRXr9REAS/hyK2Dwk6eHhnkqdBsC43RuAi28IqVQ==
+	t=1794775295;
+	b=SgHbXjsuaZzscJ8FNU8GfQwKLXpPLiB1pDZNr2IcvmEPa3pIaXflYoxtQePbxbpUxJtB
+	 KMuk7DpobGOB09WXqggTI9KRxAylTs1B6dbvFtj8P2GL/LD6gwFbe16DpC0PNNAsAn1S4
+	 AuYNpwmgnkIUqbf1FFkKgAmMQ1XA9f76ENKxfZD/OpSGwr1oEo3Ik3RlAFFimhGpV44x1
+	 +htO6PkzFb+UruL2937Q2Gu28yBp0GldTzdQbm2bYq5KyGe/TvDWkQaxpTmFFTmaWfhPA
+	 JvyVqY21i9E1V8/HO2MhiGL/6nN0VbQ9p4Qd9uVE3rb9P9ZsYY/H/rUoV+xsJCnrVxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794775284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794775295;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=31PK8ejQi8OkMxNdvjJcNS0+QCT6SvYzZcKuJxbk+N0=;
-	b=uy+kSRt7hWybJe6m2hAEKTGnP5f9USYfr8/G3wJzXYLtpJKrC1kPqyJ53Nx92z7AZGX+
-	 TtbOGa2te9CInafVObdrqD7yvtPdlGAhM1/Sx9UvnPLx28g47/KMeRmjoj+qLTkdBm3Gh
-	 KqWBrJnYnScbj4S4Wq23gZbGHSDW84vH3qpIyK3b6K1bnhQtOdJFXgWVoMOdBR4j0QDdy
-	 b5+k0TjLXVDeVSmgBM7692KhBG6GcxtyQ4zrgQHgCnqv3dSSuVP8CviOaBEIlQI/PpWdw
-	 SG/IY4GTbEKgz8ZEDStTVo8kkACUw9XJMnUebt6t4Wi6wWJSs78z9UNbwYHymNFVjLQ==
+	bh=Q4vAPhP/V1Bp8qYGqnFchGNpQrdWi5lSaW3Lmn/+Q0E=;
+	b=yH0FLapT8kflJ3UZMmujbAtGarDh2Dno4f89OgxjhBfuqeUP/MioXoC7BYUP0sqL+afQ
+	 E2TgmQgBdrKskN0MGmLNpeU+4Mn8XI6ZhcHuJ/bZKBXRkLVoZSAcKM4NO1MuV0viGLMtw
+	 pK6IHqvbhjXfjNjbw+AvzqXanc4TJxbVhjf4ULPnuwXVnNtS1P0MMlYEVcpRisAeWRH6Q
+	 G+5hoydndd7NCHwxqVCU8kMwTcqs4b/4phXwkF1fJHYP+dKWE8S9P1msK2kUfTbiP6D55
+	 YnYLIrCr2wL4p35aLFfXtISXE8RL9Un/dmDiO52Dreg0IFDCGMET2Hn/mqsvBapSuYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QC8ZDgAO;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eGCaiakI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80EF606A323
-	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300FF606A31F
+	for <damon@lists.linux.dev>; Sun, 15 Nov 2026 20:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QC8ZDgAO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A0E1F000C4;
-	Sun, 15 Nov 2026 20:41:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=eGCaiakI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE87D1F000C4;
+	Sun, 15 Nov 2026 20:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794775284;
-	bh=31PK8ejQi8OkMxNdvjJcNS0+QCT6SvYzZcKuJxbk+N0=;
+	s=k20260515; t=1794775295;
+	bh=Q4vAPhP/V1Bp8qYGqnFchGNpQrdWi5lSaW3Lmn/+Q0E=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=QC8ZDgAOAz/goD9F04hw0cJMzG4vhfIXnkMQU3fY2LwoClwGP8zFbjSxQx0sSJm8Y
-	 8gmKsPCp4eI0Nw0F51WVqnIKG5DTr4rE+O7AWpQE2gcvcNeqsuwtzsX0SKXeB9zxAm
-	 IohSyxPw1H920YflUmB3oPQH7fMD0/eMG6YOIyfwISSaN8tA+U0tUhiUGW+nEi3KiM
-	 gTo0hsQD55MS3Fy0VlvtDDOLZsPTzQlSEpLybbgaAAEIFwH+j9Bp129rvm4pKIXHPs
-	 2uOJRtgCbqsdii+m5vJlt5dVZR1f0LzaWB/RvfJgiazK0knymfJVzTykPOQA+TIZDh
-	 d95R7NSBYb7PA==
-Message-ID: <sashiko-outbox-215849@kernel.org>
+	b=eGCaiakIfl1kezaf+/ujmceYlD7vtcZ0Ev8DWvP5MSBcLVTnKerZQofuwmGY7/LLa
+	 2a0NuYDoXGKY72Uc+2yah1dVO5COdg6izZ5D2YrwEZwgtytMjy4cFYXjNdS/jx8zUp
+	 Axp11qCyNEX1is3jALAC5fo5xhtgMCT1l413hb+tqmR7LteRoVhvzKWCuFYfinj0JU
+	 +5PyZR1DHVG5vNz3bvhjZ52ZODUAgWO+GyaKh2uprvy9vk9/+dBBCS7JRFea8SXNC5
+	 hHzfvu1hb3HmEtr+LSuXuGVjCgqKSMHQduj6w7ksO544b9HdqOI4xWUWbuhHV0iUv3
+	 7Lt/WPL5eo5VA==
+Message-ID: <sashiko-outbox-215850@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 02/27] mm/damon/core: implement data attribute
- report queue
+Subject: Re: [RFC PATCH 14/27] mm/damon/paddr: support REPORT_MADE type
+ probe filter
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
-In-Reply-To: <20261115202849.99134-3-sj@kernel.org>
+In-Reply-To: <20261115202849.99134-15-sj@kernel.org>
 References: <20261115202849.99134-1-sj@kernel.org>
- <20261115202849.99134-3-sj@kernel.org>
+ <20261115202849.99134-15-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 15 Nov 2026 20:41:23 +0000
+Date: Sun, 15 Nov 2026 20:41:34 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,95 +63,138 @@ Precedence: list
 
 Thank you for your contribution! Sashiko AI review found 3 potential
 issues to consider:
-- [Medium] mm/damon: damon_init() leaks damon_region_cache on queue
-  alloc failure
-- [Low] mm/damon: missing static qualifier on damon_report_queue in
-  core.c
-- [Low] mm/damon: struct damon_report_queue comment documents head not
-  nr_reports
+- [High] mm/damon: out-of-bounds and uninitialized read in
+  damon_report_exist()
+- [Medium] mm/damon: phys_addr_t truncation and unit mismatch in
+  damon_pa_filter_match()
+- [Medium] mm/damon: uninitialized filter->report_type in
+  damon_pa_filter_match()
 --
 
-commit 10a61bc9bab6e48534e4a8552380aecaccbee97a
+commit db7c0b8660ac4e99fdce33921b7535218eaa4dc6
 Author: SJ Park <sj@kernel.org>
 
-mm/damon/core: implement data attribute report queue
+mm/damon/paddr: support REPORT_MADE type probe filter
 
-This commit adds an internal damon_report_queue structure, allocates its
-buffer for up to 1,000 reports in damon_init(), and checks that buffer in
-damon_initialized().
+This commit adds support for the DAMON_FILTER_TYPE_REPORT_MADE probe
+filter in the physical address space operation set by querying
+damon_report_exist() over the last sampling interval.
 
-> diff --git a/mm/damon/core.c b/mm/damon/core.c
-> index 0a056949604f9..3f87a7eec442e 100644
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -2334,6 +2334,25 @@ int damos_walk(struct damon_ctx *ctx, struct damos=
-_walk_control *control)
->  	return 0;
+> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+> index 5b773012a8764..04e95047f8cea 100644
+> --- a/mm/damon/paddr.c
+> +++ b/mm/damon/paddr.c
+> @@ -140,9 +140,10 @@ static void damon_pa_prep_probes(struct damon_ctx *c=
+tx, bool set_samples)
 >  }
 > =20
-> +/*
-> + * struct damon_report_queue - &struct damon_report queue.
-> + *
-> + * @lock:	Represent if this queue is being used by someone.
-> + * @head:	Head of the queue.
-> + * @tail:	Tail of the queue.
-> + * @size:	Size of the queue.
-> + * @reports:	Array of &struct damon_report.
-> + */
-> +struct damon_report_queue {
-> +	atomic_t lock;
-> +	unsigned int tail;
-> +	unsigned int size;
-> +	unsigned int nr_reports;
-> +	struct damon_report *reports;
-> +};
-
-[Severity: Low]
-The comment above struct damon_report_queue documents @head, whereas the
-struct defines nr_reports instead.
-
-> +
-> +struct damon_report_queue damon_report_queue;
-
-[Severity: Low]
-Should damon_report_queue be marked static?  struct damon_report_queue is
-private to mm/damon/core.c, so leaving damon_report_queue non-static
-exports it into the global namespace and triggers sparse and W=3D1 missing
-variable declaration warnings.
-
-> +
->  /*
->   * Reset the aggregated monitoring results ('nr_accesses' of each region=
-).
->   */
-> @@ -4308,7 +4327,7 @@ void damon_update_region_access_rate(struct damon_r=
-egion *r, bool accessed)
->   */
->  bool damon_initialized(void)
+>  static bool damon_pa_filter_match(struct damon_filter *filter,
+> -		struct folio *folio)
+> +		struct folio *folio, phys_addr_t pa, struct damon_ctx *ctx)
 >  {
-> -	return damon_region_cache !=3D NULL;
-> +	return damon_region_cache && damon_report_queue.reports;
->  }
+>  	bool matched =3D false;
+> +	struct damon_addr_range addr_range;
 > =20
->  static int __init damon_init(void)
-> @@ -4319,6 +4338,14 @@ static int __init damon_init(void)
->  		return -ENOMEM;
->  	}
-> =20
-> +	damon_report_queue.size =3D 1000;
-> +	damon_report_queue.reports =3D kmalloc_objs(*damon_report_queue.reports,
-> +			1000, GFP_KERNEL);
-> +	if (!damon_report_queue.reports) {
-> +		pr_err("report queue alloc fail\n");
-> +		return -ENOMEM;
-> +	}
+>  	switch (filter->type) {
+>  	case DAMON_FILTER_TYPE_PGIDLE_UNSET:
+> @@ -157,19 +158,27 @@ static bool damon_pa_filter_match(struct damon_filt=
+er *filter,
+>  		else
+>  			matched =3D damon_folio_young(folio) =3D=3D false;
+>  		break;
+> +	case DAMON_FILTER_TYPE_REPORT_MADE:
+> +		addr_range.start =3D pa;
+> +		addr_range.end =3D pa + 1;
 
 [Severity: Medium]
-Does this error path leak damon_region_cache when kmalloc_objs() fails?
-Destroying damon_region_cache and resetting it (along with
-damon_report_queue.size) before returning -ENOMEM would avoid leaking the
-slab cache and leaving partially initialized state.
+Can assigning pa and pa + 1 into addr_range truncate 64-bit physical
+addresses and miss reports when ctx->addr_unit > 1?
+
+struct damon_addr_range defines start and end as unsigned long, so on
+32-bit PAE/LPAE systems where phys_addr_t is 64-bit, physical addresses
+at or above 4 GiB lose their upper 32 bits (and pa + 1 wraps to 0 when
+the low 32 bits are 0xffffffff).  In addition, when ctx->addr_unit > 1,
+pa is aligned to ctx->addr_unit, so setting addr_range.end =3D pa + 1 only
+checks the first byte of the sampled unit instead of [pa, pa +
+ctx->addr_unit).
+
+> +		matched =3D damon_report_exist(filter->report_type, &addr_range,
+> +				jiffies -
+> +				usecs_to_jiffies(ctx->attrs.sample_interval));
+> +		break;
+
+[Severity: High]
+Does calling damon_report_exist() read uninitialized or out-of-bounds
+elements from damon_report_queue.reports?
+
+In damon_submit_report(), the report is written at queue->reports[tail]
+and queue->tail is then incremented, so queue->tail points to the next
+slot to be written and is never wrapped when it reaches queue->size:
+
+mm/damon/core.c:damon_submit_report() {
+    ...
+	tail =3D queue->tail;
+	if (tail =3D=3D queue->size)
+		tail =3D 0;
+	queue->reports[tail] =3D *report;
+	queue->tail++;
+    ...
+}
+
+mm/damon/core.c:damon_report_exist() {
+    ...
+	idx =3D queue->tail;
+	for (nr_read =3D 0; nr_read < queue->nr_reports; nr_read++) {
+		report =3D &queue->reports[idx];
+		if (idx)
+			idx--;
+		else
+			idx =3D queue->size - 1;
+    ...
+}
+
+Because damon_report_exist() indexes queue->reports[idx] at queue->tail
+before decrementing idx, it reads uninitialized heap memory on the first
+iteration while 1 <=3D nr_reports < queue->size (and never inspects index
+0), and reads out of bounds at queue->reports[queue->size] and beyond once
+queue->size reports have been submitted.
+
+[Severity: Medium]
+Can filter->report_type be uninitialized here when a new
+DAMON_FILTER_TYPE_REPORT_MADE filter is added via damon_commit_ctx()?
+
+damon_new_filter() allocates struct damon_filter with kmalloc_obj()
+without zeroing the union, and when damon_commit_filters() creates a new
+filter it only copies union members for DAMON_FILTER_TYPE_MEMCG and
+DAMON_FILTER_TYPE_HUGEPAGE_SIZE:
+
+mm/damon/core.c:damon_commit_filters() {
+    ...
+		new_filter =3D damon_new_filter(src_filter->type,
+				src_filter->matching, src_filter->allow);
+		if (!new_filter)
+			return -ENOMEM;
+		switch (src_filter->type) {
+		case DAMON_FILTER_TYPE_MEMCG:
+			new_filter->memcg_id =3D src_filter->memcg_id;
+			break;
+		case DAMON_FILTER_TYPE_HUGEPAGE_SIZE:
+			if (src_filter->range_max < src_filter->range_min) {
+				damon_destroy_filter(new_filter);
+				return -EINVAL;
+			}
+			new_filter->range_min =3D src_filter->range_min;
+			new_filter->range_max =3D src_filter->range_max;
+			break;
+		default:
+			break;
+		}
+    ...
+}
+
+As a result, new_filter->report_type retains uninitialized slab bytes
+when damon_pa_filter_match() passes it to damon_report_exist().
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261115202849.9913=
-4-1-sj@kernel.org?part=3D2
+4-1-sj@kernel.org?part=3D14
