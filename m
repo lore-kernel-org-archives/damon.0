@@ -1,61 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794841865;
-	b=5eF4r8SfS2xXNnlIyMmsUX0m8GttCKiEDqnogIVy2KvWuId/zSlYlU4GZoCVchZdQ9jX
-	 KW2FF5nZPTcq0qEm0JCNdAqn9YX+BJkesqATZZUcYmTBuOAI5yBcb2Cqz+2UEA1UebfRz
-	 vPyReCIvR3Na9vpJkXiPDF22/8Btuabl8qX4IO/x22e2eue4cCqPlFa/GLLki5CiNAyTF
-	 yZwvBTpcTpoIwN0QTv+R1bn0EThpELHp2Vcb6WQ8BRByKatJ1i44gZrNv4xlv5gEUQg96
-	 up+ufiPHkh2NhnqOOmwKdNOHhSQIqlotOKumnXtGJQCewm83P4UsrkEs061LIcsG64Q==
+	t=1794842005;
+	b=ZzDH3cJ4Z3HPa1iPddWbS7ncykBxI5e5Tpw9o+4wf69dRjhMSSdLaGlyCYnc8Un4VI1Y
+	 n8xInBZ4hVyZLhspcnLMtuiS4v1hNlP35wWH6WXrlB/Re8GebtI6U7Sx04CphtsjTHIko
+	 GlpheliAZpyPROlLaO3h2maLAWC4LdR9gN1BSAJVtjKeGvfdqF1DPz/ctX3KCIL4HDTQq
+	 5j8Fmb8iZGBm0rTU+v9FLQe7v0rLwLkhzhjrIv7IssYT0KjtmngmRLtAkqM/ojzjA2VbM
+	 fb8pdMDlnn7BI4U2Qgq1bK5ya2NaCzfR1Y5VG3l8PjLbj1ms43x1vnil9aF1ncAy61g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794841865;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=w1WUFy00WKif50635jpAYGG0Z7r0L+cuC+V6UO7Tvv0=;
-	b=SzGhq4OtjufYuiEjxsaStkftQY5zo332Lyptsa12GKQdRBdkNiGKlWf6Rp3irT8lj1Vp
-	 4TIwHxkIk83ks8SbsxWivBhwRShqE/PVDrNTbfHUwBZYnOQO7/Dn5VR0RI2aL2aB5FGqm
-	 CjxabX0uxHREBCjzLqkHsnrB3ZoRoCPEpiYLNcg2jGUWeb2OddPthXujfIwIhz10DTk5L
-	 RxX7NLTCHZbkN+ONTnEULwjU3akUhYukUWGjgU1DmVdKr0g87uFKbooGPkZ2z0s2LPeAM
-	 OH3mOBDqZ9IETtKze8devEAVJkvoAD02Gt0tfs5IL0r4DrZBqlQhDazm+UZEma1dtmA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794842005;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=g5ZRJiPOBXH1G4LurhV9pfgX5c+QzGU61IrAF9FWMGg=;
+	b=Gu4rdmg7DBhSXx8+CMmBtUdFeRQvVaroemLvMXscEluKFE4NlehweuYCYTuI1Z1+Y7BE
+	 e/jPryxolS49YT/ddcWjDokqbq5Idgh/qGOaHHrkNsLDcFeayFEimkawo3tacrD3ShE5W
+	 GrR9CIB/BmlXnVos4E3i8AZQQCit2IhtF5vMThew2CwpHWJN+dvoYjsWZzLJBXlqBWR1J
+	 TyShXOXlb4rplCtSQJ3mgvYz90QwGMdGM9+6FbjSkS6ikls8B4wqlMcQYqdZ2+vyAgFnD
+	 kLsu8bKZv8L6RR9Vsz+BslB0elPrpKiUOw0KJVufPQhkQ5w8LZ2ZbPWkrS2DVc9fSEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="E/NTwgEo";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ASZQEKG3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9AA606A33D;
-	Mon, 16 Nov 2026 15:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2DC606A32C
+	for <damon@lists.linux.dev>; Mon, 16 Nov 2026 15:13:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E/NTwgEo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5611F000CA;
-	Mon, 16 Nov 2026 15:11:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ASZQEKG3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D2D1F000C4;
+	Mon, 16 Nov 2026 15:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794841865;
-	bh=w1WUFy00WKif50635jpAYGG0Z7r0L+cuC+V6UO7Tvv0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E/NTwgEoelaYeC6OqXmks8N/gaUD+AcdUO8xivFoV/Ry26MI65gDTP9Ku0jol9iFJ
-	 tDagg5m3MgBwxozICWPiRceFqhmjtSQa0Pg0tlEsI2eSRrS5HBjEwjSOTdaOYOP4Pw
-	 sLpxCJ2dNldClQYI5XqEWGpERmwgVvBvJToJhJNfBgnuwSEmVKkXD51Zqbhbb37neC
-	 DXU10NdfGwhiHvc0TBe6YIterzMpGxBTLR1hmdAqxJXIzOV/nXWEugbxnEWaPrTvSY
-	 T79+2yYiY1BLICqLqXRHpQW3dPcIhogVa4euAS+9JScmG0ivR2hIRIixBwSsOdgz2B
-	 LelZrxTgyAOJg==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Enze Li <lienze@kylinos.cn>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	SJ Park <sj@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 2/2] Docs/mm/damon/design: replace "same to" with "same as"
-Date: Mon, 16 Nov 2026 07:10:52 -0800
-Message-ID: <20261116151057.81692-3-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261116151057.81692-1-sj@kernel.org>
+	s=k20260515; t=1794842005;
+	bh=g5ZRJiPOBXH1G4LurhV9pfgX5c+QzGU61IrAF9FWMGg=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=ASZQEKG3/8GcElsSqBoJZznQ/UyCeaLcVUFZLxCXmqWLK9YUKFosJZc24RToYsyT6
+	 gSRdqKpDAGhBb93l4UtmrmMWtAxvgXP/VsV93RH1emVxKI0U5WSNWR+Jda85SctnRH
+	 OY1M6faIqHPM6+rvX8asUcg0YWyCV2hTBRO9dQPOsQw1CP6SWAM26f2nLPMH1fugQB
+	 qtrZfQGM3md1wgYD1Trte/34tOaiG6MJW+JCvC2jx79ufORUNFuJXBYgobQdbtjhs0
+	 AOXJ9jF7nLURcUa0lxJCR4JOLxPKC5JET85o8p+O0NkLVaZpPUc2PL273WQGCPRkud
+	 6U4Gwaw6qlqDw==
+Message-ID: <sashiko-outbox-217243@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 2/2] Docs/mm/damon/design: replace "same to" with "same
+ as"
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261116151057.81692-3-sj@kernel.org>
 References: <20261116151057.81692-1-sj@kernel.org>
+ <20261116151057.81692-3-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 16 Nov 2026 15:13:24 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -64,71 +60,20 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Enze Li <lienze@kylinos.cn>
+> From: Enze Li <lienze@kylinos.cn>
+>=20
+> "same to" is not idiomatic; it should be "the same as" or "same as".
+> This doc has six such usages.  Fix all of them at once for consistency.
+>=20
+> Signed-off-by: Enze Li <lienze@kylinos.cn>
+> Acked-by: Randy Dunlap <rdunlap@infradead.org>
+> Reviewed-by: SJ Park <sj@kernel.org>
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-"same to" is not idiomatic; it should be "the same as" or "same as".
-This doc has six such usages.  Fix all of them at once for consistency.
+Sashiko has reviewed this patch and found no issues.
 
-Signed-off-by: Enze Li <lienze@kylinos.cn>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from v1
-- v1: https://lore.kernel.org/20261114055436.5546-1-lienze@kylinos.cn
-- Collect A-b: from Randy and R-b: from SJ.
-- Rebase to the latest mm-new.
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261116151057.8169=
+2-1-sj@kernel.org?part=3D2
 
- Documentation/mm/damon/design.rst | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-index b676be6971589..6284b90054430 100644
---- a/Documentation/mm/damon/design.rst
-+++ b/Documentation/mm/damon/design.rst
-@@ -292,17 +292,17 @@ DAMON :ref:`context <damon_design_execution_model_and_data_structures>`.  The
- registration is made by specifying a probe per attribute.  Each of the probes
- specifies a rule to determine if a given memory region has the related
- attribute.  The rule is constructed with multiple filters.  The filters work
--same to :ref:`DAMOS filters <damon_design_damos_filters>` except the supported
--filter types.  Currently below filter types are supported.
-+the same as :ref:`DAMOS filters <damon_design_damos_filters>` except the
-+supported filter types.  Currently below filter types are supported.
- 
--- ``anon``: Same to that for DAMOS filters.
--- ``memcg``: Same to that for DAMOS filters.
-+- ``anon``: Same as that for DAMOS filters.
-+- ``memcg``: Same as that for DAMOS filters.
- - ``pgidle_unset``: Matches if the page for the memory is marked as not
-   access-idle.
- - ``pgidle_set``: Matches if the page for the memory is marked as access-idle.
- - ``hugepage_size``: Matches if the page for the memory is a part of a hugepage
-   of a given size range.
--- ``active``: Same to that for DAMOS filters.
-+- ``active``: Same as that for DAMOS filters.
- 
- If such probes are registered, DAMON executes the probes for each region's
- sampling memory when it does the access :ref:`sampling
-@@ -706,7 +706,7 @@ There are two such tuning algorithms that users can select as they need.
- The goal can be specified with six parameters, namely ``target_metric``,
- ``complement``, ``target_value``, ``current_value``, ``nid`` and ``path``.  The
- auto-tuning mechanism tries to make ``current_value`` of ``complement``-ed
--``target_metric`` be same to ``target_value``.
-+``target_metric`` be the same as ``target_value``.
- 
- - ``user_input``: User-provided value.  Users could use any metric that they
-   have interest in for the value.  User space main workload's latency or
-@@ -736,7 +736,7 @@ auto-tuning mechanism tries to make ``current_value`` of ``complement``-ed
- 
- ``complement`` is a boolean parameter that determines whether to use
- complemented value of the target metric.  For example, if ``complement`` is set
--and target metric is ``active_mem_bp``, it is effectively same to
-+and target metric is ``active_mem_bp``, it is effectively the same as
- ``inactive_mem_bp``.  ``complement`` is no-op when the target metric type is
- ``user_input``.  For the metric type, the user should be able to emit
- complemented metric values on their own.
--- 
-2.47.3
