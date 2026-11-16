@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794842531;
-	b=XPTGfSz3Y2gU8EHrFuU2gJqjT6HWlXhMIxpi2Y84gCBLPHtto6UUQudMneIvmfoBx/DZ
-	 dVrvpMQbqPXobkFUDAE9v+Yj7ndsE4ZdIUbopHgWk4YcDLgmmqKdNEY9uvv8iqx0hGdPo
-	 LMYHKUKG+Ak6gLVvJ8V0lAggL3hVOxZ6bPKf0tcijZX63tzZgJLza71PAoI9aaxchBfTd
-	 YW3JG7j7icoZS+77dnn2q+oO9rSAP1YM6vHtGRvHRhr4yh06oAxjTyH7tbLAMAx1Z0J97
-	 gYUh5dnpilfrjcXhFf9MjhFg4YclSyzfkdh/3EBp03rA2+/XpOuXw+DX4vHV2Z6wc4A==
+	t=1794842930;
+	b=iRT1mnvB+pHzMcKFsCSy2ip2h4t4KRYFv6T03ehyOtWSlFRRsdBB2JtndVVPr+2JiIYw
+	 xjKXUXdYM7nY2Cv+o8tz7JqAt3yyjtMXfdRIDlkLTRSu7Ibsm2Dc3qmCkt1QZdolYSle5
+	 XMEaUo5lDJfEdHH680bI0j7n2mw2Wg6P/qtYiQIKrQelhEVNxj+S1cfyDeFcLO9Nd9mUQ
+	 YatCaIf20OBFTW9eYdybi7u1hKPMjqUgbL8lZUQvngj8MiLvrnq3A+sGzZiljXH/E4bvS
+	 sLYGc8HY9WgY5C75EVnHxxr+uAmX/HdSYBGgqaT21HWjzkO/wgbmtGI33Uxjxrr0Y8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794842531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794842930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=vY0UbG0C3Stc7c0qISbj4M381KaRmNfpfTlZNvZJ4gg=;
-	b=5Bq6hjGHfRF+YhsuETkswE/+DNdLvj9/yzK8dzx/WunMz0UVps/bbzNjCdKtucsdjNsH
-	 h/iojEm+FaC44im+wtCCzdnmn9mVGE/+SeLh6KvMwsBzveaMkCzzjjrb4SJ9ejC03vaw/
-	 REWK0+qA8jaQiYWdwP/jT2JW/p+ojwnJPkL/HmdrXo2nGQVe4NQwEnYb/KAJnt53N5hS8
-	 8rhan2EBH2vPFscpPqg0dgCZH0WUXNDxOkC8iGojsItXV36EENce1oz2oGlBJmrNz6F4U
-	 jotP1sHG7Z9ebhu/WsLTO/Obyv8Gj7bb8SAWmHG82/DXUxsd+03ZOOA3AtM/d7n56YA==
+	bh=4xAnuCAiuWX4/keedDsQNjuLhi8WyX14EAVs42DysHA=;
+	b=1n1yA6IDxd918C+Lggjku01/JtmNShp/Xn14rV4yjDymFVnK9mSiGXRXShQLmihPJYV9
+	 qmenllJiw+UGDiAu5n6R28jZId11BVbNrO/LorLcTXv+1Bx4ntVdipALaPjoxmu7OIFd5
+	 fzbUaFedqSyG8BF77vUhXTyjRWI9/xhR5ys4dg1iRWMU2iRLS6AyyKwDIV3IPAwrsfk9M
+	 WUAF77Xk5tfr965BFJ4aij/DzgEqrqY3shSR4kaM4VzNsww2RVIr5kJ1YiCdfQC2FC4iS
+	 Cl6bxnBLrqp6kYw8V39P9D3Gmnm4kOjFzjN++U1skCFoT7thNcDPS0N7gXDOPGLNVyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MW4jEOMd;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aeu8DGrK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80248606A31C;
-	Mon, 16 Nov 2026 15:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B9E606A322;
+	Mon, 16 Nov 2026 15:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MW4jEOMd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168291F000C4;
-	Mon, 16 Nov 2026 15:22:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aeu8DGrK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A7D1F000C6;
+	Mon, 16 Nov 2026 15:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794842531;
-	bh=vY0UbG0C3Stc7c0qISbj4M381KaRmNfpfTlZNvZJ4gg=;
+	s=k20260515; t=1794842929;
+	bh=4xAnuCAiuWX4/keedDsQNjuLhi8WyX14EAVs42DysHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MW4jEOMdnWGPvEz5CGqm/KorZii8WlayfaxYQOGWixb9ToQDNIwgGyTyDOi+IurvI
-	 ErG/UbUJCeqHZInLB5+s/pUew5wgPeKvlq0VS/EJNtJ3UNQKUN8hax/CmCib2GDERa
-	 Jwi7WW0dWg7El81CKKt+cFHlJHRGDtBRMl9aIvWKZYksT+8W3NR6mo9o9DFZvKn3Yi
-	 XqZPbfOVbnewWYxzJgobgZiF5p3encmi58k8O7CA9bV3IAnGykhjxxre7lAB31dh71
-	 aEVQx2Tc0v4ZHI4Ey/AqaXeuNqjauz69ZoDp3bfjYCR9ooCfNpcWlUeY0kZNuZtMiM
-	 0bx/CtQJtyhKQ==
+	b=aeu8DGrK7dOcH+25xyUfDQcUxpXG3VsMt7G/OtfmB+zqydYBhQRnyIUQZe9NDc8WI
+	 0/noo+Rhb1OqjXKQ/ye7foi+ZqBLS5PecEbjpgYoIx9wR3fgWGPgLrnJ72QhYx6CQ6
+	 p1h6NzlPYGEn7zp2M7o4imdmj7bdzv7+/jvTU74pcez4yQrUvdSpn8mMGx3Cv4QtLr
+	 xJYGDUmGbcrrVy0X3yQMVdvAgzx7hQTsoYvNpVk2+iMg7nnCgClNpwMnUPFlFdBLPc
+	 Y7J5GVmgiOJCdAfX7HVypUgxOTdjB5aZ6RArEcdLBM0LC0re1XbCwg9nJjBgcR0W9M
+	 PtEOMv1LfrcrQ==
 From: SJ Park <sj@kernel.org>
 To: Jason Angelov <jasonangelov@ucla.edu>
 Cc: SJ Park <sj@kernel.org>,
@@ -46,11 +46,11 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] mm/damon/tests/core-kunit: test DAMOS_FILTER_TYPE_AGE_MS interval changes
-Date: Mon, 16 Nov 2026 07:22:03 -0800
-Message-ID: <20261116152204.82241-1-sj@kernel.org>
+Subject: Re: [PATCH v2 0/3] mm/damon/tests: add KUnit coverage for age_ms filters
+Date: Mon, 16 Nov 2026 07:28:42 -0800
+Message-ID: <20261116152842.97789-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261116-test-age-ms-filter-v2-3-3b265d59ec98@ucla.edu>
+In-Reply-To: <20261116-test-age-ms-filter-v2-0-3b265d59ec98@ucla.edu>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -63,27 +63,42 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Jason,
+Hello Jason,
 
-On Mon, 16 Nov 2026 03:06:23 -0800 Jason Angelov <jasonangelov@ucla.edu> wrote:
+On Mon, 16 Nov 2026 03:06:20 -0800 Jason Angelov <jasonangelov@ucla.edu> wrote:
 
-> DAMOS_FILTER_TYPE_AGE_MS defines an inclusive range for age in
-> milliseconds to filter for target regions. Aggregation interval can be
-> changed by users or intervals auto-tuning features.
+> The DAMON core tests do not cover DAMOS_FILTER_TYPE_AGE_MS. Add tests for
+> committing valid and invalid age ranges, identifying the filter as
+> core-handled, and matching ages at and outside the range boundaries.
 > 
-> Add a kunit test for each:
-> 
-> - convert region age to milliseconds, correct behavior at boundaries
->   for defined filter range
-> - DAMOS_FILTER_TYPE_AGE_MS filter keeps correct behavior even when
->   aggregation interval changes
-
-Looks good to me.
-
+> Region age is counted in aggregation intervals, but age_ms filter bounds
+> are in milliseconds. The interval-change test checks filter matching
+> after both increasing and decreasing the aggregation interval.
 > 
 > Signed-off-by: Jason Angelov <jasonangelov@ucla.edu>
+> ---
+> Changes in v2:
+> - Fix commit-message formatting, line wrapping, and comments.
+> - Set age and interval inputs directly in patch 3.
+> - Add SJ's Reviewed-by tags to patches 1 and 2.
+> - Link to v1: https://lore.kernel.org/r/20261113-test-age-ms-filter-v1-0-b99eab2f71bb@ucla.edu
 
-Reviewed-by: SJ Park <sj@kernel.org>
+From next time, please reply to comments on previous version and share plan to
+the post next revision, before posting the next revision.
+
+> 
+> ---
+> Jason Angelov (3):
+>       mm/damon/tests/core-kunit: test DAMOS_FILTER_TYPE_AGE_MS in damos_test_commit_filter()
+>       mm/damon/tests/core-kunit: test DAMOS_FILTER_TYPE_AGE_MS in damos_filter_for_ops()
+>       mm/damon/tests/core-kunit: test DAMOS_FILTER_TYPE_AGE_MS interval changes
+
+All patches look good to me, thank you for this patch series, Jason.
+
+This series is applied to damon/next [1] tree.  I will repost it soon (~1 week)
+as an mm.git merge request.  So, no action from your side is needed for now.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
