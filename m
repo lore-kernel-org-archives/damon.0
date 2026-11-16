@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794842198;
-	b=HR3dddpsarIvF88hAS5KIN7LokgbDAXPab/5Sm0kal0l3N4KPUVPye1DT0NwOCyTXr0B
-	 xiByKTgIuqdbU+arEfadD6DgF/LT3zr3ULug5YEx/5mDzJ+M17P0RN46LX2WJnfwDCXPv
-	 TJLBE15yr/9xn+01K52l9W+/s4OpUDuBPDwAjhM2VUABNlNDpNFL5ix8gZBlArEPxBSTV
-	 UguUxiQaa38EtfT40Uw/S8R1CzKHOsefP8JQXGci5RawuA4MYQurCap4/EoOiQhObKzS6
-	 u8t2b3euk01hi1RnAfOnrCZJ5CA9Arqr5F6gABnSbE0g2tkjqqEBKev264pqJcn2QzQ==
+	t=1794842531;
+	b=XPTGfSz3Y2gU8EHrFuU2gJqjT6HWlXhMIxpi2Y84gCBLPHtto6UUQudMneIvmfoBx/DZ
+	 dVrvpMQbqPXobkFUDAE9v+Yj7ndsE4ZdIUbopHgWk4YcDLgmmqKdNEY9uvv8iqx0hGdPo
+	 LMYHKUKG+Ak6gLVvJ8V0lAggL3hVOxZ6bPKf0tcijZX63tzZgJLza71PAoI9aaxchBfTd
+	 YW3JG7j7icoZS+77dnn2q+oO9rSAP1YM6vHtGRvHRhr4yh06oAxjTyH7tbLAMAx1Z0J97
+	 gYUh5dnpilfrjcXhFf9MjhFg4YclSyzfkdh/3EBp03rA2+/XpOuXw+DX4vHV2Z6wc4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794842198;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=3LuavZJ3iQnK39rejxEoyB+D1tKZrDl/PQaChyGF4KQ=;
-	b=tHBSYSBKpsliTLmHU6Rp7RYJUwjoqY8DmjwoLPxR6T2xHe9QKBBw2u1BaUt96yPJpDej
-	 PRJ3tHluPZCvN9adYmxRI0Rg3n3gEk+19tNOW8vtUDKgcs0G0cXk4DPE04Oy1DcnaJyI1
-	 Ek4u+wYgFswwva8gc07NyIo9+wM+Gr0Y+KYJZTYFbUG15QANsjPyHtyS8xr0tAg+bX7l9
-	 4+hB7LvpOmrJhJB8skr7rcx2dCeui8M/C7NzOAWUNlqGc8IR4zr99dZcb3rZl6IfFWlEZ
-	 XaqNU4jKzp10Gwmz0mQJOPfK3YmCLaafA4pFqd8vP6SlkVbfDHuNuclzxB2iB22Fg7Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794842531;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=vY0UbG0C3Stc7c0qISbj4M381KaRmNfpfTlZNvZJ4gg=;
+	b=5Bq6hjGHfRF+YhsuETkswE/+DNdLvj9/yzK8dzx/WunMz0UVps/bbzNjCdKtucsdjNsH
+	 h/iojEm+FaC44im+wtCCzdnmn9mVGE/+SeLh6KvMwsBzveaMkCzzjjrb4SJ9ejC03vaw/
+	 REWK0+qA8jaQiYWdwP/jT2JW/p+ojwnJPkL/HmdrXo2nGQVe4NQwEnYb/KAJnt53N5hS8
+	 8rhan2EBH2vPFscpPqg0dgCZH0WUXNDxOkC8iGojsItXV36EENce1oz2oGlBJmrNz6F4U
+	 jotP1sHG7Z9ebhu/WsLTO/Obyv8Gj7bb8SAWmHG82/DXUxsd+03ZOOA3AtM/d7n56YA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="BpXf/Jtj";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MW4jEOMd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32B5606A31C
-	for <damon@lists.linux.dev>; Mon, 16 Nov 2026 15:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80248606A31C;
+	Mon, 16 Nov 2026 15:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BpXf/Jtj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581E71F000C4;
-	Mon, 16 Nov 2026 15:16:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MW4jEOMd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168291F000C4;
+	Mon, 16 Nov 2026 15:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794842197;
-	bh=3LuavZJ3iQnK39rejxEoyB+D1tKZrDl/PQaChyGF4KQ=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=BpXf/JtjR91M/tVyotVjwFvLNDSsVXHT3wjcoq6vDObQHwKSdXq/iCjCz06seoCDY
-	 qvRz67p8eT2SnIIGwWav8zk4FbiJGCipEoUxEwr+MHCcTkUpDl8qOJpvMnkmO7l6W3
-	 WhTkae2G+KUtPfmDZTuBaRIF7MXV8HI9rJr+x8P1p2ZzcSd0lT1AyRzcON+5/JMjcU
-	 dusORXngu7q/C+YdkWBid+NPvcZgzFvYUrsVknKroTxq0TVKC/Y+T1VyNHwJxoWyuh
-	 a0Ohv7P9OBQx8m0L2CV9mGS5f2OZdW1D27hUpppCP6PR0gZUblK5WCDSb5butKqSlZ
-	 YUyuUq6ElDU7Q==
-Message-ID: <sashiko-outbox-217248@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 1/2] mm/damon/paddr: add KUnit tests for addr_unit
- conversion
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261116151057.81692-2-sj@kernel.org>
-References: <20261116151057.81692-1-sj@kernel.org>
- <20261116151057.81692-2-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 16 Nov 2026 15:16:36 +0000
+	s=k20260515; t=1794842531;
+	bh=vY0UbG0C3Stc7c0qISbj4M381KaRmNfpfTlZNvZJ4gg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=MW4jEOMdnWGPvEz5CGqm/KorZii8WlayfaxYQOGWixb9ToQDNIwgGyTyDOi+IurvI
+	 ErG/UbUJCeqHZInLB5+s/pUew5wgPeKvlq0VS/EJNtJ3UNQKUN8hax/CmCib2GDERa
+	 Jwi7WW0dWg7El81CKKt+cFHlJHRGDtBRMl9aIvWKZYksT+8W3NR6mo9o9DFZvKn3Yi
+	 XqZPbfOVbnewWYxzJgobgZiF5p3encmi58k8O7CA9bV3IAnGykhjxxre7lAB31dh71
+	 aEVQx2Tc0v4ZHI4Ey/AqaXeuNqjauz69ZoDp3bfjYCR9ooCfNpcWlUeY0kZNuZtMiM
+	 0bx/CtQJtyhKQ==
+From: SJ Park <sj@kernel.org>
+To: Jason Angelov <jasonangelov@ucla.edu>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] mm/damon/tests/core-kunit: test DAMOS_FILTER_TYPE_AGE_MS interval changes
+Date: Mon, 16 Nov 2026 07:22:03 -0800
+Message-ID: <20261116152204.82241-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261116-test-age-ms-filter-v2-3-3b265d59ec98@ucla.edu>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,24 +60,33 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> From: Aveline Noir <jm5905938@gmail.com>
->=20
-> damon_pa_phys_addr() and damon_pa_core_addr() convert between DAMON core
-> addresses and physical addresses using addr_unit.  addr_unit lets 32-bit
-> kernels with a 64-bit phys_addr_t monitor physical memory above 4 GiB,
-> but no test covers the conversions.
->=20
-> Add a KUnit suite for both helpers, including a case for addresses above
-> 4 GiB that is skipped when phys_addr_t is 32-bit.
->=20
-> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
-> Reviewed-by: SJ Park <sj@kernel.org>
-> Signed-off-by: SJ Park <sj@kernel.org>
+Hi Jason,
 
-Sashiko has reviewed this patch and found no issues.
+On Mon, 16 Nov 2026 03:06:23 -0800 Jason Angelov <jasonangelov@ucla.edu> wrote:
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261116151057.8169=
-2-1-sj@kernel.org?part=3D1
+> DAMOS_FILTER_TYPE_AGE_MS defines an inclusive range for age in
+> milliseconds to filter for target regions. Aggregation interval can be
+> changed by users or intervals auto-tuning features.
+> 
+> Add a kunit test for each:
+> 
+> - convert region age to milliseconds, correct behavior at boundaries
+>   for defined filter range
+> - DAMOS_FILTER_TYPE_AGE_MS filter keeps correct behavior even when
+>   aggregation interval changes
 
+Looks good to me.
+
+> 
+> Signed-off-by: Jason Angelov <jasonangelov@ucla.edu>
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
+
+Thanks,
+SJ
+
+[...]
