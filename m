@@ -1,56 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794897608;
-	b=GlGJChYoAfBwmpUbFIX0x1VpCsb94XP21GwE/gl3kvpJgzEmCo2I5t9LBD2HIP/i14ZY
-	 pDLNG6fHAmaTi6b3NdtBWA7Nb9rjMoaXYVaHSb8eoc73hRnOcFXFTD4j+hGPWELGJhv3I
-	 c5Ti19ELf6QSHdRyY6QcFO+UBdBhcykxyvnNAg9Bb6Dt8Bdc/oS9m1g7qQmttoBwIxu87
-	 TZ3tSVtOavksQQBAPrmtDYIJlqkHetl2v+I1Iaq3D1OC8Pv/ynQ59O1DLLvS/CpCQ0lLs
-	 v65pp9nn3PeR0qbU5Rb2HhAP8JmwcKsx6CcU8EwOhuA/I0pEU573jZjusld5ztWxH2A==
+	t=1794908625;
+	b=VKHkZ/y0Oa69AVsNZ0xE9FUEv7dvaGuiS8Xq5elsLscexCkLfEFMryhRFIHg6gqHbr4h
+	 h8V/0tpnRmyIN5+TzvCDOBiPSwSjB2ut1oe7nDcDhC4wh9hStGrwl76B5cuVnkT3dRrfE
+	 LrBrJuxVwK3VocptkD6Wj1FZ5GCY0Jhxmxdtn95o1eOn34hZADC+cfP38Jr7N8JXpha27
+	 Z/tH2xeE/OCyilVus5u17rFki8Vr/JCZWYaYg6KMKwa2mbs7yM8q6qQlbwb5/+tXzAflY
+	 4dQhVmaAPjqXVyzhqguZgB/ddfvIUVtjXoWiXdEgfSiCFA0E+D1XaZ/By8NbMvXgHgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794897608;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=n8xoCSTxj0+mDGXwSoYCn/zQ4fe0z5dSm205OjrIiE4=;
-	b=WgdbKr0BDaFalW06kM9cWbJ01k7lJT8LbHXgSuEIiW5cqewOqv1ca5rMBfAUdZvc1pXW
-	 EMjryN8xDKx77PfB3oU9GXOxzgPYIRXeO5PNIT2PUW4BVi77HPcP6FghvacHNDSxszscH
-	 NTkN/hyJTizlVD8eiLwRItcfR5wC3KIJJZ6GPiX5dgRJs949anIGJBbx7KNwh8BB4bpyo
-	 A6DhChBXimSx+phDmfgcD/Vbhgdb5gRcLsLYzQkZcZ+qE5YIdPE2m84r5yl6JJwnyrZzi
-	 W/8WOVvgeUDIB5xetdfFHfSEVUGI64lXQnEj3PkCYD4+fdLZ42bch3s1E3l14AmPf/w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794908625;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=Sqv/SgQ08rWFoJUPpiruSJD4TJXVLiHEu5SvhVq+K60=;
+	b=qyV0J0BqgiqzEoJjUJVL5aqGWEMPdTR8IAxeLbd/UR5sLAzJuv1QhfZqaW3X+fE7sG+a
+	 NDqrr5PtbXTcSuEMWibBLoZod82dYq66DsXXYQTupbP9kPDNiQ8jvT36SDjthFsmoNZPg
+	 VjR/DFgunhZLqhez0XQwkeYxzOvM6Ri1SDQwiN9n7neVCGHrwMbSis0kb99eMqHYFu8GS
+	 1oxr45p4pZ27IS7JNB8bV9CWYwAgmjS7xv1iWldNq3iG/rV9mL1SNzzjYiedZsDu7LNni
+	 gNCRJnSb+xAqRTiMD3ZrRwyowzU968idD5eqHjH/xleOdlRa+QDheECiLmlvTYYjk8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YvpfM+9W;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vHjPXR79;
+	arc=none smtp.remote-ip=209.85.128.53
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831F7606A331
-	for <damon@lists.linux.dev>; Tue, 17 Nov 2026 06:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1715606A8AF
+	for <damon@lists.linux.dev>; Tue, 17 Nov 2026 09:43:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A1715606A8AF
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YvpfM+9W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DB01F000CA;
-	Tue, 17 Nov 2026 06:40:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794897608;
-	bh=n8xoCSTxj0+mDGXwSoYCn/zQ4fe0z5dSm205OjrIiE4=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=YvpfM+9W2cizHz/Ed5CvVHV478DTbqmzwNlPui0ADHtmnmgsCK6rNbycqmlq8JFkq
-	 IWqRuzUJtCJWOslkQfg9w+vkLpW5u+ApbDmdaSbtIQUu3izbz03D53qvHM7Iqe1Jh+
-	 xsG+wNTzrZhDdsWlh9LCqaRwwihVqXNtR6WIcON93ti8uuUzBqj7PUVFJtg8KsCDuV
-	 4IhFMut2ptS609gAq2KfUxKDaKVRBmhuTkDUPkbmr+O/hvZvYT06jYLWT1cQHCheXp
-	 t6OBcCIRRH8Lzy5xrzEx8anrNDb7vLTJvvb7banXYrOFjEwXKC2LAQv3V82LFjSr1a
-	 TmKigT9b+tm7w==
-Message-ID: <sashiko-outbox-218268@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] selftests/damon/damos_quota: skip the last sample when
- counting exceeds
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Aveline Noir" <jm5905938@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261117-fix-damon-quota-selftest-20261117-v1-1-c65d687d3def@gmail.com>
-References: <20261117-fix-damon-quota-selftest-20261117-v1-1-c65d687d3def@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 17 Nov 2026 06:40:07 +0000
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vHjPXR79
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4bb702a7548so18663305e9.1
+        for <damon@lists.linux.dev>; Tue, 17 Nov 2026 01:43:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794908623; x=1795513423; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=Sqv/SgQ08rWFoJUPpiruSJD4TJXVLiHEu5SvhVq+K60=;
+        b=vHjPXR79I9AAaP3HQwGsRjcQFWhwhMVP85zCv8ywTHQhGQ6LKFFF2sJr2OcAoge+U1
+         t3kZZB7tXRVArdhwqmEO6LjT+oijLlYGkyvOaOU5nt4Mxu4KZDhQiQhUYAVJMKHvcLT9
+         H8n9eQ1rLHh8R9tLP5y4qKtoU9Jt8203NGhASKa+CqBfO5CStuuTYT8hkYT/xbawh6cN
+         dt2sPu74uwHfhI9ASr3HiG8NCRiG1ytUzChIWfNAvWIfBUAhuFyJDUto9ictPr4mP+YE
+         UlypxgQ+G9e9/lCDgPn4O9sOY2mCqHQn1ZvaZyag0rM2LX+k135DmylCu5TkkXzLJsBT
+         ZeNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794908623; x=1795513423;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=Sqv/SgQ08rWFoJUPpiruSJD4TJXVLiHEu5SvhVq+K60=;
+        b=Vb+5N++O5CvtDMeDHOFKEV+6cxc3dhDxSwGaq5TUtcidxqWskd6T8JeuE9b4zKYn5V
+         ej660mlz+45LWs2iZu0YuoZNIFIGniTOAvZKXYewtDCsWse8e8Ej/hBTmWTaKOEoW4Z0
+         WpFlqLDTmoJc44tZ9H+ANedxW6rpNApKTTVzObnCcBOWILcjEgI0Xehk/fcGg/sx2ycL
+         jtqfVvgDoOtxPfYDJN9aYMJrK/l4eao1ePX29tii3VAMvhyVRGIOoCu85MllI4E0z5y/
+         Azc6WQPopEODxe6mVOzMltFKosaCE/0oN8CNinEUGc+/XJQyLtM+Lv5sYf6A7yFT9zxp
+         6Axg==
+X-Gm-Message-State: APuU4Z9qedKdHZV5vAfe9mpMO5xQME+K7qvQVpV9uxvjPAZaTHjTSJDS
+	GWjX16TslUbM6dCd+FaS+uH+o4N//k/jtQI7fEzBXyYXsw9U+KrQpqku
+X-Gm-Gg: AYBFou0qb5juSlqsc6z763vA/8Eh/peMwVM/FV1z8jKNzkYHIrAKsr91Iqug5nWXe93
+	ASeWD8VYfV8WhK0+MIDTb798RRtBRNr1ATq9Ma6DkfLs2nGtUq8SN3PXRIUxM8fRyEocZoUbYyW
+	YaEwqW18H5gugpYNE5MEnDtMkcyQEk/I4+0HANxCW1qUnESpZ/X6srVNp3+9IGiiaK/fDs10K7f
+	FFGUi0rlfqdFh+K4T5VcS1f8TBiFJvBXZKpwuAy00mo5fZcaxGJZwI8CVDXW2vNhtT+4juMNdGA
+	tS0G9aDXHmfg+XffSOXBAIkPxP2WudiiF8zFPDFXpYNe2a0ddpc9txoJDZd3HwHbQyNTT1//Jos
+	BVdLUmAzmWKQluQ4OWlh5npEaEwHZeBs03i9PLXNJ0wVD0E0Cf5lWfMycjYR+oO8kbtoCDUu2UM
+	RWPmrOkvOuVYb7yNUKgPuIhLQlY1eSaD9yJ81SoHlZBhY3onKysVRKiMEmg4w5CCLPqvVB4aYi9
+	ZSUTGw+P4OcbwXPy/4rmf25AyExj7q4Zsla0xbhd7gStVrD2lchDSdt8f+aBpASsg+0j/YWD3IP
+	WV8blWssJkRY0eZgE6MN8kqRWFQvvvo1twrXymB5fjwFK0ZKcMDsiuSCCdatdG1yLE5tyOKf7sB
+	UtztTd/SphOI0aeyQP90x4HpMZyHHXgA3Shc=
+X-Received: by 2002:a05:600c:1c0e:b0:4bb:68e5:b952 with SMTP id 5b1f17b1804b1-4bb68e5bb4amr205720385e9.16.1794908622593;
+        Tue, 17 Nov 2026 01:43:42 -0800 (PST)
+Received: from dohko.chello.ie (188-141-5-72.dynamic.upc.ie. [188.141.5.72])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb7ad96096sm16212925e9.9.2026.11.17.01.43.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Nov 2026 01:43:41 -0800 (PST)
+From: David Carlier <devnexen@gmail.com>
+To: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	Aveline Noir <jm5905938@gmail.com>,
+	David Carlier <devnexen@gmail.com>,
+	stable@vger.kernel.org
+Subject: [PATCH] mm/damon/stat: avoid 32-bit overflow in idle time milliseconds
+Date: Tue, 17 Nov 2026 09:43:22 +0000
+Message-ID: <20261117094339.30978-1-devnexen@gmail.com>
+X-Mailer: git-send-email 2.55.0
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,21 +97,40 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> damos_quota.py expects qt_exceeds to be increased for every sample whose
-> tried_bytes equals the quota.  The kernel increases it only when the next
-> quota window starts, so the last full window may still be pending when
-> the workload exits.  The test then fails with an expected count one
-> higher than the actual one, e.g., 15 < 16.
->=20
-> Do not count the last sample.  Also drop the sorting of the samples, so
-> that the last one is the latest.
->=20
-> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+On 32-bit, the region idle time in microseconds is computed in a long
+before the division to milliseconds. It wraps once a region has been
+idle for about 36 minutes regardless of the intervals, so the cold end
+of memory_idle_ms_percentiles reports wrong values with flipped signs.
 
-Sashiko has reviewed this patch and found no issues.
+Do the multiplication in 64 bits and divide with div_s64() so the sign
+of recently accessed regions is kept.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261117-fix-damon-=
-quota-selftest-20261117-v1-1-c65d687d3def@gmail.com?part=3D1
+Fixes: e5d2585d9e85 ("mm/damon/stat: calculate and expose idle time percentiles")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
+---
+Ref: https://lore.kernel.org/20261115173343.82437-1-sj@kernel.org
+ mm/damon/stat.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mm/damon/stat.c b/mm/damon/stat.c
+index 6e05a2b067f2..f2387aee675d 100644
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -130,8 +130,8 @@ static void damon_stat_set_idletime_percentiles(struct damon_ctx *c)
+ 		percentile = div64_ul((u64)accounted_bytes * 100, total_sz);
+ 		while (next_percentile <= percentile)
+ 			memory_idle_ms_percentiles[next_percentile++] =
+-				damon_stat_idletime(region) *
+-				(long)c->attrs.aggr_interval / USEC_PER_MSEC;
++				div_s64((s64)damon_stat_idletime(region) *
++				c->attrs.aggr_interval, USEC_PER_MSEC);
+ 	}
+ 	kfree(sorted_regions);
+ }
+-- 
+2.55.0
 
