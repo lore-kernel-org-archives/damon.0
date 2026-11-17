@@ -1,58 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794926420;
-	b=W0rtMBRVFeWyHfwc0kJgs6ClF06rLbCrVcb+tr2nD2W7FK2YpyJYGc3Dq/47XKzJDWvk
-	 o7yiYNqi3CcbeKuus66f2cKhlHuSiBnK7ZfGzQeXCgAn6DSL9U3bobqEPfpplDuUljQVE
-	 1kD8fh3YIVYwK7vgKB9CTlpa88921jCuB9+m6xhEGDsbr6E/JalnC9fA7OD9gJDqR6BfP
-	 gDSsVzYREMQN/Xe/VpjPaoDBe9CY7xeqNkYsNceLkGF1LEuTzz9gWqJERdlHdOlq6z2s9
-	 p1922HM9cqbFfOiseINDAKy9KHH0s+Zw13ut3X7jKUy5Tgo1JWvrvDUlxNVE8iigYgw==
+	t=1794926661;
+	b=j16lxjTMULq70y8vFERnswC4iExhXHFpqXjbwhDgA0uf8RApj/MIwqgLz9RRgTZufRYD
+	 YbAr/3l8/sS6rWNzCrFLH4z9zokLryuEYYgBpUqG1mIFfbJIuaoOcWJf34L6qeb4xGqaI
+	 U5tkR2zj0cygSdNCQnoUR8d5Fi/q38N6QMPK6JU4aVCCitYoZblFBGbwh3/WvPqHZCtBv
+	 pIjL2KGhglWQtUoaze5HP52lQYNhOyV4oAN5y38vfLdqodKZn7s5KOAd3pARAr6ZT7w6O
+	 kr8HutEeYxu6dxoH00hpAXq2IUgTzaV3vf3zJeRy2o5UmKVZRQPnVILFhxzdTpgeCCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794926420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794926661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=Is3YZDsuf4kkEHdqcvbool8F9PgEbG1uxT0GybnHP8U=;
-	b=lXXA9TX9yHDx9Z2woOHRE+2rMsOflxAwQLxcKn2e3hbJGUq2uywoWgJ5EEJLYkeFtD0q
-	 Y3WiaunOfoAOhGoQa43kf9/0LVL7gxXO+86NCycsDCIFd9JrcjCNZEowA9FeIlTuSqjk6
-	 KpX2vnYU6GLfZ/xPa8EFlgOvT9sWDGRTVt6p3vMT1mSJg+0/R6ox9pty2938e+FA1As95
-	 aNuOfkpWRdOzfjvLh1GYlFlFAtYQYs5xWjv7qx0ZKsduX54v13zSuLUOAWZ9b5NLRVyIH
-	 pYFUBINCfyZIYNiYu6cttQ5E+1DAYJFzGEIVN0VjpwlVT5BzSTtDQ68nDbNpaIXjYPw==
+	bh=FKqHwWb9Vsr0EE7nC7sU59WB0WtXzppmSDtlUQX6DHw=;
+	b=b9G6GqbXnujpOmgKGg15fO6aeg/pIYq4s4oOk1rPiKAJ6oWZnud4cFDlyoOtqMMqEzQA
+	 iHbwBfCmvYiOI4K1iCosnMoDiYdMFdAw76vFpLhrCWNosMWHkypYi4hVUnn/DgqVS9GAy
+	 UljDXl6jBvMrdZxmWSsqNtucvILEh+IUBLpNkeFNwY0GMrkEwuvLD5Mzmzuek8bzZreHU
+	 /eJTt6VUIUStxwgZIySWZjry5lrPl8zPs+xPdColVII23OheZ9PpTacoRHmYlX0VPhzhe
+	 r5YrZvB63PZHkXGX0vatcprp03qF2b/pFStlYY0A4DRyDLjBeRFIodaYjO63axnRofw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iGIIRE7y;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bwWoKNgX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD13606A33D;
-	Tue, 17 Nov 2026 14:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E87606A32C;
+	Tue, 17 Nov 2026 14:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iGIIRE7y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BE61F000D0;
-	Tue, 17 Nov 2026 14:40:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bwWoKNgX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F17B1F000C5;
+	Tue, 17 Nov 2026 14:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794926420;
-	bh=Is3YZDsuf4kkEHdqcvbool8F9PgEbG1uxT0GybnHP8U=;
+	s=k20260515; t=1794926661;
+	bh=FKqHwWb9Vsr0EE7nC7sU59WB0WtXzppmSDtlUQX6DHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iGIIRE7yfPORHZlp7Lj3Bag4dvQuRrC62XSY1s6WDTNwavLC1O5g6mPe7yWCoHU3e
-	 3lEfcY99mbdwW+mnBqYQSsmlvkVMxihpUSe0nnnqdhHjz5PunFqtuPY9ErjUAg2xVH
-	 7w8V7WwU1lHBrFBefjZxu++osEVkRbISir5i0SwSQFxhRTwJV5fMFvRnORd1/ajyV+
-	 iWzJH+wRMnP+rbZ3UF8ffi6FtwgL2yPFkfAq0sWebH+jMNJ3vevr0bFvTdnzk3TG8J
-	 yuOEfVjkgJXF9EpoKL0KQ3HYTYwuj8/WKuB586Z9/OGkOmk0kaKm2m+mpRU3L4owa8
-	 uAiL/0CdbhMrA==
+	b=bwWoKNgX1hhUHyAJHu6ZAUg0po2rNn5Ux+/PNtpD9E+Bm2OyodrDrYc1FiMDBwj5P
+	 3wTqUYx3VFocEq2/1uLd/Ki/UDxJDlvHQz98fYmx0GoxnvMkourBD1EwgUgkMZj1Wk
+	 p1T6fznV4uQutSDBID4xmBpZE19FNvn4JF05aX3vFYafTW0phXv0F6NtrEIRSLeORd
+	 swC6mgJA+HsX2iEaegyisXuBHItMjdR9iyVH2RZbjVRPljcoJwrX5xYMhyFvadVnwU
+	 a++BTmpqMH+47Bs10RamSl5pQIYon42x8i8s238NGgd915kykkxtxwnAb4VvdhRTNB
+	 TiX8AmCX7s6sQ==
 From: SJ Park <sj@kernel.org>
-To: Aveline Noir <jm5905938@gmail.com>
+To: David Carlier <devnexen@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] selftests/damon/damos_quota: skip the last sample when counting exceeds
-Date: Tue, 17 Nov 2026 06:40:12 -0800
-Message-ID: <20261117144013.121872-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Aveline Noir <jm5905938@gmail.com>,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/stat: avoid 32-bit overflow in idle time milliseconds
+Date: Tue, 17 Nov 2026 06:44:14 -0800
+Message-ID: <20261117144414.124589-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261117-fix-damon-quota-selftest-20261117-v1-1-c65d687d3def@gmail.com>
+In-Reply-To: <20261117094339.30978-1-devnexen@gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -65,23 +65,24 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Aveline,
+Hello David,
 
-On Tue, 17 Nov 2026 17:25:36 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
+On Tue, 17 Nov 2026 09:43:22 +0000 David Carlier <devnexen@gmail.com> wrote:
 
-> damos_quota.py expects qt_exceeds to be increased for every sample whose
-> tried_bytes equals the quota.  The kernel increases it only when the next
-> quota window starts, so the last full window may still be pending when
-> the workload exits.  The test then fails with an expected count one
-> higher than the actual one, e.g., 15 < 16.
+> On 32-bit, the region idle time in microseconds is computed in a long
+> before the division to milliseconds. It wraps once a region has been
+> idle for about 36 minutes regardless of the intervals, so the cold end
+> of memory_idle_ms_percentiles reports wrong values with flipped signs.
 > 
-> Do not count the last sample.  Also drop the sorting of the samples, so
-> that the last one is the latest.
+> Do the multiplication in 64 bits and divide with div_s64() so the sign
+> of recently accessed regions is kept.
 
-Looks good to me, thank you for this patch.
+Thank you for this patch.  Looks good to me.
 
 > 
-> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+> Fixes: e5d2585d9e85 ("mm/damon/stat: calculate and expose idle time percentiles")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: David Carlier <devnexen@gmail.com>
 
 Reviewed-by: SJ Park <sj@kernel.org>
 
