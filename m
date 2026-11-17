@@ -1,44 +1,45 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794882367;
-	b=eFn2THdwPnqVLUspOPTheeajUN2/FhttjaiGXuZYxroDSE80m7rqzdozvj68KLAB09Ak
-	 PKlSmeEk10BW4edA4iODWWa3+p+WyOvp3F4DGU7IF0EA//ETSZ97F1KcXw3G80QctsmZE
-	 8B+OUxa4bpZ5yQzGcbfFmsV1lu8EvMbg8bNOoBMSSMPJdhg2pNL97Dv8kxGAe8j046PIk
-	 kIQd6f7lhgAgtAADNzYSDe9mHz/E9mcItp2uYf+e601aXOsEAK15IVyvCTd1AA9dJHtFA
-	 LenGX6Na9kozcMzo/fycfnhpjDqKmUlPDamtMuYTuRxy23v3EDzldPmXZKYcd80elig==
+	t=1794882592;
+	b=PWLERvVOmoP+q7uKCYIt4pEkeaLd+3f2RA0b9gMTEOtXEaFagA/1V/Bc9IFUeDkuBnLU
+	 POUMfClA0CZWDghMI0uJXeN3trxN9wBftEHghDceF/Ktkjwgudii9QQpxWOBcjQMO8QMZ
+	 YRksbDW2y7YEMrIw1hmCnChvYJgcU+PmU0xmFVfCGiV3yxQXI/Y9ReolWnlDaA1V7YBVz
+	 /vPYugHNoQ9jhDowvW7Hp9aREfwPc02f/rzBC+65qaAeEvFLBNX4oUF+p4cf4XaTAmAla
+	 BrrkCJ4TXFt3Sxm2UaKQpYwRYf5Q/oUnFiVxbkD9dVmrqjEsEdq8HQe2/WCKp1KIzig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794882367;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794882592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=PwJJPpk0KtufegXyh+UDHeclSfuYI9J6g+cBDWGlDL4=;
-	b=d2zR4CaBDQM9XHp2duCY8PFFGym2KmfHZ7YbPQcf2jtEUnu1aaYmcyrf8jlZ2KRB5hFJ
-	 2QOswXO4WlJP752kxbE1tmAqHm9TJelsNxJ7v4KrVOIpoSqd1yJJTdFRbX4PuX4uzTQqk
-	 Mo9LT3LjR95vg7zrHPkCIDo6yQ/+XO2Iflrku+9w6ci7Vl/vS9fgh6l2IcqpnAzQ3dM8B
-	 byRInwerehVxaLTL50yEcsQsTc4/LFN4x3ym/eBzAcVx5ctSC8xs6poy1as8ygvhyW9Bj
-	 YZXlnTIjVzIK3emOzI0uwSf6gpGCl5JlcTDcDrsTTZxx+8sd8f3nhN1+O4exTNhzVVA==
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=I1NnY1aUEnyj0N2YV2VpV/7pu0yFFtNIfVI4q/uNQmk=;
+	b=ZRw2flp0b9pC2nFDFY23BLVslxxHIELklCydHKrMWUkjvW9ZBjVY3wRJ0RcwzBd2g26B
+	 OV8LqA0GkA2x6tZhqYQyMf0IJKC86jGuYYWey/e4LkD1WMVujuAaB8DJTFylx37sLH2AK
+	 aW2wzNCELst/pAg72Rrp8khA22rwSxHPcyneBrFH+mhDSBCDu0o5EabIh1u1KrogSJIdo
+	 LaL3I/fk/uZsFCWwU8dNoz6W6O3j+tTKWo753Sg0Lp07twbXLZgJbaqZx1C/1P/MhEb/G
+	 7OxShrwzi7AgNSQmWYNnHwvZb2Q9KL2P86fXb7HiV0+5qVToS7eLx2N/dBB5Q//zPKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kBnDPekR;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TvGEZzEH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C897E606A323;
-	Tue, 17 Nov 2026 02:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC06606A330;
+	Tue, 17 Nov 2026 02:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kBnDPekR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCDA1F000C4;
-	Tue, 17 Nov 2026 02:26:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TvGEZzEH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4771F000C4;
+	Tue, 17 Nov 2026 02:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794882367;
-	bh=PwJJPpk0KtufegXyh+UDHeclSfuYI9J6g+cBDWGlDL4=;
+	s=k20260515; t=1794882592;
+	bh=I1NnY1aUEnyj0N2YV2VpV/7pu0yFFtNIfVI4q/uNQmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kBnDPekRMxV5Tz1ixrttniVUjQ/Y5abW8tNTlEf7fOi4ZaOX6Xysah5INbCB4LJdt
-	 PNYnVRrO1c4KefQkUROFHa50Q/1Ng4uM2DQyk0BXX/yUL7xXEYZ0cCnszuKRxfXOhD
-	 dnkI+MYADUej+9hL6Bn+Aqomi3Mex2xIbLGg5NxcZh+zWOwIn0X7NjPT7ey7EC7UA6
-	 pq+1ibg0NnHaYLzC1fllDwWWjO0DTTClfja8fdc2g3XTjosIdnGN2cSulXKes5vZzM
-	 8v063ap8izPeUogb1u7LU8Rcg/3G9K2FNsR+eiJeLhSep/qh3Z+MNGJnKV+fM5b3m4
-	 MnnqolfjM2waA==
+	b=TvGEZzEHU+YK7myU8eG1QIV0P3CPEqijBPwbgCoeq+/r77R9DFec4r9ST/FRdfWlv
+	 YR50U7jG2ZOfEnrjP/ZJLCxAn7LevmeUv4oDlhu7ULa5GdRl1KrQ1ZQhZNXuPl8oDQ
+	 LbJD9tX2nTmkRwP8PKKth6dC9/X+oFsaoH+R6qNm6UlYxWp5Ejk7OQiOAGDwGiddi3
+	 PP49WS4fIBgufNuEXlrgQjZ62TL/kZNZwEWxovVvquKTaN8IrNtWkTvZD9V9OiXbrU
+	 UKcHw9pzKHCDWwpjnhuxhJdP42rv+j48F2eHTBIJs9r04Z09tIB2pRUIbSIIQQFPyj
+	 nDbp5EpwAm8RA==
 From: SJ Park <sj@kernel.org>
 To: Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -51,11 +52,11 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org,
 	Mattathias Pinchover <mattathias.pinchover@uber.com>
-Subject: Re: [PATCH 4/6] Docs/mm/damon/design: update for sz_ops_filter_passed_last
-Date: Mon, 16 Nov 2026 18:25:59 -0800
-Message-ID: <20261117022600.110435-1-sj@kernel.org>
+Subject: Re: [PATCH 5/6] Docs/admin-guide/mm/damon/usage: update for sz_ops_filter_passed_last
+Date: Mon, 16 Nov 2026 18:29:43 -0800
+Message-ID: <20261117022945.110648-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261116-damon-sz-ops-b4-v1-4-1cffe7227e6d@uber.com>
+In-Reply-To: <20261116-damon-sz-ops-b4-v1-5-1cffe7227e6d@uber.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -66,53 +67,53 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Mon, 16 Nov 2026 19:10:07 +0000 Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org> wrote:
+On Mon, 16 Nov 2026 19:10:08 +0000 Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org> wrote:
 
 > From: Mattathias Pinchover <mattathias.pinchover@uber.com>
 > 
-> Update DAMON design document for the newly added DAMOS stat,
-> sz_ops_filter_passed_last.  Also explain that, unlike other
-> stats, it is not accumulated from the beginning of the scheme's
-> execution but shows the value of the last apply interval.
+> Update DAMON usage document for the newly added DAMOS stat file,
+> sz_ops_filter_passed_last.
 > 
 > Assisted-by: Claude:claude-opus-5-5
 > Signed-off-by: Mattathias Pinchover <mattathias.pinchover@uber.com>
 > ---
->  Documentation/mm/damon/design.rst | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  Documentation/admin-guide/mm/damon/usage.rst | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/Documentation/mm/damon/design.rst b/Documentation/mm/damon/design.rst
-> index b676be697158..e40b8c1a3461 100644
-> --- a/Documentation/mm/damon/design.rst
-> +++ b/Documentation/mm/damon/design.rst
-> @@ -876,6 +876,8 @@ scheme's execution.
->  - ``sz_tried``: Total size of regions that the scheme is tried to be applied.
->  - ``sz_ops_filter_passed``: Total bytes that passed operations set
->    layer-handled DAMOS filters.
-> +- ``sz_ops_filter_passed_last``: Bytes that passed operations set
-> +  layer-handled DAMOS filters in the last ``apply_interval``.
->  - ``nr_applied``: Total number of regions that the scheme is applied.
->  - ``sz_applied``: Total size of regions that the scheme is applied.
->  - ``qt_exceeds``: Total number of times the quota of the scheme has exceeded.
-> @@ -903,6 +905,13 @@ to exclude anonymous pages and the region has only anonymous pages, or if the
->  action is ``pageout`` while all pages of the region are unreclaimable, applying
->  the action to the region will fail.
->  
-> +Unlike other stats, ``sz_ops_filter_passed_last`` is not
-> +accumulated from the beginning of the scheme's execution.  It is updated at the
-> +end of each :ref:`apply_interval <damon_design_damos>` with the amount of
-> +``sz_ops_filter_passed`` increase in the interval.  Hence it shows the size of
-> +memory that passed the operations set layer-handled filters in the last
-> +completed ``apply_interval``.
-> +
+> diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
+> index 6093b1c8fbfd..c0101a68a033 100644
+> --- a/Documentation/admin-guide/mm/damon/usage.rst
+> +++ b/Documentation/admin-guide/mm/damon/usage.rst
+> @@ -105,7 +105,7 @@ comma (",").
+>      │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,damon_target_idx,min,max
+>      │ │ │ │ │ │ │ :ref:`dests <damon_sysfs_dests>`/nr_dests
+>      │ │ │ │ │ │ │ │ 0/id,weight
+> -    │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,qt_exceeds,nr_snapshots,max_nr_snapshots
+> +    │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,sz_ops_filter_passed_last,qt_exceeds,nr_snapshots,max_nr_snapshots
 
-I think the description is clear enough.  Could we drop this?  I concern if we
-will have more non-accumulated stats but forget updating this in future.  We
-could add this again if someone really get confused about this in future.
+Too long line.  Could we wrap the line together?  E.g.,
 
-Other than that,
+'''
+--- a/Documentation/admin-guide/mm/damon/usage.rst
++++ b/Documentation/admin-guide/mm/damon/usage.rst
+@@ -108,7 +108,10 @@ comma (",").
+     │ │ │ │ │ │ │ │ 0/type,matching,allow,memcg_path,addr_start,addr_end,damon_target_idx,min,max
+     │ │ │ │ │ │ │ :ref:`dests <damon_sysfs_dests>`/nr_dests
+     │ │ │ │ │ │ │ │ 0/id,weight
+-    │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,nr_applied,sz_applied,sz_ops_filter_passed,sz_ops_filter_passed_last,qt_exceeds,nr_snapshots,max_nr_snapshots
++    │ │ │ │ │ │ │ :ref:`stats <sysfs_schemes_stats>`/nr_tried,sz_tried,
++    │ │ │ │ │ │ │     nr_applied,sz_applied,sz_ops_filter_passed,
++    │ │ │ │ │ │ │     sz_ops_filter_passed_last,qt_exceeds,nr_snapshots,
++    │ │ │ │ │ │ │     max_nr_snapshots
+     │ │ │ │ │ │ │ :ref:`tried_regions <sysfs_schemes_tried_regions>`/total_bytes
+     │ │ │ │ │ │ │ │ 0/start,end,nr_accesses,age,sz_filter_passed
+     │ │ │ │ │ │ │ │ │ probes
+'''
+
+Other than this,
 
 Reviewed-by: SJ Park <sj@kernel.org>
 
