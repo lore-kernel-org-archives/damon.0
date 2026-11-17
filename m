@@ -1,96 +1,87 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.129
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794892062;
-	b=V8zYGOGRCHRwG3immzRQJj6ZeEx9eWof6jCReQPep5pP+Dg7U2F2smdp5rcHgTwTonGi
-	 BKvnZdZsU0xxbpGbhtdSwIDup1OCnhGBCHSWfg76mQhQQi2qB2HJiwHGdAsmeU1VgSgMJ
-	 PAsuN25hKZ/svmR71wGatGNw84aenypbCWVoSnKT+FpsowN3W14gdnVIG0NQDQLhEwm23
-	 EaWHhtlByRJC1sfbjOPM1TOkIEzPKUakedZJKnyP+BQa2drsUZJ70ZURoLJxBPwAbVRvt
-	 tKpMN6TQY/H8ceUEhoU5rUPdEbFcbLz1YqTUbZ5LaY1TuiATnwnguYgtW6lGc660q8Q==
+	t=1794896432;
+	b=0TR9beY68+vtRRGh5gCfgYQOqtywZ8qp6LGP8d6yXY15WSfH+WaL4A6aLoJbUoje+n4H
+	 2ykKEFrL4be2sUiXpxEEMwBo2QNvHficjUQzsfh4gDOFkrtHlRJ+bnoPERLQWcX/4uZri
+	 LxCKP7RJMOq29Ef0ci6sAfmSSOoiW0aEHcYX/Hy/I2uRudm8CjSwjiIfjLlysApY3fTVT
+	 cyZPWFs67y83MMYtRyjTvqPiqbWofhQixOagIfAEON7gUMc2HnqaNRTLCBMCSebxJO52y
+	 URZXdIDYONqt72YupCpJR5Gt8ZgxgqVuMrhVllxjG9WnOhvfzhRiRRFcE4NBeUqeFMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794892062;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794896432;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:In-Reply-To:References:MIME-Version:
-	 Content-Type:Content-Disposition:Message-ID:User-Agent;
-	bh=erZtH4IJMudy7WQUbT7BdWCH9j2OmGrPuCsVrI+Funw=;
-	b=R/hGV9gVqYii/VM6/kfUWbOTJDvPZP9a9fnxKaqeObkTrbEBv8urbk0E21sZp1jE2yU4
-	 nO4gdWrcvH4ZiCqdZghIy5bP5/CC9A3i6fUF30Ukmfdf3qpbfNM24Z7qv1cmqfuOiKM4/
-	 wC6ylIWD8q+k0cxDA3OlxG88aJENt8aEKNn6OG4H51elBt2VVh+SNyA+EXxQ0Ny3+ZBx9
-	 mhKaT6ZaPf8PoRat8D+RvjdFa0uh0g1feRt+flfnARAB3P0416pwRIrcGx/1mlhd66l6G
-	 8M0TU4eFfP5uX/jBtw1uvAuxD4A1fHAUWbqAVGwFZDGFjS8W8iYKACPJkL10+tkRcHg==
+	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:X-Mailer;
+	bh=1DDRt7N0cPxO/KFQj7wkx+g70GiGI/WkpRraj+SxGOY=;
+	b=UQqEpna+TEY6pHme1iPASrJd50Q5U4Vn6MCi8X43hEk/VMLIyuK74hEDONsPAUXBQtAy
+	 kcoiZ0rOeZRuvtsswWFDadjhUL9W1M1OPt5n5ei9rn8/QN0dpJyr3e298/WPajcQKhA1g
+	 aigFBL+ujb2FTNK1HgyaOqbHcEDO8NPTSO/042Cz6SynM+oZH0wqWBim7wo3ppYTeNVL5
+	 tNVApr9MIVK8xTXI9pQNPYqDl5gtZOh7DM5FXItlQRnGSeR/N6BqRbJ/9fnf/ZjLXQm43
+	 qsN6XtD6xsDkzDBfc2tGrA1xWmuysuSa4bXjWUXNByhkh3+/umGfJVW3/g465QIe58A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=chrisdown.name;
-	spf=pass smtp.mailfrom=chrisdown.name;
-	dkim=pass header.d=chrisdown.name header.i=@chrisdown.name header.a=rsa-sha256 header.s=google header.b=pm5BeLNu;
-	arc=none smtp.remote-ip=74.125.82.172
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KUJufHNl;
+	arc=none smtp.remote-ip=74.125.227.129
+Received: from mail-pj2-f1.google.com (mail-pj2-f1.google.com [74.125.227.129])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CC0606A31C
-	for <damon@lists.linux.dev>; Tue, 17 Nov 2026 05:07:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 79CC0606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chrisdown.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chrisdown.name
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21895606A331
+	for <damon@lists.linux.dev>; Tue, 17 Nov 2026 06:20:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21895606A331
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chrisdown.name header.i=@chrisdown.name header.a=rsa-sha256 header.s=google header.b=pm5BeLNu
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-38133db970bso921213eec.0
-        for <damon@lists.linux.dev>; Mon, 16 Nov 2026 21:07:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KUJufHNl
+Received: by mail-pj2-f1.google.com with SMTP id d9443c01a7336-2ed408b0d0bso24535065ad.0
+        for <damon@lists.linux.dev>; Mon, 16 Nov 2026 22:20:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chrisdown.name; s=google; t=1794892062; x=1795496862; darn=lists.linux.dev;
-        h=user-agent:message-id:content-disposition:content-type:mime-version
-         :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=erZtH4IJMudy7WQUbT7BdWCH9j2OmGrPuCsVrI+Funw=;
-        b=pm5BeLNusLGeuJJF5SVBhgweEOPmoAJUlU0imYjMgPymvQc2kws+e3H1970H4ef16M
-         oMOlRyaJDbZyMz+EjuiUN0kbGDOYeMml7l02RfUJftXX14SrrJtSIuDkfWcZULxAhMmM
-         5uJuFB6MHAQdrMZsrqZ/pZ1zMpw+wHxPhDkYo=
+        d=gmail.com; s=20260707; t=1794896431; x=1795501231; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=1DDRt7N0cPxO/KFQj7wkx+g70GiGI/WkpRraj+SxGOY=;
+        b=KUJufHNlIcqj/Mq841rmz8mIlipSssj8NF2T76B+0nq+vxz1vTy/ai64A9jJx8TMhH
+         SBycOjw6xSsn6xEL0VF8n4PPOiAMI0mz5kW+mneCFqvpuyNaYH3DeADutz8MTnbWYBBa
+         OnrDZ2f7vhpWuut9SOOtMzKVO7lwgMHXBbtGlcaEwNv0IxLMP/Qy/G9X4fd5hsvjFSei
+         1w4SnYb5QBT+ThdKPz8ucNmTbnegxx3AuTSUaDQfrvCUT8A7v/C6Avrf8wWTbwM23f+I
+         eZvt4bmnIBCe3UdZXMKoiw+3Vu66b/oGsJnTN4Mp3Bni/vpB+JHVbCew0g7jeHqFoTNY
+         BEFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794892062; x=1795496862;
-        h=user-agent:message-id:content-disposition:content-type:mime-version
-         :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=erZtH4IJMudy7WQUbT7BdWCH9j2OmGrPuCsVrI+Funw=;
-        b=2W19vDD1sJGRdCIOIhv8toRK34FTOgzpN7U7VxCYdX31p8udzgY0Ml+QeifzIgEMfW
-         ibKUWQeJhQ2t6ejkOXGTsmCucUkf9r1twSWMuixoLSNjTIfAh7ywOQuvPlguNuklRUnD
-         98GYy+FhBm4ngiJgk+JJzf1b5sA3LqP46aNx790mDAWcrmFxTB3dojNOrFobZ2/yxnS3
-         JPnByztZ8Tmw/4OhD23O3cAClqFZaPbTnz3yTY0tMvlyX9x+8DrMb5zYOJvkkQGa4n2K
-         1NXBcHgjO07jz7aQ0VPqe9m85XHu8E2ST5xoJbXxB+fcAEyaxLnHiig09Ayy+TzhgxrX
-         lxcg==
-X-Forwarded-Encrypted: i=1; AL+hErGftSz307sX0m3RfeBDsinlzsdPMk3eD+a8FXWoJq9mpZNmOOHDg2uGw31w+ZTv3Moljme6yQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+fFBGJGAayT4HE6HOzwC/8EcYeVsw90KBQzgC3XCrjochYhnkl
-	jlW5kLW5fV4hGCcamg254NXJ6maActQTWBIy945rDcEfn7AdD6mwdquSOY6jrSpr3Wc=
-X-Gm-Gg: AZFdTZdD9v/qJc8SKC7GApgvhc7Zxll+T3CDyPgRERq1xP9e7xLIYp5oBucjB/1bZ+W
-	Thi3COkZg4j+KKLMXmw24GSDkFUrq3bLnGzY/wy7Xkz/RnOyF4+lXGQafuQnzUHob083weE08+e
-	h/6u8Ucj7L6J9xzY64cMwbVcXCqFloATEoaJvIVa20cWFrd5VpTYkFFNjhF/RsIkrT+al14ZHiF
-	83qNiWm/84v8usGqrafBmyldXggoM4nQT36XCok0fzyqYXV1My9A837udVz8s6bnfy7NT+ztV7a
-	QqureIoirKlBgvyiyRX9+XqbK/MdvZ/igstWkiCKDcqXmkv9qQRvaR+OJTM0cAGreCpxrMAWlDR
-	BafRqfvXAQX27lY7K5Ot7M+5sm7S5r6jVH7uAS3+44IUXbRqVbCkSfXkGfHG7OsVNIBTBVIuoPN
-	GNOkRkb2gx51aP5FosE5ojrT22NYn+/HddkNvf97UapF43acsV0iCYPY+N5fzDiQ2GUMN8Vls0n
-	KvQ106CNSWGf0oIcBHYaETRDKJdciUX5j3kpt8SP/usV3H1LmcsDFwaMph9yNwiQmBaQXlpcTIi
-	aiX/n/hevt7bLURXwzAsXrxDSbAPRcwghNFJHAfk3lDLxwRkKEwkwNwoDRlLSyZYpe2/EtNqUwP
-	RNVDP8X6X7c26nk2d4L5zUeje9VMPEf8OxpZOIumqdbBsTzt0l+43q0ozTIF8I08teKe5OmcDs4
-	ZHCegLJ8X7wSdSe5Yxi9iSl6v+yRtyQcc5oTH+v46QIWiSq5YjscBB0Xp8/hTQTeMO
-X-Received: by 2002:a05:693c:6383:10b0:380:d1bd:ed2c with SMTP id 5a478bee46e88-380d1bdeeadmr2109515eec.27.1794892061684;
-        Mon, 16 Nov 2026 21:07:41 -0800 (PST)
-Received: from [172.20.0.3] ([172.56.235.113])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-380e031f3e5sm7128627eec.12.2026.11.16.21.07.40
+        d=1e100.net; s=20260707; t=1794896431; x=1795501231;
+        h=cc:to:message-id:content-transfer-encoding:content-type
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=1DDRt7N0cPxO/KFQj7wkx+g70GiGI/WkpRraj+SxGOY=;
+        b=qK0VaqOotf22SbwY+A8O+SlHbmNW271HvKekcBoOqmhoKJm+pZFNkolkwtm5pMo0wN
+         EgYq4DUIk2VguMBH5RTijsI0cQ85Fp3osDYwexbXvTH2uGZ4Kbpk2nj4nYv75OyUT+M5
+         MO1kZm/N/oL8ewMlri7q8N0zCp5I61n85gOa8ml6xchmbDK04jxeA0Pt7kYXD57YbghI
+         AOSKInzCBzh0JqnrGFkoB+2sS6D6wuF/PDv2DkAO4yjvwjha+XqMf+6CqocOpP0becBK
+         HmztgEmLprydyyQGCaS8mz/Us+uSsRiwAaEtPTM20w7LbNP2pXexhv4c0YMcs2I5P73g
+         v5XQ==
+X-Forwarded-Encrypted: i=1; AL+hErErPVJIkA7a6DTbGrWXdgyWOVu7MRV5ESl5KYu1m3aZPSZY/6WVxVp7qsZh6r0UMDMBDyH2Ew==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/J7mQGetqymEFP5Br/dPjG8GYn5ZfjdLS6ORkLqJPELBwnBolU
+	KW/ogIr96l+PmpExKdeSExqZwR4I7EBRhLADNSvxn1Bl4vcQUJyG97ze
+X-Gm-Gg: AZFdTZe7zoMjemYm83kPFDilEfM7xdXgnfDcC2UoDqB6QYqceuK6AZWo4BCN9+oWD0B
+	Yw/oX+Q7i0uAF/AjJzx8hJy4UZFPRAlP05X5/6BIWkKaS5kqW1ZecOLj6iUKl/g/2r4g8ptwOFb
+	evyPG4PAkNIZozSVZhD1f2Btpzh5Uc3Xz67/+zzZI4hG7P8IGeUY3gLDHd2IY0qGGwpHvqh456k
+	joXGARa6cPKztODjSM2E2Ml+gJyH74KoHQkHIphaSHTUNHda2TMxGPmoCB/4p1Z24qY/nIPgHLw
+	pidnP435zIDfCWNzqilNPnBoCqOT35HRfnpl3yxiy0myeQbjYnfQ3dDa1hcdQvu3owhuIL5e2ex
+	TUg/qZeMtX97SP8SqrkmRS4e2rPvvC5vVVQDw8fH/4IGAwGnOWpgIJK3IUCTfG1ihCrLJ730HOC
+	FqaWlGOuYvlUtttSKtZ4kgLbg1CgeehKLvZp4Fvd+rbbCMccMUAVyggJPBrr81Ej2M+FUseCA2D
+	Wv4/M6zbivj6N7vHXLQQ9epBEf1W99C8V4+23lxI3ZqGqHJL48ZuDF5fUQVZIQj2oVradYm/GAb
+	Ib+IpbxuORzFZOBZCnWcKMNjtqEPJ/jU4J345yyNWNeaMs9MkK/OBhOqJWHuy5bhlY4ZTfBdSIX
+	DtaHk2SsFjzbwKLRP3LNgKWs/e0c2rqbctXg0YX7Ha9PzhQEibFBHRmlfae+eyy4=
+X-Received: by 2002:a17:903:22c3:b0:2e9:6788:9369 with SMTP id d9443c01a7336-2ee0dad1a75mr127580975ad.34.1794896431357;
+        Mon, 16 Nov 2026 22:20:31 -0800 (PST)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2efd7a5f754sm8776345ad.52.2026.11.16.22.20.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2026 21:07:40 -0800 (PST)
-Date: Mon, 16 Nov 2026 21:07:37 -0800
-From: Chris Down <chris@chrisdown.name>
-To: Joanne Koong <joannelkoong@gmail.com>
-Cc: akpm@linux-foundation.org, david@kernel.org, yosry@kernel.org,
-	mkoutny@suse.com, shakeel.butt@linux.dev, hannes@cmpxchg.org,
-	mhocko@kernel.org, roman.gushchin@linux.dev, muchun.song@linux.dev,
-	nphamcs@gmail.com, chengming.zhou@linux.dev, sj@kernel.org, ljs@kernel.org,
-	linux-mm@kvack.org, cgroups@vger.kernel.org, damon@lists.linux.dev
-Subject: Re: [PATCH v3 4/4] mm/damon/core: use node counters instead of
-	flushing the root memcg
-In-Reply-To: <20261114002822.1043378-5-joannelkoong@gmail.com>
-References: <20261114002822.1043378-1-joannelkoong@gmail.com>
-	<20261114002822.1043378-5-joannelkoong@gmail.com>
+        Mon, 16 Nov 2026 22:20:30 -0800 (PST)
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Tue, 17 Nov 2026 17:06:54 +1100
+Subject: [PATCH] mm/damon/paddr: skip hugetlb folios as a whole in pageout
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -100,18 +91,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Message-ID: <avvhGYhjBrOzAmT_@chrisdown.name>
-User-Agent: Mutt/2.4.3 (cc9e3943) (2026-10-09)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261117-fix-damon-hugetlb-pageout-20261117-v1-1-054ef8760a92@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/z2NwQ6CMBBEf4Xs2Y0URaO/Qjxs27WtkZa0RUwI/
+ 26RhOObzLyZIXF0nOBezRD545ILvoA4VKAsecPodGFo6uYihLji031RUx882tFwfkscyHAYM+4
+ VOnN90jfdUiuhiIbIZfU/6R4bp1G+WOXVvDYkJUYZySu7Rps/T2F3HvsePU+wLD8rFfSysgAAA
+ A==
+X-Change-ID: 20261117-fix-damon-hugetlb-pageout-20261117-a4e03d9d5a5b
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
+ linux-mm@kvack.org, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.16.0
 
-Hi Joanne,
+damon_pa_pageout() uses damon_get_folio(), which rejects hugetlb folios
+because they are not on the LRU.  The loop then advances by PAGE_SIZE and
+looks up every base page of a hugetlb folio that cannot be reclaimed.
 
-I've tested that this works well.
+Use damon_get_monitor_folio() and skip a hugetlb folio as a whole by
+advancing to its end.  Do this before the filters, the accounting and the
+last_applied check, so that adjacent regions within the same hugetlb
+folio are not walked by base page either.  Test the LRU flag first to keep
+the hugetlb check off the path of ordinary LRU folios.
 
-Reviewed-by: Chris Down <chris@chrisdown.name>
-Tested-by: Chris Down <chris@chrisdown.name>
+In a pageout microbenchmark in an x86-64 KVM guest, traversal time
+dropped by about 99.7% for regions covering whole 2 MiB hugetlb folios.
+As a side note, there is a small overhead of about 1 ns per region when
+each region is a single 4 KiB page.
 
-Thanks!
+Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+---
+Tested in x86-64 KVM guests.  KUnit passes.  The damos_quota.py selftest
+can also fail without this patch; I will send a separate fix for it.
+---
+ mm/damon/paddr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Chris
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index 5b773012a876..aca48bf752c8 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -268,7 +268,9 @@ static unsigned long damon_pa_pageout(struct damon_region *r,
+ 
+ 	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
+ 	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
+-		folio = damon_get_folio(PHYS_PFN(addr));
++		folio = damon_get_monitor_folio(PHYS_PFN(addr));
++		if (folio && !folio_test_lru(folio) && folio_test_hugetlb(folio))
++			goto put_folio;
+ 		if (damon_pa_invalid_damos_folio(folio, s)) {
+ 			addr += PAGE_SIZE;
+ 			continue;
+
+---
+base-commit: 67f3b04b277373438f17300e056306adbd9edf7b
+change-id: 20261117-fix-damon-hugetlb-pageout-20261117-a4e03d9d5a5b
+
+Best regards,
+--  
+Aveline Noir <jm5905938@gmail.com>
+
