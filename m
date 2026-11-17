@@ -1,56 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794908862;
-	b=3AR94sPcCN/NsDdgRbFgCCLaK0YEx6sN/PN+K7G1sK+4Wt3NYkKYJGhaS/Bo6Im2bv74
-	 9WOZqMEKSn3TtQ29zDLLDQGyXizxzkz8y3l0N3Izfa08P0o5wZY1F43disF9W+t9jijvN
-	 3i73w3MNE19Qf79N1kczILuuKSzvSLrOHBihfL0sOKb4gZCATYonhQu1INBdm34iibJVx
-	 Dt11bC4qk6KVFIip7uEOSsX81xD5uPQKysxN36fjasN2accrV96tbiHpJ2wM5hkktfpNF
-	 vxwL6OAJjfVGok3O+0WnbIov2fv3zSYbjptqZTa3yT5PLVcOjghqHrpx9N/EDB0DtNw==
+	t=1794924981;
+	b=Q4chtcV+ITSeodZ9BP4Rn4973kZeuyNMDrpWEcGvT0sUdYzrY3/+znhB/ohhOuTeukEK
+	 OnIjz0mddfE0xxv7t4QJKMypXXUuNiJW2KA3HRsmf1+9HZVyuTT2bbx3bRLrpU4ZsWZ6g
+	 twupyCzgtkE2rAxGfPMyusjkhyKmR9joZlYWHSWNf7BMbSKK61WaZyhLi34X67AB8YvCX
+	 3KiBzwoesKVBORJPPTgZyzDovP1nTM7SBem0zu8fWPxuapTeitwEklWWpN5VltRqNW31F
+	 I5BeSUUY5NRjto0akAjjiniWvNyjLEoMo3930GBHdlF3ZxPU8kCrv4/AdQUXrfuv1ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794908862;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=NcwtjDiSe4N5qL4C4JQ3nE17grk1E2z98d2tavO0V9o=;
-	b=05p/TqpC2nGygDMVQHXHTYrpckL4ShSW7HlBwvHqa4h+RLlnD8H85RltpaF72Lm1SoQ4
-	 d4gZSe1EB26hGfZ5jiwicpCyklGYBJxsu/mokB4IoStMLyktdXdksaU2XJVsWWIpP6xmN
-	 WnSp5u1MAy0uzYh3DGxjkg1y1li07QbypdP+CFQqQd03qiP2S2VGuri3OIOFo+pUFrQfr
-	 0WvWi6tdatxsqrhTHvxEsACyirufVntnfdOzffQG2Yb5R2sSzHuKSFdzaHk0kX+9m9Vo5
-	 jx6VvocujLuOqa5Yxg6mcf75WAzYFwxrlu/s+NVMSRhLLgSEwSoU4gYSEduTVTUVEXQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794924981;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=cM69XD6jCQAyvU5JbNH+E2DCO/IIg1MBUqnf3B97zP4=;
+	b=XLGunEDz0JJgW1lnPYPS2PzOGENOjuOU/L9syio4qHnK40JAHyRMPWid15UHf7iuaHGc
+	 UIM8FfTRd5sftUepWBBL3OtoJR8wG3NEOfO2xCrHGfmwIT90rdjc7IxVsAfhTSboRnLQ+
+	 lLeYUaLPuVxYpzhvV2tQzZQnNSZCO1v6EhGo0crsu/u5EmLDiX2kGa6vct4tOHnwQXRfu
+	 l4w7yhp3MkkSeAh4NQSrxchEWEjjstRbIoFoeIqHLNuzhGgbmc2RtkImxti38gL7wIrvr
+	 eF6VlDLukDoyMf69wIu86jA29egsvnb41v0bzAUWu9AHE5pAmrCwv/fPkjslxDHVutQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MMJcIzSB;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OCaH7VEe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33838606A323
-	for <damon@lists.linux.dev>; Tue, 17 Nov 2026 09:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC9E606A334;
+	Tue, 17 Nov 2026 14:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MMJcIzSB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC57A1F000CC;
-	Tue, 17 Nov 2026 09:47:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OCaH7VEe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F4F1F000C8;
+	Tue, 17 Nov 2026 14:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794908862;
-	bh=NcwtjDiSe4N5qL4C4JQ3nE17grk1E2z98d2tavO0V9o=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=MMJcIzSBC2UPr9kcl9l/a4jKS3Sh8pShWeM6abR3IfczsAME+dY0wHQ150px/g/QU
-	 MjDGLIwEYW1SfnyohqN/jqw34qEhezwbZJzTweQCsx457wkghLX4TbcPtJPA4sZ2K/
-	 SYwaTmY22pJSUuGy7R2w03Q7o1pHsv3/jjuGZ32xl7/aP2hUOVjeRPsxmdE2JZPktS
-	 72IOaEbvVASZW7kxSPF0NtzofAt2X0seiBSGN5JPVPHHYA9u40IHsf1Tf9jonwsmR6
-	 ILMS6KcYgq0bwJcAU2O5RRVNz4uIMfjhKne95DxN+ibqizMHQnJ1B9leJcXq0go1fT
-	 zQsKaLDnguECg==
-Message-ID: <sashiko-outbox-218523@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] mm/damon/stat: avoid 32-bit overflow in idle time
- milliseconds
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "David Carlier" <devnexen@gmail.com>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261117094339.30978-1-devnexen@gmail.com>
-References: <20261117094339.30978-1-devnexen@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 17 Nov 2026 09:47:41 +0000
+	s=k20260515; t=1794924981;
+	bh=cM69XD6jCQAyvU5JbNH+E2DCO/IIg1MBUqnf3B97zP4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=OCaH7VEeTQRdiRW56c7+s5byHdlpeJIDJ73r90cB5ISn2fCL0UXy/EZR2jw79lmay
+	 PwYZLyV8DM6vGH7lgoJn3lGb4cLqAOhoYf0cNZ1GuD3e9i9fcWZa8fIYrR6y6eOi6n
+	 vqh2QRDfhgTCRWYsUUJAgSWRtzmjiS6+mXo6uKNGJr2RNf6Gpt4HXnTPU9OBU37OzV
+	 uBIdjNdZqhZzF2je1wv3lJoZhlfyOJH9OYvPblEyY3ZGLEHgzT6kea2sMukYqlhgHY
+	 EQoYn4Kcl8zGr0I1DjSVXHQ+2IudrewbpuxH6ivzH0ylH7DLGncqoYbtAxkE6KoKdp
+	 8HV9RkmjiW7mg==
+From: SJ Park <sj@kernel.org>
+To: Aveline Noir <jm5905938@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	mattathias.pinchover@uber.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	damon@lists.linux.dev,
+	Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org>,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	Randy Dunlap <rdunlap@infradead.org>,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: Re: [PATCH 3/6] mm/damon/tests/core-kunit: test sz_ops_filter_passed_last
+Date: Tue, 17 Nov 2026 06:16:12 -0800
+Message-ID: <20261117141613.121192-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <179488734513.2.6285120857568566018.b4-reply@b4>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,23 +68,29 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> On 32-bit, the region idle time in microseconds is computed in a long
-> before the division to milliseconds. It wraps once a region has been
-> idle for about 36 minutes regardless of the intervals, so the cold end
-> of memory_idle_ms_percentiles reports wrong values with flipped signs.
->=20
-> Do the multiplication in 64 bits and divide with div_s64() so the sign
-> of recently accessed regions is kept.
->=20
-> Fixes: e5d2585d9e85 ("mm/damon/stat: calculate and expose idle time perce=
-ntiles")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: David Carlier <devnexen@gmail.com>
+On Tue, 17 Nov 2026 14:49:05 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
-Sashiko has reviewed this patch and found no issues.
+> Hi Mattathias,
+> 
+> On Mon, 16 Nov 2026 19:10:06 +0000 Mattathias Pinchover via B4 Relay wrote:
+> 
+> > Add a kunit test for the sz_ops_filter_passed_last DAMOS stat.
+> 
+> Since the motivation mentions contexts with multiple targets, maybe we
+> could also cover two targets in the same context, with the stub returning
+> different sizes for each? Checking their sum, then changing the sizes for
+> the next interval, would verify both aggregation across targets and that
+> the value only includes the latest interval.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261117094339.3097=
-8-1-devnexen@gmail.com?part=3D1
+I concern if that will make this test too complicated.  Testing those would be
+good, but not necessarily for sz_ops_filter_passed_last, in my opinion.  Those
+may deserve a separate test, if there is no test covering that.
 
+
+Thanks,
+SJ
+
+[...]
