@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794884086;
-	b=43/v0/n4RDetDxRjpSdJTpnCGeDOtaJZnIvhg9nAkrdA0eyHLWpcCDVDVTA2wCz4xYJy
-	 Wba2fbi9wE/skys0KqMJF6iASz4NZynmZ7Q+73rSRYJZurbSTXLHHdTP2ccEyzCh9YvHA
-	 tYVDbOs0qvxmKY4Fu+7YHSAIcSuYMeTcw5Ro+A6EWSbrI8Si5mqla3HYal1xWzutufGlz
-	 O8892g/4DnhfjpcSbu84GTKbDzaomOBSqH43u4ZGGNHA+l2XFdCCUiLouP+01V4PG3Kly
-	 v6xOYXrNx3V5eKWrkbpHt+CsIeyrqzsxAvM7i5Qi0VG58ETHvKx2aS9Hy0ZCSZ4x57Q==
+	t=1794884492;
+	b=qL1hINUjKBNLohwTRjeOVMW0n9mGe8R216UmPnKrhpU9+cinaK9853aw+1SrEAqHURx+
+	 hMHys6G4h4RTT13/eumzrYXq1O4jSqROQ8FSmvWf74z7U6oJpoL/vUyBGW6SomG2EeUWZ
+	 t5H6mxI4BiefWKsofw0h2Dvuk7ch+JlJ0Ro2AMNkXCgUGqUV/V8Dg65PyxD3XdBZnPbkp
+	 dEVcY8pqHIGr3oFVHJfheSbYZNVcLdsetU1qAqZgFh8z2ZjhgRDH4K/hN1xtXfEc4ra2u
+	 u6ezAp2KaO04iDBuCrIVAMYiA1gA10r3m6JW/C2cVXTFKirPM1NEF3U4WdzupcaqcxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794884086;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=9mRXkzBGeilyrtl2xQUNu92A5sXxTwz+7Vog/x6aTi0=;
-	b=uIjo0428i0wqbTwnFw0EkxZNXerBK+9EjNNRwX65Ln4lZqIpIFIwMw1gmtpftW50c7Zi
-	 1LWjT4OuMjbdqp6BlPCBKWzUnAAX7te4nZriMqr75RmDHkCY4bgEiQkiRwy9dkATBA8gT
-	 RS2nwIkVg9EDElFx+9cfz8e52TrYnWKbkbg8u6bdwXnY5LF8P24gpDgjyTKf7Uib1RS8U
-	 qDHNfthAgZAH+rafM1gB0wQh05gkG5L2/E/pTvtgTFlrjgtukLlykTwKZRgkLbboNjaip
-	 ugpS1hbq2mSSzKgWK59HVG2rbJIFoxni0FE3HAzY8k6/Qzo9GHWU8d+iNkyz8tVvYzA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794884492;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=aAtY2TFWLZYMInMCh3jlNE28xH3Q48Z2D2fdcOdVe2Y=;
+	b=gCFOInjptyFrbcSqDijv1vlTy+M1XxY+f9ZwzJZPu/5jzpEdnlaMYb2binhsonKwCuS3
+	 6k3fFM3WfswQo5I7mDs2Tk9qDkPnac6GwBIrYZsgyeV+AUw+GyMplu6jRm2Vle5CafM63
+	 pdiNlKX8ThK12O7cvxbXi7sH7LfJYuUoq34Dqybb9BZVdwof90qe5ue703OEAJAbE6Dp/
+	 HUs1JO1mIdZXLqecChIbqswR9NUIOt60FQVFqlB8s59uV5B48L/cDbXc/M0I8FJFfLiA/
+	 kMYDrsV/evlxWgf4ybKO6gyYJnr9x6O++Y7e2Ccj3TAdA8AR4Kp/CGab2lYIgu/l3pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gad53SSF;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nz0ZXGlA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763B1606A31C;
-	Tue, 17 Nov 2026 02:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34283606A32A
+	for <damon@lists.linux.dev>; Tue, 17 Nov 2026 03:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=gad53SSF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78601F000C4;
-	Tue, 17 Nov 2026 02:54:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nz0ZXGlA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D479D1F000C5;
+	Tue, 17 Nov 2026 03:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794884086;
-	bh=9mRXkzBGeilyrtl2xQUNu92A5sXxTwz+7Vog/x6aTi0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gad53SSFAtTxw94ku7z15FEUFg5Onmufsy0VAucpxVCdX3w7K3NAYLbg+FPLgIPxp
-	 4Up27XxYoinD6nvY8WRfyZNOwUbucJ5OWXY2ILMvsrj/KtG/iOJnE7yuaJ+IKjsa86
-	 jvPSSgVUQfRfF5H/XfxonQtaWnWt6azhfilx9QNv+Pzt2Z+cg4LAKyRRKRM/zMjNCh
-	 sVU2OCeaOJrkyhC6R5uTPf8C1WoIRDq0uy+jek3zKY5qo7UqgsSQBaSU/ly9n218yN
-	 2h66TFtuW85r6m27izN/vWFql6EBfMywuwDSEclVqHscLWa9CAG7r8AYoXlWet9KjP
-	 G/tVnaP4aPMZg==
-From: SJ Park <sj@kernel.org>
-To: Mark Polyakov <mark@thundercompute.com>
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: Re: Backport request for 6.12.y: mm/damon/reclaim: use parameter context correctly
-Date: Mon, 16 Nov 2026 18:54:28 -0800
-Message-ID: <20261117025429.117165-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAA5JH2yO-gw1gn_172hv0YWFfQpkXz915a=uoVH+e49P_D8-+Q@mail.gmail.com>
-References: 
+	s=k20260515; t=1794884492;
+	bh=aAtY2TFWLZYMInMCh3jlNE28xH3Q48Z2D2fdcOdVe2Y=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=nz0ZXGlARzORzRLvY6wPfQ8bU4/mU/NQ12VEPQhSmaqxt+zqLA0b69HiJzP/kS9LB
+	 jc31/S4kYCHgzaCU9Cxma5Zom9I0WPXWL91kTfwXeOlic63Tqr7fdZEq3VHXiYRKT5
+	 fj2uNdBkCVB4dGMNmqdWUMMnhbSSmpEQVggShsxonMuZmmVQyELFCL5G20nL/Oz/Ki
+	 9pVUAEdKBSBt313ho1LRP6TS8InWz+65z6WpSGxEHwqzj9bWAxyP+Sw4I10wrZpCwN
+	 6VQ9YfdDIbNBkb5Tf+7V1Hm2sL5DhzuN2ku/+0+60KHJK9w8XowqIaAs7E4moP2Eym
+	 nN8O9N7LfUvgw==
+Message-ID: <sashiko-outbox-218109@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [PATCH 6.12.y] mm/damon/reclaim: use parameter context
+ correctly
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261117025144.117100-1-sj@kernel.org>
+References: <20261117025144.117100-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 17 Nov 2026 03:01:31 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,32 +59,27 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Mon, 16 Nov 2026 18:39:08 -0800 Mark Polyakov <mark@thundercompute.com> wrote:
+> From: SeongJae Park <sj@kernel.org>
+>=20
+> damon_reclaim_apply_parameters() allocates a new DAMON context, stages
+> user-specified DAMON parameters on it, and commits to running DAMON
+> context at once, using damon_commit_ctx().  The code is mistakenly
+> over-writing the monitoring attributes and the reclaim scheme on the
+> running context.  It is not causing a real problem for monitoring
+> attributes, but the scheme overwriting can remove scheme's internal status
+> such as charged quota.  Fix the wrong use of the parameter context.
+>=20
+> Link: https://lkml.kernel.org/r/20250706193207.39810-7-sj@kernel.org
+> Fixes: 11ddcfc257a3 ("mm/damon/reclaim: use damon_commit_ctx()")
+> Signed-off-by: SeongJae Park <sj@kernel.org>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> (cherry picked from commit fed48693bdfeca666f7536ba88a05e9a4e5523b6)
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-> Hi, would appreciate a backport to 6.12.y of the commit
-> fed48693bdfeca666f7536ba88a05e9a4e5523b6 (mm/damon/reclaim: use
-> parameter context correctly,
-> https://git.kernel.org/torvalds/c/fed48693bdfeca666f7536ba88a05e9a4e5523b6).
-> It seems 6.12 gets backports of most DAMON fixes but this one must
-> have slipped through.
-> 
-> We've run into the issue fixed by the commit on 6.12.115: A guest VM
-> with DAMON_RECLAIM enabled but no reclamation occurred. After
-> backporting this fix ourselves, it started reclaiming.
+Sashiko has reviewed this patch and found no issues.
 
-Thank you for this issue report and requesting backport of the fix!
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261117025144.1171=
+00-1-sj@kernel.org?part=3D1
 
-I just posted [1] the fix for 6.12.y.  I mentioned you on the comment of the
-patch, but forgot Cc-ing you, sorry.  Please use the lore link to review.
-Also, let me know if I did anything wrong while doing the porting.
-
-[1] https://lore.kernel.org/20261117025144.117100-1-sj@kernel.org
-
-
-Thanks,
-SJ
-
-[...]
