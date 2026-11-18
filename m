@@ -1,86 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.53
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795014796;
-	b=VkBwQvVt+z9W1JSp8552/R/Uulou2loqqetk3xApAz9ag5ZVfdL0C7wK63BFMltRDlMN
-	 HWpooq3p0b/LlSd1gaMu8ad+Y1kvPmzR2kAJNYaAcqZr8qr1VxQBcMVQNFfoIFlxPe+sk
-	 5RQLiMWTXBai85169nZZF9qIXHbY7scYIyRewBkR3G1YZQhI/v/R6r5G6+8vRiJsSUgL/
-	 W20yWRDSMA8Dapirxr7m5b+3c2QJtXeaaMk58WNNzq6AUpd3kKTHJIn9q92QGsMbxjAkf
-	 XSBvNKCjj4NudvnMieIdO8TWHG4HlM6v9sVQaan5qEwU+2TZmH/R1Vivuzgx+t6HWXQ==
+	t=1795015080;
+	b=UTGw2d6MR8OF5BsV9qdKnQbSTUwAn7Ya9AXf7lRP9fZJdVEfoIfWUm7wkQcmvJ/+7spW
+	 xh6mTnMhoZEIJdpyHn1vDoenGNOr40Snq1RUo87PkLxQ88nwqNcuXwn9ATcQ4q2G2Dp3o
+	 x4pI5QXt6XXpib9ojlh+M2iHviouUENT6WcnKqnBtlDQNb5V4WeNOMomlkTVJ6ChWLtCx
+	 ShD/mG8t8Clmsv2ezrjmvczlLQoenmutwVV1peeZoHObI+p4EIv82YWY+UPPx4oVjCirE
+	 PnXaG+bM1ELQQyUrWNHvAJBHlduIPYo/b6hpXCL8hGNI0Cs8xXefq9LaZ7jNo0EvSsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795014796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015080;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:To:
 	 Cc:In-Reply-To:References:Date:Message-Id:X-Mailer;
-	bh=RMVcoG7RRC5e+6Od8G0B0oNhz3JqDhu+jU7/dRmM0d0=;
-	b=CbZWE2tw0lo/wbTg3v0o6CWjwICcgYf7PHSS2NvAkq2G0sF2kj1YF5T6uxVButUx20Hk
-	 pBBxI9+WwT78qlLlGK463RjJXMCCh4nnQOlQu755F3lVSsu6HfmYnDuxjuGeL2639e+Vh
-	 0GcSqF/qRTxG2M7rtBIZ1qrSRrhcVvrhv3CRDOFHz5Yx93gRxuujF+2UN56jkVnZm+S7H
-	 kJWszke1YpyySl+7QGT8JZwmU8bl+9S1PbImpQFGN/0Wkoet0nbkzDBd/VZL492ds5Pot
-	 xNCTD3DcacmiNueBikQver1cJtn0WBsfj5htDVJQegiEmn+G8DFvuOt+13fwnm9q2eg==
+	bh=NayqA+2VU8BL3bQ4QlYOm2bPtjimdoFBif/UfurJ/Ic=;
+	b=QTqIdKbVm+D7VyZZM20jDuG9VEdErVgUyk7PV2E9tymzcBogJuMZjvjNg1T40V+A6pjo
+	 5aO1r+3LeBTfrZAJyVUp/KdAYeroBJVz9mROMI8Ru4fXTI+WiOjmvwgg+oEelItk+Mu1K
+	 X5XpihfjikhuI54X30kGJrIKzPsaf8WzuDNfL5Uv9agrcI4mNnT0ooaepR31udOe5ZMui
+	 pMq/u/cVCcKNtMRBYsX5PgsU64Sg2SF9cB1Hj0eESVdmjhZ6G5oWNRp3osT3+wBKGB07W
+	 lIRKr5MRw2iwrTUEaLa8NoXc0SavlJZj+r2BTAmdsLmLwjLHRTBuoVBiK0Ic3LSc59Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=gourry.net;
 	spf=pass smtp.mailfrom=gourry.net;
-	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=TpfpoMul;
-	arc=none smtp.remote-ip=209.85.222.177
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=uHq3uBCN;
+	arc=none smtp.remote-ip=209.85.219.53
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B254606A32F
-	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 15:13:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B254606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5881F606A333
+	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 15:18:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5881F606A333
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=TpfpoMul
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-93f20c3aaa5so105860885a.2
-        for <damon@lists.linux.dev>; Wed, 18 Nov 2026 07:13:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=uHq3uBCN
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-92119da3d37so5684786d6.0
+        for <damon@lists.linux.dev>; Wed, 18 Nov 2026 07:18:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1795014795; x=1795619595; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1795015079; x=1795619879; darn=lists.linux.dev;
         h=message-id:date:references:in-reply-to:cc:to:from:subject
          :content-transfer-encoding:content-type:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=RMVcoG7RRC5e+6Od8G0B0oNhz3JqDhu+jU7/dRmM0d0=;
-        b=TpfpoMulRrnRIK1YCAb/W/aLXf+Gv4gZSW1XLMad1ji2f4dB8Ma+aaN7GLS4q98O2F
-         cV8osBb91LUzXZpsJJItfx1Q2fEqi30Bif39fxpBvA7Ll80CeVT90ywwVyNwzGwO1+h+
-         /IjFVRtw03pyemKVIG1nB1WDXEzQOcMTB0tI2zFOj9q878FDWWzh0lQ0A46jdLXCVSSm
-         1XY2Ri7ilU67zotZ39tQM2Q3N4DKiZ1X4VwpujIsYqe1lLs5wLhpuHfYc4WzFpUY9nRo
-         KsA/NMyWVoskrKjYEyxC6zSgSc1oDLB4MR02o/p9Q+1pT49PSzyf4s+LxmGfLasXroH1
-         tuOg==
+        bh=NayqA+2VU8BL3bQ4QlYOm2bPtjimdoFBif/UfurJ/Ic=;
+        b=uHq3uBCNePWFWEU91RACxzfkNgCNnV/IghHZOHEFVv8Fpd+9qBQ2LzYGFteeTX0eVC
+         3mGSB9G1avXXbNI4vCuyKLjyG7ZTqI1ZT2e2s+W4WZFIplgsFruziN+IzU4qRHAzRmdV
+         tMsjYSlDpZO5x9uou3VCfKEqiPydrtjURQoTfvKRmlSGEzoGEw96UXTjdrHDQ/G2WiZu
+         tmA8XFTum95zRbQ9XDjDSd5rPznE8aBRGmci2ExTIPBq0DNCUeV4prubBvFheCBU6k//
+         jUw54yq338uNsppEqys0LfBnjPsL/yv4O3isPC84hF6GbbedjfkQill+REMOimnk9aes
+         GPqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795014795; x=1795619595;
+        d=1e100.net; s=20260707; t=1795015079; x=1795619879;
         h=message-id:date:references:in-reply-to:cc:to:from:subject
          :content-transfer-encoding:content-type:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=RMVcoG7RRC5e+6Od8G0B0oNhz3JqDhu+jU7/dRmM0d0=;
-        b=CDG6F6UHYNy/oW8ZsP/dF4XwCCHGOmQo4GNUtLa/UcETAa5yDKMwtE/wbMMFn4h+el
-         oB+/w4vWpwJY++DpifZ33YBEi6OJ1bajrulNpCIti+f/Q6kJZXO34VnKReCzLdPwpD/m
-         SDS+MG5DGmMR5IqcgyeXsrhnnUENlSZxdd9PA7bCNCx+EAQHkBhL2u92rfyJua5/E+21
-         xL7+2fZ0aF9xxja3qfnYjLc+k4++ReZRD2mNSpdgRc5iVvLJ1r6Z5xJVupHcDJCKfzig
-         iaF5GC9Ei5UOSKkrUM+qqeJz83gSuvXItY1jx3hI4nToluDbqtey6IsZBwQ6VSDxSvFb
-         dwjg==
-X-Forwarded-Encrypted: i=1; AL+hErGhHq3SFItecX6LkQUfVwzK4XBl88b2o0UoaxpQhK5WVKNa59XRtWNJkrINAJfziu2LpgnYRg==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+nRDOUONQWtTYDJgCrgQG+IImvfYQ0a68i4pE5OmdLZhUsLC5h
-	ibCCCzwlOz+tTuopXoVQayeekfrauo+BLQjdSQZ8S2MXBlw3G0MwsBknPcSK/VEwGu/nGmtQJVu
-	GgtEV
-X-Gm-Gg: AYBFou2R/nX09rXfLwhPfzHNypkOPdHa4jcN90zRAgLsDxrV8wW8U2gXxVc5cTzyP8G
-	LmFNI5gcnKsmldSuU77XXAz0UIdsGCJo0PERfoBjsuBQMd8X0pOh5t+ZWfxJSLG/Ch6zWSe52Ad
-	27uNf2fIns9HlUC/GhUhrgtUrYgdQ5+CveefG4U1tou+QxGhsiqD5uVYpWh3SC3aRFAa6hB5mQM
-	GvRb9I0+IPt2TSnSUUnYC13dzcIwbNHBJJT9ZtFH3G+Nx9ji80g+3VeB/1IesCnibloKQK6GqGQ
-	i/tHCvL9+dUD4fAFADSSbpgatia90S+bm4ioOrOU7psujUwgbdMl3Zi8BIexKTADSW17OzD4uZ1
-	r5GI5nSgvp/Me8AjW5uXpiqLE90gcaZ9D/HqkhCOjbB9S9Q/p+v6t/DG1QK81HKiQNnZRnfoX9g
-	dsgk0LVcsGiD1h66ed8LggFlT5roMsgg/PcB5WziF72LzPJnplYMOyiuJBSY7CyWIK4gaYJ61EM
-	04i0JIW5obSIepVI/9SeRb6c4R68vAobFwnyMq7olGM3RZbmMKi2xjxGK+tsJ67GkSUHbQJQwCE
-	s4OCB1kStlqwmfyokfgidJff1l2rDuxh4ylaRWeHGX9Ev1voC8hNVp1e8U3Wk6ctiYY+1zWLApb
-	VGA0aMFA=
-X-Received: by 2002:a05:620a:444b:b0:949:6d95:f63a with SMTP id af79cd13be357-94999810096mr508584985a.78.1795014794676;
-        Wed, 18 Nov 2026 07:13:14 -0800 (PST)
+        bh=NayqA+2VU8BL3bQ4QlYOm2bPtjimdoFBif/UfurJ/Ic=;
+        b=AZTQXQxiSf6iZYFsyZVEQrf3Yof7wlfd51SeQh8x5BXHi7uyskM6+XELUKVMzIuTXe
+         u9TUElYaaxaUuOjzmBQL93B7dj39MDnGm5aSBXZbn8+Pzx2N7gaM0KNyFwWC3czdSJi0
+         /Uv4q2DhOP8455KumXrX+7QQOtJsKowgbatfN3yRgTXRLQcp8PZDmpaYKgVTTXqcZJoT
+         2/vhLjgpvN6krRavuW01OfYe/N4jWzhIlSspfqHAeLffGE+h/i0tMBkvfn9HPHqLLNjC
+         98K/Xe502aY8uw4xPj4QdTA2QaTz9bPlbfl2a3sB9kFeOYGbIp+o7ipRlZzK88rcG52U
+         l+3Q==
+X-Forwarded-Encrypted: i=1; AL+hErE1iz++bnAJK1aQwz9VfcZVqeyvJqNRo8BHjlUSvh0YOUjB9R/IeSONniKVyxBqL1wdJI+HbA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+jBjDo0sUAirTvAGP+6Az2iQVLz8nd/+5WnOTrMLi1WS5ThMM8
+	9fISaJfQSowkEdchQkOEziRCth2T8TynLxD2KZjP/1VakQnfTM/eOSly7sYvNUfyKfxVN5HURLi
+	UB328
+X-Gm-Gg: AZFdTZde0xFCpGfCNccIZdfove2ZQmyFqQ1AG8aAIngvD11SBQgbUPZyaPhjPjkaTVO
+	FVnk30e5/2tDf/VSAZ01aPpEVXNUFIwrThdlbn+PmeVS4CK6GLC0/IqEnzqPCSRoDNLx91CsHeo
+	CwCa5sLZotxJJh+dk+sWBc8qC3ROncUsCC0Q2DbKbTk/HuWZQfjxfm3xqi0aTkXgE7cexJpEVcC
+	ieIt5cRCgLjKXvtpW0rVbw7jNRquMR+v/Fmt2fepAYEgRfGP05l0+d0+Sfdr6iDG33jhD/nwUk4
+	XJGG6CvgbLqUtQN3zx0rogMpW8xUe2+l/rPwhiRi37yvpiFjwMtGQTB6X37xKPpL8lyJozjk1J5
+	1fb8PtAxrTTdI/qJYow7AVfrnrILWvl7sazwwEGIq1jpTmeu0r+knAzYCL9bqbygbKwmZAKDNZ3
+	kM8hyRIgoUIu43Jh8XUIkzmMNXf3EViAtn8HvZA2iCZITgaAg4V3UVwEn4vm2TYxqo5h73Pek5y
+	ViCg1AHqWMflu+gFNRE2RDIHuQRQwFGdb7S3MtZimr21i1BF6C325pqi1XkPgcsP6Lme3SQPl+g
+	mn+CIqqLmT20tacVA6zMnvXeTsPfb/VLgbuquSDwEI4srdWvgN5cvOv9KMbviDsO17bX5arzmJd
+	AMTRoCs4ETsPYwiqJSfjQRREqLi0f
+X-Received: by 2002:a05:6214:5d88:b0:91f:2222:b498 with SMTP id 6a1803df08f44-92114f8f66fmr40206726d6.27.1795015079071;
+        Wed, 18 Nov 2026 07:17:59 -0800 (PST)
 Received: from [192.168.50.231] (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-92114d70a8fsm23976506d6.30.2026.11.18.07.13.13
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-92114d35dabsm23793796d6.17.2026.11.18.07.17.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 07:13:14 -0800 (PST)
+        Wed, 18 Nov 2026 07:17:58 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -92,7 +92,8 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 00/22] mm: introduce N_MEMORY_COMMON
+Subject: Re: [PATCH 01/22] mm: add node-state-filtered zone and node
+ iterators
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 To: Richard Cheng <icheng@nvidia.com>
 Cc: "Gregory Price (Meta)" <gourry@gourry.net>, linux-mm@kvack.org, 
@@ -116,128 +117,53 @@ Cc: "Gregory Price (Meta)" <gourry@gourry.net>, linux-mm@kvack.org,
  xu.xin@linux.dev, chengming.zhou@linux.dev, joshua.hahnjy@gmail.com, 
  rakie.kim@sk.com, ying.huang@linux.alibaba.com, matthew.brost@intel.com, 
  byungchul@sk.com, apopple@nvidia.com, rientjes@google.com
-In-Reply-To: <av1DvCQd_OvkGgLU@MWDK4CY14F>
+In-Reply-To: <av1hKrtcATVjCnCM@MWDK4CY14F>
 References: <20261114070959.3490008-1-gourry@gourry.net>
- <av1DvCQd_OvkGgLU@MWDK4CY14F>
-Date: Wed, 18 Nov 2026 10:13:12 -0500
-Message-Id: <179501479267.1206716.268867271510310543.b4-reply@b4>
+ <20261114070959.3490008-2-gourry@gourry.net> <av1hKrtcATVjCnCM@MWDK4CY14F>
+Date: Wed, 18 Nov 2026 10:17:57 -0500
+Message-Id: <179501507729.1206716.6880334614636468959.b4-reply@b4>
 X-Mailer: b4 0.17-dev
 
-On 2026-11-18 15:01 +0800, Richard Cheng wrote:
-> Hi Gregory,
+On 2026-11-18 16:29 +0800, Richard Cheng wrote:
+> On Sat, Nov 14, 2026 at 02:09:38AM +0800, Gregory Price (Meta) wrote:
+> > +/**
+> > + * for_each_zone_node_state - iterate zones in intersect(nodemask, node_state(state))
+> > + * @zone: The current zone in the iterator
+> > + * @z: The current pointer within zonelist->_zonerefs being iterated
+> > + * @zlist: The zonelist being iterated
+> > + * @highidx: The zone index of the highest zone to return
+> > + * @nodemask: Nodemask allowed by the allocator
+> > + * @state: The node state the zone's node must be in
+> > + *
+> > + * The state filter is part of the iteration rather than a trailing if, so that
+> > + * this expands to a single for statement: a macro ending in an unbraced if
+> > + * silently steals a following else from the caller.
+> > + */
+> > +#define for_each_zone_node_state(zone, z, zlist, highidx, nodemask, state)	\
+> > +	for (z = first_zones_zonelist_state(zlist, highidx, nodemask, state),	\
+> > +		zone = zonelist_zone(z);					\
+> > +		zone;								\
+> > +		z = next_zones_zonelist_state(++z, highidx, nodemask, state),	\
+> > +		zone = zonelist_zone(z))
+> > +
 > 
-> I've browsed through the serie, I'll go into detail in each patch
-> in the following days, for now I have one general question.
->
-
-Thank you for the read and the feedback!
-
-> I wonder how the "common memory only" rule is enforced ?
+> A question on consistency. This one is a single for statement, with 2 new helper functions.
+> for_each_populated_zone_state() in the same patch uses "if (!cond) ; else" form instead.
 > 
-> As far as I read it, there're 2 ways:
-> 1. The zonelist, you build them from N_MEMORY_COMMON, so non-common
->    node isn't in any zonelist.
-> 2. A check at the call site, e.g. node_state(nid, N_MEMORY_COMMON) or
->    folio_is_common_memory()
+> Both forms keep a caller's else correct. The only difference I can find is that the if/else
+> form give a -Wdangling-else warning when the loop is the unbraced body of an if.
+> 
+> Is that the reason for the 2 helper function here? If the warning doesn't matter, this could
+> use the same short form and drop the 2 functions. If it does matter, should
+> for_each_populated_zone_state() be a single statement too ?
 > 
 
-Those are essentially the two cases, which are already present in the
-code in one shape or another in the existing shape:
+Yeah I was getting that warning from various checks. I'd convinced
+byself this was a false-positive, but it does look very funky indeed.
 
-   node_state(nid, N_MEMORY);
-        or
-   folio_is_zone_device(folio)
-
-With the exception of one or two places, the series largely modifies
-these locations to use N_MEMORY_COMMON instead (or in addition, in the
-case of zone device).  There are a few places we add common checks where
-zone device checks were not already present (because they were missing
-or did not apply, usually PMD scenarios).
-
-> 
-> Code reaches a node's memory in 3 ways: zonelist, node id, or by folio.
-> I couldn't find a statement of which mechanism is responsible for which
-> kind of path.
->
-
-Being a bit more precise: How do we reach a node's folios/pages?
-
- 1) through some kernel structure, obvious examples:
-    - page tables
-    - VMAs / pagemaps / xarrays
-    - LRUs
-
- 2) pfn walks
-    - memory hot-unplug
-    - contiguous allocation
-    - DAMON
-
- 3) page allocator
-    - freelists (page allocator)
-    Sort of its own category since you ask it for folios from a node
-
-> I see some consistent issues,
-> 1. zonelist paths are covered by way number 1. Some of them also carry
->    way number 2, some don't
-> 2. node id and folio paths can only be covered by way number 2. Some entry
->    points have the check, and some do not.
-> 
-> I can't tell when a call site has no check is deliberate or missed.
-> This matters once non-common node gets its own zonelist, as patch 4 metioned I think?
->
-> Could you clarify the rule ? e.g. which zonelist users must filter on N_MEMORY_COMMON
-> themselves? and why the zonelist alone is not enough for them ?
-
-Some of this is obfuscated by the fact that the existing code already
-does this filtering for you.
-
-I suppose I have some premature changes to add additional filtering
-where it isn't needed yet to reduce the complexity of later patches,
-but I can see why this is confusing when introduced by itself.
-
-Consider this:
-
--       for_each_zone_zonelist_nodemask(zone, z, zonelist,
--                                       gfp_zone(gfp_mask), nodemask) {
-+       for_each_zone_node_state(zone, z, zonelist, gfp_zone(gfp_mask),
-+                                nodemask, N_MEMORY_COMMON) {
-
-This is a bit of a preparatory change to later convert this to:
-
-+       for_each_zone_node_state(zone, z, zonelist, gfp_zone(gfp_mask),
-+                                nodemask, N_MEMORY_RECLAIM) {
-
-It looks like we're filtering by N_MEMORY_COMMON, but we're actually
-iterating the fallback zonelist (constructed from N_MEMORY_COMMON)
-
-  struct zonelist *zonelist = node_zonelist(numa_node_id(), sc.gfp_mask);
-
-Later we update this node_zonelist() call to determine whether the
-private nodelist should be walked, at which point you do have to filter
-for service support.
-
-> Whether every path that takes a node id or a folio must check N_MEMORY_COMMON, and
-> which ones are left for the feature bits in phase 3 ?
-> 
-> Let's get the rule settled down and make it as the foundation as well as phase 2 and
-> phase 3 ?
-
-So:
-  1) If you're walking the normal zonelists, you're already filtered
-
-  2) If you're walking nodelists, you need to filter on N_MEMORY_COMMON
-
-  3) If you're operating on folios, you need to check common_memory()
-
-  4) If you're walking the private zonelist, filter on N_MEMORY_COMMON
-
-
-So let me do this:
-  1) i'll restructure this phase to omit premature changes like above
-     (they'll move into N_MEMORY_PRIVATE and N_MEMORY_<FEATURE> commits).
-
-  2) I'll restructure N_MEMORY_COMMON commits here to handle cases 1-3
-     above in that order, and that'll hopefully clear up the confusion.
+Let me look into this again, it's possible I can massage this better to
+use the short form still.  It's also possible that I should just use a
+different shape entirely than trying to use the existing pattern.
 
 -- 
 ~Gregory
