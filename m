@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036376;
-	b=etGAOKzLkOJGekEHsOS/yHVK/VU27REu79kiKsjcAGOzGac3PizJHkVhN9RqQwGXQTV/
-	 IxnvQRrucGrres/kfw+rhYfVStgy17vtsCmW57nBqDVaUp3xkjwMz3DqrFuiMB3yhzZQJ
-	 cZ1qD+FyeqM72PI/1xUqcb5muzxa3X0YbFt/RvBBYVHssTJdNo6HLwZRudOg2DdDV5EoY
-	 vQ1ZnVCSpG+R0O7U+Q7ybL/Q8lBzIqcCmipxR58qM7YAV9Q9GJHzPfOak8LZvQfUbr9jS
-	 mep0QX0T3+Wr5hhl8kzK2Bor3SsuAaYAykdFmTwhms8kh4sfDc1ORQecWrP42NQlcYw==
+	t=1795036459;
+	b=Ce+t37QtfciYQFqHQw2H4jhPDj9q8fqEXquSJg9BZyxOSs0ljGo/kGLRGKtRybMYl+an
+	 3MVb7jfeGt+7ew5uI5M7PZG+s+tOjzZa9+nZUnG2BiYsy0Kte3FRh82tNzLmuJ40/WcAy
+	 i+90NW3Qz+Ax0PUlZTTg8z/Ac88E9wzwh8+WUqWK5zAeg443jAb3oyGN4dBBvUst6C+o7
+	 8s9c/KYj2fJCws7GdTJURnjx6zaa6CaYgRWT/diS3PzSvpp/eh7nAVjS78D1If+SIEUhc
+	 237lrXRteeYbPoYSseeKNl9iOI4PwCAfP89qfJDNSdNxYHbbC9Bly4eR3Tb/J36NdKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036459;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=vqJKj/+vMPxvkLgk+HZHWVFuHrW+qvIM0t/1LBFXagU=;
-	b=2932x4CWq1JKP3nQT58k9ZuRl84t9kMZbdBB/FghkEpM5Lr7Iq7p8ieW3g3yJpD3N70L
-	 ORzflGc1I7s2mKFOxmXkl6yQZgMmyz9iaBPFEynzDJkUIMFvH4kN8p4zmrOvPbrv+NdCc
-	 eifyxccbc77YuA6U60lvEhH1rMNxGbIaXJC/ywc1BVsxEDOu1t/Mw4RQy+VNnF9ixO1av
-	 zdNDY57U0RNMi0CbBWpbT0CxXIrNHhuZPs41zbJgGx6+lKfXCaFH+0rdJ4kg6bYvtsW/D
-	 bgGIlmGOuzObrd61I897uiiWMG+v1qTHi+TfvrFHr/lV2qw6XkT+QNuj3RrHb/EoMiA==
+	bh=VQ8i1Qr0JcAra/8/8n6QmwRVMmVMuQnbYoknWZ3vpeU=;
+	b=hZ1zG47UH7SBRhXV8I6hPxwzoNly+h/OvicLfEtA3+aNbIFTWe5JcAYgLdAWe0ELUA50
+	 YnoBnUBM7DqLOfWZfPwTsRFrMECFN1Duu7ihkAmN9+lSmpt4XTmoVxj4vhuXu6WEEEI3P
+	 diMPzQivRdNZ/ni0iinxS/QKKTevx9pubQnjEJHHwS68mXJI8VSuwPSofuZhYUOrUJPvI
+	 DOde+RbOa/rij9Al6UrEzVnRXM8df4XXaLTboynfFxpn+iwoUrSvVJqv1OCBU3xF3eFIL
+	 dr/miRlvGnHvwn4q8l81HqzTblqFrW1w9Zm2uQ08vt/GL220yN+MdNWpynLNZJShzgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FzEbGBrd;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QSSmasf+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032F9606A32A
-	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 21:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A09F606A339
+	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 21:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FzEbGBrd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82D21F000C9;
-	Wed, 18 Nov 2026 21:12:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QSSmasf+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E231F000C4;
+	Wed, 18 Nov 2026 21:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795036375;
-	bh=vqJKj/+vMPxvkLgk+HZHWVFuHrW+qvIM0t/1LBFXagU=;
+	s=k20260515; t=1795036459;
+	bh=VQ8i1Qr0JcAra/8/8n6QmwRVMmVMuQnbYoknWZ3vpeU=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=FzEbGBrdxXhs8FvKy2K670D9gYc2vppesn61CN5WjZyynS3UTg+KSPc2nqrDtWo6f
-	 CD8L8GJCy//6sPNvn0kT9v+n84h33+Mw0GA9Tc8YU1aCGNroK4MzKdBhiOLtDiG/7K
-	 JEayKo/gH87jZK0+EyZuP4ld/tnki0TPr0XYQDG4bMjx/Ghu72YpVZMAcOpZE/aZKL
-	 DDl1lzZmmj4pv8CNY19kp2i9Sm7Vx8BeZVGm/8jMGXmZd+VrRGSap/pwDIbi7qcvvk
-	 xlXYUG9HKrPUrEwDPNiG7XddsiikxQEm6zb4PImrOYELFPIE5KLLSVUDZjoBIgJg3r
-	 imouGyZ5GLAcA==
-Message-ID: <sashiko-outbox-221980@kernel.org>
+	b=QSSmasf+aPDP9/3LivfIgHFutD4EVLMusIvLzEbxjoSvO6ggMKdv/hMoswr9QY+GQ
+	 gx+s9qi7XdzT8cJuCMLcrodJLc/8Uuirk9qkCfgJQBhTlMK6XSTiaty2x+eyvVMHRi
+	 4br41Ts7xD6Kx1p2rapP0+XNCnjtAp1yYPvCxaMqbJv9MbHMCL+bT1UjFQZREsTRGN
+	 CBfXKwIXnX6Zw66VorL3kKIy63WJxfw9s40VRE4necYwlQad4Qk54PX6sKPseAPNxA
+	 FcriciK1FmdZyMpShRoS6dTZep8Sw+ViUSrC0F1EYeKk2ney+2LWasnViIQHaSwsQx
+	 BHQ66X4c+WkIw==
+Message-ID: <sashiko-outbox-221982@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 14/17] mm/huge_memory: mark folio as accessed more
- accurately on split
+Subject: Re: [PATCH v5 13/17] mm/madvise: adapt for LRU refs based
+ operations for MGLRU
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Kairui Song" <kasong@tencent.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261119-mglru-fg-v5-14-9eee2fe97a2d@tencent.com>
+In-Reply-To: <20261119-mglru-fg-v5-13-9eee2fe97a2d@tencent.com>
 References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
- <20261119-mglru-fg-v5-14-9eee2fe97a2d@tencent.com>
+ <20261119-mglru-fg-v5-13-9eee2fe97a2d@tencent.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 18 Nov 2026 21:12:55 +0000
+Date: Wed, 18 Nov 2026 21:14:18 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,25 +63,34 @@ Precedence: list
 
 > From: Kairui Song <kasong@tencent.com>
 >=20
-> The behavior of updating the folio's access info isn't consistent for
-> huge mapping splitting or ordinary unmapping. The page table's young
-> flag has to be translated into folio's access info.
+> For the active/inactive LRU, madvise clears PG_referenced so that one more
+> access is not enough to reactivate a folio, and keeps PG_workingset on a
+> folio demoted out of the active list so its refault is still accounted as
+> a workingset refault (PSI).
 >=20
-> Right now it only checks and sets the folio's referenced flag, which isn't
-> enough since folio flag updates on access have their own rules. Ordinary
-> unmapping (zapping) calls folio_mark_accessed(), and it also checks
-> if the VMA has recency to avoid false updates.
+> MGLRU keeps that history in the folio's refs count instead, which now
+> lives in PG_referenced, PG_workingset and LRU_REFS_MASK, so writing to
+> those bits directly corrupts the count. The two hints want different
+> things:
 >=20
-> So first just use the right helper here to be more consistent. Keep
-> accounting the young PTE as a cache access, sticking to the current
-> behavior.
+> - MADV_COLD resets the count in folio_deactivate(), which also requests
+>   deactivation.
+> - MADV_PAGEOUT clears non-workingset refs and caps the rest at
+>   LRU_REFS_WORKINGSET after isolation, before handing the folio to
+>   reclaim_pages(). The hint marks the folio as cold, so the
+>   eviction shadow records the capped count and does not inflate the
+>   eviction/refault counters of the hot tiers that drive aging, while
+>   folios at or above the workingset threshold keep their PSI
+>   classification.
 >=20
-> Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
+> PG_young is cleared for both LRUs as before, so the referenced walk does
+> not count stale history as a recent access.
+>=20
 > Signed-off-by: Kairui Song <kasong@tencent.com>
 
 Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261119-mglru-fg-v=
-5-0-9eee2fe97a2d@tencent.com?part=3D14
+5-0-9eee2fe97a2d@tencent.com?part=3D13
 
