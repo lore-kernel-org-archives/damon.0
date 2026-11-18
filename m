@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036142;
-	b=EWc5ZKc76HOQ68kFn11h1O/od6pYq9Y1I4I8EoLVdBjAPUakjmQfLqAWrZ3OOKF8bm6F
-	 nnhxjQ6NVgtcgjkpNnNk4RYe26q2s4ANqXjiZO8NMoO0sA7INakC2bJhM6eBaHoWrUA1z
-	 BtqX+nczBE17ATAWuzw90tHKmJWZW0R22tmkt4qpBwUpt4cLCs+++Vrbdzw+gOyrnLpkD
-	 hZutSFjX7SsEUEifMp0rqju8olElUotfa736eTr3nkr1pfXV3o1e0ZUHf7/Kvj7ze1akw
-	 91z5OHAnoNewvCPlhyB3wsIlM6qBs8VhWlt2N5GBtB1TtzkjuPKmzkd5xmrMXlpPqmQ==
+	t=1795036243;
+	b=OIqDRIixj0kYEreyv15cSHPme/YxSuhi5u9aenHDmOIFqwPKDZ8XML9Smq3C/vvnna0q
+	 YoezWXkRum15HN4oh5miqr6qYk0I50bmibsllkllFswxmOYMLl4xyn32h8IhcQwyWDQkM
+	 d1YRxiQH6Y1fpSfCKhknTCNg9Ns+Zi9ZTuqjop9tfHpzThhFuXJOLVVFE8oL9Sd3kQ07l
+	 9JdZnXRZL9qPf/BoIiRgcfE+gzlKuWEy5MisID9pz0Ns4wRnIgWgSPrhvyENudmHVbKYr
+	 duIlgL2TrwwE1/2xdwOyI38qi0fo9Mch02bv3itKa8hN1CdL1hItVblEePSe5xwcxzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036142;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036243;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=fsJMQdillzPNFGPdj66Tay9WpMtNmtqPUvUMQauzC34=;
-	b=Vp8D9EhIFESt4lkoJUdbReQujNjGaI+l1tpsDNPhIE94RcM1a/LEGqiVYG3UC8Xffh2c
-	 hXgxuFKyXa2r+cJ0rjza+pHnPsNYpeIcYnb/Tmdl0u/q7Dl3NR7pQmy9jcRc3am3soocs
-	 1zvd+e88hV7u492Lo6WHU96uduRMlWuMrVn79jxCH3DjrJ6syQCJNICm0oAF/Q5M9d3VM
-	 6LaknY0e5RuernPfzyOgF989WuUZJrkAvH+4vPNQ9pU+dV/Ao0hX+idal2gktyGrpJguB
-	 UR98Rs2F5kv0gFbsUTzv3l5CBKtkGSKz0MqxNzTl1SuZUK1/ngQ0EOh4RfQssg88cSw==
+	bh=j/gjUMsUVQQRDD6hIrHuavOjGv0w+lqXuOWeYBBr580=;
+	b=a0s10bVniL3lpTqqL9wGb42VbuU3RCzsYwnpvH9NBJXT65BIz4miBV4O/iOiYvLZE8Ry
+	 +bq0TspocyYj9jJXin8vMs534Kjs0TCqM3un7O7YWmp0deEehmylH+vV9WHeyFBDoxIns
+	 i8vF+2niF8IGfldG3gAjhZMhyFX39d00rLk8yLEdy0x+2xCfJJQHLwCSLECIyfg5/agHi
+	 39SEJzCohYN8XJo72+5Os1DlSW63GSuCzAHRAdvMnx3Bv/VmLQ+Lmzp7jGsLok6DdJ9Ho
+	 QkztLqHf2ioZBm/s8z+m+4mciN9mCopL8z6WDVLfuAPFlCaGNVNzIIWawb67eVpOpYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Y/RlDaQr";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=baUglGb7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8BA606A31C
-	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 21:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11E3606A320
+	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 21:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Y/RlDaQr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0E01F000C5;
-	Wed, 18 Nov 2026 21:09:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=baUglGb7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FE51F000C6;
+	Wed, 18 Nov 2026 21:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795036142;
-	bh=fsJMQdillzPNFGPdj66Tay9WpMtNmtqPUvUMQauzC34=;
+	s=k20260515; t=1795036243;
+	bh=j/gjUMsUVQQRDD6hIrHuavOjGv0w+lqXuOWeYBBr580=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Y/RlDaQr8Y7xSj6fkcRi0UZou8c2StPINfCB8SbXiS/q1S12p9H2lgn1UwaUnuzfn
-	 F+qBGKN+3sbzIgF+rq41bvFuhL9mcBtjFQaaCHYkWUlcXvC5L4U5Rylr2pB2LYkWFf
-	 aD/WylmWOJoZlv74daWLkxOTZW3zEJQZEJCEGxE4gByHT7mQ7sUVA6J5HmOMjQ1XW+
-	 T/U0W88k7YdELN8vMcgSaz6ywWhHjfQKYkMfVTK3agCcl/OWNur2zECf01Ptld/D66
-	 Kxe1WXy31EkTF8zIyyTD8Qk204buszQkgBTYTEIzahvqmH9wcaTkAXkvB8M7fHw+ap
-	 USCIMu8fKaINA==
-Message-ID: <sashiko-outbox-221972@kernel.org>
+	b=baUglGb76xetrECg2SudHCIjAhGCtEVX4IhJhdi4XVCz4jYpxJji9i0Vj+cu3vg2s
+	 z80QLyxOJD04KM8Q3ZuS/WWjxEb4J8gCHjJduebM7l+ce3VDnquX9aCUxUud+hlV5v
+	 u5vda7sEolK3gf2MOGnOgPqW5anMsMdCzMSNLPiisIOr1YpDqnGHTXvUFWjOOY7vYZ
+	 GOZJ979EdOpI163rVxtoqs/2ORYeOputT6WRgULd2GtOt+N3UoZ+UbuNo4JgSfc+C1
+	 uTtRuFPdUNZnxknmV5A+lB5IQ7kg+KIRk8Ae7gWnmTXbTxB+lQr2b2n9riOdIiA+bb
+	 2E2yyU/gQHP7g==
+Message-ID: <sashiko-outbox-221974@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 09/17] mm/mglru, gup: mark folios referenced via a
- fast helper
+Subject: Re: [PATCH v5 10/17] mm/mglru, smaps: convert to LRU refs based
+ operations for MGLRU
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Kairui Song" <kasong@tencent.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261119-mglru-fg-v5-9-9eee2fe97a2d@tencent.com>
+In-Reply-To: <20261119-mglru-fg-v5-10-9eee2fe97a2d@tencent.com>
 References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
- <20261119-mglru-fg-v5-9-9eee2fe97a2d@tencent.com>
+ <20261119-mglru-fg-v5-10-9eee2fe97a2d@tencent.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 18 Nov 2026 21:09:01 +0000
+Date: Wed, 18 Nov 2026 21:10:43 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,25 +63,29 @@ Precedence: list
 
 > From: Kairui Song <kasong@tencent.com>
 >=20
-> Introduce folio_inc_lru_refs_fast(): raise refs from 0 to
-> LRU_REFS_REFERENCED via cmpxchg, or just set PG_referenced for the
-> classical LRU as before. No counter update or promotion is needed,
-> nonzero refs are left unchanged.
+> PG_referenced is only the lowest bit of the folio LRU refs count
+> (LRU_REFS_FLAGS) now, and MGLRU never kept it stable: promotion used to
+> clear it, and now it toggles as the count grows. But with the LRU
+> referenced count as a stable API now, we can use two helpers to provide
+> in-kernel users a stable and sane reading of the referenced status of
+> an LRU managed folio.
 >=20
-> This helper only aims to be fast, it exists so the gup fast path can
-> stay a fast path. The new helper doesn't account refs above
-> LRU_REFS_REFERENCED but that's fine for now as GUP never used that
-> or anything similar for CLRU either.
+> Add folio_check_lru_refs() and folio_clear_lru_refs(), which use the refs
+> count when MGLRU is enabled and PG_referenced otherwise, and switch the
+> smaps paths over to them. The lru_gen_enabled() test stays inside the
+> helpers, so its static key is not splattered over the few call sites.
 >=20
-> Convert the gup fast-path sites. No behavior change for classical LRU.
-> There isn't any regression for MGLRU either.
+> Convert smaps as the first user of them. MGLRU now reports every folio
+> with a nonzero count, so the reading no longer flickers and clearing no
+> longer results in an ambiguous status.
 >=20
-> Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
+> The classical LRU case is unchanged.
+>=20
 > Signed-off-by: Kairui Song <kasong@tencent.com>
 
 Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261119-mglru-fg-v=
-5-0-9eee2fe97a2d@tencent.com?part=3D9
+5-0-9eee2fe97a2d@tencent.com?part=3D10
 
