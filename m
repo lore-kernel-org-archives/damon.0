@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794968561;
-	b=Pj7/oF3Ke8fQJon6Tw2IhhFmlOgkORjV2DkV2O+ZJBZMj08oBAWG/1KaDOwbJnB6yvZG
-	 oKN6qUY3kGh/GPuuuBQEt5r2XGjQ2cf+YNYjnbGL4u7QzoXzM7MthFTlLPtxAkti1eK8g
-	 0jF35tMLMWV8XUtbsTDXx4fTsnvpUokbt6s6Rz1IHvas0F0H0aN0BS2s4LMfbMQkmHkZU
-	 0+mc2JTNWfc1DP0awkV9pFgGMLhVUhrvWXI/+s+rXKDStypCoPjrV/izXErgB9yI+F1Xl
-	 Mh6hsd+l4/id4B8IWb0BX5f/M2ulZnpLVpr/q8M9Erf7SKR2fHJUSxZr89a8MOG2DsA==
+	t=1794968557;
+	b=RRJ9QdoJf7xm0uZua7nCioW7dUNqf41SCzPzw5smIOekTOvFGa959yRVTtJGWhxVXpeQ
+	 rZDbRZTPZe3XjRglR8cWWaGoqXfyizcuEWEhhAtXgyP7ODk9m3iMqSFr6xszNGvMBqqTo
+	 5DcFa5FonshuHhoE7AIXRlIUzJrWp49q2SyNcQ87Hnsiq0s0uvUu+LBG5FrCAOKshMVOQ
+	 y0iL1J7R5RpcGMnOViwyadRLSF1rHgc+O2h3aOudAhZqWgwKvi1to97jJ+QqCPkd/411R
+	 hin4hVVK8Uml2eDcn8Yz+422pPjNErysydsjUVvCOH8r/bk6XKkQNOEVwTynXbNCCvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794968561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794968557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=R78z6DX4Eb7n5m3aMS1vuBN9kYcpNJhnmoRj2a8fkoA=;
-	b=TYM6A1Z0/rgd5innMw6kgPNTGi9zei7L/5P2drlW8dZ9H2VMTAsUAM8U6u1MqnrIqKJK
-	 j1UHxj60aW74QsnEAVkT7pEwSxBVA7sWV/0FGvWKVynlusCnN8sDUrdhi9AYkQAmTNC+8
-	 Hq5HlrOkqgJ0mQA4IDWmpN4Op2ntDl4+OrtQFj3hhe2dfHY+C9hgHA0UJ+TbV5PjBlQXo
-	 ZXfKrTfYkUdKE6Z15QzQ8i3xt8Ha7s9s6KMhXjpCCiOEicG7iOeqpWjhLCX8/cp5P1SWD
-	 +R/mDoGf0bmelIWPU60D1aniI69mkho+crgWnGVxUs2PJZ1c7VIql3CMYprt5GjS3kA==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=L5v3TNUEUyGkIhCVZhl1qQoqUnXYUnCoqLwCawYZ32A=;
+	b=AkU2biU/1AZdzdTPE8iuIMLnNQnFPbrMM/x04YGwnDsK44kDloCS7Uykb2AY8FIwRGsG
+	 CHeWYT1fMZi1piVE5ciSpTS9vN1hLG+MUs3xflr1oAZa4sKdQFnhNhoHX781TxfuGRtvZ
+	 t+t22N9QVtHn2Dq9QCUofL4CFpCORdl73fhF/Aa9ksfYYZJy06ma0M+HHfWSDlkFhY/5i
+	 OMc+cTU+r0jWydDwzowCe+O6oNzTQX3bzIwQdZ+nOZod7Csog7Nxi1f3Pt8H1vnWXtgfl
+	 zcFp1dJeiAv6ugqNZ1+Th46BvQVnQXtl8LGatzieTohNSPHbG4Q5cWE9NpaKSjWf8ZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T0SNnpqB;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=V0IPem1m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93801606AF50;
-	Wed, 18 Nov 2026 02:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6915860A3804;
+	Wed, 18 Nov 2026 02:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T0SNnpqB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8311F00937;
-	Wed, 18 Nov 2026 02:22:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=V0IPem1m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2113C1F0089E;
+	Wed, 18 Nov 2026 02:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794968561;
-	bh=R78z6DX4Eb7n5m3aMS1vuBN9kYcpNJhnmoRj2a8fkoA=;
+	s=k20260515; t=1794968557;
+	bh=L5v3TNUEUyGkIhCVZhl1qQoqUnXYUnCoqLwCawYZ32A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T0SNnpqB8t6E+4PGKkicOyA2bgdDL/KGqJbfnKjnPtWYCdSM4Ao8uhj+FPBpzYf+N
-	 HeQhFnTFHqH//dgs+C5CGx35yY8jEGRhyHyWyrn7k/inqiN29OZLUpGHS4eIjEnSYr
-	 +q2Y7PzeRRw3oqfTh2j9sOhWGOgzQQJxSbHUtMEgmJtuiZRUBkhwsVdt3Vo2jbgWFb
-	 H58AbiFDMLJVt+Sz8wGVIyPEZz1Ij4Gs58dknyEFqfaeS+RGaBrPgJEpy1z56/Crie
-	 Tpo+X3CmsYsTB/WXtE6Cxhy/iB7U3ZKxYYapOcSRBzE1sQkM0oj5BnhNY8EWgc++GZ
-	 kpbZ3KziTHuGA==
+	b=V0IPem1mBDKRz8TiosCk09YG40S9in5HFFUBLvrEX7fIGBZ3+oV8p9GtLaEGla9JK
+	 v7TXkUYWW3G/q9KS3Lpyr3Shz2AfXLCgvTmHvyyI7rY+nCtV9IZwj+SQ7CmxHvdHgq
+	 mucNlomL4RsDtDFDG/tZYHVPgLkgFSP42zHBS5v32PnvQkupDLFEXzhiS76Z0tNXfj
+	 gEudUfHjaWA/nOm/3AJhZu0xnPST6s4uG7NoxORf4qLk0Fj9tuGor/v3dejsYfXUOw
+	 z9Vs46Sz78rFszSZr0lvChKAOf+gSVEYyiVCmG0RVNE26m0ErfpJfiQHQ3uM7XohY7
+	 hOkDWDMIjlyKQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 26/27] Docs/admin-guide/mm/damon/usage: update for user_report report support
-Date: Tue, 17 Nov 2026 18:22:21 -0800
-Message-ID: <20261118022225.100659-27-sj@kernel.org>
+Subject: [RFC PATCH v2 14/27] mm/damon/paddr: support REPORT_MADE type probe filter
+Date: Tue, 17 Nov 2026 18:22:09 -0800
+Message-ID: <20261118022225.100659-15-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261118022225.100659-1-sj@kernel.org>
 References: <20261118022225.100659-1-sj@kernel.org>
@@ -65,45 +61,73 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Update DAMON usage document for the newly added user_report type data
-attribute report support.
+Add a support of DAMON_FILTER_TYPE_REPORT_MADE type probe filter to the
+physical address space operation set.  Use the DAMON core API function,
+damon_report_exist() for the core report search functionality.  Set the
+time range as the last sampling interval.  Pass damon_ctx to the filter
+matching function for getting the sampling interval.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- Documentation/admin-guide/mm/damon/usage.rst | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ mm/damon/paddr.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/admin-guide/mm/damon/usage.rst b/Documentation/admin-guide/mm/damon/usage.rst
-index ce4e9e4c13276..4024dd4e92979 100644
---- a/Documentation/admin-guide/mm/damon/usage.rst
-+++ b/Documentation/admin-guide/mm/damon/usage.rst
-@@ -117,7 +117,7 @@ comma (",").
-     │ │ ...
-     │ reports/
-     │ │ producers/nr_producers
--    │ │ │ 0/report_type,producer_state
-+    │ │ │ 0/report_type,producer_state,addr_start,addr_end
-     │ │ │ ...
+diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
+index e89cb14ee17be..4003ae914f1a2 100644
+--- a/mm/damon/paddr.c
++++ b/mm/damon/paddr.c
+@@ -140,9 +140,10 @@ static void damon_pa_prep_probes(struct damon_ctx *ctx, bool set_samples)
+ }
  
- .. _sysfs_root:
-@@ -767,6 +767,15 @@ Users can write below keywords for the producer to the file.
+ static bool damon_pa_filter_match(struct damon_filter *filter,
+-		struct folio *folio)
++		struct folio *folio, phys_addr_t pa, struct damon_ctx *ctx)
+ {
+ 	bool matched = false;
++	struct damon_addr_range addr_range;
  
- - ``on``: Enable the producer.
- - ``off``: Disable the producer.
-+- ``submit``: Generate and submit a new ``user_report`` type report, if
-+  ``report_type`` is ``user_report``, and the producer is enabled.
-+
-+``addr_start`` and ``addr_end`` files are used only for ``user_report`` report
-+type.  Those set the address range of memory to manually report .  Users can
-+set the start and end address of the address range by writing the addresses to
-+the files.  Note that it is open-end range (``[addr_start,addr_end)``) and
-+therefore the end address is exclusive.  Reading the files shows the last
-+successfully written input.
+ 	switch (filter->type) {
+ 	case DAMON_FILTER_TYPE_PGIDLE_UNSET:
+@@ -157,19 +158,27 @@ static bool damon_pa_filter_match(struct damon_filter *filter,
+ 		else
+ 			matched = damon_folio_young(folio) == false;
+ 		break;
++	case DAMON_FILTER_TYPE_REPORT_MADE:
++		addr_range.start = pa;
++		addr_range.end = pa + 1;
++		matched = damon_report_exist(filter->report_type, &addr_range,
++				jiffies -
++				usecs_to_jiffies(ctx->attrs.sample_interval));
++		break;
+ 	default:
+ 		return damon_ops_filter_match(filter, folio);
+ 	}
+ 	return matched == filter->matching;
+ }
  
- .. _tracepoint:
+-static bool damon_pa_filter_pass(struct folio *folio, struct damon_probe *p)
++static bool damon_pa_filter_pass(struct folio *folio, struct damon_probe *p,
++		phys_addr_t pa, struct damon_ctx *ctx)
+ {
+ 	struct damon_filter *f;
+ 	bool pass = true;
  
+ 	damon_for_each_filter(f, p) {
+-		if (damon_pa_filter_match(f, folio)) {
++		if (damon_pa_filter_match(f, folio, pa, ctx)) {
+ 			pass = f->allow;
+ 			break;
+ 		}
+@@ -199,7 +208,7 @@ static unsigned int damon_pa_apply_probes(struct damon_ctx *ctx,
+ 					ctx->addr_unit);
+ 			folio = damon_get_folio(PHYS_PFN(pa));
+ 			damon_for_each_probe(p, ctx) {
+-				if (damon_pa_filter_pass(folio, p))
++				if (damon_pa_filter_pass(folio, p, pa, ctx))
+ 					r->probe_hits[i]++;
+ 				i++;
+ 			}
 -- 
 2.47.3
