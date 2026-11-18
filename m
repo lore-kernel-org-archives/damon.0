@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794968554;
-	b=PyiNxQ7OhIIRFfMTI/2WaxSnIaxZg48PObdwIMb1dyV2yRaDiOpKfF5t6hoOV8bm7+Ke
-	 6oGctiBUj2u9tuJjOrglaS1H6ccC946P8brARmFxbB1npSRSvLRTvpwrcy2b0HhkPl3DJ
-	 yZalxjSBMYbIplMVWzMSBg5MfrxkVsYs16ahM1oOBDfkMHn71N+Nem2p+RHB/ImjDJI3q
-	 eouccbYw/UXeHwE4LDXg+Aj5zC7KuDWH9FdY4L0M0Yu5roZQEzqspZAyXSb4FWB5qMqNs
-	 7F4kEy8sHi0aZn/I4yy29F2rVnDU/uVu7vVAyI/eD1J8Q5LWtwROixxj+LA/moz1LMw==
+	t=1794968555;
+	b=4Wr01skft/k7CF09n1Guip6HeSa3MUPPs3fmq4iZ+uneJ4FFFdzjcY9J6ubLhVb+5pxh
+	 gI0Wx5mkfmBgvdMOgrKXt3f5my/Gv62qPlHvI+8LKm2ZjBX/M9eVgFL3/F2+GzbVwJexM
+	 dVdkexhRIehIFubxEUZCk+Vo/KfO3eLVuCzFdE6VkG58VIdQjPtQDmUuItVvHT8bW3ppU
+	 YNLH4vVsZdj72UULc/CvOO/TR3RFUwoHhtD7P997ZkVlOU5iCSqx80YkTbDuIaRPTaMKg
+	 cejRmhCHADpijX3zl8qPoz0Ua79nF5SJVulCMGWGiUcM16uPLXwS97aLvBLZq6Rl7kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794968554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794968555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=ZoY4hnFbJ5g7c+Vl7aZxcV0uXn6NxmdIonYYm4S4XhY=;
-	b=WaL3OweEy9L8Az8/Ykpnlm8LTJB+hUtMYkWqfoYy5ejTAHl+ZiPVDUgUjHUTC6PfMFGy
-	 uJBXGJU5MwpIIMjMtmwp+7d+I/QfY0vJM/6SsiLVf6IhkQ+Vv519iLLQvs80yu1AFqWC0
-	 PUPnotTqvCuWdicm7+Iogo74qpLvc792MDujRWpiFuGbbl5iI2bp8i1QuTqpomKayqISv
-	 Bf0J7vWXKZ/teHk1wYhtuqP+gqD0MaRuHKncqwe4MhJDrHoL8VBzzzQGUg813oCl0QdL5
-	 +J1zonVElD1Wwg5lTdtUz2FAfi8MdXBW0wFlMD80Blp311s1XyVEL5SkYltLcINnh7Q==
+	bh=en0GKVo205/sJ+JMMbLGyOQzR+GcMBoehXLNhDIZG2Q=;
+	b=X4NUV2lrUIC6alZafuaf2fzXVSF1F+joA/dv0FTw88dscgkAPJY/3EZ8f2NAkljxTKkK
+	 d5aXuTVv1kRH87CWs+xG4XQV3dTJXFHL+2aK6mxeFzn4g1uTgT10pM/wasyUE+3IQ0XA7
+	 JWaLwPS3ho7ytFmtpHV9muNZYra2kklgZFwS1ANShsUBuuJdcANpyQyrceWD8AeCoRPcY
+	 QSpwjZ0oj1kk0nb/AR/oExGb/HIj9ZMSW96hvnokChx1UKZd2OyzS0ZrQs8gYmivBF+22
+	 eqr1jleW3bsYuJ/1IWY2q107O8NzuIzyqu36V0eM748NzIWib7ZbfUPitNTUSr60p6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BDJGyrGl;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wf2mGbVc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE650606A8A4;
-	Wed, 18 Nov 2026 02:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B881606A8AC;
+	Wed, 18 Nov 2026 02:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BDJGyrGl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7629C1F000CF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Wf2mGbVc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27971F000C5;
 	Wed, 18 Nov 2026 02:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1794968554;
-	bh=ZoY4hnFbJ5g7c+Vl7aZxcV0uXn6NxmdIonYYm4S4XhY=;
+	bh=en0GKVo205/sJ+JMMbLGyOQzR+GcMBoehXLNhDIZG2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDJGyrGlsnnCrzFaIATHzHA0Z7QPT+Q64Nl76ExxPjh+o5nloi1fFAQcweOqz0g5Z
-	 SVvprU2m4+hjJbdPqLkI3HGdqyBo402LtyfRsGwBhqOi8hXbceS/XGXR2GOJ7UAsOE
-	 WUDqG+At3xylwtcVfFKv2rPQ+fe/jfxELLSdNhXwFyK0FkLBqi1bzhDwAjbo0ZcfiF
-	 VuJ0KlSB42mGgfJlX/y0E90hgNeicUvF5Hzodm5syQ3SwdD+FtThrYVbLqUSroPBii
-	 weK3ncRvyvvPzvI+GWKCfd2S5aps++kqFep5fimbRxJ96Q46Sn4APic5hng3reB7NP
-	 C+PbXkmv9iBbg==
+	b=Wf2mGbVcpLyrzgFwZdtlw/Io2GXH4yW8sqWqJtJXJZhUHHyCNgrd72KE621L4bg7w
+	 h+xG+I/p4gV+J9HfHjQjQPQd79Sdcy0BkqowQ9Uok5VBJeCVOR38C61ZHyJ194T2FI
+	 YufUaMKdixYOP1tnawV2nNbL0z0oPh8PL0BwzFOp1QdRtPiruJWsGzSh93V4s6t2tQ
+	 tpjXd0DyMvqDDJRvXPDLxpGbB1faUxymoZnJ1MJnAZ+juzUb0uhUFSwbf8H/7FW/e1
+	 oHu9Vs2sToiX9rwjgttKZqEDRHikYGHYaVlypKfhMBqLdnYYsFS4JH0iVOw7fGz4Nt
+	 VdgNGYNDCSv4w==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -46,9 +46,9 @@ Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v2 06/27] mm/damon/sysfs: add producers/nr_producers file
-Date: Tue, 17 Nov 2026 18:22:01 -0800
-Message-ID: <20261118022225.100659-7-sj@kernel.org>
+Subject: [RFC PATCH v2 07/27] mm/damon/sysfs: implement report producer directory
+Date: Tue, 17 Nov 2026 18:22:02 -0800
+Message-ID: <20261118022225.100659-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261118022225.100659-1-sj@kernel.org>
 References: <20261118022225.100659-1-sj@kernel.org>
@@ -63,89 +63,115 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement a new sysfs file, nr_producers, under the producers/
-directory.  The file will be used for generating directories for each
-report producer, in a manner that is similar to the nr_kdamonds file.
+Implement a sysfs directory for each report producer.  Create and remove
+the directories for reports/producers/nr_producers file writes.  It is a
+placeholder for sysfs files that will be used for controlling each
+report producer.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ mm/damon/sysfs.c | 71 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 70 insertions(+), 1 deletion(-)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 75701ed662222..d3a7cb170975a 100644
+index d3a7cb170975a..7c6bc30c12125 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -2983,6 +2983,7 @@ static const struct kobj_type damon_sysfs_kdamonds_ktype = {
+@@ -2979,10 +2979,40 @@ static const struct kobj_type damon_sysfs_kdamonds_ktype = {
+ 	.default_groups = damon_sysfs_kdamonds_groups,
+ };
+ 
++/* producer dir */
++
++struct damon_sysfs_producer {
++	struct kobject kobj;
++};
++
++static struct damon_sysfs_producer *damon_sysfs_producer_alloc(void)
++{
++	return kzalloc_obj(struct damon_sysfs_producer);
++}
++
++static void damon_sysfs_producer_release(struct kobject *kobj)
++{
++	struct damon_sysfs_producer *producer = container_of(kobj,
++			struct damon_sysfs_producer, kobj);
++	kfree(producer);
++}
++
++static struct attribute *damon_sysfs_producer_attrs[] = {
++	NULL,
++};
++ATTRIBUTE_GROUPS(damon_sysfs_producer);
++
++static const struct kobj_type damon_sysfs_producer_ktype = {
++	.release = damon_sysfs_producer_release,
++	.sysfs_ops = &kobj_sysfs_ops,
++	.default_groups = damon_sysfs_producer_groups,
++};
++
+ /* producers dir */
  
  struct damon_sysfs_producers {
  	struct kobject kobj;
-+	int nr;
++	struct damon_sysfs_producer **producers_arr;
+ 	int nr;
  };
  
- static struct damon_sysfs_producers *damon_sysfs_producers_alloc(void)
-@@ -2990,12 +2991,62 @@ static struct damon_sysfs_producers *damon_sysfs_producers_alloc(void)
- 	return kzalloc_obj(struct damon_sysfs_producers);
- }
- 
-+static void damon_sysfs_producers_rm_dirs(
-+		struct damon_sysfs_producers *producers)
-+{
-+	producers->nr = 0;
-+}
-+
-+static int damon_sysfs_producers_add_dirs(
-+		struct damon_sysfs_producers *producers, int nr_producers)
-+{
-+	damon_sysfs_producers_rm_dirs(producers);
-+	producers->nr = nr_producers;
-+	return 0;
-+}
-+
-+static ssize_t nr_producers_show(struct kobject *kobj,
-+		struct kobj_attribute *attr, char *buf)
-+{
-+	struct damon_sysfs_producers *producers = container_of(kobj,
-+			struct damon_sysfs_producers, kobj);
-+
-+	return sysfs_emit(buf, "%d\n", producers->nr);
-+}
-+
-+static ssize_t nr_producers_store(struct kobject *kobj,
-+		struct kobj_attribute *attr, const char *buf, size_t count)
-+{
-+	struct damon_sysfs_producers *producers;
-+	int nr, err = kstrtoint(buf, 0, &nr);
-+
-+	if (err)
-+		return err;
-+	if (nr < 0)
-+		return -EINVAL;
-+
-+	producers = container_of(kobj, struct damon_sysfs_producers, kobj);
-+
-+	if (!mutex_trylock(&damon_sysfs_lock))
-+		return -EBUSY;
-+	err = damon_sysfs_producers_add_dirs(producers, nr);
-+	mutex_unlock(&damon_sysfs_lock);
-+	if (err)
-+		return err;
-+
-+	return count;
-+}
-+
- static void damon_sysfs_producers_release(struct kobject *kobj)
+@@ -2994,14 +3024,53 @@ static struct damon_sysfs_producers *damon_sysfs_producers_alloc(void)
+ static void damon_sysfs_producers_rm_dirs(
+ 		struct damon_sysfs_producers *producers)
  {
- 	kfree(container_of(kobj, struct damon_sysfs_producers, kobj));
++	struct damon_sysfs_producer **producers_arr = producers->producers_arr;
++	int i;
++
++	for (i = 0; i < producers->nr; i++) {
++		kobject_del(&producers_arr[i]->kobj);
++		kobject_put(&producers_arr[i]->kobj);
++	}
+ 	producers->nr = 0;
++	kfree(producers_arr);
++	producers->producers_arr = NULL;
  }
  
-+static struct kobj_attribute damon_sysfs_producers_nr_attr =
-+__ATTR_RW_MODE(nr_producers, 0600);
+ static int damon_sysfs_producers_add_dirs(
+ 		struct damon_sysfs_producers *producers, int nr_producers)
+ {
++	struct damon_sysfs_producer **producers_arr, *producer;
++	int err, i;
 +
- static struct attribute *damon_sysfs_producers_attrs[] = {
-+	&damon_sysfs_producers_nr_attr.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(damon_sysfs_producers);
+ 	damon_sysfs_producers_rm_dirs(producers);
+-	producers->nr = nr_producers;
++	if (!nr_producers)
++		return 0;
++
++	producers_arr = kmalloc_objs(*producers_arr, nr_producers,
++			GFP_KERNEL | __GFP_NOWARN);
++	if (!producers_arr)
++		return -ENOMEM;
++	producers->producers_arr = producers_arr;
++
++	for (i = 0; i < nr_producers; i++) {
++		producer = damon_sysfs_producer_alloc();
++		if (!producer) {
++			damon_sysfs_producers_rm_dirs(producers);
++			return -ENOMEM;
++		}
++
++		err = kobject_init_and_add(&producer->kobj,
++				&damon_sysfs_producer_ktype, &producers->kobj,
++				"%d", i);
++		if (err) {
++			kobject_put(&producer->kobj);
++			damon_sysfs_producers_rm_dirs(producers);
++			return err;
++		}
++
++		producers_arr[i] = producer;
++		producers->nr++;
++	}
+ 	return 0;
+ }
+ 
 -- 
 2.47.3
