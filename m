@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.7
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.193.66
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794985298;
-	b=nHdCyHYKy+O/VDoO4Bcdy3d9aig70XGBxdBPjhRdu0ZWleJfQGlwKHvibjv6SxjmP8k2
-	 uFLjgP0SLrHutnuKXGDEONeJJfEZ8oy89lXwvuWyb4/yQvPzuc6N6RvBn64fiaiWU+vDM
-	 RGHo2V46HWQgNHOLa0xaowF8+vkd90SLctMlRdiOvl/A2iGyvS9pXqve7awMrvnFlhA0Z
-	 4FGW/j9825sEOKkf7t5FVlDjUquOOKvKtePMlHD1PJQ2mqJyhHoAQgue5ybcdEowRgT4V
-	 q8EGCwE0E5ueaa3nJCKoiY7p8T1JFMf+q9C9Ds7g1mQ2sP/pUBZVRgavtIgvG0XnUSA==
+	t=1794987146;
+	b=VnfSt0i/sPJsVS8LFxLyoMLo3YUqdZn220l99NmtT6rBumieq2ERaYG1L1wXnyOwau0U
+	 CGhJqEwaodMbuoLDcRMFeXhe4gyTmadb45GCBP6AkPFtOGEC2xlX2evne64XlgzO31aKQ
+	 jqakA2KksbJetISR/032EbKhTI8vmjsGhP8JpEQjfwEDmNW9UpEzgqR9G+BpLzVcY1nhZ
+	 1lOvNeC7kPQ6eragOPeURHcinS15iaNAcZKe1ZMlMQuM0NKdoRNV0zHDqGONVLJF7VPfj
+	 Jc9VO8QdKHK15E+XXT9j+RERU7a49TpnhYSpf5DuwX85tsSr/w1JkmgS89YkXsqbo+A==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794985298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794987146;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
 	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
@@ -24,55 +24,55 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=XrGJuOLL59oewczUcCDpvxBHZHzjD87L6DxE9Kf6thA=;
-	b=D0D23DpW9X8pvJkhHqUk7IS+EQtezAA2IvK2yr2KGlpJRqbrlA37UYxTDzvv+bX66/bA
-	 Cqte39e4uU46dY7f5OsqmWyWNqsi7l/75Ft0BP32cvHe7eytYGEhAsYohNQ6/wqsJ0VT5
-	 psDlimOwaPYvlE7lKBX3r8gbpCTTQLc3eHRM3GjUX/Ffj/KJXOZh93N7kCh+qDCP9TvaL
-	 I6P5d4R8Q/2e5njBEiyoTBDOxiGyQPz4W720rURf72RuTVD6wsZZU4W4yZDk+KjokEAfl
-	 em6cDx8BUjL3U/jlhJIo6Tqac9ZFlmgpcgu8tmtXZcTCimzHcmntRuAOgmGhJ1pSM8A==
+	bh=3LcPghvT4MlsKigSrisYfhCeWXY5hpBEtnXJWO3z5a4=;
+	b=uLQZfzxFqVG2o3xKFtEBP23LuKRKZEvLwiSTHZhB7/eTKE5Kgxb98JX1cfJp/Lor5qib
+	 AZAcZD2jJcjQSk2cdvDaEN+qj/j6ZDQ3ag6DFx/mkD6+PrskCd1TSXA9bJtis+35ftI3U
+	 CFE+tFyd/2pgP7pZMlEjvPum0fwvzYAmVl2OTZCntnaPSfnMxx9VrP+E1i41WJW4y/pkT
+	 dDxXPo6/l9Lgq2eChnK4LXermwjGwuK6PAbhXCwV5pMkzfhX5dy89KGL/0PiiQwvAz69U
+	 x7PKBn5HYeicQ60HJvmBZZSSG/Dt+eujfSurCIdI2fmEZRPaJSv/yCgYDigJElEdElg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=pGB+1JK8;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.7
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012007.outbound.protection.outlook.com [52.101.43.7])
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=EMCproY3;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.193.66
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010066.outbound.protection.outlook.com [52.101.193.66])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0727C606A31C;
-	Wed, 18 Nov 2026 07:01:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0727C606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8F6606A325;
+	Wed, 18 Nov 2026 07:32:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2D8F6606A325
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=pGB+1JK8
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=EMCproY3
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lYwANXddT0sNsKX0CWKO7Ij2VttuEqrF8gmeLKiXoSbM8VM2INcAoDenKT8MIpBeBYY23BCQvl4mv3jtXFA3HNNdOVCiM8Eco8vcdIJEgGBK8VySD0Bu5pP7n77sIXNRQHfNjSG7xITNNDUPclhBBALLGD63gb8g0QAdt6ZajkrRFyxX5U0CByNY/Y7uzTAZSfPS8PdZf0W94sY5uSA+OaKMCVhhhMe1wIL9aGjJ+6ZMKFV/VsWhfV0LQrVAkB06Kk6iUDj0krrFoq6WujYlUYWQ9oHeXWadgiw3l5DNNG99E1v2WgSxzZaU6bZ+20VpcwU3pfnjfneNE5OITcPZGA==
+ b=CRlZcoaLNUNmdLBg7q3fErwzx/M9Vc26E6PgswXMjeYxzmiYrB0v7rj7foJfk6Cq7k3w7Ms+k74MS2jX+Co4oi3AJnw4cOi0/Kxt1XdNQlQXLhQgEyXU0fX8EQuOgV0ZhZYQGOEOLFU08n5mTEE+50m/gqlusnuBmAMnE9pOOtXs1MY8qbP+i32jpVZvl8L55BziI6sBhUD19AA6BqOeg9So0z32BFC5vb4bihEQlY9qdao7omh24PVjwA+HTGODnpi+99jKxnPbVHiVvyV2iGauI62WdD5VyjHVkSI0HmhrxjwL+QkgR0LgtyAB1YC9SjpiSK9L7RFMZX8Pmj4k6A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XrGJuOLL59oewczUcCDpvxBHZHzjD87L6DxE9Kf6thA=;
- b=HqWy+TNqkFdS1LjEbf/mbXEDALIP6R7s50+hEdux5fNCguYtVhOv6hAx3elMaZl0MtZQGtEi/6fkTNSkimjf8RcA8utjL6VrhZMkMbkq7xPiSpvCFFm2LACm5Zp1cQN/d8StQZVXMuhkRjpkHR01A1Ub4dQpBIaK4HeRq4cgLPoRWuTioO1aElQjjlMxfN88XGGGdByrP4UjvIuEFBLZo0j+M4qTxMu4FbmXJLByrx61Za+1JvHPejnZuHJPtyxORrE3H9q50cAU1MrOLr4HMZ9iZqSgEWoHqcRhmq8nJhvueoDUqOYzZFJCMXpw8xBnMQFu2tUyuJ5uTHuKG+pzPQ==
+ bh=3LcPghvT4MlsKigSrisYfhCeWXY5hpBEtnXJWO3z5a4=;
+ b=u9H50C+mO6Kel5IX3vaEEdGh5jrzI6vKOfghphg/gr864gckoaR06xhXQieUoxfWVzGqZPO/5MTuNbCVMZ1/uIT+X217MzQ6F3bHPk1n8qynU5NHkjS6eB6df7tH3n3xRaHNU1lI3ZnYzY0DTHMUhEVFHAoOhN90t/KrcebQJa3uC8cLrF2cj4jjw5J5xJ4MqzFXzMa7UO3zvix6jFpF3EfK3Y6fv0kFwhQzysHeZFAxwSYDux3W6+aR3WAXQPBOgG7Uc00LNXM8pmPxoaqZKdm666r/0cgkSTFahLhf1JTV/9hsjXoRQhzWATZiMCEXP7x2waus9oEeecXDTNJ7uw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XrGJuOLL59oewczUcCDpvxBHZHzjD87L6DxE9Kf6thA=;
- b=pGB+1JK8+prlN7L/R9OxazA6VI+53aJVNll5JnVJCDpLWIlqpRI48oS1pGEQBXwJxrins3sHUSSJ/x/MSCxEos9BcVkWM6H/aXHPKIsUZYA8lIf578cTu7WC7aFXN7Ug/L1eS9yi+c+eXY9CR+czffPKpJLltohrbkCYODWMreV/J0wGDVThwIr+I7jCelaWMOcY7dmgIhKv9hyBMWukOP4+ykgppGt/3/5ZTmHSJLpOVFVorTRS80nDlAW5kFIrFZfeId0OTAWfj7LEGAKNKhHp3t88raPhFdv1o6BWedwsyNiOky6NB6AdbEpgI/Kj6OAZKBiITR8Wc/1lWWJcPA==
+ bh=3LcPghvT4MlsKigSrisYfhCeWXY5hpBEtnXJWO3z5a4=;
+ b=EMCproY3imkOlFX32G8SkpaamXpqCgBWS56nsZou/m5iKpmysno0LDxS6snbvgDBNNM6F5+cHP9XylG4F/zgO25wzruw2gXdgyP0zFYyoKiMKduGiYCpkbqeFpGlkBGeACuwsmmKJtHt60TX2Tzl62cDrlWaZx+3LWBhCy+y340Aak49wK56re+cqkcjvjIGrsA8hmiYGcwpS7tKI65gL6R1LOsnl0syeOCtfLNfczgJJlUhp8VqZGWwvZh1piriyCu1pRQB9ihrRIQwICLzifERTEQBDnz92DAr56Vu+t4aXQWDICXbz6qjG0Dt+gmOggXrd/viuBL1+BDDX1gguw==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL0PR12MB2370.namprd12.prod.outlook.com (2603:10b6:207:47::27)
- by CH3PR12MB9429.namprd12.prod.outlook.com (2603:10b6:610:1c9::19) with
+ by SA5PPF6407DD448.namprd12.prod.outlook.com (2603:10b6:80f:fc04::8ce) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Wed, 18 Nov
- 2026 07:01:27 +0000
+ 2026 07:32:17 +0000
 Received: from BL0PR12MB2370.namprd12.prod.outlook.com
  ([fe80::86cf:c3ec:2cf5:74c8]) by BL0PR12MB2370.namprd12.prod.outlook.com
  ([fe80::86cf:c3ec:2cf5:74c8%5]) with mapi id 15.21.0615.009; Wed, 18 Nov 2026
- 07:01:27 +0000
-Date: Wed, 18 Nov 2026 15:01:19 +0800
+ 07:32:16 +0000
+Date: Wed, 18 Nov 2026 15:32:10 +0800
 From: Richard Cheng <icheng@nvidia.com>
 To: "Gregory Price (Meta)" <gourry@gourry.net>
 Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org, kernel-team@meta.com, 
@@ -91,14 +91,15 @@ Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org, kernel-team@meta.com,
 	kas@kernel.org, xu.xin@linux.dev, chengming.zhou@linux.dev, 
 	joshua.hahnjy@gmail.com, rakie.kim@sk.com, ying.huang@linux.alibaba.com, 
 	matthew.brost@intel.com, byungchul@sk.com, apopple@nvidia.com, rientjes@google.com
-Subject: Re: [PATCH 00/22] mm: introduce N_MEMORY_COMMON
-Message-ID: <av1DvCQd_OvkGgLU@MWDK4CY14F>
+Subject: Re: [PATCH 13/22] mm/hugetlb: restrict pool growth to common memory
+Message-ID: <av1PyBvUVJcy_Psd@MWDK4CY14F>
 References: <20261114070959.3490008-1-gourry@gourry.net>
+ <20261114070959.3490008-14-gourry@gourry.net>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261114070959.3490008-1-gourry@gourry.net>
-X-ClientProxiedBy: SI2PR02CA0029.apcprd02.prod.outlook.com
- (2603:1096:4:195::6) To BL0PR12MB2370.namprd12.prod.outlook.com
+In-Reply-To: <20261114070959.3490008-14-gourry@gourry.net>
+X-ClientProxiedBy: SI2PR01CA0044.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:193::8) To BL0PR12MB2370.namprd12.prod.outlook.com
  (2603:10b6:207:47::27)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -110,232 +111,214 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|CH3PR12MB9429:EE_
-X-MS-Office365-Filtering-Correlation-Id: 514d9fe3-4040-4515-2287-08df4541c348
+X-MS-TrafficTypeDiagnostic: BL0PR12MB2370:EE_|SA5PPF6407DD448:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2a7c70fd-d85c-4c61-2031-08df454611f2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|23010399003|10067099003|56012099006|261026140227099003|11063799006|261028144727099003|261021121427099003|261022105027099003|261022115727099003|261022075727099003|261026121527099003|261021123027099003|261102123227099003|261009223027099003|22082099003|18002099003|6133799003|3023799007;
+	BCL:0;ARA:13230040|7416014|376014|1800799024|23010399003|366016|261026121527099003|261022105027099003|11063799006|4143699003|56012099006|261021123027099003|10067099003|261009223027099003|261021121427099003|261102123227099003|261026140227099003|261028144727099003|18002099003|22082099003|6133799003|3023799007;
 X-Microsoft-Antispam-Message-Info:
-	/waEutd8lFNcOEAot8LrtlotdLQswvCxCLsWZI/acAHmuGfQvttoAlGTBrE5+ED60YlIv4TTyEZRblXELgkpFLE+iniSMO2COx8v3tmRRKwzPQDoTc/+YR20ou8N0+lcyZ+J4Wsn73GkbgVdNuCdZH9vrkOFQgzfKhaejDjthQ9E2Zbk0Jzyg3GLDwaaR7kvyHT1YA5En+Gq/A/CluGCdRsxkz1c1Vq2r3UFP9hU3YNRdtOJxYqOQaIzQUKWedTQyf61hUmz1jTo/KnLnbdNcXTHbMF/M3R6Qo45h9UzqTVwHc3iP3m/8r0Y3eewbRxrxAurbczSBLIQfpXkszHwZCISzkSYH6rxntiJnJzGYN6tFgn8KnIkaJdv9LhQSmPzJAbPvnJ146F0LwDaAt4RU/UZU1GhbJCnJGAN3q4vrvqtAvf8+uApzvRSxpkdlZ0E22VYrCD5xECaZlXNEmVVKZR4WMyZ++uAP7q3PsySibg6kMnwoHLyiCPxTCuWw8b67GgG92gnzgmbwQjEJemriwm0aJ8y7T3Rs5qATHA3wdGReACOfV2Y6AjbTclbGay8ONTtX5AAvh/eikhI8V/0dk9z740/YtcX9pKmKDTeahkgI677qqh8vvtfQDii9D1f5JSOJ/8LFtLoBf2Dsyk2V114L9tdSj1a6/lufXDKINI=
+	KuxMocrdiR4cSCCljhzUZz37PKhbYoREWO0kCZ+FyD4JOayPWOp+wSONX4W0Q+3+BgaPgLh2xTDGGtj2lt5D4VJCakwFdyycPiLduYN+RZbyWC7chala/x+7LlVVcsrNOMyY/6jR4SOjHTQrE8Q6uV029kGHJNB6b0hZYxsf7Y5P5gsVDNPy8bzQQmk0QodLOGgMtv1KXPV7on27IFNbHhBc0Bx2JcKE4ShA+MSu03rh3bZVYnTLg44OoZkSWPjTrzTRRWPq4lH2TxDzbORXD2TSOsfJ3Md3oDGsJm3K5E/yIiSoUzjvMJkz7YTZt90YMbUIsw8pAiwqKJu332EbTkVoE+FXcFKAQLJOZcWBRWCB/WatKyizXGSijyDhiWvp7Mn2NuiveOVth84ZLh8rDd30hCqsyl091tPIxJoPFZ5Hu0Qe9NXdrMBhi5HRVXjDGoAarSH8QByTihMgXapJOwC8PKh5OmM68t7ZTpgINPv2BVeoqQeT+9RyhNlA7xcqNwCNGw9+nLv6lHs2GBQJVe62hKfASAEosPHLSNPXS049rHrnjeUsdVGRoCZVsXDWzP8gj2l4FWNKLaTFQOevw3B+X4hfDi1fs72a7viIPAhvvYPolNUaRwpmsTUsIk+PEI2D+AlUTKCKcS4qMxSbkN0qUxmOPsgBZDNNdSE78Yc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(23010399003)(10067099003)(56012099006)(261026140227099003)(11063799006)(261028144727099003)(261021121427099003)(261022105027099003)(261022115727099003)(261022075727099003)(261026121527099003)(261021123027099003)(261102123227099003)(261009223027099003)(22082099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB2370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(23010399003)(366016)(261026121527099003)(261022105027099003)(11063799006)(4143699003)(56012099006)(261021123027099003)(10067099003)(261009223027099003)(261021121427099003)(261102123227099003)(261026140227099003)(261028144727099003)(18002099003)(22082099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?aosA1/g+XuU++UnQ9BM1jBmDf9jIBhN7Qkbl5js2WzBhK2OnSED+L1T9tBfO?=
- =?us-ascii?Q?ux/LjhFJZ+l2QQb1zZ55U1tMGoBiEVnXer5jKoTzDfxQrqx71JMyhVuZaiyc?=
- =?us-ascii?Q?Zb9rVoYcDNepZlvV5JvAc5R8iy0UrG7gF/3QeA9cFph6EzgWZ/vq/C9uiLki?=
- =?us-ascii?Q?ZaToUE3PnQ2qe0MFC97FcvwLWgjxFW+Nb3WOxtaUZcVqRw2VUa9JWlvSGgbX?=
- =?us-ascii?Q?+dGVsIwl6+yrzVPu1PFyS3QVSktUZ85tLFkpwaJAEA3Vgy8cyCgbxkQvoD14?=
- =?us-ascii?Q?H8s2ibDQaSTP+T0ruQ+27Qds4FulISY7e96zgz9JcYc2bsuKVU2OcGHl2IvE?=
- =?us-ascii?Q?PjkJ78TmmVX6zxd0pLiBNsM8bhIfn+uEnql7qG71h+nBrXRUMGUFr/56JzNa?=
- =?us-ascii?Q?+BN+G9QHFr9NTyjqyiYCIASyh9pYOZyjsiG2taV6rC+m9ZrGkM6kGdVQkpQz?=
- =?us-ascii?Q?slX4lc59t+VshG/q7BbY3ioO/LUmH7+r8lsKH1/+hhBG4/4UVqUNx1sIQIdd?=
- =?us-ascii?Q?zpC8ys+BAtueZuY5/NJ4IFEiRTc/mqNcgbp0f+tIzfS3VQrQnr11HonFKdcz?=
- =?us-ascii?Q?T/11uKVFNWmp5EMEH5jS8taDpSXZ+16zsI6E+AIeHGcIuAa3Uwbcmv7cstDo?=
- =?us-ascii?Q?mUL7OO3bASjzjAdnhWb7Q20pMQGGDNSIjXIZa98LT6nLcxstUFEiTAWYZVfs?=
- =?us-ascii?Q?bgDSIkGeqWF4C853kRIXT40l/K8XI5V/o4ObTn53/dR/PZbP3/UBN2IU9YuF?=
- =?us-ascii?Q?IXxCR74GqvN+U7K8nhhijnUKsSvrtBOmLFbM6hV3RnyUKTgycpKVNw+tuU6O?=
- =?us-ascii?Q?KUUe8DewlvelsiBQo5SkFJ5sJyvXwmTwaIl45hKBInTjp4Lj9rZZk16BkLs/?=
- =?us-ascii?Q?tqHRFNH+vyGbPQ+qp0Dm5maDHyPjlAr+N/tFkl85Bb4T9OHo+c4Ux0b8SthH?=
- =?us-ascii?Q?TXCpUaexBKua7DdyejYRmBi+lVJ3PieOu0wchAnGCXReqzejr8P67U86ldR4?=
- =?us-ascii?Q?XNVFSRUbxvCNEZQqP4LcndPdO6Mp1Nq1lYxdzEpOtgCUR1Brn1pRkVAXs1Vy?=
- =?us-ascii?Q?h/d8kAF0vsvr66ytF1s1nJSbkVtGayJ9wW4OMVbSn3X/Uo6xuctOn3T5rSwA?=
- =?us-ascii?Q?VAk8zXnPKKOJAvK4eVmFRMshjfk6mG4p2ou83jFFbYNL9tDsfRtIwuQOc9hg?=
- =?us-ascii?Q?x2swxDEIhKl/2ybfQBQfnMQbcRTa35LipqCQbhf5iwIN9FLwmgWtdrOtfDKI?=
- =?us-ascii?Q?w6mrS0XBTis0jgVjllCD9hoPh4Pka4r2Cla6osLDxNf83GiW3Q6hJfuD4gGK?=
- =?us-ascii?Q?f5s6azE2ZIaqhrlCr2qaNW5qBl3daHFajshsVT02IkcRiBfjURGnozmZg6om?=
- =?us-ascii?Q?p3IAQmMU6nSrQlXQvGLb5mka6T7CD0lOBX9wGMUtob1uDZ2N7xEQyAW0W7vQ?=
- =?us-ascii?Q?WQmx0CBTnS34TohStsypvAWKLYhn6LbtwBP63RDtfDJIXfWbX1NQj3MD+qpX?=
- =?us-ascii?Q?PMbAjmpXBzE7KIAOpOHnM0MHMqrURhFmYH6vON7RPrXP3jZ05zYDNXnly1sj?=
- =?us-ascii?Q?zGwrXfn9zedFx7zyq9Qo0MpxWcZHf78cQcqgBZvCf7bccxXSCxBIhkajhwNg?=
- =?us-ascii?Q?j1my5XRCeDJUJI+JLSSCT4h9lJhCyQtwiRfV1cOQ7jMeJDdd3iYTFyKRY4I0?=
- =?us-ascii?Q?T4sd97NhNGOOsHf0pc6qbHVyqw+8/bwEJb9lWTj0IC4skUDe?=
+	=?us-ascii?Q?gTr2q+cJZG+ehgUPLBb1axE2BtSw8Rfuxv2xnIAWIlM7EsTEZ+YYghFGfsTk?=
+ =?us-ascii?Q?I749o1yI6albDvGA9jRaORPLSME/AVYYn3ySuNFgjZeRLOkoZ5mBzt95+wA+?=
+ =?us-ascii?Q?GAE127OjyXoewNtODJqygptCJtcsz/jBeEmMAmdJpj31OobzuOj926Q2xtng?=
+ =?us-ascii?Q?pDrAB0ijr45EGGLBa0etSFXPcyaq4ymiaR8r3FCGXgmqW9nMkdM4kVXBYkYJ?=
+ =?us-ascii?Q?ySJR33QWsaiVOJYfJNxXDJQVbZqXvfzC2Z6l305i6CiMoSBUQ9m+e6CJyfez?=
+ =?us-ascii?Q?0BQlD3t49L52ssOeHO4DSWNm5RM6xqBLp2adimH+IezHMEI7lYfFSgz16SY7?=
+ =?us-ascii?Q?+hNR7hJiDXlrHIkRpdXLoQuDWL3gxuEYvuIzrscU+c/ZV/QGgl0GjjYXbcWl?=
+ =?us-ascii?Q?e0OOCaHkhr2dHWaE+B8bPS2j0hXUlqbWfdxs+a+EbEyomC9GMRTe6Et+GMyM?=
+ =?us-ascii?Q?wUwWB+74s7waJhcq/b2W4J5wFvUOlfF8fm8QOclkn7pCsnnSxOgjAXaNw3W3?=
+ =?us-ascii?Q?7w8DIa0KhTnUXQMHjTkCQvqxm0D33fLnQhq4YzAUNFnpFw80gfxXx+V9L4Sm?=
+ =?us-ascii?Q?vwQ9m1PwfKd79hIoa+mm3PVmJ97i1eWs22IQLtTiRojJj6/IynDIRaWPpVaM?=
+ =?us-ascii?Q?QShOgP8q/Ymdb1xZ+Rv7a9LYcHbaNRXeXAAkn4YrTFbRBPjd/pPzsyeY4HrK?=
+ =?us-ascii?Q?Y8Aj1s9/M+3UZxYHdxd46vZq1sxj9oXtD5PLTcZh+JqMaLKp/m6fLvhsJM6N?=
+ =?us-ascii?Q?TBTvLyE+rzCsvMl+YHn3FfKEBaY7EtcVOLjV25GTP0cCJFesKd2ik+O0ud0z?=
+ =?us-ascii?Q?Ow7trTtTAan0Q9fynn5QYbT0yiGekxjXzjfsx2uovZs9cuCUblUWtodav2Vw?=
+ =?us-ascii?Q?RWxuoYgnZDpHC26P9R7tJSIPx9+tPuwoYQLOo5PQZFubYEbobZMbXuqG5M6Y?=
+ =?us-ascii?Q?T8MssjmAoRcS+xbRewnXgbwmP3gCtilzDleCGOeqwYLpXXI88BHSKRpfgnxX?=
+ =?us-ascii?Q?oyMGloUy1qh9YgcKeppf/aD1ETiiR4KvddgMIxpjeRB+YA2cj+x5t4CKlobS?=
+ =?us-ascii?Q?Xpc1mrVEU6s5z1JU/Sxh4PNWGF+x2rtsgYjkDztl1gaEXNCE+zk1IcCBEp24?=
+ =?us-ascii?Q?UDaVeaMN8UtyRd6mpqbbjERRfIDc2EkuaBNlX45tFKzSLb2fUgSc29X/k/V1?=
+ =?us-ascii?Q?x2GBkgubY27EmfE7ObigKJhZPGFQSlTHoJgiGX56Y6YY/DBlWDWptFxRFNo2?=
+ =?us-ascii?Q?yEr06BNB815qHfxuIUyAu0m8AH/IdvmMULzeXTHUIfgpSUycboUFfTXAqojY?=
+ =?us-ascii?Q?84WBd+7SxUEHTMtSFOPVn/teRDSZICWwcPcXgdEawggNfzrR6uaRwKI41UWg?=
+ =?us-ascii?Q?wUHDoyAdK2C49rrrlPYpExqoe16pQKpvN6HGXkW2fAbkEHnI7lfUc0tQeMe0?=
+ =?us-ascii?Q?bc7onrr1tEjRrgU4vdANaroOUCw9k66wYmJ/nIOn0BZTepbR8KJI/KFGam3I?=
+ =?us-ascii?Q?Euqsk7petQhv6cwgZM6YPA884R4BqoHBkVtuOFliUHWxcEEJRUtMd2wNg/gg?=
+ =?us-ascii?Q?vLzFcSHZmGvoiXEUsG36kHd0g1taQuFV0Wf963d4UIQByzFBSlHUOZtaoLCd?=
+ =?us-ascii?Q?zVDVYHxM4/RxBBPAOP5QRQSuChXrL/6dtppK5LNwC2TnQ9pAlYyU5CtU5KHE?=
+ =?us-ascii?Q?Ry0AlQn+miLCGk+T//22CXF4QmW9zjJSouhTf23Qb4u20udg?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 514d9fe3-4040-4515-2287-08df4541c348
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2a7c70fd-d85c-4c61-2031-08df454611f2
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB2370.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 07:01:27.0715
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2026 07:32:16.5203
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1yauRTyZWkkKOev4MHsHqbyZE3mR/9uzzN6wz8NAj5N+VBsczMQwoMmKkxT81fuaGkpvtZ5td1NAfQPwaN53Tg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9429
+X-MS-Exchange-CrossTenant-UserPrincipalName: QfL5HJnpkoa9GxEImLInmfxafEKnWD7MnigAjS0faMRzQDMFbZsOcW+ui6rP8Iez72Kew/mC6bX9lamPxIwQPQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF6407DD448
 
-On Sat, Nov 14, 2026 at 02:09:37AM +0800, Gregory Price (Meta) wrote:
-> This is phase 1 of the Private NUMA node series.
+On Sat, Nov 14, 2026 at 02:09:50AM +0800, Gregory Price (Meta) wrote:
+> Fresh HugeTLB pool folios come from ordinary allocations, which only
+> N_MEMORY_COMMON nodes serve.
 > 
-> I will send v6 "Private Memory NUMA nodes" (phases 2 and 3) separately
-> next week for further discussion - but I pulled this out ahead to make
-> the core filtering mechanism easier to review.
+> Restrict HugeTLB allocations and pool-growth to N_MEMORY_COMMON nodes.
 > 
-> The series is now broken up like so:
+> Keep the original allowed mask for pool shrinking and demotion so
+> existing pool folios can still be found on any online-memory node.
 > 
-> Phase 1: Introduce N_MEMORY_COMMON to define "general purpose" (common)
->          memory as a concept separate from a node having memory as a
->          topological feature (N_MEMORY).
+> The result of this change is that hugepage allocations will fail on
+> nodes without N_MEMORY_COMMON.  This restriction can be loosened later
+> when/if it grows a user.
 > 
->          This phase is a no-op for existing systems, but creates the
->          baseline for ensuring private node memory is default opted-out
->          of being touched by MM (much like ZONE_DEVICE).
+> All memory is common at this point, so behavior is unchanged.
 > 
+> Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+> ---
+>  mm/hugetlb.c | 44 ++++++++++++++++++++------------------------
+>  1 file changed, 20 insertions(+), 24 deletions(-)
 > 
-> Phase 2: Introduce N_MEMORY_PRIVATE to define memory not part of the
->          general purpose pool. With this we can introduce a minimum set
->          of KUnit tests for the page allocator to demonstrate the
->          isolation mechanism.
-> 
->          At this point it will be possible for a driver to re-use the
->          buddy allocator to make uniform order-N allocations.
-> 
-> 
-> Phase 3: Introduce feature bits (COMPACTION, RECLAIM, MEMPOLICY) which
->          is the minimum viable set to allow userland to manage a private
->          memory node via mbind() and migrate_pages().  
-> 
->          This enables management of HBM and Coherent GPU memory via
->          userland tools (numactl, cpuset) while protecting them from
->          incidental allocation (no fallbacks, only explicit placement).
-> 
->          The memory could even be hotplugged in ZONE_NORMAL and pinned.
-> 
-> Actual cover letter for this portion
-> ====================================
-> 
-> N_MEMORY has two meanings today:
->   1) this node has memory
->   2) ordinary allocations and MM services can use this node's memory
-> 
-> The two are the same today. They stop being the same once a NUMA node
-> with memory isn't part of the general allocation pool.
-> 
-> This series adds N_MEMORY_COMMON for the second meaning and converts
-> the relevant N_MEMORY users accordingly. N_MEMORY continues reporting
-> memory topology - and some users (cpusets) still utilize it.
-> 
-> At the end of this series, N_MEMORY == N_MEMORY_COMMON, so the series
-> changes no behavior for existing systems. A later series will add memory
-> outside N_MEMORY_COMMON without having to audit every N_MEMORY user again.
-> 
-> Rather than add new hooks for page-table and pfn walkers, we consolidate
-> existing ZONE_DEVICE checks (page/folio_is_zone_device()) into a general
-> `page/folio_is_common_memory()` check.
-> 
-> The series is laid out as:
-> 
->   1-3   helper functions to check node states and a folio's
->         membership to a common memory node.  N_MEMORY_COMMON itself, and
->         the `has_common_memory` sysfs ABI.
->   4     zonelists: the fallback lists hold common nodes, and a node's
->         __GFP_THISNODE list is built only for a common node
->   5-21  N_MEMORY->N_MEMORY_COMMON and zone_device -> common_memory
->         conversions. One component per patch.
->   22    removal of first_memory_node/next_memory_node, which no longer
->         have users after this series.
-> 
-> Each conversion restricts or adjusts:
->   - an MM service (reclaim, compaction, KSM, collapse, etc)
->   - an allocation target to common memory
->   - accounting meant for ordinary allocations from common memory only
-> 
-> has_common_memory lists the same nodes as has_memory until memory
-> outside N_MEMORY_COMMON exists. It is added now so that userspace, such
-> as libnuma, can start choosing allocation targets from it, and so that
-> the meaning is fixed before anything makes the two lists differ.
-> 
-> first/next_memory_node() is replaced by first/next_node_state().
->
+> diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+> index cb2de24affdc4..cc1468f68901b 100644
+> --- a/mm/hugetlb.c
+> +++ b/mm/hugetlb.c
+> @@ -3452,13 +3452,13 @@ static void __init hugetlb_hstate_alloc_pages_onenode(struct hstate *h, int nid)
+>  			gfp_t gfp_mask = htlb_alloc_mask(h) | __GFP_THISNODE;
+>  
+>  			folio = only_alloc_fresh_hugetlb_folio(h, gfp_mask, nid,
+> -					&node_states[N_MEMORY], NULL);
+> +					&node_states[N_MEMORY_COMMON], NULL);
+>  			if (!folio && !list_empty(&folio_list) &&
+>  			    hugetlb_vmemmap_optimizable(h)) {
+>  				prep_and_add_allocated_folios(h, &folio_list);
+>  				INIT_LIST_HEAD(&folio_list);
+>  				folio = only_alloc_fresh_hugetlb_folio(h, gfp_mask, nid,
+> -						&node_states[N_MEMORY], NULL);
+> +						&node_states[N_MEMORY_COMMON], NULL);
+>  			}
+>  			if (!folio)
+>  				break;
+> @@ -3528,7 +3528,7 @@ static void __init hugetlb_pages_alloc_boot_node(unsigned long start, unsigned l
+>  			prep_and_add_allocated_folios(h, &folio_list);
+>  			INIT_LIST_HEAD(&folio_list);
+>  		}
+> -		folio = alloc_pool_huge_folio(h, &node_states[N_MEMORY],
+> +		folio = alloc_pool_huge_folio(h, &node_states[N_MEMORY_COMMON],
+>  						&node_alloc_noretry, &next_node);
+>  		if (!folio)
+>  			break;
+> @@ -3672,13 +3672,12 @@ static void __init hugetlb_init_hstates(void)
+>  
+>  	for_each_hstate(h) {
+>  		/*
+> -		 * Always reset to first_memory_node here, even if
+> -		 * next_nid_to_alloc was set before - we can't
+> -		 * reference hugetlb_bootmem_nodes after init, and
+> -		 * first_memory_node is right for all further allocations.
+> +		 * Always reset the allocation cursor here, even if it was set
+> +		 * before: hugetlb_bootmem_nodes cannot be referenced after init,
+> +		 * and further pool allocations use common memory.
+>  		 */
+> -		h->next_nid_to_alloc = first_memory_node;
+> -		h->next_nid_to_free = first_memory_node;
+> +		h->next_nid_to_alloc = first_node_state(N_MEMORY_COMMON);
+> +		h->next_nid_to_free = first_node_state(N_MEMORY_COMMON);
+>  
+>  		/* oversize hugepages were init'ed in early boot */
+>  		if (!hstate_is_gigantic(h))
+> @@ -3802,23 +3801,21 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
+>  	unsigned long allocated;
+>  	struct folio *folio;
+>  	LIST_HEAD(page_list);
+> -	NODEMASK_ALLOC(nodemask_t, node_alloc_noretry, GFP_KERNEL);
+> +	NODEMASK_ALLOC(struct nodemask_scratch, scratch, GFP_KERNEL);
+>  
+> -	/*
+> -	 * Bit mask controlling how hard we retry per-node allocations.
+> -	 * If we can not allocate the bit mask, do not attempt to allocate
+> -	 * the requested huge pages.
+> -	 */
+> -	if (node_alloc_noretry)
+> -		nodes_clear(*node_alloc_noretry);
+> -	else
+> +	/* Scratch masks for allocation eligibility and per-node retries. */
+> +	if (!scratch)
+>  		return -ENOMEM;
+> +	nodes_clear(scratch->mask2);
+>  
+>  	/*
+>  	 * resize_lock mutex prevents concurrent adjustments to number of
+>  	 * pages in hstate via the proc/sysfs interfaces.
+>  	 */
+>  	mutex_lock(&h->resize_lock);
+> +
+> +	/* Fresh pool pages come from the ordinary allocation domain. */
+> +	nodes_and(scratch->mask1, *nodes_allowed, node_states[N_MEMORY_COMMON]);
 
-Hi Gregory,
+For a global request the caller passes &node_states[N_MEMORY], so before this patch
+the grow loop read the live mask on every alloc_pool_huge_folio().
+Now the mask is sampled once, before the loop.
 
-I've browsed through the serie, I'll go into detail in each patch
-in the following days, for now I have one general question.
+The loop drops hugetlb_lock and can run for a long time. If a node gets its first
+memoroy in that window, the old code would start using it. The new code won't, until
+the next write to nr_hugepages.
 
-I wonder how the "common memory only" rule is enforced ?
+So the pool can end up uneven, or smaller than requested if the other nodes are full.
 
-As far as I read it, there're 2 ways:
-1. The zonelist, you build them from N_MEMORY_COMMON, so non-common
-   node isn't in any zonelist.
-2. A check at the call site, e.g. node_state(nid, N_MEMORY_COMMON) or
-   folio_is_common_memory()
-
-
-Code reaches a node's memory in 3 ways: zonelist, node id, or by folio.
-I couldn't find a statement of which mechanism is responsible for which
-kind of path.
-
-I see some consistent issues,
-1. zonelist paths are covered by way number 1. Some of them also carry
-   way number 2, some don't
-2. node id and folio paths can only be covered by way number 2. Some entry
-   points have the check, and some do not.
-
-I can't tell when a call site has no check is deliberate or missed.
-This matters once non-common node gets its own zonelist, as patch 4 metioned I think?
-
-Could you clarify the rule ? e.g. which zonelist users must filter on N_MEMORY_COMMON
-themselves? and why the zonelist alone is not enough for them ?
-Whether every path that takes a node id or a folio must check N_MEMORY_COMMON, and
-which ones are left for the feature bits in phase 3 ?
-
-Let's get the rule settled down and make it as the foundation as well as phase 2 and
-phase 3 ?
+I think the nodes_and() should be placed inside the loop to keep the old behavior ?
 
 Best regards,
 Richard Cheng.
 
 
-
- 
-> Gregory Price (Meta) (22):
->   mm: add node-state-filtered zone and node iterators
->   mm: publish and clear node memory states via helpers
->   mm: introduce the common-memory node state
->   mm/page_alloc: build zonelists from common memory
->   mm/mempolicy: keep interleave and tmpfs mount policies on common memory
->   mm: base hash distribution on common memory nodes
->   mm/memory_hotplug: migrate offlined pages to common memory
->   mm/memory-tiers: restrict demotion topology to common memory
->   mm/ksm: restrict merging to common memory
->   mm/khugepaged: restrict collapse to common memory
->   mm/mempolicy: don't NUMA-hint folios outside common memory
->   mm/damon: restrict DAMON-native folio operations to common memory
->   mm/hugetlb: restrict pool growth to common memory
->   mm/page_alloc: count common memory nodes for kswapd recovery
->   mm/oom_kill: compare OOM constraints against common memory
->   tty/sysrq: use common memory for the manual OOM zonelist
->   mm/vmscan: restrict reclaim to common memory
->   mm/compaction: restrict compaction to common memory
->   mm/migrate: restrict move_pages() destinations to common memory
->   PM: hibernate: size the image from common memory
->   mm/khugepaged: base the recommended min_free_kbytes on common memory
->   nodemask: remove the now-unused first_memory_node/next_memory_node
-> 
->  Documentation/ABI/stable/sysfs-devices-node | 16 +++++++
->  Documentation/mm/physical_memory.rst        |  8 +++-
->  drivers/base/node.c                         |  2 +
->  drivers/tty/sysrq.c                         |  3 +-
->  include/linux/mmzone.h                      | 46 +++++++++++++++++++++
->  include/linux/nodemask.h                    | 38 +++++++++++++----
->  kernel/power/snapshot.c                     |  7 +++-
->  mm/compaction.c                             | 14 +++----
->  mm/damon/ops-common.c                       |  7 ++--
->  mm/damon/vaddr.c                            |  2 +-
->  mm/hugetlb.c                                | 44 +++++++++-----------
->  mm/internal.h                               | 18 ++++++++
->  mm/khugepaged.c                             | 12 ++++--
->  mm/ksm.c                                    |  8 ++--
->  mm/memory-tiers.c                           | 23 ++++++-----
->  mm/memory_hotplug.c                         | 25 ++++++-----
->  mm/mempolicy.c                              | 30 +++++++-------
->  mm/migrate.c                                |  2 +-
->  mm/mm_init.c                                | 16 ++++---
->  mm/oom_kill.c                               |  7 ++--
->  mm/page_alloc.c                             | 43 +++++++++++++------
->  mm/vmscan.c                                 | 26 ++++++------
->  22 files changed, 266 insertions(+), 131 deletions(-)
-> 
+>  	flush_free_hpage_work(h);
+>  	spin_lock_irq(&hugetlb_lock);
+>  
+> @@ -3855,7 +3852,7 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
+>  		if (count > persistent_huge_pages(h)) {
+>  			spin_unlock_irq(&hugetlb_lock);
+>  			mutex_unlock(&h->resize_lock);
+> -			NODEMASK_FREE(node_alloc_noretry);
+> +			NODEMASK_FREE(scratch);
+>  			return -EINVAL;
+>  		}
+>  		/* Fall through to decrease pool */
+> @@ -3873,7 +3870,7 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
+>  	 * within all the constraints specified by the sysctls.
+>  	 */
+>  	while (h->surplus_huge_pages && count > persistent_huge_pages(h)) {
+> -		if (!adjust_pool_surplus(h, nodes_allowed, -1))
+> +		if (!adjust_pool_surplus(h, &scratch->mask1, -1))
+>  			break;
+>  	}
+>  
+> @@ -3889,9 +3886,8 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
+>  		/* yield cpu to avoid soft lockup */
+>  		cond_resched();
+>  
+> -		folio = alloc_pool_huge_folio(h, nodes_allowed,
+> -						node_alloc_noretry,
+> -						&h->next_nid_to_alloc);
+> +		folio = alloc_pool_huge_folio(h, &scratch->mask1, &scratch->mask2,
+> +					      &h->next_nid_to_alloc);
+>  		if (!folio) {
+>  			prep_and_add_allocated_folios(h, &page_list);
+>  			spin_lock_irq(&hugetlb_lock);
+> @@ -3978,7 +3974,7 @@ static int set_max_huge_pages(struct hstate *h, unsigned long count, int nid,
+>  	spin_unlock_irq(&hugetlb_lock);
+>  	mutex_unlock(&h->resize_lock);
+>  
+> -	NODEMASK_FREE(node_alloc_noretry);
+> +	NODEMASK_FREE(scratch);
+>  
+>  	return 0;
+>  }
 > -- 
 > 2.53.1-Meta
 > 
