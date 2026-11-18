@@ -1,85 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.129
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.126.103.232
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794998083;
-	b=aVqzSoNAcY5AI3coXEGdOuZI8wMriHMf53VElhyffIIBOz8ulqrLt2eRmL2Bijz6FyE0
-	 Z9QNaHhIEzWp13Bo+de8QIJkSG71RHvseL6e022Wk1L3jIuX4noXK7W6jdw0iPoG9RoHt
-	 eNuwCV09f5SpLAm6aIqRYvWMwSdRdEb144ZWykQbIRH8mt356F4c2h52NBR4SHAlB4KK/
-	 I0+T4P4vMFR0CJmY14SWaD6L0kM76CsElB0snR6xxKRSMFC/AM97mO+Sulp7NiZh+Fsn2
-	 xG2G5tnFyNeXLckL+zBKcUDg0dHg7z37PXi1DNtCGHVTqtbdJHtRscAWVs0HAy9dwzQ==
+	t=1795007921;
+	b=dbMQNTwZXzuf1L0tFt87dXLD1BPHcJ1aKKjLh9Uzu/8Of1z2vgr2fJIZMlQUDnaEaCEY
+	 +xeoFbb3gUncy+AVaZPCKAnpdwRaKpZQ+fxkep+aRcSRYev73L3A8FbFFqJsemY1HsZ2A
+	 +R2utvmjDo6B7weOotUIzLy9rxXs9ePDsY2u0+X2P0GPg6rTt+YgeDdaFtEjvvo55II/Z
+	 gg7q8ZK/8BkO/+xbBVZpFEzzCVL61jAfU4/BHdJHIKVXoLoDqX8/nIGIAc9MjPqTGnvvp
+	 CPgRZeC16X6whyuP24s7IrD/6fbkfOOBDUEVIkeHcLSgHy4AerBP095cgMlCPvVvzHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794998083;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:Subject:From:Date:Message-Id:
-	 To:Cc:In-Reply-To:References:X-Mailer;
-	bh=VbnsRzldWLp5RM4Wbi+k8602uEkMWd5FOiwEB3P+mX0=;
-	b=H/3qsvewArd1oewaUx6hl6rSt5J1s3dHCYJD755S2PN1jqFdcRlmGqiKx22ml/R9S3U7
-	 fphLI87hb61h5eSzyNZsIckUsl0EDs45BuypvVd3NBxdu/fImrHQOomzP8Lv6Ti4+4RM0
-	 bwD+ioBRiFQU/1rBUreHEMo6vvLSHruHoAb/0lLXqF0P8hqJtX15sRasL0aO1djw5CZ8i
-	 wkC8fjvM89UQU2OQ+b3j7z7QDYrBniwwazSkqVhcuxoXzFpY0HXCuJ+9BPAn/1R3HFocM
-	 fD/Lw8es9Qf72DH/0eF0TB8UOOTSVSM6zXglJFkYIcAvpnFMGdjABPRAH6r/h+eupDg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795007921;
+	h=DMARC-Filter:X-UUID:X-CID-P-RULE:X-CID-O-INFO:X-CID-INFO:X-CID-META:
+	 X-CID-BVR:X-CID-BAS:X-CID-FACTOR:X-CID-RHF:X-UUID:X-User:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=upd0IxCj2792Sd+Vd6lDIAbHvUW1f3kpvaia8Zd/3Ck=;
+	b=KXuDf4RgRuLb8rFPAeHaHPLlB5rqBbnURJWBY8g3+xU6bjsM4bUkQqBq1rvYdrhuJoEs
+	 5VnpwljVvsbQSqlRMVac/Jk9RXfpbGv2VeUFrpZTG1PaEcGmgaIVYhM+k2yf2i0QK7Tib
+	 zbtBId9ILcBI+MvCpl9ogjh+Vb8gKgUYOFrCeVw7EJqIvFtUqsOlcBCIEG9PAUTDzlM0s
+	 P3JiXaUBHrlQmRx9HNB9QhazvllayH2UQu0CavGgIG/k+FaYKnC4ck8Zm+VHAl5YILbIX
+	 lNTv20jGy2Xb9G39ZxUEw7cMtdOcIV9U2a4AQgk3e5HcnB/gwTIbihpPLDGbKXM8oGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kVWiv9qr;
-	arc=none smtp.remote-ip=74.125.227.129
-Received: from mail-pj2-f1.google.com (mail-pj2-f1.google.com [74.125.227.129])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=kylinos.cn;
+	spf=pass smtp.mailfrom=kylinos.cn;
+	arc=none smtp.remote-ip=124.126.103.232
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3638E606A31C
-	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 10:34:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3638E606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kVWiv9qr
-Received: by mail-pj2-f1.google.com with SMTP id d9443c01a7336-2ed408b0d0bso3794965ad.0
-        for <damon@lists.linux.dev>; Wed, 18 Nov 2026 02:34:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794998082; x=1795602882; darn=lists.linux.dev;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=VbnsRzldWLp5RM4Wbi+k8602uEkMWd5FOiwEB3P+mX0=;
-        b=kVWiv9qr8mfW+seK55oeqju0a/Uhng8VI1B0bpXRr++gpbzod+Iw4MGTXGfQgPkTb/
-         H20HC/wiGrxCx4vjVB1ErpV2+l5MdzO6REfzJpsS0QBNGeQop1G3zuejGgG4MpiUJNSs
-         uBbAPev6LCNWi4aIWtRG7XL3ud5M87iPJFxnpJg2FXPYJBOEmPuUhdQUzYqIprhgYV9N
-         wLau7Y9HFbvGGV/RmdrVc3SN/7e0YsBDYgAMIFICMfnLg5IL+X9JdVvw3BbW79d6f/Ur
-         hlSrM6RgclZjEVNYcjavbF64hN8Zx4oYE9W6vyrNInFQiRZK0TTgtM+KAKX2HYaUCM+j
-         Ockw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794998082; x=1795602882;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=VbnsRzldWLp5RM4Wbi+k8602uEkMWd5FOiwEB3P+mX0=;
-        b=t1PVfzYMEaR/udzpIsER/li+5LgMW/N2w/TUBLwCAlSEiWpap9sBaWBkhnFpVV8ACj
-         5eSc7c97CRo3/WzXXHcmbNGBRyd51oQoLoMPyhB0iQFPPtrK6pIPko8nQgJpmfa2LB1d
-         eb1MVep+8OW0ekuHEiO2X93zjyPW7NV9ylh7hLfIZOVyhXju/+z4DxNFIxorLQv7k+WJ
-         B2QmeAaWeHEJK8cKJ6AgeZcQH3fNn/2igFryXIpALtpMmO/qQCs/HGlUH5dum0Lpvff+
-         EkTUr6ZIZfbZqUMNv7lQ9OTaQ8h/iIrLsJuqNdGGProSROiDGksHAe/EidL9XYZcnNH1
-         NG6A==
-X-Gm-Message-State: APuU4Z8mKU0WLKZ1+eeIx3kFREk9F/ouJNCZd0zqaGRw+m50RHmrTaDm
-	iVkCwAAeg3ajuXRngapQCeYEnCtHq6Ixre6jUpyhY7pMygcWU+xMrNmb
-X-Gm-Gg: AZFdTZcaA7sCy6Aen3XHVMmUeg7TZWZLsYhZjx0Amv8+K3g42qxzsfF81N9tVYYPHkE
-	kWjxDFMTcLBX5gA+NRs94lSNuQ1hPgzTKp3GD2AmBKOAdw4Rte9hIqFYg+Wiha9XK9YrG7BRHWA
-	HIPcTI3vnCjiwbQlX9283Wu2GkiYFdR2S6vOCPekXhFwfa8JZKkwjlpnK0DP7Np+nKqP6JJ3gC0
-	Vvhm9iup+WXdGUlawqLOCqauFNKLDJnu5SijdCXKq0vKeQqjykXD4kliSSNgCK9XaL88RbSX5m5
-	Eo6oZhQiKP1J/KuakX32REXkhMot2hzCP2eHz2eloXQEDxOstKs987VdmacO3Tk5F8XZLXuuOUY
-	zFGgniQO7uEBjgM9NKulMweyM0LmbpFWQbyU1wxfYrP3+IoyS8aqPLoAMHSajYJVypSnpIHF7dG
-	Wcb5ATplGrm/3k24LunqJfWmPijlq0Z8ujG8nWP1INh4kN1gYpiBoeJzeH7MW87xsWIcshZPV7J
-	KQw+dB3SgRW5+sspKSmyAPebVArf7c6l7SkslYGorW4e4oRkMXRqOuxNWzrwctLL/Tej09O9wH7
-	eoEyrULMQLeYwbd68zAfmDmZIJm3N6wEi3SsN4MOZFkPSX3v6XCujn4rvhVqi77leH4m7g7Ruwp
-	CCHGC/Dydor0aSd+bRz8qkRNMg+1wo8bcG+rdOIVLeaH4sszxc667+kh4ifVE8S7i8wnRrD4+8h
-	RIgkIu7dNs
-X-Received: by 2002:a17:903:1ae4:b0:2e9:6333:fbb7 with SMTP id d9443c01a7336-2eff756dd79mr21077005ad.51.1794998082258;
-        Wed, 18 Nov 2026 02:34:42 -0800 (PST)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2eff6184152sm10914405ad.35.2026.11.18.02.34.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 02:34:41 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BED606A332;
+	Wed, 18 Nov 2026 13:18:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A6BED606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 8c311e00e35211f19a56ed5b684f684d-20261118
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:8e9c81ca-96b8-4040-b02f-cb5bf20b073f,IP:10,
+	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:10
+X-CID-INFO: VERSION:1.3.19,REQID:8e9c81ca-96b8-4040-b02f-cb5bf20b073f,IP:10,UR
+	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:10
+X-CID-META: VersionHash:7db8b62,CLOUDID:590b889ced8d4f83e2e07ffedd64af85,BulkI
+	D:261118093247FQF070YS,BulkQuantity:2,SF:17|19|38|64|66|78|80|81|82|83|102
+	|127|136|153|841|865|898,TC:nil,Content:0|15|16|50|99,EDM:-3|-100,IP:-2,UR
+	L:99|1,File:nil,RT:nil,Bulk:40,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1
+	,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD,TF_CID_SPAM_ULS
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 8c311e00e35211f19a56ed5b684f684d-20261118
+X-User: lienze@kylinos.cn
+Received: from [192.168.3.106] [(111.193.136.161)] by mailgw.kylinos.cn
+	(envelope-from <lienze@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 603697062; Wed, 18 Nov 2026 21:18:30 +0800
+Message-ID: <06e16d01-328b-4267-902b-1b4821139029@kylinos.cn>
+Date: Wed, 18 Nov 2026 21:18:26 +0800
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -89,33 +66,92 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/damon/paddr: avoid truncation warning in high-address
+ KUnit test
+To: Aveline Noir <jm5905938@gmail.com>, SJ Park <sj@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: damon@lists.linux.dev, David Hildenbrand <david@kernel.org>,
+ Justin Stitt <justinstitt@google.com>, linux-kernel@vger.kernel.org,
+ Linux Memory Management List <linux-mm@kvack.org>,
+ kernel test robot <lkp@intel.com>, llvm@lists.linux.dev,
+ mm-commits@vger.kernel.org, Bill Wendling <morbo@google.com>,
+ Nathan Chancellor <nathan@kernel.org>,
+ Nick Desaulniers <ndesaulniers@google.com>, oe-kbuild-all@lists.linux.dev,
+ rdunlap@infradead.org, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20261118-fix-damon-paddr-sparse-20261118-v1-1-3a0e943406d5@gmail.com>
+Content-Language: en-US
+From: Enze Li <lienze@kylinos.cn>
+In-Reply-To: <20261118-fix-damon-paddr-sparse-20261118-v1-1-3a0e943406d5@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2] mm/damon/tests/core-kunit: add test for
- damon_call()
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Wed, 18 Nov 2026 21:30:04 +1100
-Message-Id: <179499780488.5.13594313574604410531.b4-reply@b4>
-To: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
-Cc: damon@lists.linux.dev, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
- sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, sj@kernel.org
-In-Reply-To: <20261118063755.37749-1-saileshnandanavanam@gmail.com>
-References: <20261118063755.37749-1-saileshnandanavanam@gmail.com>
-X-Mailer: b4 0.16.0
 
-Hi Sailesh,
 
-On Wed, 18 Nov 2026 12:07:55 +0530 Sailesh Nandanavanam wrote:
 
-> Add a kunit test for the two cases.
+On 2026/11/18 01:04, Aveline Noir wrote:
+> Hi SJ, Andrew,
+> 
+> The kernel test robot caught this issue in my earlier addr_unit KUnit
+> patch. Feel free to fold this fix into that patch.
+> 
+> Thanks,
+> Aveline Noir
+> 
+> -- >8 --
+> When phys_addr_t is 32-bit, Sparse warns about truncating the u64 address
+> passed to damon_pa_core_addr() in damon_test_pa_addr_over_4g().  The
+> runtime kunit_skip() does not prevent Sparse from checking that
+> conversion.
+> 
+> Compile the high-address assertions only with CONFIG_PHYS_ADDR_T_64BIT,
+> and keep the test skipped otherwise.
+> 
+> Fixes: 7a983cc1b573 ("mm/damon/paddr: add KUnit tests for addr_unit conversion")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/20261117170155.fEdeuuhm-lkp@intel.com/
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
 
-Make sense. Thanks :)
-
-Tested v2 on x86-64 QEMU with v7.4-rc3 as the base. All DAMON KUnit
-tests passed.
-
-Tested-by: Aveline Noir <jm5905938@gmail.com>
-Reviewed-by: Aveline Noir <jm5905938@gmail.com>
+Reviewed-by: Enze Li <lienze@kylinos.cn>
 
 Thanks,
-Aveline Noir
+Enze
+
+> ---
+> The reported warning is gone with the original i386 config, Clang 22.1.8
+> and Sparse v0.6.5-rc1-21-g84ec0658. All executed DAMON KUnit tests passed
+> on x86_64 and i386 with and without PAE; the high-address case skips
+> without PAE.
+> ---
+>  mm/damon/tests/paddr-kunit.h | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/mm/damon/tests/paddr-kunit.h b/mm/damon/tests/paddr-kunit.h
+> index 9839cc233071..2b11f0e67a12 100644
+> --- a/mm/damon/tests/paddr-kunit.h
+> +++ b/mm/damon/tests/paddr-kunit.h
+> @@ -26,15 +26,16 @@ static void damon_test_pa_core_addr(struct kunit *test)
+>  
+>  static void damon_test_pa_addr_over_4g(struct kunit *test)
+>  {
+> +#ifdef CONFIG_PHYS_ADDR_T_64BIT
+>  	unsigned long addr = 0xffffffffUL;
+>  	unsigned long addr_unit = 0x1000;
+>  	u64 pa = 0xffffffff000ULL;
+>  
+> -	if (!IS_ENABLED(CONFIG_PHYS_ADDR_T_64BIT))
+> -		kunit_skip(test, "phys_addr_t is 32-bit");
+> -
+>  	KUNIT_EXPECT_EQ(test, damon_pa_phys_addr(addr, addr_unit), pa);
+>  	KUNIT_EXPECT_EQ(test, damon_pa_core_addr(pa, addr_unit), addr);
+> +#else
+> +	kunit_skip(test, "phys_addr_t is 32-bit");
+> +#endif
+>  }
+>  
+>  static struct kunit_case damon_paddr_test_cases[] = {
+> 
+> ---
+> base-commit: 7a983cc1b57309a875a9e07a934c9944bf3d088d
+> change-id: 20261118-fix-damon-paddr-sparse-20261118-fb08902768d7
+
