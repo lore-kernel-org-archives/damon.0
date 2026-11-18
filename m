@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794966828;
-	b=fN3XK9yX51Rw6MUOGvtr/hmTqw6X8EFQdKr6IbVx7YSXZ7VeBdEsb9JzxGXJmCwXTXM2
-	 NQ+wlp+Q/fTAh9QtgOQ/KgMVZ46RwNahEaloz9G/8Rp7cpb4+5DSXn41WXLNjb03O6U26
-	 CFfh1UItc9CV0W2758N41ndIDTRr9WzvYXBCu4kuirDq2RzEU44A4xE+oIfFO/WylQVra
-	 2uDlwME7REx60zmrB6C8bVfrCybSh8vMDlmIkm/BHw88Ust2HXoVgsieD0DUWjySUDXnw
-	 KqO0G/43L4YZsIkAyxj7y+0lyXQ/xULu8P9Ln0sjSkTk7vHUJ69Putim+nQ1yolvrXg==
+	t=1794967179;
+	b=mRvKVa9x9BFkbVAEBLnlK3C9jYMAR8MtDGOzYI53PBp0jkwILgHlNSkUAM6z6Atk56lk
+	 6VEXsg5ZZqYC9RRbCBkXMIEVCwt2Zf648fJLrZZEIS5Il7enSc1EpvfibH2O/1OV5RzB6
+	 ft73qhoEswxKas7K3VOSr41ENe0T9qPSW51nxRLBk06puiQkLF+CmHUm6IJaF/cXuI1QM
+	 sa/3KfTMVr4/FQ9ljISV3MTKerabQ9rVv2INjlbs+pXFhVHH++9Rp8M4Cgj2FI780pNDH
+	 dhHVQH6pzyc3LQ1HQ/9/qXTiyK71diToFEllTyNbT/jd6Ccu25Yv/7LIzgQpnih9CJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794966828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794967179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=ftEokabaZG7Wg3nlwTH07C9whZDOJt3FfBUJuOwVvUA=;
-	b=zfDmPXxfeOn1uSck8UKKZD0Cd/1NwP7AJFeLoDcjaMoytuNYgWrxZ2JOg4Cm1ZGQzZjD
-	 v2dguSCmmDr+A4WsTTcxdKhi4veRQxGr/V+8b9SmRTRhRvOH66ri47Pu20/rXaOR9ApHQ
-	 fEdU7x7qNWGXxYvMTeE4BQK8nTVPOTgVZquciZurffLyqjRzZ7JBnjdwzlsKT8rHbIyFQ
-	 1xG4+8yD4JICplK5jpbx7s8mAi0x4IEVO9evrB4zKB9CgmajkrEdakx9zNCgXKzHIWsIr
-	 u7geuj9jZhftdfT2buPaj48v6B14IPiSYcEmXzKnKf8kDyHtPQgcIm/0AVgb/9zI/4A==
+	bh=c5s/uyGsmm1S5dXpHxF7VvkZ/WKC43vJPwYlg7Viw64=;
+	b=scs6PY0w3RCPAg7ikIHZHnun75L8m4Hmo03/tMT35mi+5EHEj2nCMSfLXLboykq7i8h4
+	 b6GyEkTdtQIJx91vKbwhruE3iTikV9tXtSwglJkcNf+I6yUvtnE7K38yv6NYJ6+t2rrOf
+	 q0LOUQ9f5ETszNwm3yE1gVO0fSXoTJ5z2SBKoPj+8JO55uywtaYAc1cuUJWPas4Y3ztvS
+	 hqpwrmpyb0MNVwEFDsDVQpG6VuUeqov5x9+NufAxk/oK8z5/UOAvMGggdkapVYH3HK0im
+	 jmfPUbURm4xaMffyjXe6WE6ytfzAITonj+zTwveutrXUNFrQ/9PIxky4wzlMNXez2Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K9DazTgq;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=heDsfP4w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9B7606A325;
-	Wed, 18 Nov 2026 01:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F04606A31C;
+	Wed, 18 Nov 2026 01:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K9DazTgq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9357F1F000C5;
-	Wed, 18 Nov 2026 01:53:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=heDsfP4w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0C61F000C4;
+	Wed, 18 Nov 2026 01:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794966827;
-	bh=ftEokabaZG7Wg3nlwTH07C9whZDOJt3FfBUJuOwVvUA=;
+	s=k20260515; t=1794967178;
+	bh=c5s/uyGsmm1S5dXpHxF7VvkZ/WKC43vJPwYlg7Viw64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9DazTgqbQKHgVajtXTFzbTQKVx12pPjQm+tfHT9KrXHFThADgzFOKResZyT2ZDKi
-	 MS7XL0zgHSMNNDLts0JOvcdaQdpg69P4Q5Tsgm2/Vwi5DDCbL9mL+kw8w7faod1z0U
-	 7AGnvNzmm11g6BXEUaARQsIL6jVGHW/mPcDhHFbENnVe1CK+5/lH1CB5jBOkhXHRz1
-	 UXianG+0TiuHCri9qBivWl3l1JMd8PrWA4H4cjGi9eKuVgHcuXG6e8HnNVg10pKQlB
-	 U/cll1ahEQV13mj5UPGsjAdVkrHSx8uZi/Sj/BPFi50TlKOaGVkO1uqOv7ma/L8VfP
-	 hZy3vqyeQ6UPw==
+	b=heDsfP4wTRMcK7Zb31BbQz/800F4lPsuTxcE2U/Q1tbaUg3Xl91HkckJcmj0LQFgD
+	 xosS6hOBcKnHxdOHMFmKR8oOSKzMcnbaXrTkXZjaaGE48imeUiy25Lb+wa6hmVXy4G
+	 VO7b51oYC0GT0TBzGtnwXWVf3FACMVf9KyrX9ihBLBPOqgrJq89VCwuvj9PkMz/pzT
+	 J6pIOngDvbONNR7/gZdCz1mTs6K2iK90RUg+Y1ZMl+FY6CFqLi5QJijdr4ihr90Ts+
+	 G1D02P7L+AJ0Zz/iCnF4p2Z8MeniS6o2bUuz3dmt4y/8O2QIk1+zoAtWqZ/rENMl0s
+	 3wy5YG5aZjZBw==
 From: SJ Park <sj@kernel.org>
 To: Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -51,11 +51,11 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org,
 	Mattathias Pinchover <mattathias.pinchover@uber.com>
-Subject: Re: [PATCH v2 2/6] mm/damon/sysfs-schemes: add sz_ops_filter_passed_last file
-Date: Tue, 17 Nov 2026 17:53:40 -0800
-Message-ID: <20261118015340.96006-1-sj@kernel.org>
+Subject: Re: [PATCH v2 3/6] mm/damon/tests/core-kunit: test sz_ops_filter_passed_last
+Date: Tue, 17 Nov 2026 17:59:30 -0800
+Message-ID: <20261118015931.96943-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261117-damon-sz-ops-b4-v2-2-439888fa04ac@uber.com>
+In-Reply-To: <20261117-damon-sz-ops-b4-v2-3-439888fa04ac@uber.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -68,15 +68,19 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 17 Nov 2026 23:22:16 +0000 Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org> wrote:
+On Tue, 17 Nov 2026 23:22:17 +0000 Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org> wrote:
 
 > From: Mattathias Pinchover <mattathias.pinchover@uber.com>
 > 
-> Introduce a new DAMON sysfs interface file for exposing the newly added
-> DAMOS stat, sz_ops_filter_passed_last.  The file has the same
-> name as the stat and is placed under the DAMOS stats directory.  Like
-> other stats files, it is updated when the stats are refreshed via
-> refresh_ms or the update_schemes_stats command.
+> Add a kunit test for the sz_ops_filter_passed_last DAMOS
+> stat.  The test runs kdamond_apply_schemes() for multiple apply intervals
+> with a stub apply_scheme() operation that reports a given ops
+> filter-passed size, and checks that the stat is set to the value of the
+> last apply interval rather than the accumulated value, and that it is
+> kept unchanged until the next apply interval is completed.
+
+Looks good to me.
+
 > 
 > Assisted-by: Claude:claude-opus-5-5
 > Signed-off-by: Mattathias Pinchover <mattathias.pinchover@uber.com>
