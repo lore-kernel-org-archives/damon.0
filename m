@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795012117;
-	b=5D7Afi6TOqah6PZ/cL2R5KgK1llXOHOxS4N/AlWpSh//N0Ua/rR1AMQXBI1BuTdxhPH3
-	 m8m0+TdFWIC9DRvzu0+51wALbRzJXVrrckUO9SxhL4538juxwJd32s0ZQi1Kriqzw6ITD
-	 1tMcm8dKnfSdCihQyvLvD9r6PmdRt5woy0b17D+tUJqsXkBDuSdhDp5vLrHXvnMJP0/cJ
-	 xw9UsnAFj1VslnqCopmwO3WniClcqPVnljC9ycq5GVDMBA2w4htBcd9j4jz3hL5v3UgwM
-	 h3+MdnomLOFosw+a24TFQxEJeqzsg2yBcvRCmy05xGEvQHk725ihf/C8GNeW2MUePwA==
+	t=1795012416;
+	b=0YYkAj3kZGYhpbBC4xtYS//Yj3FrbcLIMf72NpCirKqsfaeHMB2EPkYxREa7ZDJ1KXDy
+	 A85Diqs9c22h+xcsYpme99tvEvbh5Ci5fscfJcSHVwRuhJpbWcLZ2eamCLLx2gZb+xln4
+	 vJjj6rxQWdEhm7ZRGztGSdO5+mMynElhbdFw7vECtD3YEuzlG5+/SG3jNGI35IxWfivoy
+	 eHV7NMtHm8U12wexBKPsB3QlPM8me5+mLk/YS99YB/aMlKv+smzaAB0UWKm9VrhTQmvy5
+	 NNB/QDF+jlRH7IkMyN5T4XYBtfLG0KGURmcpzkRNT6hjSKAKuFItDypPYwS46fWPrHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795012117;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795012416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=GUT52vgyJgPuz0uybFsuYJgMVSReQWxsEW446+mnG/c=;
-	b=ZRvZVDzT/44hu1RsciX7uaVIZo7QVoWJ5Ditq2T2idp4Wqm21ggZ8rpZVDYRiU/80p0Y
-	 QpF/+PAsyg07MbO4ReJ3CC1ECNLXgygKyGauQ8A+ZnK8TB6Y5TGfoPnN59mF8Hw9V3kQ7
-	 4dgbuOri9i8OOm9/YJvBDv/YVo/b9SU1RA0vO0B5x9oVXAkbZgMOm6gVS884CC+wlDekI
-	 NgRTnloqurC+sOtv5RE6XwmFl+je3rCLesvfD8O5vBWhE0hNElER+b6c9UBB3DjU+kOEV
-	 X1WQ8J+WX22TBYBeO3h7+mkf0e7YJkwuTNoaRCOGpf8iiqP9jSTAT3P8GTbQIR6OGeQ==
+	bh=lnjKgTm5vSNYR4pLlmAjDVsgJphmcl/khyWsdGHeBCY=;
+	b=NQXQb1P/Xf9eflNuP9IcuiRbMiBD0CSAj2hggUle19UVlMU9Z2JHVj+hTfdemzPv0KZC
+	 AcBymhxslw8zsFaSj10zAfihgrjO6tq1sLk0eNAZH+Z/PPxF8IKmcBffu16ah6m8ZiLig
+	 S2upfPYWpa7CXs/2Ohwtb1NyKphDrF1iPqu+N4Fs4fPbNvR6XBRoMbbEEPBYRTYwHNm5K
+	 AsDoNynkzyHlyxvH4xodgZsi3HhB7QKEzxHmyDUgiZFPCvUTvUmCcHCTMBi1JRWibULvo
+	 ui6TOirZUO0W2opdG619iA2joq/6f82D6yNe9CqC7DvXrIMp21rK+W9woTdMr957GqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Kog+7qaZ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TQ2pXbMM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAFB60A2600;
-	Wed, 18 Nov 2026 14:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77D1606A33D;
+	Wed, 18 Nov 2026 14:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Kog+7qaZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1881F000C5;
-	Wed, 18 Nov 2026 14:28:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TQ2pXbMM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681EE1F000C4;
+	Wed, 18 Nov 2026 14:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795012117;
-	bh=GUT52vgyJgPuz0uybFsuYJgMVSReQWxsEW446+mnG/c=;
+	s=k20260515; t=1795012416;
+	bh=lnjKgTm5vSNYR4pLlmAjDVsgJphmcl/khyWsdGHeBCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kog+7qaZykWYE2vmZ/oH75pfch5xTnHflU8PorPT1BHhJGz7cxBdAf4dIILq/VQgq
-	 Hit16GWSGZjpiJxNbNDcRNaXe0uZj7X9F/UwdTcUXH0+V3En5Hk21w5dxkSXxAnwvL
-	 rwrk+GinlXzbEaFMRyUodCXQCnPz1OGSvdemf2P/q6uiJfNYmb27xjRhzUrv7H6W+g
-	 OXVohld2oiuFRgPx5r6mO7wm3Tt3oSomxX0dZymKO6RvQMXWyEIQIACJu1eZP7zk2u
-	 uI0yMdf0idyVkZagkDkHqKqAF/Gw5yq3jlnLeGMf7NgZM2FK6kQnsw4rSrpO3hFEaZ
-	 fo71rGJpydlIA==
+	b=TQ2pXbMM8T1oX7wrQMY/hn6f1+xlHKRWE2PRIKDD/C+GPWSnoePr+Y84oMgigX5W+
+	 oDYCAON3LXdYPMVXQXH6+cKWl8YgltIJFPwG6hsUqY7krMleYaa/qmEgxml1Tjo4HM
+	 24MlTMxa3rBKD9Xi3czpMVqJYzNvVjf6y4dNl8muT25FY1OutVFES9qzdDLwjABHWW
+	 f/5n/I8sSgbk50WZnUHIeVO2ANd9qI7oaAs0163Bcy+rsK2MZZL3LHAX3qtZsfMkv/
+	 7wRIosaqy1C3ud+1g2rZwDZ9qKwdhPhxtIXt3nsR8zCqt1R6t+Jb1x9GV4Oe83R5ak
+	 YzBQEwonLtJzA==
 From: SJ Park <sj@kernel.org>
-To: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+To: Aveline Noir <jm5905938@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/tests/core-kunit: add test for damon_call()
-Date: Wed, 18 Nov 2026 06:28:29 -0800
-Message-ID: <20261118142830.90113-1-sj@kernel.org>
+	linux-kernel@vger.kernel.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] mm/damon/paddr: skip non-LRU folios as a whole in pageout
+Date: Wed, 18 Nov 2026 06:33:18 -0800
+Message-ID: <20261118143329.92901-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261118063755.37749-1-saileshnandanavanam@gmail.com>
+In-Reply-To: <20261118-fix-damon-hugetlb-pageout-20261117-v2-1-547a65a3206e@gmail.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -62,38 +65,27 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Sailesh,
+On Wed, 18 Nov 2026 03:24:28 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
-On Wed, 18 Nov 2026 12:07:55 +0530 Sailesh Nandanavanam <saileshnandanavanam@gmail.com> wrote:
-
-> A newly allocated damon_ctx has call_controls_obsolete set, meaning no
-> kdamond is available to handle call requests.  damon_call() should
-> return -ECANCELED in that case instead of queueing the request and
-> waiting forever.  When call_controls_obsolete is unset and
-> damon_call_control->repeat is set, damon_call() should return 0
-> without waiting for kdamond.  Add a kunit test for the two cases.
+> damon_pa_pageout() uses damon_get_folio(), which rejects folios that are
+> not on the LRU.  For a large non-LRU folio such as a hugetlb folio, the
+> loop then looks up the same folio once per base page even though
+> pageout cannot reclaim it.
 > 
-> Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
-> ---
-> Changes from v1
-> (https://lore.kernel.org/20261117172219.26725-1-saileshnandanavanam@gmail.com,
->  https://lore.kernel.org/20261117174834.29182-1-saileshnandanavanam@gmail.com)
-> - Merge the two tests into damon_test_call().
-> - Drop the list_empty()/call_controls.next expectations.
-> - Drop list_del() on the stack-allocated control.
-> - Post as a single patch.
+> Use damon_get_monitor_folio() and skip any returned non-LRU folio as a
+> whole by advancing to its end.  Do this before the filters, the
+> accounting and the last_applied check, so that adjacent regions within
+> the same non-LRU folio are not walked by base page either.
+> 
+> In an x86-64 KVM pageout microbenchmark, traversal time dropped by
+> about 99.7% for regions covering whole 2 MiB hugetlb folios. For
+> 4 KiB regions within hugetlb folios, traversal took about 1 ns more
+> per region.
 
-From the next time, please ensure all discussions on the previous version is
-done.  You could do so by giving more time before posting a new version, since
-the last message to the previous version thread is added.
+Looks good to me.
 
-[...]
-> base-commit: 20eef29b7c8465ac98d7dd6d6f2ac07a8d8056ca
-
-Seems this is the mainline.  Please use mm-new [1] as the baseline of DAMON
-patches from the next time.
-
-Other than those,
+> 
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
 
 Reviewed-by: SJ Park <sj@kernel.org>
 
