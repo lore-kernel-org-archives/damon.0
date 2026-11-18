@@ -1,86 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.42
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017377;
-	b=X8XPxclTI/vOj79AomhBaXdZQN/IErta9WzqvSkf9k0TF/5lIXJVkdeWYUwVdacKgSe3
-	 0jESCN0NtScZHbQqtq9lzJhu7sdgp6i/AUWO7e3znUTXvlM/rBORxbANMPLlOH4PuZPCb
-	 fQoukaDbA/zd1wLT+AbgDS3xE7cYJAVVhet9IhfxE893irLcwb4F5/TybyONpYVhB6/2l
-	 iG0WJKVM/+MJHTE+1BYbOM1g35nENCscwBQVBMNIGA7ahtERok+iPoHf7BIPMShcAEyx1
-	 uW1uTNpiwqr7OSQ7Mv7UernMQRonB41h+iifNHgEfD+yjRVwCpnxzD2WEpm6ZMaS7TQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017377;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:To:
-	 Cc:In-Reply-To:References:Date:Message-Id:X-Mailer;
-	bh=3bQBfuPo4+GA4H58G8tofWZlnWMcm4hxNRzjXZBoZg0=;
-	b=L/XpFr3LJNNquSd04DFsQ6WzpvF1NncPrBy8nePusm1wMuNVMY0K5BQhjzK0ns6052B3
-	 Lw3RwoDvftL4Q8/w9OxARajkNbmLy6/fn5q7kDyyHC81CxdT5wfhzZvmF5OGDQDIF/4TE
-	 rShuBfHBrnMWK+CwpF9358UPpA2eUQiLxg5KwC5Ru82hsjCf+v0YmfBMzWpJM1H1+mS1I
-	 lwSlXPW2lxIDqXbNir7XaZ8MZrz/X/J32S8wLLsKHSBtAyg+xlmqhkRIJai4alYrzW7nG
-	 qHS8zE535ajuYm28zwHvhZnPPIgXcGph9AFEN/YX8sB55bbC0zVu+RTnztfR233qhWQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=gourry.net;
-	spf=pass smtp.mailfrom=gourry.net;
-	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=S0L7zwZd;
-	arc=none smtp.remote-ip=209.85.219.42
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795035826;
+	b=cvILL7xMNHWuH+uO4Akoea1mArZ0Am/2DKbXXAIHicuQQFxAKv7NQhs/cT5Q2qPLNgqO
+	 OEM6NxJL+fLKgg4SXf6lHeS/dRxCkPBbPJOD6uwQvLSI5dh4I34rGK3nXiwp0dXy/nGn3
+	 z2kOXmkL5AN4WCWs0FculZVbcDDdYPt9Ay7+NipB/xqPI1ABKZV+nYSbLw10z/vVY5lDP
+	 goq51ltwZOEr3vAM2aeJr02bqIAQ1wxWSFupMaCL8YZOvHXpghyF2wnzBJuRtVd6jmB5H
+	 Vj4LuJiyMLf5SXGmZuUjyJzHOgBwbNjd68xjkNmdkhX6bCEX5Zsu3n/Q3Tz3hViDUZw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035826;
+	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=Rn/XVV3lJb0TjTij3sIrE+aEoTpSeaOajKlzbk7waNE=;
+	b=nyxPdnC7cjs+xm9HLdTV2LPQ14KDLLkroEWg5vaBmXXXTcpGWXfyoodQ2P5SadVckpCy
+	 TsLqV1myTM0kvDYpfhh7PyFZZ7Oh9cYrYhxx1kK8d8iYfXe0PA2ty8ptAhmjabRJOVDFC
+	 gg99r21TVuWQmBYHhOqL8LQQZ+h/6l+CzsYWpus6r5iwpgF+1kh4R3AZLgO2CONOOcDaX
+	 Oas+G1IJVM3j7xzOpUhXVlgIGle3HhcqHUBfrQPTdVvfOURQO4AZO5SIQGVu7GjoqxJur
+	 DZi4ZxvrnjTByEoTLq1j4D2UTWXCNPMXhY/5bkOoYuZ00hfYI7WbnXcx0H+IjMFWHxQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hNFiylac;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB3F606A337;
+	Wed, 18 Nov 2026 21:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hNFiylac
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1795035826;
+	b=kAyAj9/z9S/tvn/7BDj7BaFbfqFE0Q+yZfVthcSaASNv9gRE7oVCw8uV/2snc0IcCxUc
+	 5z4jH7Xi5THxKX1qmGQljO6CQLZ14kfURe9h2rG8c9Re2J2f6o4Jl9S98IaTFeFm9Hl8s
+	 nFlrCgxQ6lwC/whBX3YoX3M4GU0S5S3BvzzHt4Kr4ZGIvmd6H8h8KHY3QXp+PC4vh+ZKK
+	 tY8/bidpQHl/ZklAK3s1jwoVT7o/xXkX9nAVw+Dt4eWfphaVf+8PKbkiQ/eblW5Cx2FJQ
+	 gAJfXYI8eFAu5cCdEbdMF8PsHADls+x83oWGmmj4sUJfolISt8sXmCeOoqxfJZfJ71A==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1795035826;
+	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=Rn/XVV3lJb0TjTij3sIrE+aEoTpSeaOajKlzbk7waNE=;
+	b=VDrZaYbNNIx5DFYtpkwfkKGSNAkiHoi3ei0oYIVJZifr7tOnAPpzNVqdSGaSnEaBZwDZ
+	 dKGE/7AthiLX74VEHsP5s2xkZjniqdPyGEpznTbM5Dy34Q8xeQ4NeAuVej1JxKy2BaHb6
+	 0c84TxC1ZNH8xaDkfqdJ6bTQA0RaHpBVnxuOWRojfBDhXhwnp+eFtFfR4nw37fbI4WZ1b
+	 OLGEC8u6FTXefAk6t/Ek1zTTx02QKufC8XTo67BX/d3J75AgdDs4eQoiwkrrUqPyu+z5r
+	 fm3F7BBFIRLvV1SRz76/nQSOz4DV7WKdkoY/elE8DsfgGdps5bJuaNsu4B2yBmIqYuw==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	arc=none smtp.remote-ip=100.80.115.77
+Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76BF606A320
-	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 15:56:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D76BF606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=S0L7zwZd
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-91ebf4cd218so4361936d6.3
-        for <damon@lists.linux.dev>; Wed, 18 Nov 2026 07:56:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1795017376; x=1795622176; darn=lists.linux.dev;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=3bQBfuPo4+GA4H58G8tofWZlnWMcm4hxNRzjXZBoZg0=;
-        b=S0L7zwZdM46cBby3vC0oSkUe01o+3A7Zjo9hrcc3sPHP1Dk6nYzSSPDcvDHOgPWXqF
-         x2rl3PAohlJT1MGmvHh7Q5rIrblnqJ9NQt7h+zfFaWF4yJyqh+UGCsx+wIjtYjsJgW4l
-         BvvUyPGmE4j88Qm8WpRZOWjS2I0MAV1goQUB+lt6RCoisOW/PDkOWELd1IZs03qF5A1a
-         2IWtEV/raPy3c43l6t27Qblwl8fJUH9CC0mN+Ablt5W7xi3THK9DTbyfZADNNl5tA7hn
-         t4q0U4H9PeC8r8KSmzudZaW8DockAjfQ6ZkTfC8HG2HS4ozHmiu1lG10zVoE1NxDeQiG
-         QnEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795017376; x=1795622176;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3bQBfuPo4+GA4H58G8tofWZlnWMcm4hxNRzjXZBoZg0=;
-        b=RK4/AARN4uukwI65odKA7mfHdBfh0h0zkhfCYWj5UcdI6l/31WSmcvSnhgP2KLQWO+
-         2czLbq1hSrFgw5hU3TCltC4cTobTVRd5wer8Q85haIKBmPZsbTB5VmC6LE8bYfAssq4Q
-         dHEctwSc7y8OGg7UkfRrx1Nykf6QgUF1+uEwt09uC6FY2ITqnCBn7+IduthEWH+XJWnm
-         1nnTgK3vJPL+Ze7ADky0fjBgSRcDCB31bKtRzF7Qd/nrmj1hj/1pdMo+5Li6AEKqpNAe
-         o+HeVkwNCDFSyxdI0E1I0KHNyOfZZ83+hvh/EaMCxjjeqkx7j2iRGVu7KDPoldNIv/NT
-         +wZA==
-X-Forwarded-Encrypted: i=1; AL+hErH+PhYweKPr7pS5viz1s6t4G8bMev+BPhJh/v9FqZn5TkFRtvrJ3+aAqVOVjlixdUJMcgeqNA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/VdlCeS25nrneFIqqEVPMO5D5PAb50cUzaP7J4gEOZtJI1I2Y8
-	RsEE+NoJMgY5pHT0JEKzDrDfjOc9bv+16TuYajKKN+MuQUDP9ck+3dyEhmS9C2eB54ybHIa72T2
-	OJtuT
-X-Gm-Gg: AZFdTZcpmVfW1ql6wuiJXlqFT0JJAWJJ8ErdfSY8baIYOPYlCTeoduzgT1A+hIe3aHr
-	KQ1q2aLh0GjACRRlus+mCgKe/9zxrpDosiSTL6ooLXL4ohFMhB6livKAD2h8kGQxYiU2xB8KCae
-	uwozWzu75b2J5Y2eaYBLOQzehFwdrrK6U9bTRGxk2Qtz4DTQhdtok5PB8P9MjDi5IUD8e6p5q8R
-	v66+ddUIreukoHRvg5+6WFAJjQxULufjeZ30U+2eujcL2p9OMlEDypv14KkLTZSeQB4MH9vfJwR
-	TlZLGJ6arJsBxAlIwu0JWEk0nLWYf5JQnbZNR8+nlQFUZUVuhEGn4M3Yaq+HSPdP1+TgwwYeBs1
-	TaSK6SaTpclw3q9Yncrm9STuLm43Lxbu5z52WfR+Eretw5l8fDGUZExclShaw/6Tpf/JiEdleoH
-	zblh8BXShHZXbDg0pSech2TC1EAV681rY0eRxTAzdRjhTEo5uYDjTfeGaM3ST6QyTl3joyPFSRK
-	0ddqVD+0Hjb1Rc3KU2O2k76dTGEqWsGvIBkEG9gvDhvQsD5kvS8Czw3tnuazs29GTFBqtZW/3Ec
-	MwykRVMRMMSSixTLUdtHO6REDl4XJCHpjAdsrWFbhwW3aDVz6ZsVpe6OjH+HWeZ9K60SIstHtw1
-	oWBNcCwaxRt7a+v8ZxT5K7Xu3CQM0
-X-Received: by 2002:a05:6214:8013:b0:921:1890:b77f with SMTP id 6a1803df08f44-9211890b87emr29798426d6.47.1795017375668;
-        Wed, 18 Nov 2026 07:56:15 -0800 (PST)
-Received: from [192.168.50.231] (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-92114d28215sm24719106d6.16.2026.11.18.07.56.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 07:56:15 -0800 (PST)
+	by smtp.kernel.org (Postfix) with ESMTPS id BFE6E1F000D2;
+	Wed, 18 Nov 2026 21:03:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795035826;
+	bh=Rn/XVV3lJb0TjTij3sIrE+aEoTpSeaOajKlzbk7waNE=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
+	b=hNFiylacSDkpUO63Z7zELJ42BPJJG6YKdeQb2U+m20Y47uham6njZowSJNic2f+hE
+	 PdDwQfVkBxwJDHHNG4i9tL9jYuWjLU1krdGIa0VY5DQaVgA2RVrbh0Rvk234L5+upA
+	 M/oa0DWUs8hnFgIaIwVQesv0NjBhj12X8+2zui7EUrhV0+oVdiCO5e087ZJ3lqa74b
+	 Od+rPd/bgctjHbe4K9JtXV1ioNIioxqeYR0cXb0Ahg2sqEVeW1G3KBtKumdDiD/nKK
+	 OBPF34uvE4dyAVgCJidL1eMZndzNK388I534WFEPpHwsWq/cv3iXamsypaqET7jDGC
+	 gmKkOydZVt4fA==
+Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
+	by lkml.kernel.org (Postfix) with ESMTP id 44A1D4AF8C;
+	Wed, 18 Nov 2026 21:03:43 +0000 (UTC)
+From: Kairui Song via B4 Relay <devnull+kasong.tencent.com@kernel.org>
+Date: Thu, 19 Nov 2026 05:03:34 +0800
+Subject: [PATCH v5 02/17] mm/memcontrol: allow update of LRU statistic
+ without holding LRU lock
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -91,60 +84,86 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
+Message-Id: <20261119-mglru-fg-v5-2-9eee2fe97a2d@tencent.com>
+References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
+In-Reply-To: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
+To: linux-mm@kvack.org
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+ Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
+ Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>, 
+ Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
+ Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
+ Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
+ Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>, 
+ Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
+ Barry Song <baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>, 
+ Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, 
+ Vlastimil Babka <vbabka@kernel.org>, Suren Baghdasaryan <surenb@google.com>, 
+ Nhat Pham <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>, 
+ Zi Yan <ziy@nvidia.com>, Gregory Price <gourry@gourry.net>, 
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, 
+ Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
+ SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, 
+ Yu Zhao <yuzhao@google.com>, Vernon Yang <vernon2gm@gmail.com>, 
+ Zicheng Wang <wangzicheng@honor.com>, Chen Ridong <chenridong@xiaomi.com>, 
+ Tal Zussman <tz2294@columbia.edu>, Kairui Song <ryncsn@gmail.com>, 
+ Xiang Liu <liuxiang.277@bytedance.com>, 
+ Ehab Ababneh <ehab.ababneh@intel.com>, 
+ Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, 
+ Lian Wang <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>, 
+ Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>, 
+ linux-kernel@vger.kernel.org, cgroups@vger.kernel.org, 
+ damon@lists.linux.dev, linux-doc@vger.kernel.org, 
+ Kairui Song <kasong@tencent.com>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795035819; l=1182;
+ i=kasong@tencent.com; s=kasong-sign-tencent; h=from:subject:message-id;
+ bh=G0nnA5K3vgx6DnvgX5PBKRNHiMmd0ZDMM0I+7unVnUs=;
+ b=Or384oTYmhezGr12VgUCqXcg3RIjHRi1VIREbML7u8xdTtJvzi8P8v1XYtrkZ/MyxcN22pjLV
+ ZU7Emfb4fcGBc4PgU9uzX0rG1VNuzCTFopsvPnTDBNOyD35qOIS9jAr
+X-Developer-Key: i=kasong@tencent.com; a=ed25519;
+ pk=kCdoBuwrYph+KrkJnrr7Sm1pwwhGDdZKcKrqiK8Y1mI=
+X-Endpoint-Received: by B4 Relay for kasong@tencent.com/kasong-sign-tencent
+ with auth_id=562
+X-Original-From: Kairui Song <kasong@tencent.com>
+Reply-To: kasong@tencent.com
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 05/22] mm/mempolicy: keep interleave and tmpfs mount
- policies on common memory
-From: "Gregory Price (Meta)" <gourry@gourry.net>
-To: Richard Cheng <icheng@nvidia.com>
-Cc: "Gregory Price (Meta)" <gourry@gourry.net>, linux-mm@kvack.org, 
- linux-kernel@vger.kernel.org, kernel-team@meta.com, 
- linux-doc@vger.kernel.org, driver-core@lists.linux.dev, 
- linux-serial@vger.kernel.org, linux-pm@vger.kernel.org, 
- damon@lists.linux.dev, linux-cxl@vger.kernel.org, akpm@linux-foundation.org, 
- david@kernel.org, liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, 
- surenb@google.com, mhocko@suse.com, corbet@lwn.net, 
- skhan@linuxfoundation.org, rdunlap@infradead.org, 
- gregkh@linuxfoundation.org, rafael@kernel.org, dakr@kernel.org, 
- johan@kernel.org, jirislaby@kernel.org, kasong@tencent.com, 
- qi.zheng@linux.dev, shakeel.butt@linux.dev, baohua@kernel.org, 
- axelrasmussen@google.com, yuanchu@google.com, weixugc@google.com, 
- baoquan.he@linux.dev, baolin.wang@linux.alibaba.com, yury.norov@gmail.com, 
- linux@rasmusvillemoes.dk, pavel@kernel.org, lenb@kernel.org, 
- hannes@cmpxchg.org, brendan.jackman@linux.dev, ziy@nvidia.com, 
- sj@kernel.org, muchun.song@linux.dev, osalvador@suse.de, 
- nico.pache@linux.dev, ryan.roberts@arm.com, dev.jain@arm.com, 
- lance.yang@linux.dev, usama.arif@linux.dev, kas@kernel.org, 
- xu.xin@linux.dev, chengming.zhou@linux.dev, joshua.hahnjy@gmail.com, 
- rakie.kim@sk.com, ying.huang@linux.alibaba.com, matthew.brost@intel.com, 
- byungchul@sk.com, apopple@nvidia.com, rientjes@google.com
-In-Reply-To: <av3EGWuHX2JDdlrx@MWDK4CY14F>
-References: <20261114070959.3490008-1-gourry@gourry.net>
- <20261114070959.3490008-6-gourry@gourry.net> <av3EGWuHX2JDdlrx@MWDK4CY14F>
-Date: Wed, 18 Nov 2026 10:56:13 -0500
-Message-Id: <179501737390.1206716.11014097946405277594.b4-reply@b4>
-X-Mailer: b4 0.17-dev
 
-On 2026-11-18 23:30 +0800, Richard Cheng wrote:
-> On Sat, Nov 14, 2026 at 02:09:42AM +0800, Gregory Price (Meta) wrote:
-> > -	for_each_online_node(nid) {
-> > -		if (!node_state(nid, N_MEMORY))
-> > -			continue;
-> > -
-> > +	for_each_node_state(nid, N_MEMORY_COMMON) {
-> 
-> Maybe I overlooked or somehow, but when do we have the assumption
-> that common memory is definitely onlined ?
-> 
+From: Kairui Song <kasong@tencent.com>
 
-For this particular case it's not particularly relevant.
+To enable moving file pages in folio_mark_accessed directly and lazily
+for MGLRU, allow updating the LRU statistic atomically without holding a
+lock. It may cause temporary counter underflow, which should be fine as
+the counter is eventually consistent and only serves as an estimate.
 
-This code only runs at init time, so it's either got memory or it
-doesn't.  If the memory is present but offline, it still wants weights.
+Signed-off-by: Kairui Song <kasong@tencent.com>
+---
+ include/linux/mm_inline.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-There isn't really a bug here, but the existing code could also just
-check N_MEMORY and end up with the same result.  If the memory is
-hotplugged later, it still gets weights accordingly.
+diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
+index 2395ca8ee305..2edb9beef6d3 100644
+--- a/include/linux/mm_inline.h
++++ b/include/linux/mm_inline.h
+@@ -47,12 +47,11 @@ static __always_inline void __update_lru_size(struct lruvec *lruvec,
+ {
+ 	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
+ 
+-	lockdep_assert_held(&lruvec->lru_lock);
+ 	WARN_ON_ONCE(nr_pages != (int)nr_pages);
+ 
+ 	mod_lruvec_state(lruvec, NR_LRU_BASE + lru, nr_pages);
+-	__mod_zone_page_state(&pgdat->node_zones[zid],
+-				NR_ZONE_LRU_BASE + lru, nr_pages);
++	mod_zone_page_state(&pgdat->node_zones[zid],
++			    NR_ZONE_LRU_BASE + lru, nr_pages);
+ }
+ 
+ static __always_inline void update_lru_size(struct lruvec *lruvec,
 
 -- 
-~Gregory
+2.56.1
+
 
