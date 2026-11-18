@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794967305;
-	b=3tKr40svfPRWuqAiMAd4xnn95mHTvTBT0sAU1asE7iSXs3ghcvDHY0cQN8FDWizRjQNw
-	 ErhcmaT0fRy4CU7+e9RWtKsBOXALnLfHhu9ZvH92+BsqXXkqJOd8az/JkdIpYsfH+n8Bm
-	 mcDCcyfsOONJKa/MpPWGA/CxBIu0PjIvWWD6ihgFKzpyHC1zPpqsigFWLwrzNU2bMYc7J
-	 bujJ8U3fslqAhZfPR3HjrCP/Bd/f0e1w7eREuYknbeQ1936YJdlQOwPN9KDAGNLQyXN9c
-	 WyiAD9mfRxqHpK+kSWZJjCi3W299rxuYDN3XT+mRy3S4kMTITsoxYLMCWI1RWiCc1CQ==
+	t=1794967371;
+	b=qqzL4lmVk649Mooe3AKFj9CLpwzo093p6St6gqR8qzukPxqaL4DsC5i/AqPblHhQuspO
+	 AMchEe6kCNnlF6bGih2ghAaeM8yovWtmAuvOZ6xtVKvrifklYyIavzF6egU2SRKCdYjrI
+	 yZikb23oQHMC40/XvVCcV+0pEwxU8IcPbbR/Mpz0oEr8z26dVHA6rtrPykpPCEXzc65QQ
+	 L1lCXfT2Fq3buXH0H97SIQ797Skjd16AWNctgoO7jh8Bwa5/LZapTaZUBEwWgpJOl5uzI
+	 f9HhG3HU+ueK7zNYz6NDjJoAqvUtnvGwmnaRDIcupiJHIM53HM4Orn+H/4q434dhonw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794967305;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794967371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=ModsJ7OTyhdOku5yOd06nJCLRPB8N1jTa1okgDkwSN4=;
-	b=vPs84m7YWLJsTnhVnaVm+Sep2nU0rzHJCJLCh/ILSjLG0YBwx5tLA5KTUkA0f0BiZz9l
-	 Z7Tzn6AWZ4tZkRyteriwTWKZlIhMSJbNDVCAVcAKpHayThFGHqXwlXZusx9dBIDDFw6X9
-	 GIHon8Mw8bdAazkN29RwWRi01MT+weRpD+/KSETiISDv1GOJQNWdWmsorqpsweSv1u+uG
-	 H62noJTmJ21PZxL0t3pehZUklRIbCKa4kNhtyu+QP+B51bRdnjpb8JDqQy4PNO34Tj0pC
-	 kRaqmLddGtn/M+POAtefs1mnSDoo1VH8cYqo7vMJZVdNJSgAoUJs0wHb1sTFkJvEP2A==
+	bh=BzRw3magrNAp/PBSLA8AnhF9lX+dGyqPalNhhDXQaV8=;
+	b=lN4R4cKB48Z/4px6ZEH6pYa0wOsv3lHhr5vHjj8uLuawvxqdRXoX/oQtAGkeinrwaV8O
+	 CYydk/PDLOePcZD8XVB92/vFjltjKx/v9ymdgx30XxIROvmgdhKzZvzjoEjqRDGIVczja
+	 60PziRcpczFsBmLgOj5sQWgJYzK3XJHwGLHUo3TiBcT644vUsq3z8267IuhZtg6UCvYuC
+	 TMqnu3m7vS39oMd9gZkdnOCg5lvHYR/Nv2+UM6rlSfXPouP7nXgEO7JlYPGfg1o8MQwwo
+	 X7MXQSoRMtHx/AxqBwQzMrqZwdLdkoxTKBE9VF5q5WMQca+Q6KM1I1rsqzWBnSGzg7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=If4uzVok;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E72qajSD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FD4606A31C;
-	Wed, 18 Nov 2026 02:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428BD606A32C;
+	Wed, 18 Nov 2026 02:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=If4uzVok
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2654D1F000C4;
-	Wed, 18 Nov 2026 02:01:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E72qajSD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8221D1F000CA;
+	Wed, 18 Nov 2026 02:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794967305;
-	bh=ModsJ7OTyhdOku5yOd06nJCLRPB8N1jTa1okgDkwSN4=;
+	s=k20260515; t=1794967370;
+	bh=BzRw3magrNAp/PBSLA8AnhF9lX+dGyqPalNhhDXQaV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=If4uzVokBwbpms+48xpd3nNrPBsWL0U0bZATRysvdLzjIo1qQNPjTb5hB8+Uv20dJ
-	 9UfArH1ORhOGOxA5y7BS+7YgYvBAse0P7e/K7cP6lkaLZAWxBe9Ij+c0JDp14yVtTx
-	 CEPEIxS9Ykc+5KMdhAcbIovwVNQjZ3BZoHoM+v6hmzoHxnfLtFd1dbjctHYjQHrV/3
-	 qesBkPaVVbkSl1NzDolU0qs1FOWnXQ47mM8rULpzvck5xgY8C/xU5e1yUeZEchT3to
-	 KPt2VVSSRveuEiWa3eDRTT+Ig8bdK1xQ5SKr87Nm3ugRYVX/uqMv2gqj5CmQdJ9xke
-	 MqUpKJJxnNPSA==
+	b=E72qajSDmV3nOkafXwYqu3Uc3T5gIWylsZU9YvxKQVwiIhLcTxa3a5rOZnPL218kE
+	 FmTgscjfO6sxYoKxHeUbYExEnIPBjXt1EeQDQ23yIhOR/bsklCyJ/wBb/nalfYJGQP
+	 uuNCoTfDK/QrOlu8UfgLTMjCLGKY6iRpu0qASXvwnyX00OffUvPlZ1UACWH0TaZQss
+	 kfJZXHvYNw2miYdeXZoAI27anCIDcYNVT11qnRKtiWuvOQZTUQ4wHOYMzX1/OmgxJe
+	 xPsMAE8Ol7g1R54aMSVgOx43m7RGL5gasmVXHMrYoFUkrWrqt15hgGUFPYj8pp8Gb2
+	 NmPS6m8mJXPWQ==
 From: SJ Park <sj@kernel.org>
 To: Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -51,11 +51,11 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org,
 	Mattathias Pinchover <mattathias.pinchover@uber.com>
-Subject: Re: [PATCH v2 5/6] Docs/admin-guide/mm/damon/usage: update for sz_ops_filter_passed_last
-Date: Tue, 17 Nov 2026 18:01:37 -0800
-Message-ID: <20261118020138.97260-1-sj@kernel.org>
+Subject: Re: [PATCH v2 6/6] Docs/ABI/damon: update for sz_ops_filter_passed_last
+Date: Tue, 17 Nov 2026 18:02:42 -0800
+Message-ID: <20261118020243.97414-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261117-damon-sz-ops-b4-v2-5-439888fa04ac@uber.com>
+In-Reply-To: <20261117-damon-sz-ops-b4-v2-6-439888fa04ac@uber.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -68,11 +68,11 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 17 Nov 2026 23:22:19 +0000 Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org> wrote:
+On Tue, 17 Nov 2026 23:22:20 +0000 Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org> wrote:
 
 > From: Mattathias Pinchover <mattathias.pinchover@uber.com>
 > 
-> Update DAMON usage document for the newly added DAMOS stat file,
+> Update DAMON ABI document for the newly added DAMOS stat file,
 > sz_ops_filter_passed_last.
 > 
 > Assisted-by: Claude:claude-opus-5-5
