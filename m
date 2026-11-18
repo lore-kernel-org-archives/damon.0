@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794967371;
-	b=qqzL4lmVk649Mooe3AKFj9CLpwzo093p6St6gqR8qzukPxqaL4DsC5i/AqPblHhQuspO
-	 AMchEe6kCNnlF6bGih2ghAaeM8yovWtmAuvOZ6xtVKvrifklYyIavzF6egU2SRKCdYjrI
-	 yZikb23oQHMC40/XvVCcV+0pEwxU8IcPbbR/Mpz0oEr8z26dVHA6rtrPykpPCEXzc65QQ
-	 L1lCXfT2Fq3buXH0H97SIQ797Skjd16AWNctgoO7jh8Bwa5/LZapTaZUBEwWgpJOl5uzI
-	 f9HhG3HU+ueK7zNYz6NDjJoAqvUtnvGwmnaRDIcupiJHIM53HM4Orn+H/4q434dhonw==
+	t=1794967636;
+	b=XtnhXkDHNLGPxdg7UJo4j/2H4XJtmJKZbSIQCDm094fa5zEeWdG14imAusrd0WJLw+/1
+	 W6l8/rK/0FDJr2WgijOWME36XSN3vVTHKc+ARwW9+VzCKnNo5RZF9RFZ1yP54S5Ph+9S7
+	 sBg/HcTz/V9qjAQqKgpeFOjbnNpVjgkyCwgO70EqhZK08bsPwoKciTxBgIvrXSCpXAmJz
+	 D9aVjxly70JjrnL49Cy9MGtZzfxNna//6/Hbt/UmNvhe6wcghnzLqilOxBTQY8mzPWXVO
+	 JZcYaUwEE5379qqZk+4Z/xfLhm/9rjsxtPlTEpT+v2KA8opF5Yt0LfeWMZy5cY974hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794967371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794967636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=BzRw3magrNAp/PBSLA8AnhF9lX+dGyqPalNhhDXQaV8=;
-	b=lN4R4cKB48Z/4px6ZEH6pYa0wOsv3lHhr5vHjj8uLuawvxqdRXoX/oQtAGkeinrwaV8O
-	 CYydk/PDLOePcZD8XVB92/vFjltjKx/v9ymdgx30XxIROvmgdhKzZvzjoEjqRDGIVczja
-	 60PziRcpczFsBmLgOj5sQWgJYzK3XJHwGLHUo3TiBcT644vUsq3z8267IuhZtg6UCvYuC
-	 TMqnu3m7vS39oMd9gZkdnOCg5lvHYR/Nv2+UM6rlSfXPouP7nXgEO7JlYPGfg1o8MQwwo
-	 X7MXQSoRMtHx/AxqBwQzMrqZwdLdkoxTKBE9VF5q5WMQca+Q6KM1I1rsqzWBnSGzg7Q==
+	bh=SfJwYwm5e4vsMzXCNz9yx/bfvNCh4e6ZadaT7dtFFCc=;
+	b=jfjA1dt8/EZY2SxNwVw3bH8E+zCmRq4WqyInQYt1cc0RhNRfdiIpfuR7jOxCz7Z21FQ0
+	 Fk7zxRN6eZxfck0HBSA46kbqFn/jypn/0DNrO8pruB9FVaZypMe1zkty6UMeREw/uCky9
+	 jY+LOn62vpvpCz6168TbdenNzWlaJRdg1/yv83om7wH1GqH/sxRLLSySsYs1B1QJ8tZUE
+	 Y6x9KuZq1krCovRfTkOJSN2WYUudGAIrXnk+pw73G+73qtsfwJCDMbGXlBbLra1n1q/zY
+	 g/DFmJ8ZUb7HV9el9sKvdtrL57Hj/xYA9AZnVPV2rpTZjld9sj/di1PMp//slUA4mRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E72qajSD;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OxS0Otyy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428BD606A32C;
-	Wed, 18 Nov 2026 02:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B03606A31C;
+	Wed, 18 Nov 2026 02:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E72qajSD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8221D1F000CA;
-	Wed, 18 Nov 2026 02:02:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OxS0Otyy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9151F000C4;
+	Wed, 18 Nov 2026 02:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794967370;
-	bh=BzRw3magrNAp/PBSLA8AnhF9lX+dGyqPalNhhDXQaV8=;
+	s=k20260515; t=1794967636;
+	bh=SfJwYwm5e4vsMzXCNz9yx/bfvNCh4e6ZadaT7dtFFCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E72qajSDmV3nOkafXwYqu3Uc3T5gIWylsZU9YvxKQVwiIhLcTxa3a5rOZnPL218kE
-	 FmTgscjfO6sxYoKxHeUbYExEnIPBjXt1EeQDQ23yIhOR/bsklCyJ/wBb/nalfYJGQP
-	 uuNCoTfDK/QrOlu8UfgLTMjCLGKY6iRpu0qASXvwnyX00OffUvPlZ1UACWH0TaZQss
-	 kfJZXHvYNw2miYdeXZoAI27anCIDcYNVT11qnRKtiWuvOQZTUQ4wHOYMzX1/OmgxJe
-	 xPsMAE8Ol7g1R54aMSVgOx43m7RGL5gasmVXHMrYoFUkrWrqt15hgGUFPYj8pp8Gb2
-	 NmPS6m8mJXPWQ==
+	b=OxS0OtyyAIerLsAhqGBRZ+KTdGsIkmq3EWg7V/diqU8vep8orjnhHHMpfi8HdS/e8
+	 5CmV4owJrPu9fVMDWqrP3PXnFDuGAFxOaWbl9nbawe5aBx8OmbUcTRdGCuN+8szwLm
+	 DzEqrqHJvaQSXYaDpZsKoIjy+ePZyuap0aQ1vEfQgM6F47xKF/ewaUbsZyqE56eT1o
+	 sSZIdd8GUjB2BZqHlC4ABa4Wpfnx49lcjt5R3KAAiANpXhY/jtbLp+zRzJYnEaoAau
+	 PpPfsxAlxmuqUWpmLp45IjLc1wrfkR2ugyBHxexfl7s/cEMqNpWaGj2HapQa9pzGe3
+	 ou5Yf9OOHZUkA==
 From: SJ Park <sj@kernel.org>
 To: Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -51,11 +51,11 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org,
 	Mattathias Pinchover <mattathias.pinchover@uber.com>
-Subject: Re: [PATCH v2 6/6] Docs/ABI/damon: update for sz_ops_filter_passed_last
-Date: Tue, 17 Nov 2026 18:02:42 -0800
-Message-ID: <20261118020243.97414-1-sj@kernel.org>
+Subject: Re: [PATCH v2 0/6] mm/damon: add sz_ops_filter_passed_last DAMOS stat
+Date: Tue, 17 Nov 2026 18:07:08 -0800
+Message-ID: <20261118020709.97589-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261117-damon-sz-ops-b4-v2-6-439888fa04ac@uber.com>
+In-Reply-To: <20261117-damon-sz-ops-b4-v2-0-439888fa04ac@uber.com>
 References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -68,17 +68,48 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Tue, 17 Nov 2026 23:22:20 +0000 Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org> wrote:
+On Tue, 17 Nov 2026 23:22:14 +0000 Mattathias Pinchover via B4 Relay <devnull+mattathias.pinchover.uber.com@kernel.org> wrote:
 
-> From: Mattathias Pinchover <mattathias.pinchover@uber.com>
+> DAMOS stat sz_ops_filter_passed shows the total bytes that passed
+> operations layer-handled DAMOS filters, accumulated from the beginning
+> of the scheme's execution.  Users who want the amount for only the
+> latest apply interval, e.g., the size of a workload's anonymous memory
+> that is cold as of now, have to keep the previous value in user space
+> and compute the difference.  To know how many apply intervals a
+> difference covers, they have to rely on nr_snapshots.  But nr_snapshots
+> is increased once per target per apply interval, so the computation is
+> complicated for contexts having multiple targets.
 > 
-> Update DAMON ABI document for the newly added DAMOS stat file,
-> sz_ops_filter_passed_last.
-> 
-> Assisted-by: Claude:claude-opus-5-5
-> Signed-off-by: Mattathias Pinchover <mattathias.pinchover@uber.com>
+> This series introduces a new DAMOS stat, sz_ops_filter_passed_last.  It
+> shows the amount of sz_ops_filter_passed increase in the last apply
+> interval of the scheme.  It is updated at the end of each apply
+> interval, and kept unchanged until the next apply interval is
+> completed.  Like the other DAMOS stats, it is exposed under the stats/
+> directory of the scheme in the DAMON sysfs interface, and refreshed
+> together with the other stats when refresh_ms expires or
+> update_schemes_stats is written.
+[...]
+> Changes in v2:
+> - Patch 2: join the attribute declaration onto one line 
+> - Patch 3: call damos_set_filters_default_reject() before adding the
+>   scheme 
+> - Patch 4: keep only the stats list bullet, dropping the explanation
+>   that the stat is not accumulated 
+> - Patch 5: wrap the stats line in the usage document
+> - Link to v1: https://patch.msgid.link/20261116-damon-sz-ops-b4-v1-0-1cffe7227e6d@uber.com
 
-Reviewed-by: SJ Park <sj@kernel.org>
+Thank you for addressing all comments I added to v1.  However, you didn't
+directly reply to the comments on the v1 thread.  That might confuse some
+future readers.  From the next time, please make sure the previous version
+thread is complete by replying to all comments and waiting sufficient time to
+let any other chime in if they have opinions.
+
+All patches in this version look good to me.
+
+This series is applied to damon/next [1] tree.  I will repost it soon (~1 week)
+as an mm.git merge request.  So, no action from your side is needed for now.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
 
 
 Thanks,
