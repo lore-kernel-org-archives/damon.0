@@ -1,62 +1,56 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795011377;
-	b=xErg0MKERoG2ypARZslBpRBk6yDs3Gx9J3OX6dfZDc7bT1byUaX0tahtDE15AKnlcwFe
-	 3nRBLdYHLP0uoBXRYfwf2+uWxzddP0FI2PKMQb6193HE4dej/OLoN+1iuoJRG62ryCdN4
-	 yA68OXPTUr3tO3YAqYo1RI4lARAegzc59q6ZqHl9Ke8IrPwmJz6OAnMEsHaX3cS7CyoMa
-	 7BKhF5RWNr3lqs5lNGkzvbqFTSqvNyYbNavqKiiUEKNXZo4oS4klkCma477TFnH1NbOB8
-	 baV1XY6FkqH5dxx6BsJq4odHz4IR+IYMe9MCGi/fPw5NBV539IeW2bLHqsPzvgNE7Ng==
+	t=1795012117;
+	b=5D7Afi6TOqah6PZ/cL2R5KgK1llXOHOxS4N/AlWpSh//N0Ua/rR1AMQXBI1BuTdxhPH3
+	 m8m0+TdFWIC9DRvzu0+51wALbRzJXVrrckUO9SxhL4538juxwJd32s0ZQi1Kriqzw6ITD
+	 1tMcm8dKnfSdCihQyvLvD9r6PmdRt5woy0b17D+tUJqsXkBDuSdhDp5vLrHXvnMJP0/cJ
+	 xw9UsnAFj1VslnqCopmwO3WniClcqPVnljC9ycq5GVDMBA2w4htBcd9j4jz3hL5v3UgwM
+	 h3+MdnomLOFosw+a24TFQxEJeqzsg2yBcvRCmy05xGEvQHk725ihf/C8GNeW2MUePwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795011377;
-	h=DMARC-Filter:X-UUID:X-CID-P-RULE:X-CID-O-INFO:X-CID-INFO:X-CID-META:
-	 X-CID-BVR:X-CID-BAS:X-CID-FACTOR:X-CID-RHF:X-UUID:X-User:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=NkRayhbqFtlPnHUvyhGbsBwanQgB2ADYmADCwUGi5uw=;
-	b=BcdvAkbqdqifTsdAFItnWdukaZ+CKnkYWN7PJo/yUWJf8tZuXfuXsG8/O2jAerXaaQSq
-	 QeTts4QuN50H6VzwWY6ZB6EIyw9TWThXij8HRtECFyNK5p1b5JMoUx7ylhHJRs7HmKgnu
-	 nJSsEgiQOgojcnxqABGYAmH0JZk7k/6byhtdoTmv3D3tuwXqLfCmCcC3CmF2GRBnh/rQo
-	 HGpSek/HcitbHI8NMDxdh37PviQekOIYd368qNOgU3YP3Rb5Ni2G3ruTOaOleIydmSrJ1
-	 0rpYxY+Cg/ONjP5VDYpRI+/kgYXAIt/5HYpexygAjSee6SrEAnq94yH/FnbHIeZEFig==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795012117;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=GUT52vgyJgPuz0uybFsuYJgMVSReQWxsEW446+mnG/c=;
+	b=ZRvZVDzT/44hu1RsciX7uaVIZo7QVoWJ5Ditq2T2idp4Wqm21ggZ8rpZVDYRiU/80p0Y
+	 QpF/+PAsyg07MbO4ReJ3CC1ECNLXgygKyGauQ8A+ZnK8TB6Y5TGfoPnN59mF8Hw9V3kQ7
+	 4dgbuOri9i8OOm9/YJvBDv/YVo/b9SU1RA0vO0B5x9oVXAkbZgMOm6gVS884CC+wlDekI
+	 NgRTnloqurC+sOtv5RE6XwmFl+je3rCLesvfD8O5vBWhE0hNElER+b6c9UBB3DjU+kOEV
+	 X1WQ8J+WX22TBYBeO3h7+mkf0e7YJkwuTNoaRCOGpf8iiqP9jSTAT3P8GTbQIR6OGeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=kylinos.cn;
-	spf=pass smtp.mailfrom=kylinos.cn;
-	arc=none smtp.remote-ip=124.126.103.232
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Kog+7qaZ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAD160A2602;
-	Wed, 18 Nov 2026 14:16:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4AAD160A2602
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 97239286e35a11f19a56ed5b684f684d-20261118
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.19,REQID:3094af1f-aa7f-44f5-84ce-86c27277b13b,IP:10,
-	URL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:10
-X-CID-INFO: VERSION:1.3.19,REQID:3094af1f-aa7f-44f5-84ce-86c27277b13b,IP:10,UR
-	L:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
-	elease,TS:10
-X-CID-META: VersionHash:7db8b62,CLOUDID:d61cf93fb4fdaf745f8ccd974ca04727,BulkI
-	D:2611182216074FAVQI0Y,BulkQuantity:0,SF:17|19|38|64|66|78|80|81|82|83|102
-	|127|153|841|865|898,TC:nil,Content:0|15|50|99,EDM:-3,IP:-2,URL:0,File:nil
-	,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,
-	DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_FAS,TF_CID_SPAM_FSD
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 97239286e35a11f19a56ed5b684f684d-20261118
-X-User: lienze@kylinos.cn
-Received: from [192.168.3.106] [(111.193.136.161)] by mailgw.kylinos.cn
-	(envelope-from <lienze@kylinos.cn>)
-	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
-	with ESMTP id 821553608; Wed, 18 Nov 2026 22:16:04 +0800
-Message-ID: <bc48e456-5c1b-4479-a426-6639ef695914@kylinos.cn>
-Date: Wed, 18 Nov 2026 22:16:01 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAFB60A2600;
+	Wed, 18 Nov 2026 14:28:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Kog+7qaZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1881F000C5;
+	Wed, 18 Nov 2026 14:28:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795012117;
+	bh=GUT52vgyJgPuz0uybFsuYJgMVSReQWxsEW446+mnG/c=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Kog+7qaZykWYE2vmZ/oH75pfch5xTnHflU8PorPT1BHhJGz7cxBdAf4dIILq/VQgq
+	 Hit16GWSGZjpiJxNbNDcRNaXe0uZj7X9F/UwdTcUXH0+V3En5Hk21w5dxkSXxAnwvL
+	 rwrk+GinlXzbEaFMRyUodCXQCnPz1OGSvdemf2P/q6uiJfNYmb27xjRhzUrv7H6W+g
+	 OXVohld2oiuFRgPx5r6mO7wm3Tt3oSomxX0dZymKO6RvQMXWyEIQIACJu1eZP7zk2u
+	 uI0yMdf0idyVkZagkDkHqKqAF/Gw5yq3jlnLeGMf7NgZM2FK6kQnsw4rSrpO3hFEaZ
+	 fo71rGJpydlIA==
+From: SJ Park <sj@kernel.org>
+To: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] mm/damon/tests/core-kunit: add test for damon_call()
+Date: Wed, 18 Nov 2026 06:28:29 -0800
+Message-ID: <20261118142830.90113-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261118063755.37749-1-saileshnandanavanam@gmail.com>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -66,79 +60,50 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] mm/damon/paddr: skip non-LRU folios as a whole in
- pageout
-To: Aveline Noir <jm5905938@gmail.com>, SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev,
- linux-mm@kvack.org, linux-kernel@vger.kernel.org, sashiko-bot@kernel.org,
- sashiko-reviews@lists.linux.dev
-References: <20261118-fix-damon-hugetlb-pageout-20261117-v2-1-547a65a3206e@gmail.com>
-Content-Language: en-US
-From: Enze Li <lienze@kylinos.cn>
-In-Reply-To: <20261118-fix-damon-hugetlb-pageout-20261117-v2-1-547a65a3206e@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 2026/11/18 00:24, Aveline Noir wrote:
-> damon_pa_pageout() uses damon_get_folio(), which rejects folios that are
-> not on the LRU.  For a large non-LRU folio such as a hugetlb folio, the
-> loop then looks up the same folio once per base page even though
-> pageout cannot reclaim it.
+Hello Sailesh,
+
+On Wed, 18 Nov 2026 12:07:55 +0530 Sailesh Nandanavanam <saileshnandanavanam@gmail.com> wrote:
+
+> A newly allocated damon_ctx has call_controls_obsolete set, meaning no
+> kdamond is available to handle call requests.  damon_call() should
+> return -ECANCELED in that case instead of queueing the request and
+> waiting forever.  When call_controls_obsolete is unset and
+> damon_call_control->repeat is set, damon_call() should return 0
+> without waiting for kdamond.  Add a kunit test for the two cases.
 > 
-> Use damon_get_monitor_folio() and skip any returned non-LRU folio as a
-> whole by advancing to its end.  Do this before the filters, the
-> accounting and the last_applied check, so that adjacent regions within
-> the same non-LRU folio are not walked by base page either.
-> 
-> In an x86-64 KVM pageout microbenchmark, traversal time dropped by
-> about 99.7% for regions covering whole 2 MiB hugetlb folios. For
-> 4 KiB regions within hugetlb folios, traversal took about 1 ns more
-> per region.
+> Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+> ---
+> Changes from v1
+> (https://lore.kernel.org/20261117172219.26725-1-saileshnandanavanam@gmail.com,
+>  https://lore.kernel.org/20261117174834.29182-1-saileshnandanavanam@gmail.com)
+> - Merge the two tests into damon_test_call().
+> - Drop the list_empty()/call_controls.next expectations.
+> - Drop list_del() on the stack-allocated control.
+> - Post as a single patch.
 
-Good catch -- thanks for looking into this.
+From the next time, please ensure all discussions on the previous version is
+done.  You could do so by giving more time before posting a new version, since
+the last message to the previous version thread is added.
 
-> 
-> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+[...]
+> base-commit: 20eef29b7c8465ac98d7dd6d6f2ac07a8d8056ca
 
-Reviewed-by: Enze Li <lienze@kylinos.cn>
+Seems this is the mainline.  Please use mm-new [1] as the baseline of DAMON
+patches from the next time.
+
+Other than those,
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
+This patch is applied to damon/next [1] tree.  I will repost it soon (~1 week)
+as an mm.git merge request.  So, no action from your side is needed for now.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+
 
 Thanks,
-Enze
+SJ
 
-> ---
-> Tested in x86-64 KVM guests.  DAMON KUnit tests all passed.  Ordinary-page
-> and THP controls passed the 3% non-inferiority bound in the microbenchmark.
-> 
-> Changes in v2:
-> - Drop the redundant hugetlb check and update the subject and description
->   as suggested by SJ.
-> ---
->  mm/damon/paddr.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-> index 5b773012a876..0a205fa8d468 100644
-> --- a/mm/damon/paddr.c
-> +++ b/mm/damon/paddr.c
-> @@ -268,7 +268,9 @@ static unsigned long damon_pa_pageout(struct damon_region *r,
->  
->  	addr = damon_pa_phys_addr(r->ar.start, addr_unit);
->  	while (addr < damon_pa_phys_addr(r->ar.end, addr_unit)) {
-> -		folio = damon_get_folio(PHYS_PFN(addr));
-> +		folio = damon_get_monitor_folio(PHYS_PFN(addr));
-> +		if (folio && !folio_test_lru(folio))
-> +			goto put_folio;
->  		if (damon_pa_invalid_damos_folio(folio, s)) {
->  			addr += PAGE_SIZE;
->  			continue;
-> 
-> ---
-> base-commit: 67f3b04b277373438f17300e056306adbd9edf7b
-> change-id: 20261117-fix-damon-hugetlb-pageout-20261117-a4e03d9d5a5b
-> 
-> Best regards,
-> --  
-> Aveline Noir <jm5905938@gmail.com>
-> 
-
+[...]
