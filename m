@@ -1,56 +1,70 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794961373;
-	b=EqQrkIhu0B3s27wXPB9knUpAwpYC9ZXrN1+/nCgtMf2nZwZnCXhLc6cFjGjEwNJvEe9K
-	 Xwgp9k6nczsKkMPKGB1C0hxJkwbvpetK2Wd36/EHZ/9oZ7ETMdDqAYEm1KpIkqiTW0+w2
-	 nEbbz7hevsOFXp0vkfKlcyptOJ6hTpV122Z93k9CKsEeQqbzEApyWLgpZAIf3W0FJ46Ft
-	 pvKRUxxP4QFmema/LE/u85b/00CCLW8mj1Ud7zPuAxrlp4pdQK7s2qk4EXxBF6ABO4z7m
-	 WP2EgyfwHw/FZ9l21xLbtou3QIi/Pz/4ulq1pG+U9wbNsSXFKRKXyjy14EtRH0mOL+Q==
+	t=1794965557;
+	b=mEFxuw4Bb9kX9VnBGd97YfbhGWgk9Bqd4eGpOquPhEM2H2N/V7GNNwfCqWk9XUPx0cbc
+	 GFgXP6Sdpr8CiHxthAKzzKsFt4GypUUQo4/fk+u9xIqhtvkV5J8INpTVh8Ex83ew+Ux25
+	 8uO/6s2P9Qi/LK59tQSi+DAceD97BCn37HdFmCIhqUIayt3NqkSBfGkZ7mCU0S4gfOsZ/
+	 J+WmL6tESc0UtOZi7JDk/t1ruBW4XvQIRj7kNfLcC/5+BWf3It+EZHPPCcldpytItW7Tp
+	 T5dGReBRviD43mXrpdS9oMUqzy9i7O0YkPCUbO1uC+U7QlKqRQwrzotb/b53jEcvH/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794961373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794965557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=JRw6fEvSDbVhRU8qh+aETvS7Fbkzj3KZVD4IK2wFBqY=;
-	b=Sm9+6Js6bvHU6yd9A1VfsDwys78kwoSFxHvK1UXHiXW0NmbMuTdNDHX/rOuN9ATP1Iy+
-	 oExVQNXHLZ+sUr+7t0hO50JSapxwK2GPmt2iYbz6anGia6bFfq2WKDQclM3n0pgl+ccF9
-	 XMuuWm/lZFpGKEe1MElmEtuckybSJV9YqskFxsxwQJ4oJzSua9C/ABhR5tUJZ5mfOKuCa
-	 WiyqWZGJZ1VVRtsKyoM6VrBIwAmelD4/z59SxUFHOzLanMPmqnNOz92x57iRNNlUEUs/i
-	 g1Qe9LdV7M9jXghsj1OI1zvzAZMuexu7jLC7BAOoeWzmbSpD2GLB91QwNcBAHMFUb9g==
+	bh=60eiZsC1vQ0qBVJ9i90dmpYE8S+lEjH9IMSqx80A0ng=;
+	b=e27Hv+LNX1AEFKaO4DrQ7o3g2bEbCYmJwt/0P0G0YbNJG5VdsqmtKaXLfBd9QJXnV0kn
+	 fOy71yr7o513wGbAI+wgE1kZi62cego80wNmYnAGE+uj7iOlPCZzdbqtYO1xIRWudpJ0W
+	 NqbQAgH2ML8dyPtqbcKxtY0+YWBwp1sgdOgvLaOONoumyDeZ1hnqTnBQX9JM1y37eGRkU
+	 KWj7mIinOJnqhEA/1grKiPqS2yDDs0MmitzhLlSvJf/5X3qIg6Jr4pyc6GI81Fm/1ArEx
+	 eBZciSJi/4c9D/tESG3SB7KiMCr/3SP6eQumHDvM5SiGI2+9ntLj2RCEUnoh2aMhCag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AdwaZMb4;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=J+o8YWMj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C39B606A32A;
-	Wed, 18 Nov 2026 00:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7E4606A31C;
+	Wed, 18 Nov 2026 01:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AdwaZMb4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4161F000C4;
-	Wed, 18 Nov 2026 00:22:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=J+o8YWMj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1581F000C4;
+	Wed, 18 Nov 2026 01:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794961373;
-	bh=JRw6fEvSDbVhRU8qh+aETvS7Fbkzj3KZVD4IK2wFBqY=;
+	s=k20260515; t=1794965557;
+	bh=60eiZsC1vQ0qBVJ9i90dmpYE8S+lEjH9IMSqx80A0ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AdwaZMb41Dr3sv04GZVnGjckzwbg/sehBYDC9dmFCUjWmtVO+EiTp4J4s45P+khZL
-	 UCahzLL42MXU12ywdBfCrXPFhGP9An8DYILkAVUTTMREIHqtADzsdw9HV8B7btfy/y
-	 Iyn97cZZ0IizG1GH+O/uib7AAFqp6gZOC162nwpAwmV8VzGEP/84mp7dCY8qUC+qo5
-	 0yeUEa8Pc2KF3p4wMmNTKv1YFnVhIy2e41ycU1RCksHOXsbjA8JZvewNrJjYSAMVF8
-	 Ety645S097tDqS0HarWO2Vtte/fwbY2ElXgqjLueJvKnBN+XEJbP9bSXCQ1vdNsvxI
-	 H63ujfIZ03r+A==
-From: Sasha Levin <sashal@kernel.org>
-To: stable@vger.kernel.org
-Cc: sj@kernel.org,
+	b=J+o8YWMjgX9T+5jaNOFnKzda/YbY1BNrE/oTberX3jpMzeB7wh97ZK10rgf3CwYSY
+	 zq8mfbmcExTlNGaPUAdcqtmjnW+KVJR/dZpuwoTUH/GAizTqsbJ5pmwDSrNCULxRcJ
+	 3ejeOy1vgVYdhIvtqX9U1pC4IRSEVtZrjI2QnNJD5vP+9t/V0MgcmVgC2z4cRDrCjS
+	 f5XF/8p4dyvTiyWMKx9wr8jsREZ7FvT4FdC0ipJFFrF/iUn5TZCsahLeC9HttFpdF2
+	 nQ4SAofcjof1wqiK4mRA0JHf6ohnn+LhWahQwWRci43iLDHiUygj6j9tIsPsOPevBX
+	 J4VNdsXdz4+WA==
+From: SJ Park <sj@kernel.org>
+To: Aveline Noir <jm5905938@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Mark Polyakov <mark@thundercompute.com>
-Subject: Re: Backport request for 6.12.y: mm/damon/reclaim: use parameter context correctly
-Date: Tue, 17 Nov 2026 19:22:50 -0500
-Message-ID: <2026-11-17-1-daily-reply-0003@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <CAA5JH2yO-gw1gn_172hv0YWFfQpkXz915a=uoVH+e49P_D8-+Q@mail.gmail.com>
-References: <CAA5JH2yO-gw1gn_172hv0YWFfQpkXz915a=uoVH+e49P_D8-+Q@mail.gmail.com>
+	David Hildenbrand <david@kernel.org>,
+	Justin Stitt <justinstitt@google.com>,
+	lienze@kylinos.cn,
+	linux-kernel@vger.kernel.org,
+	Linux Memory Management List <linux-mm@kvack.org>,
+	kernel test robot <lkp@intel.com>,
+	llvm@lists.linux.dev,
+	mm-commits@vger.kernel.org,
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	oe-kbuild-all@lists.linux.dev,
+	rdunlap@infradead.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH] mm/damon/paddr: avoid truncation warning in high-address KUnit test
+Date: Tue, 17 Nov 2026 17:32:28 -0800
+Message-ID: <20261118013229.94629-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261118-fix-damon-paddr-sparse-20261118-v1-1-3a0e943406d5@gmail.com>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,13 +75,21 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Message-ID: <20261118002250.L5wk0sBY3Qu2EzVC7WmdJYVS2bxrl_adZ_GylXrcM6c@z>
 
-> It seems 6.12 gets backports of most DAMON fixes but this one must
-> have slipped through.
+Hi Aveline,
 
-Queued for 6.12, thanks.
+On Wed, 18 Nov 2026 04:04:33 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
--- 
+> Hi SJ, Andrew,
+> 
+> The kernel test robot caught this issue in my earlier addr_unit KUnit
+> patch. Feel free to fold this fix into that patch.
+
+I will ping Andrew again on Thursday, if Andrew doesn't add this fixup to
+mm.git by the time.
+
+
 Thanks,
-Sasha
+SJ
+
+[...]
