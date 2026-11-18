@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794968787;
-	b=v27vhWOdYHh7beCH2dvR52RAEe1z6PtB7oaTc8qp1cZ/hLjkg3AppJpvu8L/ULrT4qXo
-	 YtPi8Q3UwnJn0fws8fime1ctWcMeO1tMubihz+t9+vTMw4Z4G5BfL+Ihp0X5SFu5xbwvg
-	 3Hu71rOAsryYdifZ52DuFpvKcQIlkdIBcfzra2SBeCmHGRUJ9CZk+/1HFh4a+5yNgQBDu
-	 r1s3e/MT5u1gcKrl6cl+ijty0rRrKgAugCzM29RUI0nMokxjUSkQYL2nST0muZzdx3txI
-	 JHlzweEqz3zpCt1phD30Ni5Lvlkruq7nfzLYDC0bq6duEwoPaWOC37r+9P7nE3ck8hA==
+	t=1794968793;
+	b=DqKPoXdc20ErJ9J2+LqzW2GL4YZyI2117fU5x1HHVcYdGUhqsquBGilN3l1RhJK6ptMH
+	 OajGCUAFFeSTSqO4VmIJrrIWeetN5cQUw6wZI0xUwODbngOqFWiqQyPfc7T/0MznoX3Ge
+	 FdJ8lKO9FMjp5YgajnJTMy/mvwVepER35vDMZwvXR2cIx7L5ARnxoK+LCWhQWXShCxNPU
+	 DUILJETLcjjqrZKfSMXzJMQMqRB476fDz7MUnFXXpl5OQAaqz1GpqodFwYraX3kMfmJci
+	 hMuSELaoMN3JKZQZVatk892+XZQvzvRYtNGy0EmZQErGO/GUlkdd9hl0+V9kMscmcCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794968787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794968793;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=82Ce8Fr8BZHiYle88LD4ojBC8HBNPuwVcGis2pjysUY=;
-	b=eDh4oFpPjsg4l4PzSahtdTJKq+Nt+GuV+acNBzsXtNRx5TllOWd6cFOgT4cMhHCPmVgF
-	 Dg4uKuovXcU0Bu99+pF9aJZqnv2zXeuV+8kpUXGb/XzQBqPkyXGT9R3+XZKJ2fDKJQWnA
-	 HQsJiqMaDPKqfv2s5tUzV4hWKgc5U5Kv6Dbx0fx6960vzuVpZCKrechaUulReZHMFuOXW
-	 CoVtwWlO0AS1DRs0N1hQsiT8H0qoS4YOFQvQJ/IwZMDHvNeCHuTZ4V+PcY9cJkswYLxXb
-	 +wm+ZLrUXbKMwgpdk3vj66OIRitER3syRxRw53daY/q6BFyAhDBdrLG5pJ2yUbKzRGg==
+	bh=FFallkk4mzcmUUa18dH/gtvX32LskhcZ2yrPxt7tEeU=;
+	b=Y00Rwb3u/L2L9kqqMw5TvXlQvg0NU6d9OWs3e3N/ZZtcMDQVg9Rbq5oFO0EQlrrzA7Lp
+	 6gK/PbG1LeK7b63L/K7uPx1xEIZusXfSXfJc4/kxxzccORMJReOuWs7FWTfBjrP/743Qg
+	 18lev3/HXowpRZAPmkkyUJ2P8JpHO+KwHdVxv6qkWGaY5YFV7MhdpcseA+fi031wONLG1
+	 1cFWU7YkXgh+MobJVYWve/yUyIJOU1zikA/+Uuh+bD9A/iNbOZNQPfyjKLKBXlnk5CIWW
+	 EY7RbvQV2NxpoFo+jD6nMFmOJesX/K0oyDBbV+OGAd46wBvp2OKbx5+b0NW95/AFsgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P1HbI2BB;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KbEzIPQe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A2B606A31C
-	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 02:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3622B606A31C
+	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 02:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P1HbI2BB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E01F000C4;
-	Wed, 18 Nov 2026 02:26:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KbEzIPQe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967681F000C4;
+	Wed, 18 Nov 2026 02:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794968787;
-	bh=82Ce8Fr8BZHiYle88LD4ojBC8HBNPuwVcGis2pjysUY=;
+	s=k20260515; t=1794968792;
+	bh=FFallkk4mzcmUUa18dH/gtvX32LskhcZ2yrPxt7tEeU=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=P1HbI2BB8jFI09+Dt4fqk4kNBXVrOdzFItr0nwAJiX00tzEeFvjZpP4PDEC+cSaHi
-	 Sw5yrxoKZCtAEl5mPd10r7AWbB0sbbIQ5SPweQdYympOP5cJCRfGYlOyIW7XuzPz32
-	 mv+jQGJYoDE7Mz0SA75ZMpYIb5DXPG9/OxfyjSsoa7sDxApsO58nuhZ8mkrqbrPj1w
-	 GXcVtClp/d1JrNWLcmGbme9y+2HnFp1KX7V+al7VhEkjb0p9BAFdvaC+iaPVskbM0A
-	 ruSq1VzIRTkMEQ5p7T8QOdn5Moq15Fh+tdx/3TDpiTN6rnb1HXFV1tv+/Sj7IENhWh
-	 g5Ce+h9HWyVNw==
-Message-ID: <sashiko-outbox-219941@kernel.org>
+	b=KbEzIPQe7TidlFlEiMaK1J+/kk9nk3jvKVc4zBsmG3Jx835Do/qmfQfcZNrYdlaYT
+	 oH/JV95A0t0M5nc7sMFpjfkKOcTz6s90htgslBkEsasLrFXRcf9ZiBXyHsFLQycwRS
+	 JbcntEBCzWkqQHrxPFsy6Vv/nPnjS92EnV+COEt9QiTEgCodt2YQusp9KwRIY1mLmN
+	 M7a5QgUzRcvXSP58yhhRpngsQF7cO2cixqOtiw8MF8kdQ2b6UjhFW1VUuq79fTwwF5
+	 mpprH1bJhCKUm0cSP6ApYphVD5pYAyUleHDACgGcWN7dMrw1TFGBLhejjfo1B4Vka5
+	 Ys+ThCCXRZ8Kg==
+Message-ID: <sashiko-outbox-219942@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH v2 02/27] mm/damon/core: implement data attribute
- report queue
+Subject: Re: [RFC PATCH v2 07/27] mm/damon/sysfs: implement report producer
+ directory
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261118022225.100659-3-sj@kernel.org>
+In-Reply-To: <20261118022225.100659-8-sj@kernel.org>
 References: <20261118022225.100659-1-sj@kernel.org>
- <20261118022225.100659-3-sj@kernel.org>
+ <20261118022225.100659-8-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 18 Nov 2026 02:26:26 +0000
+Date: Wed, 18 Nov 2026 02:26:32 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,10 +61,10 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> Implement DAMON core internal data structure for queuing received
-> data attribute reports.  Initialize the queue for up to 1,000 reports,
-> inside the DAMON init routine.  Destroy damon_region_cache and reset the
-> pointer for the queue setup failures.
+> Implement a sysfs directory for each report producer.  Create and remove
+> the directories for reports/producers/nr_producers file writes.  It is a
+> placeholder for sysfs files that will be used for controlling each
+> report producer.
 >=20
 > Signed-off-by: SJ Park <sj@kernel.org>
 
@@ -72,5 +72,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261118022225.1006=
-59-1-sj@kernel.org?part=3D2
+59-1-sj@kernel.org?part=3D7
 
