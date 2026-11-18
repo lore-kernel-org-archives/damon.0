@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795012416;
-	b=0YYkAj3kZGYhpbBC4xtYS//Yj3FrbcLIMf72NpCirKqsfaeHMB2EPkYxREa7ZDJ1KXDy
-	 A85Diqs9c22h+xcsYpme99tvEvbh5Ci5fscfJcSHVwRuhJpbWcLZ2eamCLLx2gZb+xln4
-	 vJjj6rxQWdEhm7ZRGztGSdO5+mMynElhbdFw7vECtD3YEuzlG5+/SG3jNGI35IxWfivoy
-	 eHV7NMtHm8U12wexBKPsB3QlPM8me5+mLk/YS99YB/aMlKv+smzaAB0UWKm9VrhTQmvy5
-	 NNB/QDF+jlRH7IkMyN5T4XYBtfLG0KGURmcpzkRNT6hjSKAKuFItDypPYwS46fWPrHg==
+	t=1795012570;
+	b=tIxxJxqx8+H1y+puUQFYZ4qXQQm5syxEre4VLLz/72WML33lqdnxU7OoIH9UMjIZas8V
+	 gfkwzYmTdU/xE8l5xGCiwyQVcNAGLoOTpbU/KZaTj4dU+l5yxi5qjSKYaDyaTzVTNIB/9
+	 7U8rZgZYyXNOS14CR/KiQfeQ9wNMLqK4EkZw1oMMZrWNUJE9l7YOVpuEKyLts+xolHvXf
+	 dHIy6lSI0jBZXojZjUILGqPCf7KDLHA+6UvoOPFtzNgZldqMx3pV+j11NILaBMcz4LRBI
+	 tVTTxhzK4WO5LymCIw2v1fJL4mEBEuYM8k9zyEIETr24MkXYowO7ywUKadgeGXA3lBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795012416;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795012570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=lnjKgTm5vSNYR4pLlmAjDVsgJphmcl/khyWsdGHeBCY=;
-	b=NQXQb1P/Xf9eflNuP9IcuiRbMiBD0CSAj2hggUle19UVlMU9Z2JHVj+hTfdemzPv0KZC
-	 AcBymhxslw8zsFaSj10zAfihgrjO6tq1sLk0eNAZH+Z/PPxF8IKmcBffu16ah6m8ZiLig
-	 S2upfPYWpa7CXs/2Ohwtb1NyKphDrF1iPqu+N4Fs4fPbNvR6XBRoMbbEEPBYRTYwHNm5K
-	 AsDoNynkzyHlyxvH4xodgZsi3HhB7QKEzxHmyDUgiZFPCvUTvUmCcHCTMBi1JRWibULvo
-	 ui6TOirZUO0W2opdG619iA2joq/6f82D6yNe9CqC7DvXrIMp21rK+W9woTdMr957GqQ==
+	bh=CTJ6/5WzE5JCaK+BecloYss1do/yUv+G+4PNfkm1tUE=;
+	b=0ajLTIMdzvhlyFm5uLE7zSesyAux3t2D7ozyL00bcuUVYF/fYM2OCW3B8KIUY6KiAONI
+	 2sK72WJuvdBlpt+oo5rsqA1hIzwnhke/KttQDkpyuEbqw7q1e5zxb1tKjZD7LjVcCaN/b
+	 SSOi9knUaxNi+Nx+GkxLTUbgKFyd548ZCwA1XYOAYCu79yCrGjW5e5m6mYJyGWeKUyhz3
+	 povPxjlUCrVSpZvaKnlwu31PlyPPR71Fv/Q4jxotjuDhWJ63A0/O2J1J5sG3j0xx53uub
+	 TKcM+AQ1wIib4FgiTIbpLZCCEa1dQc3E8IIqsnCBLyjbXoCQo7jxaClPckw+jnHfROg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TQ2pXbMM;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KCLEdvBA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77D1606A33D;
-	Wed, 18 Nov 2026 14:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AF8606A338;
+	Wed, 18 Nov 2026 14:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TQ2pXbMM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681EE1F000C4;
-	Wed, 18 Nov 2026 14:33:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KCLEdvBA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A381F000C4;
+	Wed, 18 Nov 2026 14:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795012416;
-	bh=lnjKgTm5vSNYR4pLlmAjDVsgJphmcl/khyWsdGHeBCY=;
+	s=k20260515; t=1795012570;
+	bh=CTJ6/5WzE5JCaK+BecloYss1do/yUv+G+4PNfkm1tUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TQ2pXbMM8T1oX7wrQMY/hn6f1+xlHKRWE2PRIKDD/C+GPWSnoePr+Y84oMgigX5W+
-	 oDYCAON3LXdYPMVXQXH6+cKWl8YgltIJFPwG6hsUqY7krMleYaa/qmEgxml1Tjo4HM
-	 24MlTMxa3rBKD9Xi3czpMVqJYzNvVjf6y4dNl8muT25FY1OutVFES9qzdDLwjABHWW
-	 f/5n/I8sSgbk50WZnUHIeVO2ANd9qI7oaAs0163Bcy+rsK2MZZL3LHAX3qtZsfMkv/
-	 7wRIosaqy1C3ud+1g2rZwDZ9qKwdhPhxtIXt3nsR8zCqt1R6t+Jb1x9GV4Oe83R5ak
-	 YzBQEwonLtJzA==
+	b=KCLEdvBA6rxiK2fBZFHlt+emAzYHcLNBNuWT6W1cVvtj/QkHKCbayq8rXMNQqHmiE
+	 QG08YNjQB6j8h/O869KvqwnvmKPmcVIXcbvlWAnZ7uimQEHirzPAOFazn8bM62DNru
+	 KJJA/Sl7sobjrLTiNT7FadHW9qtxt27IghPR6NWmtNyV+K2Fj9HKN1ArgshlLztngY
+	 lhu74b50bLSxx3/jlx4TzmOwF3saTqzenvUlyuOC5VKaEKDgj1bDw4UATfoqSEgeVB
+	 jEMz/JSZcpxX9WDruvIkyK5QE2HDrwgJHy8yP+P4bWFJJcUnB6Dpa50CCNsGqcQFs5
+	 y5tnzU9V8fn8Q==
 From: SJ Park <sj@kernel.org>
 To: Aveline Noir <jm5905938@gmail.com>
 Cc: SJ Park <sj@kernel.org>,
@@ -49,8 +49,8 @@ Cc: SJ Park <sj@kernel.org>,
 	sashiko-bot@kernel.org,
 	sashiko-reviews@lists.linux.dev
 Subject: Re: [PATCH v2] mm/damon/paddr: skip non-LRU folios as a whole in pageout
-Date: Wed, 18 Nov 2026 06:33:18 -0800
-Message-ID: <20261118143329.92901-1-sj@kernel.org>
+Date: Wed, 18 Nov 2026 06:36:02 -0800
+Message-ID: <20261118143602.93103-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261118-fix-damon-hugetlb-pageout-20261117-v2-1-547a65a3206e@gmail.com>
 References: 
@@ -81,18 +81,20 @@ On Wed, 18 Nov 2026 03:24:28 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 > about 99.7% for regions covering whole 2 MiB hugetlb folios. For
 > 4 KiB regions within hugetlb folios, traversal took about 1 ns more
 > per region.
-
-Looks good to me.
-
 > 
 > Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+> ---
+> Tested in x86-64 KVM guests.  DAMON KUnit tests all passed.  Ordinary-page
+> and THP controls passed the 3% non-inferiority bound in the microbenchmark.
+> 
+> Changes in v2:
+> - Drop the redundant hugetlb check and update the subject and description
+>   as suggested by SJ.
 
-Reviewed-by: SJ Park <sj@kernel.org>
+Nit.  Please add a link to the previious version from the next time.
 
-This patch is applied to damon/next [1] tree.  I will repost it soon (~1 week)
-as an mm.git merge request.  So, no action from your side is needed for now.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+For other readers, the previous version is available at
+https://lore.kernel.org/20261117-fix-damon-hugetlb-pageout-20261117-v1-1-054ef8760a92@gmail.com
 
 
 Thanks,
