@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036101;
-	b=1Xq7Bixcs+BQmx6fa0APSyqEam6kkh6PCM4ypdnU6mnHL22AG6HcUZGXirQmAXEremlo
-	 Z63WTBPiuH6hWvBxlG5EaUm5ednsBqxiaA55KHKVg9XXm0JwUSkPjfV6XsfzQBTp/G9cD
-	 lOtTP6FCsaQ8Wy17AEkF2a+GnrkwsZQdyHDI202URXMqWATNp+zmP/uMDfwgbKo2LBvIo
-	 v7A18HibCNk1UMzRBJMAYFJEv4v45DHLON78hfrFOMAFCZPaBUbwrqDDYW40YBJyGMWOt
-	 HoXR/Qgp/scKNz+hqgvAdxJfOTnTYzVDU55qC+d+ha7x4ZtYmO7hR/SmQfOyBL5gjdQ==
+	t=1795036142;
+	b=EWc5ZKc76HOQ68kFn11h1O/od6pYq9Y1I4I8EoLVdBjAPUakjmQfLqAWrZ3OOKF8bm6F
+	 nnhxjQ6NVgtcgjkpNnNk4RYe26q2s4ANqXjiZO8NMoO0sA7INakC2bJhM6eBaHoWrUA1z
+	 BtqX+nczBE17ATAWuzw90tHKmJWZW0R22tmkt4qpBwUpt4cLCs+++Vrbdzw+gOyrnLpkD
+	 hZutSFjX7SsEUEifMp0rqju8olElUotfa736eTr3nkr1pfXV3o1e0ZUHf7/Kvj7ze1akw
+	 91z5OHAnoNewvCPlhyB3wsIlM6qBs8VhWlt2N5GBtB1TtzkjuPKmzkd5xmrMXlpPqmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036142;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=/CunEKhNFVpg/wvoORFgMhHUrWUHC3l6ukgPw5DD2AQ=;
-	b=FmXo6xNBaRTfl6X0GkCjXI7CLGzFTTs1Mg7/Hp7BmsjIjFrMP4xhjJ0vswp42ueKj5oB
-	 GUemvffU1MZOg/90k5DAwwvRzMhH4Z1MzkEhJ/W1wTfbTOyZcmfXY6jVqKfI1pQ/Ps7r4
-	 FLJrUIR9P821yPuwImP4oWnM7ucFZRwvepVZhZU2GZQfqn6OtlIVydtX6jXb4Bjp8/BN+
-	 bxP8IHrBpbB90559XaQz5TzoWPHgRWoIdQrULppSAL7leLgDoj278zp1wtnKk00TjsB6y
-	 BOaKGn70nxV3e9K/HP+SN18CWQj4Lee9rwzir8Nw/+7CWDYFvymkb7uuJuYYvkyzw+Q==
+	bh=fsJMQdillzPNFGPdj66Tay9WpMtNmtqPUvUMQauzC34=;
+	b=Vp8D9EhIFESt4lkoJUdbReQujNjGaI+l1tpsDNPhIE94RcM1a/LEGqiVYG3UC8Xffh2c
+	 hXgxuFKyXa2r+cJ0rjza+pHnPsNYpeIcYnb/Tmdl0u/q7Dl3NR7pQmy9jcRc3am3soocs
+	 1zvd+e88hV7u492Lo6WHU96uduRMlWuMrVn79jxCH3DjrJ6syQCJNICm0oAF/Q5M9d3VM
+	 6LaknY0e5RuernPfzyOgF989WuUZJrkAvH+4vPNQ9pU+dV/Ao0hX+idal2gktyGrpJguB
+	 UR98Rs2F5kv0gFbsUTzv3l5CBKtkGSKz0MqxNzTl1SuZUK1/ngQ0EOh4RfQssg88cSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iKEEhlip;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Y/RlDaQr";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64725606A31C
-	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 21:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8BA606A31C
+	for <damon@lists.linux.dev>; Wed, 18 Nov 2026 21:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iKEEhlip
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2523B1F000C8;
-	Wed, 18 Nov 2026 21:08:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Y/RlDaQr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0E01F000C5;
+	Wed, 18 Nov 2026 21:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795036101;
-	bh=/CunEKhNFVpg/wvoORFgMhHUrWUHC3l6ukgPw5DD2AQ=;
+	s=k20260515; t=1795036142;
+	bh=fsJMQdillzPNFGPdj66Tay9WpMtNmtqPUvUMQauzC34=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=iKEEhlipGCHZeqehUrf52rh8QGxeHAaJ7AYjgJKTD8qe8gyTsyYeKbot5ugU4O3ek
-	 W/UCprxwTpr4HnaG/o8aFhMQ+S71UnrsO5x5tnPcFBqmqSFnySbhzVWnfdStuRdyxT
-	 YfrUCrBrc2GMsdrGNwt91MUiSpUCU1i1eLLak/CFKmg79bgs3ny1h0TgdWl6gBo56e
-	 nxg1j9d6O4mO0WtyrgEI3h0hOkvEJx8LcadrDWtwFM1kx+qfkfA/KA25Q08aLDBqrc
-	 OgGLxU/tKbZZHdv0qE2qIG3yoGgFDc6sHXDQSVVkWwifP0yUpCHzhkqVI7AgtZOp+8
-	 ZJA4UnMoFq+UA==
-Message-ID: <sashiko-outbox-221971@kernel.org>
+	b=Y/RlDaQr8Y7xSj6fkcRi0UZou8c2StPINfCB8SbXiS/q1S12p9H2lgn1UwaUnuzfn
+	 F+qBGKN+3sbzIgF+rq41bvFuhL9mcBtjFQaaCHYkWUlcXvC5L4U5Rylr2pB2LYkWFf
+	 aD/WylmWOJoZlv74daWLkxOTZW3zEJQZEJCEGxE4gByHT7mQ7sUVA6J5HmOMjQ1XW+
+	 T/U0W88k7YdELN8vMcgSaz6ywWhHjfQKYkMfVTK3agCcl/OWNur2zECf01Ptld/D66
+	 Kxe1WXy31EkTF8zIyyTD8Qk204buszQkgBTYTEIzahvqmH9wcaTkAXkvB8M7fHw+ap
+	 USCIMu8fKaINA==
+Message-ID: <sashiko-outbox-221972@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v5 05/17] mm/mglru: skip the flags cmpxchg when nothing
- changes
+Subject: Re: [PATCH v5 09/17] mm/mglru, gup: mark folios referenced via a
+ fast helper
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "Kairui Song" <kasong@tencent.com>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261119-mglru-fg-v5-5-9eee2fe97a2d@tencent.com>
+In-Reply-To: <20261119-mglru-fg-v5-9-9eee2fe97a2d@tencent.com>
 References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
- <20261119-mglru-fg-v5-5-9eee2fe97a2d@tencent.com>
+ <20261119-mglru-fg-v5-9-9eee2fe97a2d@tencent.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 18 Nov 2026 21:08:20 +0000
+Date: Wed, 18 Nov 2026 21:09:01 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,31 +61,27 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> From: Ridong Chen <chenridong@xiaomi.com>
+> From: Kairui Song <kasong@tencent.com>
 >=20
-> folio_update_gen() and folio_set_lru_refs() always end with a
-> try_cmpxchg() on folio->flags, even when the new value equals the old
-> one. The locked instruction still takes the struct page cacheline in
-> exclusive state.
+> Introduce folio_inc_lru_refs_fast(): raise refs from 0 to
+> LRU_REFS_REFERENCED via cmpxchg, or just set PG_referenced for the
+> classical LRU as before. No counter update or promotion is needed,
+> nonzero refs are left unchanged.
 >=20
-> That is common in practice: a folio mapped by many processes is visited
-> once per mm during a page table walk, and after the first visit it is
-> already in the youngest generation with refs cleared and PG_workingset
-> set. isolate_folio() and the eviction paths also call
-> folio_set_lru_refs(folio, 0) on folios whose refs are already zero.
+> This helper only aims to be fast, it exists so the gup fast path can
+> stay a fast path. The new helper doesn't account refs above
+> LRU_REFS_REFERENCED but that's fine for now as GUP never used that
+> or anything similar for CLRU either.
 >=20
-> Break out of the loop when the flags would not change. The update is
-> complete at the point of that read: the flags already hold the target
-> [ ... ]
-> [kasong: folio_update_gen() is replaced by folio_inc_lru_refs_walk()
-> later in the series, which keeps the same early exit.]
-> Reviewed-by: Kairui Song <kasong@tencent.com>
-> Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
+> Convert the gup fast-path sites. No behavior change for classical LRU.
+> There isn't any regression for MGLRU either.
+>=20
+> Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
 > Signed-off-by: Kairui Song <kasong@tencent.com>
 
 Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261119-mglru-fg-v=
-5-0-9eee2fe97a2d@tencent.com?part=3D5
+5-0-9eee2fe97a2d@tencent.com?part=3D9
 
