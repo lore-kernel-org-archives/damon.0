@@ -1,55 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795132363;
-	b=ZKuVxip+mpYtPdkVDYDn4RrYrqFjkbMn+D2AZ07S9aj33BLM13kAXgS/qeiByhXQUrGy
-	 9V0K4DAV6FcWFy2FDMApgX0W5kptbRuep1HXFva2SiaQ2xDI0SU4ISo8cNGmkEix8IcUm
-	 d6ssaLSKa4XASVzM5Cm5yCemJvHP8sFnuK477jy7sBAX8DCQVjW00U3+NaGJKF1VIEuu8
-	 4yevvc2WGfkD/yT5ZTNDaSxe0DBEVgUXwGmaow1GGWCHIV2UnxOqIw2/EDTtAvt6QbbBB
-	 dT7GcLKABS/nToy5L7vCeEM1AHmUzXRiPmRT7YeqXyMztZi9XXXxPkbZJWTq044QdEw==
+	t=1795133587;
+	b=vWKVtoZMa0L0VgxJ7ChfU3cQWVTo64PlxD5umcXwSQ/vqgk2qGVN3lyhnxX0G123hY+Z
+	 jzFL6sqqyv7+IMEp88VwIK58K+aB16fAvMMJnV+1EepXnAI8ZCIwux0k6kY3iOzTbg6m2
+	 xcwC7dC1AzR4V4U0TDrMY1wDEFVwEqXySnyEMiOi22Rt0khm/m0K6I8xoQzgwAAcIU2zc
+	 gj8Vx19g1xJXJzu1plVihktPolhdnW2ouyvGKC+aB+R6pEzup1WZloxcW+7Kuv4Ptr2+M
+	 24dlvxnmduZY2EjPYYQvq6N6UCHT+/yTsg/hijmkEHpgLG5tWONenym5JLTCObcPaPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795132363;
-	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=UJrHYEnQ0yy/ldYky5YEoQN9xI+McH+P9QT2Lj87958=;
-	b=hu8An8ywDXqcqJY7Aqe5e0Vd+T9F6DDVDfNzovO7bGUyQc9H/1h7okyyGtNpX85KTWka
-	 0DJ4yjFK9SlJZ2oXijxjbyBA2FXBbB4ZpIzpV2Vw58p44xtX82Dfde5RwLfRHfvFdWq7M
-	 7X56VPJ9r4iAxLh07oAqaaBfRPOZavvfYrQSkWPlCJ5PbA7yi2K++gDUf9eEBmdgoJh+W
-	 mIgEZAOZmvLV77hZwkrQj72lUBNA8NDCmmixPJofQAWE+y3mJVvfBMlu9tqSajWunrJW9
-	 Om48FA89rAw9InZCyO4sA/Q6/nq4Om2IHpaG5VSpQBA3ckM9VRYGlUk3iDcI3F2kzEA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795133587;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=9SB4EObKSw+tB9P4IbZtGcg+6FkG4Gy4Q2cjVejRkPE=;
+	b=So2PlllBGDhzfxUDk2SD0YPu58jLXN9CQolLCqaG3Iz0XgI3LVB3q2e1iRTh4W0dJAss
+	 CncipiOllm2K1mYh5CdyCnWEl9eHaeRgwNJ3kI6YhQ3aSxcRaje9cUV/6KpXzNG5m+5PV
+	 PgtiyYElS990q3FeXcTOSQ7CqKYuzb5ftdSnY9NqUr37zXxcy41O9gfMmLjNUd2bjNekg
+	 m6rbmeu4kxMFq99mAgeJZN0uw+6qtDcxRP58Rt5aKK1Vynz6WHpAZIAtOcTBHhZycdvh+
+	 hje47foUDMgeUp0rwi0R4vaNHbyuW8dLU8of2N+1pO5Zom3BuCjzHhXu+6iVKZpVHyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BrPIpaRv;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YDBw5KRi;
+	arc=none smtp.remote-ip=209.85.222.181
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DFC606A32C
-	for <damon@lists.linux.dev>; Thu, 19 Nov 2026 23:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B48606A325
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 00:13:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04B48606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BrPIpaRv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F371F000D1
-	for <damon@lists.linux.dev>; Thu, 19 Nov 2026 23:52:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795132362;
-	bh=UJrHYEnQ0yy/ldYky5YEoQN9xI+McH+P9QT2Lj87958=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=BrPIpaRvDbzd8Y7rMw46WOQFjLOZas3+Km8HCtgHamZekBAwZBP842rmER5zZ8UXk
-	 S++F+v8K4swO+gtbPsJWH4+GbKbf6v9zckJgIIIn+EtGkCCox0TLyBsIoJwxmRidfm
-	 pmdHZm6nLAzvirWhXqRtfx7JrliAFvpGZyOSNwOvpaPDoyd0XO96ybt7zPdIxpcV/y
-	 DqreKbXIyRYm3dMV5znki7LnpZ3jNZDM6uAgjsAcvKxAMGkKya2k2oqaM97IBe6zKJ
-	 s2qb4LHOFzBse+g1CWsS41v24g3LG0OYrOPWJn5anTmy6bhHOBMnLhN8e4j5FfkWMo
-	 mwmloMU8T6E1Q==
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-94965745d92so34614385a.2
-        for <damon@lists.linux.dev>; Thu, 19 Nov 2026 15:52:42 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AL+hErG+bbtwLM+L7HeGeLybz8ttQXyNz0wiiZymu7ffeNPbGdz2yP+2MSAJsiDN1u+Kr2hZIlcy0A==@lists.linux.dev
-X-Gm-Message-State: APuU4Z//IoMnrFfgOKBEFTjVfux24cO5UeULCFu/Zlqw9yEs9ukTPulN
-	WoTupN7ICnAp8zmB5NWyNSbkA/CLSMZ5OZCskV4ajKtzeQ/aOhnEYx9pS7+c1kDDL/57Aih/PIw
-	id9eVP0Kqe0/PVMJoKUYyYas6weStkjk=
-X-Received: by 2002:a05:620a:17a2:b0:949:6170:b78c with SMTP id
- af79cd13be357-949ba9addbbmr226598885a.39.1795132361936; Thu, 19 Nov 2026
- 15:52:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YDBw5KRi
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-949680e6d82so45850685a.2
+        for <damon@lists.linux.dev>; Thu, 19 Nov 2026 16:13:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795133586; x=1795738386; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=9SB4EObKSw+tB9P4IbZtGcg+6FkG4Gy4Q2cjVejRkPE=;
+        b=YDBw5KRi7CGX5ovDz/uMA88JSj4N360oZY5pJLU6vJjfRW36qeJ5unLSIQJ+LBxhFC
+         VgfZP0vBn5jcrg5EvXYSb+YgXrDXspBejIafZVohiyEuwApMo7K5Pp5qDJh0WStfwQUh
+         r+Ec+5bLMeEYXEIlQiVE8LfOyMBO3JJFfrD0evB6ZNjglvp6PM4UJxf9fYB3riiuzXpx
+         jsyden0mK6G1WxeEQDCm+QMnHijv1jz0x4w45jZuRQlfnAhlj0IKgMa8FuJ1DvoZAjb8
+         0vwU+EejWUjRuJmPvHUUh83bmNAI/1QwQcbadU+ZQyX19ovuLbbvBwVi0qd9xWaJdZe8
+         NMKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795133586; x=1795738386;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=9SB4EObKSw+tB9P4IbZtGcg+6FkG4Gy4Q2cjVejRkPE=;
+        b=SrSXXkWz/sax7GqvuVQzJcELgr9JWCjXDJlmiyfv7Qr+xxbqepte94xm6/Flk4i3Ej
+         6TZsUPH8K9AFnVt2hYvammfJtAgJcSNXepIA1quMjKkz1YyXeYS8kg1JWfxXx+xGdki3
+         mUStx4xMrzwXKVwQGZFWbKJr9yMHOtNz8XotSZ6Q1+W5rWT3dcmA8q5fBQgKVItzc3NU
+         FN1d2LzmaZQY0tKGiFmXmFTsPLqEilLEkySzrxH0aDuQZgrlKmBzOE2IAjUCm9KRr6Ja
+         gYyvOYFaIUrPdm6wXmyhHtgfzaftYMd/k0nUqAL3XN2h2fCC5wHc7Q05LeotsDDKuN0B
+         wRIA==
+X-Forwarded-Encrypted: i=1; AL+hErG7N05kSDTH0pWJQsbuRkiNGDXDAkrho4VcCTo/fxtAjiYiCw5T5kT2boshJDcRZAwtXl6usQ==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+UD44bmvSBPcInd9Ar5ozC8bv42UKzSsu0eXWiqjeiz+jrtqHx
+	j8gT37ppBM2/U09xy8+0v8mPmBDVVc0jscJqt48TfCPi6J8aIGbt1qQU
+X-Gm-Gg: AZFdTZcpuh3rhRgAf03LIn/hMbnZzz8xbaYTBmrglqcq3sDPeX660bqq1fk6g5zttBN
+	18zFSVDoMouuCn6JmJjF6EGunDcZU+0ozp9OM6Y+BZw0TOENEh8EM6neWtsj7K7cWobztR9fjgY
+	2/klwolbf7Ji+3eCA9AUu0hmTbQYpU0vaTEiT/iRqekmGa2oprImRlTZAIh6t1cMPLRr87koGCM
+	FRtdW6a3dr+2asGhZ6+fpJrZZGvYYAzqvCENeMVwVtamZd91U7qXyxp+bLKwI3DOrQeUHYRen0p
+	akaFlAKwCcZr6wdyMXNpRnfzAYrEDuGhyoM44vOkKZaMGP2vfGY6Qe+XFU7Sg1dQUsTqc2TFT04
+	uIfSCTKbq7xzlhy7tdDgxqKCVHSrc8hT2bfU6FXkMaNCqI+f0+QR/WXoamTjUBvnBe4ifaTHWJA
+	XUnoznjeayiMj51BCCnn8VSF8TiBOyaLuU7qSphhpWheh9OQ26hGkvalJctKq/1TeWqTzWzCTUQ
+	Te+j8mni/1DThICyEGyYdvM4u7XTetDAT/tCv9ZPPEQZ/ASRo1rCaDJ4R0hl2mYWo34kOA5lfLI
+	1J9L2Qan3N8AsgbcEdsTMrj0nWD++oHshUFOBc+eMxtA2M/efNBFV/9oVWpidpSzlKk3YXFgrwv
+	snGo1Fr6okEtGBxOlWVVoDR/tdP9VBlEA4mIv5ELpc53GEH7DuHz1srYvjks=
+X-Received: by 2002:a05:6214:3a84:b0:921:3171:b604 with SMTP id 6a1803df08f44-92134b48c88mr23359986d6.54.1795133585733;
+        Thu, 19 Nov 2026 16:13:05 -0800 (PST)
+Received: from FKXX2DL94F.bytedance.net ([72.29.204.230])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9213515f467sm8311096d6.41.2026.11.19.16.13.04
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 19 Nov 2026 16:13:05 -0800 (PST)
+From: Yifan Feng <evanfengff@gmail.com>
+To: SJ Park <sj@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/core: fix damos_walk() hang with zero watermarks interval
+Date: Thu, 19 Nov 2026 16:13:00 -0800
+Message-Id: <20261120001300.11809-1-evanfengff@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20261119014247.119946-1-sj@kernel.org>
+References: <20261119014247.119946-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,66 +101,63 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com> <20261119154001.9b9f953136935a09e8a50af6@linux-foundation.org>
-In-Reply-To: <20261119154001.9b9f953136935a09e8a50af6@linux-foundation.org>
-From: Barry Song <baohua@kernel.org>
-Date: Fri, 20 Nov 2026 07:52:30 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4x1bm9AoB3PJ_CM9LxiHx-f85O3qYTvomROYcmYJ-ysPw@mail.gmail.com>
-X-Gm-Features: AclHuK8MXJccupEkZyLKK4OZivmndEmD7ggxoROqdAHZoRi8ilS2fyKXpz1qOWc
-Message-ID: <CAGsJ_4x1bm9AoB3PJ_CM9LxiHx-f85O3qYTvomROYcmYJ-ysPw@mail.gmail.com>
-Subject: Re: [PATCH v5 00/17] mm/mglru: frequency guided promotion (MGLRU-FG)
- and flag cleanup
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Kairui Song <kasong@tencent.com>, linux-mm@kvack.org, 
-	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
-	Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
-	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
-	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>, 
-	Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
-	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
-	Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>, 
-	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, 
-	Gregory Price <gourry@gourry.net>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, 
-	Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
-	SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, 
-	Vernon Yang <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, 
-	Chen Ridong <chenridong@xiaomi.com>, Tal Zussman <tz2294@columbia.edu>, 
-	Kairui Song <ryncsn@gmail.com>, Xiang Liu <liuxiang.277@bytedance.com>, 
-	Ehab Ababneh <ehab.ababneh@intel.com>, Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, 
-	Lian Wang <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>, 
-	Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>, linux-kernel@vger.kernel.org, 
-	cgroups@vger.kernel.org, damon@lists.linux.dev, linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 20, 2026 at 7:40=E2=80=AFAM Andrew Morton <akpm@linux-foundatio=
-n.org> wrote:
->
-> On Thu, 19 Nov 2026 05:03:32 +0800 Kairui Song <kasong@tencent.com> wrote=
-:
->
-> > This series implements MGLRU-FG following the idea proposed at LSF/MM/B=
-PF
-> > this year [1], based on current mm-new. Depending on the workload, it
-> > improves the performance or reduces IO by roughly 10% to over 50%,
-> > fixes multiple long-standing issues with MGLRU metrics, and drops one
-> > page flag.
->
-> This is looking really good - great stuff.
->
-> Review is thin, so I'll remain in wait-and-see mode for now.  What do
-> people think?
+On Wed, 18 Nov 2026 17:42:46 -0800 SJ Park <sj@kernel.org> wrote:
 
-I'd prefer to see this go in together with the swappiness fixes,
-as the two patchsets complement each other.
+[...]
+> But, this could make has_schemes_to_apply has false positive.  How about
+> calling damos_Walk_cancel() when has_schemes_to_apply is false, like below?
 
-I've been rather stretched lately, but I'm doing my best to
-find time to review this. Hopefully, I can finish the review
-next week.
+Thanks for the review.  You are right about the false positive.
+
+I tried your change.  It fixes the hang, but has_schemes_to_apply is also
+false whenever no scheme has reached its next_apply_sis yet, so it cancels
+the walks of activated schemes too.  In my test (one stat scheme, default
+intervals) 18 of 20 update_schemes_tried_regions writes got -ECANCELED,
+and two selftests fail: sysfs_update_schemes_tried_regions_wss_estimation.py
+and sysfs_update_schemes_tried_regions_hang.py.
+
+What do you think about cancelling only when no scheme is activated?
+
+'''
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -3492,9 +3492,13 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
+ 	struct damon_target *t;
+ 	struct damos *s;
+ 	bool has_schemes_to_apply = false;
++	bool has_activated_schemes = false;
+ 	unsigned long max_region_sz;
+ 
+ 	damon_for_each_scheme(s, c) {
++		if (s->wmarks.activated)
++			has_activated_schemes = true;
++
+ 		if (time_before(c->passed_sample_intervals, s->next_apply_sis))
+ 			continue;
+ 
+@@ -3506,8 +3510,12 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
+ 		damos_adjust_quota(c, s);
+ 	}
+ 
+-	if (!has_schemes_to_apply)
++	if (!has_schemes_to_apply) {
++		/* The walk cannot be completed while no scheme is activated */
++		if (!has_activated_schemes)
++			damos_walk_cancel(c);
+ 		return;
++	}
+ 
+ 	max_region_sz = damon_region_sz_limit(c);
+ 	mutex_lock(&c->walk_control_lock);
+'''
+
+With this the hang is gone, 20 of 20 writes succeed while the scheme is
+activated, and kunit and selftests results are the same as on the base
+kernel.
+
+I will send v2 with this if you are ok with it.
 
 Thanks,
-Barry
+Yifan
