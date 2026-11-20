@@ -1,79 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795198265;
-	b=vdN4RGs0iQF3/hO2bXu1a+3Oi7p4WQyMnt1yuD92O0xpXSjXtNtJAbgKxicPNJ7CO4qL
-	 +bPmuOFC37l4vrIh8NY1sYDttaqOeVTa5d9QOWKNXJKVfYTMCf29v9bVYp9sExlS4nTe/
-	 NRmfCqId74OpEY4MNEjTDN0khVMgKvZYFWA5LZASfHSwbaHVAUr+38dG2YCM3MT1KA/mi
-	 vZYyPhjFpLWyPD9OqLnQTNWcwiluhGKx/9cm7lCi3uAFPePp8enEplCtVUDofUxgXllod
-	 OmqqbcVzjnU4bO+WPMreQ0Rml6p8Jq3BYLUU20aHFSjQ8NmO/uwhZi/HBvwqkh5vYpQ==
+	t=1795198279;
+	b=hFK/51bq5gPHRlkA4dix+wnrAjd+U4h5eoqZpXXQcBIXtXRNrVWHhdmM8vsIkL40PO4L
+	 WIbaT31iU5zV/Ft06ylxso5OMbTlSQOQY5Lm5uoaPJ2SqqvqskHVB3wtKssiDyavq2KxS
+	 CmeVZgHSHWJZUN/+XgysBBOU5pta4Ttw1COpHF7pCynmPT9sfL4gmtpvCQLe8KONwcMxu
+	 WPZTSgynGRk3frdcfz+tCko0QECge9tWKhm28lcidutfpKIHOE0PdXFo9SDOPH8+5g6eR
+	 jCSH8xja0xpnRixG/+TnDSNTDrX47O0KiJRIigxiMwTmszVeW0ec8Vi0qiYaiAliWhQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795198265;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795198279;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=SDxj2h8LUz/yKelW0hpXFzxdAGDfTr2wWvPbhGHboyw=;
-	b=E2Vk2Rv2FNCrm45+Omk2ZVagZ3ET7ukOJL2RHt2B21QfJXkD45o4wBjUN0ZdS03xMy0J
-	 06QwzQcY0Hrhsztwif05ds+lfJYonKfniaIZ0uV7kOFzUZLjGXHXLV8n1OEkNu75NuSrE
-	 3Tha0HYbE9UiOB4SQQR7lRXAUX7u7TIcB56Y2y+iilW7HnYJl3iPa4/Dc7Y46VS1/Sybb
-	 FP6iz5UZaf3mLQLkIpzUNHon/sJFe8f3dMWQVM6eZkcWHki6tT7sKdROUHTM8yd6A8Vsb
-	 wwcwLMifIfenxUd5VRqTfv3EPeyMRI81m/ToPU/EcfYcLvpOlSAir/XoQ26MEZ9WaQA==
+	bh=RpcXK0l33o1Rh3w5xtzko7j4qpbLiqFRKXf73CE8MdQ=;
+	b=D7o4cGQMnacVpcVtEbKIa+RATyWXc4WXPZduAVi1e7Q6tOO8x5cPdEITSXn1rmLSy+wW
+	 rEXiD2ezcNEdnKVyj2ykZhK05JEsjzBu2zOjnVwoW/Ab56oUkjdm+nuyHB7yjRF/zFmLP
+	 AldygY+Tdg3279Cuv9f1tZ9zyuL4q50T1JhPArVJ86rJnM88OflRGxHpWWcN84kTpioTF
+	 Z2frbbYQGmEr8+aYYfyYnVwlgtvA5QbTybiNthLSiXuf62vPhm9PtZjvu3J7gDbTGaTcp
+	 pASO4m38YpIIrm48376GDvXBmPf/DefdpaMLoIhvrrbqpFx3bN6NJvCAiaLPX98kCIg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K7wL3Pl5;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fKuuGKty;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F133606B44A;
-	Fri, 20 Nov 2026 18:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BAC606B991;
+	Fri, 20 Nov 2026 18:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K7wL3Pl5
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fKuuGKty
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795198264;
-	b=kE0AhTAjt5mvEomE/RIe4XLX4Hs2ipvGMh0A39Gte3At61QLY3YKijQYtPfmLTu0cvOn
-	 2G5RexrBMAmASK+T0PHWMxP1tockKYsktieMqq2ylad8C408CeJvqBSD+qR4uIHzvlVA/
-	 8iyviVJfOQKQXAR7Z9L/hZBcAIVr1O5P6081d2jPsmRSGzLQSp8V+5dR0vi50Hiwvo1ku
-	 RILztZiGyaELi7K3FGx1xNrZdUp5hxcqi0ah8qqqQbE9LgVeVjJDxHLp6PG1p4tkF97we
-	 soDLFree2320Fy9NDAF/9mtOALb0Qyi4AnFPocjLG6TzfVopq8B3nL7H8sDj0uGoI7Q==
+	t=1795198278;
+	b=JQmR934sO1V46SBOaUoAhgSHR2B853Mc6kRvowtIe9jkdAi0ZELfQ1AuU2OLQG2c3NDw
+	 8ItB5dJMjjShXu9FsI88RrNwlXB4zzjIs+8MBGgfFO34JEERbyqgN37/rKe40PlbkifF1
+	 mUl6ZHY6UeeUVKMPxqkc+CN4jqLHZGaur52O4zrkxjFfDoyW5LQP60SKFWPpueV85AB1D
+	 YdmmbKlhEHRR//2n95P1A8MYnpy5jEzIhiEn5j6H/ir56HUaMBvnnzaxFGpAyAnWqY+t1
+	 1vO0M7LNhGB2skd4Huk7vDXI0XaIpIrqTeoJ+ouajprEkzv2vKpcIJrbG3qQKw6gOzQ==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795198264;
+	c=relaxed/relaxed; t=1795198278;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=SDxj2h8LUz/yKelW0hpXFzxdAGDfTr2wWvPbhGHboyw=;
-	b=wRB7iNq2zmkQkjDdbza26hhQjBigLAjR1kMtCXtf+GIKUOZiSo+IL/oF3gJT3i2WFwBT
-	 7jl7GuqyrLroFzr+uqmwn5D+QPqo5DMZlS+5LexuSyn8YdebRKRD4myPFx4gPnntuq3Un
-	 ljL8hIRxZbSiM//AT7dpwBnYtFQHxAzNPyv5BBVC1qWOLhT0ljKJQtf6IqGvj8R2lTpqQ
-	 5rmnq6Ts2xsJQwKycqgevOqIvf6vo56IUnd2v1gq1FIGmdvmTcMrPZVEuDOOc2IZErjjq
-	 1cJ1+f/Ojy4pRZKZ7Zl27JC3bEA78PGp4/I9JNQHGAWWY1BlhhuhfLd4FBmZYSMA86A==
+	bh=RpcXK0l33o1Rh3w5xtzko7j4qpbLiqFRKXf73CE8MdQ=;
+	b=MYvQtnFW/mDUxT+abczLBucztkJwd2Lo3sVjBpkvJBxULg3Kbuv6i7NF54ItlEXnTt7i
+	 8DiH+tr4B8ZZt4gKBlm9QhgNgZpyjqZ/xDjSOyNSKLaTvuge5XIK8uNCxi4334P60vXTV
+	 14XTRktHo2vLLU7TruCb75ZWwtCxFMWAZcDYo/p5WFPQT7pNqkKafmw7UFByzaVqmICCK
+	 TFR7QDQxwPIhhfyiH3cH5exoxsttbONTouVLxdBMflO+b0c+dAyRX+ifxsyqVLGCKEa7X
+	 x19W1N5RMphS4KY5EA9p2sJuWAiNfAKYF6UOV1Pl6dR7oVNZSOMBhRJrxPtaync1luQ==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id A237D1F00ADF;
-	Fri, 20 Nov 2026 18:10:39 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 94C981F000C4;
+	Fri, 20 Nov 2026 18:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795198264;
-	bh=SDxj2h8LUz/yKelW0hpXFzxdAGDfTr2wWvPbhGHboyw=;
+	s=k20260515; t=1795198278;
+	bh=RpcXK0l33o1Rh3w5xtzko7j4qpbLiqFRKXf73CE8MdQ=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=K7wL3Pl51LKxnGHBdlAfvvRb3zx0G66FKkg2Bk9pnCrUpi0EZWpAc3i3mKVijKO+1
-	 gk92KS4/xtldhh5+fZmphZMHXuR88Ba5MWhELHAEJBcstzv9ZD03CiMskChzCin+mS
-	 SErYPhg0XAZ+ESZUpSS0Chrr00UQSAT/TAiivIAB2oBadcTsH6+FFSNbVOtUETNY4W
-	 6qipPQWvN/58Cy+XDAsMTE0sXGXqp2JYllhF8hDMy3sEF2WyIMwfOTFZch2HkNRsCl
-	 LU7gP8sH2rNAIDKCqNR3V/QaSbefxiPNdOQitIeIQJIlNIA62N7R+Vc8+thL45zOk+
-	 NJojqlBCUiZhg==
+	b=fKuuGKtyxPknbbVz74SDlYqe8NpCSwrSdxokqvFDg/Hq6ii1GycNn0H/dzBbsxoz+
+	 dX68cSerLa9kDekAEFTpAvBvoU9C0GgI9s2Yy6tgqfJ7ak4KB1C8wVwBQJC+TjsF+L
+	 BglBAUrqngm4Cl54i4YKkuapiF0r5lIgBcYIkUdWzB5Ocrfl8OyYba4kCd3iEmW95P
+	 8iPHj0I9oEK5+f2RPjmniixq+cr5U8VFc9FjnvEhENmBGoPsgZgzSXkS98zaq9oI0I
+	 O1vQhnSky9mYVixuvbu1g92Lx+fzHn1tiacZv+ROWziop4CfV+r7KniA3E5YtDnClX
+	 MEN1F+F/gjKog==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 1E32C4B969;
+	by lkml.kernel.org (Postfix) with ESMTP id B479C4B97D;
 	Fri, 20 Nov 2026 18:09:22 +0000 (UTC)
 From: Gregory Price via B4 Relay <devnull+gourry.gourry.net@kernel.org>
-Date: Fri, 20 Nov 2026 13:09:33 -0500
-Subject: [PATCH 42/60] mm: fail private placement on exhaustion instead of
- OOM killing
+Date: Fri, 20 Nov 2026 13:09:38 -0500
+Subject: [PATCH 47/60] mm/vmscan: restrict reclaim to N_MEMORY_RECLAIM
+ instead of N_MEMORY_COMMON
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -84,7 +84,7 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261120-private_nodes_v6-v1-42-74f5f9a115c2@gourry.net>
+Message-Id: <20261120-private_nodes_v6-v1-47-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 In-Reply-To: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 To: Yury Norov <yury.norov@gmail.com>, 
@@ -141,11 +141,11 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  cgroups@vger.kernel.org, nvdimm@lists.linux.dev, 
  linux-kselftest@vger.kernel.org, "Gregory Price (Meta)" <gourry@gourry.net>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795198153; l=3361;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795198153; l=6325;
  i=gourry@gourry.net; s=20261120; h=from:subject:message-id;
- bh=TbRq76F0ctxLdrc4ZvqTJEioaj0puOvUL1bbmmWV60Y=;
- b=4TuCqLi3E6og3lhWPEnbx57vqhH0UZ+xHpnIJwJApHy8FsrwbpMCJEhWBmQF1kacYofzGuQUk
- MJg+9HMhsJnCGqIcMdsQtmg/Q+w3B05gKy4AO+RBfvyb9bK7v/Vtefk
+ bh=c7DgarKbPTh+6IzFAHFl6eKVTW2BJrYv3RKLDMceLJE=;
+ b=pJ9yiRLLHXGH+ah/OM4I5sNBVlA9ZiE7FmUiyed58jvCYoAInkb3gL9qE4qbzozo6/HQ/UBhm
+ +p2J5pp71F8BQDYiKB23kBhQW4ibDlwjd0+2F6Ea2rd3w38dcgQckEc
 X-Developer-Key: i=gourry@gourry.net; a=ed25519;
  pk=BZWDlx4htkR5KcvGjGtSDfx1tM0E5dlyBR43FEhjWVc=
 X-Endpoint-Received: by B4 Relay for gourry@gourry.net/20261120 with
@@ -156,91 +156,174 @@ Content-Transfer-Encoding: 7bit
 
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 
-Private memory belongs to a device or specialized service and is a fixed
-pool, like the HugeTLB pool. The OOM killer has no good answer for it:
-the task that faults the last page may not be the one that filled the
-node, a remote accessor or another mapper of a shared object would be
-blamed, and killing a task does not free shared private pages.
+kswapd and the reclaim interfaces currently serve only common memory. A
+private node that opts into reclaim should get them too.
 
-When reclaim cannot satisfy an allocation from a private zonelist, fail
-it instead of OOMing.
-  - __alloc_pages_may_oom() does not select a victim for a private
-    request, and marks the task.
-  - handle_mm_fault() turns VM_FAULT_OOM from such a failure into
-    VM_FAULT_SIGBUS. GUP and remote access see -EFAULT, and other
-    callers see the allocation failure, e.g. -ENOMEM from write(2).
+Restrict reclaim to N_MEMORY_RECLAIM:
+  - start kswapd only on N_MEMORY_RECLAIM nodes.
+  - walk N_MEMORY_RECLAIM nodes in MGLRU's debugfs interface.
+  - reject nodeN/reclaim for nodes without N_MEMORY_RECLAIM.
 
-A request that became ineligible since the last retry check is not
-exhausted. Report progress so the slowpath retries and relaxes it.
+Direct reclaim is unchanged: an allocation reclaims the zones on its
+zonelist, and a private node's zones are only on its private zonelist.
+
+Private nodes that permit reclaim get watermarks again (the capped
+minimum that highmem and movable zones get) and are boosted, since
+their kswapd restores both.
+
+Private nodes without the state keep zero watermarks.
+
+The hopeless-kswapd recovery on page free exists because allocations
+that fall back to another node skip the direct reclaim that would clear
+the state. Only common memory offers that fallback, so apply the
+recovery only to common nodes now that private nodes run kswapd.
+
+Leave private zones out of si_mem_available()'s low watermark sum,
+which bounds the common page cache and slab that must stay.
 
 Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 ---
- include/linux/sched.h |  2 ++
- mm/memory.c           |  5 +++++
- mm/page_alloc.c       | 14 ++++++++++++++
- 3 files changed, 21 insertions(+)
+ mm/memory_hotplug.c |  2 +-
+ mm/page_alloc.c     | 11 +++++++----
+ mm/show_mem.c       |  7 +++++--
+ mm/vmscan.c         | 14 +++++++-------
+ 4 files changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index e4f6323d7855..8a2e37475e5d 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -1038,6 +1038,8 @@ struct task_struct {
- 	/* whether the LRU algorithm may apply to this access */
- 	unsigned			in_lru_fault:1;
- #endif
-+	/* A private memory allocation failed; a fault reports SIGBUS. */
-+	unsigned			private_alloc_failed:1;
- #ifdef CONFIG_COMPAT_BRK
- 	unsigned			brk_randomized:1;
- #endif
-diff --git a/mm/memory.c b/mm/memory.c
-index 282266dd5e5d..4a8a08df28ff 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -7003,6 +7003,7 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
- 	}
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 1cb10c88954e..8146f77919d5 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1230,7 +1230,7 @@ int online_pages(unsigned long pfn, unsigned long nr_pages,
+ 	/* reinitialise watermarks and update pcp limits */
+ 	init_per_zone_wmark_min();
  
- 	is_droppable = !!(vma->vm_flags & VM_DROPPABLE);
-+	current->private_alloc_failed = 0;
- 
- 	/*
- 	 * Enable the memcg OOM handling for faults triggered in user
-@@ -7034,6 +7035,10 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
- 	if (is_droppable && (flags & FAULT_FLAG_USER))
- 		ret &= ~VM_FAULT_OOM;
- 
-+	/* Exhausted private memory fails like an empty HugeTLB pool. */
-+	if (unlikely(current->private_alloc_failed) && (ret & VM_FAULT_OOM))
-+		ret = (ret & ~VM_FAULT_OOM) | VM_FAULT_SIGBUS;
-+
- 	if (flags & FAULT_FLAG_USER) {
- 		mem_cgroup_exit_user_fault();
- 		/*
+-	if (node_state(nid, N_MEMORY_COMMON))
++	if (node_state(nid, N_MEMORY_RECLAIM))
+ 		kswapd_run(nid);
+ 	if (node_state(nid, N_MEMORY_COMPACTION))
+ 		kcompactd_run(nid);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 63cc8729c41a..ea48991ef589 100644
+index 864da908a59b..cc70e1b45322 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4176,6 +4176,20 @@ __alloc_pages_may_oom(gfp_t gfp_mask, unsigned int order,
- 	 * failures more gracefully we should just bail out here.
- 	 */
+@@ -2972,6 +2972,7 @@ static bool free_frozen_page_commit(struct zone *zone,
+ 		 * kswapd work again by resetting kswapd_failures.
+ 		 */
+ 		if (kswapd_test_hopeless(pgdat) &&
++		    node_state(pgdat->node_id, N_MEMORY_COMMON) &&
+ 		    num_node_state(N_MEMORY_COMMON) > 1)
+ 			kswapd_clear_hopeless(pgdat, KSWAPD_CLEAR_HOPELESS_PCP);
+ 	}
+@@ -6814,8 +6815,8 @@ static void __setup_per_zone_wmarks(void)
+ 		u64 tmp;
  
-+	/*
-+	 * Private memory is a fixed pool, exhausting it fails the allocation
-+	 * rather than selecting an OOM victim. Otherwise, if there is some
-+	 * indication of progress because of a revoked request, just report
-+	 * some progress so the slowpath retries and relaxes it.
-+	 */
-+	if (ac->alloc_flags & ALLOC_ZONELIST_PRIVATE) {
-+		if (!alloc_private_reachable(gfp_mask, ac))
-+			*did_some_progress = 1;
-+		else
-+			current->private_alloc_failed = 1;
-+		goto out;
+ 		spin_lock_irqsave(&zone->lock, flags);
+-		/* No kswapd runs for a private node to restore watermarks. */
+-		if (node_state(zone_to_nid(zone), N_MEMORY_PRIVATE)) {
++		/* Nodes that reclaim does not serve carry no watermarks. */
++		if (!node_state(zone_to_nid(zone), N_MEMORY_RECLAIM)) {
+ 			zone->_watermark[WMARK_MIN] = 0;
+ 			zone->_watermark[WMARK_LOW] = 0;
+ 			zone->_watermark[WMARK_HIGH] = 0;
+@@ -6826,11 +6827,13 @@ static void __setup_per_zone_wmarks(void)
+ 		}
+ 		tmp = (u64)pages_min * zone_managed_pages(zone);
+ 		tmp = div64_ul(tmp, lowmem_pages);
+-		if (is_highmem(zone) || zone_idx(zone) == ZONE_MOVABLE) {
++		if (is_highmem(zone) || zone_idx(zone) == ZONE_MOVABLE ||
++		    node_state(zone_to_nid(zone), N_MEMORY_PRIVATE)) {
+ 			/*
+ 			 * __GFP_HIGH and PF_MEMALLOC allocations usually don't
+ 			 * need highmem and movable zones pages, so cap pages_min
+-			 * to a small  value here.
++			 * to a small  value here. Private memory holds no system
++			 * reserve, only this small minimum.
+ 			 *
+ 			 * The WMARK_HIGH-WMARK_LOW and (WMARK_LOW-WMARK_MIN)
+ 			 * deltas control async page reclaim, and so should
+diff --git a/mm/show_mem.c b/mm/show_mem.c
+index b90fb5a0016b..24dd33ba783b 100644
+--- a/mm/show_mem.c
++++ b/mm/show_mem.c
+@@ -38,8 +38,11 @@ long si_mem_available(void)
+ 	unsigned long reclaimable;
+ 	struct zone *zone;
+ 
+-	for_each_zone(zone)
+-		wmark_low += low_wmark_pages(zone);
++	/* Only common zones bound the page cache and slab that must stay. */
++	for_each_zone(zone) {
++		if (!node_state(zone_to_nid(zone), N_MEMORY_PRIVATE))
++			wmark_low += low_wmark_pages(zone);
 +	}
-+
- 	/* Exhausted what can be done so it's blame time */
- 	if (out_of_memory(&oc) ||
- 	    WARN_ON_ONCE_GFP(gfp_mask & __GFP_NOFAIL, gfp_mask)) {
+ 
+ 	/*
+ 	 * Estimate the amount of memory available for userspace allocations,
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 3e934135e805..03d0919d11be 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -5729,7 +5729,7 @@ static void *lru_gen_seq_start(struct seq_file *m, loff_t *pos)
+ 	do {
+ 		int nid;
+ 
+-		for_each_node_state(nid, N_MEMORY_COMMON) {
++		for_each_node_state(nid, N_MEMORY_RECLAIM) {
+ 			if (!nr_to_skip--)
+ 				return mem_cgroup_lruvec(memcg, NODE_DATA(nid));
+ 		}
+@@ -5754,13 +5754,13 @@ static void *lru_gen_seq_next(struct seq_file *m, void *v, loff_t *pos)
+ 
+ 	++*pos;
+ 
+-	nid = next_node_state(nid, N_MEMORY_COMMON);
++	nid = next_node_state(nid, N_MEMORY_RECLAIM);
+ 	if (nid == MAX_NUMNODES) {
+ 		memcg = mem_cgroup_iter(NULL, memcg, NULL);
+ 		if (!memcg)
+ 			return NULL;
+ 
+-		nid = first_node_state(N_MEMORY_COMMON);
++		nid = first_node_state(N_MEMORY_RECLAIM);
+ 	}
+ 
+ 	return mem_cgroup_lruvec(memcg, NODE_DATA(nid));
+@@ -5832,7 +5832,7 @@ static int lru_gen_seq_show(struct seq_file *m, void *v)
+ 	DEFINE_MAX_SEQ(lruvec);
+ 	DEFINE_MIN_SEQ(lruvec);
+ 
+-	if (nid == first_node_state(N_MEMORY_COMMON)) {
++	if (nid == first_node_state(N_MEMORY_RECLAIM)) {
+ 		const char *path = memcg ? m->private : "";
+ 
+ #ifdef CONFIG_MEMCG
+@@ -5935,7 +5935,7 @@ static int run_cmd(char cmd, u64 memcg_id, int nid, unsigned long seq,
+ 	int err = -EINVAL;
+ 	struct mem_cgroup *memcg = NULL;
+ 
+-	if (nid < 0 || nid >= MAX_NUMNODES || !node_state(nid, N_MEMORY_COMMON))
++	if (nid < 0 || nid >= MAX_NUMNODES || !node_state(nid, N_MEMORY_RECLAIM))
+ 		return -EINVAL;
+ 
+ 	if (!mem_cgroup_disabled()) {
+@@ -7907,7 +7907,7 @@ static int __init kswapd_init(void)
+ {
+ 	int nid;
+ 
+-	for_each_node_state(nid, N_MEMORY_COMMON)
++	for_each_node_state(nid, N_MEMORY_RECLAIM)
+  		kswapd_run(nid);
+ 	register_sysctl_init("vm", vmscan_sysctl_table);
+ 	return 0;
+@@ -8268,7 +8268,7 @@ static ssize_t reclaim_store(struct device *dev,
+ {
+ 	int ret, nid = dev->id;
+ 
+-	if (node_state(nid, N_MEMORY_PRIVATE))
++	if (node_state(nid, N_MEMORY) && !node_state(nid, N_MEMORY_RECLAIM))
+ 		return -EOPNOTSUPP;
+ 
+ 	ret = user_proactive_reclaim((char *)buf, NULL, NODE_DATA(nid));
 
 -- 
 2.56.1
