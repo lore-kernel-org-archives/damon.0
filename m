@@ -1,101 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.54
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795191645;
-	b=O3VWNOqBNnBkCynOx+VThF726vKWtdd7BIwPYuXmUZjOHgAuv5TuKaA6tzGasQqWEsAX
-	 HZOcpDKCtqNqVU6PvV7cNPbuujB1vXysHVqBgzdynLlDskEHBiIXG6AxrhvaCjun8ig8Z
-	 qKuk5x0kZDxzSwAZ3sSvEMPrn6clUQCCmYxv6edFprzCE6QuphqlLzM0TDuxoyotgimVw
-	 DAVs1bt19eoMZA8yk49mjZegl4DWq1qAF/eqnhgQK0Qw+/UogGGGhChgIBplO+27wEJlB
-	 cMPvTkHFzTMzMFo6ZMnNRdjRaohFEkpoaT1l8iuyxAYy3ezdeekOYqo5tqsFz9TjqOg==
+	t=1795192257;
+	b=FhZUUjssNBCCCKzo2VxyXlJaH2pHENBc79nDeLrhXFkuzC6I5ZKwUlcW4lPaWZQ7lm+V
+	 jphmeuR5aLmPRhD898poNlfDZjQwoPSJiPSYuEDJZpwOUmroVBt1JVtIrHBF1XjIx0udK
+	 HC/hIBGiH4lJfwKHFn3dC6QyzcEsjdV+eLd+Qt95OyAuMUJlVkeFb2+NdEQdlK9D/i3bq
+	 bNIAhgi2DgelzICdokaMUpfIjYxHTMrHiM8JgXPZdfGFD+2s/hZdkd2GV2C+mTq38gqcd
+	 L3E7WceM8wQsWAeiuK9QfZvfY6FHPV+CnQZzvx6ELOq3XX7yzkQFr8aZiLKycVPKWZw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795191645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795192257;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=nFviYrq5o1Aunl789XsU4c1vTFdvhxxqWOma4Om+z08=;
-	b=Uiu3Ap340DHk0q25+Q8MKHTnI42GXNsamMp3LcKer87rSdDyZ7YqTHZbm7LYmLGLhuUZ
-	 hHWyKXBBADO15RmkTmTUfDMTwfT5UIMRnkkNjTtuXVGwve6yf2Jo1lU1ykSFn6wLnljYl
-	 U0QH92wIsHpCYVex05Ol9UfdUu7Rd6fKabiXla3APqkso4+ir2E1iYKmo5FT1tZzJ/56R
-	 LLfCyc7QRFb+jlHuI6gqgGLJNxtFT5hx4Xh6CbFBJelj2jfm/iZt0VPz0743WUWLAlCor
-	 n5J4QRuEo3zl9kil9w0DyJqpJ11kJeFjvn5y8lLbzFyKdQ5twHiIG4SkwwpKWbhG5uw==
+	bh=cpX1M32t+57fqMIQ7LfIycrRgmXhRXFNCGI027Dqdn4=;
+	b=kaAjCFhueEAMUxA8rpDQsI5jIuyo38oUytfm0OGPjkgTfkdnoW5MuC4fGI/Blg3Qt8me
+	 LxKZ0e9AhlPCQsO4cmpW76vo3TGXr374lwLPRSmHm4L/DEm9CTV7GLX5s01iapI9wcPlQ
+	 zbAXtIsNUhnLleB+ASHZqDZwNccLeAiv3zRvX72lglY6f3NWStwfS49OY2bWc7F6yHJP0
+	 NXY8+Z4nNYHCGqOHW0Tyfr2+b8B652N3/BJ9cfESJmr9fAIXTgc+/z2QkCxvWXRZo3bxP
+	 7bb2f0rQVGaNPZnhxkSypcr0OeEUAcAuYgBInPRoB/bBmqEqlflzcbkyqV14Fuv/inw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=F4bFJ4CR;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=f2wom9F5;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AA7606A320
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 16:20:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A9AA7606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D6460A261D
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 16:30:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 84D6460A261D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=F4bFJ4CR
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4bb77a462c6so17448145e9.1
-        for <damon@lists.linux.dev>; Fri, 20 Nov 2026 08:20:44 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795191643; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=f2wom9F5
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a2000d5fb1so6187255e9.1
+        for <damon@lists.linux.dev>; Fri, 20 Nov 2026 08:30:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795192247; cv=none;
         d=google.com; s=arc-20260327;
-        b=D5R0va4E43Sfw5OmJWXeQAbW9qg5kpZFaNoLWvA4oznVL/ZiI4c6USjaY0C2/2CgPz
-         39pquXVIlESarro3eANn+XXlpabsoO+sM/0SlpkL4ZhI1K71Tv3J4IjQGG2ED3tEDWzJ
-         WAj661eAxcsafO4yFYVsZBlBgsDfuAooty7GDr4FPZg3F8cdXkgkZ2QS/iHUzB7km8H1
-         0hgUt0PjWMK9qOav0RclCcKZFygRVzoSLJneG0kYZesYUIUoHaiB/EDoFBmKQDbq8vBg
-         7LSt/BZEdWclPv7q2eWlT6PsMrt8iJf79IRBHzW4GR4S1bHtJ8xG+VQSsrBdRCaOB+U9
-         iriA==
+        b=sOvKWBnJV/qlG2K7AGsfEZoE0ELv2kdt5hCi8gFRZoFTTlHFa4HPKsP5qNKqu6hAKM
+         mUqGvrCXQjT/jNjDYUHWCKttbEMkABkEnrlkw5o8IGxOyOZThloa43anpK+gKRcJr1Eh
+         WMUTy6Ubo/ovuaAipAAjFuRdqLvgfLiIm/nlvRpPButKXyn9iHF07D2W++hXa2848Bo8
+         aRvWz2D8nYS4cYNSOJjhlsi1Dh9RHtAeSm0/ZrnTI98dtGEGwpDs4hTKwz1Nmd5WV11x
+         9/elgGfLYyKVzgoeIA9GxnYsOS+8HqKhNMvHmrKrM52D3rMKCMX99PgAYgBM+EvMKOKY
+         p5HA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=nFviYrq5o1Aunl789XsU4c1vTFdvhxxqWOma4Om+z08=;
-        fh=3DlOBEn0SkwTZbY18ROO/M9BUrB7/ZI2LLkRNg2mc84=;
-        b=RInDcYgab9IB3Sprsxs0Ju5mayc++a09Xp6qkKHH0OP47pgveicNzz7b37cUCwP2xN
-         WhjVNOPD72GtGSdbCSkZT6Mw6zo3Dx5HLMgeO/Ec7xA+sy+M51vBL/VRcXOUyBe3gtob
-         /+MfkEVQ1J+Y6fhLudt3MP20Q27N7CZtPjmEJCAn0t9j4xwupRgdnZT5hkn2P47c/1Aj
-         UqUgUaJht493fkN48cshKERRNv/z0iLfmkncHjuAmnVi5Yzk8+FfjMfNsepY5byvvEz5
-         3pZ5v6f1KqokiXik6nviOWbJsRDl1jXTJHRHnnJHC4TxzJToskBmmQzrmVExVlEU8b3E
-         naQA==;
+        bh=cpX1M32t+57fqMIQ7LfIycrRgmXhRXFNCGI027Dqdn4=;
+        fh=sQ7MHELO0mocWa/FoVIQBvcAuMXb1CO4Yk5wbpDMcmw=;
+        b=B3fIW8ehHaRvdm9F1tpmZnhy9tuSQxopaAhc8Ua02xEL1/RQsD7gMZx6tGZX0CPA2p
+         dZZNkpJLJxzWeuO5EAI//w/1uRTtRjJa8JVm7qGwANGsdnMN+Z9+QMFtDPi44S7JhVzQ
+         kxf+3/EpL6AXqtsnqaq0+xIGjSbpLA9WbPZeZbHRBb4sPD031Q4VO/WSRZ2h77DF8HrR
+         NSh90/CoYEi5wVizRzVY5CvRenwVnDMCfKVOEnpCiUgWFCLOpDEv5xtL1Cwb/q5W+nIS
+         AWUjbpi2aUVPGci/J8J8Q3ZgTmKvO4zdsiHWKKP381fQ8QEEH0u0LME8RQrL437C4UqZ
+         UDcQ==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795191643; x=1795796443; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1795192247; x=1795797047; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=nFviYrq5o1Aunl789XsU4c1vTFdvhxxqWOma4Om+z08=;
-        b=F4bFJ4CRJnMs8wFkO0Z3wmg+w5L2hCH0GWMMKdGHFLDP/eQVdph96zPyXzdqY85nFj
-         b2hP47Seg6XjNCNzvpFFHyrm2LeiGokqUBwAM5N6FE3qjJ0FxxqRey7wOG/wP/nQI37U
-         wjtuVoHpsuNS8OSKatilSbrSc6HbZtvBcYrApKbMfI7smf4/gsdRJWlzJ5Fj/L6y2oxn
-         0A18zNOl7lscJdUzxsFlbQzlcTwUV49NfckWTAewTo+YEJhc3iwTzsR9a7voadJ/QbQg
-         4oBHhHiFcjHl0qQKheljyDog+rA15P0q47M5p0DxoSfEZWMM8uL+VTKs1QrxAmEdn+nG
-         b5nQ==
+        bh=cpX1M32t+57fqMIQ7LfIycrRgmXhRXFNCGI027Dqdn4=;
+        b=f2wom9F5bcJmSoyhLA6+J9nMqcqiMFtT+PPcboJ7OITyVoBAHrR5+SkJT5F+XWFgXE
+         N267aL3iafd8v6Ux7uqHOeM46cxWP1J2A33BZPO2P4K/7is3TaGDmYje1ZX5LQPy3bB7
+         fM9+xC3GUd6xB1AB0IGnRT/+CvWxVrIQs+2IM1wLcZB2OrwYHOIbW1u8miBOgrMZu5z4
+         pUiXyU8kw3Rl3qcVKo03DMOFLKLzQzn9m/6bj3yzi4jYXnsqHfuvr3/wcrmbu3ASQvtE
+         Y2Hb+7OClTwigZC3OUn2Jp2Q4fAta83D4aOnl6rKdoyS5Z+Li31BK/eOaCgbylAqFauz
+         YuAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795191643; x=1795796443;
+        d=1e100.net; s=20260707; t=1795192247; x=1795797047;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=nFviYrq5o1Aunl789XsU4c1vTFdvhxxqWOma4Om+z08=;
-        b=xWc6/CiKzYuPV85RBmcvsSRxzI6dQp1RwAt3PIDX78uXuQTXPWBmPV61Y3cpece9OI
-         Hphlgq9EToNwuK+oNLV5P0z8kOMATcm8/fKwsqXMoSuV10kXysp4LHGA9W0N6ZK/c9H6
-         4cSF1EdBoJVnOiSNeMn/FhYdNbb0j/Zy0jx7d5iv7vfCpJyWwhGIrd85XyjODf1hhs6p
-         1PWZsBwdcBtwuD3NLqI8afvOgq2XWdMMWzTwZcGR1InqmbrBV+wuA1aZSYTeG8FVXTXs
-         tXHXHDOBJuKJCZRMy9g4dnER/UFptcsbBsJfG8d4WoCkhEA1Pp5sGB6m+5sK7iPF2IMX
-         fs9w==
-X-Forwarded-Encrypted: i=1; AL+hErGwoS6OS+1nmp4DjtyLJiUaOVrmKRVCjdaOn+KnjFcYDNVFm6Ba+5rj5s55o3qKlI/k2FBckQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9ZutBnpPQZDGEhohs0iJAl/prDOmGnJTGSYhSAmKfuNd9mcvoL
-	7IZGXqU8h5oAHl55B1vhYVzofC76D7xFdiGdkeS2+Xjb2EwfMBrj71IouTg8AfIiJzfG5B6hekK
-	P3elU18Uma80LOLk5/KkxMQGHvKR5eec=
-X-Gm-Gg: AYBFou3Yb3PjGKS8iqByoiLu3CX8Wpi8gfIFapROI06opUHhXW3zv83u9U+WO/5fc7l
-	ibi/xaHb9WdFNAeykwHJ1/EqupwXwy2H64JU4K6NakXYLP7XqzzN4nToL9xui2vvwjTmHWpPpXq
-	2vaF0vY5Pi8eW6Vm87ZzvOr4llZTNOGeti4PUwMt1Ac766cwBoeKZ2eumVqXd/iUOGQalUnr9Tg
-	ArGN/brsHV02AK8q0oSlFkK/tS2rKVnjsIuZ7R+6u58afSWbb0AfSjy1cPrZisc3bue5kb0xCuG
-	AM+ZGVf+5pGYYrbqRQKLjZ7BpFATzDWmF2t1SAZCYRMUpQ8qpNuojF9IeJCuYgIfcjFUfjcBzY2
-	LZEqs9h3wSsOVCDSgXgZYFDvPwDtX6C1lqpIaQjlqvFNqKBC4iIlq2zS1alNZLSLfBXJroQDi2T
-	wtEldND4Q0z4IdsooBJM8=
-X-Received: by 2002:a05:600c:37c6:b0:4a1:88df:8a2a with SMTP id
- 5b1f17b1804b1-4bb88812a84mr79631575e9.13.1795191642448; Fri, 20 Nov 2026
- 08:20:42 -0800 (PST)
+        bh=cpX1M32t+57fqMIQ7LfIycrRgmXhRXFNCGI027Dqdn4=;
+        b=mxhqEc+GAREi7bfGmARWJSSRTjsp9v9jylvFsCNOhklSzPCM6PeiMcEsWV9339b+H1
+         o6HP+v05/8ZeL9YdVXfrhr/KW6/nxYE1J+Y1f7UaVCNpZcMVs13tpeMeBlZJRkl/4J7E
+         iB9x3x1O+pmbgLs4cTgnT4GmmodRIKbsDoRAfAo7wOwEH4JS1glCawGnCW+X+AO2WELh
+         dni2FBuwccsSekPpEudgR3yHJ5+6LL5sejLvyouAvxUT3GqQ/isG4KTd2/OTudhhrPjO
+         2f6jVtIKSyoevlFYfLNAhgtlha00h+Q7TXRoI4dPsz5WqW4Hx0nPiNfhERPJGDiGlE/e
+         6V5w==
+X-Forwarded-Encrypted: i=1; AL+hErGGccvnkNdHVwNpFUxGvNLhsc8H7wjJwwE25La7rmYWfuv3h6h4wuK8TGaU3R97AB+nwgGbpQ==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8US9PjRB5iPCNIZjw3kANfgJ92kWdci9PplPx/JQV1hbk9m2Yr
+	0PzY+JrMUlfHtzT/G4vou0eCuY2Z0GUroiBLkro2uTVDBU7f3JXkDikr0siIY+4+hnUrEplMSao
+	YEjQT0Bvpt173k1RYUyUwN8Vto7JxkTM=
+X-Gm-Gg: AYBFou1nwTLWXbFeGKt/Gw09m/qEdxmQZMZ6J3dwlmr16rHzEUMmX97dAgE7oUY/sEP
+	g6Um3JOT79n6olGyhJ5hxDT9IMmKS+LiGhIlnms6UVmHmS7iutcrVuEd47b1RqnvX1wAfh+TYS7
+	mrKEhIcFuMBjYniPgAdZD7S+Xw57tL3gh4N4SgTAErPfMYHrwbQcKu1gAqJRamogLRxMiyUfQBF
+	9hmN4PjB5kvFG2iscjLqs32hH2xSvrIDJrR/j5o8Un70xtlN6W25lhpEKjIneMH1PgY3Lrk3VYs
+	sIyOvmSm9PNoCamOZFAJSHVDWzvVg0pU8zafTpI7UiWghIszlRSLHPe+3u+iqStvX2ferfpGXKJ
+	s8qdxwZCgorlD97Y6cQV33kP3kQjU+d2QGc6+Tawv+jBGw/CO6qZPEeyn/ZFpnS/kRdE4UiHCT4
+	oaa619X629kmar0iEH91E=
+X-Received: by 2002:a05:600c:a08b:b0:4bb:6651:9eda with SMTP id
+ 5b1f17b1804b1-4bb88922ca4mr75440565e9.14.1795192245903; Fri, 20 Nov 2026
+ 08:30:45 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -106,14 +106,15 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
- <20261119-mglru-fg-v5-6-9eee2fe97a2d@tencent.com> <CAN_Opa_jb1pN=-Z+4WRoXVDSe0YfppeY319iagMdQoMgtOQSSg@mail.gmail.com>
- <CAMgjq7DbK8sc7-0CTOj5iZBmkLmG7ggj75mdTxVkunGzmi=NWQ@mail.gmail.com>
-In-Reply-To: <CAMgjq7DbK8sc7-0CTOj5iZBmkLmG7ggj75mdTxVkunGzmi=NWQ@mail.gmail.com>
+ <20261119-mglru-fg-v5-15-9eee2fe97a2d@tencent.com> <CAN_Opa8jGstV=s9S=c842XFJ_H8m5txc6eJDH2AF=KuJSHAe6Q@mail.gmail.com>
+ <CAMgjq7C+7=k9f9HVtYn_VwB96TZAJ=D8cbMh0mV7wCsW3m0ZWA@mail.gmail.com>
+In-Reply-To: <CAMgjq7C+7=k9f9HVtYn_VwB96TZAJ=D8cbMh0mV7wCsW3m0ZWA@mail.gmail.com>
 From: KunWu Chan <kunwu.chan@gmail.com>
-Date: Sat, 21 Nov 2026 00:20:30 +0800
-X-Gm-Features: Aa3M54pZxa4hRHw0Lgws3rEOfSeNigcJ3vp4dRWPeqYAT3KKSQ-I1gkfiyUitiM
-Message-ID: <CAN_Opa93a7Z0wmPxLGFeKF+BssvZeioFHU6tcnBioXTQKWKP-g@mail.gmail.com>
-Subject: Re: [PATCH v5 06/17] mm/mglru: frequency guided workingset promotion (MGLRU-FG)
+Date: Sat, 21 Nov 2026 00:30:33 +0800
+X-Gm-Features: Aa3M54q95jyZhEq-i_M7PwZnXUeHoRjlmXeb1GTLAqkufRChUjHRglY7D5BoOUY
+Message-ID: <CAN_Opa_+xnmx7JTYxSRyn+itcfJZqeZz2mgBjTTKF13UKqO8rQ@mail.gmail.com>
+Subject: Re: [PATCH v5 15/17] mm/mglru: folio LRU refs based active/inactive
+ number accounting
 To: Kairui Song <ryncsn@gmail.com>
 Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>, 
 	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
@@ -140,79 +141,419 @@ Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 20, 2026 at 5:36=E2=80=AFPM Kairui Song <ryncsn@gmail.com> wrot=
+On Fri, Nov 20, 2026 at 7:21=E2=80=AFPM Kairui Song <ryncsn@gmail.com> wrot=
 e:
 >
-> On Fri, Nov 20, 2026 at 4:09=E2=80=AFPM KunWu Chan <kunwu.chan@gmail.com>=
+> On Fri, Nov 20, 2026 at 5:30=E2=80=AFPM KunWu Chan <kunwu.chan@gmail.com>=
  wrote:
-> > > +/**
-> > > + * folio_inc_lru_refs - Update the folio's LRU refs and lazily promo=
-te it.
-> > > + * @folio: The folio being accessed.
-> > > + * @flags: The type of ref: FD access, or mapped access optionally w=
-ith
-> > > + * executable access.
-> > > + *
-> > > + * Used by both cache access (flags =3D=3D 0) and page table access =
-(flags =3D=3D
-> > > + * LRU_REF_MAPPED, optionally with LRU_REF_EXEC).
-> > > + * Context: The caller must keep the folio alive by a reference or t=
-he page
-> > > + * table lock of a mapped folio.
-> > > + */
-> > > +void folio_inc_lru_refs(struct folio *folio, unsigned int flags)
-> > > +{
-> > > +       int max_gen;
-> > > +       int type, refs, old_gen, gen;
-> > > +       unsigned long new_flags, old_flags, max_seq;
-> > > +       struct lru_gen_folio *lrugen;
-> > > +       struct lruvec *lruvec =3D NULL;
-> > > +
-> > > +       type =3D folio_is_file_lru(folio);
-> > > +       old_flags =3D READ_ONCE(*folio_flags(folio, 0));
-> > > +       do {
-> > > +               new_flags =3D old_flags;
-> > > +               old_gen =3D lru_get_gen_flags(old_flags);
-> > > +               refs =3D lru_get_refs_flags(old_flags) + 1;
-> > > +               gen =3D old_gen;
-> > > +               if (old_gen < 0)
-> > > +                       goto out;
-> > > +               /*
-> > > +                * Lock the lruvec if the folio is on-list. We are al=
-ready
-> > > +                * doing lazy promotion so in theory we don't need th=
-is,
-> > > +                * but for now, concurrent aging would still corrupt =
-the
-> > > +                * size counters.  This is a temporary limitation and
-> > > +                * will be lifted very soon, so the lock here is not =
-a
-> > > +                * performance concern.
-> > > +                */
-> > > +               if (!lruvec) {
-> > > +                       lruvec =3D lruvec_live_lock_irq(folio_lruvec(=
-folio));
-> > > +                       lrugen =3D &lruvec->lrugen;
-> > >                 }
 > >
-> > Can we do the lookup under RCU and preserve IRQ state here?
-> > filemap_read() can reach folio_lruvec() without RCU held. On non-RT,
-> > lruvec_unlock_irq() can re-enable IRQs while KVM's hva_to_pfn_retry()
-> > still holds gpc->lock.
+> > On Thu, Nov 19, 2026 at 5:04=E2=80=AFAM Kairui Song via B4 Relay
+> > <devnull+kasong.tencent.com@kernel.org> wrote:
+> > >
+> > > From: Kairui Song <kasong@tencent.com>
+> > >
+> > > Currently the active/inactive LRU sizes exported through /proc/vmstat
+> > > and memory.stat are derived from the generation window: folios in the
+> > > two newest generations are accounted as active, the rest as inactive.
+> > > This causes several problems:
+> > >
+> > > - Unmapped file folios can stay in older gens despite repeated use,
+> > >   so active files can be under-reported, unlike classical LRU.
+> > >
+> > > - The reading is jumpy: on aging, the second-newest gen, previously
+> > >   active, becomes inactive all at once, causing a huge drop of active
+> > >   folios without any change in use.
+> > >
+> > > - The reading is reversed on swapless machines. When swapping is
+> > >   disabled or unavailable, MGLRU ages anon by moving the gens directl=
+y
+> > >   without walking or touching any folio, to reduce the overhead. So
+> > >   inactive anon folios can suddenly count as active, or vice versa,
+> > >   despite no change in their hotness.
+> > >
+> > > With frequency guided promotion, hotness is already tracked per folio=
+ by
+> > > its referenced count, so we can do folio level accounting instead: a
+> > > folio is active once its refs reach LRU_REFS_ACTIVATED (currently
+> > > LRU_REFS_PROTECTED).
+> > >
+> > > On reaching this threshold, folios are accounted to the active part.
+> > > On forced per-folio aging or PID protection, refs are capped at
+> > > LRU_REFS_WORKINGSET, dropping active folios to the inactive part.
+> > > Note that on swapless machines anon refs are not reset by aging (the
+> > > shortcut skips the per-folio walk), but the counts no longer oscillat=
+e
+> > > as the generation indices wrap.
+> > >
+> > > The accounting is now per folio and lruvec independent, so no size
+> > > adjustment is needed when reparenting a dying memcg: the hierarchical
+> > > stats keep the counts in the parent automatically.
+> > >
+> > > folio_migrate_lru_refs() also gains off-LRU VM_WARN_ON_ONCE checks an=
+d
+> > > __folio_set_lru_refs() warns when the folio is still on an LRU list.
+> > >
+> > > The latter uses lru_get_gen_flags(), so that helper now has to move o=
+ut of
+> > > the CONFIG_LRU_GEN block and is built with the option off, where
+> > > LRU_GEN_WIDTH is 0 and LRU_GEN_MASK is zero.  Keep the decoded value =
+in
+> > > int so the subtraction of the one-off encoding cannot fold to ULONG_M=
+AX
+> > > before it happens: that is -Woverflow, and fatal with CONFIG_WERROR.
+> > >
+> > > Signed-off-by: Kairui Song <kasong@tencent.com>
+> > > ---
+> > >  Documentation/admin-guide/mm/multigen_lru.rst |   4 +-
+> > >  include/linux/mm_inline.h                     | 118 +++++++-------
+> > >  include/linux/mmzone.h                        |  23 ++-
+> > >  mm/folio.c                                    |  39 +----
+> > >  mm/madvise.c                                  |   2 +-
+> > >  mm/vmscan.c                                   | 218 ++++++++++++++++=
++---------
+> > >  mm/workingset.c                               |   2 +-
+> > >  7 files changed, 230 insertions(+), 176 deletions(-)
+> > >
+> > > diff --git a/Documentation/admin-guide/mm/multigen_lru.rst b/Document=
+ation/admin-guide/mm/multigen_lru.rst
+> > > index 9cb54b4ff5d9..808d2e97b3f3 100644
+> > > --- a/Documentation/admin-guide/mm/multigen_lru.rst
+> > > +++ b/Documentation/admin-guide/mm/multigen_lru.rst
+> > > @@ -149,8 +149,8 @@ generations less than or equal to ``min_gen_nr``.
+> > >      ``- memcg_id node_id min_gen_nr [swappiness [nr_to_reclaim]]``
+> > >
+> > >  ``min_gen_nr`` should be less than ``max_gen_nr-1``, since
+> > > -``max_gen_nr`` and ``max_gen_nr-1`` are not fully aged (equivalent t=
+o
+> > > -the active list) and therefore cannot be evicted. ``swappiness``
+> > > +``max_gen_nr`` and ``max_gen_nr-1`` are not fully aged and therefore
+> > > +cannot be evicted. ``swappiness``
+> > >  overrides the default value in ``/proc/sys/vm/swappiness`` and the v=
+alid
+> > >  range is [0-200, max], with max being exclusively used for the recla=
+mation
+> > >  of anonymous memory. ``nr_to_reclaim`` limits the number of pages to=
+ evict.
+> > > diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
+> > > index 14aab2b1ed08..77f514143266 100644
+> > > --- a/include/linux/mm_inline.h
+> > > +++ b/include/linux/mm_inline.h
+> > > @@ -105,6 +105,22 @@ static __always_inline enum lru_list folio_lru_l=
+ist(const struct folio *folio)
+> > >         return lru;
+> > >  }
+> > >
+> > > +/**
+> > > + * lru_get_gen_flags - Return the LRU generation number from folio f=
+lags.
+> > > + * @flags: folio flags
+> > > + *
+> > > + * Returns: A number between 0 and (MAX_NR_GENS - 1), inclusive. Ret=
+urns
+> > > + * -1 if the flags indicate the folio is off the list (e.g., isolate=
+d).
+> > > + */
+> > > +static inline int lru_get_gen_flags(unsigned long flags)
+> > > +{
+> > > +       int gen =3D (int)((flags & LRU_GEN_MASK) >> LRU_GEN_PGOFF);
+> > > +
+> > > +       /* The gen is stored offset by one, so zero means off-list */
+> > > +       VM_WARN_ON_ONCE(gen > MAX_NR_GENS);
+> > > +       return gen - 1;
+> > > +}
+> > > +
+> > >  #ifdef CONFIG_LRU_GEN
+> > >
+> > >  static inline bool lru_gen_switching(void)
+> > > @@ -168,22 +184,6 @@ static inline void lru_set_gen_flags(unsigned lo=
+ng *flags, int gen)
+> > >         *flags |=3D (gen + 1UL) << LRU_GEN_PGOFF;
+> > >  }
+> > >
+> > > -/**
+> > > - * lru_get_gen_flags - Return the LRU generation number from folio f=
+lags.
+> > > - * @flags: folio flags
+> > > - *
+> > > - * Returns: A number between 0 and (MAX_NR_GENS - 1), inclusive. Ret=
+urns
+> > > - * -1 if the flags indicate the folio is off the list (e.g., isolate=
+d).
+> > > - */
+> > > -static inline int lru_get_gen_flags(unsigned long flags)
+> > > -{
+> > > -       int gen =3D ((flags & LRU_GEN_MASK) >> LRU_GEN_PGOFF) - 1;
+> > > -
+> > > -       /* Exclude the legal -1 from the unsigned MAX_NR_GENS compari=
+son */
+> > > -       VM_WARN_ON_ONCE(gen !=3D -1 && gen >=3D MAX_NR_GENS);
+> > > -       return gen;
+> > > -}
+> > > -
+> > >  static inline int folio_lru_gen(const struct folio *folio)
+> > >  {
+> > >         return lru_get_gen_flags(READ_ONCE(*const_folio_flags(folio, =
+0)));
+> > > @@ -247,12 +247,21 @@ static inline bool lru_refs_is_workingset(unsig=
+ned int refs)
+> > >         return refs >=3D LRU_REFS_WORKINGSET;
+> > >  }
+> > >
+> > > -static inline void folio_set_lru_refs(struct folio *folio, unsigned =
+int refs)
+> > > +/**
+> > > + * __folio_set_lru_refs - Set a folio's LRU refs.
+> > > + * @folio: the folio
+> > > + * @refs: the new referenced count (0 .. LRU_REFS_MAX)
+> > > + *
+> > > + * Set the folio's LRU refs.  The folio must be off the LRU list (e.=
+g.,
+> > > + * isolated), or use folio_inc_lru_refs or folio_reset_lru_refs inst=
+ead.
+> > > + */
+> > > +static inline void __folio_set_lru_refs(struct folio *folio, unsigne=
+d int refs)
+> > >  {
+> > >         unsigned long new_flags, old_flags =3D READ_ONCE(*folio_flags=
+(folio, 0));
+> > >
+> > >         do {
+> > >                 new_flags =3D old_flags;
+> > > +               VM_WARN_ON_ONCE(lru_get_gen_flags(old_flags) !=3D -1)=
+;
+> > >                 lru_set_refs_flags(&new_flags, refs);
+> > >                 if (new_flags =3D=3D old_flags)
+> > >                         break;
+> > > @@ -261,12 +270,18 @@ static inline void folio_set_lru_refs(struct fo=
+lio *folio, unsigned int refs)
+> > >
+> > >  #ifdef CONFIG_LRU_GEN
+> > >  void folio_inc_lru_refs(struct folio *folio, unsigned int flags);
+> > > +bool folio_reset_lru_refs(struct folio *folio);
+> > >  #else
+> > >  static inline void folio_inc_lru_refs(struct folio *folio, unsigned =
+int flags)
+> > >  {
+> > >         /* Should not be called with !CONFIG_LRU_GEN */
+> > >         WARN_ON_ONCE(1);
+> > >  }
+> > > +
+> > > +static inline bool folio_reset_lru_refs(struct folio *folio)
+> > > +{
+> > > +       return false;
+> > > +}
+> > >  #endif
+> > >
+> > >  /**
+> > > @@ -280,10 +295,18 @@ static inline void folio_inc_lru_refs(struct fo=
+lio *folio, unsigned int flags)
+> > >   */
+> > >  static inline void folio_migrate_lru_refs(struct folio *new, const s=
+truct folio *old)
+> > >  {
+> > > -       folio_set_lru_refs(new, folio_lru_refs(old));
+> > > +       VM_WARN_ON_ONCE_FOLIO(folio_test_lru(old), old);
+> > > +       VM_WARN_ON_ONCE_FOLIO(folio_test_lru(new), new);
+> > > +       __folio_set_lru_refs(new, folio_lru_refs(old));
+> > >  }
+> > >
+> > >  #ifdef CONFIG_LRU_GEN
+> > > +static inline bool lru_refs_is_active(unsigned int refs)
+> > > +{
+> > > +       VM_WARN_ON_ONCE(refs > LRU_REFS_MAX);
+> > > +       return refs >=3D LRU_REFS_ACTIVATED;
+> > > +}
+> > > +
+> > >  static inline bool lru_gen_is_old(struct lruvec *lruvec, int type, i=
+nt gen)
+> > >  {
+> > >         unsigned long min_seq =3D READ_ONCE(lruvec->lrugen.min_seq[ty=
+pe]);
+> > > @@ -294,23 +317,12 @@ static inline bool lru_gen_is_old(struct lruvec=
+ *lruvec, int type, int gen)
+> > >                gen =3D=3D lru_gen_from_seq(min_seq + 1);
+> > >  }
+> > >
+> > > -static inline bool lru_gen_is_active(const struct lruvec *lruvec, in=
+t gen)
+> > > -{
+> > > -       unsigned long max_seq =3D READ_ONCE(lruvec->lrugen.max_seq);
+> > > -
+> > > -       VM_WARN_ON_ONCE(gen >=3D MAX_NR_GENS);
+> > > -
+> > > -       /* see the comment on MIN_NR_GENS */
+> > > -       return gen =3D=3D lru_gen_from_seq(max_seq) || gen =3D=3D lru=
+_gen_from_seq(max_seq - 1);
+> > > -}
+> > > -
+> > >  static inline void lru_gen_update_size(struct lruvec *lruvec, struct=
+ folio *folio,
+> > >                                        int old_gen, int new_gen)
+> > >  {
+> > >         int type =3D folio_is_file_lru(folio);
+> > >         int zone =3D folio_zonenum(folio);
+> > >         int delta =3D folio_nr_pages(folio);
+> > > -       enum lru_list lru =3D type * LRU_INACTIVE_FILE;
+> > >         struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
+> > >
+> > >         VM_WARN_ON_ONCE(old_gen !=3D -1 && old_gen >=3D MAX_NR_GENS);
+> > > @@ -321,19 +333,6 @@ static inline void lru_gen_update_size(struct lr=
+uvec *lruvec, struct folio *foli
+> > >                 atomic_long_sub(delta, &lrugen->nr_pages[old_gen][typ=
+e][zone]);
+> > >         if (new_gen >=3D 0)
+> > >                 atomic_long_add(delta, &lrugen->nr_pages[new_gen][typ=
+e][zone]);
+> > > -
+> > > -       /* return now if not a promotion */
+> > > -       if (old_gen < 0 || new_gen < 0)
+> > > -               return;
+> > > -
+> > > -       /* promotion */
+> > > -       if (!lru_gen_is_active(lruvec, old_gen) && lru_gen_is_active(=
+lruvec, new_gen)) {
+> > > -               __update_lru_size(lruvec, lru, zone, -delta);
+> > > -               __update_lru_size(lruvec, lru + LRU_ACTIVE, zone, del=
+ta);
+> > > -       }
+> > > -
+> > > -       /* demotion requires isolation, e.g., lru_deactivate_fn() */
+> > > -       VM_WARN_ON_ONCE(lru_gen_is_active(lruvec, old_gen) && !lru_ge=
+n_is_active(lruvec, new_gen));
+> > >  }
+> > >
+> > >  static inline unsigned long lru_gen_folio_seq(const struct lruvec *l=
+ruvec,
+> > > @@ -376,7 +375,8 @@ static inline bool __lru_gen_add_folio(struct lru=
+vec *lruvec, struct folio *foli
+> > >  {
+> > >         unsigned long seq;
+> > >         unsigned long flags;
+> > > -       int gen =3D folio_lru_gen(folio);
+> > > +       unsigned int refs;
+> > > +       int gen;
+> > >         int type =3D folio_is_file_lru(folio);
+> > >         int zone =3D folio_zonenum(folio);
+> > >         int delta =3D folio_nr_pages(folio);
+> > > @@ -384,7 +384,7 @@ static inline bool __lru_gen_add_folio(struct lru=
+vec *lruvec, struct folio *foli
+> > >         struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
+> > >
+> > >         BUILD_BUG_ON(BIT(LRU_GEN_WIDTH - 1) !=3D MAX_NR_GENS);
+> > > -       VM_WARN_ON_ONCE_FOLIO(gen !=3D -1, folio);
+> > > +       VM_WARN_ON_ONCE_FOLIO(folio_lru_gen(folio) !=3D -1, folio);
+> > >
+> > >         if (folio_test_unevictable(folio) || !lrugen->enabled)
+> > >                 return false;
+> > > @@ -395,10 +395,12 @@ static inline bool __lru_gen_add_folio(struct l=
+ruvec *lruvec, struct folio *foli
+> > >         gen =3D lru_gen_from_seq(seq);
+> > >         flags =3D (gen + 1UL) << LRU_GEN_PGOFF;
+> > >         /* see the comment on MIN_NR_GENS about PG_active */
+> > > -       set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK | BIT(PG_ac=
+tive), flags);
+> > > +       flags =3D set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK |=
+ BIT(PG_active), flags);
+> > > +       /* use the refs from the atomic snapshot to avoid raced updat=
+e */
+> > > +       refs =3D lru_get_refs_flags(flags);
+> > >
+> > >         lru_gen_update_size(lruvec, folio, -1, gen);
+> > > -       if (lru_gen_is_active(lruvec, gen))
+> > > +       if (lru_refs_is_active(refs))
+> > >                 lru +=3D LRU_ACTIVE;
+> > >         __update_lru_size(lruvec, lru, zone, delta);
+> > >
+> > > @@ -425,24 +427,33 @@ static inline bool lru_gen_add_rejected_folio(s=
+truct lruvec *lruvec, struct foli
+> > >  static inline bool lru_gen_del_folio(struct lruvec *lruvec, struct f=
+olio *folio, bool reclaiming)
+> > >  {
+> > >         unsigned long flags;
+> > > -       int gen =3D folio_lru_gen(folio);
+> > > +       unsigned int refs;
+> > > +       int gen;
+> > >         int zone =3D folio_zonenum(folio);
+> > >         int delta =3D folio_nr_pages(folio);
+> > >         enum lru_list lru =3D folio_is_file_lru(folio) * LRU_INACTIVE=
+_FILE;
+> > > +       unsigned long max_seq =3D READ_ONCE(lruvec->lrugen.max_seq);
+> > >
+> > > +       /* Keep LRU_REFS_FLAGS: refs carry access history across isol=
+ation */
+> > > +       flags =3D set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK, =
+0);
+> > > +       gen =3D lru_get_gen_flags(flags);
+> > > +       refs =3D lru_get_refs_flags(flags);
+> > >         if (gen < 0)
+> > >                 return false;
+> > >
+> > >         VM_WARN_ON_ONCE_FOLIO(folio_test_active(folio), folio);
+> > >         VM_WARN_ON_ONCE_FOLIO(folio_test_unevictable(folio), folio);
+> > >
+> > > -       /* for folio_migrate_flags() */
+> > > -       flags =3D !reclaiming && lru_gen_is_active(lruvec, gen) ? BIT=
+(PG_active) : 0;
+> > > -       flags =3D set_mask_bits(folio_flags(folio, 0), LRU_GEN_MASK, =
+flags);
+> > > -       gen =3D ((flags & LRU_GEN_MASK) >> LRU_GEN_PGOFF) - 1;
+> > > +       /*
+> > > +        * See the comment in lru_gen_folio_seq.  For migration, comp=
+action,
+> > > +        * or any other isolation of a hot folio, try best to retain =
+its gen
+> > > +        * info. Ideally we would keep the full gen info.
+> > > +        */
+> > > +       if (!reclaiming && ((max_seq - gen) % MAX_NR_GENS) < MIN_NR_G=
+ENS)
+> > > +               folio_set_active(folio);
+> > >
+> > >         lru_gen_update_size(lruvec, folio, gen, -1);
+> > > -       if (lru_gen_is_active(lruvec, gen))
+> > > +       if (lru_refs_is_active(refs))
+> > >                 lru +=3D LRU_ACTIVE;
+> > >         __update_lru_size(lruvec, lru, zone, -delta);
+> > >         list_del(&folio->lru);
+> > > @@ -499,6 +510,7 @@ static __always_inline void folio_inc_lru_refs_fa=
+st(struct folio *folio)
+> > >                 return;
+> > >         }
+> > >
+> > > +       BUILD_BUG_ON(LRU_REFS_REFERENCED >=3D LRU_REFS_ACTIVATED);
+> > >         old_flags =3D READ_ONCE(*folio_flags(folio, 0));
+> > >         do {
+> > >                 if (lru_get_refs_flags(old_flags))
+> > > @@ -534,7 +546,7 @@ static inline bool folio_check_lru_refs(const str=
+uct folio *folio)
+> > >  static inline void folio_clear_lru_refs(struct folio *folio)
+> > >  {
+> > >         if (lru_gen_enabled())
+> > > -               folio_set_lru_refs(folio, 0);
+> > > +               folio_reset_lru_refs(folio);
+> > >         else
+> > >                 folio_clear_referenced(folio);
+> > >  }
+> >
+> > Can clear_refs race with disabling MGLRU? Once the static key is
+> > off, it can drop refs from 3 to 2 on a folio still on a gen list.
+> > The drain then subtracts it from inactive, though it was counted
+> > as active.
 >
-> Thanks for the careful review!
+> Thanks for the very careful review!
 >
-> We can, but not in this commit, and in a later patch we did convert to
-> RCU convention, so this lock is just an intermediate state because it
-> may race with aging hence race with the active / inactive number
-> update. In a later commit we changed how inactive/active is reported
-> for MGLRU so this is no longer needed. We are basically lockless after
-> this whole series (I mean, RCU lock only).
->
-> Perhaps I should add a TODO in the comment here so reviewers won't got co=
-nfused.
+> I think we are fine, folio_reset_lru_refs checks gen >=3D 0 before
+> touching things, gen >=3D 0 means the folio is manged by MGLRU, right?
+> The worst could happen is we clear PG_workingset for CLRU, which
+> really doesn't matter, one metric off by one folio for a very short
+> period and self healing, not a measurable thing even if you do that on
+> purpose.
 
-Thanks, Kairui. Keeping the temporary lock for the accounting
-makes sense to me.
+Thanks, Kairui. The refs-based accounting makes sense to me.
 
+I meant the else branch in folio_clear_lru_refs(). The static key
+can already be off while the folio is still on a gen list. If
+clear_refs drops refs from 3 to 2 there, where do we subtract
+those pages from the active count?
+
+Thanks,
 Kunwu
