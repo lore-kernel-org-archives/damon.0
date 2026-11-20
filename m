@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795199381;
-	b=2S/irMsM2AZvgyYA514jR9bjf8r98Bl6oz1VB3CRXocZ4/KWfmYk/pqsuM7OMgPB9cRC
-	 7i2RjLOpOg1cBqOBxZ1lpvnGES8EpUBxArITfmZer0QWr+BD3fRr0Sy39FdwDFxYEFdY0
-	 II6PRiuvABoP1NE485wt5TpPPrLMSHA405aOC7xbvF5uQT0bw3lRhQNz+RPP7yEDqf+UR
-	 rCCveKLNe6cwihB8U44OxMFyS4f8By2ZG5NS5M3KVJgodCdLGd6zVUsRUB+XHVh4Hx6Tx
-	 axBQpcNeIJZ3J8FxneM1mOT9FZlq8ln9hyfftrmM8k5Q/dAQxub44W4/VN+YdIJufVA==
+	t=1795199433;
+	b=0WnUMBGgcj+aDy4K3b7fd4nF5boKW4LkqQ/A0u31NOgUXKiUEUZPwio+FRjuXfqxAVx1
+	 QcrzM+k12C9HxYaJ6ZBQAzvyVmSVZpbyQIVWD/HwmKuX1n370oQnXgjpWhBh+YDnU+Gb/
+	 JuqIQt0KsHN/HsTf5Ji4SCnFzebOAXL1sedz1MwdZvBqMn0r9SLWTmQmvGr7OnYLnhqGz
+	 71HMIbAzUxkxVjgvcnBO9R9aK2ym4KYz+jLuUYPSUvbOHz0y4JWjztzy7uvpIbqe8XCvp
+	 Cyf8u8YFRdGamImbHAM1kRHg5f3lvumgR4b5mXzoKLxhHgRlO41VfGvvigQLB+x7R4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795199381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795199433;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=tz3aJ0ewpwOfqDuqzD6kqsiZuumYWa1eAu91RhJ1/kw=;
-	b=Idrj+xDrrwyxqLECsC85+r2o++W3ZX8ee20Om29Q3nhj7R/hPwkYH2PPKAhvL6iCPCqv
-	 zWONVOoQTXSicRjhPm4lqwwEOjOoEKHkpYXyH5gRjA+96s+rQyNzUkx54HcZ2VSN/oYHc
-	 8PritwA5C1l+RpmlkzsABzxELZNaME+NNSouQgSNnytVC7Ff8iL0cRbswvSYHzl/pVHHy
-	 9vs7g8syWkO8Ak9LBuR6uCSUIhombHSmIJyYHt5z235NHM58vsNSUZvCIhSnny6nQmptP
-	 m6Y+IAZDHeoM0RXlSPTseuDuVPcFFqyqlUVX/xyS29fSykLo6hp8jZ+C4G5Xybv5pdQ==
+	bh=bsXZtXBajwdNkKKQ7Dljpwhq/Oiyc13pMFWXhJftEkY=;
+	b=v5ECyAewsf/dD1dXEN8iYfwB2hEUBywWbmIv5jFBn4yjciScP3B0WRpQHTBRA6AQi6lu
+	 JwzSJYrKoppH3ffeCaMsaGoR1fHM8NaeDqvmz1AM0Qn/gWHakrgxv3Rh/tIN9KMKlQ9IM
+	 /WawproM1pEkKqXteygkU8YdaotHIYXW2OgVigGgwoMk8lYOXkkPO9KhC2GhfvLhkMIAu
+	 LhvU7zNXWi9g8OPbk9TcweVi6Tz5YkNr7n6vEXrcOLLAM7cah/DoDMCulImju/4ne5FHb
+	 JppsUmk1YKe68kru4hZBwXCR3/f5B4U35kfrGkz7M6Idp1tTU+Bu4R14e7QtMfn5NRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XKiXZ58a;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=llqNehU8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939EA60A2604
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586C1606A32C
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XKiXZ58a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A801F000D2;
-	Fri, 20 Nov 2026 18:29:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=llqNehU8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE391F000D0;
+	Fri, 20 Nov 2026 18:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795199381;
-	bh=tz3aJ0ewpwOfqDuqzD6kqsiZuumYWa1eAu91RhJ1/kw=;
+	s=k20260515; t=1795199432;
+	bh=bsXZtXBajwdNkKKQ7Dljpwhq/Oiyc13pMFWXhJftEkY=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=XKiXZ58a2WwvfA1DTNPtlK4zEDByZy1ryMIilTxGIPzJ75rQBQuyZx2j6itY/PZ7B
-	 Aahnby0yNmTQztNcbqL0Y58oNkGagai5YVPu7hOq19K7MbZvSa2XcJwlrv1n9u/9lw
-	 xjbg6jLfeC69L7pdF5euAk5e6ZLvjaqOcy7uqrtkMuNntGQ9xMDmt9OHwPtghw5I5+
-	 tB0ddz+szYffq4FeQA1aP6+56zXDbVON+FwkpuAXbdl13H5Egf7H4SRQA/FrytHdVm
-	 Ib9Y3e7W1wGFDhDdysUDxQ7GNtnTbDbXZIciwWWV/vXaCMLMqaHAWsJk4ql3DWNIqS
-	 YiYYStdYW5mwA==
-Message-ID: <sashiko-outbox-225830@kernel.org>
+	b=llqNehU8F24y5ZmRMioftZF+voxWibl6ViVIKDj2gBN5CFQbR8wsOms/QCyqyCESP
+	 MzRYp8kvN5j1cC+oyTxExbSevB/90VaMwwmZnaf63uQMFLKVahamcD/Om9IMNKnWP8
+	 K3qvNuEwt7zTVqx6Lnu7Ku+0wNJXvvxRjUv90xDxCZYMZTMsmsr80HkBCM5prYf8zK
+	 KvBQUeEWGEoNFi654/+UtrdzkadzEP0mMHqwkncrxw1EpFxDw6R0OxzVYfGOPU4HhU
+	 gjMN0NqDdnqhq4JaRlsPvCRDUmOn722bYXYCbIqj0nrBV1+rH1fK2BYpu4Vd7p844B
+	 rRwP291OtFiWA==
+Message-ID: <sashiko-outbox-225831@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 48/60] mm/madvise: restrict reclaim advice to
- reclaim-capable memory
+Subject: Re: [PATCH 45/60] mm/compaction: restrict compaction to
+ N_MEMORY_COMPACTION
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?R3JlZ29yeSBQcmljZSAoTWV0YSk=?= <gourry@gourry.net>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261120-private_nodes_v6-v1-48-74f5f9a115c2@gourry.net>
+In-Reply-To: <20261120-private_nodes_v6-v1-45-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
- <20261120-private_nodes_v6-v1-48-74f5f9a115c2@gourry.net>
+ <20261120-private_nodes_v6-v1-45-74f5f9a115c2@gourry.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Nov 2026 18:29:40 +0000
+Date: Fri, 20 Nov 2026 18:30:31 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,15 +63,15 @@ Precedence: list
 
 > From: "Gregory Price (Meta)" <gourry@gourry.net>
 >=20
-> MADV_COLD, MADV_PAGEOUT and MADV_FREE reclaim or age folios directly,
-> bypassing the node filter reclaim uses, so they act only on common
-> memory.
+> Restrict compaction to N_MEMORY_COMPACTION instead of common memory:
+>   - compact N_MEMORY_COMPACTION nodes for /proc/sys/vm/compact_memory.
+>   - start kcompactd and trigger proactive compaction on those nodes.
 >=20
-> Add folio_allows_reclaim(), which requires the folio's node to permit
-> reclaim, and use it instead for those advices, including their
-> huge-page paths.
+> Direct compaction is unchanged: an allocation compacts the zones on its
+> zonelist, and a private node's zones are only on its private zonelist.
 >=20
-> No behavior change to common nodes.
+> nodeN/compact fails with -EOPNOTSUPP for private nodes without the
+> state.
 >=20
 > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 
@@ -79,5 +79,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120-private_no=
-des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D48
+des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D45
 
