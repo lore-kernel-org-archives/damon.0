@@ -1,78 +1,78 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795198227;
-	b=vV/QZtBRooCq1EIDunjTp7Y6CnXoZl6aWS3sm+kmX498j9jr9+3nDrvv7t/GVClZVCnh
-	 sD6vV9hT+Kss0CQC6RuC7FesT5rw0cY8moqEHhUzqiG69ppGG570oyi4eveUtXBuE0tfD
-	 M2ig9ZQl+A5Kh41D36ugWtIE4qpg8YZiN5hqpL1ohrYN7S28O/KhZN3cvCr6jF2ld1qSw
-	 W5Gcm0K1z8/O+2/1rV3ESLivn2EdxSwHc4l/Jsrw91VCtPVtizBoqwY3LsZsHyJEovc1a
-	 s1g1pAeXla8ApVgMUQaaxZ1epMxdm6IPIsOI+u+b+J0sakig6v6mSImOnXtLEZbgR4g==
+	t=1795198229;
+	b=xSFLxJqQVA5daXvZ9+F9CKkbvCyy2BhWf3Av0WfqPyoq2kb1JqUseMJ5N0FWIX+bADzG
+	 iYn0nm1j9Jw8dhp4pCqR0RhZ0/0IjuLgwM+DlPoMuEwozacncn4di636DHL9mwFv/p6n2
+	 DizUU6ygPmM5ElzT0UoVW55GCdJj/4ADSj2JSyKft34T5MNY1hoWB8lmUbY8pSAwkR2z+
+	 uK1sweMnDpJkw1fFXsTH9I6EqQJoR8sAsvcd8+2DJLhaJYQccO+aP0ygaUDx6zprbEUL+
+	 ocjRHD8iPG5PGsVolqIPrdfZT1P81m7ARI1mBTgVcwpZtp/MKlJ6rTi8OoPjv+041/w==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795198227;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795198229;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=6oqtpwJ0c+t+dUEI4XWL1X7l7l029xmqIZkf4A3gkKY=;
-	b=o72Z8jcPHpvXLMnzE7n+o7Li90Gn+2x7WwLh+10JKn6sANiYcx1yLm7NPx0Wma8Whbux
-	 3lPzd8KqAqjvBR+5/R0C4iUVOlAbUDhIy2RAJ7vu3qhftkLEaWFzo7shhkmZ0AxCHmGRi
-	 +3ePL2T4E8F5OIfj6v/0QgD7uuTLTJzZV1EvH2SfCw/4L4rS6v3B4G/rxuRnQPEHKMEJ6
-	 +3NkS4LLf1p989baHLhVW+2d1fkgAVCqq5DLI42jcarI/rYErAiJokfMRKDJXFaBAuMyZ
-	 h90FAitDrN91QDjTA/+GPDEub347GJT8uxhoavJSkZGosZUime2iA8BUm5Uu1Q84i5w==
+	bh=h5CrkAO7T3P4r+Yv8Uixoo1Sg+wKyzQuc9jCr1lsfYI=;
+	b=UUkZScWAlgeV5ZxKGg3V2JnvlWce9SBRCS0K1FR/R4QlBVt6+2K7UuSCp1Fe8ookkhL6
+	 YUvLgQpypHMHIDBxKiAeeodSm6Gm1riJ/13GUHe0FiaMrw14LwxHE3ra47dsF8/FQ5ebj
+	 uNXmTjxqOvJnzPI7HppEUvZ6LgkGgDOS9cTNFiK4wvK75L0iexBRIP/OKIjeJ/h7ooVSR
+	 tIEsEGUcYOjfiyEq1IgV9ux6pQD47z8GeyTapN9TcBCMuX6SaQ8SiGk6fjr9QG84i3tHK
+	 eFvVzG+nlorgK0+Tr5pIKTeo15EgD8KZqjThFE1nIlX8uuVXn8taqcY0urz28Tst37g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iRhqmX77;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PEMQ5p97;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE0A606E859;
-	Fri, 20 Nov 2026 18:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DBD6070705;
+	Fri, 20 Nov 2026 18:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iRhqmX77
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PEMQ5p97
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795198227;
-	b=TavzsQQR/LzjwrH+NoNWVKC6lM6V7xMPnCpTNgvC6tsH84xd5kgMTecqTIHuSffZdxX4
-	 ucjZ8Uv2/0Yfo/J8f6Gkzbu6dsEPEp3hWOJbBN6BPFh31SZ744aJp+vbcnJk9YFbRASau
-	 dJbDkpF8TetyjlRJ8p98N3TtsoEJ1OocvP93Xfwq6FlU1WYuAcXVzLGoNrmeGcyrnMO15
-	 mSI/+8eZH+ucosLyFNqhdfBYgMAJVJUykTlG3ZDY7n34UxZ9tEu9g20tDcgfx+d+tlh+V
-	 53C1IFLeeMGLwjQCoaicjf2W2Gd0MvK8gXYQwjsFwonVxmZXuKcb622k0NicfN1Bdpg==
+	t=1795198229;
+	b=fL3698cph9B5PR1DuRjx1FKm7OKlKp1p7TB2WZGUCtJ2Ah9iU9VhRVHfvcLz0cfo73pR
+	 7Kd5IchaLvGo5mBFSpvnmoiExAaDJ3cImwP4cIRhGRZJqMJoAK0O1e6LlNRfonap77C76
+	 nIXAQNxKsJdbJiiiogMfpubwvKaTZPakLr9OZM25XwKRwoRtbiQozqQZZPHYbO8h+w9yG
+	 6c8k3OO8+Dfla966K3jl1f6Jo/zEToT/LeX7HCPrVnTrPgzNswT1y914So1PWezOzqvga
+	 qvWzs8cNSypy6RtJuywW8n3Va5pMU/Ys+AnReDbUPR3MnJS2RZ7dkexwcZ8smQ3V8Lw==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795198227;
+	c=relaxed/relaxed; t=1795198229;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=6oqtpwJ0c+t+dUEI4XWL1X7l7l029xmqIZkf4A3gkKY=;
-	b=YYMTZ7jxbYSfRQzFO7mbhcuF9rvm+W+l8UXNpC9VUBJcix+nAPLhJdROcxs9Wrh41I9q
-	 aafdLfKxcjPQnr5pymenLfpndAj3GEDd2JmhEDIjydUCtTcIbimS0jKcizfjvKtPgyJv1
-	 LWjGWKJQ58UgcMSm/ewnGQWQVYnf2mEls8q/N1WLCtAFOM7LnqtSMbb3YYG6R8nmPCc6m
-	 NfMPAGybi7oG6T8lTW5/7Ek8ZtW6erusNHz2ihT47wiJHb9AWTj3Dxv+X5OEr5IoHKiHP
-	 yD5kK9u4m+ZqfoQgoDvyomrwNM1sQUdOhYcq7Xa3ajq2SHwV2QwHxSFDryWF2bYZX9w==
+	bh=h5CrkAO7T3P4r+Yv8Uixoo1Sg+wKyzQuc9jCr1lsfYI=;
+	b=vJ06JvfW846PVGJzY2hXOxlPjOgBmTZGG3M2X0UrBWGk51MWseAMfJIihWOvha0feXgI
+	 56OPeK6DayRyRiN09OSijXsaWGFsbuhNxYKf5ui6b2Lj8SsbL3iGhx4sQ8zNKvSAdlg2N
+	 f7+zn0dZzbLp5UUWw/wZc5hEvyHQz9DN51r9IVsem1LDBbCdQh1d70iY686S+rw6FF4uN
+	 kR33a7t0UpHlhYDnau8L273Bqgj25T/k4maxjgZ96QJ3uH2Fcl/MoLzhMvEu3FPS9Xqve
+	 JDTTV0Fo0/8CSE0/2nhhvT1yc8zkjuT37HVzdXAfovPqCnBWQuSQ0b14pkB53Xh+OkA==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id AA5861F000EF;
-	Fri, 20 Nov 2026 18:10:08 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 18B381F00ADE;
+	Fri, 20 Nov 2026 18:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795198226;
-	bh=6oqtpwJ0c+t+dUEI4XWL1X7l7l029xmqIZkf4A3gkKY=;
+	s=k20260515; t=1795198228;
+	bh=h5CrkAO7T3P4r+Yv8Uixoo1Sg+wKyzQuc9jCr1lsfYI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=iRhqmX77i/uRwMGLz9/du0j47PzE+wIn57VbdWgWlLdLOrr4JpF1+ARREn15CTeIj
-	 a0xlrDZdKw1VKF1f8bx8T4GOS/gG83bIkf1oQgGxmMneVQS22wvtz+LJY59O0ke7Rc
-	 ds3P1MAl0qv9yv7KI+SpeFeEDsv9zxyVmK5dUu6+5kBPkVpr9nn5TP9TeDUatiY0uK
-	 xXHcDJR0O2azFQ9xsOZxlch+uMj5DSFtRdxWUi9ODcsTpKkc/RaXNoF9CvJA0iR2Jo
-	 YEqcdDWNS9Kxbr9p8ScBke5bSWdnbFbqRrtR15bM4SI+kCwzOawpATRaWW02KaXoa2
-	 WhfdkOZXh3+Ow==
+	b=PEMQ5p97f9te06mMZb7I9Toy80Us+kqNrrikAtCFbhggxQvoYi4k2XTBBnWdot76o
+	 CreiKHYvms7Jg/EXakvVs0x/nqccsWywPZVd5NMtneGAU9OdA936gKXXHa6KEYdzdC
+	 jzrplmrJL5tPf+wdJIkS4k7wC+AZrH3EvDrG0nDubKikJ2kEZBSh3UcgOTxGto6Yix
+	 F1d4GhCLXuTuDz8BL+IBakh8iKzhw2JLFqTlLPEvS0wrbIbVe4/rksf8Cm95wS9fyp
+	 dV3itcIMbS7b27CLzOPplZmSdT7Kgp8n9yM/uXrUMGmk6blk4gExUbE17gmO94QPmM
+	 ERXxq6wHRXFVg==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 44F6B4B92D;
+	by lkml.kernel.org (Postfix) with ESMTP id 6165E4B931;
 	Fri, 20 Nov 2026 18:09:20 +0000 (UTC)
 From: Gregory Price via B4 Relay <devnull+gourry.gourry.net@kernel.org>
-Date: Fri, 20 Nov 2026 13:09:18 -0500
-Subject: [PATCH 27/60] mm: add the private-memory node state
+Date: Fri, 20 Nov 2026 13:09:19 -0500
+Subject: [PATCH 28/60] mm: select memory features per node
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -83,7 +83,7 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261120-private_nodes_v6-v1-27-74f5f9a115c2@gourry.net>
+Message-Id: <20261120-private_nodes_v6-v1-28-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 In-Reply-To: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 To: Yury Norov <yury.norov@gmail.com>, 
@@ -140,11 +140,11 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  cgroups@vger.kernel.org, nvdimm@lists.linux.dev, 
  linux-kselftest@vger.kernel.org, "Gregory Price (Meta)" <gourry@gourry.net>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795198153; l=5643;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795198153; l=5275;
  i=gourry@gourry.net; s=20261120; h=from:subject:message-id;
- bh=zId/m3UcEeKPlrHjDuBTph6SlMWMgHfNTv0FPlTy5jk=;
- b=UQPuu0+30xBC00mgn1hSzuDWDMkKDN3WxupMdh1ZgoT3kBVxhLL5UdV2Q7T1tbGBb8aBZhTom
- a2I0WisarbDDWUsD2+k6+bL9x+5sPTZQCfJRGG2SOn1nC/Y+GahAoYl
+ bh=9jUUwkC009YYM3M0mBtUlaNrodM1BEI0oddfspLz38Q=;
+ b=5b31/KbUha2vmTFlmfGTvBU6RaiMU83nXseyWRCHS71c1Cr/i7oXIqQHzSTf3Q6kBHMj+p+V+
+ CK3q0HN/ldxA/gpmxCF2drBz2uSDsxWLaQZ+5aY3hV5E9HSjJvI/Gfl
 X-Developer-Key: i=gourry@gourry.net; a=ed25519;
  pk=BZWDlx4htkR5KcvGjGtSDfx1tM0E5dlyBR43FEhjWVc=
 X-Endpoint-Received: by B4 Relay for gourry@gourry.net/20261120 with
@@ -155,142 +155,145 @@ Content-Transfer-Encoding: 7bit
 
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 
-N_MEMORY_COMMON describes memory that ordinary allocations and MM
-services may use. Some memory is online but is not part of that pool.
+Whether a node's memory is common or private is a property of the
+memory, so record it per node.
 
-Add N_MEMORY_PRIVATE for nodes with such memory.
+Add a per-node memory feature mask (pgdat->memory_features) with a
+single bit for common memory. Node states are published from the node's
+features at boot and when memory is onlined. A node without the common
+bit joins N_MEMORY_PRIVATE.
 
-N_MEMORY_COMMON and N_MEMORY_PRIVATE partition N_MEMORY, so a caller can
-drop private nodes from a mask without also dropping memoryless nodes.
+Ordinary System RAM carries every feature. Without NUMA, node 0 holds
+all memory, so a mask without common memory is invalid.
 
-Expose the state via `has_private_memory`.
+Every node keeps the default mask, so all memory remains common.
 
-Without CONFIG_NUMA, node 0 holds all memory and none of it is private.
-We have to adjust the node_state check to return false for this node,
-previously when CONFIG_NUMA was disabled it would always return true.
-
+Suggested-by: Dan J Williams <djbw@kernel.org>
 Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 ---
- Documentation/ABI/stable/sysfs-devices-node | 10 ++++++++++
- Documentation/mm/physical_memory.rst        |  3 +++
- drivers/base/node.c                         |  2 ++
- include/linux/nodemask.h                    | 12 ++++++++----
- mm/page_alloc.c                             |  1 +
- 5 files changed, 24 insertions(+), 4 deletions(-)
+ include/linux/mmzone.h   |  1 +
+ include/linux/nodemask.h | 12 ++++++++++++
+ mm/internal.h            |  2 +-
+ mm/memory_hotplug.c      |  2 +-
+ mm/mm_init.c             |  7 ++++++-
+ mm/page_alloc.c          |  9 +++++++--
+ 6 files changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/ABI/stable/sysfs-devices-node b/Documentation/ABI/stable/sysfs-devices-node
-index 0a2cf3088233..70ab780c6ddf 100644
---- a/Documentation/ABI/stable/sysfs-devices-node
-+++ b/Documentation/ABI/stable/sysfs-devices-node
-@@ -46,6 +46,16 @@ Description:
- 		requesting the node explicitly, and that kernel memory
- 		management services manage.
+diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
+index 6a2ad0cff795..d6c1a43c0bc8 100644
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -1612,6 +1612,7 @@ typedef struct pglist_data {
+ #ifdef CONFIG_MEMORY_FAILURE
+ 	struct memory_failure_stats mf_stats;
+ #endif
++	unsigned long memory_features;	/* NODE_MEMORY_FEAT_* mask */
+ } pg_data_t;
  
-+What:		/sys/devices/system/node/has_private_memory
-+Date:		November 2026
-+Contact:	Linux Memory Management list <linux-mm@kvack.org>
-+Description:
-+		Nodelist of the memory nodes absent from has_common_memory.
-+		Together the two lists partition has_memory.
-+
-+		Ordinary allocations do not use memory on a node listed here.
-+		See Documentation/mm/numa_private_nodes.rst.
-+
- What:		/sys/devices/system/node/nodeX
- Date:		October 2002
- Contact:	Linux Memory Management list <linux-mm@kvack.org>
-diff --git a/Documentation/mm/physical_memory.rst b/Documentation/mm/physical_memory.rst
-index 86a7d6080535..ddba7c890418 100644
---- a/Documentation/mm/physical_memory.rst
-+++ b/Documentation/mm/physical_memory.rst
-@@ -174,6 +174,9 @@ nodes with particular properties as defined by ``enum node_states``:
- ``N_MEMORY_COMMON``
-   Ordinary allocations and memory management services may use the node's
-   memory.
-+``N_MEMORY_PRIVATE``
-+  The node has memory but is not on the fallback zonelists. Together with
-+  ``N_MEMORY_COMMON`` it partitions ``N_MEMORY``.
- ``N_CPU``
-   The node has one or more CPUs
- ``N_GENERIC_INITIATOR``
-diff --git a/drivers/base/node.c b/drivers/base/node.c
-index cc6696d1390f..56a1741a6a45 100644
---- a/drivers/base/node.c
-+++ b/drivers/base/node.c
-@@ -966,6 +966,7 @@ static struct node_attr node_state_attr[] = {
- #endif
- 	[N_MEMORY] = _NODE_ATTR(has_memory, N_MEMORY),
- 	[N_MEMORY_COMMON] = _NODE_ATTR(has_common_memory, N_MEMORY_COMMON),
-+	[N_MEMORY_PRIVATE] = _NODE_ATTR(has_private_memory, N_MEMORY_PRIVATE),
- 	[N_CPU] = _NODE_ATTR(has_cpu, N_CPU),
- 	[N_GENERIC_INITIATOR] = _NODE_ATTR(has_generic_initiator,
- 					   N_GENERIC_INITIATOR),
-@@ -980,6 +981,7 @@ static struct attribute *node_state_attrs[] = {
- #endif
- 	&node_state_attr[N_MEMORY].attr.attr,
- 	&node_state_attr[N_MEMORY_COMMON].attr.attr,
-+	&node_state_attr[N_MEMORY_PRIVATE].attr.attr,
- 	&node_state_attr[N_CPU].attr.attr,
- 	&node_state_attr[N_GENERIC_INITIATOR].attr.attr,
- 	NULL
+ #define node_present_pages(nid)	(NODE_DATA(nid)->node_present_pages)
 diff --git a/include/linux/nodemask.h b/include/linux/nodemask.h
-index c3b984105bd1..5a9722d57701 100644
+index 5a9722d57701..02908ef23a62 100644
 --- a/include/linux/nodemask.h
 +++ b/include/linux/nodemask.h
-@@ -403,9 +403,12 @@ enum node_states {
- 	 * to manage per-node meta-data and topology decisions.
- 	 * N_MEMORY_COMMON indicates whether the node can satisfy arbitrary
- 	 * allocations and whether a service should manage that node's folios.
-+	 * N_MEMORY_PRIVATE holds the other memory nodes: together the two
-+	 * partition N_MEMORY.
- 	 */
- 	N_MEMORY,		/* the node has memory */
- 	N_MEMORY_COMMON,	/* common pool (fallback zonelist) */
-+	N_MEMORY_PRIVATE,	/* memory outside the common pool */
- 	N_CPU,		/* The node has one or more cpus */
- 	N_GENERIC_INITIATOR,	/* The node has one or more Generic Initiators */
- 	NR_NODE_STATES
-@@ -478,9 +481,10 @@ static __always_inline void node_set_offline(int nid)
+@@ -542,6 +542,18 @@ static __always_inline int node_random(const nodemask_t *maskp)
+ #define for_each_online_node(node) for_each_node_state(node, N_ONLINE)
+ #define for_each_node_with_cpus(node)	for_each_node_state(node, N_CPU)
  
- #else
++/* Private nodes omit NODE_MEMORY_FEAT_COMMON. */
++#define NODE_MEMORY_FEAT_COMMON		BIT(0) /* add to fallback zonelist */
++#define NODE_MEMORY_FEAT_ALL		NODE_MEMORY_FEAT_COMMON
++
++/* Private memory needs NUMA: node 0 holds all memory without it. */
++static inline bool node_memory_features_valid(unsigned long features)
++{
++	if (features & ~NODE_MEMORY_FEAT_ALL)
++		return false;
++	return IS_ENABLED(CONFIG_NUMA) || (features & NODE_MEMORY_FEAT_COMMON);
++}
++
+ /*
+  * For nodemask scratch area.
+  * NODEMASK_ALLOC(type, name) allocates an object with a specified type and
+diff --git a/mm/internal.h b/mm/internal.h
+index cd0562f0b68f..e89dd1153662 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -62,7 +62,7 @@ void lru_add_drain_cpu_zone(struct zone *zone);
+ void folio_deactivate(struct folio *folio);
+ void folio_mark_lazyfree(struct folio *folio);
  
-+/* Node 0 holds all memory, and none of it is private. */
- static __always_inline int node_state(int node, enum node_states state)
+-void node_set_memory_state(int nid);
++void node_set_memory_state(int nid, unsigned long features);
+ void node_clear_memory_state(int nid);
+ 
+ /*
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 6b6873cfbc5a..b4d94021d46e 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1197,7 +1197,7 @@ int online_pages(unsigned long pfn, unsigned long nr_pages,
+ 	adjust_present_page_count(pfn_to_page(pfn), group, nr_pages);
+ 
+ 	if (node_arg.nid >= 0)
+-		node_set_memory_state(nid);
++		node_set_memory_state(nid, NODE_DATA(nid)->memory_features);
+ 	/*
+ 	 * Check whether we are adding normal memory to the node for the first
+ 	 * time.
+diff --git a/mm/mm_init.c b/mm/mm_init.c
+index f21b3dbcc92a..99a45fd04ac5 100644
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -1585,6 +1585,9 @@ int __ref free_area_init_core_hotplug(struct pglist_data *pgdat)
+ 	pgdat->node_start_pfn = 0;
+ 	pgdat->node_present_pages = 0;
+ 
++	/* memory is common unless marked private */
++	pgdat->memory_features = NODE_MEMORY_FEAT_ALL;
++
+ 	/*
+ 	 * Hot-unplug can leave per-cpu vmstat deltas unfolded (folders skip
+ 	 * offline nodes) - reconcile this at online. Foreign access to counters
+@@ -1743,6 +1746,8 @@ static void __init free_area_init_node(int nid)
+ 
+ 	pgdat->node_id = nid;
+ 	pgdat->node_start_pfn = start_pfn;
++	/* memory is common unless marked private */
++	pgdat->memory_features = NODE_MEMORY_FEAT_ALL;
+ 
+ 	if (start_pfn != end_pfn) {
+ 		pr_info("Initmem setup node %d [mem %#018Lx-%#018Lx]\n", nid,
+@@ -1768,7 +1773,7 @@ static void __init check_for_memory(pg_data_t *pgdat)
  {
--	return node == 0;
-+	return node == 0 && state != N_MEMORY_PRIVATE;
- }
+ 	enum zone_type zone_type;
  
- static __always_inline void node_set_state(int node, enum node_states state)
-@@ -493,13 +497,13 @@ static __always_inline void node_clear_state(int node, enum node_states state)
+-	node_set_memory_state(pgdat->node_id);
++	node_set_memory_state(pgdat->node_id, pgdat->memory_features);
  
- static __always_inline int num_node_state(enum node_states state)
- {
--	return 1;
-+	return state != N_MEMORY_PRIVATE;
- }
- 
- #define for_each_node_state(node, __state) \
--	for ( (node) = 0; (node) == 0; (node) = 1)
-+	for ((node) = 0; (node) == 0 && (__state) != N_MEMORY_PRIVATE; (node) = 1)
- 
--#define first_node_state(state)	0
-+#define first_node_state(state)	((state) == N_MEMORY_PRIVATE ? MAX_NUMNODES : 0)
- static __always_inline unsigned int next_node_state(int nid, enum node_states state)
- {
- 	return MAX_NUMNODES;
+ 	for (zone_type = 0; zone_type <= ZONE_MOVABLE - 1; zone_type++) {
+ 		struct zone *zone = &pgdat->node_zones[zone_type];
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 1ec7d8000792..50336eb58edf 100644
+index 50336eb58edf..3a7c12fec906 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -217,6 +217,7 @@ void __meminit node_set_memory_state(int nid)
+@@ -209,10 +209,15 @@ nodemask_t node_states[NR_NODE_STATES] __read_mostly = {
+ };
+ EXPORT_SYMBOL(node_states);
+ 
+-void __meminit node_set_memory_state(int nid)
++void __meminit node_set_memory_state(int nid, unsigned long features)
+ {
++	WARN_ON_ONCE(!node_memory_features_valid(features));
++
+ 	node_set_state(nid, N_MEMORY);
+-	node_set_state(nid, N_MEMORY_COMMON);
++	if (features & NODE_MEMORY_FEAT_COMMON)
++		node_set_state(nid, N_MEMORY_COMMON);
++	else
++		node_set_state(nid, N_MEMORY_PRIVATE);
+ }
  
  void __meminit node_clear_memory_state(int nid)
- {
-+	node_clear_state(nid, N_MEMORY_PRIVATE);
- 	node_clear_state(nid, N_MEMORY_COMMON);
- 	node_clear_state(nid, N_MEMORY);
- }
 
 -- 
 2.56.1
