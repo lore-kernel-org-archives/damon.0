@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795199912;
-	b=2BDk+6sqyTcDwQ+9ye+/hSj9DpDFVRIQf3C6Fo57cVztfiqRZaSBjnpnmYlRe25ml3T6
-	 n15AOjblshpfQDCHS6dcaW51eNQhYHJSXbmNbpc4IokJ9a4MGVhGj9HMGCwVnMj4a64My
-	 o6CftdmcxJYtnpcbu3Dzuew/oCHZyZtQYMt5hz0qppXTclus9LG08ovbt+LmBY6LoegJL
-	 7Z8mSsPIzAMF2WiXTD9YfJorKT+T+YRyXra72+XorwAE9ap4eyW4jqCTZ3AYM7Kh7Hlcw
-	 pWMIJQvqK8v+Z93NERWRsJMDPMJtZJdlAE1TmFKs2joxh184Pr96kfFJaJDqPbmfPFA==
+	t=1795200034;
+	b=IqYuOCPVb2nvmsvLJFFjecRFOTjas+Fbf8YhYhJVyi9NOnUpbUKNbHvN2T+kaRhNWWS1
+	 2uUuHVJygis3/mNZFsiIfuxBzV5Z9TnW52Z4aIwDlKmM3sw42c4ulxI6H5Dtfj0J4r99e
+	 ryatd4IdDgp6NsaS5/69ZeFTMyIDSCaOXeo+nfxoT0e5Tmj7V51ftXU+Ncd2P7TyX3e5/
+	 wozyV09CQNbtE4k9NUwuDcaodheMJNlWWQNDmXOSXIR4FZkpMk/2sQdUQ14JsdlszqOZ9
+	 qjo2OlHp7A6nB9ltCxZE5KT/dnC/RJHC3fxm1S0f4iJ6+R3xaU5BPaG/E03rBtVuLcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795199912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795200034;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=a1rgYUpE34+tvi3aJJgf/ZGlk3eDsBF/cbFnWFj1EJs=;
-	b=r6hVobfGaUhnHLVn/sjHN0PnaXEdO74CBifCRhIpAdCYpJYG/xf/0Imjh03wV6yPDdRj
-	 ZSlr34pXYvWEEH9uRSFMfhcZXjP+hWDWwtHWYIPNw9kQ7il0jesT00U6dymLAv/0lsO4H
-	 jdlC48CC/Gk9tHhoQU3F6xuFzARl+sGrboOGa3M4HeWME9Ea0wx0/aJt5W+6S+MfHVF0L
-	 pGdTAgH9EWKznTgHrI/Y4xdrsyi0OUbOr+qyc3NJIjVZY30klOfQsdvZepAC9ojUEapPi
-	 G7pUGbkLeDqxmntOmact6H/3/xHzD4ZKgopbt38G6bMBh6I1iDAQrI6O1/ZzOK7HmCA==
+	bh=sCmjnspSS/8PAkgUM8UmdX3FI20mYTSUlBX1ozy/XpI=;
+	b=YypqEgXvnhdHduBAII5PdlxNJMVDpiZnBo9VnMf6g4jgKILCEjoPqGHJebse6l/AaU7O
+	 7Moi05HuEaizN8hHQ4UVrbs8oTOBEy1aoMHQcnro5WeIKcq7HSKiO5U7vv+KBexB1AIg4
+	 vrRdmim5rwxLs5KWG4qHQoADYrYtwKbDxqGffNpzX/M4MpUkJ8n5As7gUN11wiyhTLDCX
+	 CM6BqeIcwKE/3ixuoKRyG7gGach7/MltSE2NJtIo/rFfVigO8AjX5troJBBbHxsto1yb0
+	 oxParsCuy81PFiFvgTmt1L1NyphX6//7h/me5wNbg7fFH6qr7WuQ1LZMPFD9Riu1WDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nME1WlTT;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PhDVA0Mr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABB760A2600
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD7060A261E
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nME1WlTT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C4D1F000C0;
-	Fri, 20 Nov 2026 18:38:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PhDVA0Mr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7111F000C4;
+	Fri, 20 Nov 2026 18:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795199911;
-	bh=a1rgYUpE34+tvi3aJJgf/ZGlk3eDsBF/cbFnWFj1EJs=;
+	s=k20260515; t=1795200034;
+	bh=sCmjnspSS/8PAkgUM8UmdX3FI20mYTSUlBX1ozy/XpI=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=nME1WlTTbkxwCShQ5DXXm7mDWITFv80+EGYzyYt6VSCNqmpdxAwSCprzj+egBBngj
-	 y6L+QLcujBw8HMAaTdF8BlEgY2bguoM45JwlUu3IK8120YytLkTFvXBfRUvwfm0IpD
-	 AZLKG0PSycKWFJXcztsXR1ofxd61snOmHePxySj589jdiyXHo+2mlG73/zWtl1GTlt
-	 Ty3SfHK9JSdaTiNnU3NZTQcI7wUmc89dhb6ktur+zDlblnWjB+E6yejSP9CqNm5GN4
-	 JHQf8BfFSgCWKi/hClJvm1ROdgDnuzRqc9nN4BJOv8Rz2yiBEKpmd8ex1m3hYB5TlV
-	 Z3BTaZ8s2POzg==
-Message-ID: <sashiko-outbox-225855@kernel.org>
+	b=PhDVA0MrawhiH72ZJhJhVD6asNG2UHx5mlZUBiSTBLUEmLKAsqB0E58sbOlrVDrxX
+	 qc37g98B5lwVtQsAaKcWjX2pHga85o451nBlaaUh4V0j6KM/qdNY8cmT5g6QJCVlnQ
+	 gGQkp14S6fSR7xNKquLhCHJzILQrPqJOHQ2oB39LRRPF+M4Fw4HjQwnBEFSap09s1L
+	 EqUlyAwOSnf2Z8j1vuTDKthNIDDXzPYXMDIwCbBVVjQTyG/JsQjop97JNsC36pXiBC
+	 2B5OR4HLHqRU46tDn7uOTuy03RTuVc63hMA10mE3kDyDR8KhukqUXPaiCMSINizJsf
+	 etZs6CVt8LjrQ==
+Message-ID: <sashiko-outbox-225858@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 51/60] mm: restrict explicit migration to
- N_MEMORY_MEMPOLICY
+Subject: Re: [PATCH 29/60] mm: keep private memory out of the system memory
+ totals
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?R3JlZ29yeSBQcmljZSAoTWV0YSk=?= <gourry@gourry.net>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261120-private_nodes_v6-v1-51-74f5f9a115c2@gourry.net>
+In-Reply-To: <20261120-private_nodes_v6-v1-29-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
- <20261120-private_nodes_v6-v1-51-74f5f9a115c2@gourry.net>
+ <20261120-private_nodes_v6-v1-29-74f5f9a115c2@gourry.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Nov 2026 18:38:31 +0000
+Date: Fri, 20 Nov 2026 18:40:33 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,24 +63,23 @@ Precedence: list
 
 > From: "Gregory Price (Meta)" <gourry@gourry.net>
 >=20
-> mbind(MPOL_MF_MOVE), migrate_pages() and move_pages() act only on folios
-> on common memory. N_MEMORY_MEMPOLICY nodes are the nodes memory policy
-> and explicit migration may target, so let explicit migration also act on
-> folios already on them.
+> totalram_pages() (MemTotal) counts every managed page, and MemFree
+> counts every free page, including private memory.
 >=20
-> Add folio_allows_mempolicy(), which requires the folio's node to permit
-> memory policy, and use it instead.
+> Many limits and defaults are sized from totalram_pages():
+>   - the overcommit limit
+>   - OOM capacity
+>   - tmpfs
+>   - zswap defaults
+>   - others
 >=20
-> Memory on other private nodes is still left alone:
->   - move_pages() refuses to migrate it.
->   - mbind(MPOL_MF_MOVE) and migrate_pages() skip its folios.
+> Private memory is not usable by ordinary allocations, so it should
+> not inflate these counts.
 >=20
-> Cpuset migration can now find pages on these nodes. Evacuate them only
-> from nodes the cpuset no longer allows. Private nodes are still never
-> destinations for this kind of migration.
+> [ ... ]
+> Switch them to nr_free_pages() as well.
 >=20
-> Migration keeps its best-effort behavior and can affect shared backing
-> pages seen by other mappers.
+> The vmstat counters and per-node meminfo still count private memory.
 >=20
 > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 
@@ -88,5 +87,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120-private_no=
-des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D51
+des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D29
 
