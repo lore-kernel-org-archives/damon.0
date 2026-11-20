@@ -1,85 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.176
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795201009;
-	b=fkrHUuPsKHy10KkAtlQ1EJ9WNXJ1aDxOkv7IzRDTKZyK7tNerfHH/AqqHmGx6Dji8RKZ
-	 cRehioAkdmNGuMWy8UaNiHkBxWw/TYrcH2TfxD8CZdY1szxNRjRRSupmjSDQwCIpJKwNM
-	 DmG+L7EktZoTTCXtCHGlnTzvoEI+waJqCbsxAGTw4U+tSMRRQiterDN+UYrxwfxn7Hy7k
-	 BJjGpK859vHGyfUrI6evdp/NDK3k+xpHcHoTalyC0vWVwryPuz/kFT5VqIsMp3+VztDIZ
-	 W0etFnQyU48UPzX74MF0ndFWptZrgEXl2F5XWRgyC+OwYlsEPG76ufL8zE4TaR3aiaQ==
+	t=1795201152;
+	b=C4JfEwKVKOEtBU72uj3SY+kp3S4AxRnIEcYxH/yqYoBiN0CmEPzRZo88Sz4Pn5f0s8SQ
+	 Z5/yliouWoq2C+z/RbRVyRgevnrM6mOepg74QGAwjX9xpkGkjPMf0/xSz4DLCvxaTaZti
+	 SEOJqz9+BxoAiflJbW2bniyfTwKENNy7eW3zQmfcuZkdiQJ2gn9WdBkBHOTYZXfKUveaX
+	 J9lo8JF0tBIFLq2GQcpWzkeYCyaFxyZZJGSmA/llIYYIyjlkMcqKK7rzALzzMvWl8BELb
+	 oz/vFPjfkhOiEpMjXY+yIsgR+jjW9DnRm0/2uUm5T5VHBI1GnOi4AZNHeddVo6vaHOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795201009;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795201152;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:To:
 	 Cc:In-Reply-To:References:Date:Message-Id:X-Mailer;
-	bh=CO2FmI+t47mxhoA5B32c/6+xEdoEj1zDOKWg0tAGKfI=;
-	b=sRU835Lg+cLJ61sPQSHyFNIcPKeyaPuATGKk7/xhOy4hLrACHucFliszxhFhqCg/kfEE
-	 6OXF7EsRTCEvWedu1KLLsLAMSCqK6Gp8CQhBI8e01Fz6z024yV6TRhduwrL2U6RKiOVQI
-	 0q32t7ppPBgQ+GDl5CNJrTB/Sbj1TZo6dZQMETpLdQmpi19j4jmlRAmz5PUE+E3UcSdmb
-	 eOghP4QOhaVW+DeLqsLcRUlmSOq5LMK0ZdkEQ87c8LMuTzxRlp8aRccZKx0O0oSVsVetJ
-	 ISD8taoZgErn6bKINixgple+uojE8FVIf1hz89XL44TgEvpRnjsnx1tfbfTHF/SLDUw==
+	bh=QpjWV7nVPK4jNL88HvKbtHJ/44FkOvQPFo/KHrxl1Aw=;
+	b=3la9mF6d2L/9B8amGfQhdzhU1pQEZsQ3BxNzITTme4VqVd3tTfHBZgSiEL0k22kw3onw
+	 tv9u5cnhVnqX6ITDlbyPckvmRivDtfaHZqv3s51BmrGa9pIE9/fFYCj3Jw/rv9sOTYWyU
+	 1PZ+hKuKAXjPpjwKdNqUFOsitszUmpaIWK/aPbcLeNoQjks08vKJ3hRP4FRkd5KhHjzp7
+	 kzMdubKem6Rgb22+JzBoZf0zhrSzF5SoosZS0uMRPGENbI/ZI5pQpurAkJOEcjFu+d6UQ
+	 RuA17TQJZgQC/5/kme1xnTIIgFFxA2bphNvfRF7sK+eQ25PgvKmzqthp82c2zh4sFiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=gourry.net;
 	spf=pass smtp.mailfrom=gourry.net;
-	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=AGhJLU+t;
-	arc=none smtp.remote-ip=209.85.219.54
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=QSB+ifTl;
+	arc=none smtp.remote-ip=209.85.160.176
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF32606A33B
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:56:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DCF32606A33B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAF360A261A
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:59:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFAF360A261A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=AGhJLU+t
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-9212dac247aso14137286d6.1
-        for <damon@lists.linux.dev>; Fri, 20 Nov 2026 10:56:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=QSB+ifTl
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-5365d26ccbdso15102671cf.0
+        for <damon@lists.linux.dev>; Fri, 20 Nov 2026 10:59:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gourry.net; s=google; t=1795201001; x=1795805801; darn=lists.linux.dev;
+        d=gourry.net; s=google; t=1795201146; x=1795805946; darn=lists.linux.dev;
         h=message-id:date:references:in-reply-to:cc:to:from:subject
          :content-transfer-encoding:content-type:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=CO2FmI+t47mxhoA5B32c/6+xEdoEj1zDOKWg0tAGKfI=;
-        b=AGhJLU+tNmaBotefAwAsP/4JhVGecbMpzeOCmKe1TyUr3nxYH8sgGzSTqekCalW0+F
-         V9ELHmyXJSqLYJwz/O0ceEbCq2dsbth2v4PumuK8PEysxTghygmtBP1ClDUpzheUxr3s
-         9kuMY1tr7tmafowBZ1xSVOLIyBiNKl8S+GsZ50wTuONd0S09/uKoCW0Sw3wKDtCZw9VD
-         /7eUIqPscUDuC6hlZqdKzxUu6zsbBSt9eSmDE7gHsj80s0l/yZillsfJlf7xmWKrST/d
-         iPLxUYHTlkBgtlieViNvWCJt2C+F7polVCN7pXr6ylG38hDyF1YiBngd8IWsRvUMcG3H
-         ImAA==
+        bh=QpjWV7nVPK4jNL88HvKbtHJ/44FkOvQPFo/KHrxl1Aw=;
+        b=QSB+ifTl1rJjRm8Fm4z4DJKCqYBQcvNzHl1jAHry1Ys/rGn/dab6x27R79oaTdNkxQ
+         U1cZpNe8gzrJSNHSWrxFh7Z9kxBCnjg0wgNfn3AuePe+JsDIB7Bm7qCQh142XZY/j6SV
+         E4NjWA4BMdi5S0nuwMZhvTBreVpSLmTIZdKRRo8ytZz2JaPS8kxGAmifPTiVp7nxHeu2
+         I2PH326j3ygUyyyTIH5dv265oi33aOkcwpeoxhT4o6g2evsYuT4JSv8zJb+5IQYsjagV
+         A8WUvoRwdiDCJAvE5mO3zyKyBh2kV0rXrm0o0d11tuiiaWg7S+ZH2N1DKfhPX+bgVvSn
+         kHhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795201001; x=1795805801;
+        d=1e100.net; s=20260707; t=1795201146; x=1795805946;
         h=message-id:date:references:in-reply-to:cc:to:from:subject
          :content-transfer-encoding:content-type:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=CO2FmI+t47mxhoA5B32c/6+xEdoEj1zDOKWg0tAGKfI=;
-        b=1Y5xInwPodZdTdGxVyjQU6wcg0Wg8di2OMAhSFKh4NwMZR35ktpjTThlIz3wu6vsY+
-         Lu/miym4mmmuTH1EOzcxVFeAG+jxGPaEtUl8OXcelHwJKASFG9XlRCcys52EZxXvVqn9
-         9kqsS25JWGpU+k2Xxbm90d7Y+EdchIL1a/nSKEadfaqPk4pyiZpocWv/mLzbu4xqiZRa
-         zfSmHdilTTpqZZucXHPaOiJtlOEHUZpzCbuxP2gd3b1okyWIkP4MJug08pkdz7wemF05
-         8etG2bZP9ecBAzID6nWyG6D837jUGoYT18TIUvFEa3fZxxlzQ07vpAaRDUBggYd/IVV3
-         B2Lg==
-X-Forwarded-Encrypted: i=1; AL+hErGjqMGVd6g4EA43me3sStUbIOaGYCWIi/svj1tCxRc7MtZIj3sTVSA7rXDQerELEunl9tUbIQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+xSHZUyfcGUU9EHwkhGjJVbH1g0NHEkdd/g0hqDekFFAomy8nl
-	AGNRHulEhpXYZUE7/aC30MFdBKmImm4sQuv+GiopbXSeliWheGke8MIDqrlUbbJnoEA=
-X-Gm-Gg: AZFdTZf9X9W8bKrBfBBDOWt3pdT3X1Tmtd0/wvsBVo5Lxh+eLHQuFYdE0xzRBHzkiFU
-	nL4DgB5DfNukrhR3QkfUV2Wq9uTuO9NSkSwQucQ2Peru48PCGOTAk07WLYyvem1Q1/w3x7q/hY3
-	F/IL7gFQtjCw78upwx0tgDCxybs8oCPB6bvHo/87UBKE8IGI2LZt1pQXn2ohA2P0h4iJKN9x3lf
-	NbsEaJzfwx1kHlj9saeyjGAULxqCasTsO9EjxihHHbu4NgOhL7lYiVKXUWnExZSkxcg6Y6pC0mE
-	9+ByEl5xNk4ShCXHs7WbUu1M/Z56HlKT7almG77YTKR3SPhYQDvDeGXraj4CN0a2SpWKQ15dzgY
-	3/o3EJFL1ROc1b0wXiqwt8MQHcMzfeWejPqH4vWmWEXNdFq/gr0/8jpEVf4BefNkWXBfZggqZvw
-	NnrOC2asMjzYcqLQLKEwiCDuXl6gr4dmVe2oO/1YbfnD79/YOqaroomTMx7eqZwINs3CiVJmkXo
-	bNDqu/0Yb2UlYRTE9Jw/P+wv3T1IrSb0WxIeqXii6Dk8pmpUhnMa5jyIoZVLyZFLR4YybKx01TX
-	ZqA3s7wafjvM5piTtiA5LzkobxG1PVfjOHPsNdxGd7mxpMgvj5v1SRvIeWOCGDbsI35YaJuUeT5
-	bOqS+81E=
-X-Received: by 2002:a05:6214:320f:b0:921:3541:ed1a with SMTP id 6a1803df08f44-9213541f3eemr56576466d6.32.1795201000560;
-        Fri, 20 Nov 2026 10:56:40 -0800 (PST)
+        bh=QpjWV7nVPK4jNL88HvKbtHJ/44FkOvQPFo/KHrxl1Aw=;
+        b=G+UtDw104QnrTPtnlhs35Cl12ml4CuXTPu05DucUEB/mcFIA0RnYf4L9wMZrsqvhjV
+         ER5rngLzQBZ7jthmPojbH5KDzDFxrjDTNssObWcRGcYOUyLiz7RN5eVu5VxDGx28eOjg
+         4KTKwJ9F06AyKy7lDGpMP+afgTN86ZTLyour5wS6uaM7CAFzmWtXfBgPfLKE/m+Nd0cd
+         cI24taaRMCODPhYGf4IUMii/uy/XxDdcooTK/DZjGlDr9bNcesV3Awpiu+QEY6kc57ec
+         Jy/8BWHrp43XOpeG1CVeTfUSADuYcXuVcZB1jkyse/Ic2PnBGy27r2jROgxtR1ukVqoI
+         skPw==
+X-Forwarded-Encrypted: i=1; AL+hErGSKKkTEZqg/1Rb52KfjilRFybynTSHRgbzJtTsXNRcmj0xkZRB9G4VqfzgUrr5eTZ4sfIIKA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z964M5WbvPiWx/3L5fJhZewvBaEPXUGxvRgYzhC2LNaba+HJTd7
+	YdDyBME5FaT4XRNxO8Rx+TvVngDbuNl1Qc2ambU0xO9twKwzHeYsPsk7WM1wJ7HB4DY=
+X-Gm-Gg: AYBFou2vpOCGorfRc87D2vJtRrD02ZO1CpYYMZGGVLJFns6nDqsd4GZkNDVa73Iuggr
+	YYAO4foCI/88tfRaqNxtC/30G6wato9g3XU6usvv/3RZbIogHujsmJ9qF6iskNu0j2gY2NwhvRg
+	yUN3NDeWbn492G54Zw7ZJQIEO041QMD4Q45VFLhg0FS5k/zTddNHpHzfsGLCxOSpNq5MxISyj65
+	FDHUnbicLFoKpK4ipHx+iMCX17J6aLaeaMHEBne/t0zji+0tN7oUUNX9YEDM1W/OMOgoAea0SoB
+	bsyPDok05eS1Be6We++zUZf0UZsyHvKKseByNRMJBndPl3ZxkToLG4fjq+tRZjvViWeck5ySDQZ
+	VP4kok0SM/o6pGPhMBz9N9r15KIk6rKjvVIq0DiahamgMRSN5z1of7JCRbcEQfox56+Ki2CiWtR
+	CcrHWYXW0/BUzaa/zavKacF3NMkei4p3p73cms5ZuKbGROYXKpLQiQlkhduzEWq6oD6UL+XN+0g
+	izqGbmc8MGePgSuzhu+0AWAcvR+RGxGlMSl6bLeey3mCwjJSZ5Z98x6itV+rb6AbR7ARi5Q2WmG
+	j+jlVpoaLrK4GjEa6K33BEs4iYnr2Dj61xmUguhDpmz4IRGXj0PgQZ+/hE2tatPq7LWqQ3VqQKE
+	T/MTi1NY=
+X-Received: by 2002:a05:622a:1a89:b0:55d:2c9a:3776 with SMTP id d75a77b69052e-55d76a811c8mr74428711cf.65.1795201145651;
+        Fri, 20 Nov 2026 10:59:05 -0800 (PST)
 Received: from [192.168.50.231] (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-921366d853esm26687146d6.27.2026.11.20.10.56.35
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d7884d01csm30305771cf.21.2026.11.20.10.59.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 10:56:40 -0800 (PST)
+        Fri, 20 Nov 2026 10:59:05 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -91,12 +91,10 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 54/60] mm/migrate: route explicit NUMA migration to
- private nodes
+Subject: Re: [PATCH 00/60] Private NUMA nodes
 From: "Gregory Price (Meta)" <gourry@gourry.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: "Gregory Price (Meta)" <gourry@gourry.net>, 
- Yury Norov <yury.norov@gmail.com>, 
+To: "Gregory Price (Meta)" <gourry@gourry.net>
+Cc: Yury Norov <yury.norov@gmail.com>, 
  Rasmus Villemoes <linux@rasmusvillemoes.dk>, 
  David Hildenbrand <david@kernel.org>, 
  "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
@@ -142,65 +140,47 @@ Cc: "Gregory Price (Meta)" <gourry@gourry.net>,
  Dan Williams <djbw@kernel.org>, Vishal Verma <vishal.l.verma@intel.com>, 
  Dave Jiang <dave.jiang@intel.com>, 
  Alison Schofield <alison.schofield@intel.com>, 
- Shuah Khan <shuah@kernel.org>, linux-mm@kvack.org, 
- linux-cxl@vger.kernel.org, damon@lists.linux.dev, nvdimm@lists.linux.dev
-In-Reply-To: <sashiko-outbox-225861@kernel.org>
+ Shuah Khan <shuah@kernel.org>, linux-kernel@vger.kernel.org, 
+ linux-mm@kvack.org, linux-cxl@vger.kernel.org, linux-doc@vger.kernel.org, 
+ driver-core@lists.linux.dev, damon@lists.linux.dev, 
+ linux-pm@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+ cgroups@vger.kernel.org, nvdimm@lists.linux.dev, 
+ linux-kselftest@vger.kernel.org
+In-Reply-To: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
- <20261120-private_nodes_v6-v1-54-74f5f9a115c2@gourry.net>
- <sashiko-outbox-225861@kernel.org>
-Date: Fri, 20 Nov 2026 13:56:34 -0500
-Message-Id: <179520099481.412063.3035407964761903218.b4-reply@b4>
+Date: Fri, 20 Nov 2026 13:59:03 -0500
+Message-Id: <179520114342.412063.6068641130948664600.b4-reply@b4>
 X-Mailer: b4 0.17-dev
 
-On 2026-11-20 18:42 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue to consider:
-> - [High] mm/migrate: call to undeclared __folio_alloc_flags() in
->   alloc_migration_target()
-> --
+On 2026-11-20 13:08 -0500, Gregory Price (Meta) wrote:
+> This is v6 of the Private NUMA node series. The series falls into four
+> parts, each building on the one before:
 > 
-> commit ca3cf1708bab40e7c2c443ad00cbc882e2163cee
-> Author: Gregory Price (Meta) <gourry@gourry.net>
+>    1-18  mm: introduce N_MEMORY_COMMON
+>   19-26  restrict folio-walking MM services to common memory
+>   27-44  N_MEMORY_PRIVATE, kept out of cpusets, mempolicy, accounting
+>          and the page allocator's ordinary paths
+>   45-61  private node features, memory hotplug of private memory,
+>          dax/kmem private mode, selftests and documentation
 > 
-> mm/migrate: route explicit NUMA migration to private nodes
+> Patches 1-26 change no behavior on any system and can be reviewed and
+> merged on their own. Without private nodes, every path in patches 27-61
+> behaves as before.
 > 
-> This commit routes move_pages(2) and migrate_pages(2) allocations for
-> N_MEMORY_MEMPOLICY private destination nodes through the node's private
-> zonelist by passing ALLOC_ZONELIST_PRIVATE via migration_target_control.
-> 
-> > diff --git a/mm/migrate.c b/mm/migrate.c
-> > index 6791834f14fe1..eda961d43df0e 100644
-> > --- a/mm/migrate.c
-> > +++ b/mm/migrate.c
-> > @@ -2250,6 +2250,9 @@ struct folio *alloc_migration_target(struct folio *src, unsigned long private)
-> >  	if (is_highmem_idx(zidx) || zidx == ZONE_MOVABLE)
-> >  		gfp_mask |= __GFP_HIGHMEM;
-> >  
-> > +	if (mtc->alloc_flags)
-> > +		return __folio_alloc_flags(gfp_mask, order, nid, mtc->nmask,
-> > +					   mtc->alloc_flags);
-> >  	return __folio_alloc(gfp_mask, order, nid, mtc->nmask);
-> >  }
-> 
-> [Severity: High]
-> Where is __folio_alloc_flags() declared?  Neither include/linux/gfp.h nor
-> mm/page_alloc.c defines __folio_alloc_flags() or
-> __folio_alloc_flags_noprof(), so building mm/migrate.c with
-> CONFIG_MIGRATION=y fails with an implicit function declaration error.
+> The full stack is also available at:
+> https://github.com/gourryinverse/linux/tree/scratch/gourry/managed_nodes/private_nodes_v6
 >
 
-b4 dropped a commit on me when i made the prep branch because it
-it was tagged Author: Brendan Jackman and I filtered on myself.
-
-this commit should have immediately preceded this one:
+Apologies - my b4 prep dropped a commit from the stack because I made
+the mistake of filtering on author (myself) and it stripped out this
+commit:
 
 https://lore.kernel.org/linux-mm/20260923211041.3127588-4-gourry@gourry.net/
 
-the branch in the cover letter has everything
+The commit is one the branch listed above, and should be otherwise
+indepedent of the series (can be pulled in ahead of everything else).
 
-I will respin this again, but i'll address the sashiko reports and
-let this sit for a bit.  The first 2 chunks are still largely
-reviewable.
+Sorry for the noise / compilation error, won't happen again.
 
 -- 
 ~Gregory
