@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795155215;
-	b=WP3rn6sRt1hYEqussOFryMi6il6BDUw7fQn6zTzIio9O+go9aBlw7e70fwL5PelUmYVl
-	 rRhBeeqeCah79j1cjgtd9BHGbn/0um07oKRwaPzJgyh3OpXR5C01DOi3L3q4XbEAW3zUu
-	 Xo4C52TIljCn7StcxQvLRIrZ9rdf5/BRaCZgyXurvcTXF3XdAYFrssxZOicxLmVDE245/
-	 7b9zZCIahIPeW2k4Hyz+JP4HwYPE0+VW5HRaUlE6aTZxhwQIHhVeBdZLn0nwBqOTPixKQ
-	 eGGf5hqEoBkpZKmfmt/DYaIU3IRaZlgnDEHCVP5cbv58ju2RpHnPkJRMmljJS+Uu0iA==
+	t=1795155664;
+	b=U+XrH8uWwTgtsggjdyBYlJnxECIzV3z50ch5G6JLdISyySLqgFu67mBF4hcSP+F8Samu
+	 zc1L23dh1Z+0ej66VNwtVlzdQATj0f5PL65RmQB5zycpoYGhFeb6NMX6LUxjwA8DigwdL
+	 cHj+mjlMDxPkHJqNPfo1SsZQGgpdss7Av/uI5W+H7JQHiNKvM1WuGO9qT+tZtUByQ9+gF
+	 s0eKsI3K4s+vl82K7nidhQTBRPGebhNokXOOUpPTW3GC3fxJB6DetOudKZ21Oc4Aj9zfP
+	 E0CMFg608bXzuD2IzKHTAPMURV1WyAx6kKlI62LMINd5K1GVgKIkcGiIF6nYcrciD4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795155215;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795155664;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=rfsSxZFEpYdiQSJM1kyGKBxdeeRxyNkdzgufWtZByCU=;
-	b=TDOwy1k7iDFDVO7VEZH47c6asZf1bq7wNgQhg6EkROaSIcAYSz1PKjZUJ/jJT8C5Uyoe
-	 K1eZ7kITcZyku08eNlHP5XODVmEjE+sGLKJ48YxPysiZ/YTaKH6kxMi6KKQ24eK3alW2B
-	 CffuE8l4YBAx3GJieu9PTrbX9XfNgpnHT4slS5jSA/vnfctkgzg5cMpOKvmOP9YoSYHp+
-	 JYUd5G7hm4Tp54P1kCLuOAsTNcjooQzvhESbPQBLvra2z9TBbgJY+t/kz7s8Y7MotDYtp
-	 T8B4vVdtI3bvlAJMd+wurTGAsQ+TokIaTD8aCOXKeXGIHDgifqN6d32COCN4efLwzUw==
+	bh=c6+uUiXR57v6RettqQsX/j+41oMGlqr1n+LvSk6HEB8=;
+	b=kCPb4ka/9hyvsPRSb/t9r7NFtYmzjyNbTa0qduK1Wv45Gw9VQsOvcwSSK+JdG60AxRnL
+	 T3+Va5Ak3KIAK6JpqkIWaX/VJBEWacKiIwEr9RPYEILEpcrPbdSGO7uAW/0IYB3S+C33V
+	 SuUr7ivmGryaIU5q9XDorXsrL9w9dyYCkxzpnz+sMg71RN8+QsxwhiCGVGqgGJeWk03c/
+	 j/13pRjo3hNpa/GNmzwFw37lm7byUWLWXzS4WqgTyosJcoynOLn8RA7iqWbBjZnM2R1QK
+	 5rBdiSqL4TheHymDA7/vSIe7WE/XbuRvy32itCcKnPQXmHEkgpS/rO3EVZtgMejtpXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WWXG1DMW;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R5vZiRwR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B817C606A51E
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 06:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1827606A339
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 06:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WWXG1DMW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3356E1F000C6;
-	Fri, 20 Nov 2026 06:13:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R5vZiRwR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B46B1F000CA;
+	Fri, 20 Nov 2026 06:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795155215;
-	bh=rfsSxZFEpYdiQSJM1kyGKBxdeeRxyNkdzgufWtZByCU=;
+	s=k20260515; t=1795155664;
+	bh=c6+uUiXR57v6RettqQsX/j+41oMGlqr1n+LvSk6HEB8=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=WWXG1DMW6DEh/XaUOB67M9aKrpiw7Ssi5Qq8k3b6Pd0MtEhXXSoh7ESrqBNUftMuc
-	 8EI6MpSxN/uapi1O+1LTSxeb51Tu8NcleTejt36tTiSKwvpDDRMctdV3ElWxW6Nusq
-	 8cQ6878YOP75v6QjBp2qAoHpeBsFBVHqkO2/cSYWZyE+bocIjHCDCqDwq5sfvCY5tr
-	 50nhxRD8DAPPzufzq2nTxzwPbnnWfSJGwAmZDYNoiDvdBG0iTGNW1inRDJM7zC+3KO
-	 RH6daeA/DTObSc/jW6U9aN66D48Q/KkOvAnwJ6EqpVnzXM0jjTqCiqBcgHllwdLjDj
-	 II76PsieOyN5A==
-Message-ID: <sashiko-outbox-224543@kernel.org>
+	b=R5vZiRwRL3UYhnhzkW3XYXugfRAO2aVbidLvRrDY9ZLg/vtGGYucT3zmCMbNxUotL
+	 JbZjcyBE6iHs3Gg+5o3ov0M8iqzYjpmwnNso357BoiUZrFI+UZvrC3ujcwRtAQl++U
+	 e007kEfWOmJ2hm0f3O9MfQCGImHNcqymfA1raxuhl+i5T5BJvNzcdDiA5t9seWZsYn
+	 dXDXHjHvkgW6en5SrHxGb0rW2HRYMzlT2xcITgNwA8SZ31Y+YNN1uw8D7sYv0HTHMs
+	 nCZpiztOavdyNVvUrxZmGEqOtg6hWbPzPKRTbC2PhcAyvpJurgR5JEygYxE/rj1jja
+	 8XchiE91H+XJg==
+Message-ID: <sashiko-outbox-224552@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 2/4] mm/damon/reclaim: set memory PSI 0.05% as
- default quota goal
+Subject: Re: [RFC PATCH 1/4] mm/damon/reclaim: enable monitoring intervals
+ auto-tune by default
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261120060741.92121-3-sj@kernel.org>
+In-Reply-To: <20261120060741.92121-2-sj@kernel.org>
 References: <20261120060741.92121-1-sj@kernel.org>
- <20261120060741.92121-3-sj@kernel.org>
+ <20261120060741.92121-2-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Nov 2026 06:13:34 +0000
+Date: Fri, 20 Nov 2026 06:21:03 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -61,12 +61,10 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> DAMON_RECLAIM provides a PSI-driven quota auto-tuning feature.  Because
-> of the DAMOS quota internal access pattern based region prioritization,
-> it means the coldness threshold (min_age) is also auto-tuned.  It is
-> tuned off by default, though.  The feature is expected to be only better
-> to be enabled.  Enable it by default.  Set 0.5 milliseconds per second
-> (0.5%) as the default auto-tuning target memory pressure ratio.
+> DAMON_RECLAIM provides monitoring intervals auto-tuning feature.  It is
+> turned off by default, though.  It is expected to be only better than
+> the default values of static intervals in real use cases.  Enable the
+> auto-tuning.
 >=20
 > Signed-off-by: SJ Park <sj@kernel.org>
 
@@ -74,5 +72,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120060741.9212=
-1-1-sj@kernel.org?part=3D2
+1-1-sj@kernel.org?part=3D1
 
