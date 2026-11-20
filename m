@@ -1,58 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795135782;
-	b=jix3AgCM5c8IQOxYr5MgKXDZ4qF2vSsdS4NMCwj6YBtbIkHZ5/Uc6XEMTcSkCDhwBKTy
-	 Av5GwxcLa9gS/YTEQMqNk5+MdQ1OcSSu+AJySUyQuagUlIiURKH2W7ndAynd60tmPBXCz
-	 Vmwz3S4U+1evS9znSp8m5mkC17luhMsVSI6N+54RbN7WeVRrPv43lItIBlYG0UZbNJV2/
-	 A1lZscBQyCZyerOo9IAYOizaDMBSv/OqHUxHo1Jp4XxVab8oZ6P4S747YFS9nnqJm6nLE
-	 csEjzRUHOB901YYy2TilW+H1DA/PREq1AaSs2yZyXBIARrXLHq33SXib6Xjr6Ux+1HA==
+	t=1795154869;
+	b=qzFAlgk8K12sPiP63I+lEAkr/hq121gUr3UqIIXrHP5lckTj1NoVQ2mV2nCwAK/uuAvo
+	 yO+QDsU8I3sRygHEtehu8cRFawPiXz5em4lU+cmz/pmwre9U0LJ3n6sPCg/+CyH+ZwhEm
+	 EwU4b/8DsJq8WRzJ8+O1IfA/DC+KqLTbXI6MqaYaGsYSt+XpSKDfuhl19lFVFRFkXxUYt
+	 dy1evebtQkKp4Sk9skQ2UK/G0nsH8PpaZDc9xcRdmctIAWmniRyvLbVNWQWCY7RJRri9E
+	 J44QUJi8VGAriaRGNh/GTl6KWpDuJgFHyaVMWXs7DjnhvUqzqyEMhqai5NxaUjASLag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795135782;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795154869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=xkS1ralUzvuQKKu8b7gkCgxda4Hz1Nq+3pjzMQUco7M=;
-	b=tcp+VoDEiM+wdWT+YK3NlIBJUjo9k57eNtSuk8Ys4divQdwl7Y6a5hcmZpjqVGPB4NOr
-	 ROJDwm6paeClma3DmBm3mBTim2UvxuuTkXsJYwvn591buIpa1aO3nvVpSe6wCMGYozwlB
-	 gWc+VDejrJFxI+RHaBzesfHvb9z2/oGdDSNPjdp3346VO/k0diH78TUl/2QF9l0H+OJNM
-	 VoXcisove/lbmzvYts0etRqilKNFpXWEzq5BOxFmFcPQu6CtxlbO2bg0q0MgO5MGt9+KF
-	 8uWevXH6HmYRou06NNuMHG2UE+jCFBzMS7GpO+kRPeKZKCHewBE/5KXa2ztAD3hvqxQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=+Q/Sp05AiIZSb9V9uY0yDUF0lL9up7p30RJjOrcfbo4=;
+	b=CfBR3F12O2M7JrTJTs9zmVvFWYThnla98ZtooIruufJ2jDIZnR5iv3iSKNn8soPiAqFJ
+	 iqENw7pGQZ4D4zx+v9DkjEpN3YFB9QUj/1sEhQao8Tr6zeZ+ymPiSXV80zw/5wtNtWwDF
+	 eivrSHb2KWiAvtW369C86fZxZ7S1g0slexP6YBwU5Fpi6siK4C5dWqK5XhJTl1/cfNf2P
+	 Ep2Uy73KPD4YKlxYRz1hfH3I97skxl7qX3cLkQX92XAq+uji4lLZHzb8XMm/5aord5Ke6
+	 q1miyX6/yzyiQrqicSZV2IYANwMm0+DEOw16YeJS+u2zL5Y5+5Lae5kPSUcScfUrciw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aGuAXDAP;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b8oA2H1w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26EE606A326;
-	Fri, 20 Nov 2026 00:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B4C606A521;
+	Fri, 20 Nov 2026 06:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aGuAXDAP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0085E1F000C4;
-	Fri, 20 Nov 2026 00:49:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b8oA2H1w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0695B1F000CA;
+	Fri, 20 Nov 2026 06:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795135782;
-	bh=xkS1ralUzvuQKKu8b7gkCgxda4Hz1Nq+3pjzMQUco7M=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aGuAXDAPUStqYD3A3YZkgo8Xe+lSt4wKwYW/DoY5jQoiLKq7jxiFcW8Td0wS3NJKo
-	 KlmlaawvS8x4FEZPRxDdfubLGqbYs6JuMyL9x6KZAdpufm8muhmxICpxPatvB1MH38
-	 r7o1H8ONwOx2c25JYrs6RvdvYjZZiSqZi2hVQRqoaXgyKPi5Ozdi6BeVtYIxIYcaPA
-	 4xrZIOGC90t6yGHHiz5LEc6NDi4IWBep4rHc26G2gJPHgVSZtZEhEAXMXhkKzGxEk0
-	 SbXR33DJqWt1TVFyy9Cr5UJ55rhBDE7NAqHidr+syqqkvgKQlOK/bKHzjBD43cF52F
-	 np5huzxb3BYcg==
+	s=k20260515; t=1795154869;
+	bh=+Q/Sp05AiIZSb9V9uY0yDUF0lL9up7p30RJjOrcfbo4=;
+	h=From:To:Cc:Subject:Date;
+	b=b8oA2H1wrVN/rA89/9EkhaZutna86qhgM8ktwmiydVOErWOPhIzvUq0FOeqU8NyGN
+	 7S+SO2AgIcpZViYJt2TqP7PFgcrIJkJ3RwTblyuAMo5DIcY8oFc/VzmIQZPh5dbubg
+	 o9eogkNzHTAw3mvZXnJ051K38Udfq3sIUAucbpP17Rz6ULuOj45DbWnK1tqh8QZ5rd
+	 rYmooDiXghFeZQW/vls97sdGymLHw9J9OLMoDLokgoLAfjlehkdHcw+JK9n9qyc9zF
+	 RFmt6A/soWKxM6h36q7plHKfI/TVK3XuHmI8zn0mDcPLvaSUwMQxAF9ic8cn4uEY6p
+	 32q0NV5gCBHsA==
 From: SJ Park <sj@kernel.org>
-To: Yifan Feng <evanfengff@gmail.com>
+To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/core: fix damos_walk() hang with zero watermarks interval
-Date: Thu, 19 Nov 2026 16:49:34 -0800
-Message-ID: <20261120004935.86433-1-sj@kernel.org>
+	linux-doc@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/4] mm/damon/reclaim: enable auto-tuning features by default
+Date: Thu, 19 Nov 2026 22:07:34 -0800
+Message-ID: <20261120060741.92121-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261120001300.11809-1-evanfengff@gmail.com>
-References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -64,75 +64,51 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Thu, 19 Nov 2026 16:13:00 -0800 Yifan Feng <evanfengff@gmail.com> wrote:
+The initial version of DAMON_RECLAIM was supposed to be used after
+manual tuning of its parameters.  Among the parameters, the monitoring
+intervals (sample_interval and aggr_interval) and the coldness threshold
+(min_age) are particularly important to be optimally tuned.  The optimum
+values for the parameters tend to be highly dependent on the workload
+and the system.  Hence no small amount of tuning efforts are required to
+each DAMON_RECLAIM use case.
 
-> On Wed, 18 Nov 2026 17:42:46 -0800 SJ Park <sj@kernel.org> wrote:
-> 
-> [...]
-> > But, this could make has_schemes_to_apply has false positive.  How about
-> > calling damos_Walk_cancel() when has_schemes_to_apply is false, like below?
-> 
-> Thanks for the review.  You are right about the false positive.
-> 
-> I tried your change.  It fixes the hang, but has_schemes_to_apply is also
-> false whenever no scheme has reached its next_apply_sis yet, so it cancels
-> the walks of activated schemes too.  In my test (one stat scheme, default
-> intervals) 18 of 20 update_schemes_tried_regions writes got -ECANCELED,
-> and two selftests fail: sysfs_update_schemes_tried_regions_wss_estimation.py
-> and sysfs_update_schemes_tried_regions_hang.py.
+To reduce the tuning efforts, we recently introduced two auto-tuning
+features.  Intervals auto-tuning (autotune_monitoring_intervals)
+automatically tunes monitoring intervals to provide practical and
+efficient monitoring results.  PSI-driven quota auto-tuning
+(quota_autotune_feedback) automatically tunes the coldness threshold.
 
-You're right.  Thanks for further testing and sharing the results.
+Because the auto-tuning features were introduced after the initial
+version, the features are disabled by default.  That is to keep the
+default behaviors unchanged.  However, enabling the auto-tuning features
+is only expected to provide more benefit to the users.  Disabling those
+by default only makes the adoption of the features slow.  Also, it is
+difficult to imagine real users who use DAMON_RECLAIM with its default
+parameter values.
 
-> 
-> What do you think about cancelling only when no scheme is activated?
-> 
-> '''
-> --- a/mm/damon/core.c
-> +++ b/mm/damon/core.c
-> @@ -3492,9 +3492,13 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
->  	struct damon_target *t;
->  	struct damos *s;
->  	bool has_schemes_to_apply = false;
-> +	bool has_activated_schemes = false;
->  	unsigned long max_region_sz;
->  
->  	damon_for_each_scheme(s, c) {
-> +		if (s->wmarks.activated)
-> +			has_activated_schemes = true;
-> +
->  		if (time_before(c->passed_sample_intervals, s->next_apply_sis))
->  			continue;
->  
-> @@ -3506,8 +3510,12 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
->  		damos_adjust_quota(c, s);
->  	}
->  
-> -	if (!has_schemes_to_apply)
-> +	if (!has_schemes_to_apply) {
-> +		/* The walk cannot be completed while no scheme is activated */
-> +		if (!has_activated_schemes)
-> +			damos_walk_cancel(c);
->  		return;
-> +	}
->  
->  	max_region_sz = damon_region_sz_limit(c);
->  	mutex_lock(&c->walk_control_lock);
-> '''
+Enable the auto-tuning features by default.  For PSI-driven coldness
+threshold auto-tuning, set 0.05% memory pressure ratio as the target.
+Free memory ratio based reclaim watermarks were introduced as a safe
+guard for unoptimized coldness threshold.  Because it is now reasonably
+auto-tuned, disable the watermark feature by default.
 
-Looks good to me.
+Enable the monitoring intervals auto-tuning and PSI-driven coldness
+threshold auto-tuning via patches 1 and 2, respectively.  Disable the
+free memory ratio based watermarks via patch 3.  Finally update the user
+document to reflect the changed default values, via patch 4.
 
-> 
-> With this the hang is gone, 20 of 20 writes succeed while the scheme is
-> activated, and kunit and selftests results are the same as on the base
-> kernel.
-> 
-> I will send v2 with this if you are ok with it.
+SJ Park (4):
+  mm/damon/reclaim: enable monitoring intervals auto-tune by default
+  mm/damon/reclaim: set memory PSI 0.05% as default quota goal
+  mm/damon/reclaim: disable watermarks by default
+  Docs/admin-guide/mm/damon/reclaim: update for changed default
+    parameters
 
-Yes, I'm ok with it.  Please wait ~1 day before posting the v2, so that others
-can also add comments if they have.
+ Documentation/admin-guide/mm/damon/reclaim.rst |  7 ++++---
+ mm/damon/reclaim.c                             | 15 ++++++++-------
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
 
-Thanks,
-SJ
-
-[...]
+base-commit: 0ec5c1c237bdf91ae93b3efe32767aad9a670f8a
+-- 
+2.47.3
