@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795199483;
-	b=fIRiMAaeV5GbCqN0HTj2raS4oYrLCoD86v2i7BJzvwj6K0y04zwuzmUgm5knlEiRteqa
-	 gf8JSWm4BHRpltqZOCu8gZe+0xo58CAnEiO/gXU1PUQiZg6diOMrdsWnjYk6ywWBVZ+SC
-	 JU+Jhzpfb9PbTeykaCzMZDYl0FSKPE2BooRD35++vjaqG35kivnl1abTzEr+e37jAaDVF
-	 dSXa9S//tO9rFqhe/8x96md1AcrOn0558ZSNpf8/+VMdXChPbAJl3rp+33EMLi594nGx5
-	 NkfjJ7xIyIjJads0Vx+8Y/lPaVGE8HtxAiAKygfguGX2nWxJ0+TMYlolKi2JFR9hEiw==
+	t=1795199504;
+	b=vnuOxzd2w1Xi0oNoVlCNUYlvHD1iNJSxPg/TOnKTNxXXyZk0N8GdxGSm/Mr/632y8lMq
+	 h+06alY6FCQi6tLgd8vQ7zFzkalGU3dIF97tJkMElwfllNzJTNnHD/LxwFMYkxuOP1OkJ
+	 MToQEbwtbTiWFhzxmR6sMgZvakmkO+j+h1IfyYvtl/t9AMc7R2FPoPwS0oFpC02TIkX/d
+	 yNEXI/oQHPp4X7G8lZXWkM/dd1QjuRacUyPgWKq1+DOQG/6HSfLD/8qoVpoxqlro8IaqV
+	 iAae8PJ5AMbhvi7RyDpVGLzQcP9T6mkft6XOM2e4m1KSmu5RJUGgIWbSHYOvrRuHstw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795199483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795199504;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=cOhHOrUxw2LCm4PS3m/Lls07Hk6D+NogvV8VIIlKhFI=;
-	b=TpF+rMeTDAKZHfdlWJKKhWmSnsA7O+nNqXL+H82jECKE0zhFEcCCgdnIHVw+6UCzDG0F
-	 YWxg9hiBjlumDpqnggHsHhefOUvtS5MMPhIUTcDq+bTspIS3f9lgBp6LK2NjGcciYe48F
-	 yyh48kTTLdcKNGN8d0w/d/HZYh2yjQ0HDgbLEjHoC/ysibs3RJw0GGHmpFjaIqf5Urqma
-	 NGgv5sOVem4u9SaAqyKWMZJpLakxZgj7akqIbnPEjek7kjRNA1UvRmyevdirwzm8l7G5X
-	 6kQoJtkhBnIPjqAcVIqqVoNEAQZFKdBB7fV+g7Hfjk5o0JBStNjLLo4974qy/LKW3iw==
+	bh=FhnBwXJta14qA4W+HWY8wkRmIP2pTkoN2jMfvy8KyXQ=;
+	b=Pgz5VpKWViy+rNW785y3Q0lQ3IXRiCa4BZy2VHVehSF+AXtQ46rNHNtpP+ngV8HiD0BB
+	 yAb7l3Wm9etdNscTF44PjgYj/L0e6E7S7l8PGU9Rtw0vVC2Ok1UlQHh6/ONpVyCb/OC2Q
+	 6AEsLICIG7+980m8PuBhP4/puYtGY84F2w0FFrDcHkubD7BoA72xxuAai2RZhiC3Lj4AF
+	 r3gy+N3rPTABOWlVjxV1W9Ia8WbFqPW01U/eXlu8CtgXaxTGrR2h1ooDyteUq9dYp6/Gr
+	 OTWIbDxP/9filiU1EfCNwd2TUZX8rYs/nRvaJdOozEUOWFAp2injL3mxVk3APMm/DYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TR2tTRrL;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fHIYEdFI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B278606A331
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD155606A32A
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TR2tTRrL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30D01F000D0;
-	Fri, 20 Nov 2026 18:31:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fHIYEdFI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73BE1F000C4;
+	Fri, 20 Nov 2026 18:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795199482;
-	bh=cOhHOrUxw2LCm4PS3m/Lls07Hk6D+NogvV8VIIlKhFI=;
+	s=k20260515; t=1795199504;
+	bh=FhnBwXJta14qA4W+HWY8wkRmIP2pTkoN2jMfvy8KyXQ=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=TR2tTRrLw/QUbk28Z5UCpvfOQ1sLxmpbc/s+drR34G0phOM7meRgt6RcyvrorWcO3
-	 /0ZzSO/yJGT3TxxiTXsMZSIULXn6LxpxIpussaTt0EPq7DkFgfj8a8TCEyIsA2UnEx
-	 TDSIYiUc9ZO/SgnhU79yxhe2eActnJY3D3k3QLLSKYtJ9ztg2MnZpS8t92KumIAOQ0
-	 CvQu06NsZXHc1qkCxYTMPsceXjRJhHGvA4PENp/DgP94GqY7iQHMyPjB1zVqxPYAfs
-	 SWUobDDqwOZm03qEfhokYoCaRZVpOVtaeXJ9fRwEMw4cl9vHMpzKSslEA2/C/aOZB/
-	 e409W+lNSrjew==
-Message-ID: <sashiko-outbox-225836@kernel.org>
+	b=fHIYEdFIZ2U19exdJRhrsH4dBKrFt+PCsPQvHPWRSfFn6y9TBbj9do0XjNtXzrKyT
+	 ztX/P+tWobx/Q9lS03L2/Z/fk28lt0z+dLV+Jkv/izsEaZ+FxP3s0kpp9ZdKUcSJ2r
+	 re2gJ0yy1xfNo/Td6nqRCUN9xnpSFUh/fjKTjXDX9QhnaFiemyaI8GBjYa3RK4t6ba
+	 /LfInqR8cMhPen04mw6i5LmvbaoOl2KzLawmWFKrO5jgOIr0gyBQuCgNMhoPOrUl+t
+	 eAZkDE+MeF28G3zvCFrGbqgBYENLY1WweBzSnT/jI9dWaxLpKBCMitDdndAHQT7GR2
+	 0h8miXYuSbM6w==
+Message-ID: <sashiko-outbox-225837@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 32/60] cgroup/cpuset: keep spread page cache off private
- nodes
+Subject: Re: [PATCH 49/60] mm/vmscan: reclaim private nodes for memcg
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?R3JlZ29yeSBQcmljZSAoTWV0YSk=?= <gourry@gourry.net>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261120-private_nodes_v6-v1-32-74f5f9a115c2@gourry.net>
+In-Reply-To: <20261120-private_nodes_v6-v1-49-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
- <20261120-private_nodes_v6-v1-32-74f5f9a115c2@gourry.net>
+ <20261120-private_nodes_v6-v1-49-74f5f9a115c2@gourry.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Nov 2026 18:31:22 +0000
+Date: Fri, 20 Nov 2026 18:31:43 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,14 +62,26 @@ Precedence: list
 
 > From: "Gregory Price (Meta)" <gourry@gourry.net>
 >=20
-> With memory_spread_page set, cpuset_mem_spread_node() rotates the
-> preferred node for page cache over the task's mems_allowed.
+> Memcg reclaim does not serve one allocation, so it should cover every
+> node that permits reclaim. It walks the current node's fallback
+> zonelist, which holds no private node, so a private node that permits
+> reclaim is never scanned for a cgroup over its limit.
 >=20
-> mems_allowed can include private nodes. A private preferred node will
-> fall back to the nearest common node, which takes an extra share.
+> After the zonelist, visit the nodes that permit reclaim and that the
+> zonelist did not cover, and give them the same refault snapshot and
+> congestion reset. The zonelist keeps setting the order, which matters
+> because memcg reclaim stops once it has freed enough.
 >=20
-> Rotate only over the allowed nodes outside N_MEMORY_PRIVATE. A task's
-> mems_allowed always holds common memory, so the loop always terminates.
+> Direct reclaim for an allocation still walks only that allocation's
+> zonelist. A private allocation's zonelist covers its own node, and
+> reclaiming private memory cannot satisfy a common allocation.
+>=20
+> Without private nodes the zonelist covers every node that permits
+> reclaim, so behavior is unchanged.
+>=20
+> Another way to do this would be to implement a reclaim zonelist that
+> only reclaim uses, but this implementation does not carry the static
+> per-node size overhead that adding another zonelist does.
 >=20
 > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 
@@ -78,5 +89,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120-private_no=
-des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D32
+des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D49
 
