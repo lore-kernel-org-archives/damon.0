@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795198903;
-	b=wI8ngYQbTm20DAzzfXc8nR1TpAocH9Dok0KN+6XjLApUeyI/2NFS51j0vj1AA+1VZpwB
-	 brF+5MjfrZRKGNUmeJacSWNfBZOcRS7ODaQ2C7By0e6vkpE84oqvMAQYvN+/YgZsmzsHI
-	 EhGiVEQWjdF1IB2f5l/X6DV8pLkuxog9h/PVTn5bsnM1sCBGSjKmKA+sI9brP5N7VWRuq
-	 738VfNe3j7r3Y3NM4KnxQ3/mBvyOOhoOpZOzPoaMtqwUeUnw/y3O8gweYF271YfzOBou/
-	 YqcaH+cJt5gN3xP0SdTDJV66ez4rAbO5HVNmLiP9JO1QvD0UmnAgYQu2z4RTHkkIsPw==
+	t=1795198904;
+	b=4owJQqZDNm58PTY3HG4UikWy57fj9FrrPaw/YHPImK0pivcuX/BSm05Qf8P7EwTXILJe
+	 0wxlSeynZJi5MBByD6yFiYP7WDxk52FSk5fpvAk3h6qFVbcavaGuHE0IrH5xvRBmSvtQs
+	 5qRdDJrgo1cF8iYcQERcVZaHqLuyOalM3nmoL2YiuajeqV+iks24DqNAqDVMSPKi8MSJH
+	 oNIUbJMWixvkKFkNWwOwhyFL68KWdGg5NRnhSFj/IANh4c/id0UiRxAsTWskm0v5o/7As
+	 pXfo6GESwlPvQ15GqSb6+UEVHQ9DAENGE1W0nCL6DxHiD/u+09jjPLtitsySVSlKAFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795198903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795198904;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=0KnMKn28stx4KXvLRf83k//TIO4P14FTZxmMi/Rto4U=;
-	b=J0bJtQnPWGUqLZ5J01LZIfh3IJdxceVpaQPCJUjukVMWSMQhQNM2OBWt6OhAKNUtU9Me
-	 KQK597QpJf1+CUQMVLYNPy8skAKjDQq7w4frJvtH6J118YJgptm0ppWIxfnJ5VeGu0zQ8
-	 tkuY0Dgnk/zcIp4/aN0qsDuSnx1TgWkIcEoAusWEoyOfmXSAUY5s+v0iJ5ArTaYQdihy3
-	 BIb795YItWywASlzOkWcT0TwxH5LZfkAoopkSUT0tYAv4/VuPxJoLJ/vcBiDhA6nQZt6C
-	 fNANvCcWT6aHl6KvRITiwCXCpIYAdHxbVxgjzRCu3xpyYxhq6DkrsKHS5hdNqeCRaYw==
+	bh=Z4TDWPOEdMymY+WHLYWuo5Ay1z6Os0ii2hK21+Xis/c=;
+	b=0RHHoUkdZP87078ZoV3YHQrUFZbw1R9t7bnhPqsmJDfJMqw+bK3+o1ui3TdINiy64ttx
+	 jjg7Vr3B+UFm0o5zrB2Ncgoe7oIk6FVZx++TDdRDQA08JbVnV9ikPDdFNutCe1N1WsQqH
+	 jGUYLHUIFxDro84JDlcVa7YKZVokT4ZbTTi9Ptb4sBtjfoY3CVUzrk7HVgRdfRgxv8gO4
+	 hMV3rt4iqt4iR85yuQ0/SgXusP2f5qld9go8OpbUyqj+pbGxptt33x+ib4qeXRVR8Czsa
+	 6nisOsK9bX9tVeAxTLRcoKDuVdeV3weAU0WxJjjhPWMZpsyXfJe1R96XVclqjFdkveA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jRBLM5fc;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IZK4AvZx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EDD606B447
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE60606A8AA
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jRBLM5fc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BF81F000D4;
-	Fri, 20 Nov 2026 18:21:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=IZK4AvZx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3941F01568;
+	Fri, 20 Nov 2026 18:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795198902;
-	bh=0KnMKn28stx4KXvLRf83k//TIO4P14FTZxmMi/Rto4U=;
+	s=k20260515; t=1795198904;
+	bh=Z4TDWPOEdMymY+WHLYWuo5Ay1z6Os0ii2hK21+Xis/c=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=jRBLM5fcSgzvdl9euXTss9ha0Ow9dfKTyHoDmJxSRhJgO4X1exVVRqctDbSBsA47x
-	 A3aTbsex8LUv7INzuiDbREajSOiiU/7CDn3LZFoqCcBj3YRBgf7xxr/JBnOrNGi24g
-	 8KuYA6dGKuD2Jz2DEjQWE0T+1fO9sT/UI6ilsC9Zmdd5YmxKPwjwzEqM6SRBtHiD6h
-	 nJ1r7HSl3o42fYk/6dh5ONuHiX/k5gKvc66qtE5rrhBJu5nPhu7Wl0bxR4vDOyip3r
-	 sO+9r10Lg1LJ7Y4d9Wc4hpEesZuz4v0s2tkZ+KXXmiAciS5i7YEsJbmwAwK4T+S+Zk
-	 bA6x4L0ogFmPw==
-Message-ID: <sashiko-outbox-225811@kernel.org>
+	b=IZK4AvZxJc+qOrFOD7/9j3/mpGoyCTNja4ta01LEgnJYv5M67CPvPJ5gt1RCo13iy
+	 PcOBfjwJB/r6niMbZQ1qJInoaP2yEjSjQdtBR97+uLOXwXcpLsETNv4sdMheoVX1yj
+	 T9kZPuVnalT0xYdLZ8pD7ARGkyU810PvSQgNTaflvssReQ7gHSb+m6hYkZjP0I/nMR
+	 QpIeWUgfYey3bJZO1o/BrwtbE4DIWDI1j/OW2SDxOjrDu9jUXxiz7ZJksig5QVkWhT
+	 ywBuHCJYMK+tzVtJkrNi1BqM+B6FVE9lMmuvvqXiK6iy5AuJjoT/RWrfUTSwE09y1x
+	 sHUWQ4W5BBztg==
+Message-ID: <sashiko-outbox-225812@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 26/60] mm/migrate: leave pages outside common memory in
- move_pages()
+Subject: Re: [PATCH 22/60] mm/mempolicy: don't NUMA-hint folios outside
+ common memory
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?R3JlZ29yeSBQcmljZSAoTWV0YSk=?= <gourry@gourry.net>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261120-private_nodes_v6-v1-26-74f5f9a115c2@gourry.net>
+In-Reply-To: <20261120-private_nodes_v6-v1-22-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
- <20261120-private_nodes_v6-v1-26-74f5f9a115c2@gourry.net>
+ <20261120-private_nodes_v6-v1-22-74f5f9a115c2@gourry.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Nov 2026 18:21:42 +0000
+Date: Fri, 20 Nov 2026 18:21:43 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,12 +63,15 @@ Precedence: list
 
 > From: "Gregory Price (Meta)" <gourry@gourry.net>
 >=20
-> move_pages(2) moves the pages a caller names, and reports the node of
-> each page in status queries.
+> The NUMA balancing scanner installs PROT_NONE only on folios that
+> balancing may migrate.
 >=20
-> Leave pages outside common memory where they are: refuse to move them,
-> similar to ZONE_DEVICE pages. Status queries move nothing, so they
-> still report the node of each page.
+> folio_can_map_prot_numa() already skips ZONE_DEVICE folios. Skip folios
+> outside the common memory pool (N_MEMORY_COMMON) as well. Do not inject
+> hint faults on those folios or migrate them.
+>=20
+> Convert the zone_device check to a common memory check (which includes
+> the zone device check explicitly).
 >=20
 > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 
@@ -76,5 +79,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120-private_no=
-des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D26
+des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D22
 
