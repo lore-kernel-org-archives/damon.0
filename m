@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795154869;
-	b=yJI7hl7sF8TEwdLH/KbuS1Ew3m1neUuJZbQ4yKexFJOAGhXGJcazNSBDdPKbtQE25iJn
-	 rBc8emIpvx/8aVDZE9ohOFfbFkTQnCLQ8oU70x6NTJZXV0/rUHmNU+Ei4W0FyCN6+m6sT
-	 O2qrpKM1PPCjfTvV7OZWddqqkc5eUtPPxeixa+XVkUwWhtgTa4XP5P5vop4Nqw35MH5+B
-	 lGuRd2R2F2haJmLZHVFz1hmnHMi92qHLD4gJG5qSyj8R/o6PGSvxQw6+uK4+dlp0bctqS
-	 oDhJb267FKuI8BFbNmWQ+vf/cQStFF6PDjELugeGCqea8Z2PxIDPqDtlzCbAcx1LaJQ==
+	t=1795154870;
+	b=eyOmxz8Nc5CaI4tPvlxBFGrDYDqr0Z6i3NM1q+Pdb6wheHdQGS8ivcrRLGkptYn+TN/K
+	 03zZnrDvd0RnClZxJGC2/8kXPRfDABqxuEXN51VGiwo6LMwiO4J5LnZeI/lVTV09IoAZY
+	 dYWawqmQ7aiKEiazFBqXPGHm6zprR6TkoAdlaOgdiFqzEK+df1slRHABzmU8af7wL7Oak
+	 irRHJIWjcYW1XKC2tMfolfVRNQqePg6OxCxodh926iEoAIayCM8xufsCr6S9/03YnowDC
+	 VJrUD8/I9AsAsQ6LoTpk+ZvMija/s+Lbk8zqAe/WVzbGT4Kr/wAZNomKsnHVDZ84TvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795154869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795154870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=sgy2HIqRDs7m+gqismXK/OQPULwkzU1byqrsLzKFNC8=;
-	b=JUc4ytbY+seXVIBcWbHD/c9/PpdK3ZjgQ2JzOjwmmN1wiXAjCYrgBbn8SIaiWL1gV29C
-	 c73rEFd8+OoDgTsG2rpfDuismGHdQN1y6Xrf8HBIjXrg3+BzOgpZ1GJoQDUVWZ8MOCo+n
-	 jH3ZUjLyuH0KBIPjpdqNZ7FKgpfYWYQpzYLRiX74DNzDJTShMM5S7sD6K13b/OWwau4BS
-	 4ndLxrTtdj2FtOf62e5SVGpcwJjUTEwK7HgYwTZ7ciTZdtJ/mFeSSHbL5gpXVxJm/IPQt
-	 /tIBhXcKe362n1Q0yqpw2tgGzTwFK51Ky4XauLH56NCXK6XYk2OsomBdMaLk8V1mEVg==
+	bh=qcJiPZgN8pOzganoOrgFc2rVZ3r5oqkHfeWdy+wn69g=;
+	b=DYOlEKJkTzgQiH4RhR+LY1Mfv3PJsHgbu2tn/+FQ8nfeJ0o2eflTFHHPWXSGsgo42klu
+	 FSZIbr6jrs9dAh1S9UkgWi/Koo+0jX6SjNmMKZAlRFEgZkbmwL4fweo1sS28Jdae7uAvK
+	 z5fI/kP0DCDCFt47agziK4wJdBb4bPYfeLQOGEY5Rfp4m2/HO5xDFpDi7oBuxx/Tz6RuP
+	 TKE15YVaQfO+PKglXcXlsXZmsdvzYsiT8Ct9HxzCh6N4f9NkYY9Vi/Zm7DxmurVTnCpVM
+	 h6k1fCNnxGY7ECK5w4zYyGcIZL3nexG+UaM7/EJasQZWuZwjy3GIzV6pplnsnJrjJcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=odTTA3E9;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HglOJQvF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F32606A523
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D1E606A504
 	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 06:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=odTTA3E9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC2C1F000C4;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HglOJQvF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41211F000CF;
 	Fri, 20 Nov 2026 06:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1795154869;
-	bh=sgy2HIqRDs7m+gqismXK/OQPULwkzU1byqrsLzKFNC8=;
+	bh=qcJiPZgN8pOzganoOrgFc2rVZ3r5oqkHfeWdy+wn69g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odTTA3E9ruj1lmSPYq58HBpyJV42EJK0m7a/spYdlFG9ckTqxi1k84yFRQWnDRwUi
-	 Thtqg3tkVjHbZhmoDbBSH4dJ2E9qLnDBqvoPixW1O11sfHQ0kEFiP3y7tYjysIejl6
-	 qmSyDPVhsjbUSbs5hlW3OrRhESAhoM3ft4Z+jISMHvKrTiad8u9BYaNXE5MQ6wIheN
-	 +n5rvaEIJT0LwI0uNYNUFYr1YKLsCgVdJkSBIwLDSZeeqVA2I5JcuHtrLQjqb7aXwY
-	 IIttQX8Dz2GlGaGqvAprO+Ss8qaSiUIiFQw3zKWMZVTO3uOHWbbkHmpzO5GwUx+2Tw
-	 wdf04U7Cx1YJA==
+	b=HglOJQvF8hFc3qx1LYrKqBI4k40AOZzxok/k0qZ8fU+ee+4sa4lnrKmoGZeUgY+PD
+	 ZCQc6Ii4Ng9cB2tRTPsRUYVyJL7Ar+7dAgquxnkW5MOv4LnRCEkc2E7LrBKJEyKOQ5
+	 ApdPktoFcOFvyzhgCAo2TiMmJ3k3L1pusU25R5jrvuCFb2wqwsibtM38yjGDwAbnm+
+	 Hn8eP92dZ5AcRKe7IbPtfZ/rKPcqlm4draL4B6F/ToKepI7p/hHVcjYj4o2A8yRpK1
+	 Vn426Yx2YruMERQxKrLBLmfV6X2t0ZdIj2Xz5kUPrH5Tg/SH9tF5fUPN3xcbFRIaOV
+	 Grq6eB8NTTVOg==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 1/4] mm/damon/reclaim: enable monitoring intervals auto-tune by default
-Date: Thu, 19 Nov 2026 22:07:35 -0800
-Message-ID: <20261120060741.92121-2-sj@kernel.org>
+Subject: [RFC PATCH 2/4] mm/damon/reclaim: set memory PSI 0.05% as default quota goal
+Date: Thu, 19 Nov 2026 22:07:36 -0800
+Message-ID: <20261120060741.92121-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261120060741.92121-1-sj@kernel.org>
 References: <20261120060741.92121-1-sj@kernel.org>
@@ -62,10 +62,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_RECLAIM provides monitoring intervals auto-tuning feature.  It is
-turned off by default, though.  It is expected to be only better than
-the default values of static intervals in real use cases.  Enable the
-auto-tuning.
+DAMON_RECLAIM provides a PSI-driven quota auto-tuning feature.  Because
+of the DAMOS quota internal access pattern based region prioritization,
+it means the coldness threshold (min_age) is also auto-tuned.  It is
+tuned off by default, though.  The feature is expected to be only better
+to be enabled.  Enable it by default.  Set 0.5 milliseconds per second
+(0.5%) as the default auto-tuning target memory pressure ratio.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
@@ -73,20 +75,20 @@ Signed-off-by: SJ Park <sj@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index a84cea070ec76..2241b3e9145ef 100644
+index 2241b3e9145ef..d297b1596704b 100644
 --- a/mm/damon/reclaim.c
 +++ b/mm/damon/reclaim.c
-@@ -98,9 +98,9 @@ module_param(quota_autotune_feedback, ulong, 0600);
-  * sampling intervals 5 milliseconds in minimum, and 10 seconds in maximum.
-  * Setting this to ``N`` disables the auto-tuning.
+@@ -69,9 +69,9 @@ DEFINE_DAMON_MODULES_DAMOS_QUOTAS(damon_reclaim_quota);
+  * compared to this value to see if the aim is satisfied.  Value zero means
+  * disabling this auto-tuning feature.
   *
 - * Disabled by default.
-+ * Enabled by default.
++ * 500 microseconds (0.05% of default quota reset interval) by default.
   */
--static bool autotune_monitoring_intervals __read_mostly;
-+static bool autotune_monitoring_intervals __read_mostly = true;
- module_param(autotune_monitoring_intervals, bool, 0600);
+-static unsigned long quota_mem_pressure_us __read_mostly;
++static unsigned long quota_mem_pressure_us __read_mostly = 500;
+ module_param(quota_mem_pressure_us, ulong, 0600);
  
- static struct damos_watermarks damon_reclaim_wmarks = {
+ /*
 -- 
 2.47.3
