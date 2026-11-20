@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.44
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795157212;
-	b=0JschYEk/tmgcrLSLjM+4cEx7TpF1axC3sNuoEkdoGYG2LJ67MQVVbreHYWaopEYfqbQ
-	 xu8fzErQEpvV8tRI1nrji44WAbdtEakniXOnA+LQg6c2d0zrQf+FWk7R2bRz18G/fEaX9
-	 yH31Kayxq64tPvoscwkW5b/CYB76SqBWi898+YFPQt0KZf8xtDJlKqApVo512AFlYz+ve
-	 L54NcQPK+6FmH7rPagYV+JsxkRFbea8OlJt4k8qqkL+EaHVMzdyvXRfBIR3Vth1da+TD/
-	 uQ/X/BqlGh+37ll49cv+3+8D72bE4zB3vYBkWXprbt8F4lYOlVxsuORDJk8FLk/UdYA==
+	t=1795157344;
+	b=hS0bCFKg3riqKqTBdAkETXG/4Zydr7fDi2lwFVVorl9iJwhS5IPgUG1JJCz2DZ+IXW1W
+	 r0uNNSEuY/aqQJyDIXTSJMzJxdwPRujRuAZ+PGl91xsq7mvfNspHcy7eo9hAbu+k2802Z
+	 1xN/p7GJag1/s9e/spt53sS1mVFzaM4mjn3Yvc8fRp7WYmaj2GMB1weUsa+vofLGj5EKk
+	 W4zFbmGaXdJc6k03Jb3ZYdEL8HSZjf34vRBpFS+iWNp3It1m0PtghhAl3hIzo5HUjQCln
+	 IsOxSxxkIiL6OVR9S6txp90KHO/6iTmHMpXv3gYRbXQezqVJ6G5QYYBNFOD1uZW0MBw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795157212;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795157344;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=yh5Pw6Ns7Cwi6C95SoPvU5P8PiEbr6Awtt6kTXpPyU8=;
-	b=knu7i8/ctqveR4lm0Iu0+K3xavk0DKJlFc8WMFuluo/nPOiryC25bQR0KS/Z+poQy2Xb
-	 ZncrkV/G9Tw8ffa/Pfk/Tx4l9fcnOErOXiKET+IPCxiVYei0ODyJLIjMaJW2xaejSpD5z
-	 3N+9dHj8rrVu+fe1BXOKrkOK8qDVP7UMlyoxM9R+Z/V8Z3+2NIXECrL7rdb7bpSwHQbMY
-	 Xasn5tMClJrJGTng4NvFth/qhlukIx7kQZPmr77gYMzIIpcilwzOMFnX4/fs/HowTt+Oc
-	 svVICk+86Qkv+64x/ui1TRJE0CklSvOl3YCgG2dQAskGtLUS6AzyQDEhtpWtqz4+8Qw==
+	bh=n+lyQHOp4KoneVTmx0lXKvEiHfZq/Kgi2CNuQIZ6Z14=;
+	b=bhKqn9pSi8c9Sk1wHGH6b0pB2w+UMWMNJhSf82ePZ+KQhrXWYAKtO8umJANP4i4pPSsW
+	 opEmfROI2S+XrpxjouVNCiBIg642u5fTsOf+p2DmNzUgKH4DjN8g+jnvtZviOxYVAVCUS
+	 BwkRd4qnRaBj68BiD7sLTonEsJVDwhIEpBrkKHFG3IarEAq5nATwQ967E5ROCrLzF1+6J
+	 wfdurtQQiRMO4TUTWmu3NglaIIYEQu7PRHxV/B0RZORPrPmX4hGn72pJs9jJJxpRQ7tVd
+	 n/DwJ/fcn4xp4lQwFGWgSkV9b9Jdp+ThL3eM39r/vpMKIBUXE1soiohJi/ttizsGJKg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="L+V/AJ/E";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.42
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="zX/G8RkI";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.44
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42A1606A32A
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 06:46:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E42A1606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEAC606A325
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 06:49:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5CEAC606A325
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=L+V/AJ/E
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4bb6c7b6dbdso5581255e9.0
-        for <damon@lists.linux.dev>; Thu, 19 Nov 2026 22:46:51 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795157210; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zX/G8RkI
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4ba013938d7so4697395e9.2
+        for <damon@lists.linux.dev>; Thu, 19 Nov 2026 22:49:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795157342; cv=none;
         d=google.com; s=arc-20260327;
-        b=TnKg/4S3L0Ihrt+cKOD1odlS5F7cbVTYCiebC1tP4bTrRbydUuIjeheA+ac2erJFVx
-         9j+akqEIc6rCW7ljQJQ9MnWvIZjQuK5vBjj8HcSg6OvpvWyifKFTCEOdZU8i/Zm/LvNe
-         2eCOaQ12C42vXmjZxSIW4D7kvToUaiHPQ9ILgGgmtdoXhqEd4dUdhWlKuBRp+DblrqzY
-         Wux6y4rUwKV+ej3xNUEREV3y2iKNSMHClmiPYXOt3nuSR8KetwyczRiam2WR9JglTsqG
-         FghdgDqsC1HksVsw9feGQMsPHVSXt0AVfdiynvk4COxvABzQFS+TzGPaZmj7Xfg9NAXE
-         Il2Q==
+        b=C5BC1MzRYBd4psNGShitLTQACJ+QUEtOaGZH+odoIEDTi+Tl1H3+/sQ2t+KhxSWyhh
+         QvXmvTIujdV0QsRiuzgZA3OsNQYRFMxlfdDKrS5L9/PTjA3zZQzJv7kGDtA3X7AzEqC1
+         Y9aT0K17ohbvDtIr8JQ2Nn99gREOz2nJ/IRgqyM7uFm/f6vlWdhLM94alZhthGBagUke
+         RjLYF9LxmHOS6vGRSy/5GDmHIJndAciZWggDCAhCuxBePVjMkMY57ZNz/G8J54mEbPbS
+         nbn0JzBdY9iGuUEqycpfFsRZjt7iuhCKyCDb7FWYiFqYifH8438h+8MACsYr/2qwsDUY
+         LMrw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=yh5Pw6Ns7Cwi6C95SoPvU5P8PiEbr6Awtt6kTXpPyU8=;
-        fh=1R6Z87pRD15aF4Hi3E2KsI0Msf8+u2mOeb3fGgbKksg=;
-        b=LPGsrL8HeSAl7hMIhcy3QzV/Pcl6kfqEjJgfRrgFtM76DSH0JIWzwbLtuUehhU/v6G
-         aSMGfeFBpdmnNFXqoQ1mt1/m7KtL9I3ZjidELSZHMx5bhvZdRTbbX4LrM2D3VnduOvAG
-         x8ivOqFXKXi+J3s6t9yAnAKuQsOhjvohrC+kxUXPt4/MR2f+IO+pI/eoGhajRNX7z56t
-         tU+b2lOW3GnMHvq3vuxCkV/bdDVl4iqleqjFWmbAwKApd1GvB/W0NkNcUh03PoPAJpdg
-         cTfknFlMC+sB3NRtdTpWj9BobB8L9z+ZxKOZG0S7KXAdMCyLDy1gV5Y+AiJNvhwJL9tM
-         l4/w==;
+        bh=n+lyQHOp4KoneVTmx0lXKvEiHfZq/Kgi2CNuQIZ6Z14=;
+        fh=6cmGzt2EcGP6PSsbrpcTZR8u5BkehZSVRtkGOUNCOLo=;
+        b=Qc5YwidR0RPPDhriPUOs5J/utobTYGXcE1vWxnvUMCeMm3PKyvchRVZioLEs9bG/Yz
+         rjuZnBgIFsGP3uyw4wtuyybBjBVOhnJERkbMaZEYXiHReQxAYzZSlvfTc+g1EsQsAPq/
+         reZYdWhYbkDvnHDYWProUbaOQVzECfVG58A67MbHvqUwFbfgOG2gciETvI2dyMZa/ZpA
+         WGO276hUC7jQfvuGAXdH1Tp3C8570/C/QZVZgdNVY2tprDIcKhmOjySvBizlO/wRjtAT
+         b+Dm+wDjVv+lwy3zMVYLMazuo07bQqhP5wAmN1gipKY0atSWSQU2VPRX9554QyctEips
+         vkUg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795157210; x=1795762010; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1795157342; x=1795762142; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=yh5Pw6Ns7Cwi6C95SoPvU5P8PiEbr6Awtt6kTXpPyU8=;
-        b=L+V/AJ/EFin0GgCNE2sJTrJYdFKswUTuiM8htYLM1XH25OGKqBm56AhcWrCLHfeUJZ
-         SPNUa9FwJNBY8vBufylZOraK+5KRLMUVN8wKaL6Znlbh4l0Nygq2yeEp5/mHQMf3g1ha
-         bG0FGQtOb78l1FNXC06tSRd/0UskD8V3P3cb3cafVSUUjpsOI2jl717wO6/gaaStvojx
-         6KwTMwaNF0HUDRayXSvriZygd/U05KZVt8WcTSjH+mfHR7IkfE/ahru/tBLkoWr6BOq/
-         8DHaj4nBjVsrE0KOxqUxcWSe3g6BRKHUKXjg5kBZ0DP++jzSJ/VJuUoe+vc5OV6U+UeR
-         gBaQ==
+        bh=n+lyQHOp4KoneVTmx0lXKvEiHfZq/Kgi2CNuQIZ6Z14=;
+        b=zX/G8RkIr6rVEVatYi63hCk9XkrgjOX6AoYFtWHVZEFASG9TyooJi8fvSinw2O0zC9
+         8o3k3Thm9jRncITDuL8zjUkhMoza+R1Ru2vD5mzH8Ut0iLwtCSiCfr9uRhqLQzviNoZH
+         HI5s1egpGS1dSKtyHnxsBxM6WT+RVgtbVtfgukZn6Iq9tL6BNPav9l80XtBPZdSuX9yG
+         y0FdSVDURRTFkWt3Utu/WY3b/Bz/9v/8fkB3NyteOPWQS3cZU2n6ZRTIzPmMAJSn64+u
+         oC7MesjEpTZP0ldwwNd4Ir7RoN/YonSOiECT58i0oArKhNP6hyNKkeIQj7EN1GYohPqC
+         1lzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795157210; x=1795762010;
+        d=1e100.net; s=20260707; t=1795157342; x=1795762142;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=yh5Pw6Ns7Cwi6C95SoPvU5P8PiEbr6Awtt6kTXpPyU8=;
-        b=W7roFL1a/fAjbmDIcFYN4Q2vKam86x/KeN0wvb31A/TNhaOCqjpV1xJ+cS9CpdyOuY
-         xq1k1q6YeYjDJ39U4ZI2LG/IociTWC8fJWEQad9af3G3mhUWyldhdoZo42+iP0PqdUXp
-         FXa+UvTeviBlGJZAD6b188IHjdwdYMO/z+HVrA6Af9wW8KYTpyoOLW40rTTgorLqmr6f
-         icK50GnJ6WY7Kcq2fmujCUDu+VgKwSWh2KN6qEcWcEAGhvKQf4PiUUG/Evmzk2byegky
-         7lYUfvcdRpkM2qrVQF8LkbSppPsLmeeq3/GQ+d6+hGoy1EST9UKSkFwK9Q/TkcS5O+Nb
-         XPTA==
-X-Forwarded-Encrypted: i=1; AL+hErEo+tVhUPTLTUrhQLHgA90lgIsc704souZrjLd7OnqqyHVrvnYl10cmRCtG6HsAWcmUGEElyw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/iDfWIK7f7cz5A5brCtb2liohxOoFg9w91jqHmmhwo9gof+VHj
-	fZqJVndiHLJFB038m5Z0QJs0gPHbiwuYwCednv5WCnllqxcvP9aKJM5thTGniap56ji5voQLURq
-	lJWBoSj/xrhzhmvXD5cjyW9wGgeXbAQ8=
-X-Gm-Gg: AYBFou3yI3ZJE+MoAcGyfF3uENBWuse5XyiutXMJ7s0IJmSqQo0VUs9Z8+VFO8DQXTi
-	FaC27+94qBz0XVhPJfpYcX/6tTepO6qQ+P//zRzKNwCZVY15lRIEZtojh4nLCe7kAbdUTPE+OaM
-	o3fOXjWJjfLuHoyXFTKR2C6CGt1dPWwYLP9T6pEpEODZrJIF0fqccs+0KIz1o//kXw2MFBLuOTZ
-	sEusSnSWTNZB4gQQLa5Xj8riEOEPhLCSdQMKfhkt1/KslSj6ifIhbYxQ1O0cxCF3F6UsIgnr8sv
-	IMVVR7xYBWldKMdpmw6Jb6N9i5AvwY+YpoZHFXg/9UfUk1+4xJktCID31B1oWUmPJDs1JzGX7dQ
-	F8jEyd/uGFosJ2qgr8UoPpVJGCEyF5WXo7rxWuRtQVY6MU6Ngjqf+pu9ty7OvQfBF
-X-Received: by 2002:a05:600c:1c08:b0:4bb:7757:fe6d with SMTP id
- 5b1f17b1804b1-4bb88804c5fmr50882955e9.11.1795157209745; Thu, 19 Nov 2026
- 22:46:49 -0800 (PST)
+        bh=n+lyQHOp4KoneVTmx0lXKvEiHfZq/Kgi2CNuQIZ6Z14=;
+        b=SdJLnsiPlC0essqVDPPDhQKx02j2y1Nc2zCwfqvP9ZXet/f5UtxUwQtz5DnaCoK6+z
+         /C5bnEi+2QJ0p6Jjft6wY8ikvsFUB8SPi7BlTSeqv5zsE3poZ1zeoL+xuGvdnCMbKcE7
+         b5UtmrBUedcjR0Zh8Zs24DJrtuTGFGuZQToKIVbNrVWEXjZTfpK9ofVHlW7dwQZhdtmH
+         tzo19xMpjmlh31WFXfXKd3T3xp7ftIGNLpCuKKsGUYrbWqL97z2/qZsD80HCnWIMfoQt
+         DupGWxwvA4UMqYCBvLcHzEBJ4oJOo+gR8Nk29+Bnf/VGJqfkvk7NYYlG4T5/WO+uwOcJ
+         SAKA==
+X-Forwarded-Encrypted: i=1; AL+hErH3/hQgXpESEbc83MuBNhxHVHBpH5cAHIlIt7DQOyIkZPkRghtG41TyEYWU9AJuOCd2MreY+w==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/TAZnKuXPU1PfJDjZ1YIVuLzBsSERxTEA2LdP1GIvriSccVNYf
+	vONHzipmrjK6LNL2T7rvBnVLgEhtEOl6MPX/d4MsDRTLXem5meC6lS1vP3xxgnEf9wx3gUIeZvi
+	AUwAq8oMO/bq1q+AbsOOd4o2NH/p+BPc=
+X-Gm-Gg: AYBFou0YiqjPs3eT2Y76iF9g8OPgiY2bs6YNXrAtJ2Cp7UrEwUwoTckuehmS2HtWNP1
+	QQT8HDWNF4AolW8GwmrOPyAhSYDjvJSI2r66zS8czdVFg1heUpsua8Qs1clEGPRaLso6Yg8mn4g
+	wAlBWVbJVE36+nMRbHrybW4tAFHo+fGzuGlZWMS+lMFbTIZ9s0YGAMbx4q0AF4tfIfisO0RthI8
+	8Cz0Ux9fa/+KzTM7QLr1uHCEyeMn7gR1VTwPF/mfBmcpWL0vfhzPa9f6XFV/QAO1IoEDeaF3Z8A
+	vaqqAFa01QjjWz7urpLuKywVy/SeNmxQuQuYsLblzz/vII8SM5cXVVy+tfHCduEnfwFP8g/d5a5
+	Nxl3u79B0Cmsef4lj70WmwB7yzBaV4x1L9pQd8hwDl84x5qKU0F72b3JwpguX6y6nOA==
+X-Received: by 2002:a05:600c:3d05:b0:4b8:d17e:da27 with SMTP id
+ 5b1f17b1804b1-4bb88930872mr41310625e9.27.1795157341259; Thu, 19 Nov 2026
+ 22:49:01 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -104,13 +104,14 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com> <20261119-mglru-fg-v5-1-9eee2fe97a2d@tencent.com>
-In-Reply-To: <20261119-mglru-fg-v5-1-9eee2fe97a2d@tencent.com>
+References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com> <20261119-mglru-fg-v5-2-9eee2fe97a2d@tencent.com>
+In-Reply-To: <20261119-mglru-fg-v5-2-9eee2fe97a2d@tencent.com>
 From: KunWu Chan <kunwu.chan@gmail.com>
-Date: Fri, 20 Nov 2026 14:46:37 +0800
-X-Gm-Features: Aa3M54q6diJBPt5X49YJ4xjQARO39_f1G-0YmFpyFCjvJebbL7DyzQ2TCjNUNR8
-Message-ID: <CAN_Opa9Gu56Tdx2WVrYZU95BrHdGg0+gf2mpv25gM7WCRULJ0g@mail.gmail.com>
-Subject: Re: [PATCH v5 01/17] mm/mglru: rename the generation offset in lru_gen_folio_seq()
+Date: Fri, 20 Nov 2026 14:48:47 +0800
+X-Gm-Features: AclHuK_tpistnJ8n9EgGJGhoSv7JK71sLxGmAZ5e78h-Lbf9KixLF9WGl76rLxw
+Message-ID: <CAN_Opa-7j854ph6e7Ckmq6UgmmQerxF8V-ikSr9JNyTAHZCxdw@mail.gmail.com>
+Subject: Re: [PATCH v5 02/17] mm/memcontrol: allow update of LRU statistic
+ without holding LRU lock
 To: kasong@tencent.com
 Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>, 
 	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
@@ -146,71 +147,38 @@ Kunwu
 On Thu, Nov 19, 2026 at 5:03=E2=80=AFAM Kairui Song via B4 Relay
 <devnull+kasong.tencent.com@kernel.org> wrote:
 >
-> From: Ridong Chen <chenridong@xiaomi.com>
+> From: Kairui Song <kasong@tencent.com>
 >
-> lru_gen_folio_seq() computes how many generations below max_seq a folio
-> should be added to, but stores it in a variable named "gen". Elsewhere in
-> MGLRU "gen" means an index into lrugen->folios[], i.e. seq % MAX_NR_GENS,
-> so reusing the name for a relative offset is confusing.
+> To enable moving file pages in folio_mark_accessed directly and lazily
+> for MGLRU, allow updating the LRU statistic atomically without holding a
+> lock. It may cause temporary counter underflow, which should be fine as
+> the counter is eventually consistent and only serves as an estimate.
 >
-> Rename it to "age", which matches what the value means: the newest
-> generation is age 1, and a larger age is an older generation.
->
-> No functional change.
->
-> [kasong: dropped the comment table part, the series rewrites it]
-> Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
 > Signed-off-by: Kairui Song <kasong@tencent.com>
 > ---
->  include/linux/mm_inline.h | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>  include/linux/mm_inline.h | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 >
 > diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-> index f6f4bc9a704f..2395ca8ee305 100644
+> index 2395ca8ee305..2edb9beef6d3 100644
 > --- a/include/linux/mm_inline.h
 > +++ b/include/linux/mm_inline.h
-> @@ -302,7 +302,7 @@ static inline unsigned long lru_gen_folio_seq(const s=
-truct lruvec *lruvec,
->                                               const struct folio *folio,
->                                               bool reclaiming)
+> @@ -47,12 +47,11 @@ static __always_inline void __update_lru_size(struct =
+lruvec *lruvec,
 >  {
-> -       int gen;
-> +       int age;
->         int type =3D folio_is_file_lru(folio);
->         const struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
+>         struct pglist_data *pgdat =3D lruvec_pgdat(lruvec);
 >
-> @@ -319,17 +319,17 @@ static inline unsigned long lru_gen_folio_seq(const=
- struct lruvec *lruvec,
->          * |<---------------------------- MAX_NR_GENS -------------------=
---------->|
->          */
->         if (folio_test_active(folio))
-> -               gen =3D MIN_NR_GENS - folio_test_workingset(folio);
-> +               age =3D MIN_NR_GENS - folio_test_workingset(folio);
->         else if (reclaiming)
-> -               gen =3D MAX_NR_GENS;
-> +               age =3D MAX_NR_GENS;
->         else if ((!folio_is_file_lru(folio) && !folio_test_swapcache(foli=
-o)) ||
->                  (folio_test_reclaim(folio) &&
->                   (folio_test_dirty(folio) || folio_test_writeback(folio)=
-)))
-> -               gen =3D MIN_NR_GENS;
-> +               age =3D MIN_NR_GENS;
->         else
-> -               gen =3D MAX_NR_GENS - (folio_test_workingset(folio) || fo=
-lio_test_referenced(folio));
-> +               age =3D MAX_NR_GENS - (folio_test_workingset(folio) || fo=
-lio_test_referenced(folio));
+> -       lockdep_assert_held(&lruvec->lru_lock);
+>         WARN_ON_ONCE(nr_pages !=3D (int)nr_pages);
 >
-> -       return max(READ_ONCE(lrugen->max_seq) - gen + 1, READ_ONCE(lrugen=
-->min_seq[type]));
-> +       return max(READ_ONCE(lrugen->max_seq) - age + 1, READ_ONCE(lrugen=
-->min_seq[type]));
+>         mod_lruvec_state(lruvec, NR_LRU_BASE + lru, nr_pages);
+> -       __mod_zone_page_state(&pgdat->node_zones[zid],
+> -                               NR_ZONE_LRU_BASE + lru, nr_pages);
+> +       mod_zone_page_state(&pgdat->node_zones[zid],
+> +                           NR_ZONE_LRU_BASE + lru, nr_pages);
 >  }
 >
->  static inline bool __lru_gen_add_folio(struct lruvec *lruvec, struct fol=
-io *folio,
+>  static __always_inline void update_lru_size(struct lruvec *lruvec,
 >
 > --
 > 2.56.1
