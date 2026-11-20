@@ -1,78 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1795198280;
-	b=mfIzIC9GVIBuZwEwildqR1uTLorLc64EWp9h/+QkpFrJduIquCkgHRHp/5NYLZdJs+Vn
-	 SPD9wpvdDPgWQeVR27bi3pXNvDXKKbqV6uTmVJXzosHU6wP4W+jydjiY/4hadkcrV1Z1h
-	 G+wnOO2QKMFxvlKMjLXSEXBx55JmH9GL+Lwv99TKtmp2sGfCU7jRfMK3BsL6VB6x//mr/
-	 biqSJzEFHOIMMZETjNwhdQlqO97MnIFD/U3tRRaC++1hmCXB6Yxp8Qi/zsa2TMvzKVPVX
-	 3rAvCFn/Z5XNWlV2/ARdH/1+v3gP2XkUgtQGTahZD0AgBOnxTVQlnt4MCJcyfVnv+Gw==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795198298;
+	b=xSUaoMqdw9MutyAOlPdpxA1axml/2fVvtSgzBlnSObuxF/K26+zuFaAEbjsQ6whZ34pT
+	 smr3InQqncNKLs4eug5FxIVOnVkRu8WfmuzYMJZN7xNdA/cC0PSPphZJvyhV7chgyMlbN
+	 m2RWLOruyngRjr4eOdu6PxAwFuZLKpQwFTJO3IAAAIc9oRTNx7IXFDD9ZmXMHT907DaAx
+	 HbqXqOeUxTpddNfM6GBaDfkpSuCtpjXOvgk3wxXE7qv5P9k4I0um9xB2nUgfBxO6Pmzb6
+	 VkKAMyBNRGPne2BLnpM942KZiTMMVkClvQ/KnGlvy51rGkpBFT/H2VHw44tiygEdMVw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795198280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795198298;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=KbXqo0otTzp6KrXr3a6CWvy6rduI8+vwsObH5S7PopY=;
-	b=LIrGSOpbY96G9zQlCVNbT61ks7ojBAdo+E4JTyQCiGloAgROxj1VAUGNEC/QZO6OOyoD
-	 lrM3tGpsaI1aAw0ZGR0U85i81QmeWmc1XyCTJc4nK0jFuKCa8c/DyZOhzcd2rurSMYBnC
-	 rCp7gsIDgIxzoBFqoNIatJxNvvCyco6/WAdwU9gnBWpEAALvkkFV9GrOYxnh9jlQAV5AG
-	 3H4ngALO7jPHxpaXXZ/DwzwQqr3W8EQOEh6r/bQbFM4LFg0DijwX7SqbqJFO5ceM9g6fb
-	 qJ7SQuyajzUvsJlN20nBockyAgrZ9Ju8oQoirJ4mQYouaOwabhe8zQDFpwnukQPMy5A==
+	bh=FeMVQLv7GLlhS6IUX7kRUUhFVa1pXNLb+geY1fYUbs4=;
+	b=aQzXj7mh7s35CDZ4dQaA1vBg58N8Imcu9lIs5j/VlFxBAojeUh0K/Vd16UB4MWR/1CLv
+	 WTWFv6bsh7Ym7NCOD1J9ki/5wofC21fB4WBpy+OsCPQdE4idNy9MHC+Uw1TRwwODCj2dp
+	 DfVV7O2QEDakCOPeDEDUKUneVkuiKmprsRdU+RquYHJpxNvbiFYPc1qGKZEgsJATm6ftH
+	 2D1JiMzhHsSkxsQN6Q5RakKH9FjsPPujllC1UV+aeRKsgi0R/CIBy9tpiisbUzSgoI2TB
+	 JNvL0kOWkL+cDy8CfWjbqDbnATbZgDIlyPGzv//mYWWSajf3D0zRdh7aERi4hQJsjIw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iAKbpry+;
-	arc=fail smtp.remote-ip=100.103.45.18
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g1trP5Q1;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D9D606B99A;
-	Fri, 20 Nov 2026 18:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84DB606C6C2;
+	Fri, 20 Nov 2026 18:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=iAKbpry+
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g1trP5Q1
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795198280;
-	b=CfHr7EvM5dWXpJueZhswo4TF9IdYBivBI7meVvVTXUBd2k1pWarqefB6n/I5s/ZTvk/H
-	 jnr1mKwGh41nSmtKXSsO69AE5RlSGhFWRle53gP88LycbLjy8B9iCQlk29ZXUeh+yoFT5
-	 kfB5PGgZGRRvwPIgZ2QeXLK+SLs8zASKR4mh0LvNGl6PGzO+cChfbw0hQ+NaMzj9hpPpS
-	 cDurydC8XSyD09bgNSDR+3eQPgbQNLiC0ZrP8KqrFpV5RXWS5I8opv5azlr5PbawYf7So
-	 0fDyt0w/970JTmpXfQd5OeUasLiF1T4hradp64Xzi3sVwAlTXDi+MbeOE9MUiNprIiQ==
+	t=1795198298;
+	b=qGzPnbfU7Kp1fBbIiSJqpPch8UkUtXlZ6ORUP/t51MeKayrA0Mu4v3J7gnY0g3oFzlmT
+	 Vlpg2BQXTc1JWyTJdNJ9npf9O4tIm0y4f+ejWxBAarjQNUsWHHYp0RNXEsAfvJP6ij50O
+	 exI1G9agnNz0yH/RARmGZL7DwqRcMYfi0laRJhA8ST/hB5uZbU3HEPVd2hb68+gwpWKWd
+	 o8n9ZnAnpBpev2z7/afeMIG+9rJUnK4HBubFFfVBX0cQTB5IgNHr46f/3prER6l7jbxbb
+	 8h+a2TkPD1nYBCyagYhKj/qCzZO5JRTFTC2GqD3buL5lohsxjo4OKsmFnAvDv34wzyw==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795198280;
+	c=relaxed/relaxed; t=1795198298;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=KbXqo0otTzp6KrXr3a6CWvy6rduI8+vwsObH5S7PopY=;
-	b=uwBvHrAxH1vanYrOGqBupe8ux25epMpsaA3tnTB/WF8J3BxNANfV2V6xFQ+b1cfL4X3n
-	 4G+Po/d0lrEwcpCs+rqKw/9lZ3WsHgQcNxmt/TDeImxLxKRLkmhsELp17D2imNQdLUTws
-	 O0KktfvGELRnpo8IeEAWb3zTjWZy5cGOYBUKF2dSI3NKh9fyrQrN+kyE6hpC9dsCNHGXQ
-	 XhrW2wyJS4mcns4H2wW83UupaF++VLtJ6dRBK9mIJji8IBSWGpg7wmIaDP9c8EiAS+bYK
-	 rnfodjUBHfoG9jb/9M1Z6pJSfNT6Shri+pnr/ujlYy6/GO39ZRZmb48/v55jDwG2h1w==
+	bh=FeMVQLv7GLlhS6IUX7kRUUhFVa1pXNLb+geY1fYUbs4=;
+	b=tmV8qlp8ueMzh6Sq67qJ1k95zVFMrOEQWgfg+A/ZANmCqI7NUoChy+Er4G2lrePWhbxs
+	 TomLuQ5vmSblus+F/ckA29k7DOPZ8eqfYE0t5nkSgYF+EM6fJEUVSmbWoHQdU8LYHJmTp
+	 j5AOyfy0Hd1eapL6IYTTrBHzeDkPXTERCSY647K9XJ3T8if8+yfogH1HDSHur95QDeql+
+	 m3DWZ8rsEjvsLN42qEITeTqwUyQYuOB8TeajSP+nV2eWkZ/ql/4yDnIihM2NoWLHikCio
+	 cr6lT0doBITq0zbr9jEjIy3NtoKpfbRqepzaok8f+TZwelxJ3zy9UKBaJVmTO1xqABA==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id A54781F01565;
-	Fri, 20 Nov 2026 18:10:58 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 484771F0157A;
+	Fri, 20 Nov 2026 18:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795198280;
-	bh=KbXqo0otTzp6KrXr3a6CWvy6rduI8+vwsObH5S7PopY=;
+	s=k20260515; t=1795198298;
+	bh=FeMVQLv7GLlhS6IUX7kRUUhFVa1pXNLb+geY1fYUbs4=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=iAKbpry+EnUyYxSjPnFlOEdZ7YylYf3N1VUXwxGS0JS7ZAh2BxN0exdT+TyJ6dVxn
-	 6W1n4NmyVIhOH012iboXAKUO1f0SnLoTorvPmFhsS+X2FCpNb7ZrfB30J7X9rMt5va
-	 zst3Q1Lzg5xdaAU9rdj8XMh5vVx3KOAKhJJ/CHXk9Uj1Y3ElDlooFTl/WM9w50lcNY
-	 NvqyT+Tr6eYOCm2Ch+1O2CmQ2DuOOSO6MPCvWACS8jXViasMm2XSzGF0mKp6r1A1T3
-	 S7k+0cxVzcv3SUxawrfl15RFLnu/nersNj0Z/d1BiiCGcq250PmNe0nO/4+hJaAFFr
-	 yny4/kiVqgUXA==
+	b=g1trP5Q1di8EH67EQ1Xc+jsib0rxqEhTzKzRTnv3EQ4aD1Ej0r4vJj/OLmADWGjzE
+	 VGXxwXrM/GVPN4MJFTD3qDFWZ8CN2ZRG1Gd0I2NasoOe+aC7oxOhnUfofEU7WuOsnX
+	 cC2al+BDEOB+lzduurOsQBBu0Dtrp3kFenA40yJoK4V1kT9r2PyNNAQxRJ5kQrqXn6
+	 OCr8HfR4FuvSIT8PuaYIG4FHdHhv/ipC/s96lUh2/B0zyfpgxJiEXtkIMbq/chyMu9
+	 4o3veNmUXDpYm/7RBRMu4zcE5bGA8L722mXS53qwBOVm7hj0OicOqC/iEka6KFeLw7
+	 kavS7R5/nruDw==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id F107B4B984;
-	Fri, 20 Nov 2026 18:09:22 +0000 (UTC)
+	by lkml.kernel.org (Postfix) with ESMTP id B5C804B99C;
+	Fri, 20 Nov 2026 18:09:23 +0000 (UTC)
 From: Gregory Price via B4 Relay <devnull+gourry.gourry.net@kernel.org>
-Date: Fri, 20 Nov 2026 13:09:40 -0500
-Subject: [PATCH 49/60] mm/vmscan: reclaim private nodes for memcg
+Date: Fri, 20 Nov 2026 13:09:46 -0500
+Subject: [PATCH 55/60] mm/memory_hotplug: online and offline private memory
+ nodes
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -83,7 +84,7 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261120-private_nodes_v6-v1-49-74f5f9a115c2@gourry.net>
+Message-Id: <20261120-private_nodes_v6-v1-55-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 In-Reply-To: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 To: Yury Norov <yury.norov@gmail.com>, 
@@ -140,11 +141,11 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  cgroups@vger.kernel.org, nvdimm@lists.linux.dev, 
  linux-kselftest@vger.kernel.org, "Gregory Price (Meta)" <gourry@gourry.net>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795198153; l=4186;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795198154; l=9476;
  i=gourry@gourry.net; s=20261120; h=from:subject:message-id;
- bh=gf0+A4YMX7aNzEjLzoppxY9C0nz/hDCzkhh7ctvqKwQ=;
- b=PXI/X13XAoa7r+jmzPre0N2z+VrJATpuAV7CpwhBQAVTEngszA2E6bmutkAMGbnv2eUsyGVrn
- +kF2GDAg++lDYHrIPmvec6YTNf5pZ5MjEHc8/slSYzQiq7FbbeI35Jq
+ bh=b3jGnnyWNDUyPQKsXIBVFwBX7ofSFROdnSCpZbbkWAM=;
+ b=dURyeucqjPXkJcCpnAWMuH39xYYU9Sy7XUOxE2r8Wwzbf7ANdiCKotrRObSTQ40QuJ0Zf1HzK
+ SNlKPBgabacDKodij1dmaphP8727fp4GMxD4DcXEnSyqnVu+FgJGUPW
 X-Developer-Key: i=gourry@gourry.net; a=ed25519;
  pk=BZWDlx4htkR5KcvGjGtSDfx1tM0E5dlyBR43FEhjWVc=
 X-Endpoint-Received: by B4 Relay for gourry@gourry.net/20261120 with
@@ -155,121 +156,267 @@ Content-Transfer-Encoding: 7bit
 
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 
-Memcg reclaim does not serve one allocation, so it should cover every
-node that permits reclaim. It walks the current node's fallback
-zonelist, which holds no private node, so a private node that permits
-reclaim is never scanned for a cgroup over its limit.
+Allow a driver to hotplug memory onto a private node at runtime.
 
-After the zonelist, visit the nodes that permit reclaim and that the
-zonelist did not cover, and give them the same refault snapshot and
-congestion reset. The zonelist keeps setting the order, which matters
-because memcg reclaim stops once it has freed enough.
+Pass a feature mask through driver-managed hotplug, and reject masks
+that node_memory_features_valid() refuses.
 
-Direct reclaim for an allocation still walks only that allocation's
-zonelist. A private allocation's zonelist covers its own node, and
-reclaiming private memory cannot satisfy a common allocation.
+Memory joins a node only with the same mask. The node's features hold
+while any System RAM block remains (including offline blocks), and are
+reset after the last one is removed, even when ZONE_DEVICE memory keeps
+the node alive.
 
-Without private nodes the zonelist covers every node that permits
-reclaim, so behavior is unchanged.
-
-Another way to do this would be to implement a reclaim zonelist that
-only reclaim uses, but this implementation does not carry the static
-per-node size overhead that adding another zonelist does.
+dax/kmem and the other hotplug callers pass NODE_MEMORY_FEAT_ALL, which
+registers the node as N_MEMORY_COMMON.
 
 Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 ---
- mm/vmscan.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 42 insertions(+), 1 deletion(-)
+ drivers/dax/kmem.c             |  2 +-
+ include/linux/memory_hotplug.h |  2 +-
+ mm/internal.h                  |  9 ++++
+ mm/memory_hotplug.c            | 94 +++++++++++++++++++++++++++++++-----------
+ 4 files changed, 80 insertions(+), 27 deletions(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 03d0919d11be..49ec85ed00e0 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -6636,6 +6636,21 @@ static void consider_reclaim_throttle(pg_data_t *pgdat, struct scan_control *sc)
- 		reclaim_throttle(pgdat, VMSCAN_THROTTLE_NOPROGRESS);
+diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
+index a48d699cf344..5ec653bc88f0 100644
+--- a/drivers/dax/kmem.c
++++ b/drivers/dax/kmem.c
+@@ -126,7 +126,7 @@ static int dax_kmem_do_hotplug(struct dev_dax *dev_dax,
+ 		 */
+ 		rc = __add_memory_driver_managed(data->mgid, range.start,
+ 				range_len(&range), kmem_name, mhp_flags,
+-				online_type);
++				online_type, NODE_MEMORY_FEAT_ALL);
+ 
+ 		if (rc) {
+ 			dev_warn(dev, "mapping%d: %#llx-%#llx memory add failed\n",
+diff --git a/include/linux/memory_hotplug.h b/include/linux/memory_hotplug.h
+index ec71debc0673..ae6046510958 100644
+--- a/include/linux/memory_hotplug.h
++++ b/include/linux/memory_hotplug.h
+@@ -304,7 +304,7 @@ extern int add_memory_resource(int nid, struct resource *resource,
+ 			       mhp_t mhp_flags);
+ int __add_memory_driver_managed(int nid, u64 start, u64 size,
+ 				const char *resource_name, mhp_t mhp_flags,
+-				enum mmop online_type);
++				enum mmop online_type, unsigned long features);
+ extern int add_memory_driver_managed(int nid, u64 start, u64 size,
+ 				     const char *resource_name,
+ 				     mhp_t mhp_flags);
+diff --git a/mm/internal.h b/mm/internal.h
+index 646efc2eacd1..0eefa0df1350 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -65,6 +65,15 @@ void folio_mark_lazyfree(struct folio *folio);
+ void node_set_memory_state(int nid, unsigned long features);
+ void node_clear_memory_state(int nid);
+ 
++#ifdef CONFIG_MEMORY_HOTPLUG
++bool can_claim_node_memory(int nid, unsigned long features);
++#else
++static inline bool can_claim_node_memory(int nid, unsigned long features)
++{
++	return false;
++}
++#endif
++
+ /*
+  * Common memory is available to generic MM services. ZONE_DEVICE folios do
+  * not qualify even when their NUMA node is common.
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index 8146f77919d5..37e64c146b46 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1494,6 +1494,43 @@ static int create_altmaps_and_memory_blocks(int nid, struct memory_group *group,
+ 	return ret;
  }
  
-+/* Whether shrink_zones() reaches @nid through @zonelist. */
-+static bool zonelist_reaches_node(struct zonelist *zonelist, int nid,
-+				  struct scan_control *sc)
++static int check_no_memblock_for_node_cb(struct memory_block *mem, void *arg)
 +{
-+	struct zoneref *z;
-+	struct zone *zone;
++	int nid = *(int *)arg;
 +
-+	for_each_zone_zonelist_nodemask(zone, z, zonelist, sc->reclaim_idx,
-+					sc->nodemask) {
-+		if (zone_to_nid(zone) == nid)
-+			return true;
-+	}
-+	return false;
++	/*
++	 * If a memory block belongs to multiple nodes, the stored nid is not
++	 * reliable. However, such blocks are always online (e.g., cannot get
++	 * offlined) and, therefore, are still spanned by the node.
++	 */
++	return mem->nid == nid ? -EEXIST : 0;
++}
++
++/* Caller must hold the memory hotplug lock for these checks. */
++static bool node_has_memory_blocks(int nid)
++{
++	return for_each_memory_block(&nid, check_no_memblock_for_node_cb);
++}
++
++static bool node_has_system_ram(int nid)
++{
++	/* Mixed-node memory blocks are always online and covered by N_MEMORY. */
++	return node_state(nid, N_MEMORY) || node_has_memory_blocks(nid);
++}
++
++/*
++ * Whether memory with @features may join @nid. Offline System RAM blocks keep
++ * the node's features until the last block is removed.
++ */
++bool can_claim_node_memory(int nid, unsigned long features)
++{
++	pg_data_t *pgdat = NODE_DATA(nid);
++
++	if (pgdat->memory_features == features)
++		return true;
++	return !node_has_system_ram(nid);
 +}
 +
  /*
-  * This is the direct reclaim path, for page-allocating processes.  We only
-  * try to reclaim pages from zones which will satisfy the caller's allocation
-@@ -6651,6 +6666,7 @@ static void shrink_zones(struct zonelist *zonelist, struct scan_control *sc)
- 	gfp_t orig_mask;
- 	pg_data_t *last_pgdat = NULL;
- 	pg_data_t *first_pgdat = NULL;
-+	int nid;
+  * NOTE: The caller must call lock_device_hotplug() to serialize hotplug
+  * and online/offline operations (triggered e.g. by sysfs).
+@@ -1501,11 +1538,12 @@ static int create_altmaps_and_memory_blocks(int nid, struct memory_group *group,
+  * we are OK calling __meminit stuff here - we have CONFIG_MEMORY_HOTPLUG
+  */
+ static int __add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags,
+-				 enum mmop online_type)
++				 enum mmop online_type, unsigned long features)
+ {
+ 	struct mhp_params params = { .pgprot = pgprot_mhp(PAGE_KERNEL) };
+ 	enum memblock_flags memblock_flags = MEMBLOCK_NONE;
+ 	struct memory_group *group = NULL;
++	unsigned long old_features;
+ 	u64 start, size;
+ 	bool new_node = false;
+ 	int ret;
+@@ -1528,6 +1566,8 @@ static int __add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags,
+ 		WARN(1, "node %d was absent from the node_possible_map\n", nid);
+ 		return -EINVAL;
+ 	}
++	if (!node_memory_features_valid(features))
++		return -EINVAL;
  
- 	/*
- 	 * If the number of buffer_heads in the machine exceeds the maximum
-@@ -6706,6 +6722,14 @@ static void shrink_zones(struct zonelist *zonelist, struct scan_control *sc)
- 		shrink_node(zone->zone_pgdat, sc);
+ 	mem_hotplug_begin();
+ 
+@@ -1552,6 +1592,14 @@ static int __add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags,
+ 		new_node = true;
  	}
  
-+	/* A cgroup's memory may be on nodes that are not on the zonelist. */
-+	if (cgroup_reclaim(sc)) {
-+		for_each_node_state(nid, N_MEMORY_RECLAIM) {
-+			if (!zonelist_reaches_node(zonelist, nid, sc))
-+				shrink_node(NODE_DATA(nid), sc);
-+		}
++	old_features = NODE_DATA(nid)->memory_features;
++	if (!can_claim_node_memory(nid, features)) {
++		ret = -EBUSY;
++		goto error;
 +	}
++	/* Set the node's features before onlining its memory. */
++	WRITE_ONCE(NODE_DATA(nid)->memory_features, features);
 +
- 	if (first_pgdat)
- 		consider_reclaim_throttle(first_pgdat, sc);
- 
-@@ -6754,6 +6778,7 @@ static unsigned long do_try_to_free_pages(struct zonelist *zonelist,
- 	pg_data_t *last_pgdat;
- 	struct zoneref *z;
- 	struct zone *zone;
-+	int nid;
- retry:
- 	delayacct_freepages_start();
- 
-@@ -6792,6 +6817,21 @@ static unsigned long do_try_to_free_pages(struct zonelist *zonelist,
- 		}
- 	}
- 
-+	/*
-+	 * Also cover the nodes shrink_zones() reclaimed beyond the zonelist.
-+	 * Finishing a zonelist node again is harmless.
-+	 */
-+	if (cgroup_reclaim(sc)) {
-+		for_each_node_state(nid, N_MEMORY_RECLAIM) {
-+			struct lruvec *lruvec;
-+
-+			snapshot_refaults(sc->target_mem_cgroup, NODE_DATA(nid));
-+			lruvec = mem_cgroup_lruvec(sc->target_mem_cgroup,
-+						   NODE_DATA(nid));
-+			clear_bit(LRUVEC_CGROUP_CONGESTED, &lruvec->flags);
-+		}
-+	}
-+
- 	delayacct_freepages_end();
- 
- 	if (sc->nr_reclaimed)
-@@ -7038,7 +7078,8 @@ unsigned long try_to_free_mem_cgroup_pages(struct mem_cgroup *memcg,
  	/*
- 	 * Traverse the ZONELIST_FALLBACK zonelist of the current node to put
- 	 * equal pressure on all the nodes. This is based on the assumption that
--	 * the reclaim does not bail out early.
-+	 * the reclaim does not bail out early. shrink_zones() also visits the
-+	 * nodes that permit reclaim and are not on the zonelist.
+ 	 * Self hosted memmap array
  	 */
- 	struct zonelist *zonelist = node_zonelist(numa_node_id(), sc.gfp_mask);
+@@ -1597,6 +1645,8 @@ static int __add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags,
  
+ 	return ret;
+ error:
++	/* Restore the previous features while holding the lock. */
++	WRITE_ONCE(NODE_DATA(nid)->memory_features, old_features);
+ 	if (new_node) {
+ 		node_set_offline(nid);
+ 		unregister_node(nid);
+@@ -1612,7 +1662,8 @@ static int __add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags,
+ int add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags)
+ {
+ 	return __add_memory_resource(nid, res, mhp_flags,
+-				     mhp_get_default_online_type());
++				     mhp_get_default_online_type(),
++				     NODE_MEMORY_FEAT_ALL);
+ }
+ 
+ /* requires device_hotplug_lock, see __add_memory_resource() */
+@@ -1651,6 +1702,9 @@ EXPORT_SYMBOL_GPL(add_memory);
+  * @resource_name: Resource name in format "System RAM ($DRIVER)"
+  * @mhp_flags: Memory hotplug flags
+  * @online_type: Auto-Online behavior (offline, online, kernel, movable)
++ * @features: NODE_MEMORY_FEAT_* services the memory opts into;
++ *            %NODE_MEMORY_FEAT_ALL adds it as ordinary common system RAM,
++ *            and a mask without %NODE_MEMORY_FEAT_COMMON as private memory.
+  *
+  * Add special, driver-managed memory to the system as system RAM. Such
+  * memory is not exposed via the raw firmware-provided memmap as system
+@@ -1677,7 +1731,7 @@ EXPORT_SYMBOL_GPL(add_memory);
+  */
+ int __add_memory_driver_managed(int nid, u64 start, u64 size,
+ 		const char *resource_name, mhp_t mhp_flags,
+-		enum mmop online_type)
++		enum mmop online_type, unsigned long features)
+ {
+ 	struct resource *res;
+ 	int rc;
+@@ -1698,7 +1752,7 @@ int __add_memory_driver_managed(int nid, u64 start, u64 size,
+ 		goto out_unlock;
+ 	}
+ 
+-	rc = __add_memory_resource(nid, res, mhp_flags, online_type);
++	rc = __add_memory_resource(nid, res, mhp_flags, online_type, features);
+ 	if (rc < 0)
+ 		release_memory_resource(res);
+ 
+@@ -1727,8 +1781,8 @@ int add_memory_driver_managed(int nid, u64 start, u64 size,
+ 			      const char *resource_name, mhp_t mhp_flags)
+ {
+ 	return __add_memory_driver_managed(nid, start, size, resource_name,
+-			mhp_flags,
+-			mhp_get_default_online_type());
++			mhp_flags, mhp_get_default_online_type(),
++			NODE_MEMORY_FEAT_ALL);
+ }
+ EXPORT_SYMBOL_GPL(add_memory_driver_managed);
+ 
+@@ -1789,18 +1843,6 @@ bool mhp_range_allowed(u64 start, u64 size, bool need_mapping)
+ 
+ #ifdef CONFIG_MEMORY_HOTREMOVE
+ 
+-static int check_no_memblock_for_node_cb(struct memory_block *mem, void *arg)
+-{
+-	int nid = *(int *)arg;
+-
+-	/*
+-	 * If a memory block belongs to multiple nodes, the stored nid is not
+-	 * reliable. However, such blocks are always online (e.g., cannot get
+-	 * offlined) and, therefore, are still spanned by the node.
+-	 */
+-	return mem->nid == nid ? -EEXIST : 0;
+-}
+-
+ /* Caller must hold the memory hotplug lock for this check. */
+ static bool node_is_memoryless(int nid)
+ {
+@@ -1811,12 +1853,9 @@ static bool node_is_memoryless(int nid)
+ 	 */
+ 	if (node_spanned_pages(nid))
+ 		return false;
+-	/*
+-	 * Offline memory blocks may not be spanned by the node yet, but they
+-	 * link to it in sysfs and can be onlined later, so the node is not
+-	 * memoryless while any remain.
+-	 */
+-	return !for_each_memory_block(&nid, check_no_memblock_for_node_cb);
++
++	/* Offline memory blocks keep the node alive so they can be onlined. */
++	return !node_has_memory_blocks(nid);
+ }
+ 
+ /*
+@@ -2347,8 +2386,13 @@ static int try_remove_memory(u64 start, u64 size)
+ 
+ 	release_mem_region_adjustable(start, size);
+ 
+-	if (nid != NUMA_NO_NODE)
++	if (nid != NUMA_NO_NODE) {
++		/* No System RAM left: reset the node's features. */
++		if (!node_has_system_ram(nid))
++			WRITE_ONCE(NODE_DATA(nid)->memory_features,
++				   NODE_MEMORY_FEAT_ALL);
+ 		try_offline_node(nid);
++	}
+ 
+ 	mem_hotplug_done();
+ 	return 0;
 
 -- 
 2.56.1
