@@ -1,78 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795198299;
-	b=Sn4TRNln28eUG88Awd1WdBIm0FGAhhY4DdcpQ9cs7J+ee7VIoAHapvI8PgU+0dnRmhEv
-	 q09ERuJGn1MPZM2D/HRemtYBU160olUABKgMQs5BawKbPyT+MVKSshgMWHneFGSUqGrvZ
-	 hO0u6oo82QCYP7EVRD73EslZPvtPutgIb3w4QqANnHhHnfLIETdO1e9zJ9Lyb0gEfXCm+
-	 nYyarwAqZOYA+HE3bmdaF4Od2KFbMGzKYgqzdyG8p+rz3egaEdUH3YD/EZjYJ0gfCbPpS
-	 AAv6RGUSEFYqpbAe2KDlTTgtT0zgwxXqHNnbMcvicfr19aFTq9Y3T3GvEAh/LLHAQeA==
+	t=1795198300;
+	b=d0d6MsA6vgAJbj4lXfL6Z0XGqBCZLF1use8UqadXxPOL4VoS/nmsLMc+pzymGdhnxvyW
+	 3uR8L7w6HCIDYWhJ89up2p7kolVTfFbfSPHCJbQYfSRFWIIv7+EkXA1bVRXPHdbqQoRJX
+	 rEaiR+ItTnYhOMr5i0I5j//YohcuShRWbZSfyBvJB/8i1xCk8x/RIXDyUk0DjBpWcW+5f
+	 xj0ieZPfJIXh0ryEkTbkm3ZF2dZYexcit1NRllIcmFsU9QyqkMQY0AogaWQwckJ0VSDpG
+	 5ohjVk0TpYLyJyTske80JJUo+ouKETIY5DKYLzaqrStPTYL7rNZBTXUWLPjT3+edD4Q==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795198299;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795198300;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=ucJJo35EhYc8uBblcAl6XMSIzkyavztIGCd0YleD0jU=;
-	b=gi2AiNuJxhH13MtBP+2NYUcp/2zgerGtrUnc1jO5t1PXi4AY6Z6cRUaNemf7ERS70hB3
-	 mHm9DlFQF+9Lyq2d0bgqyo87GFhYhhIXUeyDGqV5rhSeOxG/sCbxEQlWjVEofVqGBcBL4
-	 TkM8P5GcG4SJon4VxMWHnxgFxVDu2Cq05CE+QvW+tnysq0JK2GXLM9QXSSRr/M9FYydK+
-	 dQY4rn5o8LjPdlPHCKK+Nr7kB6i/3KRKAbGrdKnUq756c1EqTkuUFh6zpF1E+vrUYMB0x
-	 RttUHfb2uyjD8LAsLNU0nyNDp7adjElQiJZ0PDOgTW0WVN86fZweQwy0YsVS7ZmIaKQ==
+	bh=nTdGtBd9go6Lwo9FeBOm72FpreXMakZmzpwJjehQh8I=;
+	b=RvVHCm0x1tbFnVs7f/B7U5lXDQxGeNT6RJM7iAOVVEatIKprlEJBRhUMupmldXhVvXBi
+	 3ON++tdVwwC2kkUy26T2Uyyygi3/myDgMMIFtftyhwmLNSTg+5Y6VJK83MyMPIjg4JcK2
+	 Dr6Wn6BWc06NqmTxuhMfgNCewa4XuJPU+THxUj/cp/sJu3Gyei46D4wlt6LikyRSRWu42
+	 C9l4JjFvlisChigVSDqBzIRgSfjiwH16Dk8FcR8SpoS1pd5E4btvipC3OXoduJXPUr8yw
+	 ZeP4Z4z8cGvpyUAXhamHIgdhmEzHWjx8LDuNKeRzO+AJyvzXgvHOcavYTAbxHgs7cdQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mNnqvyQ2;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="mJsm3/Zb";
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F777607AB60;
-	Fri, 20 Nov 2026 18:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC75607BB11;
+	Fri, 20 Nov 2026 18:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mNnqvyQ2
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mJsm3/Zb
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795198298;
-	b=HlWepT8N/RcO2s/f52O1bBRbe0iOHUMPaPhR87xFs9tXetsWsOyy0xjWxpodNqsUUhUi
-	 hL/BYTSSDXGYthe5iyihrD00g7DeHSknGuL5gtJYVkw8g0RsuP/fBdFmIlQJSxTS36niK
-	 jFN8iwpToh3ykHu3hMKlhLz4QcbjFH18N5x1pgNmqXPJq6aSMQ/S0bFGWhPyIs9Merwnj
-	 xvcjY332d7H+BMAmXUsalrPv1KARYJGy9wbdD+M9CHhIKX6HHpw0fmcovuqRRAYpHupeO
-	 ly+B18ry6T6nhOesYjS/feLBdyiJBwVKHYjtl2NQTrj1Eoy5jyV6iz+9e94fr750xMQ==
+	t=1795198300;
+	b=Dn78puIYhqIMB/XwJxu18oGmkDwJR2OI8qLSevdcOSTY9p9kbec5rckyqT2GOisW2gFj
+	 T1kkJP3kbagjNvdwbEJH+c6vnI/eUA7YvWR7CcMGk9Wrc+D7pjD+fuqL6Jf1VNh3vhNx4
+	 LdoCQGOsLtDPo0yniUtxU7lcehdp0uXBmwFo4EgPrd3Ml7Ff5oWgm369NKPF1caTi2sAc
+	 HOYdJZ0Mv3V617YhONYbmDNezDwAvjBTUIDEpRz2I/ZqShWcRFwcr8QKIl4gAGl4zfqkz
+	 ZpFoRcoe2ea3Z7weQsTGiyhhxl5iWq+SpT5WKVpxXDVgF+XeUJdskB4D/hStBpwX6dA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795198298;
+	c=relaxed/relaxed; t=1795198300;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=ucJJo35EhYc8uBblcAl6XMSIzkyavztIGCd0YleD0jU=;
-	b=qwok757q/8PPHCg1OCK4PIvyTBUXJFw/zbbxwpt80Sd5HHp1kfGPy4GH8KJeqkMZ9Vz8
-	 rEyd3Tf/jLapKhFXxJZMCn7jmRMVPM2IULIputNpijTXiJxgvNpjSmSKnmQ2kFBZOgdNt
-	 6xzPoS6HB5j+mlzpVuDhBauXjnQxAhEEv7w/2ZqatQlckTz40zPxTmDhDwNiE17WjPVBn
-	 ijG+s/VKyGyM3CMd1xqNVvTPGy9CUCq8bdtNX2v+thMksqvM8P+s8yxAqfVgsv1n1Ivu8
-	 Sb6iFLVDNIvVRkV0KH7AyM38e/GPo+3ptajIxr2YPfo1L9FaiSCwkGwHMB97z+M7Qow==
+	bh=nTdGtBd9go6Lwo9FeBOm72FpreXMakZmzpwJjehQh8I=;
+	b=Kcv5kKO9BvM7gR36G2ytCflSRVsQ4HaPa0uKjNA95DXQlThKL2YnQf4hQdGYt0fY5frN
+	 DWjEtwJi3PsoTSmyhdoBN2vq4J0kK3y6D3seFPTzbaTHcKJbrodazLYISjYNGQsiFEToc
+	 rVVwD/OaXG/HwwmIe+WwdcdqL1QTpxrBKcUWtbi9hUeu/NBDgxVQvVyb9fcl61bSZE+l+
+	 /41RX0Lzgpp2YnW7WTGbcKOR37lttmQfRkvxfWx03oY+qPTmGXAtwQiz6xIurcXqkL1WH
+	 5bMqsNTb4B7q0i3nuz4pplWQ8nEYwW3cwYINWoabYtHBQAYRdmhV1o5Bd5o1zokCaFg==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 797A21F01808;
-	Fri, 20 Nov 2026 18:11:07 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id D639F1F0180C;
+	Fri, 20 Nov 2026 18:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795198298;
-	bh=ucJJo35EhYc8uBblcAl6XMSIzkyavztIGCd0YleD0jU=;
+	s=k20260515; t=1795198300;
+	bh=nTdGtBd9go6Lwo9FeBOm72FpreXMakZmzpwJjehQh8I=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=mNnqvyQ2S/y5CQ3mA5UeNg8lnQsxvgEbK0ggeNADbf2ogUHqJSfhZ3ENv/Vg2GWC1
-	 Wb7mlVDUg4pb40GH/JQifTMpHDe76E6vaoT3/lMl4/KNJsfSm/JF+vTSfrFFLSn7yd
-	 AJ0eGUuryC6mV4lNFEupta1pomX90P7oS1wEoPqVP6D9ZObc9sZk5qcn0IGCvqH8tL
-	 I5/RpB3ClDRRGgk8r6EK8V6lw8/Fv2girBsKMVnOj4yXl2gu0kY92UPW0d7GOFtOA8
-	 U8k9bctBc1HARihAhDOScJXhd0vCwRnCWri9+aKuSwlkMUDGPkyp4Uqbd0rinLZ1Dy
-	 e5NY8tLWjxr9w==
+	b=mJsm3/ZbvdaIcPDcKFRnsB5MQxKsSFD5PEbsZ6rjRLcFUjGFcCDjE8IXjdrwZN30R
+	 AH0Q2tG6Z5vdVBUGuUUH+nEpbl1tqkQqs5Vnla6572RL9YJelsqupHZVKIwsTep6gL
+	 vbelieow6F60QqRxbFy8NyWsV2aWyGQn0m+XSxCwOfJLC9N7SZ2O4AcrwLiRVtr7NC
+	 ZjGwL1l0DzZgzX6LKBEUvXh7iZnzaPrzJtp8cCwpnOUMqTLd70UZU9wbkUqxRZEgXm
+	 d0Aj9mrwBkNyPH52tk7FT6UZd6oCCIYkeZkpxsS5qtz4JiG/oiJ9wzsnq/J3Aw5Cm5
+	 Ao+2x2y9xqYLQ==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id D3BA84B9A0;
+	by lkml.kernel.org (Postfix) with ESMTP id F1AFA4B9A4;
 	Fri, 20 Nov 2026 18:09:23 +0000 (UTC)
 From: Gregory Price via B4 Relay <devnull+gourry.gourry.net@kernel.org>
-Date: Fri, 20 Nov 2026 13:09:47 -0500
-Subject: [PATCH 56/60] dax/kmem: add a private memory mode
+Date: Fri, 20 Nov 2026 13:09:48 -0500
+Subject: [PATCH 57/60] selftests/dax: test private kmem devices and
+ services
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -83,7 +84,7 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261120-private_nodes_v6-v1-56-74f5f9a115c2@gourry.net>
+Message-Id: <20261120-private_nodes_v6-v1-57-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 In-Reply-To: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
 To: Yury Norov <yury.norov@gmail.com>, 
@@ -140,11 +141,11 @@ Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
  cgroups@vger.kernel.org, nvdimm@lists.linux.dev, 
  linux-kselftest@vger.kernel.org, "Gregory Price (Meta)" <gourry@gourry.net>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795198154; l=5242;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795198154; l=14437;
  i=gourry@gourry.net; s=20261120; h=from:subject:message-id;
- bh=zrM1qpXNDU0W3OEbrrofBX3aJ+CtXsUD9H1wIf9M9+I=;
- b=R6sNzzY6t+TWBdJe7KJBQcoH3BsMwxDWl4rWxlfetNYs3LP+oZXkDWdpnsHICyDBXQ4HWIrdL
- DUshXIHhLEGAEndhFx3dYv0seeaJh6E4Ar1fYAuHjKqy+U87r8NL2cs
+ bh=idwblUguxyP7auq0Q+zpWj4PVxwt1E+r+ThtiJ7hgoY=;
+ b=q38uwmfyBBphWMLKJXDTdBPM/s7/vheYjpqhQqz8er6+qA0nSHp7/JIQj+oBGXwL5FZ4NEhDy
+ QhTrU4jaD6UBBeMn0zc1N7bBnEUpeIq3wusDWh309Qg6huBW/kMik9h
 X-Developer-Key: i=gourry@gourry.net; a=ed25519;
  pk=BZWDlx4htkR5KcvGjGtSDfx1tM0E5dlyBR43FEhjWVc=
 X-Endpoint-Received: by B4 Relay for gourry@gourry.net/20261120 with
@@ -155,157 +156,467 @@ Content-Transfer-Encoding: 7bit
 
 From: "Gregory Price (Meta)" <gourry@gourry.net>
 
-Add a `private` boolean sysfs attribute, defaulting to false and
-changeable only while memory is unplugged.
+Test dax/kmem private mode on a device-dax instance:
+  - the private attribute across memory hotplug: private memory joins
+    has_private_memory, the mode changes only while unplugged, and
+    online common memory cannot become private.
+  - services on the private node: kswapd and kcompactd run,
+    nodeN/reclaim and nodeN/compact are accepted, and HugeTLB pool
+    growth stays off the node.
 
-When true, dax/kmem onlines the node as private memory with
-NODE_MEMORY_FEAT_MEMPOLICY, NODE_MEMORY_FEAT_RECLAIM and
-NODE_MEMORY_FEAT_COMPACTION.
-
-Userspace targets private capacity via single-node MPOL_F_PRIVATE_NODES
-bindings on anonymous and shmem-backed mappings. Reclaim and compaction
-manage the memory, and the system does not otherwise use it.
-
-The attribute is hidden without CONFIG_NUMA or CONFIG_MEMORY_HOTREMOVE,
-since selecting private mode requires unplugging the memory first, and
-the default behavior of dax/kmem probe creates the memory blocks (an
-unfortunately backward compatibility wart).
+The tests reconfigure a device, so they run only when DAX_KMEM_TEST_DEV
+names one (daxX.Y), or is "auto" to pick a device whose memory is not
+online. The device's original configuration is restored on exit.
 
 Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 ---
- Documentation/ABI/testing/sysfs-bus-dax | 19 ++++++++++++
- drivers/dax/kmem.c                      | 55 +++++++++++++++++++++++++++++++--
- 2 files changed, 72 insertions(+), 2 deletions(-)
+ tools/testing/selftests/dax/Makefile               |   3 +
+ tools/testing/selftests/dax/config                 |   2 +
+ tools/testing/selftests/dax/kmem_private.sh        |  94 ++++++++++
+ .../testing/selftests/dax/kmem_private_services.sh |  97 ++++++++++
+ tools/testing/selftests/dax/private_node_common.sh | 208 +++++++++++++++++++++
+ 5 files changed, 404 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-dax b/Documentation/ABI/testing/sysfs-bus-dax
-index 60703fffa99e..d024cf8e5ae0 100644
---- a/Documentation/ABI/testing/sysfs-bus-dax
-+++ b/Documentation/ABI/testing/sysfs-bus-dax
-@@ -175,3 +175,22 @@ Description:
- 		A device can only be onlined from the "unplugged" state, so a
- 		device must be returned to "unplugged" before it can be onlined
- 		into a different state.
-+
-+What:		/sys/bus/dax/devices/daxX.Y/private
-+Date:		October, 2026
-+Contact:	nvdimm@lists.linux.dev
-+Description:
-+		(RW) Select private memory when a device is bound to kmem.
-+		Accepts boolean values and defaults to 0. The value can only
-+		change while state is "unplugged", before memory blocks exist.
-+		The attribute is hidden without CONFIG_NUMA or
-+		CONFIG_MEMORY_HOTREMOVE.
-+
-+		With private=1, the next online enables userspace NUMA
-+		placement, together with the reclaim and compaction it
-+		requires. The memory is excluded from ordinary allocations
-+		and from other memory management services.
-+
-+		Userspace can bind anonymous and shmem-backed mappings to it
-+		with a single-node mbind() policy using
-+		(MPOL_BIND | MPOL_F_PRIVATE_NODES).
-diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
-index 5ec653bc88f0..2954f22ececf 100644
---- a/drivers/dax/kmem.c
-+++ b/drivers/dax/kmem.c
-@@ -46,6 +46,7 @@ struct dax_kmem_data {
- 	const char *res_name;
- 	int mgid;
- 	int state;
-+	bool private;
- 	struct mutex lock; /* protects hotplug state transitions */
- 	struct resource *res[];
- };
-@@ -89,9 +90,15 @@ static int dax_kmem_do_hotplug(struct dev_dax *dev_dax,
- 			       int online_type)
- {
- 	struct device *dev = &dev_dax->dev;
-+	unsigned long features;
- 	int i, rc, added = 0;
- 	mhp_t mhp_flags;
+diff --git a/tools/testing/selftests/dax/Makefile b/tools/testing/selftests/dax/Makefile
+index 25a4f3d73a5b..55d2ba0de8d9 100644
+--- a/tools/testing/selftests/dax/Makefile
++++ b/tools/testing/selftests/dax/Makefile
+@@ -2,5 +2,8 @@
+ all:
  
-+	features = data->private ? NODE_MEMORY_FEAT_MEMPOLICY |
-+				   NODE_MEMORY_FEAT_RECLAIM |
-+				   NODE_MEMORY_FEAT_COMPACTION :
-+				   NODE_MEMORY_FEAT_ALL;
+ TEST_PROGS := dax-kmem-hotplug.sh
++TEST_PROGS += kmem_private.sh
++TEST_PROGS += kmem_private_services.sh
++TEST_FILES := private_node_common.sh
+ 
+ include ../lib.mk
+diff --git a/tools/testing/selftests/dax/config b/tools/testing/selftests/dax/config
+index 4c9aaeb6ceb4..42853ed9e99f 100644
+--- a/tools/testing/selftests/dax/config
++++ b/tools/testing/selftests/dax/config
+@@ -2,3 +2,5 @@ CONFIG_DEV_DAX=m
+ CONFIG_DEV_DAX_KMEM=m
+ CONFIG_MEMORY_HOTPLUG=y
+ CONFIG_MEMORY_HOTREMOVE=y
++CONFIG_NUMA=y
++CONFIG_COMPACTION=y
+diff --git a/tools/testing/selftests/dax/kmem_private.sh b/tools/testing/selftests/dax/kmem_private.sh
+new file mode 100755
+index 000000000000..ceba05e69e14
+--- /dev/null
++++ b/tools/testing/selftests/dax/kmem_private.sh
+@@ -0,0 +1,94 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++#
++# Exercise the kmem "private" attribute across memory hotplug: when it may
++# change, and whether onlined memory joins has_private_memory or
++# has_common_memory.
++#
++# Needs root and DAX_KMEM_TEST_DEV=<daxX.Y|auto>, see private_node_common.sh.
 +
- 	if (dax_kmem_state_is_online(data->state))
- 		return -EINVAL;
- 
-@@ -126,7 +133,7 @@ static int dax_kmem_do_hotplug(struct dev_dax *dev_dax,
- 		 */
- 		rc = __add_memory_driver_managed(data->mgid, range.start,
- 				range_len(&range), kmem_name, mhp_flags,
--				online_type, NODE_MEMORY_FEAT_ALL);
-+				online_type, features);
- 
- 		if (rc) {
- 			dev_warn(dev, "mapping%d: %#llx-%#llx memory add failed\n",
-@@ -380,6 +387,33 @@ static ssize_t state_store(struct device *dev, struct device_attribute *attr,
- 	return len;
- }
- 
-+static ssize_t private_show(struct device *dev,
-+			    struct device_attribute *attr, char *buf)
++# shellcheck disable=SC1091
++DIR="$(dirname "$(readlink -f "$0")")"
++. "$DIR"/../kselftest/ktap_helpers.sh
++. "$DIR"/private_node_common.sh
++
++trap pn_unbind_kmem_private EXIT
++pn_setup
++
++if ! echo unplugged > "$D/state" 2>/dev/null ||
++   pn_node_in "$PN" has_memory; then
++	ktap_exit_fail_msg "private memory cannot be unplugged"
++fi
++
++ktap_set_plan 8
++
++name="private mode can be selected while unplugged"
++if echo 0 > "$D/private" 2>/dev/null && echo 1 > "$D/private" 2>/dev/null &&
++   [ "$(cat "$D/private")" = 1 ]; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++name="invalid private setting is rejected"
++if ! echo invalid > "$D/private" 2>/dev/null &&
++   [ "$(cat "$D/private")" = 1 ]; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++name="private online publishes private memory"
++if echo online_movable > "$D/state" 2>/dev/null &&
++   pn_node_is_private "$PN" && ! pn_node_in "$PN" has_common_memory; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++# Writing the current value again is accepted.
++name="private mode cannot change while memory blocks exist"
++if ! echo 0 > "$D/private" 2>/dev/null &&
++   [ "$(cat "$D/private")" = 1 ] && echo 1 > "$D/private" 2>/dev/null; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++name="unplug removes the private node from memory lists"
++if echo unplugged > "$D/state" 2>/dev/null &&
++   ! pn_node_in "$PN" has_memory &&
++   ! pn_node_in "$PN" has_private_memory; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++name="common mode preserves normal kmem behavior"
++if echo 0 > "$D/private" 2>/dev/null &&
++   echo online_movable > "$D/state" 2>/dev/null &&
++   pn_node_in "$PN" has_common_memory; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++name="online common memory cannot be reclassified as private"
++if ! echo 1 > "$D/private" 2>/dev/null &&
++   [ "$(cat "$D/private")" = 0 ]; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++name="private mode can be restored through an unplug cycle"
++if echo unplugged > "$D/state" 2>/dev/null &&
++   echo 1 > "$D/private" 2>/dev/null &&
++   echo online_movable > "$D/state" 2>/dev/null &&
++   pn_node_is_private "$PN"; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++ktap_finished
+diff --git a/tools/testing/selftests/dax/kmem_private_services.sh b/tools/testing/selftests/dax/kmem_private_services.sh
+new file mode 100755
+index 000000000000..df5d17fdb947
+--- /dev/null
++++ b/tools/testing/selftests/dax/kmem_private_services.sh
+@@ -0,0 +1,97 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++#
++# Check which MM services a private kmem node gets: no HugeTLB pool pages,
++# but kswapd, kcompactd and per-node compaction and reclaim.
++#
++# Needs root and DAX_KMEM_TEST_DEV=<daxX.Y|auto>, see private_node_common.sh.
++
++# shellcheck disable=SC1091
++DIR="$(dirname "$(readlink -f "$0")")"
++. "$DIR"/../kselftest/ktap_helpers.sh
++. "$DIR"/private_node_common.sh
++
++trap pn_unbind_kmem_private EXIT
++pn_setup
++
++ktap_set_plan 5
++
++# Use the default size: a gigantic page may not fit the device at all.
++hsize=$(awk '/^Hugepagesize:/ { print $2 }' /proc/meminfo)
++pool="$NODE_BASE/node$PN/hugepages/hugepages-${hsize}kB/nr_hugepages"
++global=/sys/kernel/mm/hugepages/hugepages-${hsize}kB/nr_hugepages
++name_node="per-node HugeTLB pool growth skips private memory"
++name_global="HugeTLB pool growth falls back to other nodes"
++if [ -z "$hsize" ] || [ ! -w "$pool" ] || [ ! -w "$global" ]; then
++	ktap_print_msg "HugeTLB pools unavailable"
++	ktap_test_skip "$name_node"
++	ktap_test_skip "$name_global"
++else
++	before=$(cat "$pool")
++	echo $((before + 8)) > "$pool" 2>/dev/null
++	after=$(cat "$pool")
++	echo "$before" > "$pool" 2>/dev/null
++	if [ "$after" = "$before" ]; then
++		ktap_test_pass "$name_node"
++	else
++		ktap_print_msg "private-node pool grew $before->$after"
++		ktap_test_fail "$name_node"
++	fi
++
++	gbefore=$(cat "$global")
++	echo $((gbefore + 64)) > "$global" 2>/dev/null
++	gafter=$(cat "$global")
++	after=$(cat "$pool")
++	echo "$gbefore" > "$global" 2>/dev/null
++	if [ "$gafter" -le "$gbefore" ]; then
++		ktap_print_msg "HugeTLB pool could not grow on any node"
++		ktap_test_skip "$name_global"
++	elif [ "$after" = "$before" ]; then
++		ktap_test_pass "$name_global"
++	else
++		ktap_print_msg "private-node pool grew $before->$after"
++		ktap_test_fail "$name_global"
++	fi
++fi
++
++compact="$NODE_BASE/node$PN/compact"
++name="kswapd and kcompactd run for the private node"
++if ! pgrep -x "kswapd$PN" >/dev/null; then
++	ktap_print_msg "kswapd$PN is not running"
++	ktap_test_fail "$name"
++elif [ ! -e "$compact" ]; then
++	ktap_print_msg "kcompactd unavailable without compaction"
++	ktap_test_skip "$name"
++elif pgrep -x "kcompactd$PN" >/dev/null; then
++	ktap_test_pass "$name"
++else
++	ktap_print_msg "kcompactd$PN is not running"
++	ktap_test_fail "$name"
++fi
++
++name="private-node compaction is accepted"
++if [ ! -e "$compact" ]; then
++	ktap_print_msg "per-node compaction unavailable"
++	ktap_test_skip "$name"
++elif echo 1 > "$compact" 2>/dev/null; then
++	ktap_test_pass "$name"
++else
++	ktap_test_fail "$name"
++fi
++
++reclaim="$NODE_BASE/node$PN/reclaim"
++name="private-node reclaim is accepted"
++if [ ! -e "$reclaim" ]; then
++	ktap_print_msg "per-node reclaim unavailable"
++	ktap_test_skip "$name"
++elif err=$(export LC_ALL=C; echo 1M 2>&1 > "$reclaim"); then
++	ktap_test_pass "$name"
++elif [[ $err == *"Resource temporarily unavailable"* ]]; then
++	# An idle node may have nothing to reclaim.
++	ktap_test_pass "$name"
++else
++	ktap_print_msg "$err"
++	ktap_test_fail "$name"
++fi
++
++ktap_finished
+diff --git a/tools/testing/selftests/dax/private_node_common.sh b/tools/testing/selftests/dax/private_node_common.sh
+new file mode 100644
+index 000000000000..57c5231e768b
+--- /dev/null
++++ b/tools/testing/selftests/dax/private_node_common.sh
+@@ -0,0 +1,208 @@
++# SPDX-License-Identifier: GPL-2.0
++# shellcheck shell=bash disable=SC2034
++# Helpers shared by the kmem_private*.sh selftests, sourced after
++# ../kselftest/ktap_helpers.sh.
++#
++# DAX_KMEM_TEST_DEV=<daxX.Y|auto> opts into reconfiguring a device-dax
++# instance as private kmem memory. "auto" only uses devices whose memory is
++# not online and that no process has open or mapped. A named device is used
++# whatever its state. Either is restored on exit.
++#
++# pn_setup() sets D to the sysfs directory of that device and PN to its node.
++
++DAX_BASE=/sys/bus/dax/devices
++NODE_BASE=/sys/devices/system/node
++
++# Whether nodelist $1 (e.g. "0-2,4") contains node $2.
++pn_nodelist_has()
 +{
-+	struct dax_kmem_data *data = dev_get_drvdata(dev);
++	local nid=$2 token low high
 +
-+	guard(mutex)(&data->lock);
-+	return sysfs_emit(buf, "%d\n", data->private);
++	for token in ${1//,/ }; do
++		low=${token%-*}
++		high=${token#*-}
++		if [ "$nid" -ge "$low" ] 2>/dev/null &&
++		   [ "$nid" -le "$high" ] 2>/dev/null; then
++			return 0
++		fi
++	done
++	return 1
 +}
 +
-+static ssize_t private_store(struct device *dev, struct device_attribute *attr,
-+			     const char *buf, size_t len)
++# Whether node $1 is in the node state list $2, e.g. has_memory.
++pn_node_in()
 +{
-+	struct dax_kmem_data *data = dev_get_drvdata(dev);
-+	bool private;
-+	int rc;
-+
-+	rc = kstrtobool(buf, &private);
-+	if (rc)
-+		return rc;
-+
-+	guard(mutex)(&data->lock);
-+	if (data->private != private && data->state != DAX_KMEM_UNPLUGGED)
-+		return -EBUSY;
-+	data->private = private;
-+	return len;
++	[ -r "$NODE_BASE/$2" ] &&
++		pn_nodelist_has "$(cat "$NODE_BASE/$2")" "$1"
 +}
 +
- static int dev_dax_kmem_probe(struct dev_dax *dev_dax)
- {
- 	struct device *dev = &dev_dax->dev;
-@@ -560,12 +594,29 @@ static void dev_dax_kmem_remove(struct dev_dax *dev_dax)
- #endif /* CONFIG_MEMORY_HOTREMOVE */
- 
- static DEVICE_ATTR_RW(state);
-+static DEVICE_ATTR_RW(private);
- 
- static struct attribute *dev_dax_kmem_attrs[] = {
- 	&dev_attr_state.attr,
-+	&dev_attr_private.attr,
- 	NULL,
- };
--ATTRIBUTE_GROUPS(dev_dax_kmem);
-+
-+static umode_t dev_dax_kmem_visible(struct kobject *kobj,
-+				    struct attribute *attr, int n)
++pn_node_is_private()
 +{
-+	/* Selecting private memory needs an unplug, which needs hot-remove. */
-+	if (attr == &dev_attr_private.attr &&
-+	    (!IS_ENABLED(CONFIG_NUMA) || !IS_ENABLED(CONFIG_MEMORY_HOTREMOVE)))
-+		return 0;
-+	return attr->mode;
++	pn_node_in "$1" has_private_memory
 +}
 +
-+static const struct attribute_group dev_dax_kmem_group = {
-+	.attrs = dev_dax_kmem_attrs,
-+	.is_visible = dev_dax_kmem_visible,
-+};
-+__ATTRIBUTE_GROUPS(dev_dax_kmem);
- 
- static struct dax_device_driver device_dax_kmem_driver = {
- 	.probe = dev_dax_kmem_probe,
++# Whether any process has device node $1 open or mapped.
++pn_dev_in_use()
++{
++	local fd
++
++	for fd in /proc/[0-9]*/fd/*; do
++		[ "$(readlink "$fd" 2>/dev/null)" = "$1" ] && return 0
++	done
++	grep -qs " $1\$" /proc/[0-9]*/maps
++}
++
++# Record the original configuration of device $1, bound to driver $2, for
++# pn_unbind_kmem_private().
++pn_record_kmem()
++{
++	# Binding the recorded device again keeps its original configuration.
++	[ "${PN_DEV:-}" != "$1" ] || return 0
++	PN_DEV=$1
++	PN_ORIG_DRIVER=$2
++	PN_ORIG_STATE=$(cat "$1/state" 2>/dev/null)
++	PN_ORIG_PRIVATE=$(cat "$1/private" 2>/dev/null)
++	PN_NEW_ID=
++}
++
++# Move device $1 from driver $2 to kmem and online it as private memory on
++# node $3.
++pn_online_private()
++{
++	local dev=$1 driver=$2 nid=$3 name
++
++	name=$(basename "$dev")
++	if [ "$driver" = kmem ]; then
++		echo unplugged > "$dev/state" || return 1
++	elif [ -n "$driver" ]; then
++		echo "$name" > "/sys/bus/dax/drivers/$driver/unbind" || return 1
++	fi
++	# A private node holds the memory of this device only.
++	if pn_node_in "$nid" has_memory; then
++		return 1
++	fi
++	if [ "$driver" != kmem ]; then
++		echo "$name" > /sys/bus/dax/drivers/kmem/new_id || return 1
++		PN_NEW_ID=1
++	fi
++	echo unplugged > "$dev/state" &&
++		echo 1 > "$dev/private" &&
++		echo online_movable > "$dev/state" &&
++		pn_node_is_private "$nid"
++}
++
++# Online device $1 as private kmem memory, or return 1 if it is unusable.
++pn_bind_kmem_private()
++{
++	local dev=$1 name driver nid
++
++	name=$(basename "$dev")
++	nid=$(cat "$dev/target_node" 2>/dev/null) || return 1
++	driver=$(basename "$(readlink "$dev/driver" 2>/dev/null)" 2>/dev/null)
++	if [ "$driver" = kmem ] &&
++	   [ "$(cat "$dev/state" 2>/dev/null)" != unplugged ]; then
++		# Leave online kmem memory alone unless it is ours or was named.
++		if [ "$DAX_KMEM_TEST_DEV" = auto ] &&
++		   [ "${PN_DEV:-}" != "$dev" ]; then
++			return 1
++		fi
++		if [ "$(cat "$dev/private" 2>/dev/null)" = 1 ] &&
++		   pn_node_is_private "$nid"; then
++			pn_record_kmem "$dev" "$driver"
++			return 0
++		fi
++	elif pn_node_in "$nid" has_memory; then
++		return 1
++	elif [ "$DAX_KMEM_TEST_DEV" = auto ] && pn_dev_in_use "/dev/$name"; then
++		return 1
++	fi
++
++	pn_record_kmem "$dev" "$driver"
++	if ! pn_online_private "$dev" "$driver" "$nid" 2>/dev/null; then
++		pn_unbind_kmem_private
++		return 1
++	fi
++}
++
++# Restore the device recorded by pn_bind_kmem_private(), if any.
++pn_unbind_kmem_private()
++{
++	local dev=${PN_DEV:-} name
++
++	[ -n "$dev" ] || return 0
++	PN_DEV=
++	name=$(basename "$dev")
++	if [ "$(basename "$(readlink "$dev/driver" 2>/dev/null)")" = kmem ]; then
++		echo unplugged > "$dev/state" 2>/dev/null || return 1
++		if [ -n "$PN_ORIG_PRIVATE" ]; then
++			echo "$PN_ORIG_PRIVATE" > "$dev/private" 2>/dev/null
++		fi
++	fi
++	if [ "$PN_ORIG_DRIVER" = kmem ]; then
++		case "$PN_ORIG_STATE" in
++		unplugged) ;;
++		offline)
++			# kmem cannot restore blocks onlined behind its back.
++			ktap_print_msg "$name was offline and is left unplugged"
++			;;
++		*) echo "$PN_ORIG_STATE" > "$dev/state" 2>/dev/null ;;
++		esac
++		return 0
++	fi
++	if [ -e "$dev/driver" ]; then
++		echo "$name" > /sys/bus/dax/drivers/kmem/unbind 2>/dev/null
++	fi
++	if [ -n "$PN_NEW_ID" ]; then
++		echo "$name" > /sys/bus/dax/drivers/kmem/remove_id 2>/dev/null
++	fi
++	if [ -n "$PN_ORIG_DRIVER" ]; then
++		echo "$name" > "/sys/bus/dax/drivers/$PN_ORIG_DRIVER/bind" \
++			2>/dev/null
++	fi
++	return 0
++}
++
++pn_skip()
++{
++	ktap_skip_all "$1"
++	exit "$KSFT_SKIP"
++}
++
++# An explicitly selected device must provision, auto may find none.
++pn_skip_or_fail()
++{
++	if [ "$DAX_KMEM_TEST_DEV" = auto ]; then
++		pn_skip "$1"
++	fi
++	ktap_exit_fail_msg "$1"
++}
++
++# Print the KTAP header, check the prerequisites and bind a private kmem
++# device, setting D and PN.
++pn_setup()
++{
++	local dev nid
++
++	ktap_print_header
++	[ "$(id -u)" = 0 ] || pn_skip "must be run as root"
++	[ -n "${DAX_KMEM_TEST_DEV:-}" ] ||
++		pn_skip "set DAX_KMEM_TEST_DEV=<daxX.Y|auto> to select a test device"
++	[ -e "$NODE_BASE/has_private_memory" ] ||
++		pn_skip "kernel lacks private memory nodes"
++	modprobe -q kmem 2>/dev/null
++	[ -d /sys/bus/dax/drivers/kmem ] || pn_skip "dax kmem driver unavailable"
++
++	for dev in "$DAX_BASE"/dax*; do
++		if [ "$DAX_KMEM_TEST_DEV" != auto ] &&
++		   [ "$(basename "$dev")" != "$DAX_KMEM_TEST_DEV" ]; then
++			continue
++		fi
++		nid=$(cat "$dev/target_node" 2>/dev/null) || continue
++		[ "$nid" -ge 0 ] 2>/dev/null || continue
++		pn_bind_kmem_private "$dev" || continue
++		D=$dev
++		PN=$nid
++		return 0
++	done
++	pn_skip_or_fail "no private kmem device"
++}
 
 -- 
 2.56.1
