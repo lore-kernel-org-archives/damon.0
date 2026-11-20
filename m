@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795154870;
-	b=XAtHaUIZ5paKsqyv2GaJW0RoPgZp0tkj7KJwOoEfAZ4sHgFwGd9PnUQEtkQsdf/XNmRd
-	 KLnoKRaugzLsWi7VmVm0v9ddb33HxvU70GKeYt7fytLQhtiJP+3gz9BivMyyK812RC0UE
-	 VukWVsYJXVrOUjSfHieB51Qch9+DX7Zn6mvPj24YTKO07kXYO+DVxxhMIuWc7xHUACBjC
-	 vN9+LwVNgX+8qUQhHdowNK3T5N0VArzyaymS3biz7+uJVwanT5dr7jW9D5d0PMuMiJ1pl
-	 Rbe249TEYN22d6lgKv0be0N+bkut6DrDz04AV8bZMgr+uIkiaA+OilI4UiV1mIVTbzA==
+	b=33X6Vk51i884bFE1p/rnqcMfxEq/E/WdPjiqNP2Untj4ykKVHM+LGRnEIQKPfM3EgQk7
+	 w4Zb8gDk/PK0CIRC0a88FqYVr0uXCoOmAQrpN+sPC3WZworpKXHoe5B/GhAl9szXCMYAD
+	 hEsAEbDavuoOS/+gtK2RLRHKilOwyQOKjMz8z6NDOejwJPTGfK+3OWarpWXfxI+8KtZ/3
+	 eQUH89W88GAwcen77qu0wSlZdnEg7kcGvMH1v9r3Jb2PXijmjReHH5a2iTunzwMW15z0T
+	 mJ58pFMOfARdXtbf8t8ZGayyMLMapWaf7UHKC2sPu/IHBDERCsQlozCnIaW8tdhcvKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795154870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=Qskq9szjVa9XlNedP+qAv1YRg+a7vizmTmlvGZkJCUU=;
-	b=CrChKihDlWEzrx7ERbnmWDLypnI7Dzl8FrqMBHpTf3qdqqV9Q3lbYS/Y6N/3rr1vFOik
-	 9zJoPAhXQ9RBtuBL2Ar5iv8ZfWXWDoI+JA3e54xvGwxMItBKePgHAnSCjrp2urg+//tvr
-	 eZUJzbaHvxqpkquvY35PGBA2IF5Dmk8l0Hsj2FV1AhhewDjhwv/fKxJmFYkxjJsuxVACX
-	 hlmFjgF6995m3WyGUw1pRsAtyeVY0c2Q82lYzMU85rpsUT46+2S1WIF4HqBa4piiDSUb5
-	 DWLtHghng2t1d969x5FvzytN4qxLBLmCnN56sDzxs+5NnrNrMPlZvvruHEMBMOPf22g==
+	bh=GTYH3LA1U3FT65ycu+eGiBs1yDDC6Oilxnq9ldGkodM=;
+	b=YLTNRDRmR8uUTCoLQZK9RyfM80bcVg5lxvZrnitOmXsaA2Fux4EyGGnWtkswEwE6soTv
+	 OcbqzT1d56Fw5dOpurU8AL0GAndjQQ7KWEfSuL5KeW6+1BSAYGIyF5YysVMYyJvSNBBdG
+	 bNVpdneqrnO78cEoLVBacbkXk+StYRh7jTypvCgz5w1JnaDtyr09kB2eh9hIHxQioAVqS
+	 CDFHeL6WyubGAZ5dBo/SrTiqvOmyspuFr+6/DBq2F1VO87QFttyw9XRnd58wFhmSZPVlk
+	 3U36RwHngI64zMF/UewpzxPMhnDJUhpiCHJMon5+yJHiARBcwHsCC5lLW9MNVAqGUrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DrP6t8wt;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KYcyvC85;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441F9606A504
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 06:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA87606A503;
+	Fri, 20 Nov 2026 06:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DrP6t8wt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036BF1F000C4;
-	Fri, 20 Nov 2026 06:07:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KYcyvC85
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473EF1F000CA;
+	Fri, 20 Nov 2026 06:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1795154870;
-	bh=Qskq9szjVa9XlNedP+qAv1YRg+a7vizmTmlvGZkJCUU=;
+	bh=GTYH3LA1U3FT65ycu+eGiBs1yDDC6Oilxnq9ldGkodM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrP6t8wtbBsl0csg8WTSkxMKknFEl+bdBnYt6LASgO2kYYCF527kkkM2Eu3MC/km8
-	 FMB253p7WriLRmuvYNZ6ybWaZEcyOqMzhLj6/rtuEWspqkMhp3QdVEBs93qDF0fp/o
-	 E187u/U+5rlV8I3O6ssoHw1wrwXmVkBjKsbn9aQedjNzbjmiD6ETSOD8OtGlADy7QR
-	 9i+RDc0cGS/TOWSPzMRUHoFZRgTYnN7PIUobjGaP7HIbW//dtEkH0j3soMSAf3jXLf
-	 4khFiCDsliS7FrvLeepg9+2u7ndxZmdjJ0noW5Ssxfix2X7WP6ij5jLk2wlUDX30LO
-	 mW8v6cOddc6uA==
+	b=KYcyvC85w9H2ONJL80krbPbpt1HtrOP2jmUGpjKKkdh9eaGESe8b91iaT6cPg4Y7g
+	 AVlH/JNOewP/5JvKz49jJOQmrrmwZLEHcd2gabw5JRTdN/oX+DET5KDpWUeA1uSHpS
+	 e1vCNMBwNJV/AHS0K222kx+iEDz5sRxaZk2YpAqGXngZcCWU5EFtsc2cyWHQXjtIjz
+	 vwirGFm5lOALqQTJvM6xvAqP1sfHd7bTEvzma+Rp/n7/81GE/j2PmClBh5shUsks91
+	 bAxa9ZCmoIkFZajzLOcmN7A6Lfq8DIx4ZxHTzyll9/N51tdVkOMqytmvPjQbD9cXsr
+	 dmkkXfJLA2TKQ==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 3/4] mm/damon/reclaim: disable watermarks by default
-Date: Thu, 19 Nov 2026 22:07:37 -0800
-Message-ID: <20261120060741.92121-4-sj@kernel.org>
+Subject: [RFC PATCH 4/4] Docs/admin-guide/mm/damon/reclaim: update for changed default parameters
+Date: Thu, 19 Nov 2026 22:07:38 -0800
+Message-ID: <20261120060741.92121-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261120060741.92121-1-sj@kernel.org>
 References: <20261120060741.92121-1-sj@kernel.org>
@@ -62,40 +65,47 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMON_RECLAIM's free memory based watermarks features were introduced as
-a safe guard for wrongly-tuned coldness threshold (min_age).  The
-default watermark values were chosen to let users easily understand how
-those can be set and tuned.  The default values are never meant to be
-used as are.  DAMON_RECLAIM is later updated to enable PSI-driven
-coldness threshold auto-tuning by default.  When the auto-tuning is
-enabled, having the watermarks with the default values makes no sense.
-Disable the watermarks by default.
+Update DAMON_RECLAIM user documentation to reflect the changed default
+parameter values.  Intervals and PSI-driven coldness threshold
+auto-tuning features are enabled by default.  The free memory ratio
+based watermarks feature is disabled by default.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/reclaim.c | 7 ++++---
+ Documentation/admin-guide/mm/damon/reclaim.rst | 7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/mm/damon/reclaim.c b/mm/damon/reclaim.c
-index d297b1596704b..a8b18f51e99d5 100644
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -103,12 +103,13 @@ module_param(quota_autotune_feedback, ulong, 0600);
- static bool autotune_monitoring_intervals __read_mostly = true;
- module_param(autotune_monitoring_intervals, bool, 0600);
+diff --git a/Documentation/admin-guide/mm/damon/reclaim.rst b/Documentation/admin-guide/mm/damon/reclaim.rst
+index 0ef784df98680..79d24e3819cea 100644
+--- a/Documentation/admin-guide/mm/damon/reclaim.rst
++++ b/Documentation/admin-guide/mm/damon/reclaim.rst
+@@ -95,7 +95,7 @@ amount of access events in each DAMON-snapshot, while keeping the sampling
+ interval 5 milliseconds in minimum, and 10 seconds in maximum.  Setting this to
+ ``N`` disables the auto-tuning.
  
-+/* Watermarks are effectively disabled by default. */
- static struct damos_watermarks damon_reclaim_wmarks = {
- 	.metric = DAMOS_WMARK_FREE_MEM_RATE,
- 	.interval = 5000000,	/* 5 seconds */
--	.high = 500,		/* 50 percent */
--	.mid = 400,		/* 40 percent */
--	.low = 200,		/* 20 percent */
-+	.high = 1000,		/* 100 percent */
-+	.mid = 1000,		/* 100 percent */
-+	.low = 0,		/* 0 percent */
- };
- DEFINE_DAMON_MODULES_WMARKS_PARAMS(damon_reclaim_wmarks);
+-Disabled by default.
++Enabled by default.
  
+ quota_ms
+ --------
+@@ -145,7 +145,7 @@ per quota reset interval (``quota_reset_interval_ms``) is collected and
+ compared to this value to see if the aim is satisfied.  Value zero means
+ disabling this auto-tuning feature.
+ 
+-Disabled by default.
++500 microseconds (0.05 percent of default quota reset interval) by default.
+ 
+ quota_autotune_feedback
+ -----------------------
+@@ -196,7 +196,8 @@ granularity reclamation logic.
+ 
+ To keep DAMON_RECLAIM always active regardless of the free memory rate, set
+ ``wmarks_high``, ``wmarks_mid`` and ``wmarks_low`` to ``1000``, ``1000`` and
+-``0``, respectively.
++``0``, respectively.  Use of watermarks is not recommended and therefore
++disabled by default.
+ 
+ sample_interval
+ ---------------
 -- 
 2.47.3
