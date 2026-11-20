@@ -1,100 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.48
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795167730;
-	b=0YSztuVWR4jQGt/DWh/qm8tZTJWVjqwyL89AGt9tq5GXwUY8nShSeIbI8HwOqwqDB1i8
-	 smvdP5539uRHE2wGkjJVtC4F4pPN3+4H9shN/5yyxUa0ryHi971j49SRQR3LYskwttO55
-	 AqEQmiexniwzn8uD76HvwyUyakLM6Os6EDzUW2rQxXS72cs8ccfVzW/Fj4WgW/2aqNEHl
-	 5cm1zEKFX8tW6FS8ciB1HQNsD4vAoV6YCVgffp74DQraZ26ZbsfNGAEHdWI0P2zq89RRI
-	 J1nHm79LGS05Q3WJefr3+dC30pqCiTTJ8nXlZ42FsmKI25uCrzcKORNQrg67fFcjefQ==
+	t=1795168432;
+	b=Ifxs1g69GnsgTP6mQWsdi0VW+ZQatWGke4CIiDtGtm4LBzH2xayTupu8NTUC3gZzR6mv
+	 gQI36SH2sO5e9H7nxNYwRb43jW+D90TwQ0DrupJTP/2Fz6ouAtN5T5zZkCn/FzN4+SrBc
+	 w/HgdRripRJSZ1mfqtMI8E+4a8oP7Dy7vxJbBQY3WVJfL+RnZPYWM1SE1YLhVVTuOAUYd
+	 KUOpF2AcwfrYwhhOMLFWnQF2xKgXXVGA5kYTHCjQdPhsBounDGiTLprcoVdUCWvRjMigU
+	 4t10Vqe2pqsbLFi8KD2Ed/rC4MVO3irOxgbZdwQ4FDMXCxsH70QkuMBRQefWYCOKUBg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795167730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795168432;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
 	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
 	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=nJLDjnNZ35RdFcdsO967xBDkpagvrglUg9dZPRYG/C8=;
-	b=1l15vNLsC/LkYt0HsjovdAP14yTTqgYj+gY6XoYCKuarb/q8x/X+mUlAN9Af3Azm1FPB
-	 Pl73c+SOt61/FB6NuvRXp6kmx7F0VinIzyuiMEClllvWBWyf9zCxMCaJV/4mCm8Ix9odW
-	 LLWvmhaA8T9dMJMSrzSRTV8CMBsnBlSIujKlgI9iLiN7lplHjOkP+zqXtm8IYDR6iPTsl
-	 ZXnN65rEs7qJWdy8r/1bAkz/w2CS4E8kBOz1p2lO2He3wbdGwZMbi4d89MunIRbdb+rwH
-	 Y1s/xqZO6f5caZXmDqpdUk+uXxPOJ6e3WtMdFckM5EmxP0doiE1PNAltvSL+H6Og4GQ==
+	bh=HAfymCHccjaSnDwBzcAFu1I4f93kNUDtOAKH0uubUTk=;
+	b=V87yeg4alRscaRT8p+BPJlzBlTuvk65Z3uG8OU6SDF0RnKWdzaee0hHvyi80G2YJCbt9
+	 JTzd1olAqcPW0xBiwj1ITcPTfq1OU1zKHCdm2FjHC3qPdfLYfOr4zmOly/nIAH3RsK+Wf
+	 RvEdgg5tBxnj+5pHUfJiq2eUbKbcUsdLoGucMpA/Klj37Wr5gTRube4RIAjfG8CFGYb+X
+	 D+t+iH5gNWc7WULMsEn2e3R4ZmAj1GoRAg7Sb1Vb57QFP7UWosOgVPnBOlwWTJ3aRZ18W
+	 dOsSTIzSuEGOfmd8RpNEz5jKOuwOjXNQqWLW+Kf1vJF+ZgIX59lHaH6pCAQ1pITz1ww==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OcQBGFS6;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.221.41
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pR0+K0Vk;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.48
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5587606A325
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 09:42:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E5587606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A62960A2637
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 09:53:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0A62960A2637
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OcQBGFS6
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-49465892f7bso534942f8f.1
-        for <damon@lists.linux.dev>; Fri, 20 Nov 2026 01:42:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795167728; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pR0+K0Vk
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a3517554f7so6743735e9.2
+        for <damon@lists.linux.dev>; Fri, 20 Nov 2026 01:53:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795168429; cv=none;
         d=google.com; s=arc-20260327;
-        b=fZ0V/5iq3zcsE/96ee5Hp/n/p3SLc4JF5xaiBLwlkZeaDs1qkQX9IuSyi3qF+IWQdF
-         AHzG+Rdy2Y34VJwfHrZ2s1UDsPxXrq5+9JFSPDWV6Dw9QBW7s3gHPZ1oyJQuqWpEtlGu
-         YSFTRahTNema7EmM/nUKUVv1Z+w8QDy+dWYMLwFUPgTyYV24e9zFEUMDbARpbv/fVxbR
-         syZa7FAhZsQBTmIPiJre9v8i6titmk8Y6FxA2JSXFnjwPfV+87dHoqd2JE70yriy2ov/
-         tSqR8yV3lN8OwIm3nuczw0ArvxyuBMCvHtT3PLqieoirJYglbE6Toe71Q1k9qXrIyRz5
-         hMbA==
+        b=Http1xpm7hC/A/dY9UGKlR5t0orYoAl2ERmUEjs6FcWEbazQe3kxFybvC94DU/7XQp
+         os12ngeBkfl2k1wMFBj9yo+5waoLntGQtsMzsMs7VxXUzd7n5tmXO4/u1TneVeXMkAcx
+         NAYB5wF74f9o+MemvismbZMgliQebrQR7NrwNg85lTmGws4bYH3CDISBzXYjsK8ORJwS
+         DBZNcNtwPqN/njcNP9ji24vWZrTWqrshKlIGLTOzE6tTf5S6cPjGg2dlrr77NU4155+h
+         mjPEu+14OtRC6joU82F0P4jLVA2yaKofvLwmU2losfitviXrSBjGGlsjAkqYgHWLHiQu
+         eb5w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=nJLDjnNZ35RdFcdsO967xBDkpagvrglUg9dZPRYG/C8=;
-        fh=LM41CiQFAAOk2spHuhaBe47L/ihmP5Pg957obcH7i5E=;
-        b=XVIEyOR2gC7Cr3bWaFdH45eMahdsLkkmF8O7A+DV2O2En6Bot2/SxI6k7/b8vF0MMW
-         x1dF1xLqvne1sFv0JfnpdvFuTwcOrQc1Y1pvgrtkhy4YAc+cLQS1JwPESl14cJ0odWe0
-         n8AnBk/DKWAf0ho0vjUjUbPSrcSeD15ezFNQnjdt8UCmIjQfYdt1i4ymuByKvNZ1ydJS
-         NQfDX5/sRGvsiMdEwLr0Ce0QNEaYbizHxQdT5ZzPMFNO1/+hDhZnkTWQU+nB2Byl/gNS
-         mb7SAR6CejSo0LjQnGNMnNfbNAVynOtb11ZLdAkLheACJmYDBqCh8LATfWXln1JnGDql
-         IVdQ==;
+        bh=HAfymCHccjaSnDwBzcAFu1I4f93kNUDtOAKH0uubUTk=;
+        fh=oo5YFPDg2hujVcKPVpdH21qOz/VTNWbWpXoA/eBVJJI=;
+        b=BTk3Ww6+yulf0WW83hUjXZildXWOy/2NqsQw3C0WhxDyun0ElOEys8406w3A9HLeJz
+         LeIIwYwPAqXA/WSbSCa0tKBYGWQaIVQpW9020PCX/tvNRb4leKS4TEK1Nj4KgHFZOyeO
+         zOANdqbJXQd6oNWj21513a+hUhgAuIHpx5RlHthpJLYwcK5kN1dgDRLdAcxOccYRS5xv
+         SX0c7ohkXcEf+Faun6nI/jaQN10iF1Sv+V7lVwGGIs/HugaaA2BM5GC/WcM1/8WOSi7f
+         YLZGdMcTcTXmQaWRUDri7mFuZSPb/FeHuPf836U84OO77X3Dcyy92UoqtoWy3i3cmOFe
+         RFdg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795167728; x=1795772528; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1795168429; x=1795773229; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=nJLDjnNZ35RdFcdsO967xBDkpagvrglUg9dZPRYG/C8=;
-        b=OcQBGFS68BblFrb2yYyTNZFRwqIbqwPjCnbbLhlnJGW/opDvSbswDZYvp9hq1fSHPG
-         UxW4koTomsY6tFaQ2YG3KKcDqaAMp3vZUXHOQuiJTy5EweQGhFIQWVZmyudhh1f5Q8/s
-         uA2L9ZH9No+VqMrmaaxBpTjWSMqqBDNRdXMHMARdISbETR/8NPaZUFjwFiYOWC+RiiKE
-         jt/QndGdaSsov2PTnjA8oW5PcnxsJ4NQOwAtPKwmPJaHV8mZfP5U1C6BCRla/8kxMF5c
-         NIONT6aqMa2jq55PZ9bVHLLuCVxBALJmehMvsr8bARH/RCPv8usEhmI18O9hmLLMO9cZ
-         nLyw==
+        bh=HAfymCHccjaSnDwBzcAFu1I4f93kNUDtOAKH0uubUTk=;
+        b=pR0+K0VkUJ2NegQKC7SaqBR6UWZwfjVPArEGyPsAhutF1YhKlBJpkUCbPw59zfflPl
+         LwAkl0MteJ13iZi8Gjs0t2aiHF9sKi+QWq4TqqM06pB2ag9xnC/ZRyDYkduXq5GFi6CY
+         yFFNIc9MLEHwszXiohlPrIIagnpB1rtwk2kra2SOTG2i3X6Jd7jB484BFBsFF+AT6nNP
+         knlKmMJIeISIkNPLn3LgBzuvT5VzobIGNH/TZ5967L7e+8QGhHIR7PKFCp5t++ieu1zM
+         /nIUvMXny7q4tgSCPh1ORNNhmSJlB9uDqemIP7Wjh6bDeZdIpC/OYbQuO/stI2Lcoun6
+         NkWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795167728; x=1795772528;
+        d=1e100.net; s=20260707; t=1795168429; x=1795773229;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=nJLDjnNZ35RdFcdsO967xBDkpagvrglUg9dZPRYG/C8=;
-        b=wHwSxufPRy3F9IfrEGVz6kTk0i/3Oz2IcYdqPFKwEpyMsH0LkWyczstdKzshiSMfQv
-         5LvaN7bJM759EkuL6PM1AyMvPf3wr7dvQv2Ub/2DTKckfC7aqKa7hOSGi6rKrW5TTMej
-         biCE9h+GcRHHjDt8WCscvCdHwl1hBVSs6CJbNAJ122QgJj56OANiM7lYAscpNK1gPzAe
-         tlWSZB/g3vIW2Di9P9qGvDArh2a7+04bpUyb3guIVzbyiz2OJ2iy8WnJ6u/a6WLAiZrN
-         YToX+UQBNASkCFQlgfEuTesEH8yIHZKJKzm6i3vfgjJCdYk/Ii7sxHsp/ICQW9MT+mmP
-         Nthw==
-X-Forwarded-Encrypted: i=1; AL+hErH1gbPFIkeerD9LAR0YpxotGOhzQ/2kmcKVaFCeqoweRdKO3wD602Vc+Pcjd53mNORVz2XRZA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+gZ2PHgqrJfIHjV+QLUyvq0AfKBpnBeaHt8yBvJa1qw2r+X6WQ
-	hYkc7N5RJxpbMs3GYDQ+0WXmm6MgI5E38TtDK7IbSgkz6dbXrrJmkqGQXchK+feIqhuNgpIRo3S
-	hMJUnJJxTx5E304NwHKndk1AT1EZqykg=
-X-Gm-Gg: AYBFou0RhsBH/qMdYQHACNVLIymx4WaMbrG6lrR0riadMoc5eX88V6Bgiak9WmJHV+9
-	5LDQlTtFn9D5EHdo4zqGTzRTRkuuFBph5rkKSlU/O67porZAosuwP8YFXInhYxCPb8lGbDqCBEp
-	o7oSDiHOehgvU2DUWe2ZrIHMor63U6tWZ4O/Vg+T5b02OdAXzGUmAxBQDHtEVAu95I3Ff5Smvho
-	leUZ+1UeF+J4KrM9an+ZW85Yr7yc5DbN++8SJEe2/mv1vtbRGAPaPyp50ypEPSNbFq1dHAYqeQB
-	/Nh3aMzrvjDO/5qDd344CumDHn8NiHmPzbansxw7ouKdziRIQ5VEelTF7WYsaUMKWg7Mo2w85vB
-	CfW4zFaZ6F3zITXYksEXCXT2cyrH2/l8Iss4JmW4ijD0=
-X-Received: by 2002:a05:600c:1d1d:b0:4bb:73ad:c1f0 with SMTP id
- 5b1f17b1804b1-4bb88812b0cmr58328185e9.23.1795167727989; Fri, 20 Nov 2026
- 01:42:07 -0800 (PST)
+        bh=HAfymCHccjaSnDwBzcAFu1I4f93kNUDtOAKH0uubUTk=;
+        b=FrG/1/fiffzV6Raz1pAEKMWGjO3RMa/61MElCq2Y7kPDR/pOQBMjixuUZfNrEtYryd
+         pK8HyxmYSbHj50GOZAcmS9X6kJj4qWMtIVSn9/U5/K49tpxVWN3saqM9wN3OaoFsKDYf
+         lwc7KXUBbiYZuVv4SWo+4quxKT9GaPC3N9xjQ0lZAkzDAHh3ZjOkqE9+8uc2UFHVKL+T
+         AipIAodwLYtGhIGb9S9obxgzl4w2IeGilx+PnWYN6rfN/+sZOXVfuNXiCha3BesbVKvy
+         Ahduy6GoThv6PJ5dRgoFGxIIex80Co7s91Pho8uWBokn4ZhJ617/UwLm5406oapKMV0+
+         zMzg==
+X-Forwarded-Encrypted: i=1; AL+hErHnXFODgutv+gNB8sQnaO8cXZJf5mnCCnI32qX3nv3Rdi8JRdCt3siOulZqoynlgCXwtgv87Q==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+HiCD8qprLyPkB/WVZEZ5OWkzDmZ2hx2bE5LMMJgduNQoMrMse
+	zEpwth1vIUhEoz3so6F13z9iLpHKparnfR2XmUEyheLCOXn3SB2ZAJNzCkawGVJCGbhf3TgLs78
+	ragab1GGq390jEEIu+VMpp7DmSn1gLWs=
+X-Gm-Gg: AYBFou0GFnAaYWfaQB6duO9vKSlEEepefZvoVkDXZ7K+XiA79ZhgEYk1W4wKRmBDD/W
+	8cxNy8Qsxgc6tCVnHLPa2KO4iRAQxbrMJsoflumBJ8HGu5P06GSC4kNz8B2J7Jvn3L51v3fT5Rb
+	dsV3DTI+7n0jSRYscAbnhHxU7ja9BfVAXtAHd0eO2KxpPT/Zg1pTCZINILX3q405Qbx1E2puB2t
+	YKjHf8e7HmmXe2Dm2vpkFXzPgP8MKTJj/Zqc1xnOokCA2prG3oP50rLW17MYr0Jxl300c509Y4y
+	/KVH3qBnfMURN7ZeESpUESFdZY3YxBJ56mY/5A04G2xU6LvN6U0Yl6QFOanMToIkIphD51Djh8r
+	rbE4iEgoPmaqSjOLtj9r1i2eAFtq/SwvzZJoY3tWeVJLAVgi1eHktx3ohtWwNk5St
+X-Received: by 2002:a05:600c:45d4:b0:4bb:6994:abf0 with SMTP id
+ 5b1f17b1804b1-4bb88817d91mr55598215e9.23.1795168428776; Fri, 20 Nov 2026
+ 01:53:48 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -104,13 +104,14 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com> <20261119-mglru-fg-v5-16-9eee2fe97a2d@tencent.com>
-In-Reply-To: <20261119-mglru-fg-v5-16-9eee2fe97a2d@tencent.com>
+References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com> <20261119-mglru-fg-v5-17-9eee2fe97a2d@tencent.com>
+In-Reply-To: <20261119-mglru-fg-v5-17-9eee2fe97a2d@tencent.com>
 From: KunWu Chan <kunwu.chan@gmail.com>
-Date: Fri, 20 Nov 2026 17:41:54 +0800
-X-Gm-Features: Aa3M54oYjUSUM675Gm3euCp0JmfduimCijFMBt2l5Ov01ZX35R428bhh5tZMXzI
-Message-ID: <CAN_Opa-+nb0vxQ+HsENCG2fEEMZoxG9Sy_DBC4CLkWjNLzDWKw@mail.gmail.com>
-Subject: Re: [PATCH v5 16/17] mm/mglru: make folio_inc_lru_refs lruvec lockless
+Date: Fri, 20 Nov 2026 17:53:36 +0800
+X-Gm-Features: Aa3M54qdUFU2sI5bnRLRApKXsgxmqqGXoOIYcRvpBXntBh5ayMnUgKn48bYdX08
+Message-ID: <CAN_Opa9APLNic4cnohrtZ4-HcdoNvSFvnAKiC6nn+C=thbTAAA@mail.gmail.com>
+Subject: Re: [PATCH v5 17/17] mm/mglru: make folio_test_workingset() work
+ based on folio LRU refs
 To: kasong@tencent.com
 Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>, 
 	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
@@ -143,243 +144,172 @@ On Thu, Nov 19, 2026 at 5:04=E2=80=AFAM Kairui Song via B4 Relay
 >
 > From: Kairui Song <kasong@tencent.com>
 >
-> The lruvec spinlock in folio_inc_lru_refs was only taken to keep
-> concurrent aging from corrupting the size counters.  This is no
-> longer needed: the per-generation counters are atomic, and the
-> active/inactive ABI counters are updated per folio and linearized by
-> the CAS on the folio flags, so concurrent aging can no longer corrupt
-> them.  The same argument is what lets folio_reset_lru_refs() update
-> the counters without the lruvec lock.
+> folio_test_workingset() currently tests the PG_workingset bit, which
+> is only the second lowest access bit of the folio LRU refs count now.
+> Folios with refs 4 or 5 carry it in the LRU_REFS_MASK field
+> and no longer have PG_workingset set, so the bit test misses them.
 >
-> Use folio_lruvec_live_get()/folio_lruvec_live_put() to hold the RCU
-> read lock around the lruvec lookup, and drop the spinlock entirely.
+> folio_set_workingset() currently sets the PG_workingset bit with a
+> plain set_bit(), which also over-promotes folios at a higher refs
+> count: e.g. a folio at refs 4 is bumped to refs 6, advancing it
+> toward LRU_REFS_MAX and an earlier generation promotion.
 >
-> Without the lock, aging can advance max_seq while a promotion is in
-> flight.  Generations are indexed by seq % MAX_NR_GENS, so the folio
-> flags can return to the value read earlier and the cmpxchg succeeds
-> with a target gen computed from a stale max_seq.  Recheck max_seq after
-> a gen-changing cmpxchg: if it moved, account the committed update and
-> retry with LRU_REF_FORCE, which promotes the folio to the newest gen.
-> The retry may count the access twice, which is acceptable and avoids
-> folio_activate(), whose LRU lock causes latency jitter.  smp_rmb()
-> orders the flags read, including the one returned by a failed
-> cmpxchg(), before the max_seq read.
+> Move the test into mm_inline.h as an inline helper based on
+> folio_lru_refs(), checking refs >=3D LRU_REFS_WORKINGSET.  The set
+> stays a plain PG_workingset bit operation reserved for the
+> classical LRU: under MGLRU the refs count is maintained by
+> folio_inc_lru_refs(), and now triggers a debug WARN when called
+> while MGLRU is fully on (the switching window is exempt, as the
+> classical paths legitimately run alongside MGLRU then).  The one
+> PageWorkingset() user in erofs is converted to the folio helper.
 >
-> Also simplify the post-CAS accounting guards: gen is only assigned
-> non-negative values after the old_gen < 0 early exit, so gen !=3D old_gen
-> implies gen >=3D 0, and lru_gen_update_size() needs no explicit guard.
-> The active/inactive ABI update keeps its gen >=3D 0 check because an
-> off-LRU folio has no lruvec to update.
+> Under the classical LRU the refs count is not maintained, so the
+> test is equivalent to the PG_workingset bit test, which is the old
+> behavior.
 >
+> Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
 > Signed-off-by: Kairui Song <kasong@tencent.com>
 > ---
->  include/linux/mm_inline.h | 10 +++++-----
->  include/linux/mmzone.h    |  3 ++-
->  mm/vmscan.c               | 51 +++++++++++++++++++++++++++++------------=
-------
->  3 files changed, 39 insertions(+), 25 deletions(-)
+>  fs/btrfs/compression.c     |  1 +
+>  fs/erofs/zdata.c           |  3 ++-
+>  include/linux/mm_inline.h  | 29 +++++++++++++++++++++++++++++
+>  include/linux/page-flags.h |  2 --
+>  mm/filemap.c               |  1 +
+>  mm/page_io.c               |  1 +
+>  6 files changed, 34 insertions(+), 3 deletions(-)
 >
+> diff --git a/fs/btrfs/compression.c b/fs/btrfs/compression.c
+> index ad90e14032db..127c5ee38979 100644
+> --- a/fs/btrfs/compression.c
+> +++ b/fs/btrfs/compression.c
+> @@ -8,6 +8,7 @@
+>  #include <linux/file.h>
+>  #include <linux/fs.h>
+>  #include <linux/pagemap.h>
+> +#include <linux/mm_inline.h>
+>  #include <linux/folio_batch.h>
+>  #include <linux/highmem.h>
+>  #include <linux/kthread.h>
+> diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+> index e981e371d6c2..34ee41e1ccdc 100644
+> --- a/fs/erofs/zdata.c
+> +++ b/fs/erofs/zdata.c
+> @@ -6,6 +6,7 @@
+>   */
+>  #include "compress.h"
+>  #include <linux/psi.h>
+> +#include <linux/mm_inline.h>
+>  #include <linux/cpuhotplug.h>
+>  #include <trace/events/erofs.h>
+>
+> @@ -1713,7 +1714,7 @@ static void z_erofs_submit_queue(struct z_erofs_fro=
+ntend *f,
+>                                 DBG_BUGON(bvec.bv_len < sb->s_blocksize);
+>                         }
+>
+> -                       if (unlikely(PageWorkingset(bvec.bv_page)) &&
+> +                       if (unlikely(folio_test_workingset(page_folio(bve=
+c.bv_page))) &&
+>                             !memstall) {
+>                                 psi_memstall_enter(&pflags);
+>                                 memstall =3D 1;
 > diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-> index 77f514143266..2c6cbd0df686 100644
+> index 2c6cbd0df686..a2442e49aca2 100644
 > --- a/include/linux/mm_inline.h
 > +++ b/include/linux/mm_inline.h
-> @@ -317,10 +317,9 @@ static inline bool lru_gen_is_old(struct lruvec *lru=
-vec, int type, int gen)
->                gen =3D=3D lru_gen_from_seq(min_seq + 1);
+> @@ -300,6 +300,23 @@ static inline void folio_migrate_lru_refs(struct fol=
+io *new, const struct folio
+>         __folio_set_lru_refs(new, folio_lru_refs(old));
 >  }
 >
-> -static inline void lru_gen_update_size(struct lruvec *lruvec, struct fol=
-io *folio,
-> -                                      int old_gen, int new_gen)
-> +static inline void lru_gen_update_size(struct lruvec *lruvec, int type,
-> +                                      struct folio *folio, int old_gen, =
-int new_gen)
->  {
-> -       int type =3D folio_is_file_lru(folio);
->         int zone =3D folio_zonenum(folio);
->         int delta =3D folio_nr_pages(folio);
->         struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
-> @@ -399,7 +398,7 @@ static inline bool __lru_gen_add_folio(struct lruvec =
-*lruvec, struct folio *foli
->         /* use the refs from the atomic snapshot to avoid raced update */
->         refs =3D lru_get_refs_flags(flags);
->
-> -       lru_gen_update_size(lruvec, folio, -1, gen);
-> +       lru_gen_update_size(lruvec, type, folio, -1, gen);
->         if (lru_refs_is_active(refs))
->                 lru +=3D LRU_ACTIVE;
->         __update_lru_size(lruvec, lru, zone, delta);
-> @@ -429,6 +428,7 @@ static inline bool lru_gen_del_folio(struct lruvec *l=
-ruvec, struct folio *folio,
->         unsigned long flags;
->         unsigned int refs;
->         int gen;
-> +       int type =3D folio_is_file_lru(folio);
->         int zone =3D folio_zonenum(folio);
->         int delta =3D folio_nr_pages(folio);
->         enum lru_list lru =3D folio_is_file_lru(folio) * LRU_INACTIVE_FIL=
-E;
-> @@ -452,7 +452,7 @@ static inline bool lru_gen_del_folio(struct lruvec *l=
-ruvec, struct folio *folio,
->         if (!reclaiming && ((max_seq - gen) % MAX_NR_GENS) < MIN_NR_GENS)
->                 folio_set_active(folio);
->
-> -       lru_gen_update_size(lruvec, folio, gen, -1);
-> +       lru_gen_update_size(lruvec, type, folio, gen, -1);
->         if (lru_refs_is_active(refs))
->                 lru +=3D LRU_ACTIVE;
->         __update_lru_size(lruvec, lru, zone, -delta);
-> diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-> index 2680e15b6de9..235fb04f8d78 100644
-> --- a/include/linux/mmzone.h
-> +++ b/include/linux/mmzone.h
-> @@ -540,9 +540,10 @@ enum lruvec_flags {
->  #define LRU_TIER_MIN           0U
->  #define LRU_TIER_MAX           (MAX_NR_TIERS - 1)
->
-> -/* Access source flags for folio_inc_lru_refs() */
-> +/* Flags for folio_inc_lru_refs() */
->  #define LRU_REF_MAPPED         0x1U
->  #define LRU_REF_EXEC           0x2U
-> +#define LRU_REF_FORCE          0x4U
->
->  #define LRU_REFS_REFERENCED    0x1
->  #define LRU_REFS_WORKINGSET    0x2
-> diff --git a/mm/vmscan.c b/mm/vmscan.c
-> index 78a1b4de7076..4576a7a369e3 100644
-> --- a/mm/vmscan.c
-> +++ b/mm/vmscan.c
-> @@ -876,37 +876,35 @@ void folio_inc_lru_refs(struct folio *folio, unsign=
-ed int flags)
->         long nr_pages =3D folio_nr_pages(folio);
->         struct lru_gen_folio *lrugen;
->         struct lruvec *lruvec =3D NULL;
-> +       bool aged =3D false;
->
-> +retry:
->         old_flags =3D READ_ONCE(*folio_flags(folio, 0));
->         do {
->                 new_flags =3D old_flags;
->                 old_gen =3D lru_get_gen_flags(old_flags);
->                 old_refs =3D lru_get_refs_flags(old_flags);
-> -               file =3D folio_flags_is_file_lru(&old_flags);
->                 refs =3D old_refs + 1;
->                 gen =3D old_gen;
-> +               file =3D folio_flags_is_file_lru(&old_flags);
->                 if (old_gen < 0)
->                         goto out;
-> -               /*
-> -                * Lock the lruvec if the folio is on-list. We are alread=
-y
-> -                * doing lazy promotion so in theory we don't need this,
-> -                * but for now, concurrent aging would still corrupt the
-> -                * size counters.  This is a temporary limitation and
-> -                * will be lifted very soon, so the lock here is not a
-> -                * performance concern.
-> -                */
->                 if (!lruvec) {
-> -                       lruvec =3D lruvec_live_lock_irq(folio_lruvec(foli=
-o));
-> +                       lruvec =3D folio_lruvec_live_get(folio);
->                         lrugen =3D &lruvec->lrugen;
->                 }
-> +               /*
-> +                * Read the flags before max_seq, paired with the store o=
-f a
-> +                * gen, which samples max_seq first.
-> +                */
-> +               smp_rmb();
->                 max_seq =3D READ_ONCE(lrugen->max_seq);
->                 max_gen =3D lru_gen_from_seq(max_seq);
->                 if (old_gen =3D=3D max_gen)
->                         goto out;
-> -
-> -               if (flags & (LRU_REF_MAPPED | LRU_REF_EXEC)) {
-> -                       /* Promote second page table access or executable=
- */
-> -                       if (refs > LRU_REFS_REFERENCED || flags & LRU_REF=
-_EXEC)
-> +               if (flags & (LRU_REF_MAPPED | LRU_REF_EXEC | LRU_REF_FORC=
-E)) {
-> +                       if (lru_refs_is_workingset(refs) ||
-> +                           flags & (LRU_REF_EXEC | LRU_REF_FORCE))
->                                 gen =3D max_gen;
->                         /* First access only defers eviction of an old ge=
-neration */
->                         else if (lru_gen_is_old(lruvec, file, old_gen))
-> @@ -931,9 +929,19 @@ void folio_inc_lru_refs(struct folio *folio, unsigne=
-d int flags)
->                         break;
->         } while (!try_cmpxchg(folio_flags(folio, 0), &old_flags, new_flag=
-s));
->
-> -       if (gen !=3D old_gen)
-> -               lru_gen_update_size(lruvec, folio, old_gen, gen);
-> -       if (lru_refs_is_active(old_refs) !=3D lru_refs_is_active(refs) &&=
- old_gen >=3D 0) {
-> +       if (gen !=3D old_gen) {
-> +               /*
-> +                * Gen-index reuse can fool cmpxchg(). Retry locklessly, =
-accepting
-> +                * an extra reference to avoid folio_activate() latency.
-> +                */
-> +               if (unlikely(READ_ONCE(lrugen->max_seq) !=3D max_seq)) {
-> +                       flags =3D LRU_REF_FORCE;
-> +                       aged =3D true;
-> +               }
-> +               lru_gen_update_size(lruvec, file, folio, old_gen, gen);
-> +       }
+> +/**
+> + * folio_test_workingset - Test if a folio is in the workingset.
+> + * @folio: the folio
+> + *
+> + * A folio is workingset when its LRU refs count reaches
+> + * LRU_REFS_WORKINGSET. Under the classical LRU flag encoding,
+> + * this is just testing the PG_workingset bit.
+> + * NOTE: folio_set_workingset() must not be used under MGLRU, as the
+> + * folio refs are tracked by folio_inc_lru_refs() with rules.
+> + *
+> + * Return: true if the folio is workingset.
+> + */
+> +static __always_inline bool folio_test_workingset(const struct folio *fo=
+lio)
+> +{
+> +       return lru_refs_is_workingset(folio_lru_refs(folio));
+> +}
 > +
-> +       if (lru_refs_is_active(old_refs) !=3D lru_refs_is_active(refs) &&=
- gen >=3D 0) {
->                 enum lru_list lru =3D file * LRU_INACTIVE_FILE;
+>  #ifdef CONFIG_LRU_GEN
+>  static inline bool lru_refs_is_active(unsigned int refs)
+>  {
+> @@ -551,6 +568,18 @@ static inline void folio_clear_lru_refs(struct folio=
+ *folio)
+>                 folio_clear_referenced(folio);
+>  }
 >
->                 __update_lru_size(lruvec, lru + lru_refs_is_active(old_re=
-fs),
-> @@ -941,8 +949,12 @@ void folio_inc_lru_refs(struct folio *folio, unsigne=
-d int flags)
->                 __update_lru_size(lruvec, lru + lru_refs_is_active(refs),
->                                   folio_zonenum(folio), nr_pages);
+> +/*
+> + * For the classical LRU only: with MGLRU the PG_workingset bit is
+> + * part of the folio refs count maintained by folio_inc_lru_refs(),
+> + * and a raw set would corrupt it.  The switching window is exempt
+> + * because the classical paths legitimately run alongside MGLRU then.
+> + */
+> +static __always_inline void folio_set_workingset(struct folio *folio)
+> +{
+> +       VM_WARN_ON_ONCE(lru_gen_enabled() && !lru_gen_switching());
 
-Could this leave the parent's local active count too high?
-Isolation can debit the child's active count after the refs
-2 -> 3 CAS. If CSS_DYING is set before the stats update, the credit
-can go to the parent. On SMP, reparenting can clamp the child's
-negative local count to zero.
+Could shrink_active_list() still hit this WARN after the switch
+to MGLRU completes? It can reschedule after isolating folios and
+reach this setter after lru_switch is cleared.
 
 Thanks,
 Kunwu
 
->         }
-> +       if (aged) {
-> +               aged =3D false;
-> +               goto retry;
-> +       }
->         if (lruvec)
-> -               lruvec_unlock_irq(lruvec);
-> +               folio_lruvec_live_put(lruvec);
->  }
->
->  /*
-> @@ -3517,12 +3529,13 @@ static int __folio_inc_gen(struct lruvec *lruvec,=
- struct folio *folio,
->  /* protect pages selected by the tier PID controller */
->  static int folio_inc_gen(struct lruvec *lruvec, struct folio *folio, int=
- old_gen)
+> +       set_bit(PG_workingset, folio_flags(folio, FOLIO_HEAD_PAGE));
+> +}
+> +
+>  static __always_inline
+>  void lruvec_add_folio(struct lruvec *lruvec, struct folio *folio)
 >  {
-> +       int type =3D folio_is_file_lru(folio);
->         int new_gen;
->         bool gen_increased;
+> diff --git a/include/linux/page-flags.h b/include/linux/page-flags.h
+> index b0ddc652e76c..f6625dc042da 100644
+> --- a/include/linux/page-flags.h
+> +++ b/include/linux/page-flags.h
+> @@ -549,8 +549,6 @@ PAGEFLAG(LRU, lru, PF_HEAD) __CLEARPAGEFLAG(LRU, lru,=
+ PF_HEAD)
+>  FOLIO_FLAG(active, FOLIO_HEAD_PAGE)
+>         __FOLIO_CLEAR_FLAG(active, FOLIO_HEAD_PAGE)
+>         FOLIO_TEST_CLEAR_FLAG(active, FOLIO_HEAD_PAGE)
+> -PAGEFLAG(Workingset, workingset, PF_HEAD)
+> -       TESTCLEARFLAG(Workingset, workingset, PF_HEAD)
+>  PAGEFLAG(Checked, checked, PF_NO_COMPOUND)        /* Used by some filesy=
+stems */
 >
->         new_gen =3D __folio_inc_gen(lruvec, folio, old_gen, &gen_increase=
-d);
->         if (gen_increased)
-> -               lru_gen_update_size(lruvec, folio, old_gen, new_gen);
-> +               lru_gen_update_size(lruvec, type, folio, old_gen, new_gen=
-);
->
->         return new_gen;
->  }
+>  /* Xen */
+> diff --git a/mm/filemap.c b/mm/filemap.c
+> index 648f783454c3..2939647940c1 100644
+> --- a/mm/filemap.c
+> +++ b/mm/filemap.c
+> @@ -21,6 +21,7 @@
+>  #include <linux/gfp.h>
+>  #include <linux/mm.h>
+>  #include <linux/swap.h>
+> +#include <linux/mm_inline.h>
+>  #include <linux/leafops.h>
+>  #include <linux/syscalls.h>
+>  #include <linux/mman.h>
+> diff --git a/mm/page_io.c b/mm/page_io.c
+> index a57cdcf2892d..12deab296718 100644
+> --- a/mm/page_io.c
+> +++ b/mm/page_io.c
+> @@ -16,6 +16,7 @@
+>  #include <linux/gfp.h>
+>  #include <linux/pagemap.h>
+>  #include <linux/swap.h>
+> +#include <linux/mm_inline.h>
+>  #include <linux/bio.h>
+>  #include <linux/swapops.h>
+>  #include <linux/writeback.h>
 >
 > --
 > 2.56.1
