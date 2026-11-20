@@ -1,97 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.181
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795133587;
-	b=vWKVtoZMa0L0VgxJ7ChfU3cQWVTo64PlxD5umcXwSQ/vqgk2qGVN3lyhnxX0G123hY+Z
-	 jzFL6sqqyv7+IMEp88VwIK58K+aB16fAvMMJnV+1EepXnAI8ZCIwux0k6kY3iOzTbg6m2
-	 xcwC7dC1AzR4V4U0TDrMY1wDEFVwEqXySnyEMiOi22Rt0khm/m0K6I8xoQzgwAAcIU2zc
-	 gj8Vx19g1xJXJzu1plVihktPolhdnW2ouyvGKC+aB+R6pEzup1WZloxcW+7Kuv4Ptr2+M
-	 24dlvxnmduZY2EjPYYQvq6N6UCHT+/yTsg/hijmkEHpgLG5tWONenym5JLTCObcPaPw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795133587;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.49
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795134096;
+	b=aSCmzCiiBMneQCMwBmCnti8ZbBtuQtLx/XcuVTifWde5USUOQgEtM/DBNzB4Xqg/1i8s
+	 J+mEEodRrQf/5O0qEYI5Gkb19UDwxBaDpG3eKXG6VV1XwZpa/MDzZZ24EWyu8swVrcZeE
+	 azZaxfWsH8UqMgr3EkVRZddk0v+VAG2IQdUB4GrYf9aX5h6AfEYOqzMJKwNqbUJtx3EWb
+	 CcxaOPuBWHLpjo+MzB2oN5UfzwMABw4V+EuAmn7RnhTYztuV35Na4z4ijBKZzb4hKfw/j
+	 N+F8kb3hPn+WlL1JI5GRc1/4boBDqI/bVDYz5pJaDNLZFXv3eZYtwaoyoIZUpabxrKA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795134096;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=9SB4EObKSw+tB9P4IbZtGcg+6FkG4Gy4Q2cjVejRkPE=;
-	b=So2PlllBGDhzfxUDk2SD0YPu58jLXN9CQolLCqaG3Iz0XgI3LVB3q2e1iRTh4W0dJAss
-	 CncipiOllm2K1mYh5CdyCnWEl9eHaeRgwNJ3kI6YhQ3aSxcRaje9cUV/6KpXzNG5m+5PV
-	 PgtiyYElS990q3FeXcTOSQ7CqKYuzb5ftdSnY9NqUr37zXxcy41O9gfMmLjNUd2bjNekg
-	 m6rbmeu4kxMFq99mAgeJZN0uw+6qtDcxRP58Rt5aKK1Vynz6WHpAZIAtOcTBHhZycdvh+
-	 hje47foUDMgeUp0rwi0R4vaNHbyuW8dLU8of2N+1pO5Zom3BuCjzHhXu+6iVKZpVHyQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=0CZfHhfHfESc4YrPufMYXO8QeXfOTlDtABpZbDYX5SI=;
+	b=SR6QT/ebkQxhIU7cZjQY1TjfZM53fHzSBrBPV7CcjoKIFQrjI7RUpstCoUtKJtuhiDYm
+	 lT18H7wxl/kjUwc9SH3Yd7zV9nx+vsHzSH9w9AlKK5sZAYbRq67P9E9i/RwEcw4fpZE9U
+	 vBs6SofQrphYybjz1bwyi7MFrPY5K3o4S3tBpsH7rlpGPRT9TE9KdVLKerK6AA/i+GF6h
+	 xfH4y565LX+XipDwTLDRFym9rX+6xCLsKCy4Hno3euWTxsZs72sQ+kQwDxYsxUaOaWjJ1
+	 XMebbdU/Bo5QUMBCLQ+PhyjmEpoOo+iHyiCp+Jqy5oBEB+XJiVBZljhjxLU6gwQxXjQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YDBw5KRi;
-	arc=none smtp.remote-ip=209.85.222.181
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Qek5f39Y;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.49
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B48606A325
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 00:13:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 04B48606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D533606A326
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 00:21:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1D533606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YDBw5KRi
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-949680e6d82so45850685a.2
-        for <damon@lists.linux.dev>; Thu, 19 Nov 2026 16:13:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Qek5f39Y
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4bb68c197c7so3702135e9.1
+        for <damon@lists.linux.dev>; Thu, 19 Nov 2026 16:21:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795134094; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PtHLSlqHKZKXWGa6fzU0dv4CKIvg9IeQXDmGEnoXYTwSVz6LpFCiwpnybmU7VhFgSk
+         4jqBAPHKUkKmQseKndMZ8m2enI5JI5J+tckT1zYLEe8v0QjmfbJwTT1GzcWkpetmUVjb
+         IJNPA4dZe6yvzyndDEb/jn6m1jvfsEEAOLFn3bqm2Nz1K2bHqD2mTfi9wbZBr8zguY1u
+         8qwmwwPRT8B2GrtVn3Vfhrd4ZeZ25FvtNoS9VbcNzxuZydgbLo1+6o8EnwvXXlUHhF65
+         qeK6QBakxyNgEJG1NCcdrIdQV6hFeNpM5dyTDYA90Eq80OGCBDu+W7iGPMwv1NV0fNzq
+         AqCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=0CZfHhfHfESc4YrPufMYXO8QeXfOTlDtABpZbDYX5SI=;
+        fh=ktQYFBVoxggXx5MbDqebMBTQuqPXUME2++xsNnpQHrg=;
+        b=ZZqqalC5R3xd8U0izJzQMqOHy5QyGeIBqdbgEjf1imtOzo6wn41L8+wWhY7PsdxU6A
+         Apq+gWi7t4pojMu7L01m3Hko6Ot4AyK5yoH7cEZCGXTJJKE3SaV4k9OsA1FWANshK3Ye
+         UpYhjJ7nRiRy4kUEH2yeR1il/lS8kbJDFMnU1G2Hy4Tq1glorqTurFHD30aX+UfwgXv8
+         Pf9lkuKaRZT6M0m7UE0pEUYX7zUYo+mXkq5ISfWCvZ1t3MBbKNwCiomNvn9uwElhy+n1
+         JGEPybdSeC3D9gGGkPzOOy7OMikM3e68joGqCVJ9+QRUBTGkFYa4LhKBPdxftVfLk1MS
+         93wQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795133586; x=1795738386; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=9SB4EObKSw+tB9P4IbZtGcg+6FkG4Gy4Q2cjVejRkPE=;
-        b=YDBw5KRi7CGX5ovDz/uMA88JSj4N360oZY5pJLU6vJjfRW36qeJ5unLSIQJ+LBxhFC
-         VgfZP0vBn5jcrg5EvXYSb+YgXrDXspBejIafZVohiyEuwApMo7K5Pp5qDJh0WStfwQUh
-         r+Ec+5bLMeEYXEIlQiVE8LfOyMBO3JJFfrD0evB6ZNjglvp6PM4UJxf9fYB3riiuzXpx
-         jsyden0mK6G1WxeEQDCm+QMnHijv1jz0x4w45jZuRQlfnAhlj0IKgMa8FuJ1DvoZAjb8
-         0vwU+EejWUjRuJmPvHUUh83bmNAI/1QwQcbadU+ZQyX19ovuLbbvBwVi0qd9xWaJdZe8
-         NMKQ==
+        d=gmail.com; s=20260707; t=1795134094; x=1795738894; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=0CZfHhfHfESc4YrPufMYXO8QeXfOTlDtABpZbDYX5SI=;
+        b=Qek5f39YlkS89TmXtJUawhhfSe2L617WZOP2M781QBVXm1s1hMYPnC5/56q6SesA/Q
+         buO+07Jrt/ItRFCc72UhSD/NHfprW4hW8xJhdt1fdVfbbIf5CnZgIqEs40fEJK9vuCd4
+         f4diciAnRBbNDaS9ksY4DYCnwbC9rOndSLU9QYQg2bgl+/IY+kuEoccKbd3sNhCDEZay
+         oexoOhlFFDII7MuaQ8z1KG4Hm72P8x4Wn+cSctadiEHOwYU4lOMuyMxi8Mn6RPuHVEYm
+         mSCvESPddYiITXEZJtFaPDexnbt8XBabz1BQNsUlsUqDhDAzQrTABd0DiQTMumgGPGvX
+         8Sjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795133586; x=1795738386;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=9SB4EObKSw+tB9P4IbZtGcg+6FkG4Gy4Q2cjVejRkPE=;
-        b=SrSXXkWz/sax7GqvuVQzJcELgr9JWCjXDJlmiyfv7Qr+xxbqepte94xm6/Flk4i3Ej
-         6TZsUPH8K9AFnVt2hYvammfJtAgJcSNXepIA1quMjKkz1YyXeYS8kg1JWfxXx+xGdki3
-         mUStx4xMrzwXKVwQGZFWbKJr9yMHOtNz8XotSZ6Q1+W5rWT3dcmA8q5fBQgKVItzc3NU
-         FN1d2LzmaZQY0tKGiFmXmFTsPLqEilLEkySzrxH0aDuQZgrlKmBzOE2IAjUCm9KRr6Ja
-         gYyvOYFaIUrPdm6wXmyhHtgfzaftYMd/k0nUqAL3XN2h2fCC5wHc7Q05LeotsDDKuN0B
-         wRIA==
-X-Forwarded-Encrypted: i=1; AL+hErG7N05kSDTH0pWJQsbuRkiNGDXDAkrho4VcCTo/fxtAjiYiCw5T5kT2boshJDcRZAwtXl6usQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+UD44bmvSBPcInd9Ar5ozC8bv42UKzSsu0eXWiqjeiz+jrtqHx
-	j8gT37ppBM2/U09xy8+0v8mPmBDVVc0jscJqt48TfCPi6J8aIGbt1qQU
-X-Gm-Gg: AZFdTZcpuh3rhRgAf03LIn/hMbnZzz8xbaYTBmrglqcq3sDPeX660bqq1fk6g5zttBN
-	18zFSVDoMouuCn6JmJjF6EGunDcZU+0ozp9OM6Y+BZw0TOENEh8EM6neWtsj7K7cWobztR9fjgY
-	2/klwolbf7Ji+3eCA9AUu0hmTbQYpU0vaTEiT/iRqekmGa2oprImRlTZAIh6t1cMPLRr87koGCM
-	FRtdW6a3dr+2asGhZ6+fpJrZZGvYYAzqvCENeMVwVtamZd91U7qXyxp+bLKwI3DOrQeUHYRen0p
-	akaFlAKwCcZr6wdyMXNpRnfzAYrEDuGhyoM44vOkKZaMGP2vfGY6Qe+XFU7Sg1dQUsTqc2TFT04
-	uIfSCTKbq7xzlhy7tdDgxqKCVHSrc8hT2bfU6FXkMaNCqI+f0+QR/WXoamTjUBvnBe4ifaTHWJA
-	XUnoznjeayiMj51BCCnn8VSF8TiBOyaLuU7qSphhpWheh9OQ26hGkvalJctKq/1TeWqTzWzCTUQ
-	Te+j8mni/1DThICyEGyYdvM4u7XTetDAT/tCv9ZPPEQZ/ASRo1rCaDJ4R0hl2mYWo34kOA5lfLI
-	1J9L2Qan3N8AsgbcEdsTMrj0nWD++oHshUFOBc+eMxtA2M/efNBFV/9oVWpidpSzlKk3YXFgrwv
-	snGo1Fr6okEtGBxOlWVVoDR/tdP9VBlEA4mIv5ELpc53GEH7DuHz1srYvjks=
-X-Received: by 2002:a05:6214:3a84:b0:921:3171:b604 with SMTP id 6a1803df08f44-92134b48c88mr23359986d6.54.1795133585733;
-        Thu, 19 Nov 2026 16:13:05 -0800 (PST)
-Received: from FKXX2DL94F.bytedance.net ([72.29.204.230])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9213515f467sm8311096d6.41.2026.11.19.16.13.04
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 19 Nov 2026 16:13:05 -0800 (PST)
-From: Yifan Feng <evanfengff@gmail.com>
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/core: fix damos_walk() hang with zero watermarks interval
-Date: Thu, 19 Nov 2026 16:13:00 -0800
-Message-Id: <20261120001300.11809-1-evanfengff@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20261119014247.119946-1-sj@kernel.org>
-References: <20261119014247.119946-1-sj@kernel.org>
+        d=1e100.net; s=20260707; t=1795134094; x=1795738894;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=0CZfHhfHfESc4YrPufMYXO8QeXfOTlDtABpZbDYX5SI=;
+        b=xg0HhdFXJPdhkKIyQDZIypGSvf+4xkFp5Tv3Wu6r3OqUVNAWsqJXRtWx5nOZgaYISR
+         rPhyqpY+BL0TETQzm7yBiSkxZ2TmSGckjKR+l5DKEDCb2XE7cagcD0SIKDLMgxvs3jRi
+         Pa/eUXysW59qMUaVMmB8gJIYrCv7tyfusL4xGfXLpm8cvrk1Pvk4NmJOg27vV9l6HozH
+         4f2MMOFQoEQktrZ0Ft3KSHWtiwvzT/OUYAAaIj4luy3F7eaKULoRw7wmrmZ7TmytO82x
+         2Fm/zoNkyD63zKGQqsTlpTbPK7piYXnKhHdHAXsTP2Uez7101nN4eSgMXcWOvfulgiwI
+         8E3g==
+X-Forwarded-Encrypted: i=1; AL+hErErFf5h4Lk0dcrlwyjjzn+V+NUV5GkU88ps+uL07UGyQHKRfnWT9akEiDSP4SPdEvOdwD2q9Q==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/dnraIgbEjnHDElnUwXdUjXr8Fj/m9Q/o4PRsROEj4yVPIJ0Q5
+	V3smT95vhssKbs0FK0V0KEFjdpXiLYB3VoxQPSxU0EBk88aEWJ7imaj7w2yTT4RXGrGW9TfvJe4
+	1eZ8ja8CsWzln8KSD+5aX/p4zLynJ+io=
+X-Gm-Gg: AYBFou3hTau6O2RHI6DSMcJMJ3t9mWnWneTltgXs/Bd9eJ73jzgc4hHvpbVguZRElyI
+	BRuSQnrw4mGz4fBvIhDZOQPCFbxVsPzCYG4T3aSTBB0yGoQgCtsLcbJbPRkBSoBXOWOiiZMVBHg
+	npkiwU38+WPhqKGCLjzWf2kKY26dcusRiNDZNwJSeylQ0VFNiXQysczeURUhHWwFt/nEKOTRIqk
+	saAPgjuPuPHhpnGj7ZhHCY6uavL6EpX5ROU7r9l1iycI5Xpk/WUy56d4eEwaMkxGs3pn2kJQVkP
+	IoYNFhBMFlds1Re2riQDXddIkA9h/LcDKg01H6HzMmIirJ4+jiPj5JXpSjbDv6MZXus8hE5YCtL
+	2t6uJBDMNGRpFPLjAtIMhEfSxR5Va1U7lz0q8X8Yi0MeWxPYU1SCZFisXEp+1Cz/ZV9mJasHxuX
+	8wtFAt9VP0E+4qXgR5c2h14MO0RLDs8J/3PxsMXk9Q
+X-Received: by 2002:a05:600c:4f84:b0:4bb:8701:a2df with SMTP id
+ 5b1f17b1804b1-4bb88809950mr27334705e9.17.1795134094416; Thu, 19 Nov 2026
+ 16:21:34 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -101,63 +105,71 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261114002822.1043378-1-joannelkoong@gmail.com>
+ <20261114002822.1043378-3-joannelkoong@gmail.com> <avvhFAxBcPk5Q6pW@chrisdown.name>
+In-Reply-To: <avvhFAxBcPk5Q6pW@chrisdown.name>
+From: Joanne Koong <joannelkoong@gmail.com>
+Date: Thu, 19 Nov 2026 16:21:22 -0800
+X-Gm-Features: Aa3M54ocPog8ZiHHSRBMvtbJbL2fyYxbh9unTOuH5y8YoEH3_wTAT4fdm-kxXRI
+Message-ID: <CAJnrk1b8cCOVe+4KL1LTUqw3vPE1EiFcELwurzgGPtfkvc8UoQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] mm: memcg: read root lruvec stats from the node counters
+To: Chris Down <chris@chrisdown.name>
+Cc: akpm@linux-foundation.org, david@kernel.org, yosry@kernel.org, 
+	mkoutny@suse.com, shakeel.butt@linux.dev, hannes@cmpxchg.org, 
+	mhocko@kernel.org, roman.gushchin@linux.dev, muchun.song@linux.dev, 
+	nphamcs@gmail.com, chengming.zhou@linux.dev, sj@kernel.org, ljs@kernel.org, 
+	linux-mm@kvack.org, cgroups@vger.kernel.org, damon@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 18 Nov 2026 17:42:46 -0800 SJ Park <sj@kernel.org> wrote:
+On Mon, Nov 16, 2026 at 9:07=E2=80=AFPM Chris Down <chris@chrisdown.name> w=
+rote:
+>
 
-[...]
-> But, this could make has_schemes_to_apply has false positive.  How about
-> calling damos_Walk_cancel() when has_schemes_to_apply is false, like below?
+Hi Chris,
 
-Thanks for the review.  You are right about the false positive.
+Thanks for reviewing and testing this series!
 
-I tried your change.  It fixes the hang, but has_schemes_to_apply is also
-false whenever no scheme has reached its next_apply_sis yet, so it cancels
-the walks of activated schemes too.  In my test (one stat scheme, default
-intervals) 18 of 20 update_schemes_tried_regions writes got -ECANCELED,
-and two selftests fail: sysfs_update_schemes_tried_regions_wss_estimation.py
-and sysfs_update_schemes_tried_regions_hang.py.
+> Hi Joanne,
+>
+> Joanne Koong writes:
+> >The exceptions are the kernel memory stats (slab, kernel stack, page
+> >tables, secondary page tables and vmalloc), hugetlb, and
+> >WORKINGSET_NODERECLAIM, which counts reclaimed xarray nodes (slab
+> >objects). Their node counters also count memory that isn't charged to a
+> >memcg, which falls into two categories:
+>
+> This still describes the v2 denylist. With the allowlist, the root memcg
+> also keeps reading rstat for NR_ANON_MAPPED, NR_FILE_MAPPED, NR_SHMEM et
+> al, and some of those differ for reasons outside the two categories here,
+> like swapcache being counted differently in the node counter, for
+> example. Could the changelog say what is on the list instead? So that
+> would be the stats that only change through mod_lruvec_state(), with
+> everything else still reading rstat.
 
-What do you think about cancelling only when no scheme is activated?
+Will do!
 
-'''
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3492,9 +3492,13 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
- 	struct damon_target *t;
- 	struct damos *s;
- 	bool has_schemes_to_apply = false;
-+	bool has_activated_schemes = false;
- 	unsigned long max_region_sz;
- 
- 	damon_for_each_scheme(s, c) {
-+		if (s->wmarks.activated)
-+			has_activated_schemes = true;
-+
- 		if (time_before(c->passed_sample_intervals, s->next_apply_sis))
- 			continue;
- 
-@@ -3506,8 +3510,12 @@ static noinline_for_stack void kdamond_apply_schemes(struct damon_ctx *c)
- 		damos_adjust_quota(c, s);
- 	}
- 
--	if (!has_schemes_to_apply)
-+	if (!has_schemes_to_apply) {
-+		/* The walk cannot be completed while no scheme is activated */
-+		if (!has_activated_schemes)
-+			damos_walk_cancel(c);
- 		return;
-+	}
- 
- 	max_region_sz = damon_region_sz_limit(c);
- 	mutex_lock(&c->walk_control_lock);
-'''
+>
+> >+      case PGROTATE_ANON:
+> >+      case PGROTATE_FILE:
+> >+      case PGREFILL:
+> >+              return true;
+>
+> NR_VMSCAN_WRITE isn't on the list, but prepare_scan_control() adds it to
+> WORKINGSET_RESTORE_ANON, so once the root flush in reclaim goes away,
+> root reclaim would mix a live node counter with a stale rstat value.
+> Unless I'm mistaken it should go here as well.
 
-With this the hang is gone, 20 of 20 writes succeed while the scheme is
-activated, and kunit and selftests results are the same as on the base
-kernel.
+I think your analysis is right. I'll add NR_VMSCAN_WRITE to the allow
+list as well.
 
-I will send v2 with this if you are ok with it.
+Sashiko pointed out that NR_SWAPCACHE and the other charged-folio
+stats between WORKINGSET_RESTORE_FILE and
+PGPROMOTE_SUCCESS in memcg_node_stat_items[] also should be added as
+well. I need to look into this more.
+
+I'm out on PTO for three weeks but when I come back, I'll update this
+series and submit v4.
 
 Thanks,
-Yifan
+Joanne
