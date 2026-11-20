@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795198967;
-	b=zYsf/E4zKggyYSHsZlFU/eKcBeNdtBxz4IgewQPnEpzhjgyDpS66CQBALucCx2Qxeyeb
-	 r9rEhLa8RjndNIsptZCSebh04bRMTrYQH/pSD4lbgts9yrHBDVt5/dgWIPsYaVK/Y7HHQ
-	 xKStwS3MXaDvatvTrmwLQJqD2TvjyDuRyZ5mFQpl5iyZoscdsJY688ICNZimeA9NRsUHy
-	 etjZsLpKb6Mt9eMwXdPIgi2n2fBwoQV8JWcPisKprn2/jeXgjAUnfW0r1ZUEzA8byScvP
-	 WjY0ysAt9ywVxrG+zMBcLsZrR80PhanL7kG9PAhVAIeiHYnDa5XqR1B76HfUBgwjiOQ==
+	t=1795199049;
+	b=rgDK2sBT+2RcEeYrLEcLK/lY5f99QTul04WX3Q/cOdniqFhs0ys6QJlr2pZLocvdafg8
+	 DZZrwI+rmCA5ttuqS1ulpM06/XrwAj2wv4Z9n1OJq8MEGqGfzdRapZW68aj33OQIXnl1b
+	 zz0rrRg8sJEbE/iAxk3hsWUfBe6z/zKKPZZHdLHMyFF0Abc+6JcUX5o7NiyKvLTLqwNVK
+	 FUlsw5DVmIiuEyN09R+6BnVRjCCMRTnDNltYq475U37PVhxYJT5o8D+wqOZZPIk4ked65
+	 gY+n9DC0wsE5oh8QCb5EVzrIwVvgCP50+UdAh77pvbYGRMSB32L7xH/3L5/VCrA4nRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795198967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795199049;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=5a6bJc8GkfRGLg8FVNGvZndU7Y9faJsrBRzTZLffP8M=;
-	b=yxlbVZrBdnlqjKuE8d4GFNUMQVZrrkTCz6BRwlAWi5CiGFHxOypcO0LGEKSgnSCa/mCR
-	 Cq07L4M0kxQoo8v0SwJrMPbEk9u+3trzGoNDQYC9cm8JIEOTbLQLOFDM/RVzmVp4fk++D
-	 ZubNNPLQ+SoV6t1Dl/i8uHuqnfEuKpu3X4tbrPcvOebuTcnAHwFFcJ4LGylrm+WGBu9tL
-	 +AesvZOhEiZCru3y7YSINsZRtect13kuYt2QE1pyjM3k5QYUf0tMCwgiCKNQVDx16P5j4
-	 NzecIUxT5kP+Q7KCchwTuSpsNECgHaLxNvTTVwK81qbLeYN43ILi8L7iXgiWokLKsDg==
+	bh=llF43v0SRvNM4rUOriSENiVFAisy3dZgcBRO0KDUJb8=;
+	b=eqcY88zTKpdF7NiLGYnffsYo9keZ5avhGkbNfUbKKDsC/QDvgvtBaB/xn2ChHv0CwTuE
+	 X9jrhHDgeWkvO38zFyjVTb08vdNZqMgiUfx3d7dsubc6sZOdHKjIDlGMTMDFSEP+EsJ/3
+	 sfSUmqiK6tvKJWu2HDIkVsI90jmT7zmzHkRzcQZd3pdSDEkpBV5xPdMT7Syfa3+/br8bQ
+	 7Ksh3UewRyc6jI69a9Li9zEWVUqkk+Rvl8WZVAJ01bDXoiAQ/+mbKhn/w4Kva/E9pm4h/
+	 NEmI61SbOsWhZxMNpKyRldfXQq9Z2Wm04qeUEQVeMu5TQmmIbaKA9kzlFrNkA3Iqzsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="Rvf/xzDg";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Z89bPUuL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC459606A336
-	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52A8606A32A
+	for <damon@lists.linux.dev>; Fri, 20 Nov 2026 18:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Rvf/xzDg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDCF1F000E1;
-	Fri, 20 Nov 2026 18:22:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Z89bPUuL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8791F000C4;
+	Fri, 20 Nov 2026 18:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795198967;
-	bh=5a6bJc8GkfRGLg8FVNGvZndU7Y9faJsrBRzTZLffP8M=;
+	s=k20260515; t=1795199049;
+	bh=llF43v0SRvNM4rUOriSENiVFAisy3dZgcBRO0KDUJb8=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=Rvf/xzDgf/mURah5hUdthIx6+EMAdKtDGpR1TNCdBZXrYX0+6Fp7mcjRcWxk4ijIh
-	 /1pjJUFdBfFQDNsNRyxCD+qysChraSAOK4XqGx/3L2doF+HZ1mh4X8Vxi3a30gTFuC
-	 NqJ8KL1DQosV6YUUL3BmRifUnHU4AAabJM1Q3lhx6iHkYV0Z0TLaJSRstDWWxH2MPq
-	 DzpJC5O3WRMlkOmm0y5jxOdfT1WmhtlZoaCZbUxdIoGe+RamZJla7SfIiKaMBpMUkK
-	 lvsyWJOo4HFcjT7pWOYVt+ySm+3LbF+1vpcEi/jGT4Op6cTQ8IsOHlPK83dKebjjkV
-	 KGb+6kJWU57zQ==
-Message-ID: <sashiko-outbox-225815@kernel.org>
+	b=Z89bPUuLlX0K7vbBAk4g724vLrK2fG/xwkahNwzqr3dktGyzINltwrPv2sFvSShsm
+	 EfWSAcBtOqMKIDldPO62T0RxdTKX4dSSD4wBxYTSslFQCi8Z+PvOuqZRLmoNaUcG7W
+	 /V8DuOc05v3uDQxcYVuqt61tGKAYk5HSh5h74mGt+26myjBQNjPcnSTsQODsyLqmEM
+	 MGLmbBpeKMB/ShyeyCFURWaSqToz0fZH4ilzf0fsBd1yxaz0UNFZlnkX7nYevwc4zx
+	 qybUq1xciG+EilsdCF7/e09h9FwdL2EFErtwjSUVLuC53KzBUbrxCpHnwF+gKEPTzh
+	 2GrsmiNh83cZg==
+Message-ID: <sashiko-outbox-225816@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH 05/60] mm/mempolicy: keep interleave and tmpfs mount
- policies on common memory
+Subject: Re: [PATCH 38/60] mm/page_alloc: refuse contiguous allocation from
+ private memory
 Reply-To: sashiko-reviews@lists.linux.dev
 To: =?utf-8?b?R3JlZ29yeSBQcmljZSAoTWV0YSk=?= <gourry@gourry.net>
 Cc: damon@lists.linux.dev
-In-Reply-To: <20261120-private_nodes_v6-v1-5-74f5f9a115c2@gourry.net>
+In-Reply-To: <20261120-private_nodes_v6-v1-38-74f5f9a115c2@gourry.net>
 References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
- <20261120-private_nodes_v6-v1-5-74f5f9a115c2@gourry.net>
+ <20261120-private_nodes_v6-v1-38-74f5f9a115c2@gourry.net>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Nov 2026 18:22:46 +0000
+Date: Fri, 20 Nov 2026 18:24:08 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,18 +63,14 @@ Precedence: list
 
 > From: "Gregory Price (Meta)" <gourry@gourry.net>
 >=20
-> Use N_MEMORY_COMMON for boot mempolicy calculations and their per-node
-> sysfs entries (weighted interleave weights).
+> Exact-PFN contiguous allocation bypasses the zonelists and can invoke
+> compaction and reclaim.
 >=20
-> Restrict the node set mpol_set_nodemask() applies to set_mempolicy()
-> and mbind() masks to N_MEMORY_COMMON nodes.
+> Reject a range on a private node with -EPERM before isolating any pages,
+> and document the error.
 >=20
-> A tmpfs mpol=3D nodelist must name only N_MEMORY_COMMON nodes, and an
-> interleave policy without a nodelist defaults to them.
->=20
-> Later when an N_MEMORY node is omitted from the N_MEMORY_COMMON set,
-> they will be stripped from mempolicy nodemasks as they're not eligible
-> (similar to memoryless nodes today).
+> If a user of private ranges shows up, alloc_contig_range() can grow an
+> ACR flag or an exported api for private allocations.
 >=20
 > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
 
@@ -82,5 +78,5 @@ Sashiko has reviewed this patch and found no issues.
 
 --=20
 Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261120-private_no=
-des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D5
+des_v6-v1-0-74f5f9a115c2@gourry.net?part=3D38
 
