@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795294828;
-	b=LSF3neu8lVUOBavd+CzSznKcmE00aAWpfZlcXVYtX3W9BgQM9QABDWihZqKMqR+9OqYU
-	 tgbaqaezrHC2Y8TIhB+D3X9sYoOL4Qfo7wtXby3vxGbBmHkv938isx/NoJx0QwBuItAMh
-	 iApy93l7XNj+9BtbT7cEIvnm0zljRl2iHWHT8pJYH4jPtMKXDu4iXYRvvLhAoshQ0dyGl
-	 CB6eoQ5qelOFgIymPeD5v1Jpkv0swz+e2n8i0S3YljP89Wq+MTCzuywk8Kji5TVrAv46c
-	 at6La1qAAPlx+6djomRKk0XiQhloaTKljCYXxqti5NuQARlY08uIRtsSsBTU6A4yquA==
+	b=P8qEbbwXDpkJ182EQBg5T5A8B+cwDxj39ZgtfznHhmKtxCfOkii9VHHmm8knFPgjkIT3
+	 Aka2o9eGCfX2tASZl8XTIn8AqRqaskmQKvCDRlCIy571jTIOuKJMx9g+CV1Kvj+RCnuJP
+	 Kjcs2O8gxpsjISguaSIhRH+AZfQUeXeTIeKylll3DiVKnkJdXHqWT919RGJCiNj/kPBi8
+	 bR6wajMyCPGezzaMQxlEXyXsztkRZnV9h5LlWtWTaXvXyBHZKhSfrHYCgjD8p/yrKdCwG
+	 59qELD1IVr7/Wm8bek4Pa+my4oKTRxcYbqRqzzr1Rf7Py08cM55JOkSuoijP2Z5ltWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795294828;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=FTjjk1bjDwpUg3WWMwzBwOs56rHK1uC/DHx/Q7GkWVo=;
-	b=YazZYv0MFkWCHG4bA/o0sIqV3lYlBM6Y7CrTd1vyXgGHatXANcnklldUBeNkUZHN1jlf
-	 EoG+9uPi3ajO8+vnQpG3kqdCMHqkrCZopteu3q8r1Ez/iKoy3P4c3Q4SVVTOS0r2pi6a1
-	 A2bGwdlayMB7krJkzopchogENomitwjnruALLxRt3TN7BfqP4zkATJztUBtU7Q9excXBj
-	 HRXMPYQTvUK76dHUJswnLdXVyOQtK5iXKxcMMHAUEk5FHQqqebt3BFXP2HKFHu5aroe4D
-	 kJI9TfgPD4d7m3NGzHgZemNDntOs+GqpO2Vj4LTzq7jh7Y6x1lugvNVZ+rJXpwCsEVw==
+	bh=YDurKzhLIi0mIdGpL4ZrXZs3NcRPuPDRtfbfQ8ZOhNQ=;
+	b=ORKKkEzVKfpu3vI2OFGgjPyIcGQNzZmzqfQyWQ5D9YAZGEddy2Xr8CWMs2Ll19CS5P4f
+	 RpU5A8GNlmnnIXLgpHn+pvJ9jsBOxDHt9FGJhjq93Zi6lJjiSnQiMOhyQDluZKAHsLsxi
+	 6x8MnSvjHac0ZlRZBYNqqqHnRdS9KCmJlAReU54PAZ8agqw4YHexmoqY5Kc4iUb+masRx
+	 XQbKax7b7/sNio965ux4guXD8UYouMqOaWkC1NjG+BxQP9WuWjPpkla6p6qW3ia9mw8Ul
+	 HxAPrVygvsn8+J0m8UKWDGxhE/E5LqzomcryMmqZuqLc8lNjAmlwB/teAV6GP3I2Mmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZaWZkARZ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DjIu6X6t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC35606A333
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E56606A337
 	for <damon@lists.linux.dev>; Sat, 21 Nov 2026 21:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZaWZkARZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475E21F000CF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DjIu6X6t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923881F000C4;
 	Sat, 21 Nov 2026 21:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1795294828;
-	bh=FTjjk1bjDwpUg3WWMwzBwOs56rHK1uC/DHx/Q7GkWVo=;
+	bh=YDurKzhLIi0mIdGpL4ZrXZs3NcRPuPDRtfbfQ8ZOhNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZaWZkARZ/HsAd/1YZhKEw78/Dk1rtNNpZCUby5cAAGNxutNEZOOT4xIRhyvLrvAGf
-	 FffygDz9LuC1mJR3QHo9lsIo9ESHFFM95CX4fu9M1/xGzK84nbuCln8FZIHln8h5Vf
-	 STGIdA5cExVPdfHvHoh6k0mJ5INNG8eNN5Lz9HfuF2YSz3mbg5s++s6jgdVYpa0m1L
-	 /xgn5Lh+AlDAuhJBUqz4qPtlMr7+7Aoq25C34SkZGv+i6hCjElnCp4S0wmgQK75QhH
-	 jVZV4y3rvAVK/6qhVUU4gP9VDLrpkMq9wsIzUTr7+o7inkDTRXo390rk/MAtmeHWm/
-	 zzCV0mM1mPwrA==
+	b=DjIu6X6tFNdglQB+DuO58AM+e4OKZcZnkzRxSiBlta8fwg5EwcheTW6LQrK5FrBIL
+	 JORooxV/dPj5pJLYz4VxpnxMirmM3JRRwtrbRjTmRPQXt3t8iiLFpq0OAkjcTh1VHG
+	 9OnNTcet9x93aWCwboNfXxUjOElylzvpfB6WEo7MKtYMw3NjSMb0igHiHwzCZAVlQP
+	 3PIaV0vTf1josb/TVh+XG87wuEyjweLYlaHP5IyJRc9KvxZb7xYw+NPEC+oLB2I0XE
+	 xVmRLFiDk1HKNN3hk0RG+UxaFup5xQbbzokxbsFZSPFZDu3htFaXf7S5HMKKj7wZQY
+	 pk6SXynPeuisw==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: [PATCH 21/27] mm/damon/sysfs: add user_report support for report type input
-Date: Sat, 21 Nov 2026 13:00:05 -0800
-Message-ID: <20261121210013.130397-22-sj@kernel.org>
+Subject: [PATCH 22/27] mm/damon/sysfs: implement report producer addr_{start,end} files
+Date: Sat, 21 Nov 2026 13:00:06 -0800
+Message-ID: <20261121210013.130397-23-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261121210013.130397-1-sj@kernel.org>
 References: <20261121210013.130397-1-sj@kernel.org>
@@ -61,29 +61,88 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extend the mapping list for data attribute report types and user
-keywords, for the USER_REPORT report type.  Use "user_report" as the
-matching user keyword.
+Implement addr_start and addr_end sysfs files under report producer
+directory.  Those set and get the address range of the user_report type
+data attribute reports.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ mm/damon/sysfs.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 1c171af4590a8..b4d898ec0c9f7 100644
+index b4d898ec0c9f7..5f9bb1955dfd5 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -1187,6 +1187,10 @@ struct damon_sysfs_report_type_name {
- 
- static const struct damon_sysfs_report_type_name
- damon_sysfs_report_type_names[] = {
-+	{
-+		.type = DAMON_REPORT_TYPE_USER_REPORT,
-+		.name = "user_report",
-+	},
+@@ -3047,6 +3047,7 @@ struct damon_sysfs_producer {
+ 	struct kobject kobj;
+ 	enum damon_report_type report_type;
+ 	bool enabled;
++	struct damon_addr_range addr_range;
  };
  
- static ssize_t filter_report_type_show(struct kobject *kobj,
+ static struct damon_sysfs_producer *damon_sysfs_producer_alloc(void)
+@@ -3116,6 +3117,44 @@ static ssize_t producer_state_store(struct kobject *kobj,
+ 	return count;
+ }
+ 
++static ssize_t addr_start_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_producer *producer = container_of(kobj,
++			struct damon_sysfs_producer, kobj);
++
++	return sysfs_emit(buf, "%lu\n", producer->addr_range.start);
++}
++
++static ssize_t addr_start_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_producer *producer = container_of(kobj,
++			struct damon_sysfs_producer, kobj);
++	int err = kstrtoul(buf, 0, &producer->addr_range.start);
++
++	return err ? err : count;
++}
++
++static ssize_t addr_end_show(struct kobject *kobj,
++		struct kobj_attribute *attr, char *buf)
++{
++	struct damon_sysfs_producer *producer = container_of(kobj,
++			struct damon_sysfs_producer, kobj);
++
++	return sysfs_emit(buf, "%lu\n", producer->addr_range.end);
++}
++
++static ssize_t addr_end_store(struct kobject *kobj,
++		struct kobj_attribute *attr, const char *buf, size_t count)
++{
++	struct damon_sysfs_producer *producer = container_of(kobj,
++			struct damon_sysfs_producer, kobj);
++	int err = kstrtoul(buf, 0, &producer->addr_range.end);
++
++	return err ? err : count;
++}
++
+ static void damon_sysfs_producer_release(struct kobject *kobj)
+ {
+ 	struct damon_sysfs_producer *producer = container_of(kobj,
+@@ -3127,10 +3166,16 @@ static struct kobj_attribute damon_sysfs_producer_report_type_attr =
+ 		__ATTR_RW_MODE(report_type, 0600);
+ static struct kobj_attribute damon_sysfs_producer_producer_state_type_attr =
+ 		__ATTR_RW_MODE(producer_state, 0600);
++static struct kobj_attribute damon_sysfs_producer_addr_start_type_attr =
++		__ATTR_RW_MODE(addr_start, 0600);
++static struct kobj_attribute damon_sysfs_producer_addr_end_type_attr =
++		__ATTR_RW_MODE(addr_end, 0600);
+ 
+ static struct attribute *damon_sysfs_producer_attrs[] = {
+ 	&damon_sysfs_producer_report_type_attr.attr,
+ 	&damon_sysfs_producer_producer_state_type_attr.attr,
++	&damon_sysfs_producer_addr_start_type_attr.attr,
++	&damon_sysfs_producer_addr_end_type_attr.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(damon_sysfs_producer);
 -- 
 2.47.3
