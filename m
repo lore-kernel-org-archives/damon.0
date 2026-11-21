@@ -1,116 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795292018;
-	b=mN7fZZLcOvZQD7JztlaFp73G3gcEHZsKk1OlmJpWlTcxegRg6QDCAgBOs45wJB/sQrcS
-	 uekYNku2guKHVOcdXPufVed1vF6/qjIpzGGaYaX4+lUFWIhoK+75jvMQ1nt8Fl9h9/h3O
-	 7nQJxkQTRU30+SFYtuFBj+8bvYKMB7XgLqN+utz+TzNWgE2EX5uT7kfuqoI4sY91KTSXa
-	 A6LBFpqxkLy+9V8tlO/hGr5tDtMkWlc36Br/17vyrY7QBi5Fx516qIzGIovkE7c1+UT/N
-	 KU/oYrvmzwL9gSB4iv8Ylq9IRxjJns4gjDOiMvBwGZRNXQugbmhc0CDFPJc5k3GuH8g==
+	t=1795294821;
+	b=BnAU0VMEYRzVdHdXthsFyNnEQ8PkRYcm+812YOZlFYH7klpff3vlckGysSRUjfwawDH8
+	 kddy3WfIdtYzrn+s8EIqDfoSrcNDyHdK3wHtQrQtS1jNFaQUFLj0twQT53XVFYyDLHbe4
+	 LLm7eNhU+wbBPyzEcU1ahEFqovrLeTe4Ul4ytmrdXTL6Yb3jDFdPCKqJlaCUf2LbmyM48
+	 iHyr432/+Nz1yRUsCq6OzPE3Aw6yudOim98ejh5T7o3mDZFdcVQdAPUX/EsntlhFO5Di0
+	 /nFEZPo20z7Ucq9pHBjutzQ+MEuQHuUm3nrfUqzCXtUCAeZsovoSVa1QElZB53UYkOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795292018;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:Content-Transfer-Encoding:
-	 In-Reply-To;
-	bh=LtZDpCvLJ0VvtED3yvRJczLNhRGhJEw9NB2kLqULBmg=;
-	b=N29liZYEbxxH2y/oK54g433Br4raPYG2J5EYdTLWWvvX72RodOay7J3/SJB0qXOg8ala
-	 Cqj+C624DChmByGqmCbSdOy0jaZxfSgIoJRuJu361sFTRKHGq0HnlKa0ASApFWK345Rc+
-	 nDO3dOQAkmP8+6pUqicDZkQvzsAdWMEucrVvVnJ5DRe7PJhUUj5Wp/2L5NL1mCfgIrUSs
-	 pUkBgl4oK/V5N/BXt3oPu0nC2MmZ+bqh4erqXai3QrLlph8FXtnSsBzhSBiTW0TSBIPji
-	 sH78i6gOhdXf1ROvyTgdlpC0JZ51muoZGmJqAFDyPN/NynH2FHEb17f88llilvUybEg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795294821;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=zdUEUat7j9pUSbGlH4X0DruoE2B9UNxheDyAc9R5hyc=;
+	b=M7aazIfPZ/CqS3wOozvwQmkgP2+7FmAwYbwHBXI2SFiQKqO46/wkhQKXLYSYKSbXED6r
+	 Kp1wMUmKGQTpgxvjz0k3AzEvaPiz70q2V7fjmvwVIhaYj1QFzzoaG5doQZf/eEp1TsFBd
+	 G/xjTavCaEVaiGXy9PSZ8F2Xv/1SynEz1rv4hmo3H0H5rspfgSAWHJBqfw3CFIGg2hW76
+	 WoZ4kMd+MH99p+ZoiQ6jbPrsi1rA5w8fOgkc031yp6Z6rbihL67Ylk8S50UD2cb1v7BgV
+	 jfbeNBBcE90pER5zmuMNndI1+CbHkb4ReeYK9RAJDmy203Dl6IgJNPFrMISqMLYXOww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0TBh5pTt;
-	arc=none smtp.remote-ip=209.85.215.175
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RV8Imet5;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12F4606A330
-	for <damon@lists.linux.dev>; Sat, 21 Nov 2026 20:13:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E12F4606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7919606A32A;
+	Sat, 21 Nov 2026 21:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0TBh5pTt
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-cdab938dc83so885899a12.3
-        for <damon@lists.linux.dev>; Sat, 21 Nov 2026 12:13:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795292017; x=1795896817; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LtZDpCvLJ0VvtED3yvRJczLNhRGhJEw9NB2kLqULBmg=;
-        b=0TBh5pTtDHqrbG1M8SltTMH4nyno+81U2aOL1bQ8ttKKIj+tMxitngdhEi3jgYWfAE
-         dnRG/5JoRTQc8AxeXp2AVSLfnvKO2/nx8et4AaPQXgCklMlz5LAuOVRYYoYLTIk2mRgV
-         9qEU3TyY790Av8C/uWiQHW8ZXFnT7llb7yvR35i1UmxqQbjhw9N480urP7s52153yaIA
-         76xTEAWsPcAW2WmLcMlf+3esZN8tb20gQmz4geUjr7+tUPJPSQDWrURdvnYHzxE7pBaX
-         JxgDHxmjJlWKy4RqzGTjjQ+15CeJGF7ZitR7Qf56fiadUbBkliAcUr4ocTWwspYZm/i8
-         VABA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795292017; x=1795896817;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=LtZDpCvLJ0VvtED3yvRJczLNhRGhJEw9NB2kLqULBmg=;
-        b=q/gRmqOLn1yEahIx5uZkcnWgSC59KF74erAJvsavTbNJUctlqOiQh17JbygGLyVKkR
-         45Rj5w+RPXKnqNyupk/p0hBs2vW7/O1jNLPClYSxLTIhcr6HiyFIZW7Q2iulAt07VpQC
-         Wj+G4o+Lx37SGM+xBzOkPEIv8Fvm9iCkQoe4+arXMgih3weDopnoBZ360gsTwzw4IGud
-         +e3UsMv0fkwWhHiX1cewNUkI1V52oOkDI3fg7hrcFZI0LaofWosgI2qMPgCGOvTraA4h
-         q3AWBJFenR/Bxx7nEwSZg/e1Xc3WaA/owvGIpR2aGxoF/TxDJPuDS9oZvy2UrfVQIIGO
-         sGcg==
-X-Forwarded-Encrypted: i=1; AL+hErHnfKhYtIwUyRhy++cdI67CUuoZXTsIw3Dia4nRz2SWy1CD06OQpCIYdvCCJpJ5t+gjEvqB1A==@lists.linux.dev
-X-Gm-Message-State: APuU4Z9kJjzQn1j4Ww1uJRg2EdWoVECABIV43pR8GOwhbFFucf7nmiei
-	G4iMxrV/D1H6G+FYUA3S9xMb3v343b+0L5Wcyv+aqLsPhWAfFgwwQmol
-X-Gm-Gg: AZFdTZfDhDwcfA7hYLn2zhIDlL8z0gjHoYgCzfoJsPVz/+3S3raWU1RGFuSoajjTyYb
-	J9rfsZLndMzScbr3Kaw0g+HfDi8BpGqgeYtpaGIUYYXctSphD8WFKxqbRmNpjNnO7+8URflZ/OG
-	NZYP8XPYnhfqCI027wY8hEVR4PWq8B2LkO4/PLfGequX+XcyBNQQuttd+i2+Oyqf9LtMWm4Ljmh
-	H552+yOiDWrrPcYXTlPInWMG6xqj0YzUNtXI6tC7TZ75g4TJ+CApyEeACsVBjCRSAROj7/Tpx4d
-	aV8rDTSGNK6QNfG/w0HPG4e1pS6Tgl0673ce2M87DQSkuCSje+aKbDQuVrI4C0fyp06wP+ZldYm
-	IINeV8OnGGcOTqMTGzKR/B47ohbh0rmS8pJvcbprfQZujoNgVg5jeRjoHUiKzIKvxedfSXEQE6+
-	5VTNJZ/ynVvys5PmaClzUmQQgxddXPIn1+4O3x6uq0Rhd8pICgQLDB9ckfSm9bVsYFSGQ/LLlHN
-	JSbADyJ0G8WuumyUGnHbJde2BiEW9IUHvNKmCC2Nv7kTta0txrHpgbQrLqiJHbGlMm2IUgWveIF
-	XfJ9RF1eVYsB9qloIXKhVhW0GyyBtAKBiSmMqBphnsk4iFJOJAFBfBWQUppTbhTTQ/+I5g==
-X-Received: by 2002:a17:90b:5346:b0:3b0:9976:c1c6 with SMTP id 98e67ed59e1d1-3b41c9bbe00mr6148779a91.66.1795292017156;
-        Sat, 21 Nov 2026 12:13:37 -0800 (PST)
-Received: from KASONG-MC4 ([101.32.222.185])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b44b6fc28asm2771809a91.1.2026.11.21.12.13.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Nov 2026 12:13:35 -0800 (PST)
-Date: Sun, 22 Nov 2026 04:13:19 +0800
-From: Kairui Song <ryncsn@gmail.com>
-To: KunWu Chan <kunwu.chan@gmail.com>
-Cc: kasong@tencent.com, linux-mm@kvack.org, 
-	Andrew Morton <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>, 
-	Muchun Song <muchun.song@linux.dev>, Qi Zheng <qi.zheng@linux.dev>, 
-	Ying Huang <ying.huang@linux.alibaba.com>, Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
-	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
-	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>, 
-	Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
-	Barry Song <baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>, 
-	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>, 
-	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, Gregory Price <gourry@gourry.net>, 
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, 
-	Hugh Dickins <hughd@google.com>, SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, 
-	Yu Zhao <yuzhao@google.com>, Vernon Yang <vernon2gm@gmail.com>, 
-	Zicheng Wang <wangzicheng@honor.com>, Chen Ridong <chenridong@xiaomi.com>, 
-	Tal Zussman <tz2294@columbia.edu>, Xiang Liu <liuxiang.277@bytedance.com>, 
-	Ehab Ababneh <ehab.ababneh@intel.com>, Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, 
-	Lian Wang <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>, 
-	Hui Zhu <hui.zhu@linux.dev>, linux-kernel@vger.kernel.org, cgroups@vger.kernel.org, 
-	damon@lists.linux.dev, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v5 17/17] mm/mglru: make folio_test_workingset() work
- based on folio LRU refs
-Message-ID: <awFbU_VGf0hotbyR@KASONG-MC4>
-References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
- <20261119-mglru-fg-v5-17-9eee2fe97a2d@tencent.com>
- <CAN_Opa9APLNic4cnohrtZ4-HcdoNvSFvnAKiC6nn+C=thbTAAA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RV8Imet5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DA11F000D4;
+	Sat, 21 Nov 2026 21:00:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795294821;
+	bh=zdUEUat7j9pUSbGlH4X0DruoE2B9UNxheDyAc9R5hyc=;
+	h=From:To:Cc:Subject:Date;
+	b=RV8Imet55YoYm/Q24IcP+f6IYmTruUVLB/zwnit9+4KriS7a+Tfd8/738BH9piWXo
+	 6BDRXQs0/irTm2N7mgFq7RGV+N9zEK9FpB8j4jrnnsUSF28FccqaXdgu/ohKyxUbbM
+	 RRAApXmjXUnhFh8pK/dNwkh5iCIN+KGr5MlwUDJjaxHiaasEHAAkO02Q7m/x36yjD0
+	 UzXJGnZWYINaHU4yS24kou7GBC66l0Rvk+aoQL4Cg+SeweKE23x5Xxj49xRGQqHSVU
+	 BKx1Ijg8v7Um1vOFcPI4N+B4+kldV/3mXgwnbWC9r2FxMEOJ1U5GcyFFiWUb5+3vdq
+	 2JoYNLdNcEcrg==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH 00/27] mm/damon: let users report their data attribute findings
+Date: Sat, 21 Nov 2026 12:59:44 -0800
+Message-ID: <20261121210013.130397-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -120,118 +63,313 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN_Opa9APLNic4cnohrtZ4-HcdoNvSFvnAKiC6nn+C=thbTAAA@mail.gmail.com>
 
-On Fri, Nov 20, 2026 at 05:53:36PM +0800, KunWu Chan wrote:
-> On Thu, Nov 19, 2026 at 5:04 AM Kairui Song via B4 Relay
-> <devnull+kasong.tencent.com@kernel.org> wrote:
-> >
-> > From: Kairui Song <kasong@tencent.com>
-> >
-> > folio_test_workingset() currently tests the PG_workingset bit, which
-> > is only the second lowest access bit of the folio LRU refs count now.
-> > Folios with refs 4 or 5 carry it in the LRU_REFS_MASK field
-> > and no longer have PG_workingset set, so the bit test misses them.
-> >
-> > folio_set_workingset() currently sets the PG_workingset bit with a
-> > plain set_bit(), which also over-promotes folios at a higher refs
-> > count: e.g. a folio at refs 4 is bumped to refs 6, advancing it
-> > toward LRU_REFS_MAX and an earlier generation promotion.
-> >
-> > Move the test into mm_inline.h as an inline helper based on
-> > folio_lru_refs(), checking refs >= LRU_REFS_WORKINGSET.  The set
-> > stays a plain PG_workingset bit operation reserved for the
-> > classical LRU: under MGLRU the refs count is maintained by
-> > folio_inc_lru_refs(), and now triggers a debug WARN when called
-> > while MGLRU is fully on (the switching window is exempt, as the
-> > classical paths legitimately run alongside MGLRU then).  The one
-> > PageWorkingset() user in erofs is converted to the folio helper.
-> >
-> > Under the classical LRU the refs count is not maintained, so the
-> > test is equivalent to the PG_workingset bit test, which is the old
-> > behavior.
-> >
-> > Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
-> > Signed-off-by: Kairui Song <kasong@tencent.com>
-> > ---
+TL;DR
+=====
 
-...
+Build a system for letting DAMON-external entities report their data
+attribute findings to DAMON.  Let users report their data attribute
+findings to DAMON using the report system.
 
-> > +/*
-> > + * For the classical LRU only: with MGLRU the PG_workingset bit is
-> > + * part of the folio refs count maintained by folio_inc_lru_refs(),
-> > + * and a raw set would corrupt it.  The switching window is exempt
-> > + * because the classical paths legitimately run alongside MGLRU then.
-> > + */
-> > +static __always_inline void folio_set_workingset(struct folio *folio)
-> > +{
-> > +       VM_WARN_ON_ONCE(lru_gen_enabled() && !lru_gen_switching());
-> 
-> Could shrink_active_list() still hit this WARN after the switch
-> to MGLRU completes? It can reschedule after isolating folios and
-> reach this setter after lru_switch is cleared.
+When DAMON Extension Becomes Challenging
+========================================
 
-Hi Kunwu, thanks for the very careful review!
+DAMON's probe based data attributes monitoring system allows flexible
+extension of it for new types of information.  Such extensions are not
+always easy, though.  That's because DAMON is collecting the information
+on its own worker threads, kdamonds.  If the new information to extend
+for is not already stored in a data structure that kdamonds can read,
+the extension becomes difficult.
 
-Right I thought a lot about it after your reply, first your concern
-is right, thanks! I should just remove and replace this WARN with
-something else.
+For example, extending DAMON for hugepage size of the given memory was
+straightforward.  kdamonds can read that from folios.  Extending DAMON
+for accessors or writes-only accesses is challenging because there is no
+existing easy way to get that information from arbitrary threads like
+kdamonds.
 
-And in theory, we should only call this for isolated folio (for CLRU
-it means a folio moving out of active workingset, isolation is always
-the first step), so this helper is fine - except, for the MADV cold
-case, it will call it on for a on-list folio, and will could skew
-the counter and if it raced with switching. Switching is so painful
-I hope we can get rid of it soon :/
+Extending DAMON for information that is not already available to
+kdamonds requires two works.  Finding DAMON-external kernel components
+that already have the information.  And modifying it to pass the
+information to DAMON.  Finding and modifying the components inherently
+need to be done for each of such extensions.  Building a universal way
+to report the information to DAMON could make it much easier.
 
-But, good thing is it's easy to fix, we just need (part of this belong
-to another patch, a trimmed diff just for reference):
+Modifying the component would be particularly challenging and even
+controversial depending on each case.  Some components wouldn't want to
+add a hacky change only for DAMON.  Having the universal report system
+that is well maintained will be useful at convincing the component, too.
 
-diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-index 4f65867446dc..c936d1fadfbd 100644
---- a/include/linux/mm_inline.h
-+++ b/include/linux/mm_inline.h
-@@ -261,8 +262,9 @@ static inline void __folio_set_lru_refs(struct folio *folio, unsigned int refs)
- 
- 	do {
- 		new_flags = old_flags;
--		VM_WARN_ON_ONCE(lru_get_gen_flags(old_flags) != -1);
- 		lru_set_refs_flags(&new_flags, refs);
-+		if (lru_get_gen_flags(old_flags) != -1)
-+			break;
- 		if (new_flags == old_flags)
- 			break;
- 	} while (!try_cmpxchg(folio_flags(folio, 0), &old_flags, new_flags));
-@@ -569,16 +571,16 @@ static inline void folio_clear_lru_refs(struct folio *folio)
-  */
- static __always_inline void folio_set_workingset(struct folio *folio)
- {
--	VM_WARN_ON_ONCE(lru_gen_enabled() && !lru_gen_switching());
--	set_bit(PG_workingset, folio_flags(folio, FOLIO_HEAD_PAGE));
-+	unsigned long flags;
-+
-+	flags = set_mask_bits(folio_flags(folio, 0), BIT(PG_workingset),
-+			      BIT(PG_workingset));
-+	VM_WARN_ON_ONCE(lru_get_gen_flags(flags) != -1);
- }
- 
- static __always_inline
-diff --git a/mm/madvise.c b/mm/madvise.c
-index bbbb729ed647..a73d89a2ecca 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -374,11 +374,12 @@ static void madvise_cold_prep_folio(struct folio *folio)
- 	 * as a workingset refault, and the referenced bit always needs to
- 	 * be cleared even for inactive folios. For MGLRU, MADV_COLD clears
- 	 * refs in folio_deactivate(); MADV_PAGEOUT handles refs after isolation.
- 	 */
- 	if (!lru_gen_enabled()) {
- 		folio_clear_lru_refs(folio);
- 		if (folio_test_active(folio))
--			folio_set_workingset(folio);
-+			__folio_set_lru_refs(folio, LRU_REFS_WORKINGSET);
- 	}
- }
+User Information
+================
+
+Users sometimes know some data attribute information more than what the
+kernel can know.  They could know frequently accessed data.  They could
+know that because they have access to the source code of the workload.
+They could know that using non-DAMON kernel features.  They could know
+that from some special tools and hardware.
+
+DAMON is not only for monitoring but also operations.  DAMON finds
+operation targets based on only its self monitoring results, though.
+Letting users report their data attribute information allows more
+flexible and effective control of the DAMON operations.  Users can make
+DAMON to find operation targets based on both its self monitoring and
+user-provided reports.
+
+DAMON is not providing such ways to let users report their information,
+though.
+
+Report System and User Report Support
+=====================================
+
+DAMON lacks efficient DAMON-external information report system and user
+report support.  Fill the gap.
+
+Introduce a system to report information from kdamond-external entities
+to DAMON.  Extend DAMON to monitor those reported information.  Build a
+user interface for letting users report their findings.
+
+Data Attribute Report System
+============================
+
+Introduce a system to report information from kdamond-external entities
+to DAMON.  The report system let any kernel components in any context
+including NMI context pass their data attribute finding to DAMON as a
+report.
+
+The system provides a data structure for such reports.  Using the report
+data structure, a flexible data attribute information for a given memory
+can be built.  The data structure also embeds a field for the type of
+the report.  The report producer can specify what data attribute type
+the report is providing, using the field.
+
+The system exposes an API function, damon_submit_report(), for
+submitting the report of the data type to DAMON.  The submit function
+can be called from any context including NMI context.
+
+DAMON Probe for Reports
+=======================
+
+Extend the DAMON probe filter to connect the report system with the
+existing monitoring part of DAMON.  Introduce a new DAMON probe filter
+type, report.  When the type is "report", it receives the report type
+argument.  Filters of the type match to a given memory if a report of
+the given type for the memory is made in the last sampling interval.
+Update DAMON sysfs ABI for probe filters setup to support the new filter
+type and the new argument for the report type.
+
+User Report Support
+===================
+
+Let users report their findings.  Introduce a report type for the users
+provided report.  Extend DAMON sysfs ABI to let users manually configure
+and submit such reports one by one.  Users can specify for what memory
+the report is made, with an arbitrary address range.
+
+Using the new support, users can control DAMON using their own
+information.  They can control DAMON using their information as only a
+source, or an additional source to existing ones.  For example, they can
+let DAMON do page table accessed-bit based access monitoring.  In
+addition to that, if they know some hot data that might not be found by
+the page table information, they can let DAMON know the hot data using
+the report system.
+
+Ongoing and Future Works
+========================
+
+This is a part of the "beyond page table accessed-bit DAMON extension"
+project [1] milestone 2.  This patch series provides the initial and
+essential part of the data attribute report system.
+
+I will implement a cpu cycle sampling based extension based on the
+report system that is implemented by this series.  It is for providing
+accessor and type-aware access monitoring.  Using it, users will be able
+to monitor access for given CPUs, tasks and types (read and/or write) of
+accesses.
+
+While doing that, the report system will also be advanced in a way that
+can be used for reports that are not manually produced by the user but
+by the kernel or hardware itself.  That will be the completion of the
+second milestone of the parent project.  After that, people will be able
+to build more extensions including AMD IBS-like hardware based
+monitoring, using the advanced report system.
+
+Patches Sequence
+================
+
+Introduce the data attribute report system with the first eleven patches
+(patches 1-11).  Define the data structure for each report and expose
+via DAMON core API, via patch 1.  Implement an internal data structure
+for saving the reports, struct damon_report, via patch 2.  Introduce
+another DAMON core API function for submitting each report,
+damon_submit_report(), via patch 3.  Implement reports/producers/
+sysfs directory next to the kdamonds/ directory, for controlling report
+producers, via patches 4-8.  Update the design, the usage and the ABI
+documents for the report system, with patches 9-11.
+
+Extend the DAMON probe filter for the reports, with the following eight
+patches (patches 12-19).  Introduce a new filter type, REPORT_MADE,
+which matches if a report for the probing memory is made in last
+sampling interval, via patch 12.  Implement and expose a DAMON core API
+function, damon_report_exist(), that returns if a report of given
+condition exist in the report queue, via patch 13.  Add support of the
+new filter type in paddr operation set, via patch 14.  Implement sysfs
+files for setting the new type of filter, via patches 15 and 16.  Update
+the design, the usage and the ABI documents for the new filter type and
+its user interface, via patches 17-19.
+
+Finally, implement user report support with the subsequent eight patches
+(patches 20-27).  Introduce a new report type DAMON core API,
+USER_REPORT, via patch 20.  Add a user keyword for the new report type
+to sysfs files, via patch 21.  Implement sysfs files for manually
+generating and submitting user reports, via patches 22 and 23.  Add a
+simple selftest for new sysfs files, via patch 24.  Update the design,
+the usage and the ABI documents for the new report type and its user
+interface, via patches 25-27.
+
+References
+==========
+
+[1] Beyond page table accessed bits DAMON extension roadmap:
+    https://lore.kernel.org/20260525225208.1179-1-sj@kernel.org/
+
+Tests
+=====
+
+Confirmed the user report is working like below.
+
+Submit report for [5 GiB, 6 GiB) address range for every 5 milliseconds.
+
+    # cd /sys/kernel/mm/damon/admin/reports/producers/
+    # echo 1 > nr_producers
+    # echo $((5*1024*1024)) > 0/addr_start
+    # echo $((6*1024*1024)) > 0/addr_end
+    # echo on > 0/producer_state
+    # while true; do echo submit > producer_state ; sleep 0.005; done
+
+On another terminal session, start DAMON in the attribute only
+monitoring mode, with user_report report_made probe filter type, using
+DAMON user-space tool, damo [1].
+
+    $ sudo ./damo start --probe \
+            --probe_filter allow report_made user_report \
+            --probe_weight 1
+
+Show the user report for the [5 GiB, 6 GiB) address range is detected:
+
+    $ sudo ./damo report attrs --sort_regions_by address
+    heatmap:
+    00000000000000000000000000000000000000000000000000069999999995111111100000000000
+    # min/max temperatures: -790,000,000, 80,001,900, column size: 99.800
+    MiB
+    probe allow report_made user_report (weight: 1)
+    intervals: sample 5 ms aggr 100 ms (max probe hits 20)
+    #   size         address       age           probe_hits
+    0   4.678 GiB    4.000 KiB     7.900 s       0
+    1   329.582 MiB  4.678 GiB     7.400 s       0
+    2   1024.000 MiB  5.000 GiB     800 ms        19
+    3   792.809 MiB  6.000 GiB     6.900 s       0
+    4   1.023 GiB    6.774 GiB     7.900 s       0
+    memory bw estimate: 0 B per second
+    total size: 7.797 GiB
+    record DAMON intervals: sample 5 ms, aggr 100 ms
+
+the region of index 2 is the region for the [5 GiB, 6 GiB) address
+range.  DAMON received the user report for nearly all sampling
+intervals, and therefore shows its probe_hits as 19.
+
+Stop user report submissions using Ctrl-C on the report submit terminal
+session. Show DAMON monitoring results showing no more reports are
+submitted.
+
+    $ sudo ./damo report attrs --sort_regions_by address
+    heatmap:
+    00000000000000000000000000000000000000000000000366666668999999822222221000000000
+    # min/max temperatures: -1,740,000,000, -740,000,000, column size:
+    99.800 MiB
+    probe allow report_made user_report (weight: 1)
+    intervals: sample 5 ms aggr 100 ms (max probe hits 20)
+    #   size         address       age           probe_hits
+    0   1.551 GiB    4.000 KiB     17.400 s      0
+    1   1.536 GiB    1.551 GiB     17.300 s      0
+    2   788.715 MiB  3.087 GiB     17.200 s      0
+    3   797.793 MiB  3.857 GiB     16.800 s      0
+    4   764.137 MiB  4.636 GiB     10.300 s      0
+    5   768.867 MiB  5.382 GiB     7.400 s       0
+    6   774.043 MiB  6.133 GiB     14.500 s      0
+    7   797.250 MiB  6.889 GiB     17 s          0
+    8   132.488 MiB  7.667 GiB     17.400 s      0
+    memory bw estimate: 0 B per second
+    total size: 7.797 GiB
+    record DAMON intervals: sample 5 ms, aggr 100 ms
+
+No more probe_hits for [5 GiB, 6 GiB) address range is shown, since the
+user report is stopped..
+
+[1] https://github.com/damonitor/damo
+
+Changes from RFC v2
+- RFC v2: https://lore.kernel.org/20261118022225.100659-1-sj@kernel.org
+- Add test results to the cover letter.
+- Rebase to the latest mm-new.
+- Drop RFC tag.
+Changes from RFC
+- RFC: https://lore.kernel.org/20261115202849.99134-1-sj@kernel.org
+- Add parent project roadmap link in the cover letter.
+- Fixup kernel-doc comments.
+- Mark damon_report_queue as static.
+- Destroy damon_region_cache for queue setup failure.
+- Fix out-of-bound writing in damon_submit_report().
+- Setup damon_filter->report_type in damon_commit_filters() path, too.
+- Fix wrong index referencing in damon_report_exist().
+- Rebase to the latest mm-new.
+Changes from RFC v0
+- RFC v0: https://lore.kernel.org/20261017195747.89961-1-sj@kernel.org
+- Implement the code.
+- Update the documentation to be less like Cover letter.
+- Rebase to the latest mm-new.
+
+SJ Park (27):
+  mm/damon/api: introduce struct damon_report
+  mm/damon/core: implement data attribute report queue
+  mm/damon/core: introduce damon_submit_report()
+  mm/damon/sysfs: add admin/reports/ directory
+  mm/damon/sysfs: add reports/producers/ directory
+  mm/damon/sysfs: add producers/nr_producers file
+  mm/damon/sysfs: implement report producer directory
+  mm/damon/sysfs: implement report producer type and state files
+  Docs/mm/damon/design: update for report system
+  Docs/admin-guide/mm/damon/usage: update for report producer sysfs
+  Docs/ABI/damon: update for report producer sysfs files
+  mm/damon/core: introduce DAMON_FILTER_TYPE_REPORT_MADE
+  mm/damon/core: introduce damon_report_exist()
+  mm/damon/paddr: support REPORT_MADE type probe filter
+  mm/damon/sysfs: add filter_report_type file under probe filter
+    directory
+  mm/damon/sysfs: support REPORT_MADE type probe filter setup
+  Docs/mm/damon/design: update for report_made probe filter type
+  Docs/admin-guide/mm/damon/usage: update for REPORT_MADE probe filter
+  Docs/ABI/damon: update for REPORT_MADE probe filter
+  mm/damon/api: introduce user_report report type
+  mm/damon/sysfs: add user_report support for report type input
+  mm/damon/sysfs: implement report producer addr_{start,end} files
+  mm/damon/sysfs: implement submit command for report producer
+  selftests/damon/sysfs.sh: add basic tests for admin/reports/
+  Docs/mm/damon/design: update for user report support
+  Docs/admin-guide/mm/damon/usage: update for user_report report support
+  Docs/ABI/damon: update for user_report report support
+
+ .../ABI/testing/sysfs-kernel-mm-damon         |  43 ++
+ Documentation/admin-guide/mm/damon/usage.rst  |  50 ++-
+ Documentation/mm/damon/design.rst             |  45 ++
+ include/linux/damon.h                         |  33 ++
+ mm/damon/core.c                               | 113 ++++-
+ mm/damon/paddr.c                              |  17 +-
+ mm/damon/sysfs.c                              | 420 +++++++++++++++++-
+ tools/testing/selftests/damon/sysfs.sh        |  52 +++
+ 8 files changed, 763 insertions(+), 10 deletions(-)
+
+
+base-commit: 7493b6798c5353fded63c06768dc73ab63d65fac
+-- 
+2.47.3
