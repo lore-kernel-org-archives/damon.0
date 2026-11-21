@@ -1,56 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795290135;
-	b=MWEFByPGJdkKpONae5fzsRxITpOA86Xl50Gl4+uvv7SxzwTMGxyCCUYAXyknUAdY78P2
-	 d3hnJOK7Yc3MJoO/gnxSs7VAdtK2XQLRuyjH8XQrFdlMuOvGMNipPld6euonSrx/c7VkX
-	 hJOljqT8xIa7kWr0yac96qrCRdvHrq4JoZJ34X5Zs+iPX7A9hiKuGZo6MrEA3pr/V+46f
-	 8wRLGTWwLkp+lTaxMcp20xImATeDJPaqRFKH5DMpCDvyA0ek5Ufv5tLE5UHEYuGPRaWRu
-	 HF3yzUykBYwYfH2IRbr+KuB7XQI2vheHvQVJYpPjDyGrirMjm7UDbKo+0xtI5lhnMyA==
+	t=1795290716;
+	b=fgvN1lCssgZiKtlpq+YXiVQ8SDvUa8HmOnmKGwtIXP5/35S/7KwHgiRQNbXEvpZ4cYpe
+	 Ijddcqfh5b3bhQjETWNGO1b/+neyiJU/2cLRdmg2pFPoi13wOOSL2gwvIhi6FPQhKoVsv
+	 V9pnANt5oqp/Vx4mZcC/E9N4wRaBw22O0ADhK4gtxH4SBoPkdd6xDwqQfQ/gZQ1lj0BR6
+	 raz2QazRsHn0rOpoKojesb142JEemtUWUxwq1goP+Zq7gF7uYEBc21DhFdujpSHrGJN1+
+	 st21ZgPra14Ch0yBA3Mw6n/ip21GmzXdz/xHI4nHx10BH5F1TriwtiX7M/WNSOlraAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795290135;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=I6U7ZVST+GIUsdyLn4XLpgfNVhLHIFLZIDGxR+RVAXg=;
-	b=HXsQUFEO6xFrxqOeaOJJpn0DJubYZV/pZP2Eaq/azJBHxNCvJNdn6ELnL50MlOoUz304
-	 NDa1CLeay8XiWwmcB+sKVJlwMQ46gJurYP1b8ojRdD4Ti30o5wvcnTR+5yxNwxiLTf5Dt
-	 HDWvm1qykMtv3avvB8psp0+OPzVsYh6TCEnC+yPJ936Qftbvm50YqFXcO/OVzeAdJTXtF
-	 4xHb+UzJkAt9Ls+pCwrlZaHswAJTRo47Be2mfOIqIwVUHHzunDSN179h36XT7zNskjkIb
-	 pPMR0ICl42tc7rVIIETHmety0rIW/qEqdacAb8iqqwUzMk5AKqxIgsBNRX1IS4h0LaA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795290716;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=Lacc16GR/cOxfo9/HxRF4FW+CuTPCiAe6jg0QMOUkhw=;
+	b=i9Pg1lSvUUkwgQEYIYSfSS2OIFnnjCTPGMyqo+mvDVNDMOrSyjo+TmkqBa4JBhElUfpc
+	 4AKGbNXokRE5cpjnkE/xG5pXJ+vR8QyVerHnI2D21yXWE+zMWcTuvk2UkBgWzmf+wDE2i
+	 refVjiM1/a85SC+gdC4DhswWoYsgRgi3RVH+Ocm0jn3D2BQIN0PApNrwQEFvakhUu7RSX
+	 njmYLGBhF4HLjoUyTRo+RElQ53wTwBDn+o2PEbmsvP5ajc9DJ0BD0+BOSym8sw8KBO+6T
+	 NoaL9Wknm/LNt8cefyzi23lwo+hbfkT+UcGwef9mN2IGR9HO2V4TV9CEjC1u7wpqIhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hH1dGP2+;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=m0zr1ZrU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68251606A320
-	for <damon@lists.linux.dev>; Sat, 21 Nov 2026 19:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955BE606A320
+	for <damon@lists.linux.dev>; Sat, 21 Nov 2026 19:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=hH1dGP2+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1F31F000C6;
-	Sat, 21 Nov 2026 19:42:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=m0zr1ZrU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289471F000CA;
+	Sat, 21 Nov 2026 19:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795290135;
-	bh=I6U7ZVST+GIUsdyLn4XLpgfNVhLHIFLZIDGxR+RVAXg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=hH1dGP2+lkaamyRhws1pkCYMzBeJlu/J3nYq56FYLV+aR+f5lW6+nYajl5acVykdW
-	 Q4JLnSYb5EwfV5PB54F5JN3tAwNRC/vpR98HgAi5C4KOQwYg0Vw7nBElu6fov6ph4C
-	 4e8euvxqC9AvNxfPhvf7OdT9x46ZT7fzgHD9BopQWdqhQbFH45PKLy8m/NjAzS7xqV
-	 C3Nkcy4ywiu+voypGgKsmHf8VrPREj3cvcbKx9ygS1RCJQzKYIELkBjnhjSD6jYRZ9
-	 bb8WNiCh1SgZUUBJTBroijXBjG1gZv8vrCAaHygH64COboIVL9SUk4gZGtlD1J8F0C
-	 JkbhwNT7e6uSw==
-Message-ID: <sashiko-outbox-227320@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 0/4] mm/damon: update documents for mm-next
- onboarding
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261121193331.108587-1-sj@kernel.org>
-References: <20261121193331.108587-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 21 Nov 2026 19:42:14 +0000
+	s=k20260515; t=1795290716;
+	bh=Lacc16GR/cOxfo9/HxRF4FW+CuTPCiAe6jg0QMOUkhw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=m0zr1ZrUvK/FyVOUfqOXaYvsR86ilglrgFjyJfaJOlyr4Yz1nZLtLq08wiUwpEbUh
+	 h3DEY57FbywD/BgNE1bhZO22LslxX7gYFMEFS+wZ4qPFZczQyMyb2F36lyjekNyi2O
+	 W4cEUevlXm1Uhl/xOPFjJoulp3mPZg6qOOtQGX07x9s3cwolyoy3UXO+mukklVFKgn
+	 3UCBhLOTdvmZy66iV02Qo+Ef6V8ngjrAt7ahv06IGm5R6F22QPbIi82jUHINKAmtY2
+	 XvN0GmUlkpXWwuOlfuw0qiKSs6YHM3kkAfYzcdo2wYz+ncizn/WD71eXmjVVWEgg7+
+	 z0hB8tStVGXbQ==
+From: SJ Park <sj@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: SJ Park <sj@kernel.org>,
+	"Andrew Morton" <akpm@linux-foundation.org>,
+	"David Hildenbrand" <david@kernel.org>,
+	"Jonathan Corbet" <corbet@lwn.net>,
+	"Randy Dunlap" <rdunlap@infradead.org>,
+	"Shuah Khan" <skhan@linuxfoundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: Re: [RFC PATCH 2/4] Docs/mm/damon/maintainer-profile: use damon.git for patch baselines
+Date: Sat, 21 Nov 2026 11:51:42 -0800
+Message-ID: <20261121195144.109526-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <sashiko-outbox-227319@kernel.org>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,16 +64,52 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Sashiko has finished reviewing this 4-patch series:
+On Sat, 21 Nov 2026 19:42:08 +0000 sashiko-bot@kernel.org wrote:
 
-- Patches 3 and 4: no issues found.
-- Patch 2 ("Docs/mm/damon/maintainer-profile: use damon.git for..."): 1
-  potential issue (1 Low)
-- Patch 1: skipped (not reviewed).
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue to consider:
+> - [Low] Docs/mm/damon: commit message omits MAINTAINERS section name
+>   update
+> --
+> 
+> commit 6bab7534a11559ea9b976bf2b9816f3e4a1d90b2
+> Author: SJ Park <sj@kernel.org>
+> 
+> Docs/mm/damon/maintainer-profile: use damon.git for patch baselines
+> 
+> This commit updates the DAMON maintainer profile documentation to direct
+> patches against the damon.git for-next and for-next-fixes trees and updates
+> the referenced MAINTAINERS section name.
+> 
+> > diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
+> > index c482690320249..cc6b79c066a64 100644
+> > --- a/Documentation/mm/damon/maintainer-profile.rst
+> > +++ b/Documentation/mm/damon/maintainer-profile.rst
+> > @@ -3,13 +3,20 @@
+> >  DAMON Maintainer Entry Profile
+> >  ==============================
+> >  
+> > -The DAMON subsystem covers the files that are listed in 'DAMON' section of
+> > -'MAINTAINERS' file.
+> > +The DAMON subsystem covers the files that are listed in 'MEMORY MANAGEMENT -
+> > +DAMON' section of 'MAINTAINERS' file.
+> 
+> [Severity: Low]
+> This isn't a bug, but the commit message only describes updating the patch
+> baseline branches to damon.git and doesn't mention updating the MAINTAINERS
+> section name reference to 'MEMORY MANAGEMENT - DAMON'.
 
-A detailed review has been sent as a separate reply to patch 2.
+Good catch, I will update the commit message in the next spin.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261121193331.1085=
-87-1-sj@kernel.org
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261121193331.108587-1-sj@kernel.org?part=2
+> 
+
+
+Thanks,
+SJ
