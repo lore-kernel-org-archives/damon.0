@@ -1,58 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795282168;
-	b=dh6599DLxHsi2xwCcoZvTY//rRj5Avabwo1hDtWVJP3LkohoNmFxv/w+AOTMAOYIwKS1
-	 kPhoieG/IgPZT66loBAoVmVQASFU4zpVzAiWv05FA9AF3n6f1jCZ8R/C6Y0FoeAqcBGU7
-	 d0PExVncPi0km1IuTP+qOT6G6XmEoP0yQ+wRB+kVM61P/XHQTDQrWrLKfCYZLwio6XBBa
-	 /8K/BJ9C9OR7tPNAlG8j1bkXEshw/XhlbpqRVviuz0+fFtgnRMFJrOF8G+AGFztuz7ZMf
-	 do2CiJ2FiFUWi07xTMB8mRr6F+HAn3MyjkWBTegBnsVrr0HP199JRVlr2kNc9DPgIdQ==
+	t=1795289622;
+	b=pw8nbiC8XRMNWJUKu6HTj95OH9oGIdDZOkL2H7tHwysAwx19dPT0+8cut9xuKaefGzt+
+	 F6unRMxpOOE0RKeD1veRS4ZFAVFySi3e6i4we+NOt5klcEKlIJku99bqGB2DeN5U251Uu
+	 /RYIenEiLi7v9v0nDKfmKa+cAj4FmMOMZ+WYQFu9b9m7SWMvRh66LRtecT+rLE3vfx70a
+	 KZRq+TcTJqM6Ou/70CYH8j5HglPLLlgPGlvLbiFo9msJOZY2wSGuP3DklSMCcrb0TaDmd
+	 sgQBDCxvRBNbjVD1kz0HAZ8PY8dHGNy4831EIA3paAbRbTyrwNA3s90cBzTKo8mWe1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795282168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795289622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=NJvtiQFrK+TKOzdlaogJMSqLyClicrfyTdVB70PUMlI=;
-	b=xskejg1KofZ3raqfmLFTD7wCmrzYbvL2zUKXnfyFmeNH2Ty7byxa7/NMkjfrJpg55nLj
-	 0Lc8O8pTE7ehNbOPuG42FvZjmZoJsMviiggvfXNuE9YdeppxcP4ZgvxjweFW+DT89BSrx
-	 Qdjg9Z4iO1x6opq2yNqqSjOYQsfZAhhZZC1Oo5THbWG5NEsLW7gOpnYQ/dCBvexpD07xQ
-	 EHg/dNK3+iIb3F2UE2LK7J2WQXxgHh66hOosCGFpFYog43C3Zi1WyoRf10tVrgRrEnUpd
-	 GtrDRWyCF6DPZrecjLw1s3YPEiCtjPEFEddHKk7WFtChxdRFhgrWuWr53iezmLr1bGQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=2qZsGR/sLdn0qLTF/VW/uayeEPi0hmDXZwV0zU4xgig=;
+	b=gzMnG0tZmHnW3R7Toy9Kth7GJofn/TQd9gBfYId7cQW97G+8NAg14sJcL/L9yaBrW+1c
+	 IXE5qpExO5Lib0J8hRxEglG/Wm9KswoCywpgliInepqo93lNPdhcOGkqmNrAkYEm3gR7q
+	 ohELUtibIECA6e6NBECXBmwgV9EJ0a3uOddzfbY1LFm08Z3Ls1+tlQPG/UJLyJxgRiXQQ
+	 2Jpyl9YaB9s4DTZyc3bxerydlGJw1Muv6B0+FuvRll86iWRxuoaxs0YvEgzDc9XOz76eS
+	 rxwPLD7w4l0BDFYPJH/1t4lc7zMgf+85BOduV5VxEVVyRrO68dHZ+2cMVAacpUYNabQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RuZEFH12;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="DlA/uZOO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7E0606A320;
-	Sat, 21 Nov 2026 17:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CAD606A320;
+	Sat, 21 Nov 2026 19:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RuZEFH12
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4521F000C0;
-	Sat, 21 Nov 2026 17:29:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DlA/uZOO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438C61F000C0;
+	Sat, 21 Nov 2026 19:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795282168;
-	bh=NJvtiQFrK+TKOzdlaogJMSqLyClicrfyTdVB70PUMlI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RuZEFH12nvc2PIbb9pavr1AbcZ5VX507aGY34xBjHeKBSPsbw8RiW3S6Vq+F/+RuB
-	 zvl/t7XXqQ4bO57J+rIZge5gQHAyIpvucvFW2CkDhTjfgK6o3sChHdm6hX5603pTYw
-	 jvN9pQLVAdwoOVp/TOOCGg2Ym+Fl3l+bN3NYKmYVYJIg51s4pudgnEW+kkbcjcg7f1
-	 bPpEIwI2rRfCFtjCnYeCP0sXHoD/D98SG6wn2AOc8e0+24rDxPl4Z4c7Zqqjq8ua3e
-	 c9NCrmW4EqGkUtlLMk3O3NR7JwJbmT98JdYhKlubfdYlaBC11LWPfxZYBODW5Kai8h
-	 Cj/82WdZZ/TBA==
+	s=k20260515; t=1795289621;
+	bh=2qZsGR/sLdn0qLTF/VW/uayeEPi0hmDXZwV0zU4xgig=;
+	h=From:To:Cc:Subject:Date;
+	b=DlA/uZOOmMwj7/yI/xq8L5MHTwnnPePC4ZNk7K9kI5dR+rAmqBDBa6Qi4GrTbRGhp
+	 b6b6Z16CZSWJSduDm9o3gEa+9WynORueGdk4d7m9cnhb5WDEvaQomnHTyOScvsn0v3
+	 S5NahacjGPWEh4dhbPtF986GYgcAc6F6EVU3pTY4+78vDMQvgKqOjfKCUxmFgJN4At
+	 4yM1aLJcfId44XVngK5Ux8D0dcSbNREpsrtY5npFjaLu/pyT0QfCDyz55mvyEGUG0U
+	 aFuAWQK0IbZuOjcw93+8XHpsHdo1Wo+QgI0J7/8FhiqIWDJfO59/kkcran1pKRF/8H
+	 tmIrDNVwEDPkg==
 From: SJ Park <sj@kernel.org>
-To: Yifan Feng <evanfengff@gmail.com>
+To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
-	linux-mm@kvack.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] mm/damon/core: fix damos_walk() hang with zero watermarks interval
-Date: Sat, 21 Nov 2026 09:29:20 -0800
-Message-ID: <20261121172921.84465-1-sj@kernel.org>
+	linux-mm@kvack.org
+Subject: [RFC PATCH 0/4] mm/damon: update documents for mm-next onboarding
+Date: Sat, 21 Nov 2026 11:33:25 -0800
+Message-ID: <20261121193331.108587-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261121025626.75981-1-evanfengff@gmail.com>
-References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -64,48 +66,34 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello Yifan,
+Right after the 7.5-rc1 release, DAMON will onboard the mm-next
+transition [1].  The major change is that it will use mm/damon.git [2]
+and mm/linux.git [3] instead of sj/linux.git [4] and akpm/mm.git [5].
 
-On Fri, 20 Nov 2026 18:56:26 -0800 Yifan Feng <evanfengff@gmail.com> wrote:
+Update MAINTAINERS file to capture the change, via patch 1.  Further
+update DAMON maintainer-profile document for the change, step by step,
+via patches 2-4.
 
-> kdamond_wait_activation() cancels damos_walk() requests while all
-> schemes are deactivated by their watermarks.  But it returns without
-> waiting when the watermarks check interval of a deactivated scheme is
-> zero, which is the default of the DAMON sysfs interface.  The kdamond
-> main loop then runs with all schemes deactivated.
-> 
-> In that state, kdamond_apply_schemes() finds no scheme to apply and
-> returns before it calls damos_walk_complete().  The walk request is
-> neither completed nor cancelled, so damos_walk() waits until the
-> watermarks activate a scheme again, possibly forever.
-> 
-> For example, with a scheme that has the free_mem_rate metric, zero
-> interval_us and a high watermark below the current free memory rate,
-> writing update_schemes_tried_regions to the kdamond state file never
-> returns and cannot be killed.  The writer holds damon_sysfs_lock, so all
-> other DAMON sysfs writes including "off" fail with -EBUSY meanwhile.
-> 
-> Cancel the walk request in kdamond_apply_schemes() when no scheme is
-> activated, as kdamond_wait_activation() does for a non-zero interval.
+[1] https://lore.kernel.org/bed81e01-7303-4957-bd7d-38e3a094e96f@kernel.org/
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/mm/damon.git/
+[3] https://git.kernel.org/pub/scm/linux/kernel/git/mm/linux.git/
+[4] https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/
+[4] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/
 
-Thank you for finding and fixing this issue.
+Huge thanks to Andrew for his tremendous mm.git works that raised DAMON
+up to the current state.
 
-> 
-> Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
-> Cc: <stable@vger.kernel.org> # 6.14.x
-> Suggested-by: SJ Park <sj@kernel.org>
-> Signed-off-by: Yifan Feng <evanfengff@gmail.com>
+SJ Park (4):
+  MAINTAINERS: change DAMON SCM tree to mm/damon.git
+  Docs/mm/damon/maintainer-profile: use damon.git for patch baselines
+  Docs/mm/damon/maintainer-profile: drop 'SCM Trees' section
+  Docs/mm/damon/maintainer-profile: update key cycle dates for damon.git
 
-Reviewed-by: SJ Park <sj@kernel.org>
-
-This patch is applied to damon/next [1] tree.  I will repost it soon (~1 week)
-as an mm.git merge request.  So, no action from your side is needed for now.
-
-[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+ Documentation/mm/damon/maintainer-profile.rst | 57 ++++++++++---------
+ MAINTAINERS                                   | 36 ++++++------
+ 2 files changed, 46 insertions(+), 47 deletions(-)
 
 
-
-Thanks,
-SJ
-
-[...]
+base-commit: b0ddc1203e3d7a63e712e8988a03f98dbb179904
+-- 
+2.47.3
