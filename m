@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795289622;
-	b=pw8nbiC8XRMNWJUKu6HTj95OH9oGIdDZOkL2H7tHwysAwx19dPT0+8cut9xuKaefGzt+
-	 F6unRMxpOOE0RKeD1veRS4ZFAVFySi3e6i4we+NOt5klcEKlIJku99bqGB2DeN5U251Uu
-	 /RYIenEiLi7v9v0nDKfmKa+cAj4FmMOMZ+WYQFu9b9m7SWMvRh66LRtecT+rLE3vfx70a
-	 KZRq+TcTJqM6Ou/70CYH8j5HglPLLlgPGlvLbiFo9msJOZY2wSGuP3DklSMCcrb0TaDmd
-	 sgQBDCxvRBNbjVD1kz0HAZ8PY8dHGNy4831EIA3paAbRbTyrwNA3s90cBzTKo8mWe1g==
+	b=dFUEc2eVm84IRYzdBVGAMc3YOV+t0BVHwLEQ2JeRBBDrhFgLbteJmm0J9PGcMG2kLQSX
+	 1JTCeZevMwVTEJ7EFP1737tq4nbzhtY/tDZthUo1GFupnATnm+CiA9PqClDLUD2gW0rI6
+	 sl7OpOrzMlrVosaTocZ3YDnu/qsERJ8nfh2fO4L8WHgEM7wG6pNE+SneLOc/vIYtPvCUG
+	 6WOEVCtqP2d9ghYEOWJ5cTtkRayoA3/8hu6+rCY5VfnYE9IdO8ao/vEShxiP4RqRHIqe9
+	 vUfHbCgtAECfX3wh3Owt7qhWvOVJILtPyNmcfK/SIy5QyCyLc5xWgJ3ljcVdnN0ugNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795289622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2qZsGR/sLdn0qLTF/VW/uayeEPi0hmDXZwV0zU4xgig=;
-	b=gzMnG0tZmHnW3R7Toy9Kth7GJofn/TQd9gBfYId7cQW97G+8NAg14sJcL/L9yaBrW+1c
-	 IXE5qpExO5Lib0J8hRxEglG/Wm9KswoCywpgliInepqo93lNPdhcOGkqmNrAkYEm3gR7q
-	 ohELUtibIECA6e6NBECXBmwgV9EJ0a3uOddzfbY1LFm08Z3Ls1+tlQPG/UJLyJxgRiXQQ
-	 2Jpyl9YaB9s4DTZyc3bxerydlGJw1Muv6B0+FuvRll86iWRxuoaxs0YvEgzDc9XOz76eS
-	 rxwPLD7w4l0BDFYPJH/1t4lc7zMgf+85BOduV5VxEVVyRrO68dHZ+2cMVAacpUYNabQ==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=oipHQJlQVylrVPx8RtKqcrMUGU679rocneT4MdJfejo=;
+	b=L2wxMU3Hgb3JWmPaySVxUtJSFlBm8K0AHUtm8cGDyt/qrzdV5EmMiZ5s49HHGryUxfCf
+	 YaTrhqjwD2B4A1dp6zml/WPhLh7LzxSjhZ+K6IHq9wMv/FE+5BZbe/L7mxa8NIeic5oJV
+	 Hn0h8Cuzsr+wMU9Dq0RgvxSXf8w8JvG16hXI7w6Q6PVGd+tt0UWcsI0nlYHqOi6qcI2CB
+	 NF8L2TLaWmJTgeCY6aFVPOAv+wwXwKanFbjKDMos8onPRzc6h9hE8KftBjCsMblTWGB6+
+	 zFSKYCWz4zI2AypgLueOAqVOqRrvZ+X16ex4SW6gbmCFyq0u1J23GrvUT/JCZYl6NSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="DlA/uZOO";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QpmIHZYY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CAD606A320;
-	Sat, 21 Nov 2026 19:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8384C606A338;
+	Sat, 21 Nov 2026 19:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DlA/uZOO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438C61F000C0;
-	Sat, 21 Nov 2026 19:33:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QpmIHZYY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9E31F000D0;
+	Sat, 21 Nov 2026 19:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795289621;
-	bh=2qZsGR/sLdn0qLTF/VW/uayeEPi0hmDXZwV0zU4xgig=;
-	h=From:To:Cc:Subject:Date;
-	b=DlA/uZOOmMwj7/yI/xq8L5MHTwnnPePC4ZNk7K9kI5dR+rAmqBDBa6Qi4GrTbRGhp
-	 b6b6Z16CZSWJSduDm9o3gEa+9WynORueGdk4d7m9cnhb5WDEvaQomnHTyOScvsn0v3
-	 S5NahacjGPWEh4dhbPtF986GYgcAc6F6EVU3pTY4+78vDMQvgKqOjfKCUxmFgJN4At
-	 4yM1aLJcfId44XVngK5Ux8D0dcSbNREpsrtY5npFjaLu/pyT0QfCDyz55mvyEGUG0U
-	 aFuAWQK0IbZuOjcw93+8XHpsHdo1Wo+QgI0J7/8FhiqIWDJfO59/kkcran1pKRF/8H
-	 tmIrDNVwEDPkg==
+	s=k20260515; t=1795289622;
+	bh=oipHQJlQVylrVPx8RtKqcrMUGU679rocneT4MdJfejo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=QpmIHZYY/BPHc5mWi64zEvMbT6qYIry+GMQU2MGP0y8g71vrmVZ4jtWwn78lhyV27
+	 jdbejCHx9sS+de+zXjvM8sBVyuK2IvgXYfPisudagT0hnhW6gxohFb14Ixrqh3vhlP
+	 gVYZ+6j9r53ZGBg0Za2LTTMNevnq8Y81O0KAF2jc41h9zuzz/3i//40QdEtdH7hDoj
+	 ejOs1c5k9VCXu6Z7FjUURuxf8AsGM7CZm+BL7733xprp/KpTYA7AYp0MjynRQC33Nv
+	 WRMZ7KbTHMoqHVlX9RanLrineoeAPNrmEi6KhTD6VascSXC2dzhR6/aVXGHEcmB21P
+	 oMPdCO4G73gfA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
@@ -49,12 +49,13 @@ Cc: SJ Park <sj@kernel.org>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
 	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 0/4] mm/damon: update documents for mm-next onboarding
-Date: Sat, 21 Nov 2026 11:33:25 -0800
-Message-ID: <20261121193331.108587-1-sj@kernel.org>
+Subject: [RFC PATCH 2/4] Docs/mm/damon/maintainer-profile: use damon.git for patch baselines
+Date: Sat, 21 Nov 2026 11:33:27 -0800
+Message-ID: <20261121193331.108587-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261121193331.108587-1-sj@kernel.org>
+References: <20261121193331.108587-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -66,34 +67,48 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Right after the 7.5-rc1 release, DAMON will onboard the mm-next
-transition [1].  The major change is that it will use mm/damon.git [2]
-and mm/linux.git [3] instead of sj/linux.git [4] and akpm/mm.git [5].
-
-Update MAINTAINERS file to capture the change, via patch 1.  Further
-update DAMON maintainer-profile document for the change, step by step,
-via patches 2-4.
+Right after 7.5-rc1, DAMON will onboard the mm-next transition [1].
+Update DAMON maintainer-profile document to suggest using damon.git [2]
+for-next and for-next-fixes trees as baselines, following the mm-next
+process guideline.
 
 [1] https://lore.kernel.org/bed81e01-7303-4957-bd7d-38e3a094e96f@kernel.org/
 [2] https://git.kernel.org/pub/scm/linux/kernel/git/mm/damon.git/
-[3] https://git.kernel.org/pub/scm/linux/kernel/git/mm/linux.git/
-[4] https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/
-[4] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/
 
-Huge thanks to Andrew for his tremendous mm.git works that raised DAMON
-up to the current state.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ Documentation/mm/damon/maintainer-profile.rst | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-SJ Park (4):
-  MAINTAINERS: change DAMON SCM tree to mm/damon.git
-  Docs/mm/damon/maintainer-profile: use damon.git for patch baselines
-  Docs/mm/damon/maintainer-profile: drop 'SCM Trees' section
-  Docs/mm/damon/maintainer-profile: update key cycle dates for damon.git
-
- Documentation/mm/damon/maintainer-profile.rst | 57 ++++++++++---------
- MAINTAINERS                                   | 36 ++++++------
- 2 files changed, 46 insertions(+), 47 deletions(-)
-
-
-base-commit: b0ddc1203e3d7a63e712e8988a03f98dbb179904
+diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
+index c482690320249..cc6b79c066a64 100644
+--- a/Documentation/mm/damon/maintainer-profile.rst
++++ b/Documentation/mm/damon/maintainer-profile.rst
+@@ -3,13 +3,20 @@
+ DAMON Maintainer Entry Profile
+ ==============================
+ 
+-The DAMON subsystem covers the files that are listed in 'DAMON' section of
+-'MAINTAINERS' file.
++The DAMON subsystem covers the files that are listed in 'MEMORY MANAGEMENT -
++DAMON' section of 'MAINTAINERS' file.
+ 
+ The mailing lists for the subsystem are damon@lists.linux.dev and
+-linux-mm@kvack.org.  Patches should be made against the `mm-new tree
+-<https://git.kernel.org/akpm/mm/h/mm-new>`_ whenever possible and posted to the
+-mailing lists.
++linux-mm@kvack.org.
++
++Non-urgent patches should be made against the damon.git `for-next
++<https://git.kernel.org/mm/damon/h/for-next>`_ tree.  Urgent patches should be
++made against the damon.git `for-next-fixes
++<https://git.kernel.org/mm/damon/h/for-next-fixes>`_ tree.  If there is a
++reason to not use those branches as the baseline of the patch, please explain
++the reason and what baseline is used.
++
++Patches should be posted to the mailing lists whenever possible.
+ 
+ SCM Trees
+ ---------
 -- 
 2.47.3
