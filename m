@@ -1,54 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.60
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.101
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795333565;
-	b=JCrcStnoXfzr54texaFCfzO752cCPaneEEIavIzctqAC1BMZfhXOzzBJ3YsHfII+/cP4
-	 V9JBsq8qzJBE61l6KJZG79erQz587s1U8O+lCCSDlHZ37UGBsG/fBRa61ifq06g7arnyM
-	 jceWVkx2vmZsHb9oWYIgA1z7Kjb7RBdGpOCl0uhUA9ARwvzDk0WUx8DmjiVC8Q1s2vWkR
-	 ViaUU0Vu1OnbvHXX96r3hw82P5qqI761G9Xjf+NjBKqsTDGgm6pIeOqKfsOOoZBiC9Iff
-	 kGjaJ8WsvMosk/QcgZWnqnPVwuHzqV26kCIHiINe3YN58jwEJoaWnqGBiCAC4joRmDg==
+	t=1795334039;
+	b=zHTk+FH/l0TE2+EoqIAmrOYgHwSqf+McP2ZewiTl88wssVon8hqvh8/DtOpPmaX9Ysm0
+	 R7aBvemBAzJ/oZwH2i3otTBkfoxCAdIgboE4KigI3Oz57SoMPzRA0aqz5XGwEK0jElhof
+	 p9JemWe7xBG5dg5lD7isuzANfu94CaLyE1WhRXmMnQ3YediIaxikUgv6a3i6gdYfa4M1f
+	 CFHZsLd6Z3e9nGjYH2bCprLk0lxOQE4TxrXx13HusYhOGMZjn3wzAirHU7jQfZp/xvROu
+	 mOnaTmV7q+DWPUA4+b/ebzUXzsPdONfGXwGjVjIoYDgiQ6Ovgb3CBjluRhcVGolwM0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795333565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795334039;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
-	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
-	 To:X-Mailer;
-	bh=fjN2XrDXoDL6HaIL9EYpcjTaN40VnCpFbTbw1leaE1g=;
-	b=yb+aPslVInQezokeWKW1JNhtkCa5IBUa5y3KnUsD2xQCrR5PDrEaGlNL8irMiO6pepaX
-	 WlOiITNs4koFlT5dE0KAUyW8sPzWCVBVRCkoy56P3EhjFZXVC6dB4O9knJkJBmCOfUC7N
-	 J8ggPFoaf/4/GJKIF/wV+93XaRpSFQUulx19LHlZOKG4qZCMg6PEY9XYKZpZHanaafsjG
-	 +y6jFRikwk0ucQxpaZMqYxfXOfVSgDqNFU41C0evdX3ziWswrUJtWJpeIlo3h/QSY63+S
-	 6A8lm5sRsUdjDIaP/dCLFfaM7SEVFfN6gugj8xDciTQDKS374G18gBF6ZI68kB0M/Fg==
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=mOcmoHBzKwzqRhuvzie4cVIDXlVg/sxRWH6argNn2FA=;
+	b=dE5XRmpL6DEMsxWIssohcqPIWvFidfUwMX60jkUhnl2ldXQ09G8eHGPdKgYXjH4kpbvi
+	 uUpiwxf8nfVOcLKdK7lm8aaHn3LXCuaBtmJBHFz05zIwYPyUuSIPqm0de8VvfX1+uzUVC
+	 X1AzBAmpPpOX1K+JLYvhrMfM+Vpqvkt82IFTwBPrehTQgDL38OdIRX9ZI9x8o84ONUPF7
+	 +3ubsoSiluKpCEXu44PaxSM4Fk78MnDyumltU5Q+tGouL0u3OOa9haS/M4D33ZAVwOW34
+	 XrFjHb94Z+Xn6kyupatpDOnpa4WcsZwqxn5KlPeie9VTV7WIrKHHeWxXCmdxh7vpB2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b="Ep+qtuk/";
-	arc=none smtp.remote-ip=91.218.175.60
-Received: from mta0.migadu.com (out-60.mta0.migadu.com [91.218.175.60])
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=LHuP4vQ0;
+	arc=none smtp.remote-ip=91.218.175.101
+Received: from mta0.migadu.com (out-101.mta0.migadu.com [91.218.175.101])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B04606A330
-	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 07:46:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B1B04606A330
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF4D606A330
+	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 07:53:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ADF4D606A330
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Ep+qtuk/
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=LHuP4vQ0
 X-Envelope-To: damon@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=fjN2XrDXoDL6HaIL9EYpcjTaN40VnCpFbTbw1leaE1g=;
+DKIM-Signature: a=rsa-sha256; bh=zkTOqn+rNjlOfmFIyhoF6rAk683YaTwi6c+aGGYoa60=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795333562; v=1; x=1795938362;
- b=Ep+qtuk/XW/3WBXdJc2FfXG5ni5wxOG8njJc02OEXT57/3jHMHHaWIt9HvTyl8sSqIw/eG1y
- Ogd7q0XaWhZzffdm30DqHZpdTokF7+jmEAUE/7WVfOH4yPRilUe4g3YDIFma+/A+EBcnqrZ4rwM
- +njendDcKBMg+aCJ6YS+Tn5c=
+ t=1795334036; v=1; x=1795938836;
+ b=LHuP4vQ0LbfH0TkiIc7OPnMdIxBu3k1zCmUWVwzAtOnjVmf0a7rwmnpud7efP4ws1s4i4kHF
+ 1hxO0Ln+Tqt7z1JUMNar2v1E2mG9HikoNFNE88J416rT3vWkwiJ2+7S1dIDKNCSy/sr0MuM4ANQ
+ MzPpOjU+kVGOeQw/LXMgJJJo=
 X-Envelope-To: damon@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 56927addac11c5be;
-	Sun, 22 Nov 2026 07:46:02 +0000
-X-Mizu-Trace-ID: 56927addac11c5be
+Received: by smtp.migadu.com with ESMTPS id 862c2fb0d81c39f5;
+	Sun, 22 Nov 2026 07:53:56 +0000
+X-Mizu-Trace-ID: 862c2fb0d81c39f5
 X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain;
-	charset=us-ascii
+Message-ID: <42207e26-ba7f-4df5-8c80-71fa1b84d26e@linux.dev>
+Date: Sun, 22 Nov 2026 15:53:44 +0800
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -57,87 +57,228 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH v5 02/17] mm/memcontrol: allow update of LRU statistic
- without holding LRU lock
-From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <20261119-mglru-fg-v5-2-9eee2fe97a2d@tencent.com>
-Date: Sun, 22 Nov 2026 15:45:28 +0800
-Cc: Muchun Song <muchun.song@linux.dev>,
- linux-mm@kvack.org,
- Andrew Morton <akpm@linux-foundation.org>,
- Johannes Weiner <hannes@cmpxchg.org>,
- Qi Zheng <qi.zheng@linux.dev>,
- Ying Huang <ying.huang@linux.alibaba.com>,
- Chris Li <chrisl@kernel.org>,
- Baoquan He <baoquan.he@linux.dev>,
- Nico Pache <nico.pache@linux.dev>,
- Usama Arif <usama.arif@linux.dev>,
- Michal Hocko <mhocko@kernel.org>,
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 04/17] mm/memcg: add folio-based lruvec live helper
+To: kasong@tencent.com
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Qi Zheng <qi.zheng@linux.dev>,
+ Ying Huang <ying.huang@linux.alibaba.com>, Chris Li <chrisl@kernel.org>,
+ Baoquan He <baoquan.he@linux.dev>, Nico Pache <nico.pache@linux.dev>,
+ Usama Arif <usama.arif@linux.dev>, Michal Hocko <mhocko@kernel.org>,
  Roman Gushchin <roman.gushchin@linux.dev>,
- Shakeel Butt <shakeel.butt@linux.dev>,
- David Hildenbrand <david@kernel.org>,
- Lorenzo Stoakes <ljs@kernel.org>,
- "Liam R. Howlett" <liam@infradead.org>,
- Barry Song <baohua@kernel.org>,
- Axel Rasmussen <axelrasmussen@google.com>,
- Yuanchu Xie <yuanchu@google.com>,
- Wei Xu <weixugc@google.com>,
- Vlastimil Babka <vbabka@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>,
- Nhat Pham <nphamcs@gmail.com>,
- Youngjun Park <youngjun.park@lge.com>,
- Zi Yan <ziy@nvidia.com>,
+ Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>,
+ Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>,
+ Barry Song <baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>,
+ Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>,
+ Vlastimil Babka <vbabka@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ linux-mm@kvack.org, Nhat Pham <nphamcs@gmail.com>,
+ Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>,
  Gregory Price <gourry@gourry.net>,
  "Matthew Wilcox (Oracle)" <willy@infradead.org>,
  Baolin Wang <baolin.wang@linux.alibaba.com>,
- Ryan Roberts <ryan.roberts@arm.com>,
- Dev Jain <dev.jain@arm.com>,
- Lance Yang <lance.yang@linux.dev>,
- Hugh Dickins <hughd@google.com>,
- SJ Park <sj@kernel.org>,
- David Rientjes <rientjes@google.com>,
- Yu Zhao <yuzhao@google.com>,
- Vernon Yang <vernon2gm@gmail.com>,
- Zicheng Wang <wangzicheng@honor.com>,
- Chen Ridong <chenridong@xiaomi.com>,
- Tal Zussman <tz2294@columbia.edu>,
- Kairui Song <ryncsn@gmail.com>,
- Xiang Liu <liuxiang.277@bytedance.com>,
- Ehab Ababneh <ehab.ababneh@intel.com>,
- Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>,
- Lian Wang <lianux.mm@gmail.com>,
- Joanne Koong <joannelkoong@gmail.com>,
- Kunwu Chan <kunwu.chan@gmail.com>,
- Hui Zhu <hui.zhu@linux.dev>,
- linux-kernel@vger.kernel.org,
- cgroups@vger.kernel.org,
- damon@lists.linux.dev,
- linux-doc@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B8BCB9C4-53C8-4D47-868A-EEEA4E0EBE23@linux.dev>
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>,
+ SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>,
+ Yu Zhao <yuzhao@google.com>, Vernon Yang <vernon2gm@gmail.com>,
+ Zicheng Wang <wangzicheng@honor.com>, Chen Ridong <chenridong@xiaomi.com>,
+ Tal Zussman <tz2294@columbia.edu>, Kairui Song <ryncsn@gmail.com>,
+ Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh
+ <ehab.ababneh@intel.com>, Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>,
+ Lian Wang <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>,
+ Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>,
+ linux-kernel@vger.kernel.org, cgroups@vger.kernel.org,
+ damon@lists.linux.dev, linux-doc@vger.kernel.org
 References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
- <20261119-mglru-fg-v5-2-9eee2fe97a2d@tencent.com>
-To: kasong@tencent.com
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
+ <20261119-mglru-fg-v5-4-9eee2fe97a2d@tencent.com>
+Content-Language: en-US
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <20261119-mglru-fg-v5-4-9eee2fe97a2d@tencent.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
 
-> On Nov 19, 2026, at 05:03, Kairui Song via B4 Relay =
-<devnull+kasong.tencent.com@kernel.org> wrote:
->=20
+On 2026/11/19 05:03, Kairui Song via B4 Relay wrote:
 > From: Kairui Song <kasong@tencent.com>
->=20
-> To enable moving file pages in folio_mark_accessed directly and lazily
-> for MGLRU, allow updating the LRU statistic atomically without holding =
-a
-> lock. It may cause temporary counter underflow, which should be fine =
-as
-> the counter is eventually consistent and only serves as an estimate.
->=20
+>
+> Add a helper that resolves a live lruvec for a folio under RCU
+> without taking the lruvec lock.  It takes a folio directly so the
+> lruvec lookup happens inside the RCU read-side critical section,
+> which a lruvec-based interface cannot guarantee.  The first user is
+> the lockless folio_inc_lru_refs() path later in the series.
+>
+> Factor the ancestor walk out of lruvec_live_lock_irq() into
+> __lruvec_get_live(), so that both entry points share it, and spell
+> out why the walk is enough while only the RCU read lock is held:
+> reparenting of a memcg that starts dying waits for a grace period,
+> so it cannot race with the caller until the lock is released.
+>
+> Move memcg_is_dying() up in memcontrol.h, next to the other memcg state
+> predicates, and use it for the walk rather than repeating the open coded
+> css_is_dying() test a few definitions away from where it is explained.
+>
+> No functional change for existing callers.
+>
+> Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
 > Signed-off-by: Kairui Song <kasong@tencent.com>
 
-Acked-by: Muchun Song (ByteDance) <muchun.song@linux.dev>
+Reviewed-by: Muchun Song (ByteDance) <muchun.song@linux.dev>
 
-Thanks.
+Some nits bellow:
+
+> ---
+>   include/linux/memcontrol.h | 71 ++++++++++++++++++++++++++++++++++++----------
+>   1 file changed, 56 insertions(+), 15 deletions(-)
+>
+> diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+> index 980358bc6f49..441a5d57e723 100644
+> --- a/include/linux/memcontrol.h
+> +++ b/include/linux/memcontrol.h
+> @@ -571,6 +571,11 @@ static inline bool mem_cgroup_disabled(void)
+>   	return !cgroup_subsys_enabled(memory_cgrp_subsys);
+>   }
+>   
+> +static inline bool memcg_is_dying(struct mem_cgroup *memcg)
+
+Let's make it const for @memcg along the way.
+
+> +{
+> +	return memcg ? css_is_dying(&memcg->css) : false;
+> +}
+> +
+>   static inline void mem_cgroup_protection(const struct mem_cgroup *root,
+>   					 const struct mem_cgroup *memcg,
+>   					 unsigned long *min,
+> @@ -1349,6 +1354,11 @@ static inline bool mem_cgroup_online(struct mem_cgroup *memcg)
+>   	return true;
+>   }
+>   
+> +static inline bool memcg_is_dying(struct mem_cgroup *memcg)
+> +{
+> +	return false;
+> +}
+> +
+>   static inline
+>   unsigned long mem_cgroup_get_zone_lru_size(const struct lruvec *lruvec,
+>   		enum lru_list lru, int zone_idx)
+> @@ -1510,28 +1520,41 @@ static inline void lruvec_lock_irq(struct lruvec *lruvec)
+>   	spin_lock_irq(&lruvec->lru_lock);
+>   }
+>   
+> -static inline struct lruvec *lruvec_live_lock_irq(struct lruvec *lruvec)
+> +/*
+> + * Reparenting moves a dying memcg's LRU state to its parent at any time,
+> + * so anything added to that LRU afterwards would be lost.  This helper
+> + * walks up to the nearest live ancestor while the caller must hold the
+> + * RCU read lock: reparenting of a memcg that starts dying waits for a
+> + * grace period, so it cannot race with the caller until the lock is
+> + * released.
+> + */
+> +static inline struct lruvec *__lruvec_get_live(struct lruvec *lruvec)
+
+Cound @lruvec be const as well?
+
+>   {
+>   #ifdef CONFIG_MEMCG
+>   	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
+>   	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
+>   
+> -	rcu_read_lock();
+> -
+>   	/*
+>   	 * The memcg can be NULL when the memory controller is disabled.
+>   	 * Otherwise, the caller keeps the memcg owning @lruvec alive.
+>   	 */
+> -	while (unlikely(memcg && css_is_dying(&memcg->css))) {
+> +	while (unlikely(memcg_is_dying(memcg))) {
+>   		memcg = parent_mem_cgroup(memcg);
+>   		lruvec = mem_cgroup_lruvec(memcg, pgdat);
+>   	}
+> +#endif
+> +	return lruvec;
+> +}
+>   
+> +static inline struct lruvec *lruvec_live_lock_irq(struct lruvec *lruvec)
+> +{
+> +#ifdef CONFIG_MEMCG
+> +	rcu_read_lock();
+> +	lruvec = __lruvec_get_live(lruvec);
+>   	spin_lock_irq(&lruvec->lru_lock);
+>   #else
+>   	lruvec_lock_irq(lruvec);
+>   #endif
+> -
+>   	return lruvec;
+>   }
+>   
+> @@ -1561,6 +1584,34 @@ static inline bool folio_matches_lruvec(const struct folio *folio,
+>   	       lruvec_memcg(lruvec) == folio_memcg(folio);
+>   }
+>   
+> +/**
+> + * folio_lruvec_live_get - get a live lruvec for a folio under RCU
+> + * @folio: the folio
+> + *
+> + * Same as folio_lruvec(), except that a folio whose memcg is dying is
+> + * accounted to the nearest live ancestor, which is where reparenting
+> + * would put it anyway.
+> + *
+> + * Return: the live lruvec, with rcu_read_lock() held.  Pair it with
+> + * folio_lruvec_live_put().
+> + */
+> +static inline struct lruvec *folio_lruvec_live_get(struct folio *folio)
+
+const folio?
+
+> +{
+> +#ifdef CONFIG_MEMCG
+> +	rcu_read_lock();
+> +	return __lruvec_get_live(folio_lruvec(folio));
+> +#else
+> +	return folio_lruvec(folio);
+> +#endif
+> +}
+> +
+> +static inline void folio_lruvec_live_put(struct lruvec *lruvec)
+
+Ditto.
+
+Thanks,
+Muchun
+
+> +{
+> +#ifdef CONFIG_MEMCG
+> +	rcu_read_unlock();
+> +#endif
+> +}
+> +
+>   /* Don't lock again iff page's lruvec locked */
+>   static inline struct lruvec *folio_lruvec_relock_irq(const struct folio *folio,
+>   		struct lruvec *locked_lruvec)
+> @@ -1826,11 +1877,6 @@ void mem_cgroup_node_filter_allowed(struct mem_cgroup *memcg, nodemask_t *mask);
+>   
+>   void mem_cgroup_show_protected_memory(struct mem_cgroup *memcg);
+>   
+> -static inline bool memcg_is_dying(struct mem_cgroup *memcg)
+> -{
+> -	return memcg ? css_is_dying(&memcg->css) : false;
+> -}
+> -
+>   #else
+>   static inline bool mem_cgroup_kmem_disabled(void)
+>   {
+> @@ -1901,11 +1947,6 @@ static inline void mem_cgroup_node_filter_allowed(struct mem_cgroup *memcg,
+>   static inline void mem_cgroup_show_protected_memory(struct mem_cgroup *memcg)
+>   {
+>   }
+> -
+> -static inline bool memcg_is_dying(struct mem_cgroup *memcg)
+> -{
+> -	return false;
+> -}
+>   #endif /* CONFIG_MEMCG */
+>   
+>   #if defined(CONFIG_MEMCG) && defined(CONFIG_LRU_GEN)
+>
 
