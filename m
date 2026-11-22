@@ -1,56 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795307635;
-	b=He5B8tTISqz30zrhPu/pPtBvZhHSUz7ApodQoheF5/NhJTF2xicXExKks/2jJoCiiYMc
-	 o1rxUZmVudnN6d7qa4fj3U1fCkCyofshYjGCpdS54br6jIV8PIQn+9mbXG9ZQme5RdJV7
-	 V6XdoFnKBpWIpcDi3p71op81sDUQg4M4qom4WuesF9sreVR1WrJagx/XeJjfiKpI83u1R
-	 tZ39sxEKIvNBm6+NoMVfBwLOY637xuVkFBj9o9q5X7nNkMX05i7DyMC/Y/l33cO+hDpf8
-	 irLTn19BPMCvw5MFOBRKdbKFNwehpJxqWBHMyotpwcO40p+QgEW9jNj8D/jV7IQ9afA==
+	t=1795310555;
+	b=wiCvUUqapfGpV+6/wApt0BEzJuM0bQFYlyWlsyvJ9hGa1kF1AVcRH+tgteyVdasCrUUH
+	 y7C5UcsAdCyDtsk5XylvLR2bvI7ZwLdMCgSbovv1F0ivBosUca39RIOPacXv/6xlqo9nJ
+	 IRzS6p1u4AYvJwCFBjSaWCDPoUAOXPAA9J4dV4+54b4uDR27W854+bt/wZP02fz5bNqSm
+	 8NRCkRMGBjc+lQk18OLfclyMGERzoZiD/zlQzO73/HvfVZBONVlCkJ6Rz+ml9kpPTkth/
+	 3XahctyzOR54ALtq6xbdCNQl4iyVHloT58KtFR8oer7xD5ljdBnMzTaJ1So03bsYuzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795307635;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=S5Vt0J2ubXWPNOQ/Q8svA+1mKnl9uRHMUsR9p9nrE7Y=;
-	b=IANj6H3WCTKuOVbHNWPsTzmOF1DqWrX4AiO2826So2u9QMr56H4RjSOjqZY6zkkDUhAW
-	 kt60FI3+VThvK/89WwdFnViwzBq4X5VfM5cC4FtShuZs5jN4hvgHfQi4BWb7Xcie15jZl
-	 Po1qaRMfa3jlvdTdZQ1Y+rtsom1WViCaVPmlTGbsslLGbPYB8DU7VVtzHfQ1FfJP78dlG
-	 Hqf+kifomVzymkbdgbaK4IT1Xo4LxuQh0SbfSAzGA9uz7+SMfZ7ue3b2r6nERag95bAhc
-	 tUYf4EMkMKkNAKooGLFsBEI4xxCn8jVKION0XNnYRQrHIle3XFtqbmOWZ4t5SqGAL6A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795310555;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=zE8gT4dthHqcTUv77ew8bDqnQXZvGmO379GEAq+aYmM=;
+	b=sdo5KUFhLbm2LwK8zyITvEFA7+MY0OCJSb+7zLZs02d/+1myGjbpSy/7HJ1+XyNKgFky
+	 gCnZ7hqgK1MBxEgxCWPrhHXJjKANdVDyCwLAqN+bF4RRTN8iYRCSkEqJ6z69SjzUr87NU
+	 Gx5DG1GGBcHUjfZyYzeJyFLm/C3zOCvtWQjeUmpK18u0N4Uaf/aQjpttvYAQ2mwbsHkJS
+	 TVoGVxu2eqA/o9f/iGnsN1me3I5V9nXnDCaM6/n4oZtBqzndLcD06yq4MY3elP+O3An0i
+	 AfglNrnhoRaSMLjA2gIIDgg2DQpiPPQx0PXfV/nIUivqxU0roganlQdyz8PDOek5JaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PSXwUlls;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BOjEfvAw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB927606A320
-	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 00:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B96606A320;
+	Sun, 22 Nov 2026 01:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PSXwUlls
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD461F000C6;
-	Sun, 22 Nov 2026 00:33:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BOjEfvAw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFF31F000C4;
+	Sun, 22 Nov 2026 01:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795307635;
-	bh=S5Vt0J2ubXWPNOQ/Q8svA+1mKnl9uRHMUsR9p9nrE7Y=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=PSXwUlls1W9OoDvbmmk77MtqrtM6EKuWSHmurqunRvwLU9aV56RFtk+1+W49Hk9CQ
-	 WJJhqZURPWhZwz8No/FVcNNXGHxsaBWHnjoXjPMLZlZ+k+CLgIBerCzPKXxH0utKJN
-	 xIntUPZIPo9b+B66pelSQGky8KUUEZwEPpHNVUI7xIcd7xHGIRrYSEDPG2/+HsDNkD
-	 2KuVe0dEBM4z20LsJ0cHTz5jqy+fjCcmXYwV/CKJn9bvPlNjkigBgFEuOR7VQ+p/mJ
-	 OElzTVQ9wkTQ/jqbKGGR3Y2eG3AJmxAblZTl58Evnka8DcmmM7t99hPCJyS7uuXLeD
-	 LJzrCWYzfhipA==
-Message-ID: <sashiko-outbox-227574@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH] mm/damon/core: do not overwrite wmarks.activated in
- damos_commit()
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "Yifan Feng" <evanfengff@gmail.com>
-Cc: damon@lists.linux.dev
+	s=k20260515; t=1795310554;
+	bh=zE8gT4dthHqcTUv77ew8bDqnQXZvGmO379GEAq+aYmM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=BOjEfvAwidbckoqjR4wNrgB9CbuljWYbNZOEhAFhqfQ4NZayeIpUIJzYmE29QtyEE
+	 6tUxCfwpDQJ/uMb6T24gDoLrh3q3I6oNui1kvs4kx4SOQzEhVy0iDeRGqQo4Q1m5Fx
+	 bsSu/X+eX+G2/aE57Ofwxjt1+ouyLaYjhdahM9ds6Mf+JaUVYz+Rb7tQj8f3O3pLTq
+	 G8TWLbT3sBC35XU2vlD4nCJ9ERR2OwIYJV18BZoZGuYRwB//xd0N4pvlcjTxbeF7m9
+	 DPxA2bZWE+dFcJ5DYsJbVG8TiodDTrShUt7xleVmTU5lh20SvmBGrRzAJ4IkQ77tGX
+	 +pAVZa5vTkvgg==
+From: SJ Park <sj@kernel.org>
+To: Yifan Feng <evanfengff@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] mm/damon/core: do not overwrite wmarks.activated in damos_commit()
+Date: Sat, 21 Nov 2026 17:22:21 -0800
+Message-ID: <20261122012222.148520-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261122002930.98401-1-evanfengff@gmail.com>
-References: <20261122002930.98401-1-evanfengff@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 22 Nov 2026 00:33:54 +0000
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,27 +61,33 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+On Sat, 21 Nov 2026 16:29:30 -0800 Yifan Feng <evanfengff@gmail.com> wrote:
 
 > damos_commit() copies the whole wmarks struct from the source scheme,
 > including the private 'activated' field.  The source scheme is a new
 > one, so the field is always true there.
->=20
+> 
 > As a result, a commit turns on a scheme that the watermarks turned off.
 > If the metric is between mid and high at that time, the scheme keeps
 > running, though it should stay off until the metric goes below mid.
 > DAMON_RECLAIM and DAMON_LRU_SORT use the same path for commit_inputs.
->=20
-> Save 'activated' before the copy and restore it after.  Do not restore
+> 
+> Save 'activated' before the copy and restore it after.
+
+Thank you for finding the issue and sharing this patch.
+
+> Do not restore
 > it for DAMOS_WMARK_NONE, because nothing sets it again in that case and
 > the scheme would stay off.
->=20
-> Fixes: 9cb3d0b9dfce ("mm/damon/core: implement DAMON context commit funct=
-ion")
-> Cc: <stable@vger.kernel.org> # 6.11.x
-> Signed-off-by: Yifan Feng <evanfengff@gmail.com>
 
-Sashiko has reviewed this patch and found no issues.
+Is this really necessary?  If not, I'd prefer restoring it always for
+simplicity.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261122002930.9840=
-1-1-evanfengff@gmail.com?part=3D1
+
+Thanks,
+SJ
+
+[...]
