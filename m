@@ -1,85 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.227.138
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795368739;
-	b=T/zi6lvj3bui8w9T6menuXBYPS9DQjtQTFVr3CQAIwIJ427dyp99jkV+/J91PcpxSMzu
-	 zV6Je6Ntsro14v9Whjy+CPRJtTtoYomxXwx8Ps7CvEHxD5e+x4u8prwWRz3FqQmRn+mEB
-	 rOz9v20VJY6xM9nNaA1ShJL6d5nKHeFUIRzBAxBpFVncjJlMvZzHxYO9F4+HMx9SEKdMj
-	 KrNEWEt+eNKY/BTuR8srkqxmZKQdgQtCXWQLFcbUKK5EN9ClriWPqO62ox1uYuhE39nnY
-	 YAW/KA1othpKQw1vWVqmC3Z+BydcRZw97jzQL6pn+bpsD2TqzsQJZsmHAepfmn9gjiw==
+	t=1795374696;
+	b=0RXWMr8W0g14Ip61YmL3zqTAOyZL1ExoSkg0lqJGgR1GX9/VCyvJmcPY5p3qUJd+9H6B
+	 pVcTbGjyUM2T3nCLytbPHXyT8zXE6bHcBTR7hs1dKVCWf/09uAklcEKuZw4zW1FnR9ZXZ
+	 1iu8Jx9MvwQTAdzPTyvA8L+/8bPNTK6wOJtDGz1zIG0w/seNnP5t3czVq6dZK4PHkFP20
+	 VMDCNWCAIB2MfvAfJqe9bWqeNAk+nCxBOenBJbKwaxtfHqCdI55QWcBv2EkyWabKSCMEC
+	 +ycS6grZR7c0cTYf7wQ4pAZyvCRYlKlWIB5GISR8hrQzbQBJKuU6cPXE2velEGKpSfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795368739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795374696;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
-	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
-	bh=96+Ra5zxNltRU2dUwkJA1qT54mu0P+GyudrjkcDbIs8=;
-	b=C6855KcGUIwrR6GFYIpUaEZ6VWqvTUw+tYDEvYkZZrYAlksL6lyO0pJkct3cINhLQdjl
-	 n9BrZcY3xOmEQ7m9u9UF6nyhuK2J9N58N83GzAQFN98jK5z1wXqhDdQ8qqD+WJ63iHQW1
-	 ATIKI1vwj+7/dZvopSXUE43de28s6RJM4DIXZRfWHpfbIQoNOrh2O1Acuw5m2jbepSITb
-	 gWUk5tq0HyBCIflSdkCwT3EPl8I3c7FhjI8EnJV97SVK2WDcVR1lnzUlhctFBDvXnfOTM
-	 Gi22Yq2a1L3g8Yte2f+KV8WLRNzTny7+Iiw1hxkZB2XCEhqo+nMkVyUUYmXnaZP14dQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:To:
+	 Cc:In-Reply-To:References:Date:Message-Id:X-Mailer;
+	bh=oGsMa7wmHQHTRJX2QekmD3Y6Ja6uGmq6iEm7evLlQd4=;
+	b=gXH42Kv7aJURwU+QqOCiGNo7v7lgXLJ8LXIIdGSITAYWaK81zhilOS9pKaKlTmIr5fBt
+	 mbON2mmOvb/LQG86zLR1DpBQjm2EUrJIKsP/qxRK+KmoujttJlMLeMxaTtm/Y8MeWRUGk
+	 H5fJELodP3g5q0IjcQ/+fe9RoPIw3dIDL4luz4Xn34euYOvxKKDHTeRv3Xedf+IXnANQ8
+	 Z0Pc71NGlNg+A2QX4SVTi0bayePV/rIOyTcYmhgETVkkJGOSfeEw1XWpVPAowwVZJ3Dz5
+	 WmzNamIgFftyAa2t2hKnV7htv7VtgiXrm4sHipOB2LW3PHJtvGjweY3Um+7mYVCqKSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cDn0WAhU;
-	arc=none smtp.remote-ip=74.125.227.138
-Received: from mail-pj2-f10.google.com (mail-pj2-f10.google.com [74.125.227.138])
+	dmarc=none header.from=gourry.net;
+	spf=pass smtp.mailfrom=gourry.net;
+	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=K8iea7mw;
+	arc=none smtp.remote-ip=209.85.222.174
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8E6606A320
-	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 17:32:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC8E6606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFD4606A333
+	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 19:11:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFFD4606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cDn0WAhU
-Received: by mail-pj2-f10.google.com with SMTP id 98e67ed59e1d1-3b4067446d7so397610a91.1
-        for <damon@lists.linux.dev>; Sun, 22 Nov 2026 09:32:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=K8iea7mw
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-94961d90b79so306566585a.3
+        for <damon@lists.linux.dev>; Sun, 22 Nov 2026 11:11:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795368738; x=1795973538; darn=lists.linux.dev;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
+        d=gourry.net; s=google; t=1795374695; x=1795979495; darn=lists.linux.dev;
+        h=message-id:date:references:in-reply-to:cc:to:from:subject
          :content-transfer-encoding:content-type:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=96+Ra5zxNltRU2dUwkJA1qT54mu0P+GyudrjkcDbIs8=;
-        b=cDn0WAhUNut6KFrndvTUjsouz0kiT/mLC44uAm7ELRDXyoc7fylySQno7+EoDougzR
-         IT7UR2Ott3kOHVc+73zS7UIbQRcbeIp4PiRqftewkDwondWMwt/twjOxMd2TLwLNgRoH
-         njT580yk+lGfVA/9P4doPWNAMB8R9y/Uy6Cr9YohOBrMWrr07Vtovh3Gf3aqZ839U6GE
-         7+9xEQe95mk8b2aRzl4Xpb00b41zycxdD+eAa3UN4HuvPIdTBfMOV/mLE4IOE+OeuWo2
-         OrFQF8STm4QiDgIbOz0VGvv93eqmlCBaJn+T+eGJEP5gh2gwh4UuPzi8sm8alM+tBVUS
-         YKkg==
+        bh=oGsMa7wmHQHTRJX2QekmD3Y6Ja6uGmq6iEm7evLlQd4=;
+        b=K8iea7mwyVESsZ8094DXtxwvucrDg/8tk0BjHr/6M9h3+i84is1KgpFNkEGLNRXh6v
+         ccGknAgcT3UL4EMlFLzALeyajVZ+5FI0baGbbdrT/x1BAwUtoKDMp1ItpWhIrYvC1sLU
+         e8WPS6B3Z5WXD8nlMiUvQf7aVv6TSJQ+HXXtx51uBxEe7HgpFk6pyAA4tv2MnNYhdNWS
+         fltnmRXUVOVeNjqNhRQspuRVD18NXd3zK9nSNwSNSAxqMkfSWiKofFpHnjovpg9nVw5k
+         xn4zmim80Qt4xYCCtN28A+ip3Xgo5HV5zMxtjrIZ0t6aPOHt1yxWQ5pabW58YnK/9tqG
+         csvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795368738; x=1795973538;
-        h=references:in-reply-to:cc:to:message-id:date:from:subject
+        d=1e100.net; s=20260707; t=1795374695; x=1795979495;
+        h=message-id:date:references:in-reply-to:cc:to:from:subject
          :content-transfer-encoding:content-type:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=96+Ra5zxNltRU2dUwkJA1qT54mu0P+GyudrjkcDbIs8=;
-        b=xD2sWldYL9aQPDt5O7st/tzefJE+efJzFMvQ+J3QqJQlnwzovni51zhLaF9fwv/Gg4
-         zgeufeI6iy5/ERPOy3lMQiXAH6nwSwVJpU6JJBq+d7g6Dyv7LfLn3q3l7+n3e5VWaE1q
-         V/v0IDHqu+WRLZY6I73G8SF/KwiHH/mZwY283A9uzMKtfkvH3NSbbm5ZsRZkYdtCIZKL
-         hwkHwFQI9TW2YLM5SN6js1RGnSEMpzaEzJUUrxbndlAHnRl7cShmm6E0V2vq0zyk60+f
-         KBy9OMU9VWaKbF5FDU0NOdA+3ojBFAyudvzgL/93tA/sE/mMj8EqumcF/kN7cLUGQrgX
-         VXwg==
-X-Forwarded-Encrypted: i=1; AL+hErE/ouQReudfEOyB5cKp3Zwc67eIoUwfnfYm/3ThF7IkdZJChd3Yp3gTj7yGsS5yyUkkIbK7vQ==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/Hpjr86QmUC9/SatRZbSNAWx+46VvdxqysGeQycsdFGLtBu4Yt
-	qAO3MzP2W7L6dD5H2ccvx/sVKCbqJ83b8Idt9yTCfk7dX2faaDWSxPpokY7l6GVd
-X-Gm-Gg: AZFdTZe+b33802qgBQofTjgt+7EUaEpv3ZI11OuhaYUnEFBpv/vMlN/YZEalgl8ozAl
-	FhL/KJIRmAGNZciGpThkmz2rNzc2g7Hti6XhqnP6yjD9RIEkLXRV8rk9dbil9sCwkMxxqNtYc6J
-	vs+kcpDg1xcUZe/wXFxKPveng8uV8nPi01zPRZi74jOUABR/juUmUXpcXgNqb1c9TFvL4tNB/ys
-	2x/uj4nI0pz7vk6LBApHXXZRcb5AeOZWq8RlG4WDWN1YskhIKA4yeiXAbDiCnIkjqWbEtg1L+ib
-	VoAqkK1/8JM7l3apSDH2JUcQDyNikaUxcHlSFeRVNtaKPtyMfiajFfU2Dasid3yI6qU8eu5B5rX
-	2x5ua3FDneFjIk7ZpPyjPcEX80jkhmMh2HjP8gm1XYyrGInHx3LBlOkANqwgveWP1So9dHIAHjT
-	Cvp51OZt5ArHf1FoAur+logEMdV5B7JnfXicoltubKfzOc5GqW+SCalyY31sc8yBUeVpFPZskKO
-	gpVvGb37Hcw9tLEl/vRkZ/lRqIjfuPoTT+RECfbC6tP8VmRjdBJXO93H9o46W1j1bmYlcXqQt6f
-	1T4NNj70T/Zz5d/6HmZYov0pdj8OhMB14qxGZIPG3ibTIfnP6T1Tm1u7581Lw5yfoZGwQY4NXWW
-	mmUu/ZlZBzRyTzhi2J/AKvzSzm/LrXDOSZNoWNErvzIL5piE5IRgt9PiLcapdCg==
-X-Received: by 2002:a17:90b:5303:b0:3b4:41a8:7850 with SMTP id 98e67ed59e1d1-3b441a87c7bmr5492062a91.6.1795368738095;
-        Sun, 22 Nov 2026 09:32:18 -0800 (PST)
-Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b40578dca0sm16955781a91.2.2026.11.22.09.32.13
+        bh=oGsMa7wmHQHTRJX2QekmD3Y6Ja6uGmq6iEm7evLlQd4=;
+        b=LH3OXSGJD5RjpwofU5q/Xu2gjvKnQjqjB6WL8La78jpJ4PzRibUXRO3L3qZkUDB9B3
+         ViiBJIEXYQZj2dZFR3hYkUUQm6P2qA6VUDSTX01kgMZxanXRVp+qB0uk5u+IVRJHkiT1
+         HGKr1eXFe5o6VEj9WhtucQhN+KO2zX/vE1Tq5OCcegEa8xTXYLCASV0XhmbaIhWWC1pj
+         FUUCWdi3izo8dYuygMrOxm0YyTmQvpsDWqVFTZHe0rtXMEJmAfLblsSDT1h1aUNGflmw
+         kCBczYJ5SYjzFIxZFVhmTfKzF40mLmOHe35qFTd2bQ9w84CaHr+a09yRMKzYpjsWNPNF
+         MOJg==
+X-Forwarded-Encrypted: i=1; AL+hErHCMevT4lNN9StjxU/F0QVKh20u54tEgfEN6VqTjR++3WQWAruTRQgK0scJm9BtXeZA/VCKIw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z8HngMZrfx9OaeDQ8Z17rjPh5NMpRFfNAsVlVkAQu4OG/bf5YFG
+	udHtLrNCDD13ga6t6txJcoxa6SqYbYP2mCaMNt9rL2JxQZlltZOo9YaxmDNOqQOAAy0=
+X-Gm-Gg: AZFdTZeInmDcY3aB/edSaTSaraBZ24dE66qVsZ5McIIC5EPRCsd1A5hgQcAKuZmww4V
+	eUExdXJMvGsk0dPuHakNvSv2kw7ZpLzu2k1QvKQEaZO1NKJiDLL4MuGoOQuMlS+J+oMKNlsVKAe
+	xf4efxaoAJeEuTXRJjz3QFBG7dbCZ3PuXvPzJSJEn8UvGlnM5IixoUql+fwP5P+v+MS1csuyucS
+	b2zhxB3gU0I0HfFLcY/LSd9yjOxdM/bLgpiUO05/XDqdSQeOj+1Br2G37UWI/cyJguXZnNt+WBT
+	3otpLzoVgGgDRMJk8c3k0//dWg2yhGo23iIEpwcFvOlhLNjNbh0D1Bf7AL+WBBQqMrSQO3ko8rM
+	bsiITHTZudENESilnwDDgg655IMDfwPZ7BdljUi+YK8U5Z2nd63TVEUYSTA3zupGFWMWUE27P/g
+	TBoLis2zsYtqT/ncWSagGHRDa0sA1bNhcYD+rDjbzokb0/rmxS52IeGFXnLuKYW3e80JgsANV8v
+	amg+iu6zBfmStoMq8rUMzMuS59hwCDDVn7ir4d3uIuzlBPL1GmKnqcvtyB88bTo+E2/YI0VNCqF
+	0HW08Zo8KYslL5UO3OdKS5MW3HkA/nUvmNqD7Iwbiu6qaFk9FiCJGpey4H96wZejbhvM/+bj+4R
+	ycQTIDzc=
+X-Received: by 2002:a05:620a:4727:b0:949:326f:bd2b with SMTP id af79cd13be357-949ba9aa37amr1639379885a.43.1795374694656;
+        Sun, 22 Nov 2026 11:11:34 -0800 (PST)
+Received: from [192.168.50.231] (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-949bb38c903sm651828485a.19.2026.11.22.11.11.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2026 09:32:17 -0800 (PST)
+        Sun, 22 Nov 2026 11:11:34 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -91,27 +91,86 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 03/27] mm/damon/core: introduce damon_submit_report()
-From: Aveline Noir <jm5905938@gmail.com>
-Date: Mon, 23 Nov 2026 04:30:26 +1100
-Message-Id: <179536862669.5.2109435867001229835.b4-reply@b4>
-To: SJ Park <sj@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
- linux-mm@kvack.org
-In-Reply-To: <20261122171525.153150-1-sj@kernel.org>
-References: <CANOyQmH5FX18LmMW+QwAcvOiATgUqx5VH02S5DyfTg+qPMSX+A@mail.gmail.com>
- <20261122171525.153150-1-sj@kernel.org>
-X-Mailer: b4 0.16.0
+Subject: Re: [PATCH 00/60] Private NUMA nodes
+From: "Gregory Price (Meta)" <gourry@gourry.net>
+To: Yury Norov <ynorov@nvidia.com>
+Cc: gourry@gourry.net, Yury Norov <yury.norov@gmail.com>, 
+ Rasmus Villemoes <linux@rasmusvillemoes.dk>, 
+ David Hildenbrand <david@kernel.org>, 
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+ Mike Rapoport <rppt@kernel.org>, Michal Hocko <mhocko@suse.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, 
+ Oscar Salvador <osalvador@suse.de>, Johannes Weiner <hannes@cmpxchg.org>, 
+ Suren Baghdasaryan <surenb@google.com>, 
+ Brendan Jackman <brendan.jackman@linux.dev>, Zi Yan <ziy@nvidia.com>, 
+ Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+ Randy Dunlap <rdunlap@infradead.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
+ Johan Hovold <johan@kernel.org>, Joshua Hahn <joshua.hahnjy@gmail.com>, 
+ Rakie Kim <rakie.kim@sk.com>, Ying Huang <ying.huang@linux.alibaba.com>, 
+ Matthew Brost <matthew.brost@intel.com>, Byungchul Park <byungchul@sk.com>, 
+ Alistair Popple <apopple@nvidia.com>, SJ Park <sj@kernel.org>, 
+ Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+ Juri Lelli <juri.lelli@redhat.com>, 
+ Vincent Guittot <vincent.guittot@linaro.org>, 
+ Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+ Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, 
+ Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, 
+ K Prateek Nayak <kprateek.nayak@amd.com>, Kees Cook <kees@kernel.org>, 
+ Kairui Song <kasong@tencent.com>, Barry Song <baohua@kernel.org>, 
+ Qi Zheng <qi.zheng@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, 
+ Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
+ Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Michal Hocko <mhocko@kernel.org>, David Rientjes <rientjes@google.com>, 
+ Pavel Machek <pavel@kernel.org>, Len Brown <lenb@kernel.org>, 
+ Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, 
+ Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, 
+ Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, 
+ Xu Xin <xu.xin@linux.dev>, Chengming Zhou <chengming.zhou@linux.dev>, 
+ Lorenzo Stoakes <ljs@kernel.org>, Pedro Falcato <pfalcato@suse.de>, 
+ Jann Horn <jannh@google.com>, Chris Li <chrisl@kernel.org>, 
+ Kemeng Shi <shikemeng@huaweicloud.com>, Nhat Pham <nphamcs@gmail.com>, 
+ Youngjun Park <youngjun.park@lge.com>, 
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, 
+ Waiman Long <longman@redhat.com>, Ridong Chen <ridong.chen@linux.dev>, 
+ Tejun Heo <tj@kernel.org>, 
+ =?utf-8?q?Michal_Koutn=C3=BD?= <mkoutny@suse.com>, 
+ Dan Williams <djbw@kernel.org>, Vishal Verma <vishal.l.verma@intel.com>, 
+ Dave Jiang <dave.jiang@intel.com>, 
+ Alison Schofield <alison.schofield@intel.com>, 
+ Shuah Khan <shuah@kernel.org>, linux-kernel@vger.kernel.org, 
+ linux-mm@kvack.org, linux-cxl@vger.kernel.org, linux-doc@vger.kernel.org, 
+ driver-core@lists.linux.dev, damon@lists.linux.dev, 
+ linux-pm@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+ cgroups@vger.kernel.org, nvdimm@lists.linux.dev, 
+ linux-kselftest@vger.kernel.org
+In-Reply-To: <awMdeK8O-5mffg2m@yury>
+References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
+ <awMdeK8O-5mffg2m@yury>
+Date: Sun, 22 Nov 2026 14:11:31 -0500
+Message-Id: <179537469194.412063.13456998694958645706.b4-reply@b4>
+X-Mailer: b4 0.17-dev
 
-Hi SJ,
+On 2026-11-22 11:51 -0500, Yury Norov wrote:
+> On Fri, Nov 20, 2026 at 01:08:51PM -0500, Gregory Price via B4 Relay wrote:
+> > This is v6 of the Private NUMA node series. The series falls into four
+> > parts, each building on the one before:
+> > 
+> >    1-18  mm: introduce N_MEMORY_COMMON
+> 
+> I walked through this part, mostly. It looks like you can substantially
+> decrease the patch count if you keep N_MEMORY meaning unchanged, and
+> add another type, like N_MEMORY_NOALLOC.
+> 
 
-On Sun, 22 Nov 2026 09:15:24 -0800 SJ Park wrote:
+I don't see how this would reduce the patch count substatially, you
+still need to convert existing N_MEMORY users and need to differentiate
+between general purpose memory nodes and private memory nodes.
 
-> If you don't mind, I'd keep this as is.  What do you think?
+And N_MEMORY_NOALLOC is not a good name.
 
-Makes sense to me. The rest of the patch looks good :)
+-- 
+~Gregory
 
-Reviewed-by: Aveline Noir <jm5905938@gmail.com>
-
-Thanks,
-Aveline Noir
