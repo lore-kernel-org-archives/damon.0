@@ -1,94 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795356000;
-	b=spDWP95C4fWaieR2tFyMWWMemlCsqBAzep7AgoscT6rBOxnx883JJNd2R9xVFkxFWqAR
-	 3p7k9WrwOV9mm8/AK9/37UVGRpeg1BjaNgfnQfsMNjOu76jsGZYPU0gHFK/Dfhf3sS7b1
-	 RXFwHvc6l6mVvkgOQ3dAhGlN9MhtzwIEuWGq5AdDI8Rtb9ApFy8mBKUv6wO+trI4bsTDI
-	 RYmcUMLJLcuG+dTzg6kPz+Yf9m/ejhSccCyYoXR6o+zYQMG2K17TDkfmjsQxmX5HKeqHy
-	 +ZTGIw8dCONuQ8W4pz8ENHgg6ORLEbX9ZVwuV5TuW4BTk5qbsu3CCu59awRMi55ti8A==
+	t=1795357830;
+	b=LcGtaxmN5/Hei7C1RPQFA/RvrcitvYi5le7XVg3aLsFZJWxU7bLCdWZe6euXKH922Kfa
+	 vH2N/Q2s9Lfk6dLrkaJ5a4eJrDj+ytXy/7cEYLJorsuHYgIBOCR40XrntRSwYtq3T04Pj
+	 wMnB9AZNIZk+MXPHmqNdQ1VOiNwSGIl+R6MsGiywSJgec6C3hQyac87dXxQWYScXkalAE
+	 hbfcUV34gQNPnob+O8v3a+dvv2C6YXX4YPTANDmFbaSH0ewo2H3yRut5nsFmIhnuLJ3xe
+	 Bu2mEkYx/TXQNcy3Ympx0Ol9HC7ZL8plmOh15BNT51WZspeKN+gJfZIXeb4KEoL6p+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795356000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795357830;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=990T3HNtPZH3bqJpbncLzkV3NXRnQ92AeqD5qJtei7w=;
-	b=yDBXg10QdE1poN6kEbrBp3DuQ/PqiAhSQwAwReKOFu10BRU8Obk1k5dSD4W8ZPoHbXCB
-	 YZ8trCA7FpQeM++9KRC2qOVGiABcVtN3IBF8WA5whCdG5fM8uHwjWecwvDcm1zBMybATO
-	 WLrb3GHu9knvH5VPFSPvftD+IUCzFISm/gCaYkoXlgqhLBG+uZwMHJYkh7DCGIivKHeYj
-	 db/rMEEdMQlrpkdM6nhnmQUj/wvyNP0hGkyYPtt09eLZoN9pN8QaqpMcrfHUGACeSOvvT
-	 rsZMd3S39SqCc6qg3ylgWxgsRqXFq2LR8mOtNrDz9z/sYWl39TR8AmG5oWbHDfdSjIw==
+	bh=QBjN2nkZH7Gcj/ZwiauxMt+VX48sTrjkI/4AB/9s0ZI=;
+	b=lh5I0a+XDePGK/xWdJrHUirt8aBQ78uxNfC3Q9kydsL8brB/udTYGwZsTdO5qIoGmCpw
+	 k9O8nf9fUDoNVUxf+/mB3XOXwxupuLRPxngsczWlxDRHpByUPW7sdFTCQ5hiu3SzpNWPl
+	 Xm4cabSF6+tBdVUULEBNUTIB6LM7AIXMO3hzk95V0UzVeKiYiYL+RTt0sh0nnR0OaTowE
+	 j/U/EOOOAt4RfmCJUd7MdX/i2B178kUaVVFe9LhWfX8AtSPtqRS7u4eJFKoJdjcbn92m1
+	 7omZ3MQbgVncGgs7m3FqJYtu18kHO/GpqvkX8HO+81BUaLkA0emk/EvOu4ol1PnzKDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JAGdJIuk;
-	arc=none smtp.remote-ip=74.125.82.46
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="qT7gBbD/";
+	arc=none smtp.remote-ip=74.125.82.169
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C84606A320
-	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 13:59:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7C84606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1331C606A337
+	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 14:30:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1331C606A337
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JAGdJIuk
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-1b3acec6677so3477984c88.1
-        for <damon@lists.linux.dev>; Sun, 22 Nov 2026 05:59:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=qT7gBbD/
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-386ab9ab619so582897eec.1
+        for <damon@lists.linux.dev>; Sun, 22 Nov 2026 06:30:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795355999; x=1795960799; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1795357829; x=1795962629; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=990T3HNtPZH3bqJpbncLzkV3NXRnQ92AeqD5qJtei7w=;
-        b=JAGdJIuk8ohLIUnkCIKLAcsVTPT3LFeGoUOm90iQa5RCCkEvq78ya2SNAVpwgOfqfH
-         iTz/aCoacvbx2l7dh06rENsrKumTS4/vrU2LRyyF7m+eIUxrYsslD1EpLSqphwAKNXww
-         8SwiQen/qZ5QyvgI9f6lcVNOm+oEWBBcXV2oIogLI54vUGxnAQ6AK00FqobJVjEk4Xa+
-         mYADgJgAEUDs9LxeqVt/5jcGwGMNvuqCwZAxCPJAOnoHC7Ex0zrOpMT1cceaxKX97qJy
-         j5Xpuet48cSk5Qv0n7SrjB5E/gxEB6+4PJKLdtnBphL9dgX4RR2eeqAF1m1FR7n9UxrQ
-         BRnw==
+        bh=QBjN2nkZH7Gcj/ZwiauxMt+VX48sTrjkI/4AB/9s0ZI=;
+        b=qT7gBbD/tBfC97khl9LJagMQdXSylQMZKZWW3Dxz4Y+sDR3CAyJdYJ78kXd+fTOAEy
+         7UyPEVfJ6PSK7V7nnG8xMnKlymukIiyWq/X3q08kitqJdko11MHrylPJX90D1+OwVbnH
+         ibXJBsO/jcWynzAOr96juQXDuKqjIGwwOGXGPbdJ5kvmZLVLave2e9RrbaH+36PWMLu8
+         5Xy5a6vRFFA97QSZmTDGNt8PppQPJk/iUO8fNb9/8qEgr6jrjI5Zj1jqMWU5j/INTDLG
+         ebiM6/khWVDSNPPkA/bDg+0eEXf+zwWU65gLTKM9Vep9FkBGqsHX+bEsPMkxj3Qd3n3m
+         xk8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795355999; x=1795960799;
+        d=1e100.net; s=20260707; t=1795357829; x=1795962629;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=990T3HNtPZH3bqJpbncLzkV3NXRnQ92AeqD5qJtei7w=;
-        b=CzhafsoMzToerha5zC0xor1iCHasQx60BrsyA426ejx78Rq9u0fLry3idoALW7upeX
-         +MmoXfk+3yjsYrE5FyMw7rBMkV4FATmIfn8BWKisj/1MVgFsas2CM7RZlmYhZp1pgs5O
-         tLHVzvLawpyohm/3Jos31b94Z9xl/DPAPlfEp0ZJuQ+bTZBpbBKR5w8fY49Wi7akzj+h
-         /Fjpcthujiu/yC6eSmYrYWW5v0Ko1NhD3ET6cja9Hin7eM7kFIsXmPQrtYEKocClFxRb
-         IE041arfsFIKYa1BPDbJ49UtB3TpHuhwIpVjCMkeffBavJB4MjJyMYR0r6nV4Ym+N9Ld
-         vGUQ==
-X-Forwarded-Encrypted: i=1; AL+hErHbY6pKsZglMSBgOTn7uRsdrewUulvWkt2Hm03ijSgSJ6fziX80keRMIQUhBP6w60fn9GOQOA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8tqg6lCLT5MLkbEynHbkRyXKqJlX9svn33gcyioDbWrAEa4wMO
-	Bf3HgSQ7OPTKsHjBMNU80xKmlyvTH8scvXPKU2jfBMUuFOTFZ/TVQvku
-X-Gm-Gg: AZFdTZeUQsFupDsBbcUJnN7h8Pd3F8lA+g/BPT+FX2aR/Bb4RLgInSm1g+ruzHzlQ3J
-	GzZSRLPuJRN+IRxGwhxTRPOuySe9BEk5ooL8OR3rJnKdP1TUM7lFWbt52194ugW+XDfskW6AzE9
-	TLsYECOlw//gmcZyU5hcCWIm4k8Odg6OQTyAg83xbyu2/m/SGNmeFsPqqJZmGjvZSw65f7YYfIC
-	cSWezs6eIPeg4f45FtxAWbr4OlHzapwfOPbt7KM02Mj7hS7/rNg4ql8/UL+BOe3IuLiOFRrFl+z
-	dW/f/f2kNOEMd8z6xeHWbNFCf6izL0Vhriqa9lxyIsBp5Q9DVAXHMxYgRfftgKAUoOy5/qPyLBk
-	eLUUr/82FMZBedf3dQT5jzLVcvFmN1Td/I5WXU6sE1rIMBY+cYKhfu/FLvO3cg9I4cBb9oz3KYP
-	wQIyn7bYG1ve+mH9kN++1bipCWDdHmD87xg9BdypGYr234r3mRluld8Te7I++6EpNpEj9QMckcF
-	v2elkys4VhIG/kYY4klEGlijry0jtIJVRLyb8ewMPYlGcxxozHPdyumvKOZBr8VghPO99YFsplm
-	bWJvH8BRpBxwEtT2ZzU4YnzyuMSHAiDKbTtFOwbs060IrrRE7OIFKgkeGLf78hzMNL6/
-X-Received: by 2002:a05:7022:b909:b0:1b4:f3af:355e with SMTP id a92af1059eb24-1b5568a660emr8203471c88.13.1795355998971;
-        Sun, 22 Nov 2026 05:59:58 -0800 (PST)
+        bh=QBjN2nkZH7Gcj/ZwiauxMt+VX48sTrjkI/4AB/9s0ZI=;
+        b=IWDJOlYcTihUO0zFZml91578geb/7i9QPOiukWdAVIDsDagfwYa3CvIlCtDZqTYP5F
+         HDQhJPh6u8xNzSHP+EXut4DM9f6anVzi/I58yJ6rnAzD57Vp6mh32VqRWmelnVLVjO2S
+         syQtDtETQelK3mfHBcmGxH/OXzZeJkwfTgZ1FkGPD9KZVO+96CPVROCmXqWIEfpBsJdX
+         gUB4s3EMGm+FlMo5gaSNfZVcLKT90+i3BViU9UPSSgSTCq1Evk2okVJ1Yf/LRP/sbTu3
+         RtRZjkDWGNba/MSWl/dsElZNBMO0e4xfX2TlTpqRG2QoVSHYbmu8i+2D58GBsBaOIT++
+         I9EQ==
+X-Forwarded-Encrypted: i=1; AL+hErFkrEaoABC/hOoaFe1LWZi/LZFOvutr0Moy0zDTrvJVd01mPqYqqBLdWJDdZaFUhvTV0NYr5Q==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+0uRxBNZ9hSNaE14v01+g3XzO1FC8jyBr3itXA3ggt0npbotWk
+	Jy4oNjUPWIYwO4S+G2J0mjNirVIOsh45Z1lm1P1ZVAkYj5lS6tjYda/4
+X-Gm-Gg: AZFdTZfU83plkWtcslYu1O1wEptL5yqK8uU8tGve0V2N8oLEg8KpYm4sUbHEtAcOvc6
+	84cpeJTRqjzKbM3kcahLiFbqfy8ImhQpFzMRwSVD/FEIgp/eDyg/vGZaBnMd3FpYFPlM6K+kCij
+	/K6r49GekeuGaqGwKJPwPmOcm8KxxKvQdkkLdrmuvyUfZT4nNE2y4KIEA03zTp6PKrttBPs1VSb
+	TGKOaruZrG05AAv8sNBcNxTOtdcLWauHNWPC6z8yyw2UO8eG2Miy7Ri3r1O548b0K4eniQuRauo
+	tOyGoym59MtxKKwwzdYj79ye4OjuUOCh7RXKw+Atq877IMAlEhPnGyfJR63IA9eEs5Ip1ENM+ie
+	uOS84W5Ct94s2AKsPnfqchyrMMf/CmbKDv+uXviJ87EX36Ry1Zj2ZfWnTrhLyLcDPQ85RH3Dgli
+	eFai9lxiNF1QKF6Yo2Irx7N8fElr5pqqU3FzWo/cEIFWoCoME+uJ7rPG2a+wn2LXFKR4youFt5Q
+	vTeOWPMREmk50Xtj0thoYKtVlpLSmXrsvoHJRt9F3RuyQbCZ0G1FoaRm+6x7NOlwrJ3QXmaEyhG
+	pYtXSN5fHLS4HdxkAujnTMsm9efAS9wzKBWbjyoW0IGDsZ3s5+EQ5lcDNVUXm05Z6wX4YcPjuEM
+	h4+Yg2W+OjV51QA==
+X-Received: by 2002:a05:7300:e9ce:20b0:36d:5102:9974 with SMTP id 5a478bee46e88-3856c2c2123mr11231914eec.2.1795357829128;
+        Sun, 22 Nov 2026 06:30:29 -0800 (PST)
 Received: from localhost.localdomain (vmi2317719.contaboserver.net. [84.247.152.64])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1b5567e2bd1sm20585980c88.3.2026.11.22.05.59.57
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-385667decc2sm27877901eec.9.2026.11.22.06.30.23
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 22 Nov 2026 05:59:58 -0800 (PST)
+        Sun, 22 Nov 2026 06:30:28 -0800 (PST)
 From: Lian Wang <lianux.mm@gmail.com>
 To: SJ Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: Re: [PATCH 04/27] mm/damon/sysfs: add admin/reports/ directory
-Date: Sun, 22 Nov 2026 21:59:18 +0800
-Message-ID: <20261122135941.78688-1-lianux.mm@gmail.com>
+Subject: Re: [PATCH 00/27] mm/damon: let users report their data attribute findings
+Date: Sun, 22 Nov 2026 22:29:52 +0800
+Message-ID: <20261122143011.85844-1-lianux.mm@gmail.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261121210013.130397-5-sj@kernel.org>
-References: <20261121210013.130397-1-sj@kernel.org> <20261121210013.130397-5-sj@kernel.org>
+In-Reply-To: <20261121210013.130397-1-sj@kernel.org>
+References: <20261121210013.130397-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -100,10 +107,19 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, 21 Nov 2026 12:59:48 -0800 SJ Park <sj@kernel.org> wrote:
+On Sat, 21 Nov 2026 12:59:44 -0800 SJ Park <sj@kernel.org> wrote:
 
-> Add a new sysfs directory, reports/, as a place holder for sysfs files
-> that will be used for controlling the data attribute report system.  Put
-> the directory under the admin/ directory, next to kdamonds/ directory.
+> Build a system for letting DAMON-external entities report their data
+> attribute findings to DAMON.  Let users report their data attribute
+> findings to DAMON using the report system.
 
-Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+Hi SJ,
+
+I'm reviewing the series and setting up the tests. I'm also working on
+follow-up test patches for the report queue and its sysfs interface.
+
+My schedule may be a bit tight this week, but I'll follow up here as
+soon as I find any issues.
+
+Thanks,
+Lian
