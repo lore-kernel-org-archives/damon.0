@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795387264;
-	b=s3DyzkyJR5U8He5EUq4UcLS6OqCSNM2mdCxzZO9Yf5D1VnTzxZu7kfCO264cp/16VxFi
-	 A3/+FyjCrh+8P3fZD2k7o8IlwnCJrULA9twp0hoTywHcHN+LZemlUNiGdIB+mGJEz8k9R
-	 vtrvdZmayjOelh1lg7NWmYY3N2REKGxc00l/3fOPQcISu8/zqT7NX3KJYOAu4lvSr09kB
-	 NnNZKpWaWMjQ6ZDWXpZO1wzRMNgS+2YkYV7GZiB/MclTpzEvBQvJ7sGq2Djer6x8fOrlO
-	 PvtSJh/u0i1PRrlwM1P1KYt3OKNX/pYwIW12Na667Rew0pGzrPrx3el2U+YrB7ceu7g==
+	t=1795387577;
+	b=m7cdtUZRBx07j33ViiURj6lJuCAdMvjcX9txF4Ymv3NGVfZcCguvzsd+93gxc66AdWGX
+	 jMVvjmVe5Fm7dQESIyulrM9vae7Lv8pWAUc3xCb1q05bfimdsLE18eEVFpDRffiy1d1Vy
+	 YYnS4rIpxB7L6JqEgPJepNX18cZiJQaR7wRFoLxyT9AIVlVyPvzGvXrXsimDxHK4bsy0I
+	 j1ZpauwhAlv0ffjnVVFpaI3T5SS8ik0AiCSitpY2brwJ/keQP1ZFfGhiDwBqPdLd/eCqc
+	 lOx55J2lPL0THLQx7wasDc1/s8FU5cNvVdospnX86zB4CAxWk1ZBSvzwUt1AaYTmQbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795387264;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=sJFKXYBlyKsjrymChPkVlwTwAE7JP3i6GsdhQ8/eAqU=;
-	b=J38Jr3V2TR2xFS/cPwiopMYH5ZAgnwqE4Xt+RiUIMBcCMa6bLGVA/lUfe0pU+AnD9zPS
-	 NAhpmu6HX0+9d0zjvKdQ2iZhBHTtznZLU7RrzbgJMFliHblgqffxjJlkXctcaOreWvBxf
-	 gH0HqP5217UZmzEkxH8jFq19yOnHjL4ywGZ5T/KfuK9MIvIp19BFbeYFhhNJ0txz8l+2t
-	 ZOXGWlr0+gwLAsaX2pNhtIInw+E7/eezEYHce3ge40/1kBkioXvE/RpMltUYQ7R2ShXfw
-	 AZM2Y9VI5OoSoV4Uu1+/p/RiI4bWRpJeMPetDzA3p7kYUXlWbX/irYzTor1ni3x3ARg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795387577;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=+bVpBXbONfLW2veEvY5MyXOg1V+Z2ij8/G5tQ2lFqlY=;
+	b=P7yWdOFFxdWeKNhH6prOcyD2EHfnO4qDsxRLnoGlKKGwk50Yo9HYACG4wtpn5FpSiCD9
+	 ecIDlXkbfd4l71aunikic1ewkCeiswm2sRpA0Nksjs+HLGU1Z5el2P0dAkcyLusS/otEA
+	 0yPUCkc6jAOcQyfsEsnXf/bNTS9ItqtxAEPNIGaN3RoEIr8r51q1qjJWzgcvV1tymkVXe
+	 tZcWZVSKXwbtX38mEvKYashCVo+GMzCXnsrRUOeltbFLgW3pUvwSIwR3SiXmf47DqLQXc
+	 SNI734IRyLGK5swmEZbq7kZiFVikUhglAAXQOVtbnqnyxJGUjzW0z92VjdF/Qkp6IYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OS8TcZci;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VLVqH1ZH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554F2606A31A;
-	Sun, 22 Nov 2026 22:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E7E606A31E
+	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 22:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OS8TcZci
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3B31F000C0;
-	Sun, 22 Nov 2026 22:41:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VLVqH1ZH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DFB1F000C4;
+	Sun, 22 Nov 2026 22:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795387263;
-	bh=sJFKXYBlyKsjrymChPkVlwTwAE7JP3i6GsdhQ8/eAqU=;
-	h=From:To:Cc:Subject:Date;
-	b=OS8TcZcihfSP+khLyNygpchK1BCLDPefv4GAZhdMrw/JnZVxFTB5QxsMq7x4VD0IO
-	 pPJDmxdONZVsBOw2JZUD5cwr9xfx5VPu1fEsZ3EqcYn6cM4s9+X46gp2wGRoWaKed0
-	 Nl+hLfwGIXmi21TSu4VAR53a/fRH1b43E8Qow90EqjP5CPUCkLvxdiM5VYAo8XecWl
-	 RnA/BTHEtexTTmUhfcgPcNs3wZ/GnbXVP4X7FayxyIPCM8GjDW1j/O2D9nztkmtfxr
-	 f8Hd5M9hA+1LfntvHkn/CLoc573hHYJQts+tPQIZv4RhH/z1ooGe+hLindixxoqndS
-	 2AGCt6hhFskgA==
-From: SJ Park <sj@kernel.org>
-To: 
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org
-Subject: [RFC PATCH mm-hotfixes-unstable] mm/damon/core: cleanup damos->walk_completed in damos_walk_cancel()
-Date: Sun, 22 Nov 2026 14:40:53 -0800
-Message-ID: <20261122224054.79767-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
+	s=k20260515; t=1795387576;
+	bh=+bVpBXbONfLW2veEvY5MyXOg1V+Z2ij8/G5tQ2lFqlY=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=VLVqH1ZH1OMuu3ddPTjFASULkRW473RSQLjmft+1igBODw1KwWF8Ve1Hd7BZ9hajr
+	 5a73x/bjJJd/ZUSKzxft/XCpA9xcEs4c44IQ6pMZOh99S0P+UWM5s1sLuPfy+k2Tnh
+	 bftum1lgzECqPkUwlRqOXOYToBI2MQ3L4r70IL0R/GNAyfaVNo7HaVkZES48QqHqNt
+	 JpxUOFT+Xcb3B/Z7UwjUo7LqFgPaWPMBNZT93oG8zVuGGOZsF4IvkPpdIHeO3//HT/
+	 kpD1dPp5gEjeL7TBLO4wUpbyFRUV1obf1Isr6BBkTvY6zr825h67erpCfVwJ9tmMp3
+	 tWvkVdnPJNEFA==
+Message-ID: <sashiko-outbox-228415@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH mm-hotfixes-unstable] mm/damon/core: cleanup
+ damos->walk_completed in damos_walk_cancel()
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261122224054.79767-1-sj@kernel.org>
+References: <20261122224054.79767-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 22 Nov 2026 22:46:15 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -58,71 +59,32 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-DAMOS walk could be unexpectedly only partially performed.  It can
-happen when there are multiple schemes and the walk is requested after
-the previous walk is canceled.
+> DAMOS walk could be unexpectedly only partially performed.  It can
+> happen when there are multiple schemes and the walk is requested after
+> the previous walk is canceled.
+>=20
+> The expectation of DAMOS walk for a setup that has multiple schemes is
+> that it will walk for one snapshot for all schemes.  To know if the walk
+> for the one snapshot of a given scheme is done, each damos struct has
+> the walk_completed field.  It is set when the walk for the given scheme
+> is completed.  The walk skips schemes having the field set.  It is reset
+> for all schemes when all the schemes get it set.
+>=20
+> damos_walk_cancel() cancels all existing walks.  But it does not reset
+> the walk_completed field.  damos_walk_cancel() can be called at any
+> kdamond loop iteration.  For example, due to DAMON context pause or
+> DAMOS watermarks-caused deactivation.  It means that the function can be
+> [ ... ]
+>=20
+> Closes: https://sashiko.dev/#/bug/linux-228a4c52-0545-4c1f-90ce-41114d827=
+2e9
+> Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
+> Cc: <stable@vger.kernel.org> # 6.14.x
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-The expectation of DAMOS walk for a setup that has multiple schemes is
-that it will walk for one snapshot for all schemes.  To know if the walk
-for the one snapshot of a given scheme is done, each damos struct has
-the walk_completed field.  It is set when the walk for the given scheme
-is completed.  The walk skips schemes having the field set.  It is reset
-for all schemes when all the schemes get it set.
+Sashiko has reviewed this patch and found no issues.
 
-damos_walk_cancel() cancels all existing walks.  But it does not reset
-the walk_completed field.  damos_walk_cancel() can be called at any
-kdamond loop iteration.  For example, due to DAMON context pause or
-DAMOS watermarks-caused deactivation.  It means that the function can be
-called while only some of the schemes completed their walks.  And users
-could request another walk after the canceled walk.  In the case,
-because some of the schemes still have walk_completed fields set, the
-walk for them is skipped.  As a result, DAMOS walk based user operations
-such as update_schemes_tried_bytes kdamond command could show incomplete
-output.
-
-Fix by unsetting the fields of all schemes in damos_walk_cancel().
-
-The user impact is not critical.  No crash or leak happens.  Only DAMOS
-based monitoring results retrieval could work unexpectedly, under the
-certain setup and the race.  Given the best effort nature of DAMON, such
-occasional monitoring quality degradation would be not critical.
-
-The issue has found from the Sashiko bug database.
-
-Closes: https://sashiko.dev/#/bug/linux-228a4c52-0545-4c1f-90ce-41114d8272e9
-Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
-Cc: <stable@vger.kernel.org> # 6.14.x
-Signed-off-by: SJ Park <sj@kernel.org>
----
- mm/damon/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index b8678a53b0a98..ec7f20b7856de 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2699,6 +2699,7 @@ static void damos_walk_complete(struct damon_ctx *ctx, struct damos *s)
- static void damos_walk_cancel(struct damon_ctx *ctx)
- {
- 	struct damos_walk_control *control;
-+	struct damos *s;
- 
- 	mutex_lock(&ctx->walk_control_lock);
- 	control = ctx->walk_control;
-@@ -2706,6 +2707,9 @@ static void damos_walk_cancel(struct damon_ctx *ctx)
- 
- 	if (!control)
- 		return;
-+
-+	damon_for_each_scheme(s, ctx)
-+		s->walk_completed = false;
- 	control->canceled = true;
- 	complete(&control->completion);
- 	mutex_lock(&ctx->walk_control_lock);
-
-base-commit: bcafbab5174a89c3f689e458b5114641a0f68032
--- 
-2.47.3
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261122224054.7976=
+7-1-sj@kernel.org?part=3D1
