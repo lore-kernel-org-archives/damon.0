@@ -1,58 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.201
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795310555;
-	b=wiCvUUqapfGpV+6/wApt0BEzJuM0bQFYlyWlsyvJ9hGa1kF1AVcRH+tgteyVdasCrUUH
-	 y7C5UcsAdCyDtsk5XylvLR2bvI7ZwLdMCgSbovv1F0ivBosUca39RIOPacXv/6xlqo9nJ
-	 IRzS6p1u4AYvJwCFBjSaWCDPoUAOXPAA9J4dV4+54b4uDR27W854+bt/wZP02fz5bNqSm
-	 8NRCkRMGBjc+lQk18OLfclyMGERzoZiD/zlQzO73/HvfVZBONVlCkJ6Rz+ml9kpPTkth/
-	 3XahctyzOR54ALtq6xbdCNQl4iyVHloT58KtFR8oer7xD5ljdBnMzTaJ1So03bsYuzw==
+	t=1795332643;
+	b=iGMOblXD7mCOZX832SmsmGK+9KN+4SStJtFpKV69zIwXm6+QB0U7B3yKiFbimUNeGl4g
+	 N91JtWCASCDHUAqlBa3dVrz6JTu4HKzRZk3rjBVQGCajFF3cqDOWoa4md3jWYs5toIkXj
+	 NtHUe1YofJTfgFbcKhiMUEJf3+Sssp6szR4quXJ7DXluqSVIpE8nQXacVtGXhW5YnKx6j
+	 AkN/99fITGId1buAV+pkAxsiFlpLLDq8ruU4NASKXawjvKFFuqM7Vs9PS+VKV0GOvALY4
+	 f7oTY9Y1OTx8rUexm7kd4LFJb6E49IGtAwBNy3Wpd8LGNKTboNVFRVmO98Rt2Hgn2Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795310555;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=zE8gT4dthHqcTUv77ew8bDqnQXZvGmO379GEAq+aYmM=;
-	b=sdo5KUFhLbm2LwK8zyITvEFA7+MY0OCJSb+7zLZs02d/+1myGjbpSy/7HJ1+XyNKgFky
-	 gCnZ7hqgK1MBxEgxCWPrhHXJjKANdVDyCwLAqN+bF4RRTN8iYRCSkEqJ6z69SjzUr87NU
-	 Gx5DG1GGBcHUjfZyYzeJyFLm/C3zOCvtWQjeUmpK18u0N4Uaf/aQjpttvYAQ2mwbsHkJS
-	 TVoGVxu2eqA/o9f/iGnsN1me3I5V9nXnDCaM6/n4oZtBqzndLcD06yq4MY3elP+O3An0i
-	 AfglNrnhoRaSMLjA2gIIDgg2DQpiPPQx0PXfV/nIUivqxU0roganlQdyz8PDOek5JaA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795332643;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=H02gl3A8lED/orev+VVlUTCHLPwpp1eOdDDA4V8ytIA=;
+	b=DP/MhRppZQ/mpjyh7OyRi84cRff7ZEVFnhOhLTM4Y/1EdfEZ2CqdAhyQVX0qYRQdDTjH
+	 P2nJ3vUuXGUB5k3BeRkjuiHQ7XdBrNRYj8qf+AyE4XjI+ie+U5/LIZQ+eHj1IKkfaQe73
+	 9YwNZmThxoiuv3D7Y/vU9u5ZRCVC52rkwzu9r80nDob4BDz5QTND5oiNhfNQeDor7Xc4t
+	 ONlK++x7LoKotlTNY/k0/DPsbT9+YmuTHm21vQ5H9uzN7uBWcbZ316+d9/aet3NEN737M
+	 lPJe+C8XJnCjc8L/5zOPTmQUnB5h3zst/w3cXcHlbmHxvVeGaobBx+MchCdcx8wLK3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BOjEfvAw;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=M8jygr5a;
+	arc=none smtp.remote-ip=91.218.175.201
+Received: from mta0.migadu.com (out-201.mta0.migadu.com [91.218.175.201])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B96606A320;
-	Sun, 22 Nov 2026 01:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85870606A32A
+	for <damon@lists.linux.dev>; Sun, 22 Nov 2026 07:30:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 85870606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BOjEfvAw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFF31F000C4;
-	Sun, 22 Nov 2026 01:22:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795310554;
-	bh=zE8gT4dthHqcTUv77ew8bDqnQXZvGmO379GEAq+aYmM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BOjEfvAwidbckoqjR4wNrgB9CbuljWYbNZOEhAFhqfQ4NZayeIpUIJzYmE29QtyEE
-	 6tUxCfwpDQJ/uMb6T24gDoLrh3q3I6oNui1kvs4kx4SOQzEhVy0iDeRGqQo4Q1m5Fx
-	 bsSu/X+eX+G2/aE57Ofwxjt1+ouyLaYjhdahM9ds6Mf+JaUVYz+Rb7tQj8f3O3pLTq
-	 G8TWLbT3sBC35XU2vlD4nCJ9ERR2OwIYJV18BZoZGuYRwB//xd0N4pvlcjTxbeF7m9
-	 DPxA2bZWE+dFcJ5DYsJbVG8TiodDTrShUt7xleVmTU5lh20SvmBGrRzAJ4IkQ77tGX
-	 +pAVZa5vTkvgg==
-From: SJ Park <sj@kernel.org>
-To: Yifan Feng <evanfengff@gmail.com>
-Cc: SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] mm/damon/core: do not overwrite wmarks.activated in damos_commit()
-Date: Sat, 21 Nov 2026 17:22:21 -0800
-Message-ID: <20261122012222.148520-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261122002930.98401-1-evanfengff@gmail.com>
-References: 
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=M8jygr5a
+X-Envelope-To: damon@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=NLC7oANZwCfL7depjHfIzJ4jloTo6BAzdIgGpvntEFI=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795332639; v=1; x=1795937439;
+ b=M8jygr5aBCWN7dK64eSo5G8nBVNnH0PVvZJGbiNzj+/iqwBKnRyiMpIwEeajBT8v9Zwurfdb
+ 4WVj/0p+Z8kpL94Zyzs+pjbbbZTWMJqOsf4W2KJXbOfLfrnI7egNG+fFRkVEV1nxoKF3B1VtJq1
+ 8pUyTesQeNgTH7mUVdlBe9BM=
+X-Envelope-To: damon@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id b98bde626d255cef;
+	Sun, 22 Nov 2026 07:30:38 +0000
+X-Mizu-Trace-ID: b98bde626d255cef
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <3af03366-784b-48bb-a807-9ccea92e39ca@linux.dev>
+Date: Sun, 22 Nov 2026 15:30:25 +0800
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -62,32 +58,83 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 04/17] mm/memcg: add folio-based lruvec live helper
+To: kasong@tencent.com, linux-mm@kvack.org
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>,
+ Ying Huang <ying.huang@linux.alibaba.com>, Chris Li <chrisl@kernel.org>,
+ Baoquan He <baoquan.he@linux.dev>, Nico Pache <nico.pache@linux.dev>,
+ Usama Arif <usama.arif@linux.dev>, Michal Hocko <mhocko@kernel.org>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>,
+ Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>,
+ Barry Song <baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>,
+ Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>,
+ Vlastimil Babka <vbabka@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ Nhat Pham <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>,
+ Zi Yan <ziy@nvidia.com>, Gregory Price <gourry@gourry.net>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>,
+ SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>,
+ Yu Zhao <yuzhao@google.com>, Vernon Yang <vernon2gm@gmail.com>,
+ Zicheng Wang <wangzicheng@honor.com>, Chen Ridong <chenridong@xiaomi.com>,
+ Tal Zussman <tz2294@columbia.edu>, Kairui Song <ryncsn@gmail.com>,
+ Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh
+ <ehab.ababneh@intel.com>, Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>,
+ Lian Wang <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>,
+ Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>,
+ linux-kernel@vger.kernel.org, cgroups@vger.kernel.org,
+ damon@lists.linux.dev, linux-doc@vger.kernel.org
+References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
+ <20261119-mglru-fg-v5-4-9eee2fe97a2d@tencent.com>
+From: Qi Zheng <qi.zheng@linux.dev>
+In-Reply-To: <20261119-mglru-fg-v5-4-9eee2fe97a2d@tencent.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, 21 Nov 2026 16:29:30 -0800 Yifan Feng <evanfengff@gmail.com> wrote:
 
-> damos_commit() copies the whole wmarks struct from the source scheme,
-> including the private 'activated' field.  The source scheme is a new
-> one, so the field is always true there.
+
+On 11/19/26 5:03 AM, Kairui Song via B4 Relay wrote:
+> From: Kairui Song <kasong@tencent.com>
 > 
-> As a result, a commit turns on a scheme that the watermarks turned off.
-> If the metric is between mid and high at that time, the scheme keeps
-> running, though it should stay off until the metric goes below mid.
-> DAMON_RECLAIM and DAMON_LRU_SORT use the same path for commit_inputs.
+> Add a helper that resolves a live lruvec for a folio under RCU
+> without taking the lruvec lock.  It takes a folio directly so the
+> lruvec lookup happens inside the RCU read-side critical section,
+> which a lruvec-based interface cannot guarantee.  The first user is
+> the lockless folio_inc_lru_refs() path later in the series.
 > 
-> Save 'activated' before the copy and restore it after.
+> Factor the ancestor walk out of lruvec_live_lock_irq() into
+> __lruvec_get_live(), so that both entry points share it, and spell
+> out why the walk is enough while only the RCU read lock is held:
+> reparenting of a memcg that starts dying waits for a grace period,
+> so it cannot race with the caller until the lock is released.
 
-Thank you for finding the issue and sharing this patch.
+Right, that's the ordering: CSS_DYING is set before the reparenting in
+the RCU work, so testing for a dying memcg under `rcu_read_lock()` fully
+covers the race.
 
-> Do not restore
-> it for DAMOS_WMARK_NONE, because nothing sets it again in that case and
-> the scheme would stay off.
+> 
+> Move memcg_is_dying() up in memcontrol.h, next to the other memcg state
+> predicates, and use it for the walk rather than repeating the open coded
+> css_is_dying() test a few definitions away from where it is explained.
+> 
+> No functional change for existing callers.
+> 
+> Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
+> Signed-off-by: Kairui Song <kasong@tencent.com>
+> ---
+>   include/linux/memcontrol.h | 71 ++++++++++++++++++++++++++++++++++++----------
+>   1 file changed, 56 insertions(+), 15 deletions(-)
+> 
 
-Is this really necessary?  If not, I'd prefer restoring it always for
-simplicity.
+LGTM, so:
 
+Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
 
 Thanks,
-SJ
+Qi
 
-[...]
+
