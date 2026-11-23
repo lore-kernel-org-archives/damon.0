@@ -1,57 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795446070;
-	b=5eA6dS2xrJG1w5bRs6c7IPOJBti0JN3ds497vV4p7pe0PmLkvBNn3uSy/MqOZQrWq3Oh
-	 uIWgB1BfVYY4PvFNJnDtMqHkUiZAJk1VvqCvGB7W7DvWaR36idgYiLdbCqvCsFBt77ngd
-	 aE5kRFJnQc1xpYJSX8dOncL3NWdVGUvmOkHkPJYfWggpzlBBHksIjjnM9/sj7VprWA65U
-	 0udsuX1w3/WnOfu4CK2HrtpxPVYYPdUC71mnoJmqdtFSU5bMSXcKldocM7PFxhnb71oGk
-	 eA9mwykN+Qjq+zu4Xw6CGOQu6vkqB/ijyKk3oX0KItZ1EoXMBTfRM2xwtDurNCJlBVQ==
+	t=1795446578;
+	b=Ga/p3g0RxVWfb6tW0BYURO5TbBZTskOHyKT48zvAUJUGScbgdKN+XnviwhojJeBi8K01
+	 UqyGpJ5yf8UnOwWojMXzhUK6zV44hRS5lz3Xjxk5FxOMEPJiBtHsVzau2OsvtupdFAgUX
+	 knxRGwzcgs7ai3mgwPVyr9EHn5h8KZFlrnIMWEJ1ak+onRwLHz3KP64z0587jUSMKOHv3
+	 BHvlYQshsiS9ItooML1p+UoUzFWAB3Aptgt5VqxKUXR7Z6vDZAFQzHoROmvtbDX3lgztU
+	 IJyKZu7Ql01IRlrYIPJlonYdwVERrDvKZCUUvqDEOot8Sr9qqsTSmwdltsGBxeQpo2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795446070;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795446578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=ta1APtJZ3SbnBo9Poepvc+VpghMZSCLjVAvUkbF7mMs=;
-	b=SpQKmtErQsnRsYdeEoWC6+STeYcbypwuB2X+zhpdgGhAVN2/+b/hg1qWMM14NZYJk4on
-	 8Ct6wqmda1heoYwV1eF4+zms0IW9oQCztW77TrQVLLQYvj50GXm9rWF9LrQCVu7FP2DmS
-	 ChJFK8r+M87pwmgc2HSvbjvT6x8z+3skXQkKXtKrEXfcrLNSU5vIKHDZjndJ9+QFvlUWh
-	 x+KbjgIdCDpbaVCEan+4VQYmbMN1aW+THscv9RJzUFetIAbTh93uZRgmn7j9u5WhLP9sB
-	 JrZVLupZJT4IGK8HyqduZOm3tn5L9ThUi1ihMtnpwyfZh/nXVu/edPfIb5nWuEm+NCg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=JJ8c/8W1EmEuE66i5nJ5h2SZQ9wJSL5O/EOD51UVqLE=;
+	b=21GiQxw/QYTDWToXNrBWl8HRWHXgsSqUcfrEE0Xw3uclJoZqN5ompUrUoS5H+5KlXn+z
+	 hYhYvdr8kVIG0zu4/FWirx6GlAC08CjYRSAq48P+mz+V6KFclNipAPjuhBw3WZayvdc+A
+	 nbBzBLeY3ejHHtvdpReWiKwDPQXyqa3iqvxuolkYp81o33Wh3sZH4hlQfy0V+1fuzmYRL
+	 zy+8sM7rlBgY7DJR9wLfb67QQoFs/GM1pWm2srZibGlJeIEwlHctXa2qTKXncymqwveIN
+	 +YluUiFKjrOXL9zdljTuYfLCaGncycP263HqPdyHqwteXYKsNsK0iLynZUqV+CDVVtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="CN4+/0Gn";
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j7nkVgaa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D90606A331;
-	Mon, 23 Nov 2026 15:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32254606A31A;
+	Mon, 23 Nov 2026 15:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=CN4+/0Gn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F491F000C6;
-	Mon, 23 Nov 2026 15:01:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j7nkVgaa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED331F000C4;
+	Mon, 23 Nov 2026 15:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795446069;
-	bh=ta1APtJZ3SbnBo9Poepvc+VpghMZSCLjVAvUkbF7mMs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CN4+/0Gn8La1gLwsgprHfMz/omHDvSNFjCxQwHPhimmlwEacFqD8PGsYCOyFDiVyk
-	 ze+P4xBPSBNDIzhdfquMAInfch8/HX9gdFdCOnlrbU3aDg95jvFDCC4g22pUUMrhqc
-	 j5suvJ7voB+XjPYD68SY1B+Ig+LGY1DEDWUToNaM9C00vjBZ6dfN6O7Ch3p3CHpv+Y
-	 eS/c6SY4084KamWuNC+dCwuQQMKSyPXpVqXVyFEMIUE37iaWrJ7RH8alfiT840gElF
-	 SkRKIxLJqOZ6bT/52loQEAsbEb6xkpW4leeTSqHjWjBPadZC6miIPJHh9uz+7DpDQE
-	 /uGaDvm2SIynw==
+	s=k20260515; t=1795446577;
+	bh=JJ8c/8W1EmEuE66i5nJ5h2SZQ9wJSL5O/EOD51UVqLE=;
+	h=From:To:Cc:Subject:Date;
+	b=j7nkVgaactOMke8k3yZMiQUfqdT7YZtD1yDQNOU7+OoldrqyMeYZrmc+ezJbemsA/
+	 R67BJu8UQ1hQ3CjM8qeLRfIBsP1Q7yCh2jTE8xsB+4hgaEljBgj5HCkX02nzlLaJ/R
+	 SOcM46OCVzo9gw1YUUXLo9RfEBbA66+YgCqcHwn5GhFOQpi+o/W5jtKwn1Pil1vZjB
+	 jMW6feld473fB+ZG8dSzpJ1UWyiSTy5mbFj3xEzTjjm2wyNIF7LZFBOTzs0ofiCu5D
+	 1xd5vFwrgoE3ltrJtZY03t/LWv/zwyHJ0gwLoQwvglWBaWR1a9Lciz6xKAx+5te0qv
+	 xFxwy7Sak/xgw==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Yifan Feng <evanfengff@gmail.com>,
-	stable@vger.kernel.org,
-	SJ Park <sj@kernel.org>,
+Cc: SJ Park <sj@kernel.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH mm-hotfixes-unstable 3/3] mm/damon/core: do not overwrite wmarks.activated in damos_commit()
-Date: Mon, 23 Nov 2026 07:00:48 -0800
-Message-ID: <20261123150049.81317-4-sj@kernel.org>
+Subject: [PATCH v3 0/3] mm/damon/tests: add KUnit coverage for age_ms filters
+Date: Mon, 23 Nov 2026 07:09:24 -0800
+Message-ID: <20261123150929.81797-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261123150049.81317-1-sj@kernel.org>
-References: <20261123150049.81317-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,54 +63,37 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Yifan Feng <evanfengff@gmail.com>
+From: Jason Angelov <jasonangelov@ucla.edu>
 
-damos_commit() copies the whole wmarks struct from the source scheme,
-including the private 'activated' field.  The source scheme is a new
-one, so the field is always true there.
+The DAMON core tests do not cover DAMOS_FILTER_TYPE_AGE_MS. Add tests for
+committing valid and invalid age ranges, identifying the filter as
+core-handled, and matching ages at and outside the range boundaries.
 
-As a result, a commit turns on a scheme that the watermarks turned off.
-If the metric is between mid and high at that time, the scheme keeps
-running, though it should stay off until the metric goes below mid.
-DAMON_RECLAIM and DAMON_LRU_SORT use the same path for commit_inputs.
+Region age is counted in aggregation intervals, but age_ms filter bounds
+are in milliseconds. The interval-change test checks filter matching
+after both increasing and decreasing the aggregation interval.
 
-Save 'activated' before the copy and restore it after.  Do not restore
-it for DAMOS_WMARK_NONE, because nothing sets it again in that case and
-the scheme would stay off.
+Changes from v2
+- v2: https://lore.kernel.org/20261116-test-age-ms-filter-v2-0-3b265d59ec98@ucla.edu
+- Collect R-b: from Aveline and SJ.
+Changes in v2:
+- Fix commit-message formatting, line wrapping, and comments.
+- Set age and interval inputs directly in patch 3.
+- Add SJ's Reviewed-by tags to patches 1 and 2.
+- Link to v1: https://lore.kernel.org/r/20261113-test-age-ms-filter-v1-0-b99eab2f71bb@ucla.edu
 
-Fixes: 9cb3d0b9dfce ("mm/damon/core: implement DAMON context commit function")
-Cc: <stable@vger.kernel.org> # 6.11.x
-Signed-off-by: Yifan Feng <evanfengff@gmail.com>
-Reviewed-by: SJ Park <sj@kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
----
-Changes from v1
-- v1: https://lore.kernel.org/20261122002930.98401-1-evanfengff@gmail.com
-- Collect R-b: from SJ.
+Jason Angelov (3):
+  mm/damon/tests/core-kunit: test DAMOS_FILTER_TYPE_AGE_MS in
+    damos_test_commit_filter()
+  mm/damon/tests/core-kunit: test DAMOS_FILTER_TYPE_AGE_MS in
+    damos_filter_for_ops()
+  mm/damon/tests/core-kunit: test DAMOS_FILTER_TYPE_AGE_MS interval
+    changes
 
- mm/damon/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/damon/tests/core-kunit.h | 93 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 93 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 2748f91999240..0e6b361f97ea6 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1567,6 +1567,7 @@ static struct damos *damon_nth_scheme(int n, struct damon_ctx *ctx)
- 
- static int damos_commit(struct damos *dst, struct damos *src)
- {
-+	bool activated = dst->wmarks.activated;
- 	int err;
- 
- 	dst->pattern = src->pattern;
-@@ -1578,6 +1579,8 @@ static int damos_commit(struct damos *dst, struct damos *src)
- 		return err;
- 
- 	dst->wmarks = src->wmarks;
-+	if (dst->wmarks.metric != DAMOS_WMARK_NONE)
-+		dst->wmarks.activated = activated;
- 	dst->target_nid = src->target_nid;
- 
- 	err = damos_commit_dests(&dst->migrate_dests, &src->migrate_dests);
+
+base-commit: 5247761933577a245d262c55994032b86cbec2d1
 -- 
 2.47.3
