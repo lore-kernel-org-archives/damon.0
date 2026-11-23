@@ -1,78 +1,78 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795460002;
-	b=xMoevxhKoWJjKDXKFskm68kLkrZux5nU4uhsEssN4Ias9mOjZhLlCo19ZWxQFpCxR7tH
-	 fHyL4kwa0K3oCy8bV+9S+kJRFZiGz/IO+Fz/fsOO256wHJRTvqFxjKCJPN9rqqMZXSoyz
-	 GG6IiPnTeqXKyUYikQ4EwwqtwqujaI16f43t0UwVlf7A4eQzJFz3z1jb7aslYs8xBItjQ
-	 LlOCk5+sQLDzq1+0cHCGT5+kocOyg8pohny8MiiDs8GbdQzcnW2UsumRU3SfLvcJs7mIk
-	 W5hmDADyUFGBJ3DLFmwHqDBc4l+2QzakZm/5yKMsmHFlCSrGqlonjgYEPkfz9jqQmyw==
+	t=1795460004;
+	b=iBt5LS0wbfBJb5D7rT/nmP+bxYr0G9QJPx0G0gC3+ATRdiuBkgFSEQv9WIyvFZCjYryk
+	 ltQ1EgkA0RB4CwhpXCx35vBHrsbhtBJUTf7DxzQ8I7OeAgMQmn9kArLMImbtWyStCGdB0
+	 QfFMg8x0nankIyprZH6nLnY7dS+ipYrOWgpDGwdWsr1e+qMnRi4AZ5JsFdaXQ5shaYJ+9
+	 KDbogQlGTdX8CMzMcJqal8tLUeF9veHfjPSREykRN/XjDNKCyrVsr79L1Ht4WvNFNRe5V
+	 C8xv+/ssxmoFwfTz8QP6MewBlKVqaWkg3WJ28tFJJqpHt1CfQzvWrWZJov6inAY9GkA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795460002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795460004;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=tn3ff8YYl9RnjGLJDIERe0STPUTUXTlN6iqTakkHSLE=;
-	b=Xn8AHupaujKTsi1BLCK2Z0ZOUhPEciBVwegcQriwtedurcQsGhaDDOq8e3Ws5/mIgGh4
-	 mbj2wbBex7Hxy+rbv7ZJPnO0rTng4G42ManOSHd9bpBEVErrOHlJWMs5yvvJOWGMEkow9
-	 gcGWn4n/COLFmeQ26+GJ4L/pitA2KxcrqyY+Um9BpUVd31mW0A/zILRBqL9SXp/sbizAS
-	 PpbgjL60oquqDccJ7zSEa5zedG3L5DalrYy9GkiHTXHpk3IcHRFbUvcaPU+0p2G4He5i4
-	 EuL/iJtbC7zRn+INGIALfqHbPc4Rq2+/m1mQkEmg+vv/rgJRiv5T6VEeRolnxQvJsmA==
+	bh=Y9oObqSSiDMafmKBBZklAmQlgVzGVcaYHm/4oLczkO0=;
+	b=GzuWbQMfpRGhdMfpx8wH26qqAC68OEPNJLSMERs9ukOigX3z/10EqvSPsxd2mM9uCqFm
+	 eBRnDD3wVQTngLf9BA0KA5H8mBempM2/5pk7IfCYGqpj0j9zdNwrkYEuJHoOBczNhWhF9
+	 Y5bhDWyIZhTCDV5NUwCFTGhA5CgjltuY/RlA3RrDWTyiuWWiZNvJnjOkhDE99zqS5ZPD3
+	 ELkGfGiDUi48JpwGIiCI7JUpGnbqgdQCKQ3akOOh477+0gTLbjv1qp4k5VAuvb/pUgSYf
+	 H4lTJfDz8FcI2xeSMx9Gu3beJPx8EPEPbRUKYd0cCdqinFSnyZsBAxktYwx0qfiMeRQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b8PR5mMo;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="od/eY//M";
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2237F606A31E
-	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 18:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17390606A321
+	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 18:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=b8PR5mMo
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=od/eY//M
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795460002;
-	b=DN2mgD77pvWqbIb1K1rWzfcvHmcxlwy1DmZZU4gUXUmL7Xq6MB5tXVANoDL0KEv05ql3
-	 g7CNgkECRWHCsi6QCyN4sk4zajLLqhMuG7JVx/x33hybNt8AxWljC2a7o/jL+smqK+aGY
-	 Z7AqxQQ5X8Yt/nefNjIcgskqiq90uaJIHCZBptUe1TuPjDWrB5leKATzqGhpgYDnkqC8C
-	 xfu+uZJegUqiJoTckBYvdg8UkH6yCxiyh5MixwDjV7s++KjCe4X+EhZ9XfwIHobazzwna
-	 C9Y823xxYx5aUGGxWppH5PzACOZFKG868Z0lKVXJuCNZtPPbMZNERF1A4S2+QEFStXQ==
+	t=1795460003;
+	b=2pyduxfOQ2IoqdGE84HLr+NXzy5qJdY/Ynl7UBzHKAI09Oid5hu76aAR3OK/azCh2bFs
+	 GY2D0VxNymm0RbqRlxD/HEyOzKM4cVds44+H6CtUj97GhfYfCK5IRjFWZ5QO7AV1zpK61
+	 iCizY4kVTmuYiaC9+gBbTeBcnlz2wIEBF3l1omIgWQwKGIjmlMWgMvshwM9aLz/t/P/wj
+	 5zEuqyBk/p1zmCzhPhuPzoytf3zDeowKYNCsPW+F4XdhWJHYNJkTxF/8Bm15zg+W8TYCB
+	 vUZZpYigrIamOm/MTXL+iwD15fGpmeWr+AUbbLluDx1D3GhgnXCsnpl5U6p+Si5iz9g==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795460002;
+	c=relaxed/relaxed; t=1795460003;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=tn3ff8YYl9RnjGLJDIERe0STPUTUXTlN6iqTakkHSLE=;
-	b=Dcm2NnyZacTvw2k7rEqiw27svgJEpeK4Vj3kpoju9stUyr9VfHD62muZXv6gLp0vIbwi
-	 ORs4TpOENTeQw8WoUdDTM0CcGdnwgDf07Q6ITQ91CdbZlvGSrxH+XyfAo5GJxmKcugMUO
-	 c22G6zItWgLP9vhiHTWy5vfrJoeOZ8b7CrlUTK/bDi6C3JSz5JiP8jXpNXf3DQ/IgNqDy
-	 A5tf/gjtX3Ffb5xgjteBPYVAwujXstGXIPuPtFXTuxzwBkriECCSQnMDYzO86pFovM1Eh
-	 ZgydnGZtXVmeadrM47hlaRO+bE4LgT8ez0OSYRk9Wckc/s9abKaRaIbVUXBweQQ+aRA==
+	bh=Y9oObqSSiDMafmKBBZklAmQlgVzGVcaYHm/4oLczkO0=;
+	b=YwaDQWYFqlmX1b3GvNQ1AHnSPERAOERSS+ijhaCp25k8DCkvx7blfOfO9lFKTG/1coTc
+	 T1fKq0a/WERHlm0VX2EiwjaxkusLM6Gc2L7mM52jrAFhlKA6vE7+ERaNvdfO6iPUi/IjE
+	 fM4iKp2z+3y6OO6hV+4olBQuX5kuoK8rMsK6SobP9A4diZ0+NgbEnX9+TTe+D1fGcOVYu
+	 d9TEu0eLYEJzURgXWui7YDkZ573KldCI8tbxUtbz+L0xLOa2r7jBpzl3UhJf4OyR4rHHr
+	 1Swnm17YPJ9cVU6f8Pir2Voz1na2GBZPoSXMw9SNlLi7NGoi97zQ5VM4OQD5f7FtoMA==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id D6A501F000F0;
-	Mon, 23 Nov 2026 18:53:12 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 50A1D1F00A19;
+	Mon, 23 Nov 2026 18:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795460001;
-	bh=tn3ff8YYl9RnjGLJDIERe0STPUTUXTlN6iqTakkHSLE=;
+	s=k20260515; t=1795460003;
+	bh=Y9oObqSSiDMafmKBBZklAmQlgVzGVcaYHm/4oLczkO0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=b8PR5mMoYI+X0/SjA8UMJJBWtBXi3wZZVxkZBt9zCYY9ME8Em1uUPKt1hd0gaJUnv
-	 Ob1sSvzESQOmUx1VgoQ5jrzGVEBK5DrmCGt8LTuPIKg73g7/9QmLeCX/aTVZnYJ9B2
-	 NYCtPONxetW2vWDIORuSTtdSYz32yRl+PIYO0Yfbcl4j+I+euKH1We+CiXO2M9tzia
-	 HnHHI1fCxA3L4sMh+YAErS3axLDyLg2j+E6BFqMoEKpRTtRdo5jUF2Ciyc6NK+LcUz
-	 1hWYOpujsDGpWPujgOQgXA6tTUxuAaAjM/ubstW89VO3uaHvmT5gk88MVGmI5PZi8L
-	 KH5BqFwj5xutg==
+	b=od/eY//M6OwwtZ/2VjVHg+5kOKBjtK+62RAes9/MfgS+0PdBtf88KMKllfQVYwAc5
+	 Ly20jYnZ3XBgmpalk06Zya7GY5JtAmEcXfC17lY7qo/sGi+0P6mG1d635WBYjB9T4r
+	 Iecz4bFGssxs+7mrcOTRM0B1jaIn368J1C/K/QpT4bl7fuLHI8vN6DT13sXENqWFR0
+	 kcx9/McaOLJCmPU/KVJdFCZCP+TBjPa2BUAzLY0AMpEK2miSwbAf7p/sUNQjEhqSjx
+	 oGHow8XYge/WcZjYi+mTVhUy+3jedqov9B7mj1lRgv3kAcw0smCvn4NZeM2/QkB2+W
+	 BNrdfR+KXtQ4w==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 7B3194C639;
+	by lkml.kernel.org (Postfix) with ESMTP id 9C3284C63D;
 	Mon, 23 Nov 2026 18:53:00 +0000 (UTC)
 From: Kairui Song via B4 Relay <devnull+kasong.tencent.com@kernel.org>
-Date: Tue, 24 Nov 2026 02:52:56 +0800
-Subject: [PATCH v6 04/18] mm/mglru: make generation page counters atomic
+Date: Tue, 24 Nov 2026 02:52:57 +0800
+Subject: [PATCH v6 05/18] mm/memcg: add folio-based lruvec live helper
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -83,7 +83,7 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261124-mglru-fg-v6-4-8ffea39934a6@tencent.com>
+Message-Id: <20261124-mglru-fg-v6-5-8ffea39934a6@tencent.com>
 References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
 In-Reply-To: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
 To: linux-mm@kvack.org
@@ -117,11 +117,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
  Tianyi Chen <hi@tychen.cc>, Kairui Song <kasong@tencent.com>, 
  Ridong Chen <ridong.chen@linux.dev>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795459977; l=5768;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795459977; l=5565;
  i=kasong@tencent.com; s=kasong-sign-tencent; h=from:subject:message-id;
- bh=Vglaw21Vm4r80ayuV/+BBbtCvB3+vEXOhf7b40sCexI=;
- b=Ck9hVXdiDJT21PdrgJnuB2unk1HBDNmb2YyAjDOuLd2atdc8hN1vUvyXwNsOsOO7KJ3r1Cb1r
- ETM8FJPd4GWDmWtXv1L7n8ZosAWgDSifBU53dGsNoO+QuUZwuS3t+Kv
+ bh=4nACRHHUT6uoBi4A3zLGJqQt1hkIcj1Dp7YpYy06ekc=;
+ b=L8XeY1unOlmxAlxK2jWtG4TrI2zaQHkKujBrGJORzsRuLiFUKDDM2Z0QuMTOIy1sME7rZM35M
+ Hfu4zMRX7/ODZuwwOA3Ffwe7jxyK1pS7sobMCnoUSEO0En1TeQnScMU
 X-Developer-Key: i=kasong@tencent.com; a=ed25519;
  pk=kCdoBuwrYph+KrkJnrr7Sm1pwwhGDdZKcKrqiK8Y1mI=
 X-Endpoint-Received: by B4 Relay for kasong@tencent.com/kasong-sign-tencent
@@ -132,134 +132,168 @@ Content-Transfer-Encoding: 7bit
 
 From: Kairui Song <kasong@tencent.com>
 
-No feature change, convert them to atomic so we can update them without
-holding the LRU lock. A temporary underflow is fine: readers clamp a
-negative value to zero, and the counters only need to be eventually
-consistent.
+Add a helper that resolves a live lruvec for a folio under RCU
+without taking the lruvec lock.  It takes a folio directly so the
+lruvec lookup happens inside the RCU read-side critical section,
+which a lruvec-based interface cannot guarantee.  The first user is
+the lockless folio_inc_lru_refs() path later in the series.
+
+Factor the ancestor walk out of lruvec_live_lock_irq() into
+__lruvec_get_live(), so that both entry points share it, and spell
+out why the walk is enough while only the RCU read lock is held:
+reparenting of a memcg that starts dying waits for a grace period,
+so it cannot race with the caller until the lock is released.
+
+Move memcg_is_dying() up in memcontrol.h, next to the other memcg state
+predicates, and use it for the walk rather than repeating the open coded
+css_is_dying() test a few definitions away from where it is explained.
+
+No functional change for existing callers.
 
 Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
-Reviewed-by: Barry Song <baohua@kernel.org>
 Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
 Tested-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
+Reviewed-by: Muchun Song (ByteDance) <muchun.song@linux.dev>
 Signed-off-by: Kairui Song <kasong@tencent.com>
 ---
- include/linux/mm_inline.h |  6 ++----
- include/linux/mmzone.h    |  2 +-
- mm/vmscan.c               | 26 +++++++++++++-------------
- mm/vmscan.h               |  2 +-
- 4 files changed, 17 insertions(+), 19 deletions(-)
+ include/linux/memcontrol.h | 71 ++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 56 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-index 2edb9beef6d3..46beded51c7d 100644
---- a/include/linux/mm_inline.h
-+++ b/include/linux/mm_inline.h
-@@ -265,11 +265,9 @@ static inline void lru_gen_update_size(struct lruvec *lruvec, struct folio *foli
- 	VM_WARN_ON_ONCE(old_gen == -1 && new_gen == -1);
- 
- 	if (old_gen >= 0)
--		WRITE_ONCE(lrugen->nr_pages[old_gen][type][zone],
--			   lrugen->nr_pages[old_gen][type][zone] - delta);
-+		atomic_long_sub(delta, &lrugen->nr_pages[old_gen][type][zone]);
- 	if (new_gen >= 0)
--		WRITE_ONCE(lrugen->nr_pages[new_gen][type][zone],
--			   lrugen->nr_pages[new_gen][type][zone] + delta);
-+		atomic_long_add(delta, &lrugen->nr_pages[new_gen][type][zone]);
- 
- 	/* addition */
- 	if (old_gen < 0) {
-diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 6a2ad0cff795..4e85bb520f76 100644
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -554,7 +554,7 @@ struct lru_gen_folio {
- 	/* the multi-gen LRU lists, lazily sorted on eviction */
- 	struct list_head folios[MAX_NR_GENS][ANON_AND_FILE][MAX_NR_ZONES];
- 	/* the multi-gen LRU sizes, eventually consistent */
--	long nr_pages[MAX_NR_GENS][ANON_AND_FILE][MAX_NR_ZONES];
-+	atomic_long_t nr_pages[MAX_NR_GENS][ANON_AND_FILE][MAX_NR_ZONES];
- 	/* the exponential moving average of refaulted */
- 	unsigned long avg_refaulted[ANON_AND_FILE][MAX_NR_TIERS];
- 	/* the exponential moving average of evicted+protected */
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index bc7579d47f9b..202e0f874b23 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3350,8 +3350,7 @@ static void reset_batch_size(struct lru_gen_mm_walk *walk)
- 			continue;
- 
- 		walk->nr_pages[gen][type][zone] = 0;
--		WRITE_ONCE(lrugen->nr_pages[gen][type][zone],
--			   lrugen->nr_pages[gen][type][zone] + delta);
-+		atomic_long_add(delta, &lrugen->nr_pages[gen][type][zone]);
- 
- 		if (lru_gen_is_active(lruvec, gen))
- 			lru += LRU_ACTIVE;
-@@ -3971,11 +3970,8 @@ static bool inc_min_seq(struct lruvec *lruvec, int type, int swappiness)
- 				break;
- 		}
- 		flush_lru_batch(head, &batch_end, target_list);
--
--		WRITE_ONCE(lrugen->nr_pages[old_gen][type][zone],
--			   lrugen->nr_pages[old_gen][type][zone] - delta);
--		WRITE_ONCE(lrugen->nr_pages[target_gen][type][zone],
--			   lrugen->nr_pages[target_gen][type][zone] + delta);
-+		atomic_long_sub(delta, &lrugen->nr_pages[old_gen][type][zone]);
-+		atomic_long_add(delta, &lrugen->nr_pages[target_gen][type][zone]);
- 		if (!remaining)
- 			return false;
- 	}
-@@ -4093,8 +4089,8 @@ static bool inc_max_seq(struct lruvec *lruvec, unsigned long seq, int swappiness
- 	for (type = 0; type < ANON_AND_FILE; type++) {
- 		for (zone = 0; zone < MAX_NR_ZONES; zone++) {
- 			enum lru_list lru = type * LRU_INACTIVE_FILE;
--			long delta = lrugen->nr_pages[prev][type][zone] -
--				     lrugen->nr_pages[next][type][zone];
-+			long delta = atomic_long_read(&lrugen->nr_pages[prev][type][zone]) -
-+				     atomic_long_read(&lrugen->nr_pages[next][type][zone]);
- 
- 			if (!delta)
- 				continue;
-@@ -4625,8 +4621,13 @@ static void __lru_gen_reparent_memcg(struct lruvec *child_lruvec, struct lruvec
- 	child_lrugen = &child_lruvec->lrugen;
- 	parent_lrugen = &parent_lruvec->lrugen;
- 
-+	/*
-+	 * The child is offline and the lockless updaters, which hold
-+	 * rcu_read_lock() over the update, avoid racing with reparenting,
-+	 * so the read/set/add operations below are safe.
-+	 */
- 	for (gen = 0; gen < MAX_NR_GENS; gen++) {
--		long nr_pages = child_lrugen->nr_pages[gen][type][zone];
-+		long nr_pages = atomic_long_read(&child_lrugen->nr_pages[gen][type][zone]);
- 		int child_lru_active = lru_gen_is_active(child_lruvec, gen) ? LRU_ACTIVE : 0;
- 		int parent_lru_active = lru_gen_is_active(parent_lruvec, gen) ? LRU_ACTIVE : 0;
- 
-@@ -4634,9 +4635,8 @@ static void __lru_gen_reparent_memcg(struct lruvec *child_lruvec, struct lruvec
- 		list_splice_tail_init(&child_lrugen->folios[gen][type][zone],
- 				      &parent_lrugen->folios[gen][type][zone]);
- 
--		WRITE_ONCE(child_lrugen->nr_pages[gen][type][zone], 0);
--		WRITE_ONCE(parent_lrugen->nr_pages[gen][type][zone],
--			   parent_lrugen->nr_pages[gen][type][zone] + nr_pages);
-+		atomic_long_set(&child_lrugen->nr_pages[gen][type][zone], 0);
-+		atomic_long_add(nr_pages, &parent_lrugen->nr_pages[gen][type][zone]);
- 
- 		if (lru_gen_is_active(child_lruvec, gen) != lru_gen_is_active(parent_lruvec, gen)) {
- 			__update_lru_size(child_lruvec, lru + child_lru_active, zone, -nr_pages);
-diff --git a/mm/vmscan.h b/mm/vmscan.h
-index c2cea36289f3..6551f0a6691a 100644
---- a/mm/vmscan.h
-+++ b/mm/vmscan.h
-@@ -126,7 +126,7 @@ static inline unsigned long lruvec_gen_size(struct lru_gen_folio *lrugen,
- 	unsigned long size = 0;
- 
- 	for (int zone = 0; zone < max_zone; zone++)
--		size += max(READ_ONCE(lrugen->nr_pages[gen][type][zone]), 0L);
-+		size += max(atomic_long_read(&lrugen->nr_pages[gen][type][zone]), 0L);
- 
- 	return size;
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 980358bc6f49..a03f9711522e 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -571,6 +571,11 @@ static inline bool mem_cgroup_disabled(void)
+ 	return !cgroup_subsys_enabled(memory_cgrp_subsys);
  }
+ 
++static inline bool memcg_is_dying(struct mem_cgroup *memcg)
++{
++	return memcg ? css_is_dying(&memcg->css) : false;
++}
++
+ static inline void mem_cgroup_protection(const struct mem_cgroup *root,
+ 					 const struct mem_cgroup *memcg,
+ 					 unsigned long *min,
+@@ -1349,6 +1354,11 @@ static inline bool mem_cgroup_online(struct mem_cgroup *memcg)
+ 	return true;
+ }
+ 
++static inline bool memcg_is_dying(struct mem_cgroup *memcg)
++{
++	return false;
++}
++
+ static inline
+ unsigned long mem_cgroup_get_zone_lru_size(const struct lruvec *lruvec,
+ 		enum lru_list lru, int zone_idx)
+@@ -1510,28 +1520,41 @@ static inline void lruvec_lock_irq(struct lruvec *lruvec)
+ 	spin_lock_irq(&lruvec->lru_lock);
+ }
+ 
+-static inline struct lruvec *lruvec_live_lock_irq(struct lruvec *lruvec)
++/*
++ * Reparenting moves a dying memcg's LRU state to its parent at any time,
++ * so anything added to that LRU afterwards would be lost.  This helper
++ * walks up to the nearest live ancestor while the caller must hold the
++ * RCU read lock: reparenting of a memcg that starts dying waits for a
++ * grace period, so it cannot race with the caller until the lock is
++ * released.
++ */
++static inline struct lruvec *__lruvec_get_live(struct lruvec *lruvec)
+ {
+ #ifdef CONFIG_MEMCG
+ 	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
+ 	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
+ 
+-	rcu_read_lock();
+-
+ 	/*
+ 	 * The memcg can be NULL when the memory controller is disabled.
+ 	 * Otherwise, the caller keeps the memcg owning @lruvec alive.
+ 	 */
+-	while (unlikely(memcg && css_is_dying(&memcg->css))) {
++	while (unlikely(memcg_is_dying(memcg))) {
+ 		memcg = parent_mem_cgroup(memcg);
+ 		lruvec = mem_cgroup_lruvec(memcg, pgdat);
+ 	}
++#endif
++	return lruvec;
++}
+ 
++static inline struct lruvec *lruvec_live_lock_irq(struct lruvec *lruvec)
++{
++#ifdef CONFIG_MEMCG
++	rcu_read_lock();
++	lruvec = __lruvec_get_live(lruvec);
+ 	spin_lock_irq(&lruvec->lru_lock);
+ #else
+ 	lruvec_lock_irq(lruvec);
+ #endif
+-
+ 	return lruvec;
+ }
+ 
+@@ -1561,6 +1584,34 @@ static inline bool folio_matches_lruvec(const struct folio *folio,
+ 	       lruvec_memcg(lruvec) == folio_memcg(folio);
+ }
+ 
++/**
++ * folio_lruvec_live_get - get a live lruvec for a folio under RCU
++ * @folio: the folio
++ *
++ * Same as folio_lruvec(), except that a folio whose memcg is dying is
++ * accounted to the nearest live ancestor, which is where reparenting
++ * would put it anyway.
++ *
++ * Return: the live lruvec, with rcu_read_lock() held.  Pair it with
++ * folio_lruvec_live_put().
++ */
++static inline struct lruvec *folio_lruvec_live_get(const struct folio *folio)
++{
++#ifdef CONFIG_MEMCG
++	rcu_read_lock();
++	return __lruvec_get_live(folio_lruvec(folio));
++#else
++	return folio_lruvec(folio);
++#endif
++}
++
++static inline void folio_lruvec_live_put(const struct lruvec *lruvec)
++{
++#ifdef CONFIG_MEMCG
++	rcu_read_unlock();
++#endif
++}
++
+ /* Don't lock again iff page's lruvec locked */
+ static inline struct lruvec *folio_lruvec_relock_irq(const struct folio *folio,
+ 		struct lruvec *locked_lruvec)
+@@ -1826,11 +1877,6 @@ void mem_cgroup_node_filter_allowed(struct mem_cgroup *memcg, nodemask_t *mask);
+ 
+ void mem_cgroup_show_protected_memory(struct mem_cgroup *memcg);
+ 
+-static inline bool memcg_is_dying(struct mem_cgroup *memcg)
+-{
+-	return memcg ? css_is_dying(&memcg->css) : false;
+-}
+-
+ #else
+ static inline bool mem_cgroup_kmem_disabled(void)
+ {
+@@ -1901,11 +1947,6 @@ static inline void mem_cgroup_node_filter_allowed(struct mem_cgroup *memcg,
+ static inline void mem_cgroup_show_protected_memory(struct mem_cgroup *memcg)
+ {
+ }
+-
+-static inline bool memcg_is_dying(struct mem_cgroup *memcg)
+-{
+-	return false;
+-}
+ #endif /* CONFIG_MEMCG */
+ 
+ #if defined(CONFIG_MEMCG) && defined(CONFIG_LRU_GEN)
 
 -- 
 2.56.1
