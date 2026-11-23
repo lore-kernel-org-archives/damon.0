@@ -1,79 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795460018;
-	b=VnDODa8AAdWGvHsUjt9H7jCetlMq4uaoif54xiJat2oaWMgGBYCW/Rg3yaEOdQBFkkga
-	 bG2CW6C1Aj/TwTIHodL/i7Tswo8nik+PQbc7JZngdrJl1lcDD4utYFuRMAI6NL9Tkxh4Y
-	 y9jzsNHoRcrGw8u4B4kyx/JZezM77NbQZKGxBamur4bs883ZFdEp+3Cp5gHxy5yayxq3J
-	 oKspoZnR9pBdwbH/d84cIrpB9faEG0szmb5mZuW/13w16dETghHPRrm2GUs4GE6x7oG4h
-	 W+zFAVmpIGQlW4MqURmakkaTxUIr374Cr3GgvhKPedfSAwdXZkF9JfsOMbqLHHI78ZQ==
+	t=1795460020;
+	b=I1ayTNjA6UFL1cn0O6m7CtHmQ/uIsz4vwDfqQyGMJ0s6i57df1FpTkI7Ehww6f3ghqsh
+	 +W8dkTTkaPtSPoeJkBVYc5/nXc1UY6qQV2VsKR0C9HiACVfYDTyW4lAqw3KGIDjOwgQTF
+	 N0AiVnzf7fim5C7lQRAMF+cy2heO5uc0ujTZF3Lc66cy6eHrBfKNIRIvySgZC/J5Pc2ls
+	 d9oIam/87831yMiz5kY1K/kMCf4zwWIFDBYWLE5R+VejzfA0UwDWB1Bz96loQMXolF9RW
+	 4TkIWXOHp/6HzeUNLGhnArCJE83agZDL2SDmuUGiLx+tUM5c1xbvmLQin9Og6UaFWoA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795460018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795460020;
 	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
 	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=Fy4iqtyOKVldxfrRoRe9ktEnWMk4sYM46noWj6UrSRw=;
-	b=ICqbSaUNlIO4YnrO3p6BOe+I5Jp7V6hOTwdrQgz0flQb5TZDwupR+Mg2+uR6icTwJhTG
-	 vRtmQdFWltnMyoYWCwxalRNXvF4UmclLhwYvYkGOIcII8UQSD5QuSKm6QSfn8N3Gd4Nw+
-	 AqQ5zAl9MqGiat4BuAyCGWE5cNeW2CPG6123tUyo4C2PVTzbgzZizrJOZSiYGBkRNAMg3
-	 kOM23jzluc+4fNfy5CpW0VtzKfUtqgzDOYVKKUR/QveYeX3ycXzfFRpXmiNFBwIBTj2z3
-	 lgRAjEmJog3aUKhWGMiTOh73kZ80GjRs2S7PtXHlXflU04eSRdjCK8UiArqUOLcvsgA==
+	bh=S0g05G9qZGx4poDmgO7lZ71KlplbuRcjeb30J2se0iw=;
+	b=jJQJptzKn1hVUyzbAhDIzSzkOcSedT+WzQ9JXk1/ZuStjJfidxRtktjLCPBBFnv1PhAy
+	 Q5hc4+U39MiXV49B6dWCgXc4zsOGjd8SZp+dKFlOlFv8J0RCJqUebEwjXe0CBZ07zfnqE
+	 CJSpwjXa6+670hEvW2Rvo4NNhWOCzMdvHRN7eA2byUknAo4Guv1Pf2cV8JVC6KdcKS150
+	 76/8nB3utA6zkmDORKdKgjSpmnZ0z/rTjQugMYAu4e3kzFreq1YmSZTalb8uZxl18QUgW
+	 yrik4QVJOjyiByBKFn52jvLbh42/DCRNNmUMnJ2AQ2rztOo68klQ6mY0U1YI3SnJgAw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HDdFSan7;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OI4LOAcN;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B53E606A338
-	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 18:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605D3606A697
+	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 18:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HDdFSan7
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OI4LOAcN
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795460017;
-	b=Jjom/3pXj9tQ4Zp3RY6f1pRLFSFi1elnVZHOHB16wOhnCgzztlKtRhds8GqKWoTbFEh7
-	 FfyFpocQ8gnZXG11ZMWH0dKXcBRs+B1NQ6x2dOwzudNvipDxD8r8ORv8sY7alkGQsyRaM
-	 xHw7fmarnOqgfcJrJh5iXpORnzg+WlxaaWDqqPQuLaHlg7QE7eXZXb63d8pWM75CGE6Sp
-	 GNNeQk6qJOA3RbjOAgLudIryPmgPkgzyLuIoEbtWmyEVWVhWRBvKFAX9aWHCev5dG353a
-	 dZhr6uCSMMdmGgTpiUo9Z9jGuUt9ox/7HZaVYiXqP0SREdR+Wo9EpqYacfrovf81V5Q==
+	t=1795460019;
+	b=XlZNcG1eQ8UO3gM8pVnzANPdqacQycBHowY5SGrdhkfXgN3mGRJqGcgzXWWwZPbjV+k0
+	 P5/SwKN+oPOGNN8mAxK577W2KYQUC4trJIORxfyNlESSpoWNJr22tun4Vxsb8O1+wk+8y
+	 2A46zDGs0V9LZ5IsnUma65vaq3rhs+tReJwUU8M+G0wXh3kxehj3VJH5LK4YDQW+nDReW
+	 jcuaSlD8ekp9MsM65F8FBmjGwLgZWUqgnt24ZIbys2vC5mhA0MVHs8UVTiMgmgCCA1gJv
+	 42c+C4OORrmFrs1+A1lP+AGKSADkr7URFBBbKTNDgYUfwwDmQQ+wnp9Q2kjbRo8DnBA==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795460017;
+	c=relaxed/relaxed; t=1795460019;
 	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
 	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
 	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
 	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=Fy4iqtyOKVldxfrRoRe9ktEnWMk4sYM46noWj6UrSRw=;
-	b=tRGxDVjH8MG4m8kIQshdLIlAYSkuobghJlZyhEOJRFnchk5NMEm1ZuL+cNRaBTMSHB+v
-	 ZzCrqNeCOC9oL8+eBJwOhx5obY4uuaAeU24F9RWRSYLzunqyjXg4tct3cb7r6Nv2595Tj
-	 9S9chC2aPBehcCUuFKQ4N/spZVS3zNJGiBAy4ewHWy0TDb0XPcOgb9ypo3JDQQXnDot03
-	 WIAOMrgCMO5I/oNHdWaAcWHsfaGdj/pXSTgOpf0HkhREeaAqU0yLHhJ1bh29S4NfVSzot
-	 NnuU3VKDVDIip+n9LhxM/AuLw3QoX8Lv6ZN4FfLkFcTs3nFUSIZaEz2cYcHjoHpczWw==
+	bh=S0g05G9qZGx4poDmgO7lZ71KlplbuRcjeb30J2se0iw=;
+	b=grp95qAAe8ok1C1VsANNaBMj6dQFGNEgLp9N4A62wiDqUIHQtH3p7PnfPV1DngYZ/ept
+	 ddyFhTiC3lzky3qqRgDoW9Q1aVNPZn5J2ZDDS3pQivtXqOr9GddP1Wq2bKRdjtt70NG/8
+	 tpbcbrxxmYZifrheH6AtSfUUXhkAcTTopdQXco+71ayyxLkb0UOYw0j6IodS9SyuO0m4S
+	 zxr9h+ATB97DwSDBXoGEtX/2R6R++JZ2EhRJ/frGi0xc0E/l7MXjyALAQIKcbFtjp0NTW
+	 SMnnYGUNeaTnfydTqeoiFZq5N7YZ7O63DLy7b4wk9ZkFUqOXTiTVmvUEjipvt/06vQg==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 05F841F00A01;
-	Mon, 23 Nov 2026 18:53:26 +0000 (UTC)
+	by smtp.kernel.org (Postfix) with ESMTPS id 515341F0089E;
+	Mon, 23 Nov 2026 18:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795460017;
-	bh=Fy4iqtyOKVldxfrRoRe9ktEnWMk4sYM46noWj6UrSRw=;
+	s=k20260515; t=1795460019;
+	bh=S0g05G9qZGx4poDmgO7lZ71KlplbuRcjeb30J2se0iw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=HDdFSan784ZY1na1QkuZrD95OJiWZSBxW9gq0IStIhqhG0yjn0dpGPLLGatoic2DP
-	 Py7ZCCqX5utH+eeLqYyOdGxXmcWhNWPFhzmDDMoHwmXyzb0BPwiitlD84JT8t3ocM9
-	 3fF85JwREouTYeQn0DrSMgA+MCpvbj5GgMG6chRw/nS+zWCb1B31mtQjRv//RVYdwI
-	 Y8dUXCa2xCVsKHSNpuYZfMD1ckgK1ZXwVEP/viCzLZZe47PMjmHamNIAE5XE/EVBqF
-	 kfkLTE6Xb2npiprm7It0dl0ROQvEbq60eDfb/z8FrZooitk5uC4vvYoTKkeoIJTlTK
-	 Vzw7roGeXf40w==
+	b=OI4LOAcN4E/4zVyXqI2A61Tlme4Iy4E3rNCQ7ChWI15doWpkJiblS4VzWnkHDKcMH
+	 feh+nHj6jU5xw275gQGTxXx/p6m4DT2uM+Uhka39Cm+gLsMp1V7wtUdsrpVIbG2dOV
+	 3XDNoQT9Cf3EcTlIsjW9Qt28hE4eO4sxQ00stEM3/FRKWb6HrMKB4jpQrhph5f15Uf
+	 QOn2VcGUZ3rDLa5/vIotCHclUtYgkSHVfmoh/ccX03+CzoPOVYVehqV/bWTeYo78s5
+	 OyZ+cm2A3CkhY3Zzp7kwzSTxqy2mbYJIX8m/qIZTWe851LkSVBEWnfIoos0yRUJbD6
+	 dDfZZwkHX/q2w==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 7F6304C659;
+	by lkml.kernel.org (Postfix) with ESMTP id 9B9F14C65D;
 	Mon, 23 Nov 2026 18:53:01 +0000 (UTC)
 From: Kairui Song via B4 Relay <devnull+kasong.tencent.com@kernel.org>
-Date: Tue, 24 Nov 2026 02:53:04 +0800
-Subject: [PATCH v6 12/18] mm/damon: convert to LRU refs based operations
- for MGLRU
+Date: Tue, 24 Nov 2026 02:53:05 +0800
+Subject: [PATCH v6 13/18] mm/khugepaged: convert to LRU refs based
+ operations for MGLRU
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -84,7 +84,7 @@ List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261124-mglru-fg-v6-12-8ffea39934a6@tencent.com>
+Message-Id: <20261124-mglru-fg-v6-13-8ffea39934a6@tencent.com>
 References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
 In-Reply-To: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
 To: linux-mm@kvack.org
@@ -118,11 +118,11 @@ Cc: Andrew Morton <akpm@linux-foundation.org>,
  Tianyi Chen <hi@tychen.cc>, Kairui Song <kasong@tencent.com>, 
  Ridong Chen <ridong.chen@linux.dev>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795459977; l=1016;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795459977; l=1410;
  i=kasong@tencent.com; s=kasong-sign-tencent; h=from:subject:message-id;
- bh=ofT3DkXyC3h7ptCQPZjIa/LhrvPGmBU9+3gfY2rFnss=;
- b=o6eHIETcJuwaJUc97SH5F7SQ/kGVMK/yHu942m9yR9l+9EVkcSYS7fRXRI9yRCIPDg6wTwp7x
- /7/d/ERJJiaCtmPfVXmihoibf7n0JZz3OuQL/SSmum1iHaht3PhdLNZ
+ bh=ylGSrEczLifu/DdmhwMoGhk6njBmtr2EJO7xuMx10kQ=;
+ b=pXXLUep3I/vltYX0L1UH0GTTRjdiy0b3iBc9jWcCRdtT3cKw00OaEvGBk3uaweRY+TaoRFVrh
+ ZG6rFxHmKKzBv05zdRFuW60YLUnIX7HDic9FG8ptG6NTl5y6QM0dqWa
 X-Developer-Key: i=kasong@tencent.com; a=ed25519;
  pk=kCdoBuwrYph+KrkJnrr7Sm1pwwhGDdZKcKrqiK8Y1mI=
 X-Endpoint-Received: by B4 Relay for kasong@tencent.com/kasong-sign-tencent
@@ -133,34 +133,38 @@ Content-Transfer-Encoding: 7bit
 
 From: Kairui Song <kasong@tencent.com>
 
-damon_pa_pageout() cleared PG_referenced directly, which under MGLRU
-corrupts the folio's refs count. That flag is now
-bit 0 of the count (LRU_REFS_FLAGS).
+For MGLRU, PG_referenced is only the lowest bit of the folio LRU refs
+count, so folios with nonzero even refs no longer have the bit set.
+folio_pte_referenced() testing the raw bit misses hot folios at
+refs 2, 4 or 6, under-counting the referenced folios of a candidate range
+and aborting otherwise good collapses with SCAN_LACK_REFERENCED_PAGE.
 
-Reset the count instead under MGLRU.
+Test the refs count directly when MGLRU is enabled, mirroring the
+smaps conversion.  The classical LRU keeps the plain bit test.
 
 Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
 Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
 Tested-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Kairui Song <kasong@tencent.com>
 ---
- mm/damon/paddr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/khugepaged.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/mm/damon/paddr.c b/mm/damon/paddr.c
-index e89cb14ee17b..411e1d557ba3 100644
---- a/mm/damon/paddr.c
-+++ b/mm/damon/paddr.c
-@@ -279,7 +279,8 @@ static unsigned long damon_pa_pageout(struct damon_region *r,
- 		else
- 			*sz_filter_passed += folio_size(folio) / addr_unit;
- 
--		folio_clear_referenced(folio);
-+		/* The region is cold, better drop the hotness info. */
-+		folio_clear_lru_refs(folio);
- 		folio_test_clear_young(folio);
- 		if (!folio_isolate_lru(folio))
- 			goto put_folio;
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index 2dc4245814df..5e768481ac22 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -579,7 +579,9 @@ static bool folio_pte_referenced(struct folio *folio,
+ 		struct vm_area_struct *vma, unsigned long addr, pte_t pteval)
+ {
+ 	/* The folio was referenced previously ... */
+-	if (folio_test_young(folio) || folio_test_referenced(folio))
++	if (folio_test_young(folio))
++		return true;
++	if (folio_check_lru_refs(folio))
+ 		return true;
+ 	/* ... or the PTE mapping was recently used */
+ 	return pte_young(pteval) || mmu_notifier_test_young(vma->vm_mm, addr);
 
 -- 
 2.56.1
