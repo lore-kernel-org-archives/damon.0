@@ -1,54 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.125
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795437164;
-	b=rVMePNsUcUrtik1QOwXsz4YnvrHYPZ5ZW1wgcJ9r54Qt5CXJOgd87CoLLUoqJNxEIC1z
-	 WzGcsDi0GlKy7E8qrmB8Ge/mP7CvxlOIjr8ByC3dxub9bydK8GsxfxhD0aezuedDGc6af
-	 m0aMPe+xKvVZNIgAAo9gdXsFFtP5xdbNYmPN99yMdYwi3MOfBmlKoS83IOQMArAkcwmg8
-	 NpTGhcLCP5kEg396a4T0hsUa9ClJuXW8d0U040EON/abED8tPyElr9WpuslB/GB5C2x4i
-	 qBVkqAL+WUtYpqNI0cQOBvtJhrv1OV4kmBue9xOXWPubDgw1CgukmpzZcL9a2t5pR0A==
+	t=1795442487;
+	b=T2MoyFTKarBooqMJHOoQBtRwFndZPDVpwQWusMoIRx8ETCpiUJzkvSTXszWUf9YmQs/k
+	 AFqJPaONBw0U84HZqP5QNf9kKhWriikV9dNqmRFJ23PPKX5XlHquvXAIXPgVPekFA55/h
+	 hToC8tQoGywak4SuIduDasaz0AQbEh0BSon5f2/d6UKt4JsWia85EAlGvnEVfLlPT1kT1
+	 ReoU7c81U7oRJQoWu1Cl9tixNh3L1fl4mAn2fNoOLX6IZO386DPZosvVCUuVcE/OIz+j9
+	 l2IKXC9Jgu1E6F3m3fjJNC3+jKgdIIEky7Yi7PwByrGi5XeoKZ9tkod6Hum7c5G+iYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795437164;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
-	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
-	 To:X-Mailer;
-	bh=e2RVQ3O8W1C8YW2wJ9aXaBh6gRelyzfxjUCFahQNfPU=;
-	b=1ZqFDe2qcE5r8ctLKdad6Yagz7cCVtx7fh33oIORs9aTBxST5BZCXI7fYjwO/7lduuVE
-	 D39hDZndD30GDaKUXKxV8Wywc+8pP4ij8a3TPzXwoVpvkazmIGXQGnmQn/hLArsiM1yMx
-	 8t6CnKZTf3c9dF7bL9aMbfjHhDqOX+2gdX9mAxi0H2CCd4IQtgidz1opP4DI/sn51TKZt
-	 Pf9+pk3ay71PXpRVa4lT53A5Qf/nGVK1gnKLuehiuUfkVtDUSJUlwCJ7IjaYNONQAeSaz
-	 NmXz97Vj2ruCJoP6YK5wDukwGFU1DubYdfln6PeAVs9lNi3kncioDR3VOojSzPheuDA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795442487;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:To:
+	 Cc:In-Reply-To:References:Date:Message-Id:X-Mailer;
+	bh=vG8DGIHiY7DMGeo+eA0u14jrv8r12vq2uH5/qp0e+4w=;
+	b=zlllsOer1J/+pyDoKxQB60c5q737tWRvpNNiv9goy1svwAX+WwOiQJQ+QPNULrkOSkHm
+	 bfAhI3VcCrLxprvoW2JMWKKIiCW7Jfwmzsi2LRwgzE9R4RMERZe9BLbH7htWbbe2u6Yoo
+	 7jWj1x9f5VymnJ5V5Jm3DLma5C9IEdn+1e2MyPwnxMWvzosgef6eyPISRAwW1bkrXkqzk
+	 fmh5QamJKsUbkQyJL8nxNN5jl4AHE5phu7OmreitpHxBZertp0xR+iX7/qrKS5+MrnZ7q
+	 1UYVbn3npto1FrYoGx7+8rmC4Mt3VrthghSYI5gXrMy8fuOusFPpe4ZNiWblDj+eEYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=g6yK4vC5;
-	arc=none smtp.remote-ip=91.218.175.125
-Received: from mta0.migadu.com (out-125.mta0.migadu.com [91.218.175.125])
+	dmarc=none header.from=gourry.net;
+	spf=pass smtp.mailfrom=gourry.net;
+	dkim=pass header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=q8bGqa60;
+	arc=none smtp.remote-ip=209.85.160.179
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666BA606A31F
-	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 12:32:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 666BA606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B48606A332
+	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 14:01:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 03B48606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=g6yK4vC5
-X-Envelope-To: damon@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=IaXfb5Hi/QpRbuwTQppmoutVL2pV2Zxy6b6NwmIDvTU=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1795437161; v=1; x=1796041961;
- b=g6yK4vC5n37WbsNdGMf0BkpnaNq+7uKBUXX15GD4SctWed5eePPBRCkJyQwRQZ4z/2o4XLKV
- YjmYuMufUFgSZOOqhTlUeP2HjKWGmRdRX2H20UrtpcOKL+huQpOCQUOCQ19bckPFv9Cpco69Ln0
- n04OISklYq56LohQvRYFpXuk=
-X-Envelope-To: damon@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 6fa58fd50eb09120;
-	Mon, 23 Nov 2026 12:32:41 +0000
-X-Mizu-Trace-ID: 6fa58fd50eb09120
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.a=rsa-sha256 header.s=google header.b=q8bGqa60
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-5361e313e63so46370121cf.3
+        for <damon@lists.linux.dev>; Mon, 23 Nov 2026 06:01:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1795442485; x=1796047285; darn=lists.linux.dev;
+        h=message-id:date:references:in-reply-to:cc:to:from:subject
+         :content-transfer-encoding:content-type:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=vG8DGIHiY7DMGeo+eA0u14jrv8r12vq2uH5/qp0e+4w=;
+        b=q8bGqa60ntCrElCV5H+yJq6B03U7STKlFxrqE0EGnfgaHxfULq4p+WeDBY9wBqL7Vw
+         JQOzbIyvs+iby1BRj/RhQnM2pg0ZoRUNKomO+UzmOAfYudOzLYNOebuDrWahy2txalcW
+         RsDdrr355wKIm9lC3fbnZt71fo1nT+WBkYOnN3y8TYTD8At/QMt3TFQC7BmvDD4B2m51
+         ZDcTxw4+qPnBb/UQgx9i9rFJOTvClGIiyuGhuQsvCTbu/LfolHgmcwMu5lpnfa+h1gaZ
+         AdePO2lZM/bQVfhwGRhCCkiGU+Kwwhxzs6gwQ75KT6WOt/3bbn17VyrOQyYOOBtghONh
+         yIPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795442485; x=1796047285;
+        h=message-id:date:references:in-reply-to:cc:to:from:subject
+         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=vG8DGIHiY7DMGeo+eA0u14jrv8r12vq2uH5/qp0e+4w=;
+        b=sIKHvv0atfZH5fylwg8kyBSsrzIqR9Q/w6J8RcoqltZfOonQ9z2hx5VQI9kx62qjdd
+         XZVB5d8bxPzzMuW9Ugs8HwacR+xGzO+UrXpZIdpE9DO40zzp++LecVLRByZSI521g2DX
+         c/x+lraYqNztR7ovud+kvvoF4YKuFhP9h6z23Yrw46Y4HVmY/qYYSzGaXhaC8u8w8gKv
+         Q+YPYpxcq5SAjNcGEHEUhfVFBzsU/d2gs0upXyF4sjK4cyjTbUctJ8mS9Nr+jwIp4jYr
+         oMBNUg1JF4s5QQ4YqJwZ/tfYOsb3Z1bg2pYTOxKvFFT3wFRcGWy+vYeOycKf3qDLzL7K
+         4zdg==
+X-Forwarded-Encrypted: i=1; AL+hErEkRCz6KCspqJ8ZgrM8gcT2C+8v8bz0xfy1PgeamelweDX+F9X6oD0rrv4kqqOYwYOA7MfCUA==@lists.linux.dev
+X-Gm-Message-State: APuU4Z/s/5tt8PPW3O9uVDNtmjH6de2TCymtEVjNUz1GtD6DRovFTOvD
+	J1GeGUtASZEvuSlBwIUcioehQxcRd9nSn4W7tARKHMDGvK1qjm9QEGU+OnPbFhUNVt8=
+X-Gm-Gg: AZFdTZflIEXuPo0TuzFdjSI2pFapRIiytGomM/Aa2oeZ6FwA1LU0WbvfF/wH5EQYNZz
+	sTBApPE7PbagqCAgOEaQesZdm9NSQe5D6eR4dyAmBKo4Z4EoX6lgUEgZgU+GAzNOsDihEeLJjQY
+	nqNAVkjqGW/DUnxvjcQoZm9NmIdqmmTbyWkHY6PjU4njBxNK3fzbHWC7XjzOnmCHiVYBYsoSv2J
+	w5Iu2YJ4Tl4HMhF2M+SLTlzJMpXH+HoRikncC7NxIHPmLZLrNXuLFL6hUMM46tyFMl4j6g98ARb
+	aqlMDA/JWv1qf9O/dfR4znrUBB3VKGas+aEIjb+YEgEBQxSa8oe5V7GaijLIPzTRfG62aYNhM2p
+	zktA9pFyjG8MsrAfjx2TaObLG4Vv1PAV7ysNrVDfNjMQbTMYddAxTt3m8uA+RKcH9ylXSPRezVh
+	SwEPyvJexOkaYi66NIE/C1Q5Fw7hXHd5dVOKwUxYomgBfHPTGohdQMViWME1ti4Pu9N1ItKel23
+	ydT2Zf8djSb3MLuvmdA9bO2kZUm+m7kCjRJcMIQwyGzCdMEkKqG91gf0grQnRJclhFshFHXI70W
+	kSyzTKxGBSErU6qmrXHumgJrM12VytiQYmCeGBra30qQ0kMYenb8AiS8HiaGQ4zTzqog6/d8Aon
+	LwGMj1P0=
+X-Received: by 2002:a05:622a:8413:10b0:55d:8475:aafb with SMTP id d75a77b69052e-55d8475ad43mr113506371cf.71.1795442484804;
+        Mon, 23 Nov 2026 06:01:24 -0800 (PST)
+Received: from [192.168.50.231] (pool-71-191-145-202.washdc.fios.verizon.net. [71.191.145.202])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-55d788074desm99999281cf.7.2026.11.23.06.01.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2026 06:01:24 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -57,192 +88,143 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH v5 04/17] mm/memcg: add folio-based lruvec live helper
-From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <awMX9W-Ykjw4maRg@KASONG-MC4>
-Date: Mon, 23 Nov 2026 20:32:16 +0800
-Cc: Muchun Song <muchun.song@linux.dev>,
- kasong@tencent.com,
- Andrew Morton <akpm@linux-foundation.org>,
- Johannes Weiner <hannes@cmpxchg.org>,
- Qi Zheng <qi.zheng@linux.dev>,
- Ying Huang <ying.huang@linux.alibaba.com>,
- Chris Li <chrisl@kernel.org>,
- Baoquan He <baoquan.he@linux.dev>,
- Nico Pache <nico.pache@linux.dev>,
- Usama Arif <usama.arif@linux.dev>,
- Michal Hocko <mhocko@kernel.org>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Shakeel Butt <shakeel.butt@linux.dev>,
- David Hildenbrand <david@kernel.org>,
- Lorenzo Stoakes <ljs@kernel.org>,
- "Liam R. Howlett" <liam@infradead.org>,
- Barry Song <baohua@kernel.org>,
- Axel Rasmussen <axelrasmussen@google.com>,
- Yuanchu Xie <yuanchu@google.com>,
- Wei Xu <weixugc@google.com>,
- Vlastimil Babka <vbabka@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>,
- linux-mm@kvack.org,
- Nhat Pham <nphamcs@gmail.com>,
- Youngjun Park <youngjun.park@lge.com>,
- Zi Yan <ziy@nvidia.com>,
- Gregory Price <gourry@gourry.net>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Ryan Roberts <ryan.roberts@arm.com>,
- Dev Jain <dev.jain@arm.com>,
- Lance Yang <lance.yang@linux.dev>,
- Hugh Dickins <hughd@google.com>,
- SJ Park <sj@kernel.org>,
- David Rientjes <rientjes@google.com>,
- Yu Zhao <yuzhao@google.com>,
- Vernon Yang <vernon2gm@gmail.com>,
- Zicheng Wang <wangzicheng@honor.com>,
- Chen Ridong <chenridong@xiaomi.com>,
- Tal Zussman <tz2294@columbia.edu>,
- Xiang Liu <liuxiang.277@bytedance.com>,
- Ehab Ababneh <ehab.ababneh@intel.com>,
- Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>,
- Lian Wang <lianux.mm@gmail.com>,
- Joanne Koong <joannelkoong@gmail.com>,
- Kunwu Chan <kunwu.chan@gmail.com>,
- Hui Zhu <hui.zhu@linux.dev>,
- linux-kernel@vger.kernel.org,
- cgroups@vger.kernel.org,
- damon@lists.linux.dev,
- linux-doc@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <71FD1E6D-6F79-42B7-AED8-FCFACAB541AB@linux.dev>
-References: <20261119-mglru-fg-v5-0-9eee2fe97a2d@tencent.com>
- <20261119-mglru-fg-v5-4-9eee2fe97a2d@tencent.com>
- <42207e26-ba7f-4df5-8c80-71fa1b84d26e@linux.dev>
- <awMX9W-Ykjw4maRg@KASONG-MC4>
-To: Kairui Song <ryncsn@gmail.com>
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 01/60] nodemask: add node-state iterators
+From: "Gregory Price (Meta)" <gourry@gourry.net>
+To: Yury Norov <ynorov@nvidia.com>
+Cc: gourry@gourry.net, Yury Norov <yury.norov@gmail.com>, 
+ Rasmus Villemoes <linux@rasmusvillemoes.dk>, 
+ David Hildenbrand <david@kernel.org>, 
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>, 
+ Mike Rapoport <rppt@kernel.org>, Michal Hocko <mhocko@suse.com>, 
+ Andrew Morton <akpm@linux-foundation.org>, 
+ Oscar Salvador <osalvador@suse.de>, Johannes Weiner <hannes@cmpxchg.org>, 
+ Suren Baghdasaryan <surenb@google.com>, 
+ Brendan Jackman <brendan.jackman@linux.dev>, Zi Yan <ziy@nvidia.com>, 
+ Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+ Randy Dunlap <rdunlap@infradead.org>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
+ Johan Hovold <johan@kernel.org>, Joshua Hahn <joshua.hahnjy@gmail.com>, 
+ Rakie Kim <rakie.kim@sk.com>, Ying Huang <ying.huang@linux.alibaba.com>, 
+ Matthew Brost <matthew.brost@intel.com>, Byungchul Park <byungchul@sk.com>, 
+ Alistair Popple <apopple@nvidia.com>, SJ Park <sj@kernel.org>, 
+ Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+ Juri Lelli <juri.lelli@redhat.com>, 
+ Vincent Guittot <vincent.guittot@linaro.org>, 
+ Dietmar Eggemann <dietmar.eggemann@arm.com>, 
+ Steven Rostedt <rostedt@goodmis.org>, Ben Segall <bsegall@google.com>, 
+ Mel Gorman <mgorman@suse.de>, Valentin Schneider <vschneid@redhat.com>, 
+ K Prateek Nayak <kprateek.nayak@amd.com>, Kees Cook <kees@kernel.org>, 
+ Kairui Song <kasong@tencent.com>, Barry Song <baohua@kernel.org>, 
+ Qi Zheng <qi.zheng@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, 
+ Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
+ Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Michal Hocko <mhocko@kernel.org>, David Rientjes <rientjes@google.com>, 
+ Pavel Machek <pavel@kernel.org>, Len Brown <lenb@kernel.org>, 
+ Nico Pache <nico.pache@linux.dev>, Ryan Roberts <ryan.roberts@arm.com>, 
+ Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, 
+ Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>, 
+ Xu Xin <xu.xin@linux.dev>, Chengming Zhou <chengming.zhou@linux.dev>, 
+ Lorenzo Stoakes <ljs@kernel.org>, Pedro Falcato <pfalcato@suse.de>, 
+ Jann Horn <jannh@google.com>, Chris Li <chrisl@kernel.org>, 
+ Kemeng Shi <shikemeng@huaweicloud.com>, Nhat Pham <nphamcs@gmail.com>, 
+ Youngjun Park <youngjun.park@lge.com>, 
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>, 
+ Waiman Long <longman@redhat.com>, Ridong Chen <ridong.chen@linux.dev>, 
+ Tejun Heo <tj@kernel.org>, 
+ =?utf-8?q?Michal_Koutn=C3=BD?= <mkoutny@suse.com>, 
+ Dan Williams <djbw@kernel.org>, Vishal Verma <vishal.l.verma@intel.com>, 
+ Dave Jiang <dave.jiang@intel.com>, 
+ Alison Schofield <alison.schofield@intel.com>, 
+ Shuah Khan <shuah@kernel.org>, linux-kernel@vger.kernel.org, 
+ linux-mm@kvack.org, linux-cxl@vger.kernel.org, linux-doc@vger.kernel.org, 
+ driver-core@lists.linux.dev, damon@lists.linux.dev, 
+ linux-pm@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+ cgroups@vger.kernel.org, nvdimm@lists.linux.dev, 
+ linux-kselftest@vger.kernel.org
+In-Reply-To: <awMK9V6TbU9Xtzn9@yury>
+References: <20261120-private_nodes_v6-v1-0-74f5f9a115c2@gourry.net>
+ <20261120-private_nodes_v6-v1-1-74f5f9a115c2@gourry.net>
+ <awMK9V6TbU9Xtzn9@yury>
+Date: Mon, 23 Nov 2026 09:01:22 -0500
+Message-Id: <179544248227.412063.16491857533875192357.b4-reply@b4>
+X-Mailer: b4 0.17-dev
 
+On 2026-11-22 10:32 -0500, Yury Norov wrote:
+> On Fri, Nov 20, 2026 at 01:08:52PM -0500, Gregory Price via B4 Relay wrote:
+> > From: "Gregory Price (Meta)" <gourry@gourry.net>
+> > 
+> > Add first_node_state() and next_node_state(), so callers can walk any
+> > node state the way first_memory_node and next_memory_node walk N_MEMORY.
+> > 
+> > Add for_each_node_mask_state(), which iterates a nodemask intersected
+> > with a node state using the bitmap intersection helpers, without a
+> > temporary nodemask.
+> > 
+> > Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+> > ---
+> >  include/linux/nodemask.h | 17 +++++++++++++++++
+> >  1 file changed, 17 insertions(+)
+> > 
+> > diff --git a/include/linux/nodemask.h b/include/linux/nodemask.h
+> > index 607373bd83ee..90bdcffa42ea 100644
+> > --- a/include/linux/nodemask.h
+> > +++ b/include/linux/nodemask.h
+> > @@ -411,6 +411,11 @@ enum node_states {
+> >  
+> >  extern nodemask_t node_states[NR_NODE_STATES];
+> >  
+> > +/* Iterate the nodes in a mask that also belong to the specified state. */
+> > +#define for_each_node_mask_state(node, mask, state)			\
+> 
+> for_each_node_state_and? We've got for_each_node(), and we've got
+> for_each_node_state(), so let's figure out consistent naming.
+> 
+> Did you check the codebase for exsisting candidates for this helper?
+> 
 
+for_each_node_mask_and() would be more consistent, change just requires
+passing node_state[N_MEMORY_X] instead of just the node state bit.
 
-> On Nov 23, 2026, at 01:03, Kairui Song <ryncsn@gmail.com> wrote:
->=20
-> On Sun, Nov 22, 2026 at 03:53:44PM +0800, Muchun Song wrote:
->>=20
->>=20
->> On 2026/11/19 05:03, Kairui Song via B4 Relay wrote:
->>> From: Kairui Song <kasong@tencent.com>
->>>=20
->>> Add a helper that resolves a live lruvec for a folio under RCU
->>> without taking the lruvec lock.  It takes a folio directly so the
->>> lruvec lookup happens inside the RCU read-side critical section,
->>> which a lruvec-based interface cannot guarantee.  The first user is
->>> the lockless folio_inc_lru_refs() path later in the series.
->>>=20
->>> Factor the ancestor walk out of lruvec_live_lock_irq() into
->>> __lruvec_get_live(), so that both entry points share it, and spell
->>> out why the walk is enough while only the RCU read lock is held:
->>> reparenting of a memcg that starts dying waits for a grace period,
->>> so it cannot race with the caller until the lock is released.
->>>=20
->>> Move memcg_is_dying() up in memcontrol.h, next to the other memcg =
-state
->>> predicates, and use it for the walk rather than repeating the open =
-coded
->>> css_is_dying() test a few definitions away from where it is =
-explained.
->>>=20
->>> No functional change for existing callers.
->>>=20
->>> Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
->>> Signed-off-by: Kairui Song <kasong@tencent.com>
->>=20
->> Reviewed-by: Muchun Song (ByteDance) <muchun.song@linux.dev>
->>=20
->> Some nits bellow:
->>=20
->>> ---
->>>  include/linux/memcontrol.h | 71 =
-++++++++++++++++++++++++++++++++++++----------
->>>  1 file changed, 56 insertions(+), 15 deletions(-)
->>>=20
->>> diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
->>> index 980358bc6f49..441a5d57e723 100644
->>> --- a/include/linux/memcontrol.h
->>> +++ b/include/linux/memcontrol.h
->>> @@ -571,6 +571,11 @@ static inline bool mem_cgroup_disabled(void)
->>>   	return !cgroup_subsys_enabled(memory_cgrp_subsys);
->>>  }
->>> +static inline bool memcg_is_dying(struct mem_cgroup *memcg)
->>=20
->> Let's make it const for @memcg along the way.
->=20
-> Good idea, but css_is_dying isn't constified, maybe we can do it later =
-I think.
+> > +	for_each_and_bit(node, nodes_addr(mask),			\
+> > +			 nodes_addr(node_states[state]), MAX_NUMNODES)
+> > +
+> 
+> Please use nr_node_ids instead of MAX_NUMNODES.
+> 
 
-Fine.
+I followed for_each_node_mask() which uses MAX_NUMANODES but let me
+look.
 
->=20
->>> @@ -1510,28 +1520,41 @@ static inline void lruvec_lock_irq(struct =
-lruvec *lruvec)
->>>   spin_lock_irq(&lruvec->lru_lock);
->>>  }
->>> -static inline struct lruvec *lruvec_live_lock_irq(struct lruvec =
-*lruvec)
->>> +/*
->>> + * Reparenting moves a dying memcg's LRU state to its parent at any =
-time,
->>> + * so anything added to that LRU afterwards would be lost.  This =
-helper
->>> + * walks up to the nearest live ancestor while the caller must hold =
-the
->>> + * RCU read lock: reparenting of a memcg that starts dying waits =
-for a
->>> + * grace period, so it cannot race with the caller until the lock =
-is
->>> + * released.
->>> + */
->>> +static inline struct lruvec *__lruvec_get_live(struct lruvec =
-*lruvec)
->>=20
->> Cound @lruvec be const as well?
->=20
-> The argument is fine, but tricky for the return value: when nothing is =
-dying it
-> hands back @lruvec unchanged, so a const argument means a const return =
-(which
-> isn't right) or a cast dropping it again.
+> >  #if MAX_NUMNODES > 1
+> >  static __always_inline int node_state(int node, enum node_states state)
+> >  {
+> > @@ -435,6 +440,12 @@ static __always_inline int num_node_state(enum node_states state)
+> >  #define for_each_node_state(__node, __state) \
+> >  	for_each_node_mask((__node), node_states[__state])
+> >  
+> > +#define first_node_state(state)	first_node(node_states[state])
+> > +static __always_inline unsigned int next_node_state(int nid, enum node_states state)
+> > +{
+> > +	return next_node(nid, node_states[state]);
+> > +}
+> 
+> At least the following {first,next}_{online,memory}_node must be
+> switched to the new helpers. Can you check through the rest of the
+> kernel to make sure all candidates of the proposed helpers are
+> converted?
+> 
 
-A cast is not nice. Let's keep things as they are.
+I originally intended to delete first/next_memory_node, to make
+usage of N_MEMORY a bit more obviously, but dropped it to save an
+extra patch or two.  I will probably add that back in.
 
-Thanks,
-Muchun
+But yeah i can update these otherwise.
 
->=20
->>> @@ -1561,6 +1584,34 @@ static inline bool folio_matches_lruvec(const =
-struct folio *folio,
->>>          lruvec_memcg(lruvec) =3D=3D folio_memcg(folio);
->>>  }
->>> +/**
->>> + * folio_lruvec_live_get - get a live lruvec for a folio under RCU
->>> + * @folio: the folio
->>> + *
->>> + * Same as folio_lruvec(), except that a folio whose memcg is dying =
-is
->>> + * accounted to the nearest live ancestor, which is where =
-reparenting
->>> + * would put it anyway.
->>> + *
->>> + * Return: the live lruvec, with rcu_read_lock() held.  Pair it =
-with
->>> + * folio_lruvec_live_put().
->>> + */
->>> +static inline struct lruvec *folio_lruvec_live_get(struct folio =
-*folio)
->>=20
->> const folio?
->=20
-> This is doable, will do!
->=20
-> Thanks for the review!
-
+-- 
+~Gregory
 
