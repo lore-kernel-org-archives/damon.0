@@ -1,56 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795447162;
-	b=R7VW94jv7LPoU8CtIh0xPPSXAIMzjuNAG/yFyGo/1zRZ5zPqgkxwnLzCylghuwwXsaeO
-	 Q2W+E+7jiVhGTGbRh+qso+OkSK/7/0JOAB56+RSeZIoRaeWwKtMUiD0L9XCsCDnHnQBio
-	 ZWWH1Pi+2zeGFv4KmPKhF5ZdeG6jdPZc6AkmL+nmWfFdhRWDR+bjQU6LKagGk7WWPZGsF
-	 mldvdY9HxGtFRdTzix62OjC+dYkUGPh75fqv6D2G0kVagMb5fgbmSIuJoF0dOSiU5wzvc
-	 jlb4W0ORFDZwXG5wSOvz5pwfG/h8m+0oHBH4Q/x7YTS/rpFnVIekthrgiNUaO14BEhw==
+	t=1795448170;
+	b=Ty47cWpp/QayDi4nQ6U5xE4dm+QK4MM0Ncw+prRkT4GtFYGnW+qerGzwbGJh9xrDr/GH
+	 NP6uWheTtf8JFGWtwPiru2+eumbKMgfBTRB5V76LTq2wwvJF+2KL2G5tKumAGGVemWq6e
+	 yU9Dv2VQ4QNvNrdw83/bMMhsIHjASP1lt8IUvN4dwBgVHmp3BtftcMaCpXq/beF9pKjR8
+	 VrhVF7NF2XpTGDNew0JVPSwCboeL0mIXlXEowJOy7s6kIixE7S5j2c8fLb3HrnaechWOb
+	 4gSybj8BSCHCr8fJjY2RXEiJwTZ45nRhKqeh51QyOLZSt4eWpf0Eq+vNuCHTIG49AJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795447162;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=nMduPgxhL05hgWVnvhGnMWz5x9v2kK38uOuZVHIkEsw=;
-	b=Y52uSM+4L8/SkG502h7SzXQe3pogLYAgW5NpLATPc6j8mq+7aFvVOApOPfadHRgvPbYD
-	 a9+eTvS6w7sFiWGLtQCpoPy8g/24izTHIzdWuN4ncJs+Es7k3Wb9jOhZBRp08G14gAF17
-	 Mx5CdmJHD/mVJM6fp47R1Gn+sSlywp99NVaVXHZXHFaK3IQCiAGawAjHcXPyFOWeYSt8o
-	 MN3GGdd9WVr+uXUL9JE0a9RHZ2f2zzZAdUJfvXOSqYiK/CuOCT3/Wy748mUxjZ6OjpVVN
-	 7ZyC80qUj8yijwhKEmm95i8UL80GSuv2b8wNLSrjCenoigYEfusOMbZ9zAu3SOr+K5g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795448170;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=+N93dfL1tS4vcORykzmFFgpIx1SWzI8NCvELJJ4qcd0=;
+	b=PqWs8H0EQcELg9DChjN/XH2zO4K2l19uc98MuhGC1csPtzTsBMx15xLgIwDRo4o+v+tM
+	 iaFDgMW5MoR9Xmd1SYMC8tNvlTwjej+tOf0rb7y84G1jB3X8W5YE3fstpW2Wo2rCDCmry
+	 lqdiMggOQtaQGo5niqsVb4qHdNAOD5hSMCzp4zqNvi2lWtu86kGkUyimc7nxENHLPqJdQ
+	 Lz60hwFMY+OvX+IepBDMxBoykGiFNUSfEh3xD3xz9ybWy3g3K5xTYNhqwjEnCTlmvdWDh
+	 XapbRsgwf1KL9I+JfRsbJ7LOg8xrXODy5CuUCJy7tsPa2h8N9QNlIzdEXJT0Q3DllaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ODVv9AeI;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dJzrcT9e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16498606A32A
-	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 15:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01A4606A31E
+	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 15:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ODVv9AeI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55AB1F000C0;
-	Mon, 23 Nov 2026 15:19:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dJzrcT9e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD1C1F000EF;
+	Mon, 23 Nov 2026 15:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795447161;
-	bh=nMduPgxhL05hgWVnvhGnMWz5x9v2kK38uOuZVHIkEsw=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=ODVv9AeI9sddSLK+goT/hmGY2znvpX3QsZyfm2tl6lwcMlrKGrY/wop+ZTkp7RQBx
-	 ODWttbZA3UvraNjvx8HmP0mjVhntwkmQUxwygejO6lNV+3+XO9nJ2rBSgzwrchl/0x
-	 IycdQNZKek71XDDhJgUJMmfDpFSvBDxgn6xmsqh2m7oe2hQfNcfMFi7lSPcvJTeaed
-	 K8KZXfwAdsZZaafLIwxlNBUt4rqKmcu6Ccl07yyxKpzlbgW91qmmDi/Fg9KgJyxlyD
-	 BEKVY1LPNWDyaUDEQyS926lszFZ5vMZTHC8NIx8Hg1KcUE8nvuvglcNlEd9p6zTifx
-	 NPLwOhxvp1UZw==
-Message-ID: <sashiko-outbox-229529@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v3 0/6] mm/damon: add sz_ops_filter_passed_last DAMOS
- stat
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261123151309.82675-1-sj@kernel.org>
-References: <20261123151309.82675-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 23 Nov 2026 15:19:21 +0000
+	s=k20260515; t=1795448169;
+	bh=+N93dfL1tS4vcORykzmFFgpIx1SWzI8NCvELJJ4qcd0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=dJzrcT9e/7DPR395fu2ht/DhVdesdi7aWR9+JQfaBM7llt5JPXs0pLQXpe8jkukYs
+	 6u/VYUmPrVSDW60ljr4xuXs5jJb0FrBXWo3cxP3HY1g1pt3SECgpRMzVk5I3G42OEz
+	 p+qBpQPPR5pSkM41CpIo+fEZk+m0QAqandp3uEkzJxN4c4tKtFf549ZyugT8uQKO2P
+	 b069Q1VyBsXwoC56ZxAPQd4ffvRBiJuGoIgMzxAW5DxhAnfBcmyPi3IX/U7G3BRIHM
+	 w7mC/K0bpNWGMI6kjrXZFnIwc/3fUmuCq440Gq0qLSBl8YMunma2zzGThmH0hlM8ua
+	 jQbU5gqFwk6GQ==
+From: SJ Park <sj@kernel.org>
+To: Aveline Noir <jm5905938@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Dawei Li <set_pte_at@outlook.com>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: Re: [PATCH] mm/damon/sysfs: skip registration if DAMON core init fails
+Date: Mon, 23 Nov 2026 07:36:00 -0800
+Message-ID: <20261123153601.85440-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261123-damon-sysfs-init-guard-v1-1-a2a6ca65693a@gmail.com>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,9 +61,56 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Sashiko has reviewed this 6-patch series and found no issues.
+On Mon, 23 Nov 2026 18:51:45 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261123151309.8267=
-5-1-sj@kernel.org
+> Hi SJ,
+> 
+> Here's the sysfs fix I mentioned in the report queue review.
+> 
+> -- >8 --
+> 
+> While reviewing the DAMON report queue series, I noticed that DAMON
+> sysfs still registers its interface if DAMON core initialization fails.
+> If damon_init() fails to allocate damon_region_cache, starting a
+> kdamond with an initial region can pass a NULL cache to
+> kmem_cache_alloc() via damon_new_region().
+
+"While reviewing ..." part seems unnecessary for git history.  The user impact
+(NULL dereference) could better be documented.  What about below?
+
+'''
+DAMON sysfs registers ints interface even if DAMON core initialization fails.
+If damon_init() fails to allocate damon_region_cache, starting a kdamond with
+an initial region can pass a NULL cache to kmem_cache_alloc() via
+damon_new_region().  As a result, NULL dereference can happen.  The
+initialization failure is unlikely, but the consequence is quite bad.
+'''
+
+> 
+> Check damon_initialized() before creating the DAMON sysfs directory and
+> return -ENOMEM if the core is unavailable.
+
+Thank you for finding and fixing the issue!
+
+> 
+> Fixes: a18709442869 ("mm/damon: improve damon_new_region strategy")
+> Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+
+Other than the above commit message,
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
+With the above assumption, I applied this patch to damon/next [1] tree with the
+commit message update.  I will repost it soon (~1 week) as an mm.git merge
+request.  So, no action from your side is needed for now.
+
+[1] https://origin.kernel.org/doc/html/latest/mm/damon/maintainer-profile.html#scm-trees
+
+
+Thanks,
+SJ
+
+[...]
