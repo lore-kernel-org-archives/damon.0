@@ -1,85 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.195
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.5
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795455481;
-	b=F0o01UnIKxIFQVYA8Ionuf3JJu7qO3THt1BbV3bhYstgMlE7fJ/gPAqPRL6vTrZBoANi
-	 h0/6PN7EopehWZ48+nS7bhplYtJXjrZAC+kbqcW8Kjq/Pm9a/AkcUW3aYWLRj1R1Sp8Vo
-	 ndKkWmVT6zx7NhikxZPm/lMCoMOCLr+y1849IuMu3XRVpwRON1d6ZiroY0SbrpMmlirw1
-	 70KX8pm1ZzW4IUD14IECmcDmsFgmVjTPlxofeDWzIjeXq2BapAEGnWi/QM/Gca4IS7SGP
-	 W5DhI5BG5RmXeCpZ1PBQYrYjfmQkz+T3ZWdORffw73FQhm1g7ceARHt4rHIlE0qYJ/Q==
+	t=1795455489;
+	b=TI/rMV+j/I2wjbD4ExFHaawweqakaQcq/peuH3viSHbZSYuwcg2gffEgONY41NyAYAiZ
+	 PPnyrh31aM9oLxCJz2NK5IyiKFob1QpAyoB98rHmmMFLeyFP0q6ooVCzOP+fypR2jqSCc
+	 W7fZoXdozmk7cucOA3wK11j1Pu7+9OuLDnmTz20laOXeti52eUYhb3udBZiAKWNXiTYA9
+	 lfCVC03xDDQhwfWwJktxfKZlGJWKr2rP9bVQigLhTIbYDxhECw8TSqRD0egfFrF7s+HnB
+	 pY3l6RnXjTyGOMWQkvA1CY55upS+gofgtqhE2qyeUy63G5UqnZgqr49947foyYTkI/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795455481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795455489;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:Date:
 	 Message-Id:To:Cc:In-Reply-To:References:X-Mailer;
-	bh=GdeF4xDXe9TQaYIgdFh4G15+B2cWd0mkAefbmf3E/zI=;
-	b=O6sEF/Kdjadp4+RciMcGrFblo7KEW/KukhLBQwe4dxAurT2hGtfFAR+09+F27gbLcp5l
-	 TLLIuEApAeuPF4D6kCt9Olp7JGk5hiimkr7a7I+h3eXln3iAOig2iaP5YVnGiQMqI4n69
-	 AQNYYAlBkApmc3SK6Zi5epNyXv7ewHHCRVIP0FMAeUB1K413bMP3n7rLG/eupP8WOTHEE
-	 xjP/FFQfph7jPKqHC/vbdsUjUyQzZtauaHw3RW7tsAbLuhrHNnIxBne7g1jDrATia8obg
-	 U/JPgCz9otFzpZxXySwO/U4QXQeBHHZU6CPv9BfMD9cEa46ch1J683oaoCKWn2t4cVw==
+	bh=UNprIaLuwx/PIfm0T+TSNXckbwgMyUXMskfrNB0wgSA=;
+	b=bgvAH9K2aKp9wf5Sj5oHlFKkEpHdNKhA2eZyeoPAZUYh4G8AIjdMOH3UwTqYrmdphFzw
+	 Emut+oiAOeFW4mIf6pIYIpiVZt0knXo4ouMvlUiEIOalrNPtUJPTBVUNzHKj8josdVH++
+	 l95sWFCYXsIt9zSG4N6uWRzYHB+402PrVATWOff1TE5zY8Ogu3MY8bX9W8PfpHUlLULzj
+	 4k9ixiBGx8vqJE51nC9p30pJL6UQXFk6R6tSw+vdCnDHYZJkAv+5IaCAiXBdX24XAROU5
+	 +a1tGoua9Q5LQ7p4PvuVTPgK8QU6GCPhUupdtAOmdmuarCnGOApZw8d9QzPaqR2Y1kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J7lEl++D;
-	arc=none smtp.remote-ip=74.125.82.195
-Received: from mail-dy1-f195.google.com (mail-dy1-f195.google.com [74.125.82.195])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OuX9n5tX;
+	arc=none smtp.remote-ip=74.125.229.5
+Received: from mail-dy2-f5.google.com (mail-dy2-f5.google.com [74.125.229.5])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F407F606A31A
-	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 17:38:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F407F606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EE0606A31E
+	for <damon@lists.linux.dev>; Mon, 23 Nov 2026 17:38:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 35EE0606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=J7lEl++D
-Received: by mail-dy1-f195.google.com with SMTP id 5a478bee46e88-3869f03af6aso2696330eec.1
-        for <damon@lists.linux.dev>; Mon, 23 Nov 2026 09:38:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OuX9n5tX
+Received: by mail-dy2-f5.google.com with SMTP id 5a478bee46e88-386a9c93b4eso593292eec.1
+        for <damon@lists.linux.dev>; Mon, 23 Nov 2026 09:38:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795455480; x=1796060280; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1795455488; x=1796060288; darn=lists.linux.dev;
         h=references:in-reply-to:cc:to:message-id:date:from:subject
          :content-transfer-encoding:content-type:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=GdeF4xDXe9TQaYIgdFh4G15+B2cWd0mkAefbmf3E/zI=;
-        b=J7lEl++Ds9xescorxFeOscV1c42JD+/0wBgfToB7iaPRe23cmDcdozCm9ypRbA2HJ0
-         d3mFNT0QrNs4NsmMxDu2tkphL3leHCSH4mwECRhQV7wPoHCQGSJqMnbGCFgkq6Vubx4r
-         M6Wt+/zS6fSPii6COCNcJMmOLwYV8iF5xUursiNw4n/hC28/bp0cucmiZgNlyfL2T18m
-         eWdv/5QZi1fjj1wBaPnCCfxw61MuvxRRN/TAYaUSXkJjzG4Og4C7np3WMfsQcFoy4yaE
-         LB8oTTqciJrK9Vo1OmODS8Vr2dmKhetsONDDjQlNSW4CbR53BmgqejVEFmjxHdeO+2By
-         dCeQ==
+        bh=UNprIaLuwx/PIfm0T+TSNXckbwgMyUXMskfrNB0wgSA=;
+        b=OuX9n5tXqNYEpCcReo3lyaW2RihNZ9RpVU0nhNLKGxxK/6pKUL2m4ZAnaOVP3hL6YA
+         LtPWcvLHq68vNxbJxohWL3vqSb0HD5RvTE8r1xQo90mqGxlyhqdooyO33VgslGmTY+yN
+         Z3SHeF956/b7XqXBgXfg+fDOFe2+LAKa92YKQJr0eSVFhagUMGkxttpeTdF/SOGoopA1
+         wdoUJUMjPfoYkxpJD/iHAamjMQjlqyp3hWBrV4/1715I/Fl7Ce3GgY13ftJkdplZkPRv
+         Ypa1LQwdtJHXHhV5/LPynwpZ/MnK6rSJ2nVnvqKTdMT8We5CapJ+aRB+2e8cFh/rC1+G
+         Xkjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795455480; x=1796060280;
+        d=1e100.net; s=20260707; t=1795455488; x=1796060288;
         h=references:in-reply-to:cc:to:message-id:date:from:subject
          :content-transfer-encoding:content-type:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GdeF4xDXe9TQaYIgdFh4G15+B2cWd0mkAefbmf3E/zI=;
-        b=tozTGhpDXIar04FbvzsjicoL6p4OMsuT7p5PXOtdrtEZio+MAVC+FithE4baGv0Zzw
-         BqX3q9Tcf4XBEJ1/i51Bj4AGPYxfVcp90trlQz1VSuvaSVhqxQKwmrZ7ifUEDmmqIfta
-         1rT9B3V9ZmDWZCJlR9Q3SBZUp0iW7iEQJ3dSfwl8hfoEM8eIvTqICmOwetxShhFD8DxF
-         mw0KFxcnhaS6VP4+IVlYXnKjlHAcoWgEKnkHhj/Ymqq3hD3gqZbQHj7R4M60BiUXJe3u
-         5vrmIqYvEIS/ebbVpuV+hF5z3XxW3k9/BWbKiJFG+dv1is1EidcDbnjPcS+d4ip4HtLY
-         7Vqg==
-X-Forwarded-Encrypted: i=1; AL+hErFyV0BKFIP7qCjNGzMOFzh4saMHVy/PShwzn7MfUToXzFBtf1EHCCWMIukOti62PE6E0YhSiw==@lists.linux.dev
-X-Gm-Message-State: APuU4Z8+uV4Pn1Hl0Hxds1JtQ/1fccZ1r5vTW4anFok7jLtZpy7TTrFL
-	v088NO5CC53bVDXtX9rC5UeyrtGInYc4eOp9W6zmtsCwEba5jTe+F4V/
-X-Gm-Gg: AZFdTZe8MRyQfFhNJipCR4/Z8CeNm0SVvo1AykWPBzGwCrAZXhxcPfl/X8v0UPojNwp
-	W6/IxB4rteNyRsqVWuwc6UclnDQne1INlpYISaKj8DV/NcNXDnbIBH8DDVAO12Xvfq7QkZfd16d
-	evycYP2Y7Bq2WUR6z9EHaP8s0QnfhYP/uEIR8L9T7ra0kefVvS2gxBeZK+lMHLrLy4anqDSm/be
-	7WHx8swhEfbLNVHwIt1AWnoQOcRv63Oj5R7s0UH3cSnA5psdJJEUj2jEB0RMdPIgLWd/JRcNyjG
-	+hxPc6+x7EdngoPlgrDzsARJpG7G/XelTSzTVXcROE/1vK3TDHw70DkZOSm6bFxDSEG9J/ow9Rc
-	bYbI6XRgijZBv7HMit2/Iq/w1n/B+DUYAGOk9/y3A8RlyIiFOjCTZXM6pXUBeEeEkX72Jci3nZQ
-	f2i66uFbAQ36A/VmaDAgVuW2hgv2UImHOz7AXli/4npMqu3P8Zia/1HtfvhBS6j9HMg0mCdowpu
-	aZP3BlliLoFZy+9Er+yFG1ia3DbDxmqYpFNfxZndKg0WTXxTAO2OuqJoQFTqvsa1F27kNZFgkZX
-	bqGTh51KwxHsBM27Wnx5bLnhW6KW0hcFpFUu2VlzRExHFilJuHT+eI2UeZ+kgeeL+m3fx9PNmnb
-	T9H7r1nxMUd5qkjuMcuhDUb85NakX7zFMBjaZecIr+8Lcwn6slml+En/eBprbYg==
-X-Received: by 2002:a05:693c:25cc:b0:369:f17d:efb with SMTP id 5a478bee46e88-384b3e77699mr19708498eec.10.1795455479865;
-        Mon, 23 Nov 2026 09:37:59 -0800 (PST)
+        bh=UNprIaLuwx/PIfm0T+TSNXckbwgMyUXMskfrNB0wgSA=;
+        b=UVTDvXMHyWi90gTbj+XfloxfDWpA7+FY6ufEymHV+1UgF8JqcLW8q2ZCvQrDBJlfPB
+         /iqrKqnEOhmjUwiRYdbcND+b+uGsk/D9JEKQwqWYu6K+QioNUFhVxqAL1mE3tAVQWoZC
+         YMvEL9vSkUYYFGuBU9nrHCefQWqPSw5ycbB25S1Y2b+oy9MV8bFvDJ+b73MBlt68Nu6P
+         3PSXe10cy8lnlRFcQbHsQ0e62Kk4wAcXrkvZRhQCHDZf/Fj6kC5fd3ZxoDTa89su4AAb
+         QDKMoHjuWixPiQjFUzwFbHK7zdckJHrzUT5CO6Hcke/VxHAcI2MduKTzfjWhQCzxPGrv
+         Ldlg==
+X-Forwarded-Encrypted: i=1; AL+hErEqWpS+esdjQrPc9xhM7jGu0+xuXaUtmamJzyQIdWgL7zo5Frj/J8/v4OiLkTPprmxFsI/SIw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z9Ajz1hqx0jjGoyyB+B12AmGHqmR+6xrc75D+7C4j3Io2EoM4g8
+	U6F/+nwAEJUI3wVP44H8BOGGSmFWt3TioSetcf8DxgVl8lRDNKzJpLUiDokdx6008z8kWg==
+X-Gm-Gg: AZFdTZcJ+DO/ULlnkdDmF6Ib8r+zrRQ1rrP2bCi/Gc0LxqQGjnaVJo46LP2q7LqSKBG
+	GECf7WAHP9HAOsA9vNaUd7xobvYBhxcKRJfXz/eLY0FsmTk5RyXLfDfHL6YAiPTPMnMSMEzF3TR
+	HdMUq1MQaZCaNVKxVqAM0NmveV2/7zPkr+tj+eOLjNZCrsrPZZyiqrof+/J5/CvXr2egWRikwy2
+	6qi/3Uj3wXqci8m/HpftnIavmldrDUcEDGpreX2KxLhWfGAukll4/IN7CKcYlliiVHDr1U7p8Fp
+	jr+w9TYoV7xL9PwKraDMkozDiLNy/YeiEqs27LWB+stC60JpGhA6+JqIARODXGjuj1MPKEa/Yaa
+	Fts3c9/OCKYcTs7iENuj88Vdt98z/6vilLXB3CQ5iX8yMK0cbYPv169+9UQjgJIKPN2Bakget15
+	zXHcQvIjPBEAPd9vTRXaed6yOCN6ju5MouNMIf11sddeKsRzPeduTORng3qoEN/qP6AKzviUbdW
+	8wmfwx8LnDmi53d7QKadlQ+qHtqRb/ALUsgow1LeTq5IThiR/ZLgGjHTaWuApLxx+BQJBtuYBV0
+	eonVk1n6JJRvnXkafzjSkTxFUz4hONjFBQLvuwUdkk+hGk7pqenMNW3VOzHvH6ruqXpHJH7qp+e
+	kv9tXprFNvKybV81jk/JjptyzPRyGUEHfsrK0dlwAL0MdafoXQxKcnRfP81WTfg==
+X-Received: by 2002:a05:7301:18aa:b0:386:a0cc:b97d with SMTP id 5a478bee46e88-386a0ccbd2fmr7820717eec.4.1795455488491;
+        Mon, 23 Nov 2026 09:38:08 -0800 (PST)
 Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38567abb870sm31532302eec.25.2026.11.23.09.37.54
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38567abb870sm31532302eec.25.2026.11.23.09.38.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2026 09:37:59 -0800 (PST)
+        Mon, 23 Nov 2026 09:38:08 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -91,25 +91,25 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 19/27] Docs/ABI/damon: update for REPORT_MADE probe
- filter
+Subject: Re: [PATCH 20/27] mm/damon/api: introduce user_report report type
 From: Aveline Noir <jm5905938@gmail.com>
-Date: Tue, 24 Nov 2026 03:49:24 +1100
-Message-Id: <179545256493.4.4781615741827867830.b4-reply@b4>
+Date: Tue, 24 Nov 2026 03:49:25 +1100
+Message-Id: <179545256509.4.13193548537304229599.b4-reply@b4>
 To: SJ Park <sj@kernel.org>
 Cc: Andrew Morton <akpm@linux-foundation.org>, damon@lists.linux.dev, 
  Lian Wang <lianux.mm@gmail.com>, linux-mm@kvack.org
-In-Reply-To: <20261121210013.130397-20-sj@kernel.org>
+In-Reply-To: <20261121210013.130397-21-sj@kernel.org>
 References: <20261121210013.130397-1-sj@kernel.org>
- <20261121210013.130397-20-sj@kernel.org>
+ <20261121210013.130397-21-sj@kernel.org>
 X-Mailer: b4 0.16.0
 
 Hi SJ,
 
-On Sat, 21 Nov 2026 13:00:03 -0800 SJ Park wrote:
+On Sat, 21 Nov 2026 13:00:04 -0800 SJ Park wrote:
 
-> Update DAMON ABI document for the newly added REPORT_MADE type probe
-> filter support.
+> Users could know some data attribute information and willing to provide
+> that to DAMON.  Introduce a new damon_report_type,
+> DAMON_REPORT_TYPE_USER_REPORT, for such user-provided reports.
 
 LGTM, thanks.
 
