@@ -1,56 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795535592;
-	b=uXAl3efcqepMV7HL/lpbjCvHoZy1oUhljM9ifrtjrv0BRJzqGdQtHJQCQgrvNaFEPQ8p
-	 QMrXR9owxhdSXBaWh4gY6AYWGrhhQiWWuxBUo6dvg/fzwOrNVqbDRSr/3KW971ayCtqpb
-	 vtMS0PgnDZEDRzK9f2WzDmRJpLtK7Q7RDqkfO9AZ2lzb8mVGyqi+Zm3yqr/KV78JkAnod
-	 l1hod6nm1ZsgZN3En13s/1UDQCcs1RT70EfjxPi1qBnJLFUlvlwTi6dUOzoRRzRxvTD05
-	 GM2uvotiffnLGhJ7M/NM/ngzGCpt+LMVQknZxe0kH8An+9zQEGjtzfeEcwdRxaeDtkg==
+	t=1795536092;
+	b=h0o9bLOQjrpUFQbK76dVQMluwOyl3CGk3FFCxDyGBR10mjlKdeEDOFROmEKg3jCSvZ5A
+	 U43dbkqw35TAztXypUWToWXlSZ9SPkYL9jX4+RxjGfdSv++DFXBdf1jBIPDvpeX7U+uqc
+	 vQD/jH1T4muazMCZrduRCslelSaTJXAiRjRKIkLOK33+pPHS8ygB6O8vvJFHu/Wlkbd9e
+	 nYqzZjnh42FFmO2+q4Dizl64ZjcbmxH/rqz2SQ67ZnC64leQ3iw6fpDTB0MkXGFRn2+aX
+	 RJqFxFBziTK9ic/JIU+tNBT3VdZfZjIbJRfw0Yuf1Pxrzh/LKLbeIVs74HrCDgB5xKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795535592;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=W92S3NXXFocy/5kLH13Hgsrgztna4nNYfwUIulhMkrg=;
-	b=b8jUw8ddkBCbJYsXVd1rfEg+sJPoBi0tE8zTQZt1DN23LYGgpRMkh7X0NOg0BsThTUDS
-	 7tmr/znznLxbBxdea22kOTUAR2kWw0ur9znhIqqhKyuVrm3P2H2aZAF/PSWPQg44O1i/R
-	 t64lODz7r/qIAYTTH0XGxBlLA2cuZ/JDuaqg95SpL1o5ndCKwrjRws18ugqDE8TKBOdwK
-	 8C6WY/LHmTyjWpuPhgPQ6H2Sj6ElclvO1F6c0af/g7rZSkoiN8IVWpHaeBd5cYPR1ZWKa
-	 nL5ixeYE0e8zzqGeNuNrdu275IKB7QW2E3Osb+rzczKRsEG2Of5qnqq4gw7bVkvul0Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795536092;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=q9AzOcx7lT/GAxuFckU0BqUnqN5Gf6MdjD8AIDI3n7g=;
+	b=T3IK1iMyPB8EDU/JudRbCf3coBRsSHT21cTkUK5GtOYmt60MiBX80Zkgcvk3zDWmyOY7
+	 vnZVSOgb+57Od6MalPzh1QWAAOy5UczzFtp7fohM/XwubZ5eZ9Fu3mrhUZH6gUrHg8+4N
+	 8/4hTZrKmeQ0sPzmB9x/Tog2XG2sAe3sa6S3TZB8cx5uC2Y5Uis6KqpzTsN3UXJPua+c5
+	 CCf/dygBEBEfSeOb65aw55quq/OPoODUNueOkiycFBLa0N6NzTYXe08qMFLxd2ODprOtk
+	 xZf77RKMVc6dSpxes74c4jK1s49L59RKiYYfCjS+4vC5mhm9trY4qXyQPQcRdHro43A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=l6QIaWyb;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VyKVdbNh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE67B606A31E
-	for <damon@lists.linux.dev>; Tue, 24 Nov 2026 15:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DAC606A31E;
+	Tue, 24 Nov 2026 16:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=l6QIaWyb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDF61F000CA;
-	Tue, 24 Nov 2026 15:53:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VyKVdbNh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEC31F000C6;
+	Tue, 24 Nov 2026 16:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795535592;
-	bh=W92S3NXXFocy/5kLH13Hgsrgztna4nNYfwUIulhMkrg=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=l6QIaWybWCCHn2gpDlqDc8SuSgf/ggwYoIbtc4RiJgXDkey61PuequVMXhBcpD8yb
-	 2X22RfDPFZ2PGEJNo8DMjExlLwkHHJw637SXEAr65rExCHj8KL211k55rA0gtd084E
-	 9dsH43WS44OwY5FQLFowc7Feho3Y+7AZ76FqD81pOeKmAsDFLQmkaBxwXpTUNbd9Ij
-	 XhgTACdNKnxQeyBO66CBKauvqSXmfXWGRWf/+4c+wdakYPPDEhzV4SGvIxVsaj2CE+
-	 m0lSgP8lidIIid1CEtG7YBNCOgiVia0mcs9W9YgoYqPv3+zitynbULpG+AEZnjWbdo
-	 U47Me+LxSEKGg==
-Message-ID: <sashiko-outbox-231486@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [PATCH v2 00/27] mm/damon: let users report their data
- attribute findings
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261124153636.91854-1-sj@kernel.org>
-References: <20261124153636.91854-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 24 Nov 2026 15:53:11 +0000
+	s=k20260515; t=1795536091;
+	bh=q9AzOcx7lT/GAxuFckU0BqUnqN5Gf6MdjD8AIDI3n7g=;
+	h=From:To:Cc:Subject:Date;
+	b=VyKVdbNhhNwvY2U4T2D2HYlO9FeOrSAMOP7NjSY3IrbQntMzm6T+dbybYTGx7ypXk
+	 4dsrslN9SyjdilOwkCNyJ2RCjmzOLD3EInnSHJNZwPi4XfOpvLO6TGpDi2xJqhzFGX
+	 Ay7K9jIKM5abcBUIv4JRAxeQ3yfuJw+9X9tWsfQrlEYRywpCZ/wYokMOyp1y6pCrMt
+	 Dgwy1S8FQIXk/lCcr8ehMcK/e6ncqN6pA6JLTmBjcuT3Ue20/RoGLGqFNB365nvlBA
+	 vB0wv5xyLi0cEFXRO8Jqm7lANlFV8vzZPDlyutxmtC1xsjmFQbTaxEfTecgEvGfTbb
+	 kLD8UKERnHgwQ==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [PATCH mm-new 0/4] mm/damon: update documents for mm-next onboarding
+Date: Tue, 24 Nov 2026 08:01:18 -0800
+Message-ID: <20261124160124.93482-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,9 +61,42 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Sashiko has reviewed this 27-patch series and found no issues.
+Right after the 7.5-rc1 release, DAMON will onboard the mm-next
+transition [1].  The major change is that it will use mm/damon.git [2]
+and mm/linux.git [3] instead of sj/linux.git [4] and akpm/mm.git [5].
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261124153636.9185=
-4-1-sj@kernel.org
+Update MAINTAINERS file to capture the change, via patch 1.  Further
+update DAMON maintainer-profile document for the change, step by step,
+via patches 2-4.
+
+[1] https://lore.kernel.org/bed81e01-7303-4957-bd7d-38e3a094e96f@kernel.org/
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/mm/damon.git/
+[3] https://git.kernel.org/pub/scm/linux/kernel/git/mm/linux.git/
+[4] https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/
+[4] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/
+
+Changes from RFC
+- RFC: https://lore.kernel.org/20261121193331.108587-1-sj@kernel.org
+- Update patch 2 commit message for DAMON section name update.
+- Rebase to the latest mm-new.
+
+Huge thanks to Andrew for his tremendous mm.git works that raised DAMON
+up to the current state.
+
+SJ Park (4):
+  MAINTAINERS: change DAMON SCM tree to mm/damon.git
+  Docs/mm/damon/maintainer-profile: use damon.git for patch baselines
+  Docs/mm/damon/maintainer-profile: drop 'SCM Trees' section
+  Docs/mm/damon/maintainer-profile: update key cycle dates for damon.git
+
+ Documentation/mm/damon/maintainer-profile.rst | 57 ++++++++++---------
+ MAINTAINERS                                   | 36 ++++++------
+ 2 files changed, 46 insertions(+), 47 deletions(-)
+
+
+base-commit: 39902b38a4f121b7b3c847622585858cc8070c97
+-- 
+2.47.3
