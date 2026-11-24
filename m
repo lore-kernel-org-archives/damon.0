@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795534605;
-	b=3Xaet546jT2JKU9TZgDYx0aPT3P2iJyz4iKpqyfikjJh14Drhm+HKsnimxOeGyh2lPBj
-	 rF+KHl5kjSmGpAoFrj8Og998mJaW550nE5i8IxmH22uX41M40uePZRG2fUAMyZrudhDEH
-	 Ito85QxBY3Db//3tg2cBY3YFqq45i4ngepjryPEyNgHBSicobwb1OyLCFmBs7IiRsdHXM
-	 369SUrDNCtjYzJI3O2BfMX2/ehTFgUMME3r13VQy49gfQbhtEd7kuFb4wYDvXrZ4djJkz
-	 1upXHKK1e8Bx/HAzjJmR765n7eDuX0RiUJBDCD4DQKKHLzbnQDUpKblBMMhsr6CXcKQ==
+	t=1795534606;
+	b=Rb6+mS0GGDbVWt0Oc+XTexEeq3Cbfm5NCC6ziLn6JDTkZSzc9CeKvWC2STN3PiIQMnkj
+	 k0Q+zC/B6M/VLf088OtfP20IB4vjv7VY4HoRT/SJtfQvAdcmdG9j4SQtFYvesta8XGjpW
+	 WLb/w1Nmma5pRZtH/ekr11YlSZkxcAg5YrtK67dxj9zZOw0f74c2COraAn5A79T0uxU1i
+	 8i5uaF6qOKTQ5OsIPiy2GrhduqlmsVt7bu1OFNiTU9VdvHNvgwfbhbCSgk/5ooiXNRiYH
+	 lepb38KoVhcBQlaAeFS9Eje41WMvBZxjStOQUp5pmW0eMdnk1pmKzZlc0Ih2c4Z4j8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795534605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795534606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=s4WULBvjRFLiiJiFHBxE8QngaPERSKMf2wY3GVjljHk=;
-	b=3Zz4k5JlACJpFrZegx45kSgJb4o8CIRiN7li8ZTrdxOmH2Knq8xGo6SZa+vzm0Hj2s2G
-	 3r8q8mKUueOy7YXJlAphvvCMoceT34HTYS2iF9QKPvkYjBzyO5K+wYVTltFgU30VOKzaJ
-	 YAYPtU4mbX46PhakgqCUW1aHIKWUYK+O0EhIDO5xsgE/ZB1heXatPLa97EtO9V0XM1H+S
-	 Bpeh+XryUQbnriBHCCNA3SeFdntl2sYKqoun4AzQbv6wixlLiS/Qel9NOoP1loaLzq/vZ
-	 1DFVORJBBuOT06eVGt3Qwmx7QY9n5ujLSZBbGUG6Tn2ZuTFBG3zEGEZJE5tM15gvWjA==
+	bh=N++E4pV8FIbWrmNbMjepL9j7Rj9OozUVn9hIC9L/F8Y=;
+	b=3tz09B/C0DQm8iEXw+6ZqkHeyFvhwsxij57sM6C48PYvW+X9bToLGxQ6jhm9bYuY0rFz
+	 OwD2FZRpFMKePDJapZKVWditsh7Jid20rvtZGzBAqVzbAZhEwhDj+U6J+nApNoZZf5H8Z
+	 AH0YXoLLIhLVIVebXhdv6l1pl1DxY1tDz7QDg/Iof7BqKe/ghLvgn2GkJTXE1vUZYG1GF
+	 8jhoz9wDkYy0swUn3LjzgpTEmNbROReGeVxsXjuG9bB34ww+5WsHCBRIr1xFAWcYe3h1x
+	 W8dMtz44q8ED+7uS6KdBTN6FX8EwbUqjM22KmllZwfwu5pFXU3WeIdwBMIGsMvyhs+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W8FJArd0;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SioBXk9L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D3A606A326
-	for <damon@lists.linux.dev>; Tue, 24 Nov 2026 15:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26C8606A321
+	for <damon@lists.linux.dev>; Tue, 24 Nov 2026 15:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W8FJArd0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F15C1F000C4;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SioBXk9L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851981F000C6;
 	Tue, 24 Nov 2026 15:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1795534605;
-	bh=s4WULBvjRFLiiJiFHBxE8QngaPERSKMf2wY3GVjljHk=;
+	bh=N++E4pV8FIbWrmNbMjepL9j7Rj9OozUVn9hIC9L/F8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W8FJArd02TjjV267Axt6tnCzEbxh0b1lW8/BK+9BgzBpnnE570ian47fnlAsLTDpX
-	 i7oSZGWwPHsUZGtZoexTSnfwYVKENPVEiYKDVg6LDu+stI7CbGpVUfkEurKanNZgcc
-	 IR/BmwetXIC/3m4YDhMJW522/nmB9DVV3fm84n8HusMj5ykRt12EKizZASralzAlfA
-	 PzcuPGEqbUUbjTZf9u6eFPOp781Lqwteg+6NomNY1Q/7C2slRMCWmgbtoarzamLWPM
-	 i6y7k72gKdZqJjHamUgKLxaD4S8TgQlCvOvrtEoeKmlWimkQH0lLUf6VXXQAmpJCWb
-	 uu784NNzfpwBQ==
+	b=SioBXk9LXlV+XCXAbx3ceUUcS73AYNwgUvJHDFU7vTJoowaZ1FNkoiqXmaPFhAsOr
+	 5XJj8tZQGGmqbrqxsSdidwxd3yAXuLZf6JRbRLKLfzxbMEKBp/mALVjP4oN9NyUmyR
+	 NcGqzFTUzutQj62MRcA82GYJvTP05H6zpExrbk5MZRz5ogn44xlR+S4OetSgnIdRVu
+	 GBMhAmFtrdZA9IKNBuyHyv4VZ7dqtuPBdUDqtedUPi5bmz9EbsV6+WT8aKRc8Q+EqT
+	 xTDenoY/s0T7peXAOtfY0jtSqyophi3KyEaEYbKrToyLFrJ6y6LdqzZJKEY3/PKHmP
+	 qkDaO/HQzyiyQ==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -46,9 +46,9 @@ Cc: SJ Park <sj@kernel.org>,
 	linux-mm@kvack.org,
 	Aveline Noir <jm5905938@gmail.com>,
 	Lian Wang <lianux.mm@gmail.com>
-Subject: [PATCH v2 01/27] mm/damon/api: introduce struct damon_report
-Date: Tue, 24 Nov 2026 07:36:07 -0800
-Message-ID: <20261124153636.91854-2-sj@kernel.org>
+Subject: [PATCH v2 02/27] mm/damon/core: implement data attribute report queue
+Date: Tue, 24 Nov 2026 07:36:08 -0800
+Message-ID: <20261124153636.91854-3-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261124153636.91854-1-sj@kernel.org>
 References: <20261124153636.91854-1-sj@kernel.org>
@@ -63,52 +63,73 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Define a struct for data attribute report.  The struct provides public
-fields for the type and the memory address range.  The type field
-represents the type of the report itself.  The address range is for the
-memory of the reporting data.  Data attribute producers can format their
-report using those fields.
-
-It also has a private field representing when the report is submitted.
+Implement DAMON core internal data structure for queuing received
+data attribute reports.  Initialize the queue for up to 1,000 reports,
+inside the DAMON init routine.  Destroy damon_region_cache and reset the
+pointer for the queue setup failures.
 
 Reviewed-by: Aveline Noir <jm5905938@gmail.com>
 Reviewed-by: Lian Wang <lianux.mm@gmail.com>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ mm/damon/core.c | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 3aff5c525132b..2520c036306f3 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -757,6 +757,27 @@ struct damon_intervals_goal {
- 	unsigned long max_sample_us;
- };
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 649a4ac968abf..8293b69169856 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2337,6 +2337,25 @@ int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control)
+ 	return 0;
+ }
  
-+/**
-+ * enum damon_report_type - Type of &struct damon_report.
-+ */
-+enum damon_report_type {
-+	NR_DAMON_REPORT_TYPES,
-+};
-+
-+/**
-+ * struct damon_report - Data attribute report information.
++/*
++ * struct damon_report_queue - &struct damon_report queue.
 + *
-+ * @type:	Type of the report.
-+ * @addr_range:	The address range of the memory to report for.
++ * @lock:	Represent if this queue is being used by someone.
++ * @tail:	Tail of the queue.
++ * @size:	Size of the queue.
++ * @nr_reports:	Number of reports stored in the queue.
++ * @reports:	Array of &struct damon_report.
 + */
-+struct damon_report {
-+	enum damon_report_type type;
-+	struct damon_addr_range addr_range;
-+/* private: */
-+	/* when this report is generated */
-+	unsigned long jiffies;
++struct damon_report_queue {
++	atomic_t lock;
++	unsigned int tail;
++	unsigned int size;
++	unsigned int nr_reports;
++	struct damon_report *reports;
 +};
 +
- /**
-  * enum damon_prep_action - DAMON probing preparation action.
-  *
++static struct damon_report_queue damon_report_queue;
++
+ /*
+  * Reset the aggregated monitoring results ('nr_accesses' of each region).
+  */
+@@ -4323,7 +4342,7 @@ void damon_update_region_access_rate(struct damon_region *r, bool accessed)
+  */
+ bool damon_initialized(void)
+ {
+-	return damon_region_cache != NULL;
++	return damon_region_cache;
+ }
+ 
+ static int __init damon_init(void)
+@@ -4334,6 +4353,16 @@ static int __init damon_init(void)
+ 		return -ENOMEM;
+ 	}
+ 
++	damon_report_queue.size = 1000;
++	damon_report_queue.reports = kmalloc_objs(*damon_report_queue.reports,
++			1000, GFP_KERNEL);
++	if (!damon_report_queue.reports) {
++		pr_err("report queue alloc fail\n");
++		kmem_cache_destroy(damon_region_cache);
++		damon_region_cache = NULL;
++		return -ENOMEM;
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.47.3
