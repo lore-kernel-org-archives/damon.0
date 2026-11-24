@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795536092;
-	b=h0o9bLOQjrpUFQbK76dVQMluwOyl3CGk3FFCxDyGBR10mjlKdeEDOFROmEKg3jCSvZ5A
-	 U43dbkqw35TAztXypUWToWXlSZ9SPkYL9jX4+RxjGfdSv++DFXBdf1jBIPDvpeX7U+uqc
-	 vQD/jH1T4muazMCZrduRCslelSaTJXAiRjRKIkLOK33+pPHS8ygB6O8vvJFHu/Wlkbd9e
-	 nYqzZjnh42FFmO2+q4Dizl64ZjcbmxH/rqz2SQ67ZnC64leQ3iw6fpDTB0MkXGFRn2+aX
-	 RJqFxFBziTK9ic/JIU+tNBT3VdZfZjIbJRfw0Yuf1Pxrzh/LKLbeIVs74HrCDgB5xKg==
+	t=1795536103;
+	b=R0lB4dtCvQc5ny4CdaoFDU1ZSW0eyq8HKWhrfWhxiZmMfocpC1iZctMOk/maLPSinWAs
+	 EvHCFNFIa1lMZn+TrsPA/VYYExc6yMtUSZw2oUQofY4C4k9UPAwqQ6k1RSiWV8UP4ag1S
+	 g50XBWfuTGk47DEwppZO4Humx+Ftaz8GBdBjpLW3J2EVvR1kLiWabV7/mPi45rxVqhJiu
+	 9SXRrUY1g5e16FZY5S/U0dsdhEX1zPmX9UhjdoVgB6DsTkyssmsJGgzKcixW+cWlE6okU
+	 eCf2sDh1+pKyjhj+Lf9PmqV4RU577DtHtWYp5lWvEGp5hv5a7jf3uz3ql4DusrDcuHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795536092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795536103;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=q9AzOcx7lT/GAxuFckU0BqUnqN5Gf6MdjD8AIDI3n7g=;
-	b=T3IK1iMyPB8EDU/JudRbCf3coBRsSHT21cTkUK5GtOYmt60MiBX80Zkgcvk3zDWmyOY7
-	 vnZVSOgb+57Od6MalPzh1QWAAOy5UczzFtp7fohM/XwubZ5eZ9Fu3mrhUZH6gUrHg8+4N
-	 8/4hTZrKmeQ0sPzmB9x/Tog2XG2sAe3sa6S3TZB8cx5uC2Y5Uis6KqpzTsN3UXJPua+c5
-	 CCf/dygBEBEfSeOb65aw55quq/OPoODUNueOkiycFBLa0N6NzTYXe08qMFLxd2ODprOtk
-	 xZf77RKMVc6dSpxes74c4jK1s49L59RKiYYfCjS+4vC5mhm9trY4qXyQPQcRdHro43A==
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=xi3zTL53/C0IsEtzXdFhLsnsp6QQLU3JdQrRy1JaaPk=;
+	b=ce29O717Nw9/fukmAcnGFN6l66g0c/TnobUe/F42bIAHGzI3k+p54X6gE3rGAIMiZ26B
+	 FXDwbMhfz3+WE1b0ZaUQcOK5HzXZDvlRn1wYeZUkTnWBNjOHda/VhUPziHA5pWvnPOCLQ
+	 DP/NCVXNLimoHZYvBsmEsMxC10msEbqgVGtvZhyKskIxmcCpcwZfXOdXLA/FRIg645QpU
+	 KCINic/IFIEyYJwbLigr1sCB/SJ5eccaSGs4opgyVsYC1P7ErwRnuBiJonkFsxHrAhUdO
+	 ubELExOSydUt1gjPMmVz2q3Z/GJkFpDtqo/SAJusJfVHBzBmXZuDGsxd6MFikybitcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VyKVdbNh;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R9m0cGTx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DAC606A31E;
-	Tue, 24 Nov 2026 16:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8480A606A334;
+	Tue, 24 Nov 2026 16:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VyKVdbNh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEC31F000C6;
-	Tue, 24 Nov 2026 16:01:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R9m0cGTx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3561F000EC;
+	Tue, 24 Nov 2026 16:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795536091;
-	bh=q9AzOcx7lT/GAxuFckU0BqUnqN5Gf6MdjD8AIDI3n7g=;
-	h=From:To:Cc:Subject:Date;
-	b=VyKVdbNhhNwvY2U4T2D2HYlO9FeOrSAMOP7NjSY3IrbQntMzm6T+dbybYTGx7ypXk
-	 4dsrslN9SyjdilOwkCNyJ2RCjmzOLD3EInnSHJNZwPi4XfOpvLO6TGpDi2xJqhzFGX
-	 Ay7K9jIKM5abcBUIv4JRAxeQ3yfuJw+9X9tWsfQrlEYRywpCZ/wYokMOyp1y6pCrMt
-	 Dgwy1S8FQIXk/lCcr8ehMcK/e6ncqN6pA6JLTmBjcuT3Ue20/RoGLGqFNB365nvlBA
-	 vB0wv5xyLi0cEFXRO8Jqm7lANlFV8vzZPDlyutxmtC1xsjmFQbTaxEfTecgEvGfTbb
-	 kLD8UKERnHgwQ==
+	s=k20260515; t=1795536103;
+	bh=xi3zTL53/C0IsEtzXdFhLsnsp6QQLU3JdQrRy1JaaPk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=R9m0cGTxFlXMWBvDogU+U5G7ey9rbNsM5GBHrH7X0OcvdXfuWXWLxrWpAe6Yn6vif
+	 50LT0m5pcHJlKX8a/gIPTdvLMtHSQUinzAqK562ZlZ1yvCVrOy5SWIFb4zF2E7dDU0
+	 RWPkTJeBlj3qsSJV4qwa6vV25/46BGezOTX65CT+nQKEcs8Bx4hWRCToPk61LhzLhw
+	 Fb7G1M3UTARQRRcp3x4Ab2FeQvru2CO4v3u5UFoeL6HgEkT6Yl//dkypvfufm19eM8
+	 LbwkKIrgNLQNPQU5JtOw+dltieXzPofh1dZdTMMjVGtOZerrC6m7/UhQ/lnqMAK50w
+	 ypNX3IvR+xeEg==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -47,12 +47,13 @@ Cc: SJ Park <sj@kernel.org>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
 	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [PATCH mm-new 0/4] mm/damon: update documents for mm-next onboarding
-Date: Tue, 24 Nov 2026 08:01:18 -0800
-Message-ID: <20261124160124.93482-1-sj@kernel.org>
+Subject: [PATCH mm-new 3/4] Docs/mm/damon/maintainer-profile: drop 'SCM Trees' section
+Date: Tue, 24 Nov 2026 08:01:21 -0800
+Message-ID: <20261124160124.93482-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261124160124.93482-1-sj@kernel.org>
+References: <20261124160124.93482-1-sj@kernel.org>
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -64,39 +65,51 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Right after the 7.5-rc1 release, DAMON will onboard the mm-next
-transition [1].  The major change is that it will use mm/damon.git [2]
-and mm/linux.git [3] instead of sj/linux.git [4] and akpm/mm.git [5].
-
-Update MAINTAINERS file to capture the change, via patch 1.  Further
-update DAMON maintainer-profile document for the change, step by step,
-via patches 2-4.
+Right after 7.5-rc1, DAMON will onboard the mm-next transition [1].  The
+major change is that it will use damon.git [2] as its SCM tree.  'SCM
+Trees' section on the maintainer profile document will be outdated.  The
+updates for the new process would make the roles of the new trees clear.
+Hence 'SCM Trees' section would be no more necessary.  Remove the
+section.
 
 [1] https://lore.kernel.org/bed81e01-7303-4957-bd7d-38e3a094e96f@kernel.org/
 [2] https://git.kernel.org/pub/scm/linux/kernel/git/mm/damon.git/
-[3] https://git.kernel.org/pub/scm/linux/kernel/git/mm/linux.git/
-[4] https://git.kernel.org/pub/scm/linux/kernel/git/sj/linux.git/
-[4] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/
 
-Changes from RFC
-- RFC: https://lore.kernel.org/20261121193331.108587-1-sj@kernel.org
-- Update patch 2 commit message for DAMON section name update.
-- Rebase to the latest mm-new.
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+ Documentation/mm/damon/maintainer-profile.rst | 20 -------------------
+ 1 file changed, 20 deletions(-)
 
-Huge thanks to Andrew for his tremendous mm.git works that raised DAMON
-up to the current state.
-
-SJ Park (4):
-  MAINTAINERS: change DAMON SCM tree to mm/damon.git
-  Docs/mm/damon/maintainer-profile: use damon.git for patch baselines
-  Docs/mm/damon/maintainer-profile: drop 'SCM Trees' section
-  Docs/mm/damon/maintainer-profile: update key cycle dates for damon.git
-
- Documentation/mm/damon/maintainer-profile.rst | 57 ++++++++++---------
- MAINTAINERS                                   | 36 ++++++------
- 2 files changed, 46 insertions(+), 47 deletions(-)
-
-
-base-commit: 39902b38a4f121b7b3c847622585858cc8070c97
+diff --git a/Documentation/mm/damon/maintainer-profile.rst b/Documentation/mm/damon/maintainer-profile.rst
+index cc6b79c066a64..f9a8df2b11e73 100644
+--- a/Documentation/mm/damon/maintainer-profile.rst
++++ b/Documentation/mm/damon/maintainer-profile.rst
+@@ -18,26 +18,6 @@ the reason and what baseline is used.
+ 
+ Patches should be posted to the mailing lists whenever possible.
+ 
+-SCM Trees
+----------
+-
+-There are multiple Linux trees for DAMON development.  Patches under
+-development or testing are queued in `damon/next
+-<https://git.kernel.org/sj/h/damon/next>`_ by the DAMON maintainer.
+-Sufficiently reviewed patches will be queued in `mm-new
+-<https://git.kernel.org/akpm/mm/h/mm-new>`_ by the memory management subsystem
+-maintainer.  As more sufficient tests are done, the patches will move to
+-`mm-unstable <https://git.kernel.org/akpm/mm/h/mm-unstable>`_ and then to
+-`mm-stable <https://git.kernel.org/akpm/mm/h/mm-stable>`_.  And finally those
+-will be pull-requested to the mainline by the memory management subsystem
+-maintainer.
+-
+-Note again the patches for `mm-new tree
+-<https://git.kernel.org/akpm/mm/h/mm-new>`_ are queued by the memory management
+-subsystem maintainer.  If the patches require some patches in `damon/next tree
+-<https://git.kernel.org/sj/h/damon/next>`_ which have not yet merged in mm-new,
+-please make sure the requirement is clearly specified.
+-
+ Submit checklist addendum
+ -------------------------
+ 
 -- 
 2.47.3
