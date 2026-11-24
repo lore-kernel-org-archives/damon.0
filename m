@@ -1,79 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795465346;
-	b=tKX+JVysR6Pr7cUVyak+ZO38uo5oirngFU1l+XTY7iHO03uLg4vmaELxowXIRm7X3xNt
-	 7dbQ9hOOk62jy2yfOcJfYkt9FVLXeWgw23YkNBKPpTjlj+4qb8OiCOtjph6HBWog1wGjR
-	 Of9ihCLsYs8yurhUHhO1xU3+ZdsLSmM+iT3MJ0dUZ+tmmtbsMWV4sMBtVBHlwj1Iot8Nt
-	 rM1jzhQ385PLWCJikBH5QuJp/LYbWCtX/2erq5b7lBJgWZx8tKSS7gQpCXKC70hLF833A
-	 swsUy8mRw5tatQUn90O0KpM+Mj2P75+SRyO4gRbsVkTOsAqhb8JYjrsNf/7g5YS9lqw==
+	t=1795482315;
+	b=Ta+0Hy1r6aFDhCi8+jZ53OYEqXFf1U752fqchzB08ED9CPRY6oDAChVzvPmkY6ob3qM7
+	 38aueZgXvt3mR6oO65eEr0KmIR2WZWIOIv7lfdchqoNvetb1Jj9PccemRZLM+XdGAZ2pn
+	 N5zb3B0i1tc7yM7R0eGnKft6DgVUH7X5JA2wssXU2SUV3DkBxB/o3sTD00iejAifAoyDt
+	 cS0lJN14JlbVPTq8t2TWH3O8CmXC6Z91Pt//V6W0ObKqEtFFvu0hd8ahJrGl7Om+zt6DY
+	 BdvlnDvveuNgYXcbYpGPpXg3E0PijYmhV43dqiQn3GGPpaVchIATwn6QRDxPagj3awA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795465346;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-Id:
-	 In-Reply-To:References:X-Mailer:Mime-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=25UVLybwoRnEcpbdXV2pFcFQ0Vqv+61x2so2s19OgUM=;
-	b=jaD2Boq/m0vTissas0mSgLSUOuJY8lUmnI3t14SMnwZJHbQeH0/bWRTS8yxvTgUu2PwQ
-	 24jGpSk2qwxnXFbUT72BdvpT/CtKIu6f6vjA3nopx5zYebiRVAb/Xg8W8LrfxLJxeN5jH
-	 vZu/S6U6uUN1Pdln9Oi+YzI5xCzRM3T6mB64xN/o2U9XTE17zPJJmvxa1SBWAb0TsOv13
-	 BRL84MTnkiorTpefRLJ1n63aJ/mSpU5eUdjsIBD4TcdUZLzm03FqXXRh60wc/XfKg5Hpb
-	 Th1hcah9aA/yT7m3hOCo98DUIFU41m/n2Z6Yp0RmeA5WjB7JgnNQaqFoQgKaabfk9PQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795482315;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=KENda9nYN/y7XIiHiZ/NO1fdbgQMsJasxhpRCd9Tv5c=;
+	b=yNkXrg6Xn86NJRmRCyw6rxUpFW6EbdeHg57sz/b8dC6brHGj/+LrGwq6BT/tgUyoVOQv
+	 w3A3wc0gOk8AcHgbKFWeSRjOJTszqm+BiDGlaodC1Nx0WLhqHyeMIFAQsDALJPBfZxr7T
+	 iI7P/EMMmJPZ39p4Y2kNwoLoXV4YM97PupNJ7LT9a7ezqvBP7djtDTo0P4D/RzPZ9cyfu
+	 B0C04PP4ZF6ILLeWfQ/7cMD0rO0j38wq6CQQQpYowY0uPFveoLuGVfJbWcxQiOSBo7maN
+	 BQ1EKWQdSP1ZSbxCwmN/sKql3w6KR0FnkGJTdCADVqCAwgVxS8B384oWR1qKILKvzfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=DwAC8cHH;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Z8Bu8fNF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CCB606A31E;
-	Mon, 23 Nov 2026 20:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C83606A31E;
+	Tue, 24 Nov 2026 01:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux-foundation.org header.i=@linux-foundation.org header.a=rsa-sha256 header.s=korg header.b=DwAC8cHH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04ACC1F000EB;
-	Mon, 23 Nov 2026 20:22:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux-foundation.org; s=korg; t=1795465346;
-	bh=25UVLybwoRnEcpbdXV2pFcFQ0Vqv+61x2so2s19OgUM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=DwAC8cHHY+5qU8NdK2ZbrsvhxFqopogKwAxsWk8kEnCCVT6Hmbtw0V6XziVvGOJFl
-	 UqXnmynokZ9RofSYPre5yp5SaL+eP7gD+iVzbExurknf8l0NwCrdN3RTO1xJ6LK71f
-	 8PNPmpHS6+1C0lJh+4nQoWqAlcS3s5LQourJH+QE=
-Date: Mon, 23 Nov 2026 12:22:23 -0800
-From: Andrew Morton <akpm@linux-foundation.org>
-To: kasong@tencent.com
-Cc: Kairui Song via B4 Relay <devnull+kasong.tencent.com@kernel.org>,
- linux-mm@kvack.org, Johannes Weiner <hannes@cmpxchg.org>, Muchun Song
- <muchun.song@linux.dev>, Qi Zheng <qi.zheng@linux.dev>, Ying Huang
- <ying.huang@linux.alibaba.com>, Chris Li <chrisl@kernel.org>, Baoquan He
- <baoquan.he@linux.dev>, Nico Pache <nico.pache@linux.dev>, Usama Arif
- <usama.arif@linux.dev>, Michal Hocko <mhocko@kernel.org>, Roman Gushchin
- <roman.gushchin@linux.dev>, Shakeel Butt <shakeel.butt@linux.dev>, David
- Hildenbrand <david@kernel.org>, Lorenzo Stoakes <ljs@kernel.org>,
- "Liam R. Howlett" <liam@infradead.org>, Barry Song <baohua@kernel.org>,
- Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie
- <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Vlastimil Babka
- <vbabka@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Nhat Pham
- <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>, Zi Yan
- <ziy@nvidia.com>, Gregory Price <gourry@gourry.net>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, Dev
- Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins
- <hughd@google.com>, SJ Park <sj@kernel.org>, David Rientjes
- <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, Vernon Yang
- <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, Tal Zussman
- <tz2294@columbia.edu>, Kairui Song <ryncsn@gmail.com>, Xiang Liu
- <liuxiang.277@bytedance.com>, Ehab Ababneh <ehab.ababneh@intel.com>, Zhao
- Zhenzhuo <zhaozhengzhuo@uniontech.com>, Lian Wang <lianux.mm@gmail.com>,
- Joanne Koong <joannelkoong@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>,
- Hui Zhu <hui.zhu@linux.dev>, Maxim Muzafarov <maxmuzaf@gmail.com>,
- linux-kernel@vger.kernel.org, cgroups@vger.kernel.org,
- damon@lists.linux.dev, linux-doc@vger.kernel.org, Tianyi Chen
- <hi@tychen.cc>, Ridong Chen <ridong.chen@linux.dev>
-Subject: Re: [PATCH v6 00/18] mm/mglru: frequency guided promotion
- (MGLRU-FG) and flag cleanup
-Message-Id: <20261123122223.ea225d3b6424c274679b41de@linux-foundation.org>
-In-Reply-To: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
-References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Z8Bu8fNF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969EB1F000C0;
+	Tue, 24 Nov 2026 01:05:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795482314;
+	bh=KENda9nYN/y7XIiHiZ/NO1fdbgQMsJasxhpRCd9Tv5c=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Z8Bu8fNF+KXKJP9X9cs7klKU/PMw6iRImxz2/KDQQ5DvZBSk9iTuE3dOl3FlZ2FUJ
+	 CZYSElfbv9T6BFnFm15N5jNkoDXCPRxffVy+zmyWsdS/kqOdnAQWNql1NTW6fthNvR
+	 kWracD8cuMVhdssm/s270lZU9L7lzPgD/xcAuwmRnA1oQ5YTum3gzgi4YVqeokZO0N
+	 92ayQ26WsGGVRFiPYD8xzyMdhopNVfSyMTORqWis2lFLrNCprDvhtcg68sN04+rC3V
+	 wPfkhjCtGapWX3+iur44c8F5rAb7ysYTr804cCxGFxf0CbtIrY4ysWm02xs8V7O/H6
+	 gI/bZE3WdhI6g==
+From: SJ Park <sj@kernel.org>
+To: Aveline Noir <jm5905938@gmail.com>
+Cc: SJ Park <sj@kernel.org>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 14/27] mm/damon/paddr: support REPORT_MADE type probe filter
+Date: Mon, 23 Nov 2026 17:05:07 -0800
+Message-ID: <20261124010507.90151-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <179545322647.4.683470932650691650.b4-reply@b4>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -82,38 +62,37 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Tue, 24 Nov 2026 02:52:52 +0800 Kairui Song via B4 Relay <devnull+kasong.tencent.com@kernel.org> wrote:
+On Tue, 24 Nov 2026 04:00:26 +1100 Aveline Noir <jm5905938@gmail.com> wrote:
 
-> This series implements MGLRU-FG following the idea proposed at LSF/MM/BPF
-> this year [1], based on current mm-new. Depending on the workload, it
-> improves the performance or reduces IO by roughly 10% to over 50%,
-> fixes multiple long-standing issues with MGLRU metrics, and drops one
-> page flag.
-
-Great, I'll add this to mm-new and shall move it into mm-unstable
-(hence linux-next) promptly.
-
-I tested v4 quite hard last week and I view the risk of breaking
-linux-next to be low.
-
-> The series has been tested on multiple platforms (desktop, large server,
-> Android phone, x86_64 and arm64 VM boxes) covering many typical benchmarks,
-> databases and real applications, so far everything looks nice, with good
-> test reports from other individual testers too.
+> Hi Lian and SJ,
 > 
-> Different workloads may get a flat, minor or dramatic improvement, the
-> gain here is mostly from real improvement of LRU's ability to distinguish
-> the hotter workingset.
+> On Mon, 23 Nov 2026 20:00:02 +0800 Lian Wang wrote:
+> 
+> >  		addr_range.start = damon_pa_core_addr(pa, ctx->addr_unit);
+> > -		addr_range.end = damon_pa_core_addr(pa + 1, ctx->addr_unit);
+> > +		addr_range.end = addr_range.start + 1;
+> 
+> With this conversion, each paddr context looks up reports in its own
+> addr_unit. Producers submit to one global queue, so two contexts with
+> different addr_unit values can interpret the same report as referring
+> to different physical ranges.
 
-Well, the hunt is on to find something which got slower.  No luck so far!
+I agree such interpretation will happen.  But I find it is hard to imagine a
+purpose of such setup for real users.
 
-> - Minor optimization for clearing refs:
->  https://lore.kernel.org/all/CAMgjq7Dd=Y+GekSD9WO5oGdoa+S1eG3T-U=VsCexopvb723zFA@mail.gmail.com/
+> 
+> Could we define a common address unit for reports and document it for
+> addr_start and addr_end?
 
-Right.  That was the only question mark I could find and it sounds like
-you erased that one.
+I'm afraid if that will add something that we need to maintain long term,
+without clear use case.  I think we could revisit after we get such realistic
+use cases.
 
+
+Thanks,
+SJ
+
+[...]
