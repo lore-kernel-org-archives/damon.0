@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795534606;
-	b=D/IbIbjkmcP4SDhde7/QBOrNDCMUiokFh5t093CucgdI4kjpqNw4DXQbP4DJpkZy3vEz
-	 2ZrXh8b28EAU6OhtX6ehbn4AkJBsRaTqzXrUTHXAJi71sqKDWbnrPqpMDy4pvcM4mt2Vo
-	 cyjgwdTFnRVdvXU/UT61L0vSfeBPBUNu3pbyB1WG9L2qLPhlj6FGhMfwFsuXfs2vHrhzx
-	 WxHDv1pcX2iclN/oCpKmQE08nb17UQiJny2oM7kPKw3vVE2cpElBqFVrJ5BQ025+YoMYA
-	 vJWAUyIc/NmMJXfL+TRVzrxKL2U2tYqt4jHI4KDOuu/ioPgPmDr4LoMcZG1IUDPVMZA==
+	t=1795534607;
+	b=d3zgb4tTF4HLkxYbZMs31zYMlYrY35oKwBFtSrMHpqZ+j3hgg4KBBeOZpKZHttOM8cOb
+	 jEbsXk0FeeHNWf7sbL0eK3LXYHwE0svk+BLtwziLF5RsG+e6SW53TyXRCb1DCnJCmMA73
+	 vbhTPxe/Nz5rrjUD06vcP4u5X0fOwl9ibrHOMIT1IGRMLeCvMlzALwZZyyENFwsDu/AeU
+	 FhyVsbktjR+WAkViYSbb1w5wU/cStja3M55TkVAn6DqVCgq5qZ45suPA7DBgV0bbe3/g7
+	 HOublbJg1Fl5RyqeVzaVWKlcy/+fDHxzDNARHxq6YI9oRDuA9LNMDnqxOYvaW2v00zQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795534606;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795534607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=NN8lp+t1lC6QgLK9X7uxeIzD+QXEer2g4STJ701UeWA=;
-	b=s9AIlL2bO+fbDdus1H7+Ytn3MiTy74M+mbgP+0eN7MZ9msZEbe18nX/1G2G3KsrqX79S
-	 TcEUse9St2wgx2dkI85T6NaVP/Tas781sIZgYV9ziWokwMQeDI2St4q2Bitqcl1W1PqpO
-	 bHM8v9iUiIS208CQSeVx0EKpndqYYmXX0isP7+o/3B7l6Aykkj0m/bz4IS4JmOOVr7DbU
-	 bYpuuVZ08DOfCWpBV46Y0PcZ00C94a5QprZ3jkSruz4Do26swq7lW5HMSr+DmiLKtVDDs
-	 tGTUExIhP9d26AnSVnHWrwc+gQMnGqi5ue2giBAhPVDfsKj4SJ6ydpXitMXkBrQvb4g==
+	bh=qirt3ZX0FbMTabmEssD6ikj1DbvFkhAbJB6fB/k07m4=;
+	b=APmly6Vm1YfGFTxQNlypTY4hVyC52rnGejmCbbBnlQoV49Pyv2EkkA/EIe+wSRDmW15B
+	 PDKgnXMQzD9eLCv91VNO+hvfhgQjwNOaXEcyqZPZm8YhN9j5funlYY7PEZB41XrIcKqKe
+	 zNdJ01M6cEvihDnxz8X5dR1HLeqjw7LubjrScpT1tT/+YLAEI9F9DrfO5wE3+GgdyJQ5y
+	 Fzj7B7NC0IYsgLaffXx+qYgZBvukrFHUWrrxUgMBwhmef802qV8phGy8FlshNReyp6xbB
+	 MmkKIYJc3MJfXNmpEh7yFYZpIhej8iqxLM3NYvbDTnsns7pJwR84zA6SrGDUT+FcQ0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Es5g3dCG;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="P/uP0SPS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CB9606A32C
-	for <damon@lists.linux.dev>; Tue, 24 Nov 2026 15:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3845F606A323
+	for <damon@lists.linux.dev>; Tue, 24 Nov 2026 15:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Es5g3dCG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0FD1F000D0;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P/uP0SPS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75131F000C0;
 	Tue, 24 Nov 2026 15:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795534606;
-	bh=NN8lp+t1lC6QgLK9X7uxeIzD+QXEer2g4STJ701UeWA=;
+	s=k20260515; t=1795534607;
+	bh=qirt3ZX0FbMTabmEssD6ikj1DbvFkhAbJB6fB/k07m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Es5g3dCGyNbb6SVfb4nZ8JLDh1p5N/4vOPcQbpi67NCwAH12zP/TZc1WwlO0VPFrg
-	 dwpj2qWyfQlukkcg3HvqoH1UHQ3wv6w79QCCE/YYANfq6nF1UR68iyi9kCV9OjLRcB
-	 dP8wi1zv3iBewFbhOAPe7ofz5PGqa+y7d3MRfTGho+Z39Kgjm14Cfgc+Yr7tpcukyU
-	 GU24qg8aHB5EiLcrnclSyUjEEqSlzYuDwN0CQs8vbyd44sGOAmzzUl9kkBCggDYLAL
-	 Qv68yc7qWoVmnF+lN7KDvjIfdtEaf6OKjnUeQGpXn7KPWpNMJBxpfdtqN6nlOMko5F
-	 UuDCJQWY8JBNQ==
+	b=P/uP0SPSZYWh7cqUQXUP7KpPGGqYnsyVXKKi2eQAuYb4D5GjN9ztBQY/GvbAoMVlT
+	 M9pSuMOZdnpndkGM3fWw/PAdtsOHGG+4UXRhXJAWwcIchbrtNFWqCTXknC7HBj+s7g
+	 z3FV0j5X13yaQRhqXR2mN+QP8EHjY1lJnvLQAFDsZUeEpnTS5yVH+XxrJsGp5xLl08
+	 70gYEtlI/QS/b1AQyP+OSEJxQxx0AnB8ItZJqdelTKJU5RcbbIwLg8fkSwfYTJeSMI
+	 QuEFf2mhk+b2RuQlS1FZD6/h3zQ489ema1FpjGZk5G9ydaP626dmVT597Ue7Gqocli
+	 iHV2LnLkNq63g==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
 Cc: SJ Park <sj@kernel.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org,
-	Aveline Noir <jm5905938@gmail.com>
-Subject: [PATCH v2 03/27] mm/damon/core: introduce damon_submit_report()
-Date: Tue, 24 Nov 2026 07:36:09 -0800
-Message-ID: <20261124153636.91854-4-sj@kernel.org>
+	Aveline Noir <jm5905938@gmail.com>,
+	Lian Wang <lianux.mm@gmail.com>
+Subject: [PATCH v2 04/27] mm/damon/sysfs: add admin/reports/ directory
+Date: Tue, 24 Nov 2026 07:36:10 -0800
+Message-ID: <20261124153636.91854-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261124153636.91854-1-sj@kernel.org>
 References: <20261124153636.91854-1-sj@kernel.org>
@@ -62,79 +63,112 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement and expose a new DAMON API function for submitting a data
-attribute report.  Any kernel component in any context including NMI
-context can use it to report their finding of data attribute information
-for a given memory.
-
-The function copies the content of the report into the DAMON-internal
-report queue.  The copy is done in a ring buffer-like manner, without
-being blocked for consumption.  As a result, the queue keeps the latest
-reports up to its capacity.
-
-Use simple CAS-based try-locking.  If any parallel submission is
-detected, simply forgive the submission.
+Add a new sysfs directory, reports/, as a place holder for sysfs files
+that will be used for controlling the data attribute report system.  Put
+the directory under the admin/ directory, next to kdamonds/ directory.
 
 Reviewed-by: Aveline Noir <jm5905938@gmail.com>
+Reviewed-by: Lian Wang <lianux.mm@gmail.com>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- include/linux/damon.h |  2 ++
- mm/damon/core.c       | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ mm/damon/sysfs.c | 63 +++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 59 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 2520c036306f3..30c0ab8d88c2c 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -1193,6 +1193,8 @@ int damon_kdamond_pid(struct damon_ctx *ctx);
- int damon_call(struct damon_ctx *ctx, struct damon_call_control *control);
- int damos_walk(struct damon_ctx *ctx, struct damos_walk_control *control);
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 779c98205a94b..76850a4b5b5a7 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2979,6 +2979,38 @@ static const struct kobj_type damon_sysfs_kdamonds_ktype = {
+ 	.default_groups = damon_sysfs_kdamonds_groups,
+ };
  
-+int damon_submit_report(struct damon_report *report);
++/* reports dir */
 +
- int damon_set_region_system_rams_default(struct damon_target *t,
- 				unsigned long *start, unsigned long *end,
- 				unsigned long addr_unit,
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 8293b69169856..ae6ef43e5653f 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -2356,6 +2356,36 @@ struct damon_report_queue {
- 
- static struct damon_report_queue damon_report_queue;
- 
-+/**
-+ * damon_submit_report() - Enqueue a given report to DAMON internal buffer.
-+ * @report:	The report to enqueue.
-+ *
-+ * This function can be called from any context including the NMI context.
-+ *
-+ * Return: 0 on success, negative error code otherwise.
-+ */
-+int damon_submit_report(struct damon_report *report)
++struct damon_sysfs_reports {
++	struct kobject kobj;
++};
++
++static struct damon_sysfs_reports *damon_sysfs_reports_alloc(void)
 +{
-+	struct damon_report_queue *queue;
-+	int lock_old_val;
++	return kzalloc_obj(struct damon_sysfs_reports);
++}
 +
-+	queue = &damon_report_queue;
-+	report->jiffies = jiffies;
-+	lock_old_val = atomic_cmpxchg(&queue->lock, 0, 1);
-+	if (lock_old_val)
-+		return -EBUSY;
-+
-+	if (queue->tail == queue->size)
-+		queue->tail = 0;
-+	queue->reports[queue->tail] = *report;
-+	queue->tail++;
-+	if (queue->nr_reports < queue->size)
-+		queue->nr_reports++;
-+	/* cmpxchg is known to be faster than xchg */
-+	atomic_cmpxchg(&queue->lock, 1, 0);
++static int damon_sysfs_reports_add_dirs(struct damon_sysfs_reports *reports)
++{
 +	return 0;
 +}
 +
++static void damon_sysfs_reports_release(struct kobject *kobj)
++{
++	kfree(container_of(kobj, struct damon_sysfs_reports, kobj));
++}
++
++static struct attribute *damon_sysfs_reports_attrs[] = {
++	NULL,
++};
++ATTRIBUTE_GROUPS(damon_sysfs_reports);
++
++static const struct kobj_type damon_sysfs_reports_ktype = {
++	.release = damon_sysfs_reports_release,
++	.sysfs_ops = &kobj_sysfs_ops,
++	.default_groups = damon_sysfs_reports_groups,
++};
++
  /*
-  * Reset the aggregated monitoring results ('nr_accesses' of each region).
+  * damon user interface directory
   */
+@@ -2986,6 +3018,7 @@ static const struct kobj_type damon_sysfs_kdamonds_ktype = {
+ struct damon_sysfs_ui_dir {
+ 	struct kobject kobj;
+ 	struct damon_sysfs_kdamonds *kdamonds;
++	struct damon_sysfs_reports *reports;
+ };
+ 
+ static struct damon_sysfs_ui_dir *damon_sysfs_ui_dir_alloc(void)
+@@ -2996,6 +3029,7 @@ static struct damon_sysfs_ui_dir *damon_sysfs_ui_dir_alloc(void)
+ static int damon_sysfs_ui_dir_add_dirs(struct damon_sysfs_ui_dir *ui_dir)
+ {
+ 	struct damon_sysfs_kdamonds *kdamonds;
++	struct damon_sysfs_reports *reports;
+ 	int err;
+ 
+ 	kdamonds = damon_sysfs_kdamonds_alloc();
+@@ -3005,11 +3039,32 @@ static int damon_sysfs_ui_dir_add_dirs(struct damon_sysfs_ui_dir *ui_dir)
+ 	err = kobject_init_and_add(&kdamonds->kobj,
+ 			&damon_sysfs_kdamonds_ktype, &ui_dir->kobj,
+ 			"kdamonds");
+-	if (err) {
+-		kobject_put(&kdamonds->kobj);
+-		return err;
+-	}
++	if (err)
++		goto put_kdamonds_out;
+ 	ui_dir->kdamonds = kdamonds;
++
++	reports = damon_sysfs_reports_alloc();
++	if (!reports) {
++		err = -ENOMEM;
++		goto put_kdamonds_out;
++	}
++	ui_dir->reports = reports;
++
++	err = kobject_init_and_add(&reports->kobj, &damon_sysfs_reports_ktype,
++			&ui_dir->kobj, "reports");
++	if (err)
++		goto put_reports_out;
++	err = damon_sysfs_reports_add_dirs(reports);
++	if (err)
++		goto put_reports_out;
++	return err;
++
++put_reports_out:
++	kobject_put(&reports->kobj);
++	ui_dir->reports = NULL;
++put_kdamonds_out:
++	kobject_put(&kdamonds->kobj);
++	ui_dir->kdamonds = NULL;
+ 	return err;
+ }
+ 
 -- 
 2.47.3
