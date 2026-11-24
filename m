@@ -1,56 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795534232;
-	b=ojmnNlCu4HNScxaXUtvGZ/l/rvj0Z/c61XLTb8q6Lq1BQdIDU6sQgBnI22eRe1xF5VnA
-	 b5euzpE7ZRkxkg/8+0mkv8odaOx7k2W9ylaMUAInIYAIgwUgZVnaYM2Tr83q4WjqE+CdO
-	 GEFA8yTsyVsoPO1FMmRmWZAg9K4j9B19jLjjUYxHoGre8CBnsxndvmUwC2MNbHtb4zHJh
-	 UhbjKCIkHqFc6LEBNxGJptbD9Xo9wWEhYpLmo8qatFPh4L1hHdOEYDltr0kFWIoBrGHHV
-	 LZMLP6J5lGQGbavGqIlultyy4yNUpFFR1rtiLEmu4FTEZeiJTD6cB9ndZiNWdW9NGCA==
+	t=1795534233;
+	b=xBnIdbnjgJjEGXiDs3HrhFDSujdLv2P0gIZvfzpV2P5XWGvxwxddOyZPrZyFo0lf5TJD
+	 dvZzi0l4sIDIWs4RijIEvZuEnSVAYEPnWg4Wg0Ufy88SQB+nes2D6j8MH2JoDjdcN2YWE
+	 XZ64P5RLu12RBOOyEPvFWUqe+S6JycnnKnpzHzmiWFKeMsA5pAmGgs+ufDIFGaveHxk4i
+	 TLN97KLYlvtqvkROeOY41DnbBmFJgWDGHJ3KDhd9oXYZzPdn2p10E+lXcbnEEsEvreTv5
+	 0Qxjiv9h8MFs7WijBzBQ/Oijcu8Bc+cvGMaq77piaNLHuve2kKBTT63nWl6eC/B6Jcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795534232;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795534233;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=cOP6z06Mszi9tOw3c6/ZPqKBCxHccZTSPVUgIScNGlo=;
-	b=RI8kewPN/Qot1dPEll6R039PublPbe3kth7rA2PR4+NOH/xvNbyMQhek0faOHqf1HnM/
-	 MRuiNj8vk1WMRFjeMtBbCuhkX5HOtbWVmxV/HW5gjNIuMzo0sqfuecRf77JdrDDBOhvU8
-	 Ngd5MnPnDWrOrzvNu3w9Gc2EtS71CRizm7xnkXH2z34UUV/un0dpO6lCgux9QvFmDaosg
-	 okhYynXlY7dK/o1MD6H81kD8QbFpuVYHPnboyFzcZVDIcpOSJdzFfnXv0FhEmYl3B3EMK
-	 N/lW2phEAqITy/yCflGdY74dBjQIe7KZlw5DyPYdf0uI3s5ah7l6NWpXAzhuiTFnt+g==
+	bh=7VqeTp+8dmN7UADd/YQEmvCTwc4psl0zm6amATEWXmw=;
+	b=5rHbEmkvNDv7wZ//Y1ScQ+gGXwbtkIPWHbC/FfGqe3NkjChz4XgBkal/e527T6Ah3Lx5
+	 Y66RqfcC5TW01AjHOf994szr3XkTH2C7dC/BoygZoebmNs6BFaSymcd1B66UlX18Ontov
+	 vM8ucFHYRMJSmuqZpJztcAB7n/bx+7H2XRQQuaN5rAIarHR/RDhSez/Yo/exckaUuHKXR
+	 Iit7Z/0Cuh49xXQMO0zEhjnpX8F0hmaiDwrXJLzUrA4h+5pjOpRLdjjyn8ZY4ezFS00m/
+	 YkAA4S93+eH7k4FXmq1PAuP52umYqmD3TNt7B9EO87YrBavSUD5HxkcOJTr/7qTo8gQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kxDm5Oh5;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KPi+q1Tc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52717606A32C;
-	Tue, 24 Nov 2026 15:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D98606A31E;
+	Tue, 24 Nov 2026 15:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kxDm5Oh5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885E51F000EF;
-	Tue, 24 Nov 2026 15:30:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KPi+q1Tc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5694C1F0093C;
+	Tue, 24 Nov 2026 15:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795534231;
-	bh=cOP6z06Mszi9tOw3c6/ZPqKBCxHccZTSPVUgIScNGlo=;
+	s=k20260515; t=1795534232;
+	bh=7VqeTp+8dmN7UADd/YQEmvCTwc4psl0zm6amATEWXmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kxDm5Oh5YyW/RiIDG+nOHWPVfuG+PMB4fa3fW5S2XucFV0371T2tkOSJ9gCN/Z2Tu
-	 yzJ1ofDKTtH1chmS2ZxAjc5wm5tJ+nKaJJRNg9oh7QLz+QMpqMsS+zuLrzJ5+D7qXI
-	 C3nxOci2TLDvba0udKNdt/ZDMgWK/MBIZU4Vq4yHfZS4zrz6727CP9c9w4f1hZe7Op
-	 M5Nj5NffF2R37A6VUrn9dRsgZtoeiGNFklNiwBwDthIGaqSdrBUc6P/b/9jvyuhSNm
-	 pb012woGppWq+lSesIjXiIat00Z07wukreOzp0Hbbls0ckUpXa4WSp+vMH9fs+WD/C
-	 BRNcZlscXfUFg==
+	b=KPi+q1TcfEnO+g4sjKqUzjApmnS260AuE8cvRp+z3Jf1sC/rkMlhbY946zPxyr2Q8
+	 zEjWI32tTY3/z3BRWgfRyjUqRzcwpZMCIyfPKxbnxkrZS1FTx2/T9edFlRLU2aifb1
+	 DOvBg+haxxeE/4u8Xlj4BInkEOUPHeyQ02JZFg1gOLxTu0ABbMUXCMYCxO+tJjmx2C
+	 Qw6DwoxhDLaTIZhdGFuhN/XJHBGxMajQ95qz1fwcCrRDUgclS3fep3RVmUrgcl52P7
+	 iDWzDk8QfAheox1gL+208oWfqXZB6BYFkPSHXvb1erOE85q2sT63oMqrmCSIMIQ2Zk
+	 FCUDf094wV5+w==
 From: SJ Park <sj@kernel.org>
 To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Aveline Noir <jm5905938@gmail.com>,
+Cc: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
 	SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	damon@lists.linux.dev,
+	kunit-dev@googlegroups.com,
 	linux-kselftest@vger.kernel.org,
-	linux-mm@kvack.org
-Subject: [PATCH 3/4] selftests/damon/damos_quota: skip the last sample when counting exceeds
-Date: Tue, 24 Nov 2026 07:30:19 -0800
-Message-ID: <20261124153021.90142-4-sj@kernel.org>
+	linux-mm@kvack.org,
+	Aveline Noir <jm5905938@gmail.com>
+Subject: [PATCH 4/4] mm/damon/tests/core-kunit: add test for damon_call()
+Date: Tue, 24 Nov 2026 07:30:20 -0800
+Message-ID: <20261124153021.90142-5-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261124153021.90142-1-sj@kernel.org>
 References: <20261124153021.90142-1-sj@kernel.org>
@@ -65,54 +67,75 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Aveline Noir <jm5905938@gmail.com>
+From: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
 
-damos_quota.py expects qt_exceeds to be increased for every sample whose
-tried_bytes equals the quota.  The kernel increases it only when the next
-quota window starts, so the last full window may still be pending when
-the workload exits.  The test then fails with an expected count one
-higher than the actual one, e.g., 15 < 16.
+A newly allocated damon_ctx has call_controls_obsolete set, meaning no
+kdamond is available to handle call requests.  damon_call() should
+return -ECANCELED in that case instead of queueing the request and
+waiting forever.  When call_controls_obsolete is unset and
+damon_call_control->repeat is set, damon_call() should return 0
+without waiting for kdamond.  Add a kunit test for the two cases.
 
-Do not count the last sample.  Also drop the sorting of the samples, so
-that the last one is the latest.
-
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Aveline Noir <jm5905938@gmail.com>
+Signed-off-by: Sailesh Nandanavanam <saileshnandanavanam@gmail.com>
+Tested-by: Aveline Noir <jm5905938@gmail.com>
+Reviewed-by: Aveline Noir <jm5905938@gmail.com>
 Reviewed-by: SJ Park <sj@kernel.org>
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
-Changes from v1
-- v1: https://lore.kernel.org/20261117-fix-damon-quota-selftest-20261117-v1-1-c65d687d3def@gmail.com
+Changes from v2
+- v2: https://lore.kernel.org/20261118063755.37749-1-saileshnandanavanam@gmail.com
 - Collect R-b: from SJ.
 - Rebase to the latest mm-new.
+Changes from v1
+(https://lore.kernel.org/20261117172219.26725-1-saileshnandanavanam@gmail.com,
+ https://lore.kernel.org/20261117174834.29182-1-saileshnandanavanam@gmail.com)
+- Merge the two tests into damon_test_call().
+- Drop the list_empty()/call_controls.next expectations.
+- Drop list_del() on the stack-allocated control.
+- Post as a single patch.
 
- tools/testing/selftests/damon/damos_quota.py | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ mm/damon/tests/core-kunit.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/tools/testing/selftests/damon/damos_quota.py b/tools/testing/selftests/damon/damos_quota.py
-index 879115a499bf8..bdfd22f000795 100755
---- a/tools/testing/selftests/damon/damos_quota.py
-+++ b/tools/testing/selftests/damon/damos_quota.py
-@@ -53,15 +53,16 @@ def main():
-         wss_collected.append(scheme.tried_bytes)
-         nr_quota_exceeds = scheme.stats.qt_exceeds
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index a27545602680a..4446574a35652 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -2724,6 +2724,27 @@ static void damos_test_sz_ops_filter_passed_last(struct kunit *test)
+ 	damon_destroy_ctx(c);
+ }
  
--    wss_collected.sort()
-     nr_expected_quota_exceeds = 0
--    for wss in wss_collected:
-+    for idx, wss in enumerate(wss_collected):
-         if wss > sz_quota:
-             print('quota is not kept: %s > %s' % (wss, sz_quota))
-             print('collected samples are as below')
-             print('\n'.join(['%d' % wss for wss in wss_collected]))
-             exit(1)
--        if wss == sz_quota:
-+        # qt_exceeds is updated when the next quota window starts, so skip
-+        # the last sample, whose window may still be pending.
-+        if wss == sz_quota and idx < len(wss_collected) - 1:
-             nr_expected_quota_exceeds += 1
++static void damon_test_call(struct kunit *test)
++{
++	struct damon_ctx *ctx;
++	struct damon_call_control control = {};
++	int ret;
++
++	ctx = damon_new_ctx();
++	if (!ctx)
++		kunit_skip(test, "ctx alloc fail");
++
++	ret = damon_call(ctx, &control);
++	KUNIT_EXPECT_EQ(test, ret, -ECANCELED);
++
++	ctx->call_controls_obsolete = false;
++	control.repeat = true;
++	ret = damon_call(ctx, &control);
++	KUNIT_EXPECT_EQ(test, ret, 0);
++
++	damon_destroy_ctx(ctx);
++}
++
+ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damon_test_target),
+ 	KUNIT_CASE(damon_test_regions),
+@@ -2771,6 +2792,7 @@ static struct kunit_case damon_test_cases[] = {
+ 	KUNIT_CASE(damos_test_esz_goal_temporal),
+ 	KUNIT_CASE(damon_test_last_region_quota_reset),
+ 	KUNIT_CASE(damos_test_sz_ops_filter_passed_last),
++	KUNIT_CASE(damon_test_call),
+ 	{},
+ };
  
-     if nr_quota_exceeds < nr_expected_quota_exceeds:
 -- 
 2.47.3
