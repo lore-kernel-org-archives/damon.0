@@ -1,59 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.67
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795582836;
-	b=uWutUB8j/pLL/93xKBFYyCMbHdc0HVq1tYdtFgD/DqR1AYDByWCluhdtPn9sToGutwkS
-	 MF+Po9oU5C55DnaHw3xdrbkHJ0IhwR6u9f5MIFH+SLxeiBNc1SqFO+4aZONJ20RO8Olci
-	 d3/5/8wIz3p7x+Vg65X8rBlq9vjGEiX817o/7o28ptrJwyG91I7/zHXG++SfBe6Oqr2sd
-	 7UTA1ASDn52FSaIeVoUfGg0WCgaNtyi2OwweoQn9mTdjpVHxH3aql48kxrugj1GElcxUK
-	 DD9Jg4Nj371ieNA+fZICvuv3jx+Z+DE17CDmMYzxNBzYCkCyZ/fCrlqbTIQpxM7m5Wg==
+	t=1795594691;
+	b=hODVLWgMj64OoKpuAtF/y3o3KaYVTEzb+YYehVu9RB23iP/3CFpEfsn9/eAQYteIjtBr
+	 Hgrl3n9UZQQ8UMZxDJ11LjbPTjZ8U96KYuwnO8Ss85ZPn4seg/czt7p6H4bCtY5YoC811
+	 zOmfUp8RDi8KCnRA7Z6HSCRBGZqw/bWU4YowmLImvC6oGqWiyAgs7o+6iaKOmytJe8RtX
+	 ClDsacf7grMt7PO6u3OuikpbZc+3Qc4RUEN74DWU28ps2ieVoB+FBOGzOlU2eIOlNwe67
+	 jVNajuTXVSGhdVs85/WfTbyUbOZs0DNWPCJj779Y1xjWhGOGNqBwIkT16OhubvGgshw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795582836;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=6/DyrLQAwnaVdIlNNu/TcqCjNECAIqfAfCTOu9JpszU=;
-	b=trhZ9dkFDgnMhaO6+9UNslWCrNHYlhwbrOJQ6pIPmhs2WW/45PcfH6BWMuvxpefYS8lb
-	 TPKMxpUGwx7XCWbY5Kk3oVhgIIO4ITWMa7ZsDhAihw/wMr91UydTCyZoN9wCVciEazZNF
-	 AfDkL2i4ebDMbyjrdxEqLmrmREXl4JNqHTBd8lbXRWMHhkMP7HQDeuOm8J0Kz+n1aUdQt
-	 1R5rEfA8i2HokKwYMfa7zrarnu9MkAhGRfH+oYjEiIPx6Bt8O+Ts9ZaPsp0EXPz2EK3ji
-	 pgKRWVEjdLZdw58vmbuACZ4UZSzZOqdjRbPTs0FIgmDXj3YgdTOS9y7PgMvDVtN7RcQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795594691;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=zQ4PDN/+IecVCHWBDQ0v0hwYyubU4Qhpq8q9f1QbpYY=;
+	b=lHU4KccQCa9Eq8aTjOGFgjfUstq7tXsSm4ohcWJWZqnAW5v/eKgXseT6eyak3WmjejnB
+	 BUqqDZLu3AQPP4csgav7b6hAPaAzlKlhXbS6jCoX7tT9enxQThpY2u1ewWrn/VC4LCO7m
+	 n983xDaGhuHX6o7K9edlRqbMBGPuwx42M4NFql8z+uaOilSu2NAHMNEd3y2urxBQYqzW3
+	 3xImdyZdojRo3o0glVCZwmFBjcJP3kXxnx4FsS6IfB399J8jvWHEtrPPPAsB6UqTR0Nz9
+	 N8NTqlHibkubp7uLicTG/0D8HZGjrgTUrTAlDEPd5O+xPLI5EzCyh8uOMAcoUaiWdqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=clvSJ2ws;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=JL3SfCjV;
+	arc=none smtp.remote-ip=91.218.175.67
+Received: from mta0.migadu.com (out-67.mta0.migadu.com [91.218.175.67])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC49D606A321;
-	Wed, 25 Nov 2026 05:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D74C606A32A
+	for <damon@lists.linux.dev>; Wed, 25 Nov 2026 08:18:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5D74C606A32A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=clvSJ2ws
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484571F000C6;
-	Wed, 25 Nov 2026 05:00:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795582836;
-	bh=6/DyrLQAwnaVdIlNNu/TcqCjNECAIqfAfCTOu9JpszU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=clvSJ2wsEVPXgdnUPsGMilKqq2Vs7zlX+sEDEY2h0DNxB6u6sHU+6YIYZBPI9xAUx
-	 OD6DS1EKqMljYfDZxJGvlXmGqkW5TnhVbIes5XEhGopFf1VwXbeKg39oH9AcUDwRqb
-	 tfNO1mummX160mXsQh3fPgYO0DzKKtzNRoMIGhT5u3nvbBFxzRXKsp1t0ajNbZRlkW
-	 Obc6p7APVSrrS65Y9yh6jpr+i8CC090I8N52djW7hkcHCMENZeKb1gxgVIpYz6x2V9
-	 JCGeZDpFRyLN+ZBVVNtH69K7rufxntzJsyO5hPj/9tP0vPotsT7YrW+y8LPaQNFrms
-	 yW8csjpMktxVA==
-From: SJ Park <sj@kernel.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: "linruifeng (A)" <linruifeng4@huawei.com>,
-	akpm@linux-foundation.org,
-	chenjun102@huawei.com,
-	tongtiangen@huawei.com,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/damon: support freeze kdamond
-Date: Tue, 24 Nov 2026 21:00:28 -0800
-Message-ID: <20261125050029.100568-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260409140609.59881-1-sj@kernel.org>
-References: 
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=JL3SfCjV
+X-Envelope-To: damon@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=Hnn1Upm6og0+ZrW88GDMEcGJ/ZGLLay+qcflC5gxlL0=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795594688; v=1; x=1796199488;
+ b=JL3SfCjV4080nOi9CL2Q+K936t6S+au5atuKD6XAd3apiOOESRAHmZ0x4F4NXgGc98kRpCxq
+ bwK9DlYtw/+U5IMNNX+628MFduzZMqzlSkJYE/Ma8ZgafwvwYunoQzceNShRRKkN5A4TWWH81Ab
+ uERyIbgFjLMa6/H3/tiucj8o=
+X-Envelope-To: damon@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id eba729f2d53511cd;
+	Wed, 25 Nov 2026 08:18:08 +0000
+X-Mizu-Trace-ID: eba729f2d53511cd
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <195d7fbd-5538-41ee-828a-92e5f400917c@linux.dev>
+Date: Wed, 25 Nov 2026 16:17:49 +0800
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -63,41 +58,90 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 02/18] mm/memcontrol: allow update of LRU statistic
+ without holding LRU lock
+To: kasong@tencent.com, linux-mm@kvack.org
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>,
+ Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>,
+ Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>,
+ Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>,
+ Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>,
+ Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>,
+ Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>,
+ Barry Song <baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>,
+ Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>,
+ Vlastimil Babka <vbabka@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ Nhat Pham <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>,
+ Zi Yan <ziy@nvidia.com>, Gregory Price <gourry@gourry.net>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>,
+ SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>,
+ Yu Zhao <yuzhao@google.com>, Vernon Yang <vernon2gm@gmail.com>,
+ Zicheng Wang <wangzicheng@honor.com>, Tal Zussman <tz2294@columbia.edu>,
+ Kairui Song <ryncsn@gmail.com>, Xiang Liu <liuxiang.277@bytedance.com>,
+ Ehab Ababneh <ehab.ababneh@intel.com>,
+ Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, Lian Wang
+ <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>,
+ Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>,
+ Maxim Muzafarov <maxmuzaf@gmail.com>, linux-kernel@vger.kernel.org,
+ cgroups@vger.kernel.org, damon@lists.linux.dev, linux-doc@vger.kernel.org,
+ Tianyi Chen <hi@tychen.cc>
+References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
+ <20261124-mglru-fg-v6-2-8ffea39934a6@tencent.com>
+From: Ridong Chen <ridong.chen@linux.dev>
+In-Reply-To: <20261124-mglru-fg-v6-2-8ffea39934a6@tencent.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello linruifeng,
 
 
-I was thinking how DAMON would work under hibernation, and recalled this
-thread.
+On 11/24/2026 2:52 AM, Kairui Song via B4 Relay wrote:
+> From: Kairui Song <kasong@tencent.com>
+> 
+> To enable moving file pages in folio_mark_accessed directly and lazily
+> for MGLRU, allow updating the LRU statistic atomically without holding a
+> lock. It may cause temporary counter underflow, which should be fine as
+> the counter is eventually consistent and only serves as an estimate.
+> 
+> Reviewed-by: Barry Song <baohua@kernel.org>
+> Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+> Tested-by: Andrew Morton <akpm@linux-foundation.org>
+> Acked-by: Muchun Song (ByteDance) <muchun.song@linux.dev>
+> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+> Signed-off-by: Kairui Song <kasong@tencent.com>
+> ---
+>   include/linux/mm_inline.h | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
+> index 2395ca8ee305..2edb9beef6d3 100644
+> --- a/include/linux/mm_inline.h
+> +++ b/include/linux/mm_inline.h
+> @@ -47,12 +47,11 @@ static __always_inline void __update_lru_size(struct lruvec *lruvec,
+>   {
+>   	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
+>   
+> -	lockdep_assert_held(&lruvec->lru_lock);
+>   	WARN_ON_ONCE(nr_pages != (int)nr_pages);
+>   
+>   	mod_lruvec_state(lruvec, NR_LRU_BASE + lru, nr_pages);
+> -	__mod_zone_page_state(&pgdat->node_zones[zid],
+> -				NR_ZONE_LRU_BASE + lru, nr_pages);
+> +	mod_zone_page_state(&pgdat->node_zones[zid],
+> +			    NR_ZONE_LRU_BASE + lru, nr_pages);
+>   }
+>   
+>   static __always_inline void update_lru_size(struct lruvec *lruvec,
+> 
 
-On Thu,  9 Apr 2026 07:06:08 -0700 SeongJae Park <sj@kernel.org> wrote:
+Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
+Thanks.
 
-> On Thu, 9 Apr 2026 15:20:10 +0800 "linruifeng (A)" <linruifeng4@huawei.com> wrote:
-[...]
-> I feel like it is reasonable but I'd love it more if there are more concrete
-> examples and/or observations that support this.
+-- 
+Best regards
+Ridong
 
-I now understand following problem could happen in theory.  If DAMOS is
-configured, it could migrate or reclaim pages while hibernation image is being
-copied.  It could make the image be corrupted.  As a result, the system could
-run with corrupted memory after resuming from the hibernation.
-
-Users could work around by stopping or pausing the kdamond before hibernation
-is started.  But it is easy to forget and cumbersome.
-
-So I think your patch is better to be added.
-
-Nonetheless, I think you should replace kthread_should_stop() with
-kthread_freezable_should_stop(),  Otherwise, it could have kthread_stop() /
-freezer deadlock.  By doing that, try_to_freeze() call wouldn't be necessary.
-
-Would you mind posting this patch again, with the above elaborations and
-changes?  If you don't reply in about a couple of days, I will do that on my
-own.  In the case, I will add your credit with Suggested-by: tag.
-
-
-Thanks,
-SJ
-
-[...]
