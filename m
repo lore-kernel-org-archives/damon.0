@@ -1,184 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795560249;
-	b=z+DmO3ZJ+xr72gU9RP5WcudK/MTnggHOMHfSIFPhPFrqgRG3nwMpfiDpjiFk5JBIVyor
-	 mK9vTgRC30Bkx3YgKW6YUQs9KC2enfPSgDVJzeZEOFmRGdxhyPDJ1T49HXehTW/ju23uG
-	 I5FpbVX/GMsVuZHb5s6+O0zC/G3VFJTqrGr1XJzKRL62NZWWuPl3iViBID8cz5QoBFWLu
-	 N7BaYDc8scc/xSKJG3tA+yNSivqAmBWjgCY+O9CrA/1hdzII5rcIe1Mjel5vw3LktF94Y
-	 Kt0zPYJ6SlHwjcRuq+A+G2K6t2rxu2+BL/u8j7XzDPpxpNlsymHtuMdcWy+gdrWEzxg==
+	t=1795569967;
+	b=hYxIE61/MYFIn82/76XySY/rLRa9vO6ASCIj0bpu8vl6rTgJLGIF2hWV2bDDZ+2sqDXz
+	 HRuxIxH0RHD2Wrn3Vph5VA0FfuwHiZ7pQJQJ8yd13onS8e0kmeKLRbQnrNfH8A+TR4nbx
+	 v2/t1DHC744B24Ab9bVlXFb0SuKsYmIhr04blbR6/pFDl0BFzM/ohg2lmIRU5xE2vdQ8o
+	 zuHFdCdpkxs9DW9Bnc6+TNl+4s4y5iwCup07KK+LI5KYsbKdx9WTajNim9AQrUhfk/Ui5
+	 QWFSue4XfCO/ZIftTLm1Dr97HHaIOtwDlHj9mxLRAgjkx6Z8tMhQKLjC14IJ9/OHlGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795560249;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Message-ID:Subject:From:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date:
-	 MIME-Version:User-Agent:X-TM-AS-GCONF:X-Proofpoint-Reinject:
-	 X-Authority-Analysis:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=ZGiGop5d+F8Rtl4gJM+e51darej3tvaxLWXElW4mntw=;
-	b=YmUHeqpVJPY2bDcDL1Lb68tiUCFxC8r2SXwL3QEMGALmfDJnArfwU0ehblZv7q4WRXtB
-	 2ixx4aG2l1jQUziB+mwCg+qZdNAblbjz8TzSJuHiXTXThBAljlIhYK3EfFoICsJmUWXmS
-	 7/VezBOxBccAmnckfysOYd0fdK35ZCK2IGTe4Wr+4RX168c/3gUnhU5K4PMSJTjWtfsA/
-	 eujRX2cbBikZ6Ecprs5qUylw0EbVLWJRV3IN+KuQ+zUjxxBVeVt2skcKRmRfzJPx5lpbq
-	 o1bleNRjdknb99eAruAL9ql49xI4npyG6/9WBOLJj9ScqzllvYqXx7ohFwhGKzsBkdQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795569967;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=Ca3B9Vvi6+90qx4u9Sp1DXWE1+uVNN4yzp9+O5Q2YIs=;
+	b=KZ1lFQYPSwqwmHmu6eOome9gHTBh/c2+YxG63zEme7RMkst1oF0v1h4iJfNn8CT0vpzQ
+	 Ya9W6abOASxH5CqhsoXGyn9ZxPUVI7OKYNiiEpfOfQGDYLCHhT5vFgd+eJ0OGaAWYqNF+
+	 OXU3KkY55qe/F8Xm3by2CnEUYlnkVYBXobixi9H2WQRHut5i5eim9CqvBqKycxnQl8PZc
+	 ZE6PqGRx8jxSi5+qZuEs9Fm7IbA7FjMYJlLAAKcKM/fyJQRDXK9aRg4P7hxLlTtWBGjk+
+	 AvfNoAXpkMeuZdZHLU5TaPOwKoK3biAuQwJRojMSuIcz+w/A6sGlEJNIX6ceh6Nx8+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=nTvh+C8v;
-	arc=none smtp.remote-ip=148.163.158.5
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BQ+GX78V;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636D2606A31E
-	for <damon@lists.linux.dev>; Tue, 24 Nov 2026 22:44:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 636D2606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E0606A323;
+	Wed, 25 Nov 2026 01:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=nTvh+C8v
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6AOMZaJD3653444;
-	Tue, 24 Nov 2026 22:43:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=ZGiGop
-	5d+F8Rtl4gJM+e51darej3tvaxLWXElW4mntw=; b=nTvh+C8vIj7OYYIXDe5d2R
-	kjD5qV3PLuWeVi06lfK7L2UJEji/0Y0NTNorE2sOm+OZV0abykWH0eDGNBghYJ0X
-	rq2iLVPK+mHk5L80j6FsTx3l+8sZ//o+V5DQlP8WI3upQAwt3HFFUd/psna68+YU
-	1f0SS6s2B0uwnUx5Fbet+kOp1fhhomrUiRev86n5oFeFHEaCz89bG2qaXYanxHkt
-	72GhPgk0UkvUIrOg6jofFdrKRCxRn1TnFQHCx3alMAUuJk8ditj+psJO5dju10fP
-	ZVp+oTdmh2KXNvrOZYqQt4KSurp9qFLtHQQTRoz7RDiHEaL6YTVCV5sjlgTsfu+A
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4j34gv9hk6-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 24 Nov 2026 22:43:47 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6AOMZNrm2939889;
-	Tue, 24 Nov 2026 22:43:46 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4j5kfa00u5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Nov 2026 22:43:46 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
-	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6AOMhiTQ17891842
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 24 Nov 2026 22:43:44 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2BF575805C;
-	Tue, 24 Nov 2026 22:43:44 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5736D58051;
-	Tue, 24 Nov 2026 22:43:39 +0000 (GMT)
-Received: from li-43857255-d5e6-4659-90f1-fc5cee4750ad.ibm.com (unknown [9.61.169.243])
-	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 24 Nov 2026 22:43:39 +0000 (GMT)
-Message-ID: <dfc8eada26ec70fdb802d71d4ade50e52917af26.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 10/11] ima: convert VMA flag tests to use vma_flags_t
-From: Mimi Zohar <zohar@linux.ibm.com>
-To: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-        Andrew Morton	
- <akpm@linux-foundation.org>,
-        David Hildenbrand <david@kernel.org>, Jason
- Gunthorpe <jgg@ziepe.ca>,
-        John Hubbard <jhubbard@nvidia.com>, Peter Xu
- <peterx@redhat.com>,
-        "Matthew Wilcox (Oracle)" <willy@infradead.org>,
-        Jan
- Kara <jack@suse.cz>, Rik van Riel <riel@surriel.com>,
-        "Liam R. Howlett"	
- <liam@infradead.org>,
-        Vlastimil Babka <vbabka@kernel.org>, Harry Yoo	
- <harry@kernel.org>,
-        Jann Horn <jannh@google.com>, Lance Yang	
- <lance.yang@linux.dev>,
-        Zi Yan <ziy@nvidia.com>, Matthew Brost	
- <matthew.brost@intel.com>,
-        Joshua Hahn <joshua.hahnjy@gmail.com>,
-        Byungchul
- Park <byungchul@sk.com>, Gregory Price <gourry@gourry.net>,
-        Ying Huang	
- <ying.huang@linux.alibaba.com>,
-        Alistair Popple <apopple@nvidia.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Nico Pache
- <nico.pache@linux.dev>,
-        Ryan Roberts	 <ryan.roberts@arm.com>, Dev Jain
- <dev.jain@arm.com>,
-        Barry Song	 <baohua@kernel.org>, Usama Arif
- <usama.arif@linux.dev>,
-        Kiryl Shutsemau	 <kas@kernel.org>, Xu Xin
- <xu.xin@linux.dev>,
-        Chengming Zhou	 <chengming.zhou@linux.dev>,
-        Madhavan
- Srinivasan <maddy@linux.ibm.com>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        "Christophe Leroy (CS GROUP)"	
- <chleroy@kernel.org>,
-        "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-        Shrikanth Hegde <sshegde@linux.ibm.com>,
-        Pedro Falcato <pfalcato@suse.de>, Kairui Song <kasong@tencent.com>,
-        Qi Zheng <qi.zheng@linux.dev>, Shakeel
- Butt <shakeel.butt@linux.dev>,
-        Axel Rasmussen	 <axelrasmussen@google.com>,
-        Yuanchu Xie <yuanchu@google.com>, Wei Xu	 <weixugc@google.com>,
-        Baoquan He
- <baoquan.he@linux.dev>, Mike Rapoport	 <rppt@kernel.org>,
-        Suren
- Baghdasaryan <surenb@google.com>,
-        Michal Hocko	 <mhocko@suse.com>, Leon
- Romanovsky <leon@kernel.org>,
-        SJ Park <sj@kernel.org>, Rakie Kim
- <rakie.kim@sk.com>,
-        David Rientjes <rientjes@google.com>,
-        Alexander Viro	
- <viro@zeniv.linux.org.uk>,
-        Christian Brauner <brauner@kernel.org>,
-        Peter
- Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
-        Arnaldo
- Carvalho de Melo	 <acme@kernel.org>,
-        Namhyung Kim <namhyung@kernel.org>,
-        Mark Rutland	 <mark.rutland@arm.com>,
-        Alexander Shishkin
- <alexander.shishkin@linux.intel.com>,
-        Jiri Olsa <jolsa@kernel.org>, Ian
- Rogers <irogers@google.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        James Clark <james.clark@linaro.org>,
-        Masami Hiramatsu
- <mhiramat@kernel.org>,
-        Oleg Nesterov	 <oleg@redhat.com>,
-        John Johansen
- <john.johansen@canonical.com>,
-        Georgia Garcia	
- <georgia.garcia@canonical.com>,
-        Paul Moore <paul@paul-moore.com>, James
- Morris	 <jmorris@namei.org>,
-        "Serge E. Hallyn" <serge@hallyn.com>,
-        Roberto
- Sassu	 <roberto.sassu@huawei.com>,
-        Dmitry Kasatkin
- <dmitry.kasatkin@gmail.com>,
-        Eric Snowberg <eric.snowberg@oracle.com>, Fan
- Wu <wufan@kernel.org>,
-        Stephen Smalley	 <stephen.smalley.work@gmail.com>,
-        Ondrej =?UTF-8?Q?Mosn=C3=A1=C4=8Dek?=	 <omosnacek@gmail.com>
-Cc: linux-mm@kvack.org, linux-kernel@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-        kvm@vger.kernel.org, damon@lists.linux.dev,
-        linux-trace-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
-        apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
-        linux-integrity@vger.kernel.org, selinux@vger.kernel.org
-In-Reply-To: <20261124-late-2026-vma-flags-v2-10-bf3fade93064@kernel.org>
-References: <20261124-late-2026-vma-flags-v2-0-bf3fade93064@kernel.org>
-	 <20261124-late-2026-vma-flags-v2-10-bf3fade93064@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 24 Nov 2026 17:43:38 -0500
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BQ+GX78V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D6B1F000C6;
+	Wed, 25 Nov 2026 01:26:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795569967;
+	bh=Ca3B9Vvi6+90qx4u9Sp1DXWE1+uVNN4yzp9+O5Q2YIs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=BQ+GX78VKftJ6+id7UodYIJVWt0mLOwYTL+d/5FUAfPlDVbAfxmLIdg74hMbpoT9A
+	 qMASA0BppbiZBYE6BmaS441yhU2m7bViO3tuhrklReMv1XIrnAaAlDJgGNBKQYY1sN
+	 j3WxIaMwitlY3uyl8ziV6MaUD8lIEJLChB3uP6+mbI2Mtg8GRodlirFdOOYH5yVKlU
+	 1X913VYCj42FXa4OS7y0H2qP2ZFNkiOG1ZFhzSMhFTAk8hV/VIEqU2+unCXJTZBxN6
+	 wzdqDIb/f5BYWCtK6UNW5RduhBRF1ScAN3blsgfmikp7PfnMx1qSjB/LMh2Z8ppaIb
+	 BPNSW7eGhWylA==
+From: SJ Park <sj@kernel.org>
+To: Kairui Song via B4 Relay <devnull+kasong.tencent.com@kernel.org>
+Cc: SJ Park <sj@kernel.org>,
+	linux-mm@kvack.org,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Ying Huang <ying.huang@linux.alibaba.com>,
+	Chris Li <chrisl@kernel.org>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Nico Pache <nico.pache@linux.dev>,
+	Usama Arif <usama.arif@linux.dev>,
+	Michal Hocko <mhocko@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Barry Song <baohua@kernel.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Wei Xu <weixugc@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Youngjun Park <youngjun.park@lge.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Gregory Price <gourry@gourry.net>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Hugh Dickins <hughd@google.com>,
+	David Rientjes <rientjes@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Vernon Yang <vernon2gm@gmail.com>,
+	Zicheng Wang <wangzicheng@honor.com>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Kairui Song <ryncsn@gmail.com>,
+	Xiang Liu <liuxiang.277@bytedance.com>,
+	Ehab Ababneh <ehab.ababneh@intel.com>,
+	Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Hui Zhu <hui.zhu@linux.dev>,
+	Maxim Muzafarov <maxmuzaf@gmail.com>,
+	linux-kernel@vger.kernel.org,
+	cgroups@vger.kernel.org,
+	damon@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	Tianyi Chen <hi@tychen.cc>,
+	Kairui Song <kasong@tencent.com>,
+	Ridong Chen <ridong.chen@linux.dev>
+Subject: Re: [PATCH v6 01/18] mm/mglru: rename the generation offset in lru_gen_folio_seq()
+Date: Tue, 24 Nov 2026 17:25:57 -0800
+Message-ID: <20261125012558.98032-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261124-mglru-fg-v6-1-8ffea39934a6@tencent.com>
+References: 
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -188,44 +109,37 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Evolution 3.58.3 (3.58.3-2.fc43) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=CYCdd7rl c=1 sm=1 tr=0 ts=6b061323 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=TGgUVIJ8l62jgltsAYIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMTI0MDA4OSBTYWx0ZWRfXwDA9Nt+nzQXw
- 9KrWXP5B8HLKCLWjlN02XC/5HPXZXxZsTDWoRUxxxW6lQ3FZ8mC11QweKx47A+E9TdWAwk1cOug
- sFMAIkU09NA25vt8l/0xpra1E7Xg8fo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMTI0MDA4OSBTYWx0ZWRfX4lLDXZnSTgup
- AU6qwfIygRxvBGLVJ3VZuQ2vQEBroYM2OKsmMQ6snD+HV9RnWCzLaKuCqDXutrOsby4RCqqg8UJ
- SsfKlMMH8F6LVUCaD8RR7BbuIv+XPhpBSBnxZCeknTuXXJDVTvAR7Bw2DoNd6JzHNA2XjuKWSrp
- iL316AsRfmGY6o+l/cAaLYZIXE7x6iJkdIeU9Xa9YYSKxK4wx5aTChW46MaOuudWvgAZYAVQihK
- hcYBFyGorat/+d6x133HD2fjjxCW3NKbBTBFkPlIA6ogQ5ppIKZJ8DQQSBJSbHsjOktIZZ+Cj7X
- mzfjG7/063RQmfm4E4SrHYYm3CQqMMeMfyQ5SdtF17YNLbsI9YFOWCzWTVlt2R0isDZVBVmjkpQ
- UMBNWVaSYOQFsWxeiCTAouBAmMoQAuODDconbgEa0DcV6dCu4ZFfBblcKeOY2QAAEdZQXJKIinC
- 3AkZuP9U1m6cGZIvVNw==
-X-Proofpoint-ORIG-GUID: TZok2wQxCK2m2X0K2LNljqKg3jP9hqoK
-X-Proofpoint-GUID: JKZjqjFSjC84u0cIzqrZZyhq1-jp0JkF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-11-24_06,2026-11-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1011 spamscore=0 bulkscore=0 impostorscore=0 adultscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2611040001
- definitions=main-2611240089
+Content-Transfer-Encoding: 8bit
 
-On Tue, 2026-11-24 at 17:08 +0000, Lorenzo Stoakes (ARM) wrote:
-> Replace use of the legacy vm_flags_t flags with vma_flags_t values in the
-> IMA mprotect LSM hook.
->=20
-> No functional change intended.
->=20
-> Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-> Reviewed-by: Lance Yang <lance.yang@linux.dev>
+On Tue, 24 Nov 2026 02:52:53 +0800 Kairui Song via B4 Relay <devnull+kasong.tencent.com@kernel.org> wrote:
 
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+> From: Ridong Chen <chenridong@xiaomi.com>
+> 
+> lru_gen_folio_seq() computes how many generations below max_seq a folio
+> should be added to, but stores it in a variable named "gen". Elsewhere in
+> MGLRU "gen" means an index into lrugen->folios[], i.e. seq % MAX_NR_GENS,
+> so reusing the name for a relative offset is confusing.
+> 
+> Rename it to "age", which matches what the value means: the newest
+> generation is age 1, and a larger age is an older generation.
+> 
+> No functional change.
+
+Looks good to me.
+
+> 
+> Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
+> [kasong: dropped the comment table part, the series rewrites it]
+> Reviewed-by: Barry Song <baohua@kernel.org>
+> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+> Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+> Tested-by: Andrew Morton <akpm@linux-foundation.org>
+> Signed-off-by: Kairui Song <kasong@tencent.com>
+
+Reviewed-by: SJ Park <sj@kernel.org>
+
+
+Thanks,
+SJ
+
+[...]
