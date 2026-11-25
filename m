@@ -1,115 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.41
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795614460;
-	b=bWtMM2OVzSuPMCURkcoskFYW7KgUyGasFrvEHViAxY6HZKM4Y4tfgODSb4tYt+EhD2ME
-	 JOqfSlkrF8Qs2kWQBTU5li5CKC/UiOsJnb8RtFtnKEwaB/klZsMWso3BOxY2lpg5q0RIo
-	 A5Z7y+BYPUd0sp3r/gULS20O0U1+o0niqI4Wr6H2JAXNzh8FOOpRF3rPOlgSTrvfQdGmb
-	 qnmzHeqzUFXV7/WR+ka83OUX+ILsRmCvVb+d22khbMgdjFKlC0S+Pp8lVUTv0QDyaIxbi
-	 RLD2yjBUxiWQpSNE7LeXz3lD1ubsVe4lek2xcs6yszSvit25F3GESAHPgo8sQL8apxw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795614460;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795614725;
+	b=A8pldpooPFaCjX0B9AAqdpY0SJc4RkXm8O3D1FHgEqh+21Ud4oQJsmu7XfKsjFVoYskQ
+	 OigSX43f6sy5u9/MYWkcpqKq1tcBC7iZBWh6+KJYBjk+ED7oOhW4axCYRzFE6BhG3fcRr
+	 of9WagHunV2p+P7vzFtxqm0tI/NQ0PxDEaTTzJDT7uD38T/2Ff3IFdRiZj2CKYZaP9gjy
+	 CChL1uwBxY9ZfiRicyU7d347xckR/dYsD8drxYdNNXeJyXXn6UlH0yz4j22LFY+1GzFgd
+	 b3Eia8HARSPFIC848edaNuVenQZdm/tHLkEYNCGNgWs5V/GmT8imd1o1q89sKqq+KWQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795614725;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=tNd0IbaZQFJuxJS+R9ayDKLW68Bcl2zYZx6i5ipU+qg=;
-	b=twH2e2d+ePBpEb2OhS+gmRkzpfJhE+wJJ6jUhFFoGHKVF1s5e9JYR4xY9cJgWFFaNNi0
-	 +qo12YqHjyfNhmprJ3Q34Nf05H7DlJtXRMJUymNFfOgEkUDvz5IrF9zEVz4wS5cP0SWzc
-	 UzszVFJfwYT64AaNZqf112Z9M3bqdp3sYsTAnAFPusrpEqgVHSL9PZuG0znURonzaI6GW
-	 0x52QukSxQFm5zav3/PqmzYdgK3Jg3nYxxxwjA2h3iUGD17l3OItP+XnfyixtKOskZxeh
-	 vRyDq37j/mEoHChwOchg7Z9g6pgSfmbUVIsAesR3sTlWnxsAHUMf7NuJ0k97CrFOsmw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=5FkHuxjNkBWcpazSUQh3/1ocxLfgOD0ATmjtxGIbMcI=;
+	b=rUwBWPlgpJdQFgqXeQboE3kzyB6RZrOSiN9qQPU+h3v1Uj4hoEwAtZQ0lwcFqtqLJkEJ
+	 P8jzUhcVMi7wslMHvtOsdsgY3udLc0zyJ843+iup2ExvpiJt8q+u0Jbq9UxZVwW9k1HeA
+	 HLqTtSwQdYWFEVgY8fCSohTr5tSYHgY8apiwNgQf8lXAcKmhm2zmOR1h1e1K27udJjz40
+	 oE1cyTfSuKImTluc+qBZM//xNwttiRh/eURSI8WkYBnjQ3Lm9RAeHB8Oxse2j9rzM/dPn
+	 +FMom/RaQGkTE6tNIOgeWJm2wzT+QcAnrhK0qnH7VQYdjpx/d+YmHcQsCQJTelMBREw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=shqN1e9b;
-	arc=none smtp.remote-ip=209.85.216.41
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fvL4cF2v;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.42
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26660606A327
-	for <damon@lists.linux.dev>; Wed, 25 Nov 2026 13:47:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 26660606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4492606A335
+	for <damon@lists.linux.dev>; Wed, 25 Nov 2026 13:52:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C4492606A335
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=shqN1e9b
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3b44bdcea8aso3162634a91.1
-        for <damon@lists.linux.dev>; Wed, 25 Nov 2026 05:47:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=fvL4cF2v
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6b88bc47e23so7439937a12.2
+        for <damon@lists.linux.dev>; Wed, 25 Nov 2026 05:52:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795614723; cv=none;
+        d=google.com; s=arc-20260327;
+        b=a8HWkE76oetH2eum4hMlvue5z0ptHhCojjjVzS632smjM1pBtCDiHt9CfOeuKZif0m
+         pGoGiF0beKStCvIGx5sD+K+7BEEn5qxw5DSW6lT8w6XvblcgjSHTXnOg2s+lFQcUmQYk
+         SqWs1XvE7cEnCYuoqTA+ko1RO5vEuO/zAvmDwcZBNW4P+k8wBfp4Y8FCmA5NJ+atpXzS
+         Ha6MBcjAegabAK+jRS++/PjzJgRPV0SC2kn6qVhJmHN93v8IKZWAbxM2FRvZZ0yq+dt/
+         V/mXNJaU0SkaJWAl7ePTPAQSkxOjwgfCEkSIfbVc6NWyHenGQqgOmoWg5i0G3ZPDX5Pc
+         uMzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=5FkHuxjNkBWcpazSUQh3/1ocxLfgOD0ATmjtxGIbMcI=;
+        fh=SQiEn88rVlcbTzX+juZ00KVxgJkjRRk3PQWS3Hh5oIk=;
+        b=GHFyR82x1IbU6iXx0iwMUlZv0oqIin5lhLqMkrNGQ1zHPuF7ZfHjJ9QkjsoODTGYib
+         q7JHmPvjgt060XiczoNFmJoq97GLH/8f4GvHGlqryefyBAqxLWzf25XWxD2u5LRkhwF8
+         pmC5QICfrfuyc0Lq0xOEAoAegS4JbPotE29m3j1Zm1dD1NkshTNhvy7DlIPu6LXnEusK
+         gwtA8RO+BEK2N9GUDqf8sLWw3rUHoM9/qNUJcFX4spf9+ZKys26+Uo5IJF6HfOafZS4V
+         824eZQE3iHTKwlphiDjwyev03jwG7AMGzzYS/fNRuV6AUPcsoPj+rZyM+9FDHwDp8nzJ
+         WqgA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795614458; x=1796219258; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1795614723; x=1796219523; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=tNd0IbaZQFJuxJS+R9ayDKLW68Bcl2zYZx6i5ipU+qg=;
-        b=shqN1e9bBChhYg+27RgllV/Z8OJK7siQ7KR/S1B/DBd7rplQQiGfiSgBEfC4Ed5yBq
-         e+f0y7QkGv5iVKwqHcshgKNlWluS6CwH3uS3Awo/YteUdiuKeyHgMP3TCv3JAlC6QIWk
-         jThyKCIjLDizObwbyPiVISh3YQBRe98OQxoXltB3J4MAuzynEqkX96SWpW6FgClFI+C9
-         b99FP7UAtPHB4B6QTHMVjldMsttMe+3T4ZCaz5QVYDJfKYxRVekJxZVmk8REkMsW7NlF
-         8kPU8jQzA/Q46O5UtH2q8kmy5ssYTRsMs9s/dt9eqQF7tGRH6TNSfca997uiXOAeEQ/X
-         /LVw==
+        bh=5FkHuxjNkBWcpazSUQh3/1ocxLfgOD0ATmjtxGIbMcI=;
+        b=fvL4cF2v0HxKgZL4ZgW2sxwbXlICGIsxRx/WuZsgSrGRw7yonC3oEu74BVXQBpdaQ9
+         L2W/QP14qsQ+wPDI98+Qk9VnF5OwqHQD6SvsZOqKGXUgATK5x6dZCWXNzU9hFJ/4g2f0
+         OtSV2L97c2L37V9PdxgwWK31D+HuJZyzw8m/Vws+ykFE1UEw3JhbBMtX5Uob4AiPjA7k
+         6WoqFEIfIcL/Cf6dH4sRjtNsQRXACv5sMLTrcqTk7LCJstrnAA+ADoR5QW4jw1hAcG45
+         Zm59SciC1fk78Cj47Us9+BvYtU2LxgTrbyrt/tb5rtPXAgZOeMy2AQy0LkztwvEW8Ny6
+         mFLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795614458; x=1796219258;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1795614723; x=1796219523;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=tNd0IbaZQFJuxJS+R9ayDKLW68Bcl2zYZx6i5ipU+qg=;
-        b=HH85V5COza24Pm280CYH1dRDKboZ6dqoPo7J4j9g0seBi170GdTC4khmzGXog3aB8j
-         kR+RFzFUUbBvtm+nXTNT1HutuK48s6AH17qdtutpqX3DM2Ca5Rsgaun1wPAWqSz/aBQi
-         U2SNdVgcljRvdSxzzNGD9+OanD0hgtkNWPZKJXTmGIt9NrHtDMOLJ5HprQNwujUhFdfA
-         kBNPt1MGk00k5h24l4Ufms1qTq2OR3pfLfaTtKmHMwCWyqnPDUKAUqbvI9Ib0lCksMXx
-         53wlzbZpKuOGW4MMio7cv4o45JVsYk2DrJDcmHZRZBMfRtakcIC9yMbTAOGJkcbfl6e3
-         jemA==
-X-Forwarded-Encrypted: i=1; AL+hErGMIE3/Hv3YRvG0GwLr0hew7NhSWZD9XelcefFk0YD5Ox8dNwDbGDL1lATnUDorm728IFSsOA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z++BLYxh+1IUdOiLTFdAjF3ZZOuQrXJwbnpZUpLMUKZfogVf736
-	tKplgrXpEqFO7t31oVFZN9Gc2gELNK+Ipy/6zCGeyrWGvsxfiG3CkNna
-X-Gm-Gg: AZFdTZfaV6+ezAHq6/MQF4t+veL1mZAW89IObB93d9aXqU615mzkKK03ap51X+DWZKg
-	qfp8dOsz20vq07Sy7tHTlLulhenANyje5sjOAqV26TbER2xOx/nTVLs9IorFnX2F9KAJtvwaUr3
-	SHH2fSDLZGb1gf11iJvrThSL7doYaVGrFfu+PucGXUhabpDqKvs9SShNUCr1x/NS38MMtgeFTqZ
-	PhJHszF5Zna8LU+mOZmWLk6vK62JZjCvMOGS7BxtviER33kAJfwr7fr4ID4188kCB5ceTj9EMd8
-	GN6xVh55tVbQlvIEeoN1oo+YmE/XQr4Qv/8t1T/mRKavdujafLyVQZOWDcLBPl4fm6/nlslyYXB
-	+fRiV9fZ+p27fJso0QEQpTqITrYrUIIyUSm0m2oxM+ydftVrvornh1zcAmlBzllXwH2vuFtCIiD
-	1p820jJc76ap0fjXvY0N6DTYcMeIAEHZZvHM7wZ3XZZXno2I/NMkeSE4mS1G7sH9pAnBs3r1Qqy
-	F90rv3QcNoc+gSNsucxqnC73F305Z9In0pPRApAXuX4YTgoURjvRcG6tPKmHj0+sW+FQsPS+0oC
-	mmx4V6tqG4Sn3cvNO2w4hkq+GXyp+hZ7xNrIUBzTz0sA
-X-Received: by 2002:a17:90a:d2cf:b0:3a0:e568:ed63 with SMTP id 98e67ed59e1d1-3b41c8e0507mr11255737a91.8.1795614458296;
-        Wed, 25 Nov 2026 05:47:38 -0800 (PST)
-Received: from localhost.localdomain ([240e:b8f:1df9:a600:c693:b19f:ada0:748])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b44b7d36bcsm11786323a91.3.2026.11.25.05.47.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2026 05:47:37 -0800 (PST)
-Date: Wed, 25 Nov 2026 21:47:18 +0800
-From: Vernon Yang <vernon2gm@gmail.com>
-To: kasong@tencent.com
-Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
-	Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
-	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
-	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>, 
-	Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
-	Barry Song <baohua@kernel.org>, Axel Rasmussen <axelrasmussen@google.com>, 
-	Yuanchu Xie <yuanchu@google.com>, Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>, 
-	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, Gregory Price <gourry@gourry.net>, 
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, 
-	Hugh Dickins <hughd@google.com>, SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, 
-	Yu Zhao <yuzhao@google.com>, Zicheng Wang <wangzicheng@honor.com>, 
-	Tal Zussman <tz2294@columbia.edu>, Kairui Song <ryncsn@gmail.com>, 
-	Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh <ehab.ababneh@intel.com>, 
-	Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, Lian Wang <lianux.mm@gmail.com>, 
-	Joanne Koong <joannelkoong@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>, 
-	Maxim Muzafarov <maxmuzaf@gmail.com>, linux-kernel@vger.kernel.org, cgroups@vger.kernel.org, 
-	damon@lists.linux.dev, linux-doc@vger.kernel.org, Tianyi Chen <hi@tychen.cc>, 
-	Ridong Chen <ridong.chen@linux.dev>
-Subject: Re: [PATCH v6 10/18] mm/mglru, gup: mark folios referenced via a
- fast helper
-Message-ID: <6c3d32a9-3004-4a17-b854-7088e69f164a@gmail.com>
-References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
- <20261124-mglru-fg-v6-10-8ffea39934a6@tencent.com>
+        bh=5FkHuxjNkBWcpazSUQh3/1ocxLfgOD0ATmjtxGIbMcI=;
+        b=OyxG5cdgy0GAinGRVCbaOjGYsWlO+Nnpc1t0/5fIqnLvYYeNJwEfTLHVL4FSh2rThN
+         Mxyu7MQpqX7hfmiq3HXhiqxiBgrTogsWbfmhxckKUn82GH0lrWBm/AxjtYWZaN67f7h7
+         hGyxj9PeXAJw7QvUfhd95Po7J8tvhbHe55v4k1fvrZcEhqgxZDUx0iw9gd8Ksr3na7ki
+         KhRHCmwSSUKMBZgDPvBlje2QU+nETlFqcv5Z2wcoJUQjEs1DbVwL1+EmX+mXu6gXmvXI
+         5Gpf8KUE37Q/yrOvTAVcEZajEKOEIR0bpBtitykofQxOhhnwPArTq7l/rytDjKnw7XtR
+         ZJyg==
+X-Forwarded-Encrypted: i=1; AL+hErFojleapRRSobj9wL2K4IQgfwiEkK74YWEO21TogvYJIV4H3AK8YnaQWQ9H2+RJq7n2NVLLjw==@lists.linux.dev
+X-Gm-Message-State: APuU4Z+zjyjOqIkX04kSpkqjk3vxgQGF0fF3IeSIRxhZ0Mn9/1oig4U+
+	WUUjOMNqUOvNWp40ehFvwUpp6f7eRxzFoCvLkg+UWiq2pBcZjkitgoPuUdZrRKQSKmHIURQPGUR
+	sWDhl6HEXHkpOYc8R6SaKpbQ7LkMUVrY=
+X-Gm-Gg: AZFdTZfO1k9+/B9bqpQWHaToCx5Kr93ek2rTus5k3IEX1tTHtO2wzfTTWHWInk5KptE
+	ii3VrcRyWGTaBgSUfjxjWPvw7PDBO7jA6neMsOtwQGdBbABnz7YucOZBPmDyIeKrdxiHQv7tkSx
+	DEP/E+PeR4rjdIgZS/iXN9eCvrngiW6u4h5w/oVjqKLSpOzCz+VtfLEAYsOM0b2SE5i9sRvD+0E
+	Qs+02+62FS+1n5Bru86jWOMVYB7KtlvWtx4jdJI512A2NRG/swn8RGRez1Idf72wzgsBbuqGha9
+	nE11jUvxhK3xj4E98De8ALbQLrarvDcY2olD3ZS5Isz1WbBlWG+cawgHzsNDmmr1b2SQSeIZokM
+	gdIENfEvnL5cGUpT670cTiWILIkTasGMCkZTfNtyFlUQJmmJWJj7rzdQ8Rr4ZsM5V42lnSg==
+X-Received: by 2002:aa7:d355:0:b0:6ba:3867:42c8 with SMTP id
+ 4fb4d7f45d1cf-6ba38674444mr9425076a12.30.1795614722953; Wed, 25 Nov 2026
+ 05:52:02 -0800 (PST)
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -119,143 +104,97 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261124-mglru-fg-v6-10-8ffea39934a6@tencent.com>
+References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
+ <20261124-mglru-fg-v6-13-8ffea39934a6@tencent.com> <43abc7c4-c435-48a9-8dc2-616095105d45@kernel.org>
+In-Reply-To: <43abc7c4-c435-48a9-8dc2-616095105d45@kernel.org>
+From: Kairui Song <ryncsn@gmail.com>
+Date: Wed, 25 Nov 2026 21:51:25 +0800
+X-Gm-Features: Aa3M54qvnrtyAcMz5ZXrISSFgrUyQOGr2UM6VAg_EqnvxKpfk2xtM5m2ePfgGd4
+Message-ID: <CAMgjq7CQkhA94QxVcdHzq=DD-6LCihA+psL1n-K05sxCffBOVg@mail.gmail.com>
+Subject: Re: [PATCH v6 13/18] mm/khugepaged: convert to LRU refs based
+ operations for MGLRU
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>, 
+	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
+	Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>, 
+	Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
+	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
+	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Lorenzo Stoakes <ljs@kernel.org>, 
+	"Liam R. Howlett" <liam@infradead.org>, Barry Song <baohua@kernel.org>, 
+	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
+	Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>, 
+	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, 
+	Gregory Price <gourry@gourry.net>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, 
+	Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
+	SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, 
+	Vernon Yang <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, 
+	Tal Zussman <tz2294@columbia.edu>, Xiang Liu <liuxiang.277@bytedance.com>, 
+	Ehab Ababneh <ehab.ababneh@intel.com>, Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, 
+	Lian Wang <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>, 
+	Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>, 
+	Maxim Muzafarov <maxmuzaf@gmail.com>, linux-kernel@vger.kernel.org, cgroups@vger.kernel.org, 
+	damon@lists.linux.dev, linux-doc@vger.kernel.org, Tianyi Chen <hi@tychen.cc>, 
+	Ridong Chen <ridong.chen@linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 24, 2026 at 02:53:02AM +0800, Kairui Song via B4 Relay wrote:
-> From: Kairui Song <kasong@tencent.com>
+On Wed, Nov 25, 2026 at 6:11=E2=80=AFPM David Hildenbrand (Arm)
+<david@kernel.org> wrote:
 >
-> Introduce folio_inc_lru_refs_fast(): raise refs from 0 to
-> LRU_REFS_REFERENCED via cmpxchg, or just set PG_referenced for the
-> classical LRU as before. No counter update or promotion is needed,
-> nonzero MGLRU refs are left unchanged.
+> On 11/23/26 19:53, Kairui Song via B4 Relay wrote:
+> > From: Kairui Song <kasong@tencent.com>
+> >
+> > For MGLRU, PG_referenced is only the lowest bit of the folio LRU refs
+> > count, so folios with nonzero even refs no longer have the bit set.
+> > folio_pte_referenced() testing the raw bit misses hot folios at
+> > refs 2, 4 or 6, under-counting the referenced folios of a candidate ran=
+ge
+> > and aborting otherwise good collapses with SCAN_LACK_REFERENCED_PAGE.
+> >
+> > Test the refs count directly when MGLRU is enabled, mirroring the
+> > smaps conversion.  The classical LRU keeps the plain bit test.
+> >
+> > Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
+> > Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
+> > Tested-by: Andrew Morton <akpm@linux-foundation.org>
+> > Signed-off-by: Kairui Song <kasong@tencent.com>
+> > ---
+> >  mm/khugepaged.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+> > index 2dc4245814df..5e768481ac22 100644
+> > --- a/mm/khugepaged.c
+> > +++ b/mm/khugepaged.c
+> > @@ -579,7 +579,9 @@ static bool folio_pte_referenced(struct folio *foli=
+o,
+> >               struct vm_area_struct *vma, unsigned long addr, pte_t pte=
+val)
+> >  {
+> >       /* The folio was referenced previously ... */
+> > -     if (folio_test_young(folio) || folio_test_referenced(folio))
+> > +     if (folio_test_young(folio))
+> > +             return true;
+> > +     if (folio_check_lru_refs(folio))
+> >               return true;
 >
-> The classical path is taken for a folio that is off the gen lists while
-> MGLRU is off, not on lru_gen_enabled() alone: while MGLRU is being
-> turned off, a folio can still be on a gen list after the static key
-> flips, and setting PG_referenced there would bump its refs count.
->
-> That check uses lru_get_gen_flags(), so move the helper out of the
-> CONFIG_LRU_GEN block, it is now built with the option off, where
-> LRU_GEN_WIDTH is 0 and LRU_GEN_MASK is zero. Keep the decoded value in
-> an int so the subtraction of the offset-by-one encoding cannot fold to
-> ULONG_MAX before it happens to avoid -Woverflow error with CONFIG_WERROR.
->
-> This helper only aims to be fast, it exists so the gup fast path can
-> stay a fast path. The new helper doesn't account for refs above
-> LRU_REFS_REFERENCED but that's fine for now as GUP never used that
-> or anything similar for CLRU either.
->
-> Convert the gup fast-path sites. No behavior change for classical LRU,
-> no regression for MGLRU either. Just prepare for the following changes
-> by providing a helper that follows the new convention.
->
-> Tested-by: Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>
-> Reviewed-by: Kunwu Chan <kunwu.chan@gmail.com>
-> Signed-off-by: Kairui Song <kasong@tencent.com>
-> ---
->  include/linux/mm_inline.h | 62 +++++++++++++++++++++++++++++++++++------------
->  mm/gup.c                  |  6 ++---
->  2 files changed, 49 insertions(+), 19 deletions(-)
->
-> diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-> index b15c3618a1f2..13c8b6bce349 100644
-> --- a/include/linux/mm_inline.h
-> +++ b/include/linux/mm_inline.h
-> @@ -105,6 +105,22 @@ static __always_inline enum lru_list folio_lru_list(const struct folio *folio)
->  	return lru;
->  }
->
-> +/**
-> + * lru_get_gen_flags - Return the LRU generation number from folio flags.
-> + * @flags: folio flags
-> + *
-> + * Returns: A number between 0 and (MAX_NR_GENS - 1), inclusive. Returns
-> + * -1 if the flags indicate the folio is off the list (e.g., isolated).
-> + */
-> +static inline int lru_get_gen_flags(unsigned long flags)
-> +{
-> +	int gen = (int)((flags & LRU_GEN_MASK) >> LRU_GEN_PGOFF);
-> +
-> +	/* The gen is stored offset by one, so zero means off-list */
-> +	VM_WARN_ON_ONCE(gen > MAX_NR_GENS);
-> +	return gen - 1;
-> +}
-> +
->  #ifdef CONFIG_LRU_GEN
->
->  static inline bool lru_gen_switching(void)
-> @@ -168,22 +184,6 @@ static inline void lru_set_gen_flags(unsigned long *flags, int gen)
->  	*flags |= (gen + 1UL) << LRU_GEN_PGOFF;
->  }
->
-> -/**
-> - * lru_get_gen_flags - Return the LRU generation number from folio flags.
-> - * @flags: folio flags
-> - *
-> - * Returns: A number between 0 and (MAX_NR_GENS - 1), inclusive. Returns
-> - * -1 if the flags indicate the folio is off the list (e.g., isolated).
-> - */
-> -static inline int lru_get_gen_flags(unsigned long flags)
-> -{
-> -	int gen = ((flags & LRU_GEN_MASK) >> LRU_GEN_PGOFF) - 1;
-> -
-> -	/* Exclude the legal -1 from the unsigned MAX_NR_GENS comparison */
-> -	VM_WARN_ON_ONCE(gen != -1 && gen >= MAX_NR_GENS);
-> -	return gen;
-> -}
-> -
->  static inline int folio_lru_gen(const struct folio *folio)
->  {
->  	return lru_get_gen_flags(READ_ONCE(*const_folio_flags(folio, 0)));
-> @@ -483,6 +483,36 @@ static inline bool lru_gen_del_folio(struct lruvec *lruvec, struct folio *folio,
->  }
->  #endif /* CONFIG_LRU_GEN */
->
-> +/**
-> + * folio_inc_lru_refs_fast - Bump folio refs count without promotion.
-> + * @folio: the folio
-> + *
-> + * Raise refs from 0 to LRU_REFS_REFERENCED and leave hotter folios
-> + * untouched. For a folio off the gen lists with MGLRU off, a plain
-> + * PG_referenced set.
-> + */
-> +static __always_inline void folio_inc_lru_refs_fast(struct folio *folio)
-> +{
-> +	unsigned long new_flags, old_flags = READ_ONCE(*folio_flags(folio, 0));
-> +	unsigned int refs;
-> +
-> +	do {
-> +		refs = lru_get_refs_flags(old_flags);
-> +		if (lru_get_gen_flags(old_flags) < 0 && !lru_gen_enabled()) {
-> +			/* For CLRU, just do folio_set_referenced() */
-> +			if (refs & LRU_REFS_REFERENCED)
-> +				break;
-> +			refs |= LRU_REFS_REFERENCED;
-> +		} else {
-> +			if (refs)
-> +				break;
-> +			refs = LRU_REFS_REFERENCED;
-> +		}
-> +		new_flags = old_flags;
-> +		lru_set_refs_flags(&new_flags, refs);
-> +	} while (!try_cmpxchg(folio_flags(folio, 0), &old_flags, new_flags));
-> +}
+> Why separate lines?
 
-The implementation code of this function looks a bit convoluted.
-Would it be better to simplify it into the following code?
+I thought separating them would make the git log easier to track if we
+changed one of them again in the future. I can change it back if it's
+not helpful.
 
-	do {
-		bool clru = !lru_gen_enabled() && lru_get_gen_flags(old_flags) < 0;
+> Also, is there some way to abstract this that core-mm has to worry less a=
+bout
+> the details?
 
-		refs = lru_get_refs_flags(old_flags);
-		if (clru ? (refs & LRU_REFS_REFERENCED) : refs)
-			break;
-		new_flags = old_flags;
-		lru_set_refs_flags(&new_flags, refs | LRU_REFS_REFERENCED);
-	} while (!try_cmpxchg(folio_flags(folio, 0), &old_flags, new_flags));
+Let's just move folio_test_young into folio_check_lru_refs() then,
+PG_young is page idles's hint for LRU, so doing that makes sense.
 
---
-Cheers,
-Vernon
+And with FG, I think we will soon be able to retire PG_young
+completely, page idle's feed back can just call
+folio_inc_lru_refs(folio, LRU_REF_MAPPED), save one page flag. But
+can't do that yet, need to cover the CLRU case.
