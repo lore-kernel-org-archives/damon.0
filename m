@@ -1,55 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.180
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795600993;
-	b=5llwLVmCkkcNqGTk6iujYlXJF5fsvjIdD7dRLmUp9U0c53zdg6sv8R8fMkUcesBzXVlL
-	 Dkf0g1Mz7hFI/voRDzgqgoqZtOEpyX99sHolizZ9JZua1iNZ/QfldeMdDXDvBS94Tuml8
-	 owPziEVYT5/O9gtj30/0+NAqIT4ykX5VBgwrXRfgUBUg8YJqL3tD5ink/AeiIMps87icQ
-	 3/0eG03tXLl4SD6AUmTFlZ2YEDRWZ07IHgEW2OlG3Sl+ftdm1g4zAN3GMSykVdKQEZ5wh
-	 1+oiKN2NUeF/IpFul5XhV0BMsd0N89aBIgXhyjwFHYtrdX6C5e4hTXS3jstBfMnvWAQ==
+	t=1795601193;
+	b=HZeuFuSHgPDoMMR9UkYmbiVFHZ7MiwKDd14pswAZDnup8xu5daXW6tkiuHGQEiVpyy+d
+	 Ma3pod9lEHQ5eWPDleO91V2aMZRIYy2QfsdL84hIjJW15uk3TDl8zNBCFPwU+m0fxqR5Z
+	 m4DkIAy/oh4DNYsYydVx/pKHBTLOHAin4u+mi6XlmuS4584i+Aj6qlXbzQp0ngUgaU2VB
+	 CVvS4oepRUb8fD0JFZ/xHln6B72zz2IzZ6HC2UtYUpcMFVhlxt9NPSpIE7Z4AKNEvq/54
+	 Lj+YsOgbPyzNIHWBp99ESHtq6vDIWyTzht7DtHm009Cd2H4t4/UivkpL4vgnA9ECCYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795600993;
-	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=ahAD1nTlJMyKd+Ivy4YWjGLtR4U+tnl+mOngOadx7yo=;
-	b=MiNYSbu/mUldDJR3uK0BG00qCG9VhitvZr4LAZ5Ysyrz2hUSzciGeuiYgmaw7X2zy3Kk
-	 +5wCP+31u53SAXaMt0J80jaQsxhboE+cazBT+9zeKikNgU66diLe8eHY9oHUY53PwLuWv
-	 UdWnevRj5j3SzX3BOB4cq0OiGCojhrEuBLzCFzeVSszsQfDQS3NDpxMZ7zAEU7cFrKP0J
-	 GxPGptJMVZiikoIzaxcSoXhsH4zmi3MVjZxW2wCu5WDFmVYriEprMSYhuebpm8zkxyI6l
-	 P3+BUvQCVy6xDO++/gkERyPAudFxf4PF36iE+NfltwjKbGVtmJrOLoh0ILavZ84UbEA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795601193;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Arx3BJNS+dbXZzp4h/tce0DGEBdUqyAuZtL9wSo0Tdw=;
+	b=O7IFQ/9KKRUY58n79y9B8/6Wtl3ae1WnxCCvNFruMRM+843HojSBOaRhw+WYw+u6xHx+
+	 TCKW+3tdhf66h1RIH8oTAvajZ1pjmHiFoo/PSlQxgRDO7ptxhpcosNPUjtlneQX7j5NEj
+	 Xxjo2G36menphHlH7vExHGfHCsaov05dzTwNm/zCAVLRS1fgOuFNv6MrBlsCEjdzkdlPX
+	 +B+KSvS+OGH+IUOCXeJfl4QFuUNe/K2D/SHMicUk0pA/7dmtMZhnQzqAdbSCS0hiVp6PZ
+	 4Slm2joKk5sFoWYebpqSHN8eE8NkKj19a0EfJd77tu3GxBNhW5Hse+BB2NRrg1wCdmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aB9TCN5u;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=rqcluRyp;
+	arc=none smtp.remote-ip=91.218.175.180
+Received: from mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76C7606A31E
-	for <damon@lists.linux.dev>; Wed, 25 Nov 2026 10:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC16A606A31E
+	for <damon@lists.linux.dev>; Wed, 25 Nov 2026 10:06:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DC16A606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=aB9TCN5u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E801F000C0
-	for <damon@lists.linux.dev>; Wed, 25 Nov 2026 10:03:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795600993;
-	bh=ahAD1nTlJMyKd+Ivy4YWjGLtR4U+tnl+mOngOadx7yo=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=aB9TCN5un+FY44DyzDWOfl/JnifH+71Ve+hTPGcSbb5FWibTB8+3/a03RedeyXNtw
-	 Ut9a/5zRNkzIfwPM6/c+S+na0kzX2kwPZHrDCK52XhWFCBtUhcZrVR5Upx3aWadPFo
-	 8NJWiQuMjAfswvt25VnnqVlrijaEO4ceNFKGLCrVfyg8PKFfhQM49xUc4KNORl245l
-	 xwGeI6stLtGCII8QWnG9I6IawEmJ4MBCp6r1t47BEYd7Yu5SmPp38aOviFYzyzKXUM
-	 ZMhk/UIIo8OdYZxxNmfjRj7D5vITgRvSjWY5jFCjjYLxbODxTN94UtKki/yrvlBR7h
-	 59NtENOfSatLw==
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-9496473b511so661022785a.0
-        for <damon@lists.linux.dev>; Wed, 25 Nov 2026 02:03:12 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AL+hErFY+ZSNcRROHB2Gkfv87dKiZgOM3vH+pMG1Ob2sDhd3IHJ9ZbiqrYH3BFttiMthyzZEQ1SSMA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z+I3J/p+HFyWD21LPsu2wgGx6QG1A6kQPz4WtWbjM5IFqFCdu7I
-	ihmHdp3/LuIdpPVHz6jorUXX+mmaxkxzFdUSOg551D+tWm/hvc246vqBePwXR2HQeMoxplKP3Ev
-	Au+kMyxWLIi9uTZUckEoVUgg8OZDLqVI=
-X-Received: by 2002:a05:620a:4011:b0:949:82b5:402d with SMTP id
- af79cd13be357-949ba955997mr2986180585a.12.1795600992351; Wed, 25 Nov 2026
- 02:03:12 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=rqcluRyp
+X-Envelope-To: damon@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=PsZOw7bb0SZdIWP30vhMxqaF4WJhPkOQJioKFLKp5zU=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795601190; v=1; x=1796205990;
+ b=rqcluRypAtOkPq8Eh2yvStZDZFUGNDNb6iZcpxVjGuSVpiwAja6utt8HZmkoJQ3tN4BzwRrD
+ dRb2Oim7V5lHkRsQcjFSOeMh6afyuzoerFEPzw/Fr8VlfGsHZI9ryn8aSUh1HlcOS8YHNoOx/xP
+ O+Sm3+onzhyBTawWGd9hr2Sk=
+X-Envelope-To: damon@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 74f8e64801debf3e;
+	Wed, 25 Nov 2026 10:06:30 +0000
+X-Mizu-Trace-ID: 74f8e64801debf3e
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <17263a6c-b812-4a03-b64a-338224142e35@linux.dev>
+Date: Wed, 25 Nov 2026 18:06:27 +0800
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,162 +58,35 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com> <20261124-mglru-fg-v6-17-8ffea39934a6@tencent.com>
-In-Reply-To: <20261124-mglru-fg-v6-17-8ffea39934a6@tencent.com>
-From: Barry Song <baohua@kernel.org>
-Date: Wed, 25 Nov 2026 18:02:58 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4zuAmNt9xYJdU1dmc06PRsCnDc8H+hV=5vU6oRAyWsSCA@mail.gmail.com>
-X-Gm-Features: Aa3M54rjOxmsiKxZY9PTg72qI_9AeJX3OFX-7i-N7MNLDLDrtS6AQM6YTnwOk90
-Message-ID: <CAGsJ_4zuAmNt9xYJdU1dmc06PRsCnDc8H+hV=5vU6oRAyWsSCA@mail.gmail.com>
-Subject: Re: [PATCH v6 17/18] mm/mglru: folio LRU refs based active/inactive
- number accounting
-To: kasong@tencent.com
-Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
-	Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
-	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
-	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, David Hildenbrand <david@kernel.org>, 
-	Lorenzo Stoakes <ljs@kernel.org>, "Liam R. Howlett" <liam@infradead.org>, 
-	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
-	Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>, 
-	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, 
-	Gregory Price <gourry@gourry.net>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, 
-	Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
-	SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, 
-	Vernon Yang <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, 
-	Tal Zussman <tz2294@columbia.edu>, Kairui Song <ryncsn@gmail.com>, 
-	Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh <ehab.ababneh@intel.com>, 
-	Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, Lian Wang <lianux.mm@gmail.com>, 
-	Joanne Koong <joannelkoong@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>, 
-	Hui Zhu <hui.zhu@linux.dev>, Maxim Muzafarov <maxmuzaf@gmail.com>, linux-kernel@vger.kernel.org, 
-	cgroups@vger.kernel.org, damon@lists.linux.dev, linux-doc@vger.kernel.org, 
-	Tianyi Chen <hi@tychen.cc>, Ridong Chen <ridong.chen@linux.dev>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/27] mm/damon/api: introduce struct damon_report
+To: SJ Park <sj@kernel.org>, Andrew Morton <akpm@linux-foundation.org>
+Cc: damon@lists.linux.dev, linux-mm@kvack.org,
+ Aveline Noir <jm5905938@gmail.com>, Lian Wang <lianux.mm@gmail.com>
+References: <20261124153636.91854-1-sj@kernel.org>
+ <20261124153636.91854-2-sj@kernel.org>
+Content-Language: en-US
+From: Enze Li <enze.li@linux.dev>
+In-Reply-To: <20261124153636.91854-2-sj@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 24, 2026 at 2:53=E2=80=AFAM Kairui Song via B4 Relay
-<devnull+kasong.tencent.com@kernel.org> wrote:
->
-> From: Kairui Song <kasong@tencent.com>
->
-> Currently the active/inactive LRU sizes exported through /proc/vmstat
-> and memory.stat are derived from the generation window: folios in the
-> two newest generations are accounted as active, the rest as inactive.
-> This causes several problems:
->
-> - Unmapped file folios can stay in older gens despite repeated use,
->   so active files can be under-reported, unlike classical LRU.
->
-> - The reading is jumpy: on aging, the second-newest gen, previously
->   active, becomes inactive all at once, causing a huge drop of active
->   folios without any change in use.
->
-> - The reading is reversed on swapless machines. When swapping is
->   disabled or unavailable, MGLRU ages anon by moving the gens directly
->   without walking or touching any folio, to reduce the overhead. So
->   inactive anon folios can suddenly count as active, or vice versa,
->   despite no change in their hotness.
->
-> With frequency guided promotion, hotness is already tracked per folio by
-> its referenced count, so we can do folio level accounting instead: a
-> folio is active once its refs reach LRU_REFS_ACTIVATED (currently
-> LRU_REFS_PROTECTED).
->
-> On reaching this threshold, folios are accounted to the active part.
-> On forced per-folio aging or PID protection, refs are capped at
-> LRU_REFS_WORKINGSET, dropping active folios to the inactive part.
-> Note that on swapless machines anon refs are not reset by aging (the
-> shortcut skips the per-folio walk), but the counts no longer oscillate
-> as the generation indices wrap.
->
-> The accounting is now per folio and lruvec independent, so no size
-> adjustment is needed when reparenting a dying memcg: the hierarchical
-> stats keep the counts in the parent automatically.
+On 11/24/26 23:36, SJ Park wrote:
+> Define a struct for data attribute report.  The struct provides public
+> fields for the type and the memory address range.  The type field
+> represents the type of the report itself.  The address range is for the
+> memory of the reporting data.  Data attribute producers can format their
+> report using those fields.
+> 
+> It also has a private field representing when the report is submitted.
+> 
+> Reviewed-by: Aveline Noir <jm5905938@gmail.com>
+> Reviewed-by: Lian Wang <lianux.mm@gmail.com>
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-I'm still struggling to understand whether the local LRU accounting
-is correct here. But if there is a bug, it wasn't introduced by
-this patch.
+LGTM, thank you.
 
-[...]
-
-> @@ -4743,7 +4823,6 @@ static void __lru_gen_reparent_memcg(struct lruvec =
-*child_lruvec, struct lruvec
->                                      int zone, int type)
->  {
->         struct lru_gen_folio *child_lrugen, *parent_lrugen;
-> -       enum lru_list lru =3D type * LRU_INACTIVE_FILE;
->         int gen;
->
->         child_lrugen =3D &child_lruvec->lrugen;
-> @@ -4756,8 +4835,6 @@ static void __lru_gen_reparent_memcg(struct lruvec =
-*child_lruvec, struct lruvec
->          */
->         for (gen =3D 0; gen < MAX_NR_GENS; gen++) {
->                 long nr_pages =3D atomic_long_read(&child_lrugen->nr_page=
-s[gen][type][zone]);
-> -               int child_lru_active =3D lru_gen_is_active(child_lruvec, =
-gen) ? LRU_ACTIVE : 0;
-> -               int parent_lru_active =3D lru_gen_is_active(parent_lruvec=
-, gen) ? LRU_ACTIVE : 0;
->
->                 /* Assuming that child pages are colder than parent pages=
- */
->                 list_splice_tail_init(&child_lrugen->folios[gen][type][zo=
-ne],
-> @@ -4765,11 +4842,6 @@ static void __lru_gen_reparent_memcg(struct lruvec=
- *child_lruvec, struct lruvec
->
->                 atomic_long_set(&child_lrugen->nr_pages[gen][type][zone],=
- 0);
->                 atomic_long_add(nr_pages, &parent_lrugen->nr_pages[gen][t=
-ype][zone]);
-> -
-> -               if (lru_gen_is_active(child_lruvec, gen) !=3D lru_gen_is_=
-active(parent_lruvec, gen)) {
-> -                       __update_lru_size(child_lruvec, lru + child_lru_a=
-ctive, zone, -nr_pages);
-> -                       __update_lru_size(parent_lruvec, lru + parent_lru=
-_active, zone, nr_pages);
-> -               }
->         }
->  }
->
-
-The old code also skips updating the local stats when
-lru_gen_is_active(child_lruvec, gen) =3D=3D
-lru_gen_is_active(parent_lruvec, gen), as we skip
-__update_lru_size() in that case.
-
-But we do have some code in mm/workingset.c that relies on the
-local stats:
-
-        if (sc->memcg && shadow_nodes.memcg_aware) {
-                struct lruvec *lruvec;
-                int i;
-
-                mem_cgroup_flush_stats_ratelimited(sc->memcg);
-                lruvec =3D mem_cgroup_lruvec(sc->memcg, NODE_DATA(sc->nid))=
-;
-                for (pages =3D 0, i =3D 0; i < NR_LRU_LISTS; i++)
-                        pages +=3D lruvec_page_state_local(lruvec,
-                                                         NR_LRU_BASE + i);
-                pages +=3D lruvec_page_state_local(
-                        lruvec, NR_SLAB_RECLAIMABLE_B) >> PAGE_SHIFT;
-                pages +=3D lruvec_page_state_local(
-                        lruvec, NR_SLAB_UNRECLAIMABLE_B) >> PAGE_SHIFT;
-        }
-
-So unless the local stats are transferred elsewhere during memcg
-reparenting, this seems to be a pre-existing bug.
-
-It would be relatively straightforward to fix in the old code.
-With the new code, would we need to account for active/inactive
-pages on a folio-by-folio basis during reparenting, or is there
-still a way to transfer the stats in bulk?
+Reviewed-by: Enze Li <lienze@kylinos.cn>
 
 Thanks,
-Barry
+Enze
