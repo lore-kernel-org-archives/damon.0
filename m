@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795727191;
-	b=jwdv9/MmamU6vDK6+YD0t995ebMDTqAVf2Y3RxjR2sbZlUrhQC2xN9V85kQpqXz3l0TL
-	 Qm+97PCQ0+PB1Kh4exJj1v6VwD/fyUXQQAWTtD8RpRae6rGQwpNmpSRHyLYOLfO3ZbKst
-	 bFrfRHdWSa5x/KA8iuiEnUDs8TRBenx7Urv7ysSKsaToJncMB1R91UY74f5RZ/ND2f0PK
-	 tUSL3XHMAIMUSLSrvKuj8U3H/EQUVx9RRMHLaK5YJW2t/uulGIy8RP+aHauHiijx/1Iyt
-	 fpkCMYWmZ0/2aIEcn0DrgCL2OD2gsXwgARlEwmW39T9hVStlz7tYPWkrlqx0tM038EA==
+	b=nICxuILqOwmRvhChnSOMABj/jI+51q9AMjRwB17MFkhGaqpGSh6T1csbmH+Tn3WLeh35
+	 s6py7Q4e/TagrkeHO07oxQ4SK5W6AKBAnIy0uPmIvMm5r3TCJR1V6dmFeQK+7iziiGBNy
+	 4X+7LA8Vt5BP+APmTFsAOf23LMH06t7qP0jc2BfjR1jDLOVS2cMm5xSbzJ1Kcq/byK6Cg
+	 Aw7xpuo1oNNOQj8HLuzOLR5CzJX1TiP8NMwNGe0pzNitDYZd5xiFj4U+vcmvfCVUeR+dS
+	 0KUCC0Qu0Yywc6+XCTz7nzY0pw/udFwhVLseT3I/hC31/fwenVRyes39uM49emS24HA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795727191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=SeTTtc4pH5Qdy0QRbAyn5ThNALUromTyBmx5tzYSbKo=;
-	b=oH/puhVVHKqG3Tf+2LS6CF+7js2CrJdHu3ANBRrL6v+00iWHeOq1zgcFzRzlV7J7/W3U
-	 EwV8Uou8NGHQPNL9BRCFr+OwG2j4lUPrLKWujrca+/hKZRoR9X2VZnrCq7geqbB58h0Yh
-	 FtteWk8pjrn3y8vqjmXvLwvd/85LWF7mTPv/SzFl9OlPLz01JQEo5AHjcq8sfd4zy3q9W
-	 p7YWt8T3F2ckUInPt2OKscu42qxXu+gj3F90AFIBC6TpeQ39pwNJx0RUyntiGGtBkjnUm
-	 LLAM80B73bipl1QwU3h1kjMY7daYonWeCA2Z1lORL8RJWyk1Qq6UHn5zzOf26wFJBXw==
+	bh=yUbztBrsqn4RHPvpcYlZWejTXQHREOkSwYN78+WQ4Lg=;
+	b=V68Ul5TNPrV+22jL8WvkesoOa4csHmXZ4DJ8Usr2wY4wzcp8kLwdzvIu80MeX40mxqTz
+	 6awj+/0Z5O5SFfpFI1MSmRh+f3UsSwqeAxLHbA21NKkzLxkCoa9NSbPErhM1Mh04VpCU/
+	 BSPcelWzCH8DAopxuR4ni7S0DorudPDEpoJbn5WxJk2Lw2xuNwPAQRLgoHB9eNTkKsqeB
+	 hD1Xs8JWmih5ZZCH8LZdB9CbJNxu6VvQbFW2l5YnwouC50HjlSdkh9BjjtjRPcT0SfKW1
+	 8iVI0WGi1Hum8zMPwYQFrmZF9FsExkHyyK2DfdczH9ICm/ay9XzTNka17KGxVy+d1Xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YaaQyMD7;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XdlukMeq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4561606A323
-	for <damon@lists.linux.dev>; Thu, 26 Nov 2026 21:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0AD606A31C
+	for <damon@lists.linux.dev>; Thu, 26 Nov 2026 21:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YaaQyMD7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5642E1F00893;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XdlukMeq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED801F00896;
 	Thu, 26 Nov 2026 21:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795727190;
-	bh=SeTTtc4pH5Qdy0QRbAyn5ThNALUromTyBmx5tzYSbKo=;
+	s=k20260515; t=1795727191;
+	bh=yUbztBrsqn4RHPvpcYlZWejTXQHREOkSwYN78+WQ4Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YaaQyMD7sqi3aLwXqaivPPbuFvT811e3n/QKn26RVL7ixe4a5gMPo7IEnmylZJ/ND
-	 h+KCkjFmUSbxyjV8GzBbad1y8PFrnGhy1xpnl7tKRhfxtqwVuxdaobiBmRveQxpC6G
-	 b5UV9b5hUFOIxP8yaJRkwEdl73Fjy94VFWxYRVAF4zrLvH7+9yjZOmZuCBfQZn6vB4
-	 z7a8wMKEsOk+MEiWLPH/lRnGUjCrexxl78G3QRdHIUU9rCbODup/y4ENRuNYJkc/2P
-	 GJ9xnzoz+5CDwPcA7HKmjZY1aHP/hPbsXs4KVjEoL8ktWu7Uz1IvH4B4BgZT3hpxZz
-	 RQ6Kh6ju7rVRw==
+	b=XdlukMeq7xpgGHc27DpOm8kgjaGNYgkfnQpZ8FjwdJgWlJrW1PWW1u/sFOLrHqEvp
+	 /CNhy0h/iBmCV/kO8ZarL2EN6e1En00c1b1Nnvf/QFBGipPnDmDZP62eg8GBVWR4xn
+	 c6YyErTzTF9TDPw3RsKqewV4rcxNsSv+iY1obcL64PoL5QWQGp+64SG17DMtZSUq12
+	 tTLRHgUcR+zcjYFGYX1A5cypHtmTEMstHiGZUBW3WjWu22qkYe0ewZ4N5eRc0D1X58
+	 8yhXTLbIv+e6tZrrpAmWy60ihx6Kl47KnH6lfXxxBvpXwUXkrJcrFLhoyQOpbuORth
+	 bxbKZU4kguDBw==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: [RFC PATCH 1/4] mm/damon/sysfs: define damon_sysfs_cmd_name type and array
-Date: Thu, 26 Nov 2026 13:06:14 -0800
-Message-ID: <20261126210619.97634-2-sj@kernel.org>
+Subject: [RFC PATCH 3/4] mm/damon/sysfs: use damon_sysfs_cmd_names in state_show()
+Date: Thu, 26 Nov 2026 13:06:16 -0800
+Message-ID: <20261126210619.97634-4-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261126210619.97634-1-sj@kernel.org>
 References: <20261126210619.97634-1-sj@kernel.org>
@@ -62,73 +62,45 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Define a new struct for kdamond state file user input handling.  The
-struct explains what user inputs are for what kdamond commands  Define
-an array of the structs for all existing inputs.
+Update kdamond state file read handling function to use
+damon_sysfs_cmd_names instead of damon_sysfs_cmd_strs.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- mm/damon/sysfs.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ mm/damon/sysfs.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 0049aac6ab974..c76063b703a4a 100644
+index e0ddf4ed5dbb3..5a91a1c3e4389 100644
 --- a/mm/damon/sysfs.c
 +++ b/mm/damon/sysfs.c
-@@ -2254,6 +2254,54 @@ static const char * const damon_sysfs_cmd_strs[] = {
- 	"update_tuned_intervals",
- };
- 
-+struct damon_sysfs_cmd_name {
+@@ -2309,6 +2309,8 @@ static ssize_t state_show(struct kobject *kobj, struct kobj_attribute *attr,
+ 			struct damon_sysfs_kdamond, kobj);
+ 	struct damon_ctx *ctx;
+ 	bool running = false;
 +	enum damon_sysfs_cmd cmd;
-+	char *name;
-+};
++	int i;
+ 
+ 	if (!mutex_trylock(&damon_sysfs_lock))
+ 		return -EBUSY;
+@@ -2319,9 +2321,15 @@ static ssize_t state_show(struct kobject *kobj, struct kobj_attribute *attr,
+ 
+ 	mutex_unlock(&damon_sysfs_lock);
+ 
+-	return sysfs_emit(buf, "%s\n", running ?
+-			damon_sysfs_cmd_strs[DAMON_SYSFS_CMD_ON] :
+-			damon_sysfs_cmd_strs[DAMON_SYSFS_CMD_OFF]);
++	cmd = running ? DAMON_SYSFS_CMD_ON : DAMON_SYSFS_CMD_OFF;
++	for (i = 0; i < ARRAY_SIZE(damon_sysfs_cmd_names); i++) {
++		const struct damon_sysfs_cmd_name *cmd_name;
 +
-+static const struct damon_sysfs_cmd_name damon_sysfs_cmd_names[] = {
-+	{
-+		.cmd = DAMON_SYSFS_CMD_ON,
-+		.name = "on",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_OFF,
-+		.name = "off",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_COMMIT,
-+		.name = "commit",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_COMMIT_SCHEMES_QUOTA_GOALS,
-+		.name = "commit_schemes_quota_goals",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_UPDATE_SCHEMES_STATS,
-+		.name = "update_schemes_stats",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_BYTES,
-+		.name = "update_schemes_tried_bytes",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_UPDATE_SCHEMES_TRIED_REGIONS,
-+		.name = "update_schemes_tried_regions",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_CLEAR_SCHEMES_TRIED_REGIONS,
-+		.name = "clear_schemes_tried_regions",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS,
-+		.name = "update_schemes_effective_quotas",
-+	},
-+	{
-+		.cmd = DAMON_SYSFS_CMD_UPDATE_TUNED_INTERVALS,
-+		.name = "update_tuned_intervals",
-+	},
-+};
-+
- static ssize_t state_show(struct kobject *kobj, struct kobj_attribute *attr,
- 		char *buf)
- {
++		cmd_name = &damon_sysfs_cmd_names[i];
++		if (cmd_name->cmd == cmd)
++			return sysfs_emit(buf, "%s\n", cmd_name->name);
++	}
++	return -EINVAL;
+ }
+ 
+ static int damon_sysfs_set_attrs(struct damon_ctx *ctx,
 -- 
 2.47.3
