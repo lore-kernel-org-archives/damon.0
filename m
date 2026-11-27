@@ -1,55 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.113
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795727564;
-	b=eBsRY37DeiQTdqFtuODUOpVaSoeqHtUv+8PYQm6y1oKQbo60X4oOLphCBIp3VyjT9JDf
-	 PL7e2putMoCTnSAjwPQ6C7DhNO3981MZNWtjmfqFLArr6yUqIXXXPKGB+XMX/gKwzYbrc
-	 1VkUPod8Vrq4pH299I10zder0MKilFduLGdJbG1hhERtEtJbMzGOgZHrdEEIMeAjt2yKS
-	 jcurIKIrHHQfqzKltsd+qCQr8ZtoEWQ/D+RvGVJFy3w6IlIaH+8rxhm2U+wFsS3FgVtfK
-	 U2rLTRt6Y+W99UTRboGSa7zFXvoi/YIwlx1drAncoriOIfXoUIxvGqi1dCcv6s5rzAA==
+	t=1795744112;
+	b=m6A/QqrKjuxYf5uybP1qrKhKRUeRu1ReIJiEvWvn9LC5cMs4jyBOu4IELNYYKXH3hH0v
+	 NjCE64doDWXEe3h5YMrV2qIKoCdvIvC3nelV+NxXbb2q09Ys7YDJ5Coq82GY11tv5/waH
+	 JlG3ap4mG+Z80aQD3MiHbjtl56NmuwVC2SUxw2aN7e9vxbr0M9TEg6B/4BaeOGsPp4IET
+	 Isjaq8/YdTk05eGzIby4ecwY0k+Fzyl1F4novU+y890DZbf01vaUoTW/WrQ/Ojeq6i9Ww
+	 M7lpHS1XiYZkR8wSF6wyhpaS+cJgDSZbAeGd2yu9eNRAq66zpebraKxdOlL8448MjQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795727564;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=A7Mi0+BMQa++VeA9/a+piIjLNDc8IssSZ/lk+BxgSGU=;
-	b=LvVNqda5WwbnEpQ3ny0osLMJI0XcrqTYZLJVJKsUhksEXwJEX3x22Mt3dkioPy11kq3i
-	 VTb3nTLxSFV2FfDT9nhochBSXLU7p9UzyFCbMTYIP+aUV2YodUD3xDJ5TeuJJXfukPbL3
-	 /VI3ODpd1dmU9itP3bcMNBnDuUHThvMR73193sXZuJ6F6CD3pYuqpkzZxmCicFWXTJB9k
-	 P17zEKwlMSBAjMVyICyjlDwrWjMY9ZVZd1NrUPcDbcTL3LUpQ7ZI7eK3paVxB7dEGjhSE
-	 81rTBI9rg0BqnV4yoDAh8Pr4aKDIj+l5gMDyyZ6KVwsKe6AaW829VTrcUPr9N+I/qrQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795744112;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=aTJQdyhxcBsW+3THmacQX4CnuREPTh1k/3kUlckbS3I=;
+	b=rgHzhNzFOUO4PBYOWGTMNx0mijJbbvSo7yJjDuELApa3cu28pT8pSS/O3/Bg6ciy+ozS
+	 /Eo9LPiH/orU2lSzHnl2BpOGoG444vSDU9CmaVya8iOh4ndYOQNhAm3jpawhBjVICU235
+	 QuDkCS64WSAD6+HfyXIetVwH6dkUTcPE3FnDLZq6FTBBz5G4IPZEWTehootY9DKG16sgC
+	 Vaoq3gDl7gOJvTe8oA8+3xREs2aXH5i0MyEGd1TOIyvBWx99CMx6HR3DCbA1Ifx676Dkn
+	 aftUuARtUY4y59YsNxUdGuFy6XeaXrJ/VKF/CH/nJgZCEeVy0Vi1hKgOdVUk9KfNdww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PXR+dlI3;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=GQAyIF3A;
+	arc=none smtp.remote-ip=91.218.175.113
+Received: from mta0.migadu.com (out-113.mta0.migadu.com [91.218.175.113])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B542606A31C
-	for <damon@lists.linux.dev>; Thu, 26 Nov 2026 21:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EBD606A324
+	for <damon@lists.linux.dev>; Fri, 27 Nov 2026 01:48:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 14EBD606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PXR+dlI3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7569D1F00898;
-	Thu, 26 Nov 2026 21:12:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795727563;
-	bh=A7Mi0+BMQa++VeA9/a+piIjLNDc8IssSZ/lk+BxgSGU=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=PXR+dlI3ehi91ZunnIuDZlG1hekIASnQWO7vRXYsRafb5EERMGSgIfrozEndAOPd8
-	 Xvw2gzR/zy9UJ1TcZMRc8uK9EjDBcy4VFiWndH1Y5kmFNnGUzehkVUiJcHzPnwvR3D
-	 pmeJ0S9GbrVKnGTRfHGR4Ve+lAVINaxQ2gD+V6ej7MevxCu6RXGLpN//HOr8wC1kAW
-	 yJ5UuOAWKgyjewPbRk0fGSGSKNsCZ6d3T+Ug5EA0gqcgfQnxUD2unf95P3Bkj5iknL
-	 HCYSWe43O+MATNNv+XaSu45OKo+4V57X9AIg6UutB9GLYXTurC6X6bsXnpakU3lM7J
-	 SygjWxqIX4LyA==
-Message-ID: <sashiko-outbox-236217@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH 0/4] mm/damon/sysfs: refactor state input matching
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261126210619.97634-1-sj@kernel.org>
-References: <20261126210619.97634-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 26 Nov 2026 21:12:43 +0000
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=GQAyIF3A
+X-Envelope-To: damon@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=Q9H1ZM4mU9UmY5HM2f6Dg/Q5kejbxPRjAjPA/4aeIW4=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795744108; v=1; x=1796348908;
+ b=GQAyIF3A+2EButRR4JjY4Bm85mad1mJTAC5S3LZHCgaYBn6qF95pIY9iOIbYAg16WrObnc//
+ 1njH7JPm+cZcEpzTh9ZJhUeqKtAj9cEzgaJlNiLYxECchCkjH5pS6HJYNL74uFQ4EBpJmAqJFTI
+ 0+vPU1w3AO7emKvOqe6Hh4Ps=
+X-Envelope-To: damon@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id b8479f5f7f50d961;
+	Fri, 27 Nov 2026 01:48:27 +0000
+X-Mizu-Trace-ID: b8479f5f7f50d961
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <8ec3f3e2-5d3a-4bed-a571-88f7ba473b00@linux.dev>
+Date: Fri, 27 Nov 2026 09:48:13 +0800
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -58,9 +57,127 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 08/18] mm/mglru: make folio lru referenced times count
+ a generic API
+To: Kairui Song <ryncsn@gmail.com>, "David Hildenbrand (Arm)"
+ <david@kernel.org>
+Cc: kasong@tencent.com, linux-mm@kvack.org,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>,
+ Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>,
+ Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>,
+ Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>,
+ Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>,
+ Shakeel Butt <shakeel.butt@linux.dev>, Lorenzo Stoakes <ljs@kernel.org>,
+ "Liam R. Howlett" <liam@infradead.org>, Barry Song <baohua@kernel.org>,
+ Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>,
+ Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>,
+ Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>,
+ Gregory Price <gourry@gourry.net>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>,
+ SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>,
+ Yu Zhao <yuzhao@google.com>, Vernon Yang <vernon2gm@gmail.com>,
+ Zicheng Wang <wangzicheng@honor.com>, Tal Zussman <tz2294@columbia.edu>,
+ Xiang Liu <liuxiang.277@bytedance.com>, Ehab Ababneh
+ <ehab.ababneh@intel.com>, Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>,
+ Lian Wang <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>,
+ Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>,
+ Maxim Muzafarov <maxmuzaf@gmail.com>, linux-kernel@vger.kernel.org,
+ cgroups@vger.kernel.org, damon@lists.linux.dev, linux-doc@vger.kernel.org,
+ Tianyi Chen <hi@tychen.cc>
+References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
+ <20261124-mglru-fg-v6-8-8ffea39934a6@tencent.com>
+ <e85a2666-9722-420b-9a60-9d4251fc3d4c@kernel.org>
+ <awa30hwg6x82REoo@KASONG-MC4>
+From: Ridong Chen <ridong.chen@linux.dev>
+In-Reply-To: <awa30hwg6x82REoo@KASONG-MC4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Sashiko has reviewed this 4-patch series and found no issues.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261126210619.9763=
-4-1-sj@kernel.org
+
+On 11/25/2026 8:36 PM, Kairui Song wrote:
+>> On 11/23/26 19:53, Kairui Song via B4 Relay wrote:
+>>> From: Kairui Song<kasong@tencent.com>
+>>>
+>>> Pure code shuffle, no behavior change.
+>>>
+>>> Make the folio LRU refs helpers available regardless of CONFIG_LRU_GEN.
+>>> Without MGLRU the extra bits are never set, so they are inert. Move the
+>>> lru_gen_* helpers into the CONFIG_LRU_GEN section.  This prepares for
+>>> unifying the API for checking folio referenced and workingset status.
+>>>
+>>> folio_migrate_lru_refs() now migrates the complete refs count,
+>>> including PG_workingset (bit 1 of the encoding), bitwise identical to
+>>> the direct copy dropped from folio_migrate_flags().
+>>>
+>>> lru_set_refs_flags() skips the nonexistent mask bits when
+>>> LRU_REFS_WIDTH collapses to 0, preserving the two independent flags for
+>>> !CONFIG_LRU_GEN builds.
+>>>
+>>> Tested-by: Zhao Zhenzhuo<zhaozhengzhuo@uniontech.com>
+>>> Reviewed-by: Kunwu Chan<kunwu.chan@gmail.com>
+>>> Tested-by: Andrew Morton<akpm@linux-foundation.org>
+>>> Signed-off-by: Kairui Song<kasong@tencent.com>
+>>> ---
+>>>   include/linux/mm_inline.h | 55 ++++++++++++++++++++++++-----------------------
+>> I'm starting to feel like all of these mglru/reclaim thingies should go into a
+>> dedicated helper.
+> Hi David
+> 
+> I saw your comment on other patches too, about the header mm_inline.h,
+> about ~690 / 860 lines of code in it is for MGLRU / CLRU only. The
+> rest ~200 are for VMA / TLB / MMU.
+> 
+>> Can you do that as a prio cleanup in this series, so we don't have to mess with
+>> mm_inline.h in later patches anymore?
+> Perhaps we can instead move the non LRU helpers in it?
+> These helpers:
+> 
+>    - anon_vma_name_get
+>    - anon_vma_name_put
+>    - anon_vma_name_reuse
+>    - dup_anon_vma_name
+>    - free_anon_vma_name
+>    - anon_vma_name_eq
+>    - pfnmap_track_ctx_release
+>    - init_tlb_flush_pending
+>    - inc_tlb_flush_pending
+>    - dec_tlb_flush_pending
+>    - mm_tlb_flush_pending
+>    - mm_tlb_flush_nested
+>    - copy_pte_marker
+>    - num_pages_contiguous
+> 
+> All other helper in mm_inline.h are for LRU. So we rename mm_inline.h
+> to mm_lru.h?
+
+Moving the VMA/TLB helpers out looks good to me as a first step.
+
+For the LRU part, there is already mm/vmscan.h, added by "mm/vmscan:
+move struct scan_control to a dedicated header" in mm-new. Most LRU
+helpers are only used inside mm/, e.g. lruvec_add_folio(),
+lruvec_add_folio_tail(), lru_gen_add_folio() and the refs encoding
+helpers, so they could move there instead of staying in a public
+header. Barry also suggested moving lruvec_add_folio() and friends
+to mm/vmscan.h in another thread.
+
+A few are used outside mm/ and need to stay public:
+folio_lru_list() in include/trace/events/pagemap.h, and
+folio_test_workingset() in fs/btrfs and fs/erofs after patch 16. So
+maybe keep a small public header for those, and move the rest to
+mm/vmscan.h, or to a separate mm/mglru.h if it gets too large, as
+David mentioned.
+
+I can help with the mm/vmscan.h part if that works for you.
+
+-- 
+Best regards
+Ridong
+
