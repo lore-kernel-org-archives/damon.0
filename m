@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795811485;
-	b=We5QY0q0bHAIfFzVPJ1ADO5Z+XXmwOOiZthuakZ26BKhue+27gIuVvTXV+PypbmBQQ+c
-	 BqbXO0FZIKZdXywR06APgHql33MJZpsryW/XNru7MdkYTeFMWUY6ZZQmK3jbgNTsmuVAx
-	 Y8IBE4GJigzNFnmprX6yEBJ5Nlu2Ydca2USE0RHXDOeXq9p5cyrYxHJYf8OVLOY59tTIo
-	 dsoXrOFo2/NVJ7gdEv+fmol9ShZOPRffBCSa98vAgd6/RfHa+Df2qjIYz7UCaBhwvR1t/
-	 nPaAB21hilngnc9P7THErMcfePFQErUL+duSx3OUatM34OlzpzNMG7RQSWlOXyvapGg==
+	t=1795811986;
+	b=xmGDPeCRBzT8K/eYTBP2VMElIR4kJgDo7qTMuA37GIVDMdceW5xvkAcnhhDqos9K6esj
+	 WiXoARnLH0A7nfxf6AJBmDTcXHZfijQL9LnlV4LrXFMuxDEJ6mbUv6GdjBwNa8tLzRY11
+	 j+HAT/nSGTzoS1Z0OIfk1iAFPeKPwyV4eP4bj5fKYRpll8VhR3QK2rCsHajyWZIXZdMli
+	 ChOB93QQ5+45way8HfuveSwlTQw5lXZS+D0oL+Dyrc0sLyq8OJDa/h5+FsCqy/kgwj1fn
+	 GizdaxXC6hJBFsG9VSZ591Zd28iCH0VH8x+sPwISHW56pckR3zKmD2PfNj3Ghz9eD6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795811485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795811986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VpkQKOzSD2hgUO4KXQobYy7a0rOKz3nk4brF7xC2xAQ=;
-	b=OYRw9istx707HBjd4H+lXgrVbRVMC5UFHqk7Tv83ytyx19au8w2AL6Tpl/YLkXTzmXKr
-	 lihwtkMD58q2j62Bk2x4cy66+LokqzGVJ0+wb+jEpPbrid6Q5yUYVJURVAqJuJaxB+yJB
-	 o8xW8GHze3g+zk3nqVLzPF1BhB5s3u/7Ub723VaG9hYkVgkp3TjGogXcV+Twebt0j6mRw
-	 rBeSvDJgujkS0QlI3jSvM+f39Lw+Gx0GMbDTlFLhMqMg7G//6YQfwc2Dugkpgcm0MCoTt
-	 u1BFL030CSOP5hUKV/TEmrQE94JJ0JVM87dRtS+q5z/knnfG3z3mOmwMMeDZPPFTc8w==
+	bh=vmt/h+98quVGznsKJZsY/ImK2ypo6iML2/iEdcnVAoo=;
+	b=ecFDJvYJWVhJR50Vt0SHBDVo0d3tRLa3SxYWMrgfm/sda28ZKTFfmmTlOi0VRFQES9Wu
+	 Q+YPBiHv8vHcdYJt9Ge0rjFK+nUQlx9vxdllbiotZGQAzGIdZDLKYrpBt/QgmW9wzE9a1
+	 VgrirRvNDuDIjddv8GurTAtfkHElr9kiyK20ty+byL5VF3OWRvZ4AnggJulS+dr2+I71n
+	 ziNJT4hti5Jzplme5/CFyo10h4eAxn62tvpAxr55E5KjFkqZRO9Bx8Bdn8Rni4BmSWnM9
+	 oe63BDdUKLWQvO3Uq/dXm3Vp7RGSUpSZCRlPJtzA2EP5aYzLGcTcvum7DJKEKSrujkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j7dnWdgd;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R7H03EBC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AF7606A31C;
-	Fri, 27 Nov 2026 20:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB12606A31C;
+	Fri, 27 Nov 2026 20:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j7dnWdgd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560001F0089A;
-	Fri, 27 Nov 2026 20:31:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R7H03EBC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB391F000C1;
+	Fri, 27 Nov 2026 20:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795811484;
-	bh=VpkQKOzSD2hgUO4KXQobYy7a0rOKz3nk4brF7xC2xAQ=;
+	s=k20260515; t=1795811985;
+	bh=vmt/h+98quVGznsKJZsY/ImK2ypo6iML2/iEdcnVAoo=;
 	h=From:To:Cc:Subject:Date;
-	b=j7dnWdgd1Bl978lwebtZPQyWWpCjWe4dn2z5kOXLbAhoYwmWar4ixKKTe4jexlLAh
-	 QyQyRF2UZZc92Ec9XmcuYf2aDQeZhDr5HuD7CewMKoqOKep4sRwhzmmHvMd0jcdiKv
-	 JJPXAq+vqNcyB8Z2m7K98KF6swgJH3Fy+jK6eozFp9pWsaFmDWy7bWYWEPXwE7UrPN
-	 sENk991PPEwDFDmRbbdRJOM1LzfJ+JSNDCYShqsbjJ8xbH1cXp8oxzezQ3k6f6nODJ
-	 ZdYSVRcqw7eos0aZbERE8b5icph7/rEHXo/Md+QANDZv7br4Vb2DG9d0M9RzrdCmTq
-	 YIeJ7EYdNUlaw==
+	b=R7H03EBChbVbrwQSrjrNCNuD0itWNBGvyWIwRLe9eT+DnCDFEY66kmlzxqkdjtSj+
+	 PojwkufUvwEy/87dRB+S+r8W1vu1vu1DshpmMhsI30PVaFWFd+pFdJUpxn8nITVj8k
+	 ZoSP12+W1hjKk0IcRhuFZn4jEPP/WsW9J374RCTuLf8d/YgjzP3du7rcp5fzk5dEPu
+	 j4YOEoLqXyBgLHIZmBnDtwHKmTDcTcVzztV/cKd2xA2peEH+rivsdZtgVUdm9GW2B4
+	 FILvjCStLES3qEmtjUTAXr2E1nx+pN3WK14IZXvnKuf8T/Q4uZIPtkU0qSrDRhoeJV
+	 Orm1VsZvAYJlg==
 From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
+To: 
 Cc: SJ Park <sj@kernel.org>,
 	stable@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
 	linux-mm@kvack.org
-Subject: [PATCH mm-hotfixes-unstable] mm/damon/core: cleanup damos->walk_completed in damos_walk_cancel()
-Date: Fri, 27 Nov 2026 12:31:15 -0800
-Message-ID: <20261127203116.92895-1-sj@kernel.org>
+Subject: [RFC PATCH mm-hotfixes-unstable] mm/damon/core: do not update stat for core filter rejecting region
+Date: Fri, 27 Nov 2026 12:39:37 -0800
+Message-ID: <20261127203938.94339-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
@@ -60,72 +61,51 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-DAMOS walk could be unexpectedly only partially performed.  It can
-happen when there are multiple schemes and the walk is requested after
-the previous walk is canceled.
+damos_apply_scheme() update stats for regions that were unable to apply
+the scheme due to the quota.  Those are counted as tried and failed.  It
+doesn't update stats for regions that were rejected by DAMOS core
+filters.  Those are counted as not tried at all.
 
-The expectation of DAMOS walk for a setup that has multiple schemes is
-that it will walk for one snapshot for all schemes.  To know if the walk
-for the one snapshot of a given scheme is done, each damos struct has
-the walk_completed field.  It is set when the walk for the given scheme
-is completed.  The walk skips schemes having the field set.  It is reset
-for all schemes when all the schemes get it set.
+However, the DAMOS quota-driven failure is handled before DAMOS core
+filters.  Regions that would be rejected by the core filter can, hence,
+be accounted as tried and failed.  As a result, users could show
+confusing stat changes.
 
-damos_walk_cancel() cancels all existing walks.  But it does not reset
-the walk_completed field.  damos_walk_cancel() can be called at any
-kdamond loop iteration.  For example, due to DAMON context pause or
-DAMOS watermarks-caused deactivation.  It means that the function can be
-called while only some of the schemes completed their walks.  And users
-could request another walk after the canceled walk.  In the case,
-because some of the schemes still have walk_completed fields set, the
-walk for them is skipped.  As a result, DAMOS walk based user operations
-such as update_schemes_tried_bytes kdamond command could show incomplete
-output.
+Fix by handling core filters before quotas.
 
-Fix by unsetting the fields of all schemes in damos_walk_cancel().
+The user impact is not critical.  No crash or leak happens.  Only the
+DAMOS stat could occasionally move in an unexpected way.
 
-The user impact is not critical.  No crash or leak happens.  Only DAMOS
-based monitoring results retrieval could work unexpectedly, under the
-certain setup and the race.  Given the best effort nature of DAMON, such
-occasional monitoring quality degradation would be not critical.
-
-The issue has found from the Sashiko bug database.
-
-Closes: https://sashiko.dev/#/bug/linux-228a4c52-0545-4c1f-90ce-41114d8272e9
-Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
-Cc: <stable@vger.kernel.org> # 6.14.x
+Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
+Cc: <stable@vger.kernel.org> # 6.6.x
+closes: https://sashiko.dev/#/bug/linux-9c51890e-a25c-4534-afab-ef33f22a9557
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
-Changes from RFC
-- RFC: https://lore.kernel.org/20261122224054.79767-1-sj@kernel.org
-- Rebase to the latest mm-new.
-- Drop RFC tag.
-
- mm/damon/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ mm/damon/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 0e6b361f97ea..a6aac382f296 100644
+index 0e6b361f97ea..e0ea93de100d 100644
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -2702,6 +2702,7 @@ static void damos_walk_complete(struct damon_ctx *ctx, struct damos *s)
- static void damos_walk_cancel(struct damon_ctx *ctx)
- {
- 	struct damos_walk_control *control;
-+	struct damos *s;
+@@ -2785,6 +2785,8 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 	}
  
- 	mutex_lock(&ctx->walk_control_lock);
- 	control = ctx->walk_control;
-@@ -2709,6 +2710,9 @@ static void damos_walk_cancel(struct damon_ctx *ctx)
- 
- 	if (!control)
- 		return;
-+
-+	damon_for_each_scheme(s, ctx)
-+		s->walk_completed = false;
- 	control->canceled = true;
- 	complete(&control->completion);
- 	mutex_lock(&ctx->walk_control_lock);
+ 	if (c->ops.apply_scheme) {
++		if (damos_core_filter_out(c, t, r, s))
++			return;
+ 		if (damos_quota_is_set(quota) &&
+ 				quota->charged_sz + sz > quota->esz) {
+ 			sz = ALIGN_DOWN(quota->esz - quota->charged_sz,
+@@ -2794,8 +2796,6 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
+ 			if (damon_split_region_at(t, r, sz))
+ 				goto update_stat;
+ 		}
+-		if (damos_core_filter_out(c, t, r, s))
+-			return;
+ 		sz = damon_sz_region(r);
+ 		ktime_get_coarse_ts64(&begin);
+ 		trace_damos_before_apply(cidx, sidx, tidx, r, nr_accesses,
 
 base-commit: daba53bdc1a54c453c2f4ced54a1cd52416c3f87
 -- 
