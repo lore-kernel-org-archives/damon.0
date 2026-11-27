@@ -1,100 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.45
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795808514;
-	b=tGRJjpFYJoEz8Bf5GYRHMMQfabbD37M47wNfPAPOBZKXDXP97PBAF1sF76JIq/f3eoDD
-	 E8wLfw62OHO5oMVN3AL4jvsUV+mP1qGmTJ75qOfwDdwetmwNfGeJ6M0jgVn3rPWFLBQl/
-	 N8wMXVTzU3tncNOh84VrB6lfJytYfdY9uzu2fx+BnqDtK+t7OzmpAUu1IA6qCQ/QRIDjF
-	 So20Wx89mILbNmvx/F44WDzxC6F6I+Qu2cxoBwBnUuKBiy96W3AOMn/olBJdNdS9b3CQI
-	 XR8J/tGoQ0jyrDmfmRBVAoPtdgbF7xk2sMl3lvVMmUhXAz20M4ibwewE57Q2oHxymmA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795808514;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=Hh8eaml/yBFyozdjvUyyf0twA7kkmRnJygaFP+0NC2E=;
-	b=gwi92HMJkUTFoyhFFh5+vvwvxFcHS4UzyRvHJZ+/JuWmfMA8hAb/wxKYyTFqGr0YjqMj
-	 03zXLKRHrvsvcli4n/EVKibLzZXksQ/4vLv0PEux4YTkA00Xdanza7+yUhWxMXhZkcHHL
-	 TPsvGX40YLDIj2zY+uBQQIUP+kY1PaUUTRJnuBOJeUOZwkCpjwhwXN0XItFq1+FGPrcPO
-	 j+tr8GR8KYBBoxUQyYGpwWX0qVbV6ZLHW1y448+TyJh204gA8u5hoeLWgA8iAJ6jgmoKS
-	 izAQXefuWwokORyBKopkrzsWHCP4kvdEh2Itdcw829yP/VTHqA10va68OOKqcfKmOrw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=K1n9MMHW;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.45
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795811485;
+	b=We5QY0q0bHAIfFzVPJ1ADO5Z+XXmwOOiZthuakZ26BKhue+27gIuVvTXV+PypbmBQQ+c
+	 BqbXO0FZIKZdXywR06APgHql33MJZpsryW/XNru7MdkYTeFMWUY6ZZQmK3jbgNTsmuVAx
+	 Y8IBE4GJigzNFnmprX6yEBJ5Nlu2Ydca2USE0RHXDOeXq9p5cyrYxHJYf8OVLOY59tTIo
+	 dsoXrOFo2/NVJ7gdEv+fmol9ShZOPRffBCSa98vAgd6/RfHa+Df2qjIYz7UCaBhwvR1t/
+	 nPaAB21hilngnc9P7THErMcfePFQErUL+duSx3OUatM34OlzpzNMG7RQSWlOXyvapGg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795811485;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=VpkQKOzSD2hgUO4KXQobYy7a0rOKz3nk4brF7xC2xAQ=;
+	b=OYRw9istx707HBjd4H+lXgrVbRVMC5UFHqk7Tv83ytyx19au8w2AL6Tpl/YLkXTzmXKr
+	 lihwtkMD58q2j62Bk2x4cy66+LokqzGVJ0+wb+jEpPbrid6Q5yUYVJURVAqJuJaxB+yJB
+	 o8xW8GHze3g+zk3nqVLzPF1BhB5s3u/7Ub723VaG9hYkVgkp3TjGogXcV+Twebt0j6mRw
+	 rBeSvDJgujkS0QlI3jSvM+f39Lw+Gx0GMbDTlFLhMqMg7G//6YQfwc2Dugkpgcm0MCoTt
+	 u1BFL030CSOP5hUKV/TEmrQE94JJ0JVM87dRtS+q5z/knnfG3z3mOmwMMeDZPPFTc8w==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j7dnWdgd;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC0A606A31E
-	for <damon@lists.linux.dev>; Fri, 27 Nov 2026 19:41:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2FC0A606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AF7606A31C;
+	Fri, 27 Nov 2026 20:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=K1n9MMHW
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c51bf011392so357420966b.3
-        for <damon@lists.linux.dev>; Fri, 27 Nov 2026 11:41:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795808512; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FF9oVdkCl3hnUdiVHtrqrUexRYgxGGEzPESXYqB5lvTaelTtBa9nIgWRKvOhV3h+Y1
-         N4fjA3dBJdpdR3PiEf9hLlxTWWq0O85ZuSngfmptzqaZ/ctxw6ADkmAAWSOsM0qY5aqN
-         R533PbXXlOAz/3xxMKjQ7XeuFhUnFWZD7CroUQ50CJeq5ShzxoSHBi6uhQiLBdZzr5q1
-         5NOqQ6Dfq/cA77mAvPfaVA/7BpOuoRUdZ6RlLNWC1dDyIUbygmMKXmPPTQK1uuubOTBf
-         oNtsYp4Ox4dRLqOrYkWJcgBUWxc1Z1zT2MT4u/l8w2vLMTfLEsJmqZ1N1fi+ucjr/8Wd
-         jj6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Hh8eaml/yBFyozdjvUyyf0twA7kkmRnJygaFP+0NC2E=;
-        fh=N5DZh4FwS4Ae+JN9qwjJoohFxt17t84Tpaxcu67Pbgs=;
-        b=UI7fEQkpHhuN0ipObiweiMWybbUyP/AAxZB/a2gMMI5g/f2tdDcI2DTj7M4ZHytFuf
-         ezatrcowl9Q1RQzGv10nEnJImE76iwQICkk3RJgZ1zFRavApXgyCXVhoovWkwvTbB7ro
-         XwrUqDO0eOZklBojL7Cl7T1usp8M8/aoTzVTjjsjUdLnXMutfqJLzV/pSrTOdaQSuOa7
-         yK11kXt6IEXo11QBLnazeiVMesS9JfHcOPruCJ8UP13PmQHLVlgldZVqftj5uRiptkb6
-         7wTMzQqR5wexGrfGDZCMPrpZSTWm35Vn/r6/38HcucW7FaKt5NHa+489Uay8MId9cFIU
-         uEyQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795808512; x=1796413312; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Hh8eaml/yBFyozdjvUyyf0twA7kkmRnJygaFP+0NC2E=;
-        b=K1n9MMHW9+k/eSTK8C7glZafmU+tDMYFYvesvIIdVkmLVtwvgrJvsX+Hld9GOKVgKe
-         lXqtU7VFTk7tPmw2KMlV3GEGmbeO+nIrrAmn/MQZet9ttZjK/r9a5dhN6gtwuJJiP5IY
-         J1is3+gkmqrOTrrvYrHaPQ/4ENQNgCQdsITe644JlneQ05IaQO9NJlbLU1J3GzBaJk10
-         0AOXClXS5KVJFIoX2V/DDalGlCZ2h7el1kXkrXBpUPNu9ylIcD17/jRmRNmU2g6ESxlk
-         71Zz8WHfPTN5sodPIwkisgrucH2tIfw7OimeMS9Zn5bfvQaA3pejcZzcIFWh3WoE/dxa
-         5jKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795808512; x=1796413312;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Hh8eaml/yBFyozdjvUyyf0twA7kkmRnJygaFP+0NC2E=;
-        b=lTCGmjxAU4z+zzU6vrKOkJ4fNRiomx1FhQohL3MD/EsSi8NPkY4NMED6RUMESkDuLn
-         tbD9P+9Bb2fBCpXUMclk1Fay9IPqP8JXyf6UfrQmkUSD4HzRGDnED2+6K9vyZ+GJ1ZgQ
-         CLkIV+nI5kdneEseNL6GbMgRdWed4H/Djvo8kARHyq0bKY4EYIeo0wP1twMWrls5OGJ6
-         53f6XhzW2tA+HverkFvz3IskrNNY3s1c9NPLJ5abQxRniOvubC7atJBI4avrO73OMb4Q
-         +66vQGIaxg0Yk+2VYaicLJXfUk8FPYWgzHnOAv4C08+ZfkHrZmnwG7f1uQD4xcurOTx5
-         1aEA==
-X-Forwarded-Encrypted: i=1; AL+hErEL0uh65GXR9UlKxsNZV1wivPj4vT2P0Yumw7z51Roj/EkGMe86gPspk66Ftv7NEbp5YDUbZA==@lists.linux.dev
-X-Gm-Message-State: APuU4Z/17G+91DFse3HRu4ReTgNS0G9jjZdVyAC6K0Grbpr4O7iURMPu
-	6I/Dognke11KiThNt5w9ixTDX5KOfrraDpNeBCZwC3WHfsWMt1GibSni2xmaHe+g4gQJewaClBQ
-	amKa5C423L8DKbjK1m5MpHHqmVQirLSo=
-X-Gm-Gg: AZFdTZcmI5cXs46C6FdtzYThpFS9cFNRyB9btrjEoSwborGlaOp9Yn2tNAZfCQPqWMd
-	tUtyQPgB2DhRenRYz36mDPdv6XD+xgBJBW2C/9+m6ZDM6q3Pho6fOinJFrhrw6nrYqdKBaixTFE
-	M1lSp8t2Z5jFFJZqf13hZNnh8nESRP3WBa0jogU9CsznU/FhObOJqmZkRrEe5jSTU2q5FG+WYTB
-	i7HamPrIn6nafZksz8UusQkqEpurRjPx3RdKO5d5lUMmZXFVpBnS19fjkGy13t8Tk0QLBObjEbs
-	H7ir1at0g86Uka3qLZudgBhUWlIdrWsrTf9dx7kNsKKvoeSWKkDFnuVoajGPZ0q6pbCgVgCVokb
-	8U2T/qaUJH4/h7He+CnbqJt38T5mBWicRyG3YaKtRF2XjEnZ7TT+pONgRuVxtTqy/m/bFog==
-X-Received: by 2002:a17:907:7b9b:b0:c4d:3208:5781 with SMTP id
- a640c23a62f3a-c513a4b1c1fmr2320437166b.1.1795808512384; Fri, 27 Nov 2026
- 11:41:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j7dnWdgd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560001F0089A;
+	Fri, 27 Nov 2026 20:31:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795811484;
+	bh=VpkQKOzSD2hgUO4KXQobYy7a0rOKz3nk4brF7xC2xAQ=;
+	h=From:To:Cc:Subject:Date;
+	b=j7dnWdgd1Bl978lwebtZPQyWWpCjWe4dn2z5kOXLbAhoYwmWar4ixKKTe4jexlLAh
+	 QyQyRF2UZZc92Ec9XmcuYf2aDQeZhDr5HuD7CewMKoqOKep4sRwhzmmHvMd0jcdiKv
+	 JJPXAq+vqNcyB8Z2m7K98KF6swgJH3Fy+jK6eozFp9pWsaFmDWy7bWYWEPXwE7UrPN
+	 sENk991PPEwDFDmRbbdRJOM1LzfJ+JSNDCYShqsbjJ8xbH1cXp8oxzezQ3k6f6nODJ
+	 ZdYSVRcqw7eos0aZbERE8b5icph7/rEHXo/Md+QANDZv7br4Vb2DG9d0M9RzrdCmTq
+	 YIeJ7EYdNUlaw==
+From: SJ Park <sj@kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+Cc: SJ Park <sj@kernel.org>,
+	stable@vger.kernel.org,
+	damon@lists.linux.dev,
+	linux-mm@kvack.org
+Subject: [PATCH mm-hotfixes-unstable] mm/damon/core: cleanup damos->walk_completed in damos_walk_cancel()
+Date: Fri, 27 Nov 2026 12:31:15 -0800
+Message-ID: <20261127203116.92895-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -104,67 +58,75 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261124-mglru-fg-v6-0-8ffea39934a6@tencent.com>
- <20261124-mglru-fg-v6-8-8ffea39934a6@tencent.com> <e85a2666-9722-420b-9a60-9d4251fc3d4c@kernel.org>
- <awa30hwg6x82REoo@KASONG-MC4> <8ec3f3e2-5d3a-4bed-a571-88f7ba473b00@linux.dev>
- <CAMgjq7Ayu9H85wurRAUdmXEPWYi9BdLJW13BhK+LMYoBX_7fuw@mail.gmail.com>
- <CAMgjq7DwCNbke2G25Bxfj3bi5aRp3_qkGeYmCTGVGv+Y5XzKTw@mail.gmail.com> <60e890bf-d5c4-44db-9f90-ae7970b5de32@linux.dev>
-In-Reply-To: <60e890bf-d5c4-44db-9f90-ae7970b5de32@linux.dev>
-From: Kairui Song <ryncsn@gmail.com>
-Date: Sat, 28 Nov 2026 03:41:16 +0800
-X-Gm-Features: Aa3M54q0GwKlgENV-fDrHnc1e8ZIFsqPaG2vdLKK-3H09a0TbqTlTAM4SzLkpj0
-Message-ID: <CAMgjq7B9r17gQrOfxffRBiTSepitThjLAUbnraFFjze35t2P6w@mail.gmail.com>
-Subject: Re: [PATCH v6 08/18] mm/mglru: make folio lru referenced times count
- a generic API
-To: "David Hildenbrand (Arm)" <david@kernel.org>, Ridong Chen <ridong.chen@linux.dev>
-Cc: linux-mm@kvack.org, Andrew Morton <akpm@linux-foundation.org>, 
-	Johannes Weiner <hannes@cmpxchg.org>, Muchun Song <muchun.song@linux.dev>, 
-	Qi Zheng <qi.zheng@linux.dev>, Ying Huang <ying.huang@linux.alibaba.com>, 
-	Chris Li <chrisl@kernel.org>, Baoquan He <baoquan.he@linux.dev>, 
-	Nico Pache <nico.pache@linux.dev>, Usama Arif <usama.arif@linux.dev>, 
-	Michal Hocko <mhocko@kernel.org>, Roman Gushchin <roman.gushchin@linux.dev>, 
-	Shakeel Butt <shakeel.butt@linux.dev>, Lorenzo Stoakes <ljs@kernel.org>, 
-	"Liam R. Howlett" <liam@infradead.org>, Barry Song <baohua@kernel.org>, 
-	Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>, 
-	Wei Xu <weixugc@google.com>, Vlastimil Babka <vbabka@kernel.org>, 
-	Suren Baghdasaryan <surenb@google.com>, Nhat Pham <nphamcs@gmail.com>, 
-	Youngjun Park <youngjun.park@lge.com>, Zi Yan <ziy@nvidia.com>, 
-	Gregory Price <gourry@gourry.net>, "Matthew Wilcox (Oracle)" <willy@infradead.org>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Ryan Roberts <ryan.roberts@arm.com>, 
-	Dev Jain <dev.jain@arm.com>, Lance Yang <lance.yang@linux.dev>, Hugh Dickins <hughd@google.com>, 
-	SJ Park <sj@kernel.org>, David Rientjes <rientjes@google.com>, Yu Zhao <yuzhao@google.com>, 
-	Vernon Yang <vernon2gm@gmail.com>, Zicheng Wang <wangzicheng@honor.com>, 
-	Tal Zussman <tz2294@columbia.edu>, Xiang Liu <liuxiang.277@bytedance.com>, 
-	Ehab Ababneh <ehab.ababneh@intel.com>, Zhao Zhenzhuo <zhaozhengzhuo@uniontech.com>, 
-	Lian Wang <lianux.mm@gmail.com>, Joanne Koong <joannelkoong@gmail.com>, 
-	Kunwu Chan <kunwu.chan@gmail.com>, Hui Zhu <hui.zhu@linux.dev>, 
-	Maxim Muzafarov <maxmuzaf@gmail.com>, linux-kernel@vger.kernel.org, cgroups@vger.kernel.org, 
-	damon@lists.linux.dev, linux-doc@vger.kernel.org, Tianyi Chen <hi@tychen.cc>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 27, 2026 at 11:33=E2=80=AFAM Ridong Chen <ridong.chen@linux.dev=
-> wrote:
-> Thinking about it more, the header move is not urgent, while this
-> series has been iterated for a long time and fixes real problems, e.g.
-> the swappiness 200 regression you mentioned. Making it depend on a
-> code shuffle would only delay it.
+DAMOS walk could be unexpectedly only partially performed.  It can
+happen when there are multiple schemes and the walk is requested after
+the previous walk is canceled.
 
-I also prefer to land the FG series first. It's not just a feature &
-optimization, it covers several "bug"-level issues for MGLRU and fixes
-regressions, which are hard to solve without a rework like this.
+The expectation of DAMOS walk for a setup that has multiple schemes is
+that it will walk for one snapshot for all schemes.  To know if the walk
+for the one snapshot of a given scheme is done, each damos struct has
+the walk_completed field.  It is set when the walk for the given scheme
+is completed.  The walk skips schemes having the field set.  It is reset
+for all schemes when all the schemes get it set.
 
-> So if David doesn't object, I would suggest landing MGLRU-FG first,
-> and doing the mm_inline.h split as a follow-up on top of it. That also
-> avoids rebasing this large series onto a moving header. I am happy to
-> work on the follow-up then, keeping the folio refs helpers in a public
-> header for the fs users as you said.
+damos_walk_cancel() cancels all existing walks.  But it does not reset
+the walk_completed field.  damos_walk_cancel() can be called at any
+kdamond loop iteration.  For example, due to DAMON context pause or
+DAMOS watermarks-caused deactivation.  It means that the function can be
+called while only some of the schemes completed their walks.  And users
+could request another walk after the canceled walk.  In the case,
+because some of the schemes still have walk_completed fields set, the
+walk for them is skipped.  As a result, DAMOS walk based user operations
+such as update_schemes_tried_bytes kdamond command could show incomplete
+output.
 
-Let's see how others think about this :)
+Fix by unsetting the fields of all schemes in damos_walk_cancel().
 
-> David, would that work for you?
->
-> --
-> Best regards
-> Ridong
->
+The user impact is not critical.  No crash or leak happens.  Only DAMOS
+based monitoring results retrieval could work unexpectedly, under the
+certain setup and the race.  Given the best effort nature of DAMON, such
+occasional monitoring quality degradation would be not critical.
+
+The issue has found from the Sashiko bug database.
+
+Closes: https://sashiko.dev/#/bug/linux-228a4c52-0545-4c1f-90ce-41114d8272e9
+Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
+Cc: <stable@vger.kernel.org> # 6.14.x
+Signed-off-by: SJ Park <sj@kernel.org>
+---
+Changes from RFC
+- RFC: https://lore.kernel.org/20261122224054.79767-1-sj@kernel.org
+- Rebase to the latest mm-new.
+- Drop RFC tag.
+
+ mm/damon/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 0e6b361f97ea..a6aac382f296 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2702,6 +2702,7 @@ static void damos_walk_complete(struct damon_ctx *ctx, struct damos *s)
+ static void damos_walk_cancel(struct damon_ctx *ctx)
+ {
+ 	struct damos_walk_control *control;
++	struct damos *s;
+ 
+ 	mutex_lock(&ctx->walk_control_lock);
+ 	control = ctx->walk_control;
+@@ -2709,6 +2710,9 @@ static void damos_walk_cancel(struct damon_ctx *ctx)
+ 
+ 	if (!control)
+ 		return;
++
++	damon_for_each_scheme(s, ctx)
++		s->walk_completed = false;
+ 	control->canceled = true;
+ 	complete(&control->completion);
+ 	mutex_lock(&ctx->walk_control_lock);
+
+base-commit: daba53bdc1a54c453c2f4ced54a1cd52416c3f87
+-- 
+2.47.3
