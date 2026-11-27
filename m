@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795818449;
-	b=Dr9+rGOQaTEGiHzGufm6nOGKnY9h97qPtebMgoad6uk428J1W5fMPTpGVoOc1mC4AAKe
-	 UT02GNxEVlm4Ccvu+DcPyHkWpa2yf1oZ/rInt10SxYGLGXtwwojPwk8y1V14cDOE/W3m6
-	 hqOFP1HsnF/1331fGRLu2FHT9y0WiRtcMm8hhwwHSX4kNzrI8+JDFYhwsOGWwPrdnBIPi
-	 8cFvDF7NEkfADxnFGtlut+H/4Lly7Tj4PrQK8oMi38mCO2MM7yn32jP+bablp7Dlv2tc6
-	 7ofuwwBof1FjYZYWz405KKnz957VzaxGnkaARC1uAwxZ0dPSJLPZ4x2O9kR3N58MOeg==
+	b=Locdl4GEo9dNyIgaz89Lb9XQ5E6B87lzB5Df5DHzSQvQHTxHQ13YqEJT6fq0qRFnk/I7
+	 dXHaCO0GzYR4xZhpEkAwCKqJYc3mXhvAWeg2bgqdb9t3IjXATICce/8SzDdO9a838acGA
+	 U+WNzEE2tz5gkgZLeW0lrfbvqwCzUJQtTRVGU2bWBTZ3/abY5rgJTNw/xaMbQrTbUU14m
+	 cL02OsUCn+hBbr0rj9qvc2TMnN2ej4S+dYRPLqJrsHvZzyxdLs2prD0PtBWQ1i/5dDK/9
+	 XxX9h6uZ2N10OLh5+d8aotCVvt8uKgFQOxSueJUJIIQV67FRju9HEzZt/4kPG9U9rEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795818449;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=o7wpSeL6G0QpGcEme2lV9PTUvLXdPq2HjfhafRLkksA=;
-	b=HkSpKbLQM8X8oeFh93VymAGk/c5Fa4ldr/U0Q1oNswxh6i5ruFLa88uS1qnGYA+c5qZY
-	 0RUG4oioty0250f/Yf/v37TXXLtrinz0aWMsfSe01GlA0lblJDbBVUy0N+U+V26GOOzao
-	 Mu6RIthjYJeR642vsLNAt1r6fueBfiazXHYJXLCOJnlUKK+Gne0o8wvs/cQ9pP0PvBUPJ
-	 95cZpRCN3iFf6SaphXrp8ENv64Tgj7+j2t2oVXxhbTv5fZWOJcJ5wXNPrU0ZzATT8OvCF
-	 69YlCcTl6ASNG3wS+JGw97T+SErjrOWwSVIdfPF2hK7Q+0cVG8x2jSCAY7CXJLOMyZQ==
+	bh=9U9C62lmOkyzoqlQRfq1910+hM/DPzph/zq/GHK+ls0=;
+	b=eafMCb6SsFG7EHIoOOwDtxPHjReS3Pij498LGOrzlYpPOkU+Die4WG/Us5iJ4++7Wc/I
+	 aLqk12sIqzMWbwhox/fgeMPpMzp+k4wXQ6krEKajsoJpvzDq5KTXEdCjF/7qqmfUORJuo
+	 xAumbq36XUrdkWKKcoG43q3Ns6WkbybLZhHv9vk7CzG9F9o6QhjZidnvnuwacbJsTySXD
+	 YSvZV1WRPVt8sHkyP9Pr5nOovZANoqRZpdzi/B1KZ8Ojy+lf3rkXQEVPkoCJlgXu3BmlE
+	 SvGDYkPARC48DHoljOs+HPeXRY/cM+43zwKSvNUNTiMJ6XYKk18GqyiJ+M4sVHIn5Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=N3XW1xeQ;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Q7pQveaP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E56606A31C;
-	Fri, 27 Nov 2026 22:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AA2606A31E
+	for <damon@lists.linux.dev>; Fri, 27 Nov 2026 22:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=N3XW1xeQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC3C1F000C1;
-	Fri, 27 Nov 2026 22:27:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Q7pQveaP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4600C1F0089C;
+	Fri, 27 Nov 2026 22:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1795818449;
-	bh=o7wpSeL6G0QpGcEme2lV9PTUvLXdPq2HjfhafRLkksA=;
+	bh=9U9C62lmOkyzoqlQRfq1910+hM/DPzph/zq/GHK+ls0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3XW1xeQJIu91zH9xJxXcHbsY8f6yJtA6RKUhKQB05gVInyO4c5F54h80kdIok9SQ
-	 8OOxnFMh1zByumc3kY3O8XkLSf1VgacLKYUQZKFBtZB6JdlLlB7XOwBjXdodlKfTfe
-	 4ddESz76Z9BEe2lGtMapwNXJKyWcqmM6m9WQbefre5kdM217u/NjM4yl/Y9nla7Fjx
-	 LdRMJECxCLKu5MR0+SzHTNgoIwuGC+sZl/uX5nM22PNHvcYrzzWns5oGYb+QeYIxu5
-	 dkmcF7DderJW99K/vNRGvbgZRswr4LgjE4i9w1xWHNjd5xvzvMxBHUexXPCBHYoeDe
-	 vSRwr9ciJ98mg==
+	b=Q7pQveaPaBSfL9S6J+8BQmtrAmR86ZMcuZRcKjFcpv+QfeRUECO/QBJAQAFiu+Xz6
+	 mLoNevfWWOOGHOt+pdreZxdi9bxO8U4BjBYnppQySDVp+MEFpZzzw+FJWERFb+VD8w
+	 QRocZFnv3pWs3nwavMpzKvMDZK+spex291P6FDTKUr1VSXtz6KUZcnOtxBcWcTVpOS
+	 PVGJM4BLTwWsgE7p822OGF0zqugfSc6M7G2pynZIUHucdgp7KWADcH9plMLk5ow7JE
+	 A+pfzaO0f0Cruy4abZ72JySf+BVKwxVLbE/jOtMJs7x6PbhRDBno7Ve/n22Ntjwtcg
+	 xneTEDjx1MhpA==
 From: SJ Park <sj@kernel.org>
 To: 
 Cc: SJ Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	damon@lists.linux.dev,
-	linux-kselftest@vger.kernel.org,
 	linux-mm@kvack.org
-Subject: [RFC PATCH v3 6/7] selftests/damon: remove unused imports of sys and time modules
-Date: Fri, 27 Nov 2026 14:27:17 -0800
-Message-ID: <20261127222719.105510-7-sj@kernel.org>
+Subject: [RFC PATCH v3 7/7] mm/damon: update file intro comments to call DAMON just DAMON
+Date: Fri, 27 Nov 2026 14:27:18 -0800
+Message-ID: <20261127222719.105510-8-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261127222719.105510-1-sj@kernel.org>
 References: <20261127222719.105510-1-sj@kernel.org>
@@ -63,41 +62,105 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-sysfs_no_op_commit_break.py imports 'sys' module but never uses it.
-sysfs_update_schemes_tried_regions_hang imports 'time' module but never
-uses it.  Remove the unnecessary imports.
-
-The issue is found using flake8.
+DAMON source file intro comments call DAMON as Data Access Monitor.
+Since the introduction of DAMOS, DAMON has been somewhat more than a
+Data Access Monitor.  Update the comments to call it just DAMON.  Also
+some of the comments are not appropriate.  Update those together.
 
 Signed-off-by: SJ Park <sj@kernel.org>
 ---
- tools/testing/selftests/damon/sysfs_no_op_commit_break.py        | 1 -
- .../selftests/damon/sysfs_update_schemes_tried_regions_hang.py   | 1 -
- 2 files changed, 2 deletions(-)
+ mm/damon/core.c              | 2 +-
+ mm/damon/ops-common.c        | 2 +-
+ mm/damon/ops-common.h        | 2 +-
+ mm/damon/tests/core-kunit.h  | 2 +-
+ mm/damon/tests/paddr-kunit.h | 2 +-
+ mm/damon/tests/sysfs-kunit.h | 2 +-
+ mm/damon/tests/vaddr-kunit.h | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
-index 81774ddc55ac..5664f75186ba 100755
---- a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
-+++ b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
-@@ -4,7 +4,6 @@
- import json
- import os
- import subprocess
--import sys
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index b791a2621bd6..fa32ebf7ad09 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+- * Data Access Monitor
++ * DAMON Core
+  */
  
- import _damon_sysfs
+ #define pr_fmt(fmt) "damon: " fmt
+diff --git a/mm/damon/ops-common.c b/mm/damon/ops-common.c
+index 2216a0023154..38720794c9fc 100644
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+- * Common Code for Data Access Monitoring
++ * Common Code for DAMON Operation Set
+  */
  
-diff --git a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
-index 625761c243b5..326a14f04053 100755
---- a/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
-+++ b/tools/testing/selftests/damon/sysfs_update_schemes_tried_regions_hang.py
-@@ -4,7 +4,6 @@
- import os
- import subprocess
- import sys
--import time
+ #include <linux/hugetlb.h>
+diff --git a/mm/damon/ops-common.h b/mm/damon/ops-common.h
+index ee2705825100..aabcf09ff501 100644
+--- a/mm/damon/ops-common.h
++++ b/mm/damon/ops-common.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+- * Common Code for Data Access Monitoring
++ * Common Code for DAMON Operation Set
+  */
  
- sys.path.append(os.path.dirname(os.path.abspath(__file__)))
- import _damon_sysfs
+ #include <linux/damon.h>
+diff --git a/mm/damon/tests/core-kunit.h b/mm/damon/tests/core-kunit.h
+index 4446574a3565..73c3bd6a9612 100644
+--- a/mm/damon/tests/core-kunit.h
++++ b/mm/damon/tests/core-kunit.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+- * Data Access Monitor Unit Tests
++ * DAMON Core Unit Tests
+  */
+ 
+ #ifdef CONFIG_DAMON_KUNIT_TEST
+diff --git a/mm/damon/tests/paddr-kunit.h b/mm/damon/tests/paddr-kunit.h
+index 2b11f0e67a12..547e1b3c989f 100644
+--- a/mm/damon/tests/paddr-kunit.h
++++ b/mm/damon/tests/paddr-kunit.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+- * Data Access Monitor Unit Tests
++ * DAMON Physical Address Space Operation Set Unit Tests
+  */
+ 
+ #ifdef CONFIG_DAMON_PADDR_KUNIT_TEST
+diff --git a/mm/damon/tests/sysfs-kunit.h b/mm/damon/tests/sysfs-kunit.h
+index 16373ba751db..c2bba2e01301 100644
+--- a/mm/damon/tests/sysfs-kunit.h
++++ b/mm/damon/tests/sysfs-kunit.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+- * Data Access Monitor Unit Tests
++ * DAMON sysfs Interface Unit Tests
+  */
+ 
+ #ifdef CONFIG_DAMON_SYSFS_KUNIT_TEST
+diff --git a/mm/damon/tests/vaddr-kunit.h b/mm/damon/tests/vaddr-kunit.h
+index d61b503e319a..979e459327bf 100644
+--- a/mm/damon/tests/vaddr-kunit.h
++++ b/mm/damon/tests/vaddr-kunit.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+- * Data Access Monitor Unit Tests
++ * DAMON Virtual Address Space Operation Set Unit Tests
+  */
+ 
+ #ifdef CONFIG_DAMON_VADDR_KUNIT_TEST
 -- 
 2.47.3
