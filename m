@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795812067;
-	b=0hm2RyOIr+ub4hfM08Fa+rJPuMJqUeQtOGlIwN7RfX9bB4jOYE/UDm7l4VwyfRmHSisF
-	 tBXyR1lC54fn+zh4JlbKRfUgqGEfcMh5JxaBIF1+U3Gs7dla4Qadm1Prsa5+pUb2afLOE
-	 Q8k8+OWZhmiGQ5MkM+tZZucwLpIun/d+4ix313/qlcD+DWBq0JVxBJ7nxrGXYAxpbTuGg
-	 k8DsjvBhMmFQT3chujz0uYvA7de+HiYvm9rJsqCOSRYg1kKFLGm41NlRwf26gLyHquNzX
-	 yTzDCnZikTuxH98vSRlniOFahqH+oD66ZDZjpc11e9Xy0GjqBEAW48y2xOQO4IkBTkg==
+	t=1795812497;
+	b=ShFma47pmALqMfx3RYOr+2jV0bzzORVHRJ2d2/Bvs3697Djc5Tlb4HcaNzvHAyKsuO0x
+	 74vFnGMRqgh6WZhmhM5VX6w0Tz0jY2dH85fA9DwbKWVUW1A6QoVSGIx3InFUycwis6/Jt
+	 MIFYn9KuOClkbu9cQrmUj5wv1WHXbSifSEU43ad7aCe0mz0q5kim+8qU5dWz16GXeYkOL
+	 ru6KcCtvjQ+aSb2hglIqnmv6i59E9j9T5bCsN8Xx4qSMkX/fLiA4k7KOx9lbWVYORK/lj
+	 lQavC8fscV7NvJO2nvhMch4JhbtHl1H+AZUB2sXZIHO3uXZi/SGFYvBik9juLgAiYUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795812067;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795812497;
 	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
 	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=/QnSsinwrJ9wIM0R4Swv1HXlkWqlkSi2iQrfbAkFwl0=;
-	b=M1/Ab5zmwxgVgZs9Z+sCuvCGwPoKMU58zusDDyE74DbRta47NLvXd7NBn096o6AV52m6
-	 R4MuAcmcWd9x/jgEOWUrzVxBcYP+S31oWi2NYJ0ZrxCa0O68AOOe11wMzwLzUmBfb6fA2
-	 2uVYKYwSZnodX4RIVLRa+DDJL7g93reMonRZiI8PuSKcyl+4Rr5F5Lzo4cQ+0QG6/bs0O
-	 HketTELdsH5I8OzyWCugLpgRiXPxUGfnWlDPcgHc8YzA2azg27u04qJIhZbckan8k3ls3
-	 ScO48HA/1pedo5JIbgzE0FEb9sv+4f9y5OVr37d7PAwWvOIE2DfC+WQ5SoFSWAQ3Sug==
+	bh=sllkbWDxXjWYtj7uG2v2TOwOgj+n7g6G9IaAtPlGIVE=;
+	b=z7rjVAB3o7zz9llYwhy6OwR/1zNGseSIhvj/QF2QgcTANGRYBjUsbkzNSWh39jhfyQmd
+	 tNwxaUe2i01BGAQrPo5pUizD1aIdbLcNdRDJr6Q3jdec9VWfSYtctsUezRkPDv5zdkuHa
+	 YqqZ2Avtt6awybAZpnVwfoNL8Jif5/1mddYqZGUgOr5T1yPngg1IJjwN61YO7YQoJpJKz
+	 tktHqYc2H16gtaF4ZH8xjBn5m/foKN5MKCxgEB0hvHSkER4ap57eIWNLl/z0dpDsaygRF
+	 nPXCbqq/U47TavNH8iv7cfFr/qUQrT35U+kioQKlAL6uVjBCDlrZ/AFKl6VeTOal9+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AKSJHTIt;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bFt7j+mY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D111606A31C
-	for <damon@lists.linux.dev>; Fri, 27 Nov 2026 20:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7178606A31C
+	for <damon@lists.linux.dev>; Fri, 27 Nov 2026 20:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=AKSJHTIt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971171F00893;
-	Fri, 27 Nov 2026 20:41:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bFt7j+mY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1DB1F000C1;
+	Fri, 27 Nov 2026 20:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795812066;
-	bh=/QnSsinwrJ9wIM0R4Swv1HXlkWqlkSi2iQrfbAkFwl0=;
+	s=k20260515; t=1795812497;
+	bh=sllkbWDxXjWYtj7uG2v2TOwOgj+n7g6G9IaAtPlGIVE=;
 	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=AKSJHTItHg4q/VYoY/AH/C/x2U7hZ7xFS6AygKktSn1y7cX0Av6tkNvgtlxHNqLN3
-	 mgbmkcubFox9pJ/tInxNf1874geU8pKYroydWzVCDd0b/iA6lKX/vSwH+huj0MtqJn
-	 SVSjtCSKi35PkOte+RAtvwg8PvJCbJ8UikDQsJSywXRYE2sTmHb0uNLnXFRKibeemG
-	 Eef9QTQjL5WBBXRV2EN/ZlbUxQEmUUQLINnNsM0qPz9bEiVWzYEonFE0qIFvqtJA9M
-	 NkW+rrmFn1gxGxhM1x8rbFEOwmipN/a7JIls7Mfms16hpY0NixHY+d4OU3k2qj1ta4
-	 QkN0ezt10ulrQ==
-Message-ID: <sashiko-outbox-238269@kernel.org>
+	b=bFt7j+mY7bZARjb3g9pJPiITfMS0DJEXkG9SMIhpRJqGG6LlyojRMgCzsepzLvV6B
+	 KcR3DRgLYogyhtNxeL4xiyQWSnc63OhegISiFOeRKXLe9Miqux+aDC/Ukz2hoP+pxq
+	 oqDwFHrdiN/fv4/+JHDdb4FYeTZ3TT5yIgh+rMtnRwICOGFb566vE7hVbckAXqQBlr
+	 qe4bmyNL+N/ZhPMPwGdNuUIP98Ql/8PySR9opLPzyS5qUJYpSjjqoBkMqaIZ6uarPB
+	 KeaUdJEG4jLFQwDEUcH72VNu0bQLRH5ZyQf0rLCtsrWlhspQgqpfqTyyzspJMVIqI6
+	 xyz/TlJdpnMLQ==
+Message-ID: <sashiko-outbox-238270@kernel.org>
 From: sashiko-bot@kernel.org
-Subject: Re: [PATCH mm-hotfixes-unstable] mm/damon/core: cleanup
- damos->walk_completed in damos_walk_cancel()
+Subject: Re: [RFC PATCH mm-hotfixes-unstable] mm/damon/core: do not update
+ stat for core filter rejecting region
 Reply-To: sashiko-reviews@lists.linux.dev
 To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261127203116.92895-1-sj@kernel.org>
-References: <20261127203116.92895-1-sj@kernel.org>
+Cc: "Andrew Morton" <akpm@linux-foundation.org>, damon@lists.linux.dev, linux-mm@kvack.org
+In-Reply-To: <20261127203938.94339-1-sj@kernel.org>
+References: <20261127203938.94339-1-sj@kernel.org>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 27 Nov 2026 20:41:06 +0000
+Date: Fri, 27 Nov 2026 20:48:16 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,31 +60,58 @@ List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
 
-> DAMOS walk could be unexpectedly only partially performed.  It can
-> happen when there are multiple schemes and the walk is requested after
-> the previous walk is canceled.
->=20
-> The expectation of DAMOS walk for a setup that has multiple schemes is
-> that it will walk for one snapshot for all schemes.  To know if the walk
-> for the one snapshot of a given scheme is done, each damos struct has
-> the walk_completed field.  It is set when the walk for the given scheme
-> is completed.  The walk skips schemes having the field set.  It is reset
-> for all schemes when all the schemes get it set.
->=20
-> damos_walk_cancel() cancels all existing walks.  But it does not reset
-> the walk_completed field.  damos_walk_cancel() can be called at any
-> kdamond loop iteration.  For example, due to DAMON context pause or
-> DAMOS watermarks-caused deactivation.  It means that the function can be
-> [ ... ]
->=20
-> Closes: https://sashiko.dev/#/bug/linux-228a4c52-0545-4c1f-90ce-41114d827=
-2e9
-> Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
-> Cc: <stable@vger.kernel.org> # 6.14.x
-> Signed-off-by: SJ Park <sj@kernel.org>
+Thank you for your contribution! Sashiko AI review found 1 potential
+issue to consider:
+- [High] mm/damon/core: stale region size in damos_apply_scheme()
+  corrupts regions
+--
 
-Sashiko has reviewed this patch and found no issues.
+commit 2aba0f31066065a1efc163e77a7548d189458afa
+Author: SJ Park <sj@kernel.org>
+
+mm/damon/core: do not update stat for core filter rejecting region
+
+This commit moves the damos_core_filter_out() check in
+damos_apply_scheme() ahead of the quota enforcement check so that
+regions rejected by core filters are not accounted in DAMOS statistics
+when the quota is full.
+
+> diff --git a/mm/damon/core.c b/mm/damon/core.c
+> index 0e6b361f97ea6..e0ea93de100d8 100644
+> --- a/mm/damon/core.c
+> +++ b/mm/damon/core.c
+> @@ -2785,6 +2785,8 @@ static void damos_apply_scheme(struct damon_ctx *c,=
+ struct damon_target *t,
+>  	}
+> =20
+>  	if (c->ops.apply_scheme) {
+> +		if (damos_core_filter_out(c, t, r, s))
+> +			return;
+>  		if (damos_quota_is_set(quota) &&
+>  				quota->charged_sz + sz > quota->esz) {
+>  			sz =3D ALIGN_DOWN(quota->esz - quota->charged_sz,
+> @@ -2794,8 +2796,6 @@ static void damos_apply_scheme(struct damon_ctx *c,=
+ struct damon_target *t,
+>  			if (damon_split_region_at(t, r, sz))
+>  				goto update_stat;
+>  		}
+> -		if (damos_core_filter_out(c, t, r, s))
+> -			return;
+>  		sz =3D damon_sz_region(r);
+
+[Severity: High]
+Should sz be refreshed with damon_sz_region(r) right after
+damos_core_filter_out() rather than after the quota check?
+
+damos_core_filter_out() -> damos_filter_match() can split r in place and
+shrink r->ar.end for a DAMOS_FILTER_TYPE_ADDR filter.  Because sz still
+holds the pre-filter region size during the quota check, when the
+remaining aligned quota falls between the post-filter and pre-filter
+sizes, damon_split_region_at(t, r, sz) is called with sz >=3D
+damon_sz_region(r).  That expands r->ar.end back across the filter
+boundary and inserts a zero-length or inverted region (start >=3D end)
+into t->regions_list.
 
 --=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261127203116.9289=
-5-1-sj@kernel.org?part=3D1
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261127203938.9433=
+9-1-sj@kernel.org?part=3D1
