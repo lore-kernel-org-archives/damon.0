@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795892109;
-	b=QeNjzv6wRubrNNHBOBvgcBDHWVj1e9mSKSyFivgEKUjJcsgIxEv1lcKdS6w5YWIovKYX
-	 6hh4tJOvAttS77QUAlYs9YZV/b9MnToulpYHx8pyNaT7KS4SgKmJNmCWT3zTpf+c8r3D5
-	 QeDeWBUFWkcPDmB9hy2fxfIRxxB49BlkofOlgEK2SGnt0x42boyxxqObrpCb0EtSo9ss/
-	 gwGkxZtGHZWp9hjxsqVvPDmAXFtTM9bZNAezCS/hGusagpuU2X0EzjuKsvPlVbsXpeWhG
-	 M12Y0F4/k4lvd6rvaAzIuxW8wWRqhUjbMnvuRU7GxVxAoiwubDtFaDatoBLnQ0zTgmQ==
+	t=1795892183;
+	b=XRX9iNscttm+QF7YQB8Bm1fH97XVlH5mr8yy0EORN046cYxu8SZEQE9XySCq0cE236Kn
+	 ZrlMl9/tBphU4q+GUTAUeNLxXAPcJnXMwvKdzPw8yL30If2Nsi3aKEcXl6M+UmuBExQG4
+	 LK7/J0CgqfxpdphIrGN3VgS8q7Q8avrP0s6u0atR0hyIbOcFOBZ4+tKGdA7TkZ724tP55
+	 ARS3cGqUIObk//TcMLKH+bFGlMeFCLWKUPs19clEP6EW/HkXXjSy1bDagrx19VVtIhxdj
+	 WmKXo+Wnn6hNVyXQi8JeURogw3VnG01gCjfN0ttSfHjcckJLeZDZRuOnlVUBN4P8FvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795892109;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=x3Hjz9mEIVSyKXl1WCX4n2u3w7wq8qym2uID9jE8P7c=;
-	b=MAzu47pGrlg77ekGT+Jr5r6v9qlwQfx+wsEXspXsPjMKDXaVuA6ghLYk44A81HKG7IZD
-	 8UGdxMbkRRPg4glgc3ZkZNdlG4YxrYaMwi5beA1IqlB9yiZ2BaglEGN2s3h1jLckXIlIR
-	 mosA4OagKaxxppzigtUDhyQM/B3qhIZJqDVVornO670fNUxjQesMmtWLetlVGE+sH3Vbh
-	 DD317ix33ZCumbFzjxsNyX5IuLaL4l83FycL9AecRorxxWYllK+zANDzdLKwGS5edwSN1
-	 x9jrqragEh1GClZcxnMRqsMQnYkf0lHiBGQZSHXeWSKPHvKulgx9pKeaYqorFanMHZQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795892183;
+	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
+	bh=afHOt3Ua88IRHFGBJ/3WRDSVkMDM77OwVTwLqDbUGXs=;
+	b=gtZk49EJmL/vL1qnVk4SBsZ9eOaSq/ZanYewHQ48b9R2ggEDQdZxNPaje5isXdLCmNCm
+	 lAuVORhbuZH+ZiZYzvPivA1cuMQuhONXC3B2bcjllsgTLV5yK5ePWnonhXwUdnXx764Mx
+	 LzoKiNO96S1blog6Y9vwJ44c+/adAXNl7Fll548Dc3FqZT4KJbNrT1SOu45JE9lO/HkFZ
+	 /nqF2zTMyPYNYye9wv/kU0lpEGOPGgHMT1eSgIfyYgGuSElOV0Gxng9Z32R89Tx+MSeNb
+	 3+Q/8UL6ACfd+F7JLfNq633s/z93BceRwTe/eteYrYhRQJRm2JZUuQbkJqdXEQ+A/iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jAI+cOmP;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SRGyq+Bb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18C4606A31C;
-	Sat, 28 Nov 2026 18:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CA6606A31C
+	for <damon@lists.linux.dev>; Sat, 28 Nov 2026 18:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=jAI+cOmP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858C61F00893;
-	Sat, 28 Nov 2026 18:55:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SRGyq+Bb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A551F00893;
+	Sat, 28 Nov 2026 18:56:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795892108;
-	bh=x3Hjz9mEIVSyKXl1WCX4n2u3w7wq8qym2uID9jE8P7c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jAI+cOmP1iAKcX8P298CiYFS4ZqU9j6VL5tzC7zqwpGR90Y2GmKuyO7+8GmV30NuX
-	 lGI7tgG0B6ETBz5CxqTqDYsWt/CPnMdgj4xkRkQvlj1tP34EXLG4uM/ann+s9MqW0m
-	 X4hiA0/Q2Oi/0lhooQDwQ/k7lr7OP3vRrYYa1NqFXrxzVzRruBFGWD32mTC4iYKGuo
-	 uivkiAibLYd0CyMAb4oBo6yk42N5f6rRs+3sRpRuM4XMytcbZci/W4k0lgnJLOE7CO
-	 HeDrziCwtWCOJWQ+w1fJxltO5oQAXC9K3fSA61gNBiHeJATiHfdJBLX+Naaz7WKr1P
-	 H2YJ1sjCKOYoQ==
-From: SJ Park <sj@kernel.org>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: SJ Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	damon@lists.linux.dev,
-	linux-mm@kvack.org,
-	Lin Ruifeng <linruifeng4@huawei.com>
-Subject: Re: [PATCH] mm/damon/core: let kdamond freezable
-Date: Sat, 28 Nov 2026 10:55:01 -0800
-Message-ID: <20261128185501.163398-1-sj@kernel.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261128105138.568d35b02dbc712d486a6676@linux-foundation.org>
-References: 
+	s=k20260515; t=1795892182;
+	bh=afHOt3Ua88IRHFGBJ/3WRDSVkMDM77OwVTwLqDbUGXs=;
+	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
+	b=SRGyq+BboaJ3RAqKC+UAZ+6hfeRsgvUdjHw8pV1MwYXUkOzSys8sPpzysvd+F+3UK
+	 Y2GLOz6UrbSE2zEby3FhJBF3UciZEpvIs/vUhorj6+En1rNoVO/5GHl9lUs7/T+gjR
+	 QcPSColOLJypsUnnsqF/3zm/Onx4CdJ48HnCs2tIDIZzDUD4/OW86UP7uGi0WY15PG
+	 7uQCYYXGZOfuRqugIJJLXsTDPkYnqu3p/iXer38QUPtMz5NE3oZb6sqgOeiN/oCmDr
+	 k5fPLyJkJl7C+mIzFUvyljRjkxDk6y3KfPpkAPDZLIOwxRDluRcqAuLDcCzP+Av3Wv
+	 P3/LzLqyaTBiA==
+Message-ID: <sashiko-outbox-238973@kernel.org>
+From: sashiko-bot@kernel.org
+Subject: Re: [RFC PATCH mm-hotfixes-unstable v2] mm/damon/core: do not
+ update stat for core filter rejecting region
+Reply-To: sashiko-reviews@lists.linux.dev
+To: "SJ Park" <sj@kernel.org>
+Cc: damon@lists.linux.dev
+In-Reply-To: <20261128185140.163079-1-sj@kernel.org>
+References: <20261128185140.163079-1-sj@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 28 Nov 2026 18:56:22 +0000
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -60,21 +59,31 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-On Sat, 28 Nov 2026 10:51:38 -0800 Andrew Morton <akpm@linux-foundation.org> wrote:
+> damos_apply_scheme() update stats for regions that were unable to apply
+> the scheme due to the quota.  Those are counted as tried and failed.  It
+> doesn't update stats for regions that were rejected by DAMOS core
+> filters.  Those are counted as not tried at all.
+>=20
+> However, the DAMOS quota-driven failure is handled before DAMOS core
+> filters.  Regions that would be rejected by the core filter can, hence,
+> be accounted as tried and failed.  As a result, users could show
+> confusing stat changes.
+>=20
+> Fix by handling core filters before quotas.
+>=20
+> The user impact is not critical.  No crash or leak happens.  Only the
+> DAMOS stat could occasionally move in an unexpected way.
+>=20
+> Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos f=
+ilter")
+> Cc: <stable@vger.kernel.org> # 6.6.x
+> Closes: https://sashiko.dev/#/bug/linux-9c51890e-a25c-4534-afab-ef33f22a9=
+557
+> Signed-off-by: SJ Park <sj@kernel.org>
 
-> On Sat, 28 Nov 2026 10:43:10 -0800 SJ Park <sj@kernel.org> wrote:
-> 
-> > Subject: [PATCH] mm/damon/core: let kdamond freezable
-> 
-> Let's use "make kdamond freezable".
+Sashiko has reviewed this patch and found no issues.
 
-Sounds good, thank you Andrew!
-
-
-Thanks,
-SJ
-
-[...]
+--=20
+Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261128185140.1630=
+79-1-sj@kernel.org?part=3D1
