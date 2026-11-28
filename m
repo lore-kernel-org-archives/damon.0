@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795892183;
-	b=XRX9iNscttm+QF7YQB8Bm1fH97XVlH5mr8yy0EORN046cYxu8SZEQE9XySCq0cE236Kn
-	 ZrlMl9/tBphU4q+GUTAUeNLxXAPcJnXMwvKdzPw8yL30If2Nsi3aKEcXl6M+UmuBExQG4
-	 LK7/J0CgqfxpdphIrGN3VgS8q7Q8avrP0s6u0atR0hyIbOcFOBZ4+tKGdA7TkZ724tP55
-	 ARS3cGqUIObk//TcMLKH+bFGlMeFCLWKUPs19clEP6EW/HkXXjSy1bDagrx19VVtIhxdj
-	 WmKXo+Wnn6hNVyXQi8JeURogw3VnG01gCjfN0ttSfHjcckJLeZDZRuOnlVUBN4P8FvQ==
+	t=1795892441;
+	b=LHM60lsxLePZAdpVvFmGNAj4XR3Q18hfOebvCsNN4clBmpJfuc1bjB0Ys4X1teShQRWI
+	 lwh00XkmrzNUhl8cCMGHUuLSRLqtAxz/kjgnqOvjjLpxFz6EWwYsXJqn2Cx5YQaleULjp
+	 S6tnad8AdNL3QEJwCDpaRz9aURh3OiYii5OOg2rbfcfP0Cld4BjIi+3DTt7ixCk9gA3LI
+	 gXYGLLfbVDFFTkHxCWRn7Zy1kmwK0rtVm5co4hOqOsRE+jcnuSo9XxoD+1CGxLsk9jRkP
+	 mviTIy4cXAsbFy2kcw3m17BcdIPUTU4ZRU0RvbeN0bzSFsrSMHnwEY7qESAe0k/40Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795892183;
-	h=Received:DKIM-Signature:Message-ID:From:Subject:Reply-To:To:Cc:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:Date;
-	bh=afHOt3Ua88IRHFGBJ/3WRDSVkMDM77OwVTwLqDbUGXs=;
-	b=gtZk49EJmL/vL1qnVk4SBsZ9eOaSq/ZanYewHQ48b9R2ggEDQdZxNPaje5isXdLCmNCm
-	 lAuVORhbuZH+ZiZYzvPivA1cuMQuhONXC3B2bcjllsgTLV5yK5ePWnonhXwUdnXx764Mx
-	 LzoKiNO96S1blog6Y9vwJ44c+/adAXNl7Fll548Dc3FqZT4KJbNrT1SOu45JE9lO/HkFZ
-	 /nqF2zTMyPYNYye9wv/kU0lpEGOPGgHMT1eSgIfyYgGuSElOV0Gxng9Z32R89Tx+MSeNb
-	 3+Q/8UL6ACfd+F7JLfNq633s/z93BceRwTe/eteYrYhRQJRm2JZUuQbkJqdXEQ+A/iw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795892441;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=q3Ayp3mf5LZNEnREMb+uXcykhhHuaIN8Xp18yqPUd3A=;
+	b=4OZ5/NhS6yQT0ISD37Jz5xo+UZv1zuDjz6pLMIPaS7qtqiw3dY8E4xINRLajyygAmNK8
+	 rxdCvCw9C3SGPLc4F2LYDikQlY22qLD23U0vcuqzHAzUtFQ9gKPL+T5CcL/pqs3q1TO8x
+	 temiChU29KPKgvp1V4Yj0DoyZuw3hFdxxoiahzXDUqAqf1A1YqUnhbg1JqzY8KNFjPPQD
+	 ysMa/ztF0iNWXQxNMUB/hWMtTQpUdDHGbGPV3tYI3D4i8peexaf2A0qHhQPiYxppKpq24
+	 AAnvDBt5Ay4tZiQRFsYYK47yQuLR38A8Fo3TDabmK0S3TamMkeAQdmEAkjWZbgn7UPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SRGyq+Bb;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GdnGfLMj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CA6606A31C
-	for <damon@lists.linux.dev>; Sat, 28 Nov 2026 18:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319C2606A32F;
+	Sat, 28 Nov 2026 19:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SRGyq+Bb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A551F00893;
-	Sat, 28 Nov 2026 18:56:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GdnGfLMj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48EE1F000C1;
+	Sat, 28 Nov 2026 19:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795892182;
-	bh=afHOt3Ua88IRHFGBJ/3WRDSVkMDM77OwVTwLqDbUGXs=;
-	h=From:Subject:Reply-To:To:Cc:In-Reply-To:References:Date;
-	b=SRGyq+BboaJ3RAqKC+UAZ+6hfeRsgvUdjHw8pV1MwYXUkOzSys8sPpzysvd+F+3UK
-	 Y2GLOz6UrbSE2zEby3FhJBF3UciZEpvIs/vUhorj6+En1rNoVO/5GHl9lUs7/T+gjR
-	 QcPSColOLJypsUnnsqF/3zm/Onx4CdJ48HnCs2tIDIZzDUD4/OW86UP7uGi0WY15PG
-	 7uQCYYXGZOfuRqugIJJLXsTDPkYnqu3p/iXer38QUPtMz5NE3oZb6sqgOeiN/oCmDr
-	 k5fPLyJkJl7C+mIzFUvyljRjkxDk6y3KfPpkAPDZLIOwxRDluRcqAuLDcCzP+Av3Wv
-	 P3/LzLqyaTBiA==
-Message-ID: <sashiko-outbox-238973@kernel.org>
-From: sashiko-bot@kernel.org
-Subject: Re: [RFC PATCH mm-hotfixes-unstable v2] mm/damon/core: do not
- update stat for core filter rejecting region
-Reply-To: sashiko-reviews@lists.linux.dev
-To: "SJ Park" <sj@kernel.org>
-Cc: damon@lists.linux.dev
-In-Reply-To: <20261128185140.163079-1-sj@kernel.org>
-References: <20261128185140.163079-1-sj@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 28 Nov 2026 18:56:22 +0000
+	s=k20260515; t=1795892440;
+	bh=q3Ayp3mf5LZNEnREMb+uXcykhhHuaIN8Xp18yqPUd3A=;
+	h=From:To:Cc:Subject:Date;
+	b=GdnGfLMjul9fQRT6906rDXCgC2/D0Y5dW/e2PWhjxZ8N8fAF7RPdXyO2vx3WMwtAt
+	 5BJQWHu4eQTYZ+2rPP653yS19LweSjGhtbe/xwNh64gf22/fqJrHu1UvkJY05U2UYN
+	 V30gWCTN6RNjHzagJwFD+NposNA/DlipgFY385d0GL9zwyrQIQCmdZDl2JqyLVCAZJ
+	 FZAlKEmtXpnCrn+DoDwLn4dfUk+Fp+gyBdcrxDy9YwT4W2A7rmUw6/tCX2PjzPeaMK
+	 1D/JX047UmTX121RrdncGnhxApjgrVvRoaZygIhCcLwyuLJS+AznhnEM1wxulPMj/N
+	 MJRlI8Q6dTZpA==
+From: SJ Park <sj@kernel.org>
+To: 
+Cc: SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shuah Khan <shuah@kernel.org>,
+	damon@lists.linux.dev,
+	linux-kselftest@vger.kernel.org,
+	linux-mm@kvack.org
+Subject: [RFC PATCH v4 0/7] mm/damon: various improvements/cleanups for code, tests and comments
+Date: Sat, 28 Nov 2026 11:00:25 -0800
+Message-ID: <20261128190033.164440-1-sj@kernel.org>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: damon@lists.linux.dev
 List-Id: <damon.lists.linux.dev>
 List-Post: <mailto:damon@lists.linux.dev>
@@ -59,31 +59,70 @@ List-Subscribe: <mailto:damon+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:damon+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:damon+owner@lists.linux.dev>
 Precedence: list
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-> damos_apply_scheme() update stats for regions that were unable to apply
-> the scheme due to the quota.  Those are counted as tried and failed.  It
-> doesn't update stats for regions that were rejected by DAMOS core
-> filters.  Those are counted as not tried at all.
->=20
-> However, the DAMOS quota-driven failure is handled before DAMOS core
-> filters.  Regions that would be rejected by the core filter can, hence,
-> be accounted as tried and failed.  As a result, users could show
-> confusing stat changes.
->=20
-> Fix by handling core filters before quotas.
->=20
-> The user impact is not critical.  No crash or leak happens.  Only the
-> DAMOS stat could occasionally move in an unexpected way.
->=20
-> Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos f=
-ilter")
-> Cc: <stable@vger.kernel.org> # 6.6.x
-> Closes: https://sashiko.dev/#/bug/linux-9c51890e-a25c-4534-afab-ef33f22a9=
-557
-> Signed-off-by: SJ Park <sj@kernel.org>
+Refactor code, optimize code speed, add missing feature supports, and
+update comments on various areas of DAMON.
 
-Sashiko has reviewed this patch and found no issues.
+Optimize the efficiency of vaddr damos_migrate action under filter
+failures with patch 1.  Use damos->last_applied on damos_migrate action
+in vaddr and support sz_filter_passed for damos_migrate action in vaddr,
+respectively with patch 2 and 3.  Drop a redundant and racy quota goal
+target value validation in sysfs, in favor of that in the core layer,
+with patch 4.  Drop unused variables and imports from selftests with
+patch 5 and 6.  Update source file intro comments to call DAMON just
+DAMON, via patch 7.
 
---=20
-Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261128185140.1630=
-79-1-sj@kernel.org?part=3D1
+Issues for patches 1 and 3 were found by Sashiko.  Those are
+mild inefficiency and unsupported features, though.  Hence not Cc-ing
+stable.
+
+Changes from RFC v3
+- RFC v3: https://lore.kernel.org/20261127222719.105510-1-sj@kernel.org
+- Avoid NULL dereference when vm_normal_folio() returns NULL, in patch 2.
+- Rebase to the latest mm-new.
+Changes from RFC v2
+- RFC v2: https://lore.kernel.org/20261101171630.81477-1-sj@kernel.org
+- Set last_applied regardless of damos-filtering.
+- Advance entire folio for invalid folio.
+- update subject for unused imports removal.
+- Add source file intro comments update patch.
+- Rebase to the latest mm-new.
+Changes from RFC
+- RFC: https://lore.kernel.org/20261031202614.96036-1-sj@kernel.org
+- Drop charge_target_from fixup consolidation.
+- Add a patch for using last_applied on vaddr migrate action.
+- Add missed damos_va_migrate_private->sz_filter_passed setup.
+- Fix wrong commit message for unused imports removal.
+
+SJ Park (7):
+  mm/damon/vaddr: advance migration attempt in folio level for filter
+    out
+  mm/damon/vaddr: use damos->last_applied for migrate action
+  mm/damon/vaddr: implement sz_filter_passed for migrate_{hot,cold}
+    action
+  mm/damon/sysfs-schemes: drop redundant and racy zero target_value
+    check
+  selftests/damon/damos_apply_interval: remove unused variables
+  selftests/damon: remove unused imports of sys and time modules
+  mm/damon: update file intro comments to call DAMON just DAMON
+
+ mm/damon/core.c                               |  2 +-
+ mm/damon/ops-common.c                         |  2 +-
+ mm/damon/ops-common.h                         |  2 +-
+ mm/damon/sysfs-schemes.c                      |  3 ---
+ mm/damon/tests/core-kunit.h                   |  2 +-
+ mm/damon/tests/paddr-kunit.h                  |  2 +-
+ mm/damon/tests/sysfs-kunit.h                  |  2 +-
+ mm/damon/tests/vaddr-kunit.h                  |  2 +-
+ mm/damon/vaddr.c                              | 27 ++++++++++++-------
+ .../selftests/damon/damos_apply_interval.py   |  2 --
+ .../damon/sysfs_no_op_commit_break.py         |  1 -
+ ...sysfs_update_schemes_tried_regions_hang.py |  1 -
+ 12 files changed, 25 insertions(+), 23 deletions(-)
+
+
+base-commit: 23cd682622886800b912219e307cf46a99f69c10
+-- 
+2.47.3
